@@ -348,8 +348,8 @@ namespace Goedel.Utilities {
                 }
             }
 
-
-
+        ///<summary>Convenience flag can be set true to force task flags to throw an exception.</summary> 
+        public static bool HaltPhase1 { get; set; }  = false;
 
         /// <summary>
         /// Utility routine used to flag missing code to implement missing
@@ -379,7 +379,12 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="description">Description of the missing functionality.</param>
         /// <param name="exception">If true, throw an exception.</param>
-        public static void TaskFunctionality(this string description, bool exception = false) {
+        public static void TaskFunctionality(this string description, 
+                bool exception = false,
+                bool suppress = false) {
+            if (suppress) {
+                return;
+                }
             Screen.WriteInfo($"***Functionality missing***{description}");
             if (exception) {
                 throw new NYI();

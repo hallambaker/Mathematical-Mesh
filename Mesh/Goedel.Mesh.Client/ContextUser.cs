@@ -274,7 +274,7 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public void BidService(string accountAddress) {
+        public void BindService(string accountAddress) {
 
             // Request binding
             var createRequest = new BindRequest() {
@@ -287,8 +287,25 @@ namespace Goedel.Mesh.Client {
             var response = MeshClient.BindAccount(createRequest);
             response.AssertSuccess(ServerOperationFailed.Throw);
 
+            // Create the Access catalog here with policy allowing the service access
+
+            var accessEncrypt = response.AccessEncrypt;
+            ActivationAccount.DictionaryStoreEncryptionKey.TryGetValue(CatalogAccess.Label, out var accessSelf);
+
+            var recipients = new List<Key> { accessEncrypt.PublicParameters , 
+                    Key.FactoryPublic(accessSelf) };
+
+            var policy = new DarePolicy() {
+                EncryptKeys = recipients
+                };
+            var access = MakeStore(CatalogAccess.Label, policy);
+
 
             LoadStores(); // Load all stores so that these are created on the service.
+            
+            
+
+            
             SyncProgressUpload();
             }
 
@@ -341,13 +358,13 @@ namespace Goedel.Mesh.Client {
         /// <param name="profileUser">The user profile</param>
         /// <param name="activationAccount">The account activation</param>
         /// <param name="keyLocate">the key locator.</param>
-        public static void CreateDirectory(
+        public static string CreateDirectory(
                     MeshHost meshHost,
                     ProfileUser profileUser,
                     ActivationAccount activationAccount,
                     IKeyCollection keyLocate) {
-            var StoresDirectory = ContextUser.GetStoresDirectory(meshHost, profileUser);
-            Directory.CreateDirectory(StoresDirectory);
+            var storesDirectory = ContextUser.GetStoresDirectory(meshHost, profileUser);
+            Directory.CreateDirectory(storesDirectory);
 
 
             // Create each of the stores and add the activation to the record.
@@ -355,25 +372,24 @@ namespace Goedel.Mesh.Client {
 
                 var storeName = entry.Key;
                 var factory = entry.Value;
+                var policy = activationAccount.InitializeStore(storeName, keyLocate);
                 if (!ServiceCatalogs.Contains(storeName)) {
-
-                    
-                    var policy = activationAccount.InitializeStore(storeName);
-
-                    using var store = factory(StoresDirectory, storeName, null, policy, keyCollection: keyLocate);
+                    // We do not create the access store yet because we need the host key
+                    using var store = factory(storesDirectory, storeName, null, policy, keyCollection: keyLocate);
                     }
-                //else {
-                //    using var store = factory(StoresDirectory, storeName, null, null, keyCollection: keyLocate);
-                //    }
+                else {
+                    //keyLocate.Add (policy.)
+                    }
                 }
             foreach (var entry in StaticSpoolDelegates) {
                 var storeName = entry.Key;
                 var factory = entry.Value;
                 var policy = activationAccount.InitializeStore(storeName);
 
-                using var store = factory(StoresDirectory, storeName, null, policy);
+                using var store = factory(storesDirectory, storeName, null, policy);
                 }
 
+            return storesDirectory;
             }
 
         ///<inheritdoc/>
@@ -530,7 +546,7 @@ namespace Goedel.Mesh.Client {
             };
 
         static SortedSet<string> ServiceCatalogs = new() {
-            //CatalogAccess.Label,
+            CatalogAccess.Label,
             //CatalogPublication.Label
             };
 

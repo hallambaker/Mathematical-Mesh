@@ -577,7 +577,7 @@
             <param name="blind">If true, only the sequence header values are read</param>
             <returns>The <see cref="T:Goedel.Mesh.Store"/> instance.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.MakeStore(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.MakeStore(System.String,Goedel.Cryptography.Dare.DarePolicy)">
             <summary>
             Create a new instance bound to the specified core within this account context.
             </summary>

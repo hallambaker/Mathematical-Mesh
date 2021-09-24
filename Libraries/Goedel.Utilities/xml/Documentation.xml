@@ -367,6 +367,9 @@
             Condition is true</param>
             <param name="args">Reason arguments to be passed to the throw delegate.</param>
         </member>
+        <member name="P:Goedel.Utilities.Assert.HaltPhase1">
+            <summary>Convenience flag can be set true to force task flags to throw an exception.</summary> 
+        </member>
         <member name="M:Goedel.Utilities.Assert.TaskValidate(System.String)">
             <summary>
             Utility routine used to flag missing code to implement missing
@@ -387,7 +390,7 @@
             </summary>
             <param name="description">Task description</param>
         </member>
-        <member name="M:Goedel.Utilities.Assert.TaskFunctionality(System.String,System.Boolean)">
+        <member name="M:Goedel.Utilities.Assert.TaskFunctionality(System.String,System.Boolean,System.Boolean)">
             <summary>
             Utility routine used to flag missing code to implement missing test for
             functionality not yet implemented.

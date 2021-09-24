@@ -319,7 +319,8 @@ namespace Goedel.Mesh.Server {
             6) Release all the locks.
 
             */
-            // report the updates to be applied here
+
+                // report the updates to be applied here
             using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
 
             //using var accountEntry = GetAccountVerified(account, jpcSession);
@@ -346,7 +347,7 @@ namespace Goedel.Mesh.Server {
             // we always do these last
             if (outbound != null) {
                 foreach (var envelope in outbound) {
-                    MessagePostOther(jpcSession, accountHandle, accounts, envelope);
+                    MessagePostOther(accountHandle, accounts, envelope);
                     }
                 }
 
@@ -386,17 +387,15 @@ namespace Goedel.Mesh.Server {
         /// <param name="dareMessage">The message.</param>
         /// <returns>Identifier of the message posted.</returns>
         public string MessagePostOther(
-                IJpcSession jpcSession,
+
                 AccountHandleLocked senderAccount,
                 List<string> accounts,
                 DareEnvelope dareMessage) {
 
-            jpcSession.Future();
-
             var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
             identifier.AssertNotNull(InvalidMessageID.Throw);
 
-            var senderService = senderAccount.Provider;
+            var senderService = senderAccount.AccountAddress.GetService();
 
             foreach (var recipient in accounts) {
                 var recipientService = recipient.GetService();

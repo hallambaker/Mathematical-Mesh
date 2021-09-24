@@ -555,7 +555,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="name">The name of the store to bind.</param>
         /// <returns>The store instance.</returns>
-        protected Store MakeStore(string name) {
+        protected Store MakeStore(string name, DarePolicy darePolicy=null) {
 
             //// special case this for now
             //switch (name) {
@@ -564,7 +564,7 @@ namespace Goedel.Mesh.Client {
             //    }
 
             if (DictionaryCatalogDelegates.TryGetValue(name, out var factory)) {
-                var darePolicy = ActivationAccount.GetDarePolicy(name);
+                darePolicy ??= ActivationAccount.GetDarePolicy(name);
                 return factory(StoresDirectory, name, this, darePolicy, null, this);
                 }
             if (DictionarySpoolDelegates.TryGetValue(name, out factory)) {

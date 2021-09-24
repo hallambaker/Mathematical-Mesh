@@ -271,7 +271,7 @@
             <param name="keyIdentifier">The authentication key to be used to claim this capability.</param>
             <param name="transactContextAccount">The transaction context.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.InitializeStore(System.String)">
+        <member name="M:Goedel.Mesh.ActivationAccount.InitializeStore(System.String,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Initialize the store <paramref name="storeName"/> by derriving the corresponding
             encryption key.
@@ -10050,6 +10050,11 @@
              <summary>
             A URL to which the user is directed to complete the account creation 
             request.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.BindResponse.AccessEncrypt">
+             <summary>
+            Encryption key to be used to encrypt data for the service to use.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.BindResponse._Tag">

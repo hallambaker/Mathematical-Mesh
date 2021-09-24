@@ -252,7 +252,7 @@ namespace Goedel.Mesh.Client {
             contextUser.SetService(accountAddress);
 
             if (create) {
-                contextUser.BidService(accountAddress);
+                contextUser.BindService(accountAddress);
                 }
             else {
                 contextUser.Sync();

@@ -420,7 +420,11 @@ namespace Goedel.Mesh.Server {
 
                 // ToDo: Allow the BindResponse to specify a different host
                 // ToDo: Allow the BindResponse to specify a unique service encryption key for the acount                
-                return new BindResponse();
+
+
+                return new BindResponse() {
+                    AccessEncrypt = ProfileHost.Encryption
+                    };
                 }
             catch (System.Exception exception) {
                 return new BindResponse(exception);

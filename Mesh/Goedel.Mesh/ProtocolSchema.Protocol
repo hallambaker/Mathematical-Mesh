@@ -235,6 +235,9 @@
 			Description
 				|A URL to which the user is directed to complete the account creation 
 				|request.
+		Struct KeyData AccessEncrypt
+			Description
+				|Encryption key to be used to encrypt data for the service to use.
 
 
 

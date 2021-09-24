@@ -72,7 +72,7 @@ namespace Scratchpad {
 
             // Temporary fix : Also encrypt the Access catalog so the user devices can read it.
 
-            TestService.Test().MeshEscrowRecover();
+            //TestService.Test().MeshEscrowRecover();
 
             TestService.Test().MeshCatalogGroup();
 

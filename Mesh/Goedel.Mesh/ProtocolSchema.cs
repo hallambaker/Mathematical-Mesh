@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/23/2021 3:52:06 PM
+//  This file was automatically generated at 9/24/2021 3:34:47 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2341,6 +2341,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						URL  {get; set;}
+        /// <summary>
+        ///Encryption key to be used to encrypt data for the service to use.
+        /// </summary>
+
+		public virtual KeyData						AccessEncrypt  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2395,6 +2400,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("URL", 1);
 					_writer.WriteString (URL);
 				}
+			if (AccessEncrypt != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("AccessEncrypt", 1);
+					AccessEncrypt.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -2434,6 +2444,13 @@ namespace Goedel.Mesh {
 					}
 				case "URL" : {
 					URL = jsonReader.ReadString ();
+					break;
+					}
+				case "AccessEncrypt" : {
+					// An untagged structure
+					AccessEncrypt = new KeyData ();
+					AccessEncrypt.Deserialize (jsonReader);
+ 
 					break;
 					}
 				default : {

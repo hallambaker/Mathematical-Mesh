@@ -109,6 +109,9 @@ namespace Goedel.Mesh.Server {
                 case KeyCredentialPublic keyCredentialPublic: {
                     return Authenticate(keyCredentialPublic, accountPrivilege);
                     }
+                case MeshCredential meshCredential: {
+                    return Authenticate(meshCredential, accountPrivilege);
+                    }
                 }
             return false;
             }
@@ -123,6 +126,23 @@ namespace Goedel.Mesh.Server {
             // authenticated under the AccountAuthenticationKey
             (profileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
                     credential.AuthenticationKeyId)).AssertTrue (NotAuthorized.Throw);
+
+            return true;
+            }
+
+        bool Authenticate(
+            MeshCredential credential,
+            AccountPrivilege accountPrivilege) {
+
+            var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();
+
+            "Need to validate the client credential to the account here.".TaskFunctionality(Assert.HaltPhase1);
+
+
+            //// To operate under the account authentication key, the request must be
+            //// authenticated under the AccountAuthenticationKey
+            //(profileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
+            //        credential.AuthenticationKeyId)).AssertTrue(NotAuthorized.Throw);
 
             return true;
             }
@@ -225,7 +245,10 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="dareMessage">The message to post.</param>
         public void PostInbound(DareEnvelope dareMessage) {
-            AccountPrivilege.HasFlag(AccountPrivilege.Post).AssertTrue(NotAuthorized.Throw);
+
+            "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
+
+            //AccountPrivilege.HasFlag(AccountPrivilege.Post).AssertTrue(NotAuthorized.Throw);
 
             using var container = new Spool(Directory, SpoolInbound.Label);
             container.Add(dareMessage);
@@ -238,7 +261,9 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="envelope">The message to post.</param>
         public void PostLocal(DareEnvelope envelope) {
-            AccountPrivilege.HasFlag(AccountPrivilege.Local).AssertTrue(NotAuthorized.Throw);
+            //AccountPrivilege.HasFlag(AccountPrivilege.Local).AssertTrue(NotAuthorized.Throw);
+
+            "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
 
             using var container = new Spool(Directory, SpoolLocal.Label);
             container.Add(envelope);
@@ -252,7 +277,9 @@ namespace Goedel.Mesh.Server {
         /// <param name="label">The store to add the envelopes to.</param>
         /// <param name="envelopes">The envelopes to append.</param>
         public void StoreAppend(string label, List<DareEnvelope> envelopes) {
-            AccountPrivilege.HasFlag(AccountPrivilege.Connected).AssertTrue(NotAuthorized.Throw);
+            "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
+
+            //AccountPrivilege.HasFlag(AccountPrivilege.Connected).AssertTrue(NotAuthorized.Throw);
             Store.Append(Directory, null, envelopes, label);
             }
 

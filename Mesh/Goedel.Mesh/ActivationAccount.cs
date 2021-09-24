@@ -533,16 +533,21 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="storeName">The store to initialize.</param>
         /// <returns>Cryptographic parameters for the store.</returns>
-        public DarePolicy InitializeStore(string storeName) {
+        public DarePolicy InitializeStore(string storeName,
+                    IKeyCollection keyLocate=null) {
             var encryptionKey = secretSeed.GenerateContributionKeyPair(MeshKeyType.Complete,
                 MeshActor.Account, MeshKeyOperation.Encrypt, keySecurity: KeySecurity.Exportable,
                 info: storeName);
 
             DictionaryStoreEncryptionKey.Add(storeName, encryptionKey);
 
+            if (keyLocate != null) {
+                keyLocate.Add(encryptionKey);
+                }
+
             // here we have to build the policy for the store. This will be to encrypt under the store key
 
-            var policy = new DarePolicy(KeyCollection, recipient: encryptionKey);
+                var policy = new DarePolicy(KeyCollection, recipient: encryptionKey);
             return policy;
             }
 
