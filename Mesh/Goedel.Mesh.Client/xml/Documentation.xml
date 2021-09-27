@@ -781,7 +781,15 @@
             <param name="catalogedGroup">Description of the group to return the
             context for.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateGroup(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup)">
+        <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup,Goedel.Mesh.ActivationAccount)">
+            <summary>
+            Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
+            </summary>
+            <param name="contextAccount">The enclosing account context.</param>
+            <param name="catalogedGroup">Description of the group to return the
+            context for.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateGroup(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup,Goedel.Mesh.ActivationAccount,Goedel.Mesh.MeshServiceClient)">
             <summary>
             Create a new group.
             </summary>
@@ -1254,8 +1262,19 @@
             </summary>
             <param name="groupName">Name of the group to create.</param>
             <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
-            <param name="rights">List of rights to be granted.</param>
+            <param name="roles">List of rights to be granted.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.EscrowSeed(Goedel.Mesh.KeyData[])">
+            <summary>
+            Escrow the seed from which an account is derrived. This is attached to the 
+            user context to allow future implementations to support alternative or
+            additional escrow policies. Keys might be escrowed under the account escrow
+            and also escrow administrator keys to allow closer control.
+            </summary>
+            <param name="catalogedApplication">The applications the escrowed
+            keys are to be added to.</param>
+            <param name="keyDatas">The keys to be escrowed.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetContextGroup(System.String)">
             <summary>
@@ -1703,6 +1722,14 @@
             <param name="catalog">The catalog to be updated</param>
             <param name="catalogedEntry">The entry to add as an update.</param>
             <typeparam name="TEntry">The entry type.</typeparam>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.CatalogUpdate(Goedel.Mesh.CatalogContact,Goedel.Mesh.Contact)">
+            <summary>
+            Append a request to append <paramref name="catalogedEntry"/> to the catalog
+            <paramref name="catalog"/> to the transaction.
+            </summary>
+            <param name="catalog">The catalog to be updated</param>
+            <param name="contact">The contact to add as an update.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.CatalogDelete``1(Goedel.Mesh.Catalog{``0},``0)">
             <summary>

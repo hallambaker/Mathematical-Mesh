@@ -606,11 +606,14 @@ namespace Goedel.Mesh.Client {
 
 
             //Bug? This might cause group decryption to fail.
-            //var catalogCapability = GetStore(CatalogAccess.Label) as CatalogAccess;
-            //return catalogCapability.TryFindKeyDecryption(keyId, out cryptoKey);
+            var catalogContact = GetStore(Mesh.CatalogContact.Label) as CatalogContact;
+            return catalogContact.TryFindKeyDecryption(keyId, out cryptoKey);
 
-            return false;
+            //return false;
             }
+
+
+
         #endregion
         #region // Message Handling - Get/Process pending.
 
@@ -728,12 +731,12 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="groupName">Name of the group to create.</param>
         /// <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
-        /// <param name="rights">List of rights to be granted.</param>
+        /// <param name="roles">List of rights to be granted.</param>
         /// <returns></returns>
 
         public ContextGroup CreateGroup(string groupName,
                         PrivateKeyUDF accountSeed = null,
-                        List<string> rights = null
+                        List<string> roles = null
                         ) {
 
             // create the cataloged group
@@ -766,9 +769,12 @@ namespace Goedel.Mesh.Client {
             // so that the activation for the cataloged group is saved under the 
             // account escrow key.
 
-            rights.Future();
-            var catalogedGroup = activationGroup.MakeCatalogedGroup(profileGroup,
-                activationGroup, KeyAccountEncryption, connectionGroup);
+            var catalogedGroup = new CatalogedGroup(profileGroup,
+                activationGroup, KeyAccountEncryption, connectionGroup) {
+                Grant = roles
+                };
+
+
 
             // here we request creation of the group at the service.
             var createRequest = new BindRequest() {
@@ -780,19 +786,36 @@ namespace Goedel.Mesh.Client {
             // here we need to create aMesh client to use to control the group account.
             // We should also preserve the group key so we can add users.
 
-            var createResponse = MeshClient.BindAccount(createRequest);
+
+            // Since the service does not know this account (yet)
+            var credentialPrivate = new KeyCredentialPrivate(
+                        activationGroup.AccountAuthenticationKey as KeyPairAdvanced);
+
+            var groupClient = MeshMachine.GetMeshClient(credentialPrivate, null, groupName);
+
+
+            var createResponse = groupClient.BindAccount(createRequest);
             createResponse.AssertSuccess();
 
             // create the group context
-            var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
-            var contact = contextGroup.CreateContact();
+            var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup, activationGroup, groupClient);
+            contextGroup.MeshClient = groupClient;
 
+
+            var contact = contextGroup.CreateContact();
 
             // Commit all changes to the administrator context in a single transaction.
             using (var transaction = TransactBegin()) {
                 // Add the group to the application catalog
-                var catalogApplication = transaction.GetCatalogApplication();
-                transaction.CatalogUpdate(catalogApplication, catalogedGroup);
+                transaction.ApplicationCreate(catalogedGroup);
+
+                //var catalogApplication = transaction.GetCatalogApplication();
+                //transaction.CatalogUpdate(catalogApplication, catalogedGroup);
+
+                // need to provision ourselves a capability!
+
+                //transaction.Escrow(accountSeed, "admin", profileGroup.Udf, $"group {groupName}");
+
 
                 var catalogAccess = transaction.GetCatalogAccess();
 
@@ -806,10 +829,34 @@ namespace Goedel.Mesh.Client {
 
 
 
+
+
             return contextGroup;
 
 
             }
+
+        /// <summary>
+        /// Escrow the seed from which an account is derrived. This is attached to the 
+        /// user context to allow future implementations to support alternative or
+        /// additional escrow policies. Keys might be escrowed under the account escrow
+        /// and also escrow administrator keys to allow closer control.
+        /// </summary>
+        /// <param name="catalogedApplication">The applications the escrowed
+        /// keys are to be added to.</param>
+        /// <param name="keyDatas">The keys to be escrowed.</param>
+        public List<Enveloped<KeyData>> EscrowSeed(
+                        params KeyData[] keyDatas) {
+            var result = new List<Enveloped<KeyData>> ();
+
+            foreach (var keyData in keyDatas) {
+                var enveloped = new Enveloped<KeyData>(
+                        keyData, encryptionKey: ProfileUser.EscrowEncryptionKey);
+                result.Add(enveloped);
+                }
+            return result;
+            }
+
 
         /// <summary>
         /// Get a managment context for the group <paramref name="groupAddress"/>.
@@ -1167,17 +1214,20 @@ namespace Goedel.Mesh.Client {
             var transactRequest = TransactBegin();
             var catalogContact = transactRequest.GetCatalogContact();
 
-            catalogContact.Add(request.Contact);  // Hack: make transactional
-            if (request.Contact?.NetworkAddresses != null) {
-                var catalogCapability = transactRequest.GetCatalogAccess(); // Hack: make transactional
-                foreach (var address in request.Contact.NetworkAddresses) {
-                    if (address.Capabilities != null) {
-                        foreach (var capability in address.Capabilities) {
-                            catalogCapability.Add(capability);
-                            }
-                        }
-                    }
-                }
+            //catalogContact.Add(request.Contact);  
+
+            transactRequest.CatalogUpdate(catalogContact, request.Contact);
+
+            //if (request.Contact?.NetworkAddresses != null) {
+            //    var catalogCapability = transactRequest.GetCatalogAccess(); // Hack: make transactional
+            //    foreach (var address in request.Contact.NetworkAddresses) {
+            //        if (address.Capabilities != null) {
+            //            foreach (var capability in address.Capabilities) {
+            //                catalogCapability.Add(capability);
+            //                }
+            //            }
+            //        }
+            //    }
 
             transactRequest.Transact();
 

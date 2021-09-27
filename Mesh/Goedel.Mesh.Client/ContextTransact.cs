@@ -141,6 +141,10 @@ namespace Goedel.Mesh.Client {
         /// <returns>Response from the Mesh service.</returns>
         public TransactResponse Transact<TContext>(
                 Transaction<TContext> transact) where TContext : ContextAccount {
+
+            transact.ContextAccount.AssertEqual(this, NYI.Throw);
+
+
             TransactResponse response = null;
             var transactRequest = transact.TransactRequest;
 
@@ -467,6 +471,21 @@ namespace Goedel.Mesh.Client {
             var update = GetContainerUpdate(TransactRequest.Updates, catalog);
             update.Update(catalogedEntry);
             }
+
+        /// <summary>
+        /// Append a request to append <paramref name="catalogedEntry"/> to the catalog
+        /// <paramref name="catalog"/> to the transaction.
+        /// </summary>
+        /// <param name="catalog">The catalog to be updated</param>
+        /// <param name="contact">The contact to add as an update.</param>
+        public void CatalogUpdate(
+                CatalogContact catalog,
+                Contact contact) {
+            var cataloged = new CatalogedContact(contact);
+            CatalogUpdate(catalog, cataloged);
+            }
+
+
 
         /// <summary>
         /// Append a request to delete <paramref name="catalogedEntry"/> from the catalog

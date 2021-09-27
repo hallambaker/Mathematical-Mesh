@@ -78,7 +78,7 @@ namespace Scratchpad {
 
 
 
-            //TestService.Test().MeshDeviceMail();
+            TestService.Test().MeshDeviceMail();
 
 
             //ShellTests.Test().TestProfileConnectPinReused();

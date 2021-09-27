@@ -347,7 +347,7 @@ namespace Goedel.Mesh.Server {
             // we always do these last
             if (outbound != null) {
                 foreach (var envelope in outbound) {
-                    MessagePostOther(accountHandle, accounts, envelope);
+                    MessagePostOther(jpcSession, accountHandle, accounts, envelope);
                     }
                 }
 
@@ -387,7 +387,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="dareMessage">The message.</param>
         /// <returns>Identifier of the message posted.</returns>
         public string MessagePostOther(
-
+            IJpcSession jpcSession,
                 AccountHandleLocked senderAccount,
                 List<string> accounts,
                 DareEnvelope dareMessage) {
@@ -401,7 +401,7 @@ namespace Goedel.Mesh.Server {
                 var recipientService = recipient.GetService();
                 if (recipientService == senderService) {
                     // Is the message for delivery to a local user?
-                    MessagePostLocal(recipient, dareMessage);
+                    MessagePostLocal(jpcSession, recipient, dareMessage);
                     }
                 else {
                     // Post to the outbound spool
@@ -411,9 +411,11 @@ namespace Goedel.Mesh.Server {
             return identifier;
             }
 
-        bool MessagePostLocal(string recipient, DareEnvelope dareMessage) {
+        bool MessagePostLocal(
+            IJpcSession jpcSession,
+            string recipient, DareEnvelope dareMessage) {
 
-            using var recipientAccount = GetAccountHandleLocked(recipient);
+            using var recipientAccount = GetAccountHandleLocked(recipient, jpcSession, AccountPrivilege.Local);
             recipientAccount.PostInbound(dareMessage);
 
             return true;
@@ -444,7 +446,11 @@ namespace Goedel.Mesh.Server {
 
             // Fetch the account 
             //using var accountEntry = GetAccountUnverified(accountAddress);
-            using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
+
+            
+
+            using var accountHandle = GetAccountHandleLocked(accountAddress, 
+                                jpcSession, AccountPrivilege.Operate);
             using var catalogCapability = accountHandle.GetCatalogCapability();
 
             var results = new List<CryptographicResult>();
@@ -642,7 +648,14 @@ namespace Goedel.Mesh.Server {
                 }
             }
 
-        AccountHandleLocked GetAccountHandleLocked(string Account) {
+        AccountHandleLocked GetAccountHandleLocked(string Account,
+                    IJpcSession session,
+                    AccountPrivilege accountPrivilege) {
+
+            session.Future();
+            accountPrivilege.Future();
+            // Bug/Phase2: Need to have a means of revoking devices performing foreign operations.
+
             var accountEntry = GetAccountLocked(Account);
             var accountContext = new AccountContext() {
                 AccountEntry = accountEntry

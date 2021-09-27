@@ -48,6 +48,8 @@ namespace Goedel.Mesh.Server {
         Post        = 0b0001_0000,
         ///<summary>???</summary> 
         Local       = 0b0010_0000,
+        ///<summary>???</summary> 
+        Operate     = 0b0100_0000,
 
         ///<summary>All privileges.</summary> 
         All         = 0xFFF

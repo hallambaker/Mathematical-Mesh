@@ -558,7 +558,7 @@ namespace Goedel.XUnit {
             Exchange(contextAccountAlice, contextAccountBob);
 
             // Generate a recryption group
-            var contextGroup = contextAccountAlice.CreateGroup(AccountGroup);
+            var contextGroup = contextAccountAlice.CreateGroup(AccountGroup, roles:RightsDirect);
 
             var groupList = new List<string>() { AccountGroup };
             // Encrypt to the group

@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using System.Text;
+using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
     // Phase2: Mail Store account access details, passwords, etc.
@@ -90,6 +91,15 @@ namespace Goedel.Mesh {
         public KeyPair OpenpgpSignKeyPair {  get; init; }
         ///<summary>The OpenPGP encryption key.</summary> 
         public KeyPair OpenpgpEncryptKeyPair {  get; init; }
+
+
+        public override KeyData[] GetEscrow() => new KeyData[] {
+                new KeyData(SmimeSignKeyPair, true),
+                new KeyData(SmimeEncryptKeyPair, true),
+                new KeyData(OpenpgpSignKeyPair, true),
+                new KeyData(OpenpgpEncryptKeyPair, true)
+            };
+
         #endregion
         #region // Constructors and factories
         /// <summary>

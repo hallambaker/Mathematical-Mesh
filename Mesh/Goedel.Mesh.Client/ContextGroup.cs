@@ -71,9 +71,22 @@ namespace Goedel.Mesh.Client {
 
 
         ///<inheritdoc/>
-        public override MeshCredentialPrivate GetMeshCredentialPrivate() => new(
-                null, ContextUser?.ConnectionDevice, CatalogedGroup?.ConnectionAddress,
-                ContextUser?.DeviceAuthentication);
+        public override MeshCredentialPrivate GetMeshCredentialPrivate() =>
+            throw new NYI();
+
+        // have to get the credential from the client...
+        public override MeshServiceClient MeshClient {
+            get => meshClient ??
+              GetMeshClient(GetMeshCredentialPrivate()).CacheValue(out meshClient);
+            set => meshClient = value;
+            }
+        MeshServiceClient meshClient;
+
+
+
+        //new(
+        //    null, ContextUser?.ConnectionDevice, CatalogedGroup?.ConnectionAddress,
+        //    ContextUser?.DeviceAuthentication);
 
 
         ///<summary>The directory containing the catalogs related to the account.</summary>
@@ -101,18 +114,51 @@ namespace Goedel.Mesh.Client {
         /// <param name="catalogedGroup">Description of the group to return the
         /// context for.</param>
         public ContextGroup(ContextUser contextAccount, CatalogedGroup catalogedGroup) :
-                    base(contextAccount.MeshHost, null) {
-            CatalogedGroup = catalogedGroup;
-            ContextUser = contextAccount;
+                    this (contextAccount, catalogedGroup, GetActivationAccount())  { 
+            
 
-            // Activate the device to communicate as the account (via threshold)
-            ActivationAccount = CatalogedGroup?.GetActivationAccount(ContextUser);
-
-            // Phase2: This is a hack, we are throwing the encryption key away rather than registering it.
-            var keyCollectionGroup = new KeyCollectionEphemeral();
-            ActivationAccount.Activate(keyCollectionGroup);
             }
 
+
+
+            // Here we have to recover the application group entry
+
+            // create a fake activation account with just
+            // Signing key
+            // encryption key.
+
+
+            //// Activate the device to communicate as the account (via threshold)
+            //ActivationAccount = CatalogedGroup?.GetActivationAccount(ContextUser);
+
+            //// Phase2: This is a hack, we are throwing the encryption key away rather than registering it.
+            //var keyCollectionGroup = new KeyCollectionEphemeral();
+
+
+        /// <summary>
+        /// Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
+        /// </summary>
+        /// <param name="contextAccount">The enclosing account context.</param>
+        /// <param name="catalogedGroup">Description of the group to return the
+        /// context for.</param>
+        public ContextGroup(ContextUser contextAccount,
+                    CatalogedGroup catalogedGroup,
+                    ActivationAccount activationAccount) :
+                    base(contextAccount.MeshHost, null) {
+            ActivationAccount = activationAccount;
+            CatalogedGroup = catalogedGroup;
+            ContextUser = contextAccount;
+            }
+
+
+        static ActivationAccount GetActivationAccount() {
+
+            // this needs fixin'
+            // Should pull the account entry...
+
+
+            throw new NYI();
+            }
 
         /// <summary>
         /// Create a new group.
@@ -120,9 +166,13 @@ namespace Goedel.Mesh.Client {
         /// <param name="contextAccount">The enclosing account context.</param>
         /// <param name="catalogedGroup">Description of the group to create.</param>
         /// <returns>The group context.</returns>
-        public static ContextGroup CreateGroup(ContextUser contextAccount, CatalogedGroup catalogedGroup) {
-            var result = new ContextGroup(contextAccount, catalogedGroup);
-
+        public static ContextGroup CreateGroup(
+                    ContextUser contextAccount, 
+                    CatalogedGroup catalogedGroup,
+                    ActivationAccount activationAccount,
+                    MeshServiceClient client) {
+            var result = new ContextGroup(contextAccount, catalogedGroup, activationAccount);
+            result.MeshClient = client;
             // Prepopulate the catalogs
             Directory.CreateDirectory(result.StoresDirectory);
 
@@ -193,9 +243,12 @@ namespace Goedel.Mesh.Client {
             var catalogMember = transactGroup.GetCatalogMember();
             transactGroup.CatalogUpdate(catalogMember, catalogedMember);
 
-            // commit the transactions
-            Transact(transactGroup);
-            Transact(transactInvitation);
+            //// commit the transactions
+            //Transact(transactGroup);
+            //Transact(transactInvitation);
+
+            transactGroup.Transact();
+            transactInvitation.Transact();
 
             return catalogedMember;
 

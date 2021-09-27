@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 
 using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
@@ -87,6 +88,10 @@ namespace Goedel.Mesh.Client {
         public void ApplicationCreate(
                     CatalogedApplication catalogedApplication) {
 
+            var escrow = catalogedApplication.GetEscrow();
+            catalogedApplication.EnvelopedEscrow = 
+                        ContextUser.EscrowSeed(escrow);
+
             var catalog = GetCatalogApplication();
             CatalogUpdate(catalog, catalogedApplication);
 
@@ -125,6 +130,18 @@ namespace Goedel.Mesh.Client {
         /// <param name="applicationId">The application to remove</param>
         public void ApplicationDelete(
                     string applicationId) => throw new NYI();
+
+
+
+        public void Escrow(
+                    PrivateKeyUDF keyPair,
+                    string right,
+                    string keyIdentifier,
+                    string description) {
+            "Escrow the group seed for recovery".TaskFunctionality(suppress:Assert.HaltPhase1);
+
+            }
+
 
 
         //// Phase2: Add SSH application explicitly

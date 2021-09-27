@@ -26,8 +26,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.KeyFile;
 using Goedel.Utilities;
 
@@ -177,6 +177,14 @@ namespace Goedel.Mesh {
         /// <returns>The activation record.</returns>
         public abstract ApplicationEntry GetActivation(CatalogedDevice catalogedDevice);
 
+
+        /// <summary>
+        /// Construct an activation record for the application.
+        /// </summary>
+        /// <returns>The activation record.</returns>
+        public abstract KeyData[] GetEscrow();
+
+
         /// <summary>
         /// Determine if the device is authorized to use the application.
         /// </summary>
@@ -222,84 +230,15 @@ namespace Goedel.Mesh {
         }
 
 
-
-
-    //public partial class CatalogedApplicationSshHost {
-
-    //    /// <summary>
-    //    /// The primary key used to catalog the entry.
-    //    /// </summary>
-    //    public override string _PrimaryKey => Key;
-
-    //    }
-
-    //public partial class CatalogedApplicationSshClient {
-
-    //    /// <summary>
-    //    /// The primary key used to catalog the entry.
-    //    /// </summary>
-    //    public override string _PrimaryKey => Key;
-
-    //    }
-
-
-    public partial class CatalogedGroup {
-        #region // Properties
-        ///<summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
-        public static string GetGroupID(string groupAddress) => MeshConstants.PrefixCatalogedGroup + groupAddress;
-
-        /// <summary>
-        /// The primary key used to catalog the entry.
-        /// </summary>
-        public override string _PrimaryKey => GetGroupID(Key);
-
-        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileGroup"/>
-        ///to return the <see cref="ProfileUser"/> value.</summary>
-        public ProfileGroup ProfileGroup => profileGroup ??
-                    (EnvelopedProfileGroup.Decode(KeyCollection) as ProfileGroup).CacheValue(out profileGroup);
-        ProfileGroup profileGroup;
-
-
-
-        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedConnectionAddress"/>
-        ///to return the <see cref="connectionAddress"/> value.</summary>
-        public ConnectionAddress ConnectionAddress => connectionAddress ??
-                    (EnvelopedConnectionAddress.Decode(KeyCollection) as ConnectionAddress).CacheValue(out connectionAddress);
-        ConnectionAddress connectionAddress;
-
-
-        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationAccount"/>
-        ///to return the <see cref="ActivationAccount"/> value.</summary>
-        public ActivationAccount GetActivationAccount(IKeyCollection keyCollection) =>
-                    EnvelopedActivationAccount.Decode(keyCollection);
-
-        #endregion
-        #region // Factory methods and constructors
-        /// <summary>
-        /// Default constructor for serialization.
-        /// </summary>     
-        public CatalogedGroup() {
-            }
-
-
-        ///<inheritdoc/>
-        public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
-
-
-        public override void ToBuilder(StringBuilder output) {
-
-            }
-
-        #endregion
-
-        }
-
-
     public partial class CatalogedApplicationNetwork {
 
         ///<inheritdoc/>
+        public override KeyData[] GetEscrow() => new KeyData[0];
+
+        ///<inheritdoc/>
         public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
 
+        ///<inheritdoc/>
         public override void ToBuilder(StringBuilder output) {
 
             }

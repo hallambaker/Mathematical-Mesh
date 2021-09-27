@@ -99,6 +99,10 @@ namespace Goedel.Mesh {
         ///<summary>The account signature key under which outbound messages are signed.</summary>
         public KeyPair AccountSignatureKey { get; private set; }
 
+
+        ///<summary>The account escrow key.</summary>
+        public KeyPair EscrowEncryptionKey { get; private set; }
+
         ///<summary>The service profile</summary> 
         public ProfileService ProfileService;
 
@@ -115,7 +119,7 @@ namespace Goedel.Mesh {
         public Dictionary<string, KeyPair> DictionaryStoreEncryptionKey =
             new();
 
-        PrivateKeyUDF secretSeed;
+        public PrivateKeyUDF secretSeed { get; set; }
 
         ///<summary>The device activation.</summary> 
         public ActivationDevice ActivationDevice;
@@ -147,6 +151,9 @@ namespace Goedel.Mesh {
                     IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed) {
             this.secretSeed = secretSeed;
+
+
+
             ProfileSignatureKey = secretSeed.GenerateContributionKeyPair(
                 MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Profile,
                 keyCollection, KeySecurity.Exportable);
@@ -164,6 +171,11 @@ namespace Goedel.Mesh {
                 keyCollection, KeySecurity.Exportable);
             AccountSignatureKey = secretSeed.GenerateContributionKeyPair(
                 MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Sign,
+                keyCollection, KeySecurity.Exportable);
+
+
+            EscrowEncryptionKey = secretSeed.GenerateContributionKeyPair(
+                MeshKeyType.Complete, MeshActor.Account, MeshKeyOperation.Escrow,
                 keyCollection, KeySecurity.Exportable);
             }
 
@@ -351,39 +363,7 @@ namespace Goedel.Mesh {
 
         #endregion
 
-        /// <summary>
-        /// Create and return a new catalog entry for <paramref name="profileGroup"/> with
-        /// the activation data <paramref name="activationAccount"/>.
-        /// </summary>
-        /// <param name="profileGroup">The group profile.</param>
-        /// <param name="activationAccount">The activation data.</param>
-        /// <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
-        /// <param name="connectionAddress">Connection binding profile to an address.</param>
-        /// <returns>The created group.</returns>
-        public CatalogedGroup MakeCatalogedGroup(
-                        ProfileGroup profileGroup,
-                        ActivationAccount activationAccount,
-                        CryptoKey encryptionKey,
-                        ConnectionAddress connectionAddress
-                        ) {
 
-            profileGroup?.DareEnvelope.AssertNotNull(Internal.Throw);
-
-            // encrypt the activationAccount under the device encryption key.
-            activationAccount.AssertNotNull(Internal.Throw);
-            activationAccount.Envelope(AdministratorSignatureKey, encryptionKey);
-            activationAccount.DareEnvelope.AssertNotNull(Internal.Throw);
-
-            var catalogedGroup = new CatalogedGroup() {
-                Key = profileGroup.AccountAddress,
-                EnvelopedProfileGroup = profileGroup.EnvelopedProfileAccount,
-                EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
-                EnvelopedConnectionAddress = connectionAddress.EnvelopedConnectionAddress
-                };
-
-            return catalogedGroup;
-
-            }
 
         /// <summary>
         /// Create an activation record for the device <paramref name="profileDevice"/> 

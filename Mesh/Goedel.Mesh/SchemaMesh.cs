@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/24/2021 3:34:48 PM
+//  This file was automatically generated at 9/27/2021 12:34:28 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -102,8 +102,10 @@ namespace Goedel.Mesh {
 			{"ActivationApplication", ActivationApplication._Factory},
 			{"ActivationApplicationSsh", ActivationApplicationSsh._Factory},
 			{"ActivationApplicationMail", ActivationApplicationMail._Factory},
+			{"ActivationApplicationGroup", ActivationApplicationGroup._Factory},
 			{"ApplicationEntry", ApplicationEntry._Factory},
 			{"ApplicationEntrySsh", ApplicationEntrySsh._Factory},
+			{"ApplicationEntryGroup", ApplicationEntryGroup._Factory},
 			{"ApplicationEntryMail", ApplicationEntryMail._Factory},
 			{"Contact", Contact._Factory},
 			{"Anchor", Anchor._Factory},
@@ -1005,7 +1007,8 @@ namespace Goedel.Mesh {
 
 		public virtual string						ActivationKey  {get; set;}
         /// <summary>
-        ///Activation of named resources.
+        ///Activation of named account resource activations. These are separate from
+        ///Application activations which are 
         /// </summary>
 
 		public virtual List<ActivationEntry>				Entries  {get; set;}
@@ -3717,6 +3720,168 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
+	public partial class ActivationApplicationGroup : ActivationApplication {
+        /// <summary>
+        ///Key or capability allowing account encryption keys to be created 
+        ///for new members.
+        /// </summary>
+
+		public virtual KeyData						AccountEncryption  {get; set;}
+        /// <summary>
+        ///Key or capability allowing account updates, connection assertions
+        ///etc to be signed.
+        /// </summary>
+
+		public virtual KeyData						AdministratorSignature  {get; set;}
+        /// <summary>
+        ///Key or capability allowing administration of the group.
+        /// </summary>
+
+		public virtual KeyData						AccountAuthentication  {get; set;}
+        /// <summary>
+        ///Sined connection service delegation allowing the device to
+        ///access the account.
+        /// </summary>
+
+		public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ActivationApplicationGroup";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new ActivationApplicationGroup();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((ActivationApplication)this).SerializeX(_writer, false, ref _first);
+			if (AccountEncryption != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("AccountEncryption", 1);
+					AccountEncryption.Serialize (_writer, false);
+				}
+			if (AdministratorSignature != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("AdministratorSignature", 1);
+					AdministratorSignature.Serialize (_writer, false);
+				}
+			if (AccountAuthentication != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("AccountAuthentication", 1);
+					AccountAuthentication.Serialize (_writer, false);
+				}
+			if (EnvelopedConnectionService != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedConnectionService", 1);
+					EnvelopedConnectionService.Serialize (_writer, false);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ActivationApplicationGroup FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as ActivationApplicationGroup;
+				}
+		    var Result = new ActivationApplicationGroup ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "AccountEncryption" : {
+					// An untagged structure
+					AccountEncryption = new KeyData ();
+					AccountEncryption.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "AdministratorSignature" : {
+					// An untagged structure
+					AdministratorSignature = new KeyData ();
+					AdministratorSignature.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "AccountAuthentication" : {
+					// An untagged structure
+					AccountAuthentication = new KeyData ();
+					AccountAuthentication.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "EnvelopedConnectionService" : {
+					// An untagged structure
+					EnvelopedConnectionService = new Enveloped<ConnectionService> ();
+					EnvelopedConnectionService.Deserialize (jsonReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
 	abstract public partial class ApplicationEntry : MeshItem {
         /// <summary>
         /// </summary>
@@ -3906,6 +4071,113 @@ namespace Goedel.Mesh {
 				case "EnvelopedActivation" : {
 					// An untagged structure
 					EnvelopedActivation = new Enveloped<ActivationApplicationSsh> ();
+					EnvelopedActivation.Deserialize (jsonReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ApplicationEntryGroup : ApplicationEntry {
+        /// <summary>
+        /// </summary>
+
+		public virtual Enveloped<ActivationApplicationGroup>						EnvelopedActivation  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ApplicationEntryGroup";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new ApplicationEntryGroup();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((ApplicationEntry)this).SerializeX(_writer, false, ref _first);
+			if (EnvelopedActivation != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedActivation", 1);
+					EnvelopedActivation.Serialize (_writer, false);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ApplicationEntryGroup FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as ApplicationEntryGroup;
+				}
+		    var Result = new ApplicationEntryGroup ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "EnvelopedActivation" : {
+					// An untagged structure
+					EnvelopedActivation = new Enveloped<ActivationApplicationGroup> ();
 					EnvelopedActivation.Deserialize (jsonReader);
  
 					break;
@@ -9270,6 +9542,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual List<DareEnvelope>				EnvelopedCapabilities  {get; set;}
+        /// <summary>
+        ///Escrow entries for the application.
+        /// </summary>
+
+		public virtual List<Enveloped<KeyData>>				EnvelopedEscrow  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -9360,6 +9637,23 @@ namespace Goedel.Mesh {
 				_writer.WriteArrayEnd ();
 				}
 
+			if (EnvelopedEscrow != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedEscrow", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in EnvelopedEscrow) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -9426,6 +9720,20 @@ namespace Goedel.Mesh {
 						_Item.Deserialize (jsonReader);
 						// var _Item = new DareEnvelope (jsonReader);
 						EnvelopedCapabilities.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "EnvelopedEscrow" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					EnvelopedEscrow = new List <Enveloped<KeyData>> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  Enveloped<KeyData> ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Enveloped<KeyData> (jsonReader);
+						EnvelopedEscrow.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;

@@ -203,6 +203,9 @@
         <member name="F:Goedel.Mesh.Server.AccountPrivilege.Local">
             <summary>???</summary> 
         </member>
+        <member name="F:Goedel.Mesh.Server.AccountPrivilege.Operate">
+            <summary>???</summary> 
+        </member>
         <member name="F:Goedel.Mesh.Server.AccountPrivilege.All">
             <summary>All privileges.</summary> 
         </member>
@@ -1214,7 +1217,7 @@
             <param name="local">Entries to be added to the user's local store.</param>
             <param name="accounts">Accounts to which outbound messages are to be sent.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostOther(Goedel.Mesh.Server.AccountHandleLocked,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostOther(Goedel.Protocol.IJpcSession,Goedel.Mesh.Server.AccountHandleLocked,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
             Post message to a remote user.
             </summary>

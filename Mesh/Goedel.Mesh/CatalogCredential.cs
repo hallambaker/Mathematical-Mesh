@@ -22,8 +22,10 @@
 
 
 
+using System.Collections.Generic;
 using System.Text;
 
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
@@ -43,6 +45,7 @@ namespace Goedel.Mesh {
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
+
 
         #endregion
         #region // Factory methods and constructors
@@ -97,6 +100,12 @@ namespace Goedel.Mesh {
 
         #endregion
         #region // Class methods
+
+
+
+        void UpdateLocal(CatalogedEntry catalogedEntry) {
+            }
+
         /// <summary>
         /// Locate credential matching the specified service name, ignoring the protocol value.
         /// </summary>
@@ -110,6 +119,11 @@ namespace Goedel.Mesh {
                 }
             return null;
             }
+
+
+
+
+
         #endregion
         }
 

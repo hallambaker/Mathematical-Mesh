@@ -139,7 +139,8 @@
 		Struct ActivationEntry Entries
 			Multiple
 			Description
-				|Activation of named resources.
+				|Activation of named account resource activations. These are separate from
+				|Application activations which are 
 	
 	Structure ActivationEntry
 		String Resource
@@ -393,6 +394,25 @@
 		Struct KeyData OpenpgpEncrypt
 			Description
 				|The OpenPGP encryption key
+
+	Structure ActivationApplicationGroup
+		Inherits ActivationApplication
+		Struct KeyData AccountEncryption
+			Description
+				|Key or capability allowing account encryption keys to be created 
+				|for new members.
+		Struct KeyData AdministratorSignature
+			Description
+				|Key or capability allowing account updates, connection assertions
+				|etc to be signed.
+		Struct KeyData AccountAuthentication
+			Description
+				|Key or capability allowing administration of the group.
+		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+			Description
+				|Sined connection service delegation allowing the device to
+				|access the account.
+				
 	
 	Section 2 "Application Data"
 		
@@ -400,15 +420,19 @@
 		Abstract
 		String Identifier
 
+
 	Structure ApplicationEntrySsh
 		Inherits ApplicationEntry
 		Struct Enveloped<ActivationApplicationSsh> EnvelopedActivation
 
 
+	Structure ApplicationEntryGroup
+		Inherits ApplicationEntry
+		Struct Enveloped<ActivationApplicationGroup> EnvelopedActivation
+
 	Structure ApplicationEntryMail
 		Inherits ApplicationEntry
 		Struct Enveloped<ActivationApplicationMail> EnvelopedActivation
-
 
 	Section 2 "Data Structures"
 		Description
@@ -898,6 +922,11 @@
 			Multiple
 			Description
 				|Enveloped keys for use with Application
+		Struct Enveloped<KeyData> EnvelopedEscrow
+			Multiple
+			Description
+				|Escrow entries for the application.
+		
 
 
 	Structure CatalogedMember

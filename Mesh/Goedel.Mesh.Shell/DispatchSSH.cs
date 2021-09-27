@@ -47,6 +47,7 @@ namespace Goedel.Mesh.Shell {
 
             var applicationSSH = CatalogedApplicationSsh.Create(id, rights);
 
+
             transaction.ApplicationCreate(applicationSSH);
             //transaction.ApplicationDeviceAdd(applicationSSH);
             var resultTransact = transaction.Transact();

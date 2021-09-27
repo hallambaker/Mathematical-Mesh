@@ -54,6 +54,12 @@ namespace Goedel.Mesh {
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
 
+
+        ///<summary>Dictionary for locating capabilities for use.</summary>
+        public Dictionary<string, CapabilityDecrypt> DictionaryDecryptByKeyId =
+                new();
+
+
         #endregion
         #region // Factory methods and constructors
         /// <summary>
@@ -127,6 +133,20 @@ namespace Goedel.Mesh {
             foreach (var networkAddress in contact.NetworkAddresses) {
                 DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
                     new NetworkProtocolEntry(catalogedContact, networkAddress));
+
+                if (networkAddress.Capabilities != null) {
+                    foreach (var capability in networkAddress.Capabilities) {
+                        capability.KeyCollection = KeyCollection;
+                        switch (capability) {
+                            case CapabilityDecrypt capabilityDecrypt: {
+                                DictionaryDecryptByKeyId.AddSafe(capability.Id, capabilityDecrypt);
+                                break;
+                                }
+                            }
+                        }
+                    }
+
+
                 }
             }
 
@@ -249,6 +269,22 @@ namespace Goedel.Mesh {
 
             return catalogedContact.MeshKeyEncryption;
             }
+
+
+        /// <summary>
+        /// Resolve a decryption capability corresponding to the key <paramref name="keyId"/>.
+        /// </summary>
+        /// <param name="keyId">The identifier of the public key to obtain a decryption 
+        /// capability against.</param>
+        /// <param name="keyDecrypt">The decryption key if found, otherwise null.</param>
+        /// <returns>true if a key is found, otherwise false.</returns>
+        public bool TryFindKeyDecryption(string keyId, out IKeyDecrypt keyDecrypt) {
+            var found = DictionaryDecryptByKeyId.TryGetValue(keyId, out var key);
+            keyDecrypt = key;
+            return found;
+            }
+
+
 
 
         #endregion
