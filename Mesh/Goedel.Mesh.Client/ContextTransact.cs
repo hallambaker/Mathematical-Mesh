@@ -99,7 +99,7 @@ namespace Goedel.Mesh.Client {
         public DareEnvelope Update(TEntry catalogedEntry) {
 
             // ToDo: need to seriously revise this to get the interlock stuff right.
-            var envelope = Catalog.PersistenceStore.PrepareUpdate(out _, catalogedEntry);
+            var envelope = Catalog.PersistenceStore.PrepareUpdate(out _, catalogedEntry, additionalRecipients:catalogedEntry.AdditionalRecipients);
             envelope.JsonObject = catalogedEntry;
             Envelopes.Add(envelope);
 
@@ -245,7 +245,7 @@ namespace Goedel.Mesh.Client {
     /// </summary>
     /// <typeparam name="TAccount">The type of the context on which the transaction is to
     /// be performed.</typeparam>
-    public abstract class Transaction<TAccount> : Disposable, ITransactContextAccount
+    public abstract class Transaction<TAccount> : Disposable
                 where TAccount : ContextAccount {
         #region // Properties
 
@@ -484,6 +484,9 @@ namespace Goedel.Mesh.Client {
             var cataloged = new CatalogedContact(contact);
             CatalogUpdate(catalog, cataloged);
             }
+
+
+
 
 
 

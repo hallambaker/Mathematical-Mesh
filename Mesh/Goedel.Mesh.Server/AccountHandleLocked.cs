@@ -59,7 +59,7 @@ namespace Goedel.Mesh.Server {
     /// Wrapper for the AccountEntry permitting the context in which the account entry
     /// is used to be cached and shared between operations.
     /// </summary>
-    public class AccountContext {
+    public class AccountContext : Disposable {
 
         #region // Public and private properties
 
@@ -72,12 +72,28 @@ namespace Goedel.Mesh.Server {
         ///<summary>The account entry from the host store.</summary> 
         public AccountEntry AccountEntry { get; init; }
 
+        ///<summary>The directory in which all the account data is stored.</summary> 
+        public string Directory => AccountEntry.Directory;
+
+
+        public Enveloped<CatalogedDevice> EnvelopedCatalogedDevice { get; set; }
+
+
+        public AccessCapability AccessCapability { get; set; }
+
+
+        public CatalogedAccess CatalogedAccess { get; set; }
 
         Dictionary <string, Store> DictionaryStores = new ();
 
         #endregion
-        #region // Constructors
+        #region // Dispose
 
+        protected override void Disposing() {
+            }
+
+        #endregion
+        #region // Constructors
         /// <summary>
         /// Return a new instance.
         /// </summary>
@@ -86,8 +102,20 @@ namespace Goedel.Mesh.Server {
         #endregion
         #region // Methods
         Store GetStore() {
+
+
+
             throw new NYI();
             }
+
+        /// <summary>
+        /// Return the publication catalog. This is a catalog that the service MUST have
+        /// read access to. Not clear that the clients need access though.
+        /// </summary>
+        /// <returns></returns>
+        public CatalogAccess GetCatalogCapability() =>
+            new(Directory);
+
 
         /// <summary>
         /// Called just before a caller unlocks the file, Updates the 
@@ -138,6 +166,15 @@ namespace Goedel.Mesh.Server {
 
             var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();
 
+            using var catalogCapability = GetCatalogCapability();
+
+            CatalogedAccess = catalogCapability.Locate(credential.AuthenticationKeyId);
+
+
+            EnvelopedCatalogedDevice =
+                    (CatalogedAccess?.Capability as AccessCapability)?.EnvelopedCatalogedDevice;
+
+
             "Need to validate the client credential to the account here.".TaskFunctionality(Assert.HaltPhase1);
 
 
@@ -182,15 +219,20 @@ namespace Goedel.Mesh.Server {
         public ProfileAccount ProfileAccount => AccountUser.GetProfileAccount();
 
         ///<summary>The directory in which all the account data is stored.</summary> 
-        string Directory => AccountContext.AccountEntry.Directory;
+        string Directory => AccountContext.Directory;
+
+        public Enveloped<CatalogedDevice> EnvelopedCatalogedDevice => 
+            AccountContext.EnvelopedCatalogedDevice;
+
 
         #endregion
         #region // Disposal
 
         ///<inheritdoc/>
         protected override void Disposing() {
-            AccountContext.Close();
+            //AccountContext.Close();
             System.Threading.Monitor.Exit(AccountContext.AccountEntry);
+            AccountContext.Dispose();
             }
 
         #endregion

@@ -234,18 +234,48 @@ namespace Goedel.Mesh.Server {
         /// be appropriately authenticated.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
-        public StatusResponse AccountStatus(IJpcSession jpcSession) {
+        public StatusResponse AccountStatus(
+                        IJpcSession jpcSession, 
+                        byte[] deviceConnection) {
 
             using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
+
+
+            //var access = catalogCapability.Locate (
+
+
             //using var accountHandle = GetAccountVerified(account, jpcSession);
 
             var containerStatus = accountHandle.GetContainerStatuses();
+
+
+
 
             var statusResponse = new StatusResponse() {
                 ContainerStatus = containerStatus,
                 //EnvelopedProfileAccount = accountHandle.EnvelopedProfileAccount,
                 EnvelopedCatalogedDevice = null
                 };
+
+            if (accountHandle.EnvelopedCatalogedDevice != null) {
+                if (deviceConnection == null) {
+                    statusResponse.EnvelopedCatalogedDevice =
+                                accountHandle.EnvelopedCatalogedDevice;
+                    }
+                else if (deviceConnection.IsEqualTo(
+                        accountHandle.EnvelopedCatalogedDevice.GetValidatedDigest())) {
+                    statusResponse.EnvelopedCatalogedDevice =
+                                accountHandle.EnvelopedCatalogedDevice;
+                    }
+                }
+
+
+
+            if (deviceConnection == null) {
+
+                }
+
+
 
             // summarize the status here.
             statusResponse.ToConsole();

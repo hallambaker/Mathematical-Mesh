@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Protocol;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh {
@@ -118,6 +119,7 @@ namespace Goedel.Mesh {
             }
         #endregion
         #region // Class methods
+
         /// <summary>
         /// Resolve a decryption capability corresponding to the key <paramref name="keyId"/>.
         /// </summary>

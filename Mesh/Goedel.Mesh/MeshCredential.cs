@@ -145,7 +145,7 @@ namespace Goedel.Mesh {
             AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
             AuthenticationPublic = authenticationKey;
 
-
+            AuthenticationKeyId = authenticationKey.KeyIdentifier;
 
             }
 

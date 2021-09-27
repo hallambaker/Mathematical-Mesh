@@ -170,7 +170,7 @@ namespace ExampleGenerator {
             var verifyFile = verify.GetResultFileDare();
             (verifyFile.TotalBytes > 0).TestTrue();
             //verifyFile.Envelope.Trailer.TestNotNull();
-            verifyFile.Envelope.PayloadDigest.TestNotNull();
+            verifyFile.Envelope.PayloadDigestComputed.TestNotNull();
 
             Account.ConsoleEncryptFile = new List<ExampleResult>() {
                 dump, encode[0], verify[0]

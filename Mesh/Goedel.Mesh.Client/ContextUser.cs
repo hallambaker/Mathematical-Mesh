@@ -319,12 +319,12 @@ namespace Goedel.Mesh.Client {
 
             //var catalogAccess = transactRequest.GetCatalogAccess();
             //transactRequest.FirstFrame(catalogAccess);
-            var catalogDevice = transactRequest.GetCatalogDevice();
+
             //transactRequest.FirstFrame(catalogDevice);
 
 
 
-            transactRequest.CatalogUpdate(catalogDevice, CatalogedMachine.CatalogedDevice);
+
             foreach (var update in transactRequest.TransactRequest.Updates) {
                 DictionaryStores.TryGetValue(update.Container, out var status).AssertTrue(NYI.Throw);
                 status.Index = update.Envelopes.Count;
@@ -395,6 +395,9 @@ namespace Goedel.Mesh.Client {
         ///<inheritdoc/>
         public override int UpdateStore(ContainerUpdate containerUpdate) {
             var count = base.UpdateStore(containerUpdate);
+
+
+
 
 
             CatalogedDevice catalogedDevice = null;

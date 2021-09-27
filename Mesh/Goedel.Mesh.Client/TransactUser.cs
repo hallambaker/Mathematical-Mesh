@@ -30,7 +30,7 @@ namespace Goedel.Mesh.Client {
     /// <summary>
     /// Transaction on a Mesh user account.Provides access to the account catalogs and spools.
     /// </summary>
-    public partial class TransactUser : Transaction<ContextUser> {
+    public partial class TransactUser : Transaction<ContextUser>, ITransactContextAccount {
 
         #region // Properties
         /// <summary>The account context in which this transaction takes place.</summary>
@@ -78,7 +78,18 @@ namespace Goedel.Mesh.Client {
         public TransactUser(ContextUser contextUser) => ContextUser = contextUser;
 
         #endregion
+
         #region // Methods
+        public void CatalogUpdate(
+                CatalogedAccess catalogedAccess, CatalogedDevice catalogedDevice) {
+            var catalogDevice = GetCatalogDevice();
+            var catalogAccess = GetCatalogAccess();
+
+            CatalogUpdate(catalogAccess, catalogedAccess);
+            CatalogUpdate(catalogDevice, catalogedDevice);
+            }
+
+
 
         /// <summary>
         /// Add the application described in <paramref name="catalogedApplication"/> to the

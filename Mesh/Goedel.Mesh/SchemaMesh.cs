@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/27/2021 12:34:28 PM
+//  This file was automatically generated at 9/27/2021 5:32:00 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -7010,6 +7010,11 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class CatalogedDevice : CatalogedEntry {
         /// <summary>
+        ///Timestamp, allows 
+        /// </summary>
+
+		public virtual DateTime?						Updated  {get; set;}
+        /// <summary>
         ///UDF of the signature key of the device in the Mesh
         /// </summary>
 
@@ -7025,7 +7030,8 @@ namespace Goedel.Mesh {
 
 		public virtual string						SignatureUdf  {get; set;}
         /// <summary>
-        ///The Mesh profile
+        ///The Mesh profile. Why is this still here? This is not 
+        ///specific to the device.
         /// </summary>
 
 		public virtual Enveloped<ProfileAccount>						EnvelopedProfileUser  {get; set;}
@@ -7035,12 +7041,13 @@ namespace Goedel.Mesh {
 
 		public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
         /// <summary>
-        ///Slim version of ConnectionDevice used by the presentation layer
+        ///The assertion binding the account to an address. This should
+        ///be moved out to an account record.
         /// </summary>
 
 		public virtual Enveloped<ConnectionAddress>						EnvelopedConnectionAddress  {get; set;}
         /// <summary>
-        ///The public assertion demonstrating connection of the Device to the Mesh
+        ///Slim version of ConnectionDevice used by the presentation layer
         /// </summary>
 
 		public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
@@ -7108,6 +7115,11 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((CatalogedEntry)this).SerializeX(_writer, false, ref _first);
+			if (Updated != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Updated", 1);
+					_writer.WriteDateTime (Updated);
+				}
 			if (Udf != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Udf", 1);
@@ -7207,6 +7219,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "Updated" : {
+					Updated = jsonReader.ReadDateTime ();
+					break;
+					}
 				case "Udf" : {
 					Udf = jsonReader.ReadString ();
 					break;
@@ -8258,6 +8274,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual List<Publication>				Publications  {get; set;}
+        /// <summary>
+        ///
+        /// </summary>
+
+		public virtual Enveloped<CatalogedDevice>						EnvelopedCatalogedDevice  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -8331,6 +8352,11 @@ namespace Goedel.Mesh {
 				_writer.WriteArrayEnd ();
 				}
 
+			if (EnvelopedCatalogedDevice != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedCatalogedDevice", 1);
+					EnvelopedCatalogedDevice.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -8387,6 +8413,13 @@ namespace Goedel.Mesh {
 						Publications.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
+					break;
+					}
+				case "EnvelopedCatalogedDevice" : {
+					// An untagged structure
+					EnvelopedCatalogedDevice = new Enveloped<CatalogedDevice> ();
+					EnvelopedCatalogedDevice.Deserialize (jsonReader);
+ 
 					break;
 					}
 				default : {

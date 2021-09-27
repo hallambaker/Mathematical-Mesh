@@ -679,6 +679,9 @@
 		Inherits CatalogedEntry
 		Description
 			|Public device entry, indexed under the device ID Hello
+		DateTime Updated
+			Description
+				|Timestamp, allows 
 		String Udf
 			Description
 				|UDF of the signature key of the device in the Mesh
@@ -809,7 +812,9 @@
 			Multiple
 			Description
 				|Published data that may be claimed by the authorized party
-
+		Struct Enveloped<CatalogedDevice> EnvelopedCatalogedDevice
+			Description
+				|
 			
 	Structure Publication
 		Description

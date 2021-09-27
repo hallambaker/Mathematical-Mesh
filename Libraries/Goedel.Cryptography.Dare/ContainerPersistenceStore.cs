@@ -351,9 +351,12 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The prepared envelope.</returns>
         public DareEnvelope Prepare(
                 ContentMeta contentInfo,
-                JsonObject jsonObject) {
+                JsonObject jsonObject,
+                    List<KeyPair> additionalRecipients = null) {
 
-            var contextWrite = new SequenceWriterDeferred(Container);
+            var contextWrite = new SequenceWriterDeferred(Container) {
+                AdditionalRecipients = additionalRecipients
+                };
 
             var data = jsonObject?.GetBytes();
             var envelope = Sequence.Defer(contextWrite, contentInfo, data);
@@ -418,7 +421,8 @@ namespace Goedel.Cryptography.Dare {
         public virtual DareEnvelope PrepareUpdate(
                     out StoreEntry previous,
                     JsonObject jsonObject,
-                    bool create = true, CryptoKey encryptionKey = null) {
+                    bool create = true, CryptoKey encryptionKey = null,
+                    List<KeyPair> additionalRecipients=null) {
 
             encryptionKey.Future();
 
@@ -438,7 +442,7 @@ namespace Goedel.Cryptography.Dare {
                 contentInfo.First = (int)First?.FrameCount;
                 contentInfo.Previous = (int)previous?.FrameCount;
                 }
-            return Prepare(contentInfo, jsonObject);
+            return Prepare(contentInfo, jsonObject, additionalRecipients);
             }
 
         /// <summary>

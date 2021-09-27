@@ -349,6 +349,9 @@ namespace Goedel.Mesh.Client {
 
             var download = MeshClient.Download(downloadRequest);
 
+            // check here to see if we have an update to the Cataloged Device
+
+
             foreach (var update in download.Updates) {
                 count += UpdateStore(update);
                 }

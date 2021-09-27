@@ -77,8 +77,12 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>Convenience accessor for the envelope id.</summary>
         public string EnvelopeId => Header.EnvelopeId;
 
+        ///<summary>The declared payload digest value</summary> 
+        public byte[] PayloadDigest => Header?.PayloadDigest ?? Trailer?.PayloadDigest;
+
+
         ///<summary>The payload digest value calculated during decoding.</summary> 
-        public byte[] PayloadDigest;
+        public byte[] PayloadDigestComputed;
 
         ///<summary>The payload MAC value calculated during decoding.</summary> 
         public byte[] PayloadMac;
@@ -381,14 +385,36 @@ namespace Goedel.Cryptography.Dare {
             var provider = digestAlg.CreateDigest();
             var result = provider.ComputeHash(Body);
 
-            if (Trailer.PayloadDigest != null) {
-                if (!Trailer.PayloadDigest.IsEqualTo(result)) {
+            if (PayloadDigest != null) {
+                if (!PayloadDigest.IsEqualTo(result)) {
                     return null;
                     }
                 }
 
             return result;
             }
+
+        /// <summary>
+        /// Compute the digest of the payload and if a digest value is specified in the header
+        /// or trailer, verify that it matches.
+        /// </summary>
+        /// <returns>If a payload digest field is specified in the trailer that does not
+        /// match the digest of the payload, returns the payload. Otherwise returns the
+        /// digest of the payload.</returns>
+        public byte[] GetUnvalidatedDigest() {
+            if (PayloadDigest != null) {
+                return PayloadDigest;
+                }
+
+            var digestAlg = (Header.DigestAlgorithm ?? "S512").FromJoseIDDigest();
+            var provider = digestAlg.CreateDigest();
+            var result = provider.ComputeHash(Body);
+
+            return result;
+            }
+
+
+
 
         /// <summary>
         /// Find a signature whose key identifier matches <paramref name="key"/>
@@ -463,7 +489,7 @@ namespace Goedel.Cryptography.Dare {
                     keyCollection: keyCollection);
                 reader.CopyTo(buffer);
                 decoder.Close();
-                message.PayloadDigest = decoder.DigestValue;
+                message.PayloadDigestComputed = decoder.DigestValue;
                 message.PayloadMac = decoder.MacValue;
                 message.Body = buffer.ToArray();
                 }
@@ -700,7 +726,7 @@ namespace Goedel.Cryptography.Dare {
 
             Reader.CopyTo(Stream.Null);
             decoder.Close();
-            message.PayloadDigest = decoder.DigestValue;
+            message.PayloadDigestComputed = decoder.DigestValue;
             message.PayloadMac = decoder.MacValue;
             message.PayloadLength = decoder.BytesRead;
 

@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using System.Collections.Generic;
+
 using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
@@ -100,6 +102,8 @@ namespace Goedel.Cryptography.Dare {
 
         long frameCount;
 
+
+        public List<KeyPair> AdditionalRecipients { get; set; }
 
         ///<summary>The apex digest value of the container as written to the file.</summary>
         public byte[] Digest => DareTrailer.TreeDigest ?? DareTrailer.ChainDigest;

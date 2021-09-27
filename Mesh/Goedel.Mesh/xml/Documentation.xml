@@ -1499,6 +1499,11 @@
             Published data that may be claimed by the authorized party
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.AccessCapability.EnvelopedCatalogedDevice">
+             <summary>
+            
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.AccessCapability._Tag">
             <summary>
             Tag identifying this class
@@ -3716,6 +3721,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedDevice.Updated">
+             <summary>
+            Timestamp, allows 
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.Udf">
              <summary>
             UDF of the signature key of the device in the Mesh
@@ -3733,7 +3743,8 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileUser">
              <summary>
-            The Mesh profile
+            The Mesh profile. Why is this still here? This is not 
+            specific to the device.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileDevice">
@@ -3743,12 +3754,13 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedConnectionAddress">
              <summary>
-            Slim version of ConnectionDevice used by the presentation layer
+            The assertion binding the account to an address. This should
+            be moved out to an account record.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedConnectionService">
              <summary>
-            The public assertion demonstrating connection of the Device to the Mesh
+            Slim version of ConnectionDevice used by the presentation layer
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedConnectionDevice">

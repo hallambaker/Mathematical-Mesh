@@ -224,10 +224,20 @@
         <member name="P:Goedel.Mesh.Server.AccountContext.AccountEntry">
             <summary>The account entry from the host store.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.Directory">
+            <summary>The directory in which all the account data is stored.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Server.AccountContext.#ctor">
             <summary>
             Return a new instance.
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountContext.GetCatalogCapability">
+            <summary>
+            Return the publication catalog. This is a catalog that the service MUST have
+            read access to. Not clear that the clients need access though.
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountContext.Close">
             <summary>
@@ -1190,7 +1200,7 @@
             <param name="jpcSession">The session connection data.</param>
             <param name="completeRequest">The completion request.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession,System.Byte[])">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.

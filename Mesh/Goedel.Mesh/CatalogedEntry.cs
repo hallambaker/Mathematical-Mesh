@@ -22,9 +22,11 @@
 
 
 
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+using Goedel.Cryptography;
 using Goedel.Protocol;
 
 namespace Goedel.Mesh {
@@ -89,6 +91,9 @@ namespace Goedel.Mesh {
 
 
     public partial class CatalogedEntry {
+
+        public List<KeyPair> AdditionalRecipients;
+
 
         /// <summary>
         /// Describe the entry, appending the output to <paramref name="builder"/>.
