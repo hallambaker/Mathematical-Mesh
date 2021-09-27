@@ -74,11 +74,13 @@ namespace Scratchpad {
 
             //TestService.Test().MeshEscrowRecover();
 
-            TestService.Test().MeshCatalogGroup();
+            //TestService.Test().MeshCatalogGroup();
 
+            TestService.Test().MeshDeviceConnectPIN();
+            //TestService.Test().MeshDeviceConnectDynamicQR();
+            //TestService.Test().MeshDeviceConnectStaticQR();
 
-
-            TestService.Test().MeshDeviceMail();
+            //TestService.Test().MeshDeviceMail();
 
 
             //ShellTests.Test().TestProfileConnectPinReused();

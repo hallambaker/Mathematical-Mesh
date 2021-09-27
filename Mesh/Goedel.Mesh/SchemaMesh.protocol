@@ -690,17 +690,19 @@
 				|UDF of the account online signature key
 		Struct Enveloped<ProfileAccount> EnvelopedProfileUser
 			Description
-				|The Mesh profile
+				|The Mesh profile. Why is this still here? This is not 
+				|specific to the device.
 		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile
 		
 		Struct Enveloped<ConnectionAddress> EnvelopedConnectionAddress
 			Description
-				|Slim version of ConnectionDevice used by the presentation layer
+				|The assertion binding the account to an address. This should
+				|be moved out to an account record.
 		Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
-				|The public assertion demonstrating connection of the Device to the Mesh
+				|Slim version of ConnectionDevice used by the presentation layer
 		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
