@@ -175,7 +175,7 @@ namespace Goedel.Mesh.Shell {
             var contextAccount = GetContextUser(options);
             var rights = GetRights(options);
 
-            var catalogedDevice = contextAccount.Connect(options.Uri.Value, rights);
+            var catalogedDevice = contextAccount.ConnectStaticUri(options.Uri.Value, rights);
 
 
             var result = new ResultAccountConnect() {

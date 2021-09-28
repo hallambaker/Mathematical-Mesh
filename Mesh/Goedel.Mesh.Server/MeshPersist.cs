@@ -258,21 +258,18 @@ namespace Goedel.Mesh.Server {
                 };
 
             if (accountHandle.EnvelopedCatalogedDevice != null) {
-                if (deviceConnection == null) {
-                    statusResponse.EnvelopedCatalogedDevice =
-                                accountHandle.EnvelopedCatalogedDevice;
-                    }
-                else if (deviceConnection.IsEqualTo(
-                        accountHandle.EnvelopedCatalogedDevice.GetValidatedDigest())) {
-                    statusResponse.EnvelopedCatalogedDevice =
-                                accountHandle.EnvelopedCatalogedDevice;
-                    }
-                }
+                statusResponse.EnvelopedCatalogedDevice =
+                    accountHandle.EnvelopedCatalogedDevice; // Hack: should allow this to be cached.
 
-
-
-            if (deviceConnection == null) {
-
+                //if (deviceConnection == null) {
+                //    statusResponse.EnvelopedCatalogedDevice =
+                //                accountHandle.EnvelopedCatalogedDevice;
+                //    }
+                //else if (deviceConnection.IsEqualTo(
+                //        accountHandle.EnvelopedCatalogedDevice.GetUnvalidatedDigest())) {
+                //    statusResponse.EnvelopedCatalogedDevice =
+                //                accountHandle.EnvelopedCatalogedDevice;
+                //    }
                 }
 
 

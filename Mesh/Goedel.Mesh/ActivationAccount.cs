@@ -54,7 +54,11 @@ namespace Goedel.Mesh {
                 TEntry catalogedEntry) where TEntry : CatalogedEntry;
 
 
-        void CatalogUpdate(CatalogedAccess catalogedAccess, CatalogedDevice catalogedDevice);
+        void CatalogUpdate(CatalogedDevice catalogedDevice, KeyPair encryptionKey);
+
+
+
+            //(CatalogedAccess catalogedAccess, CatalogedDevice catalogedDevice);
 
 
 
@@ -338,6 +342,12 @@ namespace Goedel.Mesh {
             connectionAccount.DareEnvelope.Strip();
 
 
+            var accessCapability = new AccessCapability() {
+                Id = connectionService.AuthenticationPublic.KeyIdentifier
+                //EnvelopedCatalogedDevice = catalogEntryDevice.EnvelopedCatalogedDevice
+                };
+          
+
 
             var catalogEntryDevice = new CatalogedDevice() {
                 //Udf = activationAccount.ProfileSignature.Udf,
@@ -350,35 +360,37 @@ namespace Goedel.Mesh {
                 EnvelopedActivationAccount = activationAccount?.EnvelopedActivationAccount,
                 ApplicationEntries = applicationEntries,
                 DeviceUdf = profileDevice.Udf,
+                AccessCapability = accessCapability
+
                 //AdditionalRecipients = new() { activationDevice.DeviceEncryption}
                 };
 
 
-            var envelopedCatalogDevice = catalogEntryDevice.Envelope(
-                encryptionKey: activationDevice.DeviceEncryption);
+            //var envelopedCatalogDevice = catalogEntryDevice.Envelope(
+            //    encryptionKey: activationDevice.DeviceEncryption);
 
-            var accessCapability = new CatalogedAccess() {
-                Capability = new AccessCapability() {
-                    Id = connectionService.AuthenticationPublic.KeyIdentifier,
-                    EnvelopedCatalogedDevice = catalogEntryDevice.EnvelopedCatalogedDevice
-                    }
-                };
+            //var accessCapability = new CatalogedAccess() {
+            //    Capability = new AccessCapability() {
+            //        Id = connectionService.AuthenticationPublic.KeyIdentifier,
+            //        EnvelopedCatalogedDevice = catalogEntryDevice.EnvelopedCatalogedDevice
+            //        }
+            //    };
 
 
             // This needs to be moved out of here so that the application entries can be
             // properly updated.
 
 
-            if (transactContextAccount != null) {
+            //if (transactContextAccount != null) {
 
 
-                transactContextAccount.CatalogUpdate(accessCapability, catalogEntryDevice);
+            //    transactContextAccount.CatalogUpdate(accessCapability, catalogEntryDevice);
 
-                //var catalogAccess = transactContextAccount.GetCatalogAccess();
-                //transactContextAccount.CatalogUpdate(catalogAccess, accessCapability);
-                //var catalogDevice = transactContextAccount.GetCatalogDevice();
-                //transactContextAccount.CatalogUpdate(catalogDevice, catalogEntryDevice);
-                }
+            //    //var catalogAccess = transactContextAccount.GetCatalogAccess();
+            //    //transactContextAccount.CatalogUpdate(catalogAccess, accessCapability);
+            //    //var catalogDevice = transactContextAccount.GetCatalogDevice();
+            //    //transactContextAccount.CatalogUpdate(catalogDevice, catalogEntryDevice);
+            //    }
 
 
 

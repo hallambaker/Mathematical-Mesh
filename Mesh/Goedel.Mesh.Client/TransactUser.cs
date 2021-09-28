@@ -80,8 +80,16 @@ namespace Goedel.Mesh.Client {
         #endregion
 
         #region // Methods
-        public void CatalogUpdate(
-                CatalogedAccess catalogedAccess, CatalogedDevice catalogedDevice) {
+        public void CatalogUpdate(CatalogedDevice catalogedDevice, KeyPair encryptionKey) {
+            var accessCapability = catalogedDevice.AccessCapability;
+
+            catalogedDevice.Envelope(encryptionKey: encryptionKey);
+            accessCapability.EnvelopedCatalogedDevice = catalogedDevice.EnvelopedCatalogedDevice;
+
+            var catalogedAccess = new CatalogedAccess() {
+                Capability = accessCapability
+                };
+
             var catalogDevice = GetCatalogDevice();
             var catalogAccess = GetCatalogAccess();
 
@@ -121,7 +129,12 @@ namespace Goedel.Mesh.Client {
                     }
                 }
             foreach (var device in updated) {
-                CatalogUpdate(catalogDevice, device);
+
+                var connectionDevice = device.EnvelopedConnectionDevice.Decode();
+                var encryptionKey = connectionDevice.Encryption.GetKeyPair();
+                CatalogUpdate(device, encryptionKey);
+
+                //CatalogUpdate(catalogDevice, device);
                 }
 
             }

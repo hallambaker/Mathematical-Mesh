@@ -172,6 +172,9 @@ namespace Goedel.Mesh {
                     EnvelopedConnectionAddress.Decode(KeyCollection);
 
 
+        public AccessCapability AccessCapability { get; set; }
+
+
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationDevice"/>
         ///to return the <see cref="ActivationDevice"/> value.</summary>
         public ActivationDevice GetActivationDevice(IKeyCollection keyCollection) =>

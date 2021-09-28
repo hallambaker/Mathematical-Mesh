@@ -311,30 +311,22 @@ namespace Goedel.Mesh.Client {
 
 
         public void MakeAdministrator(List<string> rights) {
-
-            var transactRequest = TransactBegin();
+            var transact = TransactBegin();
 
             CatalogedMachine.CatalogedDevice = ActivationAccount.MakeCatalogedDevice(
-                    ProfileDevice, ProfileUser, rights, transactRequest, ActivationDevice);
+                    ProfileDevice, ProfileUser, rights, transact, ActivationDevice);
+          
+            // When creating a device for the first time, the update is always encrypted
+            // under the device key.
+            transact.CatalogUpdate(CatalogedMachine.CatalogedDevice,
+                        ProfileDevice.KeyEncrypt);
 
-            //var catalogAccess = transactRequest.GetCatalogAccess();
-            //transactRequest.FirstFrame(catalogAccess);
-
-            //transactRequest.FirstFrame(catalogDevice);
-
-
-
-
-            foreach (var update in transactRequest.TransactRequest.Updates) {
+            foreach (var update in transact.TransactRequest.Updates) {
                 DictionaryStores.TryGetValue(update.Container, out var status).AssertTrue(NYI.Throw);
                 status.Index = update.Envelopes.Count;
                 }
 
-            transactRequest.Transact();
-
-
-
-
+            transact.Transact();
             }
 
 
@@ -1022,7 +1014,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="uri">The connection URI</param>
         /// <param name="rights">The list of rights being requested by the device.</param>
         /// <returns>The </returns>
-        public CatalogedDevice Connect(string uri, List<string> rights = null) {
+        public CatalogedDevice ConnectStaticUri(string uri, List<string> rights = null) {
 
             var envelopedProfileDevice = ClaimPublication(uri, out var responseId);
 
@@ -1036,6 +1028,8 @@ namespace Goedel.Mesh.Client {
             var cataloguedDevice = ActivationAccount.MakeCatalogedDevice(profileDevice, 
                     ProfileUser, transactContextAccount: transact, roles: rights);
 
+
+
             //Console.WriteLine($"Accept connection ID is {responseId}");
             var respondConnection = new RespondConnection() {
                 MessageId = responseId,
@@ -1047,8 +1041,15 @@ namespace Goedel.Mesh.Client {
 
             transact.LocalMessage(respondConnection, deviceEncrypt);
 
-            var catalogDevice = transact.GetCatalogDevice();
-            transact.CatalogUpdate(catalogDevice, cataloguedDevice);
+            // When creating a device for the first time, the update is always encrypted
+            // under the device key.
+            // Phase2: Consider introducing an additional blinding key
+            transact.CatalogUpdate(CatalogedMachine.CatalogedDevice,
+                        profileDevice.KeyEncrypt);
+
+
+            //var catalogDevice = transact.GetCatalogDevice();
+            //transact.CatalogUpdate(catalogDevice, cataloguedDevice);
             Transact(transact);
 
             //SendMessage(respondConnection);
@@ -1306,14 +1307,23 @@ namespace Goedel.Mesh.Client {
             return new ResultAcknowledgeConnection(request, messagePin, responseTransaction);
             }
 
-        private void AddDevice(AcknowledgeConnection request, List<string> rights, TransactUser transactRequest, RespondConnection respondConnection) {
+        private void AddDevice(AcknowledgeConnection request, List<string> rights, TransactUser transact, RespondConnection respondConnection) {
+            
             var device = ActivationAccount.MakeCatalogedDevice(
-                    request.MessageConnectionRequest.ProfileDevice, ProfileUser, roles: rights, transactContextAccount: transactRequest);
-            device.ApplicationEntries = MakeApplicationEntries(rights, transactRequest, device);
+                    request.MessageConnectionRequest.ProfileDevice, ProfileUser, roles: rights, transactContextAccount: transact);
+            
+            device.ApplicationEntries = MakeApplicationEntries(rights, transact, device);
             respondConnection.CatalogedDevice = device;
             respondConnection.Result = MeshConstants.TransactionResultAccept;
-            var catalogDevice = transactRequest.GetCatalogDevice();
-            transactRequest.CatalogUpdate(catalogDevice, device);
+
+
+            // When creating a device for the first time, the update is always encrypted
+            // under the device key.
+            transact.CatalogUpdate(CatalogedMachine.CatalogedDevice,
+                        ProfileDevice.KeyEncrypt);
+
+            //var catalogDevice = transact.GetCatalogDevice();
+            //transact.CatalogUpdate(catalogDevice, device);
 
             //var catalogedAccessors = device.EnvelopedActivationAccount?.EnvelopedObject?.CatalogedAccessors;
             //if (catalogedAccessors != null) {

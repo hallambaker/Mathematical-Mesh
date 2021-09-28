@@ -1318,7 +1318,7 @@
             <param name="bitsPin">The size of secret to generate in bits/</param>
             <returns>Response from the server.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.Connect(System.String,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ConnectStaticUri(System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Attempt device connection by means of the static URI <paramref name="uri"/>.
             </summary>
