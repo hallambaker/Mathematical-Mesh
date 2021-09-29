@@ -210,7 +210,7 @@ namespace Goedel.Mesh.Client {
             keyData.Envelope(encryptionKey: userEncryptionKey);
             var capabilityMember = new CapabilityDecryptPartial() {
                 Id = ProfileGroup.AccountEncryption.Udf,
-                EnvelopedKeyShare = keyData.EnvelopedKeyData
+                EnvelopedKeyShare = keyData.GetEnvelopedKeyData()
                 };
 
             // Create and send the invitation

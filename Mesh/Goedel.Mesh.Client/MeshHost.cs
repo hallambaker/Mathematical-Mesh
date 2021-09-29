@@ -328,7 +328,7 @@ namespace Goedel.Mesh.Client {
                 Id = profileDevice.Udf,
                 Local = localName,
                 CatalogedDevice = catalogedDevice,
-                EnvelopedProfileAccount = profileUser.EnvelopedProfileAccount
+                EnvelopedProfileAccount = profileUser.GetEnvelopedProfileAccount()
                 };
 
             //Persist the results.

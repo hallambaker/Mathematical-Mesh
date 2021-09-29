@@ -72,6 +72,19 @@ namespace Scratchpad {
 
             // Temporary fix : Also encrypt the Access catalog so the user devices can read it.
 
+
+            //TestService.Test().MeshDeviceMail();
+
+
+            TestService.Test().MeshDeviceConnectStaticQR();
+
+            TestService.Test().MeshDeviceDirectKey();
+
+            TestService.Test().MeshDeviceThresholdKey();
+
+            //Debug();
+
+
             //TestService.Test().MeshEscrowRecover();
 
             //TestService.Test().MeshCatalogGroup();
@@ -80,7 +93,7 @@ namespace Scratchpad {
             //TestService.Test().MeshDeviceConnectDynamicQR();
             //TestService.Test().MeshDeviceConnectStaticQR();
 
-            TestService.Test().MeshDeviceMail();
+            //TestService.Test().MeshDeviceMail();
 
 
             //ShellTests.Test().TestProfileConnectPinReused();
@@ -91,11 +104,6 @@ namespace Scratchpad {
             //TestService.Test().MeshDeviceSsh();
 
 
-            TestService.Test().MeshDeviceDirectKey();
-            TestService.Test().MeshDeviceConnectStaticQR();
-            TestService.Test().MeshDeviceThresholdKey();
-
-            //Debug();
             //TestService.Test().MeshDeviceDeveloper();
 
 

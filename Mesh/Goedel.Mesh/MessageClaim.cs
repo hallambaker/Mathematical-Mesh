@@ -30,10 +30,7 @@ namespace Goedel.Mesh {
     public partial class MessageClaim {
 
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<MessageClaim> EnvelopedMessageClaim =>
-            envelopedProfileUser ?? new Enveloped<MessageClaim>(DareEnvelope).
-                    CacheValue(out envelopedProfileUser);
-        Enveloped<MessageClaim> envelopedProfileUser;
+        public Enveloped<MessageClaim> GetEnvelopedMessageClaim() => new(DareEnvelope);
 
 
         ///<summary>Base constructor used for deserialization.</summary>

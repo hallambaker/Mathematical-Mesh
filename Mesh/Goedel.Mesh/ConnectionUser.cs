@@ -33,10 +33,8 @@ using Goedel.Utilities;
 namespace Goedel.Mesh {
     public partial class ConnectionAddress {
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ConnectionAddress> EnvelopedConnectionAddress =>
-            envelopedConnectionDevice ?? new Enveloped<ConnectionAddress>(DareEnvelope).
-                    CacheValue(out envelopedConnectionDevice);
-        Enveloped<ConnectionAddress> envelopedConnectionDevice;
+        public Enveloped<ConnectionAddress> GetEnvelopedConnectionAddress() =>
+            new(DareEnvelope);
 
         /// <summary>
         /// Minimize the connection data to remove unnecessary data.
@@ -51,10 +49,8 @@ namespace Goedel.Mesh {
 
     public partial class ConnectionDevice {
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ConnectionDevice> EnvelopedConnectionDevice =>
-    envelopedConnectionDevice ?? new Enveloped<ConnectionDevice>(DareEnvelope).
-            CacheValue(out envelopedConnectionDevice);
-        Enveloped<ConnectionDevice> envelopedConnectionDevice;
+        public Enveloped<ConnectionDevice> GetEnvelopedConnectionDevice() =>
+            new(DareEnvelope);
 
         }
 
@@ -62,10 +58,8 @@ namespace Goedel.Mesh {
     public partial class ConnectionService {
 
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ConnectionService> EnvelopedConnectionService =>
-            envelopedConnectionService ?? new Enveloped<ConnectionService>(DareEnvelope).
-                    CacheValue(out envelopedConnectionService);
-        Enveloped<ConnectionService> envelopedConnectionService;
+        public Enveloped<ConnectionService> GetEnvelopedConnectionService() =>
+            new(DareEnvelope);
 
 
         ///<inheritdoc cref="ICredential"/>

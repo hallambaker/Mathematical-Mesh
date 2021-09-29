@@ -175,7 +175,7 @@
         <member name="P:Goedel.Mesh.ActivationAccount.ServiceEncryptionKey">
             <summary>The account signature key under which outbound messages are signed.</summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationAccount.EnvelopedActivationAccount">
+        <member name="M:Goedel.Mesh.ActivationAccount.GetEnvelopedActivationAccount">
             <summary>The enveloped object</summary> 
         </member>
         <member name="F:Goedel.Mesh.ActivationAccount.DictionaryStoreEncryptionKey">
@@ -374,7 +374,7 @@
              Mesh host
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationHost.EnvelopedActivationHost">
+        <member name="M:Goedel.Mesh.ActivationHost.GetEnvelopedActivationHost">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ActivationHost.MeshActor">
@@ -457,7 +457,7 @@
              Mesh account.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationDevice.EnvelopedActivationDevice">
+        <member name="M:Goedel.Mesh.ActivationDevice.GetEnvelopedActivationDevice">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ActivationDevice.Connection">
@@ -644,7 +644,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationGroup.EnvelopedActivationApplicationGroup">
+        <member name="M:Goedel.Mesh.ActivationApplicationGroup.GetEnvelopedActivationApplicationGroup">
             <summary>The enveloped object</summary> 
         </member>
         <member name="P:Goedel.Mesh.ActivationApplicationGroup.AccountEncryption">
@@ -891,7 +891,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationMail.EnvelopedActivationApplicationMail">
+        <member name="M:Goedel.Mesh.ActivationApplicationMail.GetEnvelopedActivationApplicationMail">
             <summary>The enveloped object</summary> 
         </member>
         <member name="P:Goedel.Mesh.ActivationApplicationMail.SmimeSign">
@@ -1152,7 +1152,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationSsh.EnvelopedActivationApplicationSsh">
+        <member name="M:Goedel.Mesh.ActivationApplicationSsh.GetEnvelopedActivationApplicationSsh">
             <summary>The enveloped object</summary> 
         </member>
         <member name="P:Goedel.Mesh.ActivationApplicationSsh.ClientKey">
@@ -2973,7 +2973,7 @@
             The primary key used to catalog the entry. This is the UDF of the authentication key.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedContact.EnvelopedCatalogedContact">
+        <member name="M:Goedel.Mesh.CatalogedContact.GetEnvelopedCatalogedContact">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="M:Goedel.Mesh.CatalogedContact.#ctor">
@@ -4532,7 +4532,7 @@
              Stripped down connection assertion
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionAddress.EnvelopedConnectionAddress">
+        <member name="M:Goedel.Mesh.ConnectionAddress.GetEnvelopedConnectionAddress">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="M:Goedel.Mesh.ConnectionAddress.Strip">
@@ -4602,7 +4602,7 @@
              Asserts that a device is connected to an account profile
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionDevice.EnvelopedConnectionDevice">
+        <member name="M:Goedel.Mesh.ConnectionDevice.GetEnvelopedConnectionDevice">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ConnectionDevice.Roles">
@@ -4676,7 +4676,7 @@
              Asserts that a device is connected to an account profile
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionService.EnvelopedConnectionService">
+        <member name="M:Goedel.Mesh.ConnectionService.GetEnvelopedConnectionService">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ConnectionService.AuthenticationPublic">
@@ -7328,7 +7328,7 @@
              MessageConnectionRequestClient
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.AcknowledgeConnection.EnvelopedAcknowledgeConnection">
+        <member name="M:Goedel.Mesh.AcknowledgeConnection.GetEnvelopedAcknowledgeConnection">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.AcknowledgeConnection.MessageConnectionRequest">
@@ -7562,7 +7562,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.GroupInvitation.EnvelopedGroupInvitation">
+        <member name="M:Goedel.Mesh.GroupInvitation.GetEnvelopedGroupInvitation">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.GroupInvitation.Text">
@@ -7629,7 +7629,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.RequestConfirmation.EnvelopedRequestConfirmation">
+        <member name="M:Goedel.Mesh.RequestConfirmation.GetEnvelopedRequestConfirmation">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.RequestConfirmation.Text">
@@ -7691,7 +7691,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ResponseConfirmation.EnvelopedResponseConfirmation">
+        <member name="M:Goedel.Mesh.ResponseConfirmation.GetEnvelopedResponseConfirmation">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ResponseConfirmation.Request">
@@ -7757,7 +7757,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.RequestTask.EnvelopedRequestTask">
+        <member name="M:Goedel.Mesh.RequestTask.GetEnvelopedRequestTask">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.RequestTask._Tag">
@@ -7817,7 +7817,7 @@
              For future use, allows logging of operations and results	
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ProcessResult.EnvelopedProcessResult">
+        <member name="M:Goedel.Mesh.ProcessResult.GetEnvelopedProcessResult">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ProcessResult.RequestMessage">
@@ -7963,7 +7963,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.MessageClaim.EnvelopedMessageClaim">
+        <member name="M:Goedel.Mesh.MessageClaim.GetEnvelopedMessageClaim">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="M:Goedel.Mesh.MessageClaim.#ctor">
@@ -8352,7 +8352,7 @@
         <member name="P:Goedel.Mesh.ProfileAccount.MeshActor">
             <summary>The actor type</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ProfileAccount.EnvelopedProfileAccount">
+        <member name="M:Goedel.Mesh.ProfileAccount.GetEnvelopedProfileAccount">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount.AccountAuthenticationKey">
@@ -8491,7 +8491,7 @@
         <member name="P:Goedel.Mesh.ProfileDevice.MeshActor">
             <summary>The actor type</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ProfileDevice.EnvelopedProfileDevice">
+        <member name="M:Goedel.Mesh.ProfileDevice.GetEnvelopedProfileDevice">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="M:Goedel.Mesh.ProfileDevice.#ctor">
@@ -8703,7 +8703,7 @@
         <member name="P:Goedel.Mesh.ProfileHost.MeshActor">
             <summary>The actor type</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ProfileHost.EnvelopedProfileHost">
+        <member name="M:Goedel.Mesh.ProfileHost.GetEnvelopedProfileHost">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="M:Goedel.Mesh.ProfileHost.#ctor">
@@ -8797,7 +8797,7 @@
         <member name="P:Goedel.Mesh.ProfileService.MeshActor">
             <summary>The actor type</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ProfileService.EnvelopedProfileService">
+        <member name="M:Goedel.Mesh.ProfileService.GetEnvelopedProfileService">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ProfileService.KeySignature">
@@ -12226,7 +12226,7 @@
              trust assertions associated with a public key.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.KeyData.EnvelopedKeyData">
+        <member name="M:Goedel.Mesh.KeyData.GetEnvelopedKeyData">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="F:Goedel.Mesh.KeyData.keyPair">

@@ -278,7 +278,7 @@ namespace Goedel.Mesh.Client {
             // Request binding
             var createRequest = new BindRequest() {
                 AccountAddress = accountAddress,
-                EnvelopedProfileAccount = ProfileUser.EnvelopedProfileAccount
+                EnvelopedProfileAccount = ProfileUser.GetEnvelopedProfileAccount()
                 //Updates = transactUser.TransactRequest.Updates
                 };
 
@@ -765,7 +765,7 @@ namespace Goedel.Mesh.Client {
             // here we request creation of the group at the service.
             var createRequest = new BindRequest() {
                 AccountAddress = groupName,
-                EnvelopedProfileAccount = profileGroup.EnvelopedProfileAccount
+                EnvelopedProfileAccount = profileGroup.GetEnvelopedProfileAccount()
                 };
 
 
@@ -899,14 +899,14 @@ namespace Goedel.Mesh.Client {
             var devicePreconfiguration = new DevicePreconfigurationPrivate() {
                 PrivateKey = secretSeed,
                 ConnectUri = connectUri,
-                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
-                EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice,
-                EnvelopedConnectionService = connectionService.EnvelopedConnectionService
+                EnvelopedProfileDevice = profileDevice.GetEnvelopedProfileDevice(),
+                EnvelopedConnectionDevice = connectionDevice.GetEnvelopedConnectionDevice(),
+                EnvelopedConnectionService = connectionService.GetEnvelopedConnectionService()
                 };
             devicePreconfiguration.ToFile(filename, tagged: true);
 
             var devicePreconfigurationPublic = new DevicePreconfigurationPublic() {
-                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice
+                EnvelopedProfileDevice = profileDevice.GetEnvelopedProfileDevice()
                 };
 
             return (devicePreconfigurationPublic, devicePreconfiguration);
@@ -1115,7 +1115,7 @@ namespace Goedel.Mesh.Client {
 
             // make claim request to service managing the device
             var claimRequest = new ClaimRequest {
-                EnvelopedMessageClaim = messageClaim.EnvelopedMessageClaim
+                EnvelopedMessageClaim = messageClaim.GetEnvelopedMessageClaim()
                 };
 
             var claimResponse = MeshClient.Claim(claimRequest);
@@ -1680,7 +1680,7 @@ namespace Goedel.Mesh.Client {
                 MessageId = requestConfirmation.GetResponseId(),
                 Recipient = recipientAddress,
                 Accept = response,
-                Request = requestConfirmation.EnvelopedRequestConfirmation
+                Request = requestConfirmation.GetEnvelopedRequestConfirmation()
                 };
 
             var transact = TransactBegin();

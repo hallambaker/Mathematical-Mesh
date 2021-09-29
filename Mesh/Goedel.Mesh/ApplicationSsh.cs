@@ -44,8 +44,8 @@ namespace Goedel.Mesh {
     public partial class ActivationApplicationSsh {
         #region // Properties
         ///<summary>The enveloped object</summary> 
-        public Enveloped<ActivationApplicationSsh> EnvelopedActivationApplicationSsh =>
-            new Enveloped<ActivationApplicationSsh>(DareEnvelope)
+        public Enveloped<ActivationApplicationSsh> GetEnvelopedActivationApplicationSsh() =>
+            new(DareEnvelope);
 
         #endregion
 
@@ -114,7 +114,7 @@ namespace Goedel.Mesh {
 
             return new ApplicationEntrySsh() {
                 Identifier = Key,
-                EnvelopedActivation = activation.EnvelopedActivationApplicationSsh
+                EnvelopedActivation = activation.GetEnvelopedActivationApplicationSsh()
                 };
 
             }

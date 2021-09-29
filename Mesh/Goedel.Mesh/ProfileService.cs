@@ -34,10 +34,7 @@ namespace Goedel.Mesh {
         public override MeshActor MeshActor => MeshActor.Service;
 
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ProfileService> EnvelopedProfileService =>
-            envelopedProfileService ?? new Enveloped<ProfileService>(DareEnvelope).
-                    CacheValue(out envelopedProfileService);
-        Enveloped<ProfileService> envelopedProfileService;
+        public Enveloped<ProfileService> GetEnvelopedProfileService() => new(DareEnvelope);
 
         ///<summary>The service signature key</summary> 
         public KeyPair KeySignature { get; private set; }

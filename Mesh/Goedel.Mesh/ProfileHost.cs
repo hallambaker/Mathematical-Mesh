@@ -35,10 +35,7 @@ namespace Goedel.Mesh {
         public override MeshActor MeshActor => MeshActor.Host;
 
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ProfileHost> EnvelopedProfileHost =>
-            envelopedProfileHost ?? new Enveloped<ProfileHost>(DareEnvelope).
-                    CacheValue(out envelopedProfileHost);
-        Enveloped<ProfileHost> envelopedProfileHost;
+        public Enveloped<ProfileHost> GetEnvelopedProfileHost() => new(DareEnvelope);
 
 
 

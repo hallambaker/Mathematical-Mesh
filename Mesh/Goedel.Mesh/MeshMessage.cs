@@ -67,9 +67,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<Message> EnvelopedMessage =>
-            envelopedMessage ?? new Enveloped<Message>(DareEnvelope).
-                    CacheValue(out envelopedMessage);
-        Enveloped<Message> envelopedMessage;
+            new(DareEnvelope);
 
         ///<summary>The message status.</summary>
         public MessageStatus MessageStatus;
@@ -134,18 +132,14 @@ namespace Goedel.Mesh {
     public partial class MessageError {
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<MessageError> EnvelopedMessageError =>
-            envelopedMessageError ?? new Enveloped<MessageError>(DareEnvelope).
-                    CacheValue(out envelopedMessageError);
-        Enveloped<MessageError> envelopedMessageError;
+            new(DareEnvelope);
 
         }
     public partial class MessageComplete {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<MessageComplete> EnvelopedMessageComplete =>
-            envelopedMessageComplete ?? new Enveloped<MessageComplete>(DareEnvelope).
-                    CacheValue(out envelopedMessageComplete);
-        Enveloped<MessageComplete> envelopedMessageComplete;
+            new(DareEnvelope);
 
 
         /// <summary>
@@ -175,9 +169,7 @@ namespace Goedel.Mesh {
     public partial class MessagePinValidated {
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<MessagePinValidated> EnvelopedMessagePinValidated =>
-            envelopedMessagePinValidated ?? new Enveloped<MessagePinValidated>(DareEnvelope).
-                    CacheValue(out envelopedMessagePinValidated);
-        Enveloped<MessagePinValidated> envelopedMessagePinValidated;
+            new(DareEnvelope);
 
         ///<summary>The authorized action.</summary> 
         public virtual string Action { get; }
@@ -236,9 +228,7 @@ namespace Goedel.Mesh {
     public partial class MessagePin {
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<MessagePin> EnvelopedMessagePIN =>
-            envelopedMessagePIN ?? new Enveloped<MessagePin>(DareEnvelope).
-                    CacheValue(out envelopedMessagePIN);
-        Enveloped<MessagePin> envelopedMessagePIN;
+            new(DareEnvelope);
 
 
         ///<summary>The unbound PIN code.</summary>
@@ -369,9 +359,7 @@ namespace Goedel.Mesh {
     public partial class RequestConnection {
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<RequestConnection> EnvelopedRequestConnection =>
-            envelopedRequestConnection ?? new Enveloped<RequestConnection>(DareEnvelope).
-                    CacheValue(out envelopedRequestConnection);
-        Enveloped<RequestConnection> envelopedRequestConnection;
+            new(DareEnvelope);
 
         ///<summary>The action for pin code validation.</summary> 
         public override string Action => MeshConstants.MessagePINActionDevice;
@@ -419,10 +407,8 @@ namespace Goedel.Mesh {
         }
     public partial class AcknowledgeConnection {
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<AcknowledgeConnection> EnvelopedAcknowledgeConnection =>
-            envelopedAcknowledgeConnection ?? new Enveloped<AcknowledgeConnection>(DareEnvelope).
-                    CacheValue(out envelopedAcknowledgeConnection);
-        Enveloped<AcknowledgeConnection> envelopedAcknowledgeConnection;
+        public Enveloped<AcknowledgeConnection> GetEnvelopedAcknowledgeConnection() =>
+            new(DareEnvelope);
 
         ///<summary>Convenience accessor for the inner <see cref="AcknowledgeConnection"/></summary>
         public RequestConnection MessageConnectionRequest =>
@@ -432,10 +418,7 @@ namespace Goedel.Mesh {
     public partial class RespondConnection {
 
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<RespondConnection> EnvelopedRespondConnection =>
-            envelopedRespondConnection ?? new Enveloped<RespondConnection>(DareEnvelope).
-                    CacheValue(out envelopedRespondConnection);
-        Enveloped<RespondConnection> envelopedRespondConnection;
+        public Enveloped<RespondConnection> EnvelopedRespondConnection =>new(DareEnvelope);
 
 
         /// <summary>
@@ -470,9 +453,7 @@ namespace Goedel.Mesh {
     public partial class MessageContact {
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<MessageContact> EnvelopedRequestContact =>
-            envelopedRequestContact ?? new Enveloped<MessageContact>(DareEnvelope).
-                    CacheValue(out envelopedRequestContact);
-        Enveloped<MessageContact> envelopedRequestContact;
+            new Enveloped<MessageContact>(DareEnvelope);
 
         ///<summary>The action for pin code validation.</summary> 
         public override string Action => MeshConstants.MessagePINActionContact;
@@ -481,39 +462,26 @@ namespace Goedel.Mesh {
 
     public partial class GroupInvitation {
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<GroupInvitation> EnvelopedGroupInvitation =>
-            envelopedGroupInvitation ?? new Enveloped<GroupInvitation>(DareEnvelope).
-                    CacheValue(out envelopedGroupInvitation);
-        Enveloped<GroupInvitation> envelopedGroupInvitation;
+        public Enveloped<GroupInvitation> GetEnvelopedGroupInvitation() => new(DareEnvelope);
         }
     public partial class RequestConfirmation {
 
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<RequestConfirmation> EnvelopedRequestConfirmation =>
-            envelopedRequestConfirmation ?? new Enveloped<RequestConfirmation>(DareEnvelope).
-                    CacheValue(out envelopedRequestConfirmation);
-        Enveloped<RequestConfirmation> envelopedRequestConfirmation;
+        public Enveloped<RequestConfirmation> GetEnvelopedRequestConfirmation() =>
+            new Enveloped<RequestConfirmation>(DareEnvelope);
 
         }
     public partial class ResponseConfirmation {
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ResponseConfirmation> EnvelopedResponseConfirmation =>
-            envelopedResponseConfirmation ?? new Enveloped<ResponseConfirmation>(DareEnvelope).
-                    CacheValue(out envelopedResponseConfirmation);
-        Enveloped<ResponseConfirmation> envelopedResponseConfirmation;
+        public Enveloped<ResponseConfirmation> GetEnvelopedResponseConfirmation() => new(DareEnvelope);
         }
     public partial class RequestTask {
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<RequestTask> EnvelopedRequestTask =>
-            envelopedRequestTask ?? new Enveloped<RequestTask>(DareEnvelope).
-                    CacheValue(out envelopedRequestTask);
-        Enveloped<RequestTask> envelopedRequestTask;
+        public Enveloped<RequestTask> GetEnvelopedRequestTask() =>
+            new Enveloped<RequestTask>(DareEnvelope);
         }
     public partial class ProcessResult {
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ProcessResult> EnvelopedProcessResult =>
-            envelopedProcessResult ?? new Enveloped<ProcessResult>(DareEnvelope).
-                    CacheValue(out envelopedProcessResult);
-        Enveloped<ProcessResult> envelopedProcessResult;
+        public Enveloped<ProcessResult> GetEnvelopedProcessResult() => new(DareEnvelope);
         }
     }

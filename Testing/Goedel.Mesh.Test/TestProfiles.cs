@@ -172,8 +172,8 @@ namespace Goedel.Mesh.Test {
 
             var catalogEntryDevice = new CatalogedDevice() {
                 Udf = profileDevice.Udf,
-                EnvelopedConnectionService = profileMeshDevicePublic.EnvelopedConnectionService,
-                EnvelopedActivationDevice = profileMeshDevicePrivate.EnvelopedActivationDevice
+                EnvelopedConnectionService = profileMeshDevicePublic.GetEnvelopedConnectionService(),
+                EnvelopedActivationDevice = profileMeshDevicePrivate.GetEnvelopedActivationDevice()
                 };
 
 

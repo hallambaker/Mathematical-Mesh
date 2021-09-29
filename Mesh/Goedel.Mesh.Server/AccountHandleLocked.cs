@@ -150,8 +150,20 @@ namespace Goedel.Mesh.Server {
 
             // To operate under the account authentication key, the request must be
             // authenticated under the AccountAuthenticationKey
-            (profileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
-                    credential.AuthenticationKeyId)).AssertTrue (NotAuthorized.Throw);
+
+            switch (accountPrivilege) {
+                case AccountPrivilege.Device: {
+                    break;
+                    }
+                default: {
+                    (profileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
+                            credential.AuthenticationKeyId)).AssertTrue(NotAuthorized.Throw);
+                    break;
+                    }
+                }
+
+
+
 
             return true;
             }
@@ -166,9 +178,27 @@ namespace Goedel.Mesh.Server {
 
             CatalogedAccess = catalogCapability.Locate(credential.AuthenticationKeyId);
 
+            switch (accountPrivilege) {
+                case AccountPrivilege.Device: {
+                    break;
+                    }
+                default: {
+                    (AccessCapability?.Active != true).AssertTrue(NotAuthorized.Throw);
+                    break;
+                    }
+                }
+
+
+
+            //if (AccessCapability?.Active != true) {
+            //    (accountPrivilege == AccountPrivilege.Device).AssertTrue(NotAuthorized.Throw);
+
+            //    }
+
 
             "Need to validate the client credential to the account here.".TaskFunctionality(Assert.HaltPhase1);
-
+            //AccessCapability.AssertNotNull(NotAuthorized.Throw);
+            //AccessCapability.Active.AssertTrue(NotAuthorized.Throw);
 
             //// To operate under the account authentication key, the request must be
             //// authenticated under the AccountAuthenticationKey

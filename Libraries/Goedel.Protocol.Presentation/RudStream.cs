@@ -503,7 +503,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="credentialSelf">Optional additional credential to be presented.</param>
         /// <returns>The created stream.</returns>
         public RudStreamClient MakeStreamClient(string protocol, ICredentialPrivate credentialSelf = null) =>
-            new RudStreamClient(this, protocol, credentialSelf);
+            new(this, protocol, credentialSelf);
 
 
         /// <summary>

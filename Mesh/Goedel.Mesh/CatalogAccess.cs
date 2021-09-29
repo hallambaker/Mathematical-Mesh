@@ -228,7 +228,7 @@ namespace Goedel.Mesh {
         public ActivationEntry MakeActivation(
                                 Right right,
                     KeyPairAdvanced keyPair, string keyIdentifier,
-                    ITransactContextAccount transactContextAccount = null) => new ActivationEntry() {
+                    ITransactContextAccount transactContextAccount = null) => new() {
                         Resource = right.Name,
                         Key = MakeKeyData(right, keyPair, keyIdentifier, transactContextAccount)
                         };
@@ -318,7 +318,7 @@ namespace Goedel.Mesh {
                 Id = deviceKey.KeyIdentifier,
                 GranteeUdf = granteeUdf,
                 GranteeAccount = granteeAccount,
-                EnvelopedKeyShare = remoteKeyData.EnvelopedKeyData
+                EnvelopedKeyShare = remoteKeyData.GetEnvelopedKeyData()
                 };
 
             return (deviceKeyData, capabilityDecrypt);

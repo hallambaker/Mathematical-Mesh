@@ -34,8 +34,8 @@ namespace Goedel.Mesh {
     public partial class ActivationApplicationGroup {
         #region // Properties
         ///<summary>The enveloped object</summary> 
-        public Enveloped<ActivationApplicationGroup> EnvelopedActivationApplicationGroup =>
-            new Enveloped<ActivationApplicationGroup>(DareEnvelope);
+        public Enveloped<ActivationApplicationGroup> GetEnvelopedActivationApplicationGroup() =>
+            new(DareEnvelope);
 
         #endregion
 
@@ -101,7 +101,7 @@ namespace Goedel.Mesh {
 
         public override KeyData[] GetEscrow() => 
             new KeyData[] { new KeyData () {
-                PrivateParameters =ActivationAccount.secretSeed } };
+                PrivateParameters =ActivationAccount.SecretSeed } };
 
 
 
@@ -134,7 +134,7 @@ namespace Goedel.Mesh {
 
             ActivationAccount = activationAccount;
             Key = profileGroup.AccountAddress;
-            EnvelopedProfileGroup = profileGroup.EnvelopedProfileAccount;
+            EnvelopedProfileGroup = profileGroup.GetEnvelopedProfileAccount();
 
             //// encrypt the activationAccount under the device encryption key.
             //activationAccount.AssertNotNull(Internal.Throw);
@@ -167,7 +167,7 @@ namespace Goedel.Mesh {
 
             return new ApplicationEntryGroup() {
                 Identifier = ProfileGroup.AccountAddress,
-                EnvelopedActivation = activation.EnvelopedActivationApplicationGroup
+                EnvelopedActivation = activation.GetEnvelopedActivationApplicationGroup()
                 };
 
             }

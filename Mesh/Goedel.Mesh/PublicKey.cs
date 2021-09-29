@@ -38,10 +38,7 @@ namespace Goedel.Mesh {
 
 
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<KeyData> EnvelopedKeyData =>
-            envelopedProfileDevice ?? new Enveloped<KeyData>(DareEnvelope).
-                    CacheValue(out envelopedProfileDevice);
-        Enveloped<KeyData> envelopedProfileDevice;
+        public Enveloped<KeyData> GetEnvelopedKeyData() => new(DareEnvelope);
 
 
         /// <summary>

@@ -34,10 +34,7 @@ namespace Goedel.Mesh {
         public override MeshActor MeshActor => MeshActor.Account;
 
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ProfileAccount> EnvelopedProfileAccount =>
-            envelopedProfileAccount ?? new Enveloped<ProfileAccount>(DareEnvelope).
-                    CacheValue(out envelopedProfileAccount);
-        Enveloped<ProfileAccount> envelopedProfileAccount;
+        public Enveloped<ProfileAccount> GetEnvelopedProfileAccount() => new(DareEnvelope);
 
 
         ///<summary>The account encryption key</summary> 

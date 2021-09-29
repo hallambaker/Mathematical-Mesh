@@ -101,7 +101,7 @@ namespace Goedel.Mesh.Client {
                 Id = profileDevice.Udf,
                 DeviceUDF = profileDevice.Udf,
                 AccountAddress = messageClaim.Sender,
-                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
+                EnvelopedProfileDevice = profileDevice.GetEnvelopedProfileDevice(),
                 EnvelopedAcknowledgeConnection =
                         new Enveloped<AcknowledgeConnection>(claimResponse.EnvelopedMessage)
                 };

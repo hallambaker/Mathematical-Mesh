@@ -45,8 +45,8 @@ namespace Goedel.Mesh {
     public partial class ActivationApplicationMail {
         #region // Properties
         ///<summary>The enveloped object</summary> 
-        public Enveloped<ActivationApplicationMail> EnvelopedActivationApplicationMail =>
-            new Enveloped<ActivationApplicationMail>(DareEnvelope)
+        public Enveloped<ActivationApplicationMail> GetEnvelopedActivationApplicationMail() =>
+            new(DareEnvelope);
 
         #endregion
 
@@ -150,7 +150,7 @@ namespace Goedel.Mesh {
 
             return new ApplicationEntryMail() {
                 Identifier = Key,
-                EnvelopedActivation = activation.EnvelopedActivationApplicationMail
+                EnvelopedActivation = activation.GetEnvelopedActivationApplicationMail()
                 };
             }
 

@@ -119,14 +119,14 @@ namespace Goedel.Mesh {
         public KeyPair ServiceEncryptionKey { get; private set; }
 
         ///<summary>The enveloped object</summary> 
-        public Enveloped<ActivationAccount> EnvelopedActivationAccount =>
-            new Enveloped<ActivationAccount>(DareEnvelope);
+        public Enveloped<ActivationAccount> GetEnvelopedActivationAccount() =>
+            new(DareEnvelope);
 
         ///<summary>Dictionary mapping store names to encryption keys.</summary> 
         public Dictionary<string, KeyPair> DictionaryStoreEncryptionKey =
             new();
 
-        public PrivateKeyUDF secretSeed { get; set; }
+        public PrivateKeyUDF SecretSeed { get; set; }
 
         ///<summary>The device activation.</summary> 
         public ActivationDevice ActivationDevice;
@@ -157,7 +157,7 @@ namespace Goedel.Mesh {
         void ActivateFromSeed(
                     IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed) {
-            this.secretSeed = secretSeed;
+            this.SecretSeed = secretSeed;
 
 
 
@@ -349,13 +349,13 @@ namespace Goedel.Mesh {
 
             var catalogEntryDevice = new CatalogedDevice() {
                 //Udf = activationAccount.ProfileSignature.Udf,
-                EnvelopedProfileUser = profileUser.EnvelopedProfileAccount,
-                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
-                EnvelopedConnectionService = connectionService?.EnvelopedConnectionService,
-                EnvelopedConnectionDevice = connectionDevice?.EnvelopedConnectionDevice,
-                EnvelopedConnectionAddress = connectionAccount?.EnvelopedConnectionAddress,
-                EnvelopedActivationDevice = activationDevice?.EnvelopedActivationDevice,
-                EnvelopedActivationAccount = activationAccount?.EnvelopedActivationAccount,
+                EnvelopedProfileUser = profileUser.GetEnvelopedProfileAccount(),
+                EnvelopedProfileDevice = profileDevice.GetEnvelopedProfileDevice(),
+                EnvelopedConnectionService = connectionService?.GetEnvelopedConnectionService(),
+                EnvelopedConnectionDevice = connectionDevice?.GetEnvelopedConnectionDevice(),
+                EnvelopedConnectionAddress = connectionAccount?.GetEnvelopedConnectionAddress(),
+                EnvelopedActivationDevice = activationDevice?.GetEnvelopedActivationDevice(),
+                EnvelopedActivationAccount = activationAccount?.GetEnvelopedActivationAccount(),
                 ApplicationEntries = applicationEntries,
                 DeviceUdf = profileDevice.Udf
                 //AccessCapability = accessCapability
@@ -550,7 +550,7 @@ namespace Goedel.Mesh {
         /// <returns>Cryptographic parameters for the store.</returns>
         public DarePolicy InitializeStore(string storeName,
                     IKeyCollection keyLocate=null) {
-            var encryptionKey = secretSeed.GenerateContributionKeyPair(MeshKeyType.Complete,
+            var encryptionKey = SecretSeed.GenerateContributionKeyPair(MeshKeyType.Complete,
                 MeshActor.Account, MeshKeyOperation.Encrypt, keySecurity: KeySecurity.Exportable,
                 info: storeName);
 

@@ -86,7 +86,7 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>Factory method returning a reader of the default decryption algorithm and mode.</summary> 
         public static PacketReader Factory(byte[] data,
                 int position = 0,
-                int count = -1) => new PacketReader(data, position, count);
+                int count = -1) => new(data, position, count);
 
         ///<summary>The delegate to use to decrypt data.</summary> 
         public DecryptDataDelegate DecryptDataDelegate = DecryptAesGcm;

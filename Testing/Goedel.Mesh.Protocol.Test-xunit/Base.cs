@@ -42,7 +42,7 @@ namespace Goedel.XUnit {
 
         #region // Methods 
 
-        public virtual TestEnvironmentCommon GetTestEnvironmentCommon() => new TestEnvironmentCommon();
+        public virtual TestEnvironmentCommon GetTestEnvironmentCommon() => new();
 
 
         #endregion

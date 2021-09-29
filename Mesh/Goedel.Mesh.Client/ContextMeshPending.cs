@@ -25,6 +25,7 @@ using System.IO;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
+using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
@@ -162,8 +163,12 @@ namespace Goedel.Mesh.Client {
             requestConnection.Envelope(keyAuthentication);
 
             profileDevice.Activate(meshHost.KeyCollection);
-            var meshCredentialPrivate = new MeshCredentialPrivate(profileDevice, null, null,
+            //var meshCredentialPrivate = new MeshCredentialPrivate(profileDevice, null, null,
+            //    profileDevice.KeyAuthentication as KeyPairAdvanced);
+
+            var meshCredentialPrivate = new KeyCredentialPrivate(
                 profileDevice.KeyAuthentication as KeyPairAdvanced);
+
 
             // Acquire ephemeral client. This will only be used for the Connect and Complete methods.
             var meshClient = meshHost.MeshMachine.GetMeshClient(
@@ -184,7 +189,7 @@ namespace Goedel.Mesh.Client {
                 AccountAddress = accountAddress,
                 EnvelopedAcknowledgeConnection = connectResponse.EnvelopedAcknowledgeConnection,
                 EnvelopedProfileAccount = connectResponse.EnvelopedProfileAccount,
-                EnvelopedProfileDevice = profileDevice.EnvelopedProfileDevice,
+                EnvelopedProfileDevice = profileDevice.GetEnvelopedProfileDevice(),
                 Local = localName
                 };
 
@@ -243,7 +248,7 @@ namespace Goedel.Mesh.Client {
             var catalogedStandard = new CatalogedStandard() {
                 Id = ProfileDevice.Udf,
                 CatalogedDevice = catalogedEntry,
-                EnvelopedProfileAccount = profileUser.EnvelopedProfileAccount
+                EnvelopedProfileAccount = profileUser.GetEnvelopedProfileAccount()
                 };
 
             // create the context mesh

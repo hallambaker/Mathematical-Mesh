@@ -39,8 +39,8 @@ using Goedel.Mesh.Server;
 
 namespace Goedel.XUnit {
     public partial class TestService {
-        List<string> RightsDirect => new List<string> { Rights.IdRolesWeb };
-        List<string> RightsThreshold => new List<string> { Rights.IdRolesThreshold };
+        List<string> RightsDirect => new() { Rights.IdRolesWeb };
+        List<string> RightsThreshold => new() { Rights.IdRolesThreshold };
         string TestFileText { get; } = "Test plaintext data";
 
         #region // Device access to account decryption key

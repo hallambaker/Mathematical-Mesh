@@ -193,8 +193,8 @@ namespace Goedel.Mesh.Server {
             accountHandle.PostInbound(acknowledgeConnection.DareEnvelope);
 
             var connectResponse = new ConnectResponse() {
-                EnvelopedAcknowledgeConnection = acknowledgeConnection.EnvelopedAcknowledgeConnection,
-                EnvelopedProfileAccount = accountHandle.ProfileAccount.EnvelopedProfileAccount
+                EnvelopedAcknowledgeConnection = acknowledgeConnection.GetEnvelopedAcknowledgeConnection(),
+                EnvelopedProfileAccount = accountHandle.ProfileAccount.GetEnvelopedProfileAccount()
                 };
 
             return connectResponse;

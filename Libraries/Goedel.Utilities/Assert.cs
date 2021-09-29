@@ -147,7 +147,7 @@ namespace Goedel.Utilities {
         /// <param name="Int">The integer value</param>
         /// <param name="String">The string value</param>
         /// <returns>The boxed exception data.</returns>
-        public static ExceptionData Box(int Int = 0, string String = "") => new ExceptionData() {
+        public static ExceptionData Box(int Int = 0, string String = "") => new() {
             Int = Int,
             String = String
             };

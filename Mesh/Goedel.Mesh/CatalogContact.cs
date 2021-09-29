@@ -300,10 +300,8 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => Key;
 
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<CatalogedContact> EnvelopedCatalogedContact =>
-            envelopedCatalogedContact ?? new Enveloped<CatalogedContact>(DareEnvelope).
-                    CacheValue(out envelopedCatalogedContact);
-        Enveloped<CatalogedContact> envelopedCatalogedContact;
+        public Enveloped<CatalogedContact> GetEnvelopedCatalogedContact() =>
+            new(DareEnvelope);
 
 
 
@@ -378,9 +376,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<Contact> EnvelopedContact =>
-            envelopedContact ?? new Enveloped<Contact>(DareEnvelope).
-                    CacheValue(out envelopedContact);
-        Enveloped<Contact> envelopedContact;
+            new(DareEnvelope);
 
         /// <summary>
         /// Decode <paramref name="envelope"/> and return the inner <see cref="Contact"/>
@@ -462,7 +458,7 @@ namespace Goedel.Mesh {
 
             List<CryptographicCapability> keyList = null;
 
-            EnvelopedProfileAccount = profile.EnvelopedProfileAccount;
+            EnvelopedProfileAccount = profile.GetEnvelopedProfileAccount();
 
 
             Address = address;

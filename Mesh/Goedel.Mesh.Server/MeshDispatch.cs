@@ -289,10 +289,10 @@ namespace Goedel.Mesh.Server {
 
             var catalogedService = new CatalogedService() {
                 Id = connectionDevice.Subject,
-                EnvelopedProfileService = profileService.EnvelopedProfileService,
-                EnvelopedProfileHost = profileHost.EnvelopedProfileHost,
-                EnvelopedActivationHost = activationDevice.EnvelopedActivationHost,
-                EnvelopedConnectionService = connectionDevice.EnvelopedConnectionService
+                EnvelopedProfileService = profileService.GetEnvelopedProfileService(),
+                EnvelopedProfileHost = profileHost.GetEnvelopedProfileHost(),
+                EnvelopedActivationHost = activationDevice.GetEnvelopedActivationHost(),
+                EnvelopedConnectionService = connectionDevice.GetEnvelopedConnectionService()
                 };
             meshMachine.MeshHost.Register(catalogedService, null);
 
@@ -383,7 +383,7 @@ namespace Goedel.Mesh.Server {
                     Minor = 0,
                     Encodings = new List<Goedel.Protocol.Encoding>(),
                     },
-                EnvelopedProfileService = ProfileService.EnvelopedProfileService,
+                EnvelopedProfileService = ProfileService.GetEnvelopedProfileService(),
                 //EnvelopedProfileHost = ProfileHost.EnvelopedProfileHost,
                 Status = 201 // Must specify this explicitly since not derrived from MeshResponse.
                 };
