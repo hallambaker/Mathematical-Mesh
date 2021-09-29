@@ -1035,8 +1035,7 @@ namespace Goedel.Mesh.Client {
             // When creating a device for the first time, the update is always encrypted
             // under the device key.
             // Phase2: Consider introducing an additional blinding key
-            transact.CatalogUpdate(CatalogedMachine.CatalogedDevice,
-                        profileDevice.KeyEncrypt);
+            transact.CatalogUpdate(cataloguedDevice, profileDevice.KeyEncrypt);
 
 
             //var catalogDevice = transact.GetCatalogDevice();
@@ -1113,12 +1112,16 @@ namespace Goedel.Mesh.Client {
 
             messageClaim.Envelope(KeyAccountSignature);
 
+
+            var claimClient = MeshMachine.GetMeshClient(
+                            GetMeshCredentialPrivate(), null, targetAccountAddress);
+
             // make claim request to service managing the device
             var claimRequest = new ClaimRequest {
                 EnvelopedMessageClaim = messageClaim.GetEnvelopedMessageClaim()
                 };
 
-            var claimResponse = MeshClient.Claim(claimRequest);
+            var claimResponse = claimClient.Claim(claimRequest);
 
             // The Dare envelope contains a DareEnvelope<ProfileDevice>
             var encryptedEnvelope = claimResponse.CatalogedPublication.EnvelopedData;

@@ -75,10 +75,10 @@ namespace Scratchpad {
 
 
             //TestService.Test().MeshDeviceMail();
-            TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSigner);
+            //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSigner);
 
 
-            //TestService.Test().MeshDeviceConnectStaticQR();
+            TestService.Test().MeshDeviceConnectStaticQR();
 
             //TestService.Test().MeshDeviceDirectKey();
 

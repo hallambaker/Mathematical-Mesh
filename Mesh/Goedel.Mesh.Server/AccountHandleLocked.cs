@@ -179,6 +179,7 @@ namespace Goedel.Mesh.Server {
             CatalogedAccess = catalogCapability.Locate(credential.AuthenticationKeyId);
 
             switch (accountPrivilege) {
+                case AccountPrivilege.Post:
                 case AccountPrivilege.Device: {
                     break;
                     }
