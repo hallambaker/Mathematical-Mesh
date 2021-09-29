@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/28/2021 11:01:07 AM
+//  This file was automatically generated at 9/29/2021 12:56:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -3148,7 +3148,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
-		public virtual byte[]						ProfileMasterDigest  {get; set;}
+		public virtual string						CatalogedDeviceDigest  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -3206,10 +3206,10 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("DeviceUDF", 1);
 					_writer.WriteString (DeviceUDF);
 				}
-			if (ProfileMasterDigest != null) {
+			if (CatalogedDeviceDigest != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ProfileMasterDigest", 1);
-					_writer.WriteBinary (ProfileMasterDigest);
+				_writer.WriteToken ("CatalogedDeviceDigest", 1);
+					_writer.WriteString (CatalogedDeviceDigest);
 				}
 			if (Catalogs != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -3272,8 +3272,8 @@ namespace Goedel.Mesh {
 					DeviceUDF = jsonReader.ReadString ();
 					break;
 					}
-				case "ProfileMasterDigest" : {
-					ProfileMasterDigest = jsonReader.ReadBinary ();
+				case "CatalogedDeviceDigest" : {
+					CatalogedDeviceDigest = jsonReader.ReadString ();
 					break;
 					}
 				case "Catalogs" : {
@@ -3322,6 +3322,10 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual Enveloped<CatalogedDevice>						EnvelopedCatalogedDevice  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						CatalogedDeviceDigest  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -3379,6 +3383,11 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("EnvelopedCatalogedDevice", 1);
 					EnvelopedCatalogedDevice.Serialize (_writer, false);
+				}
+			if (CatalogedDeviceDigest != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("CatalogedDeviceDigest", 1);
+					_writer.WriteString (CatalogedDeviceDigest);
 				}
 			if (ContainerStatus != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -3442,6 +3451,10 @@ namespace Goedel.Mesh {
 					EnvelopedCatalogedDevice = new Enveloped<CatalogedDevice> ();
 					EnvelopedCatalogedDevice.Deserialize (jsonReader);
  
+					break;
+					}
+				case "CatalogedDeviceDigest" : {
+					CatalogedDeviceDigest = jsonReader.ReadString ();
 					break;
 					}
 				case "ContainerStatus" : {

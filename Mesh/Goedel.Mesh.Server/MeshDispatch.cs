@@ -504,7 +504,7 @@ namespace Goedel.Mesh.Server {
         public override StatusResponse Status(
                 StatusRequest request, IJpcSession jpcSession) {
             try {
-                return MeshPersist.AccountStatus(jpcSession, request.ProfileMasterDigest);
+                return MeshPersist.AccountStatus(jpcSession, request.CatalogedDeviceDigest);
                 }
             catch (System.Exception exception) {
                 return new StatusResponse(exception);

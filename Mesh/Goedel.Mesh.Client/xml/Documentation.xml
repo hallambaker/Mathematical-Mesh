@@ -69,6 +69,11 @@
             The cataloged device profile
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine.CatalogedDeviceDigest">
+             <summary>
+            The digest of the cataloged device.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedMachine._Tag">
             <summary>
             Tag identifying this class
@@ -404,6 +409,9 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.ProfileDevice">
             <summary>The device profile</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.CatalogedDevice">
+            <summary>The cataloged device</summary>
+        </member>
         <member name="F:Goedel.Mesh.Client.ContextAccount.ProfileService">
             <summary>The current service profile</summary> 
         </member>
@@ -536,6 +544,12 @@
             the service is held at the service, this means only downloading updates at present.
             </summary>
             <returns>The number of items synchronized</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.UpdateCatalogedMachine(Goedel.Mesh.CatalogedDevice,System.String)">
+            <summary>
+            Update the <paramref name="catalogedDevice"/> entry in the machine catalog.
+            </summary>
+            <param name="catalogedDevice">The entry to update.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.SyncProgressUpload(System.Int32)">
             <summary>
@@ -1031,9 +1045,6 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.AccountAddress">
             <summary>Convenience accessor to the account address.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.CatalogedDevice">
-            <summary>The cataloged device</summary>
-        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ProfileUser">
             <summary>The profile</summary>
         </member>
@@ -1141,15 +1152,6 @@
             <param name="profileUser">The user profile</param>
             <param name="activationAccount">The account activation</param>
             <param name="keyLocate">the key locator.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.UpdateStore(Goedel.Mesh.ContainerUpdate)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.UpdateCatalogedMachine(Goedel.Mesh.CatalogedDevice)">
-            <summary>
-            Update the <paramref name="catalogedDevice"/> entry in the machine catalog.
-            </summary>
-            <param name="catalogedDevice">The entry to update.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelf(Goedel.Mesh.Contact,System.String)">
             <summary>
@@ -2558,7 +2560,7 @@
             <param name="meshMachine">The Mesh Machine.</param>
             <param name="containerHost">The host catalog.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.Register(Goedel.Mesh.Client.CatalogedMachine)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.GetContext(Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
             Create a context for the machine entry <paramref name="catalogedMachine"/>.
             </summary>

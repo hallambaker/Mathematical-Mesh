@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 9/28/2021 11:01:07 AM
+//  This file was automatically generated at 9/29/2021 12:56:44 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -8279,6 +8279,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual Enveloped<CatalogedDevice>						EnvelopedCatalogedDevice  {get; set;}
+        /// <summary>
+        ///Digest value used to signal updates to envelope		
+        /// </summary>
+
+		public virtual string						CatalogedDeviceDigest  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -8357,6 +8362,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("EnvelopedCatalogedDevice", 1);
 					EnvelopedCatalogedDevice.Serialize (_writer, false);
 				}
+			if (CatalogedDeviceDigest != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("CatalogedDeviceDigest", 1);
+					_writer.WriteString (CatalogedDeviceDigest);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -8420,6 +8430,10 @@ namespace Goedel.Mesh {
 					EnvelopedCatalogedDevice = new Enveloped<CatalogedDevice> ();
 					EnvelopedCatalogedDevice.Deserialize (jsonReader);
  
+					break;
+					}
+				case "CatalogedDeviceDigest" : {
+					CatalogedDeviceDigest = jsonReader.ReadString ();
 					break;
 					}
 				default : {

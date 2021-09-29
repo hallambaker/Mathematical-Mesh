@@ -236,7 +236,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="jpcSession">The session connection data.</param>
         public StatusResponse AccountStatus(
                         IJpcSession jpcSession, 
-                        byte[] deviceConnection) {
+                        string catalogedDeviceDigest) {
 
             using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
 
@@ -260,13 +260,14 @@ namespace Goedel.Mesh.Server {
             if (accountHandle.EnvelopedCatalogedDevice != null) {
                 statusResponse.EnvelopedCatalogedDevice =
                     accountHandle.EnvelopedCatalogedDevice; // Hack: should allow this to be cached.
+                statusResponse.CatalogedDeviceDigest = accountHandle.CatalogedDeviceDigest;
 
-                //if (deviceConnection == null) {
-                //    statusResponse.EnvelopedCatalogedDevice =
-                //                accountHandle.EnvelopedCatalogedDevice;
-                //    }
-                //else if (deviceConnection.IsEqualTo(
-                //        accountHandle.EnvelopedCatalogedDevice.GetUnvalidatedDigest())) {
+                Screen.WriteLine($"Status update:  {accountHandle.CatalogedDeviceDigest}");
+
+
+
+                //if ((deviceConnection == null) || (deviceConnection.IsEqualTo(
+                //        accountHandle.EnvelopedCatalogedDevice.PayloadDigest))) {
                 //    statusResponse.EnvelopedCatalogedDevice =
                 //                accountHandle.EnvelopedCatalogedDevice;
                 //    }

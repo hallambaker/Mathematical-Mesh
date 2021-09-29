@@ -1504,6 +1504,11 @@
             
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.AccessCapability.CatalogedDeviceDigest">
+             <summary>
+            Digest value used to signal updates to envelope		
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.AccessCapability._Tag">
             <summary>
             Tag identifying this class
@@ -3658,7 +3663,7 @@
             The primary key used to catalog the entry. This is the UDF of the authentication key.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedCatalogedDevice">
+        <member name="M:Goedel.Mesh.CatalogedDevice.GetEnvelopedCatalogedDevice">
             <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.ProfileUser">
@@ -10701,7 +10706,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.StatusRequest.ProfileMasterDigest">
+        <member name="P:Goedel.Mesh.StatusRequest.CatalogedDeviceDigest">
             <summary>
             </summary>
         </member>
@@ -10777,6 +10782,10 @@
              <summary>
             The catalog device entry
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.StatusResponse.CatalogedDeviceDigest">
+            <summary>
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.StatusResponse.ContainerStatus">
             <summary>

@@ -1200,7 +1200,7 @@
             <param name="jpcSession">The session connection data.</param>
             <param name="completeRequest">The completion request.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession,System.Byte[])">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession,System.String)">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.

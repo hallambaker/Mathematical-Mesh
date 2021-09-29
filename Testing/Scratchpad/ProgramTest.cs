@@ -91,7 +91,9 @@ namespace Scratchpad {
             //TestService.Test().MeshDeviceSsh();
 
 
-            //TestService.Test().MeshDeviceDirectKey();
+            TestService.Test().MeshDeviceDirectKey();
+            TestService.Test().MeshDeviceConnectStaticQR();
+            TestService.Test().MeshDeviceThresholdKey();
 
             //Debug();
             //TestService.Test().MeshDeviceDeveloper();
@@ -100,7 +102,7 @@ namespace Scratchpad {
 
             //TestService.Test().MeshDeviceConnectPIN();
             //TestService.Test().MeshDeviceConnectDynamicQR();
-            //TestService.Test().MeshDeviceConnectStaticQR();
+
 
 
             //ShellTests.Test().TestProfileConnectPin();

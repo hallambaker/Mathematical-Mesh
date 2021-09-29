@@ -58,8 +58,7 @@ namespace Goedel.Mesh.Client {
         public override string AccountAddress => ProfileUser.AccountAddress;
 
 
-        ///<summary>The cataloged device</summary>
-        public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
+
 
         ///<summary>The profile</summary>
         public ProfileUser ProfileUser { get; set; }
@@ -384,42 +383,34 @@ namespace Goedel.Mesh.Client {
             return storesDirectory;
             }
 
-        ///<inheritdoc/>
-        public override int UpdateStore(ContainerUpdate containerUpdate) {
-            var count = base.UpdateStore(containerUpdate);
+        /////<inheritdoc/>
+        //public override int UpdateStore(ContainerUpdate containerUpdate) {
+        //    var count = base.UpdateStore(containerUpdate);
 
 
 
 
 
-            CatalogedDevice catalogedDevice = null;
-            if (containerUpdate.Container == CatalogDevice.Label &
-                    containerUpdate.Envelopes != null) {
-                foreach (var entry in containerUpdate.Envelopes) {
-                    if (CatalogedDevice.DeviceUdf == entry.Header.ContentMeta.UniqueId) {
-                        catalogedDevice = entry.DecodeJsonObject(KeyCollection) as CatalogedDevice;
-                        }
+        //    CatalogedDevice catalogedDevice = null;
+        //    if (containerUpdate.Container == CatalogDevice.Label &
+        //            containerUpdate.Envelopes != null) {
+        //        foreach (var entry in containerUpdate.Envelopes) {
+        //            if (CatalogedDevice.DeviceUdf == entry.Header.ContentMeta.UniqueId) {
+        //                catalogedDevice = entry.DecodeJsonObject(KeyCollection) as CatalogedDevice;
+        //                }
 
-                    }
+        //            }
 
 
-                }
+        //        }
 
-            if (catalogedDevice != null) {
-                UpdateCatalogedMachine(catalogedDevice);
-                }
-            return count;
+        //    if (catalogedDevice != null) {
+        //        UpdateCatalogedMachine(catalogedDevice);
+        //        }
+        //    return count;
 
-            }
+        //    }
 
-        /// <summary>
-        /// Update the <paramref name="catalogedDevice"/> entry in the machine catalog.
-        /// </summary>
-        /// <param name="catalogedDevice">The entry to update.</param>
-        public void UpdateCatalogedMachine(CatalogedDevice catalogedDevice) {
-            CatalogedMachine.CatalogedDevice = catalogedDevice;
-            MeshHost.Register(CatalogedMachine);
-            }
 
         #endregion
         #region // Contact management
@@ -1319,8 +1310,7 @@ namespace Goedel.Mesh.Client {
 
             // When creating a device for the first time, the update is always encrypted
             // under the device key.
-            transact.CatalogUpdate(CatalogedMachine.CatalogedDevice,
-                        ProfileDevice.KeyEncrypt);
+            transact.CatalogUpdate(device, ProfileDevice.KeyEncrypt);
 
             //var catalogDevice = transact.GetCatalogDevice();
             //transact.CatalogUpdate(catalogDevice, device);

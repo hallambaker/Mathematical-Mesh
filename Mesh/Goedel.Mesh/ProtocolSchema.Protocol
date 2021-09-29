@@ -303,7 +303,7 @@
 	Message StatusRequest
 		Inherits MeshRequestUser
 		String DeviceUDF
-		Binary ProfileMasterDigest
+		String CatalogedDeviceDigest
 		String Catalogs
 			Multiple
 		String Spools
@@ -318,6 +318,7 @@
 		Struct Enveloped<CatalogedDevice> EnvelopedCatalogedDevice
 			Description
 				|The catalog device entry
+		String CatalogedDeviceDigest
 		Struct ContainerStatus ContainerStatus
 			Multiple
 

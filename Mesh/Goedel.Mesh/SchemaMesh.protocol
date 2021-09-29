@@ -815,7 +815,10 @@
 		Struct Enveloped<CatalogedDevice> EnvelopedCatalogedDevice
 			Description
 				|
-			
+		String CatalogedDeviceDigest
+			Description
+				|Digest value used to signal updates to envelope		
+
 	Structure Publication
 		Description
 			|

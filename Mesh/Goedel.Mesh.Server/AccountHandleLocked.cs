@@ -75,11 +75,7 @@ namespace Goedel.Mesh.Server {
         ///<summary>The directory in which all the account data is stored.</summary> 
         public string Directory => AccountEntry.Directory;
 
-
-        public Enveloped<CatalogedDevice> EnvelopedCatalogedDevice { get; set; }
-
-
-        public AccessCapability AccessCapability { get; set; }
+        public AccessCapability AccessCapability => CatalogedAccess?.Capability as AccessCapability;
 
 
         public CatalogedAccess CatalogedAccess { get; set; }
@@ -171,10 +167,6 @@ namespace Goedel.Mesh.Server {
             CatalogedAccess = catalogCapability.Locate(credential.AuthenticationKeyId);
 
 
-            EnvelopedCatalogedDevice =
-                    (CatalogedAccess?.Capability as AccessCapability)?.EnvelopedCatalogedDevice;
-
-
             "Need to validate the client credential to the account here.".TaskFunctionality(Assert.HaltPhase1);
 
 
@@ -221,8 +213,12 @@ namespace Goedel.Mesh.Server {
         ///<summary>The directory in which all the account data is stored.</summary> 
         string Directory => AccountContext.Directory;
 
-        public Enveloped<CatalogedDevice> EnvelopedCatalogedDevice => 
-            AccountContext.EnvelopedCatalogedDevice;
+
+        public Enveloped<CatalogedDevice> EnvelopedCatalogedDevice =>
+                    AccountContext.AccessCapability?.EnvelopedCatalogedDevice;
+
+        public string CatalogedDeviceDigest =>
+                            AccountContext.AccessCapability?.CatalogedDeviceDigest;
 
 
         #endregion

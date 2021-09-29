@@ -27,7 +27,9 @@
 		Struct CatalogedDevice CatalogedDevice
 			Description
 				|The cataloged device profile
-
+		String CatalogedDeviceDigest
+			Description
+				|The digest of the cataloged device.
 
 
 	Structure CatalogedService

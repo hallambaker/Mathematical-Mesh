@@ -120,9 +120,7 @@ namespace Goedel.Mesh {
 
         ///<summary>The enveloped object</summary> 
         public Enveloped<ActivationAccount> EnvelopedActivationAccount =>
-            envelopedActivationAccount ?? new Enveloped<ActivationAccount>(DareEnvelope).
-                    CacheValue(out envelopedActivationAccount);
-        Enveloped<ActivationAccount> envelopedActivationAccount;
+            new Enveloped<ActivationAccount>(DareEnvelope);
 
         ///<summary>Dictionary mapping store names to encryption keys.</summary> 
         public Dictionary<string, KeyPair> DictionaryStoreEncryptionKey =
@@ -342,10 +340,10 @@ namespace Goedel.Mesh {
             connectionAccount.DareEnvelope.Strip();
 
 
-            var accessCapability = new AccessCapability() {
-                Id = connectionService.AuthenticationPublic.KeyIdentifier
-                //EnvelopedCatalogedDevice = catalogEntryDevice.EnvelopedCatalogedDevice
-                };
+            //var accessCapability = new AccessCapability() {
+            //    Id = connectionService.AuthenticationPublic.KeyIdentifier
+            //    //EnvelopedCatalogedDevice = catalogEntryDevice.EnvelopedCatalogedDevice
+            //    };
           
 
 
@@ -359,8 +357,8 @@ namespace Goedel.Mesh {
                 EnvelopedActivationDevice = activationDevice?.EnvelopedActivationDevice,
                 EnvelopedActivationAccount = activationAccount?.EnvelopedActivationAccount,
                 ApplicationEntries = applicationEntries,
-                DeviceUdf = profileDevice.Udf,
-                AccessCapability = accessCapability
+                DeviceUdf = profileDevice.Udf
+                //AccessCapability = accessCapability
 
                 //AdditionalRecipients = new() { activationDevice.DeviceEncryption}
                 };

@@ -81,10 +81,25 @@ namespace Goedel.Mesh.Client {
 
         #region // Methods
         public void CatalogUpdate(CatalogedDevice catalogedDevice, KeyPair encryptionKey) {
-            var accessCapability = catalogedDevice.AccessCapability;
+            //var accessCapability = catalogedDevice.AccessCapability;
 
+            //catalogedDevice.Envelope();
             catalogedDevice.Envelope(encryptionKey: encryptionKey);
-            accessCapability.EnvelopedCatalogedDevice = catalogedDevice.EnvelopedCatalogedDevice;
+            var digest = catalogedDevice.DareEnvelope.GetUnvalidatedDigest();
+            catalogedDevice.DareEnvelope.Header.PayloadDigest = digest;
+
+            var digestUDF = UDF.Sha2ToString(digest, 128);
+
+            //accessCapability.EnvelopedCatalogedDevice = catalogedDevice.EnvelopedCatalogedDevice;
+            var accessCapability = new AccessCapability() {
+                Id = catalogedDevice.ConnectionService.AuthenticationPublic.KeyIdentifier,
+                EnvelopedCatalogedDevice = catalogedDevice.GetEnvelopedCatalogedDevice(),
+                CatalogedDeviceDigest = digestUDF
+                };
+
+
+            Screen.WriteLine($"Catalog update: {accessCapability.CatalogedDeviceDigest} Entries: {catalogedDevice.ApplicationEntries?.Count}");
+
 
             var catalogedAccess = new CatalogedAccess() {
                 Capability = accessCapability
@@ -95,6 +110,11 @@ namespace Goedel.Mesh.Client {
 
             CatalogUpdate(catalogAccess, catalogedAccess);
             CatalogUpdate(catalogDevice, catalogedDevice);
+
+            if (ContextAccount.CatalogedDevice?.DeviceUdf == catalogedDevice.DeviceUdf) {
+                ContextAccount.UpdateCatalogedMachine(catalogedDevice, digestUDF);
+                }
+
             }
 
 
@@ -133,6 +153,7 @@ namespace Goedel.Mesh.Client {
                 var connectionDevice = device.EnvelopedConnectionDevice.Decode();
                 var encryptionKey = connectionDevice.Encryption.GetKeyPair();
                 CatalogUpdate(device, encryptionKey);
+
 
                 //CatalogUpdate(catalogDevice, device);
                 }

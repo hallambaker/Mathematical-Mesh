@@ -77,7 +77,7 @@ namespace Goedel.Mesh.Client {
 
             foreach (var entry in containerHost.ObjectIndex) {
                 var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
-                Register(catalogedMachine);
+                GetContext(catalogedMachine);
                 //Console.WriteLine($"Container  {entry.Key}  of {entry.Value.GetType()}");
                 }
 
@@ -88,7 +88,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="catalogedMachine">The machine to create the context for.</param>
         /// <returns>The context created.</returns>
-        public ContextAccount Register(CatalogedMachine catalogedMachine) {
+        public ContextAccount GetContext(CatalogedMachine catalogedMachine) {
             switch (catalogedMachine) {
                 // consider adding a machine catalog entry for a group...
                 case CatalogedStandard standardEntry: {
@@ -263,8 +263,8 @@ namespace Goedel.Mesh.Client {
             // Return to normal privilege.
             contextUser.MeshClient = null;
 
-            // Register the mesh description on the local machine.
-            Register(contextUser.CatalogedMachine, contextUser);
+            //// Register the mesh description on the local machine.
+            //Register(contextUser.CatalogedMachine, contextUser);
 
             return contextUser;
             }

@@ -42,6 +42,10 @@ namespace Goedel.Mesh {
             set => Enveloped = value;
             }
 
+
+
+
+
         ///<summary>The key collection that was used to decode this object instance.</summary>
         public virtual IKeyCollection KeyCollection {
             get => KeyLocate as IKeyCollection;

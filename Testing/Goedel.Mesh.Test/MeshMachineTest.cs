@@ -127,7 +127,7 @@ namespace Goedel.Mesh.Test {
             var catalogedMachine = contextUser.CatalogedMachine;
 
             host.Deregister(contextUser);
-            return host.Register(catalogedMachine) as ContextUser;
+            return host.GetContext(catalogedMachine) as ContextUser;
             }
 
 

@@ -76,6 +76,10 @@ namespace Goedel.Mesh.Client {
         ///<summary>The device profile</summary>
         public virtual ProfileDevice ProfileDevice => CatalogedMachine?.ProfileDevice;
 
+        ///<summary>The cataloged device</summary>
+        public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
+
+
         ///<summary>The current service profile</summary> 
         public ProfileService ProfileService;
 
@@ -320,11 +324,15 @@ namespace Goedel.Mesh.Client {
             int count = 0;
 
             var statusRequest = new StatusRequest() {
+                CatalogedDeviceDigest = CatalogedMachine.CatalogedDeviceDigest
                 };
             var status = MeshClient.Status(statusRequest);
 
             status.ContainerStatus.AssertNotNull(ServerResponseInvalid.Throw, status);
-
+            if (status.EnvelopedCatalogedDevice != null) {
+                var catalogedDevice = status.EnvelopedCatalogedDevice.Decode(this);
+                UpdateCatalogedMachine(catalogedDevice, status.CatalogedDeviceDigest);
+                }
 
             var constraintsSelects = new List<ConstraintsSelect>();
 
@@ -364,6 +372,25 @@ namespace Goedel.Mesh.Client {
             }
 
         //public bool SyncProgress(int maxEnvelopes = -1) => SyncProgressUpload(maxEnvelopes);
+
+
+
+        /// <summary>
+        /// Update the <paramref name="catalogedDevice"/> entry in the machine catalog.
+        /// </summary>
+        /// <param name="catalogedDevice">The entry to update.</param>
+        public void UpdateCatalogedMachine(CatalogedDevice catalogedDevice, string digestUDF) {
+
+            Screen.WriteLine($"Install/update: {digestUDF} Entries: {catalogedDevice.ApplicationEntries?.Count}");
+
+
+
+            CatalogedMachine.CatalogedDevice = catalogedDevice;
+            CatalogedMachine.CatalogedDeviceDigest = digestUDF;
+                //UDF.Sha2ToString(catalogedDevice.DareEnvelope?.PayloadDigest);
+            MeshHost.Register(CatalogedMachine, this);
+            }
+
 
         /// <summary>
         /// Synchronize the device to the store in increments of no more than <paramref name="maxEnvelopes"/>

@@ -45,9 +45,7 @@ namespace Goedel.Mesh {
         #region // Properties
         ///<summary>The enveloped object</summary> 
         public Enveloped<ActivationApplicationSsh> EnvelopedActivationApplicationSsh =>
-            envelopedActivationApplicationSsh ?? new Enveloped<ActivationApplicationSsh>(DareEnvelope).
-                    CacheValue(out envelopedActivationApplicationSsh);
-        Enveloped<ActivationApplicationSsh> envelopedActivationApplicationSsh;
+            new Enveloped<ActivationApplicationSsh>(DareEnvelope)
 
         #endregion
 

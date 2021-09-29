@@ -134,11 +134,16 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => DeviceUdf;
 
         ///<summary>Typed enveloped data</summary> 
-        public Enveloped<CatalogedDevice> EnvelopedCatalogedDevice =>
-            envelopedCatalogedDevice ?? new Enveloped<CatalogedDevice>(DareEnvelope).
-                    CacheValue(out envelopedCatalogedDevice);
-        Enveloped<CatalogedDevice> envelopedCatalogedDevice;
+        public Enveloped<CatalogedDevice> GetEnvelopedCatalogedDevice() =>
+           new Enveloped<CatalogedDevice>(DareEnvelope);
 
+
+        //public override DareEnvelope DareEnvelope 
+        //    { get => base.DareEnvelope;
+        //    set {
+        //        base.DareEnvelope = value;
+        //        envelopedCatalogedDevice = null;
+        //        } }
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileUser"/>
         ///to return the <see cref="ProfileUser"/> value.</summary>
@@ -172,7 +177,7 @@ namespace Goedel.Mesh {
                     EnvelopedConnectionAddress.Decode(KeyCollection);
 
 
-        public AccessCapability AccessCapability { get; set; }
+        //public AccessCapability AccessCapability { get; set; }
 
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationDevice"/>

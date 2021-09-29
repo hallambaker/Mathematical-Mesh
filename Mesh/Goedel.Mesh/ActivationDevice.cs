@@ -33,9 +33,7 @@ namespace Goedel.Mesh {
     public partial class ActivationHost : ActivationDevice {
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ActivationHost> EnvelopedActivationHost =>
-            envelopedActivationDevice ?? new Enveloped<ActivationHost>(DareEnvelope).
-                    CacheValue(out envelopedActivationDevice);
-        Enveloped<ActivationHost> envelopedActivationDevice;
+            new Enveloped<ActivationHost>(DareEnvelope);
 
 
         ///<inheritdoc/>
@@ -80,9 +78,7 @@ namespace Goedel.Mesh {
         #region // Properties
         ///<summary>Typed enveloped data</summary> 
         public Enveloped<ActivationDevice> EnvelopedActivationDevice =>
-            envelopedActivationDevice ?? new Enveloped<ActivationDevice>(DareEnvelope).
-                    CacheValue(out envelopedActivationDevice);
-        Enveloped<ActivationDevice> envelopedActivationDevice;
+            new Enveloped<ActivationDevice>(DareEnvelope);
 
         ///<summary>The connection value.</summary>
         public override Connection Connection => ConnectionService;

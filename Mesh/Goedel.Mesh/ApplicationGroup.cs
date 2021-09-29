@@ -35,9 +35,7 @@ namespace Goedel.Mesh {
         #region // Properties
         ///<summary>The enveloped object</summary> 
         public Enveloped<ActivationApplicationGroup> EnvelopedActivationApplicationGroup =>
-            envelopedActivationApplicationGroup ?? new Enveloped<ActivationApplicationGroup>(DareEnvelope).
-                    CacheValue(out envelopedActivationApplicationGroup);
-        Enveloped<ActivationApplicationGroup> envelopedActivationApplicationGroup;
+            new Enveloped<ActivationApplicationGroup>(DareEnvelope);
 
         #endregion
 

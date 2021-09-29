@@ -286,6 +286,14 @@ namespace Goedel.Cryptography {
             return PresentationBase32(buffer, bits);
 
             }
+
+
+        public static string Sha2ToString(
+                byte[] source,
+                int bits = 0) => TypeBDSToString(UdfTypeIdentifier.Digest_SHA_2_512,
+                    source, bits);
+
+
         /// <summary>
         /// Convert a digest value and content type to a UDF buffer.
         /// </summary>
