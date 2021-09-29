@@ -70,6 +70,7 @@ namespace Goedel.XUnit {
         public string DeviceAlice3 = "Alice Device 3";
         public string DeviceBobAdmin = "Bob Admin";
         public string DeviceQ = "DeviceQ";
+        public string DeviceMallet = "DeviceMallet";
 
         static string AccountGroup = "groupw@example.com";
 

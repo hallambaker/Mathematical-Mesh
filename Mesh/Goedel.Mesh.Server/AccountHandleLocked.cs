@@ -183,7 +183,7 @@ namespace Goedel.Mesh.Server {
                     break;
                     }
                 default: {
-                    (AccessCapability?.Active != true).AssertTrue(NotAuthorized.Throw);
+                    (AccessCapability?.Active == true).AssertTrue(NotAuthorized.Throw);
                     break;
                     }
                 }

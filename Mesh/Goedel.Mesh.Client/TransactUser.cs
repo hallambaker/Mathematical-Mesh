@@ -94,7 +94,8 @@ namespace Goedel.Mesh.Client {
             var accessCapability = new AccessCapability() {
                 Id = catalogedDevice.ConnectionService.AuthenticationPublic.KeyIdentifier,
                 EnvelopedCatalogedDevice = catalogedDevice.GetEnvelopedCatalogedDevice(),
-                CatalogedDeviceDigest = digestUDF
+                CatalogedDeviceDigest = digestUDF,
+                Active = true
                 };
 
 

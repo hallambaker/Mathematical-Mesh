@@ -30,6 +30,7 @@ using Goedel.XUnit;
 using Goedel.Test;
 using Goedel.Mesh.Test;
 using Goedel.Cryptography.Algorithms;
+using Goedel.Test.Core;
 
 namespace Scratchpad {
 
@@ -74,13 +75,14 @@ namespace Scratchpad {
 
 
             //TestService.Test().MeshDeviceMail();
+            TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSigner);
 
 
-            TestService.Test().MeshDeviceConnectStaticQR();
+            //TestService.Test().MeshDeviceConnectStaticQR();
 
-            TestService.Test().MeshDeviceDirectKey();
+            //TestService.Test().MeshDeviceDirectKey();
 
-            TestService.Test().MeshDeviceThresholdKey();
+            //TestService.Test().MeshDeviceThresholdKey();
 
             //Debug();
 

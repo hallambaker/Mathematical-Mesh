@@ -123,7 +123,7 @@ namespace Goedel.XUnit {
             DareEnvelope alternative = null;
             if (dataValidity == DataValidity.CorruptSigner) {
                 var mallet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountMallet, "main");
+                DeviceMallet, AccountMallet, "main");
                 alternative = mallet.ConnectionDevice.DareEnvelope;
                 }
 
@@ -153,7 +153,7 @@ namespace Goedel.XUnit {
             DareEnvelope alternative = null;
             if (dataValidity == DataValidity.CorruptSigner) {
                 var mallet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountMallet, "main");
+                        DeviceMallet, AccountMallet, "main");
                 alternative = mallet.ConnectionDevice.DareEnvelope;
                 }
 
