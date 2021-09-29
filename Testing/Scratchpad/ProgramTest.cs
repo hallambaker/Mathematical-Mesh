@@ -78,7 +78,12 @@ namespace Scratchpad {
             //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSigner);
 
 
-            TestService.Test().MeshDeviceConnectStaticQR();
+            TestService.Test().MeshServiceFull();
+            Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
+            Goedel.XUnit.MakeSiteDocs.Test().CreateSSH();
+            Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
+            Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+            Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
             //TestService.Test().MeshDeviceDirectKey();
 
