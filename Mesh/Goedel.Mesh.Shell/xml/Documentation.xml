@@ -2094,6 +2094,39 @@
         <member name="P:Goedel.Mesh.Shell._GroupCreate.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.Auth">
+            <summary>Field accessor for option [auth]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthSuper">
+            <summary>Field accessor for option [root]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthAdmin">
+            <summary>Field accessor for option [admin]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthMessage">
+            <summary>Field accessor for option [message]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthWeb">
+            <summary>Field accessor for option [web]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthDevice">
+            <summary>Field accessor for option [device]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthThreshold">
+            <summary>Field accessor for option [threshold]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthSSH">
+            <summary>Field accessor for option [ssh]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthEmail">
+            <summary>Field accessor for option [email]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthGroupMember">
+            <summary>Field accessor for option [member]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthGroupAdmin">
+            <summary>Field accessor for option [group]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._GroupCreate.GroupID">
             <summary>Field accessor for parameter []</summary>
         </member>

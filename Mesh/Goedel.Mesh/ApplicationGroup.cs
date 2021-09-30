@@ -58,6 +58,10 @@ namespace Goedel.Mesh {
         public override void Decode(IKeyCollection keyCollection) =>
             Activation = EnvelopedActivation.Decode(keyCollection);
 
+
+        public ActivationAccount GetActivationAccount() => new(Activation);
+
+
         #endregion
 
         }

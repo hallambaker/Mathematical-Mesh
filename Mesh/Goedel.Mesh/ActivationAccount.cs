@@ -186,6 +186,14 @@ namespace Goedel.Mesh {
                 keyCollection, KeySecurity.Exportable);
             }
 
+        public ActivationAccount(ActivationApplicationGroup activationApplicationGroup) {
+            AccountAuthenticationKey = activationApplicationGroup.AccountAuthentication.GetKeyPair();
+            AccountEncryptionKey = activationApplicationGroup.AccountEncryption.GetKeyPair();
+            AdministratorSignatureKey = activationApplicationGroup.AdministratorSignature.GetKeyPair();
+            }
+
+
+
 
         /// <summary>
         /// Activate the keys bound to this activation record.

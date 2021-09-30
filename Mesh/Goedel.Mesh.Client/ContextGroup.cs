@@ -25,6 +25,7 @@ using System.IO;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
@@ -71,13 +72,12 @@ namespace Goedel.Mesh.Client {
 
 
         ///<inheritdoc/>
-        public override MeshCredentialPrivate GetMeshCredentialPrivate() =>
-            throw new NYI();
-
+        public  KeyCredentialPrivate GetKeyCredentialPrivate() =>
+           new KeyCredentialPrivate(KeyAccountAuthentication as KeyPairAdvanced);
         // have to get the credential from the client...
         public override MeshServiceClient MeshClient {
             get => meshClient ??
-              GetMeshClient(GetMeshCredentialPrivate()).CacheValue(out meshClient);
+              GetMeshClient(GetKeyCredentialPrivate()).CacheValue(out meshClient);
             set => meshClient = value;
             }
         MeshServiceClient meshClient;
@@ -107,17 +107,17 @@ namespace Goedel.Mesh.Client {
         #endregion
         #region // Factory methods and constructors
 
-        /// <summary>
-        /// Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
-        /// </summary>
-        /// <param name="contextAccount">The enclosing account context.</param>
-        /// <param name="catalogedGroup">Description of the group to return the
-        /// context for.</param>
-        public ContextGroup(ContextUser contextAccount, CatalogedGroup catalogedGroup) :
-                    this (contextAccount, catalogedGroup, GetActivationAccount())  { 
+        ///// <summary>
+        ///// Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
+        ///// </summary>
+        ///// <param name="contextAccount">The enclosing account context.</param>
+        ///// <param name="catalogedGroup">Description of the group to return the
+        ///// context for.</param>
+        //public ContextGroup(ContextUser contextAccount, CatalogedGroup catalogedGroup) :
+        //            this (contextAccount, catalogedGroup, GetActivationAccount())  { 
             
 
-            }
+        //    }
 
 
 

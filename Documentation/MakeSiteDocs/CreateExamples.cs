@@ -522,7 +522,7 @@ namespace ExampleGenerator {
 
             // Group
             Group.GroupCreate = Alice1.Example(
-                $"group create {GroupAccount}"
+                $"group create {GroupAccount} /web"
                  );
 
             Group.EncryptSourceFile.WriteFileNew(Group.TestText);

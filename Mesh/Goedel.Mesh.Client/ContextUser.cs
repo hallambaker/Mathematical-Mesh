@@ -856,9 +856,16 @@ namespace Goedel.Mesh.Client {
             var catalog = GetStore(CatalogApplication.Label) as CatalogApplication;
             var entry = catalog.LocateGroup(groupAddress);
 
+            // get the Application entry here.
+            var applicationEntry = GetApplicationEntryGroup(groupAddress);
+
+
+            // Get the activation from the entry
+            var activationAccount = applicationEntry.GetActivationAccount();
+
             // construct the group context
             // We do not attempt to get admin privs here, we will do that if necessary.
-            return new ContextGroup(this, entry);
+            return new ContextGroup(this, entry, activationAccount);
             }
 
 
@@ -1876,6 +1883,14 @@ namespace Goedel.Mesh.Client {
         public ApplicationEntryMail GetApplicationEntryMail(
                 string applicationId) => GetApplicationEntry(
                     CatalogedApplicationMail.GetKey(applicationId)) as ApplicationEntryMail;
+
+        /// <summary>
+        /// Get the Mail application entry  for the context device.<paramref name="applicationId"/>.
+        /// </summary>
+        /// <param name="applicationId">The name of the specific Mail application entry.</param>
+        /// <returns>The application iff found, otherwise null.</returns>
+        public ApplicationEntryGroup GetApplicationEntryGroup(
+               string applicationId) => GetApplicationEntry(applicationId) as ApplicationEntryGroup;
 
 
 

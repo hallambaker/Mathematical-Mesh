@@ -778,7 +778,7 @@
         <member name="P:Goedel.Mesh.Client.ContextGroup.Connection">
             <summary>Convenience accessor for the connection.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.GetMeshCredentialPrivate">
+        <member name="M:Goedel.Mesh.Client.ContextGroup.GetKeyCredentialPrivate">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.StoresDirectory">
@@ -786,14 +786,6 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.DictionaryCatalogDelegates">
             <summary>Dictionarry used to create stores</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup)">
-            <summary>
-            Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
-            </summary>
-            <param name="contextAccount">The enclosing account context.</param>
-            <param name="catalogedGroup">Description of the group to return the
-            context for.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup,Goedel.Mesh.ActivationAccount)">
             <summary>
@@ -1587,6 +1579,13 @@
             <returns>The application iff found, otherwise null.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetApplicationEntryMail(System.String)">
+            <summary>
+            Get the Mail application entry  for the context device.<paramref name="applicationId"/>.
+            </summary>
+            <param name="applicationId">The name of the specific Mail application entry.</param>
+            <returns>The application iff found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetApplicationEntryGroup(System.String)">
             <summary>
             Get the Mail application entry  for the context device.<paramref name="applicationId"/>.
             </summary>
