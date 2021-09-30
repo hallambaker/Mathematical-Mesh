@@ -449,6 +449,7 @@
 			Include AccountOptions
 			Include Reporting
 			Include CryptoOptions
+			Include DeviceAuthOptions
 			Parameter GroupID "group" String
 				Brief "Recryption group name in user@example.com format"
 

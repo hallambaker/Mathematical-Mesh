@@ -34,10 +34,11 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult GroupCreate(GroupCreate options) {
+            var rights = GetRights(options);
             var groupID = options.GroupID.Value;
 
             var contextAccount = GetContextUser(options);
-            var contextGroup = contextAccount.CreateGroup(groupID);
+            var contextGroup = contextAccount.CreateGroup(groupID, roles: rights);
 
             //Screen.WriteLine($"Group Encryption key is {contextGroup.ProfileGroup.AccountEncryptionKey.KeyIdentifier}");
 

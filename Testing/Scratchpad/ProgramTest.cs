@@ -65,24 +65,10 @@ namespace Scratchpad {
 
 
 
-            // Goes into infinite loop trying to obtain the catalog decryption key.
 
-            // This is a consequence of the Access catalog being encrypted only to the 
-            // service key - the admin client can't read it.
-
-
-            // Temporary fix : Also encrypt the Access catalog so the user devices can read it.
-
-
-            //TestService.Test().MeshDeviceMail();
-            //TestService.Test().TestCredentialAccountFails(DataValidity.CorruptSigner);
-
-
-            //TestService.Test().MeshServiceFull();
-            //Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
-            //Goedel.XUnit.MakeSiteDocs.Test().CreateSSH();
-            Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
             Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+            ShellTests.Test().TestMessageGroup();
+
             Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
             //TestService.Test().MeshDeviceDirectKey();
