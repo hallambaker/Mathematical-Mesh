@@ -149,8 +149,9 @@ namespace Goedel.Mesh {
         /// <returns>Sequence of Mail application instances.</returns>
         public List<CatalogedApplication> GetMail() {
             var result = new List<CatalogedApplication>();
-            foreach (var application in AsCatalogedType) {
-                if (application is CatalogedApplicationMail catalogedApplicationMail) {
+            foreach (var entry in PersistenceStore.ObjectIndex) {
+                var application = entry.Value;
+                if (application.JsonObject is CatalogedApplicationMail catalogedApplicationMail) {
                     result.Add(catalogedApplicationMail);
                     }
                 }

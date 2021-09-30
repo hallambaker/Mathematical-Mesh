@@ -66,8 +66,8 @@ namespace Scratchpad {
 
 
 
-            Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
-            ShellTests.Test().TestMessageGroup();
+            //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+            //ShellTests.Test().TestMessageGroup();
 
             Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 

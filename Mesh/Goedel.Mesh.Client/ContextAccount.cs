@@ -532,8 +532,8 @@ namespace Goedel.Mesh.Client {
 
                     count++;
                     store.AppendDirect(entry);
-
-
+                   
+                    // the persistence store needs to be updated as well!!!!
 
                     }
 

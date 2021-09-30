@@ -120,7 +120,8 @@ namespace Goedel.Mesh {
             }
 
         ///<inheritdoc/>
-        public override KeyData[] GetEscrow() => new KeyData[] {
+        public override KeyData[] GetEscrow() => 
+            new KeyData[] {
             new KeyData(ClientKeyPrivate, true)};
 
         ///<inheritdoc/>
