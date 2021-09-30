@@ -160,18 +160,19 @@ namespace Goedel.Mesh.Client {
 
             if (catalogedMachine?.CatalogedDevice?.EnvelopedConnectionService != null) {
                 // Some validation checks
-                (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionService.Authentication.Udf,
+                (DeviceAuthentication.KeyIdentifier).AssertEqual(
+                        ConnectionService.Authentication.CryptoKey.KeyIdentifier,
                         KeyActivationFailed.Throw);
                 }
 
 
             if (catalogedMachine?.CatalogedDevice?.EnvelopedConnectionDevice != null) {
                 // Some validation checks
-                (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionDevice.Signature.Udf,
+                (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionDevice.Signature.CryptoKey.KeyIdentifier,
                         KeyActivationFailed.Throw);
-                (DeviceEncryption.KeyIdentifier).AssertEqual(ConnectionDevice.Encryption.Udf,
+                (DeviceEncryption.KeyIdentifier).AssertEqual(ConnectionDevice.Encryption.CryptoKey.KeyIdentifier,
                         KeyActivationFailed.Throw);
-                (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionDevice.Authentication.Udf,
+                (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionDevice.Authentication.CryptoKey.KeyIdentifier,
                         KeyActivationFailed.Throw);
                 }
 

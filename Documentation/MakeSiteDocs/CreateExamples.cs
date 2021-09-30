@@ -85,15 +85,18 @@ namespace ExampleGenerator {
         /// 
         /// </summary>
         public void PerformAll() {
+            var index = "";
+
+
             // ignore unit test errors.
             Goedel.Test.AssertTest.FlagFailure = false;
 
 
             ServiceConnect();
             CreateAliceAccount();
-            EncodeDecodeFile();
+            EncodeDecodeFile(index);
 
-            ConnectDeviceCompare(out deviceId);
+            ConnectDeviceCompare(index);
 
 
             PasswordCatalog();
@@ -157,12 +160,12 @@ namespace ExampleGenerator {
             }
 
 
-        public void EncodeDecodeFile() {
+        public void EncodeDecodeFile(string index ) {
             // Encrypt the file
             Account.EncryptSourceFile.WriteFileNew(TestFile1Text);
             var dump = Alice1.DumpFile(Account.EncryptSourceFile);
             var encode = Alice1.Example(
-                $"dare encode {Account.EncryptSourceFile} {Account.EncryptTargetFile} /encrypt {AliceAccount} ");
+                $"dare encode {Account.EncryptSourceFile} {Account.EncryptTargetFile}{index} /encrypt {AliceAccount} ");
             var verify = Alice1.Example(
                 $"dare verify {Account.EncryptTargetFile}"
                 );
@@ -178,7 +181,7 @@ namespace ExampleGenerator {
 
             // Decrypt the file
             var decode = Alice1.Example(
-                $"dare decode {Account.EncryptTargetFile} {Account.EncryptResultFile}"
+                $"dare decode {Account.EncryptTargetFile}{index} {Account.EncryptResultFile}"
                 );
             var dump2 = Alice1.DumpFile(Account.EncryptResultFile);
             Account.ConsoleDecryptFile = new List<ExampleResult>() {
@@ -251,7 +254,9 @@ namespace ExampleGenerator {
             Apps.TaskCatalogEntry = resultTask.CatalogedEntries[0];
             }
 
-        public void ConnectDeviceCompare(out string deviceId) {
+
+        public void ConnectDevice() {
+
 
             Alice2 = GetTestCLI(AliceDevice2);
             // Connect the second device
@@ -295,16 +300,22 @@ namespace ExampleGenerator {
             Connect.ConnectAccept.GetResult().Success.TestTrue();
             Connect.ConnectComplete.GetResult().Success.TestTrue();
 
-            // This is not syncing correctly. Do not have the credentials in the store(!)
+
             Account.SyncAlice = Alice2.Example(
                 $"account sync"
                 );
+            }
+
+
+        public void ConnectDeviceCompare(string index) {
+            ConnectDevice();
+
 
             // Password catalog access broken on device 2
             // Don't have the account decryption key either.
             Connect.PasswordList2 = Alice2.Example(
                 $"password get {ShellPassword.PasswordSite}",
-                $"dare decode {Account.EncryptTargetFile} {Connect.EncryptResultFile}"
+                $"dare decode {Account.EncryptTargetFile}{index} {Connect.EncryptResultFile}"
                 );
 
             Connect.PasswordList2.Add(Alice2.DumpFile(Connect.EncryptResultFile));
@@ -328,7 +339,6 @@ namespace ExampleGenerator {
             var dev2Device = dev2Machine?.CatalogedDevice;
 
 
-            // Failing here because the catalog keys are now different for each key of course!!!!
 
             Connect.AliceProfileDevice2 = dev2Machine.ProfileDevice;
             Connect.AliceActivationDevice2 = connectStaticPollSuccess.ActivationDevice;
@@ -337,21 +347,21 @@ namespace ExampleGenerator {
             Connect.AliceConnectionService2 = dev2Device.ConnectionService;
             }
 
-        public void TestConnectDisconnect(string deviceId) {
+        public void TestConnectDisconnect(string index) {
             Connect.Disconnect = Alice1.Example(
-                $"device delete {deviceId}"
+                $"device delete {Connect.Device2Id}"
                 );
             Connect.Disconnect.GetResult().Success.TestTrue();
 
             Connect.PasswordList2Disconnect = Alice2.Example(
                 //$"password get {PasswordSite}",
                 $"account sync",
-                $"dare decode {Account.EncryptTargetFile} {Connect.encryptResultFile3}"
+                $"dare decode {Account.EncryptTargetFile}{index} {Connect.encryptResultFile3}"
                 );
             Connect.PasswordList2Disconnect.Add(Alice2.DumpFile(Connect.encryptResultFile3));
 
-
-            Connect.PasswordList2Disconnect.GetResult(1).Success.TestFalse();
+            Connect.PasswordList2Disconnect.GetResult(0).Success.TestFalse();
+            Connect.PasswordList2Disconnect.GetResult(1).Success.TestTrue();
 
 
            Connect.DisconnectThresh = Alice1.Example(
@@ -362,9 +372,10 @@ namespace ExampleGenerator {
             Connect.DisconnectThreshDecrypt = Alice3.Example(
                 //$"password get {PasswordSite}",
                 $"account sync",
-                $"dare decode {Account.EncryptTargetFile} {Connect.encryptResultFile3}"
+                $"dare decode {Account.EncryptTargetFile}{index} {Connect.encryptResultFile3}"
                 );
-
+            Connect.DisconnectThreshDecrypt.GetResult(0).Success.TestFalse();
+            Connect.DisconnectThreshDecrypt.GetResult(1).Success.TestFalse();
             }
 
 

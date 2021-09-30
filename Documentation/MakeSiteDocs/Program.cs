@@ -219,7 +219,7 @@ namespace ExampleGenerator {
             // Dare uses the keys from the contacts catalog.
             PlatformDare();
 
-            TestConnectDisconnect(deviceId);
+            TestConnectDisconnect("");
             EscrowAndRecover();
 
 

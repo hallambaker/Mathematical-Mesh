@@ -21,6 +21,8 @@
 #endregion
 
 
+using System;
+
 using ExampleGenerator;
 
 using Goedel.Mesh.Test;
@@ -53,39 +55,48 @@ namespace Goedel.XUnit {
         [Fact]
 
         public void FullTest() {
+            var index = "FullTest";
+
             ServiceConnect();
             CreateAliceAccount();
-            EncodeDecodeFile();
+            EncodeDecodeFile(index);
 
             PasswordCatalog();
             BookmarkCatalog();
             ContactCatalog();
             NetworkCatalog();
             TaskCatalog();
-            ConnectDeviceCompare(out var deviceId);
+            ConnectDeviceCompare(index);
 
 
 
-            TestConnectDisconnect(deviceId);
+
             SSHApp();
             MailApp();
             CreateBobAccount();
             ContactExchange();
 
 
+
             Confirmation();
             GroupOperations();
             ConnectPINDynamicQR();
             ConnectStaticQR();
+
+            TestConnectDisconnect(index);
+
+
             EscrowAndRecover();
             }
 
         [Fact]
         public void CiphertextVerify() {
+            var index = "CiphertextVerify";
+
 
             ServiceConnect();
             CreateAliceAccount();
-            EncodeDecodeFile();
+            EncodeDecodeFile(index);
 
 
             }
@@ -94,22 +105,24 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void DeleteDevice() {
+            var index = "DeleteDevice";
 
             ServiceConnect();
             CreateAliceAccount();
-            EncodeDecodeFile();
-            ConnectDeviceCompare(out var deviceId);
-            TestConnectDisconnect(deviceId);
+            EncodeDecodeFile(index);
+            ConnectDeviceCompare(index);
+            ConnectPINDynamicQR();
+            TestConnectDisconnect(index);
             }
 
         [Fact]
         public void DecodeSecondDevice() {
-
+            var index = "DecodeSecondDevice";
 
             ServiceConnect();
             CreateAliceAccount();
-            EncodeDecodeFile();
-            ConnectDeviceCompare(out _);
+            EncodeDecodeFile(index);
+            ConnectDeviceCompare(index);
 
 
 
@@ -120,6 +133,7 @@ namespace Goedel.XUnit {
         public void CreateSSH() {
             ServiceConnect();
             CreateAliceAccount();
+            ConnectDevice();
             SSHApp();
             }
 
@@ -128,6 +142,7 @@ namespace Goedel.XUnit {
         public void CreateMail() {
             ServiceConnect();
             CreateAliceAccount();
+            ConnectDevice();
             MailApp();
             }
 
