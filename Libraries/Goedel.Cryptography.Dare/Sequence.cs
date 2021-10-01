@@ -115,6 +115,8 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The current read position.</summary> 
         public long Position => JbcdStream.PositionRead;
 
+
+
         ///<summary>Position of the last index in the file.</summary> 
         public long PositionIndex { get; set; }
 
@@ -683,7 +685,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="header">The frame header value.</param>
         /// <param name="trailer">The frame trailer value.</param>
         /// <returns>The number of bytes written.</returns>
-        void AppendFrame(byte[] header, byte[] payload = null, byte[] trailer = null) =>
+        long AppendFrame(byte[] header, byte[] payload = null, byte[] trailer = null) =>
                 JbcdStream.WriteWrappedFrame(header, payload, trailer);
 
 
@@ -743,7 +745,7 @@ namespace Goedel.Cryptography.Dare {
         /// <paramref name="envelope"/> to the computed values.</param>
         public virtual SequenceFrameIndex Append(DareEnvelope envelope, bool updateEnvelope = false) {
 
-            var sequenceFrameIndex = new SequenceFrameIndex(envelope);
+
 
             //var header = envelope.Header as DareHeader; // fails ! need to copy over !!
             var headerIn = envelope.Header;
@@ -779,7 +781,9 @@ namespace Goedel.Cryptography.Dare {
             // Hack: should verify the digest value and signature.
 
 
-            AppendEnvelope(envelope.Body, header, trailer);
+            var dataPosition = AppendEnvelope(envelope.Body, header, trailer);
+            var sequenceFrameIndex = new SequenceFrameIndex(this, envelope, dataPosition);
+
 
             if (updateEnvelope) {
                 envelope.Header = header;
@@ -792,7 +796,7 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
-        private void AppendEnvelope(byte[] body, DareHeader header, DareTrailer trailer) {
+        private long AppendEnvelope(byte[] body, DareHeader header, DareTrailer trailer) {
             PrepareFrame(header.SequenceInfo);
             var contextWrite = new SequenceWriterFile(this, header, JbcdStream);
             contextWrite.CommitFrame(trailer);
@@ -802,7 +806,7 @@ namespace Goedel.Cryptography.Dare {
             //Apply(header, envelope.Body, envelope.Trailer);
             var dataHeader = header.GetBytes(false);
             var dataTrailer = trailer.GetBytes(false);
-            AppendFrame(dataHeader, body, dataTrailer);
+            return AppendFrame(dataHeader, body, dataTrailer);
             }
 
         /// <summary>

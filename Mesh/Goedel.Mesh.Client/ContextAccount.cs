@@ -277,6 +277,7 @@ namespace Goedel.Mesh.Client {
             "Need to delete the account at the service!!!".TaskFunctionality();
 
             var unbindRequest = new UnbindRequest() {
+                Account = AccountAddress
                 };
             var response = MeshClient.UnbindAccount(unbindRequest);
 
@@ -531,7 +532,7 @@ namespace Goedel.Mesh.Client {
                         }
 
                     count++;
-                    store.AppendDirect(entry);
+                    store.AppendDirect(entry, true);
                     }
 
 

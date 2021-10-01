@@ -213,8 +213,8 @@ namespace Goedel.Mesh {
         /// Append the envelopes <paramref name="envelope"/> to the
         /// store.
         /// </summary>
-        public override void AppendDirect(DareEnvelope envelope) {
-            Container.Append(envelope);
+        public override void AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
+            Container.Append(envelope, updateEnvelope);
             Intern(envelope, null);
             }
 

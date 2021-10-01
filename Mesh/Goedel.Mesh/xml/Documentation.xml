@@ -2118,7 +2118,7 @@
             <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
             <param name="create">If true, create a container if it does not already exist.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Catalog`1.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
             <summary>
             Append the envelopes <paramref name="envelope"/> to the
             store.
@@ -14439,7 +14439,7 @@
             </summary>
             <param name="envelope"></param>
         </member>
-        <member name="M:Goedel.Mesh.Spool.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Spool.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
             <summary>
             Append the envelopes <paramref name="envelope"/> to the
             store.
@@ -14807,7 +14807,7 @@
             <param name="containerName">The name of the container.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Store.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Store.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
             <summary>
             Append the envelopes <paramref name="envelope"/> to the
             store.

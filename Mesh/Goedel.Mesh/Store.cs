@@ -215,7 +215,8 @@ namespace Goedel.Mesh {
         /// Append the envelopes <paramref name="envelope"/> to the
         /// store.
         /// </summary>
-        public virtual void AppendDirect(DareEnvelope envelope) => Container.Append(envelope);
+        public virtual void AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) => 
+            Container.Append(envelope, updateEnvelope);
 
         /// <summary>
         /// Returns an enumerator for traversing the store. If <paramref name="reverse"/>

@@ -256,7 +256,13 @@ namespace Goedel.Cryptography.Dare {
                 else {
                     WriteTag(UFrame, 0);
                     }
+
+                var result = PositionWrite;
+
                 if (FrameData1 != null) {
+
+                    result += TagLength(FrameData1.LongLength);
+
                     WriteFrame(FrameData1);
                     }
                 else {
@@ -277,7 +283,7 @@ namespace Goedel.Cryptography.Dare {
                     StreamWrite.Flush();
                     }
 
-                return TotalLength2(FrameLength);
+                return result;
                 }
 
             catch (Exception exception) {

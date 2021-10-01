@@ -114,9 +114,17 @@ namespace Goedel.Cryptography.Dare {
                     StoreEntry previous,
                     Sequence container,
                     JsonObject item = null) {
+            if ((frameIndex.DataPosition == 0) & (frameIndex.Header.Index > 0)) {
+
+                }
+
+
+
+            //((frameIndex.DataPosition == 0) & (FrameCount > 0)).AssertFalse(Internal.Throw);
+
+
             Container = container;
             ContainerHeader = frameIndex.Header;
-
 
 
             FrameIndex = frameIndex;

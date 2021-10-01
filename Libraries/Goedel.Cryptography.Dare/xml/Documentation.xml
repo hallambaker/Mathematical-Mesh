@@ -6335,7 +6335,7 @@
             </summary>
             <returns>The frame payload data.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceFrameIndex.#ctor(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceFrameIndex.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.Dare.DareEnvelope,System.Int64)">
             <summary>
             Constructor returning an instance for the envelope <paramref name="envelope"/>.
             </summary>
