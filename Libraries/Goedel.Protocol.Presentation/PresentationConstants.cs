@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 10/1/2021 5:09:43 PM
+//  This file was automatically generated at 10/2/2021 4:15:48 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -84,6 +84,10 @@ namespace Goedel.Protocol.Presentation {
     public enum ExtensionTags {
         ///<summary>Undefined type</summary>
         Unknown = -1,
+        ///<summary>X448-Pub</summary>
+        DirectX448,
+        ///<summary>X25519-Pub</summary>
+        DirectX25519,
         ///<summary>X448</summary>
         X448,
         ///<summary>X25519</summary>
@@ -323,6 +327,10 @@ namespace Goedel.Protocol.Presentation {
                 };
 
 
+        ///<summary>Jose enumeration tag for ExtensionTags.DirectX448</summary>
+        public const string  ExtensionTagsDirectX448Tag = "DirectX448";
+        ///<summary>Jose enumeration tag for ExtensionTags.DirectX25519</summary>
+        public const string  ExtensionTagsDirectX25519Tag = "DirectX25519";
         ///<summary>Jose enumeration tag for ExtensionTags.X448</summary>
         public const string  ExtensionTagsX448Tag = "X448";
         ///<summary>Jose enumeration tag for ExtensionTags.X25519</summary>
@@ -380,6 +388,8 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The enumeration value.</returns>
         public static ExtensionTags ToExtensionTags (this string text) =>
             text switch {
+                ExtensionTagsDirectX448Tag => ExtensionTags.DirectX448,
+                ExtensionTagsDirectX25519Tag => ExtensionTags.DirectX25519,
                 ExtensionTagsX448Tag => ExtensionTags.X448,
                 ExtensionTagsX25519Tag => ExtensionTags.X25519,
                 ExtensionTagsPkixX509Tag => ExtensionTags.PkixX509,
@@ -415,6 +425,8 @@ namespace Goedel.Protocol.Presentation {
         /// <returns>The text value.</returns>
         public static string ToLabel (this ExtensionTags data) =>
             data switch {
+                ExtensionTags.DirectX448 => ExtensionTagsDirectX448Tag,
+                ExtensionTags.DirectX25519 => ExtensionTagsDirectX25519Tag,
                 ExtensionTags.X448 => ExtensionTagsX448Tag,
                 ExtensionTags.X25519 => ExtensionTagsX25519Tag,
                 ExtensionTags.PkixX509 => ExtensionTagsPkixX509Tag,

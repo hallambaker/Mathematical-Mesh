@@ -553,7 +553,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// The Ephemeral public key
         /// </summary>
-        public override KeyPair EphemeralKeyPair => new KeyPairX448(EphemeralPublicValue as CurveX448Public);
+        public override KeyPair EphemeralKeyPair => 
+            new KeyPairX448(EphemeralPublicValue as CurveX448Public);
 
 
         /// <summary>Carry from proxy recryption efforts</summary>

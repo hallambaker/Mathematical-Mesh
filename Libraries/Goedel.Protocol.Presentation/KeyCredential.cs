@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 
 using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
 
 
@@ -73,10 +74,15 @@ namespace Goedel.Protocol.Presentation {
         #region // Implement Interface: ICredentialPrivate
 
         ///<inheritdoc/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey() => throw new NotImplementedException();
-        
+        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
+            (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
+                        AuthenticationPublic);
+
         ///<inheritdoc/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<KeyPairAdvanced> ephemerals, string keyId) => throw new NotImplementedException();
+        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
+                List<KeyPairAdvanced> ephemerals, 
+                string keyId) =>
+            (ephemerals[0], AuthenticationPublic);
         #endregion
         }
 
@@ -87,6 +93,8 @@ namespace Goedel.Protocol.Presentation {
         #region // Properties
 
         string Tag { get; }
+
+        List<PacketExtension> Extensions { get; } = new();
 
 
         KeyPairAdvanced AuthenticationPrivate { get; }
@@ -101,35 +109,78 @@ namespace Goedel.Protocol.Presentation {
         /// Create a new instance with the private key <paramref name="authenticationPrivate"/>
         /// </summary>
         /// <param name="authenticationPrivate">The private key.</param>
-        public KeyCredentialPrivate(KeyPairAdvanced authenticationPrivate) : 
-                    base (authenticationPrivate) {
+        public KeyCredentialPrivate(KeyPairAdvanced authenticationPrivate) :
+                    base(authenticationPrivate) {
             AuthenticationPrivate = authenticationPrivate;
             Tag = authenticationPrivate switch {
 
-                KeyPairX448 => Constants.ExtensionTagsX448Tag,
+                KeyPairX448 => Constants.ExtensionTagsDirectX448Tag,
                 //KeyPairX25519 => Constants.ExtensionTagsX25519Tag,
                 _ => throw new NYI()
                 };
-
+            Extensions.Add(new PacketExtension() {
+                Tag = Tag,
+                Value = AuthenticationPrivate.IKeyAdvancedPublic.Encoding
+                });
             }
 
         #endregion
         #region // Implement Interface: ICredentialPrivate
 
         ///<inheritdoc/>
-        public void AddCredentials(List<PacketExtension> extensions) => throw new NotImplementedException();
-        
+        public void AddCredentials(
+                List<PacketExtension> extensions
+                ) {
+            foreach (var extension in Extensions) {
+                extensions.Add(extension);
+                }
+            }
         ///<inheritdoc/>
-        public void AddEphemerals(List<PacketExtension> extensions, ref List<KeyPairAdvanced> ephmeralsOffered) => throw new NotImplementedException();
-        
+        public void AddEphemerals(
+                List<PacketExtension> extensions,
+                ref List<KeyPairAdvanced> ephmeralsOffered) {
+            KeyPairAdvanced ephemeral;
+
+            if (ephmeralsOffered != null) {
+                ephemeral = ephmeralsOffered[0];
+                //Screen.WriteLine($"Re-Offer of = {ephemeral}");
+
+                }
+            else {
+                ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+                ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
+                //Screen.WriteLine($"Make Offer of = {ephemeral}");
+                }
+
+            var extension = new PacketExtension() {
+                Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
+                Value = ephemeral.IKeyAdvancedPublic.Encoding
+                };
+
+
+            extensions.Add(extension);
+
+            }
+
         ///<inheritdoc/>
-        public ICredentialPublic GetCredentials(List<PacketExtension> extensions) => throw new NotImplementedException();
-        
+        public ICredentialPublic GetCredentials(List<PacketExtension> extensions) =>
+            throw new NotImplementedException();
+
         ///<inheritdoc/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) => throw new NotImplementedException();
-        
+        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
+            foreach (var extension in extensions) {
+                if (extension.Tag == Constants.ExtensionTagsX448Tag) {
+                    var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
+                    //Screen.WriteLine($"Select = {ephemeral}");
+                    return (AuthenticationPrivate, ephemeral);
+                    }
+                }
+            throw new NYI();
+            }
+
         ///<inheritdoc/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) => throw new NotImplementedException();
+        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) =>
+            (AuthenticationPrivate, new KeyPairX448(ephemeral, KeySecurity.Public));
 
         #endregion
         }

@@ -8149,7 +8149,7 @@
             <summary>
             Construct class from a public key value
             </summary>
-            <param name="Public">The public key value</param>
+            <param name="publicKey">The public key value</param>
             <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
             in signature operations.</param>
             <param name="keyUses">The permitted key uses.</param>

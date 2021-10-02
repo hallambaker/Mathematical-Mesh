@@ -166,34 +166,25 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) =>
             new(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
 
-        ///// <summary>
-        ///// Generate a key co-generation contribution and return the new composite public
-        ///// key and the private key contribution.
-        ///// </summary>
-        ///// <param name="privateKey">The private key contribution.</param>
-        ///// <returns>The composite public key.</returns>
-        //public override KeyPairAdvanced Cogenerate(out KeyPairAdvanced privateKey) {
-        //    privateKey = Generate(KeySecurity.Exportable, KeyUses, CryptoAlgorithmID);
-        //    var combinedKey = PublicKey.Combine(privateKey.IKeyAdvancedPublic as CurveX448Public);
-        //    return new KeyPairX448(combinedKey, CryptoAlgorithmID);
-        //    }
 
         /// <summary>
         /// Construct class from a public key value
         /// </summary>
-        /// <param name="Public">The public key value</param>
+        /// <param name="publicKey">The public key value</param>
         /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
         /// in signature operations.</param>
         /// <param name="keyUses">The permitted key uses.</param>
-        public KeyPairX448(IKeyAdvancedPublic Public,
+        public KeyPairX448(IKeyAdvancedPublic publicKey,
                     CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default,
                     KeyUses keyUses = KeyUses.Any) {
             CryptoAlgorithmId = cryptoAlgorithmID == CryptoAlgorithmId.Default ?
                 CryptoAlgorithmId.X448 : cryptoAlgorithmID;
-            PublicKey = Public as CurveX448Public;
+            PublicKey = publicKey as CurveX448Public;
             PKIXPublicKeyECDH = new PKIXPublicKeyX448(PublicKey.Encoding);
             KeyUses = keyUses;
             }
+
+
 
 
         ///<inheritdoc/>

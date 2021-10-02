@@ -86,6 +86,12 @@ File PresentationConstants
 	Enum ExtensionTags "Presentation extension tags"
 
 		// Key exchange related
+		Code DirectX448				"X448-Pub"
+			Description
+				|Public key for X448 key exchange.
+		Code DirectX25519			"X25519-Pub"
+			Description
+				|Public key for X448 key exchange.
 		Code X448					"X448"
 			Description
 				|Ephemeral key for X448 key exchange.

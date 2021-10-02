@@ -64,12 +64,12 @@ namespace Scratchpad {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
 
-
+            ShellTestsHTTP.Test().TestHello();
 
             //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
             //ShellTests.Test().TestMessageGroup();
 
-            Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+            //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
             //TestService.Test().MeshDeviceDirectKey();
 

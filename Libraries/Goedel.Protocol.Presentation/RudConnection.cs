@@ -239,8 +239,8 @@ namespace Goedel.Protocol.Presentation {
 
             var keyDerive = clientKeyAgreementResult.KeyDerive;
 
-            //Screen.WriteLine($"Key Agreement {privateKey.KeyIdentifier}.{keyPublic.KeyIdentifier}");
-            //Screen.WriteLine($"     {clientKeyAgreementResult.IKM.ToStringBase16()}");
+            Screen.WriteLine($"Key Agreement {privateKey.KeyIdentifier}.{keyPublic.KeyIdentifier}");
+            Screen.WriteLine($"     {clientKeyAgreementResult.IKM.ToStringBase16()}");
 
             ClientKeyClientToHost = keyDerive.Derive(Constants.ByteKeyInitiatorResponder, Constants.SizeKeyAesGcm * 8);
             ClientKeyHostToClient = keyDerive.Derive(Constants.ByteKeyResponderInitiator, Constants.SizeKeyAesGcm * 8);
@@ -290,7 +290,7 @@ namespace Goedel.Protocol.Presentation {
         public virtual void ClientKeyExchange(out byte[] ephemeral, out string keyId) {
             var (privateEphemeral, publickey) = HostCredential.SelectKey();
 
-            //Screen.WriteLine($"Client key exchange at client Ephemeral={privateEphemeral} Host={publickey}");
+            Screen.WriteLine($"Client key exchange at client Ephemeral={privateEphemeral} Host={publickey}");
 
             ClientKeyExchange(privateEphemeral, publickey);
 
@@ -309,7 +309,7 @@ namespace Goedel.Protocol.Presentation {
                         KeyPairAdvanced privateKey,
                         KeyPairAdvanced keyPublic) {
 
-            //Screen.WriteLine($"Keys {privateKey.KeyIdentifier}.{keyPublic.KeyIdentifier}");
+            Screen.WriteLine($"Keys {privateKey.KeyIdentifier}.{keyPublic.KeyIdentifier}");
 
 
             mutualKeyAgreementResult = privateKey.Agreement(keyPublic);

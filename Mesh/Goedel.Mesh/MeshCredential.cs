@@ -274,9 +274,11 @@ namespace Goedel.Mesh {
 
             foreach (var extension in extensions) {
                 switch (extension.Tag) {
-                    case Constants.ExtensionTagsX25519Tag:
-                    case Constants.ExtensionTagsX448Tag: {
-                        return new KeyCredentialPublic(extension);
+                    case Constants.ExtensionTagsDirectX25519Tag: {
+                        return new KeyCredentialPublic(new KeyPairX25519(extension.Value));
+                        }
+                    case Constants.ExtensionTagsDirectX448Tag: {
+                        return new KeyCredentialPublic(new KeyPairX448 (extension.Value));
                         }
 
 
@@ -336,10 +338,6 @@ namespace Goedel.Mesh {
                 extensions.Add(extension);
                 }
             }
-        //=> extensions.Add(new PacketExtension() {
-        //    Tag = Tag,
-        //    Value = Value
-        //    });
 
         ///<inheritdoc/>
         public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
@@ -356,18 +354,6 @@ namespace Goedel.Mesh {
         ///<inheritdoc/>
         public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) =>
                 (AuthenticationPrivate, new KeyPairX448(ephemeral, KeySecurity.Public));
-
-        #endregion
-        #region Local methods
-
-        ///// <summary>
-        ///// Not sure if this is needed, binding of the profile might well be a stream 
-        ///// action rather than a credential action.
-        ///// </summary>
-        ///// <param name="profileAccount"></param>
-        //public void Bind(ProfileAccount profileAccount) {
-
-        //    }
 
         #endregion
         }

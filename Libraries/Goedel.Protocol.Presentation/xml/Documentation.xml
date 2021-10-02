@@ -417,6 +417,12 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsDirectX448Tag">
+            <summary>Jose enumeration tag for ExtensionTags.DirectX448</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsDirectX25519Tag">
+            <summary>Jose enumeration tag for ExtensionTags.DirectX25519</summary>
+        </member>
         <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsX448Tag">
             <summary>Jose enumeration tag for ExtensionTags.X448</summary>
         </member>
@@ -1397,6 +1403,12 @@
         </member>
         <member name="F:Goedel.Protocol.Presentation.ExtensionTags.Unknown">
             <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.DirectX448">
+            <summary>X448-Pub</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Presentation.ExtensionTags.DirectX25519">
+            <summary>X25519-Pub</summary>
         </member>
         <member name="F:Goedel.Protocol.Presentation.ExtensionTags.X448">
             <summary>X448</summary>
