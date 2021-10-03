@@ -72,8 +72,8 @@ namespace Goedel.Mesh.Client {
 
 
         ///<inheritdoc/>
-        public  KeyCredentialPrivate GetKeyCredentialPrivate() =>
-           new KeyCredentialPrivate(KeyAccountAuthentication as KeyPairAdvanced);
+        public MeshKeyCredentialPrivate GetKeyCredentialPrivate() =>
+           new MeshKeyCredentialPrivate(KeyAccountAuthentication as KeyPairAdvanced);
         // have to get the credential from the client...
         public override MeshServiceClient MeshClient {
             get => meshClient ??

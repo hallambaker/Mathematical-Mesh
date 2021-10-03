@@ -6596,6 +6596,15 @@
         <member name="M:Goedel.Mesh.MeshCredentialPrivate.SelectKey(System.String,System.Byte[])">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Mesh.MeshKeyCredentialPublic.#ctor(Goedel.Cryptography.KeyPairAdvanced)">
+            <summary>
+            Create a new instance with the public key <paramref name="authenticationPublic"/>
+            </summary>
+            <param name="authenticationPublic">The public key.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MeshKeyCredentialPrivate.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Mesh.GetMachineDelegate">
             <summary>
             Return a new IMeshMachine.

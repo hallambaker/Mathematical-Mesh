@@ -63,8 +63,8 @@ namespace Scratchpad {
         static void Main() {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
-
-            ShellTestsHTTP.Test().TestHello();
+            // Refactor to make KeyCredential Mesh a subclass and chain Mesh credential off that.
+            ShellTestsHTTP.Test().TestAccount();
 
             //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
             //ShellTests.Test().TestMessageGroup();

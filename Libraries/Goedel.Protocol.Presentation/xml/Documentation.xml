@@ -717,12 +717,6 @@
         <member name="P:Goedel.Protocol.Presentation.KeyCredentialPublic.CredentialValidation">
             <summary>The credential validation report (always fails as no provider)</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPublic.#ctor(Goedel.Protocol.Presentation.PacketExtension)">
-            <summary>
-            Create a new credential from a raw key specified in <paramref name="packetExtension"/>
-            </summary>
-            <param name="packetExtension">The packet extension specifying the key</param>
-        </member>
         <member name="M:Goedel.Protocol.Presentation.KeyCredentialPublic.#ctor(Goedel.Cryptography.KeyPairAdvanced)">
             <summary>
             Create a new instance with the public key <paramref name="authenticationPublic"/>

@@ -54,35 +54,6 @@ namespace Goedel.Mesh {
 
 
 
-
-
-    //public class MeshKeyCredentialPublic : KeyCredentialPublic, IVerifyCredential {
-
-
-    //    public override KeyCredentialPublic(KeyPairAdvanced authenticationPublic)
-    //            => new KeyCredentialPublic(MeshKeyCredentialPublic);
-
-
-
-    //    /// <summary>
-    //    /// Create a new credential from a raw key specified in <paramref name="packetExtension"/>
-    //    /// </summary>
-    //    /// <param name="packetExtension">The packet extension specifying the key</param>
-    //    public MeshKeyCredentialPublic(PacketExtension packetExtension) : base (packetExtension) {
-    //        throw new NYI();
-    //        }
-
-
-
-
-
-    //    }
-
-
-    //public class MeshKeyCredentialPrivate : KeyCredentialPrivate {
-    //    }
-
-
     /// <summary>
     /// JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
     /// assertion).
@@ -262,7 +233,7 @@ namespace Goedel.Mesh {
 
 
         #endregion
-        #region Implement ICredential
+        #region Implement ICredentialPrivate
 
         ///<inheritdoc/>
         public ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
@@ -275,10 +246,10 @@ namespace Goedel.Mesh {
             foreach (var extension in extensions) {
                 switch (extension.Tag) {
                     case Constants.ExtensionTagsDirectX25519Tag: {
-                        return new KeyCredentialPublic(new KeyPairX25519(extension.Value));
+                        return new MeshKeyCredentialPublic(new KeyPairX25519(extension.Value));
                         }
                     case Constants.ExtensionTagsDirectX448Tag: {
-                        return new KeyCredentialPublic(new KeyPairX448 (extension.Value));
+                        return new MeshKeyCredentialPublic(new KeyPairX448 (extension.Value));
                         }
 
 

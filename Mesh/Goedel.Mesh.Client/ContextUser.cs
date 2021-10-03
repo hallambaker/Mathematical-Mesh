@@ -237,7 +237,7 @@ namespace Goedel.Mesh.Client {
             KeyProfile.AssertNotNull(NotSuperAdministrator.Throw);
 
             // Since the service does not know this account (yet)
-            var credentialPrivate = new KeyCredentialPrivate(
+            var credentialPrivate = new MeshKeyCredentialPrivate(
                         ProfileUser.AccountAuthenticationKey as KeyPairAdvanced);
 
             MeshClient = MeshMachine.GetMeshClient(credentialPrivate, null, AccountAddress);
@@ -775,7 +775,7 @@ namespace Goedel.Mesh.Client {
 
 
             // Since the service does not know this account (yet)
-            var credentialPrivate = new KeyCredentialPrivate(
+            var credentialPrivate = new MeshKeyCredentialPrivate(
                         activationGroup.AccountAuthenticationKey as KeyPairAdvanced);
 
             var groupClient = MeshMachine.GetMeshClient(credentialPrivate, null, groupName);

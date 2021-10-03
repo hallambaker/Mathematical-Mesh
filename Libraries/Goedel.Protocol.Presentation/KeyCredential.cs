@@ -53,33 +53,21 @@ namespace Goedel.Protocol.Presentation {
         #region // Constructors
 
         /// <summary>
-        /// Create a new credential from a raw key specified in <paramref name="packetExtension"/>
-        /// </summary>
-        /// <param name="packetExtension">The packet extension specifying the key</param>
-        public KeyCredentialPublic(PacketExtension packetExtension) {
-            throw new NYI();
-            }
-
-        /// <summary>
         /// Create a new instance with the public key <paramref name="authenticationPublic"/>
         /// </summary>
         /// <param name="authenticationPublic">The public key.</param>
-        public KeyCredentialPublic(KeyPairAdvanced authenticationPublic) {
-            AuthenticationPublic = authenticationPublic;
-            }
-
-
+        public KeyCredentialPublic(KeyPairAdvanced authenticationPublic) => AuthenticationPublic = authenticationPublic;
 
         #endregion
         #region // Implement Interface: ICredentialPrivate
 
         ///<inheritdoc/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
+        public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
             (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
                         AuthenticationPublic);
 
         ///<inheritdoc/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
+        public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
                 List<KeyPairAdvanced> ephemerals, 
                 string keyId) =>
             (ephemerals[0], AuthenticationPublic);
@@ -128,7 +116,7 @@ namespace Goedel.Protocol.Presentation {
         #region // Implement Interface: ICredentialPrivate
 
         ///<inheritdoc/>
-        public void AddCredentials(
+        public virtual void AddCredentials(
                 List<PacketExtension> extensions
                 ) {
             foreach (var extension in Extensions) {
@@ -136,7 +124,7 @@ namespace Goedel.Protocol.Presentation {
                 }
             }
         ///<inheritdoc/>
-        public void AddEphemerals(
+        public virtual void AddEphemerals(
                 List<PacketExtension> extensions,
                 ref List<KeyPairAdvanced> ephmeralsOffered) {
             KeyPairAdvanced ephemeral;
@@ -163,11 +151,11 @@ namespace Goedel.Protocol.Presentation {
             }
 
         ///<inheritdoc/>
-        public ICredentialPublic GetCredentials(List<PacketExtension> extensions) =>
+        public virtual ICredentialPublic GetCredentials(List<PacketExtension> extensions) =>
             throw new NotImplementedException();
 
         ///<inheritdoc/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
+        public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
             foreach (var extension in extensions) {
                 if (extension.Tag == Constants.ExtensionTagsX448Tag) {
                     var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
@@ -179,7 +167,7 @@ namespace Goedel.Protocol.Presentation {
             }
 
         ///<inheritdoc/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) =>
+        public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) =>
             (AuthenticationPrivate, new KeyPairX448(ephemeral, KeySecurity.Public));
 
         #endregion
