@@ -545,7 +545,7 @@
             </summary>
             <returns>The number of items synchronized</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.UpdateCatalogedMachine(Goedel.Mesh.CatalogedDevice,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.UpdateCatalogedMachine(Goedel.Mesh.CatalogedDevice,System.String,System.Boolean)">
             <summary>
             Update the <paramref name="catalogedDevice"/> entry in the machine catalog.
             </summary>

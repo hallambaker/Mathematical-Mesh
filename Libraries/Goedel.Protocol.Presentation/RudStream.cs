@@ -135,8 +135,7 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The account address</summary> 
         public string AccountAddress { get; }
 
-        ///<summary>The verified account</summary> 
-        public virtual IVerifiedAccount VerifiedAccount { get; }
+
 
         #endregion
         #region // Constructors
@@ -155,7 +154,12 @@ namespace Goedel.Protocol.Presentation {
                 string protocol,
                 ICredentialPrivate credentialSelf = null,
                 ICredentialPublic credentialOther = null,
-                    RudConnection rudConnection = null) {
+                    RudConnection rudConnection = null,
+                string accountAddress = null) {
+
+            //(credentialSelf?.AuthenticationPublic.PublicOnly != true).AssertTrue(NYI.Throw);
+
+
             RdpStreamParent = parent;
             if (parent != null) {
                 parent.AddChild(this);

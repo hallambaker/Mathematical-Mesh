@@ -59,14 +59,14 @@ namespace Goedel.Mesh {
     /// assertion).
     /// </summary>
 
-    public class MeshCredential : ICredentialPublic, IVerifyCredential {
+    public class MeshCredentialPublic : MeshKeyCredentialPublic {
         #region // Properties
 
         ///<inheritdoc cref="ICredential"/>
         public KeyPairAdvanced AuthenticationPublic { get; }
 
-        ///<inheritdoc cref="ICredential"/>
-        public string Account { get; private set; }
+        /////<inheritdoc cref="ICredential"/>
+        //public string Account { get; private set; }
 
         ///<inheritdoc cref="ICredential"/>
         public string AuthenticationKeyId { get; }
@@ -79,9 +79,6 @@ namespace Goedel.Mesh {
 
         ///<inheritdoc cref="ICredential"/>
         public KeyPairAdvanced AuthenticationPrivate { get; }
-
-
-
 
         ///<summary>The device profile</summary> 
         public ProfileDevice ProfileDevice { get; }
@@ -105,33 +102,33 @@ namespace Goedel.Mesh {
         /// <param name="connectionAccount">Connection to the account </param>
         /// <param name="authenticationKey">The authentication key</param>
         /// <param name="meshCredentialPrivate">The private credential.</param>
-        public MeshCredential(ProfileDevice profileDevice,
+        public MeshCredentialPublic(ProfileDevice profileDevice,
                 ConnectionService connectionDevice,
                 ConnectionAddress connectionAccount,
                 KeyPairAdvanced authenticationKey,
-                MeshCredentialPrivate meshCredentialPrivate = null) {
+                MeshCredentialPrivate meshCredentialPrivate = null) : base (authenticationKey) {
             ProfileDevice = profileDevice ?? meshCredentialPrivate?.ProfileDevice;
             ConnectionDevice = connectionDevice ?? meshCredentialPrivate?.ConnectionDevice;
             ConnectionAccount = connectionAccount ?? meshCredentialPrivate?.ConnectionAccount;
             AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
-            AuthenticationPublic = authenticationKey;
+            //AuthenticationPublic = authenticationKey;
 
             AuthenticationKeyId = authenticationKey.KeyIdentifier;
-
+            Account = connectionAccount?.Account ?? connectionDevice?.Account;
             }
 
 
         #endregion
         #region // Methods
 
-        ///<inheritdoc cref="ICredential"/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
-            (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
-                        AuthenticationPublic);
+        /////<inheritdoc cref="ICredential"/>
+        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
+        //    (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
+        //                AuthenticationPublic);
 
-        ///<inheritdoc cref="ICredential"/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<KeyPairAdvanced> ephemerals, string keyId) =>
-            (ephemerals[0], AuthenticationPublic);
+        /////<inheritdoc cref="ICredential"/>
+        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<KeyPairAdvanced> ephemerals, string keyId) =>
+        //    (ephemerals[0], AuthenticationPublic);
 
         /// <summary>
         /// Verify the device.
@@ -156,7 +153,7 @@ namespace Goedel.Mesh {
         public MeshVerifiedAccount VerifyAccount() {
             ConnectionDevice.AssertNotNull(NotAuthenticated.Throw);
 
-            Account = ConnectionAccount?.Account;
+            //Account = ConnectionAccount?.Account;
 
             AuthenticationPublic.MatchKeyIdentifier(
                 ConnectionDevice.AuthenticationPublic.KeyIdentifier).AssertTrue(NotAuthenticated.Throw);
@@ -174,15 +171,23 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Wrapper for a private credential.
     /// </summary>
-    public class MeshCredentialPrivate : MeshCredential, ICredentialPrivate {
+    public class MeshCredentialPrivate : MeshKeyCredentialPrivate {
         #region // Properties
 
+        /////<inheritdoc/>
+        //public byte[] Value { get; }
 
+        //List<PacketExtension> Extensions { get; } = new();
 
-        ///<inheritdoc/>
-        public byte[] Value { get; }
+        ///<summary>The device profile</summary> 
+        public ProfileDevice ProfileDevice { get; }
 
-        List<PacketExtension> Extensions { get; } = new();
+        ///<summary>The connection device</summary> 
+        public ConnectionService ConnectionDevice { get; }
+
+        ///<summary>The address connection.</summary> 
+        public ConnectionAddress ConnectionAccount { get; }
+
 
 
         #endregion
@@ -201,9 +206,17 @@ namespace Goedel.Mesh {
                 ConnectionService connectionDevice,
                 ConnectionAddress connectionAccount,
                 KeyPairAdvanced authenticationKey,
-                MeshCredentialPrivate meshCredentialPrivate = null) : base
-                            (profileDevice, connectionDevice, connectionAccount,
-                                    authenticationKey, meshCredentialPrivate) {
+                MeshCredentialPrivate meshCredentialPrivate = null) : base (
+                            null,
+                                connectionAccount?.Account ?? connectionDevice?.Account) {
+
+            AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
+            AuthenticationPublic = AuthenticationPrivate;
+
+            ProfileDevice = profileDevice ?? meshCredentialPrivate?.ProfileDevice;
+            ConnectionDevice = connectionDevice ?? meshCredentialPrivate?.ConnectionDevice;
+            ConnectionAccount = connectionAccount ?? meshCredentialPrivate?.ConnectionAccount;
+
 
             if (meshCredentialPrivate?.ProfileDevice is null & profileDevice is not null) {
                 Extensions.Add(new PacketExtension() {
@@ -225,106 +238,106 @@ namespace Goedel.Mesh {
                     Value = connectionAccount.DareEnvelope.GetBytes(false)
                     });
                 }
-
-
-
             }
-
-
 
         #endregion
         #region Implement ICredentialPrivate
 
-        ///<inheritdoc/>
-        public ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
+        /////<inheritdoc/>
+        //public ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
 
-            ConnectionService connectionDevice = null;
-            ConnectionAddress connectionAddress = null;
-            ProfileDevice profileDevice = null;
-            KeyPairAdvanced keyAuthentication = null;
+        //    ConnectionService connectionDevice = null;
+        //    ConnectionAddress connectionAddress = null;
+        //    ProfileDevice profileDevice = null;
+        //    KeyPairAdvanced keyAuthentication = null;
 
-            foreach (var extension in extensions) {
-                switch (extension.Tag) {
-                    case Constants.ExtensionTagsDirectX25519Tag: {
-                        return new MeshKeyCredentialPublic(new KeyPairX25519(extension.Value));
-                        }
-                    case Constants.ExtensionTagsDirectX448Tag: {
-                        return new MeshKeyCredentialPublic(new KeyPairX448 (extension.Value));
-                        }
-
-
-                    case Constants.ExtensionTagsMeshProfileDeviceTag: {
-                        // convert the enveloped ConnectionDevice
-                        var envelope = DareEnvelope.FromJSON(extension.Value, false);
-                        profileDevice = envelope.DecodeJsonObject() as ProfileDevice;
-                        keyAuthentication ??= profileDevice.Authentication.GetKeyPairAdvanced();
-                        break;
-                        }
-                    case Constants.ExtensionTagsMeshConnectionDeviceTag: {
-                        // convert the enveloped ConnectionDevice
-                        var envelope = DareEnvelope.FromJSON(extension.Value, false);
-                        connectionDevice = envelope.DecodeJsonObject() as ConnectionService;
-                        keyAuthentication = connectionDevice.AuthenticationPublic;
-                        break;
-                        }
-                    case Constants.ExtensionTagsMeshConnectionAddressTag: {
-                        // convert the enveloped ConnectionDevice
-                        var envelope = DareEnvelope.FromJSON(extension.Value, false);
-                        connectionAddress = envelope.DecodeJsonObject() as ConnectionAddress;
-                        break;
-                        }
-                    }
-                }
-
-            return new MeshCredential(profileDevice, connectionDevice, connectionAddress, keyAuthentication);
-            }
-
-        ///<inheritdoc/>
-        public void AddEphemerals(List<PacketExtension> extensions, ref List<KeyPairAdvanced> ephmeralsOffered) {
-            KeyPairAdvanced ephemeral;
-
-            if (ephmeralsOffered != null) {
-                ephemeral = ephmeralsOffered[0];
-                //Screen.WriteLine($"Re-Offer of = {ephemeral}");
-
-                }
-            else {
-                ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
-                ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
-                //Screen.WriteLine($"Make Offer of = {ephemeral}");
-                }
-
-            var extension = new PacketExtension() {
-                Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
-                Value = ephemeral.IKeyAdvancedPublic.Encoding
-                };
+        //    foreach (var extension in extensions) {
+        //        switch (extension.Tag) {
+        //            case Constants.ExtensionTagsDirectX25519Tag: {
+        //                return new MeshKeyCredentialPublic(new KeyPairX25519(extension.Value));
+        //                }
+        //            case Constants.ExtensionTagsDirectX448Tag: {
+        //                return new MeshKeyCredentialPublic(new KeyPairX448 (extension.Value));
+        //                }
 
 
-            extensions.Add(extension);
-            }
+        //            case Constants.ExtensionTagsMeshProfileDeviceTag: {
+        //                // convert the enveloped ConnectionDevice
+        //                var envelope = DareEnvelope.FromJSON(extension.Value, false);
+        //                profileDevice = envelope.DecodeJsonObject() as ProfileDevice;
+        //                keyAuthentication ??= profileDevice.Authentication.GetKeyPairAdvanced();
+        //                break;
+        //                }
+        //            case Constants.ExtensionTagsMeshConnectionDeviceTag: {
+        //                // convert the enveloped ConnectionDevice
+        //                var envelope = DareEnvelope.FromJSON(extension.Value, false);
+        //                connectionDevice = envelope.DecodeJsonObject() as ConnectionService;
+        //                keyAuthentication = connectionDevice.AuthenticationPublic;
+        //                break;
+        //                }
+        //            case Constants.ExtensionTagsMeshConnectionAddressTag: {
+        //                // convert the enveloped ConnectionDevice
+        //                var envelope = DareEnvelope.FromJSON(extension.Value, false);
+        //                connectionAddress = envelope.DecodeJsonObject() as ConnectionAddress;
+        //                break;
+        //                }
+        //            }
+        //        }
 
-        ///<inheritdoc/>
-        public void AddCredentials(List<PacketExtension> extensions) {
-            foreach (var extension in Extensions) {
-                extensions.Add(extension);
-                }
-            }
+        //    return new MeshCredentialPublic(profileDevice, connectionDevice, connectionAddress, keyAuthentication);
+        //    }
 
-        ///<inheritdoc/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
-            foreach (var extension in extensions) {
-                if (extension.Tag == "X448") {
-                    var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
-                    //Screen.WriteLine($"Select = {ephemeral}");
-                    return (AuthenticationPrivate, ephemeral);
-                    }
-                }
-            throw new NYI();
-            }
 
-        ///<inheritdoc/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) =>
-                (AuthenticationPrivate, new KeyPairX448(ephemeral, KeySecurity.Public));
+
+        /////<inheritdoc/>
+        //public void AddCredentials(List<PacketExtension> extensions) {
+        //    foreach (var extension in Extensions) {
+        //        extensions.Add(extension);
+        //        }
+        //    }
+
+
+        /////<inheritdoc/>
+        //public void AddEphemerals(List<PacketExtension> extensions, ref List<KeyPairAdvanced> ephmeralsOffered) {
+        //    KeyPairAdvanced ephemeral;
+
+        //    if (ephmeralsOffered != null) {
+        //        ephemeral = ephmeralsOffered[0];
+        //        //Screen.WriteLine($"Re-Offer of = {ephemeral}");
+
+        //        }
+        //    else {
+        //        ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+        //        ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
+        //        //Screen.WriteLine($"Make Offer of = {ephemeral}");
+        //        }
+
+        //    var extension = new PacketExtension() {
+        //        Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
+        //        Value = ephemeral.IKeyAdvancedPublic.Encoding
+        //        };
+
+
+        //    extensions.Add(extension);
+        //    }
+
+
+
+        /////<inheritdoc/>
+        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
+        //    foreach (var extension in extensions) {
+        //        if (extension.Tag == "X448") {
+        //            var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
+        //            //Screen.WriteLine($"Select = {ephemeral}");
+        //            return (AuthenticationPrivate, ephemeral);
+        //            }
+        //        }
+        //    throw new NYI();
+        //    }
+
+        /////<inheritdoc/>
+        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) =>
+        //        (AuthenticationPrivate, new KeyPairX448(ephemeral, KeySecurity.Public));
 
         #endregion
         }

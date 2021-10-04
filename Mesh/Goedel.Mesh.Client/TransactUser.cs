@@ -113,7 +113,7 @@ namespace Goedel.Mesh.Client {
             CatalogUpdate(catalogDevice, catalogedDevice);
 
             if (ContextAccount.CatalogedDevice?.DeviceUdf == catalogedDevice.DeviceUdf) {
-                ContextAccount.UpdateCatalogedMachine(catalogedDevice, digestUDF);
+                ContextAccount.UpdateCatalogedMachine(catalogedDevice, digestUDF, false);
                 }
 
             }

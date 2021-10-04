@@ -132,12 +132,13 @@ namespace Goedel.Mesh.Server {
                     IJpcSession session, 
                     AccountPrivilege accountPrivilege) {
             switch (session.Credential) {
+                case MeshCredentialPublic meshCredential: {
+                    return Authenticate(meshCredential, accountPrivilege);
+                    }
                 case KeyCredentialPublic keyCredentialPublic: {
                     return Authenticate(keyCredentialPublic, accountPrivilege);
                     }
-                case MeshCredential meshCredential: {
-                    return Authenticate(meshCredential, accountPrivilege);
-                    }
+
                 }
             return false;
             }
@@ -169,7 +170,7 @@ namespace Goedel.Mesh.Server {
             }
 
         bool Authenticate(
-            MeshCredential credential,
+            MeshCredentialPublic credential,
             AccountPrivilege accountPrivilege) {
 
             var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();

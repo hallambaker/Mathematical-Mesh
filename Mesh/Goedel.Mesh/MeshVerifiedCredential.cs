@@ -50,13 +50,13 @@ namespace Goedel.Mesh {
         public CredentialValidation CredentialValidation => MeshCredential.CredentialValidation;
 
         ///<summary>Return the underlying credential.</summary> 
-        public MeshCredential MeshCredential { get; }
+        public MeshCredentialPublic MeshCredential { get; }
 
         /// <summary>
         /// Construct an instance from the credential <paramref name="meshCredential"/>
         /// </summary>
         /// <param name="meshCredential">The credential from which the instance is to be created.</param>
-        public MeshVerifiedDevice(MeshCredential meshCredential) =>
+        public MeshVerifiedDevice(MeshCredentialPublic meshCredential) =>
             MeshCredential = meshCredential;
 
         }
@@ -75,7 +75,7 @@ namespace Goedel.Mesh {
         /// Construct an instance from the credential <paramref name="meshCredential"/>
         /// </summary>
         /// <param name="meshCredential">The credential from which the instance is to be created.</param>
-        public MeshVerifiedAccount(MeshCredential meshCredential) : base(meshCredential) {
+        public MeshVerifiedAccount(MeshCredentialPublic meshCredential) : base(meshCredential) {
             }
 
         /// <summary>

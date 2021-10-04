@@ -36,7 +36,7 @@ namespace Goedel.Protocol.Presentation {
         #region // Properties
 
         ///<inheritdoc/>
-        public KeyPairAdvanced AuthenticationPublic { get; private set; }
+        public KeyPairAdvanced AuthenticationPublic { get; init; }
 
         ///<summary>The account being claimed (unverified).</summary> 
         public string Account { get; init ; }
@@ -56,7 +56,8 @@ namespace Goedel.Protocol.Presentation {
         /// Create a new instance with the public key <paramref name="authenticationPublic"/>
         /// </summary>
         /// <param name="authenticationPublic">The public key.</param>
-        public KeyCredentialPublic(KeyPairAdvanced authenticationPublic) => AuthenticationPublic = authenticationPublic;
+        public KeyCredentialPublic(KeyPairAdvanced authenticationPublic) => 
+            AuthenticationPublic = authenticationPublic;
 
         #endregion
         #region // Implement Interface: ICredentialPrivate
@@ -82,10 +83,9 @@ namespace Goedel.Protocol.Presentation {
 
         string Tag { get; }
 
-        List<PacketExtension> Extensions { get; } = new();
+        public List<PacketExtension> Extensions { get; } = new();
 
-
-        KeyPairAdvanced AuthenticationPrivate { get; }
+        public KeyPairAdvanced AuthenticationPrivate { get; init;  }
         #endregion
 
         #region // Destructor
@@ -97,19 +97,32 @@ namespace Goedel.Protocol.Presentation {
         /// Create a new instance with the private key <paramref name="authenticationPrivate"/>
         /// </summary>
         /// <param name="authenticationPrivate">The private key.</param>
-        public KeyCredentialPrivate(KeyPairAdvanced authenticationPrivate) :
+        public KeyCredentialPrivate(KeyPairAdvanced authenticationPrivate,
+                string account) :
                     base(authenticationPrivate) {
             AuthenticationPrivate = authenticationPrivate;
-            Tag = authenticationPrivate switch {
+            Account = account;
 
-                KeyPairX448 => Constants.ExtensionTagsDirectX448Tag,
-                //KeyPairX25519 => Constants.ExtensionTagsX25519Tag,
-                _ => throw new NYI()
-                };
-            Extensions.Add(new PacketExtension() {
-                Tag = Tag,
-                Value = AuthenticationPrivate.IKeyAdvancedPublic.Encoding
-                });
+            if (authenticationPrivate != null) {
+                Tag = authenticationPrivate switch {
+
+                    KeyPairX448 => Constants.ExtensionTagsDirectX448Tag,
+                    //KeyPairX25519 => Constants.ExtensionTagsX25519Tag,
+                    _ => throw new NYI()
+                    };
+                Extensions.Add(new PacketExtension() {
+                    Tag = Tag,
+                    Value = AuthenticationPrivate.IKeyAdvancedPublic.Encoding
+                    });
+                }
+
+            if (account is not null) {
+                Extensions.Add(new PacketExtension() {
+                    Tag = Constants.ExtensionTagsClaimIdTag,
+                    Value = account.ToUTF8()
+                    });
+                }
+
             }
 
         #endregion

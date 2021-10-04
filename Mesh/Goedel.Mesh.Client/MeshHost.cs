@@ -257,7 +257,6 @@ namespace Goedel.Mesh.Client {
             else {
                 contextUser.Sync();
                 }
-
             contextUser.MakeAdministrator(rights);
             
             // Return to normal privilege.
@@ -266,7 +265,7 @@ namespace Goedel.Mesh.Client {
             //// Register the mesh description on the local machine.
             //Register(contextUser.CatalogedMachine, contextUser);
 
-            return contextUser;
+            return GetContext(contextUser.CatalogedMachine) as ContextUser;
             }
 
 

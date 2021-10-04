@@ -48,7 +48,7 @@ namespace Goedel.Protocol.Service {
         #region // Properties
 
         ///<summary>The maximum request size</summary> 
-        public const int MaxRequest = 0x10000;
+        public const int MaxRequest = 0x1000000;
 
         ///<summary>The object encoding to use.</summary> 
         public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON_B;
@@ -363,13 +363,17 @@ namespace Goedel.Protocol.Service {
             // Read the input stream until either it is closed or 64KB have been read
 
             var read = 1;
+
             while (Count < MaxRequest & read > 0) {
                 read = request.InputStream.Read(Buffer, Count, MaxRequest - Count);
                 Count += read;
                 }
+
+
+            if (Count == MaxRequest) {
+                }
+
             (Count < MaxRequest).AssertTrue(NYI.Throw);
-
-
             ProcessBuffer();
 
 

@@ -136,10 +136,10 @@ namespace Goedel.Protocol.Presentation {
                         streamId = extension.Value;
                         break;
                         }
-                    case Constants.ExtensionTagsClaimIdTag: {
-                        account = extension.Value.ToUTF8();
-                        break;
-                        }
+                    //case Constants.ExtensionTagsClaimIdTag: {
+                    //    account = extension.Value.ToUTF8();
+                    //    break;
+                    //    }
                     }
                 }
 

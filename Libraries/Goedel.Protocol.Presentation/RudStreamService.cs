@@ -37,11 +37,9 @@ namespace Goedel.Protocol.Presentation {
         ///<summary>The service instance.</summary> 
         public JpcInterface JpcInterface;
 
-        ///<summary>The verified account.</summary> 
-        public override IVerifiedAccount VerifiedAccount { get; }
 
-        ///<summary>The account the stream claims to be operating under.</summary> 
-        public string TargetAccount => throw new System.NotImplementedException();
+        ///<inheritdoc/>
+        public string TargetAccount => Credential.Account;
 
         #region // Constructors
 
@@ -65,10 +63,10 @@ namespace Goedel.Protocol.Presentation {
                 ICredentialPublic credentialOther = null,
                 string accountAddress = null,
                 RudConnection rudConnection = null) : base(
-                    parent, protocol, credentialSelf, credentialOther, rudConnection) {
+                    parent, protocol, credentialSelf, credentialOther, rudConnection, accountAddress) {
 
             JpcInterface = RudConnection?.Listener.GetService(protocol, instance);
-
+            //TargetAccount = CredentialOther.Account;
 
             }
 

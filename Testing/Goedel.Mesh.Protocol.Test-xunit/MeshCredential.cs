@@ -28,6 +28,7 @@ using Goedel.Mesh;
 using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Test.Core;
+using Goedel.Utilities;
 
 using Xunit;
 
@@ -48,10 +49,18 @@ namespace Goedel.XUnit {
 
         #region // Tests 
 
+        MeshCredentialPublic GetMeshCredentialPublic(
+            MeshCredentialPrivate MeshCredentialPrivate) => new MeshCredentialPublic(
+                    MeshCredentialPrivate.ProfileDevice,
+                    MeshCredentialPrivate.ConnectionDevice,
+                    MeshCredentialPrivate.ConnectionAccount,
+                    MeshCredentialPrivate.AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced);
+
+
         [Fact]
         public void TestCredentialDevice() {
-            var credentialTemp = MakeCredentialDevice();
-
+            var credentialTempPrivate = MakeCredentialDevice();
+            var credentialTemp = GetMeshCredentialPublic(credentialTempPrivate);
             // Device validation should succeed.
             var validatedDevice = credentialTemp.VerifyDevice();
             (validatedDevice as MeshVerifiedDevice).TestNotNull();
@@ -66,7 +75,8 @@ namespace Goedel.XUnit {
             var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
-            var credentialTemp = contextAccountAlice.GetMeshCredentialPrivate();
+            var credentialTempPrivate = contextAccountAlice.GetMeshCredentialPrivate();
+            var credentialTemp = GetMeshCredentialPublic(credentialTempPrivate);
 
             // Device validation should succeed.
             var validatedDevice = credentialTemp.VerifyDevice();
@@ -90,8 +100,11 @@ namespace Goedel.XUnit {
         public void TestCredentialDeviceFails(DataValidity dataValidity) {
             var alternative = dataValidity == DataValidity.CorruptSigner ?
                  ProfileDevice.Generate() : null;
-            var credentialTemp = MakeCredentialDevice();
+            var credentialTempPrivate = MakeCredentialDevice();
+
+            var credentialTemp = GetMeshCredentialPublic(credentialTempPrivate);
             credentialTemp.ProfileDevice.DareEnvelope.Corrupt(dataValidity, alternative?.DareEnvelope);
+
 
 
             Xunit.Assert.Throws<InvalidProfile>(() => credentialTemp.VerifyDevice());
@@ -99,7 +112,7 @@ namespace Goedel.XUnit {
             }
 
 
-        static MeshCredential MakeCredentialDevice() {
+        static MeshCredentialPrivate MakeCredentialDevice() {
             var profileDevice = ProfileDevice.Generate();
             return new MeshCredentialPrivate(profileDevice, null, null,
                         profileDevice.KeyAuthentication as KeyPairAdvanced);
@@ -118,7 +131,8 @@ namespace Goedel.XUnit {
             var testEnvironmentCommon = GetTestEnvironmentCommon();
             var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
-            var credentialTemp = contextAccountAlice.GetMeshCredentialPrivate();
+            var credentialTempPrivate = contextAccountAlice.GetMeshCredentialPrivate();
+            var credentialTemp = GetMeshCredentialPublic(credentialTempPrivate);
 
             DareEnvelope alternative = null;
             if (dataValidity == DataValidity.CorruptSigner) {

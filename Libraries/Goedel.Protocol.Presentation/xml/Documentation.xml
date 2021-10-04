@@ -734,7 +734,7 @@
             Private key credential specifying only a raw key.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.#ctor(Goedel.Cryptography.KeyPairAdvanced)">
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.#ctor(Goedel.Cryptography.KeyPairAdvanced,System.String)">
             <summary>
             Create a new instance with the private key <paramref name="authenticationPrivate"/>
             </summary>
@@ -1832,10 +1832,7 @@
         <member name="P:Goedel.Protocol.Presentation.RudStream.AccountAddress">
             <summary>The account address</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.RudStream.VerifiedAccount">
-            <summary>The verified account</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStream.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,Goedel.Protocol.Presentation.RudConnection)">
+        <member name="M:Goedel.Protocol.Presentation.RudStream.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,Goedel.Protocol.Presentation.RudConnection,System.String)">
             <summary>
             Initialize a new stream instance as a child of <paramref name="parent"/> to support
             protocol <paramref name="protocol"/> according to the stream role.
@@ -2023,11 +2020,8 @@
         <member name="F:Goedel.Protocol.Presentation.RudStreamService.JpcInterface">
             <summary>The service instance.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.RudStreamService.VerifiedAccount">
-            <summary>The verified account.</summary> 
-        </member>
         <member name="P:Goedel.Protocol.Presentation.RudStreamService.TargetAccount">
-            <summary>The account the stream claims to be operating under.</summary> 
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStreamService.#ctor(Goedel.Protocol.Presentation.RudStream,System.String,System.String,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.ICredentialPublic,System.String,Goedel.Protocol.Presentation.RudConnection)">
             <summary>

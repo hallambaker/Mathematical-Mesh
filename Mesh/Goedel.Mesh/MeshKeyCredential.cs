@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol.Presentation;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
     public class MeshKeyCredentialPublic : KeyCredentialPublic, ICredentialPublic{
@@ -46,29 +47,43 @@ namespace Goedel.Mesh {
 
     public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate {
         #region // Constructors
-        public MeshKeyCredentialPrivate(KeyPairAdvanced authenticationPrivate) :
-            base(authenticationPrivate) {
+        public MeshKeyCredentialPrivate(KeyPairAdvanced authenticationPrivate , string account) :
+
+            // we do have to include the account address here!!!
+
+            base(authenticationPrivate, account) {
+
+
+
+
             }
         #endregion
         #region Implement ICredential
 
         ///<inheritdoc/>
-        public ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
+        public override ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
 
             ConnectionService connectionDevice = null;
             ConnectionAddress connectionAddress = null;
             ProfileDevice profileDevice = null;
             KeyPairAdvanced keyAuthentication = null;
+            string account = null;
+            KeyPairAdvanced keyDirect = null;
 
             foreach (var extension in extensions) {
                 switch (extension.Tag) {
                     case Constants.ExtensionTagsDirectX25519Tag: {
-                        return new KeyCredentialPublic(new KeyPairX25519(extension.Value));
+                        keyDirect = new KeyPairX25519(extension.Value);
+                        break;
                         }
                     case Constants.ExtensionTagsDirectX448Tag: {
-                        return new KeyCredentialPublic(new KeyPairX448(extension.Value));
+                        keyDirect = new KeyPairX448(extension.Value);
+                        break;
                         }
-
+                    case Constants.ExtensionTagsClaimIdTag: {
+                        account = extension.Value.ToUTF8();
+                        break;
+                        }
 
                     case Constants.ExtensionTagsMeshProfileDeviceTag: {
                         // convert the enveloped ConnectionDevice
@@ -93,7 +108,17 @@ namespace Goedel.Mesh {
                     }
                 }
 
-            return new MeshCredential(profileDevice, connectionDevice, connectionAddress, keyAuthentication);
+            if (keyDirect != null) {
+                return new MeshKeyCredentialPublic(keyDirect) {
+                    Account = account
+                    };
+
+                }
+            else {
+
+
+                return new MeshCredentialPublic(profileDevice, connectionDevice, connectionAddress, keyAuthentication);
+                }
             }
 
         #endregion

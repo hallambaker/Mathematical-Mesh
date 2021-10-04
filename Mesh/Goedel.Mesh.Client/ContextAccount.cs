@@ -332,7 +332,7 @@ namespace Goedel.Mesh.Client {
             status.ContainerStatus.AssertNotNull(ServerResponseInvalid.Throw, status);
             if (status.EnvelopedCatalogedDevice != null) {
                 var catalogedDevice = status.EnvelopedCatalogedDevice.Decode(this);
-                UpdateCatalogedMachine(catalogedDevice, status.CatalogedDeviceDigest);
+                UpdateCatalogedMachine(catalogedDevice, status.CatalogedDeviceDigest, true);
                 }
 
             var constraintsSelects = new List<ConstraintsSelect>();
@@ -380,7 +380,8 @@ namespace Goedel.Mesh.Client {
         /// Update the <paramref name="catalogedDevice"/> entry in the machine catalog.
         /// </summary>
         /// <param name="catalogedDevice">The entry to update.</param>
-        public void UpdateCatalogedMachine(CatalogedDevice catalogedDevice, string digestUDF) {
+        public void UpdateCatalogedMachine(CatalogedDevice catalogedDevice, 
+                string digestUDF, bool registerContext) {
 
             Screen.WriteLine($"Install/update: {digestUDF} Entries: {catalogedDevice.ApplicationEntries?.Count}");
 
@@ -389,7 +390,7 @@ namespace Goedel.Mesh.Client {
             CatalogedMachine.CatalogedDevice = catalogedDevice;
             CatalogedMachine.CatalogedDeviceDigest = digestUDF;
                 //UDF.Sha2ToString(catalogedDevice.DareEnvelope?.PayloadDigest);
-            MeshHost.Register(CatalogedMachine, this);
+            MeshHost.Register(CatalogedMachine, registerContext ? this: null);
             }
 
 

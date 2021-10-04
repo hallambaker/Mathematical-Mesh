@@ -30,41 +30,41 @@ using Xunit;
 
 namespace Goedel.XUnit {
 
-    [Collection("Sequential")]
-    public partial class ShellTestsAdmin : ShellTests {
-        TestEnvironmentCommon testEnvironmentCommon;
+    //[Collection("Sequential")]
+    //public partial class ShellTestsAdmin : ShellTests {
+    //    TestEnvironmentCommon testEnvironmentCommon;
 
 
-        protected override void Disposing() {
-            testEnvironmentCommon.Dispose();
-            base.Disposing();
-            }
+    //    protected override void Disposing() {
+    //        testEnvironmentCommon.Dispose();
+    //        base.Disposing();
+    //        }
 
 
-        // Use the new test environment (when defined.)
-        public override TestEnvironmentCommon GetTestEnvironment() {
+    //    // Use the new test environment (when defined.)
+    //    public override TestEnvironmentCommon GetTestEnvironment() {
 
-            //var shell = new Goedel.Mesh.Shell.ServiceAdmin.Shell() {
-            //    };
+    //        //var shell = new Goedel.Mesh.Shell.ServiceAdmin.Shell() {
+    //        //    };
 
-            //throw new NYI();
+    //        //throw new NYI();
 
-            testEnvironmentCommon = new TestEnvironmentRdpShell() {
-                JpcConnection = Protocol.JpcConnection.Http
-                };
-            return testEnvironmentCommon;
-            }
+    //        testEnvironmentCommon = new TestEnvironmentRdpShell() {
+    //            JpcConnection = Protocol.JpcConnection.Http
+    //            };
+    //        return testEnvironmentCommon;
+    //        }
 
-        public static new ShellTestsAdmin Test() => new();
-
-
-        public override TestCLI GetTestCLI(string MachineName = null) {
-            var testShell = new TestShell(TestEnvironment, MachineName, false);
-            return new TestCLI(testShell);
-            }
+    //    public static new ShellTestsAdmin Test() => new();
 
 
-        }
+    //    public override TestCLI GetTestCLI(string MachineName = null) {
+    //        var testShell = new TestShell(TestEnvironment, MachineName, false);
+    //        return new TestCLI(testShell);
+    //        }
+
+
+    //    }
 
 
     [Collection("Sequential")]

@@ -697,6 +697,7 @@ namespace Goedel.Mesh.Server {
 
         AccountHandleLocked GetAccountHandleLocked(IJpcSession session,
                 AccountPrivilege accountPrivilege) {
+
             var accountEntry = GetAccountLocked(session.TargetAccount);
 
             // Performance: Cache the account context to permit reuse.

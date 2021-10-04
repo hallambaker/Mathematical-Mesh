@@ -167,7 +167,7 @@ namespace Goedel.Mesh.Client {
             //    profileDevice.KeyAuthentication as KeyPairAdvanced);
 
             var meshCredentialPrivate = new KeyCredentialPrivate(
-                profileDevice.KeyAuthentication as KeyPairAdvanced);
+                profileDevice.KeyAuthentication as KeyPairAdvanced, accountAddress);
 
 
             // Acquire ephemeral client. This will only be used for the Connect and Complete methods.
