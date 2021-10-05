@@ -291,10 +291,15 @@ namespace Goedel.Mesh.Client {
 
             // Create the Access catalog here with policy allowing the service access
 
-            var accessEncrypt = response.AccessEncrypt;
+            //var accessEncrypt = response.AccessEncrypt;
+
+            CatalogedMachine.EnvelopedAccountHostAssignment = response.EnvelopedAccountHostAssignment;
+            var accessEncrypt = AccountHostAssignment.AccessEncrypt;
+
             ActivationAccount.DictionaryStoreEncryptionKey.TryGetValue(CatalogAccess.Label, out var accessSelf);
 
-            var recipients = new List<Key> { accessEncrypt.PublicParameters , 
+            var recipients = new List<Key> {
+                    accessEncrypt.PublicParameters,
                     Key.FactoryPublic(accessSelf) };
 
             var policy = new DarePolicy() {

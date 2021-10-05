@@ -328,6 +328,21 @@
 		Inherits Connection
 
 
+
+	Structure AccountHostAssignment
+		Inherits Assertion
+		String AccountAddess
+			Description
+				|The account being bound
+		String HostAddresses
+			Multiple
+			Description
+				|Host address in Callsign, DNS or IP format in order of preference.
+		Struct KeyData AccessEncrypt
+			Description
+				|Encryption key to be used to encrypt data for the service to use.
+
+
 	Structure ConnectionHost
 		Inherits Connection
 

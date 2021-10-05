@@ -20,15 +20,15 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/5/2021 12:40:51 AM
+//  This file was automatically generated at 10/5/2021 4:58:58 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.652
+//  Generator:  protogen version 3.0.0.700
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
-//      Copyright : © 2015-2019
+//      Copyright : © 2015-2021
 //  
 //  Build Platform: Win32NT 10.0.18362.0
 //  
@@ -113,9 +113,7 @@ namespace Goedel.Mesh.Management {
         /// </summary>
 		public const string WellKnown = "wsmp";
 
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
+		///<inheritdoc/>
 		public override string GetWellKnown => WellKnown;
 
         /// <summary>
@@ -123,10 +121,16 @@ namespace Goedel.Mesh.Management {
         /// </summary>
 		public const string Discovery = "_wmsmp._tcp";
 
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
+		///<inheritdoc/>
 		public override string GetDiscovery => Discovery;
+
+		///<inheritdoc/>
+		public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
+		
+		static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {
+					{"ServiceConfig", ServiceConfigRequest._Factory},
+					{"ServiceStatus", ServiceStatusRequest._Factory}
+			};
 
 		/// <summary>
 		/// Dispatch object request in specified authentication context.

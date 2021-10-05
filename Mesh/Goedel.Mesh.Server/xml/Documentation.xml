@@ -129,6 +129,12 @@
             The signed assertion describing the account.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser.EnvelopedAccountHostAssignment">
+             <summary>
+            The enveloped assignment describing how the client should
+            discover the host and encrypt data to it.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.Server.AccountUser._Tag">
             <summary>
             Tag identifying this class

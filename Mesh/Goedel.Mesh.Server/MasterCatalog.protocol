@@ -35,4 +35,7 @@
 		Struct Enveloped<ProfileAccount> EnvelopedProfileUser
 			Description
 				|The signed assertion describing the account.
-
+		Struct Enveloped<AccountHostAssignment> EnvelopedAccountHostAssignment
+			Description
+				|The enveloped assignment describing how the client should
+				|discover the host and encrypt data to it.

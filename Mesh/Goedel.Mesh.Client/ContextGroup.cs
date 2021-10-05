@@ -202,7 +202,7 @@ namespace Goedel.Mesh.Client {
             var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;
 
             // will fail because the ProfileService is not set.
-            var serviceEncryptionKey = ContextUser.ProfileService.ServiceEncryption.GetKeyPair();
+            var serviceEncryptionKey = ContextUser.HostEncryptAccount;
 
 
             var keyGenerate = ActivationAccount.AccountEncryptionKey as KeyPairAdvanced;

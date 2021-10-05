@@ -110,8 +110,14 @@ namespace Goedel.Mesh.Client {
 
         MeshServiceClient meshClient;
 
+        ///<summary>The host assignment binding.</summary> 
+        public AccountHostAssignment AccountHostAssignment => accountHostAssignment ??
+            CatalogedMachine?.EnvelopedAccountHostAssignment?.Decode().CacheValue(out accountHostAssignment) ;
+        AccountHostAssignment accountHostAssignment;
 
-
+        public KeyPair HostEncryptAccount => hostEncryptAccount ??
+            AccountHostAssignment?.AccessEncrypt?.GetKeyPair().CacheValue(out hostEncryptAccount);
+        KeyPair hostEncryptAccount;
         ///<summary>The Account Address</summary>
         public abstract string AccountAddress { get; }
         #endregion

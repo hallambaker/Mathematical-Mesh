@@ -20,15 +20,15 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/5/2021 12:40:45 AM
+//  This file was automatically generated at 10/5/2021 4:58:48 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.652
+//  Generator:  protogen version 3.0.0.700
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
-//      Copyright : © 2015-2019
+//      Copyright : © 2015-2021
 //  
 //  Build Platform: Win32NT 10.0.18362.0
 //  
@@ -147,9 +147,7 @@ namespace Goedel.Mesh {
         /// </summary>
 		public const string WellKnown = "mmm";
 
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
+		///<inheritdoc/>
 		public override string GetWellKnown => WellKnown;
 
         /// <summary>
@@ -157,10 +155,26 @@ namespace Goedel.Mesh {
         /// </summary>
 		public const string Discovery = "_mmm._tcp";
 
-        /// <summary>
-        /// Well Known service identifier.
-        /// </summary>
+		///<inheritdoc/>
 		public override string GetDiscovery => Discovery;
+
+		///<inheritdoc/>
+		public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
+		
+		static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {
+					{"Hello", HelloRequest._Factory},
+					{"BindAccount", BindRequest._Factory},
+					{"UnbindAccount", UnbindRequest._Factory},
+					{"Connect", ConnectRequest._Factory},
+					{"Complete", CompleteRequest._Factory},
+					{"Status", StatusRequest._Factory},
+					{"Download", DownloadRequest._Factory},
+					{"Transact", TransactRequest._Factory},
+					{"Post", PostRequest._Factory},
+					{"Claim", ClaimRequest._Factory},
+					{"PollClaim", PollClaimRequest._Factory},
+					{"Operate", OperateRequest._Factory}
+			};
 
 		/// <summary>
 		/// Dispatch object request in specified authentication context.
@@ -2342,10 +2356,11 @@ namespace Goedel.Mesh {
 
 		public virtual string						URL  {get; set;}
         /// <summary>
-        ///Encryption key to be used to encrypt data for the service to use.
+        ///The enveloped assignment describing hos the client should
+        ///discover the host and encrypt data to it.
         /// </summary>
 
-		public virtual KeyData						AccessEncrypt  {get; set;}
+		public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2400,10 +2415,10 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("URL", 1);
 					_writer.WriteString (URL);
 				}
-			if (AccessEncrypt != null) {
+			if (EnvelopedAccountHostAssignment != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("AccessEncrypt", 1);
-					AccessEncrypt.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedAccountHostAssignment", 1);
+					EnvelopedAccountHostAssignment.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -2446,10 +2461,10 @@ namespace Goedel.Mesh {
 					URL = jsonReader.ReadString ();
 					break;
 					}
-				case "AccessEncrypt" : {
+				case "EnvelopedAccountHostAssignment" : {
 					// An untagged structure
-					AccessEncrypt = new KeyData ();
-					AccessEncrypt.Deserialize (jsonReader);
+					EnvelopedAccountHostAssignment = new Enveloped<AccountHostAssignment> ();
+					EnvelopedAccountHostAssignment.Deserialize (jsonReader);
  
 					break;
 					}
@@ -3038,6 +3053,12 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual Enveloped<RespondConnection>						EnvelopedRespondConnection  {get; set;}
+        /// <summary>
+        ///The enveloped assignment describing how the client should
+        ///discover the host and encrypt data to it.
+        /// </summary>
+
+		public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3087,6 +3108,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("EnvelopedRespondConnection", 1);
 					EnvelopedRespondConnection.Serialize (_writer, false);
 				}
+			if (EnvelopedAccountHostAssignment != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedAccountHostAssignment", 1);
+					EnvelopedAccountHostAssignment.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -3124,6 +3150,13 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					EnvelopedRespondConnection = new Enveloped<RespondConnection> ();
 					EnvelopedRespondConnection.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "EnvelopedAccountHostAssignment" : {
+					// An untagged structure
+					EnvelopedAccountHostAssignment = new Enveloped<AccountHostAssignment> ();
+					EnvelopedAccountHostAssignment.Deserialize (jsonReader);
  
 					break;
 					}
@@ -3330,6 +3363,12 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual List<ContainerStatus>				ContainerStatus  {get; set;}
+        /// <summary>
+        ///The enveloped assignment describing how the client should
+        ///discover the host and encrypt data to it.
+        /// </summary>
+
+		public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3406,6 +3445,11 @@ namespace Goedel.Mesh {
 				_writer.WriteArrayEnd ();
 				}
 
+			if (EnvelopedAccountHostAssignment != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedAccountHostAssignment", 1);
+					EnvelopedAccountHostAssignment.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -3469,6 +3513,13 @@ namespace Goedel.Mesh {
 						ContainerStatus.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
+					break;
+					}
+				case "EnvelopedAccountHostAssignment" : {
+					// An untagged structure
+					EnvelopedAccountHostAssignment = new Enveloped<AccountHostAssignment> ();
+					EnvelopedAccountHostAssignment.Deserialize (jsonReader);
+ 
 					break;
 					}
 				default : {

@@ -76,8 +76,12 @@ namespace Goedel.Mesh {
         ///<summary>The account address.</summary> 
         string AccountId { get; }
 
-        ///<summary>The service profile.</summary> 
-        ProfileService ProfileService { get; }
+        /////<summary>The service profile.</summary> 
+        //ProfileService ProfileService { get; }
+
+        ///<summary>The access encryption key</summary> 
+        KeyPair HostEncryptAccount { get; }
+
 
         ///<summary>The device credential</summary> 
         ConnectionDevice ConnectionDevice { get; }

@@ -67,6 +67,10 @@ namespace Goedel.Protocol {
         ///serialization/deserialization interfaces.</summary> 
         Serialized,
         ///<summary>The client makes a remote call to the service by means of a 
+        ///HTTP POST method containing a JSON serialization presented in a RUD
+        ///packet.</summary> 
+        Rud,
+        ///<summary>The client makes a remote call to the service by means of a 
         ///HTTP POST method containing a JSON serialization.</summary> 
         Http,
         ///<summary>The client makes a remote call to the service using a ticket 

@@ -257,7 +257,7 @@ namespace Goedel.Mesh {
                     transactContextAccount.AssertNotNull(NYI.Throw);
                     var (keyData, capabilityDecryptServiced) = MakeShare(keyPair,
                         transactContextAccount.AccountId,
-                        transactContextAccount.ProfileService.ServiceEncryption.GetKeyPair(),
+                        transactContextAccount.HostEncryptAccount,
                         keyIdentifier);
                     var catalogedCapability = new CatalogedAccess(capabilityDecryptServiced);
                     transactContextAccount.CatalogUpdate(this, catalogedCapability);

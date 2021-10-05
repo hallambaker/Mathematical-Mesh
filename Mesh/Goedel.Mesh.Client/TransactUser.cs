@@ -63,9 +63,9 @@ namespace Goedel.Mesh.Client {
         public SpoolInbound GetSpoolInbound() => ContextUser.GetStore(SpoolInbound.Label) as SpoolInbound;
 
 
+        ///<inheritdoc/>
+        public KeyPair HostEncryptAccount => ContextUser.HostEncryptAccount;
 
-        
-        
         #endregion
         #region // Constructors
 

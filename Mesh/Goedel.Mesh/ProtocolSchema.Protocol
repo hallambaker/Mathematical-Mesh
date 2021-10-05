@@ -235,9 +235,10 @@
 			Description
 				|A URL to which the user is directed to complete the account creation 
 				|request.
-		Struct KeyData AccessEncrypt
+		Struct Enveloped<AccountHostAssignment> EnvelopedAccountHostAssignment
 			Description
-				|Encryption key to be used to encrypt data for the service to use.
+				|The enveloped assignment describing hos the client should
+				|discover the host and encrypt data to it.
 
 
 
@@ -298,6 +299,11 @@
 		Struct Enveloped<RespondConnection> EnvelopedRespondConnection
 			Description
 				|The signed assertion describing the result of the connect request
+		Struct Enveloped<AccountHostAssignment> EnvelopedAccountHostAssignment
+			Description
+				|The enveloped assignment describing how the client should
+				|discover the host and encrypt data to it.
+
 
 	Transaction User Status StatusRequest StatusResponse
 	Message StatusRequest
@@ -321,7 +327,10 @@
 		String CatalogedDeviceDigest
 		Struct ContainerStatus ContainerStatus
 			Multiple
-
+		Struct Enveloped<AccountHostAssignment> EnvelopedAccountHostAssignment
+			Description
+				|The enveloped assignment describing how the client should
+				|discover the host and encrypt data to it.
 
 
 	//

@@ -74,7 +74,8 @@ namespace Goedel.Protocol {
         ///// <returns></returns>
         //public abstract IJpcSession GetSession();
 
-
+        ///<summary>Tag dictionary mapping operation tags to requests.</summary> 
+        public abstract Dictionary<string, JsonFactoryDelegate> GetTagDictionary();
         }
 
     /// <summary>

@@ -1201,6 +1201,9 @@
             <param name="jpcSession">Session to which requests are to be bound.</param>
             <returns>The direct client instance.</returns>
         </member>
+        <member name="M:Goedel.Protocol.JpcInterface.GetTagDictionary">
+            <summary>Tag dictionary mapping operation tags to requests.</summary> 
+        </member>
         <member name="T:Goedel.Protocol.JpcClientInterface">
             <summary>
             Base class for all JPC client classes.
@@ -1294,6 +1297,11 @@
         <member name="F:Goedel.Protocol.JpcConnection.Serialized">
             <summary>The client makes a direct call to the service through the JSON
             serialization/deserialization interfaces.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JpcConnection.Rud">
+            <summary>The client makes a remote call to the service by means of a 
+            HTTP POST method containing a JSON serialization presented in a RUD
+            packet.</summary> 
         </member>
         <member name="F:Goedel.Protocol.JpcConnection.Http">
             <summary>The client makes a remote call to the service by means of a 

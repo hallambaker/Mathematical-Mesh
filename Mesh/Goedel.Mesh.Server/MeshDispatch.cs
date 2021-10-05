@@ -159,7 +159,7 @@ namespace Goedel.Mesh.Server {
             this.ConnectionDevice.Strip();
 
             ProfileService.Sign(this.ConnectionDevice, ObjectEncoding.JSON_B);
-
+            //KeyCollection.Add(ProfileHost.KeyEncryption);
             KeyCollection.Add(ProfileService.KeyEncryption);
             MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
 
@@ -412,8 +412,17 @@ namespace Goedel.Mesh.Server {
                 var profileAccount = request.EnvelopedProfileAccount.Decode();
                 VerifyDevice(profileAccount, jpcSession).AssertTrue(NotAuthenticated.Throw);
 
+
+                var accountHostAssignment = new AccountHostAssignment() {
+                    AccountAddess = request.AccountAddress,
+                    AccessEncrypt = ProfileService.ServiceEncryption,
+                    };
+                accountHostAssignment.Envelope();
+
                 // Create the account (not transactional)
-                var accountEntry = new AccountUser(request);
+                var accountEntry = new AccountUser(request) {
+                    EnvelopedAccountHostAssignment = accountHostAssignment.GetEnvelopedAccountHostAssignment()
+                    };
 
                 // Perform the transaction.
                 MeshPersist.AccountBind(accountEntry, request.Updates);
@@ -421,9 +430,8 @@ namespace Goedel.Mesh.Server {
                 // ToDo: Allow the BindResponse to specify a different host
                 // ToDo: Allow the BindResponse to specify a unique service encryption key for the acount                
 
-
                 return new BindResponse() {
-                    AccessEncrypt = ProfileHost.Encryption
+                    EnvelopedAccountHostAssignment = accountHostAssignment.GetEnvelopedAccountHostAssignment()
                     };
                 }
             catch (System.Exception exception) {

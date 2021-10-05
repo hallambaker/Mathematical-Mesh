@@ -204,6 +204,10 @@ namespace Goedel.Mesh.Test {
         PublicMeshService meshService;
 
 
+        public virtual TestServiceRud TestServiceRud => testServiceRud ??
+            new TestServiceRud(MeshService, null).CacheValue(out testServiceRud);
+        TestServiceRud testServiceRud;
+
         public virtual MeshServiceClient GetMeshClient(
                 MeshMachineTest meshMachineTest,
                 ICredentialPrivate credential,
@@ -218,6 +222,12 @@ namespace Goedel.Mesh.Test {
                         meshMachineTest.MeshProtocolMessages, meshMachineTest) {
                     TargetAccount = accountAddress
                     },
+                JpcConnection.Rud => new TestSessionRud(TestServiceRud, credential,
+                        meshMachineTest.MeshProtocolMessages, meshMachineTest) {
+                    TargetAccount = accountAddress
+                    },
+
+
                 _ => throw new NYI()
                 };
 

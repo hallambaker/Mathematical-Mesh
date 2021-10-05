@@ -74,6 +74,12 @@
             The digest of the cataloged device.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine.EnvelopedAccountHostAssignment">
+             <summary>
+            The enveloped assignment describing how the client should
+            discover the host and encrypt data to it.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedMachine._Tag">
             <summary>
             Tag identifying this class
@@ -432,6 +438,9 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.MeshClient">
             <summary>Returns the MeshClient and caches the result for future use.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountHostAssignment">
+            <summary>The host assignment binding.</summary> 
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
             <summary>The Account Address</summary>
@@ -2795,6 +2804,9 @@
         </member>
         <member name="M:Goedel.Mesh.Client.TransactUser.GetSpoolInbound">
             <summary>Returns the inbound spool for the account</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.TransactUser.HostEncryptAccount">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Client.TransactUser.#ctor(Goedel.Mesh.Client.ContextUser)">
             <summary>

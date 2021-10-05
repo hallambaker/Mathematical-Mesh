@@ -135,8 +135,8 @@
         <member name="P:Goedel.Mesh.ITransactContextAccount.AccountId">
             <summary>The account address.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ITransactContextAccount.ProfileService">
-            <summary>The service profile.</summary> 
+        <member name="P:Goedel.Mesh.ITransactContextAccount.HostEncryptAccount">
+            <summary>The access encryption key</summary> 
         </member>
         <member name="P:Goedel.Mesh.ITransactContextAccount.ConnectionDevice">
             <summary>The device credential</summary> 
@@ -9049,9 +9049,7 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.MeshService.GetWellKnown">
-            <summary>
-            Well Known service identifier.
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="F:Goedel.Mesh.MeshService.Discovery">
             <summary>
@@ -9059,9 +9057,10 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.MeshService.GetDiscovery">
-            <summary>
-            Well Known service identifier.
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshService.GetTagDictionary">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
             <summary>
@@ -10240,9 +10239,10 @@
             request.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.BindResponse.AccessEncrypt">
+        <member name="P:Goedel.Mesh.BindResponse.EnvelopedAccountHostAssignment">
              <summary>
-            Encryption key to be used to encrypt data for the service to use.
+            The enveloped assignment describing hos the client should
+            discover the host and encrypt data to it.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.BindResponse._Tag">
@@ -10632,6 +10632,12 @@
             The signed assertion describing the result of the connect request
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CompleteResponse.EnvelopedAccountHostAssignment">
+             <summary>
+            The enveloped assignment describing how the client should
+            discover the host and encrypt data to it.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.CompleteResponse._Tag">
             <summary>
             Tag identifying this class
@@ -10781,6 +10787,12 @@
         <member name="P:Goedel.Mesh.StatusResponse.ContainerStatus">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.StatusResponse.EnvelopedAccountHostAssignment">
+             <summary>
+            The enveloped assignment describing how the client should
+            discover the host and encrypt data to it.
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.StatusResponse._Tag">
             <summary>
@@ -13189,6 +13201,79 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.AccountHostAssignment">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.AccountHostAssignment.AccountAddess">
+             <summary>
+            The account being bound
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.AccountHostAssignment.HostAddresses">
+             <summary>
+            Host address in Callsign, DNS or IP format in order of preference.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.AccountHostAssignment.AccessEncrypt">
+             <summary>
+            Encryption key to be used to encrypt data for the service to use.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.AccountHostAssignment._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.AccountHostAssignment.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.AccountHostAssignment._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.AccountHostAssignment.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AccountHostAssignment.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AccountHostAssignment.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.AccountHostAssignment.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.AccountHostAssignment.GetEnvelopedAccountHostAssignment">
+            <summary>Typed enveloped data</summary> 
         </member>
         <member name="T:Goedel.Mesh.ConnectionHost">
             <summary>

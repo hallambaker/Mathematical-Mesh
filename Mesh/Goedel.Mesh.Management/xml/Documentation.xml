@@ -83,9 +83,7 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Management.ServiceManagementService.GetWellKnown">
-            <summary>
-            Well Known service identifier.
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="F:Goedel.Mesh.Management.ServiceManagementService.Discovery">
             <summary>
@@ -93,9 +91,10 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Management.ServiceManagementService.GetDiscovery">
-            <summary>
-            Well Known service identifier.
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementService.GetTagDictionary">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagementService.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
             <summary>

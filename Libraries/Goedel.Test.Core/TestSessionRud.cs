@@ -20,43 +20,20 @@
 //  THE SOFTWARE.
 #endregion
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.IO;
-using System.Reflection.PortableExecutable;
 
-using Goedel.Mesh;
 using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 
 namespace Goedel.Test.Core {
-
     /// <summary>
-    /// Test session, a specialization of the serialized class in which the
-    /// request and response messages are captured.
+    /// Expanded test session that captures RUD packet traces.
     /// </summary>
-    public partial class TestSession : JpcSessionSerialized {
+    public partial class TestSessionRud : TestSession {
 
-        //public static JpcSession JpcSessionFactory(JpcCredential jpcCredential) =>
-        //        new TestSession(jpcCredential as JpcCredentialTest);
+        TestServiceRud TestServiceRud { get; }
 
-
-        public object Machine;
-
-        public List<Trace> MeshProtocolMessages;
-
-
-        static ICredential GetPublic(ICredential credential) {
-            return credential switch {
-                MeshCredentialPrivate meshCredentialPrivate => 
-                            meshCredentialPrivate.GetMeshCredentialPublic(),
-                MeshKeyCredentialPrivate meshKeyCredentialPrivate => 
-                            meshKeyCredentialPrivate.GetMeshKeyCredentialPublic(),
-                KeyCredentialPrivate keyCredentialPrivate =>
-                            keyCredentialPrivate.GetKeyCredentialPublic(),
-                _ => credential
-                };
-
-
-            }
 
         /// <summary>
         /// Create a remote session with authentication under the
@@ -66,12 +43,14 @@ namespace Goedel.Test.Core {
         /// <param name="Domain">Portal address</param>
         /// <param name="Account">User account</param>
         /// <param name="UDF">Authentication key identifier.</param>
-        public TestSession(JpcInterface host, ICredential credential, 
-                    List<Trace> meshProtocolMessages, object machine) : 
-                        base(host, GetPublic(credential)) {
+        public TestSessionRud(TestServiceRud testServiceRud, ICredential clientCredential,
+                    List<Trace> meshProtocolMessages, object machine) :
+                        base(testServiceRud.Host, clientCredential, meshProtocolMessages, machine) {
+            TestServiceRud = testServiceRud;
             Machine = machine;
             MeshProtocolMessages = meshProtocolMessages;
             }
+
 
 
         /// <summary>
@@ -82,15 +61,40 @@ namespace Goedel.Test.Core {
         public override Stream Post(MemoryStream data, JsonObject Request) {
             var requestBytes = data.ToArray();
 
-            var JSONReader = new JsonReader(requestBytes);
-            var result = Host.Dispatch(this, JSONReader);
-            var responseBytes = result.GetBytes();
-
-            var trace = new Trace(requestBytes, responseBytes, Host);
+            var (responseBytes, trace) = TestServiceRud.Dispatch(requestBytes, this);
 
             MeshProtocolMessages.Add(trace);
             return new MemoryStream(responseBytes);
             }
 
+
+
         }
+
+
+    public class TestServiceRud {
+
+        public JpcInterface Host { get; }
+
+        public TestServiceRud(JpcInterface host, ICredential hostCredential) {
+            Host = host;
+
+            }
+
+
+        public (byte[], Trace) Dispatch (byte[] requestBytes, TestSessionRud session) {
+            var jsonReader = new JsonReader(requestBytes);
+
+            var result = Host.Dispatch(session, jsonReader);
+
+            var responseBytes = result.GetBytes();
+            var trace = new Trace(requestBytes, responseBytes, Host);
+            return (responseBytes, trace);
+            }
+
+
+
+        }
+
+
     }

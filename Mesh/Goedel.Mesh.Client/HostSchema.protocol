@@ -30,7 +30,10 @@
 		String CatalogedDeviceDigest
 			Description
 				|The digest of the cataloged device.
-
+		Struct Enveloped<AccountHostAssignment> EnvelopedAccountHostAssignment
+			Description
+				|The enveloped assignment describing how the client should
+				|discover the host and encrypt data to it.
 
 	Structure CatalogedService
 		Inherits CatalogedMachine
@@ -54,6 +57,7 @@
 		Inherits CatalogedMachine
 		Description
 			|Describes an ordinary device connected to a Mesh
+
 
 
 

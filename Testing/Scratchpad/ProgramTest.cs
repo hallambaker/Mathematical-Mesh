@@ -41,12 +41,7 @@ namespace Scratchpad {
 
     // ToDo: Remove application from Account
 
-    // ToDo: Test for delected device being denied access to stores etc.
-    // ToDo: Test for threshold device being unable to decrypt after deletion
-
     // ToDo: Test write validator, read in all catalogs and check encryption etc. status
-
-    // ToDo: Test Clear all unit tests
 
 
     // ToDo: RUD Documentation - Grab examples from connection formation
@@ -63,8 +58,16 @@ namespace Scratchpad {
         static void Main() {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
-            TestService.Test().MeshCatalogGroup();
 
+
+
+
+            TestService.Test().MeshCatalogGroup();
+            TestService.Test().MeshDeviceThresholdKey();
+            TestService.Test().MeshServiceFull();
+            TestService.Test().TestCredentialAccount();
+
+            Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
 
 
             // Refactor to make KeyCredential Mesh a subclass and chain Mesh credential off that.

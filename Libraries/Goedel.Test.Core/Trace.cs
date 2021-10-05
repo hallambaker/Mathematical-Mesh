@@ -19,7 +19,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using System.Collections.Generic;
+using System.Formats.Asn1;
+
+using Goedel.Mesh;
 using Goedel.Protocol;
+using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 namespace Goedel.Test.Core {
@@ -28,7 +33,7 @@ namespace Goedel.Test.Core {
         public byte[] Request;
         public byte[] Response;
         public Response ResponseObject;
-        public Request RequestObject;
+        public Goedel.Protocol.Request RequestObject;
 
         public string XMLRequest => GetRequest();
         public string XMLResponse => GetResponse();
@@ -38,14 +43,31 @@ namespace Goedel.Test.Core {
 
         public string RequestText;
         public string ResponseText;
-        public Trace(byte[] request, byte[] response, JsonObject requestObject) {
+
+        public List<Packet> RequestPackets;
+        public List<Packet> ResponsePackets;
+
+        public Trace(byte[] request, byte[] response, JpcInterface service) {
             Request = request;
             Response = response;
             RequestText = Request.ToUTF8();
             ResponseText = Response.ToUTF8();
+
+            //JsonReader.Trace = true;
+
+            var jsonReader = Request.JsonReader();
+            jsonReader.StartObject();
+            string token = jsonReader.ReadToken();
+            service.GetTagDictionary().TryGetValue(token, out var factory);
+            var requestObject = factory();
+            requestObject.Deserialize(jsonReader);
+
             RequestObject = requestObject as Request;
             ResponseObject = Goedel.Protocol.Response.FromJson(Response.JsonReader(), true);
             }
+
+
+
 
         }
 

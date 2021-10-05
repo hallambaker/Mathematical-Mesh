@@ -30,7 +30,11 @@ using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
+    public partial class AccountHostAssignment {
+        ///<summary>Typed enveloped data</summary> 
+        public Enveloped<AccountHostAssignment> GetEnvelopedAccountHostAssignment() => new(DareEnvelope);
 
+        }
 
     public partial class MeshItem {
 

@@ -47,7 +47,9 @@ namespace Goedel.XUnit {
             Group = new LayerGroup(this);
             NYI = new LayerNYI(this);
 
-            TestEnvironment = new TestEnvironmentCommon();
+            TestEnvironment = new TestEnvironmentCommon {
+                JpcConnection = Protocol.JpcConnection.Rud
+                };
             }
 
 
