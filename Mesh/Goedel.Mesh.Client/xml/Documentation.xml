@@ -412,7 +412,7 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.CatalogedDevice">
             <summary>The cataloged device</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ContextAccount.ProfileService">
+        <member name="P:Goedel.Mesh.Client.ContextAccount.ProfileService">
             <summary>The current service profile</summary> 
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.MeshMachine">

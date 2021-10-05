@@ -243,6 +243,14 @@ namespace Goedel.Mesh {
         #endregion
         #region Implement ICredentialPrivate
 
+        public MeshCredentialPublic GetMeshCredentialPublic () =>
+                    new MeshCredentialPublic(ProfileDevice,
+                    ConnectionDevice,
+                    ConnectionAccount,
+                    AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced);
+
+
+
         /////<inheritdoc/>
         //public ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
 

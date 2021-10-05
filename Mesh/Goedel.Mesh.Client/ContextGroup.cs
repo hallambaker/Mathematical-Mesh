@@ -56,6 +56,8 @@ namespace Goedel.Mesh.Client {
         public override ProfileDevice ProfileDevice => ContextUser?.ProfileDevice;
 
 
+        //public override ProfileService ProfileService => ContextUser.ProfileService;
+
         ///<inheritdoc/>
         public override string AccountAddress => ProfileGroup.AccountAddress;
 

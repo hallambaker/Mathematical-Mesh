@@ -81,7 +81,7 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>The current service profile</summary> 
-        public ProfileService ProfileService;
+        public virtual ProfileService ProfileService { get; set; }
 
         ///<summary>The Machine context.</summary>
         protected IMeshMachineClient MeshMachine => MeshHost.MeshMachine;

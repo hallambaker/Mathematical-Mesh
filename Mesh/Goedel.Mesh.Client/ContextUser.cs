@@ -63,6 +63,8 @@ namespace Goedel.Mesh.Client {
         ///<summary>The profile</summary>
         public ProfileUser ProfileUser { get; set; }
 
+
+
         ///<summary>The connection device</summary>
         public ConnectionService ConnectionService => CatalogedDevice?.ConnectionService;
 

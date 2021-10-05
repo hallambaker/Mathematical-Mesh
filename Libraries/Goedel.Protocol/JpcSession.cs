@@ -171,6 +171,8 @@ namespace Goedel.Protocol {
         public JpcInterface Host { get; }
 
 
+
+
         /// <summary>
         /// Create a remote session with authentication under the
         /// specified credential.

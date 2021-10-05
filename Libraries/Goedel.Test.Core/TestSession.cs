@@ -23,32 +23,33 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection.PortableExecutable;
 
+using Goedel.Mesh;
 using Goedel.Protocol;
-
+using Goedel.Protocol.Presentation;
 
 namespace Goedel.Test.Core {
 
-    ///// <summary>
-    ///// Test credential used to create a test session.
-    ///// </summary>
-    //public class JpcCredentialTest : JpcCredential {
-    //    public JpcInterface Host;
+///// <summary>
+///// Test credential used to create a test session.
+///// </summary>
+//public class JpcCredentialTest : JpcCredential {
+//    public JpcInterface Host;
 
-    //    public List<Trace> MeshProtocolMessages { get; }
+//    public List<Trace> MeshProtocolMessages { get; }
 
-    //    public JpcCredentialTest(JpcInterface host, string accountAddress, List<Trace> meshProtocolMessages) :
-    //        base(accountAddress) {
-    //        MeshProtocolMessages = meshProtocolMessages;
-    //        }
-
-
-    //    }
+//    public JpcCredentialTest(JpcInterface host, string accountAddress, List<Trace> meshProtocolMessages) :
+//        base(accountAddress) {
+//        MeshProtocolMessages = meshProtocolMessages;
+//        }
 
 
-    /// <summary>
-    /// Test session, a specialization of the serialized class in which the
-    /// request and response messages are captured.
-    /// </summary>
+//    }
+
+
+/// <summary>
+/// Test session, a specialization of the serialized class in which the
+/// request and response messages are captured.
+/// </summary>
     public partial class TestSession : JpcSessionSerialized {
 
         //public static JpcSession JpcSessionFactory(JpcCredential jpcCredential) =>
@@ -58,6 +59,21 @@ namespace Goedel.Test.Core {
         public object Machine;
 
         public List<Trace> MeshProtocolMessages;
+
+
+        static ICredential GetPublic(ICredential credential) {
+            return credential switch {
+                MeshCredentialPrivate meshCredentialPrivate => 
+                            meshCredentialPrivate.GetMeshCredentialPublic(),
+                MeshKeyCredentialPrivate meshKeyCredentialPrivate => 
+                            meshKeyCredentialPrivate.GetMeshKeyCredentialPublic(),
+                KeyCredentialPrivate keyCredentialPrivate =>
+                            keyCredentialPrivate.GetKeyCredentialPublic(),
+                _ => credential
+                };
+
+
+            }
 
         /// <summary>
         /// Create a remote session with authentication under the
@@ -69,7 +85,7 @@ namespace Goedel.Test.Core {
         /// <param name="UDF">Authentication key identifier.</param>
         public TestSession(JpcInterface host, ICredential credential, 
                     List<Trace> meshProtocolMessages, object machine) : 
-                        base(host, credential) {
+                        base(host, GetPublic(credential)) {
             Machine = machine;
             MeshProtocolMessages = meshProtocolMessages;
             }

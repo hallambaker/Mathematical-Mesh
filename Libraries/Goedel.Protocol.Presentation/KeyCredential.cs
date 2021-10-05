@@ -128,6 +128,11 @@ namespace Goedel.Protocol.Presentation {
         #endregion
         #region // Implement Interface: ICredentialPrivate
 
+        public KeyCredentialPublic GetKeyCredentialPublic() =>
+                    new KeyCredentialPublic(
+                    AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced);
+
+
         ///<inheritdoc/>
         public virtual void AddCredentials(
                 List<PacketExtension> extensions

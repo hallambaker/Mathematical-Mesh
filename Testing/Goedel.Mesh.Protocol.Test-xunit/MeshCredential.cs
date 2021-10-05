@@ -50,11 +50,7 @@ namespace Goedel.XUnit {
         #region // Tests 
 
         MeshCredentialPublic GetMeshCredentialPublic(
-            MeshCredentialPrivate MeshCredentialPrivate) => new MeshCredentialPublic(
-                    MeshCredentialPrivate.ProfileDevice,
-                    MeshCredentialPrivate.ConnectionDevice,
-                    MeshCredentialPrivate.ConnectionAccount,
-                    MeshCredentialPrivate.AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced);
+            MeshCredentialPrivate MeshCredentialPrivate) => MeshCredentialPrivate.GetMeshCredentialPublic();
 
 
         [Fact]
