@@ -6507,18 +6507,6 @@
             assertion).
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.MeshCredentialPublic.AuthenticationPublic">
-            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
-        </member>
-        <member name="P:Goedel.Mesh.MeshCredentialPublic.AuthenticationKeyId">
-            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
-        </member>
-        <member name="P:Goedel.Mesh.MeshCredentialPublic.Provider">
-            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
-        </member>
-        <member name="P:Goedel.Mesh.MeshCredentialPublic.CredentialValidation">
-            <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
-        </member>
         <member name="P:Goedel.Mesh.MeshCredentialPublic.AuthenticationPrivate">
             <inheritdoc cref="T:Goedel.Protocol.ICredential"/>
         </member>

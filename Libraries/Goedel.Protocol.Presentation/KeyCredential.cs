@@ -48,7 +48,7 @@ namespace Goedel.Protocol.Presentation {
         public string AuthenticationKeyId => AuthenticationPublic.KeyIdentifier;
 
         ///<summary>The credential validation report (always fails as no provider)</summary> 
-        public CredentialValidation CredentialValidation => throw new NotImplementedException();
+        public CredentialValidation CredentialValidation { get; set; } = CredentialValidation.None;
         #endregion
         #region // Constructors
 

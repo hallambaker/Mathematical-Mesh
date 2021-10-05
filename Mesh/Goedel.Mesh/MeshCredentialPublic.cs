@@ -63,21 +63,6 @@ namespace Goedel.Mesh {
         #region // Properties
 
         ///<inheritdoc cref="ICredential"/>
-        public KeyPairAdvanced AuthenticationPublic { get; }
-
-        /////<inheritdoc cref="ICredential"/>
-        //public string Account { get; private set; }
-
-        ///<inheritdoc cref="ICredential"/>
-        public string AuthenticationKeyId { get; }
-
-        ///<inheritdoc cref="ICredential"/>
-        public string Provider => Account.GetService();
-
-        ///<inheritdoc cref="ICredential"/>
-        public CredentialValidation CredentialValidation { get; set; }
-
-        ///<inheritdoc cref="ICredential"/>
         public KeyPairAdvanced AuthenticationPrivate { get; }
 
         ///<summary>The device profile</summary> 
@@ -113,7 +98,7 @@ namespace Goedel.Mesh {
             AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
             //AuthenticationPublic = authenticationKey;
 
-            AuthenticationKeyId = authenticationKey.KeyIdentifier;
+            //AuthenticationKeyId = authenticationKey.KeyIdentifier;
             Account = connectionAccount?.Account ?? connectionDevice?.Account;
             }
 

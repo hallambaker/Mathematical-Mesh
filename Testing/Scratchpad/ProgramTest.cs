@@ -58,16 +58,8 @@ namespace Scratchpad {
         static void Main() {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
-
-
-
-
-            TestService.Test().MeshCatalogGroup();
-            TestService.Test().MeshDeviceThresholdKey();
-            TestService.Test().MeshServiceFull();
-            TestService.Test().TestCredentialAccount();
-
-            Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
+            ShellTests.Test().TestCreateSuper();
+            ShellTests.Test().TestCreateAdmin();
 
 
             // Refactor to make KeyCredential Mesh a subclass and chain Mesh credential off that.

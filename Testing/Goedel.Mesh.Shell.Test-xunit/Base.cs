@@ -30,45 +30,8 @@ using Xunit;
 
 namespace Goedel.XUnit {
 
-    //[Collection("Sequential")]
-    //public partial class ShellTestsAdmin : ShellTests {
-    //    TestEnvironmentCommon testEnvironmentCommon;
-
-
-    //    protected override void Disposing() {
-    //        testEnvironmentCommon.Dispose();
-    //        base.Disposing();
-    //        }
-
-
-    //    // Use the new test environment (when defined.)
-    //    public override TestEnvironmentCommon GetTestEnvironment() {
-
-    //        //var shell = new Goedel.Mesh.Shell.ServiceAdmin.Shell() {
-    //        //    };
-
-    //        //throw new NYI();
-
-    //        testEnvironmentCommon = new TestEnvironmentRdpShell() {
-    //            JpcConnection = Protocol.JpcConnection.Http
-    //            };
-    //        return testEnvironmentCommon;
-    //        }
-
-    //    public static new ShellTestsAdmin Test() => new();
-
-
-    //    public override TestCLI GetTestCLI(string MachineName = null) {
-    //        var testShell = new TestShell(TestEnvironment, MachineName, false);
-    //        return new TestCLI(testShell);
-    //        }
-
-
-    //    }
-
-
     [Collection("Sequential")]
-    public partial class ShellTestsHTTP : ShellTests {
+    public partial class ShellTestsAdmin : ShellTests {
         TestEnvironmentCommon testEnvironmentCommon;
 
 
@@ -81,13 +44,18 @@ namespace Goedel.XUnit {
         // Use the new test environment (when defined.)
         public override TestEnvironmentCommon GetTestEnvironment() {
 
-            testEnvironmentCommon = new TestEnvironmentRdp() {
+            //var shell = new Goedel.Mesh.Shell.ServiceAdmin.Shell() {
+            //    };
+
+            //throw new NYI();
+
+            testEnvironmentCommon = new TestEnvironmentRdpShell() {
                 JpcConnection = Protocol.JpcConnection.Http
                 };
             return testEnvironmentCommon;
             }
 
-        public static new ShellTestsHTTP Test() => new();
+        public static new ShellTestsAdmin Test() => new();
 
 
         public override TestCLI GetTestCLI(string MachineName = null) {
@@ -97,6 +65,59 @@ namespace Goedel.XUnit {
 
 
         }
+
+    // Remove in time because these are really not different enough to be worth considering as different.
+
+    //[Collection("Sequential")]
+    //public partial class ShellTestsHTTP : ShellTests {
+    //    TestEnvironmentCommon testEnvironmentCommon;
+
+
+    //    protected override void Disposing() {
+    //        testEnvironmentCommon.Dispose();
+    //        base.Disposing();
+    //        }
+
+
+    //    // Use the new test environment (when defined.)
+    //    public override TestEnvironmentCommon GetTestEnvironment() {
+
+    //        testEnvironmentCommon = new TestEnvironmentRdp() {
+    //            JpcConnection = Protocol.JpcConnection.Http
+    //            };
+    //        return testEnvironmentCommon;
+    //        }
+
+    //    public static new ShellTestsHTTP Test() => new();
+
+
+    //    public override TestCLI GetTestCLI(string MachineName = null) {
+    //        var testShell = new TestShell(TestEnvironment, MachineName, false);
+    //        return new TestCLI(testShell);
+    //        }
+
+
+    //    }
+
+
+    public partial class ShellTestsRud : ShellTests {
+        TestEnvironmentCommon testEnvironmentCommon;
+
+
+        protected override void Disposing() {
+            testEnvironmentCommon.Dispose();
+            base.Disposing();
+            }
+        public override TestEnvironmentCommon GetTestEnvironment() => new() {
+            JpcConnection = Protocol.JpcConnection.Rud
+            };
+
+
+        public static new ShellTestsRud Test() => new();
+
+        }
+
+
 
     public partial class ShellTests : Disposable {
 
