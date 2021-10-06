@@ -58,8 +58,15 @@ namespace Scratchpad {
         static void Main() {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
-            ShellTests.Test().TestCreateSuper();
-            ShellTests.Test().TestCreateAdmin();
+
+            //// OK these are failing because we are not assigning the super/admin privs to the
+            //// root device in the first place or failing to recover them.
+            //ShellTests.Test().TestCreateSuper();
+            //ShellTests.Test().TestCreateAdmin();
+
+
+            ShellTestsRud.Test().TestHello();
+
 
 
             // Refactor to make KeyCredential Mesh a subclass and chain Mesh credential off that.

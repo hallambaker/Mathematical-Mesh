@@ -104,10 +104,10 @@ namespace Goedel.XUnit {
         TestEnvironmentCommon testEnvironmentCommon;
 
 
-        protected override void Disposing() {
-            testEnvironmentCommon.Dispose();
-            base.Disposing();
-            }
+        //protected override void Disposing() {
+        //    testEnvironmentCommon.Dispose();
+        //    base.Disposing();
+        //    }
         public override TestEnvironmentCommon GetTestEnvironment() => new() {
             JpcConnection = Protocol.JpcConnection.Rud
             };
