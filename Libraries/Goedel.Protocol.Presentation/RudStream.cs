@@ -21,8 +21,10 @@
 #endregion
 
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 using Goedel.Utilities;
@@ -224,32 +226,47 @@ namespace Goedel.Protocol.Presentation {
             string tag,
             JsonObject request) {
 
-            // Serialize request
-            byte[] span = null;
-            if (request != null) {
-                span = SerializePayload(tag, request, out var stream);
-                }
+            var span = PrePost(tag, request);
 
 
             //Screen.WriteLine($"Client {Protocol} - Post data to {RemoteStreamId?.ToStringBase16()}");
             var packet = await PostWeb(span);
 
             //Screen.WriteLine($"Client {Protocol} - Posted data to {RemoteStreamId?.ToStringBase16()}");
-
-
-
             if (packet is PacketResponderChallenge packetResponderChallenge &&
                         (packet.Payload == null | packet?.Payload.Length == 0)) {
                 // if we got a challenge and no payload, represent the request here.
                 packet = await PostWeb(span);
                 }
 
+            return PostPost(packet);
+            }
+
+
+        public byte[]  PrePost(string tag, JsonObject request) {
+            // Serialize request
+            byte[] span = null;
+            if (request != null) {
+                span = SerializePayload(tag, request, out var stream);
+                }
+
+            return span;
+}
+
+
+        public JsonObject PostPost(Packet packet) {
+
+
+
             JsonObject response = null;
             if (packet?.Payload.Length > 0) {
                 response = JsonObject.From(packet.Payload);
                 }
             return response;
+
             }
+
+
 
         void InitializeStream(
                      ref List<PacketExtension> extensions) {
@@ -331,6 +348,13 @@ namespace Goedel.Protocol.Presentation {
             }
 
 
+
+
+
+
+
+
+
         async Task<Packet> PostWebHello(byte[] span, List<PacketExtension> extensions = null) {
             InitializeStream(ref extensions);
 
@@ -338,12 +362,12 @@ namespace Goedel.Protocol.Presentation {
                 LocalStreamId.GetValue(), span,
                 plaintextExtensionsIn: extensions);
 
-            //Screen.WriteLine($"URI: {Uri}");
+            Screen.WriteLine($"URI: {Uri}");
 
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
             var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
-            //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+            Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var code = PacketReader.ReadResponderMessageType(responsepacketData, ref position);
 
@@ -370,9 +394,11 @@ namespace Goedel.Protocol.Presentation {
                 LocalStreamId.GetValue(), span,
                 ciphertextExtensions: extensions);
 
+
+            Screen.WriteLine($"Complete");
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
             var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
-            //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+            Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
 
@@ -391,9 +417,11 @@ namespace Goedel.Protocol.Presentation {
             var encoded = RudConnection.SerializePacketData(destinationStream: remoteStreamIdInitial, payload: span,
                 ciphertextExtensions: extensions);
 
+            Screen.WriteLine($"Child");
+
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
             var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
-            //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+            Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
             Process(packet);
@@ -405,9 +433,10 @@ namespace Goedel.Protocol.Presentation {
             var encoded = RudConnection.SerializePacketData(destinationStream: RemoteStreamId, payload: span,
                 ciphertextExtensions: extensions);
 
+            Screen.WriteLine($"Data");
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
             var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
-            //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+            Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
             Process(packet);

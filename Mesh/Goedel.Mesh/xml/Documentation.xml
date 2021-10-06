@@ -11481,6 +11481,12 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Mesh.ClaimResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
+        </member>
         <member name="T:Goedel.Mesh.PollClaimRequest">
             <summary>
             </summary>
@@ -11605,6 +11611,12 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.PollClaimResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
         </member>
         <member name="T:Goedel.Mesh.CryptographicOperation">
             <summary>
@@ -12209,6 +12221,12 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.OperateResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
         </member>
         <member name="T:Goedel.Mesh.KeyData">
              <summary>

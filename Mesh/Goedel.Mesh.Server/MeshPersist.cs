@@ -568,14 +568,14 @@ namespace Goedel.Mesh.Server {
             var id = messageClaim.PublicationId;
             var publicationEntry = store.GetEntry(id);
 
-            if (publicationEntry.JsonObject is not CatalogedPublication publication) {
-                return null;
+            if (publicationEntry?.JsonObject is not CatalogedPublication publication) {
+                throw new NYI();
                 }
 
             // verify the claim.
             if (!publication.VerifyService(messageClaim.Sender,
                         messageClaim.ServiceAuthenticate)) {
-                return null;
+                throw new NYI();
                 }
 
             // Post the claim to the local spool. The unique identifier is the

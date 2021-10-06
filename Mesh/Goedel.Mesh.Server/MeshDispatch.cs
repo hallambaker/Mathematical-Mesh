@@ -605,8 +605,16 @@ namespace Goedel.Mesh.Server {
 		/// <returns>The response object from the service</returns>
         public override ClaimResponse Claim(
                     ClaimRequest request,
-                    IJpcSession session = null) =>
-            MeshPersist.Claim(session, request.EnvelopedMessageClaim);
+                    IJpcSession session = null) {
+            try {
+
+                return MeshPersist.Claim(session, request.EnvelopedMessageClaim);
+                }
+            catch (System.Exception exception) {
+                return new ClaimResponse(exception);
+
+                }
+            }
 
         /// <summary>
         /// Server method implementing the transaction  PollClaim.
@@ -616,8 +624,17 @@ namespace Goedel.Mesh.Server {
         /// <returns>The response object from the service</returns>
         public override PollClaimResponse PollClaim(
                     PollClaimRequest request,
-                    IJpcSession session = null) =>
-            MeshPersist.PollClaim(session, request.TargetAccountAddress, request.PublicationId);
+                    IJpcSession session = null) {
+            try {
+
+                return MeshPersist.PollClaim(session, request.TargetAccountAddress, request.PublicationId);
+                }
+            catch (System.Exception exception) {
+                return new PollClaimResponse(exception);
+
+                }
+            }
+        
 
 
         /// <summary>
@@ -628,8 +645,18 @@ namespace Goedel.Mesh.Server {
         /// <returns>The response object from the service</returns>
         public override OperateResponse Operate(
                     OperateRequest request,
-                    IJpcSession session = null) =>
-            MeshPersist.Operate(session, request.AccountAddress, request.Operations);
+                    IJpcSession session = null) {
+            try {
+
+                return MeshPersist.Operate(session, request.AccountAddress, request.Operations);
+                }
+            catch (System.Exception exception) {
+                return new OperateResponse(exception);
+
+                }
+            }
+
+            
 
         #endregion
         }

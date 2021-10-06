@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using System;
 using System.Net.Sockets;
 
 using Goedel.Discovery;
@@ -29,7 +30,7 @@ namespace Goedel.Protocol.Presentation {
 #pragma warning disable CS1572
 #pragma warning disable CS1573
 
-
+    [Flags]
     public enum TransportType {
 
         ///<summary>HTTP/Fred binding.</summary> 
@@ -40,7 +41,10 @@ namespace Goedel.Protocol.Presentation {
 
 
         ///<summary>All supported provider types.</summary> 
-        All = Http | Udp
+        All = Http | Udp,
+
+        ///<summary>Direct connection for testing.</summary> 
+        Direct = 0b1000000
 
         }
 

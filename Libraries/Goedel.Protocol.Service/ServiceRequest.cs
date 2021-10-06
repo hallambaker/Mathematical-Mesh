@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -160,8 +161,13 @@ namespace Goedel.Protocol.Service {
 
                 try {
                     response = rudStreamService.JpcInterface.Dispatch(rudStreamService, reader);
+
+
+                    if (response == null) {
+                        }
+
                     }
-                catch {
+                catch (Exception exception) {
                     // here make error response wrapper
 
                     }

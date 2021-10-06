@@ -279,5 +279,31 @@ namespace Goedel.Mesh {
         public CompleteResponse(Exception exception = null) : base(exception) {
             }
         }
+    public partial class ClaimResponse {
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
+        public ClaimResponse(Exception exception = null) : base(exception) {
+            }
+        }
+
+    public partial class PollClaimResponse {
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
+        public PollClaimResponse(Exception exception = null) : base(exception) {
+            }
+        }
+
+    public partial class OperateResponse {
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
+        public OperateResponse(Exception exception = null) : base(exception) {
+            }
+        }
 
     }

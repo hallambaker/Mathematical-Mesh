@@ -591,6 +591,9 @@
         <member name="F:Goedel.Protocol.Presentation.TransportType.All">
             <summary>All supported provider types.</summary> 
         </member>
+        <member name="F:Goedel.Protocol.Presentation.TransportType.Direct">
+            <summary>Direct connection for testing.</summary> 
+        </member>
         <member name="T:Goedel.Protocol.Presentation.Endpoint">
             <summary>
             Record describing a listener endpoint.

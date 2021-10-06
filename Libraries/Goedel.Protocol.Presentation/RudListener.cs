@@ -35,7 +35,7 @@ namespace Goedel.Protocol.Presentation {
 
         #region // Properties
 
-
+        RudStream streamResponderChallenge = null;
         #endregion
         #region // Constructors
 
@@ -50,7 +50,7 @@ namespace Goedel.Protocol.Presentation {
 
         #endregion
         #region // Methods 
-        RudStream streamResponderChallenge = null;
+
 
         ///<inheritdoc/>
         public override RudStream GetTemporaryResponder(

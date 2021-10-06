@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 using System.Net;
-
+using System;
 namespace Goedel.Protocol.Presentation {
     /// <summary>
     /// Presentation client connection. Tracks the state of a client connection.
@@ -100,8 +100,10 @@ namespace Goedel.Protocol.Presentation {
             Domain = domain;
             Instance = instance;
             CredentialSelf = initiatorCredential;
-            WebClient = new WebClient();
 
+            if (transportTypes.HasFlag(TransportType.Http)) {
+                WebClient = new WebClient();
+                }
 
             //// Create the initial stream NB Do NOT re-present the credential used to
             //// initialize the connection.
@@ -109,6 +111,10 @@ namespace Goedel.Protocol.Presentation {
             //    StreamState = StreamState.Initial
             //    };
             }
+
+
+
+
 
 
         #endregion

@@ -27,6 +27,8 @@ using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 
 namespace Goedel.Test.Core {
+
+
     /// <summary>
     /// Expanded test session that captures RUD packet traces.
     /// </summary>
@@ -34,6 +36,9 @@ namespace Goedel.Test.Core {
 
         TestServiceRud TestServiceRud { get; }
 
+        ConnectionInitiatorTest ConnectionInitiatorTest { get; }
+
+        RudStream RudStream { get; }
 
         /// <summary>
         /// Create a remote session with authentication under the
@@ -43,12 +48,16 @@ namespace Goedel.Test.Core {
         /// <param name="Domain">Portal address</param>
         /// <param name="Account">User account</param>
         /// <param name="UDF">Authentication key identifier.</param>
-        public TestSessionRud(TestServiceRud testServiceRud, ICredential clientCredential,
+        public TestSessionRud(TestServiceRud testServiceRud, ICredentialPrivate clientCredential,
                     List<Trace> meshProtocolMessages, object machine) :
                         base(testServiceRud.Host, clientCredential, meshProtocolMessages, machine) {
             TestServiceRud = testServiceRud;
             Machine = machine;
             MeshProtocolMessages = meshProtocolMessages;
+
+
+            ConnectionInitiatorTest = new ConnectionInitiatorTest(clientCredential, null);
+            RudStream = new RudStream(null, null, clientCredential, null, ConnectionInitiatorTest);
             }
 
 
@@ -71,26 +80,53 @@ namespace Goedel.Test.Core {
 
         }
 
+    public class RudStreamTest : RudStream {
+
+
+        public RudStreamTest(
+                    RudStream parent,
+                    string protocol,
+                    ICredentialPrivate credentialSelf = null,
+                    ICredentialPublic credentialOther = null,
+                        RudConnection rudConnection = null,
+                    string accountAddress = null) : base(
+                parent, protocol, credentialSelf, credentialOther, rudConnection, accountAddress) {
+            }
+
+        }
+
 
     public class TestServiceRud {
 
+
+        RudListenerTest RudListenerTest { get; }
+
+
         public JpcInterface Host { get; }
 
-        public TestServiceRud(JpcInterface host, ICredential hostCredential) {
+        public TestServiceRud(JpcInterface host, ICredentialPrivate hostCredential) {
             Host = host;
+            var rudProvider = new List<RudProvider> {
+                new RudProvider(new List<Endpoint>(), host)
+            };
+            RudListenerTest = new RudListenerTest(hostCredential, rudProvider);
 
             }
 
 
-        public (byte[], Trace) Dispatch (byte[] requestBytes, TestSessionRud session) {
-            var jsonReader = new JsonReader(requestBytes);
+        public (byte[], Trace) Dispatch(byte[] requestBytes, TestSessionRud session) =>
+                RudListenerTest.Dispatch(requestBytes, session);
 
-            var result = Host.Dispatch(session, jsonReader);
 
-            var responseBytes = result.GetBytes();
-            var trace = new Trace(requestBytes, responseBytes, Host);
-            return (responseBytes, trace);
-            }
+            //{
+            //var jsonReader = new JsonReader(requestBytes);
+
+        //var result = Host.Dispatch(session, jsonReader);
+
+        //var responseBytes = result.GetBytes();
+        //var trace = new Trace(requestBytes, responseBytes, Host);
+        //return (responseBytes, trace);
+        //}
 
 
 

@@ -100,22 +100,22 @@ namespace Goedel.XUnit {
     //    }
 
 
-    public partial class ShellTestsRud : ShellTests {
-        TestEnvironmentCommon testEnvironmentCommon;
+    //public partial class ShellTestsRud : ShellTests {
+    //    TestEnvironmentCommon testEnvironmentCommon;
 
 
-        //protected override void Disposing() {
-        //    testEnvironmentCommon.Dispose();
-        //    base.Disposing();
-        //    }
-        public override TestEnvironmentCommon GetTestEnvironment() => new() {
-            JpcConnection = Protocol.JpcConnection.Rud
-            };
+    //    //protected override void Disposing() {
+    //    //    testEnvironmentCommon.Dispose();
+    //    //    base.Disposing();
+    //    //    }
+    //    public override TestEnvironmentCommon GetTestEnvironment() => new() {
+    //        JpcConnection = Protocol.JpcConnection.Rud
+    //        };
 
 
-        public static new ShellTestsRud Test() => new();
+    //    public static new ShellTestsRud Test() => new();
 
-        }
+    //    }
 
 
 

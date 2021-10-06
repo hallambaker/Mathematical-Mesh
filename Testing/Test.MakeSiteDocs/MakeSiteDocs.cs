@@ -48,7 +48,8 @@ namespace Goedel.XUnit {
             NYI = new LayerNYI(this);
 
             TestEnvironment = new TestEnvironmentCommon {
-                JpcConnection = Protocol.JpcConnection.Rud
+                //JpcConnection = Protocol.JpcConnection.Rud
+                JpcConnection = Protocol.JpcConnection.Serialized
                 };
             }
 

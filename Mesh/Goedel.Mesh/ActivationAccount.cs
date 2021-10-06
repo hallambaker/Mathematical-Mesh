@@ -480,7 +480,7 @@ namespace Goedel.Mesh {
                     break;
                     }
                 case Resource.ProfileAdmin: {
-                    newActivation.ProfileSignature = catalog.MakeKeyData(right,
+                    newActivation.AdministratorSignature = catalog.MakeKeyData(right,
                         AdministratorSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
                     newActivation.DefaultActive = true;
                     break;
