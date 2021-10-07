@@ -70,8 +70,7 @@ namespace Goedel.Mesh.Client {
     public partial class CatalogedPending {
 
         ///<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
-        public override ProfileDevice ProfileDevice =>
-                    ProfileDevice.Decode(EnvelopedProfileDevice);
+        public override ProfileDevice ProfileDevice => EnvelopedProfileDevice.Decode();
 
 
         /// <summary>
@@ -92,8 +91,8 @@ namespace Goedel.Mesh.Client {
         }
     public partial class CatalogedPreconfigured {
         ///<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
-        public override ProfileDevice ProfileDevice =>
-                    EnvelopedProfileDevice.Decode();
+        public override ProfileDevice ProfileDevice => EnvelopedProfileDevice.Decode();
+
         ///<summary>The decoded connection device</summary> 
         public ConnectionService ConnectionDevice =>
                     EnvelopedConnectionDevice.Decode();

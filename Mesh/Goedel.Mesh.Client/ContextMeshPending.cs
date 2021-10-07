@@ -166,7 +166,7 @@ namespace Goedel.Mesh.Client {
             //var meshCredentialPrivate = new MeshCredentialPrivate(profileDevice, null, null,
             //    profileDevice.KeyAuthentication as KeyPairAdvanced);
 
-            var meshCredentialPrivate = new KeyCredentialPrivate(
+            var meshCredentialPrivate = new MeshKeyCredentialPrivate(
                 profileDevice.KeyAuthentication as KeyPairAdvanced, accountAddress);
 
 
@@ -218,15 +218,21 @@ namespace Goedel.Mesh.Client {
                 ResponseID = CatalogedPending.GetResponseID(),
                 AccountAddress = AccountAddress
                 };
-            ProfileDevice.Activate(KeyCollection);
+            var profileDevice = ProfileDevice;
+            profileDevice.Activate(KeyCollection);
 
-            var completeResponse = MeshClient.Complete(completeRequest);
+            var meshCredentialPrivate = new MeshKeyCredentialPrivate(
+                    profileDevice.KeyAuthentication as KeyPairAdvanced, AccountAddress);
+            var meshClient = MeshHost.MeshMachine.GetMeshClient(
+                    meshCredentialPrivate, null, AccountAddress);
+
+            var completeResponse = meshClient.Complete(completeRequest);
             completeResponse.Success().AssertTrue(ConnectionAccountUnknown.Throw);
 
             //// OK so here we need to unpack the profile etc.
             var respondConnection = completeResponse.EnvelopedRespondConnection.Decode(KeyCollection);
 
-            respondConnection.Validate(ProfileDevice, KeyCollection);
+            respondConnection.Validate(profileDevice, KeyCollection);
 
             switch (respondConnection.Result) {
                 case MeshConstants.TransactionResultReject: throw new ConnectionRefused();
@@ -246,7 +252,7 @@ namespace Goedel.Mesh.Client {
 
             // create the host catalog entry
             var catalogedStandard = new CatalogedStandard() {
-                Id = ProfileDevice.Udf,
+                Id = profileDevice.Udf,
                 CatalogedDevice = catalogedEntry,
                 EnvelopedProfileAccount = profileUser.GetEnvelopedProfileAccount()
                 };

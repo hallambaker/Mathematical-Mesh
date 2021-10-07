@@ -49,11 +49,12 @@ namespace Goedel.Mesh {
         #region // Constructors
         public MeshKeyCredentialPrivate(KeyPairAdvanced authenticationPrivate , string account) :
 
+
             // we do have to include the account address here!!!
 
-            base(authenticationPrivate, account) {
-
-
+                base(authenticationPrivate, account) {
+            //authenticationPrivate.AssertNotNull(NYI.Throw);
+            //account.AssertNotNull(NYI.Throw);
 
 
             }

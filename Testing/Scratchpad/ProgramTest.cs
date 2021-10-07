@@ -64,13 +64,26 @@ namespace Scratchpad {
             // a problem for tomorrow!!!
 
 
-            //ShellTests.Test().TestMessageConfirmationAccept();
-            ShellTestsAdmin.Test().TestMessageConfirmationAccept();
-            ShellTestsAdmin.Test().TestProfileConnect();
-            ShellTestsAdmin.Test().TestCreateDevice();
 
-            ShellTestsAdmin.Test().TestProfileConnect();
-            ShellTestsAdmin.Test().TestProfileMail();
+            TestService.Test().MeshCatalogGroup();
+            TestService.Test().MeshDeviceThresholdKey();
+
+            ShellTestsAdmin.Test().TestAccountDelete();
+            ShellTests.Test().TestMessageContactRemote();
+            TestService.Test().MeshDeviceConnectPIN();
+            TestService.Test().MeshDeviceConnectStaticQR();
+
+
+            //ShellTestsAdmin.Test().TestMessageConfirmationAccept();
+            //ShellTestsAdmin.Test().TestProfileConnect();
+
+            //ShellTestsAdmin.Test().TestProfileConnect();
+
+            //ShellTestsAdmin.Test().TestProfileMail();
+            //ShellTestsAdmin.Test().TestCreateDevice();
+
+
+
 
             //ShellTestsAdmin.Test().TestHello();
             //ShellTestsRud.Test().TestHello();
@@ -86,14 +99,14 @@ namespace Scratchpad {
 
             //TestService.Test().MeshDeviceDirectKey();
 
-            //TestService.Test().MeshDeviceThresholdKey();
+
 
             //Debug();
 
 
             //TestService.Test().MeshEscrowRecover();
 
-            //TestService.Test().MeshCatalogGroup();
+
 
             //TestService.Test().MeshDeviceConnectPIN();
             //TestService.Test().MeshDeviceConnectDynamicQR();

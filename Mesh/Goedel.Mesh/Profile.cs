@@ -130,9 +130,13 @@ namespace Goedel.Mesh {
         /// <paramref name="keyLocate"/>.
         /// </summary>
         /// <param name="keyLocate">Key collection containing the secret seed.</param>
-        public void Activate(IKeyCollection keyLocate) =>
-                SecretSeed ??= keyLocate.LocatePrivateKey(Udf) as PrivateKeyUDF;
-
+        public void Activate(IKeyCollection keyLocate) {
+            SecretSeed ??= keyLocate.LocatePrivateKey(Udf) as PrivateKeyUDF;
+            Generate();
+            }
+        
+        
+        
         /// <summary>
         /// Generate profile specific keys, is overriden in child classes.
         /// </summary>
