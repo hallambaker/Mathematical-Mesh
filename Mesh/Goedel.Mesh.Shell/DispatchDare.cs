@@ -69,8 +69,8 @@ namespace Goedel.Mesh.Shell {
             var outputFile = options.Output.Value ?? Path.ChangeExtension(inputFile, ".xdare");
             //var keyLocate = GetKeyCollection(options);
 
-            var contextAccount = GetContextUser(options);
-            var Length = DareEnvelope.Decode(inputFile, outputFile, keyCollection: contextAccount);
+            var keyLocate = GetKeyCollection(options);
+            var Length = DareEnvelope.Decode(inputFile, outputFile, keyCollection: keyLocate);
 
             return new ResultFile() {
                 TotalBytes = (int)Length
@@ -84,9 +84,9 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareVerify(DareVerify options) {
             var inputFile = options.Input.Value;
-            var contextAccount = GetContextUser(options);
+            var keyLocate = GetKeyCollection(options);
 
-            var result = DareEnvelope.Verify(inputFile, contextAccount);
+            var result = DareEnvelope.Verify(inputFile, keyLocate);
 
             "Should check that the signature value is correct".TaskFunctionality();
 

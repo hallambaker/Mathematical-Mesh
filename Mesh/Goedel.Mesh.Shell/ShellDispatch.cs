@@ -237,13 +237,29 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command options.</param>
         /// <returns>The account context.</returns>
-        public virtual ContextUser GetContextUser(IAccountOptions options) {
+        public virtual ContextUser TryGetContextUser(IAccountOptions options) {
+
 
             //throw new NYI();
             var accountAddress = options.AccountAddress.Value;
             var local = options.LocalName.Value;
 
-            return MeshHost.GetContextMesh(accountAddress ?? local) as ContextUser;
+            var result =  MeshHost.GetContextMesh(accountAddress ?? local) as ContextUser;
+
+
+            return result;
+            }
+
+        /// <summary>
+        /// Obtain an account context for the options specified in <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">The command options.</param>
+        /// <returns>The account context.</returns>
+
+        public virtual ContextUser GetContextUser(IAccountOptions options) {
+            var result = TryGetContextUser(options);
+            result.AssertNotNull(NYI.Throw);
+            return result;
             }
 
 

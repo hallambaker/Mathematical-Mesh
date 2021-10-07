@@ -32,7 +32,8 @@ Namespace Goedel.Mesh.Client
 		Description
 			|The action cannot be performed because connection of this device to the account is still pending.
 
-
+	Exception CryptographicOperationRefused
+		Console "A cryptographic operation was refused."
 
 	
 	Exception SyncFailed

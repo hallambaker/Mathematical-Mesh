@@ -153,6 +153,7 @@ namespace Goedel.Mesh.Server {
             // authenticated under the AccountAuthenticationKey
 
             switch (accountPrivilege) {
+                case AccountPrivilege.Post:
                 case AccountPrivilege.Device: {
                     break;
                     }

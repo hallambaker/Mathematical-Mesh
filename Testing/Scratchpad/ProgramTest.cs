@@ -37,41 +37,36 @@ namespace Scratchpad {
 
     // ToDo: Server logging
     // ToDo: Server status info
-
-
-    // ToDo: Remove application from Account
-
     // ToDo: Test write validator, read in all catalogs and check encryption etc. status
-
 
     // ToDo: RUD Documentation - Grab examples from connection formation
     // ToDo: RUD Documentation - Describe stream lifecycle
     // ToDo: RUD Documentation - Describe account binding
 
-
-
-
-    // Refactor: Convert all DareEnvelope to Enveloped<type> and use Decode for cached accessor
-
-
     partial class Program {
         static void Main() {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
-
-            // It is suspected that these are failing because the wrong account is
-            // being referenced. May need to move the target account address about
-            // a problem for tomorrow!!!
+            //ShellTestsAdmin.Test().TestMessageContactRemote();
+            ShellTestsAdmin.Test().TestFilePlain();
 
 
 
-            TestService.Test().MeshCatalogGroup();
-            TestService.Test().MeshDeviceThresholdKey();
 
-            ShellTestsAdmin.Test().TestAccountDelete();
-            ShellTests.Test().TestMessageContactRemote();
-            TestService.Test().MeshDeviceConnectPIN();
-            TestService.Test().MeshDeviceConnectStaticQR();
+            //TestService.Test().MeshCatalogGroup();
+            //TestService.Test().MeshDeviceThresholdKey();
+
+
+            //ShellTestsAdmin.Test().TestProfileConnectPin();
+            //ShellTestsAdmin.Test().TestProfileConnectPinExpired();
+            //ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
+
+            //ShellTestsAdmin.Test().TestProfileConnectStaticQR();
+
+            //ShellTestsAdmin.Test().TestHello();
+            //ShellTestsAdmin.Test().TestAccountDelete();
+
+            //ShellTestsAdmin.Test().TestCreateSuper();
 
 
             //ShellTestsAdmin.Test().TestMessageConfirmationAccept();

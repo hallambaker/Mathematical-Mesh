@@ -51,6 +51,9 @@ namespace Goedel.Mesh.Client {
         //            CacheValue(out meshClient);
         //MeshService meshClient;
 
+
+
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -58,6 +61,14 @@ namespace Goedel.Mesh.Client {
         /// <param name="catalogedMachine">The pending connection description.</param>
         public ContextMeshPreconfigured(MeshHost meshHost, CatalogedMachine catalogedMachine) :
                     base(meshHost, catalogedMachine) {
+
+            var profileDevice = ProfileDevice;
+            profileDevice.Activate(KeyCollection);
+
+            var meshCredentialPrivate = new MeshKeyCredentialPrivate(
+                    profileDevice.KeyAuthentication as KeyPairAdvanced, AccountAddress);
+            MeshClient = MeshHost.MeshMachine.GetMeshClient(
+                    meshCredentialPrivate, null, AccountAddress);
             }
 
 

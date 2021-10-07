@@ -53,6 +53,8 @@ namespace Goedel.XUnit {
             var resultfetch = deviceB.Dispatch($"contact fetch {uri}");
             ValidContact(deviceB, AccountB, AliceAccount);
             ValidContact(deviceA, AliceAccount);
+
+            EndTest();
             }
 
 
@@ -85,6 +87,8 @@ namespace Goedel.XUnit {
             // reject the contact request.
             var result7 = ProcessMessage(deviceA, true, messageId);
             ValidContact(deviceA, AliceAccount, AccountB);
+
+            EndTest();
             }
 
 
@@ -116,6 +120,8 @@ namespace Goedel.XUnit {
             // Explicit reject has no effect
             var result7 = deviceA.Dispatch($"account sync /auto");
             ValidContact(deviceA, AliceAccount);
+
+            EndTest();
             }
 
         [Fact]
@@ -138,6 +144,8 @@ namespace Goedel.XUnit {
             // Automatically accept the contact request.
             var result6 = deviceA.Dispatch($"account sync /auto");
             ValidContact(deviceA, AliceAccount, AccountB);
+
+            EndTest();
             }
 
 
@@ -165,6 +173,10 @@ namespace Goedel.XUnit {
             // check the contact is listed
             var result6 = deviceB.Dispatch($"account sync /auto");
             ValidContact(deviceB, AccountB, AliceAccount);
+
+
+
+            EndTest();
             }
 
         Result MakeAccount(TestCLI device, string account) {

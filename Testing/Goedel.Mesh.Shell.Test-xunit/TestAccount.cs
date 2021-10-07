@@ -106,6 +106,8 @@ namespace Goedel.XUnit {
             var recoverSync = testCLIAlice2.Example($"account sync");
 
             "Should add much more test functionality here".TaskTest();
+
+            EndTest();
             }
 
         [Fact]
@@ -126,6 +128,8 @@ namespace Goedel.XUnit {
             var recoverSync = testCLIAlice2.Example($"account sync");
 
             "Should add much more test functionality here".TaskTest();
+
+            EndTest();
             }
 
 
@@ -159,6 +163,9 @@ namespace Goedel.XUnit {
 
             // Failing because the device catalog is keypt open.
             testCLIAlice1.Dispatch($"account sync", fail: true);
+
+
+            EndTest();
             }
 
 
@@ -203,7 +210,7 @@ namespace Goedel.XUnit {
             var MalletDevice2Sync = testCLIMallet1.Example($"device complete");
             MalletDevice2Sync[0].Result.Success.TestFalse();
 
-
+            EndTest();
             }
         }
     }

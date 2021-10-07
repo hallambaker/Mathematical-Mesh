@@ -489,7 +489,8 @@ namespace Goedel.Mesh.Server {
 
             // Different stores depending on user or group account
             foreach (var operation in operations) {
-                results.Add(Operate(catalogCapability, operation, jpcSession.Credential.Account));
+                results.Add(Operate(catalogCapability, operation, 
+                            jpcSession.Credential.Account));
                 }
 
             var response = new OperateResponse() {
@@ -520,7 +521,7 @@ namespace Goedel.Mesh.Server {
                 CatalogAccess catalogCapability,
                 CryptographicOperationKeyAgreement cryptographicOperation, string accountAddress) {
 
-            var keyId = cryptographicOperation.KeyId ?? accountAddress;
+            var keyId = cryptographicOperation.KeyId ?? accountAddress.CannonicalAccountAddress();
             // Phase2: validate the access to this key id
 
             catalogCapability.DictionaryDecryptByKeyId.TryGetValue(

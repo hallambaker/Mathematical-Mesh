@@ -121,7 +121,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestProfileConnectPin() {
-            var accountA = "alice@example.com";
+
 
             var device1 = GetTestCLI("Device1");
             var device2 = GetTestCLI("Device2");
@@ -130,9 +130,9 @@ namespace Goedel.XUnit {
 
             device1.Dispatch($"account create {AliceAccount}");
 
-            var c1 = device1.Connect(device2, accountA);
+            var c1 = device1.Connect(device2, AliceAccount);
             c1.ProcessedResults.TestEqual(1);
-            var c2 = device1.Connect(device3, accountA);
+            var c2 = device1.Connect(device3, AliceAccount);
             c2.ProcessedResults.TestEqual(1);
 
             EndTest();
@@ -141,7 +141,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestProfileConnectPinExpired() {
-            var accountA = "alice@example.com";
+
 
             var device1 = GetTestCLI("Device1");
             var device2 = GetTestCLI("Device2");
@@ -153,7 +153,7 @@ namespace Goedel.XUnit {
             Thread.Sleep(1000); // make sure that the PIN expires
 
             var pin = result.MessagePIN.Pin;
-            device2.Dispatch($"device request {accountA} /pin {pin}");
+            device2.Dispatch($"device request {AliceAccount} /pin {pin}");
             device1.Dispatch($"account sync /auto");
 
             // The connection MUST be rejected as the PIN has expired.
@@ -166,8 +166,6 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestProfileConnectPinInvalid() {
-            var accountA = "alice@example.com";
-
             var device1 = GetTestCLI("Device1");
             var device2 = GetTestCLI("Device2");
 
@@ -179,7 +177,7 @@ namespace Goedel.XUnit {
             var pin = result.MessagePIN.Pin.CorruptedPIN();
 
 
-            device2.Dispatch($"device request {accountA} /pin {pin}");
+            device2.Dispatch($"device request {AliceAccount} /pin {pin}");
             device1.Dispatch($"account sync /auto");
 
             // The connection MUST be rejected as the PIN has expired.

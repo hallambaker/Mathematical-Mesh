@@ -712,6 +712,7 @@ namespace Goedel.Mesh.Client {
                 };
             ;
             var response = MeshClient.Operate(operateRequest);
+            response.AssertSuccess(CryptographicOperationRefused.Throw);
 
             var result = response.Results[0] as CryptographicResultKeyAgreement;
 

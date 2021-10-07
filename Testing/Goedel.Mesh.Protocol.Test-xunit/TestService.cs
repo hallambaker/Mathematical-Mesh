@@ -603,7 +603,7 @@ namespace Goedel.XUnit {
             decrypt5.IsEqualTo(plaintext).TestTrue();
 
 
-            Xunit.Assert.Throws<MeshOperationFailed>(() =>
+            Xunit.Assert.Throws<CryptographicOperationRefused>(() =>
               contextAccountBob.DareDecode(envelope, verify: true));
 
             }

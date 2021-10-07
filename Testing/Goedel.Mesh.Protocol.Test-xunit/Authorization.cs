@@ -97,7 +97,7 @@ namespace Goedel.XUnit {
             Xunit.Assert.Throws<ServerResponseInvalid>(() => newContext.Sync());
 
             if (role == Rights.IdRolesThreshold) {
-                Xunit.Assert.Throws<MeshOperationFailed>(() => testFile.Decrypt(newContext.KeyCollection));
+                Xunit.Assert.Throws<CryptographicOperationRefused>(() => testFile.Decrypt(newContext.KeyCollection));
 
                 }
             else {

@@ -802,6 +802,13 @@
             <param name="options">Options specifying the Mesh account id to bind to.</param>
             <returns>The Mesh Client.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.TryGetContextUser(Goedel.Mesh.Shell.IAccountOptions)">
+            <summary>
+            Obtain an account context for the options specified in <paramref name="options"/>.
+            </summary>
+            <param name="options">The command options.</param>
+            <returns>The account context.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.GetContextUser(Goedel.Mesh.Shell.IAccountOptions)">
             <summary>
             Obtain an account context for the options specified in <paramref name="options"/>.

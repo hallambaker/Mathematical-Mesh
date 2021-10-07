@@ -74,7 +74,11 @@ namespace Goedel.XUnit {
             }
 
         public bool TestFile(string content, string contentType = null,
+
+
             string encrypt = null, string sign = null, bool corrupt = false) {
+
+            _ = DefaultDevice;
 
             var filename = content.ToFileUnique();
             var contentClause = contentType == null ? "" : $" /cty {contentType}";
