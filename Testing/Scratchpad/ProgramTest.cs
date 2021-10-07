@@ -64,6 +64,7 @@ namespace Scratchpad {
             // a problem for tomorrow!!!
 
 
+            //ShellTests.Test().TestMessageConfirmationAccept();
             ShellTestsAdmin.Test().TestMessageConfirmationAccept();
             ShellTestsAdmin.Test().TestProfileConnect();
             ShellTestsAdmin.Test().TestCreateDevice();

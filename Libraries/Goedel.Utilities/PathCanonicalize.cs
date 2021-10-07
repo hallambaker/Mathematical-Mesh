@@ -98,54 +98,7 @@ namespace Goedel.Utilities {
             }
 
 
-        ///// <summary>
-        ///// Verify that the path contains no relative references to an earlier path.
-        ///// </summary>
-        ///// <param name="path">The path to verify</param>
-        ///// <returns>True if the path is canonical, otherwise false.</returns>
-        //public static string Canonicalize(this string path) {
 
-        //    var builder = new StringBuilder();
-        //    var state = State.start;
-
-        //    foreach (var c in path) {
-
-        //        switch (c) {
-        //            case '/':
-        //            case '\\': {
-        //                if (state == State.dot2) {
-        //                    return false; // have encountered illegal combination.
-        //                    }
-        //                state = State.start;
-        //                break;
-        //                }
-        //            case '.': {
-        //                switch (state) {
-        //                    case State.start: {
-        //                        state = State.dot1;
-        //                        break;
-        //                        }
-        //                    case State.dot1: {
-        //                        state = State.dot2;
-        //                        break;
-        //                        }
-        //                    case State.dot2: {
-        //                        state = State.segment;
-        //                        break;
-        //                        }
-        //                    }
-
-        //                break;
-        //                }
-        //            default: {
-        //                state = State.segment;
-        //                break;
-        //                }
-        //            }
-        //        }
-
-        //    return state != State.dot2;
-        //}
 
 
 

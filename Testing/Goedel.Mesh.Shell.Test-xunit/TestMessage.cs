@@ -287,14 +287,14 @@ namespace Goedel.XUnit {
                 var contact = contactEntry.Contact;
 
                 foreach (var address in contact.NetworkAddresses) {
-                    dictionary.Add(address.Address, address);
+                    dictionary.Add(address.Address.ToLower(), address);
                     // don't need to add safe because we want an error if there is a double entry.
                     }
                 }
 
             (dictionary.Count == accountAddress.Length).TestTrue();
             foreach (var address in accountAddress) {
-                dictionary.ContainsKey(address).TestTrue();
+                dictionary.ContainsKey(address.ToLower()).TestTrue();
                 //Screen.WriteLine($"Found contact: {address}");
                 }
 

@@ -110,6 +110,8 @@ namespace Goedel.Mesh.Server {
                         List<ContainerUpdate> storeEntries) {
             StoreEntry containerEntry;
 
+            accountEntry.AccountAddress = accountEntry.AccountAddress.CannonicalAccountAddress();
+
             var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
             accountEntry.Directory = directory;
 
@@ -555,11 +557,13 @@ namespace Goedel.Mesh.Server {
         /// <returns>The claim response.</returns>
         public ClaimResponse Claim(
                     IJpcSession jpcSession,
-                    DareEnvelope dareEnvelope) {
+                    DareEnvelope dareEnvelope
+                    ) {
 
             var messageClaim = MeshItem.Decode(dareEnvelope) as MessageClaim;
+            var targetAccount = messageClaim.Recipient;
 
-            using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Post);
+            using var accountHandle = GetAccountHandleLocked(targetAccount, jpcSession, AccountPrivilege.Post);
             //using var accountEntry = GetAccountUnverified(messageClaim.Recipient);
             using var store = accountHandle.GetCatalogPublication();
 
@@ -655,7 +659,7 @@ namespace Goedel.Mesh.Server {
 
             try {
                 lock (Container) {
-                    var containerEntry = Container.Get(account) as StoreEntry;
+                    var containerEntry = Container.Get(account.CannonicalAccountAddress()) as StoreEntry;
                     result = containerEntry?.JsonObject as AccountEntry;
                     result.AssertNotNull(MeshUnknownAccount.Throw);
 

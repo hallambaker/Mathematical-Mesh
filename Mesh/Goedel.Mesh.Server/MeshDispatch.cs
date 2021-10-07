@@ -608,7 +608,8 @@ namespace Goedel.Mesh.Server {
                     IJpcSession session = null) {
             try {
 
-                return MeshPersist.Claim(session, request.EnvelopedMessageClaim);
+                return MeshPersist.Claim(session, 
+                        request.EnvelopedMessageClaim);
                 }
             catch (System.Exception exception) {
                 return new ClaimResponse(exception);

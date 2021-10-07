@@ -326,7 +326,7 @@ namespace Goedel.Mesh {
         public static string GetPinId(
                     string pin,
                     string accountAddress) {
-            var result = UDF.SymmetricKeyMac(accountAddress.ToUTF8(), pin);
+            var result = UDF.SymmetricKeyMac(accountAddress.CannonicalAccountAddressUtf8(), pin);
 
             //ScreenConsole.WriteLine($"{pin} + {accountAddress}  -> PinUDF = {result}");
 
@@ -353,7 +353,7 @@ namespace Goedel.Mesh {
             var digest = envelope.Trailer.PayloadDigest;
 
             //Screen.WriteLine($"clientNonce {digest.ToStringBase16FormatHex()}");
-            return UDF.PinWitness(pin, accountAddress.ToUTF8(), clientNonce, digest);
+            return UDF.PinWitness(pin, accountAddress.CannonicalAccountAddressUtf8(), clientNonce, digest);
             }
         }
     public partial class RequestConnection {

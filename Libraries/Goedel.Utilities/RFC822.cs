@@ -121,6 +121,14 @@ namespace Goedel.Utilities {
             service = identifier.Substring(at + 1);
             }
 
+        /// Parse a string that may contain an account identifier to extract the service and 
+        /// account components.
+        /// </summary>
+        /// <param name="identifier">The AccountID to split.</param>
+        /// <returns>The service component.</returns>
+        public static string GetService(this string identifier) => GetServiceRaw(identifier).ToLower();
+
+
 
         /// <summary>
         /// Parse a string that may contain an account identifier to extract the service and 
@@ -128,7 +136,7 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="identifier">The AccountID to split.</param>
         /// <returns>The service component.</returns>
-        public static string GetService(this string identifier) {
+        public static string GetServiceRaw(this string identifier) {
 
             int At = identifier.LastIndexOf('@');
             if (At < 0) {

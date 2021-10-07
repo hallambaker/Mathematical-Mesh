@@ -4,6 +4,346 @@
         <name>Goedel.Utilities</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Utilities.Extension">
+            <summary>
+            Extensions class
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToCommaSeparated(System.Collections.Generic.List{System.String})">
+            <summary>
+            Convert a list of strings to a comma separated string.
+            </summary>
+            <param name="texts">The input strings.</param>
+            <returns>If Texts is not null, the string values separated by commas, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.SplitByComma(System.String)">
+            <summary>
+            Split a string into a series of substrings delimited by spaces and/or commas
+            with null entries suppressed.
+            </summary>
+            <param name="text">The text to split</param>
+            <returns>The split strings.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.Byte[])">
+            <summary>
+            Convert UTF8 encoded bytes to string
+            </summary>
+            <param name="data">The encoded bytes to convert.</param>
+            <returns>The resulting string.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.Span{System.Byte})">
+            <summary>
+            Convert UTF8 encoded bytes to string
+            </summary>
+            <param name="data">The encoded bytes to convert.</param>
+            <returns>The resulting string.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToBytes(System.String)">
+            <summary>
+            Convert Text to UTF8 encoded bytes
+            </summary>
+            <param name="text">Text to convert</param>
+            <returns>The encoded bytes</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToASCII(System.Int32)">
+            <summary>
+            Convert integer to ASCII character if in the range 1-127, otherwise
+            return .
+            </summary>
+            <param name="c">The character to convert</param>
+            <returns>ASCII character if 0 &lt; In &lt; 128, otherwise '.'</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.IsBase64(System.Int32)">
+            <summary>Test to see if an input character is a Base64 character.
+            </summary>
+            <param name="c">The input character value</param>
+            <returns>true if and only if the input corresponds to an ASCII 
+            character used to encode Base64 in traditional or URL encoding
+            format.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.IsBlank(System.String)">
+            <summary>
+            Test to see whether the input string is blank. That is either a 
+            null pointer or an empty string.
+            </summary>
+            <param name="c">The string to test.</param>
+            <returns>True if either c is null or c is the empty string, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.IsWhite(System.Int32)">
+            <summary>Test to see if an input character is a Base64 character.
+            </summary>
+            <param name="c">The input character value</param>
+            <returns>true if and only if the input corresponds to an ASCII 
+            character used to encode Base64 in traditional or URL encoding
+            format.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.CountUTF8(System.String)">
+            <summary>
+            Count the number of bytes that are required to encode
+            a string in UTF8.
+            </summary>
+            <param name="text">Input string</param>
+            <returns>Number of bytes required to encode the string.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.String)">
+            <summary>
+            Convert a string to a UTF byte array
+            </summary>
+            <param name="text">Text to convert</param>
+            <returns>UTF8 character data as array</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.String,System.Byte[],System.Int32)">
+            <summary>
+            Convert a string to a UTF byte array
+            </summary>
+            <param name="text">Text to convert</param>
+            <param name="buffer">Output buffer to write result to.</param>
+            <param name="position">Starting position to write data to.</param>
+            <returns>Number of characters converted</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.CEscape(System.String)">
+            <summary>
+            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+            </summary>
+            <param name="text">String to be escaped</param>
+            <returns>The escaped string</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.XMLEscape(System.String)">
+            <summary>
+            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+            </summary>
+            <param name="text">String to be escaped</param>
+            <returns>The escaped string</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.XMLEscapeStrict(System.String)">
+            <summary>
+            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+            </summary>
+            <param name="text">String to be escaped</param>
+            <returns>The escaped string</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.XMLEscapeRFCBullies(System.String)">
+            <summary>
+            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+            </summary>
+            <param name="text">String to be escaped</param>
+            <returns>The escaped string</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.RFCBullies(System.Char)">
+            <summary>
+            Perform strict character constraints according to the undocumented requirements
+            or the HTML RFC spec.
+            </summary>
+            <param name="c">The character to constrain.</param>
+            <returns>The constrained character.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToHTMLEntity(System.Char)">
+            <summary>
+            Convert the character <paramref name="c"/> to the choresponding escaped
+            HTML character or entity binding.
+            </summary>
+            <param name="c">Character to escape.</param>
+            <returns>The escaped character.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.XMLAttributeEscape(System.String)">
+            <summary>
+            Escape text using XML acharacter entity sequences &amp;lt;, &amp;gt;, &amp;amp;
+            &amp;quot; and &amp;nbsp;.
+            </summary>
+            <param name="text">String to be escaped</param>
+            <returns>The escaped string</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.AppendNotNull(System.Text.StringBuilder,System.String,System.String)">
+            <summary>
+            Append the string <paramref name="text"/> to the StringBuilder <paramref name="builder"/> 
+            if and only if <paramref name="value"/> is not null.
+            </summary>
+            <param name="builder">The builder to append to.</param>
+            <param name="value">The text value to append to <paramref name="builder"/>.</param>
+            <param name="text">The test to be added iff <paramref name="value"/> is not null.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Keep(System.Object)">
+            <summary>
+            Tell compiler that an object is reserved.
+            </summary>
+            <param name="o">Object to reserve.</param>
+            <returns>true if the object is not null, false otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Future(System.Object)">
+            <summary>
+            Tell compiler that an object is reserved for future use.
+            </summary>
+            <param name="o">Object to reserve.</param>
+            <returns>true if the object is not null, false otherwise.</returns>
+        </member>
+        <member name="F:Goedel.Utilities.Extension.AlwaysTrue">
+            <summary>
+            You might think this code is unnecessary but it is actually very 
+            important. Don't tamper with it unless you understand how the
+            different storage classes affect the moves permitted by the optimizer.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.True(System.Boolean)">
+            <summary>
+            Convert constant truth value to static. This allows the programmer 
+            to prevent unreachable code being removed.
+            </summary>
+            <param name="Value">The test value</param>
+            <returns>True if the test value is true, false otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.False(System.Boolean)">
+            <summary>
+            Convert constant truth value to static. This allows the programmer 
+            to prevent unreachable code being removed.
+            </summary>
+            <param name="Value">The test value</param>
+            <returns>False if the test value is true, true otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.VerifyCanonical(System.String)">
+            <summary>
+            Verify that the path is not an absolute path and contains no relative 
+            references to an earlier path.
+            </summary>
+            <param name="path">The path to verify</param>
+            <returns>True if the path is canonical, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.UnixCanonicalPath(System.String)">
+            <summary>
+            Parse file path and return canonical unix path. Relative directory references will
+            be consolidated if possible thus a\..\..\b will become ..\b.
+            </summary>
+            <param name="Path">The path to transform</param>
+            <returns>The transformed path.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.UnixPath(System.String,System.String)">
+            <summary>
+            Combine a base file path and sujbdirectory path and return a unix file path.
+            </summary>
+            <param name="File">The base file path.</param>
+            <param name="Sub">The subdirectory</param>
+            <returns>The combined file path</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.UnixPath(System.String)">
+            <summary>
+            Return the path for a file as a unix file path.
+            </summary>
+            <param name="File">The windows file path</param>
+            <returns>The corresponding unix path.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.UnixFile(System.String)">
+            <summary>
+            Convert Windows file path to Unix.
+            </summary>
+            <param name="File">Windows file path</param>
+            <returns>Unix file path.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.UnixFile(System.String,System.String)">
+            <summary>
+            Combine a base file path and sujbdirectory path and return a unix path for the file.
+            </summary>
+            <param name="File">The base file path.</param>
+            <param name="Sub">The subdirectory</param>
+            <returns>The combined file path</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Left(System.String,System.Char)">
+            <summary>
+            If the input string contains the separator, return the string leading up 
+            to the separator. Otherwise return null.
+            </summary>
+            <param name="Input">The string to split.</param>
+            <param name="Separator">The separator character</param>
+            <returns>If the separator is found, returns the input string up to but not 
+            including the separator, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Right(System.String,System.Char)">
+            <summary>
+            If the input string contains the separator, return the string leading up 
+            to the separator. Otherwise return null.
+            </summary>
+            <param name="Input">The string to split.</param>
+            <param name="Separator">The separator character</param>
+            <returns>If the separator is found, returns the input string up to but not 
+            including the separator, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Separate(System.String,System.Char,System.String@,System.String@)">
+            <summary>
+            If the input string contains the separator, return the string leading up 
+            to the separator. Otherwise return null.
+            </summary>
+            <param name="Input">The string to split.</param>
+            <param name="Separator">The separator character</param>
+            <param name="Right">The string to the right of the separator</param>
+            <param name="Left">The string to the left of the separator</param>
+            <returns>If the separator is found, returns the input string up to but not 
+            including the separator, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.IsAccountID(System.String)">
+            <summary>
+            Returns true if <paramref name="accountID"/> is a reasonably well formed account
+            address, other
+            </summary>
+            <param name="accountID">The string to test.</param>
+            <returns><paramref name="accountID"/> if it is a well formed account identifier
+            and null otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.SplitAccountIDService(System.String,System.String@,System.String@)">
+            <summary>
+            Parse a string that may contain an account identifier to extract the service and 
+            account components.
+            </summary>
+            <param name="identifier">The AccountID to split.</param>
+            <param name="service">The portal address.</param>
+            <param name="account">The account name.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Utilities.Extension.GetService(System.String)" -->
+        <member name="M:Goedel.Utilities.Extension.GetServiceRaw(System.String)">
+            <summary>
+            Parse a string that may contain an account identifier to extract the service and 
+            account components.
+            </summary>
+            <param name="identifier">The AccountID to split.</param>
+            <returns>The service component.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Read(System.IO.Stream,System.Byte[],System.Int64,System.Int64)">
+            <summary>
+            Reads a sequence of bytes from the current stream and advances the position 
+            within the stream by the number of bytes read using index pointers that
+            are 64 bits.
+            </summary>
+            <param name="Stream">The stream to be read.</param>
+            <param name="buffer">An array of bytes. A maximum of count bytes are read 
+            from the current stream and stored in <paramref name="buffer"/>.</param>
+            <param name="offset">The byte offset in <paramref name="buffer"/> at which 
+            to begin storing the data read from the current stream.</param>
+            <param name="count">The maximum number of bytes to be read from the current 
+            stream.</param>
+            <returns>The total number of bytes read into the buffer. This can be less 
+            than the number of bytes requested if that many bytes are not currently available, 
+            or zero if the end of the stream has been reached.</returns>
+            <remarks>This routine does not currently implement 64 bit clean processing,
+            it merely provides a single point through which such processing may introduced 
+            should it prove necessary.</remarks>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Write(System.IO.Stream,System.Byte[],System.Int64,System.Int64)">
+            <summary>
+            Writes a sequence of bytes to the current CryptoStream and advances the 
+            position within the stream by the number of bytes written.
+            </summary>
+            <param name="Stream">The stream to be written to.</param>
+            <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from <paramref name="buffer"/> to the current stream.</param>
+            <param name="offset">The byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param>
+            <remarks>This routine does not currently implement 64 bit clean processing,
+            it merely provides a single point through which such processing may introduced 
+            should it prove necessary.</remarks>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Write(System.IO.Stream,System.Byte[])">
+            <summary>
+            Write the entire contents of <paramref name="buffer"/> to <paramref name="stream"/>
+            </summary>
+            <param name="stream">Stream to write to.</param>
+            <param name="buffer">the data to be written.</param>
+        </member>
         <member name="T:Goedel.Utilities.ArrayUtilities">
             <summary>
             Static class containing extension methods for array manipulation.
@@ -968,345 +1308,6 @@
             <summary>
             Complete input and reset converter for next session.
             </summary>
-        </member>
-        <member name="T:Goedel.Utilities.Extension">
-            <summary>
-            Extensions class
-            </summary>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.ToCommaSeparated(System.Collections.Generic.List{System.String})">
-            <summary>
-            Convert a list of strings to a comma separated string.
-            </summary>
-            <param name="texts">The input strings.</param>
-            <returns>If Texts is not null, the string values separated by commas, otherwise null.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.SplitByComma(System.String)">
-            <summary>
-            Split a string into a series of substrings delimited by spaces and/or commas
-            with null entries suppressed.
-            </summary>
-            <param name="text">The text to split</param>
-            <returns>The split strings.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.Byte[])">
-            <summary>
-            Convert UTF8 encoded bytes to string
-            </summary>
-            <param name="data">The encoded bytes to convert.</param>
-            <returns>The resulting string.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.Span{System.Byte})">
-            <summary>
-            Convert UTF8 encoded bytes to string
-            </summary>
-            <param name="data">The encoded bytes to convert.</param>
-            <returns>The resulting string.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.ToBytes(System.String)">
-            <summary>
-            Convert Text to UTF8 encoded bytes
-            </summary>
-            <param name="text">Text to convert</param>
-            <returns>The encoded bytes</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.ToASCII(System.Int32)">
-            <summary>
-            Convert integer to ASCII character if in the range 1-127, otherwise
-            return .
-            </summary>
-            <param name="c">The character to convert</param>
-            <returns>ASCII character if 0 &lt; In &lt; 128, otherwise '.'</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.IsBase64(System.Int32)">
-            <summary>Test to see if an input character is a Base64 character.
-            </summary>
-            <param name="c">The input character value</param>
-            <returns>true if and only if the input corresponds to an ASCII 
-            character used to encode Base64 in traditional or URL encoding
-            format.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.IsBlank(System.String)">
-            <summary>
-            Test to see whether the input string is blank. That is either a 
-            null pointer or an empty string.
-            </summary>
-            <param name="c">The string to test.</param>
-            <returns>True if either c is null or c is the empty string, otherwise false.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.IsWhite(System.Int32)">
-            <summary>Test to see if an input character is a Base64 character.
-            </summary>
-            <param name="c">The input character value</param>
-            <returns>true if and only if the input corresponds to an ASCII 
-            character used to encode Base64 in traditional or URL encoding
-            format.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.CountUTF8(System.String)">
-            <summary>
-            Count the number of bytes that are required to encode
-            a string in UTF8.
-            </summary>
-            <param name="text">Input string</param>
-            <returns>Number of bytes required to encode the string.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.String)">
-            <summary>
-            Convert a string to a UTF byte array
-            </summary>
-            <param name="text">Text to convert</param>
-            <returns>UTF8 character data as array</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.String,System.Byte[],System.Int32)">
-            <summary>
-            Convert a string to a UTF byte array
-            </summary>
-            <param name="text">Text to convert</param>
-            <param name="buffer">Output buffer to write result to.</param>
-            <param name="position">Starting position to write data to.</param>
-            <returns>Number of characters converted</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.CEscape(System.String)">
-            <summary>
-            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
-            </summary>
-            <param name="text">String to be escaped</param>
-            <returns>The escaped string</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.XMLEscape(System.String)">
-            <summary>
-            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
-            </summary>
-            <param name="text">String to be escaped</param>
-            <returns>The escaped string</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.XMLEscapeStrict(System.String)">
-            <summary>
-            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
-            </summary>
-            <param name="text">String to be escaped</param>
-            <returns>The escaped string</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.XMLEscapeRFCBullies(System.String)">
-            <summary>
-            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
-            </summary>
-            <param name="text">String to be escaped</param>
-            <returns>The escaped string</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.RFCBullies(System.Char)">
-            <summary>
-            Perform strict character constraints according to the undocumented requirements
-            or the HTML RFC spec.
-            </summary>
-            <param name="c">The character to constrain.</param>
-            <returns>The constrained character.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.ToHTMLEntity(System.Char)">
-            <summary>
-            Convert the character <paramref name="c"/> to the choresponding escaped
-            HTML character or entity binding.
-            </summary>
-            <param name="c">Character to escape.</param>
-            <returns>The escaped character.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.XMLAttributeEscape(System.String)">
-            <summary>
-            Escape text using XML acharacter entity sequences &amp;lt;, &amp;gt;, &amp;amp;
-            &amp;quot; and &amp;nbsp;.
-            </summary>
-            <param name="text">String to be escaped</param>
-            <returns>The escaped string</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.AppendNotNull(System.Text.StringBuilder,System.String,System.String)">
-            <summary>
-            Append the string <paramref name="text"/> to the StringBuilder <paramref name="builder"/> 
-            if and only if <paramref name="value"/> is not null.
-            </summary>
-            <param name="builder">The builder to append to.</param>
-            <param name="value">The text value to append to <paramref name="builder"/>.</param>
-            <param name="text">The test to be added iff <paramref name="value"/> is not null.</param>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.Keep(System.Object)">
-            <summary>
-            Tell compiler that an object is reserved.
-            </summary>
-            <param name="o">Object to reserve.</param>
-            <returns>true if the object is not null, false otherwise.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.Future(System.Object)">
-            <summary>
-            Tell compiler that an object is reserved for future use.
-            </summary>
-            <param name="o">Object to reserve.</param>
-            <returns>true if the object is not null, false otherwise.</returns>
-        </member>
-        <member name="F:Goedel.Utilities.Extension.AlwaysTrue">
-            <summary>
-            You might think this code is unnecessary but it is actually very 
-            important. Don't tamper with it unless you understand how the
-            different storage classes affect the moves permitted by the optimizer.
-            </summary>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.True(System.Boolean)">
-            <summary>
-            Convert constant truth value to static. This allows the programmer 
-            to prevent unreachable code being removed.
-            </summary>
-            <param name="Value">The test value</param>
-            <returns>True if the test value is true, false otherwise.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.False(System.Boolean)">
-            <summary>
-            Convert constant truth value to static. This allows the programmer 
-            to prevent unreachable code being removed.
-            </summary>
-            <param name="Value">The test value</param>
-            <returns>False if the test value is true, true otherwise.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.VerifyCanonical(System.String)">
-            <summary>
-            Verify that the path is not an absolute path and contains no relative 
-            references to an earlier path.
-            </summary>
-            <param name="path">The path to verify</param>
-            <returns>True if the path is canonical, otherwise false.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.UnixCanonicalPath(System.String)">
-            <summary>
-            Parse file path and return canonical unix path. Relative directory references will
-            be consolidated if possible thus a\..\..\b will become ..\b.
-            </summary>
-            <param name="Path">The path to transform</param>
-            <returns>The transformed path.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.UnixPath(System.String,System.String)">
-            <summary>
-            Combine a base file path and sujbdirectory path and return a unix file path.
-            </summary>
-            <param name="File">The base file path.</param>
-            <param name="Sub">The subdirectory</param>
-            <returns>The combined file path</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.UnixPath(System.String)">
-            <summary>
-            Return the path for a file as a unix file path.
-            </summary>
-            <param name="File">The windows file path</param>
-            <returns>The corresponding unix path.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.UnixFile(System.String)">
-            <summary>
-            Convert Windows file path to Unix.
-            </summary>
-            <param name="File">Windows file path</param>
-            <returns>Unix file path.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.UnixFile(System.String,System.String)">
-            <summary>
-            Combine a base file path and sujbdirectory path and return a unix path for the file.
-            </summary>
-            <param name="File">The base file path.</param>
-            <param name="Sub">The subdirectory</param>
-            <returns>The combined file path</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.Left(System.String,System.Char)">
-            <summary>
-            If the input string contains the separator, return the string leading up 
-            to the separator. Otherwise return null.
-            </summary>
-            <param name="Input">The string to split.</param>
-            <param name="Separator">The separator character</param>
-            <returns>If the separator is found, returns the input string up to but not 
-            including the separator, otherwise null.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.Right(System.String,System.Char)">
-            <summary>
-            If the input string contains the separator, return the string leading up 
-            to the separator. Otherwise return null.
-            </summary>
-            <param name="Input">The string to split.</param>
-            <param name="Separator">The separator character</param>
-            <returns>If the separator is found, returns the input string up to but not 
-            including the separator, otherwise null.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.Separate(System.String,System.Char,System.String@,System.String@)">
-            <summary>
-            If the input string contains the separator, return the string leading up 
-            to the separator. Otherwise return null.
-            </summary>
-            <param name="Input">The string to split.</param>
-            <param name="Separator">The separator character</param>
-            <param name="Right">The string to the right of the separator</param>
-            <param name="Left">The string to the left of the separator</param>
-            <returns>If the separator is found, returns the input string up to but not 
-            including the separator, otherwise null.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.IsAccountID(System.String)">
-            <summary>
-            Returns true if <paramref name="accountID"/> is a reasonably well formed account
-            address, other
-            </summary>
-            <param name="accountID">The string to test.</param>
-            <returns><paramref name="accountID"/> if it is a well formed account identifier
-            and null otherwise.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.SplitAccountIDService(System.String,System.String@,System.String@)">
-            <summary>
-            Parse a string that may contain an account identifier to extract the service and 
-            account components.
-            </summary>
-            <param name="identifier">The AccountID to split.</param>
-            <param name="service">The portal address.</param>
-            <param name="account">The account name.</param>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.GetService(System.String)">
-            <summary>
-            Parse a string that may contain an account identifier to extract the service and 
-            account components.
-            </summary>
-            <param name="identifier">The AccountID to split.</param>
-            <returns>The service component.</returns>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.Read(System.IO.Stream,System.Byte[],System.Int64,System.Int64)">
-            <summary>
-            Reads a sequence of bytes from the current stream and advances the position 
-            within the stream by the number of bytes read using index pointers that
-            are 64 bits.
-            </summary>
-            <param name="Stream">The stream to be read.</param>
-            <param name="buffer">An array of bytes. A maximum of count bytes are read 
-            from the current stream and stored in <paramref name="buffer"/>.</param>
-            <param name="offset">The byte offset in <paramref name="buffer"/> at which 
-            to begin storing the data read from the current stream.</param>
-            <param name="count">The maximum number of bytes to be read from the current 
-            stream.</param>
-            <returns>The total number of bytes read into the buffer. This can be less 
-            than the number of bytes requested if that many bytes are not currently available, 
-            or zero if the end of the stream has been reached.</returns>
-            <remarks>This routine does not currently implement 64 bit clean processing,
-            it merely provides a single point through which such processing may introduced 
-            should it prove necessary.</remarks>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.Write(System.IO.Stream,System.Byte[],System.Int64,System.Int64)">
-            <summary>
-            Writes a sequence of bytes to the current CryptoStream and advances the 
-            position within the stream by the number of bytes written.
-            </summary>
-            <param name="Stream">The stream to be written to.</param>
-            <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from <paramref name="buffer"/> to the current stream.</param>
-            <param name="offset">The byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream.</param>
-            <param name="count">The number of bytes to be written to the current stream.</param>
-            <remarks>This routine does not currently implement 64 bit clean processing,
-            it merely provides a single point through which such processing may introduced 
-            should it prove necessary.</remarks>
-        </member>
-        <member name="M:Goedel.Utilities.Extension.Write(System.IO.Stream,System.Byte[])">
-            <summary>
-            Write the entire contents of <paramref name="buffer"/> to <paramref name="stream"/>
-            </summary>
-            <param name="stream">Stream to write to.</param>
-            <param name="buffer">the data to be written.</param>
         </member>
         <member name="T:Goedel.Utilities.Screen">
             <summary>
