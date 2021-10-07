@@ -47,8 +47,20 @@ namespace Scratchpad {
         static void Main() {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
-            //ShellTestsAdmin.Test().TestMessageContactRemote();
+
+
+
+
+            ShellTestsAdmin.Test().TestMessageContactRemote();
             ShellTestsAdmin.Test().TestFilePlain();
+
+            ShellTestsAdmin.Test().TestHello();
+            ShellTestsAdmin.Test().TestAccountDelete();
+            ShellTestsAdmin.Test().TestProfileConnectPin();
+            ShellTestsAdmin.Test().TestProfileConnectPinExpired();
+            ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
+
+
 
 
 
@@ -57,14 +69,11 @@ namespace Scratchpad {
             //TestService.Test().MeshDeviceThresholdKey();
 
 
-            //ShellTestsAdmin.Test().TestProfileConnectPin();
-            //ShellTestsAdmin.Test().TestProfileConnectPinExpired();
-            //ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
+
 
             //ShellTestsAdmin.Test().TestProfileConnectStaticQR();
 
-            //ShellTestsAdmin.Test().TestHello();
-            //ShellTestsAdmin.Test().TestAccountDelete();
+
 
             //ShellTestsAdmin.Test().TestCreateSuper();
 

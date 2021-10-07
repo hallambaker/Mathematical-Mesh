@@ -51,6 +51,8 @@ namespace Goedel.XUnit {
             device2.Dispatch($"mail openpgp sign {mailaddress} /file=d2_pgp_prv.pem /private");
             device2.Dispatch($"mail openpgp encrypt {mailaddress} /file=d2_pgp_pub.pem");
 
+
+            EndTest();
             //device1.Dispatch($"mail update {mailaddress} /inbound {mailinbound2} /outbound {mailoutbound}");
 
             //device2.Dispatch($"account sync");

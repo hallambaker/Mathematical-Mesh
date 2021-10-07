@@ -46,10 +46,14 @@ namespace Goedel.XUnit {
             device3.Dispatch($"ssh private /file=d3_ssh_prv.pem");
             device3.Dispatch($"ssh public /file=d1_ssh_pub.pem");
 
+
+
             // should all match
             //device1.Dispatch($"ssh show auth");
             //device2.Dispatch($"ssh show auth");
             //device3.Dispatch($"ssh show auth");
+
+            EndTest();
             }
 
         //[Fact]

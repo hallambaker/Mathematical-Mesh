@@ -81,6 +81,8 @@ namespace Goedel.XUnit {
                     result.Digest.TestEqual(test.SHA3);
                     }
                 }
+
+            EndTest();
             }
 
         [Fact]
@@ -94,6 +96,8 @@ namespace Goedel.XUnit {
                     result1.Digest.TestEqual(result2.Digest);
                     }
                 }
+
+            EndTest();
             }
 
         ResultDigest TestCommitmentInt(string content, string key = null, string alg = null) {
@@ -206,7 +210,7 @@ namespace Goedel.XUnit {
                     result.TestEqual(test.SHA3);
                     }
                 }
-
+            EndTest();
             }
 
 

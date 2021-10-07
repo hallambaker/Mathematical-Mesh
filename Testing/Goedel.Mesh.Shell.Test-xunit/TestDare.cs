@@ -200,7 +200,7 @@ namespace Goedel.XUnit {
                 return null;
 
                 }
-
+            EndTest();
             }
 
 
@@ -244,6 +244,8 @@ namespace Goedel.XUnit {
                 VerifyLog(encrypt, sign, filename, entries, mallet);
                 // test
                 }
+
+            EndTest();
             }
 
 

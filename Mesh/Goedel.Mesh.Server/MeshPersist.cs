@@ -142,7 +142,7 @@ namespace Goedel.Mesh.Server {
         public bool AccountUnbind(IJpcSession jpcSession, string accountAddress) {
 
             using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Unbind);
-            accountAddress.AssertEqual(accountHandle.AccountAddress, NYI.Throw);
+            accountAddress.CannonicalAccountAddress().AssertEqual(accountHandle.AccountAddress, NYI.Throw);
 
             lock (Container) {
                 return Container.Delete(accountHandle.AccountAddress);

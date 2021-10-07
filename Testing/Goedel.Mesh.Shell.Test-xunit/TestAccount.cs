@@ -71,7 +71,7 @@ namespace Goedel.XUnit {
 
 
             TestEnvironment.Dispose();
-
+            EndTest();
             }
 
         public string AliceDevice1 = "Alice";

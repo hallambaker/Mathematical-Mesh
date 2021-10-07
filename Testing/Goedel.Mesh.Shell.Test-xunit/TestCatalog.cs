@@ -74,6 +74,8 @@ namespace Goedel.XUnit {
             Dispatch($"password add {site2} {username4} {password4}");
             CheckPasswordResult(site1, username3, password3);
             CheckPasswordResult(site2, username4, password4);
+
+            EndTest();
             }
 
 
@@ -131,6 +133,8 @@ namespace Goedel.XUnit {
             ValidContact(device1, AliceAccount, AccountB, AccountC);
             ValidContact(device2, AccountB);
             ValidContact(device3, AccountC);
+
+            EndTest();
             }
 
 
@@ -170,6 +174,8 @@ namespace Goedel.XUnit {
             Dispatch($"bookmark add {path2} {uri2} {title2}");
             CheckBookmarkResult(path2, uri2, title2);
             CheckBookmarkResult(path3, uri3, title3);
+
+            EndTest();
             }
 
         static string GetTaskKey(ShellResult result) =>
@@ -218,6 +224,8 @@ namespace Goedel.XUnit {
             Dispatch($"calendar add  {title3} /id={task2} ");
             CheckTaskResult(task2, title3);
             CheckTaskResult(task1, title1a);
+
+            EndTest();
             }
 
 
@@ -255,6 +263,9 @@ namespace Goedel.XUnit {
             Dispatch($"network add {ssid2} {password2}");
             CheckNetworkResult(ssid2, password2);
             CheckNetworkResult(ssid1, password1a);
+
+
+            EndTest();
 
             }
         }
