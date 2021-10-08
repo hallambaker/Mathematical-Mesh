@@ -48,17 +48,20 @@ namespace Scratchpad {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
 
+            Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
 
 
-            ShellTestsAdmin.Test().TestMessageContactRemote();
-            ShellTestsAdmin.Test().TestFilePlain();
+            //ShellTestsAdmin.Test().TestProfileMail();
 
-            ShellTestsAdmin.Test().TestHello();
-            ShellTestsAdmin.Test().TestAccountDelete();
-            ShellTestsAdmin.Test().TestProfileConnectPin();
-            ShellTestsAdmin.Test().TestProfileConnectPinExpired();
-            ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
+            //ShellTestsAdmin.Test().TestMessageContactRemote();
+            //ShellTestsAdmin.Test().TestFilePlain();
+
+            //ShellTestsAdmin.Test().TestHello();
+            //ShellTestsAdmin.Test().TestAccountDelete();
+            //ShellTestsAdmin.Test().TestProfileConnectPin();
+            //ShellTestsAdmin.Test().TestProfileConnectPinExpired();
+            //ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
 
 
 
@@ -83,7 +86,7 @@ namespace Scratchpad {
 
             //ShellTestsAdmin.Test().TestProfileConnect();
 
-            //ShellTestsAdmin.Test().TestProfileMail();
+
             //ShellTestsAdmin.Test().TestCreateDevice();
 
 
@@ -99,7 +102,7 @@ namespace Scratchpad {
             //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
             //ShellTests.Test().TestMessageGroup();
 
-            //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+
 
             //TestService.Test().MeshDeviceDirectKey();
 

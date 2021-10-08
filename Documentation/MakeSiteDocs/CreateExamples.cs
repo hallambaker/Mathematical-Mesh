@@ -167,7 +167,7 @@ namespace ExampleGenerator {
             var encode = Alice1.Example(
                 $"dare encode {Account.EncryptSourceFile} {Account.EncryptTargetFile}{index} /encrypt {AliceAccount} ");
             var verify = Alice1.Example(
-                $"dare verify {Account.EncryptTargetFile}"
+                $"dare verify {Account.EncryptTargetFile}{index}"
                 );
 
             var verifyFile = verify.GetResultFileDare();
