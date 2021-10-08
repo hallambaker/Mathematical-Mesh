@@ -110,7 +110,7 @@ namespace Goedel.Mesh.Server {
                         List<ContainerUpdate> storeEntries) {
             StoreEntry containerEntry;
 
-            accountEntry.AccountAddress = accountEntry.AccountAddress.CannonicalAccountAddress();
+            accountEntry.AccountAddress = accountEntry.AccountAddress;
 
             var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
             accountEntry.Directory = directory;

@@ -142,6 +142,8 @@ namespace Goedel.Mesh {
                 create: create
                 );
 
+
+
             KeyCollection = keyCollection;
             //CryptoParameters = cryptoParameters;
             }
@@ -155,6 +157,11 @@ namespace Goedel.Mesh {
         /// <returns></returns>
         public static ContainerStatus Status(string directory, string storeName) {
             using var store = new Store(directory, storeName);
+
+            if (store?.Container == null) {
+                var store2 = new Store(directory, storeName);
+                }
+
             return new ContainerStatus() {
 
                 // Bug: This should populate the TreeDigest

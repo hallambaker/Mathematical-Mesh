@@ -81,6 +81,8 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="request">The account creation request.</param>
         public AccountUser(BindRequest request) {
+
+
             AccountAddress = request.AccountAddress;
             EnvelopedProfileUser = request.EnvelopedProfileAccount;
             Directory = AccountAddress;

@@ -408,13 +408,17 @@ namespace Goedel.Mesh.Server {
 
             try {
 
+                // canonicalize the account address to ensure consistency.
+                request.AccountAddress = request.AccountAddress.CannonicalAccountAddress();
+                var account = request.AccountAddress;
+
                 // Authenticate and authorize the request before acting on it.
                 var profileAccount = request.EnvelopedProfileAccount.Decode();
                 VerifyDevice(profileAccount, jpcSession).AssertTrue(NotAuthenticated.Throw);
 
 
                 var accountHostAssignment = new AccountHostAssignment() {
-                    AccountAddess = request.AccountAddress,
+                    AccountAddess = account,
                     AccessEncrypt = ProfileService.ServiceEncryption,
                     };
                 accountHostAssignment.Envelope();

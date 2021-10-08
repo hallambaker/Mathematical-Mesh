@@ -47,8 +47,23 @@ namespace Scratchpad {
         static void Main() {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
+            for (var i = 0; i < 100; i++) {
+                Screen.WriteLine($"Test {i}");
 
-            Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+                ShellTestsAdmin.Test().TestAccountDelete();
+                ShellTestsAdmin.Test().TestAccount();
+                }
+
+
+
+
+
+            //ShellTestsAdmin.Test().TestMessageContactRemote();
+            //ShellTestsAdmin.Test().TestMessageContactRemote();
+
+
+
+            //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
 
 

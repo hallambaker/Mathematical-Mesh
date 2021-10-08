@@ -257,7 +257,7 @@ namespace Goedel.Cryptography.Dare {
                 Container.DisposeJBCDStream = jbcdStream;
                 return Container;
                 }
-            catch {
+            catch (Exception exception) {
                 jbcdStream?.Dispose();
                 return null;
                 }
