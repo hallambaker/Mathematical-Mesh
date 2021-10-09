@@ -4,6 +4,51 @@
         <name>Goedel.Mesh.Server</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Mesh.Server.AccountContext">
+            <summary>
+            Wrapper for the AccountEntry permitting the context in which the account entry
+            is used to be cached and shared between operations.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.Created">
+            <summary>Timestamp of context creation.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.Accessed">
+            <summary>Timestamp of context last accessed</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.AccountEntry">
+            <summary>The account entry from the host store.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.Directory">
+            <summary>The directory in which all the account data is stored.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountContext.#ctor">
+            <summary>
+            Return a new instance.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountContext.GetCatalogCapability">
+            <summary>
+            Return the publication catalog. This is a catalog that the service MUST have
+            read access to. Not clear that the clients need access though.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountContext.Close">
+            <summary>
+            Called just before a caller unlocks the file, Updates the 
+            last access timestamp to allow intelligent cache management.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountContext.Authenticate(Goedel.Protocol.IJpcSession,Goedel.Mesh.Server.AccountPrivilege)">
+            <summary>
+            Verify that the request <paramref name="session"/> has the 
+            privileges <paramref name="accountPrivilege"/>.
+            </summary>
+            <param name="session">The request session.</param>
+            <param name="accountPrivilege">The privileges required to perform the operation.</param>
+            <returns>True if all the privileges are granted, otherwise false.</returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.AccountEntry">
              <summary>
             
@@ -215,51 +260,6 @@
         <member name="F:Goedel.Mesh.Server.AccountPrivilege.All">
             <summary>All privileges.</summary> 
         </member>
-        <member name="T:Goedel.Mesh.Server.AccountContext">
-            <summary>
-            Wrapper for the AccountEntry permitting the context in which the account entry
-            is used to be cached and shared between operations.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountContext.Created">
-            <summary>Timestamp of context creation.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountContext.Accessed">
-            <summary>Timestamp of context last accessed</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountContext.AccountEntry">
-            <summary>The account entry from the host store.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountContext.Directory">
-            <summary>The directory in which all the account data is stored.</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountContext.#ctor">
-            <summary>
-            Return a new instance.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountContext.GetCatalogCapability">
-            <summary>
-            Return the publication catalog. This is a catalog that the service MUST have
-            read access to. Not clear that the clients need access though.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountContext.Close">
-            <summary>
-            Called just before a caller unlocks the file, Updates the 
-            last access timestamp to allow intelligent cache management.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountContext.Authenticate(Goedel.Protocol.IJpcSession,Goedel.Mesh.Server.AccountPrivilege)">
-            <summary>
-            Verify that the request <paramref name="session"/> has the 
-            privileges <paramref name="accountPrivilege"/>.
-            </summary>
-            <param name="session">The request session.</param>
-            <param name="accountPrivilege">The privileges required to perform the operation.</param>
-            <returns>True if all the privileges are granted, otherwise false.</returns>
-        </member>
         <member name="T:Goedel.Mesh.Server.AccountHandleLocked">
             <summary>
             Account handle, implements the security monitor mediating all access to 
@@ -289,6 +289,12 @@
         <member name="P:Goedel.Mesh.Server.AccountHandleLocked.Directory">
             <summary>The directory in which all the account data is stored.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandleLocked.EnvelopedCatalogedDevice">
+            <summary>The enveloped catalog device.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandleLocked.CatalogedDeviceDigest">
+            <summary>Digest of the cataloged device envelope, used to detect changes.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.Disposing">
             <inheritdoc/>
         </member>
@@ -305,13 +311,6 @@
             </summary>
             <param name="label">Catalog to return status on.</param>
             <returns>The status vector.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.GetStore(System.String)">
-            <summary>
-            Open the store <paramref name="label"/> and return an accessor.
-            </summary>
-            <param name="label">The store to open</param>
-            <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.GetCatalogCapability">
             <summary>
@@ -332,7 +331,7 @@
             Post a message to the spool associated with the account. This is the only operation
             that is supported for a device that is not connected to the account profile.
             </summary>
-            <param name="dareMessage">The message to post.</param>
+            <param name="envelope">The message to post.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostLocal(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>

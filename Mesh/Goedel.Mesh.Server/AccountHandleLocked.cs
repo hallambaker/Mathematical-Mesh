@@ -24,10 +24,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Reflection.Emit;
+using System.Runtime.InteropServices.ComTypes;
 
 using Goedel.Cryptography.Dare;
-using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
+using Goedel.IO;
 using Goedel.Utilities;
 namespace Goedel.Mesh.Server {
 
@@ -53,165 +56,6 @@ namespace Goedel.Mesh.Server {
 
         ///<summary>All privileges.</summary> 
         All         = 0xFFF
-        }
-
-    /// <summary>
-    /// Wrapper for the AccountEntry permitting the context in which the account entry
-    /// is used to be cached and shared between operations.
-    /// </summary>
-    public class AccountContext : Disposable {
-
-        #region // Public and private properties
-
-        ///<summary>Timestamp of context creation.</summary> 
-        public DateTime Created { get; }
-
-        ///<summary>Timestamp of context last accessed</summary> 
-        public DateTime Accessed { get; private set; }
-
-        ///<summary>The account entry from the host store.</summary> 
-        public AccountEntry AccountEntry { get; init; }
-
-        ///<summary>The directory in which all the account data is stored.</summary> 
-        public string Directory => AccountEntry.Directory;
-
-        public AccessCapability AccessCapability => CatalogedAccess?.Capability as AccessCapability;
-
-
-        public CatalogedAccess CatalogedAccess { get; set; }
-
-        Dictionary <string, Store> DictionaryStores = new ();
-
-        #endregion
-        #region // Dispose
-
-        protected override void Disposing() {
-            }
-
-        #endregion
-        #region // Constructors
-        /// <summary>
-        /// Return a new instance.
-        /// </summary>
-        public AccountContext() => Created = Accessed = DateTime.Now;
-
-        #endregion
-        #region // Methods
-        Store GetStore() {
-
-
-
-            throw new NYI();
-            }
-
-        /// <summary>
-        /// Return the publication catalog. This is a catalog that the service MUST have
-        /// read access to. Not clear that the clients need access though.
-        /// </summary>
-        /// <returns></returns>
-        public CatalogAccess GetCatalogCapability() =>
-            new(Directory);
-
-
-        /// <summary>
-        /// Called just before a caller unlocks the file, Updates the 
-        /// last access timestamp to allow intelligent cache management.
-        /// </summary>
-        public void Close() {
-            Accessed = DateTime.Now;
-            }
-
-        /// <summary>
-        /// Verify that the request <paramref name="session"/> has the 
-        /// privileges <paramref name="accountPrivilege"/>.
-        /// </summary>
-        /// <param name="session">The request session.</param>
-        /// <param name="accountPrivilege">The privileges required to perform the operation.</param>
-        /// <returns>True if all the privileges are granted, otherwise false.</returns>
-        public bool Authenticate(
-                    IJpcSession session, 
-                    AccountPrivilege accountPrivilege) {
-            switch (session.Credential) {
-                case MeshCredentialPublic meshCredential: {
-                    return Authenticate(meshCredential, accountPrivilege);
-                    }
-                case KeyCredentialPublic keyCredentialPublic: {
-                    return Authenticate(keyCredentialPublic, accountPrivilege);
-                    }
-
-                }
-            return false;
-            }
-
-        bool Authenticate(
-                    KeyCredentialPublic credential,
-                    AccountPrivilege accountPrivilege) {
-
-            var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();
-
-            // To operate under the account authentication key, the request must be
-            // authenticated under the AccountAuthenticationKey
-
-            switch (accountPrivilege) {
-                case AccountPrivilege.Post:
-                case AccountPrivilege.Device: {
-                    break;
-                    }
-                default: {
-                    (profileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
-                            credential.AuthenticationKeyId)).AssertTrue(NotAuthorized.Throw);
-                    break;
-                    }
-                }
-
-
-
-
-            return true;
-            }
-
-        bool Authenticate(
-            MeshCredentialPublic credential,
-            AccountPrivilege accountPrivilege) {
-
-            var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();
-
-            using var catalogCapability = GetCatalogCapability();
-
-            CatalogedAccess = catalogCapability.Locate(credential.AuthenticationKeyId);
-
-            switch (accountPrivilege) {
-                case AccountPrivilege.Post:
-                case AccountPrivilege.Device: {
-                    break;
-                    }
-                default: {
-                    (AccessCapability?.Active == true).AssertTrue(NotAuthorized.Throw);
-                    break;
-                    }
-                }
-
-
-
-            //if (AccessCapability?.Active != true) {
-            //    (accountPrivilege == AccountPrivilege.Device).AssertTrue(NotAuthorized.Throw);
-
-            //    }
-
-
-            "Need to validate the client credential to the account here.".TaskFunctionality(Assert.HaltPhase1);
-            //AccessCapability.AssertNotNull(NotAuthorized.Throw);
-            //AccessCapability.Active.AssertTrue(NotAuthorized.Throw);
-
-            //// To operate under the account authentication key, the request must be
-            //// authenticated under the AccountAuthenticationKey
-            //(profileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
-            //        credential.AuthenticationKeyId)).AssertTrue(NotAuthorized.Throw);
-
-            return true;
-            }
-
-        #endregion
         }
 
 
@@ -246,12 +90,15 @@ namespace Goedel.Mesh.Server {
         ///<summary>The directory in which all the account data is stored.</summary> 
         string Directory => AccountContext.Directory;
 
-
+        ///<summary>The enveloped catalog device.</summary> 
         public Enveloped<CatalogedDevice> EnvelopedCatalogedDevice =>
                     AccountContext.AccessCapability?.EnvelopedCatalogedDevice;
 
+        ///<summary>Digest of the cataloged device envelope, used to detect changes.</summary> 
         public string CatalogedDeviceDigest =>
                             AccountContext.AccessCapability?.CatalogedDeviceDigest;
+
+        Dictionary<string, Sequence> DictionarySequences { get; set; }
 
 
         #endregion
@@ -259,9 +106,20 @@ namespace Goedel.Mesh.Server {
 
         ///<inheritdoc/>
         protected override void Disposing() {
-            //AccountContext.Close();
+            Screen.Write($"AccountContext close {AccountContext?.AccountEntry?.AccountAddress}");
+            if (DictionarySequences != null) {
+                foreach (var sequenceEntry in DictionarySequences) {
+                    //Screen.WriteLine($"Delete Sequence {sequenceEntry.Key}");
+                    sequenceEntry.Value.Dispose();
+                    }
+                }
+
+
+
             System.Threading.Monitor.Exit(AccountContext.AccountEntry);
-            AccountContext.Dispose();
+            AccountContext?.Dispose();
+
+            Screen.WriteLine($"Deleted context");
             }
 
         #endregion
@@ -272,27 +130,67 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="accountContext">The account context.</param>
         /// 
-        public AccountHandleLocked(AccountContext accountContext) => 
-                    AccountContext = accountContext;
+        public AccountHandleLocked(AccountContext accountContext) {
+            //Screen.WriteLine($"AccountContext open {accountContext?.AccountEntry?.AccountAddress}");
+            accountContext.AssertNotNull(NYI.Throw);
+            AccountContext = accountContext;
+
+            }
 
         #endregion
         #region // Methods
+
+        Sequence MakeNewSequence(string label, List<DareEnvelope> envelopes) {
+            var fileName = Store.FileName(Directory, label);
+            var sequence =  Sequence.MakeNewSequence(fileName, null, envelopes);
+            //Screen.Write($"Create {label}");
+            DictionarySequences ??= new();
+            DictionarySequences.Add(label, sequence);
+            return sequence;
+            }
+
+        public Sequence GetSequence(string label, bool existing=true) {
+            //Screen.Write($"Try open {label}");
+
+            if (label == CatalogAccess.Label) {
+                var catalog = AccountContext.GetCatalogCapability();
+                //Screen.WriteLine($" [Access]");
+                return catalog.Container;
+                }
+            DictionarySequences ??= new();
+            if (DictionarySequences.TryGetValue(label, out var sequence)) {
+                //Screen.WriteLine($" [cached]");
+                return sequence;
+                }
+            var fileName = Store.FileName(Directory, label);
+
+            if (existing) {
+                sequence = Sequence.OpenExisting(fileName, FileStatus.ConcurrentLocked, decrypt: false);
+                //Screen.WriteLine($" Open {sequence != null} {sequence.DisposeJBCDStream != null}");
+                }
+            else {
+                sequence = Sequence.Open(fileName, FileStatus.ConcurrentLocked, decrypt: false, create: false);
+                //Screen.WriteLine($" OpenCreate {sequence != null} {sequence.DisposeJBCDStream != null}");
+                }
+            DictionarySequences.Add(label, sequence);
+
+            return sequence;
+            }
+
         /// <summary>
         /// Return the status of the catalog <paramref name="label"/>.
         /// </summary>
         /// <param name="label">Catalog to return status on.</param>
         /// <returns>The status vector.</returns>
-        public ContainerStatus GetStatusStore(string label) =>
-            Store.Status(Directory, label);
-
-
-        /// <summary>
-        /// Open the store <paramref name="label"/> and return an accessor.
-        /// </summary>
-        /// <param name="label">The store to open</param>
-        /// <returns></returns>
-        public Store GetStore(string label) =>
-            new(Directory, label);
+        public ContainerStatus GetStatusStore(string label) {
+            var sequence = GetSequence(label, false);
+            return sequence == null ? null : new ContainerStatus() {
+                // Bug: This should populate the TreeDigest
+                Digest = sequence.TrailerLast?.TreeDigest,
+                Index = (int)sequence.FrameCount,
+                Container = label
+                };
+            }
 
 
         /// <summary>
@@ -316,16 +214,19 @@ namespace Goedel.Mesh.Server {
         /// Post a message to the spool associated with the account. This is the only operation
         /// that is supported for a device that is not connected to the account profile.
         /// </summary>
-        /// <param name="dareMessage">The message to post.</param>
-        public void PostInbound(DareEnvelope dareMessage) {
+        /// <param name="envelope">The message to post.</param>
+        public void PostInbound(DareEnvelope envelope) {
 
             "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
 
             //AccountPrivilege.HasFlag(AccountPrivilege.Post).AssertTrue(NotAuthorized.Throw);
 
-            using var container = new Spool(Directory, SpoolInbound.Label);
-            container.Add(dareMessage);
+            //using var container = new Spool(Directory, SpoolInbound.Label);
+            //container.Add(dareMessage);
 
+
+            var sequence = GetSequence(SpoolInbound.Label);
+            sequence.Append(envelope);
             }
 
         /// <summary>
@@ -338,9 +239,12 @@ namespace Goedel.Mesh.Server {
 
             "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
 
-            using var container = new Spool(Directory, SpoolLocal.Label);
-            container.Add(envelope);
+            //using var container = new Spool(Directory, SpoolLocal.Label);
+            //container.Add(envelope);
 
+
+            var sequence = GetSequence(SpoolLocal.Label);
+            sequence.Append(envelope);
             }
 
         /// <summary>
@@ -351,13 +255,27 @@ namespace Goedel.Mesh.Server {
         /// <param name="envelopes">The envelopes to append.</param>
         public void StoreAppend(string label, List<DareEnvelope> envelopes) {
             "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
+            
+            envelopes.AssertNotNull(Internal.Throw);
+            if (envelopes.Count == 0) {
+                return;
+                }
 
-            //AccountPrivilege.HasFlag(AccountPrivilege.Connected).AssertTrue(NotAuthorized.Throw);
-            Store.Append(Directory, null, envelopes, label);
+            if (envelopes[0].Header.SequenceInfo.Index == 0) {
+                MakeNewSequence(label, envelopes);
+                }
+            else {
+                var sequence = GetSequence(label);
+                sequence.Append(envelopes);
+                }
             }
 
-
-
+        void AddStatusStore(List<ContainerStatus> statuses, string label) {
+            var result = GetStatusStore(label);
+            if (result != null) {
+                statuses.Add(result);
+                }
+            }
 
 
 
@@ -366,33 +284,36 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <returns>The list of container status entries.</returns>
         public List<ContainerStatus> GetContainerStatuses() {
-            var result = new List<ContainerStatus> {
-                    GetStatusStore (SpoolInbound.Label),
-                    GetStatusStore (SpoolOutbound.Label),
-                    GetStatusStore (SpoolLocal.Label),
-                    GetStatusStore (CatalogAccess.Label)
+            try {
+                var result = new List<ContainerStatus>();
+                AddStatusStore(result, SpoolInbound.Label);
+                AddStatusStore(result, SpoolOutbound.Label);
+                AddStatusStore(result, SpoolLocal.Label);
+                AddStatusStore(result, CatalogAccess.Label);
 
-                };
+                switch (AccountContext.AccountEntry) {
+                    //case AccountGroup _: {
+                    //    result.Add(GetStatusStore(CatalogMember.Label));
+                    //    break;
+                    //    }
 
-            switch (AccountContext.AccountEntry) {
-                //case AccountGroup _: {
-                //    result.Add(GetStatusStore(CatalogMember.Label));
-                //    break;
-                //    }
-
-                case Goedel.Mesh.Server.AccountUser _: {
-                    result.Add(GetStatusStore(CatalogCredential.Label));
-                    result.Add(GetStatusStore(CatalogDevice.Label));
-                    result.Add(GetStatusStore(CatalogContact.Label));
-                    result.Add(GetStatusStore(CatalogApplication.Label));
-                    result.Add(GetStatusStore(CatalogPublication.Label));
-                    result.Add(GetStatusStore(CatalogBookmark.Label));
-                    result.Add(GetStatusStore(CatalogTask.Label));
-                    break;
+                    case Goedel.Mesh.Server.AccountUser _: {
+                        AddStatusStore(result, CatalogCredential.Label);
+                        AddStatusStore(result, CatalogDevice.Label);
+                        AddStatusStore(result, CatalogContact.Label);
+                        AddStatusStore(result, CatalogApplication.Label);
+                        AddStatusStore(result, CatalogPublication.Label);
+                        AddStatusStore(result, CatalogBookmark.Label);
+                        AddStatusStore(result, CatalogTask.Label);
+                        break;
+                        }
                     }
-                }
 
-            return result;
+                return result;
+                }
+            catch {
+                throw new NYI();
+                }
             }
 
         /// <summary>
@@ -403,7 +324,7 @@ namespace Goedel.Mesh.Server {
         public DareEnvelope GetLocal(string messageId) {
             var envelopeId = Message.GetEnvelopeId(messageId);
 
-            using var spoolLocal = GetStore(SpoolLocal.Label);
+            using var spoolLocal = GetSequence(SpoolLocal.Label);
 
             foreach (var message in spoolLocal.Select(0, reverse: true)) {
                 if (message?.EnvelopeId == envelopeId) {

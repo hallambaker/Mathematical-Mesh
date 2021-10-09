@@ -389,7 +389,7 @@ namespace Goedel.Mesh.Client {
         public void UpdateCatalogedMachine(CatalogedDevice catalogedDevice, 
                 string digestUDF, bool registerContext) {
 
-            Screen.WriteLine($"Install/update: {digestUDF} Entries: {catalogedDevice.ApplicationEntries?.Count}");
+            //Screen.WriteLine($"Install/update: {digestUDF} Entries: {catalogedDevice.ApplicationEntries?.Count}");
 
 
 

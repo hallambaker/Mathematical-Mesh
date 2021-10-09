@@ -70,7 +70,7 @@ namespace Goedel.Protocol.Presentation {
         /// Debug routine, print the tag value to the screen.
         /// </summary>
         public void Dump() {
-            Screen.WriteInfo($"    {Tag} -> {Value.ToStringBase16()}");
+            //Screen.WriteInfo($"    {Tag} -> {Value.ToStringBase16()}");
             }
 
         #endregion

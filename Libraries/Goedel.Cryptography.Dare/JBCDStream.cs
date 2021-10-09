@@ -129,10 +129,7 @@ namespace Goedel.Cryptography.Dare {
         /// Dispose method, frees all resources.
         /// </summary>
         protected override void Disposing() {
-            //Screen.WriteLine($"close {Filename} read {disposeStreamRead != null} write {disposeStreamWrite!=null}");
-
-
-
+            //Screen.WriteLine($"close {Filename} read {disposeStreamRead != null} write {disposeStreamWrite != null}");
             disposeStreamWrite?.Dispose();
             disposeStreamRead?.Dispose();
             LockGlobal?.Dispose();

@@ -14862,7 +14862,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.Store.Status(System.String,System.String)">
+        <member name="M:Goedel.Mesh.Store.GetContainerStatus">
             <summary>
             Return the status of the spool.
             </summary>

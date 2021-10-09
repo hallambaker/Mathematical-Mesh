@@ -99,7 +99,7 @@ namespace Goedel.Mesh.Client {
                 };
 
 
-            Screen.WriteLine($"Catalog update: {accessCapability.CatalogedDeviceDigest} Entries: {catalogedDevice.ApplicationEntries?.Count}");
+            //Screen.WriteLine($"Catalog update: {accessCapability.CatalogedDeviceDigest} Entries: {catalogedDevice.ApplicationEntries?.Count}");
 
 
             var catalogedAccess = new CatalogedAccess() {

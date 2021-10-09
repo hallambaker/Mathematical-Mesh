@@ -296,10 +296,10 @@ namespace Goedel.Protocol.Presentation {
             var dataOut = new byte[length];
             var plaintextSpan = new Span<byte>(dataOut, 0, length);
 
-            Screen.Write("D-Cipher: ");
+            //Screen.Write("D-Cipher: ");
             var ciphertextSpan = GetReadOnlySpan(Position, length);
 
-            Screen.Write("D-Tag: ");
+            //Screen.Write("D-Tag: ");
             var tagSpan = GetReadOnlySpan(Position, Constants.SizeTagAesGcm);
 
             DecryptDataDelegate(key, ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);

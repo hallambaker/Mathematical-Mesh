@@ -155,23 +155,19 @@ namespace Goedel.Mesh {
         /// <param name="directory">The directory in which the spool is stored.</param>
         /// <param name="storeName">The store name.</param>
         /// <returns></returns>
-        public static ContainerStatus Status(string directory, string storeName) {
-            using var store = new Store(directory, storeName);
-
-            if (store?.Container == null) {
-                var store2 = new Store(directory, storeName);
-                }
-
+        public ContainerStatus GetContainerStatus() {
             return new ContainerStatus() {
 
                 // Bug: This should populate the TreeDigest
-                Digest = store.Container.TrailerLast?.TreeDigest,
+                Digest = Container.TrailerLast?.TreeDigest,
 
-                Index = (int)store.Container.FrameCount,
-                Container = storeName
+                Index = (int)Container.FrameCount,
+                Container = ContainerName
 
                 };
             }
+
+
 
         /// <summary>
         /// Append the list of envelopes <paramref name="envelopes"/> to the
@@ -200,6 +196,8 @@ namespace Goedel.Mesh {
                 }
 
             }
+
+
 
         /// <summary>
         /// Compute the filename for the container <paramref name="containerName"/> 

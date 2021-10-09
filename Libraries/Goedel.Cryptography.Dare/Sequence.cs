@@ -179,6 +179,9 @@ namespace Goedel.Cryptography.Dare {
         public JbcdStream DisposeJBCDStream;
 
 
+        public string Filename { get; set; }
+
+
         #endregion
         /// <summary>
         /// Default constructor.
@@ -191,7 +194,8 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The class specific disposal routine.
         /// </summary>
-        protected override void Disposing() => DisposeJBCDStream?.Dispose();
+        protected override void Disposing() => 
+            DisposeJBCDStream?.Dispose();
         #endregion
         #region // IEnumerable
 
@@ -255,14 +259,20 @@ namespace Goedel.Cryptography.Dare {
                     }
                 (Container.KeyCollection == keyLocate).AssertTrue(NYI.Throw);
                 Container.DisposeJBCDStream = jbcdStream;
+                Container.Filename = fileName;
+
                 return Container;
                 }
             catch (Exception exception) {
+                Screen.WriteLine($"Failed to open {fileName}");
+
+
                 jbcdStream?.Dispose();
                 return null;
                 }
             }
-
+        #endregion
+        #region // 
         #endregion
         #region // Open sequence 
 
@@ -304,7 +314,10 @@ namespace Goedel.Cryptography.Dare {
                 IKeyLocate keyCollection = null, bool decrypt = true) {
             var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
 
-            return OpenExisting(jbcdStream, keyCollection, decrypt: decrypt);
+            var sequence = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt);
+            sequence.DisposeJBCDStream = jbcdStream;
+
+            return sequence;
             }
 
 

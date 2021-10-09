@@ -22,6 +22,7 @@
 
 
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection.Emit;
@@ -130,6 +131,8 @@ namespace Goedel.Mesh.Server {
                         }
                     }
                 new Spool(directory, SpoolInbound.Label).Dispose();
+                new Spool(directory, SpoolOutbound.Label).Dispose();
+                new Spool(directory, SpoolLocal.Label).Dispose();
                 }
             }
 
@@ -237,52 +240,31 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
         public StatusResponse AccountStatus(
-                        IJpcSession jpcSession, 
+                        IJpcSession jpcSession,
                         string catalogedDeviceDigest) {
 
+
             using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
-
-
-            //var access = catalogCapability.Locate (
-
-
-            //using var accountHandle = GetAccountVerified(account, jpcSession);
 
             var containerStatus = accountHandle.GetContainerStatuses();
 
 
-
-
             var statusResponse = new StatusResponse() {
                 ContainerStatus = containerStatus,
-                //EnvelopedProfileAccount = accountHandle.EnvelopedProfileAccount,
                 EnvelopedCatalogedDevice = null
                 };
 
+            Screen.Write($"Enveloped???");
             if (accountHandle.EnvelopedCatalogedDevice != null) {
                 statusResponse.EnvelopedCatalogedDevice =
                     accountHandle.EnvelopedCatalogedDevice; // Hack: should allow this to be cached.
                 statusResponse.CatalogedDeviceDigest = accountHandle.CatalogedDeviceDigest;
-
-                Screen.WriteLine($"Status update:  {accountHandle.CatalogedDeviceDigest}");
-
-
-
-                //if ((deviceConnection == null) || (deviceConnection.IsEqualTo(
-                //        accountHandle.EnvelopedCatalogedDevice.PayloadDigest))) {
-                //    statusResponse.EnvelopedCatalogedDevice =
-                //                accountHandle.EnvelopedCatalogedDevice;
-                //    }
                 }
 
-
-
-            // summarize the status here.
-            statusResponse.ToConsole();
-
+            Screen.Write($"Status complete");
             return statusResponse;
-            }
 
+            }
 
         /// <summary>
         /// Update an account record. There must be an existing record and the request must
@@ -294,13 +276,14 @@ namespace Goedel.Mesh.Server {
                     IJpcSession session,
 
                     List<ConstraintsSelect> selections) {
-            
+
             using var accountHandle = GetAccountHandleLocked(session, AccountPrivilege.Connected);
 
             //using var accountEntry = GetAccountVerified(account, jpcSession);
             var updates = new List<ContainerUpdate>();
             foreach (var selection in selections) {
-                using var store = accountHandle.GetStore(selection.Container);
+                using var store = accountHandle.GetSequence(selection.Container);
+
                 var update = new ContainerUpdate() {
                     Container = selection.Container,
                     Envelopes = new List<DareEnvelope>()
@@ -350,7 +333,7 @@ namespace Goedel.Mesh.Server {
 
             */
 
-                // report the updates to be applied here
+            // report the updates to be applied here
             using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
 
             //using var accountEntry = GetAccountVerified(account, jpcSession);
@@ -477,9 +460,9 @@ namespace Goedel.Mesh.Server {
             // Fetch the account 
             //using var accountEntry = GetAccountUnverified(accountAddress);
 
-            
 
-            using var accountHandle = GetAccountHandleLocked(accountAddress, 
+
+            using var accountHandle = GetAccountHandleLocked(accountAddress,
                                 jpcSession, AccountPrivilege.Operate);
             using var catalogCapability = accountHandle.GetCatalogCapability();
 
@@ -489,7 +472,7 @@ namespace Goedel.Mesh.Server {
 
             // Different stores depending on user or group account
             foreach (var operation in operations) {
-                results.Add(Operate(catalogCapability, operation, 
+                results.Add(Operate(catalogCapability, operation,
                             jpcSession.Credential.Account));
                 }
 
@@ -624,28 +607,6 @@ namespace Goedel.Mesh.Server {
             return response;
             }
 
-        ///// <summary>
-        ///// Get access to an account record for an authenticated request.
-        ///// </summary>
-        ///// <param name="jpcSession">The session connection data.</param>      
-        ///// <param name="verifiedAccount">The account for which the data is requested.</param>
-        ///// <returns></returns>
-        //AccountHandleVerified GetAccountVerified(MeshVerifiedAccount verifiedAccount, IJpcSession jpcSession) {
-        //    var accountEntry = GetAccountLocked(jpcSession.TargetAccount);
-
-        //    accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
-        //    accountEntry.Verify(jpcSession);
-        //    return new AccountHandleVerified(jpcSession);
-        //    }
-
-        ///// <summary>
-        ///// Get access to an account record for an authenticated request.
-        ///// </summary>
-        ///// <param name="account">The account to access.</param>
-        ///// <returns>The access handle.</returns>
-        //AccountHandleUnverified GetAccountUnverified(string account) =>
-        //    new(GetAccountLocked(account));
-
         #endregion
         #region // Account handle management
         /// <summary>
@@ -702,7 +663,7 @@ namespace Goedel.Mesh.Server {
 
         AccountHandleLocked GetAccountHandleLocked(IJpcSession session,
                 AccountPrivilege accountPrivilege) {
-
+            //try {
             var accountEntry = GetAccountLocked(session.TargetAccount);
 
             // Performance: Cache the account context to permit reuse.
@@ -712,8 +673,13 @@ namespace Goedel.Mesh.Server {
             accountContext.Authenticate(
                 session, accountPrivilege).AssertTrue(NotAuthenticated.Throw);
 
-            return new AccountHandleLocked(accountContext) { 
-                AccountPrivilege = accountPrivilege};
+            return new AccountHandleLocked(accountContext) {
+                AccountPrivilege = accountPrivilege
+                };
+            //}
+            //catch (Exception e) {
+            //    throw new NYI();
+            //    }
             }
 
 
