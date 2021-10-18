@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "Goedel.FSR/1.0.0": {
+        "dependencies": {
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.FSR.dll": {}
+        }
+      },
+      "Goedel.Utilities/1.0.0": {
+        "runtime": {
+          "Goedel.Utilities.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Goedel.FSR/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Utilities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

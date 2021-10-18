@@ -1,0 +1,349 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Protocol.Service</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Protocol.Service.ServerNotSupported">
+            <summary>
+            This platform does not support HTTP service
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServerNotSupported.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServerNotSupported.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServerNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServerNotSupported._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServerNotSupported.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.IMonitorProvider">
+            <summary>
+            Monitor provider interface. Used by a provider to advertise availability of a monitor.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.IMonitorProvider.Monitor">
+            <summary>The monitor class to be exposed.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Service.Monitor">
+            <summary>
+            Service monitoring class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Monitor.Total">
+            <summary>Total result since the Monitor was last restarted.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.Monitor.Recent">
+            <summary>Total results in the most recent sample interval.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Constructor returning a monitor instance for <paramref name="listeners"/>
+            listeners and <paramref name="dispatchers"/> dispatchers.
+            </summary>
+            <param name="listeners">The number of listener threads.</param>
+            <param name="dispatchers">The number of dispatcher threads.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.StartBusy">
+            <summary>
+            Mark the start of period when the service is blocked because no dispatcher threads are available.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.EndBusy">
+            <summary>
+            Mark the end of period when the service is blocked because no dispatcher threads are available.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.StartDispatch(System.Int32)">
+            <summary>
+            Mark the start of dispatch on thread <paramref name="dispatch"/>
+            </summary>
+            <param name="dispatch">Index of the thread that was started.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.EndDispatch(System.Int32)">
+            <summary>
+            Mark the end of dispatch on thread <paramref name="dispatch"/>
+            </summary>
+            <param name="dispatch">Index of the thread that was ended.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.MarkRecent">
+            <summary>
+            Mark the end of the 'Recent' period.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Monitor.GetStats">
+            <summary>
+            Return a snapshot of the server status for the total time since the 
+            collection period began and for the most recent collection interval.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.Service.MonitorResult">
+            <summary>
+            Class containing a set of monitor results.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.TimeBegin">
+            <summary>The time at which the result interval began</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.TimeEnd">
+            <summary>The time at which the next result interval began</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.TimeElapsed">
+            <summary>The elapsed time.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.ListenerRequests">
+            <summary>Number of listener events received</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.DispatcherRequests">
+            <summary>Number of dispatcher requests started.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.MonitorResult.DispatcherBusy">
+            <summary>Time the dispatcher thread was busy in milliseconds</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.MonitorResult.Busy">
+            <summary>Time all threads were busy.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.MonitorResult.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Constructor creating a new result for <paramref name="listeners"/> and
+            <paramref name="dispatchers"/> dispatchers.
+            </summary>
+            <param name="listeners">The number of listener threads.</param>
+            <param name="dispatchers">The number of dispatcher threads.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.MonitorResult.Add(Goedel.Protocol.Service.MonitorResult)">
+            <summary>
+            Add the continguous result <paramref name="value"/> to the current result.
+            </summary>
+            <param name="value">The contiguous result data.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.MonitorResult.CopyClear">
+            <summary>
+            Create a copy of the current monitor result, clear the current values and return
+            the copy. This is performed 
+            </summary>
+            <returns>The copy of the original values.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.MonitorResult.Copy">
+            <summary>
+            Create a copy of the current monitor result and return
+            the copy. This is performed 
+            </summary>
+            <returns>The copy of the values.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Service.NamespaceDoc">
+            <summary>
+            Service monitoring classes.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.RudService">
+            <summary>
+            Service provider managing HTTP and UDP listeners.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.RudService.MaxDispatch">
+            <summary>Maximum number of concurrent worker processes.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.RudService.Timeout">
+            <summary>Timeout for action on a worker thread.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.RudService.Listener">
+            <summary>The RDP Listener.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.RudService.Monitor">
+            <summary>Service instrumentation.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.RudService.Disposing">
+            <summary>
+            Disposal routine, perform clean termination of all active threads.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.RudService.#ctor(System.Collections.Generic.List{Goedel.Protocol.Presentation.RudProvider},Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.Listener,System.Int32)">
+            <summary>
+            Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
+            </summary>
+            <param name="providers">The services to be served.</param>
+            <param name="rdpListener">Specify the listener layer (default is <see cref="T:Goedel.Protocol.Presentation.RudListener"/>.</param>
+            <param name="maxCores">Maximum number of dispatch threads.</param>
+            <param name="credential">Credential for the listener to use.</param>
+            <remarks>Constructor returns after the service has been started and listener threads 
+            initialized.</remarks>
+        </member>
+        <member name="M:Goedel.Protocol.Service.RudService.GetProvider(System.String,System.Int32,System.String)">
+            <summary>
+            Return a provider.
+            </summary>
+            <param name="domain">Domain to which the provider is bound.</param>
+            <param name="port">Port to which the provider is bound.</param>
+            <param name="resource">Protocol serviced.</param>
+            <returns>The provider.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.RudService.NullTask">
+            <summary>
+            Null task, simply runs to completion. This is used to allow gracefull shutdown of the
+            dispatch threads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.RequestQuality">
+            <summary>
+            Describe the result of request source analysis.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.RequestQuality.OK">
+            <summary>The request comes from an acceptable (non blocked source).</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.RequestQuality.Reason">
+            <summary>The request is not acceptable respond giving (Reason TBS)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.RequestQuality.Abort">
+            <summary>The request is not acceptable and should be ignored without response.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Service.ServiceRequest">
+            <summary>
+            Base class for connection handlers
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceRequest.MaxRequest">
+            <summary>The maximum request size</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServiceRequest.ObjectEncoding">
+            <summary>The object encoding to use.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServiceRequest.Resource">
+            <summary>Specifies a resouce that is under contention, e.g. an account or the 
+            account catalog. This allows requests for the same resource to be queued for
+            dispatch after the blocking requests have completed.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceRequest.Slot">
+            <summary></summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceRequest.Service">
+            <summary></summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceRequest.Buffer">
+            <summary>The buffer to receive the input request.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceRequest.Count">
+            <summary>Number of bytes read into the input buffer.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServiceRequest.Refused">
+            <summary>If true, the request was refused.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequest.Complete">
+            <summary>
+            Process the connection, dispatch the request and return the result.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequest.AbuseCheckIpSource(System.Net.IPEndPoint)">
+            <summary>
+            Determine  quality of request received from <paramref name="iPEndPoint"/>
+            </summary>
+            <param name="iPEndPoint">The request origin.</param>
+            <returns>The quality of the request.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequest.Abort(Goedel.Protocol.Service.RequestQuality)">
+            <summary>
+            Abort the connection.
+            </summary>
+            <param name="requestQuality"></param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequest.ProcessBuffer">
+            <summary>
+            Process the buffer containing inbound data.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequest.ReturnResponse(System.Byte[])">
+            <summary>
+            Return a response containing the payload <paramref name="payload"/>
+            </summary>
+            <param name="payload">The payload data to return.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Service.ServiceRequestHttp">
+            <summary>
+            Connection handler for HTTP request
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequestHttp.#ctor(Goedel.Protocol.Service.RudService,System.Net.HttpListenerContext)">
+            <summary>
+            Constructor returning an instance to process the request 
+            specified by <paramref name="listenerContext"/>.
+            </summary>
+            <param name="service">The service to process the request.</param>
+            <param name="listenerContext">The HTTP request context.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequestHttp.Complete">
+            <summary>
+            Process the connection, dispatch the request and return the result.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequestHttp.ReturnResponse(System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequestHttp.Abort(Goedel.Protocol.Service.RequestQuality)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.Service.ServiceRequestUdp">
+            <summary>
+            Connection handler for UDP request
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequestUdp.#ctor(System.Net.Sockets.UdpReceiveResult)">
+            <summary>
+            Constructor, process the request contained in <paramref name="result"/>.
+            </summary>
+            <param name="result">The UDP receive result</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequestUdp.Complete">
+            <summary>
+            Process the connection, dispatch the request and return the result.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequestUdp.Abort(Goedel.Protocol.Service.RequestQuality)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceRequestUdp.ReturnResponse(System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.Service.HostUDP">
+            <summary>
+            UDP Host type.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.ConnectionUDP">
+            <summary>
+            UDP Connection type (obsolete?)
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ConnectionUDP.CompletionInbound">
+            <summary>This really goes in the stream</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.ConnectionUDP.TaskInbound">
+            <summary>This really goes in the stream</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.ConnectionUDP.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+    </members>
+</doc>

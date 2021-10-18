@@ -4,8 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
 		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-	
-		<Company>Threshold Secrets LLC.</Company>
+    <Company>Threshold Secrets LLC.</Company>
 		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
@@ -14,12 +13,22 @@
     <UseSharedCompilation>false</UseSharedCompilation>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+  <!-- Platform specific libraries for windows -->
+  <ItemGroup Condition=" '$(RuntimeIdentifier.StartsWith(`win`))' ">
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Windows.csproj" />
   </ItemGroup>
 
+  <!-- Platform specific libraries for linux -->
+  <ItemGroup Condition=" '$(RuntimeIdentifier.StartsWith(`linux`))' ">
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.macos.csproj" />
+  </ItemGroup>
 
-
+  <!-- Platform specific libraries for osx -->
+  <ItemGroup Condition=" '$(RuntimeIdentifier.StartsWith(`osx`))' ">
+    <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.linux.csproj" />
+  </ItemGroup>
+  
+  
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
 		<Exec Command="VSPreBuild" />
 	</Target>

@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Cryptography.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Cryptography.Core.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Core.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Core.Initialization.Initialize">
+            <summary>
+            Initialization routine for cryptographic functions on the dotNet Core platform.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Core.KeyCollectionCore">
+            <summary>
+            KeyCollection implementation using platform agnostic .NET 5.0 
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Core.KeyCollectionCore.DirectoryKeys">
+            <summary>Directory in which to store keys</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Core.KeyCollectionCore.DirectoryMesh">
+            <summary>Directory in which to store Mesh application data.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.Persist(System.String,Goedel.Cryptography.PKIX.IPKIXPrivateKey,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.Persist(System.String,Goedel.Cryptography.IJson,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.ErasePrivateKey(System.String)">
+            <summary>
+            Erase the private key <paramref name="udf"/> from storage.
+            </summary>
+            <param name="udf">The key to erase.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.LocatePrivateKey(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptoKey@)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.ValidateTrustPath(Goedel.Cryptography.Dare.DareSignature,System.String)">
+            <summary>
+            Validate the trust path specified in <paramref name="dareSignature"/> relative to the
+            trust anchor <paramref name="anchor"/> and return the result.
+            </summary>
+            <param name="dareSignature">The signature to evaluate.</param>
+            <param name="anchor">The trust anchor to evaluate relative to.</param>
+            <returns>The trust result.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.RemoteAgreement(System.String,Goedel.Cryptography.KeyPairAdvanced,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Cryptography.Core.NamespaceDoc">
+            <summary>
+            Provides platform specific support functions for Goedel.Cryptography
+            classes on the .NET Core platform.
+            </summary>
+        </member>
+    </members>
+</doc>

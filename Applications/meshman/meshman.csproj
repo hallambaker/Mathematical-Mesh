@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>    
+    <Product>Meshman</Product>
+    <Description>Mesh command line tool.</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Meshman</Title>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
+  </ItemGroup>
+
+
+  
+</Project>

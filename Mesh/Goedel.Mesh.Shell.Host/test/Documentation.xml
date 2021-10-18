@@ -1,0 +1,612 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Mesh.Shell.Host</name>
+    </assembly>
+    <members>
+        <member name="F:Goedel.Mesh.Shell.Host.EnumReporting.eJson">
+            <summary>Case "json": Report output in JSON format</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.EnumReporting.eVerbose">
+            <summary>Case "verbose": Verbose reports</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.EnumReporting.eReport">
+            <summary>Case "report": Report output (default)</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.EnumReporting.eSilent">
+            <summary>Case "silent": Suppress output</summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.Host.CommandLineInterpreter">
+            <summary>
+            Host Shell Command Line Interpreter.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.CommandLineInterpreter.Entries">
+            <summary>The command entries</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.CommandLineInterpreter.DefaultCommand">
+            <summary>The default command.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.CommandLineInterpreter.Description">
+            <summary>Description of the comman</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.CommandLineInterpreter.Help(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Default help dispatch
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
+            <summary>
+            Describe the application invoked by the command.
+            </summary>
+            <param name="Dispatch">The command description.</param>
+            <param name="args">The set of arguments.</param>
+            <param name="index">The first unparsed argument.</param>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostStart.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostStart.Console">
+            <summary>Field accessor for option [console]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostStart.MachineName">
+            <summary>Field accessor for option [host]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostStart.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostStart.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostStart.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostStart.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostVerify.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostVerify.Console">
+            <summary>Field accessor for option [console]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostVerify.MachineName">
+            <summary>Field accessor for option [host]</summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.Host.Shell">
+            <summary>
+            The command shell.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Shell.MeshMachine">
+            <summary>The Mesh Machine</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Shell.Instance">
+            <summary>The service instance</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Shell.ShellResult">
+            <summary>Result returned by last shell command.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Shell.ServiceDescriptionDictionary">
+            <summary>Dictionary of service descriptions.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.#ctor(Goedel.Mesh.ServiceAdmin.ServiceDescription[])">
+            <summary>
+            Constructor creating a shell prepopulated with the service descriptions
+            <paramref name="serviceDescriptions"/>.
+            </summary>
+            <param name="serviceDescriptions">Descriptions of services to dispatch on.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.Dispatch(System.String[],System.IO.TextWriter)">
+            <summary>
+            Dispatch command line instruction with arguments <paramref name="args"/> and
+            error output <paramref name="console"/>.
+            </summary>
+            <param name="args">The command line arguments.</param>
+            <param name="console">Error output stream.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.AddService(Goedel.Mesh.ServiceAdmin.ServiceDescription)">
+            <summary>
+            Add a service provider to the hosting options.
+            </summary>
+            <param name="serviceDescription">The service description.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell._PostProcess(Goedel.Mesh.Shell.Host.ShellResult)">
+            <summary>
+            Post processing action
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.HostStart(Goedel.Mesh.Shell.Host.HostStart)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.HostVerify(Goedel.Mesh.Shell.Host.HostVerify)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.VerifyConfig(System.Boolean,System.String,System.String)">
+            <summary>
+            Verify the configuration specified in <paramref name="hostConfig"/> and extract the host 
+            description for <paramref name="hostConfig"/>.
+            </summary>
+            <param name="console"></param>
+            <param name="machineName"></param>
+            <param name="hostConfig"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.StartService(Goedel.Mesh.ServiceAdmin.HostConfiguration,Goedel.Mesh.ServiceAdmin.ServiceConfiguration)">
+            <summary>
+            Start the service
+            </summary>
+            <param name="hostConfiguration">The host configuration.</param>
+            <param name="serviceConfiguration">The service configuration</param>
+            <returns>The RUD service</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.Host.ShellResult">
+             <summary>
+            
+             Classes to be used to test serialization an deserialization.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ShellResult._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.ShellResult.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ShellResult._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ShellResult.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ShellResult.Verbose">
+            <summary>
+            Converts the value of this instance to a <see langword="String"/> with 
+            additional details.
+            </summary>
+            <returns>The string value.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.Host.Result">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Result.Success">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Result.Reason">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Result._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.Result.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Result._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Result.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Result.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Result.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Result.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Result.#ctor">
+            <summary>
+            Default constructor, initialize the value <see cref="P:Goedel.Mesh.Shell.Host.Result.Success"/> to <see langword="true"/>.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Result.StringBuilder">
+            <summary>
+            Returns a <see cref="M:Goedel.Mesh.Shell.Host.Result.StringBuilder"/> instance initialized with the success value and
+            the expanded error message reason (if relevant).
+            </summary>
+            <returns>The <see cref="M:Goedel.Mesh.Shell.Host.Result.StringBuilder"/> instance.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Result.ToString">
+            <summary>
+            Converts the value of this instance to a <see langword="String"/>.
+            </summary>
+            <returns>The current string.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.Host.ResultStartService">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultStartService._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.ResultStartService.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ResultStartService._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ResultStartService.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ResultStartService.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ResultStartService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ResultStartService.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultStartService.RudService">
+            <summary>The RUD service that was started.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.Shell.MeshShellException">
+            <summary>
+            Generic error in Mesh Shell library
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.MeshShellException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.MeshShellException.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.MeshShellException.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.MeshShellException._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.MeshShellException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.DidNotMatchExpectedValue">
+            <summary>
+            The calculated fingerprint did not match the expected value.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DidNotMatchExpectedValue.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DidNotMatchExpectedValue.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.DidNotMatchExpectedValue.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.DidNotMatchExpectedValue._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DidNotMatchExpectedValue.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ProfileFingerprintInvalid">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ProfileFingerprintInvalid.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ProfileFingerprintInvalid.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ProfileFingerprintInvalid.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ProfileFingerprintInvalid._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ProfileFingerprintInvalid.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.AccountNotFound">
+            <summary>
+            Account not valid
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.AccountNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.AccountNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.AccountNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.AccountNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.AccountNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ProfileNotFound">
+            <summary>
+            Account not valid
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ProfileNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ProfileNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ProfileNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ProfileNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ProfileNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.DirectoryNotFound">
+            <summary>
+            The directory could not be found
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DirectoryNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DirectoryNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.DirectoryNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.DirectoryNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DirectoryNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.FileNotFound">
+            <summary>
+            The directory could not be found
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.FileNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.FileNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.FileNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.FileNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.FileNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.CommandNotImplemented">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.CommandNotImplemented.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.CommandNotImplemented.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.CommandNotImplemented.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.CommandNotImplemented._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.CommandNotImplemented.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.OptionNotImplemented">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.OptionNotImplemented.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.OptionNotImplemented.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.OptionNotImplemented.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.OptionNotImplemented._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.OptionNotImplemented.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.NamespaceDoc">
+            <summary>
+            Host shell. Runs an actual host instance with minimal command line options.
+            </summary>
+        </member>
+    </members>
+</doc>

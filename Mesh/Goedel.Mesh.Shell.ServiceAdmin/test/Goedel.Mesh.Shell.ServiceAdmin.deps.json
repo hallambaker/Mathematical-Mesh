@@ -1,0 +1,324 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "Goedel.Mesh.Shell.ServiceAdmin/1.0.0": {
+        "dependencies": {
+          "Goedel.Command": "1.0.0",
+          "Goedel.Cryptography": "1.0.0",
+          "Goedel.Cryptography.Dare": "1.0.0",
+          "Goedel.Mesh": "1.0.0",
+          "Goedel.Mesh.Client": "1.0.0",
+          "Goedel.Mesh.Server": "1.0.0",
+          "Goedel.Mesh.ServiceAdmin": "1.0.0",
+          "Goedel.Protocol": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Mesh.Shell.ServiceAdmin.dll": {}
+        }
+      },
+      "Goedel.ASN/1.0.0": {
+        "dependencies": {
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.ASN.dll": {}
+        }
+      },
+      "Goedel.Command/1.0.0": {
+        "dependencies": {
+          "Goedel.FSR": "1.0.0",
+          "Goedel.Registry": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Command.dll": {}
+        }
+      },
+      "Goedel.Cryptography/1.0.0": {
+        "dependencies": {
+          "Goedel.ASN": "1.0.0",
+          "Goedel.IO": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Cryptography.dll": {}
+        }
+      },
+      "Goedel.Cryptography.Core/1.0.0": {
+        "dependencies": {
+          "Goedel.Cryptography": "1.0.0",
+          "Goedel.Cryptography.Dare": "1.0.0",
+          "Goedel.Cryptography.Jose": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Cryptography.Core.dll": {}
+        }
+      },
+      "Goedel.Cryptography.Dare/1.0.0": {
+        "dependencies": {
+          "Goedel.Cryptography.Jose": "1.0.0",
+          "Goedel.IO": "1.0.0",
+          "Goedel.Protocol": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Cryptography.Dare.dll": {}
+        }
+      },
+      "Goedel.Cryptography.Jose/1.0.0": {
+        "dependencies": {
+          "Goedel.Cryptography": "1.0.0",
+          "Goedel.Protocol": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Cryptography.Jose.dll": {}
+        }
+      },
+      "Goedel.Cryptography.KeyFile/1.0.0": {
+        "dependencies": {
+          "Goedel.Cryptography": "1.0.0",
+          "Goedel.FSR": "1.0.0",
+          "Goedel.IO": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Cryptography.KeyFile.dll": {}
+        }
+      },
+      "Goedel.Discovery/1.0.0": {
+        "dependencies": {
+          "Goedel.Cryptography": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Discovery.dll": {}
+        }
+      },
+      "Goedel.FSR/1.0.0": {
+        "dependencies": {
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.FSR.dll": {}
+        }
+      },
+      "Goedel.IO/1.0.0": {
+        "dependencies": {
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.IO.dll": {}
+        }
+      },
+      "Goedel.Mesh/1.0.0": {
+        "dependencies": {
+          "Goedel.Cryptography": "1.0.0",
+          "Goedel.Cryptography.Dare": "1.0.0",
+          "Goedel.Cryptography.KeyFile": "1.0.0",
+          "Goedel.Protocol.Presentation": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Mesh.dll": {}
+        }
+      },
+      "Goedel.Mesh.Client/1.0.0": {
+        "dependencies": {
+          "Goedel.Cryptography": "1.0.0",
+          "Goedel.Cryptography.Dare": "1.0.0",
+          "Goedel.Mesh": "1.0.0",
+          "Goedel.Protocol": "1.0.0",
+          "Goedel.Protocol.Presentation": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Mesh.Client.dll": {}
+        }
+      },
+      "Goedel.Mesh.Core/1.0.0": {
+        "dependencies": {
+          "Goedel.Cryptography": "1.0.0",
+          "Goedel.Cryptography.Core": "1.0.0",
+          "Goedel.Mesh": "1.0.0",
+          "Goedel.Mesh.Client": "1.0.0",
+          "Goedel.Protocol": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Mesh.Core.dll": {}
+        }
+      },
+      "Goedel.Mesh.Server/1.0.0": {
+        "dependencies": {
+          "Goedel.Cryptography": "1.0.0",
+          "Goedel.Cryptography.Dare": "1.0.0",
+          "Goedel.Mesh": "1.0.0",
+          "Goedel.Mesh.Core": "1.0.0",
+          "Goedel.Mesh.ServiceAdmin": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Mesh.Server.dll": {}
+        }
+      },
+      "Goedel.Mesh.ServiceAdmin/1.0.0": {
+        "dependencies": {
+          "Goedel.Cryptography": "1.0.0",
+          "Goedel.Cryptography.Dare": "1.0.0",
+          "Goedel.Mesh": "1.0.0",
+          "Goedel.Protocol": "1.0.0",
+          "Goedel.Protocol.Presentation": "1.0.0",
+          "Goedel.Registry": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Mesh.ServiceAdmin.dll": {}
+        }
+      },
+      "Goedel.Protocol/1.0.0": {
+        "dependencies": {
+          "Goedel.Discovery": "1.0.0",
+          "Goedel.FSR": "1.0.0",
+          "Goedel.IO": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Protocol.dll": {}
+        }
+      },
+      "Goedel.Protocol.Presentation/1.0.0": {
+        "dependencies": {
+          "Goedel.Cryptography": "1.0.0",
+          "Goedel.Cryptography.Dare": "1.0.0",
+          "Goedel.Cryptography.Jose": "1.0.0",
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Protocol.Presentation.dll": {}
+        }
+      },
+      "Goedel.Registry/1.0.0": {
+        "dependencies": {
+          "Goedel.Utilities": "1.0.0"
+        },
+        "runtime": {
+          "Goedel.Registry.dll": {}
+        }
+      },
+      "Goedel.Utilities/1.0.0": {
+        "runtime": {
+          "Goedel.Utilities.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Goedel.Mesh.Shell.ServiceAdmin/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.ASN/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Command/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Cryptography/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Cryptography.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Cryptography.Dare/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Cryptography.Jose/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Cryptography.KeyFile/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Discovery/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.FSR/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.IO/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Mesh/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Mesh.Client/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Mesh.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Mesh.Server/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Mesh.ServiceAdmin/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Protocol/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Protocol.Presentation/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Registry/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Goedel.Utilities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

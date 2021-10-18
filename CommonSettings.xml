@@ -3,7 +3,10 @@
 	<PropertyGroup>
 		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
 		<TargetFramework>net5.0</TargetFramework>
-		<Company>Threshold Secrets LLC.</Company>
+    <!--
+    <RuntimeIdentifiers>win-x64;win-x86;win-arm;win-arm64;osx-x64;linux-x64;linux-arm;linux-arm64</RuntimeIdentifiers>	
+		-->
+    <Company>Threshold Secrets LLC.</Company>
 		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>

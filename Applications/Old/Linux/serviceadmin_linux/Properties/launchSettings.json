@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "serviceadmin": {
+      "commandName": "Project",
+      "commandLineArgs": "create MeshTemplate.json hallambaker.com /out=..\\Meshhost\\HostVoodoo.json /host=voodoo.hallambaker.com /ip=108.20.156.67 /admin=admin@hallambaker.com",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Applications\\Any\\serviceadmin"
+    }
+  }
+}

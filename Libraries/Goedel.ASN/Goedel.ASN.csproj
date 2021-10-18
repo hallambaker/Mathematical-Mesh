@@ -1,13 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(SolutionDir)CommonSettings.xml" />
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Goedel.ASN</RootNamespace>
     <Product>Goedel.ASN</Product>
     <Description>ASN1 parsing library.</Description>
     <Copyright>© 2020</Copyright>
     <Title>Goedel.ASN</Title>
-
   </PropertyGroup>
 
 

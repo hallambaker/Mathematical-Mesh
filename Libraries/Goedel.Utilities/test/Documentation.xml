@@ -1,0 +1,1989 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Utilities</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Utilities.Extension">
+            <summary>
+            Extensions class
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToCommaSeparated(System.Collections.Generic.List{System.String})">
+            <summary>
+            Convert a list of strings to a comma separated string.
+            </summary>
+            <param name="texts">The input strings.</param>
+            <returns>If Texts is not null, the string values separated by commas, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.SplitByComma(System.String)">
+            <summary>
+            Split a string into a series of substrings delimited by spaces and/or commas
+            with null entries suppressed.
+            </summary>
+            <param name="text">The text to split</param>
+            <returns>The split strings.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.Byte[])">
+            <summary>
+            Convert UTF8 encoded bytes to string
+            </summary>
+            <param name="data">The encoded bytes to convert.</param>
+            <returns>The resulting string.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.Span{System.Byte})">
+            <summary>
+            Convert UTF8 encoded bytes to string
+            </summary>
+            <param name="data">The encoded bytes to convert.</param>
+            <returns>The resulting string.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToBytes(System.String)">
+            <summary>
+            Convert Text to UTF8 encoded bytes
+            </summary>
+            <param name="text">Text to convert</param>
+            <returns>The encoded bytes</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToASCII(System.Int32)">
+            <summary>
+            Convert integer to ASCII character if in the range 1-127, otherwise
+            return .
+            </summary>
+            <param name="c">The character to convert</param>
+            <returns>ASCII character if 0 &lt; In &lt; 128, otherwise '.'</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.IsBase64(System.Int32)">
+            <summary>Test to see if an input character is a Base64 character.
+            </summary>
+            <param name="c">The input character value</param>
+            <returns>true if and only if the input corresponds to an ASCII 
+            character used to encode Base64 in traditional or URL encoding
+            format.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.IsBlank(System.String)">
+            <summary>
+            Test to see whether the input string is blank. That is either a 
+            null pointer or an empty string.
+            </summary>
+            <param name="c">The string to test.</param>
+            <returns>True if either c is null or c is the empty string, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.IsWhite(System.Int32)">
+            <summary>Test to see if an input character is a Base64 character.
+            </summary>
+            <param name="c">The input character value</param>
+            <returns>true if and only if the input corresponds to an ASCII 
+            character used to encode Base64 in traditional or URL encoding
+            format.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.CountUTF8(System.String)">
+            <summary>
+            Count the number of bytes that are required to encode
+            a string in UTF8.
+            </summary>
+            <param name="text">Input string</param>
+            <returns>Number of bytes required to encode the string.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.String)">
+            <summary>
+            Convert a string to a UTF byte array
+            </summary>
+            <param name="text">Text to convert</param>
+            <returns>UTF8 character data as array</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToUTF8(System.String,System.Byte[],System.Int32)">
+            <summary>
+            Convert a string to a UTF byte array
+            </summary>
+            <param name="text">Text to convert</param>
+            <param name="buffer">Output buffer to write result to.</param>
+            <param name="position">Starting position to write data to.</param>
+            <returns>Number of characters converted</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.CEscape(System.String)">
+            <summary>
+            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+            </summary>
+            <param name="text">String to be escaped</param>
+            <returns>The escaped string</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.XMLEscape(System.String)">
+            <summary>
+            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+            </summary>
+            <param name="text">String to be escaped</param>
+            <returns>The escaped string</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.XMLEscapeStrict(System.String)">
+            <summary>
+            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+            </summary>
+            <param name="text">String to be escaped</param>
+            <returns>The escaped string</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.XMLEscapeRFCBullies(System.String)">
+            <summary>
+            Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+            </summary>
+            <param name="text">String to be escaped</param>
+            <returns>The escaped string</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.RFCBullies(System.Char)">
+            <summary>
+            Perform strict character constraints according to the undocumented requirements
+            or the HTML RFC spec.
+            </summary>
+            <param name="c">The character to constrain.</param>
+            <returns>The constrained character.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.ToHTMLEntity(System.Char)">
+            <summary>
+            Convert the character <paramref name="c"/> to the choresponding escaped
+            HTML character or entity binding.
+            </summary>
+            <param name="c">Character to escape.</param>
+            <returns>The escaped character.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.XMLAttributeEscape(System.String)">
+            <summary>
+            Escape text using XML acharacter entity sequences &amp;lt;, &amp;gt;, &amp;amp;
+            &amp;quot; and &amp;nbsp;.
+            </summary>
+            <param name="text">String to be escaped</param>
+            <returns>The escaped string</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.AppendNotNull(System.Text.StringBuilder,System.String,System.String)">
+            <summary>
+            Append the string <paramref name="text"/> to the StringBuilder <paramref name="builder"/> 
+            if and only if <paramref name="value"/> is not null.
+            </summary>
+            <param name="builder">The builder to append to.</param>
+            <param name="value">The text value to append to <paramref name="builder"/>.</param>
+            <param name="text">The test to be added iff <paramref name="value"/> is not null.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Keep(System.Object)">
+            <summary>
+            Tell compiler that an object is reserved.
+            </summary>
+            <param name="o">Object to reserve.</param>
+            <returns>true if the object is not null, false otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Future(System.Object)">
+            <summary>
+            Tell compiler that an object is reserved for future use.
+            </summary>
+            <param name="o">Object to reserve.</param>
+            <returns>true if the object is not null, false otherwise.</returns>
+        </member>
+        <member name="F:Goedel.Utilities.Extension.AlwaysTrue">
+            <summary>
+            You might think this code is unnecessary but it is actually very 
+            important. Don't tamper with it unless you understand how the
+            different storage classes affect the moves permitted by the optimizer.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.True(System.Boolean)">
+            <summary>
+            Convert constant truth value to static. This allows the programmer 
+            to prevent unreachable code being removed.
+            </summary>
+            <param name="Value">The test value</param>
+            <returns>True if the test value is true, false otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.False(System.Boolean)">
+            <summary>
+            Convert constant truth value to static. This allows the programmer 
+            to prevent unreachable code being removed.
+            </summary>
+            <param name="Value">The test value</param>
+            <returns>False if the test value is true, true otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.VerifyCanonical(System.String)">
+            <summary>
+            Verify that the path is not an absolute path and contains no relative 
+            references to an earlier path.
+            </summary>
+            <param name="path">The path to verify</param>
+            <returns>True if the path is canonical, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.UnixCanonicalPath(System.String)">
+            <summary>
+            Parse file path and return canonical unix path. Relative directory references will
+            be consolidated if possible thus a\..\..\b will become ..\b.
+            </summary>
+            <param name="Path">The path to transform</param>
+            <returns>The transformed path.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.UnixPath(System.String,System.String)">
+            <summary>
+            Combine a base file path and sujbdirectory path and return a unix file path.
+            </summary>
+            <param name="File">The base file path.</param>
+            <param name="Sub">The subdirectory</param>
+            <returns>The combined file path</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.UnixPath(System.String)">
+            <summary>
+            Return the path for a file as a unix file path.
+            </summary>
+            <param name="File">The windows file path</param>
+            <returns>The corresponding unix path.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.UnixFile(System.String)">
+            <summary>
+            Convert Windows file path to Unix.
+            </summary>
+            <param name="File">Windows file path</param>
+            <returns>Unix file path.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.UnixFile(System.String,System.String)">
+            <summary>
+            Combine a base file path and sujbdirectory path and return a unix path for the file.
+            </summary>
+            <param name="File">The base file path.</param>
+            <param name="Sub">The subdirectory</param>
+            <returns>The combined file path</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Left(System.String,System.Char)">
+            <summary>
+            If the input string contains the separator, return the string leading up 
+            to the separator. Otherwise return null.
+            </summary>
+            <param name="Input">The string to split.</param>
+            <param name="Separator">The separator character</param>
+            <returns>If the separator is found, returns the input string up to but not 
+            including the separator, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Right(System.String,System.Char)">
+            <summary>
+            If the input string contains the separator, return the string leading up 
+            to the separator. Otherwise return null.
+            </summary>
+            <param name="Input">The string to split.</param>
+            <param name="Separator">The separator character</param>
+            <returns>If the separator is found, returns the input string up to but not 
+            including the separator, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Separate(System.String,System.Char,System.String@,System.String@)">
+            <summary>
+            If the input string contains the separator, return the string leading up 
+            to the separator. Otherwise return null.
+            </summary>
+            <param name="Input">The string to split.</param>
+            <param name="Separator">The separator character</param>
+            <param name="Right">The string to the right of the separator</param>
+            <param name="Left">The string to the left of the separator</param>
+            <returns>If the separator is found, returns the input string up to but not 
+            including the separator, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.IsAccountID(System.String)">
+            <summary>
+            Returns true if <paramref name="accountID"/> is a reasonably well formed account
+            address, other
+            </summary>
+            <param name="accountID">The string to test.</param>
+            <returns><paramref name="accountID"/> if it is a well formed account identifier
+            and null otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.SplitAccountIDService(System.String,System.String@,System.String@)">
+            <summary>
+            Parse a string that may contain an account identifier to extract the service and 
+            account components.
+            </summary>
+            <param name="identifier">The AccountID to split.</param>
+            <param name="service">The portal address.</param>
+            <param name="account">The account name.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Utilities.Extension.GetService(System.String)" -->
+        <member name="M:Goedel.Utilities.Extension.GetServiceRaw(System.String)">
+            <summary>
+            Parse a string that may contain an account identifier to extract the service and 
+            account components.
+            </summary>
+            <param name="identifier">The AccountID to split.</param>
+            <returns>The service component.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Read(System.IO.Stream,System.Byte[],System.Int64,System.Int64)">
+            <summary>
+            Reads a sequence of bytes from the current stream and advances the position 
+            within the stream by the number of bytes read using index pointers that
+            are 64 bits.
+            </summary>
+            <param name="Stream">The stream to be read.</param>
+            <param name="buffer">An array of bytes. A maximum of count bytes are read 
+            from the current stream and stored in <paramref name="buffer"/>.</param>
+            <param name="offset">The byte offset in <paramref name="buffer"/> at which 
+            to begin storing the data read from the current stream.</param>
+            <param name="count">The maximum number of bytes to be read from the current 
+            stream.</param>
+            <returns>The total number of bytes read into the buffer. This can be less 
+            than the number of bytes requested if that many bytes are not currently available, 
+            or zero if the end of the stream has been reached.</returns>
+            <remarks>This routine does not currently implement 64 bit clean processing,
+            it merely provides a single point through which such processing may introduced 
+            should it prove necessary.</remarks>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Write(System.IO.Stream,System.Byte[],System.Int64,System.Int64)">
+            <summary>
+            Writes a sequence of bytes to the current CryptoStream and advances the 
+            position within the stream by the number of bytes written.
+            </summary>
+            <param name="Stream">The stream to be written to.</param>
+            <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from <paramref name="buffer"/> to the current stream.</param>
+            <param name="offset">The byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param>
+            <remarks>This routine does not currently implement 64 bit clean processing,
+            it merely provides a single point through which such processing may introduced 
+            should it prove necessary.</remarks>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.Write(System.IO.Stream,System.Byte[])">
+            <summary>
+            Write the entire contents of <paramref name="buffer"/> to <paramref name="stream"/>
+            </summary>
+            <param name="stream">Stream to write to.</param>
+            <param name="buffer">the data to be written.</param>
+        </member>
+        <member name="T:Goedel.Utilities.ArrayUtilities">
+            <summary>
+            Static class containing extension methods for array manipulation.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.Intersects``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Returns <code>true</code> iff the intersection of <paramref name="list1"/> and <paramref name="list2"/>
+            is non-empty.
+            </summary>
+            <typeparam name="T">Any object that supports testing for equality.</typeparam>
+            <param name="list1">The first list to compare.</param>
+            <param name="list2">The second list to compare.</param>
+            <returns><code>true</code> iff the intersection of <paramref name="list1"/> and <paramref name="list2"/>
+            is non-empty; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.IsEqualTo(System.Byte[],System.Byte[])">
+            <summary>Test to see if two arrays are equal.
+            </summary>
+            <param name="test1">First test value</param>
+            <param name="test2">Second test value</param>
+            <returns>true if and only if the two arrays are of the same size and each
+            element is equal.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.AppendChecked(System.Byte[],System.Int32,System.Byte[])">
+            <summary>
+            Copy data into the destination array at the specified index. If there is insufficient
+            space, the remaining data is silently discarded. The main use for this is for inside 
+            key derivation functions where the amount of key generated by the function may be greater
+            than the amount needed.
+            </summary>
+            <param name="destination">The destination array</param>
+            <param name="offset">Offset in the destination array</param>
+            <param name="data">Data to be written</param>
+            <returns>Offset of the next byte to be written.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.Duplicate(System.Byte[])">
+            <summary>
+            Create a duplicate copy of a byte array. This allows the original data to be modified
+            or disposed of.
+            </summary>
+            <param name="source">The source array</param>
+            <returns>The copied array</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.OrTruncated(System.Byte[],System.Int32)">
+            <summary>
+            Conditional truncation of an output value. If the value Length is zero,
+            returns the source array. Otherwise a new array is created and the first
+            Length bits of the source array copied into it and the new array returned.
+            </summary>
+            <param name="source">The source array</param>
+            <param name="length">The truncation length, 0 for no truncation.</param>
+            <returns>Truncated value</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.AddSafe``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
+            <summary>
+            Wrapper for the Dictionary Add method to signal success or failure by means of a
+            boolean return value rather than throwing an error.
+            </summary>
+            <typeparam name="TKey">The Key type</typeparam>
+            <typeparam name="TValue">The Value type, null values are pruned.</typeparam>
+            <param name="dictionary">The dictionary to add to</param>
+            <param name="key">The key to add</param>
+            <param name="value">The value to add</param>
+            <returns>True if a new entry was added, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.GetValue``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
+            <summary>
+            Wrapper for the Dictionary TryGetValue method returning the found value as the function result instead of 
+            the success or failure.
+            </summary>
+            <typeparam name="TKey">The Key type</typeparam>
+            <typeparam name="TValue">The Value type.</typeparam>
+            <param name="dictionary">The dictionary to search</param>
+            <param name="key">The key to search on</param>
+            <param name="defaultValue">The default value to return if nothing is found.</param>
+            <returns>The value found.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.GetValue``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
+            <summary>
+            Wrapper for the Dictionary TryGetValue method returning the found value as the function result instead of 
+            the success or failure.
+            </summary>
+            <typeparam name="TKey">The Key type</typeparam>
+            <typeparam name="TValue">The Value type.</typeparam>
+            <param name="dictionary">The dictionary to search</param>
+            <param name="key">The key to search on</param>
+            <returns>The value found.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.ReplaceSafe``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
+            <summary>
+            Wrapper for the Dictionary Add method to signal success or failure by means of a
+            boolean return value rather than throwing an error.
+            </summary>
+            <typeparam name="TKey">The Key type</typeparam>
+            <typeparam name="TValue">The Value type, null values are pruned.</typeparam>
+            <param name="dictionary">The dictionary to add to</param>
+            <param name="key">The key to add</param>
+            <param name="value">The value to add</param>
+            <returns>True if a new entry was added, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.Concatenate(System.Byte[],System.Byte[])">
+            <summary>
+            Concatenate the two arrays
+            </summary>
+            <param name="first">First array</param>
+            <param name="second">Second array</param>
+            <returns>result</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.SafeIndex``1(System.Collections.Generic.List{``0},System.Int32)">
+            <summary>
+            Return element number <paramref name="index"/> from <paramref name="list"/>
+            if it exists, otherwise the default for the list element type.
+            </summary>
+            <typeparam name="T">The list element type.</typeparam>
+            <param name="list">The list to extract from (may be null).</param>
+            <param name="index">The element to extract (if present).</param>
+            <returns>The extracted element or null if either <paramref name="list"/> is null
+            or <paramref name="index"/> is greater than the number of elements.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.AddRangeSafe``1(System.Collections.Generic.List{``0},System.Collections.Generic.List{``0})">
+            <summary>
+            If the list <paramref name="second"/> is not null, append the entries to the list
+            <paramref name="first"/>. Otherwise, do nothing.
+            </summary>
+            <typeparam name="T">The type of the list entries.</typeparam>
+            <param name="first">The list to add to.</param>
+            <param name="second">The list of items to be added if not null.</param>
+        </member>
+        <member name="T:Goedel.Utilities.AssemblyStack">
+            <summary>
+            Utility functions using reflection to extract information from the stack.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.AssemblyStack.GetMethodName">
+            <summary>
+            Return the name of the calling method.
+            </summary>
+            <returns>The name of the calling method.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.AssemblyStack.GetCallerMethodName">
+            <summary>
+            Return the name of the caller of the calling method.
+            </summary>
+            <returns>The name of the caller of the calling method.</returns>
+        </member>
+        <member name="T:Goedel.Utilities.GoedelException">
+            <summary>
+            Base class for all exceptions generated by Exceptional
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.GoedelException.#ctor">
+            <summary>
+            Construct instance for exception "An internal error occurred"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Utilities.GoedelException.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "An internal error occurred"
+            </summary>		
+            <param name="description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Utilities.GoedelException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="description">Description of the error</param>	
+            <param name="inner">Inner Exception</param>	
+        </member>
+        <member name="P:Goedel.Utilities.GoedelException.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="F:Goedel.Utilities.GoedelException.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Utilities.GoedelException.UserDataNew">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="M:Goedel.Utilities.GoedelException.Format(System.Object[])">
+            <summary>
+            Formatted error return.
+            </summary>
+            <param name="reasons">Exception parameter data.</param>
+            <returns>The formated exception description.</returns>
+        </member>
+        <member name="P:Goedel.Utilities.GoedelException.Templates">
+            <summary>Templates used to format the exception message.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.GoedelException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate</summary>
+        </member>
+        <member name="P:Goedel.Utilities.GoedelException.NoMessageSpecified">
+            <summary>Default error message return</summary>
+        </member>
+        <member name="M:Goedel.Utilities.GoedelException.FormatException(System.String,System.Collections.Generic.List{System.String},System.Globalization.CultureInfo,System.Object[])">
+            <summary>
+            Default exception message format provider.
+            </summary>
+            <param name="description">Description of the exception (overrides templates and culture).</param>
+            <param name="templates">Exception message templates.</param>
+            <param name="culture">The culture in which the message is to be formatted.</param>
+            <param name="args">Arguments to be used to construct the message.</param>
+            <returns>The formatted message string</returns>
+        </member>
+        <member name="T:Goedel.Utilities.ThrowDelegate">
+            <summary>
+            Delegate that will be thrown as an exception if a condition is met
+            </summary>
+            <param name="reasons">The reason for raising the exception.</param>
+            <returns>The exception to throw</returns>
+        </member>
+        <member name="T:Goedel.Utilities.ExceptionData">
+            <summary>
+            Convenience class for constructing an object on the fly to report exception
+            parameters of type integer or string.
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.ExceptionData.Int">
+            <summary>An integer value;</summary>
+        </member>
+        <member name="P:Goedel.Utilities.ExceptionData.String">
+            <summary>A string value</summary>
+        </member>
+        <member name="M:Goedel.Utilities.ExceptionData.Box(System.Int32,System.String)">
+            <summary>
+            Factory method to create and return object with specified integer
+            and/or string values.
+            </summary>
+            <param name="Int">The integer value</param>
+            <param name="String">The string value</param>
+            <returns>The boxed exception data.</returns>
+        </member>
+        <member name="T:Goedel.Utilities.ExceptionFormatDelegate">
+            <summary>
+            Delegate returning an exception message format provider.
+            </summary>
+            <param name="description">Description of the exception (overrides templates and culture).</param>
+            <param name="templates">Exception message templates.</param>
+            <param name="culture">The culture in which the message is to be formatted.</param>
+            <param name="args">Arguments to be used to construct the message.</param>
+            <returns>The formatted message string</returns>
+        </member>
+        <member name="T:Goedel.Utilities.Assert">
+            <summary>
+            Convenience routines to test various types of assertion and throw
+            an exception using an exception factory method such as the ones
+            created by Exceptional.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.NotNull``1(``0,``0@)">
+            <summary>
+            Syntactic sugar to allow compact tests on the return value of a function.
+            Returns true is <paramref name="test"/> is not null, otherwise false.
+            The value <paramref name="result"/> is set equal to the value of 
+            <paramref name="test"/> in either case.
+            </summary>
+            <example>
+            This sample shows how to call the <see cref="M:Goedel.Utilities.Assert.NotNull``1(``0,``0@)"/> method.
+            <code>
+            if (base.Get(key).NotNull (out var result)) {
+                return result;
+                }
+            </code>
+            </example>
+            <typeparam name="T">The type of the argument.</typeparam>
+            <param name="test">The test value.</param>
+            <param name="result">Returns the value <paramref name="test"/>.</param>
+            <returns>True if the value <paramref name="test"/> is not null,
+            otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.Expired``1(System.Nullable{System.DateTime},``0)">
+             <summary>
+             Provides a means of optionally expiring a value specified by <paramref name="value"/>.
+             If <paramref name="expiry"/> is not null and specifies a time value that is strictly 
+             less than the value of <see cref="P:System.DateTime.Now"/>, the value null is returned. Otherwise
+             the value <paramref name="value"/> is returned.
+             </summary>
+             <typeparam name="T">The type to return and of <paramref name="value"/>.</typeparam>
+             <param name="expiry">The expiry time.</param>
+             <param name="value">The value to return if not expired.</param>
+             <returns>
+             The value <paramref name="value"/> unless the parameter <paramref name="expiry"/>
+             is not null and is strictly less than the current time in which case the value 
+             <code>null</code> is returned. 
+            </returns>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.CacheValue``1(``0,``0@)">
+            <summary>
+            Cache and return a value. This is used to produce compact expression
+            body methods for properties that are only evaluated the first time
+            they are called.
+            </summary>
+            <typeparam name="T">The type of data to be cached.</typeparam>
+            <param name="Value">The value to be stored.</param>
+            <param name="Store">The store that the value is to be written to.</param>
+            <returns>The stored value.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.AssertFalse(System.Boolean,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if <paramref name="condition"/> is true. 
+            (test, NYIException.Throw, "test was false").AssertTrue();
+            </summary>
+            <param name="condition">The condition</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.AssertTrue(System.Boolean,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if <paramref name="condition"/> is false. 
+            (test, NYIException.Throw, "test was false").AssertTrue();
+            </summary>
+            <param name="condition">The condition</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.AssertNull(System.Object,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if <paramref name="test"/> is not null. 
+            </summary>
+            <param name="test">The object to test to see if it is null</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.AssertNotNull``1(``0,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if <paramref name="test"/> is null. 
+            </summary>
+            <param name="test">The object to test to see if it is null</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.AssertEqual(System.Byte[],System.Byte[],Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Test to see if two arrays are equal.
+            </summary>
+            <param name="test1">First test value</param>
+            <param name="test2">Second test value</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.AssertEqual``1(``0,``0,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Test to see if two values are equal.
+            </summary>
+            <typeparam name="T">The type of the argument.</typeparam>
+            <param name="test1">First test value</param>
+            <param name="test2">Second test value</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.VerifyTrue(System.Boolean,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>If debugging Throw an exception if <paramref name="condition"/> is false. 
+            (test, NYIException.Throw, "test was false").AssertTrue();
+            </summary>
+            <param name="condition">The condition</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="P:Goedel.Utilities.Assert.HaltPhase1">
+            <summary>Convenience flag can be set true to force task flags to throw an exception.</summary> 
+        </member>
+        <member name="M:Goedel.Utilities.Assert.TaskValidate(System.String)">
+            <summary>
+            Utility routine used to flag missing code to implement missing
+            cryptographic authentication check
+            </summary>
+            <param name="description">Task description</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.TaskRedundant(System.String)">
+            <summary>
+            Utility routine used to flag possibly redundant code.
+            </summary>
+            <param name="description">Task description</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.TaskTest(System.String)">
+            <summary>
+            Utility routine used to flag missing code to implement missing test for
+            functionality not yet implemented.
+            </summary>
+            <param name="description">Task description</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.TaskFunctionality(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Utility routine used to flag missing code to implement missing test for
+            functionality not yet implemented.
+            </summary>
+            <param name="description">Description of the missing functionality.</param>
+            <param name="exception">If true, throw an exception.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.Task(System.String,System.String)">
+            <summary>
+            Utility routine used to flag missing code to implement missing test for
+            functionality not yet implemented.
+            </summary>
+            <param name="description">Description of the missing test.</param>
+            <param name="result">The result value to be returned.</param>
+            <returns>The value <paramref name="result"/>.</returns>
+        </member>
+        <member name="T:Goedel.Utilities.Disposable">
+            <summary>
+            Base class for an object that implements the standard IDisposable pattern.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Disposable.Dispose">
+            <summary>
+            Dispose method, frees all resources.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Disposable.Dispose(System.Boolean)">
+            <summary>
+            Dispose method, frees resources when disposing, 
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Goedel.Utilities.Disposable.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Disposable.Disposing">
+            <summary>
+            The class specific disposal routine.
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.ConversionFormat">
+            <summary>Specify formatting options fdor conversion</summary>
+        </member>
+        <member name="F:Goedel.Utilities.ConversionFormat.None">
+            <summary>Apply no additional formatting</summary>
+        </member>
+        <member name="F:Goedel.Utilities.ConversionFormat.Draft">
+            <summary>Perform linewrapping at 72 charcters and insert 
+            leading spaces as per an Internet Draft.</summary>
+        </member>
+        <member name="F:Goedel.Utilities.ConversionFormat.Hex">
+            <summary>Perform hexadecimal spacing</summary>
+        </member>
+        <member name="F:Goedel.Utilities.ConversionFormat.Dash4">
+            <summary>Insert a dash every 4 output characters</summary>
+        </member>
+        <member name="F:Goedel.Utilities.ConversionFormat.Dash5">
+            <summary>Insert a dash every 5 output characters</summary>
+        </member>
+        <member name="F:Goedel.Utilities.ConversionFormat.Terminal">
+            <summary>Add trailing base64 equals characters if required.</summary>
+        </member>
+        <member name="T:Goedel.Utilities.BaseConvert">
+            <summary>
+            Routines to convert binary data to various character representations.
+            Supported representations include Base16, Base32 and Base64 and common
+            variations thereof.
+            </summary>
+            <summary>
+            Routines to convert binary data to various character representations.
+            Supported representations include Base16, Base32 and Base64 and common
+            variations thereof.
+            </summary>
+        </member>
+        <member name="F:Goedel.Utilities.BaseConvert.BASE16">
+            <summary>Base16 conversion table</summary>
+        </member>
+        <member name="F:Goedel.Utilities.BaseConvert.BASE32">
+            <summary>Base32 conversion table</summary>
+        </member>
+        <member name="F:Goedel.Utilities.BaseConvert.BASE32HEX">
+            <summary>Base32Hex conversion table</summary>
+        </member>
+        <member name="F:Goedel.Utilities.BaseConvert.BASE64URL">
+            <summary>Base64URL conversion table</summary>
+        </member>
+        <member name="F:Goedel.Utilities.BaseConvert.BASE64">
+            <summary>Base64 conversion table</summary>
+        </member>
+        <member name="F:Goedel.Utilities.BaseConvert.BASE16Value">
+            <summary>Base 16 conversion table</summary>
+        </member>
+        <member name="F:Goedel.Utilities.BaseConvert.BASE32Value">
+            <summary>Base 32 conversion table</summary>
+        </member>
+        <member name="F:Goedel.Utilities.BaseConvert.BASE64Value">
+            <summary>Base 64 conversion table</summary>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.OutputLength32(System.Int32)">
+            <summary>
+            Convenience function returning the number of characters that will be returned by converting
+            a string of <paramref name="precision"/> bits to Base32 encoding.
+            </summary>
+            <param name="precision">Output precision</param>
+            <returns>The output length</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase16(System.IO.Stream,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Return reusable stream converter to convert data input to 
+            base 16 (hexadecimal) with uppercase characters 
+            and write characters to specified stream in ASCII/UTF8.
+            </summary>
+            <param name="output">The stream to write the output to.</param>
+            <param name="format">Specifies the output format</param>
+            <returns>The stream converter</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase16(System.Text.StringBuilder,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Return reusable stream converter to convert data input to 
+            base 16 (hexadecimal) with uppercase characters 
+            and write characters to specified stream in ASCII/UTF8.
+            </summary>
+            <param name="output">The stream to write the output to.</param>
+            <param name="format">Specifies the output format</param>
+            <returns>The stream converter</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase16(System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Convert data to base32 encoded string
+            </summary>
+            <param name="data">The data to convert</param>
+            <param name="First">The index position of the first byte to convert.</param>
+            <param name="Length">The number of bytes to convert</param>
+            <param name="Format">Specifies the output format</param>
+            <returns>The encoded data</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase16FormatHex(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Convert data to base32 encoded string
+            </summary>
+            <param name="data">The data to convert</param>
+            <param name="first">The index position of the first byte to convert.</param>
+            <param name="length">The number of bytes to convert</param>
+            <returns>The encoded data</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase16(System.Text.StringBuilder,System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Convert data to Base16 (hexadecimal) and append to the specified stringbuilder.
+            </summary>
+            <param name="stringBuilder">String builder to append data to</param>
+            <param name="first">Position of first byte to send.</param>
+            <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+            <param name="data">The data to be encoded.</param>
+            <param name="Format">Specifies the output format</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase32(System.IO.Stream,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Return reusable stream converter to convert data input to 
+            base 32 with prefered (disambiguated) characters 
+            and write characters to specified stream in ASCII/UTF8.
+            </summary>
+            <param name="output">The stream to write the output to.</param>
+            <param name="format">Specifies the output format</param>
+            <returns>The stream converter</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase32(System.Text.StringBuilder,Goedel.Utilities.ConversionFormat,System.Int32)">
+            <summary>
+            Return reusable stream converter to convert data input to 
+            base 32 with prefered (disambiguated) characters 
+            and write characters to specified stream in ASCII/UTF8.
+            </summary>
+            <param name="output">The stream to write the output to.</param>
+            <param name="format">Specifies the output format</param>
+            <param name="outputMax">The maximum number of significant bits in the output.</param>
+            <returns>The stream converter</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase32(System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat,System.Int32)">
+            <summary>
+            Convert data to base32 encoded string
+            </summary>
+            <param name="data">The data to convert</param>
+            <param name="first">The index position of the first byte to convert.</param>
+            <param name="length">The number of bytes to convert</param>
+            <param name="format">Specifies the output format</param>
+            <param name="outputMax">The maximum number of significant bits in the output.</param>
+            <returns>The encoded data</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase32(System.Text.StringBuilder,System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat,System.Int32)">
+            <summary>
+            Convert data to Base32 and append to the specified stringbuilder.
+            </summary>
+            <param name="stringBuilder">String builder to append data to</param>
+            <param name="first">Position of first byte to send.</param>
+            <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+            <param name="data">The data to be encoded.</param>
+            <param name="format">Specifies the output format</param>
+            <param name="outputMax">The maximum number of significant bits in the output.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase32Hex(System.IO.Stream,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Return reusable stream converter to convert data input to 
+            base 32 using the extended hexadecimal encoding
+            and write characters to specified stream in ASCII/UTF8.
+            </summary>
+            <param name="output">The stream to write the output to.</param>
+            <param name="format">Specifies the output format</param>
+            <returns>The stream converter</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase32Hex(System.Text.StringBuilder,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Return reusable stream converter to convert data input to 
+            base 32 using the extended hexadecimal encoding
+            and write characters to specified stream in ASCII/UTF8.
+            </summary>
+            <param name="output">The stream to write the output to.</param>
+            <param name="format">Specifies the output format</param>
+            <returns>The stream converter</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase32Hex(System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Convert data to base32Hex encoded string
+            </summary>
+            <param name="data">The data to convert</param>
+            <param name="first">The index position of the first byte to convert.</param>
+            <param name="length">The number of bytes to convert</param>
+            <param name="Format">Specifies the output format</param>
+            <returns>The encoded data</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase32Hex(System.Text.StringBuilder,System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Convert data to Base32 (with hexadecimal characters) and append to the specified stringbuilder.
+            </summary>
+            <param name="stringBuilder">String builder to append data to</param>
+            <param name="first">Position of first byte to send.</param>
+            <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+            <param name="data">The data to be encoded.</param>
+            <param name="format">Specifies the output format</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase64(System.IO.Stream,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Return reusable stream converter to convert data input to 
+            base 64 (original) characters
+            and write characters to specified stream in ASCII/UTF8.
+            </summary>
+            <param name="output">The stream to write the output to.</param>
+            <param name="format">Specifies the output format</param>
+            <returns>The stream converter</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase64(System.Text.StringBuilder,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Return reusable stream converter to convert data input to 
+            base 64 (original) characters
+            and write characters to specified stream in ASCII/UTF8.
+            </summary>
+            <param name="output">The stream to write the output to.</param>
+            <param name="format">Specifies the output format</param>
+            <returns>The stream converter</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase64(System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Convert data to base64 encoded string
+            </summary>
+            <param name="data">The data to convert</param>
+            <param name="first">The index position of the first byte to convert.</param>
+            <param name="length">The number of bytes to convert</param>
+            <param name="format">Specifies the output format</param>
+            <returns>The encoded data</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase64(System.Text.StringBuilder,System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Convert data to Base64 and append to the specified stringbuilder.
+            </summary>
+            <param name="stringBuilder">String builder to append data to</param>
+            <param name="first">Position of first byte to send.</param>
+            <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+            <param name="data">The data to be encoded.</param>
+            <param name="format">Specifies the output format</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase64Url(System.IO.Stream,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Return reusable stream converter to convert data input to 
+            base 64 URL-safe characters 
+            and write characters to specified stream in ASCII/UTF8.
+            </summary>
+            <param name="output">The stream to write the output to.</param>
+            <param name="format">Specifies the output format</param>
+            <returns>The stream converter</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase64Url(System.Text.StringBuilder,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Return reusable stream converter to convert data input to 
+            base 64 URL-safe characters 
+            and write characters to specified stream in ASCII/UTF8.
+            </summary>
+            <param name="output">The stream to write the output to.</param>
+            <param name="format">Specifies the output format</param>
+            <returns>The stream converter</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase64url(System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat,System.Int32,System.Int32)">
+            <summary>
+            Convert data to base64URL encoded string
+            </summary>
+            <param name="data">The data to convert</param>
+            <param name="first">The index position of the first byte to convert.</param>
+            <param name="length">The number of bytes to convert</param>
+            <param name="format">Specifies the output format</param>
+            <param name="outputCol">The initial ouput column</param>
+            <param name="outputMax">The maximum output width.</param>
+            <returns>The encoded data</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase64URL(System.Text.StringBuilder,System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat)">
+            <summary>
+            Convert data to Base64URL and append to the specified stringbuilder.
+            </summary>
+            <param name="stringBuilder">String builder to append data to</param>
+            <param name="first">Position of first byte to send.</param>
+            <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+            <param name="data">The data to be encoded.</param>
+            <param name="Format">Specifies the output format</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ToStringBase32hs(System.Byte[],System.Int32)">
+            <summary>
+            Convert data to Base32HS string. This is probably not necessary as 
+            the ticket mechanism needs to be overhauled anyway.
+            </summary>
+            <param name="data">The data to convert</param>
+            <param name="Length">The maximum number of characters in the output string</param>
+            <returns>The resulting string.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.FromBase64(System.String)">
+            <summary>
+            Convert Base64/Base64URL character string data to binary data. Note
+            that because the two character sets are unambiguous, a single conversion
+            function converts both types of data.
+            </summary>
+            <param name="Data">The string to convert</param>
+            <returns>The resulting binary data.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.FromBase32">
+            <summary>
+            Return a streaming converter to 
+            convert Base32 character string data to binary data.
+            </summary>
+            <returns>The resulting binary data.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.FromBase32(System.String)">
+            <summary>
+            Convert Base32 character string data to binary data.
+            </summary>
+            <param name="Data">The string to convert</param>
+            <returns>The resulting binary data.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.FromBase16">
+            <summary>
+            Return a streaming converter to 
+            convert Base32 character string data to binary data.
+            </summary>
+            <returns>The resulting binary data.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.FromBase16(System.String)">
+            <summary>
+            Convert Base16 character string data to binary data.
+            </summary>
+            <param name="Data">The string to convert</param>
+            <returns>The resulting binary data.</returns>
+        </member>
+        <member name="T:Goedel.Utilities.BaseConvert.StreamConvertString">
+            <summary>
+            Conversion from character streams to bytes is straighforward since there
+            is no formatting required of the target.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.StreamConvertString.#ctor(System.Byte[],System.Int32)">
+            <summary>
+            Constructore using conversion table <paramref name="table"/> with taking 
+            <paramref name="stride"/> bits per character.
+            </summary>
+            <param name="table">The conversion table.</param>
+            <param name="stride">The number of bits corresponding to each output character.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.StreamConvertString.Write(System.String)">
+            <summary>
+            Transform the string <paramref name="data"/>.
+            </summary>
+            <param name="data">String to be transformed.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.StreamConvertString.Write(System.Char)">
+            <summary>
+            Transform the character <paramref name="c"/>.
+            </summary>
+            <param name="c">String to be transformed.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.StreamConvertString.Final">
+            <summary>
+            Complete the transformation.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.StreamConvertString.Convert(System.Byte[],System.Int32,System.String)">
+            <summary>
+            Create a StreamConvertString instance using conversion table <paramref name="table"/> in 
+            which each character represents <paramref name="stride"/> bits and return the result
+            of applying it to <paramref name="data"/>.
+            </summary>
+            <param name="table">The conversion table.</param>
+            <param name="stride">The number of bits corresponding to each output character.</param>
+            <param name="data">String to be transformed.</param>
+            <returns>The result of the transformation</returns>
+        </member>
+        <member name="T:Goedel.Utilities.BaseConvert.ByteStreamFormatter">
+            <summary>
+            Base class for byte streamed formatter
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ByteStreamFormatter.#ctor(System.Char[],System.Int32,Goedel.Utilities.ConversionFormat,System.Int32,System.Int32)">
+            <summary>
+            Converter from binary to text form.
+            </summary>
+            <param name="table">The conversion table.</param>
+            <param name="bits">The number of bits per character.</param>
+            <param name="format">The output conversion format to use.</param>
+            <param name="outputCol">The initial output column</param>
+            <param name="outputMax">If positive, wrap the output at the column value specified.
+            Otherwise, do not wrap.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ByteStreamFormatter.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Write the specified data to the converter instance.
+            </summary>
+            <param name="data">The data buffer to write.</param>
+            <param name="first">The first byte to write from in the buffer.</param>
+            <param name="length">The number of bytes to write from the buffer.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ByteStreamFormatter.Final">
+            <summary>
+            Complete writing from the buffer.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ByteStreamFormatter.FormatCharDirect(System.Char)">
+            <summary>
+            Format output character without format considerations.
+            </summary>
+            <param name="c">The character to format.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ByteStreamFormatter.FormatCharDash(System.Char)">
+            <summary>
+            Format output character with dash format.
+            </summary>
+            <param name="c">The character to format.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ByteStreamFormatter.FormatCharDraft(System.Char)">
+            <summary>
+            Format output character with IETF plaintext draft format.
+            </summary>
+            <param name="c">The character to format.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ByteStreamFormatter.FormatCharHex(System.Char)">
+            <summary>
+            Format hexadecimal character..
+            </summary>
+            <param name="c">The character to format.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ByteStreamFormatter.WriteChar(System.Char)">
+            <summary>
+            Write the character to the output stream.
+            </summary>
+            <param name="c">The character to write.</param>
+        </member>
+        <member name="T:Goedel.Utilities.BaseConvert.StreamConvertBits">
+            <summary>
+            General purpose converter used for every conversion to a stream except for Base32UDF.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.StreamConvertBits.#ctor(System.IO.Stream,System.Char[],System.Int32,Goedel.Utilities.ConversionFormat,System.Int32,System.Int32)">
+            <summary>
+            Constructor for stream converter.
+            </summary>
+            <param name="output">The output stream.</param>
+            <param name="table">The conversion table.</param>
+            <param name="bits">The number of bits per character.</param>
+            <param name="format">The output conversion format to use.</param>
+            <param name="outputCol">The initial output column</param>
+            <param name="outputMax">If positive, wrap the output at the column value specified.
+            Otherwise, do not wrap.</param>
+        </member>
+        <member name="T:Goedel.Utilities.BaseConvert.StringBuilderConvertBits">
+            <summary>
+            General purpose converter used for every conversion to a string except for Base32UDF.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.StringBuilderConvertBits.#ctor(System.Text.StringBuilder,System.Char[],System.Int32,Goedel.Utilities.ConversionFormat,System.Int32,System.Int32)">
+            <summary>
+            Constructor for converter from binary to string form.
+            </summary>
+            <param name="output">The output string builder</param>
+            <param name="table">The conversion table.</param>
+            <param name="bits">The number of bits per character.</param>
+            <param name="format">The output conversion format to use.</param>
+            <param name="outputCol">The initial output column</param>
+            <param name="outputMax">If positive, wrap the output at the column value specified.
+            Otherwise, do not wrap.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.StringBuilderConvertBits.Convert(System.Byte[],System.Char[],System.Int32,Goedel.Utilities.ConversionFormat,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            One shot convenience wrapper, creates a converter, uses it to convert <paramref name="data"/>
+            according to the parameters specified and returns the output. Is almost invariably called
+            from another wrapper specifying <paramref name="table"/>, <paramref name="bits"/>, etc.
+            </summary>
+            <param name="data">The data to convert.</param>
+            <param name="table">The conversion table.</param>
+            <param name="bits">The number of bits per character.</param>
+            <param name="format">The output conversion format to use.</param>
+            <param name="first">Position of first byte to send.</param>
+            <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+            <param name="outputCol">The initial output column</param>
+            <param name="outputMax">If positive, wrap the output at the column value specified.
+            Otherwise, do not wrap.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.StringBuilderConvertBits.Append(System.Byte[],System.Char[],System.Int32,Goedel.Utilities.ConversionFormat,System.Text.StringBuilder,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            One shot convenience wrapper, creates a converter, uses it to convert <paramref name="data"/>
+            according to the parameters specified appending the result to <paramref name="output"/>. 
+            Is almost invariably called from another wrapper specifying <paramref name="table"/>, 
+            <paramref name="bits"/>, etc.
+            </summary>
+            <param name="data">The data to convert.</param>
+            <param name="table">The conversion table.</param>
+            <param name="bits">The number of bits per character.</param>
+            <param name="format">The output conversion format to use.</param>
+            <param name="output"></param>
+            <param name="first">Position of first byte to send.</param>
+            <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+            <param name="outputCol">The initial output column</param>
+            <param name="outputMax">If positive, wrap the output at the column value specified.
+            Otherwise, do not wrap.</param>
+        </member>
+        <member name="T:Goedel.Utilities.IBytesToStream">
+            <summary>
+            Interface to binary stream converter.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.IBytesToStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Write a sequence of bytes to the stream
+            </summary>
+            <param name="data">The data to send</param>
+            <param name="first">Position of first byte to send.</param>
+            <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+        </member>
+        <member name="M:Goedel.Utilities.IBytesToStream.Final">
+            <summary>
+            Complete sending bytes and reset converter to send more bytes.
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.IStringToStream">
+            <summary>
+            Interface to binary stream converter.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.IStringToStream.Write(System.String)">
+            <summary>
+            Write string to the stream
+            </summary>
+            <param name="data">The data to send</param>
+        </member>
+        <member name="M:Goedel.Utilities.IStringToStream.Write(System.Char)">
+            <summary>
+            Write character to the stream
+            </summary>
+            <param name="data">The data to send</param>
+        </member>
+        <member name="M:Goedel.Utilities.IStringToStream.Final">
+            <summary>
+            Complete input and reset converter for next session.
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.Screen">
+            <summary>
+            Debug trace class
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Screen.WriteLine(System.String,System.Object[])">
+            <summary>
+            Write debug output to current trace listener.
+            </summary>
+            <param name="format">The format string</param>
+            <param name="arg">Arguments to apply to the format string.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Screen.WriteInfo(System.String,System.Object[])">
+            <summary>
+            Write debug output to current trace listener.
+            </summary>
+            <param name="format">The format string</param>
+            <param name="arg">Arguments to apply to the format string.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Screen.WriteLine">
+            <summary>
+            Write a blank line to the output
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Screen.Write(System.String)">
+            <summary>
+            Write text to the console;
+            </summary>
+            <param name="text">The text to write.</param>
+        </member>
+        <member name="T:Goedel.Utilities.NYI">
+            <summary>
+            This feature has not been implemented
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.NYI.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.NYI.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Utilities.NYI.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Utilities.NYI._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Utilities.NYI.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.AssertionFail">
+            <summary>
+            An internal assertion check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.AssertionFail.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.AssertionFail.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Utilities.AssertionFail.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Utilities.AssertionFail._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Utilities.AssertionFail.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.Internal">
+            <summary>
+            An internal assertion check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.Internal.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.Internal.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Utilities.Internal.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Internal._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Utilities.Internal.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.FileReadError">
+            <summary>
+            The file could not be read.
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.FileReadError.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.FileReadError.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Utilities.FileReadError.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Utilities.FileReadError._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Utilities.FileReadError.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.Not64Bit">
+            <summary>
+            A call was made to a routine that has not yet been made
+            64 bit clean with a value that exceeds the Int32 limits.
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.Not64Bit.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.Not64Bit.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Utilities.Not64Bit.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Not64Bit._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Utilities.Not64Bit.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.EnvironmentVariableRequired">
+            <summary>
+            The environment variable must be defined.
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.EnvironmentVariableRequired.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.EnvironmentVariableRequired.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Utilities.EnvironmentVariableRequired.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Utilities.EnvironmentVariableRequired._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Utilities.EnvironmentVariableRequired.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.ExpectedSuccess">
+            <summary>
+            Service request failed when it should have succeded
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.ExpectedSuccess.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.ExpectedSuccess.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Utilities.ExpectedSuccess.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Utilities.ExpectedSuccess._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Utilities.ExpectedSuccess.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.ExpectedError">
+            <summary>
+            Service request succeeded when it should have returned an error
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.ExpectedError.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.ExpectedError.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Utilities.ExpectedError.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Utilities.ExpectedError._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Utilities.ExpectedError.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.Linewrap">
+            <summary>
+            Wrap xml output to fit within a line.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Linewrap.AppendIndent(System.Text.StringBuilder,System.Int32,System.String)">
+            <summary>
+            Append <paramref name="text"/> to the string builder <paramref name="builder"/> prefixed
+            by <paramref name="indent"/> indents of two spaces each.
+            </summary>
+            <param name="builder">The string builder to append to.</param>
+            <param name="text">The text to write.</param>
+            <param name="indent">The number of two space indents to prepend.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Linewrap.Wrap(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Wrap text to fit a line without breaking words.
+            </summary>
+            <param name="input">The input string.</param>
+            <param name="input2">Additional input</param>
+            <param name="length">Maximum line length</param>
+            <param name="indent">Number of spaces to indent wrapped lines.</param>
+            <returns>The wrapped string.</returns>
+        </member>
+        <member name="T:Goedel.Utilities.LockGlobal">
+            <summary>
+            Wrapper for system wide lock with convenience accessors.
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.LockGlobal.MaxRead">
+            <summary>Maximum number of readers</summary>
+        </member>
+        <member name="M:Goedel.Utilities.LockGlobal.Disposing">
+            <summary>
+            Dispose the lock releasing all mutexes and disposing the resources correctly.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.LockGlobal.#ctor(System.String,System.Int32)">
+            <summary>
+            Constructor returning a lock on the resource <paramref name="resource"/> with a
+            timeout value of <paramref name="millisecondsTimeout"/>
+            </summary>
+            <param name="resource">The resource to lock.</param>
+            <param name="millisecondsTimeout">The timeout value (it less than zero wait forever).</param>
+        </member>
+        <member name="M:Goedel.Utilities.LockGlobal.Enter">
+            <summary>
+            Enter the lock.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.LockGlobal.Exit">
+            <summary>
+            Exit the lock.
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.NamespaceDoc">
+            <summary>
+            The Goedel.Utilities namespace contains various utilities classes. These include
+            <list type="bullet">
+            <item>Methods of converting binary data to/from character strings using
+            standard encodings.</item>
+            <item>Testing if a character is of a particular type.</item>
+            <item>Convenience routines to test various types of assertion and throw
+            an exception using an exception factory method such as the ones
+            created by Exceptional.</item>
+            </list>
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.NumberSplit">
+            <summary>
+            Utilities to split an integer value to byte chunks
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Maximum(System.Int32,System.Int32)">
+            <summary>
+            Returns the lesser of <paramref name="value"/> and <paramref name="maximum"/>,
+            thus ensuring that the returned value is equal to or smaller than the specified
+            maximum.
+            </summary>
+            <param name="value">The test value.</param>
+            <param name="maximum">The maximum value to return.</param>
+            <returns>The greater of <paramref name="value"/> and <paramref name="maximum"/></returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Minimum(System.Int32,System.Int32)">
+            <summary>
+            Returns the greater of <paramref name="value"/> and <paramref name="minimum"/>,
+            thus ensuring that the returned value is equal to or greater than the specified
+            minimum.
+            </summary>
+            <param name="value">The test value.</param>
+            <param name="minimum">The minimum value to return.</param>
+            <returns>The greater of <paramref name="value"/> and <paramref name="minimum"/></returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.GetLast(System.Array,System.Int32,System.Int32)">
+            <summary>
+            Calculate the upper bound for an array index given a specified first position and
+            length.
+            </summary>
+            <param name="Array">The array for which the index value will be calculated.</param>
+            <param name="First">The first element to be read.</param>
+            <param name="Length">The maximum number of elements to be read. If less 
+            than zero, defaults to the size of the array.</param>
+            <returns>The upper bound, that is one higher than the last element to
+            be read.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte0(System.Int32)">
+            <summary>
+            Extract bits 0-7 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 0-7</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte1(System.Int32)">
+            <summary>
+            Extract bits 8-15 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 8-15</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte2(System.Int32)">
+            <summary>
+            Extract bits 16-23 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 16-23</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte3(System.Int32)">
+            <summary>
+            Extract bits 24-31 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 24-31</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte0(System.UInt32)">
+            <summary>
+            Extract bits 0-7 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 0-7</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte1(System.UInt32)">
+            <summary>
+            Extract bits 8-15 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 8-15</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte2(System.UInt32)">
+            <summary>
+            Extract bits 16-23 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 16-23</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte3(System.UInt32)">
+            <summary>
+            Extract bits 24-31 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 24-31</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.BigEndianInt(System.Byte[],System.Int32)">
+            <summary>
+            Convert an array of bytes in bigendian format to an unsigned integer value.
+            </summary>
+            <param name="Data">The data to convert</param>
+            <param name="Count">The number of bytes to convert.</param>
+            <returns>The integer value.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.BigEndian(System.Int32)">
+            <summary>
+            Convert integer to bigendian array. That is with the most significant byte first.
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Output array</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.NetworkByte(System.Int32)">
+            <summary>
+            Convert integer to bigendian array. That is with the most significant byte first.
+            This is a convenience alias for Bigendian.
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Output array</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.LittleEndian(System.Int32)">
+            <summary>
+            Convert integer to little endian array. That is with the most significant byte first.
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Output array</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.SetBigEndian(System.Byte[],System.Int32)">
+            <summary>
+            Set the values of a byte array from 32 bit integer in big endian order
+            </summary>
+            <param name="Array">Byte array to set, MUST be sufficiently large for input</param>
+            <param name="Data">Data value to set</param>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.SetBigEndian(System.Byte[],System.UInt32)">
+            <summary>
+            Set the values of a byte array from 32 bit integer in big endian order
+            </summary>
+            <param name="Array">Byte array to set, MUST be sufficiently large for input</param>
+            <param name="Data">Data value to set</param>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.SetBigEndian(System.Byte[],System.UInt64)">
+            <summary>
+            Set the values of a byte array from 64 bit integer in big endian order
+            </summary>
+            <param name="Array">Byte array to set, MUST be sufficiently large for input</param>
+            <param name="Data">Data value to set</param>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.SetNetworkByte(System.Byte[],System.Int32)">
+            <summary>
+            Set the values of a byte array from 32 bit integer in big endian order
+            </summary>
+            <param name="Array">Byte array to set, MUST be sufficiently large for input</param>
+            <param name="Data">Data value to set</param>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.SetLittleEndian(System.Byte[],System.Int32)">
+            <summary>
+            Set the values of a byte array from 32 bit integer in little endian order
+            </summary>
+            <param name="Array">Byte array to set, MUST be sufficiently large for input</param>
+            <param name="Data">Data value to set</param>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte0(System.Int64)">
+            <summary>
+            Extract bits 0-7 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 0-7</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte1(System.Int64)">
+            <summary>
+            Extract bits 8-15 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 8-15</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte2(System.Int64)">
+            <summary>
+            Extract bits 16-23 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 16-23</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte3(System.Int64)">
+            <summary>
+            Extract bits 24-31 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 24-31</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte4(System.Int64)">
+            <summary>
+            Extract bits 32-39 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 32-39</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte5(System.Int64)">
+            <summary>
+            Extract bits 40-47 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 40-47</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte6(System.Int64)">
+            <summary>
+            Extract bits 48-55 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 48-55</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte7(System.Int64)">
+            <summary>
+            Extract bits 55-64 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 55-64</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte0(System.UInt64)">
+            <summary>
+            Extract bits 0-7 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 0-7</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte1(System.UInt64)">
+            <summary>
+            Extract bits 8-15 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 8-15</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte2(System.UInt64)">
+            <summary>
+            Extract bits 16-23 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 16-23</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte3(System.UInt64)">
+            <summary>
+            Extract bits 24-31 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 24-31</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte4(System.UInt64)">
+            <summary>
+            Extract bits 24-31 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 24-31</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte5(System.UInt64)">
+            <summary>
+            Extract bits 24-31 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 24-31</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte6(System.UInt64)">
+            <summary>
+            Extract bits 24-31 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 24-31</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.Byte7(System.UInt64)">
+            <summary>
+            Extract bits 24-31 from an integer value
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Bits 24-31</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.BigEndian(System.UInt64)">
+            <summary>
+            Convert integer to bigendian array. That is with the most significant byte first.
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Output array</returns>
+        </member>
+        <member name="T:Goedel.Utilities.RFC3339">
+            <summary>
+            Conversion class to and from RFC3339 DateTime representation.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.RFC3339.Digit(System.Char)">
+            <summary>
+            If C is a digit (0-9), return the numeric value. Otherwise return -1
+            </summary>
+            <param name="C">Character to convert</param>
+            <returns>Integer value of character</returns>
+        </member>
+        <member name="M:Goedel.Utilities.RFC3339.ToRFC3339(System.DateTime)">
+            <summary>
+            Format a DateTime value in RFC3339 format.
+            </summary>
+            <param name="DateTime">The time to convert.</param>
+            <returns>The converted date time</returns>
+        </member>
+        <member name="M:Goedel.Utilities.RFC3339.ToRFC3339(System.Nullable{System.DateTime})">
+            <summary>
+            Format a DateTime value in RFC3339 format.
+            </summary>
+            <param name="DateTime">The time to convert.</param>
+            <returns>The converted date time</returns>
+        </member>
+        <member name="M:Goedel.Utilities.RFC3339.FromRFC3339(System.String)">
+            <summary>
+            Parse an RFC3339 format date time value.
+            </summary>
+            <param name="Text">The date to parse</param>
+            <returns>The date value</returns>
+        </member>
+        <member name="T:Goedel.Utilities.Unique">
+            <summary>
+            Class that provides a number guaranteed to be unique for a particular run.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Unique.Next">
+            <summary>
+            Create a filename that is guaranteed to be unique for this particular run.
+            </summary>
+            <returns>A string containing successive integers 1, 2, 3,...</returns>
+        </member>
+    </members>
+</doc>

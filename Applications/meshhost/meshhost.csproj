@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
+  <PropertyGroup>
+    <Product>Meshhost</Product>
+    <Description>Mesh service host.</Description>
+    <Copyright>© 2021</Copyright>
+    <Title>Meshhost</Title>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell.Host\Goedel.Mesh.Shell.Host.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -295,7 +295,14 @@
             <param name="service">The portal address.</param>
             <param name="account">The account name.</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Utilities.Extension.GetService(System.String)" -->
+        <member name="M:Goedel.Utilities.Extension.GetService(System.String)">
+            <summary>
+            Parse a string that may contain an account identifier to extract the service and 
+            account components.
+            </summary>
+            <param name="identifier">The AccountID to split.</param>
+            <returns>The service component.</returns>
+        </member>
         <member name="M:Goedel.Utilities.Extension.GetServiceRaw(System.String)">
             <summary>
             Parse a string that may contain an account identifier to extract the service and 

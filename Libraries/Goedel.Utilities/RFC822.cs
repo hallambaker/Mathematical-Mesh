@@ -121,6 +121,7 @@ namespace Goedel.Utilities {
             service = identifier.Substring(at + 1);
             }
 
+        /// <summary>
         /// Parse a string that may contain an account identifier to extract the service and 
         /// account components.
         /// </summary>

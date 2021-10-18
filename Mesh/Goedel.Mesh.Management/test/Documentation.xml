@@ -1,0 +1,590 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Mesh.Management</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Mesh.Management.ServiceManagementServiceProvider">
+            <summary>
+            Management service provider.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceProvider.Monitor">
+            <summary>The monitor being reported.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.Management.NamespaceDoc">
+            <summary>
+            Service management interface provides host and service telemetry.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Management.ServiceManagementProvider">
+            <summary>
+            The Service Management Provider.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.Factory(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
+            <inheritdoc cref="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate"/>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementProvider.ServiceDescriptionHost">
+            <summary>The service description for a service reporting a single host.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementProvider.ServiceDescriptionMeta">
+            <summary>The service description for a service reporting a set of hosts.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.#ctor(Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
+            <summary>
+            Return a new <see cref="T:Goedel.Mesh.Management.ServiceManagementProvider"/> instance.
+            </summary>
+            <param name="serviceConfiguration"></param>
+            <param name="hostConfiguration"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.ServiceStatus(Goedel.Mesh.Management.ServiceStatusRequest,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.ServiceConfig(Goedel.Mesh.Management.ServiceConfigRequest,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.Management.ServiceManagement">
+             <summary>
+            
+             Web service providing server management interface.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagement._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceManagement.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagement._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagement.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="T:Goedel.Mesh.Management.ServiceManagementService">
+            <summary>
+            The new base class for the client and service side APIs.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceManagementService.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementService.GetWellKnown">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceManagementService.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementService.GetDiscovery">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementService.GetTagDictionary">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementService.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="session">The client context.</param>
+            <param name="jsonReader">Reader for data object.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementService.GetDirect(Goedel.Protocol.IJpcSession)">
+            <summary>
+            Return a client tapping the service API directly without serialization bound to
+            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+            </summary>
+            <param name="jpcSession">Session to which requests are to be bound.</param>
+            <returns>The direct client instance.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementService.ServiceConfig(Goedel.Mesh.Management.ServiceConfigRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction  ServiceConfig.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementService.ServiceStatus(Goedel.Mesh.Management.ServiceStatusRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction  ServiceStatus.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Management.ServiceManagementServiceClient">
+            <summary>
+            Client class for ServiceManagementService.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceManagementServiceClient.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceClient.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceManagementServiceClient.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceClient.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementServiceClient.ServiceConfig(Goedel.Mesh.Management.ServiceConfigRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementServiceClient.ServiceStatus(Goedel.Mesh.Management.ServiceStatusRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Management.ServiceManagementServiceDirect">
+            <summary>
+            Direct API class for ServiceManagementService.
+            </summary>		
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceManagementServiceDirect.Service">
+            <summary>
+            Interface object to dispatch requests to.
+            </summary>	
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementServiceDirect.ServiceConfig(Goedel.Mesh.Management.ServiceConfigRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementServiceDirect.ServiceStatus(Goedel.Mesh.Management.ServiceStatusRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Management.WsmpRequest">
+             <summary>
+            
+             Base class for all request messages.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.WsmpRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Management.WsmpRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Management.WsmpRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.WsmpRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.WsmpRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.WsmpRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Management.WsmpRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Management.WsmpResponse">
+             <summary>
+            
+             Base class for all response messages. Contains only the
+             status code and status description fields.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.WsmpResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Management.WsmpResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Management.WsmpResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.WsmpResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.WsmpResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.WsmpResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Management.WsmpResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Management.ServiceConfigRequest">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceConfigRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceConfigRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceConfigRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceConfigRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceConfigRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceConfigRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Management.ServiceConfigResponse">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse.HostConfiguration">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse.ServiceConfiguration">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceConfigResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceConfigResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceConfigResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceConfigResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceConfigResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceConfigResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Management.ServiceStatusRequest">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceStatusRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceStatusRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceStatusRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceStatusRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceStatusRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceStatusRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Management.ServiceStatusResponse">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse.Start">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse.End">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse.Started">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse.Completed">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse.Pending">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceStatusResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceStatusResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceStatusResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceStatusResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceStatusResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Management.ServiceStatusResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Protocol.Management.ServerNotSupported">
+            <summary>
+            This platform does not support HTTP service
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Management.ServerNotSupported.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Management.ServerNotSupported.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Management.ServerNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Management.ServerNotSupported._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Protocol.Management.ServerNotSupported.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+    </members>
+</doc>
