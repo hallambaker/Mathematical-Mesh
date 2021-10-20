@@ -158,6 +158,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to register the private key to
         /// (the key is always generated as ephemeral.)</param>
         /// <param name="keySecurity">The key security model of the derrived key.</param>
+        /// <param name="info">Additional information to be passed to the KDF.</param>
         /// <returns>The derrived key.</returns>
         public static KeyPairAdvanced GenerateContributionKeyPair(
 

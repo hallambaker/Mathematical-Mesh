@@ -49,15 +49,17 @@ namespace Goedel.Mesh.Server {
         ///<summary>The directory in which all the account data is stored.</summary> 
         public string Directory => AccountEntry.Directory;
 
+        ///<summary>The access capability.</summary> 
         public AccessCapability AccessCapability => CatalogedAccess?.Capability as AccessCapability;
 
-
+        ///<summary>The access catalog entry.</summary> 
         public CatalogedAccess CatalogedAccess { get; set; }
 
 
         #endregion
         #region // Dispose
 
+        ///<inheritdoc/>
         protected override void Disposing() {
             if (catalogAccess != null) {
                 Screen.WriteLine($"Dispose {catalogAccess}");

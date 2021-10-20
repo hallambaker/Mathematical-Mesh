@@ -102,7 +102,8 @@ namespace Goedel.Cryptography.Dare {
 
         long frameCount;
 
-
+        ///<summary>A list of encryption keys to which additional recipient entries
+        ///are to be created.</summary> 
         public List<KeyPair> AdditionalRecipients { get; set; }
 
         ///<summary>The apex digest value of the container as written to the file.</summary>

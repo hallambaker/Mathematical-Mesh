@@ -113,6 +113,16 @@ namespace Goedel.Utilities {
             }
         }
 
+    public partial class NYI {
+        /// <summary>
+        /// Initialize an instance that creates a dependency on the object 
+        /// <paramref name="dependency"/> preventing spurious warnings about
+        /// static methods.
+        /// </summary>
+        /// <param name="dependency"></param>
+        public NYI(object dependency) => _ = dependency.Future();
+
+        }
 
     /// <summary>
     /// Delegate that will be thrown as an exception if a condition is met
@@ -379,6 +389,7 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="description">Description of the missing functionality.</param>
         /// <param name="exception">If true, throw an exception.</param>
+        /// <param name="suppress">If true, suppress this task report completely.</param>
         public static void TaskFunctionality(this string description, 
                 bool exception = false,
                 bool suppress = false) {

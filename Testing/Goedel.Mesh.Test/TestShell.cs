@@ -53,17 +53,16 @@ namespace Goedel.Mesh.Test {
         //MeshServiceClient meshClient;
 
 
-        bool Direct { get; }
+        //public bool Direct { get; }
 
         /// <summary>
         /// Create a new test shell
         /// </summary>
         /// <param name="meshPortalDirect"></param>
-        public TestShell(TestEnvironmentCommon testEnvironment, string machineName = null,
-                    bool direct = true) {
+        public TestShell(TestEnvironmentCommon testEnvironment, string machineName = null) {
             MachineName = machineName ?? MachineName;
             TestEnvironmentCommon = testEnvironment;
-            Direct = direct;
+            //Direct = direct;
             }
 
 

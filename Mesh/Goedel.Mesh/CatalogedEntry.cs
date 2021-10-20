@@ -92,6 +92,7 @@ namespace Goedel.Mesh {
 
     public partial class CatalogedEntry {
 
+        ///<summary>Additional encryption keys to which the encrypted catalog entry is to be written.</summary> 
         public List<KeyPair> AdditionalRecipients;
 
 

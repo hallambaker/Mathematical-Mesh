@@ -442,6 +442,9 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountHostAssignment">
             <summary>The host assignment binding.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.HostEncryptAccount">
+            <summary>The host encryption key.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
             <summary>The Account Address</summary>
         </member>
@@ -559,6 +562,8 @@
             Update the <paramref name="catalogedDevice"/> entry in the machine catalog.
             </summary>
             <param name="catalogedDevice">The entry to update.</param>
+            <param name="digestUDF">The UDF of the digest value of the cataloged devbice data.</param>
+            <param name="registerContext">If true associate register this context with the host.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.SyncProgressUpload(System.Int32)">
             <summary>
@@ -605,6 +610,7 @@
             Create a new instance bound to the specified core within this account context.
             </summary>
             <param name="name">The name of the store to bind.</param>
+            <param name="darePolicy">Policy to be applied to the store.</param>
             <returns>The store instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.LoadStores">
@@ -790,6 +796,9 @@
         <member name="M:Goedel.Mesh.Client.ContextGroup.GetKeyCredentialPrivate">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextGroup.MeshClient">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
         </member>
@@ -803,6 +812,7 @@
             <param name="contextAccount">The enclosing account context.</param>
             <param name="catalogedGroup">Description of the group to return the
             context for.</param>
+            <param name="activationAccount">The account activation.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.CreateGroup(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup,Goedel.Mesh.ActivationAccount,Goedel.Mesh.MeshServiceClient)">
             <summary>
@@ -810,6 +820,8 @@
             </summary>
             <param name="contextAccount">The enclosing account context.</param>
             <param name="catalogedGroup">Description of the group to create.</param>
+            <param name="activationAccount">The account activation.</param>
+            <param name="client">The client to connect to the service with.</param>
             <returns>The group context.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.Add(System.String,System.String)">
@@ -1133,8 +1145,18 @@
             personal mesh. This method does not support transfer of the Mesh Service.
             </summary>
             <param name="accountAddress">The account address</param>
-            <param name="transactUser">Transaction containing entries to be prepopulated
-            to the account stores.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.BindService(System.String)">
+            <summary>
+            Bind to a service under the account address <paramref name="accountAddress"/>.
+            </summary>
+            <param name="accountAddress">The account address to bind.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.MakeAdministrator(System.Collections.Generic.List{System.String})">
+            <summary>
+            Create an administrator device entry.
+            </summary>
+            <param name="rights">The rights to be granted to the administrator device.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetStoresDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser)">
             <summary>
@@ -1167,24 +1189,6 @@
             address entry for this mesh and mesh account. 
             </summary>
             <returns>The default contact.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetCapability(Goedel.Mesh.CatalogedApplication)">
-            <summary>
-            Return the first cryptographic capability granted to this particular device
-            for the application <paramref name="catalogedApplication"/>.
-            </summary>
-            <param name="catalogedApplication">The application to return the capability from.</param>
-            <returns>The first cryptographic capability this device has been granted if found,
-            otherwise null.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetCapability(Goedel.Cryptography.Dare.DareEnvelope)">
-            <summary>
-            Attempt to decrypt <paramref name="envelopedCapability"/>. If successful, the content 
-            data is decoded and the enclosed capability returned. Otherwise, null is returned.
-            </summary>
-            <param name="envelopedCapability">The envelope to attempt to decrypt.</param>
-            <returns>The first cryptographic capability this device has been granted if found,
-            otherwise null.</returns>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.DictionaryCatalogDelegates">
             <summary>Dictionarry used to create stores</summary>
@@ -1275,8 +1279,6 @@
             additional escrow policies. Keys might be escrowed under the account escrow
             and also escrow administrator keys to allow closer control.
             </summary>
-            <param name="catalogedApplication">The applications the escrowed
-            keys are to be added to.</param>
             <param name="keyDatas">The keys to be escrowed.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetContextGroup(System.String)">
@@ -1735,7 +1737,7 @@
         </member>
         <member name="M:Goedel.Mesh.Client.Transaction`1.CatalogUpdate(Goedel.Mesh.CatalogContact,Goedel.Mesh.Contact)">
             <summary>
-            Append a request to append <paramref name="catalogedEntry"/> to the catalog
+            Append a request to append <paramref name="contact"/> to the catalog
             <paramref name="catalog"/> to the transaction.
             </summary>
             <param name="catalog">The catalog to be updated</param>
@@ -2659,6 +2661,8 @@
              <param name="profileDevice">Specify the device profile. This allows use of a device 
              profile bound to the machine hardware.</param>
              <param name="rights">The rights to be granted to the initial connected device.</param>
+             <param name="create">If true, create a new mesh, otherwise attempt recovery from the
+             service.</param>
              <returns>Context for administering the Mesh</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.GetContextMesh(System.String,System.Boolean)">
@@ -2847,6 +2851,14 @@
             <param name="contextUser">The account context in which the update
             is to be applied.</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.TransactUser.CatalogUpdate(Goedel.Mesh.CatalogedDevice,Goedel.Cryptography.KeyPair)">
+            <summary>
+            Update the device catalog to add or update <paramref name="catalogedDevice"/>, creating
+            a recipient decryption entry for the device encryption key <paramref name="encryptionKey"/>.
+            </summary>
+            <param name="catalogedDevice">The device description.</param>
+            <param name="encryptionKey">Encryption key to encrypt a copy of the device description to.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.TransactUser.ApplicationCreate(Goedel.Mesh.CatalogedApplication)">
             <summary>
             Add the application described in <paramref name="catalogedApplication"/> to the
@@ -2859,12 +2871,6 @@
             Update the application
             </summary>
             <param name="catalogedApplication">The updated application entry</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactUser.ApplicationDelete(System.String)">
-            <summary>
-            Delete the application
-            </summary>
-            <param name="applicationId">The application to remove</param>
         </member>
     </members>
 </doc>

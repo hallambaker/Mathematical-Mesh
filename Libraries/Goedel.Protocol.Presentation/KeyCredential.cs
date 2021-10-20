@@ -83,8 +83,10 @@ namespace Goedel.Protocol.Presentation {
 
         string Tag { get; }
 
+        ///<summary>The packet extensions describing the private key.</summary> 
         public List<PacketExtension> Extensions { get; } = new();
 
+        ///<summary>The private key used to authenticate packets.</summary> 
         public KeyPairAdvanced AuthenticationPrivate { get; init;  }
         #endregion
 
@@ -97,6 +99,7 @@ namespace Goedel.Protocol.Presentation {
         /// Create a new instance with the private key <paramref name="authenticationPrivate"/>
         /// </summary>
         /// <param name="authenticationPrivate">The private key.</param>
+        /// <param name="account">The account claimed.</param>
         public KeyCredentialPrivate(KeyPairAdvanced authenticationPrivate,
                 string account) :
                     base(authenticationPrivate) {
@@ -128,8 +131,9 @@ namespace Goedel.Protocol.Presentation {
         #endregion
         #region // Implement Interface: ICredentialPrivate
 
+        ///<inheritdoc/>
         public KeyCredentialPublic GetKeyCredentialPublic() =>
-                    new KeyCredentialPublic(
+                    new(
                     AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced);
 
 

@@ -9,6 +9,23 @@
             Extensions class
             </summary>
         </member>
+        <member name="M:Goedel.Utilities.Extension.CannonicalAccountAddress(System.String)">
+            <summary>
+            Returns the canonicalized address form of <paramref name="address"/> as a
+            string.
+            </summary>
+            <param name="address">The input, an account address.</param>
+            <returns>The canonicalized form of <paramref name="address"/>.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.CannonicalAccountAddressUtf8(System.String)">
+            <summary>
+            Returns the canonicalized address form of <paramref name="address"/> as
+            a UTF8 encoded byte sequence.
+            </summary>
+            <param name="address">The input, an account address.</param>
+            <returns>The canonicalized form of <paramref name="address"/> as
+            a UTF8 encoded byte sequence.</returns>
+        </member>
         <member name="M:Goedel.Utilities.Extension.ToCommaSeparated(System.Collections.Generic.List{System.String})">
             <summary>
             Convert a list of strings to a comma separated string.
@@ -559,6 +576,46 @@
             <param name="args">Arguments to be used to construct the message.</param>
             <returns>The formatted message string</returns>
         </member>
+        <member name="T:Goedel.Utilities.NYI">
+            <summary>
+            This feature has not been implemented
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.NYI.#ctor(System.Object)">
+            <summary>
+            Initialize an instance that creates a dependency on the object 
+            <paramref name="dependency"/> preventing spurious warnings about
+            static methods.
+            </summary>
+            <param name="dependency"></param>
+        </member>
+        <member name="P:Goedel.Utilities.NYI.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.NYI.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Utilities.NYI.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Utilities.NYI._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Utilities.NYI.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Utilities.ThrowDelegate">
             <summary>
             Delegate that will be thrown as an exception if a condition is met
@@ -744,6 +801,7 @@
             </summary>
             <param name="description">Description of the missing functionality.</param>
             <param name="exception">If true, throw an exception.</param>
+            <param name="suppress">If true, suppress this task report completely.</param>
         </member>
         <member name="M:Goedel.Utilities.Assert.Task(System.String,System.String)">
             <summary>
@@ -1345,38 +1403,6 @@
             Write text to the console;
             </summary>
             <param name="text">The text to write.</param>
-        </member>
-        <member name="T:Goedel.Utilities.NYI">
-            <summary>
-            This feature has not been implemented
-            </summary>
-        </member>
-        <member name="P:Goedel.Utilities.NYI.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Utilities.NYI.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Utilities.NYI.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Utilities.NYI._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Utilities.NYI.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
         </member>
         <member name="T:Goedel.Utilities.AssertionFail">
             <summary>

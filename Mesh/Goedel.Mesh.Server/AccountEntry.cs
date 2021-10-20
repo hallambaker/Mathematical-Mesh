@@ -44,10 +44,6 @@ namespace Goedel.Mesh.Server {
         /// <returns>True if the account entry is properly formatted.</returns>
         public abstract void Verify(MeshVerifiedAccount meshVerifiedAccount);
 
-
-
-        public abstract void Verify(IJpcSession jpcSession);
-
         }
 
 
@@ -81,19 +77,11 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="request">The account creation request.</param>
         public AccountUser(BindRequest request) {
-
-
             AccountAddress = request.AccountAddress;
             EnvelopedProfileUser = request.EnvelopedProfileAccount;
             Directory = AccountAddress;
             }
 
-
-
-
-        public override void Verify(IJpcSession jpcSession) {
-
-            }
 
         ///<inheritdoc/>
         public override void Verify(MeshVerifiedAccount meshVerifiedAccount) {

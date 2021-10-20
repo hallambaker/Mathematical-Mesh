@@ -737,11 +737,21 @@
             Private key credential specifying only a raw key.
             </summary>
         </member>
+        <member name="P:Goedel.Protocol.Presentation.KeyCredentialPrivate.Extensions">
+            <summary>The packet extensions describing the private key.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.KeyCredentialPrivate.AuthenticationPrivate">
+            <summary>The private key used to authenticate packets.</summary> 
+        </member>
         <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.#ctor(Goedel.Cryptography.KeyPairAdvanced,System.String)">
             <summary>
             Create a new instance with the private key <paramref name="authenticationPrivate"/>
             </summary>
             <param name="authenticationPrivate">The private key.</param>
+            <param name="account">The account claimed.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.GetKeyCredentialPublic">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.Presentation.KeyCredentialPrivate.AddCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <inheritdoc/>
@@ -1845,12 +1855,7 @@
             <param name="credentialSelf">Optional additional credential for self.</param>
             <param name="credentialOther">Optional additional credential for other.</param>
             <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStream.AddOneTime(System.Byte[])">
-            <summary>
-            Add one time use stream Id to the store (if needed).
-            </summary>
-            <param name="oneTimeId">The one time Id to add.</param>
+            <param name="accountAddress">The account address claimed.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStream.SetOptions(System.Byte[],System.Byte[])">
             <summary>
@@ -1868,6 +1873,22 @@
             <param name="request">The transaction body.</param>
             <returns>The transaction result.</returns>
         </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStream.PrePost(System.String,Goedel.Protocol.JsonObject)">
+            <summary>
+            Convert the request for operation <paramref name="tag"/> with parameters
+            <paramref name="request"/> to a byte array.
+            </summary>
+            <param name="tag">The operation identifier.</param>
+            <param name="request">The request parameters.</param>
+            <returns>The binary data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.RudStream.PostPost(Goedel.Protocol.Presentation.Packet)">
+            <summary>
+            Recover the response object from the reply <paramref name="packet"/>.
+            </summary>
+            <param name="packet">Packet containing a response object.</param>
+            <returns>The response object.</returns>
+        </member>
         <member name="M:Goedel.Protocol.Presentation.RudStream.PostWeb(System.Byte[],System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <summary>
             Post the message <paramref name="span"/> with extensions <paramref name="extensions"/>
@@ -1876,13 +1897,6 @@
             <param name="span">The binary payload data.</param>
             <param name="extensions">The message extensions.</param>
             <returns>The response packet received.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.RudStream.ForwardSecrecy(System.Boolean)">
-            <summary>
-            Perform a forward secrecy operation on the stream. If <paramref name="recurse"/> is
-            true, the child streams will be marked to perform a rekey operation.
-            </summary>
-            <param name="recurse"></param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.RudStream.RemoveChild(Goedel.Protocol.Presentation.RudStream)">
             <summary>

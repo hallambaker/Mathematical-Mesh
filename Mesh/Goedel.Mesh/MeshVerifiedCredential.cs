@@ -25,23 +25,13 @@ using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
-    /// <summary>
-    /// A verified device credential.
-    /// </summary>
-    public class MeshVerifiedCredential {
-        IJpcSession JpcSession;
-
-        }
-
-
-
 
 
 
     /// <summary>
     /// A verified device credential.
     /// </summary>
-    public class MeshVerifiedDevice : MeshVerifiedCredential {
+    public class MeshVerifiedDevice  {
 
         ///<summary>The credential provider.</summary> 
         public string Provider => MeshCredential.Provider;

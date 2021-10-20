@@ -46,12 +46,6 @@ namespace Goedel.Protocol.Service {
 
         bool active = true;
 
-        /////<summary>Maximum number of concurrent dispatch threads</summary> 
-        //public int Concurrent => concurrent;
-
-        //private int concurrent = 0;
-
-
         private Thread serviceThread;
 
 
@@ -60,7 +54,7 @@ namespace Goedel.Protocol.Service {
 
         private HttpListener httpListener = null;
 
-        private UdpClient[] udpListeners;
+        private UdpClient[] udpListeners = null;
 
         ///<summary>The RDP Listener.</summary> 
         public Listener Listener;

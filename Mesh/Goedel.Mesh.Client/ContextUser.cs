@@ -232,8 +232,6 @@ namespace Goedel.Mesh.Client {
         /// personal mesh. This method does not support transfer of the Mesh Service.
         /// </summary>
         /// <param name="accountAddress">The account address</param>
-        /// <param name="transactUser">Transaction containing entries to be prepopulated
-        /// to the account stores.</param>
         public void SetService(
                 string accountAddress) {
             KeyProfile.AssertNotNull(NotSuperAdministrator.Throw);
@@ -254,28 +252,18 @@ namespace Goedel.Mesh.Client {
             ProfileUser.AccountAddress = accountAddress;
             ProfileUser.Envelope(KeyProfile);
 
-
-
             ActivationAccount.BindService(ProfileService);
-
-            ////RudStream.Rebind(MeshClient, AccountAddress);
-
-            //"Fix this rebind to put the connection in".TaskFunctionality(true);
-            //MeshClient.Rebind(GetMeshCredentialPrivate());
 
             // Generate a contact and self-sign
             var contact = CreateContact();
             SetContactSelf(contact);
-
-
-
-
-
-
-
             }
 
 
+        /// <summary>
+        /// Bind to a service under the account address <paramref name="accountAddress"/>.
+        /// </summary>
+        /// <param name="accountAddress">The account address to bind.</param>
         public void BindService(string accountAddress) {
 
             // Request binding
@@ -305,18 +293,16 @@ namespace Goedel.Mesh.Client {
             var policy = new DarePolicy() {
                 EncryptKeys = recipients
                 };
-            var access = MakeStore(CatalogAccess.Label, policy);
-
+            MakeStore(CatalogAccess.Label, policy);
 
             LoadStores(); // Load all stores so that these are created on the service.
-            
-            
-
-            
             SyncProgressUpload();
             }
 
-
+        /// <summary>
+        /// Create an administrator device entry.
+        /// </summary>
+        /// <param name="rights">The rights to be granted to the administrator device.</param>
         public void MakeAdministrator(List<string> rights) {
             var transact = TransactBegin();
 
@@ -488,37 +474,37 @@ namespace Goedel.Mesh.Client {
         #region // Operations on capabilities 
 
 
-        /// <summary>
-        /// Return the first cryptographic capability granted to this particular device
-        /// for the application <paramref name="catalogedApplication"/>.
-        /// </summary>
-        /// <param name="catalogedApplication">The application to return the capability from.</param>
-        /// <returns>The first cryptographic capability this device has been granted if found,
-        /// otherwise null.</returns>
-        public CryptographicCapability GetCapability(CatalogedApplication catalogedApplication) {
+        ///// <summary>
+        ///// Return the first cryptographic capability granted to this particular device
+        ///// for the application <paramref name="catalogedApplication"/>.
+        ///// </summary>
+        ///// <param name="catalogedApplication">The application to return the capability from.</param>
+        ///// <returns>The first cryptographic capability this device has been granted if found,
+        ///// otherwise null.</returns>
+        //public CryptographicCapability GetCapability(CatalogedApplication catalogedApplication) {
 
-            foreach (var envelope in catalogedApplication.EnvelopedCapabilities) {
-                var capability = GetCapability(envelope);
-                if (capability != null) {
-                    return capability;
-                    }
-                }
-            return null;
-            }
+        //    foreach (var envelope in catalogedApplication.EnvelopedCapabilities) {
+        //        var capability = GetCapability(envelope);
+        //        if (capability != null) {
+        //            return capability;
+        //            }
+        //        }
+        //    return null;
+        //    }
 
-        /// <summary>
-        /// Attempt to decrypt <paramref name="envelopedCapability"/>. If successful, the content 
-        /// data is decoded and the enclosed capability returned. Otherwise, null is returned.
-        /// </summary>
-        /// <param name="envelopedCapability">The envelope to attempt to decrypt.</param>
-        /// <returns>The first cryptographic capability this device has been granted if found,
-        /// otherwise null.</returns>
-        public static CryptographicCapability GetCapability(DareEnvelope envelopedCapability) {
-            envelopedCapability.Future();
+        ///// <summary>
+        ///// Attempt to decrypt <paramref name="envelopedCapability"/>. If successful, the content 
+        ///// data is decoded and the enclosed capability returned. Otherwise, null is returned.
+        ///// </summary>
+        ///// <param name="envelopedCapability">The envelope to attempt to decrypt.</param>
+        ///// <returns>The first cryptographic capability this device has been granted if found,
+        ///// otherwise null.</returns>
+        //public static CryptographicCapability GetCapability(DareEnvelope envelopedCapability) {
+        //    envelopedCapability.Future();
 
-            throw new NYI();
+        //    throw new NYI();
 
-            }
+        //    }
         #endregion
 
         #region // Store management and convenience accessors
@@ -836,8 +822,6 @@ namespace Goedel.Mesh.Client {
         /// additional escrow policies. Keys might be escrowed under the account escrow
         /// and also escrow administrator keys to allow closer control.
         /// </summary>
-        /// <param name="catalogedApplication">The applications the escrowed
-        /// keys are to be added to.</param>
         /// <param name="keyDatas">The keys to be escrowed.</param>
         public List<Enveloped<KeyData>> EscrowSeed(
                         params KeyData[] keyDatas) {

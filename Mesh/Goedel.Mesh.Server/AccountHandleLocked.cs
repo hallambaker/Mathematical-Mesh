@@ -149,6 +149,12 @@ namespace Goedel.Mesh.Server {
             return sequence;
             }
 
+        /// <summary>
+        /// Open the sequence <paramref name="label"/>.
+        /// </summary>
+        /// <param name="label">The sequence to open.</param>
+        /// <param name="existing">If true the sequence MUST exist.</param>
+        /// <returns>The sequence class.</returns>
         public Sequence GetSequence(string label, bool existing=true) {
             //Screen.Write($"Try open {label}");
 

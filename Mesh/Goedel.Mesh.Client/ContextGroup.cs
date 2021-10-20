@@ -75,8 +75,11 @@ namespace Goedel.Mesh.Client {
 
         ///<inheritdoc/>
         public MeshKeyCredentialPrivate GetKeyCredentialPrivate() =>
-           new MeshKeyCredentialPrivate(KeyAccountAuthentication as KeyPairAdvanced, AccountAddress);
+           new(KeyAccountAuthentication as KeyPairAdvanced, AccountAddress);
         // have to get the credential from the client...
+
+
+        ///<inheritdoc/>
         public override MeshServiceClient MeshClient {
             get => meshClient ??
               GetMeshClient(GetKeyCredentialPrivate()).CacheValue(out meshClient);
@@ -117,24 +120,24 @@ namespace Goedel.Mesh.Client {
         ///// context for.</param>
         //public ContextGroup(ContextUser contextAccount, CatalogedGroup catalogedGroup) :
         //            this (contextAccount, catalogedGroup, GetActivationAccount())  { 
-            
+
 
         //    }
 
 
 
-            // Here we have to recover the application group entry
+        // Here we have to recover the application group entry
 
-            // create a fake activation account with just
-            // Signing key
-            // encryption key.
+        // create a fake activation account with just
+        // Signing key
+        // encryption key.
 
 
-            //// Activate the device to communicate as the account (via threshold)
-            //ActivationAccount = CatalogedGroup?.GetActivationAccount(ContextUser);
+        //// Activate the device to communicate as the account (via threshold)
+        //ActivationAccount = CatalogedGroup?.GetActivationAccount(ContextUser);
 
-            //// Phase2: This is a hack, we are throwing the encryption key away rather than registering it.
-            //var keyCollectionGroup = new KeyCollectionEphemeral();
+        //// Phase2: This is a hack, we are throwing the encryption key away rather than registering it.
+        //var keyCollectionGroup = new KeyCollectionEphemeral();
 
 
         /// <summary>
@@ -143,6 +146,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="contextAccount">The enclosing account context.</param>
         /// <param name="catalogedGroup">Description of the group to return the
         /// context for.</param>
+        /// <param name="activationAccount">The account activation.</param>
         public ContextGroup(ContextUser contextAccount,
                     CatalogedGroup catalogedGroup,
                     ActivationAccount activationAccount) :
@@ -152,29 +156,23 @@ namespace Goedel.Mesh.Client {
             ContextUser = contextAccount;
             }
 
-
-        static ActivationAccount GetActivationAccount() {
-
-            // this needs fixin'
-            // Should pull the account entry...
-
-
-            throw new NYI();
-            }
-
         /// <summary>
         /// Create a new group.
         /// </summary>
         /// <param name="contextAccount">The enclosing account context.</param>
         /// <param name="catalogedGroup">Description of the group to create.</param>
+        /// <param name="activationAccount">The account activation.</param>
+        /// <param name="client">The client to connect to the service with.</param>
         /// <returns>The group context.</returns>
         public static ContextGroup CreateGroup(
                     ContextUser contextAccount, 
                     CatalogedGroup catalogedGroup,
                     ActivationAccount activationAccount,
                     MeshServiceClient client) {
-            var result = new ContextGroup(contextAccount, catalogedGroup, activationAccount);
-            result.MeshClient = client;
+            var result = new ContextGroup(contextAccount, catalogedGroup, activationAccount) {
+                MeshClient = client
+                };
+
             // Prepopulate the catalogs
             Directory.CreateDirectory(result.StoresDirectory);
 

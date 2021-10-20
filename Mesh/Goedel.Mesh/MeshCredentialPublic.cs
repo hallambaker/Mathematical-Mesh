@@ -33,27 +33,6 @@ using Goedel.Utilities;
 namespace Goedel.Mesh {
 
 
-
-    public interface IVerifyCredential {
-
-        /// <summary>
-        /// Verify the device.
-        /// </summary>
-        /// <returns>The verified device (if successful)</returns>
-        public MeshVerifiedDevice VerifyDevice();
-
-        /// <summary>
-        /// Verify the account
-        /// </summary>
-        /// <returns>The verified account (if successful)</returns>
-        public MeshVerifiedAccount VerifyAccount();
-
-        }
-
-
-
-
-
     /// <summary>
     /// JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
     /// assertion).
@@ -228,109 +207,15 @@ namespace Goedel.Mesh {
         #endregion
         #region Implement ICredentialPrivate
 
+        /// <summary>
+        /// Return the public credential.
+        /// </summary>
+        /// <returns></returns>
         public MeshCredentialPublic GetMeshCredentialPublic () =>
-                    new MeshCredentialPublic(ProfileDevice,
+                    new(ProfileDevice,
                     ConnectionDevice,
                     ConnectionAccount,
                     AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced);
-
-
-
-        /////<inheritdoc/>
-        //public ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
-
-        //    ConnectionService connectionDevice = null;
-        //    ConnectionAddress connectionAddress = null;
-        //    ProfileDevice profileDevice = null;
-        //    KeyPairAdvanced keyAuthentication = null;
-
-        //    foreach (var extension in extensions) {
-        //        switch (extension.Tag) {
-        //            case Constants.ExtensionTagsDirectX25519Tag: {
-        //                return new MeshKeyCredentialPublic(new KeyPairX25519(extension.Value));
-        //                }
-        //            case Constants.ExtensionTagsDirectX448Tag: {
-        //                return new MeshKeyCredentialPublic(new KeyPairX448 (extension.Value));
-        //                }
-
-
-        //            case Constants.ExtensionTagsMeshProfileDeviceTag: {
-        //                // convert the enveloped ConnectionDevice
-        //                var envelope = DareEnvelope.FromJSON(extension.Value, false);
-        //                profileDevice = envelope.DecodeJsonObject() as ProfileDevice;
-        //                keyAuthentication ??= profileDevice.Authentication.GetKeyPairAdvanced();
-        //                break;
-        //                }
-        //            case Constants.ExtensionTagsMeshConnectionDeviceTag: {
-        //                // convert the enveloped ConnectionDevice
-        //                var envelope = DareEnvelope.FromJSON(extension.Value, false);
-        //                connectionDevice = envelope.DecodeJsonObject() as ConnectionService;
-        //                keyAuthentication = connectionDevice.AuthenticationPublic;
-        //                break;
-        //                }
-        //            case Constants.ExtensionTagsMeshConnectionAddressTag: {
-        //                // convert the enveloped ConnectionDevice
-        //                var envelope = DareEnvelope.FromJSON(extension.Value, false);
-        //                connectionAddress = envelope.DecodeJsonObject() as ConnectionAddress;
-        //                break;
-        //                }
-        //            }
-        //        }
-
-        //    return new MeshCredentialPublic(profileDevice, connectionDevice, connectionAddress, keyAuthentication);
-        //    }
-
-
-
-        /////<inheritdoc/>
-        //public void AddCredentials(List<PacketExtension> extensions) {
-        //    foreach (var extension in Extensions) {
-        //        extensions.Add(extension);
-        //        }
-        //    }
-
-
-        /////<inheritdoc/>
-        //public void AddEphemerals(List<PacketExtension> extensions, ref List<KeyPairAdvanced> ephmeralsOffered) {
-        //    KeyPairAdvanced ephemeral;
-
-        //    if (ephmeralsOffered != null) {
-        //        ephemeral = ephmeralsOffered[0];
-        //        //Screen.WriteLine($"Re-Offer of = {ephemeral}");
-
-        //        }
-        //    else {
-        //        ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
-        //        ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
-        //        //Screen.WriteLine($"Make Offer of = {ephemeral}");
-        //        }
-
-        //    var extension = new PacketExtension() {
-        //        Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
-        //        Value = ephemeral.IKeyAdvancedPublic.Encoding
-        //        };
-
-
-        //    extensions.Add(extension);
-        //    }
-
-
-
-        /////<inheritdoc/>
-        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
-        //    foreach (var extension in extensions) {
-        //        if (extension.Tag == "X448") {
-        //            var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
-        //            //Screen.WriteLine($"Select = {ephemeral}");
-        //            return (AuthenticationPrivate, ephemeral);
-        //            }
-        //        }
-        //    throw new NYI();
-        //    }
-
-        /////<inheritdoc/>
-        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) =>
-        //        (AuthenticationPrivate, new KeyPairX448(ephemeral, KeySecurity.Public));
 
         #endregion
         }

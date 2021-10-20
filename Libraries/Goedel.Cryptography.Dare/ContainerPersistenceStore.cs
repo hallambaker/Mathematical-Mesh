@@ -347,7 +347,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="contentInfo">The content metadata</param>
         /// <param name="jsonObject">The object.</param>
-        /// 
+        /// <param name="additionalRecipients">Encryption keys of additional recipients.</param>
         /// <returns>The prepared envelope.</returns>
         public DareEnvelope Prepare(
                 ContentMeta contentInfo,
@@ -418,6 +418,8 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jsonObject">The new object value</param>
         /// <param name="create">If true, create a new value if one does not already exist</param>
         /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
+        /// <param name="additionalRecipients">Additional encryption keys for which recipient
+        /// entries are to be created.</param>
         public virtual DareEnvelope PrepareUpdate(
                     out StoreEntry previous,
                     JsonObject jsonObject,

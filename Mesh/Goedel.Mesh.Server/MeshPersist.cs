@@ -239,6 +239,8 @@ namespace Goedel.Mesh.Server {
         /// be appropriately authenticated.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="catalogedDeviceDigest">The digest version identifier of the device catalog
+        /// entry.</param>
         public StatusResponse AccountStatus(
                         IJpcSession jpcSession,
                         string catalogedDeviceDigest) {

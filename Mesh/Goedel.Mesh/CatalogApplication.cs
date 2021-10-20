@@ -224,7 +224,10 @@ namespace Goedel.Mesh {
             return false;
             }
 
-
+        /// <summary>
+        /// Write a description of the application to <paramref name="output"/>.
+        /// </summary>
+        /// <param name="output">Destination to which the description is written.</param>
         public abstract void ToBuilder(StringBuilder output);
 
 

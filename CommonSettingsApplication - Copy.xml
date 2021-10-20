@@ -1,0 +1,53 @@
+<Project DefaultTargets="Build">
+
+	<PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <Company>Threshold Secrets LLC.</Company>
+		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
+		<DocumentationFile>xml\Documentation.xml</DocumentationFile>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <UseSharedCompilation>false</UseSharedCompilation>
+	</PropertyGroup>
+
+
+  <!-- Platform specific libraries for windows -->
+  <ItemGroup Condition=" '$(RuntimeIdentifier)' == '$(UndefinedValue)' ">
+    <!-- <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Windows.csproj" /> -->
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+  </ItemGroup>
+
+
+  <!-- Platform specific libraries for windows -->
+  <ItemGroup Condition=" '$(RuntimeIdentifier.StartsWith(`win`))' ">
+    <!-- <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Windows.csproj" /> -->
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+  </ItemGroup>
+
+  <!-- Platform specific libraries for linux -->
+  <ItemGroup Condition=" '$(RuntimeIdentifier.StartsWith(`linux`))' ">
+    <!-- <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.macos.csproj" />-->
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+  </ItemGroup>
+  
+  <!-- Platform specific libraries for osx -->
+  <ItemGroup Condition=" '$(RuntimeIdentifier.StartsWith(`osx`))' ">
+    <!-- <ProjectReference Include="..\..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.linux.csproj" />-->
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+  </ItemGroup>
+  
+  
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
+		<Exec Command="VSPreBuild" />
+	</Target>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
+		<Exec Command="VSPostBuild" />
+	</Target>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Github'">
+		<DefineConstants>TRACE;_Github_</DefineConstants>
+	</PropertyGroup>
+</Project>

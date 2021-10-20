@@ -92,7 +92,11 @@ namespace Goedel.Protocol.Service {
         /// </summary>
         /// <param name="iPEndPoint">The request origin.</param>
         /// <returns>The quality of the request.</returns>
-        protected RequestQuality AbuseCheckIpSource(IPEndPoint iPEndPoint) => RequestQuality.OK;
+        protected RequestQuality AbuseCheckIpSource(IPEndPoint iPEndPoint) {
+            iPEndPoint.Future();
+            this.Future();
+            return RequestQuality.OK;
+            }
 
 
         /// <summary>
@@ -114,8 +118,6 @@ namespace Goedel.Protocol.Service {
         /// Process the buffer containing inbound data.
         /// </summary>
         protected virtual void ProcessBuffer() {
-
-
             var (sourceId, offset) = StreamId.GetSourceId(Buffer);
 
             //Screen.WriteLine($"Received Request {sourceId.Value}");
@@ -143,10 +145,9 @@ namespace Goedel.Protocol.Service {
                 }
 
 
-            var sessionResponder = stream?.RudConnection as ConnectionResponder;
 
 
-            if (sessionResponder == null) {
+            if (stream?.RudConnection is not ConnectionResponder sessionResponder) {
                 return; // 
                 }
 
@@ -161,13 +162,10 @@ namespace Goedel.Protocol.Service {
 
                 try {
                     response = rudStreamService.JpcInterface.Dispatch(rudStreamService, reader);
-
-
                     if (response == null) {
                         }
-
                     }
-                catch (Exception exception) {
+                catch  {
                     // here make error response wrapper
 
                     }

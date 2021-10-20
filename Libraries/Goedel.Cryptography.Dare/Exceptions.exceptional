@@ -70,3 +70,4 @@ Namespace Goedel.Cryptography.Dare
         Console "The file was not found."
 	Exception DirectoryNotFound
         Console "The directory was not found."
+

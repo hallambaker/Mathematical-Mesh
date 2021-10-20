@@ -287,11 +287,30 @@ namespace Goedel.Cryptography {
 
             }
 
-
+        /// <summary>
+        /// Convert the SHA-2-512 digest value <paramref name="source"/> to a 
+        /// UDF string with <paramref name="bits"/> precision.
+        /// </summary>
+        /// <param name="source">The digest value.</param>
+        /// <param name="bits">The output precision in bits.</param>
+        /// <returns>The UDF string value.</returns>
         public static string Sha2ToString(
                 byte[] source,
                 int bits = 0) => TypeBDSToString(UdfTypeIdentifier.Digest_SHA_2_512,
                     source, bits);
+
+        /// <summary>
+        /// Convert the SHA-3-512 digest value <paramref name="source"/> to a 
+        /// UDF string with <paramref name="bits"/> precision.
+        /// </summary>
+        /// <param name="source">The digest value.</param>
+        /// <param name="bits">The output precision in bits.</param>
+        /// <returns>The UDF string value.</returns>
+        public static string Sha3ToString(
+                byte[] source,
+                int bits = 0) => TypeBDSToString(UdfTypeIdentifier.Digest_SHA_3_512,
+                    source, bits);
+
 
 
         /// <summary>

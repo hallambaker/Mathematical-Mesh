@@ -151,6 +151,7 @@ namespace Goedel.Protocol.Presentation {
         /// <param name="credentialSelf">Optional additional credential for self.</param>
         /// <param name="credentialOther">Optional additional credential for other.</param>
         /// <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
+        /// <param name="accountAddress">The account address claimed.</param>
         public RudStream(
                 RudStream parent,
                 string protocol,
@@ -193,14 +194,6 @@ namespace Goedel.Protocol.Presentation {
         #region // Methods
 
         /// <summary>
-        /// Add one time use stream Id to the store (if needed).
-        /// </summary>
-        /// <param name="oneTimeId">The one time Id to add.</param>
-        public void AddOneTime(byte[] oneTimeId) {
-
-            }
-
-        /// <summary>
         /// Set the encryption options for the stream.
         /// </summary>
         /// <param name="encryptionOptions"></param>
@@ -233,7 +226,7 @@ namespace Goedel.Protocol.Presentation {
             var packet = await PostWeb(span);
 
             //Screen.WriteLine($"Client {Protocol} - Posted data to {RemoteStreamId?.ToStringBase16()}");
-            if (packet is PacketResponderChallenge packetResponderChallenge &&
+            if (packet is PacketResponderChallenge &&
                         (packet.Payload == null | packet?.Payload.Length == 0)) {
                 // if we got a challenge and no payload, represent the request here.
                 packet = await PostWeb(span);
@@ -242,22 +235,29 @@ namespace Goedel.Protocol.Presentation {
             return PostPost(packet);
             }
 
-
-        public byte[]  PrePost(string tag, JsonObject request) {
+        /// <summary>
+        /// Convert the request for operation <paramref name="tag"/> with parameters
+        /// <paramref name="request"/> to a byte array.
+        /// </summary>
+        /// <param name="tag">The operation identifier.</param>
+        /// <param name="request">The request parameters.</param>
+        /// <returns>The binary data.</returns>
+        public byte[] PrePost(string tag, JsonObject request) {
             // Serialize request
             byte[] span = null;
             if (request != null) {
-                span = SerializePayload(tag, request, out var stream);
+                span = SerializePayload(tag, request, out var _);
                 }
 
             return span;
-}
+            }
 
-
-        public JsonObject PostPost(Packet packet) {
-
-
-
+        /// <summary>
+        /// Recover the response object from the reply <paramref name="packet"/>.
+        /// </summary>
+        /// <param name="packet">Packet containing a response object.</param>
+        /// <returns>The response object.</returns>
+        public static JsonObject PostPost(Packet packet) {
             JsonObject response = null;
             if (packet?.Payload.Length > 0) {
                 response = JsonObject.From(packet.Payload);
@@ -366,7 +366,7 @@ namespace Goedel.Protocol.Presentation {
 
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
-            var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
+            var (_, position) = StreamId.GetSourceId(responsepacketData);
             //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var code = PacketReader.ReadResponderMessageType(responsepacketData, ref position);
@@ -397,7 +397,7 @@ namespace Goedel.Protocol.Presentation {
 
             //Screen.WriteLine($"Complete");
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
-            var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
+            var (_, position) = StreamId.GetSourceId(responsepacketData);
             //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
@@ -420,7 +420,7 @@ namespace Goedel.Protocol.Presentation {
             //Screen.WriteLine($"Child");
 
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
-            var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
+            var (_, position) = StreamId.GetSourceId(responsepacketData);
             //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
@@ -435,7 +435,7 @@ namespace Goedel.Protocol.Presentation {
 
             //Screen.WriteLine($"Data");
             var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
-            var (sourceId, position) = StreamId.GetSourceId(responsepacketData);
+            var (_, position) = StreamId.GetSourceId(responsepacketData);
             //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
             var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
@@ -482,11 +482,11 @@ namespace Goedel.Protocol.Presentation {
 
             }
 
-        void GetSourceId(PacketData packet) {
-            RemoteStreamId = PacketExtension.GetExtensionByTag(packet?.CiphertextExtensions,
-                    Constants.ExtensionTagsStreamIdTag);
+        //void GetSourceId(PacketData packet) {
+        //    RemoteStreamId = PacketExtension.GetExtensionByTag(packet?.CiphertextExtensions,
+        //            Constants.ExtensionTagsStreamIdTag);
 
-            }
+        //    }
 
 
         private byte[] SerializePayload(string tag, JsonObject request, out MemoryStream stream) {
@@ -505,15 +505,6 @@ namespace Goedel.Protocol.Presentation {
             // avoid the copy by using a Span.
             return stream.ToArray();
             }
-
-
-        /// <summary>
-        /// Perform a forward secrecy operation on the stream. If <paramref name="recurse"/> is
-        /// true, the child streams will be marked to perform a rekey operation.
-        /// </summary>
-        /// <param name="recurse"></param>
-        public void ForwardSecrecy(bool recurse) => throw new NYI();
-
 
         private void AddChild(RudStream child) {
             ChildStreams ??= new();
@@ -544,14 +535,14 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="credential">Optional additional credential to be presented.</param>
         /// <returns>The created stream.</returns>
-        public RudStreamClient MakeStreamSender(ICredentialPrivate credential = null) => throw new NYI();
+        public RudStreamClient MakeStreamSender(ICredentialPrivate credential = null) => throw new NYI(this);
 
         /// <summary>
         /// Request creation of a transactional stream in the server role
         /// </summary>
         /// <param name="transactionPostDelegate">Optional delegate to be called when a request is received.</param>
         /// <returns>The created stream.</returns>
-        public RudStreamService MakeStreamService(TransactionPostDelegate transactionPostDelegate = null) => throw new NYI();
+        public RudStreamService MakeStreamService(TransactionPostDelegate transactionPostDelegate = null) => throw new NYI(this);
 
 
         /// <summary>
@@ -559,12 +550,12 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="asynchronousReceiveDelegate">Optional delegate to be called when data is received.</param>
         /// <returns></returns>
-        public RudStreamReceiver MakeStreamReceiver(AsynchronousReceiveDelegate asynchronousReceiveDelegate = null) => throw new NYI();
+        public RudStreamReceiver MakeStreamReceiver(AsynchronousReceiveDelegate asynchronousReceiveDelegate = null) => throw new NYI(this);
 
         /// <summary>
         /// Cause queued requests to be flushed.
         /// </summary>
-        public void Flush() => throw new NYI();
+        public void Flush() => throw new NYI(this);
 
         //public async Task<RudStream> AsyncReceiveStreamOffer() => throw new NYI();
 

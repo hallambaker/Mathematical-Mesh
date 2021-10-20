@@ -90,7 +90,10 @@ namespace Goedel.Mesh {
         ///<summary>The OpenPGP encryption key.</summary> 
         public KeyPair OpenpgpEncryptKeyPair {  get; init; }
 
-
+        /// <summary>
+        /// Return an escrow record for the application.
+        /// </summary>
+        /// <returns>The escrow record.</returns>
         public override KeyData[] GetEscrow() => new KeyData[] {
                 new KeyData(SmimeSignKeyPair, true),
                 new KeyData(SmimeEncryptKeyPair, true),
@@ -134,6 +137,11 @@ namespace Goedel.Mesh {
         #endregion
         #region // Methods
 
+        /// <summary>
+        /// Return a catalog key for the SMTP mail account <paramref name="address"/>.
+        /// </summary>
+        /// <param name="address">The input, an RFC822 address.</param>
+        /// <returns>The catalog key.</returns>
         public static string GetKey (string address) => $"mailto:{address}";
 
 

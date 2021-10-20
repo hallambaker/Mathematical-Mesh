@@ -59,7 +59,7 @@ namespace Goedel.XUnit {
 
 
         public override TestCLI GetTestCLI(string MachineName = null) {
-            var testShell = new TestShell(TestEnvironment, MachineName, false);
+            var testShell = new TestShell(TestEnvironment, MachineName);
             return new TestCLI(testShell);
             }
 

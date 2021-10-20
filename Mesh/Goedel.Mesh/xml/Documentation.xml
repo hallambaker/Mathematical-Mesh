@@ -123,6 +123,15 @@
             <param name="catalogedEntry">The entry to add as an update.</param>
             <typeparam name="TEntry">The entry type.</typeparam>
         </member>
+        <member name="M:Goedel.Mesh.ITransactContextAccount.CatalogUpdate(Goedel.Mesh.CatalogedDevice,Goedel.Cryptography.KeyPair)">
+            <summary>
+            Update the cataloged device entryh <paramref name="catalogedDevice"/>
+            specifying the additional key pair entry <paramref name="encryptionKey"/>
+            to allow the device to decrypt its own entry.
+            </summary>
+            <param name="catalogedDevice">The cataloged device.</param>
+            <param name="encryptionKey">Additional encryption key.</param>
+        </member>
         <member name="M:Goedel.Mesh.ITransactContextAccount.CatalogDelete``1(Goedel.Mesh.Catalog{``0},``0)">
             <summary>
             Append a request to delete <paramref name="catalogedEntry"/> from the catalog
@@ -181,6 +190,9 @@
         <member name="F:Goedel.Mesh.ActivationAccount.DictionaryStoreEncryptionKey">
             <summary>Dictionary mapping store names to encryption keys.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.SecretSeed">
+            <summary>The secret seed.</summary> 
+        </member>
         <member name="F:Goedel.Mesh.ActivationAccount.ActivationDevice">
             <summary>The device activation.</summary> 
         </member>
@@ -194,6 +206,13 @@
             <summary>
             Constructor for use by deserializers.
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationAccount.#ctor(Goedel.Mesh.ActivationApplicationGroup)">
+            <summary>
+            Initializes a new instance of the ActivationAccount from the group application
+            <paramref name="activationApplicationGroup"/>.
+            </summary>
+            <param name="activationApplicationGroup">The base activation of the group.</param>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.#ctor(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF)">
             <summary>
@@ -270,6 +289,8 @@
             encryption key.
             </summary>
             <param name="storeName">The store to initialize.</param>
+            <param name="keyLocate">The key collection to which the encryption key should be added
+            if not null.</param>
             <returns>Cryptographic parameters for the store.</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.GetDarePolicy(System.String)">
@@ -731,6 +752,12 @@
         <member name="M:Goedel.Mesh.ApplicationEntryGroup.Decode(Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Mesh.ApplicationEntryGroup.GetActivationAccount">
+            <summary>
+            Construct an activation record for the group.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Goedel.Mesh.ApplicationEntryGroup.EnvelopedActivation">
             <summary>
             </summary>
@@ -802,6 +829,12 @@
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedGroup.EnvelopedProfileGroup"/>
             to return the <see cref="T:Goedel.Mesh.ProfileUser"/> value.</summary>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedGroup.GetEscrow">
+            <summary>
+            Return the escrowed keys.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedGroup.#ctor">
             <summary>
             Default constructor for serialization.
@@ -819,6 +852,9 @@
             <returns>The created group.</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedGroup.GetActivation(Goedel.Mesh.CatalogedDevice)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedGroup.ToBuilder(System.Text.StringBuilder)">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CatalogedGroup.EnvelopedConnectionAddress">
@@ -1051,6 +1087,12 @@
         <member name="P:Goedel.Mesh.CatalogedApplicationMail.OpenpgpEncryptKeyPair">
             <summary>The OpenPGP encryption key.</summary> 
         </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.GetEscrow">
+            <summary>
+            Return an escrow record for the application.
+            </summary>
+            <returns>The escrow record.</returns>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationMail.Create(System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Create a new mail application instance.
@@ -1058,6 +1100,13 @@
             <param name="address">The email address.</param>
             <param name="roles">The roles to which the application is granted.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.GetKey(System.String)">
+            <summary>
+            Return a catalog key for the SMTP mail account <paramref name="address"/>.
+            </summary>
+            <param name="address">The input, an RFC822 address.</param>
+            <returns>The catalog key.</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationMail.GetActivation(Goedel.Mesh.CatalogedDevice)">
             <inheritdoc/>
@@ -2561,6 +2610,12 @@
             <returns>True if the device <paramref name="catalogedDevice"/> is authorized to 
             use this application according to the authorization criteria for the device.</returns>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedApplication.ToBuilder(System.Text.StringBuilder)">
+            <summary>
+            Write a description of the application to <paramref name="output"/>.
+            </summary>
+            <param name="output">Destination to which the description is written.</param>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedApplication.Key">
             <summary>
             </summary>
@@ -3900,6 +3955,9 @@
             
              Base class for cataloged Mesh data.
              </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedEntry.AdditionalRecipients">
+            <summary>Additional encryption keys to which the encrypted catalog entry is to be written.</summary> 
         </member>
         <member name="M:Goedel.Mesh.CatalogedEntry.Describe(System.Text.StringBuilder,System.Boolean)">
             <summary>
@@ -6170,6 +6228,7 @@
             <param name="keyCollection">The key collection to register the private key to
             (the key is always generated as ephemeral.)</param>
             <param name="keySecurity">The key security model of the derrived key.</param>
+            <param name="info">Additional information to be passed to the KDF.</param>
             <returns>The derrived key.</returns>
         </member>
         <member name="M:Goedel.Mesh.Extensions.ActivatePublic(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.KeyPair,Goedel.Mesh.MeshActor,Goedel.Mesh.MeshKeyOperation)">
@@ -6489,18 +6548,6 @@
         <member name="F:Goedel.Mesh.MeshServerStatus.Timeout">
             <summary>Request timed out</summary>
         </member>
-        <member name="M:Goedel.Mesh.IVerifyCredential.VerifyDevice">
-            <summary>
-            Verify the device.
-            </summary>
-            <returns>The verified device (if successful)</returns>
-        </member>
-        <member name="M:Goedel.Mesh.IVerifyCredential.VerifyAccount">
-            <summary>
-            Verify the account
-            </summary>
-            <returns>The verified account (if successful)</returns>
-        </member>
         <member name="T:Goedel.Mesh.MeshCredentialPublic">
             <summary>
             JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
@@ -6566,11 +6613,40 @@
             <param name="authenticationKey"></param>
             <param name="meshCredentialPrivate"></param>
         </member>
+        <member name="M:Goedel.Mesh.MeshCredentialPrivate.GetMeshCredentialPublic">
+            <summary>
+            Return the public credential.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Mesh.MeshKeyCredentialPublic">
+            <summary>
+            Mesh device key public credential.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.MeshKeyCredentialPublic.#ctor(Goedel.Cryptography.KeyPairAdvanced)">
             <summary>
             Create a new instance with the public key <paramref name="authenticationPublic"/>
             </summary>
             <param name="authenticationPublic">The public key.</param>
+        </member>
+        <member name="T:Goedel.Mesh.MeshKeyCredentialPrivate">
+            <summary>
+            Mesh device key private credential.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshKeyCredentialPrivate.#ctor(Goedel.Cryptography.KeyPairAdvanced,System.String)">
+            <summary>
+            Create a new instance with the private key <paramref name="authenticationPrivate"/>
+            </summary>
+            <param name="authenticationPrivate">The private key.</param>
+            <param name="account">The account to which the request is directed.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MeshKeyCredentialPrivate.GetMeshKeyCredentialPublic">
+            <summary>
+            Return the public credential.
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.MeshKeyCredentialPrivate.GetCredentials(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <inheritdoc/>
@@ -7886,11 +7962,6 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.MeshVerifiedCredential">
-            <summary>
-            A verified device credential.
-            </summary>
         </member>
         <member name="T:Goedel.Mesh.MeshVerifiedDevice">
             <summary>
@@ -14661,6 +14732,12 @@
         <member name="F:Goedel.Mesh.SpoolLocal.Label">
             <summary>Canonical name for local spool</summary>
         </member>
+        <member name="M:Goedel.Mesh.SpoolLocal.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
         <member name="M:Goedel.Mesh.SpoolLocal.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Factory delegate
@@ -14861,14 +14938,6 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Store.GetContainerStatus">
-            <summary>
-            Return the status of the spool.
-            </summary>
-            <param name="directory">The directory in which the spool is stored.</param>
-            <param name="storeName">The store name.</param>
-            <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Store.Append(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.String)">
             <summary>

@@ -178,7 +178,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public JbcdStream DisposeJBCDStream;
 
-
+        ///<summary>Name of the underlying file (may be used to reconnect to file)</summary> 
         public string Filename { get; set; }
 
 
@@ -264,11 +264,9 @@ namespace Goedel.Cryptography.Dare {
                 return Container;
                 }
             catch (Exception exception) {
-                Screen.WriteLine($"Failed to open {fileName}");
-
-
                 jbcdStream?.Dispose();
-                return null;
+
+                throw new AccessRefused($"Failed to open {fileName}", exception);
                 }
             }
         #endregion

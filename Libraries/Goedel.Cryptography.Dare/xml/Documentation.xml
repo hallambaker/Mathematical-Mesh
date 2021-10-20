@@ -1328,7 +1328,7 @@
             </summary>
             <param name="contentInfo">The content metadata</param>
             <param name="jsonObject">The object.</param>
-            
+            <param name="additionalRecipients">Encryption keys of additional recipients.</param>
             <returns>The prepared envelope.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.CommitToContainer(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.StoreEntry)">
@@ -1355,6 +1355,8 @@
             <param name="jsonObject">The new object value</param>
             <param name="create">If true, create a new value if one does not already exist</param>
             <param name="encryptionKey">Key under which the item is to be encrypted.</param>
+            <param name="additionalRecipients">Additional encryption keys for which recipient
+            entries are to be created.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.PrepareDelete(Goedel.Cryptography.Dare.StoreEntry@,System.String)">
             <summary>
@@ -5833,6 +5835,9 @@
             the sequence is released.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Sequence.Filename">
+            <summary>Name of the underlying file (may be used to reconnect to file)</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.#ctor">
             <summary>
             Default constructor.
@@ -6340,6 +6345,8 @@
             Constructor returning an instance for the envelope <paramref name="envelope"/>.
             </summary>
             <param name="envelope">The envelope to return an index for.</param>
+            <param name="sequence">The sequence in which the envelope is embedded.</param>
+            <param name="dataPosition">Position of the envelope in the sequence.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceFrameIndex.#ctor(Goedel.Cryptography.Dare.JbcdStream,System.Int64)">
             <summary>
@@ -6440,6 +6447,10 @@
             <summary>
             Sequence writer to write in defered mode so that the updates can be applied in one transaction.
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceWriterDeferred.AdditionalRecipients">
+            <summary>A list of encryption keys to which additional recipient entries
+            are to be created.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceWriterDeferred.Digest">
             <summary>The apex digest value of the container as written to the file.</summary>

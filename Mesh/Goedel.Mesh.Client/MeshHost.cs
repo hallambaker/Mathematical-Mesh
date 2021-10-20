@@ -234,6 +234,8 @@ namespace Goedel.Mesh.Client {
         /// <param name="profileDevice">Specify the device profile. This allows use of a device 
         /// profile bound to the machine hardware.</param>
         /// <param name="rights">The rights to be granted to the initial connected device.</param>
+        /// <param name="create">If true, create a new mesh, otherwise attempt recovery from the
+        /// service.</param>
         /// <returns>Context for administering the Mesh</returns>
         public ContextUser ConfigureMesh(
                 string accountAddress,
@@ -246,7 +248,7 @@ namespace Goedel.Mesh.Client {
 
             var contextUser = InitializeAdminContext(accountAddress, localName,
                 ref accountSeed, ref profileDevice, ref rights,
-                 out var activationRoot);
+                 out var _);
 
 
             contextUser.SetService(accountAddress);
@@ -469,7 +471,10 @@ namespace Goedel.Mesh.Client {
 
             var contextMeshAdmin = ConfigureMesh(localName);
 
-            throw new NYI();
+            return contextMeshAdmin;
+
+
+            //throw new NYI();
             //return contextMeshAdmin.CreateAccount(localName);
 
             }

@@ -53,13 +53,14 @@ namespace Goedel.Mesh {
                 Catalog<TEntry> catalog,
                 TEntry catalogedEntry) where TEntry : CatalogedEntry;
 
-
+        /// <summary>
+        /// Update the cataloged device entryh <paramref name="catalogedDevice"/>
+        /// specifying the additional key pair entry <paramref name="encryptionKey"/>
+        /// to allow the device to decrypt its own entry.
+        /// </summary>
+        /// <param name="catalogedDevice">The cataloged device.</param>
+        /// <param name="encryptionKey">Additional encryption key.</param>
         void CatalogUpdate(CatalogedDevice catalogedDevice, KeyPair encryptionKey);
-
-
-
-            //(CatalogedAccess catalogedAccess, CatalogedDevice catalogedDevice);
-
 
 
         /// <summary>
@@ -130,6 +131,7 @@ namespace Goedel.Mesh {
         public Dictionary<string, KeyPair> DictionaryStoreEncryptionKey =
             new();
 
+        ///<summary>The secret seed.</summary> 
         public PrivateKeyUDF SecretSeed { get; set; }
 
         ///<summary>The device activation.</summary> 
@@ -148,6 +150,18 @@ namespace Goedel.Mesh {
         public ActivationAccount() {
             }
 
+
+        /// <summary>
+        /// Initializes a new instance of the ActivationAccount from the group application
+        /// <paramref name="activationApplicationGroup"/>.
+        /// </summary>
+        /// <param name="activationApplicationGroup">The base activation of the group.</param>
+        public ActivationAccount(ActivationApplicationGroup activationApplicationGroup) {
+            AccountAuthenticationKey = activationApplicationGroup.AccountAuthentication.GetKeyPair();
+            AccountEncryptionKey = activationApplicationGroup.AccountEncryption.GetKeyPair();
+            AdministratorSignatureKey = activationApplicationGroup.AdministratorSignature.GetKeyPair();
+            }
+
         /// <summary>
         /// Constructor returning an activation account for the seed <paramref name="secretSeed"/>.
         /// This constructor is used for generation of the initial account keys.
@@ -157,6 +171,10 @@ namespace Goedel.Mesh {
         public ActivationAccount(
                     IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed) => ActivateFromSeed(keyCollection, secretSeed);
+
+
+
+
 
         void ActivateFromSeed(
                     IKeyCollection keyCollection,
@@ -190,11 +208,7 @@ namespace Goedel.Mesh {
                 keyCollection, KeySecurity.Exportable);
             }
 
-        public ActivationAccount(ActivationApplicationGroup activationApplicationGroup) {
-            AccountAuthenticationKey = activationApplicationGroup.AccountAuthentication.GetKeyPair();
-            AccountEncryptionKey = activationApplicationGroup.AccountEncryption.GetKeyPair();
-            AdministratorSignatureKey = activationApplicationGroup.AdministratorSignature.GetKeyPair();
-            }
+
 
 
 
@@ -559,6 +573,8 @@ namespace Goedel.Mesh {
         /// encryption key.
         /// </summary>
         /// <param name="storeName">The store to initialize.</param>
+        /// <param name="keyLocate">The key collection to which the encryption key should be added
+        /// if not null.</param>
         /// <returns>Cryptographic parameters for the store.</returns>
         public DarePolicy InitializeStore(string storeName,
                     IKeyCollection keyLocate=null) {

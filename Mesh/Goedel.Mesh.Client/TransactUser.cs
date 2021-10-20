@@ -80,6 +80,12 @@ namespace Goedel.Mesh.Client {
         #endregion
 
         #region // Methods
+        /// <summary>
+        /// Update the device catalog to add or update <paramref name="catalogedDevice"/>, creating
+        /// a recipient decryption entry for the device encryption key <paramref name="encryptionKey"/>.
+        /// </summary>
+        /// <param name="catalogedDevice">The device description.</param>
+        /// <param name="encryptionKey">Encryption key to encrypt a copy of the device description to.</param>
         public void CatalogUpdate(CatalogedDevice catalogedDevice, KeyPair encryptionKey) {
             //var accessCapability = catalogedDevice.AccessCapability;
 
@@ -167,26 +173,26 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="catalogedApplication">The updated application entry</param>
         public void ApplicationUpdate(
-            CatalogedApplication catalogedApplication) => throw new NYI();
+            CatalogedApplication catalogedApplication) => throw new NYI(this);
 
         // Phase2: Delete applications after grant
-        /// <summary>
-        /// Delete the application
-        /// </summary>
-        /// <param name="applicationId">The application to remove</param>
-        public void ApplicationDelete(
-                    string applicationId) => throw new NYI();
+        ///// <summary>
+        ///// Delete the application
+        ///// </summary>
+        ///// <param name="applicationId">The application to remove</param>
+        //public void ApplicationDelete(
+        //            string applicationId) => throw new NYI();
 
 
 
-        public void Escrow(
-                    PrivateKeyUDF keyPair,
-                    string right,
-                    string keyIdentifier,
-                    string description) {
-            "Escrow the group seed for recovery".TaskFunctionality(suppress:Assert.HaltPhase1);
+        //public void Escrow(
+        //            PrivateKeyUDF keyPair,
+        //            string right,
+        //            string keyIdentifier,
+        //            string description) {
+        //    "Escrow the group seed for recovery".TaskFunctionality(suppress:Assert.HaltPhase1);
 
-            }
+        //    }
 
 
 

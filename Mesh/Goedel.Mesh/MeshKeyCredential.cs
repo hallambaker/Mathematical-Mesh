@@ -29,6 +29,10 @@ using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh {
+
+    /// <summary>
+    /// Mesh device key public credential.
+    /// </summary>
     public class MeshKeyCredentialPublic : KeyCredentialPublic, ICredentialPublic{
 
         #region // Constructors
@@ -44,9 +48,17 @@ namespace Goedel.Mesh {
         }
 
 
-
+    /// <summary>
+    /// Mesh device key private credential.
+    /// </summary>
     public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate {
         #region // Constructors
+
+        /// <summary>
+        /// Create a new instance with the private key <paramref name="authenticationPrivate"/>
+        /// </summary>
+        /// <param name="authenticationPrivate">The private key.</param>
+        /// <param name="account">The account to which the request is directed.</param>
         public MeshKeyCredentialPrivate(KeyPairAdvanced authenticationPrivate , string account) :
 
 
@@ -61,8 +73,12 @@ namespace Goedel.Mesh {
         #endregion
         #region Implement ICredential
 
+        /// <summary>
+        /// Return the public credential.
+        /// </summary>
+        /// <returns></returns>
         public MeshKeyCredentialPublic GetMeshKeyCredentialPublic() =>
-            new MeshKeyCredentialPublic(
+            new(
             AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced) {
                 Account = Account
                 };

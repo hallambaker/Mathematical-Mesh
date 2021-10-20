@@ -22,6 +22,15 @@
         <member name="P:Goedel.Mesh.Server.AccountContext.Directory">
             <summary>The directory in which all the account data is stored.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.AccessCapability">
+            <summary>The access capability.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.CatalogedAccess">
+            <summary>The access catalog entry.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountContext.Disposing">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.Server.AccountContext.#ctor">
             <summary>
             Return a new instance.
@@ -304,6 +313,14 @@
             </summary>
             <param name="accountContext">The account context.</param>
             
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.GetSequence(System.String,System.Boolean)">
+            <summary>
+            Open the sequence <paramref name="label"/>.
+            </summary>
+            <param name="label">The sequence to open.</param>
+            <param name="existing">If true the sequence MUST exist.</param>
+            <returns>The sequence class.</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.GetStatusStore(System.String)">
             <summary>
@@ -1211,6 +1228,8 @@
             be appropriately authenticated.
             </summary>
             <param name="jpcSession">The session connection data.</param>
+            <param name="catalogedDeviceDigest">The digest version identifier of the device catalog
+            entry.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountDownload(Goedel.Protocol.IJpcSession,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect})">
             <summary>

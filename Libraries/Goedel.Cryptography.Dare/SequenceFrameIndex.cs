@@ -105,6 +105,8 @@ namespace Goedel.Cryptography.Dare {
         /// Constructor returning an instance for the envelope <paramref name="envelope"/>.
         /// </summary>
         /// <param name="envelope">The envelope to return an index for.</param>
+        /// <param name="sequence">The sequence in which the envelope is embedded.</param>
+        /// <param name="dataPosition">Position of the envelope in the sequence.</param>
         public SequenceFrameIndex(Sequence sequence, DareEnvelope envelope, long dataPosition) {
             Header = envelope.Header;
             Trailer = envelope.Trailer;
@@ -150,7 +152,7 @@ namespace Goedel.Cryptography.Dare {
                 return JsonObject;
                 }
             var bytes = GetPayload(sequence, sequence.KeyLocate);
-            var text = bytes.ToUTF8();
+            //var text = bytes.ToUTF8();
             return bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
 
             }

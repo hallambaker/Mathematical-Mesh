@@ -115,6 +115,7 @@ namespace Goedel.Mesh.Client {
             CatalogedMachine?.EnvelopedAccountHostAssignment?.Decode().CacheValue(out accountHostAssignment) ;
         AccountHostAssignment accountHostAssignment;
 
+        ///<summary>The host encryption key.</summary> 
         public KeyPair HostEncryptAccount => hostEncryptAccount ??
             AccountHostAssignment?.AccessEncrypt?.GetKeyPair().CacheValue(out hostEncryptAccount);
         KeyPair hostEncryptAccount;
@@ -278,14 +279,11 @@ namespace Goedel.Mesh.Client {
         /// Delete the associated account from the local machine.
         /// </summary>
         public void DeleteAccount() {
-            // post device leave notice to service
-
-            "Need to delete the account at the service!!!".TaskFunctionality();
-
             var unbindRequest = new UnbindRequest() {
                 Account = AccountAddress
                 };
             var response = MeshClient.UnbindAccount(unbindRequest);
+            response.AssertSuccess(NYI.Throw);
 
             // close all open stores and clear the dictionary
             foreach (var status in DictionaryStores) {
@@ -386,6 +384,8 @@ namespace Goedel.Mesh.Client {
         /// Update the <paramref name="catalogedDevice"/> entry in the machine catalog.
         /// </summary>
         /// <param name="catalogedDevice">The entry to update.</param>
+        /// <param name="digestUDF">The UDF of the digest value of the cataloged devbice data.</param>
+        /// <param name="registerContext">If true associate register this context with the host.</param>
         public void UpdateCatalogedMachine(CatalogedDevice catalogedDevice, 
                 string digestUDF, bool registerContext) {
 
@@ -589,6 +589,7 @@ namespace Goedel.Mesh.Client {
         /// Create a new instance bound to the specified core within this account context.
         /// </summary>
         /// <param name="name">The name of the store to bind.</param>
+        /// <param name="darePolicy">Policy to be applied to the store.</param>
         /// <returns>The store instance.</returns>
         protected Store MakeStore(string name, DarePolicy darePolicy=null) {
 

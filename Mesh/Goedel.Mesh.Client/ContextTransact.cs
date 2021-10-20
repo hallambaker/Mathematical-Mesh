@@ -208,7 +208,7 @@ namespace Goedel.Mesh.Client {
         /// Begin a transaction.
         /// </summary>
         /// <returns>The transaction handle</returns>
-        public new TransactUser TransactBegin(bool local=false) => new(this) {
+        public TransactUser TransactBegin(bool local=false) => new(this) {
             Local = local
             };
         }
@@ -473,7 +473,7 @@ namespace Goedel.Mesh.Client {
             }
 
         /// <summary>
-        /// Append a request to append <paramref name="catalogedEntry"/> to the catalog
+        /// Append a request to append <paramref name="contact"/> to the catalog
         /// <paramref name="catalog"/> to the transaction.
         /// </summary>
         /// <param name="catalog">The catalog to be updated</param>
@@ -484,10 +484,6 @@ namespace Goedel.Mesh.Client {
             var cataloged = new CatalogedContact(contact);
             CatalogUpdate(catalog, cataloged);
             }
-
-
-
-
 
 
         /// <summary>
@@ -503,17 +499,6 @@ namespace Goedel.Mesh.Client {
             TransactRequest.Updates ??= new List<ContainerUpdate>();
             var update = GetContainerUpdate(TransactRequest.Updates, catalog);
             update.Delete(catalogedEntry);
-            }
-
-
-        public void FirstFrame<TEntry>(Catalog<TEntry> catalog) where TEntry : CatalogedEntry {
-            TransactRequest.Updates ??= new List<ContainerUpdate>();
-            var update = new TransactionUpdate<TEntry>(catalog) {
-                Envelopes = new List<DareEnvelope> {
-                    catalog.Container.FrameZero
-                    }
-                };
-            TransactRequest.Updates.Add(update);
             }
 
         #endregion

@@ -150,26 +150,6 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Return the status of the spool.
-        /// </summary>
-        /// <param name="directory">The directory in which the spool is stored.</param>
-        /// <param name="storeName">The store name.</param>
-        /// <returns></returns>
-        public ContainerStatus GetContainerStatus() {
-            return new ContainerStatus() {
-
-                // Bug: This should populate the TreeDigest
-                Digest = Container.TrailerLast?.TreeDigest,
-
-                Index = (int)Container.FrameCount,
-                Container = ContainerName
-
-                };
-            }
-
-
-
-        /// <summary>
         /// Append the list of envelopes <paramref name="envelopes"/> to the
         /// container <paramref name="containerName"/> in <paramref name="directory"/>.
         /// </summary>

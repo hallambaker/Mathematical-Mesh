@@ -13437,6 +13437,24 @@
             <param name="offset">Offset in <paramref name="source"/>.</param>
             <returns>The resulting binary buffer.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.UDF.Sha2ToString(System.Byte[],System.Int32)">
+            <summary>
+            Convert the SHA-2-512 digest value <paramref name="source"/> to a 
+            UDF string with <paramref name="bits"/> precision.
+            </summary>
+            <param name="source">The digest value.</param>
+            <param name="bits">The output precision in bits.</param>
+            <returns>The UDF string value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.UDF.Sha3ToString(System.Byte[],System.Int32)">
+            <summary>
+            Convert the SHA-3-512 digest value <paramref name="source"/> to a 
+            UDF string with <paramref name="bits"/> precision.
+            </summary>
+            <param name="source">The digest value.</param>
+            <param name="bits">The output precision in bits.</param>
+            <returns>The UDF string value.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.UDF.UDFBuffer(System.Byte[],System.String)">
             <summary>
             Convert a digest value and content type to a UDF buffer.
