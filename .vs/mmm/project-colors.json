@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "44bfea22-0b87-416e-9d5c-73f858251c50": {
+      "ProjectGuid": "44bfea22-0b87-416e-9d5c-73f858251c50",
+      "DisplayName": "meshhost",
+      "ColorIndex": 0
+    },
+    "ee662ff1-4cd5-4f99-a121-8f519084d971": {
+      "ProjectGuid": "ee662ff1-4cd5-4f99-a121-8f519084d971",
+      "DisplayName": "meshman",
+      "ColorIndex": 1
+    },
+    "bc5c1868-1628-47de-b28f-47d6489cc59d": {
+      "ProjectGuid": "bc5c1868-1628-47de-b28f-47d6489cc59d",
+      "DisplayName": "serviceadmin",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}

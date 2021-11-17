@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.202
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}"
 EndProject
@@ -120,6 +120,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TemplateClass.cs = TemplateClass.cs
 		TestSettings.xml = TestSettings.xml
 		ToDo.md = ToDo.md
+		VS2022Publish.md = VS2022Publish.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Shell.Test-xunit", "Testing\Goedel.Mesh.Shell.Test-xunit\Goedel.Mesh.Shell.Test-xunit.csproj", "{F345341F-C902-47D8-8014-7D76FB652726}"
