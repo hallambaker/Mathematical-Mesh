@@ -58,5 +58,13 @@ The files are instead written to:
 "C:\Users\hallam\Work\mmm\Applications\serviceadmin\bin\Debug\net5.0-windows\win-x64\serviceadmin.exe"
 
 
+## Additional issues
+
+The documentation for dotnet publish and msbuild are terrible. Both assume I am publishing
+a Web site using ASP. I am merely trying to build the same program on multiple platforms
+with separate per-platform customizations.
+
+Both are confused and often innacurate.
+
 
 
