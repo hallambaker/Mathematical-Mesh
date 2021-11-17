@@ -508,12 +508,8 @@ namespace Goedel.Mesh.Shell {
     public partial class ResultApplication {
 
         ///<inheritdoc/>
-        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
-
-
+        public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) => 
             Application.ToBuilder(builder);
-
-            }
 
         }
 
@@ -538,7 +534,7 @@ namespace Goedel.Mesh.Shell {
 
             var profileDevice = DevicePreconfigurationPublic.EnvelopedProfileDevice.Decode();
 
-            builder.AppendLine($"Device Udf: {profileDevice.Udf}");
+            builder.AppendLine($"Device UDF: {profileDevice.Udf}");
             builder.AppendLine($"File: {FileName}");
 
             }

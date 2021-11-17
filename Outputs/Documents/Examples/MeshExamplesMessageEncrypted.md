@@ -7,27 +7,31 @@ includes Recipients and Salt fields to enable the content to be decoded.
 ~~~~
 [{
     "enc":"A256CBC",
-    "kid":"EBQE-TBIZ-ATX4-7J4B-5WLW-C3CN-K56D",
-    "Salt":"vTJrrGzvmqz0sOz0ZJ6QkA",
-    "annotations":["iAEAiCBEYCZgW3wDgAOGqqRELXIKce5tGGorMk-9Nac-a7
-  fHtQ",
-      "iAEBiCAYkYp3RulBwMEGLtLPRNm3zVhkt_WF4apnarZpHPQTYA",
-      "iAECiDB6Va2K5jMNhHcCw04kDQpIgKhdO9Nr3Lh8_8GmOYbpIU-yn6GQwL
-  FQOC8bjrFDu4I"
+    "kid":"EBQJ-F3HF-WSRR-53YK-37I3-NPWS-DI2R",
+    "Salt":"_AB2_21ftAif0mb3OG7tdw",
+    "annotations":["iAEAiCBSOa4a2ojOZX7LhcgavZnjpSFTUetC3Kl-ssKbXc
+  4iLA",
+      "iAEBiCDVHd1gP9MfZgj2LVPtQUUUjuN1uO4edfmDTRJRUXfiSA",
+      "iAECiDBv1aBAveLy_zrcBh0xuq32WyIZX5uWElimVslhf9_WL9eR5PgTvw
+  wOvpKvalFFlQc"
       ],
     "recipients":[{
-        "kid":"MDDG-ZV35-AOTM-32HM-PW5S-FKW3-F63R",
+        "kid":"MBMR-WQKI-2GTU-EBEY-XOTA-53NO-XPEK",
         "epk":{
           "PublicKeyECDH":{
             "crv":"Ed25519",
-            "Public":"hqIOUEvi0ONPX124JYESrQYTAsE5zvvJ_YG6I0h2VX8"}},
-        "wmk":"L3ItFHnAS_2lTupbj1sWBHWXNo--eHwJMtUeS79NioWmPJtByJ
-  _LIw"}
+            "Public":"YPWFbBbIqUKQgpMcWa5efsznELBpKk9QbfFcJAPHjEE"}},
+        "wmk":"pPTcSLuK0bEvGeG7hSzlcJJS1NayHfe1DclO4UYzcJsFlrN7Vy
+  bZvg"}
       ],
     "ContentMetaData":"ewogICJjdHkiOiAiYXBwbGljYXRpb24vZXhhbXBsZS
   1tYWlsIn0"},
-  "wuYXTf1RBZaXZ2oFs5iG7vsKiaRo3JHsGPbS-drW8x3mrPUYRby8vmVPNOB2y4
-  AwUyhAmGTaEe3oB6-dJkIzRg"
+  "-H0hjMjWs8VC2MErvsW7iCVmxHLrkSoWuyF6vDHQlnhaN1ucJPev-QMgG_LELi
+  m7qUrUQ4jD8TphAJLhxkNjIg"
   ]
 ~~~~
+
+For efficiency of processing, the ContentMetaData is presented in plaintext.
+This header could be encrypted as an EDS sequence and presented as a 
+cloaked header.
 

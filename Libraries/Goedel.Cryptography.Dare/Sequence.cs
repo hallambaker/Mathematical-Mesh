@@ -333,6 +333,8 @@ namespace Goedel.Cryptography.Dare {
                         JbcdStream jbcdStream,
                         IKeyLocate keyCollection = null, bool decrypt = true) {
 
+            decrypt.Future();
+
             // Initialize frame zero
             var frameZero = jbcdStream.ReadDareEnvelope();
 
@@ -1149,12 +1151,14 @@ namespace Goedel.Cryptography.Dare {
         static bool VerifyFinal(
                 Sequence sequence,
                 DarePolicy darePolicy,
-                SequenceFrameIndex frameIndex) =>
-
+                SequenceFrameIndex frameIndex) {
+            sequence.Future();
+            darePolicy.Future();
+            frameIndex.Future();
             // here perform policy checks on the very last frame.
 
-            true;
-
+            return true;
+            }
 
         static bool Verify(
             Sequence sequence,
@@ -1164,6 +1168,11 @@ namespace Goedel.Cryptography.Dare {
 
             IKeyLocate keyCollection,
             Dictionary<int, SequenceFrameIndex> dictionary) {
+
+            keyCollection.Future();
+            dictionary.Future();
+            sequence.Future();
+
 
             bool encrypt = true;
             bool? keyExchange = null;

@@ -438,7 +438,7 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default) {
-
+            localName.Future();
             filename.Future();
             algorithmSign.Future();
             algorithmEncrypt.Future();

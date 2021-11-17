@@ -1192,12 +1192,11 @@
             <param name="directory">The directory in which all the service data is stored.</param>
             <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountBind(Goedel.Mesh.Server.AccountEntry,System.Collections.Generic.List{Goedel.Mesh.ContainerUpdate})">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountBind(Goedel.Mesh.Server.AccountEntry)">
             <summary>
             Add a new account. The account name must be unique.
             </summary>
             <param name="accountEntry">Account data to add.</param>
-            <param name="storeEntries">Updates to be prepopulated to the account stores.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountUnbind(Goedel.Protocol.IJpcSession,System.String)">
             <summary>

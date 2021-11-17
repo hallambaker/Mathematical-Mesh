@@ -52,11 +52,6 @@ namespace Goedel.XUnit {
 
         static string DeviceConnect1Name => "DeviceConnect1";
 
-        static string DeviceAliceName => "MachineAlice";
-
-        static string DeviceAliceName2 => "MachineAlice2";
-
-        static string DeviceBobName => "MachineBob";
 
         [Fact]
         public void TestHello() {

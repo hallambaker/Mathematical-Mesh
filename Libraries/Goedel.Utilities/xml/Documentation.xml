@@ -581,7 +581,7 @@
             This feature has not been implemented
             </summary>
         </member>
-        <member name="M:Goedel.Utilities.NYI.#ctor(System.Object)">
+        <member name="M:Goedel.Utilities.NYI.#ctor(System.Object[])">
             <summary>
             Initialize an instance that creates a dependency on the object 
             <paramref name="dependency"/> preventing spurious warnings about

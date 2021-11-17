@@ -37,6 +37,8 @@ using Xunit;
 
 #pragma warning disable IDE0059
 #pragma warning disable IDE0060
+#pragma warning disable CA1822
+
 namespace Goedel.XUnit {
 
 
@@ -647,7 +649,7 @@ namespace Goedel.XUnit {
 
 
 
-        bool VerifyContainers(ContextUser contextUser) {
+        public bool VerifyContainers(ContextUser contextUser) {
 
             var profileuser = contextUser.ProfileUser;
             using (var transaction1 = contextUser.TransactBegin()) {

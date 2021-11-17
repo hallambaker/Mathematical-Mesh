@@ -1,12 +1,3 @@
-String
-String
-String
-String
-String
-String
-String
-String
-String
 Function
 <table>
 <tr><td>Code</td><td>Algorithm</td><td>Description</td></tr>
@@ -20,7 +11,91 @@ Function
 <tr><td>8</td><td>TooLarge</td><td>Request is too large</td></tr>
 <tr><td>9</td><td>Timeout</td><td>Request timed out</td></tr>
 </table>
-String
-String
-String
-String
+<dl>
+<dt>application/mmm/message
+<dd>
+    The proposed IANA content identifier for the Mesh message type.
+</dd>
+</dl>
+<dl>
+<dt>application/mmm/object
+<dd>
+    The proposed IANA content identifier for the Mesh message type.
+</dd>
+</dl>
+<dl>
+<dt>application/mmm/nonce
+<dd>
+    The proposed IANA content identifier for the Mesh message type.
+</dd>
+</dl>
+<dl>
+<dt>application/mmm/capability/
+<dd>
+    The proposed IANA content identifier for the Mesh message type.
+</dd>
+</dl>
+<dl>
+<dt>application/mmm/authenticator
+<dd>
+    The proposed IANA content identifier for the Mesh message type.
+</dd>
+</dl>
+<dl>
+<dt>mcu
+<dd>
+    The proposed IANA URI scheme.
+</dd>
+</dl>
+<dl>
+<dt>mmm/key/authenticate/service
+<dd>
+    HKDF info tag for deriving Service Authenticator from IKM
+</dd>
+</dl>
+<dl>
+<dt>mmm/key/authenticate/device
+<dd>
+    HKDF info tag for deriving Device Authenticator from IKM
+</dd>
+</dl>
+<dl>
+<dt>mmm/CatalogedGroup/
+<dd>
+    Prefix to be applied to form the ID of a mesh group in the catalog.
+</dd>
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+<dl>
+<dt>Accept
+<dd>
+    Transaction result tag Accept
+</dd>
+</dl>
+<dl>
+<dt>Reject
+<dd>
+    Transaction result tag Reject
+</dd>
+</dl>
+<dl>
+<dt>Pending
+<dd>
+    Transaction result tag Pending
+</dd>
+</dl>
+<dl>
+<dt>Expired
+<dd>
+    Transaction result tag Expired
+</dd>
+</dl>

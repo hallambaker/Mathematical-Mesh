@@ -239,8 +239,6 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Connect.ConnectPINComplete);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ArchitectureConnectPin/Connect.ConnectPINComplete"));
-				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The Dynamic QRCode connection scheme uses exactly the same mechanism except that instead \n{0}", _Indent);
 				_Output.Write ("of the PIN being presented to Alice in the form of an alphanumeric string, the connection\n{0}", _Indent);
 				_Output.Write ("information is encoded as a URI and presented to the connecting device as a QR code.\n{0}", _Indent);
@@ -460,8 +458,8 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("At this point, Bob can't encrypt or decrypt messages because he doesn't know the \n{0}", _Indent);
 				_Output.Write ("public key and he isn't in the group. Alice could allow Bob to encrypt but not\n{0}", _Indent);
-				_Output.Write ("decrypt by sending him the group contact information. Instead she adds Bob to \n{0}", _Indent);
-				_Output.Write ("the group:\n{0}", _Indent);
+				_Output.Write ("decrypt by sending him the group contact information without a decryption share. \n{0}", _Indent);
+				_Output.Write ("Instead she adds Bob to the group as a member:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.Group.GroupAddBob);
 				_Output.Write ("\n{0}", _Indent);

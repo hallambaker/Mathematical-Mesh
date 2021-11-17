@@ -1,91 +1,10 @@
 
+>>>> Unfinished ProtocolGroupInvite
+
+
+
+
 ~~~~
-{
-  "GroupInvitation":{
-    "MessageId":"NAMQ-GY7W-VP5R-7B5E-IURJ-PDAR-66ML",
-    "Sender":"alice@example.com",
-    "Recipient":"bob@example.com",
-    "Contact":{
-      "ContactPerson":{
-        "Anchors":[{
-            "Udf":"MCHX-THLV-3AII-AJT7-LT6W-TQTK-TIMX",
-            "Validation":"Self"}
-          ],
-        "NetworkAddresses":[{
-            "Address":"groupw@example.com",
-            "EnvelopedProfileAccount":[{
-                "EnvelopeId":"MCHX-THLV-3AII-AJT7-LT6W-TQTK-TIMX",
-                "dig":"S512",
-                "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJNQ0hYLV
-  RITFYtM0FJSS1BSlQ3LUxUNlctVFFUSy1USU1YIiwKICAiTWVzc2FnZVR5cGUiOiA
-  iUHJvZmlsZUdyb3VwIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3Qi
-  LAogICJDcmVhdGVkIjogIjIwMjEtMDktMjFUMDA6NTg6NTFaIn0"},
-              "ewogICJQcm9maWxlR3JvdXAiOiB7CiAgICAiUHJvZmlsZVNpZ2
-  5hdHVyZSI6IHsKICAgICAgIlVkZiI6ICJNQ0hYLVRITFYtM0FJSS1BSlQ3LUxUNlc
-  tVFFUSy1USU1YIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAg
-  IlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgI
-  CAgICAgICJQdWJsaWMiOiAiME5LX3NQRlF2VmJGeHZLdFpGQVR3M2w5VzNIOVFPR3
-  g4X1FWcUhtcl9BeXVMcktnX0JtawogIEpCUGJzWGZCVk1sNVQ4SUZZRVFuNjMwQSJ
-  9fX0sCiAgICAiQWNjb3VudEFkZHJlc3MiOiAiZ3JvdXB3QGV4YW1wbGUuY29tIiwK
-  ICAgICJBY2NvdW50RW5jcnlwdGlvbiI6IHsKICAgICAgIlVkZiI6ICJNQzMyLTI0U
-  jYtWUc0My1HQUg1LU8zS0otWVRFNC0zT0NTIiwKICAgICAgIlB1YmxpY1BhcmFtZX
-  RlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J
-  2IjogIlg0NDgiLAogICAgICAgICAgIlB1YmxpYyI6ICJySWRUYnYxU3NSLS1JUFlT
-  eVVxbmowSlkxRU1Lb05MQS1MTTdOSEtmZ0tjV2lFblhmak41CiAgME1ISXpFOFk3N
-  HhvYjIzT3RnZWpmUjJBIn19fSwKICAgICJBZG1pbmlzdHJhdG9yU2lnbmF0dXJlIj
-  ogewogICAgICAiVWRmIjogIk1BSzYtVjVBSC02MlpOLTU2UTYtQ0FQVS1LVzRBLUc
-  0TFQiLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUHVibGlj
-  S2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICAgICAgI
-  lB1YmxpYyI6ICJfWkV5Q0U3eU9MWmF6d1NYcm0yUU5uM2l4YXZNUGZuUWlCM1NadF
-  dYQWh0a2RpYUpUSXNnCiAgUkt6bWZoMER5a0o5eFpTa0xPMk5uc0VBIn19fX19",
-              {
-                "signatures":[{
-                    "alg":"S512",
-                    "kid":"MCHX-THLV-3AII-AJT7-LT6W-TQTK-TIMX",
-                    "signature":"7wdpW6mot91xcahdQArhNpQs6V4R_Luf
-  ROJ_WN0hhVvBEhLfO8Rc-HnLiF_fQ32Ye6iYSzecLuoApYv0BgfzAUBAbIB5mTLK2
-  upZbMVfnBCm_6ZlpL2Y6HvikRVIsedLDJHNywhO5zmefzuxBZJ1VzEA"}
-                  ],
-                "PayloadDigest":"xm47eLVfg4xHV1pCcwETasVKxzBqlj5k
-  z4OYwD8RRe_tFgUdW4PqAwzxCv2ZnjmVnoOYRhhUsA50sP7imHpuTg"}
-              ],
-            "Protocols":[{
-                "Protocol":"mmm"}
-              ],
-            "Capabilities":[{
-                "CapabilityDecryptPartial":{
-                  "Id":"MC32-24R6-YG43-GAH5-O3KJ-YTE4-3OCS",
-                  "EnvelopedKeyShare":[{
-                      "enc":"A256CBC",
-                      "kid":"EBQK-JPF6-DNCK-32FY-QULN-U3P6-M7OC",
-                      "Salt":"lKDyAG5tKGDY9v_9SaVNwA",
-                      "recipients":[{
-                          "kid":"MCFW-CK2L-PGW2-3CYU-GX52-ZGED-L4FR",
-                          "epk":{
-                            "PublicKeyECDH":{
-                              "crv":"X448",
-                              "Public":"cezOoDEsrvqfLlrXxvRLesuLz
-  LxWnR1auon8AznZpC2CRtU20ZmM6hxPAeLt4CwmUVEIvLeAleyA"}},
-                          "wmk":"ukckIB1FkZLpnT9ZbB1_TcM519G3ahsP
-  3dfPqKrcx66-whAEsd4PQw"}
-                        ],
-                      "ContentMetaData":"ewogICJNZXNzYWdlVHlwZSI6
-  ICJLZXlEYXRhIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogI
-  CJDcmVhdGVkIjogIjIwMjEtMDktMjFUMDA6NTg6NTJaIn0"},
-                    "Co5jQq7qiNaQWc4FjUqNJXEVAMN_lG-4TEGHVDfbSYu8
-  IhL9zCSycQrm42qzBrtrY8MNf2uh8l8Fbp--DCuhM3D7FOtxCnPL2SIByCuXPjN7J
-  kl5gFBF9_-fIzEyCbR-pA_5m59kIwczMbA32fQR2ZLcbcwTExPsUFB3AsjgTstUWw
-  K5ybJKtmaU92KD9rIUCx5GcNVgyFRjRjMCYu5wvf4Xr1ImFxh4xYmGhc9MsAtrimI
-  EzBQcp4UT8lehGbbeCVdzYgpY-l2xFcd4fLgnojMwG5YjQ9Ly4hU8qqWLBy3Ppu8h
-  Su1GqLjY9jg0NHoq2fBm_9baAwOEqFg2N9vDVU63aFMFY50JnTCmv1iCblGkbunXR
-  fm17vTRVpThSZJEvX_a2Ex2n9lduLsi_s4u7Ld5H6Z3i3npkS4fH-VkpkKDaINczR
-  cCMfYZFoWgOhJ-ODKJy06FxD4CMPTdZQA3Hi9Tz9yIooU5tTm5IflMPemo5zVgWP_
-  yqnGskQOuqEuiRUx5riLCFCZiJjF0e0LlzPwK5HjQQ7e2O5OpCQ0onxbfoFA7nx9q
-  VG2vmC0AElBokFpisL55rIC9G-zMOKRTjyWO17yb1g4VTfDEYR16uswnZn_o7muE8
-  pppDWlav1S2OTB1u3EP6LyLyY5S3VKfmbjnMhSogb1pHWsjwC2jgju56sSpcOl-qK
-  B5Ih9Ic1w5tQgM4Voa39jXLiGZNTW3Rw"
-                    ]}}
-              ]}
-          ]}}}}
+Missing example 3
 ~~~~
 

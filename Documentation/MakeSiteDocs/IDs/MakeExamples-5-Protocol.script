@@ -351,6 +351,7 @@ After using the PIN code to authenticate connection of a device in the previous
 example, the corresponding MessagePin is marked as having been used by appending 
 a completion message to the Local spool.
 
+
 #%  DescribeMessage (Connect.ConnectPINCompleteMessage);
 
 #end zfile
@@ -363,6 +364,8 @@ a completion message to the Local spool.
 #end zfile
 
 #zfile CreateExamples ProtocolGroupInvite "Examples\\ProtocolGroupInvite.md" Example
+
+#{Unfinished ("ProtocolGroupInvite")}
 
 #% DescribeMessage (Group.GroupInvitation);
 

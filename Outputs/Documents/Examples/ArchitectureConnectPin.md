@@ -7,8 +7,8 @@ to the connecting device:
 ~~~~
 <div="terminal">
 <cmd>Alice> account pin /threshold
-<rsp>PIN=ADCA-JUQP-AWFS-SDGL-6EUP-DCK6-HY
- (Expires=2021-09-22T00:58:53Z)
+<rsp>PIN=ABQR-GO5I-FPIE-TK5O-M4VU-DALE-WM
+ (Expires=2021-10-26T15:49:02Z)
 </div>
 ~~~~
 
@@ -19,9 +19,9 @@ the PIN is specified. This time, only the 'threshold' right is granted.
 ~~~~
 <div="terminal">
 <cmd>Alice3> device request alice@example.com /pin ^
-    ADCA-JUQP-AWFS-SDGL-6EUP-DCK6-HY
-<rsp>   Device UDF = MATO-OK36-H76J-GLYM-QRPL-FXSV-CR32
-   Witness value = IOJY-DGBZ-AEXG-IATI-6MQO-5U5W-QTWJ
+    ABQR-GO5I-FPIE-TK5O-M4VU-DALE-WM
+<rsp>   Device UDF = MCVN-XLLT-LLNW-U4HR-BOMG-RA6Z-UWRR
+   Witness value = 2WZP-KNZF-JMKO-RQSU-WYTH-UU35-NWXV
 </div>
 ~~~~
 
@@ -33,29 +33,27 @@ automatically when the administration device is synchronized:
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: IOJY-DGBZ-AEXG-IATI-6MQO-5U5W-QTWJ
+<rsp>MessageID: 2WZP-KNZF-JMKO-RQSU-WYTH-UU35-NWXV
         Connection Request::
-        MessageID: IOJY-DGBZ-AEXG-IATI-6MQO-5U5W-QTWJ
+        MessageID: 2WZP-KNZF-JMKO-RQSU-WYTH-UU35-NWXV
         To:  From: 
-        Device:  MATO-OK36-H76J-GLYM-QRPL-FXSV-CR32
-        Witness: IOJY-DGBZ-AEXG-IATI-6MQO-5U5W-QTWJ
-MessageID: NB2L-5YB3-24H6-YGRB-PX34-MUPC-FVSW
+        Device:  MCVN-XLLT-LLNW-U4HR-BOMG-RA6Z-UWRR
+        Witness: 2WZP-KNZF-JMKO-RQSU-WYTH-UU35-NWXV
+MessageID: NCVP-LUEL-F3OI-QOAM-HND2-WG5Z-346D
         Group invitation::
-        MessageID: NB2L-5YB3-24H6-YGRB-PX34-MUPC-FVSW
+        MessageID: NCVP-LUEL-F3OI-QOAM-HND2-WG5Z-346D
         To: alice@example.com From: alice@example.com
-MessageID: NBQB-3S4U-QIJU-A2YB-HDPL-SGGM-CPKY
+MessageID: NDAD-KLJY-C5JO-JGXL-VUWG-Y6PP-PSFJ
         Confirmation Request::
-        MessageID: NBQB-3S4U-QIJU-A2YB-HDPL-SGGM-CPKY
+        MessageID: NDAD-KLJY-C5JO-JGXL-VUWG-Y6PP-PSFJ
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NCKJ-A26T-F457-ZDUM-KCLY-DI3W-LICQ
+MessageID: NAP7-MRKY-LGHV-W6C2-IDAX-ELNG-V5NT
         Contact Request::
-        MessageID: NCKJ-A26T-F457-ZDUM-KCLY-DI3W-LICQ
+        MessageID: NAP7-MRKY-LGHV-W6C2-IDAX-ELNG-V5NT
         To: alice@example.com From: bob@example.com
-        PIN: ADVA-25BJ-2FZG-LMV3-IUVO-QRF4-JHXA
+        PIN: AAIE-IVI5-54XO-5PHG-VE62-FFS7-62GQ
 <cmd>Alice> account sync /auto
-<rsp>ERROR - An attempt was made to create an object with an existing obje
-ct identifier
 </div>
 ~~~~
 
@@ -65,16 +63,12 @@ Alice can now synchronize her newly connected device to her account:
 ~~~~
 <div="terminal">
 <cmd>Alice3> device complete
-<rsp>   Device UDF = MATO-OK36-H76J-GLYM-QRPL-FXSV-CR32
+<rsp>   Device UDF = MCVN-XLLT-LLNW-U4HR-BOMG-RA6Z-UWRR
    Account = alice@example.com
-   Account UDF = MCST-2JUP-UNOG-O4A3-Q6KS-O2V5-HSQL
+   Account UDF = MB5I-R24M-QXJT-KDBF-XFOA-DGC3-U3AA
 <cmd>Alice3> account sync
 </div>
 ~~~~
-
->>>> Unfinished ArchitectureConnectPin/Connect.ConnectPINComplete
-
-
 
 The Dynamic QRCode connection scheme uses exactly the same mechanism except that instead 
 of the PIN being presented to Alice in the form of an alphanumeric string, the connection
@@ -83,7 +77,7 @@ information is encoded as a URI and presented to the connecting device as a QR c
 The URI corresponding to the connection PIN is:
 
 ~~~~
-mcu://alice@example.com/ADCA-JUQP-AWFS-SDGL-6EUP-DCK6-HY
+mcu://alice@example.com/ABQR-GO5I-FPIE-TK5O-M4VU-DALE-WM
 ~~~~
 
 

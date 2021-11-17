@@ -29,10 +29,16 @@ $$$ Missing data $$$
 #end method
 
 
+
+
+
+
 #zfile CreateExamples DareSchemaCatalog "Examples\\DareSchemaCatalog.md" Example
+#% Unfinished ("DareSchemaCatalog");
 #end zfile
 
 #zfile CreateExamples DareSchemaSpool "Examples\\DareSchemaSpool.md" Example
+#% Unfinished ("DareSchemaSpool");
 #end zfile
 
 #zfile CreateExamples MeshExamplesContainer "Examples\\ExamplesContainer.md" Example
@@ -161,8 +167,9 @@ The plaintext form of the equivalent DARE Message encoding is:
 #{JSONDebugWriter.Write (Dare.MailMessageAsDAREPlaintext, false)}
 ~~~~
 
-This contains the same information as before but the mail message headers are 
-now presented as  a list of Encoded Data Sequences.
+This contains the same information as before but the data we might wish to encrypt to
+protect the confidentiality of the payload is separated from data required for 
+processing.
 
 #end zfile 
 
@@ -185,6 +192,10 @@ includes Recipients and Salt fields to enable the content to be decoded.
 ~~~~
 #{JSONDebugWriter.Write (Dare.MailMessageAsDAREEncrypted, false)}
 ~~~~
+
+For efficiency of processing, the ContentMetaData is presented in plaintext.
+This header could be encrypted as an EDS sequence and presented as a 
+cloaked header.
 
 #end zfile
 

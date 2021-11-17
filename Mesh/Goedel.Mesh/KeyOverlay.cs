@@ -139,10 +139,9 @@ namespace Goedel.Mesh {
                     MeshActor actor,
                     MeshKeyOperation operation,
                     IKeyCollection keyCollection = null,
-                    KeySecurity keySecurity = KeySecurity.Ephemeral) {
-            return new KeyData(GenerateContributionKeyPair(secretSeed, type, actor, operation,
+                    KeySecurity keySecurity = KeySecurity.Ephemeral) => 
+            new(GenerateContributionKeyPair(secretSeed, type, actor, operation,
                 keyCollection, keySecurity));
-            }
 
         /// <summary>
         /// Derive a base private key of type <paramref name="type"/> for the

@@ -161,7 +161,7 @@ namespace Goedel.Protocol.Presentation {
                 string accountAddress = null) {
 
             //(credentialSelf?.AuthenticationPublic.PublicOnly != true).AssertTrue(NYI.Throw);
-
+            accountAddress.Future();
 
             RdpStreamParent = parent;
             if (parent != null) {
@@ -201,11 +201,8 @@ namespace Goedel.Protocol.Presentation {
         public void SetOptions(
                     byte[] streamId,
                     byte[] encryptionOptions) {
-
-            //Screen.WriteLine($"Stream set Stream Id {streamId.ToStringBase16()}");
-
+            encryptionOptions.Future();
             RemoteStreamId = streamId;
-            //AccountAddress = account?.ToUTF8();
             }
 
         /// <summary>
@@ -445,12 +442,8 @@ namespace Goedel.Protocol.Presentation {
 
 
 
-        void Process(PacketData packetData) {
-            RemoteStreamId ??= PacketExtension.GetExtensionByTag(packetData?.CiphertextExtensions,
+        void Process(PacketData packetData) => RemoteStreamId ??= PacketExtension.GetExtensionByTag(packetData?.CiphertextExtensions,
                     Constants.ExtensionTagsStreamIdTag);
-
-
-            }
 
         void Process(PacketResponderChallenge packetResponderChallenge) {
             if (packetResponderChallenge.PlaintextExtensions != null) {
@@ -515,9 +508,7 @@ namespace Goedel.Protocol.Presentation {
         /// Remove a child stream.
         /// </summary>
         /// <param name="child">The child to drop.</param>
-        protected void RemoveChild(RudStream child) {
-            ChildStreams.Remove(child);
-            }
+        protected void RemoveChild(RudStream child) => _ = ChildStreams.Remove(child);
 
 
         /// <summary>
@@ -535,14 +526,14 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="credential">Optional additional credential to be presented.</param>
         /// <returns>The created stream.</returns>
-        public RudStreamClient MakeStreamSender(ICredentialPrivate credential = null) => throw new NYI(this);
+        public RudStreamClient MakeStreamSender(ICredentialPrivate credential = null) => throw new NYI(this, credential);
 
         /// <summary>
         /// Request creation of a transactional stream in the server role
         /// </summary>
         /// <param name="transactionPostDelegate">Optional delegate to be called when a request is received.</param>
         /// <returns>The created stream.</returns>
-        public RudStreamService MakeStreamService(TransactionPostDelegate transactionPostDelegate = null) => throw new NYI(this);
+        public RudStreamService MakeStreamService(TransactionPostDelegate transactionPostDelegate = null) => throw new NYI(this, transactionPostDelegate);
 
 
         /// <summary>
@@ -550,7 +541,7 @@ namespace Goedel.Protocol.Presentation {
         /// </summary>
         /// <param name="asynchronousReceiveDelegate">Optional delegate to be called when data is received.</param>
         /// <returns></returns>
-        public RudStreamReceiver MakeStreamReceiver(AsynchronousReceiveDelegate asynchronousReceiveDelegate = null) => throw new NYI(this);
+        public RudStreamReceiver MakeStreamReceiver(AsynchronousReceiveDelegate asynchronousReceiveDelegate = null) => throw new NYI(this, asynchronousReceiveDelegate);
 
         /// <summary>
         /// Cause queued requests to be flushed.

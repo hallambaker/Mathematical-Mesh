@@ -1,25 +1,25 @@
-# Current focus
+# Packaging and Presentation
 
-* Admin QR code
-* Device QR code
+## Console service configuration and startup
 
-* Contact Exchange Remote
-* Contact Exchange QR
+* Create a service
 
-* Confirm Request
+* Start the host (console)
 
-* Group Create
-* Group Add
-* Group Delete
+* Stop the host 
 
-* Threshold decrypt
-* Time bound decryption service
-* Threshold sign
+* Restart the host
 
+* Bind an account
 
+* Stop/Restart the host 
 
-Nits
+* Check access
 
-* What is wrong with the witness value? Not a proper UDF.
+## Logging
 
-Need to sync up with the specs.
+* To console
+
+* To plaintext file
+
+* To encrypted file

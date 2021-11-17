@@ -34,7 +34,7 @@ namespace Goedel.Cryptography.Dare {
         #region // Propeties and fields
 
         ///<summary>The container the store entry belongs to</summary>
-        Sequence Container;
+        Sequence Container { get; }
 
         /////<summary>The enveloped data</summary>
         //public DareEnvelope DareEnvelope;

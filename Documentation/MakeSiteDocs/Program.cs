@@ -275,9 +275,10 @@ namespace ExampleGenerator {
             }
 
 
-        public string Unfinished(string example = null) => 
-            $">>>> Unfinished {example}\n\n" ?? "TBS";
-
+        public string Unfinished(string example = null) {
+            this.Future();
+            return $">>>> Unfinished {example}\n\n" ?? "TBS";
+            }
 
         public TestEnvironmentCommon TestEnvironment;
         public TestCLI GetTestCLI(string MachineName = null) {
@@ -288,8 +289,7 @@ namespace ExampleGenerator {
 
         #region // Mesh commands
 
-        public string AliceProfileUDF => // (ProfileAliceRegister[0].Result as ResultMasterCreate)?.MeshUDF ?? 
-            "uuuu-uuuu-uuuu".Task("Fix the register command");
+        public string AliceProfileUDF => AliceProfileAccount?.Udf;
 
         #endregion
         #region // Application commands

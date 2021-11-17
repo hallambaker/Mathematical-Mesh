@@ -293,7 +293,7 @@ namespace Goedel.Mesh {
 
             var catalogedDevice = CreateCataloguedDevice(
                     profileUser, profileDevice, activationDevice, activationAccount,
-                    AdministratorSignatureKey, transactContextAccount);
+                    AdministratorSignatureKey);
 
             return catalogedDevice;
             }
@@ -307,9 +307,8 @@ namespace Goedel.Mesh {
         /// <param name="activationDevice">The device key overlay.</param>
         /// <param name="activationAccount">The account key overlay.</param>
         /// <param name="signature">The signature key to use to sign the entry.</param>
-        /// <param name="transactContextAccount">Transaction context to which updates are to be appended.
-        /// This is null during creation of a profile.</param>
         /// <param name="applicationEntries">The list of application entries to be bound.</param>
+        /// 
         /// <returns>The CatalogedDevice entry.</returns>
         public CatalogedDevice CreateCataloguedDevice(
                     ProfileUser profileUser,
@@ -317,7 +316,6 @@ namespace Goedel.Mesh {
                     ActivationDevice activationDevice,
                     ActivationAccount activationAccount,
                     KeyPair signature,
-                    ITransactContextAccount transactContextAccount = null,
                     List<ApplicationEntry> applicationEntries = null) {
 
             //PrivateAccountOnlineSignature.AssertNotNull(NotAdministrator.Throw);

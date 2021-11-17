@@ -23,7 +23,9 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 
+using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Mesh;
 using Goedel.Mesh.Shell;
@@ -356,9 +358,9 @@ namespace ExampleGenerator {
             Connect.PasswordList2Disconnect = Alice2.Example(
                 //$"password get {PasswordSite}",
                 $"account sync",
-                $"dare decode {Account.EncryptTargetFile}{index} {Connect.encryptResultFile3}"
+                $"dare decode {Account.EncryptTargetFile}{index} {Connect.EncryptResultFile3}"
                 );
-            Connect.PasswordList2Disconnect.Add(Alice2.DumpFile(Connect.encryptResultFile3));
+            Connect.PasswordList2Disconnect.Add(Alice2.DumpFile(Connect.EncryptResultFile3));
 
             Connect.PasswordList2Disconnect.GetResult(0).Success.TestFalse();
             Connect.PasswordList2Disconnect.GetResult(1).Success.TestTrue();
@@ -372,7 +374,7 @@ namespace ExampleGenerator {
             Connect.DisconnectThreshDecrypt = Alice3.Example(
                 //$"password get {PasswordSite}",
                 $"account sync",
-                $"dare decode {Account.EncryptTargetFile}{index} {Connect.encryptResultFile3}"
+                $"dare decode {Account.EncryptTargetFile}{index} {Connect.EncryptResultFile3}"
                 );
             Connect.DisconnectThreshDecrypt.GetResult(0).Success.TestFalse();
             Connect.DisconnectThreshDecrypt.GetResult(1).Success.TestFalse();
@@ -526,7 +528,7 @@ namespace ExampleGenerator {
                  );
 
             Group.EncryptSourceFile.WriteFileNew(Group.TestText);
-            var dump = Alice1.DumpFile(Account.EncryptSourceFile);
+            var dump = Alice1.DumpFile(Group.EncryptSourceFile);
             var encode = Alice1.Example(
                 $"dare encode {Group.EncryptSourceFile} {Group.EncryptTargetFile} /encrypt {GroupAccount}",
                 $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptAliceFile}"
@@ -553,6 +555,10 @@ namespace ExampleGenerator {
             Group.GroupDecryptAlice = Alice1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
                  );
+
+
+
+
             Group.GroupDecryptBobFail = Bob1.Example(
                 $"dare decode {Group.EncryptTargetFile}"
                  );
@@ -578,6 +584,8 @@ namespace ExampleGenerator {
                 $"account sync  /auto",
                 $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile}"
                  );
+
+   
             Group.GroupDecryptBobSuccess.Add(Bob1.DumpFile(Group.GroupDecryptBobFile));
             // dump EncryptTargetFile 
 
@@ -588,6 +596,9 @@ namespace ExampleGenerator {
             Group.GroupDecryptBobRevoked = Bob1.Example(
                 $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile2}"
                  );
+            Group.GroupDecryptBobRevoked.Add(Bob1.DumpFile(Group.GroupDecryptBobFile));
+
+
 
             Group.GroupDecryptAlice.GetResult().Success.TestTrue();
             Group.GroupDecryptBobFail.GetResult().Success.TestFalse();
@@ -637,10 +648,14 @@ namespace ExampleGenerator {
 
             // this is probably failing because previous auto complete actions are not being marked closed.
 
-            var connectPendingPIN = Connect.ConnectPINPending.GetResultPending();
+            //var connectPendingPIN = Connect.ConnectPINPending.GetResultPending();
             var syncUpdates = Connect.ConnectPINPending[1].Traces[1].RequestObject as TransactRequest;
 
-            Connect.ConnectPINCompleteMessage = syncUpdates.Local[1].JsonObject as MessageComplete; // change here!!!
+
+            var enveloped = syncUpdates.Local[1] as Enveloped<Message>;
+            var message = enveloped.Decode();
+
+            Connect.ConnectPINCompleteMessage = message as MessageComplete;
 
             Connect.ConnectPINComplete = Alice3.Example(
                 $"device complete",
@@ -744,9 +759,9 @@ namespace ExampleGenerator {
             var share1 = resultEscrow.Shares[0];
             var share2 = resultEscrow.Shares[2];
 
-            Account.DeleteAlice = Alice1.Example(
-                $"account delete {AliceProfileAccount.Udf}"
-                );
+            //Account.DeleteAlice = Alice1.Example(
+            //    $"account delete {AliceProfileAccount.Udf}"
+            //    );
 
             //Account.ProfileRecover = Alice2.Example(
             //    $"account recover {share1} {share2} /verify"

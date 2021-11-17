@@ -351,7 +351,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="profileAccount"></param>
         /// <param name="jpcSession"></param>
         /// <returns></returns>
-        public bool VerifyDevice(ProfileAccount profileAccount, IJpcSession jpcSession) => 
+        public static bool VerifyDevice(ProfileAccount profileAccount, IJpcSession jpcSession) => 
                 profileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
                     jpcSession.Credential.AuthenticationKeyId);
 
@@ -429,7 +429,7 @@ namespace Goedel.Mesh.Server {
                     };
 
                 // Perform the transaction.
-                MeshPersist.AccountBind(accountEntry, request.Updates);
+                MeshPersist.AccountBind(accountEntry);
 
                 // ToDo: Allow the BindResponse to specify a different host
                 // ToDo: Allow the BindResponse to specify a unique service encryption key for the acount                

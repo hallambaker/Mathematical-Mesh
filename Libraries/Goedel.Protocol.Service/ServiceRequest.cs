@@ -444,9 +444,7 @@ namespace Goedel.Protocol.Service {
             }
 
         ///<inheritdoc/>
-        protected override void ReturnResponse(byte[] chunk) {
-            throw new NYI();
-            }
+        protected override void ReturnResponse(byte[] chunk) => throw new NYI();
 
         #endregion
         }

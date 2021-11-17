@@ -5,27 +5,17 @@
 	Extern DareSignature
 
 	Description 
-		|Classes that describe the DARE Container Format.
+		|Classes that describe the DARE Sequence Format.
 
-	Section 1 "DARE Container Schema"
+	Section 1 "DARE Sequence Schema"
 		Description
-			|TBS stuff
+			|A DARE Sequence consists of a sequence of JsonBCD Frames each containing 
+			|a DARE Envelope.
 
-	Section 2 "Container Headers" 
+	Structure SequenceInfo			
 		Description
-			|TBS stuff
-
-	//Structure ContainerEntry
-	//	Inherits ContainerHeader
-	//	Binary Body
-	//		Description
-	//			|The container data.
-
-	Structure SequenceInfo
-
-				
-		Description
-			|Information that describes container information
+			|Information that describes the relationship of the envelope to its
+			|enclosing sequence.
 
 		String DataEncoding
 			Description
@@ -74,17 +64,9 @@
 				|to be found
 
 
-
-
-	Section 2 "Index Structures"
-		Description
-			|TBS stuff
-
-
-
 	Structure SequenceIndex
 		Description
-			|A container index
+			|A record providing an index to the sequence.
 		Boolean Full
 			Description
 				|If true, the index is complete and contains position entries for all the 
@@ -108,9 +90,6 @@
 		String UniqueId
 			Description 
 				|Unique object identifier
-
-
-
 
 	Structure KeyValue
 		Description

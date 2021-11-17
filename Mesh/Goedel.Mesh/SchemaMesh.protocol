@@ -823,10 +823,6 @@
 			Multiple
 			Description
 				|Access rights associated with the key
-		Struct Publication Publications
-			Multiple
-			Description
-				|Published data that may be claimed by the authorized party
 		Struct Enveloped<CatalogedDevice> EnvelopedCatalogedDevice
 			Description
 				|
@@ -834,7 +830,8 @@
 			Description
 				|Digest value used to signal updates to envelope		
 
-	Structure Publication
+	Structure PublicationCapability
+		Inherits Capability
 		Description
 			|
 		String Identifier

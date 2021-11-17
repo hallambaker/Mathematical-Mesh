@@ -130,7 +130,6 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="policy">The cryptographic policy to be applied to the container.</param>
         /// <param name="fileName">Log file.</param>
         /// <param name="contentType">Type of data to store (the schema name).</param>
-        /// <param name="comment">Comment to be written to the log.</param>
         /// <param name="containerType">The Container type.</param>
         /// <param name="dataEncoding">The data encoding.</param>
         /// <param name="fileStatus">The file status in which to open the container.</param>
@@ -138,7 +137,6 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="readContainer">If true read the container to initialize the persistence store.</param>
         /// <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
         public PersistenceStore(string fileName, string contentType = null,
-                    string comment = null,
                     FileStatus fileStatus = FileStatus.OpenOrCreate,
                     SequenceType containerType = SequenceType.Chain,
                     DarePolicy policy = null,

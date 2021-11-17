@@ -401,7 +401,8 @@ namespace Goedel.Protocol.Service {
                     }
                 }
             }
-        async Task<ServiceRequest> Process(UdpClient UdpClient) {
+
+        static async Task<ServiceRequest> Process(UdpClient UdpClient) {
             var connection = UdpClient.ReceiveAsync();
 
             await connection;

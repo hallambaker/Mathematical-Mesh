@@ -246,7 +246,7 @@
             <param name="activationDevice">The device activation.</param>
             <returns>The catalog entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.KeyPair,Goedel.Mesh.ITransactContextAccount,System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry})">
+        <member name="M:Goedel.Mesh.ActivationAccount.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.KeyPair,System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry})">
             <summary>
             Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
             and activation <paramref name="activationDevice"/>.
@@ -256,9 +256,8 @@
             <param name="activationDevice">The device key overlay.</param>
             <param name="activationAccount">The account key overlay.</param>
             <param name="signature">The signature key to use to sign the entry.</param>
-            <param name="transactContextAccount">Transaction context to which updates are to be appended.
-            This is null during creation of a profile.</param>
             <param name="applicationEntries">The list of application entries to be bound.</param>
+            
             <returns>The CatalogedDevice entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.MakeActivationAccount(Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,System.Collections.Generic.List{System.String},Goedel.Mesh.ITransactContextAccount)">
@@ -1541,11 +1540,6 @@
         <member name="P:Goedel.Mesh.AccessCapability.Rights">
              <summary>
             Access rights associated with the key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.AccessCapability.Publications">
-             <summary>
-            Published data that may be claimed by the authorized party
              </summary>
         </member>
         <member name="P:Goedel.Mesh.AccessCapability.EnvelopedCatalogedDevice">
@@ -10224,12 +10218,6 @@
             The signed assertion describing the account.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.BindRequest.Updates">
-             <summary>
-            Data to be prepopulated to the account stores. This MUST include the access 
-            authorization for the devices to be used to complete the account initialization.
-             </summary>
-        </member>
         <member name="P:Goedel.Mesh.BindRequest._Tag">
             <summary>
             Tag identifying this class
@@ -14276,46 +14264,46 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.Publication">
+        <member name="T:Goedel.Mesh.PublicationCapability">
              <summary>
             
              
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Publication.Identifier">
+        <member name="P:Goedel.Mesh.PublicationCapability.Identifier">
              <summary>
             Selector allowing a specific document to be requested.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Publication.Digest">
+        <member name="P:Goedel.Mesh.PublicationCapability.Digest">
              <summary>
             Document digest, this allows a status/claim request to 
             request an update to be returned only if the document
             has changed.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Publication.Data">
+        <member name="P:Goedel.Mesh.PublicationCapability.Data">
              <summary>
             The published document.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Publication._Tag">
+        <member name="P:Goedel.Mesh.PublicationCapability._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Publication.__Tag">
+        <member name="F:Goedel.Mesh.PublicationCapability.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Publication._Factory">
+        <member name="M:Goedel.Mesh.PublicationCapability._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.Publication.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.PublicationCapability.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -14324,7 +14312,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Publication.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.PublicationCapability.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -14335,7 +14323,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Publication.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.PublicationCapability.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -14343,7 +14331,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Publication.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Mesh.PublicationCapability.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

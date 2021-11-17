@@ -148,8 +148,6 @@ Alice can now synchronize her newly connected device to her account:
 
 #%  ConsoleExample (Example.Connect.ConnectPINComplete);
 
-#{Unfinished ("ArchitectureConnectPin/Connect.ConnectPINComplete")}
-
 The Dynamic QRCode connection scheme uses exactly the same mechanism except that instead 
 of the PIN being presented to Alice in the form of an alphanumeric string, the connection
 information is encoded as a URI and presented to the connecting device as a QR code.
@@ -294,8 +292,8 @@ Alice adds herself to the group, now she can decrypt:
 
 At this point, Bob can't encrypt or decrypt messages because he doesn't know the 
 public key and he isn't in the group. Alice could allow Bob to encrypt but not
-decrypt by sending him the group contact information. Instead she adds Bob to 
-the group:
+decrypt by sending him the group contact information without a decryption share. 
+Instead she adds Bob to the group as a member:
 
 #%  ConsoleExample (Example.Group.GroupAddBob);
 

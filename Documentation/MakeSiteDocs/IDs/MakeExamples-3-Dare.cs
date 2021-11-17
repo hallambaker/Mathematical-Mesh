@@ -52,6 +52,7 @@ namespace ExampleGenerator {
 			}
 		public void _DareSchemaCatalog(CreateExamples Example) {
 
+				 Unfinished ("DareSchemaCatalog");
 					}
 		
 
@@ -65,6 +66,7 @@ namespace ExampleGenerator {
 			}
 		public void _DareSchemaSpool(CreateExamples Example) {
 
+				 Unfinished ("DareSchemaSpool");
 					}
 		
 
@@ -220,8 +222,9 @@ namespace ExampleGenerator {
 				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.MailMessageAsDAREPlaintext, false));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("This contains the same information as before but the mail message headers are \n{0}", _Indent);
-				_Output.Write ("now presented as  a list of Encoded Data Sequences.\n{0}", _Indent);
+				_Output.Write ("This contains the same information as before but the data we might wish to encrypt to\n{0}", _Indent);
+				_Output.Write ("protect the confidentiality of the payload is separated from data required for \n{0}", _Indent);
+				_Output.Write ("processing.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -264,6 +267,10 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Dare.MailMessageAsDAREEncrypted, false));
 				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("For efficiency of processing, the ContentMetaData is presented in plaintext.\n{0}", _Indent);
+				_Output.Write ("This header could be encrypted as an EDS sequence and presented as a \n{0}", _Indent);
+				_Output.Write ("cloaked header.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		

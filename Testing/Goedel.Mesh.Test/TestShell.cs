@@ -145,11 +145,11 @@ namespace Goedel.Mesh.Test {
 
 
         public int ErrorCount = 0;
-        public static int ErrorCountTotal = 0;
+        public static int ErrorCountTotal { get; set; } = 0;
 
 
         public int Count = 0;
-        public static int CountTotal = 0;
+        public static int CountTotal { get; set; } = 0;
 
         public TestCLI(TestShell shell) : base() => Shell = shell;
         public string MachineName => Shell.MachineName;

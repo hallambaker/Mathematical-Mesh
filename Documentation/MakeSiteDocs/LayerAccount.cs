@@ -60,7 +60,7 @@ namespace ExampleGenerator {
 
     public partial class LayerConnect : ExampleSet {
         public string EncryptResultFile = "plaintext2.txt";
-        public string encryptResultFile3 = "plaintext3.txt";
+        public string EncryptResultFile3 = "plaintext3.txt";
 
         public List<ExampleResult> ConnectRequest;
         public List<ExampleResult> ConnectPending;

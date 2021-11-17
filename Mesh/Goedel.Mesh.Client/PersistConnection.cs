@@ -54,7 +54,7 @@ namespace Goedel.Mesh.Client {
         /////<summary></summary>
         //public CatalogedPending DefaultPendingEntry { get; private set; }
 
-        Dictionary<string, CatalogedMachine> DictionaryLocal2Connection = new();
+        Dictionary<string, CatalogedMachine> dictionaryLocal2Connection = new();
 
         /////<summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
         //static PersistHost() {
@@ -70,33 +70,23 @@ namespace Goedel.Mesh.Client {
         /// Open or create a persistence store in specified mode with 
         /// the specified file name, content type and optional comment.
         /// </summary>
-        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        /// be applied to this message.</param>
         /// <param name="policy">The cryptographic policy to be applied to the spool.</param>
         /// <param name="fileName">Log file.</param>
-        /// <param name="readOnly">If true, persistence store must exist
-        /// and will be opened in read-only mode. If false, persistence store
-        /// is opened in read/write mode and a new store will be created
-        /// if none exists.</param>
         /// <param name="type">Type of data to store (the schema name).</param>
-        /// <param name="comment">Comment to be written to the log.</param>
         /// <param name="containerType">The Container type.</param>
         /// <param name="dataEncoding">The data encoding.</param>
         /// <param name="fileStatus">The file status in which to open the container.</param>
         /// <param name="keyCollection">The key collection to use to resolve private keys.</param>
         /// <param name="readContainer">If true read the container to initialize the persistence store.</param>
         public PersistHost(string fileName, string type = null,
-                    string comment = null, bool readOnly = false,
-                    FileStatus fileStatus = FileStatus.ConcurrentLocked,
-                    SequenceType containerType = SequenceType.Chain,
+                    FileStatus fileStatus = FileStatus.ConcurrentLocked, SequenceType containerType = SequenceType.Chain,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     DarePolicy policy = null,
-                    CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null,
                     bool readContainer = true) : base(
-                        fileName, type, comment,
-                        fileStatus, containerType, policy, dataEncoding,
-                        keyCollection, readContainer) {
+                        fileName, type, fileStatus,
+                        containerType, policy, dataEncoding, keyCollection,
+                        readContainer) {
             }
 
 
@@ -187,7 +177,7 @@ namespace Goedel.Mesh.Client {
             var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
 
             if (catalogItem.Local != null) {
-                DictionaryLocal2Connection.AddSafe(catalogItem.Local, catalogItem);
+                dictionaryLocal2Connection.AddSafe(catalogItem.Local, catalogItem);
                 }
 
             switch (catalogItem) {

@@ -77,7 +77,7 @@ namespace Goedel.XUnit {
 
     public class TestItemContainerPersistenceStore : PersistenceStore {
 
-        IPersistenceIndex IndexKeyUserProfileUDF;
+        IPersistenceIndex indexKeyUserProfileUDF;
 
 
         /// <summary>
@@ -94,11 +94,10 @@ namespace Goedel.XUnit {
         /// <param name="ContainerType">The Container type.</param>
         /// <param name="FileStatus">The file status in which to open the container.</param>
         public TestItemContainerPersistenceStore(string FileName, string Type = null,
-                    string Comment = null,
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
                     SequenceType ContainerType = SequenceType.Chain) : base(
-                        FileName, Type, Comment, FileStatus, ContainerType) =>
-                        IndexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
+                        FileName, Type, FileStatus, ContainerType) =>
+                        indexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
 
         static TestItem Get(IPersistenceEntry DataItem) => DataItem.JsonObject as TestItem;
 
@@ -119,28 +118,28 @@ namespace Goedel.XUnit {
         /// <param name="UserProfileUDF">The user profile UDF</param>
         /// <returns>The test item</returns>
         public TestItem GetUserProfileUDF(string UserProfileUDF) {
-            var IndexEntry = IndexKeyUserProfileUDF.Last(UserProfileUDF);
+            var IndexEntry = indexKeyUserProfileUDF.Last(UserProfileUDF);
             var DataItem = IndexEntry.Data;
             return Get(DataItem);
             }
 
-        /// <summary>
-        /// Get the previous value(s) of a test item version.
-        /// </summary>
-        /// <param name="TestItem">The base version</param>
-        /// <param name="MaxResult">Maximum number of results to return.</param>
-        /// <param name="OnOrAfter">Only return versions that are on or after the specified value.</param>
-        /// <returns>The list of previous versions.</returns>
-        public static List<TestItem> GetPrevious(TestItem TestItem, int MaxResult, DateTime OnOrAfter) => throw new NYI();
+        ///// <summary>
+        ///// Get the previous value(s) of a test item version.
+        ///// </summary>
+        ///// <param name="TestItem">The base version</param>
+        ///// <param name="MaxResult">Maximum number of results to return.</param>
+        ///// <param name="OnOrAfter">Only return versions that are on or after the specified value.</param>
+        ///// <returns>The list of previous versions.</returns>
+        //public static List<TestItem> GetPrevious(TestItem TestItem, int MaxResult, DateTime OnOrAfter) => throw new NYI();
 
 
-        public static TestItem GetRecord(int Record) =>
-            // read the header and data from container
+        //public static TestItem GetRecord(int Record) =>
+        //    // read the header and data from container
 
-            //
+        //    //
 
 
-            throw new NYI();
+        //    throw new NYI();
 
 
 

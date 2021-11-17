@@ -46,6 +46,13 @@ namespace ExampleGenerator {
 			 SchemaEntrySSH(Example);
 			 SchemaEntryMail(Example);
 			 SchemaConnectionHost(Example);
+			 SchemaAccessCapability(Example);
+			 SchemaNullCapability(Example);
+			 SchemaEncryptCapability(Example);
+			 SchemaPublicationCapability(Example);
+			 SchemaSignCapability(Example);
+			 SchemaKeyGenCapability(Example);
+			 SchemaFairExchangeCapability(Example);
 			}
 		
 
@@ -56,6 +63,104 @@ namespace ExampleGenerator {
 			 if (message == null) { ReportMissingExample(); return;}
 			 Format(message);
 			}
+		
+
+		//
+		// SchemaAccessCapability
+		//
+		public static void SchemaAccessCapability(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaAccessCapability.md");
+			Example._Output = _Output;
+			Example._SchemaAccessCapability(Example);
+			}
+		public void _SchemaAccessCapability(CreateExamples Example) {
+
+				 Unfinished ("SchemaAccessCapability");
+					}
+		
+
+		//
+		// SchemaNullCapability
+		//
+		public static void SchemaNullCapability(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaNullCapability.md");
+			Example._Output = _Output;
+			Example._SchemaNullCapability(Example);
+			}
+		public void _SchemaNullCapability(CreateExamples Example) {
+
+				 Unfinished ("SchemaNullCapability");
+					}
+		
+
+		//
+		// SchemaEncryptCapability
+		//
+		public static void SchemaEncryptCapability(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaEncryptCapability.md");
+			Example._Output = _Output;
+			Example._SchemaEncryptCapability(Example);
+			}
+		public void _SchemaEncryptCapability(CreateExamples Example) {
+
+				 Unfinished ("SchemaEncryptCapability");
+					}
+		
+
+		//
+		// SchemaSignCapability
+		//
+		public static void SchemaSignCapability(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaSignCapability.md");
+			Example._Output = _Output;
+			Example._SchemaSignCapability(Example);
+			}
+		public void _SchemaSignCapability(CreateExamples Example) {
+
+				 Unfinished ("SchemaSignCapability");
+					}
+		
+
+		//
+		// SchemaKeyGenCapability
+		//
+		public static void SchemaKeyGenCapability(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaKeyGenCapability.md");
+			Example._Output = _Output;
+			Example._SchemaKeyGenCapability(Example);
+			}
+		public void _SchemaKeyGenCapability(CreateExamples Example) {
+
+				 Unfinished ("SchemaKeyGenCapability");
+					}
+		
+
+		//
+		// SchemaFairExchangeCapability
+		//
+		public static void SchemaFairExchangeCapability(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaFairExchangeCapability.md");
+			Example._Output = _Output;
+			Example._SchemaFairExchangeCapability(Example);
+			}
+		public void _SchemaFairExchangeCapability(CreateExamples Example) {
+
+				 Unfinished ("SchemaFairExchangeCapability");
+					}
+		
+
+		//
+		// SchemaPublicationCapability
+		//
+		public static void SchemaPublicationCapability(CreateExamples Example) { /* XFile  */
+				using var _Output = new StreamWriter("Examples\\SchemaPublicationCapability.md");
+			Example._Output = _Output;
+			Example._SchemaPublicationCapability(Example);
+			}
+		public void _SchemaPublicationCapability(CreateExamples Example) {
+
+				 Unfinished ("SchemaPublicationCapability");
+					}
 		
 
 		//
@@ -370,6 +475,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaEntryPublication(CreateExamples Example) {
 
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("SchemaEntryPublication"));
 				 Format(Apps.PublicationEntry);
 					}
 		

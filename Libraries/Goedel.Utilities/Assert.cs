@@ -120,7 +120,7 @@ namespace Goedel.Utilities {
         /// static methods.
         /// </summary>
         /// <param name="dependency"></param>
-        public NYI(object dependency) => _ = dependency.Future();
+        public NYI(params object[] dependency) => _ = dependency.Future();
 
         }
 

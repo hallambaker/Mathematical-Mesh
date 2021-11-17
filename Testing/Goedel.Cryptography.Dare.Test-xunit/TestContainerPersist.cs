@@ -75,7 +75,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestPersistenceStoreCreate() {
             using var TestStore = new TestItemContainerPersistenceStore(
-            FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite);
+            FileTest, "application/test", FileStatus: FileStatus.Overwrite);
             // retrieve by master key -fail
             AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
             }
@@ -84,7 +84,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestPersistenceStoreAdd() {
             using var TestStore = new TestItemContainerPersistenceStore(
-            FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite);
+            FileTest, "application/test", FileStatus: FileStatus.Overwrite);
             // retrieve by master key -fail
             AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
             (TestStore.Container.FrameCount == 1).TestTrue();
@@ -109,7 +109,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestPersistenceStoreAll() {
             using (var TestStore = new TestItemContainerPersistenceStore(
-            FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite)) {
+            FileTest, "application/test", FileStatus: FileStatus.Overwrite)) {
                 // retrieve by master key -fail
                 AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
                 TestStore.New(AccountAlice);
@@ -126,7 +126,7 @@ namespace Goedel.XUnit {
 
             //Check we can read record back when opening the file in create or use existing mode
             using (var TestStore = new TestItemContainerPersistenceStore(
-                    FileTest, "application/test", "A testy store", FileStatus: FileStatus.Append)) {
+                    FileTest, "application/test", FileStatus: FileStatus.Append)) {
                 AssertTest.TestTrue(TestStore.Contains(AccountIDAlice));
                 AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 

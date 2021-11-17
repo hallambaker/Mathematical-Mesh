@@ -37,6 +37,8 @@ using Xunit;
 using Goedel.Cryptography;
 using Goedel.Mesh.Server;
 
+#pragma warning disable CA1822
+
 namespace Goedel.XUnit {
     public partial class TestService {
         List<string> RightsDirect => new() { Rights.IdRolesWeb };

@@ -40,6 +40,13 @@
 #% SchemaEntrySSH(Example);
 #% SchemaEntryMail(Example);
 #% SchemaConnectionHost(Example);
+#% SchemaAccessCapability(Example);
+#% SchemaNullCapability(Example);
+#% SchemaEncryptCapability(Example);
+#% SchemaPublicationCapability(Example);
+#% SchemaSignCapability(Example);
+#% SchemaKeyGenCapability(Example);
+#% SchemaFairExchangeCapability(Example);
 #!!!!Obsolete??
 #!% SchemaAccount(Example);
 #!% SchemaService(Example);
@@ -50,6 +57,36 @@
 #% if (message == null) { ReportMissingExample(); return;}
 #% Format(message);
 #end method
+
+
+
+#zfile CreateExamples SchemaAccessCapability "Examples\\SchemaAccessCapability.md" Example
+#% Unfinished ("SchemaAccessCapability");
+#end zfile
+
+#zfile CreateExamples SchemaNullCapability "Examples\\SchemaNullCapability.md" Example
+#% Unfinished ("SchemaNullCapability");
+#end zfile
+
+#zfile CreateExamples SchemaEncryptCapability "Examples\\SchemaEncryptCapability.md" Example
+#% Unfinished ("SchemaEncryptCapability");
+#end zfile
+
+#zfile CreateExamples SchemaSignCapability "Examples\\SchemaSignCapability.md" Example
+#% Unfinished ("SchemaSignCapability");
+#end zfile
+
+#zfile CreateExamples SchemaKeyGenCapability "Examples\\SchemaKeyGenCapability.md" Example
+#% Unfinished ("SchemaKeyGenCapability");
+#end zfile
+
+#zfile CreateExamples SchemaFairExchangeCapability "Examples\\SchemaFairExchangeCapability.md" Example
+#% Unfinished ("SchemaFairExchangeCapability");
+#end zfile
+
+#zfile CreateExamples SchemaPublicationCapability "Examples\\SchemaPublicationCapability.md" Example
+#% Unfinished ("SchemaPublicationCapability");
+#end zfile
 
 
 #zfile CreateExamples SchemaCode1 "Examples\\SchemaCode1.md" Example
@@ -198,6 +235,7 @@ The corresponding ConnectionService assertion is:
 #end zfile
 
 #zfile CreateExamples SchemaEntryPublication "Examples\\SchemaEntryPublication.md" Example
+#{Unfinished ("SchemaEntryPublication")}
 #% Format(Apps.PublicationEntry);
 #end zfile
 

@@ -30,6 +30,8 @@ using Goedel.Test;
 using Xunit;
 
 #pragma warning disable IDE0059
+#pragma warning disable CA1822
+
 namespace Goedel.XUnit {
     public partial class ShellTests {
 
@@ -165,7 +167,7 @@ namespace Goedel.XUnit {
             var result3 = deviceA.Dispatch("message pending") as ResultPending;
 
             // check there is exactly one pending message and accept it
-            var result4 = ProcessMessage(deviceA, true, 1, 0);
+            var result4 = ProcessMessage(deviceA, true, 1);
 
             ValidContact(deviceA, AliceAccount, AccountB);
 
@@ -192,7 +194,8 @@ namespace Goedel.XUnit {
             return result;
             }
 
-        static Result ProcessMessage(TestCLI device, bool accept, int length, int index) {
+        static Result ProcessMessage(TestCLI device, bool accept, int length) {
+
             var resultPending = device.Dispatch("message pending") as ResultPending;
             // check there is exactly one pending message.
             (resultPending.Messages.Count == length).TestTrue();

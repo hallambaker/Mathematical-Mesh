@@ -105,10 +105,8 @@ namespace Goedel.Mesh.Server {
         /// Add a new account. The account name must be unique.
         /// </summary>
         /// <param name="accountEntry">Account data to add.</param>
-        /// <param name="storeEntries">Updates to be prepopulated to the account stores.</param>
         public void AccountBind(
-                        AccountEntry accountEntry,
-                        List<ContainerUpdate> storeEntries) {
+                        AccountEntry accountEntry) {
             StoreEntry containerEntry;
 
             accountEntry.AccountAddress = accountEntry.AccountAddress;
@@ -125,11 +123,11 @@ namespace Goedel.Mesh.Server {
             // Lock the container entry so that we can initialize it.
             lock (containerEntry) {
                 Directory.CreateDirectory(directory);
-                if (storeEntries != null) {
-                    foreach (var entry in storeEntries) {
-                        Store.Append(directory, null, entry.Envelopes, entry.Container);
-                        }
-                    }
+                //if (storeEntries != null) {
+                //    foreach (var entry in storeEntries) {
+                //        Store.Append(directory, null, entry.Envelopes, entry.Container);
+                //        }
+                //    }
                 new Spool(directory, SpoolInbound.Label).Dispose();
                 new Spool(directory, SpoolOutbound.Label).Dispose();
                 new Spool(directory, SpoolLocal.Label).Dispose();
@@ -256,14 +254,16 @@ namespace Goedel.Mesh.Server {
                 EnvelopedCatalogedDevice = null
                 };
 
-            Screen.Write($"Enveloped???");
+            //Screen.Write($"Enveloped???");
             if (accountHandle.EnvelopedCatalogedDevice != null) {
-                statusResponse.EnvelopedCatalogedDevice =
-                    accountHandle.EnvelopedCatalogedDevice; // Hack: should allow this to be cached.
-                statusResponse.CatalogedDeviceDigest = accountHandle.CatalogedDeviceDigest;
+                if (accountHandle.CatalogedDeviceDigest != catalogedDeviceDigest) {
+                    statusResponse.EnvelopedCatalogedDevice =
+                        accountHandle.EnvelopedCatalogedDevice; // Hack: should allow this to be cached.
+                    statusResponse.CatalogedDeviceDigest = accountHandle.CatalogedDeviceDigest;
+                    }
                 }
 
-            Screen.Write($"Status complete");
+            //Screen.Write($"Status complete");
             return statusResponse;
 
             }
@@ -601,6 +601,7 @@ namespace Goedel.Mesh.Server {
                     string id) {
             using var accountEntry = GetAccountHandleLocked(jpcSession, AccountPrivilege.Post);
             var message = accountEntry.GetLocal(id);
+            targetAccount.Future();
 
             // return the message if found (otherwise null)
             var response = message == null ? null : new PollClaimResponse() {

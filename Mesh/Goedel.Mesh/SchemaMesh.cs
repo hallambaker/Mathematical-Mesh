@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/20/2021 2:48:18 PM
+//  This file was automatically generated at 11/16/2021 1:50:45 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.700
+//  Generator:  protogen version 3.0.0.719
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -133,7 +133,7 @@ namespace Goedel.Mesh {
 			{"Capability", Capability._Factory},
 			{"NullCapability", NullCapability._Factory},
 			{"AccessCapability", AccessCapability._Factory},
-			{"Publication", Publication._Factory},
+			{"PublicationCapability", PublicationCapability._Factory},
 			{"CryptographicCapability", CryptographicCapability._Factory},
 			{"CapabilityDecrypt", CapabilityDecrypt._Factory},
 			{"CapabilityDecryptPartial", CapabilityDecryptPartial._Factory},
@@ -8421,11 +8421,6 @@ namespace Goedel.Mesh {
 
 		public virtual List<string>				Rights  {get; set;}
         /// <summary>
-        ///Published data that may be claimed by the authorized party
-        /// </summary>
-
-		public virtual List<Publication>				Publications  {get; set;}
-        /// <summary>
         ///
         /// </summary>
 
@@ -8491,23 +8486,6 @@ namespace Goedel.Mesh {
 				_writer.WriteArrayEnd ();
 				}
 
-			if (Publications != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Publications", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Publications) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
-
 			if (EnvelopedCatalogedDevice != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("EnvelopedCatalogedDevice", 1);
@@ -8562,20 +8540,6 @@ namespace Goedel.Mesh {
 						}
 					break;
 					}
-				case "Publications" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Publications = new List <Publication> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  Publication ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new Publication (jsonReader);
-						Publications.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
 				case "EnvelopedCatalogedDevice" : {
 					// An untagged structure
 					EnvelopedCatalogedDevice = new Enveloped<CatalogedDevice> ();
@@ -8602,7 +8566,7 @@ namespace Goedel.Mesh {
 	///
 	/// 
 	/// </summary>
-	public partial class Publication : MeshItem {
+	public partial class PublicationCapability : Capability {
         /// <summary>
         ///Selector allowing a specific document to be requested.
         /// </summary>
@@ -8629,13 +8593,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "Publication";
+		public new const string __Tag = "PublicationCapability";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new Publication();
+		public static new JsonObject _Factory () => new PublicationCapability();
 
 
         /// <summary>
@@ -8663,6 +8627,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
+			((Capability)this).SerializeX(_writer, false, ref _first);
 			if (Identifier != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Identifier", 1);
@@ -8689,15 +8654,15 @@ namespace Goedel.Mesh {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Publication FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new PublicationCapability FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as Publication;
+				return Out as PublicationCapability;
 				}
-		    var Result = new Publication ();
+		    var Result = new PublicationCapability ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -8724,6 +8689,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				default : {
+					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}

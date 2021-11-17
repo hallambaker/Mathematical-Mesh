@@ -518,6 +518,7 @@ namespace ExampleGenerator {
 				_Output.Write ("example, the corresponding MessagePin is marked as having been used by appending \n{0}", _Indent);
 				_Output.Write ("a completion message to the Local spool.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				  DescribeMessage (Connect.ConnectPINCompleteMessage);
 				_Output.Write ("\n{0}", _Indent);
 					}
@@ -549,6 +550,8 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolGroupInvite(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Unfinished ("ProtocolGroupInvite"));
 				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage (Group.GroupInvitation);
 				_Output.Write ("\n{0}", _Indent);

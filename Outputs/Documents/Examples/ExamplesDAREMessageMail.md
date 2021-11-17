@@ -32,6 +32,7 @@ The plaintext form of the equivalent DARE Message encoding is:
   ]
 ~~~~
 
-This contains the same information as before but the mail message headers are 
-now presented as  a list of Encoded Data Sequences.
+This contains the same information as before but the data we might wish to encrypt to
+protect the confidentiality of the payload is separated from data required for 
+processing.
 

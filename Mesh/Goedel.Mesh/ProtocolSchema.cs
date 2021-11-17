@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/20/2021 2:48:17 PM
+//  This file was automatically generated at 11/16/2021 1:50:45 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.700
+//  Generator:  protogen version 3.0.0.719
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -2193,12 +2193,6 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual Enveloped<ProfileAccount>						EnvelopedProfileAccount  {get; set;}
-        /// <summary>
-        ///Data to be prepopulated to the account stores. This MUST include the access 
-        ///authorization for the devices to be used to complete the account initialization.
-        /// </summary>
-
-		public virtual List<ContainerUpdate>				Updates  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2253,23 +2247,6 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("EnvelopedProfileAccount", 1);
 					EnvelopedProfileAccount.Serialize (_writer, false);
 				}
-			if (Updates != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Updates", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Updates) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
-
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -2312,20 +2289,6 @@ namespace Goedel.Mesh {
 					EnvelopedProfileAccount = new Enveloped<ProfileAccount> ();
 					EnvelopedProfileAccount.Deserialize (jsonReader);
  
-					break;
-					}
-				case "Updates" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Updates = new List <ContainerUpdate> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  ContainerUpdate ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new ContainerUpdate (jsonReader);
-						Updates.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
 					break;
 					}
 				default : {

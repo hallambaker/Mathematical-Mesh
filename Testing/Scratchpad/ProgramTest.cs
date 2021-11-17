@@ -47,12 +47,12 @@ namespace Scratchpad {
         static void Main() {
             Screen.WriteInfo($"Start test  {DateTime.Now}");
 
-            for (var i = 0; i < 100; i++) {
-                Screen.WriteLine($"Test {i}");
+            //for (var i = 0; i < 100; i++) {
+            //    Screen.WriteLine($"Test {i}");
 
-                ShellTestsAdmin.Test().TestAccountDelete();
-                ShellTestsAdmin.Test().TestAccount();
-                }
+            //    ShellTestsAdmin.Test().TestAccountDelete();
+            //    ShellTestsAdmin.Test().TestAccount();
+            //    }
 
 
 
@@ -65,18 +65,19 @@ namespace Scratchpad {
 
             //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
-
+            ShellTestsAdmin.Test().TestProfileSSHPrivate();
 
             //ShellTestsAdmin.Test().TestProfileMail();
 
             //ShellTestsAdmin.Test().TestMessageContactRemote();
             //ShellTestsAdmin.Test().TestFilePlain();
 
-            //ShellTestsAdmin.Test().TestHello();
-            //ShellTestsAdmin.Test().TestAccountDelete();
-            //ShellTestsAdmin.Test().TestProfileConnectPin();
-            //ShellTestsAdmin.Test().TestProfileConnectPinExpired();
-            //ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
+            ShellTestsAdmin.Test().TestHello();
+            ShellTestsAdmin.Test().TestAccountDelete();
+            ShellTestsAdmin.Test().TestProfileConnectPin();
+            ShellTestsAdmin.Test().TestProfileConnectPinExpired();
+            ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
+
 
 
 

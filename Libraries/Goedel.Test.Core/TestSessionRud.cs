@@ -38,7 +38,7 @@ namespace Goedel.Test.Core {
 
         ConnectionInitiatorTest ConnectionInitiatorTest { get; }
 
-        RudStream RudStream { get; }
+        public RudStream RudStream { get; }
 
         /// <summary>
         /// Create a remote session with authentication under the

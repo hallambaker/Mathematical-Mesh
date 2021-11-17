@@ -123,26 +123,14 @@ namespace Goedel.Mesh {
                         CryptoKey encryptionKey,
                         ConnectionAddress connectionAddress
                         ) {
+            encryptionKey.Future();
+            connectionAddress.Future();
 
             profileGroup?.DareEnvelope.AssertNotNull(Internal.Throw);
 
             ActivationAccount = activationAccount;
             Key = profileGroup.AccountAddress;
             EnvelopedProfileGroup = profileGroup.GetEnvelopedProfileAccount();
-
-            //// encrypt the activationAccount under the device encryption key.
-            //activationAccount.AssertNotNull(Internal.Throw);
-            //activationAccount.Envelope(activationAccount.AdministratorSignatureKey, encryptionKey);
-            //activationAccount.DareEnvelope.AssertNotNull(Internal.Throw);
-
-            //var catalogedGroup = new CatalogedGroup() {
-
-            //    //EnvelopedActivationAccount = activationAccount.EnvelopedActivationAccount,
-            //    //EnvelopedConnectionAddress = connectionAddress.EnvelopedConnectionAddress,
-
-            //    };
-
-
             }
 
 

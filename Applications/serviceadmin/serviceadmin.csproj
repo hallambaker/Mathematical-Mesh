@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)CommonSettingsApplication.xml" />
+  <!-- Import Project="$(SolutionDir)CommonSettingsApplication.xml" / -->
+  <Import Project="$(SolutionDir)CommonSettingsWindows.xml" />
   <PropertyGroup>
     <Product>Meshhost</Product>
     <Description>Mesh service host.</Description>

@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/20/2021 2:47:39 PM
+//  This file was automatically generated at 11/16/2021 1:50:31 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.700
+//  Generator:  protogen version 3.0.0.719
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -53,7 +53,7 @@ namespace Goedel.Cryptography.Dare {
 
 	/// <summary>
 	///
-	/// Classes that describe the DARE Container Format.
+	/// Classes that describe the DARE Sequence Format.
 	/// </summary>
 	public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject {
 
@@ -102,7 +102,8 @@ namespace Goedel.Cryptography.Dare {
 		// Transaction Classes
 	/// <summary>
 	///
-	/// Information that describes container information
+	/// Information that describes the relationship of the envelope to its
+	/// enclosing sequence.
 	/// </summary>
 	public partial class SequenceInfo : SequenceData {
         /// <summary>
@@ -344,7 +345,7 @@ namespace Goedel.Cryptography.Dare {
 
 	/// <summary>
 	///
-	/// A container index
+	/// A record providing an index to the sequence.
 	/// </summary>
 	public partial class SequenceIndex : SequenceData {
 		bool								__Full = false;

@@ -173,48 +173,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="catalogedApplication">The updated application entry</param>
         public void ApplicationUpdate(
-            CatalogedApplication catalogedApplication) => throw new NYI(this);
-
-        // Phase2: Delete applications after grant
-        ///// <summary>
-        ///// Delete the application
-        ///// </summary>
-        ///// <param name="applicationId">The application to remove</param>
-        //public void ApplicationDelete(
-        //            string applicationId) => throw new NYI();
-
-
-
-        //public void Escrow(
-        //            PrivateKeyUDF keyPair,
-        //            string right,
-        //            string keyIdentifier,
-        //            string description) {
-        //    "Escrow the group seed for recovery".TaskFunctionality(suppress:Assert.HaltPhase1);
-
-        //    }
-
-
-
-        //// Phase2: Add SSH application explicitly
-        ///// <summary>
-        ///// Add SSH application to existing device.
-        ///// </summary>
-        ///// <param name="application">The application description.</param>
-        ///// <param name="ProfileDevice">The device profile.</param>
-        //public void ApplicationDeviceAdd(
-        //    CatalogedApplicationSsh application, Connection ProfileDevice=null) => throw new NYI();
-
-
-        //// Phase2: Add Mail application explicitly
-        ///// <summary>
-        ///// Add Mail application to existing device.
-        ///// </summary>
-        ///// <param name="application">The application description.</param>
-        ///// <param name="ProfileDevice">The device profile.</param>
-        //public void ApplicationDeviceAdd(
-        //    CatalogedApplicationMail application, Connection ProfileDevice = null) => throw new NYI();
-
+            CatalogedApplication catalogedApplication) => throw new NYI(this, catalogedApplication);
 
         #endregion
         }

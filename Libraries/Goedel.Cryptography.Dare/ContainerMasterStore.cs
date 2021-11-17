@@ -298,18 +298,16 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="FileName">Log file.</param>
         /// <param name="Type">Type of data to store (the schema name).</param>
-        /// <param name="Comment">Comment to be written to the log.</param>
         /// <param name="ContainerType">The Container type.</param>
         /// <param name="policy">The cryptographic policy to be applied to the container.</param>
         /// <param name="DataEncoding">The data encoding.</param>
         /// <param name="FileStatus">The file status in which to open the container.</param>
         public ContainerPersistenceStoreThreadSafe(string FileName, string Type = null,
-                    string Comment = null,
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
                     SequenceType ContainerType = SequenceType.Chain,
                     DarePolicy policy = null,
                     DataEncoding DataEncoding = DataEncoding.JSON) : base(
-                        FileName, Type, Comment, FileStatus, ContainerType, policy, DataEncoding) {
+                        FileName, Type, FileStatus, ContainerType, policy, DataEncoding) {
             }
 
         /// <summary>
