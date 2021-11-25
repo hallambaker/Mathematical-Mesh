@@ -1190,8 +1190,17 @@
             an error. This must be caught and processed by the host dispatch class.
             </summary>
             <param name="Session">The service session that is to handle the request.</param>
-            <param name="JSONReader">The input stream to be read</param>
+            <param name="jsonReader">The input stream to be read</param>
             <returns>The response to the request.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JpcInterface.GetRequest(Goedel.Protocol.JsonReader)">
+            <summary>
+            Parse the input stream <paramref name="jsonReader"/> and return the token 
+            identifying the method and the parsed request data.
+            </summary>
+            <param name="jsonReader">The input stream to be read</param>
+            <returns>The parsed request.</returns>
+            <exception cref="T:Goedel.Protocol.UnknownOperation">Thrown if am unknown operation is attempted.</exception>
         </member>
         <member name="M:Goedel.Protocol.JpcInterface.GetDirect(Goedel.Protocol.IJpcSession)">
             <summary>
@@ -2118,7 +2127,29 @@
             <summary>
             Factory delegate that returns a JSONObject.
             </summary>
-            <returns></returns>
+            <returns>Object of the specified type</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JsonDispatchDelegate">
+            <summary>
+            Method dispatch delegate
+            </summary>
+            <param name="request">The request data.</param>
+            <param name="session">The connection session.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JsonMethodDescription">
+            <summary>
+            Record describing a method.
+            </summary>
+            <param name="JsonFactoryDelegate">Delegate returning object of the request type.</param>
+            <param name="JsonDispatchDelegate">Dispatch method</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonMethodDescription.#ctor(Goedel.Protocol.JsonFactoryDelegate,Goedel.Protocol.JsonDispatchDelegate)">
+            <summary>
+            Record describing a method.
+            </summary>
+            <param name="JsonFactoryDelegate">Delegate returning object of the request type.</param>
+            <param name="JsonDispatchDelegate">Dispatch method</param>
         </member>
         <member name="T:Goedel.Protocol.JsonObject">
             <summary>

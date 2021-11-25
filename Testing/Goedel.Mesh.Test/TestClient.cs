@@ -27,61 +27,61 @@ using System.Net;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh.Test {
-    public class TestClient {
+namespace Goedel.Mesh.Test;
 
-        HttpEndpoint httpEndpoint;
-        bool Created { get; set; } = false;
+public class TestClient {
 
-
-        public TestClient(string accountAddress, List<Endpoint> endpoints) {
-
-            httpEndpoint = endpoints[0] as HttpEndpoint;
+    HttpEndpoint httpEndpoint;
+    bool Created { get; set; } = false;
 
 
-            //var session = new WebRemoteSession(null, null, accountAddress);
+    public TestClient(string accountAddress, List<Endpoint> endpoints) {
 
-            //var webClient = session.GetWebClient<ServiceManagementServiceClient>();
-
-            throw new NYI();
-            }
+        httpEndpoint = endpoints[0] as HttpEndpoint;
 
 
-        public void NextAction() {
-            var requestData = "Hello World".ToUTF8();
+        //var session = new WebRemoteSession(null, null, accountAddress);
 
-            if (!Created) {
-                HTTPRequest(requestData);
-                Created = true;
-                return;
-                }
+        //var webClient = session.GetWebClient<ServiceManagementServiceClient>();
+
+        throw new NYI();
+        }
 
 
+    public void NextAction() {
+        var requestData = "Hello World".ToUTF8();
 
+        if (!Created) {
             HTTPRequest(requestData);
+            Created = true;
+            return;
             }
 
 
-        public void HTTPRequest(byte[] requestData) {
-            using var client = new WebClient();
-            client.Headers.Add(HttpRequestHeader.UserAgent, "MeshTestClient");
-            client.Headers.Add(HttpRequestHeader.CacheControl, "no-store,no-transform");
 
-            var uri = httpEndpoint.GetServiceUri();
+        HTTPRequest(requestData);
+        }
 
 
-            //Screen.WriteLine($"Connect to {uri}");
-            try {
-                var responseData = client.UploadData(uri, requestData);
-                }
-            catch (Exception e) {
-                e.Future();
-                // deal with whatever issue here.
+    public void HTTPRequest(byte[] requestData) {
+        using var client = new WebClient();
+        client.Headers.Add(HttpRequestHeader.UserAgent, "MeshTestClient");
+        client.Headers.Add(HttpRequestHeader.CacheControl, "no-store,no-transform");
+
+        var uri = httpEndpoint.GetServiceUri();
 
 
-                }
+        //Screen.WriteLine($"Connect to {uri}");
+        try {
+            var responseData = client.UploadData(uri, requestData);
             }
-        public void UDPRequest() {
+        catch (Exception e) {
+            e.Future();
+            // deal with whatever issue here.
+
+
             }
+        }
+    public void UDPRequest() {
         }
     }

@@ -25,114 +25,114 @@ using System.Collections.Generic;
 using Goedel.Cryptography;
 using Goedel.Utilities;
 
-namespace Goedel.Protocol.Presentation {
+namespace Goedel.Protocol.Presentation;
+
+/// <summary>
+/// RUD Listener class, accepts connections from multiple sources and passes them to
+/// the specified service.
+/// </summary>
+public class RudListener : Listener {
+
+    #region // Properties
+
+    RudStream streamResponderChallenge = null;
+    #endregion
+    #region // Constructors
 
     /// <summary>
-    /// RUD Listener class, accepts connections from multiple sources and passes them to
-    /// the specified service.
+    /// Base constructor, populate the common properties.
     /// </summary>
-    public class RudListener : Listener {
+    /// <param name="credential">The credential used by the listener.</param>
+    /// <param name="providers">The service providers to be dispatched to.</param>
+    public RudListener(ICredentialPrivate credential, List<RudProvider> providers) :
+            base(credential, providers) {
+        }
 
-        #region // Properties
-
-        RudStream streamResponderChallenge = null;
-        #endregion
-        #region // Constructors
-
-        /// <summary>
-        /// Base constructor, populate the common properties.
-        /// </summary>
-        /// <param name="credential">The credential used by the listener.</param>
-        /// <param name="providers">The service providers to be dispatched to.</param>
-        public RudListener(ICredentialPrivate credential, List<RudProvider> providers) :
-                base(credential, providers) {
-            }
-
-        #endregion
-        #region // Methods 
+    #endregion
+    #region // Methods 
 
 
-        ///<inheritdoc/>
-        public override RudStream GetTemporaryResponder(
-            Packet packetRequest) => streamResponderChallenge ??
-                    MakeConnectionResponder().CacheValue(out streamResponderChallenge);
+    ///<inheritdoc/>
+    public override RudStream GetTemporaryResponder(
+        Packet packetRequest) => streamResponderChallenge ??
+                MakeConnectionResponder().CacheValue(out streamResponderChallenge);
 
 
-        private RudStream MakeConnectionResponder() {
-            var responder = new ConnectionResponder(this);
+    private RudStream MakeConnectionResponder() {
+        var responder = new ConnectionResponder(this);
 
-            return new RudStream(null, null, rudConnection: responder);
-            }
-
-
-        ///<inheritdoc/>
-        public override List<PacketExtension> MakeChallenge(
-                Packet packetRequest,
-                byte[] payload = null) {
-            var bytes = Platform.GetRandomBytes(16);
-            var challenge = new PacketExtension() {
-                Tag = Constants.ExtensionTagsChallengeTag,
-                Value = bytes
-                };
-            return new List<PacketExtension> { challenge };
-            }
-
-        ///<inheritdoc/>
-        public override bool VerifyChallenge(
-                Packet packetRequest) => true;
-
-        ///<inheritdoc/>
-        public override RudStream AcceptConnection(Packet packetRequest) {
+        return new RudStream(null, null, rudConnection: responder);
+        }
 
 
-            var responder = new ConnectionResponder(this, packetRequest);
+    ///<inheritdoc/>
+    public override List<PacketExtension> MakeChallenge(
+            Packet packetRequest,
+            byte[] payload = null) {
+        var bytes = Platform.GetRandomBytes(16);
+        var challenge = new PacketExtension() {
+            Tag = Constants.ExtensionTagsChallengeTag,
+            Value = bytes
+            };
+        return new List<PacketExtension> { challenge };
+        }
 
-            switch (packetRequest) {
-                case PacketInitiatorComplete packetClientCompleteDeferred: {
+    ///<inheritdoc/>
+    public override bool VerifyChallenge(
+            Packet packetRequest) => true;
+
+    ///<inheritdoc/>
+    public override RudStream AcceptConnection(Packet packetRequest) {
+
+
+        var responder = new ConnectionResponder(this, packetRequest);
+
+        switch (packetRequest) {
+            case PacketInitiatorComplete packetClientCompleteDeferred: {
                     responder.CompleteInitiatorComplete(packetClientCompleteDeferred);
 
                     return AcceptStream(packetClientCompleteDeferred.CiphertextExtensions, responder,
                         null);
                     }
-                }
-
-
-            throw new NYI();
             }
 
 
+        throw new NYI();
+        }
 
 
-        ///<inheritdoc/>
-        public override RudStream AcceptStream(List<PacketExtension> packetExtensions,
-                RudConnection rudConnection = null,
-                RudStream stream = null) {
-            RudStream child = null;
 
-            // NB: Some of this functionality could be expressed in the connection. Hoevever,
-            // it is (probably) better to combine this with connection creation.
 
-            byte[] streamId = null;
-            byte[] encrypt = null;
-            string account = null;
-            string protocol = null;
+    ///<inheritdoc/>
+    public override RudStream AcceptStream(List<PacketExtension> packetExtensions,
+            RudConnection rudConnection = null,
+            RudStream stream = null) {
+        RudStream child = null;
 
-            string streamType = null;
+        // NB: Some of this functionality could be expressed in the connection. Hoevever,
+        // it is (probably) better to combine this with connection creation.
 
-            foreach (var extension in packetExtensions) {
+        byte[] streamId = null;
+        byte[] encrypt = null;
+        string account = null;
+        string protocol = null;
 
-                switch (extension.Tag) {
-                    case Constants.ExtensionTagsStreamReceiverTag:
-                    case Constants.ExtensionTagsStreamClientTag: {
+        string streamType = null;
+
+        foreach (var extension in packetExtensions) {
+
+            switch (extension.Tag) {
+                case Constants.ExtensionTagsStreamReceiverTag:
+                case Constants.ExtensionTagsStreamClientTag: {
                         streamType = extension.Tag;
                         protocol = extension.Value.ToUTF8();
                         break;
                         }
-                    case Constants.ExtensionTagsStreamIdTag: {
+                case Constants.ExtensionTagsStreamIdTag: {
                         streamId = extension.Value;
                         break;
                         }
-                    case Constants.ExtensionTagsEncryptTag: {
+                case Constants.ExtensionTagsEncryptTag: {
                         streamId = extension.Value;
                         break;
                         }
@@ -140,38 +140,36 @@ namespace Goedel.Protocol.Presentation {
                     //    account = extension.Value.ToUTF8();
                     //    break;
                     //    }
-                    }
                 }
+            }
 
-            switch (streamType) {
-                case Constants.ExtensionTagsStreamClientTag: {
+        switch (streamType) {
+            case Constants.ExtensionTagsStreamClientTag: {
                     child = new RudStreamService(stream, protocol, accountAddress: account, rudConnection: rudConnection);
                     break;
                     }
-                case Constants.ExtensionTagsStreamReceiverTag: {
+            case Constants.ExtensionTagsStreamReceiverTag: {
                     child = new RudStreamReceiver(stream, protocol, accountAddress: account);
                     break;
                     }
-                default: {
+            default: {
                     return null;
                     }
-                }
-
-
-            child.SetOptions(child.LocalStreamId.Bytes, encrypt);
-
-            //Screen.WriteLine($"Replace {child.LocalStreamId.Value} ");
-            if (DictionaryStreamsInbound.TryGetValue(child.LocalStreamId, out var _)) {
-                DictionaryStreamsInbound.Remove(child.LocalStreamId);
-
-                }
-            DictionaryStreamsInbound.Add(child.LocalStreamId, child);
-
-
-            return child;
             }
 
-        #endregion
+
+        child.SetOptions(child.LocalStreamId.Bytes, encrypt);
+
+        //Screen.WriteLine($"Replace {child.LocalStreamId.Value} ");
+        if (DictionaryStreamsInbound.TryGetValue(child.LocalStreamId, out var _)) {
+            DictionaryStreamsInbound.Remove(child.LocalStreamId);
+
+            }
+        DictionaryStreamsInbound.Add(child.LocalStreamId, child);
+
+
+        return child;
         }
 
+    #endregion
     }

@@ -22,10 +22,11 @@
 
 using System.Collections.Generic;
 
-namespace Goedel.Cryptography.Jose {
-    partial class Constants {
+namespace Goedel.Cryptography.Jose;
 
-        public static string[] JoseTags = {
+partial class Constants {
+
+    public static string[] JoseTags = {
             "alg", "jku", "jwk", "kid", "x5u", "x5c", "x5t", "x5t#S256", "typ", "cty", "crit",
             "enc", "zip", "kty", "use", "key_ops", "sig", "sign", "verify", "encrypt", "decrypt",
             "wrapKey", "unwrapKey", "deriveKey", "deriveBits",
@@ -40,16 +41,15 @@ namespace Goedel.Cryptography.Jose {
             "Protected", "Header", "Payload", "Signature"
            };
 
-        public static Dictionary<string, int> MakeDictionary(string[] Tags) {
-            var Result = new Dictionary<string, int>(Tags.Length);
+    public static Dictionary<string, int> MakeDictionary(string[] Tags) {
+        var Result = new Dictionary<string, int>(Tags.Length);
 
-            for (var i = 0; i < Tags.Length; i++) {
-                Result.Add(Tags[i], i);
-                }
-
-            return Result;
+        for (var i = 0; i < Tags.Length; i++) {
+            Result.Add(Tags[i], i);
             }
 
-
+        return Result;
         }
+
+
     }

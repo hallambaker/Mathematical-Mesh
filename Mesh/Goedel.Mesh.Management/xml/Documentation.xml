@@ -96,6 +96,15 @@
         <member name="M:Goedel.Mesh.Management.ServiceManagementService.GetTagDictionary">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Mesh.Management.ServiceManagementService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="token">The method identifier</param>
+            <param name="request">The request data</param>
+            <param name="session">The client context.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagementService.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
             <summary>
             Dispatch object request in specified authentication context.
@@ -114,7 +123,7 @@
         </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagementService.ServiceConfig(Goedel.Mesh.Management.ServiceConfigRequest,Goedel.Protocol.IJpcSession)">
             <summary>
-            Base method for implementing the transaction  ServiceConfig.
+            Base method for implementing the transaction ServiceConfig.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="session">The request context.</param>
@@ -122,7 +131,7 @@
         </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagementService.ServiceStatus(Goedel.Mesh.Management.ServiceStatusRequest,Goedel.Protocol.IJpcSession)">
             <summary>
-            Base method for implementing the transaction  ServiceStatus.
+            Base method for implementing the transaction ServiceStatus.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="session">The request context.</param>

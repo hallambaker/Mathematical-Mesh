@@ -23,32 +23,31 @@ using System;
 
 using Goedel.Cryptography.PKIX;
 
-namespace Goedel.Cryptography.Dare {
+namespace Goedel.Cryptography.Dare;
 
-    /// <summary>
-    /// Stub key collection used to prevent keys being written to persistent storage.
-    /// </summary>
-    public class KeyCollectionEphemeral : KeyCollection, IKeyCollection {
+/// <summary>
+/// Stub key collection used to prevent keys being written to persistent storage.
+/// </summary>
+public class KeyCollectionEphemeral : KeyCollection, IKeyCollection {
 
-        ///<inheritdoc/>
-        public void ErasePrivateKey(string udf) => throw new NotImplementedException();
+    ///<inheritdoc/>
+    public void ErasePrivateKey(string udf) => throw new NotImplementedException();
 
-        ///<inheritdoc/>
-        public override IJson LocatePrivateKey(string udf) => throw new PrivateKeyNotFound();
+    ///<inheritdoc/>
+    public override IJson LocatePrivateKey(string udf) => throw new PrivateKeyNotFound();
 
-        ///<inheritdoc/>
-        public override void Persist(string udf, IPKIXPrivateKey privateKey, bool Exportable) =>
-                throw new NotImplementedException();
-
-        ///<inheritdoc/>
-        public override void Persist(string udf, IJson joseKey, bool exportable) =>
+    ///<inheritdoc/>
+    public override void Persist(string udf, IPKIXPrivateKey privateKey, bool Exportable) =>
             throw new NotImplementedException();
 
-        ///<inheritdoc/>
-        public override KeyAgreementResult RemoteAgreement(string serviceAddress, KeyPairAdvanced ephemeral, string shareId) => throw new NotImplementedException();
+    ///<inheritdoc/>
+    public override void Persist(string udf, IJson joseKey, bool exportable) =>
+        throw new NotImplementedException();
 
-        ///<inheritdoc/>
-        public TrustResult ValidateTrustPath(DareSignature dareSignature, string anchor = null) =>
-                throw new NotImplementedException();
-        }
+    ///<inheritdoc/>
+    public override KeyAgreementResult RemoteAgreement(string serviceAddress, KeyPairAdvanced ephemeral, string shareId) => throw new NotImplementedException();
+
+    ///<inheritdoc/>
+    public TrustResult ValidateTrustPath(DareSignature dareSignature, string anchor = null) =>
+            throw new NotImplementedException();
     }

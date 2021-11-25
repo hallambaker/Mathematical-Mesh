@@ -22,58 +22,58 @@
 
 using Xunit;
 
-namespace Goedel.XUnit {
-    public partial class ShellTests {
+namespace Goedel.XUnit;
+
+public partial class ShellTests {
 
 
 
-        [Fact]
-        public void TestProfileSSHPrivate() {
-            CreateAlice(out var device1, out var device2);
+    [Fact]
+    public void TestProfileSSHPrivate() {
+        CreateAlice(out var device1, out var device2);
 
-            device1.Dispatch($"ssh create /web");
-            device1.Dispatch($"ssh private /file=d1_ssh_prv.pem");
-            device1.Dispatch($"ssh public /file=d1_ssh_pub.pem");
-            //device1.Dispatch($"ssh show auth");
+        device1.Dispatch($"ssh create /web");
+        device1.Dispatch($"ssh private /file=d1_ssh_prv.pem");
+        device1.Dispatch($"ssh public /file=d1_ssh_pub.pem");
+        //device1.Dispatch($"ssh show auth");
 
-            device2.Dispatch($"account sync");
-            device2.Dispatch($"ssh private /file=d2_ssh_prv.pem");
-            device2.Dispatch($"ssh public /file=d1_ssh_pub.pem");
-            //device2.Dispatch($"ssh show auth");
+        device2.Dispatch($"account sync");
+        device2.Dispatch($"ssh private /file=d2_ssh_prv.pem");
+        device2.Dispatch($"ssh public /file=d1_ssh_pub.pem");
+        //device2.Dispatch($"ssh show auth");
 
-            var device3 = GetConnectedCLI(device1, "Device3", AliceAccount);
+        var device3 = GetConnectedCLI(device1, "Device3", AliceAccount);
 
-            device3.Dispatch($"ssh private /file=d3_ssh_prv.pem");
-            device3.Dispatch($"ssh public /file=d1_ssh_pub.pem");
-
-
-
-            // should all match
-            //device1.Dispatch($"ssh show auth");
-            //device2.Dispatch($"ssh show auth");
-            //device3.Dispatch($"ssh show auth");
-
-            EndTest();
-            }
-
-        //[Fact]
-        //public void TestProfileSSHPublic() {
-        //    var knownHosts = "known_hosts";
-
-        //    CreateAlice(out var device1, out var device2);
-
-        //    device1.Dispatch($"ssh add known {knownHosts}");
-
-        //    device1.Dispatch($"ssh show known");
-        //    device2.Dispatch($"ssh show known");
-
-        //    var device3 = GetConnectedCLI(device1, "Device3", AliceAccount);
-
-        //    device1.Dispatch($"ssh show known");
-        //    device2.Dispatch($"ssh show known");
-        //    device3.Dispatch($"ssh show known");
-        //    }
+        device3.Dispatch($"ssh private /file=d3_ssh_prv.pem");
+        device3.Dispatch($"ssh public /file=d1_ssh_pub.pem");
 
 
+
+        // should all match
+        //device1.Dispatch($"ssh show auth");
+        //device2.Dispatch($"ssh show auth");
+        //device3.Dispatch($"ssh show auth");
+
+        EndTest();
         }
+
+    //[Fact]
+    //public void TestProfileSSHPublic() {
+    //    var knownHosts = "known_hosts";
+
+    //    CreateAlice(out var device1, out var device2);
+
+    //    device1.Dispatch($"ssh add known {knownHosts}");
+
+    //    device1.Dispatch($"ssh show known");
+    //    device2.Dispatch($"ssh show known");
+
+    //    var device3 = GetConnectedCLI(device1, "Device3", AliceAccount);
+
+    //    device1.Dispatch($"ssh show known");
+    //    device2.Dispatch($"ssh show known");
+    //    device3.Dispatch($"ssh show known");
+    //    }
+
+
     }

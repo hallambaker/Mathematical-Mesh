@@ -30,195 +30,192 @@ using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
 
-    /// <summary>
-    /// JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
-    /// assertion).
-    /// </summary>
+/// <summary>
+/// JPC Credential bound to a Mesh credential (i.e. Mesh Profile and connection
+/// assertion).
+/// </summary>
 
-    public class MeshCredentialPublic : MeshKeyCredentialPublic {
-        #region // Properties
+public class MeshCredentialPublic : MeshKeyCredentialPublic {
+    #region // Properties
 
-        ///<inheritdoc cref="ICredential"/>
-        public KeyPairAdvanced AuthenticationPrivate { get; }
+    ///<inheritdoc cref="ICredential"/>
+    public KeyPairAdvanced AuthenticationPrivate { get; }
 
-        ///<summary>The device profile</summary> 
-        public ProfileDevice ProfileDevice { get; }
+    ///<summary>The device profile</summary> 
+    public ProfileDevice ProfileDevice { get; }
 
-        ///<summary>The connection device</summary> 
-        public ConnectionService ConnectionDevice { get; }
+    ///<summary>The connection device</summary> 
+    public ConnectionService ConnectionDevice { get; }
 
-        ///<summary>The address connection.</summary> 
-        public ConnectionAddress ConnectionAccount { get; }
-
-
-        #endregion
-        #region // Constructors
-
-        /// <summary>
-        /// Create a credential wrapper for a device key asserted by means of the connection
-        /// <paramref name="connectionDevice"/>.
-        /// </summary>
-        /// <param name="connectionDevice">The device connection assertion.</param>
-        /// <param name="profileDevice">The device profile</param>
-        /// <param name="connectionAccount">Connection to the account </param>
-        /// <param name="authenticationKey">The authentication key</param>
-        /// <param name="meshCredentialPrivate">The private credential.</param>
-        public MeshCredentialPublic(ProfileDevice profileDevice,
-                ConnectionService connectionDevice,
-                ConnectionAddress connectionAccount,
-                KeyPairAdvanced authenticationKey,
-                MeshCredentialPrivate meshCredentialPrivate = null) : base (authenticationKey) {
-            ProfileDevice = profileDevice ?? meshCredentialPrivate?.ProfileDevice;
-            ConnectionDevice = connectionDevice ?? meshCredentialPrivate?.ConnectionDevice;
-            ConnectionAccount = connectionAccount ?? meshCredentialPrivate?.ConnectionAccount;
-            AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
-            //AuthenticationPublic = authenticationKey;
-
-            //AuthenticationKeyId = authenticationKey.KeyIdentifier;
-            Account = connectionAccount?.Account ?? connectionDevice?.Account;
-            }
+    ///<summary>The address connection.</summary> 
+    public ConnectionAddress ConnectionAccount { get; }
 
 
-        #endregion
-        #region // Methods
-
-        /////<inheritdoc cref="ICredential"/>
-        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
-        //    (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
-        //                AuthenticationPublic);
-
-        /////<inheritdoc cref="ICredential"/>
-        //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<KeyPairAdvanced> ephemerals, string keyId) =>
-        //    (ephemerals[0], AuthenticationPublic);
-
-        /// <summary>
-        /// Verify the device.
-        /// </summary>
-        /// <returns>The verified device (if successful)</returns>
-        public MeshVerifiedDevice VerifyDevice() {
-            if (ConnectionDevice != null) {
-                return VerifyAccount();
-                }
-            ProfileDevice.AssertNotNull(NotAuthenticated.Throw);
-            ProfileDevice.Validate();
-            AuthenticationPublic.MatchKeyIdentifier(
-                    ProfileDevice.Authentication.Udf).AssertTrue(NotAuthenticated.Throw);
-            CredentialValidation = CredentialValidation.Device;
-            return new MeshVerifiedDevice(this);
-            }
-
-        /// <summary>
-        /// Verify the account
-        /// </summary>
-        /// <returns>The verified account (if successful)</returns>
-        public MeshVerifiedAccount VerifyAccount() {
-            ConnectionDevice.AssertNotNull(NotAuthenticated.Throw);
-
-            //Account = ConnectionAccount?.Account;
-
-            AuthenticationPublic.MatchKeyIdentifier(
-                ConnectionDevice.AuthenticationPublic.KeyIdentifier).AssertTrue(NotAuthenticated.Throw);
-            
-            CredentialValidation = CredentialValidation.Account;
-            return new MeshVerifiedAccount(this);
-
-            }
-
-
-        #endregion
-
-        }
+    #endregion
+    #region // Constructors
 
     /// <summary>
-    /// Wrapper for a private credential.
+    /// Create a credential wrapper for a device key asserted by means of the connection
+    /// <paramref name="connectionDevice"/>.
     /// </summary>
-    public class MeshCredentialPrivate : MeshKeyCredentialPrivate {
-        #region // Properties
+    /// <param name="connectionDevice">The device connection assertion.</param>
+    /// <param name="profileDevice">The device profile</param>
+    /// <param name="connectionAccount">Connection to the account </param>
+    /// <param name="authenticationKey">The authentication key</param>
+    /// <param name="meshCredentialPrivate">The private credential.</param>
+    public MeshCredentialPublic(ProfileDevice profileDevice,
+            ConnectionService connectionDevice,
+            ConnectionAddress connectionAccount,
+            KeyPairAdvanced authenticationKey,
+            MeshCredentialPrivate meshCredentialPrivate = null) : base(authenticationKey) {
+        ProfileDevice = profileDevice ?? meshCredentialPrivate?.ProfileDevice;
+        ConnectionDevice = connectionDevice ?? meshCredentialPrivate?.ConnectionDevice;
+        ConnectionAccount = connectionAccount ?? meshCredentialPrivate?.ConnectionAccount;
+        AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
+        //AuthenticationPublic = authenticationKey;
 
-        /////<inheritdoc/>
-        //public byte[] Value { get; }
-
-        //List<PacketExtension> Extensions { get; } = new();
-
-        ///<summary>The device profile</summary> 
-        public ProfileDevice ProfileDevice { get; }
-
-        ///<summary>The connection device</summary> 
-        public ConnectionService ConnectionDevice { get; }
-
-        ///<summary>The address connection.</summary> 
-        public ConnectionAddress ConnectionAccount { get; }
-
-
-
-        #endregion
-        #region // Constructors
-
-        /// <summary>
-        /// Create private credential
-        /// </summary>
-        /// <param name="profileDevice"></param>
-        /// <param name="connectionDevice"></param>
-        /// <param name="connectionAccount"></param>
-        /// <param name="authenticationKey"></param>
-        /// <param name="meshCredentialPrivate"></param>
-        public MeshCredentialPrivate(
-                ProfileDevice profileDevice,
-                ConnectionService connectionDevice,
-                ConnectionAddress connectionAccount,
-                KeyPairAdvanced authenticationKey,
-                MeshCredentialPrivate meshCredentialPrivate = null) : base (
-                            null,
-                                connectionAccount?.Account ?? connectionDevice?.Account) {
-
-            AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
-            AuthenticationPublic = AuthenticationPrivate;
-
-            ProfileDevice = profileDevice ?? meshCredentialPrivate?.ProfileDevice;
-            ConnectionDevice = connectionDevice ?? meshCredentialPrivate?.ConnectionDevice;
-            ConnectionAccount = connectionAccount ?? meshCredentialPrivate?.ConnectionAccount;
-
-
-            if (meshCredentialPrivate?.ProfileDevice is null & profileDevice is not null) {
-                Extensions.Add(new PacketExtension() {
-                    Tag = Constants.ExtensionTagsMeshProfileDeviceTag,
-                    Value = profileDevice.DareEnvelope.GetBytes(false)
-                    });
-                }
-            if (meshCredentialPrivate?.ConnectionDevice is null & connectionDevice is not null) {
-                authenticationKey.MatchKeyIdentifier(
-                        connectionDevice.Authentication.PublicParameters.KeyPair.KeyIdentifier).AssertTrue (NYI.Throw);
-                Extensions.Add(new PacketExtension() {
-                    Tag = Constants.ExtensionTagsMeshConnectionDeviceTag,
-                    Value = connectionDevice.DareEnvelope.GetBytes(false)
-                    });
-                }
-            if (meshCredentialPrivate?.ConnectionAccount is null & connectionAccount is not null) {
-                Extensions.Add(new PacketExtension() {
-                    Tag = Constants.ExtensionTagsMeshConnectionAddressTag,
-                    Value = connectionAccount.DareEnvelope.GetBytes(false)
-                    });
-                }
-            }
-
-        #endregion
-        #region Implement ICredentialPrivate
-
-        /// <summary>
-        /// Return the public credential.
-        /// </summary>
-        /// <returns></returns>
-        public MeshCredentialPublic GetMeshCredentialPublic () =>
-                    new(ProfileDevice,
-                    ConnectionDevice,
-                    ConnectionAccount,
-                    AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced);
-
-        #endregion
+        //AuthenticationKeyId = authenticationKey.KeyIdentifier;
+        Account = connectionAccount?.Account ?? connectionDevice?.Account;
         }
 
 
+    #endregion
+    #region // Methods
+
+    /////<inheritdoc cref="ICredential"/>
+    //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
+    //    (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
+    //                AuthenticationPublic);
+
+    /////<inheritdoc cref="ICredential"/>
+    //public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<KeyPairAdvanced> ephemerals, string keyId) =>
+    //    (ephemerals[0], AuthenticationPublic);
+
+    /// <summary>
+    /// Verify the device.
+    /// </summary>
+    /// <returns>The verified device (if successful)</returns>
+    public MeshVerifiedDevice VerifyDevice() {
+        if (ConnectionDevice != null) {
+            return VerifyAccount();
+            }
+        ProfileDevice.AssertNotNull(NotAuthenticated.Throw);
+        ProfileDevice.Validate();
+        AuthenticationPublic.MatchKeyIdentifier(
+                ProfileDevice.Authentication.Udf).AssertTrue(NotAuthenticated.Throw);
+        CredentialValidation = CredentialValidation.Device;
+        return new MeshVerifiedDevice(this);
+        }
+
+    /// <summary>
+    /// Verify the account
+    /// </summary>
+    /// <returns>The verified account (if successful)</returns>
+    public MeshVerifiedAccount VerifyAccount() {
+        ConnectionDevice.AssertNotNull(NotAuthenticated.Throw);
+
+        //Account = ConnectionAccount?.Account;
+
+        AuthenticationPublic.MatchKeyIdentifier(
+            ConnectionDevice.AuthenticationPublic.KeyIdentifier).AssertTrue(NotAuthenticated.Throw);
+
+        CredentialValidation = CredentialValidation.Account;
+        return new MeshVerifiedAccount(this);
+
+        }
+
+
+    #endregion
+
+    }
+
+/// <summary>
+/// Wrapper for a private credential.
+/// </summary>
+public class MeshCredentialPrivate : MeshKeyCredentialPrivate {
+    #region // Properties
+
+    /////<inheritdoc/>
+    //public byte[] Value { get; }
+
+    //List<PacketExtension> Extensions { get; } = new();
+
+    ///<summary>The device profile</summary> 
+    public ProfileDevice ProfileDevice { get; }
+
+    ///<summary>The connection device</summary> 
+    public ConnectionService ConnectionDevice { get; }
+
+    ///<summary>The address connection.</summary> 
+    public ConnectionAddress ConnectionAccount { get; }
+
+
+
+    #endregion
+    #region // Constructors
+
+    /// <summary>
+    /// Create private credential
+    /// </summary>
+    /// <param name="profileDevice"></param>
+    /// <param name="connectionDevice"></param>
+    /// <param name="connectionAccount"></param>
+    /// <param name="authenticationKey"></param>
+    /// <param name="meshCredentialPrivate"></param>
+    public MeshCredentialPrivate(
+            ProfileDevice profileDevice,
+            ConnectionService connectionDevice,
+            ConnectionAddress connectionAccount,
+            KeyPairAdvanced authenticationKey,
+            MeshCredentialPrivate meshCredentialPrivate = null) : base(
+                        null,
+                            connectionAccount?.Account ?? connectionDevice?.Account) {
+
+        AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
+        AuthenticationPublic = AuthenticationPrivate;
+
+        ProfileDevice = profileDevice ?? meshCredentialPrivate?.ProfileDevice;
+        ConnectionDevice = connectionDevice ?? meshCredentialPrivate?.ConnectionDevice;
+        ConnectionAccount = connectionAccount ?? meshCredentialPrivate?.ConnectionAccount;
+
+
+        if (meshCredentialPrivate?.ProfileDevice is null & profileDevice is not null) {
+            Extensions.Add(new PacketExtension() {
+                Tag = Constants.ExtensionTagsMeshProfileDeviceTag,
+                Value = profileDevice.DareEnvelope.GetBytes(false)
+                });
+            }
+        if (meshCredentialPrivate?.ConnectionDevice is null & connectionDevice is not null) {
+            authenticationKey.MatchKeyIdentifier(
+                    connectionDevice.Authentication.PublicParameters.KeyPair.KeyIdentifier).AssertTrue(NYI.Throw);
+            Extensions.Add(new PacketExtension() {
+                Tag = Constants.ExtensionTagsMeshConnectionDeviceTag,
+                Value = connectionDevice.DareEnvelope.GetBytes(false)
+                });
+            }
+        if (meshCredentialPrivate?.ConnectionAccount is null & connectionAccount is not null) {
+            Extensions.Add(new PacketExtension() {
+                Tag = Constants.ExtensionTagsMeshConnectionAddressTag,
+                Value = connectionAccount.DareEnvelope.GetBytes(false)
+                });
+            }
+        }
+
+    #endregion
+    #region Implement ICredentialPrivate
+
+    /// <summary>
+    /// Return the public credential.
+    /// </summary>
+    /// <returns></returns>
+    public MeshCredentialPublic GetMeshCredentialPublic() =>
+                new(ProfileDevice,
+                ConnectionDevice,
+                ConnectionAccount,
+                AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced);
+
+    #endregion
     }

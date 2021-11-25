@@ -32,212 +32,212 @@ using Goedel.Utilities;
 
 using Xunit;
 #pragma warning disable IDE0060
-namespace Goedel.XUnit {
-    public partial class TestContainers {
-        static TestContainers() {
-            }
+namespace Goedel.XUnit;
 
-        static KeyCollection MakeKeyCollection() {
-            var TestEnvironment = new TestEnvironmentCommon();
-            //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
-            return new KeyCollectionTestEnv(TestEnvironment.Path);
-            }
+public partial class TestContainers {
+    static TestContainers() {
+        }
 
-        [Fact]
-        public void ContainerOnceExchange() =>
-            ContainerFixedExchangeTest(DareConstants.PolicyEncryptionOnceTag, true, 10, 2048, 5, 2);
+    static KeyCollection MakeKeyCollection() {
+        var TestEnvironment = new TestEnvironmentCommon();
+        //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
+        return new KeyCollectionTestEnv(TestEnvironment.Path);
+        }
 
-        [Fact]
-        public void ContainerIsolatedPolicy() =>
-            ContainerFixedExchangeTest(DareConstants.PolicyEncryptionIsolatedTag, true, 10, 2048, 5, 2);
+    [Fact]
+    public void ContainerOnceExchange() =>
+        ContainerFixedExchangeTest(DareConstants.PolicyEncryptionOnceTag, true, 10, 2048, 5, 2);
 
-        [Fact]
-        public void ContainerSessionPolicy() =>
-            ContainerFixedExchangeTest(DareConstants.PolicyEncryptionSessionTag, false, 10, 2048, 5, 2);
+    [Fact]
+    public void ContainerIsolatedPolicy() =>
+        ContainerFixedExchangeTest(DareConstants.PolicyEncryptionIsolatedTag, true, 10, 2048, 5, 2);
+
+    [Fact]
+    public void ContainerSessionPolicy() =>
+        ContainerFixedExchangeTest(DareConstants.PolicyEncryptionSessionTag, false, 10, 2048, 5, 2);
 
 
-        [Theory]
-        [InlineData(DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
-        [InlineData(DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
-        [InlineData(DareConstants.PolicyEncryptionIsolatedTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
-        [InlineData(DareConstants.PolicyEncryptionIsolatedTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
-        [InlineData(DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
-        [InlineData(DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
-        public void ContainerFixedExchangeTest(
-                string encryptPolicy,
-                bool seal,
-                int records = 1, int maxSize = 0,
-                int reOpen = 0, int moveStep = 0,
-                CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.X448) {
-            // Setup
-            var keyCollection = MakeKeyCollection();
+    [Theory]
+    [InlineData(DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
+    [InlineData(DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
+    [InlineData(DareConstants.PolicyEncryptionIsolatedTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
+    [InlineData(DareConstants.PolicyEncryptionIsolatedTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
+    [InlineData(DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
+    [InlineData(DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
+    public void ContainerFixedExchangeTest(
+            string encryptPolicy,
+            bool seal,
+            int records = 1, int maxSize = 0,
+            int reOpen = 0, int moveStep = 0,
+            CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.X448) {
+        // Setup
+        var keyCollection = MakeKeyCollection();
 
-            // Generate key(s)
-            var encrypt = KeyPair.Factory(cryptoAlgorithmId,
-                    KeySecurity.Exportable, keyCollection, keyUses: KeyUses.Encrypt);
+        // Generate key(s)
+        var encrypt = KeyPair.Factory(cryptoAlgorithmId,
+                KeySecurity.Exportable, keyCollection, keyUses: KeyUses.Encrypt);
 
-            // Create Policy
-            var policy = new DarePolicy() {
-                Encryption = encryptPolicy,
-                EncryptKeys = new List<Cryptography.Jose.Key> {
+        // Create Policy
+        var policy = new DarePolicy() {
+            Encryption = encryptPolicy,
+            EncryptKeys = new List<Cryptography.Jose.Key> {
                     Cryptography.Jose.Key.FactoryPublic (encrypt)
                     },
-                Sealed = seal
-                };
+            Sealed = seal
+            };
 
-            var namebase = $"Incremental-{encryptPolicy}-";
-            // Exercise Container
-            TestContainerIncremental(namebase, keyCollection, policy, records, maxSize, reOpen, moveStep);
-            }
+        var namebase = $"Incremental-{encryptPolicy}-";
+        // Exercise Container
+        TestContainerIncremental(namebase, keyCollection, policy, records, maxSize, reOpen, moveStep);
+        }
 
-        static byte[] MakeRecordData(int record, int size) {
-            var rand = new Random(record);
-            size = rand.Next(1, size);
-            var result = new byte[size];
-            rand.NextBytes(result);
+    static byte[] MakeRecordData(int record, int size) {
+        var rand = new Random(record);
+        size = rand.Next(1, size);
+        var result = new byte[size];
+        rand.NextBytes(result);
 
-            Console.WriteLine($"MakeRecordData  {record} {size} => {result} ");
+        Console.WriteLine($"MakeRecordData  {record} {size} => {result} ");
 
 
-            return result;
-            }
+        return result;
+        }
 
-        static bool Verify(
-                    Sequence container,
-                    DarePolicy darePolicy,
-                    SequenceFrameIndex frameIndex,
-                    int record,
-                    int size,
-                    IKeyLocate keyCollection) {
+    static bool Verify(
+                Sequence container,
+                DarePolicy darePolicy,
+                SequenceFrameIndex frameIndex,
+                int record,
+                int size,
+                IKeyLocate keyCollection) {
 
-            bool encrypt = true;
-            bool? keyExchange = null;
+        bool encrypt = true;
+        bool? keyExchange = null;
 
-            var header = frameIndex.Header;
+        var header = frameIndex.Header;
 
-            switch (darePolicy.Encryption) {
-                case DareConstants.PolicyEncryptionOnceTag: {
+        switch (darePolicy.Encryption) {
+            case DareConstants.PolicyEncryptionOnceTag: {
                     keyExchange = (header.Index == 0);
                     break;
                     }
-                case DareConstants.PolicyEncryptionIsolatedTag: {
+            case DareConstants.PolicyEncryptionIsolatedTag: {
                     keyExchange = true;
                     break;
                     }
 
-                case DareConstants.PolicyEncryptionNoneTag: {
+            case DareConstants.PolicyEncryptionNoneTag: {
                     encrypt = false;
                     break;
                     }
-                case DareConstants.PolicyEncryptionSessionTag: {
+            case DareConstants.PolicyEncryptionSessionTag: {
                     keyExchange = null;
                     break;
                     }
-                default: {
+            default: {
                     throw new NYI();
                     }
-                }
-
-            // Check policy is applied correctly
-            (frameIndex.IsEncrypted == encrypt).TestTrue();
-            (keyExchange == null || keyExchange == frameIndex.KeyExchange).TestTrue();
-
-            // check the payload
-            frameIndex.HasPayload.TestTrue();
-            var payload = frameIndex.GetPayload(container, keyCollection);
-            var test = MakeRecordData(record, size);
-            payload.TestEqual(test);
-
-            // check the encrypted payload isn't the plaintext(!)
-            if (frameIndex.IsEncrypted) {
-                var body = frameIndex.GetBody(container);
-                ArrayUtilities.IsEqualTo(body, test).TestFalse();
-                }
-
-            return true;
             }
 
-        static void TestContainerIncremental(
-                string namebase,
-                    IKeyLocate keyCollection,
-                DarePolicy darePolicy = null,
-                int records = 1, int maxSize = 0,
-                int reOpen = 0, int moveStep = 0) {
+        // Check policy is applied correctly
+        (frameIndex.IsEncrypted == encrypt).TestTrue();
+        (keyExchange == null || keyExchange == frameIndex.KeyExchange).TestTrue();
 
-            reOpen = reOpen == 0 ? records : reOpen;
-            maxSize = maxSize == 0 ? records + 1 : maxSize;
+        // check the payload
+        frameIndex.HasPayload.TestTrue();
+        var payload = frameIndex.GetPayload(container, keyCollection);
+        var test = MakeRecordData(record, size);
+        payload.TestEqual(test);
 
-            var filename = $"namebase-{records}-{maxSize}-{reOpen}-{moveStep}";
-            int record;
+        // check the encrypted payload isn't the plaintext(!)
+        if (frameIndex.IsEncrypted) {
+            var body = frameIndex.GetBody(container);
+            ArrayUtilities.IsEqualTo(body, test).TestFalse();
+            }
 
-            // Write initial set of records
-            using (var XContainer = Sequence.NewContainer(
-                            filename, FileStatus.Overwrite, sequenceType:
-                            SequenceType.Merkle,
-                            policy: darePolicy)) {
-                for (record = 0; record < reOpen; record++) {
-                    var Test = MakeRecordData(record, maxSize);
-                    XContainer.Append(Test);
-                    }
+        return true;
+        }
+
+    static void TestContainerIncremental(
+            string namebase,
+                IKeyLocate keyCollection,
+            DarePolicy darePolicy = null,
+            int records = 1, int maxSize = 0,
+            int reOpen = 0, int moveStep = 0) {
+
+        reOpen = reOpen == 0 ? records : reOpen;
+        maxSize = maxSize == 0 ? records + 1 : maxSize;
+
+        var filename = $"namebase-{records}-{maxSize}-{reOpen}-{moveStep}";
+        int record;
+
+        // Write initial set of records
+        using (var XContainer = Sequence.NewContainer(
+                        filename, FileStatus.Overwrite, sequenceType:
+                        SequenceType.Merkle,
+                        policy: darePolicy)) {
+            for (record = 0; record < reOpen; record++) {
+                var Test = MakeRecordData(record, maxSize);
+                XContainer.Append(Test);
                 }
+            }
 
-            // Write additional records
-            while (record < records) {
-                using var XContainer = Sequence.Open(filename, FileStatus.Append, keyCollection);
-                for (var i = 0; (record < records) & i < reOpen; i++) {
-                    var Test = MakeRecordData(record, maxSize);
-                    XContainer.Append(Test);
-                    record++;
-                    }
+        // Write additional records
+        while (record < records) {
+            using var XContainer = Sequence.Open(filename, FileStatus.Append, keyCollection);
+            for (var i = 0; (record < records) & i < reOpen; i++) {
+                var Test = MakeRecordData(record, maxSize);
+                XContainer.Append(Test);
+                record++;
                 }
+            }
 
-            using (var XContainer = Sequence.Open(filename, FileStatus.Read,
-                            keyLocate: keyCollection)) {
-                XContainer.VerifySequence();
-                }
-
-
-            //var Headers = new List<DareHeader>();
-
-
-            // Read records 
-            using (var XContainer = Sequence.Open(filename, FileStatus.Read,
-                            keyLocate: keyCollection)) {
-
-                record = 0;
-                foreach (var ContainerDataReader in XContainer) {
-                    Verify(XContainer, darePolicy, ContainerDataReader, record++, maxSize, keyCollection);
-                    }
-
-                //XContainer.CheckContainer(Headers);
-                }
-
-            //Test random access.
-            if (moveStep > 0) {
-                // Check in forward direction
-                using (var XContainer = Sequence.Open(filename, FileStatus.Read, keyCollection)) {
-                    for (record = moveStep; record < records; record += moveStep) {
-                        var ContainerDataReader = XContainer.GetSequenceFrameIndex(record);
-                        (ContainerDataReader.Header.SequenceInfo.Index == record).TestTrue();
-                        }
-
-                    }
-
-                // Check in backwards direction
-                using (var XContainer = Sequence.Open(filename, FileStatus.Read, keyCollection)) {
-                    for (record = records; record > 0; record -= moveStep) {
-                        var ContainerDataReader = XContainer.GetSequenceFrameIndex(record);
-                        (ContainerDataReader.Header.SequenceInfo.Index == record).TestTrue();
-                        }
-                    }
-
-                }
-
+        using (var XContainer = Sequence.Open(filename, FileStatus.Read,
+                        keyLocate: keyCollection)) {
+            XContainer.VerifySequence();
             }
 
 
+        //var Headers = new List<DareHeader>();
 
 
+        // Read records 
+        using (var XContainer = Sequence.Open(filename, FileStatus.Read,
+                        keyLocate: keyCollection)) {
+
+            record = 0;
+            foreach (var ContainerDataReader in XContainer) {
+                Verify(XContainer, darePolicy, ContainerDataReader, record++, maxSize, keyCollection);
+                }
+
+            //XContainer.CheckContainer(Headers);
+            }
+
+        //Test random access.
+        if (moveStep > 0) {
+            // Check in forward direction
+            using (var XContainer = Sequence.Open(filename, FileStatus.Read, keyCollection)) {
+                for (record = moveStep; record < records; record += moveStep) {
+                    var ContainerDataReader = XContainer.GetSequenceFrameIndex(record);
+                    (ContainerDataReader.Header.SequenceInfo.Index == record).TestTrue();
+                    }
+
+                }
+
+            // Check in backwards direction
+            using (var XContainer = Sequence.Open(filename, FileStatus.Read, keyCollection)) {
+                for (record = records; record > 0; record -= moveStep) {
+                    var ContainerDataReader = XContainer.GetSequenceFrameIndex(record);
+                    (ContainerDataReader.Header.SequenceInfo.Index == record).TestTrue();
+                    }
+                }
+
+            }
 
         }
+
+
+
+
+
     }

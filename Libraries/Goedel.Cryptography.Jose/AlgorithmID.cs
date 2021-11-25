@@ -23,42 +23,42 @@ using System.Collections.Generic;
 
 using Goedel.Utilities;
 
-namespace Goedel.Cryptography.Jose {
+namespace Goedel.Cryptography.Jose;
+
+/// <summary>
+/// Constants and related methods for identifying cryptographic algorithms and suites.
+/// </summary>
+public static class AlgorithmID {
 
     /// <summary>
-    /// Constants and related methods for identifying cryptographic algorithms and suites.
+    /// Lookup  identifier by Jose name or commonly used alias
     /// </summary>
-    public static class AlgorithmID {
-
-        /// <summary>
-        /// Lookup  identifier by Jose name or commonly used alias
-        /// </summary>
-        public static readonly Dictionary<string, CryptoAlgorithmId> UpperToID =
-            new() {
-                    { "AES", CryptoAlgorithmId.AES256 },
-                    { "AES256", CryptoAlgorithmId.AES256 },
-                    { "AES128", CryptoAlgorithmId.AES128 },
-                    { "S512", CryptoAlgorithmId.SHA_2_512 },
-                    { "S256", CryptoAlgorithmId.SHA_2_256 },
-                    { "SHA2", CryptoAlgorithmId.SHA_2_512 },
-                    { "SHA256", CryptoAlgorithmId.SHA_2_256 },
+    public static readonly Dictionary<string, CryptoAlgorithmId> UpperToID =
+        new() {
+                { "AES", CryptoAlgorithmId.AES256 },
+                { "AES256", CryptoAlgorithmId.AES256 },
+                { "AES128", CryptoAlgorithmId.AES128 },
+                { "S512", CryptoAlgorithmId.SHA_2_512 },
+                { "S256", CryptoAlgorithmId.SHA_2_256 },
+                { "SHA2", CryptoAlgorithmId.SHA_2_512 },
+                { "SHA256", CryptoAlgorithmId.SHA_2_256 },
                 //{"SHA128",  CryptoAlgorithmID.SHA_2_512T128 },
                     { "SHA512", CryptoAlgorithmId.SHA_2_512 },
-                    { "SHA3", CryptoAlgorithmId.SHA_3_512 },
-                    { "SHA3256", CryptoAlgorithmId.SHA_3_256 },
-                    { "X448", CryptoAlgorithmId.X448 },
-                    { "X25519", CryptoAlgorithmId.X25519 },
-                    { "ED448", CryptoAlgorithmId.Ed448 },
-                    { "ED25519", CryptoAlgorithmId.Ed25519 },
+                { "SHA3", CryptoAlgorithmId.SHA_3_512 },
+                { "SHA3256", CryptoAlgorithmId.SHA_3_256 },
+                { "X448", CryptoAlgorithmId.X448 },
+                { "X25519", CryptoAlgorithmId.X25519 },
+                { "ED448", CryptoAlgorithmId.Ed448 },
+                { "ED25519", CryptoAlgorithmId.Ed25519 },
                 //{"", CryptoAlgorithmID }
                 };
 
 
-        /// <summary>
-        /// Lookup identifier by Jose name.
-        /// </summary>
-        public static readonly Dictionary<string, CryptoAlgorithmId> StringToID =
-            new() {
+    /// <summary>
+    /// Lookup identifier by Jose name.
+    /// </summary>
+    public static readonly Dictionary<string, CryptoAlgorithmId> StringToID =
+        new() {
                 //SHA-256	alg (Private)
                     { "S256", CryptoAlgorithmId.SHA_2_256 },
                 //SHA-512	alg (Private)
@@ -132,7 +132,7 @@ namespace Goedel.Cryptography.Jose {
 
                 // Diffie Hellman using HKDF Key derrivation and RFC3394 Key Wrap
                     { "DH", CryptoAlgorithmId.DH },
-                    { "ECDH", CryptoAlgorithmId.ECDH },
+                { "ECDH", CryptoAlgorithmId.ECDH },
 
                 // Special
 
@@ -167,106 +167,105 @@ namespace Goedel.Cryptography.Jose {
 
                 };
 
-        /// <summary>
-        /// Lookup Jose Name by identifier.
-        /// </summary>
-        public static readonly Dictionary<CryptoAlgorithmId, string> IdToString =
-            new();
+    /// <summary>
+    /// Lookup Jose Name by identifier.
+    /// </summary>
+    public static readonly Dictionary<CryptoAlgorithmId, string> IdToString =
+        new();
 
-        // This is called as a one time initializer
-        static AlgorithmID() {
-            foreach (var Entry in UpperToID) {
-                IdToString.AddSafe(Entry.Value, Entry.Key);
-                }
-            foreach (var Entry in StringToID) {
-                IdToString.AddSafe(Entry.Value, Entry.Key);
-                UpperToID.AddSafe(Entry.Key.ToUpper(), Entry.Value);
-                }
+    // This is called as a one time initializer
+    static AlgorithmID() {
+        foreach (var Entry in UpperToID) {
+            IdToString.AddSafe(Entry.Value, Entry.Key);
+            }
+        foreach (var Entry in StringToID) {
+            IdToString.AddSafe(Entry.Value, Entry.Key);
+            UpperToID.AddSafe(Entry.Key.ToUpper(), Entry.Value);
+            }
+        }
+
+    /// <summary>
+    /// Convert a case sensitive JOSE name to an identifier.
+    /// </summary>
+    /// <param name="JoseID">Jose Name</param>
+    /// <returns>Identifier</returns>
+    public static CryptoAlgorithmId FromJoseID(this string JoseID) {
+        if (JoseID == null) {
+            return CryptoAlgorithmId.NULL;
             }
 
-        /// <summary>
-        /// Convert a case sensitive JOSE name to an identifier.
-        /// </summary>
-        /// <param name="JoseID">Jose Name</param>
-        /// <returns>Identifier</returns>
-        public static CryptoAlgorithmId FromJoseID(this string JoseID) {
-            if (JoseID == null) {
-                return CryptoAlgorithmId.NULL;
-                }
+        var Found = StringToID.TryGetValue(JoseID, out CryptoAlgorithmId result);
+        return Found ? result : CryptoAlgorithmId.NULL;
+        }
 
-            var Found = StringToID.TryGetValue(JoseID, out CryptoAlgorithmId result);
-            return Found ? result : CryptoAlgorithmId.NULL;
-            }
-
-        /// <summary>
-        /// Convert a case sensitive JOSE name to an identifier.
-        /// </summary>
-        /// <param name="joseID">Jose Name</param>
-        /// <param name="force">Force use of encryption if not specified.</param>
-        /// <returns>Identifier</returns>
-        public static CryptoAlgorithmId FromJoseIDEncryption(this string joseID, bool force = false) =>
-            joseID switch {
-                null => force ? CryptoID.DefaultEncryptionId : CryptoAlgorithmId.NULL,
-                "" => force ? CryptoID.DefaultEncryptionId : CryptoAlgorithmId.NULL,
-                "none" => force ? CryptoID.DefaultEncryptionId : CryptoAlgorithmId.NULL,
-                "default" => CryptoID.DefaultEncryptionId,
-                _ => FromJoseID(joseID)
-                };
-
-        /// <summary>
-        /// Convert a case sensitive JOSE name to an identifier.
-        /// </summary>
-        /// <param name="joseID">Jose Name</param>
-        /// <param name="force">Force use of digest if not specified.</param>
-        /// <returns>Identifier</returns>
-        public static CryptoAlgorithmId FromJoseIDDigest(this string joseID, bool force = false) =>
-            joseID switch {
-                null => force ? CryptoID.DefaultDigestId : CryptoAlgorithmId.NULL,
-                "" => force ? CryptoID.DefaultDigestId : CryptoAlgorithmId.NULL,
-                "none" => force ? CryptoID.DefaultDigestId : CryptoAlgorithmId.NULL,
-                "default" => CryptoID.DefaultDigestId,
-                _ => FromJoseID(joseID)
-                };
-
-
-        /// <summary>
-        /// Convert a case insensitive algorithm name to an identifier.
-        /// </summary>
-        /// <param name="uncasedID">Jose Name</param>
-        /// <param name="defaultID">Optional deafult algorithm to be returned if 
-        /// <paramref name="uncasedID"/> is null.</param>
-        /// <returns>Identifier</returns>
-        public static CryptoAlgorithmId ToCryptoAlgorithmID(this string uncasedID,
-                    CryptoAlgorithmId defaultID = CryptoAlgorithmId.NULL) {
-            if (uncasedID == null) {
-                return defaultID;
-                }
-
-            var Found = UpperToID.TryGetValue(uncasedID.ToUpper(), out CryptoAlgorithmId result);
-            return Found ? result : CryptoAlgorithmId.Unknown;
-            }
-
-
-        /// <summary>
-        /// Convert an identifier to a Jose name
-        /// </summary>
-        /// <param name="ID">Identifier</param>
-        /// <returns>Jose Name</returns>
-        public static string ToJoseID(this CryptoAlgorithmId ID) {
-            var Found = IdToString.TryGetValue(ID, out var Result);
-            return Found ? Result : null;
-            }
-
-        /// <summary>
-        /// Convert a JOSE Key uses string to a KeyUses enumeration.
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <returns></returns>
-        public static KeyUses GetUses(this string tag) => tag switch {
-            "enc" => KeyUses.Encrypt,
-            "sig" => KeyUses.Sign,
-            _ => KeyUses.Any,
+    /// <summary>
+    /// Convert a case sensitive JOSE name to an identifier.
+    /// </summary>
+    /// <param name="joseID">Jose Name</param>
+    /// <param name="force">Force use of encryption if not specified.</param>
+    /// <returns>Identifier</returns>
+    public static CryptoAlgorithmId FromJoseIDEncryption(this string joseID, bool force = false) =>
+        joseID switch {
+            null => force ? CryptoID.DefaultEncryptionId : CryptoAlgorithmId.NULL,
+            "" => force ? CryptoID.DefaultEncryptionId : CryptoAlgorithmId.NULL,
+            "none" => force ? CryptoID.DefaultEncryptionId : CryptoAlgorithmId.NULL,
+            "default" => CryptoID.DefaultEncryptionId,
+            _ => FromJoseID(joseID)
             };
 
+    /// <summary>
+    /// Convert a case sensitive JOSE name to an identifier.
+    /// </summary>
+    /// <param name="joseID">Jose Name</param>
+    /// <param name="force">Force use of digest if not specified.</param>
+    /// <returns>Identifier</returns>
+    public static CryptoAlgorithmId FromJoseIDDigest(this string joseID, bool force = false) =>
+        joseID switch {
+            null => force ? CryptoID.DefaultDigestId : CryptoAlgorithmId.NULL,
+            "" => force ? CryptoID.DefaultDigestId : CryptoAlgorithmId.NULL,
+            "none" => force ? CryptoID.DefaultDigestId : CryptoAlgorithmId.NULL,
+            "default" => CryptoID.DefaultDigestId,
+            _ => FromJoseID(joseID)
+            };
+
+
+    /// <summary>
+    /// Convert a case insensitive algorithm name to an identifier.
+    /// </summary>
+    /// <param name="uncasedID">Jose Name</param>
+    /// <param name="defaultID">Optional deafult algorithm to be returned if 
+    /// <paramref name="uncasedID"/> is null.</param>
+    /// <returns>Identifier</returns>
+    public static CryptoAlgorithmId ToCryptoAlgorithmID(this string uncasedID,
+                CryptoAlgorithmId defaultID = CryptoAlgorithmId.NULL) {
+        if (uncasedID == null) {
+            return defaultID;
+            }
+
+        var Found = UpperToID.TryGetValue(uncasedID.ToUpper(), out CryptoAlgorithmId result);
+        return Found ? result : CryptoAlgorithmId.Unknown;
         }
+
+
+    /// <summary>
+    /// Convert an identifier to a Jose name
+    /// </summary>
+    /// <param name="ID">Identifier</param>
+    /// <returns>Jose Name</returns>
+    public static string ToJoseID(this CryptoAlgorithmId ID) {
+        var Found = IdToString.TryGetValue(ID, out var Result);
+        return Found ? Result : null;
+        }
+
+    /// <summary>
+    /// Convert a JOSE Key uses string to a KeyUses enumeration.
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <returns></returns>
+    public static KeyUses GetUses(this string tag) => tag switch {
+        "enc" => KeyUses.Encrypt,
+        "sig" => KeyUses.Sign,
+        _ => KeyUses.Any,
+        };
+
     }

@@ -28,124 +28,122 @@ using Goedel.Cryptography.Dare;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
+/// <summary>
+/// Mesh device key public credential.
+/// </summary>
+public class MeshKeyCredentialPublic : KeyCredentialPublic, ICredentialPublic {
+
+    #region // Constructors
     /// <summary>
-    /// Mesh device key public credential.
+    /// Create a new instance with the public key <paramref name="authenticationPublic"/>
     /// </summary>
-    public class MeshKeyCredentialPublic : KeyCredentialPublic, ICredentialPublic{
-
-        #region // Constructors
-        /// <summary>
-        /// Create a new instance with the public key <paramref name="authenticationPublic"/>
-        /// </summary>
-        /// <param name="authenticationPublic">The public key.</param>
-        public MeshKeyCredentialPublic(KeyPairAdvanced authenticationPublic) : 
-                    base (authenticationPublic) {
-            }
-
-        #endregion
+    /// <param name="authenticationPublic">The public key.</param>
+    public MeshKeyCredentialPublic(KeyPairAdvanced authenticationPublic) :
+                base(authenticationPublic) {
         }
 
+    #endregion
+    }
+
+
+/// <summary>
+/// Mesh device key private credential.
+/// </summary>
+public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate {
+    #region // Constructors
 
     /// <summary>
-    /// Mesh device key private credential.
+    /// Create a new instance with the private key <paramref name="authenticationPrivate"/>
     /// </summary>
-    public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate {
-        #region // Constructors
-
-        /// <summary>
-        /// Create a new instance with the private key <paramref name="authenticationPrivate"/>
-        /// </summary>
-        /// <param name="authenticationPrivate">The private key.</param>
-        /// <param name="account">The account to which the request is directed.</param>
-        public MeshKeyCredentialPrivate(KeyPairAdvanced authenticationPrivate , string account) :
+    /// <param name="authenticationPrivate">The private key.</param>
+    /// <param name="account">The account to which the request is directed.</param>
+    public MeshKeyCredentialPrivate(KeyPairAdvanced authenticationPrivate, string account) :
 
 
             // we do have to include the account address here!!!
 
-                base(authenticationPrivate, account) {
-            //authenticationPrivate.AssertNotNull(NYI.Throw);
-            //account.AssertNotNull(NYI.Throw);
+            base(authenticationPrivate, account) {
+        //authenticationPrivate.AssertNotNull(NYI.Throw);
+        //account.AssertNotNull(NYI.Throw);
 
 
-            }
-        #endregion
-        #region Implement ICredential
+        }
+    #endregion
+    #region Implement ICredential
 
-        /// <summary>
-        /// Return the public credential.
-        /// </summary>
-        /// <returns></returns>
-        public MeshKeyCredentialPublic GetMeshKeyCredentialPublic() =>
-            new(
-            AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced) {
-                Account = Account
-                };
+    /// <summary>
+    /// Return the public credential.
+    /// </summary>
+    /// <returns></returns>
+    public MeshKeyCredentialPublic GetMeshKeyCredentialPublic() =>
+        new(
+        AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced) {
+            Account = Account
+            };
 
 
-        ///<inheritdoc/>
-        public override ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
+    ///<inheritdoc/>
+    public override ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
 
-            ConnectionService connectionDevice = null;
-            ConnectionAddress connectionAddress = null;
-            ProfileDevice profileDevice = null;
-            KeyPairAdvanced keyAuthentication = null;
-            string account = null;
-            KeyPairAdvanced keyDirect = null;
+        ConnectionService connectionDevice = null;
+        ConnectionAddress connectionAddress = null;
+        ProfileDevice profileDevice = null;
+        KeyPairAdvanced keyAuthentication = null;
+        string account = null;
+        KeyPairAdvanced keyDirect = null;
 
-            foreach (var extension in extensions) {
-                switch (extension.Tag) {
-                    case Constants.ExtensionTagsDirectX25519Tag: {
+        foreach (var extension in extensions) {
+            switch (extension.Tag) {
+                case Constants.ExtensionTagsDirectX25519Tag: {
                         keyDirect = new KeyPairX25519(extension.Value);
                         break;
                         }
-                    case Constants.ExtensionTagsDirectX448Tag: {
+                case Constants.ExtensionTagsDirectX448Tag: {
                         keyDirect = new KeyPairX448(extension.Value);
                         break;
                         }
-                    case Constants.ExtensionTagsClaimIdTag: {
+                case Constants.ExtensionTagsClaimIdTag: {
                         account = extension.Value.ToUTF8();
                         break;
                         }
 
-                    case Constants.ExtensionTagsMeshProfileDeviceTag: {
+                case Constants.ExtensionTagsMeshProfileDeviceTag: {
                         // convert the enveloped ConnectionDevice
                         var envelope = DareEnvelope.FromJSON(extension.Value, false);
                         profileDevice = envelope.DecodeJsonObject() as ProfileDevice;
                         keyAuthentication ??= profileDevice.Authentication.GetKeyPairAdvanced();
                         break;
                         }
-                    case Constants.ExtensionTagsMeshConnectionDeviceTag: {
+                case Constants.ExtensionTagsMeshConnectionDeviceTag: {
                         // convert the enveloped ConnectionDevice
                         var envelope = DareEnvelope.FromJSON(extension.Value, false);
                         connectionDevice = envelope.DecodeJsonObject() as ConnectionService;
                         keyAuthentication = connectionDevice.AuthenticationPublic;
                         break;
                         }
-                    case Constants.ExtensionTagsMeshConnectionAddressTag: {
+                case Constants.ExtensionTagsMeshConnectionAddressTag: {
                         // convert the enveloped ConnectionDevice
                         var envelope = DareEnvelope.FromJSON(extension.Value, false);
                         connectionAddress = envelope.DecodeJsonObject() as ConnectionAddress;
                         break;
                         }
-                    }
-                }
-
-            if (keyDirect != null) {
-                return new MeshKeyCredentialPublic(keyDirect) {
-                    Account = account
-                    };
-
-                }
-            else {
-
-
-                return new MeshCredentialPublic(profileDevice, connectionDevice, connectionAddress, keyAuthentication);
                 }
             }
 
-        #endregion
+        if (keyDirect != null) {
+            return new MeshKeyCredentialPublic(keyDirect) {
+                Account = account
+                };
+
+            }
+        else {
+
+
+            return new MeshCredentialPublic(profileDevice, connectionDevice, connectionAddress, keyAuthentication);
+            }
         }
 
+    #endregion
     }

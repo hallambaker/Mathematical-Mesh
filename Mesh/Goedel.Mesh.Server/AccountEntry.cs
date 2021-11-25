@@ -24,100 +24,79 @@
 using Goedel.Protocol;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh.Server {
-    public abstract partial class AccountEntry {
+namespace Goedel.Mesh.Server;
 
-        ///<summary>The primary key</summary>
-        public override string _PrimaryKey => AccountAddress;
+public abstract partial class AccountEntry {
+
+    ///<summary>The primary key</summary>
+    public override string _PrimaryKey => AccountAddress;
 
 
 
-        /// <summary>
-        /// Default constructor for serialization.
-        /// </summary>
-        public AccountEntry() {
-            }
+    /// <summary>
+    /// Default constructor for serialization.
+    /// </summary>
+    public AccountEntry() {
+        }
 
-        /// <summary>
-        /// Verification function.
-        /// </summary>
-        /// <returns>True if the account entry is properly formatted.</returns>
-        public abstract void Verify(MeshVerifiedAccount meshVerifiedAccount);
+    /// <summary>
+    /// Verification function.
+    /// </summary>
+    /// <returns>True if the account entry is properly formatted.</returns>
+    public abstract void Verify(MeshVerifiedAccount meshVerifiedAccount);
 
+    }
+
+
+public partial class AccountUser {
+
+
+    ///<summary>Cached convenience accessor for <see cref="profileAccount"/></summary>
+    public ProfileAccount GetProfileAccount() =>
+        profileAccount ?? EnvelopedProfileUser.Decode().CacheValue(out profileAccount);
+
+    ProfileAccount profileAccount;
+
+    //public ProfileUser ProfileUser => GetProfileAccount() as ProfileUser;
+
+    ///<summary>Cached convenience accessor for <see cref="ProfileUser"/></summary>
+    public ProfileUser ProfileUser => GetProfileAccount() as ProfileUser;
+
+
+    ///<summary>Cached convenience accessor for <see cref="ProfileGroup"/></summary>
+    public ProfileGroup ProfileGroup => GetProfileAccount() as ProfileGroup;
+
+
+    /// <summary>
+    /// Default constructor for serialization.
+    /// </summary>
+    public AccountUser() {
+        }
+
+    /// <summary>
+    /// Constructor creating an Account entry from the request <paramref name="request"/>.
+    /// </summary>
+    /// <param name="request">The account creation request.</param>
+    public AccountUser(BindRequest request) {
+        AccountAddress = request.AccountAddress;
+        EnvelopedProfileUser = request.EnvelopedProfileAccount;
+        Directory = AccountAddress;
         }
 
 
-    public partial class AccountUser {
+    ///<inheritdoc/>
+    public override void Verify(MeshVerifiedAccount meshVerifiedAccount) {
+        var profile = GetProfileAccount();
 
-
-        ///<summary>Cached convenience accessor for <see cref="profileAccount"/></summary>
-        public ProfileAccount GetProfileAccount() =>
-            profileAccount ?? EnvelopedProfileUser.Decode().CacheValue (out profileAccount);
-
-        ProfileAccount profileAccount;
-
-        //public ProfileUser ProfileUser => GetProfileAccount() as ProfileUser;
-
-        ///<summary>Cached convenience accessor for <see cref="ProfileUser"/></summary>
-        public ProfileUser ProfileUser => GetProfileAccount() as ProfileUser;
-
-
-        ///<summary>Cached convenience accessor for <see cref="ProfileGroup"/></summary>
-        public ProfileGroup ProfileGroup => GetProfileAccount() as ProfileGroup;
-
-
-        /// <summary>
-        /// Default constructor for serialization.
-        /// </summary>
-        public AccountUser() {
-            }
-
-        /// <summary>
-        /// Constructor creating an Account entry from the request <paramref name="request"/>.
-        /// </summary>
-        /// <param name="request">The account creation request.</param>
-        public AccountUser(BindRequest request) {
-            AccountAddress = request.AccountAddress;
-            EnvelopedProfileUser = request.EnvelopedProfileAccount;
-            Directory = AccountAddress;
-            }
-
-
-        ///<inheritdoc/>
-        public override void Verify(MeshVerifiedAccount meshVerifiedAccount) {
-            var profile = GetProfileAccount();
-
-            switch (profile) {
-                case ProfileUser profileUser: {
+        switch (profile) {
+            case ProfileUser profileUser: {
                     meshVerifiedAccount.Validate(profileUser);
                     break;
                     }
-                case ProfileGroup profileGroup: {
+            case ProfileGroup profileGroup: {
                     meshVerifiedAccount.Validate(profileGroup);
                     break;
                     }
-                }
             }
         }
-
-    //public partial class AccountGroup {
-
-    //    /// <summary>
-    //    /// Default constructor for serialization.
-    //    /// </summary>
-    //    public AccountGroup() {
-    //        }
-    //    /// <summary>
-    //    /// Constructor creating an Account entry from the request <paramref name="request"/>.
-    //    /// </summary>
-    //    /// <param name="request">The account creation request.</param>
-    //    public AccountGroup(BindRequest request) {
-    //        AccountAddress = request.AccountAddress;
-    //        EnvelopedProfileGroup = request.EnvelopedProfileAccount;
-    //        Directory = AccountAddress;
-    //        }
-
-    //    public override void Verify(MeshVerifiedAccount meshVerifiedAccount) => throw new NYI();
-
-    //    }
     }

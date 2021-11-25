@@ -21,23 +21,56 @@
 #endregion
 
 
-using Goedel.Cryptography.Core;
+using System;
+
 using Goedel.Mesh.Shell.ServiceAdmin;
 using Goedel.Utilities;
+using Goedel.Mesh;
+
+#if NET6_0_WINDOWS_OR_GREATER
+using Goedel.Cryptography.Windows;
+#elif NET6_0_MACOS_OR_GREATER
+using Goedel.Cryptography.Core;
+#else
+using Goedel.Cryptography.Core;
+#endif
+
+
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace serviceadmin {
-    ///<summary>Main calling program.</summary> 
-    public class Program {
+namespace serviceadmin;
 
-        static Program() => Initialization.Initialized.AssertTrue(Internal.Throw);
+///<summary>Main calling program.</summary> 
+public class Program {
 
-        static void Main(string[] args) {
-            var commandLineInterpreter = new CommandLineInterpreter();
-            commandLineInterpreter.MainMethod(args);
-            }
+    static Program() => Goedel.Cryptography.Windows.Initialization.Initialized.AssertTrue(
+        Goedel.Mesh.Internal.Throw);
+
+    static void Main(string[] args) {
+        var commandLineInterpreter = new CommandLineInterpreter();
+
+        Shell Dispatch = new Shell() {
+            MeshMachine = new MeshMachineCore()
+            };
+
+        commandLineInterpreter.MainMethod(Dispatch, args);
+
+
+        //try {
+        //    commandLineInterpreter.MainMethod(Dispatch, args);
+        //    }
+        //catch (Goedel.Command.ParserException) {
+        //    CommandLineInterpreter.Brief(
+        //        CommandLineInterpreter.Description,
+        //        CommandLineInterpreter.DefaultCommand,
+        //        CommandLineInterpreter.Entries);
+        //    }
+        //catch (System.Exception Exception) {
+        //    Console.WriteLine("Application: {0}", Exception.Message);
+        //    }
+
         }
     }

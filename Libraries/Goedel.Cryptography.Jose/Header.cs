@@ -21,51 +21,19 @@
 #endregion
 
 
-namespace Goedel.Cryptography.Jose {
+namespace Goedel.Cryptography.Jose;
 
 
-    public partial class Header {
+public partial class Header {
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public Header() { }
+    /// <summary>
+    /// Default Constructor
+    /// </summary>
+    public Header() { }
 
-        /// <summary>
-        /// Initialize the alg parameter to match the specified provider.
-        /// </summary>
-        /// <param name="Provider">The encryption provider</param>
-        public Header(CryptoProviderEncryption Provider) => Alg = Provider.CryptoAlgorithmID.ToJoseID();
-        }
-
-    ///// <summary>
-    ///// Signature header object
-    ///// </summary>
-    //public class SignatureHeader : Header {
-
-    //    /// <summary>
-    //    /// Initialize the alg and kid parameters to match the specified 
-    //    /// signature provider.
-    //    /// </summary>
-    //    /// <param name="SignatureProvider">The signature provider.</param>
-    //    public SignatureHeader(CryptoProviderSignature SignatureProvider) {
-    //        Kid = SignatureProvider.UDF;
-    //        Alg = SignatureProvider.CryptoAlgorithmID.ToJoseID();
-
-    //        }
-
-    //    /// <summary>
-    //    /// Initialize the alg and kid parameters to match the specified 
-    //    /// signature provider.
-    //    /// </summary>
-    //    /// <param name="Signature">The signature to add.</param>
-    //    public SignatureHeader(CryptoDataSignature Signature) {
-    //        Kid = Signature.Meta.UDF;
-    //        Alg = Signature.Meta.CryptoAlgorithmID.ToJoseID();
-
-    //        }
-
-
-    //    }
-
+    /// <summary>
+    /// Initialize the alg parameter to match the specified provider.
+    /// </summary>
+    /// <param name="Provider">The encryption provider</param>
+    public Header(CryptoProviderEncryption Provider) => Alg = Provider.CryptoAlgorithmID.ToJoseID();
     }

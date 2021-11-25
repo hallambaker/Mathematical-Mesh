@@ -3,10 +3,14 @@
   <Import Project="$(SolutionDir)CommonSettingsWindows.xml" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>    
+        <AssemblyName>meshman</AssemblyName>
     <Product>Meshman</Product>
     <Description>Mesh command line tool.</Description>
     <Copyright>© 2020</Copyright>
     <Title>Meshman</Title>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
   <ItemGroup>

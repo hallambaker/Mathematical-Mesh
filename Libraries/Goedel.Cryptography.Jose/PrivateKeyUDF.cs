@@ -19,159 +19,155 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-namespace Goedel.Cryptography.Jose {
+namespace Goedel.Cryptography.Jose;
+
+/// <summary>
+/// Interface providing key activation functions. This interface is supported
+/// by PrivateKeyUDF allowing keys to be derived from a pair of seeds. Devices
+/// whose keys are bound to an HSM should provide a class exposing the IActivate
+/// interface that exposes the necessary functionality for key location,
+/// activation and use.
+/// </summary>
+public interface IActivate {
+
+    ///<summary>The encryption algorithm identifier</summary>
+    CryptoAlgorithmId AlgorithmEncryptID { get; }
+
+    ///<summary>The signature algorithm identifier</summary>
+    CryptoAlgorithmId AlgorithmSignID { get; }
+
+    ///<summary>The authentication algorithm identifier</summary>
+    CryptoAlgorithmId AlgorithmAuthenticateID { get; }
+
 
     /// <summary>
-    /// Interface providing key activation functions. This interface is supported
-    /// by PrivateKeyUDF allowing keys to be derived from a pair of seeds. Devices
-    /// whose keys are bound to an HSM should provide a class exposing the IActivate
-    /// interface that exposes the necessary functionality for key location,
-    /// activation and use.
+    /// Generate a composite private key by generating private keys by means
+    /// of the activation seed <paramref name="activationSeed"/> and the
+    /// class instance generator.
     /// </summary>
-    public interface IActivate {
+    /// <param name="activationSeed">The activation seed value.</param>
+    /// <param name="keyCollection">The key collection to register the private key to</param>
+    /// <param name="keyUses">The permitted key uses.</param>
+    /// <param name="saltSuffix">The salt suffix for use in key derrivation.</param>
+    /// <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
+    /// <returns>The generated ephemeral key.</returns>
+    KeyPair ActivatePrivate(
+        string activationSeed,
+        IKeyLocate keyCollection,
+        KeyUses keyUses, string saltSuffix,
+        CryptoAlgorithmId cryptoAlgorithmID);
 
-        ///<summary>The encryption algorithm identifier</summary>
-        CryptoAlgorithmId AlgorithmEncryptID { get; }
+    }
 
-        ///<summary>The signature algorithm identifier</summary>
-        CryptoAlgorithmId AlgorithmSignID { get; }
-
-        ///<summary>The authentication algorithm identifier</summary>
-        CryptoAlgorithmId AlgorithmAuthenticateID { get; }
+public partial class PrivateKeyUDF : IActivate {
 
 
-        /// <summary>
-        /// Generate a composite private key by generating private keys by means
-        /// of the activation seed <paramref name="activationSeed"/> and the
-        /// class instance generator.
-        /// </summary>
-        /// <param name="activationSeed">The activation seed value.</param>
-        /// <param name="keyCollection">The key collection to register the private key to</param>
-        /// <param name="keyUses">The permitted key uses.</param>
-        /// <param name="saltSuffix">The salt suffix for use in key derrivation.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
-        /// <returns>The generated ephemeral key.</returns>
-        KeyPair ActivatePrivate(
-            string activationSeed,
-            IKeyLocate keyCollection,
-            KeyUses keyUses, string saltSuffix,
-            CryptoAlgorithmId cryptoAlgorithmID);
+    ///<summary>The encryption algorithm identifier</summary>
+    public CryptoAlgorithmId AlgorithmEncryptID =>
+        AlgorithmEncrypt != null ? AlgorithmEncrypt.FromJoseID() : CryptoAlgorithmId.Default;
 
+    ///<summary>The signature algorithm identifier</summary>
+    public CryptoAlgorithmId AlgorithmSignID =>
+        AlgorithmSign != null ? AlgorithmSign.FromJoseID() : CryptoAlgorithmId.Default;
+
+    ///<summary>The authentication algorithm identifier</summary>
+    public CryptoAlgorithmId AlgorithmAuthenticateID =>
+        AlgorithmAuthenticate != null ? AlgorithmAuthenticate.FromJoseID() : CryptoAlgorithmId.Default;
+
+
+    /// <summary>
+    /// Basic constructor for deserialization
+    /// </summary>
+    public PrivateKeyUDF() {
         }
 
-    public partial class PrivateKeyUDF : IActivate {
+    /// <summary>
+    /// Constructor generating a new instance with a private key derrived from the
+    /// seed  <paramref name="secret"/> if not null or a random value otherwise.
+    /// </summary>
+    /// <param name="udf">The secret seed specified as a UDF.</param>
+    /// <param name="udfAlgorithmIdentifier">The type of master secret.</param>
+    /// <param name="secret">The master secret as a byte array.</param>
+    /// <param name="algorithmEncrypt">The encryption algorithm.</param>
+    /// <param name="algorithmSign">The signature algorithm</param>
+    /// <param name="algorithmAuthenticate">The signature algorithm</param>
+    /// <param name="bits">The size of key to generate in bits/</param>
+    /// 
+    public PrivateKeyUDF(
+                string udf = null,
+            UdfAlgorithmIdentifier udfAlgorithmIdentifier = UdfAlgorithmIdentifier.Any,
+            byte[] secret = null,
+            CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+            CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
+            int bits = 256) {
 
-
-        ///<summary>The encryption algorithm identifier</summary>
-        public CryptoAlgorithmId AlgorithmEncryptID =>
-            AlgorithmEncrypt != null ? AlgorithmEncrypt.FromJoseID() : CryptoAlgorithmId.Default;
-
-        ///<summary>The signature algorithm identifier</summary>
-        public CryptoAlgorithmId AlgorithmSignID =>
-            AlgorithmSign != null ? AlgorithmSign.FromJoseID() : CryptoAlgorithmId.Default;
-
-        ///<summary>The authentication algorithm identifier</summary>
-        public CryptoAlgorithmId AlgorithmAuthenticateID =>
-            AlgorithmAuthenticate != null ? AlgorithmAuthenticate.FromJoseID() : CryptoAlgorithmId.Default;
-
-
-        /// <summary>
-        /// Basic constructor for deserialization
-        /// </summary>
-        public PrivateKeyUDF() {
+        if (udf == null) {
+            PrivateValue = udf ?? UDF.DerivedKey(udfAlgorithmIdentifier,
+                data: secret ?? Platform.GetRandomBits(bits));
+            }
+        else {
+            PrivateValue = udf;
+            (udfAlgorithmIdentifier, _) = UDF.ParseUdfAlgorithmIdentifier(udf);
             }
 
-        /// <summary>
-        /// Constructor generating a new instance with a private key derrived from the
-        /// seed  <paramref name="secret"/> if not null or a random value otherwise.
-        /// </summary>
-        /// <param name="udf">The secret seed specified as a UDF.</param>
-        /// <param name="udfAlgorithmIdentifier">The type of master secret.</param>
-        /// <param name="secret">The master secret as a byte array.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        /// <param name="algorithmSign">The signature algorithm</param>
-        /// <param name="algorithmAuthenticate">The signature algorithm</param>
-        /// <param name="bits">The size of key to generate in bits/</param>
-        /// 
-        public PrivateKeyUDF(
-                    string udf = null,
-                UdfAlgorithmIdentifier udfAlgorithmIdentifier = UdfAlgorithmIdentifier.Any,
-                byte[] secret = null,
-                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                int bits = 256) {
-
-            if (udf == null) {
-                PrivateValue = udf ?? UDF.DerivedKey(udfAlgorithmIdentifier,
-                    data: secret ?? Platform.GetRandomBits(bits));
-                }
-            else {
-                PrivateValue = udf;
-                (udfAlgorithmIdentifier, _) = UDF.ParseUdfAlgorithmIdentifier(udf);
-                }
-
-            KeyType = udfAlgorithmIdentifier.ToString();
-            AlgorithmSign = algorithmSign.ToJoseID();
-            AlgorithmEncrypt = algorithmEncrypt.ToJoseID();
-            AlgorithmAuthenticate = algorithmAuthenticate.ToJoseID();
-            }
-
-
-        ///// <summary>
-        ///// Constructor generating a new instance with a private key derrived from the
-        ///// value  <paramref name="udf"/> if not null or a random value otherwise.
-        ///// </summary>
-        ///// <param name="udf">The UDF encoding of the secret value.</param>
-        ///// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        ///// <param name="algorithmSign">The signature algorithm</param>
-        ///// <param name="algorithmAuthenticate">The signature algorithm</param>
-        //public PrivateKeyUDF(
-        //        string udf,
-        //        CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-        //        CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-        //        CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default
-        //        ) : this (algorithmEncrypt: algorithmEncrypt,
-        //            algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate,
-        //                udf: udf) {
-        //    }
-
-        /// <summary>
-        /// Generate a composite private key by generating private keys by means
-        /// of the activation seed <paramref name="activationSeed"/> and the
-        /// class instance generator.
-        /// </summary>
-        /// <param name="activationSeed">The activation seed value.</param>
-        /// <param name="keyCollection">The key collection to register the private key to</param>
-        /// <param name="keyUses">The permitted key uses.</param>
-        /// <param name="saltSuffix">The salt suffix for use in key derrivation.</param>
-        /// <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
-        /// <returns>The generated ephemeral key.</returns>
-        public KeyPair ActivatePrivate(
-                    string activationSeed,
-                    IKeyLocate keyCollection,
-                    KeyUses keyUses, string saltSuffix,
-                    CryptoAlgorithmId cryptoAlgorithmID) {
-            var baseKey = UDF.DeriveKey(PrivateValue, keyCollection,
-                    KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
-
-            //Console.WriteLine($"Private: Base-{baseKey.UDF} Seed-{activationSeed} Type-{meshKeyType}");
-
-            var activationKey = UDF.DeriveKey(activationSeed, keyCollection,
-                    KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
-
-
-
-            var combinedKey = activationKey.Combine(baseKey, keyUses: keyUses);
-
-            //Console.WriteLine($"   result {combinedKey}");
-
-            return combinedKey;
-            }
-
-
+        KeyType = udfAlgorithmIdentifier.ToString();
+        AlgorithmSign = algorithmSign.ToJoseID();
+        AlgorithmEncrypt = algorithmEncrypt.ToJoseID();
+        AlgorithmAuthenticate = algorithmAuthenticate.ToJoseID();
         }
 
+
+    ///// <summary>
+    ///// Constructor generating a new instance with a private key derrived from the
+    ///// value  <paramref name="udf"/> if not null or a random value otherwise.
+    ///// </summary>
+    ///// <param name="udf">The UDF encoding of the secret value.</param>
+    ///// <param name="algorithmEncrypt">The encryption algorithm.</param>
+    ///// <param name="algorithmSign">The signature algorithm</param>
+    ///// <param name="algorithmAuthenticate">The signature algorithm</param>
+    //public PrivateKeyUDF(
+    //        string udf,
+    //        CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+    //        CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+    //        CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default
+    //        ) : this (algorithmEncrypt: algorithmEncrypt,
+    //            algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate,
+    //                udf: udf) {
+    //    }
+
+    /// <summary>
+    /// Generate a composite private key by generating private keys by means
+    /// of the activation seed <paramref name="activationSeed"/> and the
+    /// class instance generator.
+    /// </summary>
+    /// <param name="activationSeed">The activation seed value.</param>
+    /// <param name="keyCollection">The key collection to register the private key to</param>
+    /// <param name="keyUses">The permitted key uses.</param>
+    /// <param name="saltSuffix">The salt suffix for use in key derrivation.</param>
+    /// <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
+    /// <returns>The generated ephemeral key.</returns>
+    public KeyPair ActivatePrivate(
+                string activationSeed,
+                IKeyLocate keyCollection,
+                KeyUses keyUses, string saltSuffix,
+                CryptoAlgorithmId cryptoAlgorithmID) {
+        var baseKey = UDF.DeriveKey(PrivateValue, keyCollection,
+                KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
+
+        //Console.WriteLine($"Private: Base-{baseKey.UDF} Seed-{activationSeed} Type-{meshKeyType}");
+
+        var activationKey = UDF.DeriveKey(activationSeed, keyCollection,
+                KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
+
+
+
+        var combinedKey = activationKey.Combine(baseKey, keyUses: keyUses);
+
+        //Console.WriteLine($"   result {combinedKey}");
+
+        return combinedKey;
+        }
 
 
     }

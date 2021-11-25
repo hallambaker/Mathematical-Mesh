@@ -19,27 +19,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-namespace Goedel.Cryptography {
+namespace Goedel.Cryptography;
+
+/// <summary>
+/// Interface describing properties that allow export of a secret
+/// or private key as a JSON object.
+/// </summary>
+public interface IJson {
 
     /// <summary>
-    /// Interface describing properties that allow export of a secret
-    /// or private key as a JSON object.
+    /// Encode object as a JSON-B byte array
     /// </summary>
-    public interface IJson {
+    /// <param name="tag">If true, serialization is tagged with 
+    /// the object type.</param>
+    /// <returns>The encoded data.</returns>
+    byte[] ToJson(bool tag = false);
 
-        /// <summary>
-        /// Encode object as a JSON-B byte array
-        /// </summary>
-        /// <param name="tag">If true, serialization is tagged with 
-        /// the object type.</param>
-        /// <returns>The encoded data.</returns>
-        byte[] ToJson(bool tag = false);
-
-        /// <summary>
-        ///If true, a stored key may be exported from the machine on 
-        ///which it is stored.
-        /// </summary>
-        bool Exportable { get; set; }
-        }
-
+    /// <summary>
+    ///If true, a stored key may be exported from the machine on 
+    ///which it is stored.
+    /// </summary>
+    bool Exportable { get; set; }
     }

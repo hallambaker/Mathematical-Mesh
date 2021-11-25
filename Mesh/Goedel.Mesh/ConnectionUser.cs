@@ -30,95 +30,94 @@ using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh {
-    public partial class ConnectionAddress {
-        ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ConnectionAddress> GetEnvelopedConnectionAddress() =>
-            new(DareEnvelope);
+namespace Goedel.Mesh;
 
-        /// <summary>
-        /// Minimize the connection data to remove unnecessary data.
-        /// </summary>
-        public void Strip() {
-            if (Authentication != null) {
-                Authentication.Udf = null;
-                }
+public partial class ConnectionAddress {
+    ///<summary>Typed enveloped data</summary> 
+    public Enveloped<ConnectionAddress> GetEnvelopedConnectionAddress() =>
+        new(DareEnvelope);
+
+    /// <summary>
+    /// Minimize the connection data to remove unnecessary data.
+    /// </summary>
+    public void Strip() {
+        if (Authentication != null) {
+            Authentication.Udf = null;
             }
+        }
+
+    }
+
+public partial class ConnectionDevice {
+    ///<summary>Typed enveloped data</summary> 
+    public Enveloped<ConnectionDevice> GetEnvelopedConnectionDevice() =>
+        new(DareEnvelope);
+
+    }
+
+
+public partial class ConnectionService {
+
+    ///<summary>Typed enveloped data</summary> 
+    public Enveloped<ConnectionService> GetEnvelopedConnectionService() =>
+        new(DareEnvelope);
+
+
+    ///<inheritdoc cref="ICredential"/>
+    public KeyPairAdvanced AuthenticationPublic => Authentication.GetKeyPairAdvanced();
+
+
+    /// <summary>
+    /// Constructor for use by deserializers.
+    /// </summary>
+    public ConnectionService() {
+        }
+
+
+    /// <summary>
+    /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+    /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
+    /// the key collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
+    /// </summary>
+    /// <param name="builder">The string builder to write to.</param>
+    /// <param name="indent">The number of units to indent the presentation.</param>
+    /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
+    public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
+
+        builder.AppendIndent(indent, $"Connection Device");
+        indent++;
+        DareEnvelope.Report(builder, indent);
+        indent++;
+        //builder.AppendIndent(indent, $"KeyOfflineSignature: {KeyOfflineSignature.UDF} ");
+
+        //if (KeysOnlineSignature != null) {
+        //    foreach (var online in KeysOnlineSignature) {
+        //        builder.AppendIndent(indent, $"   KeysOnlineSignature: {online.UDF} ");
+        //        }
+        //    }
+        //builder.AppendIndent(indent, $"KeyEncryption:       {Encryption.Udf} ");
+        builder.AppendIndent(indent, $"KeyAuthentication:   {Authentication.Udf} ");
 
         }
 
-    public partial class ConnectionDevice {
-        ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ConnectionDevice> GetEnvelopedConnectionDevice() =>
-            new(DareEnvelope);
+    ///<inheritdoc cref="ICredential"/>
+    public (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
+        (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
+                    AuthenticationPublic);
 
-        }
-
-
-    public partial class ConnectionService {
-
-        ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ConnectionService> GetEnvelopedConnectionService() =>
-            new(DareEnvelope);
+    ///<inheritdoc cref="ICredential"/>
+    public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<KeyPairAdvanced> ephemerals, string keyId) =>
+        (ephemerals[0], AuthenticationPublic);
 
 
-        ///<inheritdoc cref="ICredential"/>
-        public KeyPairAdvanced AuthenticationPublic => Authentication.GetKeyPairAdvanced();
 
-
-        /// <summary>
-        /// Constructor for use by deserializers.
-        /// </summary>
-        public ConnectionService() {
+    /// <summary>
+    /// Minimize the connection data to remove unnecessary data.
+    /// </summary>
+    public void Strip() {
+        if (Authentication != null) {
+            Authentication.Udf = null;
             }
-
-
-        /// <summary>
-        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
-        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
-        /// the key collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
-        /// </summary>
-        /// <param name="builder">The string builder to write to.</param>
-        /// <param name="indent">The number of units to indent the presentation.</param>
-        /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
-
-            builder.AppendIndent(indent, $"Connection Device");
-            indent++;
-            DareEnvelope.Report(builder, indent);
-            indent++;
-            //builder.AppendIndent(indent, $"KeyOfflineSignature: {KeyOfflineSignature.UDF} ");
-
-            //if (KeysOnlineSignature != null) {
-            //    foreach (var online in KeysOnlineSignature) {
-            //        builder.AppendIndent(indent, $"   KeysOnlineSignature: {online.UDF} ");
-            //        }
-            //    }
-            //builder.AppendIndent(indent, $"KeyEncryption:       {Encryption.Udf} ");
-            builder.AppendIndent(indent, $"KeyAuthentication:   {Authentication.Udf} ");
-
-            }
-
-        ///<inheritdoc cref="ICredential"/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
-            (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
-                        AuthenticationPublic);
-
-        ///<inheritdoc cref="ICredential"/>
-        public (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<KeyPairAdvanced> ephemerals, string keyId) =>
-            (ephemerals[0], AuthenticationPublic);
-
-
-
-        /// <summary>
-        /// Minimize the connection data to remove unnecessary data.
-        /// </summary>
-        public void Strip() {
-            if (Authentication != null) {
-                Authentication.Udf = null;
-                }
-            }
-
         }
 
     }

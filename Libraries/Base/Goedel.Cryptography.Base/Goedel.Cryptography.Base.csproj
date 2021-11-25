@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(SolutionDir)BaseSettings.xml" />
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <Product>Goedel.Cryptography.Windows</Product>
     <Description>Platform specific windows libraries.</Description>
     <Copyright>© 2020</Copyright>

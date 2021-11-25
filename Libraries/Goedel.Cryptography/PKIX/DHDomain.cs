@@ -24,47 +24,47 @@ using System.Numerics;
 
 using Goedel.ASN;
 
-namespace Goedel.Cryptography.PKIX {
+namespace Goedel.Cryptography.PKIX;
 
-    public partial class PKIXPublicKeyDH : Goedel.ASN.Root {
-        /// <summary>
-        /// The shared domain parameters
-        /// </summary>
-        public DHDomain Domain {
-            get {
-                _Domain ??= DHDomain.GetByUDF(Shared);
-                return _Domain;
-                }
-            set {
-                _Domain = value;
-                Shared = _Domain.UDFData;
-                }
+public partial class PKIXPublicKeyDH : Goedel.ASN.Root {
+    /// <summary>
+    /// The shared domain parameters
+    /// </summary>
+    public DHDomain Domain {
+        get {
+            _Domain ??= DHDomain.GetByUDF(Shared);
+            return _Domain;
             }
-        DHDomain _Domain = null;
-
-        }
-
-    public partial class PKIXPrivateKeyDH : Goedel.ASN.Root {
-        /// <summary>
-        /// The shared domain parameters
-        /// </summary>
-        public DHDomain Domain {
-            get {
-                _Domain ??= DHDomain.GetByUDF(Shared);
-                return _Domain;
-                }
-            set {
-                _Domain = value;
-                Shared = _Domain.UDFData;
-                }
+        set {
+            _Domain = value;
+            Shared = _Domain.UDFData;
             }
-        DHDomain _Domain = null;
         }
+    DHDomain _Domain = null;
+
+    }
+
+public partial class PKIXPrivateKeyDH : Goedel.ASN.Root {
+    /// <summary>
+    /// The shared domain parameters
+    /// </summary>
+    public DHDomain Domain {
+        get {
+            _Domain ??= DHDomain.GetByUDF(Shared);
+            return _Domain;
+            }
+        set {
+            _Domain = value;
+            Shared = _Domain.UDFData;
+            }
+        }
+    DHDomain _Domain = null;
+    }
 
 
-    public partial class DHDomain {
+public partial class DHDomain {
 
-        private const string Group2048PText = @"00
+    private const string Group2048PText = @"00
             FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1
             29024E08 8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD
             EF9519B3 CD3A431B 302B0A6D F25F1437 4FE1356D 6D51C245
@@ -77,7 +77,7 @@ namespace Goedel.Cryptography.PKIX {
             DE2BCBF6 95581718 3995497C EA956AE5 15D22618 98FA0510
             15728E5A 8AACAA68 FFFFFFFF FFFFFFFF";
 
-        private const string Group4096PText = @"00
+    private const string Group4096PText = @"00
             FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1
             29024E08 8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD
             EF9519B3 CD3A431B 302B0A6D F25F1437 4FE1356D 6D51C245
@@ -101,106 +101,105 @@ namespace Goedel.Cryptography.PKIX {
             93B4EA98 8D8FDDC1 86FFB7DC 90A6C08F 4DF435C9 34063199
             FFFFFFFF FFFFFFFF";
 
-        byte[] udfData = null;
+    byte[] udfData = null;
 
-        /// <summary>
-        /// Return the UDF value as a byte sequence.
-        /// </summary>
-        public byte[] UDFData {
-            get {
-                var DEREncoded = DER();
-                udfData ??= UDF.FromKeyInfo(DEREncoded);
-                return udfData;
-                }
+    /// <summary>
+    /// Return the UDF value as a byte sequence.
+    /// </summary>
+    public byte[] UDFData {
+        get {
+            var DEREncoded = DER();
+            udfData ??= UDF.FromKeyInfo(DEREncoded);
+            return udfData;
             }
-
-
-        static DHDomain DhDomain2048 = null;
-        /// <summary>
-        /// Shared parameters for the 2048 bit curve
-        /// </summary>
-        public static DHDomain DHDomain2048 {
-            get {
-                DhDomain2048 ??= new DHDomain(Group2048PText);
-                return DhDomain2048;
-                }
-            }
-
-        static DHDomain DhDomain4096 = null;
-        /// <summary>
-        /// Shared parameters for the 2048 bit curve
-        /// </summary>
-        public static DHDomain DHDomain4096 {
-            get {
-                DhDomain4096 ??= new DHDomain(Group4096PText);
-                return DhDomain4096;
-                }
-            }
-
-
-
-        /// <summary>
-        /// The Modulus as a big integer
-        /// </summary>
-        public BigInteger BigIntegerP {
-            get {
-                _BigIntegerP ??= Modulus.ToBigInteger();
-                return (BigInteger)_BigIntegerP;
-                }
-            }
-        BigInteger? _BigIntegerP;
-
-        /// <summary>
-        /// The Generator as a big integer
-        /// </summary>
-        public BigInteger BigIntegerG {
-            get {
-                _BigIntegerG ??= Generator.ToBigInteger();
-                return (BigInteger)_BigIntegerG;
-                }
-            }
-        BigInteger? _BigIntegerG;
-
-        /// <summary>
-        /// Returns the size of the modulus.
-        /// </summary>
-        public int KeySize => (Modulus.Length - 1) * 8;
-
-        DHDomain(string Text) : this(Text.HexToBigInteger(), new BigInteger(2)) {
-            }
-
-        /// <summary>
-        /// Create domain parameters from BigInteger parameters.
-        /// </summary>
-        /// <param name="P">The Modulus value</param>
-        /// <param name="G">The generator value</param>
-        public DHDomain(BigInteger P, BigInteger G) {
-            _BigIntegerP = P;
-            _BigIntegerG = G;
-
-            Modulus = BigIntegerP.ToByteArray();
-            Generator = BigIntegerG.ToByteArray();
-            }
-
-        /// <summary>
-        /// Return the domain parameter object by UDF value
-        /// </summary>
-        /// <param name="ID">The byte code identifier.</param>
-        /// <returns>The domain parameter.</returns>
-        public static DHDomain GetByUDF(byte[] ID) {
-            if (DHDomain2048.Match(ID)) {
-                return DHDomain2048;
-                }
-            if (DHDomain4096.Match(ID)) {
-                return DHDomain4096;
-                }
-            throw new KeySizeNotSupported();
-            }
-
-        /// <summary>Test a UDF identifier value for a match.
-        /// </summary>
-        /// <param name="ID">The identifier to compare</param>
-        /// <returns>true if the UDF value matches the specified identifier.</returns>
-        public bool Match(byte[] ID) => ID.SequenceEqual(UDFData);
         }
+
+
+    static DHDomain DhDomain2048 = null;
+    /// <summary>
+    /// Shared parameters for the 2048 bit curve
+    /// </summary>
+    public static DHDomain DHDomain2048 {
+        get {
+            DhDomain2048 ??= new DHDomain(Group2048PText);
+            return DhDomain2048;
+            }
+        }
+
+    static DHDomain DhDomain4096 = null;
+    /// <summary>
+    /// Shared parameters for the 2048 bit curve
+    /// </summary>
+    public static DHDomain DHDomain4096 {
+        get {
+            DhDomain4096 ??= new DHDomain(Group4096PText);
+            return DhDomain4096;
+            }
+        }
+
+
+
+    /// <summary>
+    /// The Modulus as a big integer
+    /// </summary>
+    public BigInteger BigIntegerP {
+        get {
+            _BigIntegerP ??= Modulus.ToBigInteger();
+            return (BigInteger)_BigIntegerP;
+            }
+        }
+    BigInteger? _BigIntegerP;
+
+    /// <summary>
+    /// The Generator as a big integer
+    /// </summary>
+    public BigInteger BigIntegerG {
+        get {
+            _BigIntegerG ??= Generator.ToBigInteger();
+            return (BigInteger)_BigIntegerG;
+            }
+        }
+    BigInteger? _BigIntegerG;
+
+    /// <summary>
+    /// Returns the size of the modulus.
+    /// </summary>
+    public int KeySize => (Modulus.Length - 1) * 8;
+
+    DHDomain(string Text) : this(Text.HexToBigInteger(), new BigInteger(2)) {
+        }
+
+    /// <summary>
+    /// Create domain parameters from BigInteger parameters.
+    /// </summary>
+    /// <param name="P">The Modulus value</param>
+    /// <param name="G">The generator value</param>
+    public DHDomain(BigInteger P, BigInteger G) {
+        _BigIntegerP = P;
+        _BigIntegerG = G;
+
+        Modulus = BigIntegerP.ToByteArray();
+        Generator = BigIntegerG.ToByteArray();
+        }
+
+    /// <summary>
+    /// Return the domain parameter object by UDF value
+    /// </summary>
+    /// <param name="ID">The byte code identifier.</param>
+    /// <returns>The domain parameter.</returns>
+    public static DHDomain GetByUDF(byte[] ID) {
+        if (DHDomain2048.Match(ID)) {
+            return DHDomain2048;
+            }
+        if (DHDomain4096.Match(ID)) {
+            return DHDomain4096;
+            }
+        throw new KeySizeNotSupported();
+        }
+
+    /// <summary>Test a UDF identifier value for a match.
+    /// </summary>
+    /// <param name="ID">The identifier to compare</param>
+    /// <returns>true if the UDF value matches the specified identifier.</returns>
+    public bool Match(byte[] ID) => ID.SequenceEqual(UDFData);
     }

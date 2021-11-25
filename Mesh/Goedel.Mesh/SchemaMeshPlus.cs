@@ -28,141 +28,140 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
-    public partial class AccountHostAssignment {
-        ///<summary>Typed enveloped data</summary> 
-        public Enveloped<AccountHostAssignment> GetEnvelopedAccountHostAssignment() => new(DareEnvelope);
+public partial class AccountHostAssignment {
+    ///<summary>Typed enveloped data</summary> 
+    public Enveloped<AccountHostAssignment> GetEnvelopedAccountHostAssignment() => new(DareEnvelope);
+
+    }
+
+public partial class MeshItem {
+
+    /// <summary>
+    /// The DareEnvelope encapsulation of this object instance.
+    /// </summary>
+    public virtual DareEnvelope DareEnvelope {
+        get => Enveloped as DareEnvelope;
+        set => Enveloped = value;
+        }
+
+
+
+
+
+    ///<summary>The key collection that was used to decode this object instance.</summary>
+    public virtual IKeyCollection KeyCollection {
+        get => KeyLocate as IKeyCollection;
+        set => KeyLocate = value;
+        }
+
+
+    ///<summary>The envelope Identifier.</summary> 
+    public virtual string EnvelopeId => _PrimaryKey;
+
+    /// <summary>
+    /// Sign the profile under <paramref name="signingKey"/>.
+    /// </summary>
+    /// <param name="signingKey">Optional signature key.</param>
+    /// <param name="encryptionKey">Optional encryption key.</param>
+    /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+    /// <returns>Envelope containing the signed profile. Also updates the property
+    /// <see cref="DareEnvelope"/></returns>
+    public virtual DareEnvelope Envelope(
+                CryptoKey signingKey = null,
+                CryptoKey encryptionKey = null,
+                ObjectEncoding objectEncoding = ObjectEncoding.JSON
+                ) {
+
+        var contentMeta = new ContentMeta() {
+            UniqueId = _PrimaryKey,
+            Created = DateTime.Now,
+            ContentType = MeshConstants.IanaTypeMeshObject,
+            MessageType = _Tag
+            };
+
+        Enveloped = new Enveloped<MeshItem>(this,
+                    signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,
+                    objectEncoding: objectEncoding);
+        DareEnvelope.Header.EnvelopeId = EnvelopeId;
+
+        return DareEnvelope;
+        }
+
+
+
+    /////<summary>Initialization property, used to force initialization of the 
+    /////Json parser dictionaries.</summary>
+    //public static object Initialize => null;
+
+    ///<summary>Reports the status of the item. </summary>
+    public MessageStatus Status = MessageStatus.None;
+
+    //static MeshItem() => AddDictionary(ref _TagDictionary);
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="JSONReader">The input stream</param>
+    /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new MeshItem FromJson(JsonReader JSONReader, bool Tagged = true) {
+        if (JSONReader == null) {
+            return null;
+            }
+        if (Tagged) {
+            var Out = JSONReader.ReadTaggedObject(_TagDictionary);
+            return Out as MeshItem;
+            }
+        throw new CannotCreateAbstract();
+        }
+
+
+    /// <summary>
+    /// Decode and parse the data 
+    /// </summary>
+    /// <param name="envelope">The enveloped data.</param>
+    /// <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
+    /// <returns>The decoded data item</returns>
+    public static MeshItem Decode(DareEnvelope envelope, IKeyCollection keyCollection = null) {
+
+        if (envelope == null) {
+            return null;
+            }
+
+        var plaintext = envelope.GetPlaintext(keyCollection);
+
+        //Console.WriteLine(plaintext.ToUTF8());
+
+        var reader = new JsonBcdReader(plaintext);
+
+        var result = FromJson(reader, true);
+        result.Enveloped = envelope;
+        result.KeyCollection = keyCollection;
+        return result;
 
         }
 
-    public partial class MeshItem {
 
-        /// <summary>
-        /// The DareEnvelope encapsulation of this object instance.
-        /// </summary>
-        public virtual DareEnvelope DareEnvelope {
-            get => Enveloped as DareEnvelope;
-            set => Enveloped = value;
-            }
-
-
-
-
-
-        ///<summary>The key collection that was used to decode this object instance.</summary>
-        public virtual IKeyCollection KeyCollection {
-            get => KeyLocate as IKeyCollection;
-            set => KeyLocate = value;
-            }
+    /// <summary>
+    /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+    /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
+    /// thekey collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
+    /// </summary>
+    /// <param name="builder">The string builder to write to.</param>
+    /// <param name="indent">The number of units to indent the presentation.</param>
+    /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
+    public virtual void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) =>
+        _ = builder.AppendLine($"[{_Tag}]");
 
 
-        ///<summary>The envelope Identifier.</summary> 
-        public virtual string EnvelopeId => _PrimaryKey;
+    }
+public partial class MessageError {
+    /////<summary>Always false for an error result.</summary>
+    //public override bool Success => false;
 
-        /// <summary>
-        /// Sign the profile under <paramref name="signingKey"/>.
-        /// </summary>
-        /// <param name="signingKey">Optional signature key.</param>
-        /// <param name="encryptionKey">Optional encryption key.</param>
-        /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-        /// <returns>Envelope containing the signed profile. Also updates the property
-        /// <see cref="DareEnvelope"/></returns>
-        public virtual DareEnvelope Envelope(
-                    CryptoKey signingKey = null,
-                    CryptoKey encryptionKey = null,
-                    ObjectEncoding objectEncoding = ObjectEncoding.JSON
-                    ) {
-
-            var contentMeta = new ContentMeta() {
-                UniqueId = _PrimaryKey,
-                Created = DateTime.Now,
-                ContentType = MeshConstants.IanaTypeMeshObject,
-                MessageType = _Tag
-                };
-
-            Enveloped = new Enveloped<MeshItem>(this,
-                        signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,
-                        objectEncoding: objectEncoding);
-            DareEnvelope.Header.EnvelopeId = EnvelopeId;
-
-            return DareEnvelope;
-            }
-
-
-
-        /////<summary>Initialization property, used to force initialization of the 
-        /////Json parser dictionaries.</summary>
-        //public static object Initialize => null;
-
-        ///<summary>Reports the status of the item. </summary>
-        public MessageStatus Status = MessageStatus.None;
-
-        //static MeshItem() => AddDictionary(ref _TagDictionary);
-
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new MeshItem FromJson(JsonReader JSONReader, bool Tagged = true) {
-            if (JSONReader == null) {
-                return null;
-                }
-            if (Tagged) {
-                var Out = JSONReader.ReadTaggedObject(_TagDictionary);
-                return Out as MeshItem;
-                }
-            throw new CannotCreateAbstract();
-            }
-
-
-        /// <summary>
-        /// Decode and parse the data 
-        /// </summary>
-        /// <param name="envelope">The enveloped data.</param>
-        /// <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
-        /// <returns>The decoded data item</returns>
-        public static MeshItem Decode(DareEnvelope envelope, IKeyCollection keyCollection = null) {
-
-            if (envelope == null) {
-                return null;
-                }
-
-            var plaintext = envelope.GetPlaintext(keyCollection);
-
-            //Console.WriteLine(plaintext.ToUTF8());
-
-            var reader = new JsonBcdReader(plaintext);
-
-            var result = FromJson(reader, true);
-            result.Enveloped = envelope;
-            result.KeyCollection = keyCollection;
-            return result;
-
-            }
-
-
-        /// <summary>
-        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
-        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
-        /// thekey collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
-        /// </summary>
-        /// <param name="builder">The string builder to write to.</param>
-        /// <param name="indent">The number of units to indent the presentation.</param>
-        /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-        public virtual void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) =>
-            _ = builder.AppendLine($"[{_Tag}]");
-
-
-        }
-    public partial class MessageError {
-        /////<summary>Always false for an error result.</summary>
-        //public override bool Success => false;
-
-        /////<summary>The error report code</summary>
-        //public override string ErrorReport => ErrorCode;
-        }
+    /////<summary>The error report code</summary>
+    //public override string ErrorReport => ErrorCode;
     }

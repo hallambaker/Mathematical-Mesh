@@ -20,12 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
-namespace Goedel.Mesh.Test {
+namespace Goedel.Mesh.Test;
 
-    public static class Check {
-
-
-        }
+public static class Check {
 
 
     }

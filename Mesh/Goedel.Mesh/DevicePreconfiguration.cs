@@ -23,28 +23,28 @@
 
 using Goedel.IO;
 using Goedel.Protocol;
-namespace Goedel.Mesh {
-    public partial class DevicePreconfigurationPrivate {
+namespace Goedel.Mesh;
 
-        ///<summary>Base constructor for deserialization.</summary>
-        public DevicePreconfigurationPrivate() {
-            }
+public partial class DevicePreconfigurationPrivate {
+
+    ///<summary>Base constructor for deserialization.</summary>
+    public DevicePreconfigurationPrivate() {
+        }
 
 
 
-        /// <summary>
-        /// Read device preconfiguration data from a file.
-        /// </summary>
-        /// <param name="filename">The file to read.</param>
-        /// <returns>The DevicePreconfiguration instance created from the file data.</returns>
-        public static DevicePreconfigurationPrivate FromFile(string filename) {
-            using var inputStream = filename.OpenFileRead();
-            using var reader = new JsonReader(inputStream);
+    /// <summary>
+    /// Read device preconfiguration data from a file.
+    /// </summary>
+    /// <param name="filename">The file to read.</param>
+    /// <returns>The DevicePreconfiguration instance created from the file data.</returns>
+    public static DevicePreconfigurationPrivate FromFile(string filename) {
+        using var inputStream = filename.OpenFileRead();
+        using var reader = new JsonReader(inputStream);
 
-            return FromJson(reader, tagged: true);
-
-            }
-
+        return FromJson(reader, tagged: true);
 
         }
+
+
     }

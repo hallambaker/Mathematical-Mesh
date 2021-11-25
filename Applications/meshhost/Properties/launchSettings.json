@@ -2,8 +2,8 @@
   "profiles": {
     "meshhost": {
       "commandName": "Project",
-      "commandLineArgs": "MeshVoodoo.json /console ",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Applications\\Any\\meshhost"
+      "commandLineArgs": "MeshProvider.json /console ",
+      "workingDirectory": "..\\..\\TestResults"
     }
   }
 }

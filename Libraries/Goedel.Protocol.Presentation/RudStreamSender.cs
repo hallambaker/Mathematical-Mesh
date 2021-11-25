@@ -28,57 +28,55 @@ using Goedel.Utilities;
 
 #pragma warning disable CS1998
 
-namespace Goedel.Protocol.Presentation {
+namespace Goedel.Protocol.Presentation;
+
+/// <summary>
+/// RUD stream sender class. Provides methods to send datagrams and to receive
+/// notice of receipt of a control message.
+/// </summary>
+public class RudStreamSender : RudStream {
+    #region // Constructors
+
     /// <summary>
-    /// RUD stream sender class. Provides methods to send datagrams and to receive
-    /// notice of receipt of a control message.
+    /// Initialize a new stream instance as a child of <paramref name="parent"/> to support
+    /// protocol <paramref name="protocol"/> 
     /// </summary>
-    public class RudStreamSender : RudStream {
-        #region // Constructors
-
-        /// <summary>
-        /// Initialize a new stream instance as a child of <paramref name="parent"/> to support
-        /// protocol <paramref name="protocol"/> 
-        /// </summary>
-        /// <param name="parent">The parent stream</param>
-        /// <param name="protocol">The stream protocol</param>
-        /// <param name="credentialSelf">Optional additional credential for self.</param>
-        /// <param name="credentialOther">Optional additional credential for other.</param>
-        /// <param name="accountAddress">Account address asserted</param>
-        /// <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
+    /// <param name="parent">The parent stream</param>
+    /// <param name="protocol">The stream protocol</param>
+    /// <param name="credentialSelf">Optional additional credential for self.</param>
+    /// <param name="credentialOther">Optional additional credential for other.</param>
+    /// <param name="accountAddress">Account address asserted</param>
+    /// <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
 
 
-        public RudStreamSender(
-                RudStream parent,
-                string protocol,
-                ICredentialPrivate credentialSelf = null,
-                ICredentialPublic credentialOther = null,
-                string accountAddress = null,
-                RudConnection rudConnection = null) : base(
-                    parent, protocol, credentialSelf, credentialOther, rudConnection) {
-
-            }
-        #endregion
-
-
-        #region // Methods
-
-        /// <summary>
-        /// Asynchronous method that waits for receipt of a control message.
-        /// </summary>
-        /// <returns>The datagram received.</returns>
-        public async Task<DataGram> AsyncControlDatagram() => throw new NYI();
-
-        /// <summary>
-        /// Asynchronous message to send a datagram.
-        /// </summary>
-        /// <param name="dataGram">The datagram to send.</param>
-        public async void Send(DataGram dataGram) {
-
-            }
-        #endregion
+    public RudStreamSender(
+            RudStream parent,
+            string protocol,
+            ICredentialPrivate credentialSelf = null,
+            ICredentialPublic credentialOther = null,
+            string accountAddress = null,
+            RudConnection rudConnection = null) : base(
+                parent, protocol, credentialSelf, credentialOther, rudConnection) {
 
         }
+    #endregion
 
+
+    #region // Methods
+
+    /// <summary>
+    /// Asynchronous method that waits for receipt of a control message.
+    /// </summary>
+    /// <returns>The datagram received.</returns>
+    public async Task<DataGram> AsyncControlDatagram() => throw new NYI();
+
+    /// <summary>
+    /// Asynchronous message to send a datagram.
+    /// </summary>
+    /// <param name="dataGram">The datagram to send.</param>
+    public async void Send(DataGram dataGram) {
+
+        }
+    #endregion
 
     }

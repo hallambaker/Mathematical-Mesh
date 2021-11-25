@@ -20,26 +20,26 @@
 //  THE SOFTWARE.
 #endregion
 
-namespace ExampleGenerator {
-    public partial class CreateExamples {
+namespace ExampleGenerator;
 
-        public void LayerAccount() {
-            //DoCommandsCreateAcount();
+public partial class CreateExamples {
 
-            ShellAccount = new ShellAccount(this);
+    public void LayerAccount() {
+        //DoCommandsCreateAcount();
 
-            ShellBookmark = new ShellBookmark(this);
-            ShellPassword = new ShellPassword(this);
-            ShellNetwork = new ShellNetwork(this);
-            ShellCalendar = new ShellCalendar(this);
-            ShellMessage = new ShellMessage(this);
-            ShellContact = new ShellContact(this);
-            ShellGroup = new ShellGroup(this);
+        ShellAccount = new ShellAccount(this);
 
-            ShellSSH = new ShellSSH(this);
-            ShellMail = new ShellMail(this);
-            }
+        ShellBookmark = new ShellBookmark(this);
+        ShellPassword = new ShellPassword(this);
+        ShellNetwork = new ShellNetwork(this);
+        ShellCalendar = new ShellCalendar(this);
+        ShellMessage = new ShellMessage(this);
+        ShellContact = new ShellContact(this);
+        ShellGroup = new ShellGroup(this);
 
-
+        ShellSSH = new ShellSSH(this);
+        ShellMail = new ShellMail(this);
         }
+
+
     }

@@ -23,80 +23,79 @@
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh.Client {
+namespace Goedel.Mesh.Client;
 
 
-    public partial class HostCatalogItem {
+public partial class HostCatalogItem {
 
-        /////<summary>Dummy property used to force initialization.</summary>
-        //public static object Initialize => null;
+    /////<summary>Dummy property used to force initialization.</summary>
+    //public static object Initialize => null;
 
-        //static HostCatalogItem() => AddDictionary(ref _TagDictionary);
-        }
+    //static HostCatalogItem() => AddDictionary(ref _TagDictionary);
+    }
 
-    public partial class CatalogedMachine {
+public partial class CatalogedMachine {
 
-        ///<summary>The unique identifier.</summary>
-        public override string _PrimaryKey => Id;
+    ///<summary>The unique identifier.</summary>
+    public override string _PrimaryKey => Id;
 
-        ///<summary>The device profile</summary>
-        public virtual ProfileDevice ProfileDevice => throw new NYI();
+    ///<summary>The device profile</summary>
+    public virtual ProfileDevice ProfileDevice => throw new NYI();
 
-        }
-
-
-    public partial class CatalogedStandard {
-
-        ///<summary>The device profile (from <see cref="CatalogedDevice"/>)</summary>
-        public override ProfileDevice ProfileDevice => CatalogedDevice?.ProfileDevice;
+    }
 
 
-        }
+public partial class CatalogedStandard {
 
-    //public partial class CatalogedAdmin {
-
-    //    ///<summary>The device profile (from <see cref="CatalogedDevice"/>)</summary>
-    //    public override ProfileDevice ProfileDevice => CatalogedDevice?.ProfileDevice;
-
-    //    /// <summary>
-    //    /// Default constructor used for deserialization.
-    //    /// </summary>
-    //    public CatalogedAdmin() {
-    //        }
-
-    //    }
+    ///<summary>The device profile (from <see cref="CatalogedDevice"/>)</summary>
+    public override ProfileDevice ProfileDevice => CatalogedDevice?.ProfileDevice;
 
 
-    public partial class CatalogedPending {
+    }
 
-        ///<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
-        public override ProfileDevice ProfileDevice => EnvelopedProfileDevice.Decode();
+//public partial class CatalogedAdmin {
+
+//    ///<summary>The device profile (from <see cref="CatalogedDevice"/>)</summary>
+//    public override ProfileDevice ProfileDevice => CatalogedDevice?.ProfileDevice;
+
+//    /// <summary>
+//    /// Default constructor used for deserialization.
+//    /// </summary>
+//    public CatalogedAdmin() {
+//        }
+
+//    }
 
 
-        /// <summary>
-        /// Cached convenience accessor returning the decoded <see cref="MessageConnectionResponse"/>.
-        /// </summary>
-        public Message MessageConnectionResponse => messageConnectionResponse ??
-            Message.Decode(EnvelopedAcknowledgeConnection).
-                CacheValue(out messageConnectionResponse);
-        Message messageConnectionResponse;
+public partial class CatalogedPending {
 
-        ///<summary>Return the corresponding response identifier.</summary>
-        public string GetResponseID() => MessageConnectionResponse switch {
-            AcknowledgeConnection acknowledgeConnection => acknowledgeConnection.GetResponseId(),
-            MessageClaim messageClaim => messageClaim.GetResponseId(),
-            _ => throw new NYI()
-            };
+    ///<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
+    public override ProfileDevice ProfileDevice => EnvelopedProfileDevice.Decode();
 
-        }
-    public partial class CatalogedPreconfigured {
-        ///<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
-        public override ProfileDevice ProfileDevice => EnvelopedProfileDevice.Decode();
 
-        ///<summary>The decoded connection device</summary> 
-        public ConnectionService ConnectionDevice =>
-                    EnvelopedConnectionDevice.Decode();
+    /// <summary>
+    /// Cached convenience accessor returning the decoded <see cref="MessageConnectionResponse"/>.
+    /// </summary>
+    public Message MessageConnectionResponse => messageConnectionResponse ??
+        Message.Decode(EnvelopedAcknowledgeConnection).
+            CacheValue(out messageConnectionResponse);
+    Message messageConnectionResponse;
 
-        //            (var account, var key) = MeshUri.ParseConnectUri(devicePreconfiguration.ConnectUri);
-        }
+    ///<summary>Return the corresponding response identifier.</summary>
+    public string GetResponseID() => MessageConnectionResponse switch {
+        AcknowledgeConnection acknowledgeConnection => acknowledgeConnection.GetResponseId(),
+        MessageClaim messageClaim => messageClaim.GetResponseId(),
+        _ => throw new NYI()
+        };
+
+    }
+public partial class CatalogedPreconfigured {
+    ///<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
+    public override ProfileDevice ProfileDevice => EnvelopedProfileDevice.Decode();
+
+    ///<summary>The decoded connection device</summary> 
+    public ConnectionService ConnectionDevice =>
+                EnvelopedConnectionDevice.Decode();
+
+    //            (var account, var key) = MeshUri.ParseConnectUri(devicePreconfiguration.ConnectUri);
     }

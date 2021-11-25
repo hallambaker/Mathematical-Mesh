@@ -29,131 +29,128 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
 
-    #region // The data classes CatalogCredential, CatalogedCredential
+#region // The data classes CatalogCredential, CatalogedCredential
+/// <summary>
+/// Device catalog. Describes the properties of all devices connected to the user's Mesh account.
+/// </summary>
+
+public class CatalogCredential : Catalog<CatalogedCredential> {
+    #region // Properties
+    ///<summary>The canonical label for the catalog</summary>
+
+    public const string Label = MeshConstants.MMM_Credential;
+
+    ///<summary>The catalog label</summary>
+    public override string ContainerDefault => Label;
+
+
+    #endregion
+    #region // Factory methods and constructors
+
     /// <summary>
-    /// Device catalog. Describes the properties of all devices connected to the user's Mesh account.
+    /// Factory delegate
     /// </summary>
+    /// <param name="directory">Directory of store file on local machine.</param>
+    /// <param name="storeId">Store identifier.</param>
+    /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+    /// <param name="policy">The cryptographic policy to be applied to the catalog.</param>
+    /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+    /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+    /// <param name="create">If true, create a new file if none exists.</param>
+    /// <param name="meshClient">Means of obtaining a Mesh Client.</param>
+    public static new Store Factory(
+            string directory,
+                string storeId,
+                IMeshClient meshClient = null,
+                DarePolicy policy = null,
+                CryptoParameters cryptoParameters = null,
+                IKeyCollection keyCollection = null,
+                bool decrypt = true,
+                bool create = true) {
+        meshClient.Future();
+        return new CatalogCredential(directory, storeId, policy, cryptoParameters, keyCollection, decrypt, create);
+        }
 
-    public class CatalogCredential : Catalog<CatalogedCredential> {
-        #region // Properties
-        ///<summary>The canonical label for the catalog</summary>
-
-        public const string Label = MeshConstants.MMM_Credential;
-
-        ///<summary>The catalog label</summary>
-        public override string ContainerDefault => Label;
-
-
-        #endregion
-        #region // Factory methods and constructors
-
-        /// <summary>
-        /// Factory delegate
-        /// </summary>
-        /// <param name="directory">Directory of store file on local machine.</param>
-        /// <param name="storeId">Store identifier.</param>
-        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
-        /// <param name="policy">The cryptographic policy to be applied to the catalog.</param>
-        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
-        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
-        /// <param name="create">If true, create a new file if none exists.</param>
-        /// <param name="meshClient">Means of obtaining a Mesh Client.</param>
-        public static new Store Factory(
+    /// <summary>
+    /// Constructor for a catalog named <paramref name="storeName"/> in directory
+    /// <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+    /// and key collection <paramref name="keyCollection"/>.
+    /// </summary>
+    /// <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+    /// <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+    /// <param name="directory">The directory in which the catalog persistence container is stored.</param>
+    /// <param name="storeName">The catalog persistence container file name.</param>
+    /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+    /// <param name="policy">The cryptographic policy to be applied to the container.</param>
+    /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+    public CatalogCredential(
                 string directory,
-                    string storeId,
-                    IMeshClient meshClient = null,
-                    DarePolicy policy = null,
-                    CryptoParameters cryptoParameters = null,
-                    IKeyCollection keyCollection = null,
-                    bool decrypt = true,
-                    bool create = true) {
-            meshClient.Future();
-            return new CatalogCredential(directory, storeId, policy, cryptoParameters, keyCollection, decrypt, create);
-            }
+                string storeName = null,
+                DarePolicy policy = null,
+                CryptoParameters cryptoParameters = null,
+                IKeyCollection keyCollection = null,
+                bool decrypt = true,
+                bool create = true) :
+        base(directory, storeName ?? Label,
+                    policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+        }
 
-        /// <summary>
-        /// Constructor for a catalog named <paramref name="storeName"/> in directory
-        /// <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
-        /// and key collection <paramref name="keyCollection"/>.
-        /// </summary>
-        /// <param name="create">Create a new persistence store on disk if it does not already exist.</param>
-        /// <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
-        /// <param name="directory">The directory in which the catalog persistence container is stored.</param>
-        /// <param name="storeName">The catalog persistence container file name.</param>
-        /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
-        /// <param name="policy">The cryptographic policy to be applied to the container.</param>
-        /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
-        public CatalogCredential(
-                    string directory,
-                    string storeName = null,
-                    DarePolicy policy = null,
-                    CryptoParameters cryptoParameters = null,
-                    IKeyCollection keyCollection = null,
-                    bool decrypt = true,
-                    bool create = true) :
-            base(directory, storeName ?? Label,
-                        policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
-            }
-
-        #endregion
-        #region // Class methods
+    #endregion
+    #region // Class methods
 
 
 
-        void UpdateLocal(CatalogedEntry catalogedEntry) {
-            }
+    void UpdateLocal(CatalogedEntry catalogedEntry) {
+        }
 
-        /// <summary>
-        /// Locate credential matching the specified service name, ignoring the protocol value.
-        /// </summary>
-        /// <param name="key">The service to be matched.</param>
-        /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
-        public CatalogedCredential GetCredentialByService(string key) {
-            foreach (var credential in AsCatalogedType) {
-                if (credential.Service == key) {
-                    return credential;
-                    }
+    /// <summary>
+    /// Locate credential matching the specified service name, ignoring the protocol value.
+    /// </summary>
+    /// <param name="key">The service to be matched.</param>
+    /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
+    public CatalogedCredential GetCredentialByService(string key) {
+        foreach (var credential in AsCatalogedType) {
+            if (credential.Service == key) {
+                return credential;
                 }
-            return null;
             }
-
-
-
-
-
-        #endregion
+        return null;
         }
 
 
-    public partial class CatalogedCredential {
-        #region // Properties
 
-        ///<summary>The primary key is protocol:site </summary>
-        public override string _PrimaryKey => $"{Protocol ?? ""}:{Service ?? ""}";
 
-        #endregion
-        #region // Override methods
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var stringBuilder = new StringBuilder();
-            if (Protocol != null) {
-                stringBuilder.Append($"{Protocol}:");
-                }
-            stringBuilder.AppendLine($"{Username}@{Service} = [{Password}]");
+    #endregion
+    }
 
-            return stringBuilder.ToString();
 
+public partial class CatalogedCredential {
+    #region // Properties
+
+    ///<summary>The primary key is protocol:site </summary>
+    public override string _PrimaryKey => $"{Protocol ?? ""}:{Service ?? ""}";
+
+    #endregion
+    #region // Override methods
+
+    /// <summary>
+    /// Converts the value of this instance to a <see langword="String"/>.
+    /// </summary>
+    /// <returns>The current string.</returns>
+    public override string ToString() {
+        var stringBuilder = new StringBuilder();
+        if (Protocol != null) {
+            stringBuilder.Append($"{Protocol}:");
             }
-        #endregion
+        stringBuilder.AppendLine($"{Username}@{Service} = [{Password}]");
+
+        return stringBuilder.ToString();
+
         }
     #endregion
-
-
     }
+#endregion

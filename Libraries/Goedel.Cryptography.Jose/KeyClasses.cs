@@ -25,231 +25,227 @@ using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
 
-namespace Goedel.Cryptography.Jose {
+namespace Goedel.Cryptography.Jose;
 
 
 
-    public partial class Key : IJson {
+public partial class Key : IJson {
 
-        /// <summary>Convert to Goedel.Cryptography.KeyPair</summary>
-        public virtual KeyPair KeyPair => GetKeyPair(KeySecurity.Bound);
-
-
-        /// <summary>
-        /// Extract a KeyPair object from the JOSE data structure.
-        /// </summary>
-        /// <param name="keySecurity">The key security requirements. If KeySecurity.NULL is specified,
-        /// the key security setting is ignored.</param>
-        /// <param name="keyCollection">The key collection to add the key to.</param>
-        /// <returns>The extracted key pair</returns>
-        public virtual KeyPair GetKeyPair(
-                    KeySecurity keySecurity,
-                    IKeyLocate keyCollection = null) =>
-            throw new InternalError("GetKeyPair method not implemented in child class");
+    /// <summary>Convert to Goedel.Cryptography.KeyPair</summary>
+    public virtual KeyPair KeyPair => GetKeyPair(KeySecurity.Bound);
 
 
-        /// <summary>
-        /// Return the public portion of the key pair.
-        /// </summary>
-        /// <param name="keyPair">The key pair.</param>
-        /// <returns>Public portion.</returns>
-        public static Key GetPublic(CryptoKey keyPair) => keyPair switch {
-            KeyPairBaseRSA keyPairBaseRSA => new PublicKeyRSA(keyPairBaseRSA),
-            KeyPairBaseDH keyPairBaseDH => new PublicKeyDH(keyPairBaseDH),
-            KeyPairECDH keyPairECDH => new PublicKeyECDH(keyPairECDH),
-            _ => throw new NYI(),
-            };
+    /// <summary>
+    /// Extract a KeyPair object from the JOSE data structure.
+    /// </summary>
+    /// <param name="keySecurity">The key security requirements. If KeySecurity.NULL is specified,
+    /// the key security setting is ignored.</param>
+    /// <param name="keyCollection">The key collection to add the key to.</param>
+    /// <returns>The extracted key pair</returns>
+    public virtual KeyPair GetKeyPair(
+                KeySecurity keySecurity,
+                IKeyLocate keyCollection = null) =>
+        throw new InternalError("GetKeyPair method not implemented in child class");
 
-        /// <summary>
-        /// Return the private portion of the keypair.
-        /// </summary>
-        /// <param name="keyPair">The key pair.</param>
-        /// <returns>The private data.</returns>
-        public static Key GetPrivate(CryptoKey keyPair) => keyPair switch {
-            KeyPairBaseRSA keyPairBaseRSA => new PrivateKeyRSA(keyPairBaseRSA),
-            KeyPairBaseDH keyPairBaseDH => new PrivateKeyDH(keyPairBaseDH),
-            KeyPairECDH keyPairECDH => new PrivateKeyECDH(keyPairECDH),
-            _ => throw new NYI(),
-            };
 
-        /// <summary>
-        /// Convert PKIX parameters to JSON structure.
-        /// </summary>
-        /// <param name="pkixKey">The PKIX key parameters</param>
-        /// <returns>The JOSE key</returns>
-        public static Key Factory(IPkixPublicKey pkixKey) => pkixKey switch {
-            PkixPrivateKeyRsa PKIXPrivateKeyRSA => new PrivateKeyRSA(PKIXPrivateKeyRSA),
-            PKIXPrivateKeyDH PKIXPrivateKeyDH => new PrivateKeyDH(PKIXPrivateKeyDH),
-            PKIXPrivateKeyECDH PKIXPrivateKeyECDH => new PrivateKeyECDH(PKIXPrivateKeyECDH),
-            PkixPublicKeyRsa PKIXPublicKeyRSA => new PublicKeyRSA(PKIXPublicKeyRSA),
-            PKIXPublicKeyDH PKIXPublicKeyDH => new PublicKeyDH(PKIXPublicKeyDH),
-            PKIXPublicKeyECDH PKIXPublicKeyECDH => new PublicKeyECDH(PKIXPublicKeyECDH),
-            _ => null,
-            };
+    /// <summary>
+    /// Return the public portion of the key pair.
+    /// </summary>
+    /// <param name="keyPair">The key pair.</param>
+    /// <returns>Public portion.</returns>
+    public static Key GetPublic(CryptoKey keyPair) => keyPair switch {
+        KeyPairBaseRSA keyPairBaseRSA => new PublicKeyRSA(keyPairBaseRSA),
+        KeyPairBaseDH keyPairBaseDH => new PublicKeyDH(keyPairBaseDH),
+        KeyPairECDH keyPairECDH => new PublicKeyECDH(keyPairECDH),
+        _ => throw new NYI(),
+        };
 
-        /// <summary>
-        /// Convert PKIX parameters to JSON structure.
-        /// </summary>
-        /// <param name="pkixKey">The PKIX key parameters</param>
-        /// <returns>The JOSE key</returns>
-        public static Key Factory(IPKIXPrivateKey pkixKey) => pkixKey switch {
-            PkixPrivateKeyRsa privateKey => new PrivateKeyRSA(privateKey),
-            PKIXPrivateKeyDH privateKey => new PrivateKeyDH(privateKey),
-            PKIXPrivateKeyECDH privateKey => new PrivateKeyECDH(privateKey),
-            _ => null,
-            };
+    /// <summary>
+    /// Return the private portion of the keypair.
+    /// </summary>
+    /// <param name="keyPair">The key pair.</param>
+    /// <returns>The private data.</returns>
+    public static Key GetPrivate(CryptoKey keyPair) => keyPair switch {
+        KeyPairBaseRSA keyPairBaseRSA => new PrivateKeyRSA(keyPairBaseRSA),
+        KeyPairBaseDH keyPairBaseDH => new PrivateKeyDH(keyPairBaseDH),
+        KeyPairECDH keyPairECDH => new PrivateKeyECDH(keyPairECDH),
+        _ => throw new NYI(),
+        };
 
-        /// <summary>Create private key from Goedel.Cryptography.KeyPair.</summary>
-        /// <param name="keyPair">Key pair to convert</param>
-        /// <returns>JOSE private Key value</returns>
-        public static Key FactoryPrivate(KeyPair keyPair) {
-            var PKIX = keyPair?.PKIXPrivateKey;
-            return Factory(PKIX);
-            }
+    /// <summary>
+    /// Convert PKIX parameters to JSON structure.
+    /// </summary>
+    /// <param name="pkixKey">The PKIX key parameters</param>
+    /// <returns>The JOSE key</returns>
+    public static Key Factory(IPkixPublicKey pkixKey) => pkixKey switch {
+        PkixPrivateKeyRsa PKIXPrivateKeyRSA => new PrivateKeyRSA(PKIXPrivateKeyRSA),
+        PKIXPrivateKeyDH PKIXPrivateKeyDH => new PrivateKeyDH(PKIXPrivateKeyDH),
+        PKIXPrivateKeyECDH PKIXPrivateKeyECDH => new PrivateKeyECDH(PKIXPrivateKeyECDH),
+        PkixPublicKeyRsa PKIXPublicKeyRSA => new PublicKeyRSA(PKIXPublicKeyRSA),
+        PKIXPublicKeyDH PKIXPublicKeyDH => new PublicKeyDH(PKIXPublicKeyDH),
+        PKIXPublicKeyECDH PKIXPublicKeyECDH => new PublicKeyECDH(PKIXPublicKeyECDH),
+        _ => null,
+        };
 
-        /// <summary>Create public key from Goedel.Cryptography.KeyPair.</summary>
-        /// <param name="keyPair">Key pair to convert</param>
-        /// <returns>JOSE public Key value</returns>
-        public static Key FactoryPublic(KeyPair keyPair) {
-            var PKIX = keyPair?.PkixPublicKey;
-            return Factory(PKIX);
-            }
+    /// <summary>
+    /// Convert PKIX parameters to JSON structure.
+    /// </summary>
+    /// <param name="pkixKey">The PKIX key parameters</param>
+    /// <returns>The JOSE key</returns>
+    public static Key Factory(IPKIXPrivateKey pkixKey) => pkixKey switch {
+        PkixPrivateKeyRsa privateKey => new PrivateKeyRSA(privateKey),
+        PKIXPrivateKeyDH privateKey => new PrivateKeyDH(privateKey),
+        PKIXPrivateKeyECDH privateKey => new PrivateKeyECDH(privateKey),
+        _ => null,
+        };
 
+    /// <summary>Create private key from Goedel.Cryptography.KeyPair.</summary>
+    /// <param name="keyPair">Key pair to convert</param>
+    /// <returns>JOSE private Key value</returns>
+    public static Key FactoryPrivate(KeyPair keyPair) {
+        var PKIX = keyPair?.PKIXPrivateKey;
+        return Factory(PKIX);
         }
 
-    public partial class KeyContainer {
-
-        ///// <summary>
-        ///// The Key data
-        ///// </summary>
-        //public Key Key => Key.FromJSON(new JSONReader (KeyData.ToUTF8()));
-
-        //string KeyText  => KeyData.ToUTF8(); 
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public KeyContainer() { }
-
-        /// <summary>
-        /// Construct a Key Container with the specified Key security level.
-        /// </summary>
-        /// <param name="key">The key to constrruct the container for.</param>
-        /// <param name="keySecurity">The key security level.</param>
-        public KeyContainer(Key key, KeySecurity keySecurity) :
-                    this(key.ToJson(true), keySecurity) {
-            }
-
-
-        /// <summary>
-        /// Construct a Key Container with the specified Key security level.
-        /// </summary>
-        /// <param name="keyData">The key to constrruct the container for.</param>
-        /// <param name="keySecurity">The key security level.</param>
-        public KeyContainer(byte[] keyData, KeySecurity keySecurity) {
-            Exportable = keySecurity.IsExportable();
-            this.KeyCore = keyData;
-            }
-
+    /// <summary>Create public key from Goedel.Cryptography.KeyPair.</summary>
+    /// <param name="keyPair">Key pair to convert</param>
+    /// <returns>JOSE public Key value</returns>
+    public static Key FactoryPublic(KeyPair keyPair) {
+        var PKIX = keyPair?.PkixPublicKey;
+        return Factory(PKIX);
         }
 
-    /// <summary>Base class for JOSE key agreement result.</summary>
-    public partial class KeyAgreement {
+    }
 
-        /// <summary>
-        /// Return the Goedel.Cryptography result.
-        /// </summary>
-        public virtual KeyAgreementResult KeyAgreementResult { get; }
+public partial class KeyContainer {
 
-        /// <summary>
-        /// Obtain a Key agreement provider for the specified key agreement result.
-        /// </summary>
-        /// <param name="keyAgreementResult">The result to return a provider for.</param>
-        /// <returns>The provider (if found).</returns>
-        public static KeyAgreement Factory(KeyAgreementResult keyAgreementResult) {
-            switch (keyAgreementResult) {
-                case ResultDiffieHellman result: {
+    ///// <summary>
+    ///// The Key data
+    ///// </summary>
+    //public Key Key => Key.FromJSON(new JSONReader (KeyData.ToUTF8()));
+
+    //string KeyText  => KeyData.ToUTF8(); 
+
+    /// <summary>
+    /// Default Constructor
+    /// </summary>
+    public KeyContainer() { }
+
+    /// <summary>
+    /// Construct a Key Container with the specified Key security level.
+    /// </summary>
+    /// <param name="key">The key to constrruct the container for.</param>
+    /// <param name="keySecurity">The key security level.</param>
+    public KeyContainer(Key key, KeySecurity keySecurity) :
+                this(key.ToJson(true), keySecurity) {
+        }
+
+
+    /// <summary>
+    /// Construct a Key Container with the specified Key security level.
+    /// </summary>
+    /// <param name="keyData">The key to constrruct the container for.</param>
+    /// <param name="keySecurity">The key security level.</param>
+    public KeyContainer(byte[] keyData, KeySecurity keySecurity) {
+        Exportable = keySecurity.IsExportable();
+        this.KeyCore = keyData;
+        }
+
+    }
+
+/// <summary>Base class for JOSE key agreement result.</summary>
+public partial class KeyAgreement {
+
+    /// <summary>
+    /// Return the Goedel.Cryptography result.
+    /// </summary>
+    public virtual KeyAgreementResult KeyAgreementResult { get; }
+
+    /// <summary>
+    /// Obtain a Key agreement provider for the specified key agreement result.
+    /// </summary>
+    /// <param name="keyAgreementResult">The result to return a provider for.</param>
+    /// <returns>The provider (if found).</returns>
+    public static KeyAgreement Factory(KeyAgreementResult keyAgreementResult) {
+        switch (keyAgreementResult) {
+            case ResultDiffieHellman result: {
                     return new KeyAgreementDH(result);
                     }
-                case ResultECDH result: {
+            case ResultECDH result: {
                     return new KeyAgreementECDH(result);
                     }
 
-                default:
+            default:
                 break;
-                }
-            return null;
             }
+        return null;
+        }
+    }
+
+/// <summary>
+/// Base class for JOSE Diffie-Hellman key agreement result.
+/// </summary>
+public partial class KeyAgreementDH {
+
+    /// <summary>
+    /// Return the Goedel.Cryptography result.
+    /// </summary>
+    public override KeyAgreementResult KeyAgreementResult =>
+          new ResultDiffieHellman() {
+              Agreement = Result.BigIntegerLittleEndian()
+              };
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public KeyAgreementDH() {
         }
 
     /// <summary>
-    /// Base class for JOSE Diffie-Hellman key agreement result.
+    /// Constructor from the specified Goedel.Cryptography result.
     /// </summary>
-    public partial class KeyAgreementDH {
+    /// <param name="DiffieHellmanResult">The Goedel.Cryptography result.</param>
+    public KeyAgreementDH(ResultDiffieHellman DiffieHellmanResult) => Result = DiffieHellmanResult.Agreement.ToByteArray();
+    }
 
-        /// <summary>
-        /// Return the Goedel.Cryptography result.
-        /// </summary>
-        public override KeyAgreementResult KeyAgreementResult =>
-              new ResultDiffieHellman() {
-                  Agreement = Result.BigIntegerLittleEndian()
-                  };
+/// <summary>
+/// Base class for JOSE Diffie-Hellman key agreement result.
+/// </summary>
+public partial class KeyAgreementECDH {
 
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public KeyAgreementDH() {
-            }
+    /// <summary>
+    /// Return the Goedel.Cryptography result.
+    /// </summary>
+    public override KeyAgreementResult KeyAgreementResult => Curve switch {
+        CurveX448.CurveJose => new CurveX448Result() {
+            AgreementX448 = new CurveX448(Result)
+            },
+        CurveX25519.CurveJose => new CurveX25519Result() {
+            AgreementX25519 = new CurveX25519(Result)
+            },
+        //CurveEdwards448.CurveJose => new CurveEdwards448Result() {
+        //    AgreementEd448 = new CurveEdwards448(Result)
+        //    },
+        //CurveEdwards25519.CurveJose => new CurveEdwards25519Result() {
+        //    AgreementEd25519 = new CurveEdwards25519(Result)
+        //    },
+        _ => throw new NYI()
+        };
 
-        /// <summary>
-        /// Constructor from the specified Goedel.Cryptography result.
-        /// </summary>
-        /// <param name="DiffieHellmanResult">The Goedel.Cryptography result.</param>
-        public KeyAgreementDH(ResultDiffieHellman DiffieHellmanResult) => Result = DiffieHellmanResult.Agreement.ToByteArray();
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public KeyAgreementECDH() {
         }
 
     /// <summary>
-    /// Base class for JOSE Diffie-Hellman key agreement result.
+    /// Constructor from the specified Goedel.Cryptography result.
     /// </summary>
-    public partial class KeyAgreementECDH {
-
-        /// <summary>
-        /// Return the Goedel.Cryptography result.
-        /// </summary>
-        public override KeyAgreementResult KeyAgreementResult => Curve switch {
-            CurveX448.CurveJose => new CurveX448Result() {
-                AgreementX448 = new CurveX448(Result)
-                },
-            CurveX25519.CurveJose => new CurveX25519Result() {
-                AgreementX25519 = new CurveX25519(Result)
-                },
-            //CurveEdwards448.CurveJose => new CurveEdwards448Result() {
-            //    AgreementEd448 = new CurveEdwards448(Result)
-            //    },
-            //CurveEdwards25519.CurveJose => new CurveEdwards25519Result() {
-            //    AgreementEd25519 = new CurveEdwards25519(Result)
-            //    },
-            _ => throw new NYI()
-            };
-
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public KeyAgreementECDH() {
-            }
-
-        /// <summary>
-        /// Constructor from the specified Goedel.Cryptography result.
-        /// </summary>
-        /// <param name="result">The Goedel.Cryptography result.</param>
-        public KeyAgreementECDH(ResultECDH result) {
-            Result = result.Agreement.KeyAdvancedPublic.Encoding;
-            Curve = result.CurveJose;
-            }
-        //Result = result.Agreement.ToByteArray();
+    /// <param name="result">The Goedel.Cryptography result.</param>
+    public KeyAgreementECDH(ResultECDH result) {
+        Result = result.Agreement.KeyAdvancedPublic.Encoding;
+        Curve = result.CurveJose;
         }
-
-
-
+    //Result = result.Agreement.ToByteArray();
     }

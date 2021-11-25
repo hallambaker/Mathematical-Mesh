@@ -29,14 +29,12 @@
 
 
 
-namespace Goedel.Mesh.ServiceAdmin {
+namespace Goedel.Mesh.ServiceAdmin;
 
-    /// <summary>
-    /// Service administration over multiple hosts.
-    /// </summary>
+/// <summary>
+/// Service administration over multiple hosts.
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

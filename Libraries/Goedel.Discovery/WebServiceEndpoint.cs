@@ -21,47 +21,46 @@
 #endregion
 
 using Goedel.Utilities;
-namespace Goedel.Discovery {
+namespace Goedel.Discovery;
+
+/// <summary>
+/// Describes a service endpoint for HTTP and HTTPS transport.
+/// </summary>
+public class WebServiceEndpoint {
+
+    static int port => 15099;
 
     /// <summary>
-    /// Describes a service endpoint for HTTP and HTTPS transport.
+    /// Return a host endpoint to allow a client to access the service <paramref name="srv"/>
+    /// at domain <paramref name="domain"/>.
     /// </summary>
-    public class WebServiceEndpoint {
+    /// <param name="domain">Service name.</param>
+    /// <param name="wellKnown">Protocol identifier.</param>
+    /// <param name="srv">DNS protocol identifier.</param>
+    /// <param name="instance">Optional instance used to identify a sepcific instance
+    /// of the service on a host.</param>
+    /// <returns>The service endpoint.</returns>
+    public static string GetEndpoint(
+                string domain,
 
-        static int port => 15099;
+                string wellKnown,
+                string srv = null,
+                string instance = null) {
 
-        /// <summary>
-        /// Return a host endpoint to allow a client to access the service <paramref name="srv"/>
-        /// at domain <paramref name="domain"/>.
-        /// </summary>
-        /// <param name="domain">Service name.</param>
-        /// <param name="wellKnown">Protocol identifier.</param>
-        /// <param name="srv">DNS protocol identifier.</param>
-        /// <param name="instance">Optional instance used to identify a sepcific instance
-        /// of the service on a host.</param>
-        /// <returns>The service endpoint.</returns>
-        public static string GetEndpoint(
-                    string domain,
+        // do the SRV record lookup here
+        domain.Future();
+        srv ??= $"_{wellKnown}._tcp";
+        srv.Future();
 
-                    string wellKnown,
-                    string srv = null,
-                    string instance = null) {
-
-            // do the SRV record lookup here
-            domain.Future();
-            srv ??= $"_{wellKnown}._tcp";
-            srv.Future();
-
-            var host = "voodoo.hallambaker.com";
+        var host = "voodoo.hallambaker.com";
 
 
-            // form the HTTP uri
-            var specializer = instance == null ? "" : $"/{instance}";
+        // form the HTTP uri
+        var specializer = instance == null ? "" : $"/{instance}";
 
-            return $"http://{host}:15099/.well-known/{wellKnown}{specializer}/";
-            }
-
-
-
+        return $"http://{host}:15099/.well-known/{wellKnown}{specializer}/";
         }
+
+
+
     }

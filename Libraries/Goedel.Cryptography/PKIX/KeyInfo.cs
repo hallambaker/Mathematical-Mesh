@@ -21,62 +21,61 @@
 #endregion
 
 
-namespace Goedel.Cryptography.PKIX {
+namespace Goedel.Cryptography.PKIX;
 
-    public partial class SubjectPublicKeyInfo {
+public partial class SubjectPublicKeyInfo {
 
 
-        /// <summary>
-        /// Construct from algorithm identifier and key data.
-        /// </summary>
-        /// <param name="OID">Algorithm identifier.</param>
-        /// <param name="KeyData">Key Data.</param>
+    /// <summary>
+    /// Construct from algorithm identifier and key data.
+    /// </summary>
+    /// <param name="OID">Algorithm identifier.</param>
+    /// <param name="KeyData">Key Data.</param>
 
-        public SubjectPublicKeyInfo(string OID, byte[] KeyData) {
-            this.Algorithm = new AlgorithmIdentifier(OID);
-            this.SubjectPublicKey = KeyData;
-
-            }
-
-        /// <summary>
-        /// Construct from algorithm identifier and key data.
-        /// </summary>
-        /// <param name="OID">Algorithm identifier.</param>
-        /// <param name="KeyData">Key Data.</param>
-
-        public SubjectPublicKeyInfo(int[] OID, byte[] KeyData) {
-            this.Algorithm = new AlgorithmIdentifier(OID);
-            this.SubjectPublicKey = KeyData;
-
-            }
+    public SubjectPublicKeyInfo(string OID, byte[] KeyData) {
+        this.Algorithm = new AlgorithmIdentifier(OID);
+        this.SubjectPublicKey = KeyData;
 
         }
 
+    /// <summary>
+    /// Construct from algorithm identifier and key data.
+    /// </summary>
+    /// <param name="OID">Algorithm identifier.</param>
+    /// <param name="KeyData">Key Data.</param>
 
-    public partial class AlgorithmIdentifier {
-
-
-        /// <summary>
-        /// Construct from OID identifier string.
-        /// </summary>
-        /// <param name="ID">The identifier as a CryptoAlgorithmID</param>
-        public AlgorithmIdentifier(CryptoAlgorithmId ID) {
-            var OID = ID.ToOID();
-
-            this.Algorithm = Goedel.ASN.ASN.OIDToArray(OID);
-            }
-
-        /// <summary>
-        /// Construct from OID identifier string.
-        /// </summary>
-        /// <param name="ID">The identifier as a string</param>
-        public AlgorithmIdentifier(string ID) => Algorithm = Goedel.ASN.ASN.OIDToArray(ID);
-
-        /// <summary>
-        /// Create an Algorithm Identifier from an integer array.
-        /// </summary>
-        /// <param name="Numbers">OID as an integer sequence.</param>
-        public AlgorithmIdentifier(int[] Numbers) => Algorithm = Numbers;
+    public SubjectPublicKeyInfo(int[] OID, byte[] KeyData) {
+        this.Algorithm = new AlgorithmIdentifier(OID);
+        this.SubjectPublicKey = KeyData;
 
         }
+
+    }
+
+
+public partial class AlgorithmIdentifier {
+
+
+    /// <summary>
+    /// Construct from OID identifier string.
+    /// </summary>
+    /// <param name="ID">The identifier as a CryptoAlgorithmID</param>
+    public AlgorithmIdentifier(CryptoAlgorithmId ID) {
+        var OID = ID.ToOID();
+
+        this.Algorithm = Goedel.ASN.ASN.OIDToArray(OID);
+        }
+
+    /// <summary>
+    /// Construct from OID identifier string.
+    /// </summary>
+    /// <param name="ID">The identifier as a string</param>
+    public AlgorithmIdentifier(string ID) => Algorithm = Goedel.ASN.ASN.OIDToArray(ID);
+
+    /// <summary>
+    /// Create an Algorithm Identifier from an integer array.
+    /// </summary>
+    /// <param name="Numbers">OID as an integer sequence.</param>
+    public AlgorithmIdentifier(int[] Numbers) => Algorithm = Numbers;
+
     }

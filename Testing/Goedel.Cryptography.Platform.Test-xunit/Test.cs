@@ -2,18 +2,18 @@
 using Goedel.Mesh.Test;
 
 
-namespace Goedel.XUnit {
-    public partial class TestPlatform {
-        KeyCollection KeyCollection;
+namespace Goedel.XUnit;
 
-        public MeshMachineTest MeshMachine;
+public partial class TestPlatform {
+    KeyCollection KeyCollection;
 
-        public static TestPlatform Test() => new();
-        public TestPlatform() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
+    public MeshMachineTest MeshMachine;
 
-            MeshMachine = new MeshMachineTest(testEnvironmentCommon);
-            KeyCollection = new KeyCollectionTest(MeshMachine);
-            }
+    public static TestPlatform Test() => new();
+    public TestPlatform() {
+        var testEnvironmentCommon = new TestEnvironmentCommon();
+
+        MeshMachine = new MeshMachineTest(testEnvironmentCommon);
+        KeyCollection = new KeyCollectionTest(MeshMachine);
         }
     }

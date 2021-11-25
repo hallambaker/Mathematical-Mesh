@@ -26,149 +26,148 @@ using System.Collections.Generic;
 using Goedel.Utilities;
 
 
-namespace Goedel.Protocol.Presentation {
+namespace Goedel.Protocol.Presentation;
+
+/// <summary>
+/// Debug version of PacketWriter (move to doc tools.)
+/// </summary>
+public class PacketWriterDebug : PacketWriter {
+
+
+
+
+
+    #region // Properties
+
+
+    #endregion
+
+    #region // Destructor
+    #endregion
+
+    #region // Constructors
+
     /// <summary>
-    /// Debug version of PacketWriter (move to doc tools.)
+    /// Constructor creating an instance of <see cref="PacketWriterDebug"/>
     /// </summary>
-    public class PacketWriterDebug : PacketWriter {
-
-
-
-
-
-        #region // Properties
-
-
-        #endregion
-
-        #region // Destructor
-        #endregion
-
-        #region // Constructors
-
-        /// <summary>
-        /// Constructor creating an instance of <see cref="PacketWriterDebug"/>
-        /// </summary>
-        /// <param name="parent">Parent writer</param>
-        /// <param name="buffer">Buffer provided by caller</param>
-        /// <param name="position">Offset within packet at which first byte is to be written.</param>
-        public PacketWriterDebug(
-                    PacketWriter parent = null,
-                    byte[] buffer = null,
-                    int position = 0) : base(parent) {
-            Debug("");
-            Debug("");
-            Debug("---Start");
-            if (position > 0) {
-                Debug($"Inner buffer start:{position} bytes{Packet.Length}");
-                }
+    /// <param name="parent">Parent writer</param>
+    /// <param name="buffer">Buffer provided by caller</param>
+    /// <param name="position">Offset within packet at which first byte is to be written.</param>
+    public PacketWriterDebug(
+                PacketWriter parent = null,
+                byte[] buffer = null,
+                int position = 0) : base(parent) {
+        Debug("");
+        Debug("");
+        Debug("---Start");
+        if (position > 0) {
+            Debug($"Inner buffer start:{position} bytes{Packet.Length}");
             }
-
-        /// <summary>
-        /// Factory method returning instance of <see cref="PacketWriterDebug"/>
-        /// </summary>
-        /// <param name="parent">Parent writer</param>
-        /// <returns>The created instance.</returns>
-        public static new PacketWriter Factory(
-            PacketWriter parent = null) => new PacketWriterDebug(parent);
-
-
-        #endregion 
-        #region // Methods 
-
-
-        //long positionDebug;
-
-        /// <summary>
-        /// Stub method to write debug output to the screeen for now, change this to
-        /// write to the documentation.
-        /// </summary>
-        /// <param name="text"></param>
-        void Debug(string text = null) {
-            //Screen.WriteLine(text ?? "");
-            //positionDebug = Position;
-            }
-
-        void DebugBytes() {
-            //for (; positionDebug < Position; positionDebug++) {
-            //    Screen.Write($"{Packet[positionDebug]:X2} ");
-
-
-            //    }
-            //Screen.WriteLine();
-
-            }
-
-
-        ///<inheritdoc/>
-        public override void WriteStreamId(byte[] data) {
-            Debug("Stream Id");
-            base.WriteStreamId(data);
-            DebugBytes();
-            }
-
-        ///<inheritdoc/>
-        public override void Write(InitiatorMessageType b) {
-            Debug($"InitiatorMessageType {b}");
-            base.Write(b);
-            DebugBytes();
-            }
-
-        ///<inheritdoc/>
-        public override void Write(ResponderMessageType b) {
-            Debug($"ResponderMessageType {b}");
-            base.Write(b);
-            DebugBytes();
-            }
-        ///<inheritdoc/>
-        public override void Write(int data) {
-            Debug($"Integer: {data}");
-            base.Write(data);
-            DebugBytes();
-            }
-        ///<inheritdoc/>
-        public override void Write(string data) {
-            Debug($"String: {data ?? "<null>"}");
-            base.Write(data);
-            DebugBytes();
-            }
-        ///<inheritdoc/>
-        public override void Write(byte[] data) {
-            Debug($"Data");
-            base.Write(data);
-            DebugBytes();
-            }
-        ///<inheritdoc/>
-        public override void WriteExtensions(List<PacketExtension> extensions = null) {
-            Debug($"Extensions");
-            base.WriteExtensions(extensions);
-            DebugBytes();
-            }
-
-        ///<inheritdoc/>
-        public override byte[] Wrap(byte[] streamId, byte[] key) => base.Wrap(streamId, key);
-
-
-        ///<inheritdoc/>
-        public override void Encrypt(byte[] key, PacketWriter writerIn, bool pad = true) {
-            if (writerIn is PacketWriterDebug debug) {
-                debug.Debug($"---- End");
-                }
-
-
-            if (pad) {
-                Debug($"Encrypt {writerIn.Position} bytes key: {key.ToStringBase16()} with padding");
-                }
-            else {
-                Debug($"Encrypt {writerIn.Position} bytes key: {key.ToStringBase16()} without padding");
-                }
-            base.Encrypt(key, writerIn, pad);
-
-
-            DebugBytes();
-            }
-
-        #endregion 
         }
 
+    /// <summary>
+    /// Factory method returning instance of <see cref="PacketWriterDebug"/>
+    /// </summary>
+    /// <param name="parent">Parent writer</param>
+    /// <returns>The created instance.</returns>
+    public static new PacketWriter Factory(
+        PacketWriter parent = null) => new PacketWriterDebug(parent);
+
+
+    #endregion
+    #region // Methods 
+
+
+    //long positionDebug;
+
+    /// <summary>
+    /// Stub method to write debug output to the screeen for now, change this to
+    /// write to the documentation.
+    /// </summary>
+    /// <param name="text"></param>
+    void Debug(string text = null) {
+        //Screen.WriteLine(text ?? "");
+        //positionDebug = Position;
+        }
+
+    void DebugBytes() {
+        //for (; positionDebug < Position; positionDebug++) {
+        //    Screen.Write($"{Packet[positionDebug]:X2} ");
+
+
+        //    }
+        //Screen.WriteLine();
+
+        }
+
+
+    ///<inheritdoc/>
+    public override void WriteStreamId(byte[] data) {
+        Debug("Stream Id");
+        base.WriteStreamId(data);
+        DebugBytes();
+        }
+
+    ///<inheritdoc/>
+    public override void Write(InitiatorMessageType b) {
+        Debug($"InitiatorMessageType {b}");
+        base.Write(b);
+        DebugBytes();
+        }
+
+    ///<inheritdoc/>
+    public override void Write(ResponderMessageType b) {
+        Debug($"ResponderMessageType {b}");
+        base.Write(b);
+        DebugBytes();
+        }
+    ///<inheritdoc/>
+    public override void Write(int data) {
+        Debug($"Integer: {data}");
+        base.Write(data);
+        DebugBytes();
+        }
+    ///<inheritdoc/>
+    public override void Write(string data) {
+        Debug($"String: {data ?? "<null>"}");
+        base.Write(data);
+        DebugBytes();
+        }
+    ///<inheritdoc/>
+    public override void Write(byte[] data) {
+        Debug($"Data");
+        base.Write(data);
+        DebugBytes();
+        }
+    ///<inheritdoc/>
+    public override void WriteExtensions(List<PacketExtension> extensions = null) {
+        Debug($"Extensions");
+        base.WriteExtensions(extensions);
+        DebugBytes();
+        }
+
+    ///<inheritdoc/>
+    public override byte[] Wrap(byte[] streamId, byte[] key) => base.Wrap(streamId, key);
+
+
+    ///<inheritdoc/>
+    public override void Encrypt(byte[] key, PacketWriter writerIn, bool pad = true) {
+        if (writerIn is PacketWriterDebug debug) {
+            debug.Debug($"---- End");
+            }
+
+
+        if (pad) {
+            Debug($"Encrypt {writerIn.Position} bytes key: {key.ToStringBase16()} with padding");
+            }
+        else {
+            Debug($"Encrypt {writerIn.Position} bytes key: {key.ToStringBase16()} without padding");
+            }
+        base.Encrypt(key, writerIn, pad);
+
+
+        DebugBytes();
+        }
+
+    #endregion
     }

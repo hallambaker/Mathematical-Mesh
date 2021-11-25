@@ -23,28 +23,28 @@
 
 using Goedel.Mesh.Test;
 
-namespace Goedel.XUnit {
-    public partial class TestService {
-        #region // Properties
+namespace Goedel.XUnit;
 
-        public static TestService Test() => new();
+public partial class TestService {
+    #region // Properties
 
-        #endregion
+    public static TestService Test() => new();
 
-        #region // Destructor
-        #endregion
+    #endregion
 
-        #region // Constructors
-        #endregion
+    #region // Destructor
+    #endregion
 
-        #region // Implement Interface: Ixxx
-        #endregion
+    #region // Constructors
+    #endregion
 
-        #region // Methods 
+    #region // Implement Interface: Ixxx
+    #endregion
 
-        public virtual TestEnvironmentCommon GetTestEnvironmentCommon() => new();
+    #region // Methods 
+
+    public virtual TestEnvironmentCommon GetTestEnvironmentCommon() => new();
 
 
-        #endregion
-        }
+    #endregion
     }

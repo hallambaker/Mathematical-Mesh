@@ -23,11 +23,11 @@
 using Goedel.Cryptography.Windows;
 using Goedel.Test;
 
-namespace Goedel.XUnit {
-    public partial class TestPlatformWindows : TestPlatform {
+namespace Goedel.XUnit;
 
-        public TestPlatformWindows() => Initialization.Initialized.TestTrue();
+public partial class TestPlatformWindows : TestPlatform {
+
+    public TestPlatformWindows() => Initialization.Initialized.TestTrue();
 
 
-        }
     }

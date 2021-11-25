@@ -28,37 +28,37 @@ using Goedel.Protocol;
 using Goedel.Test;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh.Test {
-    public static class Extension {
+namespace Goedel.Mesh.Test;
+
+public static class Extension {
 
 
 
-        public static void CorruptDareMessage(this string filename) {
+    public static void CorruptDareMessage(this string filename) {
 
-            using var inputStream = filename.OpenFileReadWrite();
-            var jsonReader = new JsonBcdReader(inputStream);
+        using var inputStream = filename.OpenFileReadWrite();
+        var jsonReader = new JsonBcdReader(inputStream);
 
-            (jsonReader.StartArray()).TestTrue();
-            var Header = DareHeader.FromJson(jsonReader, false);
-            Header.TestNotNull();
-            (jsonReader.NextArray()).TestTrue();
+        (jsonReader.StartArray()).TestTrue();
+        var Header = DareHeader.FromJson(jsonReader, false);
+        Header.TestNotNull();
+        (jsonReader.NextArray()).TestTrue();
 
-            jsonReader.PeekToken();
+        jsonReader.PeekToken();
 
-            switch (jsonReader.TokenType) {
-                case JsonReader.Token.Binary: {
+        switch (jsonReader.TokenType) {
+            case JsonReader.Token.Binary: {
                     CorruptBinaryJSON(inputStream);
                     return;
                     }
 
-                case JsonReader.Token.String: {
+            case JsonReader.Token.String: {
                     CorruptStringJSON(inputStream);
                     return;
                     }
-                }
             }
-
-        static void CorruptStringJSON(FileStream input) => throw new NYI();
-        static void CorruptBinaryJSON(FileStream input) => throw new NYI();
         }
+
+    static void CorruptStringJSON(FileStream input) => throw new NYI();
+    static void CorruptBinaryJSON(FileStream input) => throw new NYI();
     }

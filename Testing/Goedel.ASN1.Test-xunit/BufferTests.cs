@@ -28,32 +28,31 @@ using Goedel.Utilities;
 
 using Xunit;
 
-namespace Goedel.XUnit {
+namespace Goedel.XUnit;
 
-    public class BufferTests {
-        public static BufferTests Test() => new();
+public class BufferTests {
+    public static BufferTests Test() => new();
 
 
-        [Fact]
-        public void TestBuffer() {
-            var Public = new BigInteger(42);
-            var Test = new PKIXPublicKeyDH() {
-                Public = Public.ToByteArray()
-                };
+    [Fact]
+    public void TestBuffer() {
+        var Public = new BigInteger(42);
+        var Test = new PKIXPublicKeyDH() {
+            Public = Public.ToByteArray()
+            };
 
-            for (var i = 0; i < 66000; i += 100) {
-                Test.Shared = Platform.GetRandomBytes(i);
-                var Encode = Test.DER();
-                Encode.Keep();
-                }
-
+        for (var i = 0; i < 66000; i += 100) {
+            Test.Shared = Platform.GetRandomBytes(i);
+            var Encode = Test.DER();
+            Encode.Keep();
             }
 
-
-
-        //void TestDH (System.Numerics.BigInteger Count) {
-
-        //    }
-
         }
+
+
+
+    //void TestDH (System.Numerics.BigInteger Count) {
+
+    //    }
+
     }

@@ -117,6 +117,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
 		LICENSE.txt = LICENSE.txt
 		readme.md = readme.md
+		ServerConfig.md = ServerConfig.md
 		TemplateClass.cs = TemplateClass.cs
 		TestSettings.xml = TestSettings.xml
 		ToDo.md = ToDo.md
@@ -180,6 +181,27 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "meshman", "Applications\meshman\meshman.csproj", "{EE662FF1-4CD5-4F99-A121-8F519084D971}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "serviceadmin", "Applications\serviceadmin\serviceadmin.csproj", "{BC5C1868-1628-47DE-B28F-47D6489CC59D}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TestResults", "TestResults\", "{CA6633DB-B8D7-4059-A53F-D96D0686989A}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_57025"
+		Debug.AspNetCompiler.PhysicalPath = "TestResults\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57025\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_57025"
+		Release.AspNetCompiler.PhysicalPath = "TestResults\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57025\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "57025"
+		SlnRelativePath = "TestResults\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1656,6 +1678,30 @@ Global
 		{BC5C1868-1628-47DE-B28F-47D6489CC59D}.Sandcastle|x64.Build.0 = Sandcastle|Any CPU
 		{BC5C1868-1628-47DE-B28F-47D6489CC59D}.Sandcastle|x86.ActiveCfg = Sandcastle|Any CPU
 		{BC5C1868-1628-47DE-B28F-47D6489CC59D}.Sandcastle|x86.Build.0 = Sandcastle|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Debug|x64.Build.0 = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Debug|x86.Build.0 = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Github|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Github|Any CPU.Build.0 = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Github|x64.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Github|x64.Build.0 = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Github|x86.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Github|x86.Build.0 = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Release|x64.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Release|x64.Build.0 = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Release|x86.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Release|x86.Build.0 = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Sandcastle|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Sandcastle|Any CPU.Build.0 = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Sandcastle|x64.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Sandcastle|x64.Build.0 = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Sandcastle|x86.ActiveCfg = Debug|Any CPU
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A}.Sandcastle|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1732,6 +1778,7 @@ Global
 		{44BFEA22-0B87-416E-9D5C-73F858251C50} = {0B0479B0-052D-4BCA-8920-7B2BAA788BE5}
 		{EE662FF1-4CD5-4F99-A121-8F519084D971} = {0B0479B0-052D-4BCA-8920-7B2BAA788BE5}
 		{BC5C1868-1628-47DE-B28F-47D6489CC59D} = {0B0479B0-052D-4BCA-8920-7B2BAA788BE5}
+		{CA6633DB-B8D7-4059-A53F-D96D0686989A} = {479601E3-3DC5-40DA-BA5E-403D5346E50D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {480B9067-AB16-45B8-BFE3-8EF8803D9D07}

@@ -26,87 +26,84 @@ using Goedel.Utilities;
 using Goedel.Protocol.Service;
 using Goedel.Protocol;
 
-namespace Goedel.Test.Core {
+namespace Goedel.Test.Core;
 
 
 
 
-    public class RudListenerTest : RudListener {
-        #region // Properties
+public class RudListenerTest : RudListener {
+    #region // Properties
 
-        RudStream streamResponderChallenge = null;
-        #endregion
-        #region // Constructors
-        /// <summary>
-        /// Base constructor, populate the common properties.
-        /// </summary>
-        /// <param name="credential">The credential used by the listener.</param>
-        /// <param name="providers">The service providers to be dispatched to.</param>
-        public RudListenerTest(ICredentialPrivate credential, List<RudProvider> providers) :
-                base(credential, providers) {
-            }
-        #endregion
-        #region // Methods 
+    RudStream streamResponderChallenge = null;
+    #endregion
+    #region // Constructors
+    /// <summary>
+    /// Base constructor, populate the common properties.
+    /// </summary>
+    /// <param name="credential">The credential used by the listener.</param>
+    /// <param name="providers">The service providers to be dispatched to.</param>
+    public RudListenerTest(ICredentialPrivate credential, List<RudProvider> providers) :
+            base(credential, providers) {
+        }
+    #endregion
+    #region // Methods 
 
-        ///<inheritdoc/>
-        public override RudStream GetTemporaryResponder(
-            Packet packetRequest) => streamResponderChallenge ??
-                    MakeConnectionResponder().CacheValue(out streamResponderChallenge);
+    ///<inheritdoc/>
+    public override RudStream GetTemporaryResponder(
+        Packet packetRequest) => streamResponderChallenge ??
+                MakeConnectionResponder().CacheValue(out streamResponderChallenge);
 
 
-        private RudStream MakeConnectionResponder() {
-            var responder = new ConnectionResponder(this);
+    private RudStream MakeConnectionResponder() {
+        var responder = new ConnectionResponder(this);
 
-            return new RudStream(null, null, rudConnection: responder);
-            }
+        return new RudStream(null, null, rudConnection: responder);
+        }
 
-        public (byte[], Trace) Dispatch(byte[] requestBytes, TestSessionRud session) {
-            //var jsonReader = new JsonReader(requestBytes);
+    public (byte[], Trace) Dispatch(byte[] requestBytes, TestSessionRud session) {
+        //var jsonReader = new JsonReader(requestBytes);
 
-            //var result = Host.Dispatch(session, jsonReader);
+        //var result = Host.Dispatch(session, jsonReader);
 
-            //var responseBytes = result.GetBytes();
-            //var trace = new Trace(requestBytes, responseBytes, Host);
-            //return (responseBytes, trace);
+        //var responseBytes = result.GetBytes();
+        //var trace = new Trace(requestBytes, responseBytes, Host);
+        //return (responseBytes, trace);
 
-            throw new NYI();
-            }
+        throw new NYI();
+        }
 
-        #endregion
+    #endregion
+
+    }
+
+public class ConnectionInitiatorTest : ConnectionInitiator {
+    public ConnectionInitiatorTest(
+        ICredentialPrivate credentialPrivate,
+        string domain) : base(credentialPrivate, domain,
+            null, TransportType.Direct, null) {
+        }
+    }
+
+public class ConnectionResponderTest : ConnectionResponder {
+
+
+
+    /// <summary>
+    /// Constructor for a connection host instance connected to <paramref name="listener"/>
+    /// </summary>
+    /// <param name="listener">The listener this connection is to service.</param>
+    /// <param name="packetIn">The packet resulting in creation of the responder.</param>
+    public ConnectionResponderTest(Listener listener,
+            Packet packetIn = null) : base(listener, packetIn) {
+
 
         }
 
-    public class ConnectionInitiatorTest : ConnectionInitiator {
-        public ConnectionInitiatorTest(
-            ICredentialPrivate credentialPrivate,
-            string domain) : base(credentialPrivate, domain,
-                null, TransportType.Direct, null) {
-            }
-        }
-
-    public class ConnectionResponderTest : ConnectionResponder {
+    }
 
 
-
-        /// <summary>
-        /// Constructor for a connection host instance connected to <paramref name="listener"/>
-        /// </summary>
-        /// <param name="listener">The listener this connection is to service.</param>
-        /// <param name="packetIn">The packet resulting in creation of the responder.</param>
-        public ConnectionResponderTest(Listener listener,
-                Packet packetIn = null) : base(listener, packetIn) {
-
-
-            }
-
-        }
-
-
-    public class ServiceRequestDirect : ServiceRequest {
-        public override void Abort(RequestQuality requestQuality) => throw new System.NotImplementedException();
-        public override void Complete() => throw new System.NotImplementedException();
-        protected override void ReturnResponse(byte[] payload) => throw new System.NotImplementedException();
-        }
-
-
+public class ServiceRequestDirect : ServiceRequest {
+    public override void Abort(RequestQuality requestQuality) => throw new System.NotImplementedException();
+    public override void Complete() => throw new System.NotImplementedException();
+    protected override void ReturnResponse(byte[] payload) => throw new System.NotImplementedException();
     }

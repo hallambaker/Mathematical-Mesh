@@ -25,32 +25,31 @@ using System.Collections.Generic;
 using Goedel.Utilities;
 
 
-namespace Goedel.Utilities {
-    public static partial class Extension {
+namespace Goedel.Utilities;
+
+public static partial class Extension {
 
 
-        #region // Methods 
+    #region // Methods 
 
-        /// <summary>
-        /// Returns the canonicalized address form of <paramref name="address"/> as a
-        /// string.
-        /// </summary>
-        /// <param name="address">The input, an account address.</param>
-        /// <returns>The canonicalized form of <paramref name="address"/>.</returns>
-        public static string CannonicalAccountAddress(this string address) => address.ToLower();
+    /// <summary>
+    /// Returns the canonicalized address form of <paramref name="address"/> as a
+    /// string.
+    /// </summary>
+    /// <param name="address">The input, an account address.</param>
+    /// <returns>The canonicalized form of <paramref name="address"/>.</returns>
+    public static string CannonicalAccountAddress(this string address) => address.ToLower();
 
-        /// <summary>
-        /// Returns the canonicalized address form of <paramref name="address"/> as
-        /// a UTF8 encoded byte sequence.
-        /// </summary>
-        /// <param name="address">The input, an account address.</param>
-        /// <returns>The canonicalized form of <paramref name="address"/> as
-        /// a UTF8 encoded byte sequence.</returns>
-        public static byte[] CannonicalAccountAddressUtf8(this string address) => 
-            address.CannonicalAccountAddress().ToUTF8();
+    /// <summary>
+    /// Returns the canonicalized address form of <paramref name="address"/> as
+    /// a UTF8 encoded byte sequence.
+    /// </summary>
+    /// <param name="address">The input, an account address.</param>
+    /// <returns>The canonicalized form of <paramref name="address"/> as
+    /// a UTF8 encoded byte sequence.</returns>
+    public static byte[] CannonicalAccountAddressUtf8(this string address) =>
+        address.CannonicalAccountAddress().ToUTF8();
 
 
-        #endregion 
-        }
-
+    #endregion
     }

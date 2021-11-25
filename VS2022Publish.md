@@ -66,5 +66,6 @@ with separate per-platform customizations.
 
 Both are confused and often innacurate.
 
-
-
+~~~~
+PS C:\Users\hallam\Work\mmm> msbuild mmm.sln /p:PublishProfile=publish-win-x64 /p:deployOnBuild=true
+~~~~

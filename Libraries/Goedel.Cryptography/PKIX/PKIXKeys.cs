@@ -19,211 +19,208 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-namespace Goedel.Cryptography.PKIX {
+namespace Goedel.Cryptography.PKIX;
+
+/// <summary>
+/// Interface permitting Key classes to be managed as if they inherited from
+/// a common base class.
+/// </summary>
+public interface IPKIXData {
 
     /// <summary>
-    /// Interface permitting Key classes to be managed as if they inherited from
-    /// a common base class.
+    /// Return the DER encoding of this structure
     /// </summary>
-    public interface IPKIXData {
-
-        /// <summary>
-        /// Return the DER encoding of this structure
-        /// </summary>
-        /// <returns>The DER encoded value.</returns>
-        byte[] DER();
-
-
-        /// <summary>
-        /// Return the algorithm identifier that represents this key
-        /// </summary>
-        int[] OID { get; }
-
-        ///// <summary>
-        ///// Return an ASN.1 object
-        ///// </summary>
-        //ASN.Root GetASN { get; }
-
-        }
+    /// <returns>The DER encoded value.</returns>
+    byte[] DER();
 
 
     /// <summary>
-    /// Interface permitting Key classes to be managed as if they inherited from
-    /// a common base class.
+    /// Return the algorithm identifier that represents this key
     /// </summary>
-    public interface IPkixPublicKey : IPKIXData {
+    int[] OID { get; }
 
-        /// <summary>
-        /// Construct a PKIX SubjectPublicKeyInfo block
-        /// </summary>
-        /// <param name="OID">The OID value</param>
-        /// <returns>The PKIX structure</returns>
-        SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OID = null);
+    ///// <summary>
+    ///// Return an ASN.1 object
+    ///// </summary>
+    //ASN.Root GetASN { get; }
 
-        /// <summary>
-        /// Return the corresponding public parameters
-        /// </summary>
-        IPkixPublicKey PublicParameters { get; }
+    }
 
+
+/// <summary>
+/// Interface permitting Key classes to be managed as if they inherited from
+/// a common base class.
+/// </summary>
+public interface IPkixPublicKey : IPKIXData {
+
+    /// <summary>
+    /// Construct a PKIX SubjectPublicKeyInfo block
+    /// </summary>
+    /// <param name="OID">The OID value</param>
+    /// <returns>The PKIX structure</returns>
+    SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OID = null);
+
+    /// <summary>
+    /// Return the corresponding public parameters
+    /// </summary>
+    IPkixPublicKey PublicParameters { get; }
+
+    }
+
+
+/// <summary>
+/// Interface permitting Key classes to be managed as if they inherited from
+/// a common base class.
+/// </summary>
+public interface IPKIXPrivateKey : IPkixPublicKey {
+
+    }
+
+/// <summary>
+/// Interface permitting Key classes to be managed as if they inherited from
+/// a common base class.
+/// </summary>
+public interface IPKIXAgreement : IPKIXData {
+    }
+
+
+public partial class PKIXPublicKeyDH : IPkixPublicKey, IKeyPublicDH {
+
+    /// <summary>
+    /// Construct a PKIX SubjectPublicKeyInfo block
+    /// </summary>
+    /// <param name="OIDValue">The OID value</param>
+    /// <returns>The PKIX structure</returns>
+    public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
+        OIDValue ??= OID;
+        return new SubjectPublicKeyInfo(OIDValue, DER());
         }
+
+    /// <summary>
+    /// Return the algorithm identifier that represents this key
+    /// </summary>
+    public override int[] OID => Constants.OID__id_dh_public;
 
 
     /// <summary>
-    /// Interface permitting Key classes to be managed as if they inherited from
-    /// a common base class.
+    /// Return the corresponding public parameters
     /// </summary>
-    public interface IPKIXPrivateKey : IPkixPublicKey {
+    public IPkixPublicKey PublicParameters => this;
 
+    byte[] IKeyPublicDH.Shared { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    byte[] IKeyPublicDH.Public { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    }
+
+public partial class PKIXPrivateKeyDH : IPKIXPrivateKey, IKeyPrivateDH {
+
+    /// <summary>
+    /// Construct a PKIX SubjectPublicKeyInfo block
+    /// </summary>
+    /// <param name="OIDValue">The OID value</param>
+    /// <returns>The PKIX structure</returns>
+    public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
+        OIDValue ??= OID;
+        return new SubjectPublicKeyInfo(OIDValue, DER());
         }
 
     /// <summary>
-    /// Interface permitting Key classes to be managed as if they inherited from
-    /// a common base class.
+    /// Return the algorithm identifier that represents this key
     /// </summary>
-    public interface IPKIXAgreement : IPKIXData {
+    public override int[] OID => Constants.OID__id_dh_private;
+
+
+    /// <summary>
+    /// Return the corresponding public parameters
+    /// </summary>
+    public IPkixPublicKey PublicParameters => PKIXPublicKeyDH;
+
+
+    /// <summary>
+    /// Return the corresponding public parameters
+    /// </summary>
+    public PKIXPublicKeyDH PKIXPublicKeyDH {
+        get {
+            _PKIXPublicKeyDH ??= new PKIXPublicKeyDH() {
+                Shared = Shared,
+                Public = Public
+                };
+            return _PKIXPublicKeyDH;
+            }
         }
 
+    byte[] IKeyPrivateDH.Shared { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    byte[] IKeyPrivateDH.Public { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    byte[] IKeyPrivateDH.Private { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
-    public partial class PKIXPublicKeyDH : IPkixPublicKey, IKeyPublicDH {
+    PKIXPublicKeyDH _PKIXPublicKeyDH = null;
 
-        /// <summary>
-        /// Construct a PKIX SubjectPublicKeyInfo block
-        /// </summary>
-        /// <param name="OIDValue">The OID value</param>
-        /// <returns>The PKIX structure</returns>
-        public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
-            OIDValue ??= OID;
-            return new SubjectPublicKeyInfo(OIDValue, DER());
-            }
-
-        /// <summary>
-        /// Return the algorithm identifier that represents this key
-        /// </summary>
-        public override int[] OID => Constants.OID__id_dh_public;
+    }
 
 
-        /// <summary>
-        /// Return the corresponding public parameters
-        /// </summary>
-        public IPkixPublicKey PublicParameters => this;
 
-        byte[] IKeyPublicDH.Shared { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        byte[] IKeyPublicDH.Public { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+public partial class PkixPublicKeyRsa : IPkixPublicKey {
+
+    /// <summary>
+    /// Construct a PKIX SubjectPublicKeyInfo block
+    /// </summary>
+    /// <param name="OIDValue">The OID value</param>
+    /// <returns>The PKIX structure</returns>
+    public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
+        OIDValue ??= OID;
+        return new SubjectPublicKeyInfo(OIDValue, DER());
         }
 
-    public partial class PKIXPrivateKeyDH : IPKIXPrivateKey, IKeyPrivateDH {
-
-        /// <summary>
-        /// Construct a PKIX SubjectPublicKeyInfo block
-        /// </summary>
-        /// <param name="OIDValue">The OID value</param>
-        /// <returns>The PKIX structure</returns>
-        public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
-            OIDValue ??= OID;
-            return new SubjectPublicKeyInfo(OIDValue, DER());
-            }
-
-        /// <summary>
-        /// Return the algorithm identifier that represents this key
-        /// </summary>
-        public override int[] OID => Constants.OID__id_dh_private;
+    /// <summary>
+    /// Return the algorithm identifier that represents this key
+    /// </summary>
+    public override int[] OID => Constants.OID__rsaEncryption;
 
 
-        /// <summary>
-        /// Return the corresponding public parameters
-        /// </summary>
-        public IPkixPublicKey PublicParameters => PKIXPublicKeyDH;
+    /// <summary>
+    /// Return the corresponding public parameters
+    /// </summary>
+    public IPkixPublicKey PublicParameters => this;
 
+    }
 
-        /// <summary>
-        /// Return the corresponding public parameters
-        /// </summary>
-        public PKIXPublicKeyDH PKIXPublicKeyDH {
-            get {
-                _PKIXPublicKeyDH ??= new PKIXPublicKeyDH() {
-                    Shared = Shared,
-                    Public = Public
-                    };
-                return _PKIXPublicKeyDH;
-                }
-            }
+public partial class PkixPrivateKeyRsa : IPKIXPrivateKey {
 
-        byte[] IKeyPrivateDH.Shared { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        byte[] IKeyPrivateDH.Public { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        byte[] IKeyPrivateDH.Private { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
-        PKIXPublicKeyDH _PKIXPublicKeyDH = null;
-
+    /// <summary>
+    /// Construct a PKIX SubjectPublicKeyInfo block
+    /// </summary>
+    /// <param name="OIDValue">The OID value</param>
+    /// <returns>The PKIX structure</returns>
+    public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
+        OIDValue ??= OID;
+        return new SubjectPublicKeyInfo(OIDValue, DER());
         }
 
+    /// <summary>
+    /// Return the algorithm identifier that represents this key
+    /// </summary>
+    public override int[] OID => Constants.OID__rsaEncryption;
 
 
+    /// <summary>
+    /// Return the corresponding public parameters
+    /// </summary>
+    public IPkixPublicKey PublicParameters => PKIXPublicKeyRSA;
 
-    public partial class PkixPublicKeyRsa : IPkixPublicKey {
 
-        /// <summary>
-        /// Construct a PKIX SubjectPublicKeyInfo block
-        /// </summary>
-        /// <param name="OIDValue">The OID value</param>
-        /// <returns>The PKIX structure</returns>
-        public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
-            OIDValue ??= OID;
-            return new SubjectPublicKeyInfo(OIDValue, DER());
+    /// <summary>
+    /// Return the corresponding public parameters
+    /// </summary>
+    public PkixPublicKeyRsa PKIXPublicKeyRSA {
+        get {
+            _PKIXPublicKeyRSA ??= new PkixPublicKeyRsa() {
+                Modulus = Modulus,
+                PublicExponent = PublicExponent
+                };
+            return _PKIXPublicKeyRSA;
             }
-
-        /// <summary>
-        /// Return the algorithm identifier that represents this key
-        /// </summary>
-        public override int[] OID => Constants.OID__rsaEncryption;
-
-
-        /// <summary>
-        /// Return the corresponding public parameters
-        /// </summary>
-        public IPkixPublicKey PublicParameters => this;
-
         }
 
-    public partial class PkixPrivateKeyRsa : IPKIXPrivateKey {
-
-        /// <summary>
-        /// Construct a PKIX SubjectPublicKeyInfo block
-        /// </summary>
-        /// <param name="OIDValue">The OID value</param>
-        /// <returns>The PKIX structure</returns>
-        public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
-            OIDValue ??= OID;
-            return new SubjectPublicKeyInfo(OIDValue, DER());
-            }
-
-        /// <summary>
-        /// Return the algorithm identifier that represents this key
-        /// </summary>
-        public override int[] OID => Constants.OID__rsaEncryption;
-
-
-        /// <summary>
-        /// Return the corresponding public parameters
-        /// </summary>
-        public IPkixPublicKey PublicParameters => PKIXPublicKeyRSA;
-
-
-        /// <summary>
-        /// Return the corresponding public parameters
-        /// </summary>
-        public PkixPublicKeyRsa PKIXPublicKeyRSA {
-            get {
-                _PKIXPublicKeyRSA ??= new PkixPublicKeyRsa() {
-                    Modulus = Modulus,
-                    PublicExponent = PublicExponent
-                    };
-                return _PKIXPublicKeyRSA;
-                }
-            }
-
-        PkixPublicKeyRsa _PKIXPublicKeyRSA = null;
-
-        }
-
+    PkixPublicKeyRsa _PKIXPublicKeyRSA = null;
 
     }

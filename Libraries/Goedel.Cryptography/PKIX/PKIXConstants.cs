@@ -21,181 +21,125 @@
 #endregion
 
 
-namespace Goedel.Cryptography.PKIX {
+namespace Goedel.Cryptography.PKIX;
+
+/// <summary>
+/// X.500 String types. Most should be avoided.
+/// </summary>
+public enum StringType {
+    /// <summary>
+    /// US variant of the ASCII encoding.
+    /// </summary>
+    IA5,
 
     /// <summary>
-    /// X.500 String types. Most should be avoided.
+    /// Synonym for IA5.
     /// </summary>
-    public enum StringType {
-        /// <summary>
-        /// US variant of the ASCII encoding.
-        /// </summary>
-        IA5,
-
-        /// <summary>
-        /// Synonym for IA5.
-        /// </summary>
-        ASCII = IA5,
-
-        /// <summary>
-        /// Avoid
-        /// </summary>
-        BMP,
-        /// <summary>
-        /// UTF8 encoding
-        /// </summary>
-        UTF8,
-
-        /// <summary>
-        /// Avoid
-        /// </summary>
-        Printable,
-
-        /// <summary>
-        /// Avoid
-        /// </summary>
-        Teletex,
-
-        /// <summary>
-        /// No really, just avoid, avoid, avoid.
-        /// </summary>
-        Universal
-        }
-
+    ASCII = IA5,
 
     /// <summary>
-    /// High level Key Uses
+    /// Avoid
     /// </summary>
-    public enum Application {
-        /// <summary>
-        /// Server Authentication
-        /// </summary>
+    BMP,
+    /// <summary>
+    /// UTF8 encoding
+    /// </summary>
+    UTF8,
 
-        ServerAuth = 0x0001,
+    /// <summary>
+    /// Avoid
+    /// </summary>
+    Printable,
 
-        /// <summary>
-        /// Client Authentication
-        /// </summary>
-        ClientAuth = 0x0002,
+    /// <summary>
+    /// Avoid
+    /// </summary>
+    Teletex,
 
-        /// <summary>
-        /// Code Signing
-        /// </summary>
-        CodeSigning = 0x0004,
-
-        /// <summary>
-        /// Email encryption
-        /// </summary>
-        EmailEncryption = 0x0008,
-
-        /// <summary>
-        /// Email Signature
-        /// </summary>
-        EmailSignature = 0x0010,
-
-        /// <summary>
-        /// Data Encryption
-        /// </summary>
-        DataEncryption = 0x0020,
-
-        /// <summary>
-        /// Data Signature
-        /// </summary>
-        DataSignature = 0x0040,
-
-        /// <summary>
-        /// Timestamp
-        /// </summary>
-        TimeStamping = 0x0080,
-
-        /// <summary>
-        /// Signing OCSP status responses
-        /// </summary>
-        OCSP = 0x0100,
-
-        /// <summary>
-        /// Signing CRLs
-        /// </summary>
-        CRL = 0x0200,
-
-        /// <summary>
-        /// Mesh personal master profile signature.
-        /// </summary>
-        PersonalMaster = 0x0400,
-
-        /// <summary>
-        /// Confirmation
-        /// </summary>
-        Confirmation = 0x0800,
-
-        /// <summary>
-        /// Certificate Authority intermediate signer
-        /// </summary>
-        CA = 0x1000,
-
-        /// <summary>
-        /// Root of trust.
-        /// </summary>
-        Root = 0x2000,
-
-        /// <summary>
-        /// Device root.
-        /// </summary>
-        DeviceMaster = 0x4000,
-        }
+    /// <summary>
+    /// No really, just avoid, avoid, avoid.
+    /// </summary>
+    Universal
+    }
 
 
+/// <summary>
+/// High level Key Uses
+/// </summary>
+public enum Application {
+    /// <summary>
+    /// Server Authentication
+    /// </summary>
 
+    ServerAuth = 0x0001,
 
-    ///// <summary>
-    ///// PKIX Key Uses
-    ///// </summary>
-    //public enum KeyUses {
-    //    /// <summary>
-    //    /// Sign
-    //    /// </summary>
-    //    DigitalSignature = 0x0001,       // EmailSignature | DataSignature | CodeSigning
+    /// <summary>
+    /// Client Authentication
+    /// </summary>
+    ClientAuth = 0x0002,
 
-    //    /// <summary>
-    //    /// If clear, signatures may be repudiated
-    //    /// </summary>
-    //    NonRepudiation = 0x0002,       // Confirmation
+    /// <summary>
+    /// Code Signing
+    /// </summary>
+    CodeSigning = 0x0004,
 
-    //    /// <summary>
-    //    /// Encryption
-    //    /// </summary>
-    //    KeyEncipherment = 0x0004,       // EmailEncryption | DataEncryption
+    /// <summary>
+    /// Email encryption
+    /// </summary>
+    EmailEncryption = 0x0008,
 
-    //    /// <summary>
-    //    /// Don't use.
-    //    /// </summary>
-    //    DataEncipherment = 0x0008,       // Don't Use
+    /// <summary>
+    /// Email Signature
+    /// </summary>
+    EmailSignature = 0x0010,
 
-    //    /// <summary>
-    //    /// Key agreement (used for client, server authentication).
-    //    /// </summary>
-    //    KeyAgreement = 0x0010,       // ServerAuth | ClientAuth
+    /// <summary>
+    /// Data Encryption
+    /// </summary>
+    DataEncryption = 0x0020,
 
-    //    /// <summary>
-    //    /// Sign certificates
-    //    /// </summary>
-    //    KeyCertSign = 0x0020,       // CA | Root
+    /// <summary>
+    /// Data Signature
+    /// </summary>
+    DataSignature = 0x0040,
 
-    //    /// <summary>
-    //    /// Sign CRLs
-    //    /// </summary>
-    //    CRLSign = 0x0040,       // CRL
+    /// <summary>
+    /// Timestamp
+    /// </summary>
+    TimeStamping = 0x0080,
 
-    //    /// <summary>
-    //    /// Don't use
-    //    /// </summary>
-    //    EncipherOnly = 0x0080,       // Don't use
+    /// <summary>
+    /// Signing OCSP status responses
+    /// </summary>
+    OCSP = 0x0100,
 
-    //    /// <summary>
-    //    /// Don't Use.
-    //    /// </summary>
-    //    DecipherOnly = 0x0100        // Don't use
-    //    }
+    /// <summary>
+    /// Signing CRLs
+    /// </summary>
+    CRL = 0x0200,
 
+    /// <summary>
+    /// Mesh personal master profile signature.
+    /// </summary>
+    PersonalMaster = 0x0400,
 
+    /// <summary>
+    /// Confirmation
+    /// </summary>
+    Confirmation = 0x0800,
+
+    /// <summary>
+    /// Certificate Authority intermediate signer
+    /// </summary>
+    CA = 0x1000,
+
+    /// <summary>
+    /// Root of trust.
+    /// </summary>
+    Root = 0x2000,
+
+    /// <summary>
+    /// Device root.
+    /// </summary>
+    DeviceMaster = 0x4000,
     }

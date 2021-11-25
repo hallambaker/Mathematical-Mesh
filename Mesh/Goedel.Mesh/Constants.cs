@@ -24,122 +24,121 @@
 
 using Goedel.Cryptography;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
+
+/// <summary>
+/// Status values for Mesh Messages
+/// </summary>
+public enum MessageStatus {
+
+
+
+    ///<summary>Message is unread.</summary>
+    Unread = 0b1,
+
+    ///<summary>Message has been read.</summary>
+    Read = 0b10,
+
+    ///<summary>Message has expired</summary>
+    Unexpired = 0b100,
+
+    ///<summary>Message has expired</summary>
+    Expired = 0b1000,
+
+    ///<summary>Message is open.</summary>
+    Open = 0b1_0000,
+
+    ///<summary>Message is closed.</summary>
+    Closed = 0b10_0000,
+
+
+    ///<summary>Initial Message Status</summary>
+    Initial = Unread | Open,
+
+    ///<summary>Initial Message Status</summary>
+    Active = Unexpired | Open,
+
+
+    ///<summary>All messages.</summary>
+    All = 0b11_1111,
+
+    ///<summary>No messages.</summary>
+    None = 0b00_0000,
+
+    }
+
+/// <summary>
+/// Collected constants used in the Mathematical Mesh
+/// </summary>
+public static partial class MeshConstants {
+    // Constants for calculating timeout values.
+
+    ///<summary>Number of ticks in a millisecond</summary>
+    public const long MillisecondInTicks = 10_000;
+    ///<summary>Number of ticks in a second</summary>
+    public const long SecondInTicks = 1000 * MillisecondInTicks;
+    ///<summary>Number of ticks in a minute</summary>
+    public const long MinuteInTicks = 60 * SecondInTicks;
+    ///<summary>Number of ticks in a hour</summary>
+    public const long HourInTicks = 60 * MinuteInTicks;
+    ///<summary>Number of ticks in a day</summary>
+    public const long DayInTicks = 24 * HourInTicks;
+    ///<summary>Number of ticks in a week</summary>
+    public const long WeekInTicks = 7 * DayInTicks;
+    ///<summary>Number of ticks in a year</summary>
+    public const long YearInTicks = 365 * DayInTicks;
+
+
+    // Constants used in conjunction with UDF derived keys.
+
+    ///<summary>Default master seed size in bits.</summary>
+    public const int DefaultMasterKeyBits = 256;
+
+
+    // CryptoAlgorithmID related constants and convenience functions
+
+    ///<summary>The default encryption algorithm</summary>
+    public const CryptoAlgorithmId DefaultAlgorithmEncryptID = CryptoAlgorithmId.X448;
+    ///<summary>The default signature algorithm</summary>
+    public const CryptoAlgorithmId DefaultAlgorithmSignID = CryptoAlgorithmId.Ed448;
+    ///<summary>The default authentication algorithm</summary>
+    public const CryptoAlgorithmId DefaultAlgorithmAuthenticateID = CryptoAlgorithmId.X448;
 
     /// <summary>
-    /// Status values for Mesh Messages
+    /// Convenience function that returns the value <see cref="DefaultAlgorithmEncryptID"/> if
+    /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmId.Default"/> 
+    /// and <paramref name="cryptoAlgorithmID"/>
+    /// otherwise.
     /// </summary>
-    public enum MessageStatus {
-
-
-
-        ///<summary>Message is unread.</summary>
-        Unread = 0b1,
-
-        ///<summary>Message has been read.</summary>
-        Read = 0b10,
-
-        ///<summary>Message has expired</summary>
-        Unexpired = 0b100,
-
-        ///<summary>Message has expired</summary>
-        Expired = 0b1000,
-
-        ///<summary>Message is open.</summary>
-        Open = 0b1_0000,
-
-        ///<summary>Message is closed.</summary>
-        Closed = 0b10_0000,
-
-
-        ///<summary>Initial Message Status</summary>
-        Initial = Unread | Open,
-
-        ///<summary>Initial Message Status</summary>
-        Active = Unexpired | Open,
-
-
-        ///<summary>All messages.</summary>
-        All = 0b11_1111,
-
-        ///<summary>No messages.</summary>
-        None = 0b00_0000,
-
-        }
+    /// <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
+    /// <returns>The value <paramref name="cryptoAlgorithmID"/> with the
+    /// specified substitution if the value is <see cref="CryptoAlgorithmId.Default"/>.</returns>
+    public static CryptoAlgorithmId DefaultAlgorithmEncrypt(this CryptoAlgorithmId cryptoAlgorithmID) =>
+        cryptoAlgorithmID.DefaultMeta(DefaultAlgorithmEncryptID);
 
     /// <summary>
-    /// Collected constants used in the Mathematical Mesh
+    /// Convenience function that returns the value <see cref="DefaultAlgorithmSignID"/> if
+    /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmId.Default"/> 
+    /// and <paramref name="cryptoAlgorithmID"/>
+    /// otherwise.
     /// </summary>
-    public static partial class MeshConstants {
-        // Constants for calculating timeout values.
+    /// <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
+    /// <returns>The value <paramref name="cryptoAlgorithmID"/> with the
+    /// specified substitution if the value is <see cref="CryptoAlgorithmId.Default"/>.</returns>
+    public static CryptoAlgorithmId DefaultAlgorithmSign(this CryptoAlgorithmId cryptoAlgorithmID) =>
+        cryptoAlgorithmID.DefaultMeta(DefaultAlgorithmSignID);
 
-        ///<summary>Number of ticks in a millisecond</summary>
-        public const long MillisecondInTicks = 10_000;
-        ///<summary>Number of ticks in a second</summary>
-        public const long SecondInTicks = 1000 * MillisecondInTicks;
-        ///<summary>Number of ticks in a minute</summary>
-        public const long MinuteInTicks = 60 * SecondInTicks;
-        ///<summary>Number of ticks in a hour</summary>
-        public const long HourInTicks = 60 * MinuteInTicks;
-        ///<summary>Number of ticks in a day</summary>
-        public const long DayInTicks = 24 * HourInTicks;
-        ///<summary>Number of ticks in a week</summary>
-        public const long WeekInTicks = 7 * DayInTicks;
-        ///<summary>Number of ticks in a year</summary>
-        public const long YearInTicks = 365 * DayInTicks;
+    /// <summary>
+    /// Convenience function that returns the value <see cref="DefaultAlgorithmAuthenticateID"/> if
+    /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmId.Default"/> 
+    /// and <paramref name="cryptoAlgorithmID"/>
+    /// otherwise.
+    /// </summary>
+    /// <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
+    /// <returns>The value <paramref name="cryptoAlgorithmID"/> with the
+    /// specified substitution if the value is <see cref="CryptoAlgorithmId.Default"/>.</returns>
+    public static CryptoAlgorithmId DefaultAlgorithmAuthenticate(this CryptoAlgorithmId cryptoAlgorithmID) =>
+        cryptoAlgorithmID.DefaultMeta(DefaultAlgorithmAuthenticateID);
 
-
-        // Constants used in conjunction with UDF derived keys.
-
-        ///<summary>Default master seed size in bits.</summary>
-        public const int DefaultMasterKeyBits = 256;
-
-
-        // CryptoAlgorithmID related constants and convenience functions
-
-        ///<summary>The default encryption algorithm</summary>
-        public const CryptoAlgorithmId DefaultAlgorithmEncryptID = CryptoAlgorithmId.X448;
-        ///<summary>The default signature algorithm</summary>
-        public const CryptoAlgorithmId DefaultAlgorithmSignID = CryptoAlgorithmId.Ed448;
-        ///<summary>The default authentication algorithm</summary>
-        public const CryptoAlgorithmId DefaultAlgorithmAuthenticateID = CryptoAlgorithmId.X448;
-
-        /// <summary>
-        /// Convenience function that returns the value <see cref="DefaultAlgorithmEncryptID"/> if
-        /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmId.Default"/> 
-        /// and <paramref name="cryptoAlgorithmID"/>
-        /// otherwise.
-        /// </summary>
-        /// <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
-        /// <returns>The value <paramref name="cryptoAlgorithmID"/> with the
-        /// specified substitution if the value is <see cref="CryptoAlgorithmId.Default"/>.</returns>
-        public static CryptoAlgorithmId DefaultAlgorithmEncrypt(this CryptoAlgorithmId cryptoAlgorithmID) =>
-            cryptoAlgorithmID.DefaultMeta(DefaultAlgorithmEncryptID);
-
-        /// <summary>
-        /// Convenience function that returns the value <see cref="DefaultAlgorithmSignID"/> if
-        /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmId.Default"/> 
-        /// and <paramref name="cryptoAlgorithmID"/>
-        /// otherwise.
-        /// </summary>
-        /// <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
-        /// <returns>The value <paramref name="cryptoAlgorithmID"/> with the
-        /// specified substitution if the value is <see cref="CryptoAlgorithmId.Default"/>.</returns>
-        public static CryptoAlgorithmId DefaultAlgorithmSign(this CryptoAlgorithmId cryptoAlgorithmID) =>
-            cryptoAlgorithmID.DefaultMeta(DefaultAlgorithmSignID);
-
-        /// <summary>
-        /// Convenience function that returns the value <see cref="DefaultAlgorithmAuthenticateID"/> if
-        /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmId.Default"/> 
-        /// and <paramref name="cryptoAlgorithmID"/>
-        /// otherwise.
-        /// </summary>
-        /// <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
-        /// <returns>The value <paramref name="cryptoAlgorithmID"/> with the
-        /// specified substitution if the value is <see cref="CryptoAlgorithmId.Default"/>.</returns>
-        public static CryptoAlgorithmId DefaultAlgorithmAuthenticate(this CryptoAlgorithmId cryptoAlgorithmID) =>
-            cryptoAlgorithmID.DefaultMeta(DefaultAlgorithmAuthenticateID);
-
-        }
     }

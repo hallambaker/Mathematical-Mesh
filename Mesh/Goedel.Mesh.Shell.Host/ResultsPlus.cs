@@ -24,58 +24,58 @@ using System.Text;
 
 using Goedel.Protocol.Service;
 
-namespace Goedel.Mesh.Shell.Host {
-    public partial class ShellResult {
+namespace Goedel.Mesh.Shell.Host;
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/> with 
-        /// additional details.
-        /// </summary>
-        /// <returns>The string value.</returns>
-        public virtual string Verbose() => ToString();
-        }
+public partial class ShellResult {
 
-    public partial class Result {
+    /// <summary>
+    /// Converts the value of this instance to a <see langword="String"/> with 
+    /// additional details.
+    /// </summary>
+    /// <returns>The string value.</returns>
+    public virtual string Verbose() => ToString();
+    }
 
-        /// <summary>
-        /// Default constructor, initialize the value <see cref="Success"/> to <see langword="true"/>.
-        /// </summary>
-        public Result() => Success = true;
+public partial class Result {
 
-        /// <summary>
-        /// Returns a <see cref="StringBuilder"/> instance initialized with the success value and
-        /// the expanded error message reason (if relevant).
-        /// </summary>
-        /// <returns>The <see cref="StringBuilder"/> instance.</returns>
-        public virtual StringBuilder StringBuilder() {
-            var Builder = new StringBuilder();
+    /// <summary>
+    /// Default constructor, initialize the value <see cref="Success"/> to <see langword="true"/>.
+    /// </summary>
+    public Result() => Success = true;
 
-            if (!Success) {
-                Builder.Append("ERROR");
-                if (Reason != null) {
-                    Builder.Append(" - ");
-                    Builder.Append(Reason);
-                    }
-                Builder.Append('\n');
+    /// <summary>
+    /// Returns a <see cref="StringBuilder"/> instance initialized with the success value and
+    /// the expanded error message reason (if relevant).
+    /// </summary>
+    /// <returns>The <see cref="StringBuilder"/> instance.</returns>
+    public virtual StringBuilder StringBuilder() {
+        var Builder = new StringBuilder();
+
+        if (!Success) {
+            Builder.Append("ERROR");
+            if (Reason != null) {
+                Builder.Append(" - ");
+                Builder.Append(Reason);
                 }
-            return Builder;
-
+            Builder.Append('\n');
             }
+        return Builder;
 
-        /// <summary>
-        /// Converts the value of this instance to a <see langword="String"/>.
-        /// </summary>
-        /// <returns>The current string.</returns>
-        public override string ToString() {
-            var Builder = StringBuilder();
-
-            return Builder.ToString();
-            }
         }
 
-    public partial class ResultStartService {
+    /// <summary>
+    /// Converts the value of this instance to a <see langword="String"/>.
+    /// </summary>
+    /// <returns>The current string.</returns>
+    public override string ToString() {
+        var Builder = StringBuilder();
 
-        ///<summary>The RUD service that was started.</summary> 
-        public RudService RudService { get; set; }
+        return Builder.ToString();
         }
+    }
+
+public partial class ResultStartService {
+
+    ///<summary>The RUD service that was started.</summary> 
+    public RudService RudService { get; set; }
     }

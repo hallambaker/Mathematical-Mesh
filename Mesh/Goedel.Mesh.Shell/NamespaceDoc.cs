@@ -29,14 +29,12 @@
 
 
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
-    /// <summary>
-    /// Mesh Protocol and Profile Definition.
-    /// </summary>
+/// <summary>
+/// Mesh Protocol and Profile Definition.
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

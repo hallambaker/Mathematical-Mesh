@@ -3,14 +3,12 @@
 #endif
 
 
-namespace Goedel.IO {
+namespace Goedel.IO;
 
-    /// <summary>
-    /// Various support functions for managing files.
-    /// </summary>
+/// <summary>
+/// Various support functions for managing files.
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

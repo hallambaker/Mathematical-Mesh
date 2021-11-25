@@ -30,159 +30,159 @@ using Goedel.Mesh.Test;
 using Xunit;
 
 
-namespace Goedel.XUnit {
-    public class MakeSiteDocs : CreateExamples {
-        public static MakeSiteDocs Test() => new();
+namespace Goedel.XUnit;
+
+public class MakeSiteDocs : CreateExamples {
+    public static MakeSiteDocs Test() => new();
 
 
-        public MakeSiteDocs() {
+    public MakeSiteDocs() {
 
-            Service = new LayerService(this);
-            Account = new LayerAccount(this);
-            Connect = new LayerConnect(this);
+        Service = new LayerService(this);
+        Account = new LayerAccount(this);
+        Connect = new LayerConnect(this);
 
-            Apps = new LayerApps(this);
-            base.Contact = new LayerContact(this);
-            Confirm = new LayerConfirm(this);
-            Group = new LayerGroup(this);
-            NYI = new LayerNYI(this);
+        Apps = new LayerApps(this);
+        base.Contact = new LayerContact(this);
+        Confirm = new LayerConfirm(this);
+        Group = new LayerGroup(this);
+        NYI = new LayerNYI(this);
 
-            TestEnvironment = new TestEnvironmentCommon {
-                //JpcConnection = Protocol.JpcConnection.Rud
-                JpcConnection = Protocol.JpcConnection.Serialized
-                };
-            }
-
-
-
-        [Fact]
-
-        public void FullTest() {
-            var index = "FullTest";
-
-            ServiceConnect();
-            CreateAliceAccount();
-            EncodeDecodeFile(index);
-
-            PasswordCatalog();
-            BookmarkCatalog();
-            ContactCatalog();
-            NetworkCatalog();
-            TaskCatalog();
-            ConnectDeviceCompare(index);
+        TestEnvironment = new TestEnvironmentCommon {
+            //JpcConnection = Protocol.JpcConnection.Rud
+            JpcConnection = Protocol.JpcConnection.Serialized
+            };
+        }
 
 
 
+    [Fact]
 
-            SSHApp();
-            MailApp();
-            CreateBobAccount();
-            ContactExchange();
+    public void FullTest() {
+        var index = "FullTest";
 
+        ServiceConnect();
+        CreateAliceAccount();
+        EncodeDecodeFile(index);
 
-
-            Confirmation();
-            GroupOperations();
-            ConnectPINDynamicQR();
-            ConnectStaticQR();
-
-            TestConnectDisconnect(index);
-
-
-            EscrowAndRecover();
-            }
-
-        [Fact]
-        public void CiphertextVerify() {
-            var index = "CiphertextVerify";
-
-
-            ServiceConnect();
-            CreateAliceAccount();
-            EncodeDecodeFile(index);
-
-
-            }
+        PasswordCatalog();
+        BookmarkCatalog();
+        ContactCatalog();
+        NetworkCatalog();
+        TaskCatalog();
+        ConnectDeviceCompare(index);
 
 
 
-        [Fact]
-        public void DeleteDevice() {
-            var index = "DeleteDevice";
 
-            ServiceConnect();
-            CreateAliceAccount();
-            EncodeDecodeFile(index);
-            ConnectDeviceCompare(index);
-            ConnectPINDynamicQR();
-            TestConnectDisconnect(index);
-            }
-
-        [Fact]
-        public void DecodeSecondDevice() {
-            var index = "DecodeSecondDevice";
-
-            ServiceConnect();
-            CreateAliceAccount();
-            EncodeDecodeFile(index);
-            ConnectDeviceCompare(index);
+        SSHApp();
+        MailApp();
+        CreateBobAccount();
+        ContactExchange();
 
 
 
-            }
+        Confirmation();
+        GroupOperations();
+        ConnectPINDynamicQR();
+        ConnectStaticQR();
+
+        TestConnectDisconnect(index);
 
 
-        [Fact]
-        public void CreateSSH() {
-            ServiceConnect();
-            CreateAliceAccount();
-            ConnectDevice();
-            SSHApp();
-            }
+        EscrowAndRecover();
+        }
+
+    [Fact]
+    public void CiphertextVerify() {
+        var index = "CiphertextVerify";
 
 
-        [Fact]
-        public void CreateMail() {
-            ServiceConnect();
-            CreateAliceAccount();
-            ConnectDevice();
-            MailApp();
-            }
+        ServiceConnect();
+        CreateAliceAccount();
+        EncodeDecodeFile(index);
 
-        [Fact]
-        public void TestContact() {
-            ServiceConnect();
-            CreateAliceAccount();
-            CreateBobAccount();
-            ContactExchange();
-            }
 
-        [Fact]
-        public void TestConfirmation() {
-            ServiceConnect();
-            CreateAliceAccount();
-            Confirmation();
-            }
+        }
 
-        [Fact]
-        public void GroupTests() {
-            ServiceConnect();
-            CreateAliceAccount();
-            CreateBobAccount();
-            ContactExchange();
 
-            GroupOperations();
-            }
 
-        [Fact]
-        public void Recover() {
-            ServiceConnect();
-            CreateAliceAccount();
-            EscrowAndRecover();
-            }
+    [Fact]
+    public void DeleteDevice() {
+        var index = "DeleteDevice";
 
+        ServiceConnect();
+        CreateAliceAccount();
+        EncodeDecodeFile(index);
+        ConnectDeviceCompare(index);
+        ConnectPINDynamicQR();
+        TestConnectDisconnect(index);
+        }
+
+    [Fact]
+    public void DecodeSecondDevice() {
+        var index = "DecodeSecondDevice";
+
+        ServiceConnect();
+        CreateAliceAccount();
+        EncodeDecodeFile(index);
+        ConnectDeviceCompare(index);
 
 
 
         }
+
+
+    [Fact]
+    public void CreateSSH() {
+        ServiceConnect();
+        CreateAliceAccount();
+        ConnectDevice();
+        SSHApp();
+        }
+
+
+    [Fact]
+    public void CreateMail() {
+        ServiceConnect();
+        CreateAliceAccount();
+        ConnectDevice();
+        MailApp();
+        }
+
+    [Fact]
+    public void TestContact() {
+        ServiceConnect();
+        CreateAliceAccount();
+        CreateBobAccount();
+        ContactExchange();
+        }
+
+    [Fact]
+    public void TestConfirmation() {
+        ServiceConnect();
+        CreateAliceAccount();
+        Confirmation();
+        }
+
+    [Fact]
+    public void GroupTests() {
+        ServiceConnect();
+        CreateAliceAccount();
+        CreateBobAccount();
+        ContactExchange();
+
+        GroupOperations();
+        }
+
+    [Fact]
+    public void Recover() {
+        ServiceConnect();
+        CreateAliceAccount();
+        EscrowAndRecover();
+        }
+
+
+
+
     }

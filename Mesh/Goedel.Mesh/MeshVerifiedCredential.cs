@@ -23,69 +23,66 @@
 
 using Goedel.Protocol;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
 
 
+
+/// <summary>
+/// A verified device credential.
+/// </summary>
+public class MeshVerifiedDevice {
+
+    ///<summary>The credential provider.</summary> 
+    public string Provider => MeshCredential.Provider;
+
+    ///<summary>The validation data??</summary> 
+    public CredentialValidation CredentialValidation => MeshCredential.CredentialValidation;
+
+    ///<summary>Return the underlying credential.</summary> 
+    public MeshCredentialPublic MeshCredential { get; }
 
     /// <summary>
-    /// A verified device credential.
+    /// Construct an instance from the credential <paramref name="meshCredential"/>
     /// </summary>
-    public class MeshVerifiedDevice  {
+    /// <param name="meshCredential">The credential from which the instance is to be created.</param>
+    public MeshVerifiedDevice(MeshCredentialPublic meshCredential) =>
+        MeshCredential = meshCredential;
 
-        ///<summary>The credential provider.</summary> 
-        public string Provider => MeshCredential.Provider;
+    }
 
-        ///<summary>The validation data??</summary> 
-        public CredentialValidation CredentialValidation => MeshCredential.CredentialValidation;
 
-        ///<summary>Return the underlying credential.</summary> 
-        public MeshCredentialPublic MeshCredential { get; }
 
-        /// <summary>
-        /// Construct an instance from the credential <paramref name="meshCredential"/>
-        /// </summary>
-        /// <param name="meshCredential">The credential from which the instance is to be created.</param>
-        public MeshVerifiedDevice(MeshCredentialPublic meshCredential) =>
-            MeshCredential = meshCredential;
+/// <summary>
+/// A verified account credential.
+/// </summary>
+public class MeshVerifiedAccount : MeshVerifiedDevice {
 
+    ///<summary>The account address</summary> 
+    public string AccountAddress => MeshCredential.Account;
+
+    /// <summary>
+    /// Construct an instance from the credential <paramref name="meshCredential"/>
+    /// </summary>
+    /// <param name="meshCredential">The credential from which the instance is to be created.</param>
+    public MeshVerifiedAccount(MeshCredentialPublic meshCredential) : base(meshCredential) {
         }
 
-
+    /// <summary>
+    /// Validate the profile <paramref name="profile"/> under this credential
+    /// </summary>
+    /// <param name="profile">The profile to validate.</param>
+    public virtual void Validate(ProfileUser profile) => MeshCredential.ConnectionDevice.Validate(profile);
 
     /// <summary>
-    /// A verified account credential.
+    /// Validate the profile <paramref name="profile"/> under this credential
     /// </summary>
-    public class MeshVerifiedAccount : MeshVerifiedDevice {
-
-        ///<summary>The account address</summary> 
-        public string AccountAddress => MeshCredential.Account;
-
-        /// <summary>
-        /// Construct an instance from the credential <paramref name="meshCredential"/>
-        /// </summary>
-        /// <param name="meshCredential">The credential from which the instance is to be created.</param>
-        public MeshVerifiedAccount(MeshCredentialPublic meshCredential) : base(meshCredential) {
-            }
-
-        /// <summary>
-        /// Validate the profile <paramref name="profile"/> under this credential
-        /// </summary>
-        /// <param name="profile">The profile to validate.</param>
-        public virtual void Validate(ProfileUser profile) => MeshCredential.ConnectionDevice.Validate(profile);
-
-        /// <summary>
-        /// Validate the profile <paramref name="profile"/> under this credential
-        /// </summary>
-        /// <param name="profile">The profile to validate.</param>
-        public virtual void Validate(ProfileGroup profile) {
-            //MeshCredential.ConnectionDevice.Validate(profile);
+    /// <param name="profile">The profile to validate.</param>
+    public virtual void Validate(ProfileGroup profile) {
+        //MeshCredential.ConnectionDevice.Validate(profile);
 
 
-            // stub this out for now.
-
-            }
-
+        // stub this out for now.
 
         }
 

@@ -2,14 +2,12 @@
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace Goedel.Discovery {
+namespace Goedel.Discovery;
 
-    /// <summary>
-    /// Provides a hook 
-    /// </summary>
+/// <summary>
+/// Provides a hook 
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

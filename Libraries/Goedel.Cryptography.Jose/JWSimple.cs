@@ -22,9 +22,8 @@
 
 //  
 
-namespace Goedel.Cryptography.Jose {
+namespace Goedel.Cryptography.Jose;
 
-    public partial class JoseWebSignature {
+public partial class JoseWebSignature {
 
-        }
     }

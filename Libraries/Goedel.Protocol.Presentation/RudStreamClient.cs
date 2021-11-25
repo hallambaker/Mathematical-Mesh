@@ -24,78 +24,76 @@
 
 using Goedel.Utilities;
 
-namespace Goedel.Protocol.Presentation {
+namespace Goedel.Protocol.Presentation;
+
+/// <summary>
+/// The client side of an RDP transactional stream.
+/// </summary>
+public class RudStreamClient : RudStream, IJpcSession {
+    #region // Properties
+
+    ///<inheritdoc/>
+    public virtual string TargetAccount => throw new NYI();
+
+
+
+    #endregion
+    #region // Constructors
+
     /// <summary>
-    /// The client side of an RDP transactional stream.
+    /// Initialize a new stream instance as a child of <paramref name="parent"/> to support
+    /// protocol <paramref name="protocol"/> 
     /// </summary>
-    public class RudStreamClient : RudStream, IJpcSession {
-        #region // Properties
+    /// <param name="parent">The parent stream</param>
+    /// <param name="protocol">The stream protocol</param>
+    /// <param name="credentialSelf">Optional additional credential for self.</param>
+    /// <param name="credentialOther">Optional additional credential for other.</param>
+    /// <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
 
-        ///<inheritdoc/>
-        public virtual string TargetAccount => throw new NYI();
+    public RudStreamClient(
+            RudStream parent,
+            string protocol,
+             ICredentialPrivate credentialSelf = null,
+            ICredentialPublic credentialOther = null,
+            RudConnection rudConnection = null) : base(
+                parent, protocol, credentialSelf, credentialOther, rudConnection) { }
 
-
-
-        #endregion
-        #region // Constructors
-
-        /// <summary>
-        /// Initialize a new stream instance as a child of <paramref name="parent"/> to support
-        /// protocol <paramref name="protocol"/> 
-        /// </summary>
-        /// <param name="parent">The parent stream</param>
-        /// <param name="protocol">The stream protocol</param>
-        /// <param name="credentialSelf">Optional additional credential for self.</param>
-        /// <param name="credentialOther">Optional additional credential for other.</param>
-        /// <param name="rudConnection">The parent connection (if specified, overrides <paramref name="parent"/></param>
-
-        public RudStreamClient(
-                RudStream parent,
-                string protocol,
-                 ICredentialPrivate credentialSelf = null,
-                ICredentialPublic credentialOther = null,
-                RudConnection rudConnection = null) : base(
-                    parent, protocol, credentialSelf, credentialOther, rudConnection) { }
-
-        #endregion
-        #region // Methods
+    #endregion
+    #region // Methods
 
 
 
-        /// <summary>
-        /// Post the transaction <paramref name="tag"/> with data <paramref name="request"/>
-        /// to the stream and await the response.
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public JsonObject Post(string tag, JsonObject request) {
+    /// <summary>
+    /// Post the transaction <paramref name="tag"/> with data <paramref name="request"/>
+    /// to the stream and await the response.
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    public JsonObject Post(string tag, JsonObject request) {
 
-            //var service = "http://voodoo:15099/.well-known/mmm/";
-            //var webClient = new WebClient();
-            //var data = new byte[12000];
+        //var service = "http://voodoo:15099/.well-known/mmm/";
+        //var webClient = new WebClient();
+        //var data = new byte[12000];
 
 
-            //(service == Uri).AssertTrue(NYI.Throw);
+        //(service == Uri).AssertTrue(NYI.Throw);
 
-            //var post = webClient.UploadData(Uri, data);
+        //var post = webClient.UploadData(Uri, data);
 
 
 
 
-            var task = PostAsync(tag, request);
-            task.Wait();
-            return task.Result;
-            }
+        var task = PostAsync(tag, request);
+        task.Wait();
+        return task.Result;
+        }
 
-        ///<inheritdoc cref="IJpcSession"/>
-        public IJpcSession Rebind(ICredential credential) {
-            return MakeStreamClient(Protocol, credential as ICredentialPrivate);
-            }
-
-
-        #endregion
+    ///<inheritdoc cref="IJpcSession"/>
+    public IJpcSession Rebind(ICredential credential) {
+        return MakeStreamClient(Protocol, credential as ICredentialPrivate);
         }
 
 
+    #endregion
     }

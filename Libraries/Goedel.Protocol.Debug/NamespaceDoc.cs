@@ -23,14 +23,12 @@
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace Goedel.Protocol.Debug {
+namespace Goedel.Protocol.Debug;
 
-    /// <summary>
-    /// Debugging extensions for PROTOGEN Web Services
-    /// </summary>
+/// <summary>
+/// Debugging extensions for PROTOGEN Web Services
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

@@ -31,142 +31,141 @@ using Goedel.Cryptography.KeyFile;
 using Goedel.Utilities;
 using Goedel.IO;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
+
+/// <summary>
+/// Static extensions class.
+/// </summary>
+public static partial class Extensions {
+
+    //delegate void ToBuilderDelegate (StringBuilder builder, int indent);
 
     /// <summary>
-    /// Static extensions class.
+    /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+    /// a leading indent of <paramref name="indent"/> units.
     /// </summary>
-    public static partial class Extensions {
-
-        //delegate void ToBuilderDelegate (StringBuilder builder, int indent);
-
-        /// <summary>
-        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
-        /// a leading indent of <paramref name="indent"/> units.
-        /// </summary>
-        /// <param name="meshItem">The item to present.</param>
-        /// <param name="builder">The string builder to write to.</param>
-        /// <param name="indent">The number of units to indent the presentation.</param>
-        /// <param name="nullText">Text to provide if the item is null.</param>
-        public static void ToBuilder(this MeshItem meshItem, StringBuilder builder,
-                int indent, string nullText) {
-            if (meshItem == null) {
-                builder.AppendLine(nullText);
-                }
-            else {
-                meshItem.ToBuilder(builder, indent);
-                }
+    /// <param name="meshItem">The item to present.</param>
+    /// <param name="builder">The string builder to write to.</param>
+    /// <param name="indent">The number of units to indent the presentation.</param>
+    /// <param name="nullText">Text to provide if the item is null.</param>
+    public static void ToBuilder(this MeshItem meshItem, StringBuilder builder,
+            int indent, string nullText) {
+        if (meshItem == null) {
+            builder.AppendLine(nullText);
             }
-
-        /// <summary>
-        /// Locate a keypair in the set <paramref name="publicKeys"/> that has a private key in 
-        /// <paramref name="keyCollection"/>
-        /// </summary>
-        /// <param name="keyCollection">The key collection to search.</param>
-        /// <param name="publicKeys">The list of public keys to match</param>
-        /// <returns>The key pair if found, otherwise <see langword="false"/></returns>
-        public static CryptoKey LocatePrivate(this IKeyCollection keyCollection, List<KeyData> publicKeys) {
-
-            foreach (var publicKey in publicKeys) {
-                if (keyCollection.LocatePrivateKeyPair(publicKey.Udf, out var keyPair)) {
-                    return keyPair;
-                    }
-
-                }
-            return null;
-
+        else {
+            meshItem.ToBuilder(builder, indent);
             }
+        }
 
-        /// <summary>
-        /// Write a formatted version of the DareEnvelope <paramref name="envelope"/> to the
-        /// string builder <paramref name="builder"/> indented by <paramref name="indent"/> 
-        /// units of two spaces.
-        /// </summary>
-        /// <param name="envelope">The envelope to present.</param>
-        /// <param name="builder">The string builder.</param>
-        /// <param name="indent">The indentation level.</param>
-        public static void Report(this DareEnvelope envelope, StringBuilder builder, int indent = 0) {
-            if (envelope != null) {
+    /// <summary>
+    /// Locate a keypair in the set <paramref name="publicKeys"/> that has a private key in 
+    /// <paramref name="keyCollection"/>
+    /// </summary>
+    /// <param name="keyCollection">The key collection to search.</param>
+    /// <param name="publicKeys">The list of public keys to match</param>
+    /// <returns>The key pair if found, otherwise <see langword="false"/></returns>
+    public static CryptoKey LocatePrivate(this IKeyCollection keyCollection, List<KeyData> publicKeys) {
 
-                Report(envelope.Header, builder, indent);
-                Report(envelope.Trailer, builder, indent);
-                }
-            else {
-                builder.AppendIndent(indent, $"[No Envelope]");
+        foreach (var publicKey in publicKeys) {
+            if (keyCollection.LocatePrivateKeyPair(publicKey.Udf, out var keyPair)) {
+                return keyPair;
                 }
 
             }
-
-        /// <summary>
-        /// Write a formatted version of the DareHeader <paramref name="header"/> to the
-        /// string builder <paramref name="builder"/> indented by <paramref name="indent"/> 
-        /// units of two spaces.
-        /// </summary>
-        /// <param name="header">The header to present.</param>
-        /// <param name="builder">The string builder.</param>
-        /// <param name="indent">The indentation level.</param>
-        public static void Report(this DareHeader header, StringBuilder builder, int indent = 0) {
-            if (header.Recipients != null) {
-                foreach (var recipient in header.Recipients) {
-                    builder.AppendIndent(indent, $"Encrypted: {recipient.KeyIdentifier}");
-                    }
-                }
-            }
-
-        /// <summary>
-        /// Write a formatted version of the DareTrailer <paramref name="trailer"/> to the
-        /// string builder <paramref name="builder"/> indented by <paramref name="indent"/> 
-        /// units of two spaces.
-        /// </summary>
-        /// <param name="trailer">The trailer to present.</param>
-        /// <param name="builder">The string builder.</param>
-        /// <param name="indent">The indentation level.</param>
-        public static void Report(this DareTrailer trailer, StringBuilder builder, int indent = 0) {
-            if (trailer?.Signatures != null) {
-                foreach (var signature in trailer.Signatures) {
-                    builder.AppendIndent(indent, $"Signed by: {signature.KeyIdentifier}");
-                    }
-                }
-            }
-
-
-        /// <summary>
-        /// Convert key pair to specified format
-        /// </summary>
-        /// <param name="keyData">Keypair to convert</param>
-        /// <param name="filename">Name of the file to be created.</param>
-        /// <param name="KeyFileFormat">Format to convert to</param>
-        /// <param name="passphrase">Optional encryption passphrase.</param>
-        /// <returns>The keyfile data</returns>
-        public static void ToKeyFile(
-                this KeyData keyData,
-                string filename,
-                KeyFileFormat KeyFileFormat = KeyFileFormat.Default,
-                string passphrase=null) {
-            var data = keyData.GetKeyPair(KeySecurity.Exportable).ToKeyFile(KeyFileFormat);
-
-            filename.WriteFileNew(data);
-            }
-
-
-        /// <summary>
-        /// Convert key pair to specified format
-        /// </summary>
-        /// <param name="keyPair">Keypair to convert</param>
-        /// <param name="filename">Name of the file to be created.</param>
-        /// <param name="KeyFileFormat">Format to convert to</param>
-        /// <param name="passphrase">Optional encryption passphrase.</param>
-        /// <returns>The keyfile data</returns>
-        public static long ToKeyFile(
-                this KeyPair keyPair,
-                string filename,
-                KeyFileFormat KeyFileFormat = KeyFileFormat.Default,
-                string passphrase = null) {
-            var data = keyPair.ToKeyFile(KeyFileFormat);
-
-            return filename.WriteFileNew(data);
-            }
-
+        return null;
 
         }
+
+    /// <summary>
+    /// Write a formatted version of the DareEnvelope <paramref name="envelope"/> to the
+    /// string builder <paramref name="builder"/> indented by <paramref name="indent"/> 
+    /// units of two spaces.
+    /// </summary>
+    /// <param name="envelope">The envelope to present.</param>
+    /// <param name="builder">The string builder.</param>
+    /// <param name="indent">The indentation level.</param>
+    public static void Report(this DareEnvelope envelope, StringBuilder builder, int indent = 0) {
+        if (envelope != null) {
+
+            Report(envelope.Header, builder, indent);
+            Report(envelope.Trailer, builder, indent);
+            }
+        else {
+            builder.AppendIndent(indent, $"[No Envelope]");
+            }
+
+        }
+
+    /// <summary>
+    /// Write a formatted version of the DareHeader <paramref name="header"/> to the
+    /// string builder <paramref name="builder"/> indented by <paramref name="indent"/> 
+    /// units of two spaces.
+    /// </summary>
+    /// <param name="header">The header to present.</param>
+    /// <param name="builder">The string builder.</param>
+    /// <param name="indent">The indentation level.</param>
+    public static void Report(this DareHeader header, StringBuilder builder, int indent = 0) {
+        if (header.Recipients != null) {
+            foreach (var recipient in header.Recipients) {
+                builder.AppendIndent(indent, $"Encrypted: {recipient.KeyIdentifier}");
+                }
+            }
+        }
+
+    /// <summary>
+    /// Write a formatted version of the DareTrailer <paramref name="trailer"/> to the
+    /// string builder <paramref name="builder"/> indented by <paramref name="indent"/> 
+    /// units of two spaces.
+    /// </summary>
+    /// <param name="trailer">The trailer to present.</param>
+    /// <param name="builder">The string builder.</param>
+    /// <param name="indent">The indentation level.</param>
+    public static void Report(this DareTrailer trailer, StringBuilder builder, int indent = 0) {
+        if (trailer?.Signatures != null) {
+            foreach (var signature in trailer.Signatures) {
+                builder.AppendIndent(indent, $"Signed by: {signature.KeyIdentifier}");
+                }
+            }
+        }
+
+
+    /// <summary>
+    /// Convert key pair to specified format
+    /// </summary>
+    /// <param name="keyData">Keypair to convert</param>
+    /// <param name="filename">Name of the file to be created.</param>
+    /// <param name="KeyFileFormat">Format to convert to</param>
+    /// <param name="passphrase">Optional encryption passphrase.</param>
+    /// <returns>The keyfile data</returns>
+    public static void ToKeyFile(
+            this KeyData keyData,
+            string filename,
+            KeyFileFormat KeyFileFormat = KeyFileFormat.Default,
+            string passphrase = null) {
+        var data = keyData.GetKeyPair(KeySecurity.Exportable).ToKeyFile(KeyFileFormat);
+
+        filename.WriteFileNew(data);
+        }
+
+
+    /// <summary>
+    /// Convert key pair to specified format
+    /// </summary>
+    /// <param name="keyPair">Keypair to convert</param>
+    /// <param name="filename">Name of the file to be created.</param>
+    /// <param name="KeyFileFormat">Format to convert to</param>
+    /// <param name="passphrase">Optional encryption passphrase.</param>
+    /// <returns>The keyfile data</returns>
+    public static long ToKeyFile(
+            this KeyPair keyPair,
+            string filename,
+            KeyFileFormat KeyFileFormat = KeyFileFormat.Default,
+            string passphrase = null) {
+        var data = keyPair.ToKeyFile(KeyFileFormat);
+
+        return filename.WriteFileNew(data);
+        }
+
+
     }

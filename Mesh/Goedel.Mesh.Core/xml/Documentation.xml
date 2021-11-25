@@ -43,12 +43,6 @@
             </summary>
             <param name="directory">Directory to store the server information.</param>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetKeyCollection">
-            <summary>
-            Get the host key collection.
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetFilePath(System.String)">
             <inheritdoc/>
         </member>

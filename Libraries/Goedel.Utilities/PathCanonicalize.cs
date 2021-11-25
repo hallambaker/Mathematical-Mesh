@@ -21,67 +21,68 @@
 #endregion
 using System;
 
-namespace Goedel.Utilities {
-    public static partial class Extension {
-        enum State {
-            initial,
-            start,
-            dot2,
-            dot1,
-            segment,
-            drive
-            };
+namespace Goedel.Utilities;
 
-        /// <summary>
-        /// Verify that the path is not an absolute path and contains no relative 
-        /// references to an earlier path.
-        /// </summary>
-        /// <param name="path">The path to verify</param>
-        /// <returns>True if the path is canonical, otherwise false.</returns>
-        public static bool VerifyCanonical(this string path) {
+public static partial class Extension {
+    enum State {
+        initial,
+        start,
+        dot2,
+        dot1,
+        segment,
+        drive
+        };
 
-            State state = State.initial;
+    /// <summary>
+    /// Verify that the path is not an absolute path and contains no relative 
+    /// references to an earlier path.
+    /// </summary>
+    /// <param name="path">The path to verify</param>
+    /// <returns>True if the path is canonical, otherwise false.</returns>
+    public static bool VerifyCanonical(this string path) {
 
-            foreach (var c in path) {
+        State state = State.initial;
 
-                switch (c) {
-                    case '~': {
+        foreach (var c in path) {
+
+            switch (c) {
+                case '~': {
                         if (state == State.initial) {
                             return false; // have encountered illegal combination.
                             }
                         state = State.segment;
                         break;
                         }
-                    case '/':
-                    case '\\': {
+                case '/':
+                case '\\': {
                         if ((state == State.dot2) | (state == State.initial)) {
                             return false; // have encountered illegal combination.
                             }
                         state = State.start;
                         break;
                         }
-                    case '.': {
+                case '.': {
                         switch (state) {
                             case State.start: {
-                                state = State.dot1;
-                                break;
-                                }
+                                    state = State.dot1;
+                                    break;
+                                    }
                             case State.dot1: {
-                                state = State.dot2;
-                                break;
-                                }
+                                    state = State.dot2;
+                                    break;
+                                    }
                             case State.dot2: {
-                                state = State.segment;
-                                break;
-                                }
+                                    state = State.segment;
+                                    break;
+                                    }
                             }
 
                         break;
                         }
-                    case ':': {
+                case ':': {
                         return false; // Illegal Windows drive path.
                         }
-                    default: {
+                default: {
                         var cl = Char.ToLower(c);
                         if (state == State.initial & cl >= 'a' & cl <= 'z') {
                             state = State.drive;
@@ -91,16 +92,15 @@ namespace Goedel.Utilities {
                             }
                         break;
                         }
-                    }
                 }
-
-            return state != State.dot2;
             }
 
-
-
-
-
-
+        return state != State.dot2;
         }
+
+
+
+
+
+
     }

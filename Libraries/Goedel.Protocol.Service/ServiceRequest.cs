@@ -28,156 +28,156 @@ using System.Net.Sockets;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
-namespace Goedel.Protocol.Service {
+namespace Goedel.Protocol.Service;
+
+/// <summary>
+/// Describe the result of request source analysis.
+/// </summary>
+public enum RequestQuality {
+    ///<summary>The request comes from an acceptable (non blocked source).</summary> 
+    OK,
+    ///<summary>The request is not acceptable respond giving (Reason TBS)</summary> 
+    Reason,
+    ///<summary>The request is not acceptable and should be ignored without response.</summary> 
+    Abort
+    }
+
+/// <summary>
+/// Base class for connection handlers
+/// </summary>
+public abstract class ServiceRequest {
+    #region // Properties
+
+    ///<summary>The maximum request size</summary> 
+    public const int MaxRequest = 0x1000000;
+
+    ///<summary>The object encoding to use.</summary> 
+    public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON_B;
+
+
+    ///<summary>Specifies a resouce that is under contention, e.g. an account or the 
+    ///account catalog. This allows requests for the same resource to be queued for
+    ///dispatch after the blocking requests have completed.</summary> 
+    public string Resource { get; protected set; } = null;
+
+    ///<summary></summary> 
+    public int Slot;
+
+    ///<summary></summary> 
+    public RudService Service;
+
+    ///<summary>The buffer to receive the input request.</summary> 
+    protected byte[] Buffer = new byte[MaxRequest];
+
+    ///<summary>Number of bytes read into the input buffer.</summary> 
+    protected int Count = 0;
+
+
+    ///<summary>If true, the request was refused.</summary> 
+    public bool Refused { get; protected set; } = false;
+
+    #endregion
+
+    #region // Methods 
+
 
     /// <summary>
-    /// Describe the result of request source analysis.
+    /// Process the connection, dispatch the request and return the result.
     /// </summary>
-    public enum RequestQuality {
-        ///<summary>The request comes from an acceptable (non blocked source).</summary> 
-        OK,
-        ///<summary>The request is not acceptable respond giving (Reason TBS)</summary> 
-        Reason,
-        ///<summary>The request is not acceptable and should be ignored without response.</summary> 
-        Abort
+    public abstract void Complete();
+
+
+    /// <summary>
+    /// Determine  quality of request received from <paramref name="iPEndPoint"/>
+    /// </summary>
+    /// <param name="iPEndPoint">The request origin.</param>
+    /// <returns>The quality of the request.</returns>
+    protected RequestQuality AbuseCheckIpSource(IPEndPoint iPEndPoint) {
+        iPEndPoint.Future();
+        this.Future();
+        return RequestQuality.OK;
         }
 
+
     /// <summary>
-    /// Base class for connection handlers
+    /// Abort the connection.
     /// </summary>
-    public abstract class ServiceRequest {
-        #region // Properties
+    /// <param name="requestQuality"></param>
+    public abstract void Abort(RequestQuality requestQuality);
 
-        ///<summary>The maximum request size</summary> 
-        public const int MaxRequest = 0x1000000;
+    JsonObject response;
+    //IJpcSession session;
 
-        ///<summary>The object encoding to use.</summary> 
-        public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON_B;
+    ResponderMessageType responsePacket;
 
+    Listener Listener => Service.Listener;
 
-        ///<summary>Specifies a resouce that is under contention, e.g. an account or the 
-        ///account catalog. This allows requests for the same resource to be queued for
-        ///dispatch after the blocking requests have completed.</summary> 
-        public string Resource { get; protected set; } = null;
+    Packet packetClient;
 
-        ///<summary></summary> 
-        public int Slot;
+    /// <summary>
+    /// Process the buffer containing inbound data.
+    /// </summary>
+    protected virtual void ProcessBuffer() {
+        var (sourceId, offset) = StreamId.GetSourceId(Buffer);
 
-        ///<summary></summary> 
-        public RudService Service;
+        //Screen.WriteLine($"Received Request {sourceId.Value}");
 
-        ///<summary>The buffer to receive the input request.</summary> 
-        protected byte[] Buffer = new byte[MaxRequest];
+        RudStream stream = null;
 
-        ///<summary>Number of bytes read into the input buffer.</summary> 
-        protected int Count = 0;
+        if (sourceId.Value == 0) {
+            offset = Constants.SizeReservedInitialStreamId;
+            var messageType = PacketReader.ReadInitiatorMessageType(Buffer, ref offset);
 
-
-        ///<summary>If true, the request was refused.</summary> 
-        public bool Refused { get; protected set; } = false;
-
-        #endregion
-
-        #region // Methods 
-
-
-        /// <summary>
-        /// Process the connection, dispatch the request and return the result.
-        /// </summary>
-        public abstract void Complete();
-
-
-        /// <summary>
-        /// Determine  quality of request received from <paramref name="iPEndPoint"/>
-        /// </summary>
-        /// <param name="iPEndPoint">The request origin.</param>
-        /// <returns>The quality of the request.</returns>
-        protected RequestQuality AbuseCheckIpSource(IPEndPoint iPEndPoint) {
-            iPEndPoint.Future();
-            this.Future();
-            return RequestQuality.OK;
-            }
-
-
-        /// <summary>
-        /// Abort the connection.
-        /// </summary>
-        /// <param name="requestQuality"></param>
-        public abstract void Abort(RequestQuality requestQuality);
-
-        JsonObject response;
-        //IJpcSession session;
-
-        ResponderMessageType responsePacket;
-
-        Listener Listener => Service.Listener;
-
-        Packet packetClient;
-
-        /// <summary>
-        /// Process the buffer containing inbound data.
-        /// </summary>
-        protected virtual void ProcessBuffer() {
-            var (sourceId, offset) = StreamId.GetSourceId(Buffer);
-
-            //Screen.WriteLine($"Received Request {sourceId.Value}");
-
-            RudStream stream = null;
-
-            if (sourceId.Value == 0) {
-                offset = Constants.SizeReservedInitialStreamId;
-                var messageType = PacketReader.ReadInitiatorMessageType(Buffer, ref offset);
-
-                switch (messageType) {
-                    case InitiatorMessageType.InitiatorHello: {
+            switch (messageType) {
+                case InitiatorMessageType.InitiatorHello: {
                         stream = ProcessClientInitial(offset);
                         break;
                         }
-                    case InitiatorMessageType.InitiatorComplete: {
+                case InitiatorMessageType.InitiatorComplete: {
                         stream = ProcessClientComplete(offset);
                         break;
                         }
+                }
+
+            }
+        else {
+            stream = ProcessClientData(sourceId, offset);
+            }
+
+
+
+
+        if (stream?.RudConnection is not ConnectionResponder sessionResponder) {
+            return; // 
+            }
+
+
+        var memoryStream = new MemoryStream(packetClient.Payload);
+        var reader = new JsonBcdReader(memoryStream);
+
+        byte[] responseBytes = null;
+        if ((stream is RudStreamService rudStreamService) && (packetClient?.Payload.Length > 0)) {
+
+            //Screen.WriteLine($"Begin dispatch");
+
+            try {
+                response = rudStreamService.JpcInterface.Dispatch(rudStreamService, reader);
+                if (response == null) {
                     }
+                }
+            catch {
+                // here make error response wrapper
 
                 }
-            else {
-                stream = ProcessClientData(sourceId, offset);
-                }
+            //Screen.WriteLine($"End dispatch");
 
 
+            responseBytes = response.GetBytes(true, ObjectEncoding);
+            }
 
-
-            if (stream?.RudConnection is not ConnectionResponder sessionResponder) {
-                return; // 
-                }
-
-
-            var memoryStream = new MemoryStream(packetClient.Payload);
-            var reader = new JsonBcdReader(memoryStream);
-
-            byte[] responseBytes = null;
-            if ((stream is RudStreamService rudStreamService) && (packetClient?.Payload.Length > 0)) {
-
-                //Screen.WriteLine($"Begin dispatch");
-
-                try {
-                    response = rudStreamService.JpcInterface.Dispatch(rudStreamService, reader);
-                    if (response == null) {
-                        }
-                    }
-                catch  {
-                    // here make error response wrapper
-
-                    }
-                //Screen.WriteLine($"End dispatch");
-
-
-                responseBytes = response.GetBytes(true, ObjectEncoding);
-                }
-
-            // UGH: this should be switched out to use stream.StreamState !!!!
-            switch (responsePacket) {
-                case ResponderMessageType.ResponderChallenge: {
+        // UGH: this should be switched out to use stream.StreamState !!!!
+        switch (responsePacket) {
+            case ResponderMessageType.ResponderChallenge: {
 
                     var challenge = Listener.MakeChallenge(packetClient, responseBytes);
 
@@ -192,7 +192,7 @@ namespace Goedel.Protocol.Service {
 
                     break;
                     }
-                case ResponderMessageType.Data: {
+            case ResponderMessageType.Data: {
                     List<PacketExtension> packetExtensions = null;
 
                     if (stream.StreamState != StreamState.Data) {
@@ -213,245 +213,238 @@ namespace Goedel.Protocol.Service {
 
                     break;
                     }
-                default: {
+            default: {
                     throw new NYI();
                     }
 
+            }
+
+        }
+
+
+
+
+    RudStream ProcessClientInitial(int offset) {
+        responsePacket = ResponderMessageType.ResponderChallenge;
+        packetClient = Listener.ParseInitiatorHello(Buffer, offset,
+            Count - offset);
+        return Listener.GetTemporaryResponder(packetClient); ;
+        }
+
+    RudStream ProcessClientData(StreamId SourceId, int offset) {
+
+
+        //Screen.WriteLine($"Try to match inbound stream {SourceId.Value}");
+
+        responsePacket = ResponderMessageType.Data;
+
+        // Is the stream unknown?
+        if (!Listener.DictionaryStreamsInbound.TryGetValue(SourceId, out var stream)) {
+            // NYI: Need better handling of unknown steams, return error message?
+            throw new NYI();
+            }
+
+
+        var responder = stream.RudConnection;
+
+        var packet = responder.ParsePacketData(Buffer, offset, Count);
+        packetClient = packet;
+        // check to see if there is a sub-stream to be created.
+
+        if (packet.CiphertextExtensions != null) {
+            var streamChild = Listener.AcceptStream(packet.CiphertextExtensions, parentStream: stream);
+            if (streamChild != null) {
+                return streamChild;
                 }
-
             }
 
+        if (packet.CiphertextExtensions != null) {
+            foreach (var extension in packet.CiphertextExtensions) {
+                switch (extension.Tag) {
+                    case Constants.ExtensionTagsRollTag: {
 
+                            break;
+                            }
+                    case Constants.ExtensionTagsCloseStreamTag: {
 
+                            break;
+                            }
+                    case Constants.ExtensionTagsCloseConnectionTag: {
 
-        RudStream ProcessClientInitial(int offset) {
-            responsePacket = ResponderMessageType.ResponderChallenge;
-            packetClient = Listener.ParseInitiatorHello(Buffer, offset,
-                Count - offset);
-            return Listener.GetTemporaryResponder(packetClient); ;
+                            break;
+                            }
+                    }
+
+                }
             }
+        return stream;
+        }
 
-        RudStream ProcessClientData(StreamId SourceId, int offset) {
+    RudStream ProcessClientComplete(int offset) {
+
+        packetClient = Listener.ParseInitiatorComplete(Buffer, offset, Count - offset);
+        // verify the challenge here
+
+        if (Listener.VerifyChallenge(packetClient)) {
 
 
-            //Screen.WriteLine($"Try to match inbound stream {SourceId.Value}");
+
 
             responsePacket = ResponderMessageType.Data;
-
-            // Is the stream unknown?
-            if (!Listener.DictionaryStreamsInbound.TryGetValue(SourceId, out var stream)) {
-                // NYI: Need better handling of unknown steams, return error message?
-                throw new NYI();
-                }
-
-
-            var responder = stream.RudConnection;
-
-            var packet = responder.ParsePacketData(Buffer, offset, Count);
-            packetClient = packet;
-            // check to see if there is a sub-stream to be created.
-
-            if (packet.CiphertextExtensions != null) {
-                var streamChild = Listener.AcceptStream(packet.CiphertextExtensions, parentStream: stream);
-                if (streamChild != null) {
-                    return streamChild;
-                    }
-                }
-
-            if (packet.CiphertextExtensions != null) {
-                foreach (var extension in packet.CiphertextExtensions) {
-                    switch (extension.Tag) {
-                        case Constants.ExtensionTagsRollTag: {
-
-                            break;
-                            }
-                        case Constants.ExtensionTagsCloseStreamTag: {
-
-                            break;
-                            }
-                        case Constants.ExtensionTagsCloseConnectionTag: {
-
-                            break;
-                            }
-                        }
-
-                    }
-                }
-            return stream;
+            return Listener.AcceptConnection(packetClient);
             }
+        else {
+            responsePacket = ResponderMessageType.Error;
 
-        RudStream ProcessClientComplete(int offset) {
-
-            packetClient = Listener.ParseInitiatorComplete(Buffer, offset, Count - offset);
-            // verify the challenge here
-
-            if (Listener.VerifyChallenge(packetClient)) {
-
-
-
-
-                responsePacket = ResponderMessageType.Data;
-                return Listener.AcceptConnection(packetClient);
-                }
-            else {
-                responsePacket = ResponderMessageType.Error;
-
-                return null;
-                }
-
-
+            return null;
             }
 
 
-
-        /// <summary>
-        /// Return a response containing the payload <paramref name="payload"/>
-        /// </summary>
-        /// <param name="payload">The payload data to return.</param>
-        protected abstract void ReturnResponse(byte[] payload);
-
-        #endregion
         }
+
 
 
     /// <summary>
-    /// Connection handler for HTTP request
+    /// Return a response containing the payload <paramref name="payload"/>
     /// </summary>
-    public class ServiceRequestHttp : ServiceRequest {
-        #region // Properties
-        HttpListenerContext ListenerContext { get; }
+    /// <param name="payload">The payload data to return.</param>
+    protected abstract void ReturnResponse(byte[] payload);
 
-        #endregion
-        #region // Constructors
-
+    #endregion
+    }
 
 
+/// <summary>
+/// Connection handler for HTTP request
+/// </summary>
+public class ServiceRequestHttp : ServiceRequest {
+    #region // Properties
+    HttpListenerContext ListenerContext { get; }
 
-        /// <summary>
-        /// Constructor returning an instance to process the request 
-        /// specified by <paramref name="listenerContext"/>.
-        /// </summary>
-        /// <param name="service">The service to process the request.</param>
-        /// <param name="listenerContext">The HTTP request context.</param>
-        public ServiceRequestHttp(RudService service, HttpListenerContext listenerContext) {
-
-            Service = service;
-            ListenerContext = listenerContext;
-
-            // Filter out abusive requests.
-            var abuse = AbuseCheckIpSource(listenerContext.Request.RemoteEndPoint);
-            if (abuse != RequestQuality.OK) {
-                Abort(abuse);
-                return;
-                }
-
-            }
-        #endregion
-        #region // Methods 
-        /// <summary>
-        /// Process the connection, dispatch the request and return the result.
-        /// </summary>
-        public override void Complete() {
-            Service.Monitor.StartDispatch(Slot);
-
-            var request = ListenerContext.Request;
-
-            // get the provider here - if null - abort
-            var provider = Service.GetProvider(
-                    request.ServiceName, request.LocalEndPoint.Port, request.RawUrl);
-
-            provider.AssertNotNull(NYI.Throw);
-
-            request.InputStream.AssertNotNull(NYI.Throw);
-
-            // Read the input stream until either it is closed or 64KB have been read
-
-            var read = 1;
-
-            while (Count < MaxRequest & read > 0) {
-                read = request.InputStream.Read(Buffer, Count, MaxRequest - Count);
-                Count += read;
-                }
-
-
-            if (Count == MaxRequest) {
-                }
-
-            (Count < MaxRequest).AssertTrue(NYI.Throw);
-            ProcessBuffer();
+    #endregion
+    #region // Constructors
 
 
 
-            }
-
-
-        ///<inheritdoc/>
-        protected override void ReturnResponse(byte[] chunk) {
-            var response = ListenerContext.Response;
-
-
-            response.StatusCode = (int)HttpStatusCode.OK;
-            response.StatusDescription = "OK";
-            response.KeepAlive = true;
-            response.OutputStream.Write(chunk);
-
-
-            response.Close();
-
-            Service.Monitor.EndDispatch(Slot);
-            }
-
-
-
-        ///<inheritdoc/>
-        public override void Abort(RequestQuality requestQuality) {
-            Refused = true;
-            if (requestQuality == RequestQuality.Abort) {
-                ListenerContext.Response.Abort();
-                return;
-                }
-            ListenerContext.Response.StatusCode = (int)HttpStatusCode.TooManyRequests;
-            ListenerContext.Response.StatusDescription = "Not at all OK";
-            ListenerContext.Response.KeepAlive = true;
-            ListenerContext.Response.Close();
-            }
-
-        #endregion
-        }
 
     /// <summary>
-    /// Connection handler for UDP request
+    /// Constructor returning an instance to process the request 
+    /// specified by <paramref name="listenerContext"/>.
     /// </summary>
-    public class ServiceRequestUdp : ServiceRequest {
+    /// <param name="service">The service to process the request.</param>
+    /// <param name="listenerContext">The HTTP request context.</param>
+    public ServiceRequestHttp(RudService service, HttpListenerContext listenerContext) {
 
-        #region // Constructors
-        /// <summary>
-        /// Constructor, process the request contained in <paramref name="result"/>.
-        /// </summary>
-        /// <param name="result">The UDP receive result</param>
-        public ServiceRequestUdp(UdpReceiveResult result) => Buffer = result.Buffer;
-        #endregion
-        #region // Methods 
-        /// <summary>
-        /// Process the connection, dispatch the request and return the result.
-        /// </summary>
-        public override void Complete() {
+        Service = service;
+        ListenerContext = listenerContext;
+
+        // Filter out abusive requests.
+        var abuse = AbuseCheckIpSource(listenerContext.Request.RemoteEndPoint);
+        if (abuse != RequestQuality.OK) {
+            Abort(abuse);
+            return;
             }
 
-        ///<inheritdoc/>
-        public override void Abort(RequestQuality requestQuality) {
-            // Do nothing, just drop the connection.
+        }
+    #endregion
+    #region // Methods 
+    /// <summary>
+    /// Process the connection, dispatch the request and return the result.
+    /// </summary>
+    public override void Complete() {
+        Service.Monitor.StartDispatch(Slot);
+
+        var request = ListenerContext.Request;
+
+        // get the provider here - if null - abort
+        var provider = Service.GetProvider(
+                request.ServiceName, request.LocalEndPoint.Port, request.RawUrl);
+
+        provider.AssertNotNull(NYI.Throw);
+
+        request.InputStream.AssertNotNull(NYI.Throw);
+
+        // Read the input stream until either it is closed or 64KB have been read
+
+        var read = 1;
+
+        while (Count < MaxRequest & read > 0) {
+            read = request.InputStream.Read(Buffer, Count, MaxRequest - Count);
+            Count += read;
             }
 
-        ///<inheritdoc/>
-        protected override void ReturnResponse(byte[] chunk) => throw new NYI();
 
-        #endregion
+        if (Count == MaxRequest) {
+            }
+
+        (Count < MaxRequest).AssertTrue(NYI.Throw);
+        ProcessBuffer();
+
+
+
+        }
+
+
+    ///<inheritdoc/>
+    protected override void ReturnResponse(byte[] chunk) {
+        var response = ListenerContext.Response;
+
+
+        response.StatusCode = (int)HttpStatusCode.OK;
+        response.StatusDescription = "OK";
+        response.KeepAlive = true;
+        response.OutputStream.Write(chunk);
+
+
+        response.Close();
+
+        Service.Monitor.EndDispatch(Slot);
         }
 
 
 
+    ///<inheritdoc/>
+    public override void Abort(RequestQuality requestQuality) {
+        Refused = true;
+        if (requestQuality == RequestQuality.Abort) {
+            ListenerContext.Response.Abort();
+            return;
+            }
+        ListenerContext.Response.StatusCode = (int)HttpStatusCode.TooManyRequests;
+        ListenerContext.Response.StatusDescription = "Not at all OK";
+        ListenerContext.Response.KeepAlive = true;
+        ListenerContext.Response.Close();
+        }
 
+    #endregion
+    }
 
+/// <summary>
+/// Connection handler for UDP request
+/// </summary>
+public class ServiceRequestUdp : ServiceRequest {
 
+    #region // Constructors
+    /// <summary>
+    /// Constructor, process the request contained in <paramref name="result"/>.
+    /// </summary>
+    /// <param name="result">The UDP receive result</param>
+    public ServiceRequestUdp(UdpReceiveResult result) => Buffer = result.Buffer;
+    #endregion
+    #region // Methods 
+    /// <summary>
+    /// Process the connection, dispatch the request and return the result.
+    /// </summary>
+    public override void Complete() {
+        }
+
+    ///<inheritdoc/>
+    public override void Abort(RequestQuality requestQuality) {
+        // Do nothing, just drop the connection.
+        }
+
+    ///<inheritdoc/>
+    protected override void ReturnResponse(byte[] chunk) => throw new NYI();
+
+    #endregion
     }

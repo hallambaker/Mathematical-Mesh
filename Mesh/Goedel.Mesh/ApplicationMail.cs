@@ -28,157 +28,155 @@ using Goedel.Utilities;
 using System.Text;
 using Goedel.Cryptography.Jose;
 
-namespace Goedel.Mesh {
-    // Phase2: Mail Store account access details, passwords, etc.
+namespace Goedel.Mesh;
 
-    // Phase2: Mail PGP Passprase for PEM keys
-    // Phase2: Mail PGP Support for PGP ECC algorithms
-    // Phase2: Mail PGP Create PGP subkey / fingerprint / etc.
-    // Phase2: Mail PGP Push key to MIT key server
+// Phase2: Mail Store account access details, passwords, etc.
 
-    // Phase2: Mail SMIME Create CSR
-    // Phase2: Mail SMIME Request CA issued cert via ACME
-    // Phase2: Mail SMIME Save private key as P12
-    // Phase2: Mail SMIME Self signed root o'trust
+// Phase2: Mail PGP Passprase for PEM keys
+// Phase2: Mail PGP Support for PGP ECC algorithms
+// Phase2: Mail PGP Create PGP subkey / fingerprint / etc.
+// Phase2: Mail PGP Push key to MIT key server
 
-    #region // ActivationApplicationMail
-    public partial class ActivationApplicationMail {
-        #region // Properties
-        ///<summary>The enveloped object</summary> 
-        public Enveloped<ActivationApplicationMail> GetEnvelopedActivationApplicationMail() =>
-            new(DareEnvelope);
+// Phase2: Mail SMIME Create CSR
+// Phase2: Mail SMIME Request CA issued cert via ACME
+// Phase2: Mail SMIME Save private key as P12
+// Phase2: Mail SMIME Self signed root o'trust
 
-        #endregion
+#region // ActivationApplicationMail
+public partial class ActivationApplicationMail {
+    #region // Properties
+    ///<summary>The enveloped object</summary> 
+    public Enveloped<ActivationApplicationMail> GetEnvelopedActivationApplicationMail() =>
+        new(DareEnvelope);
 
-
-        }
     #endregion
-    #region // ApplicationEntryMail
 
-    public partial class ApplicationEntryMail {
 
-        #region // Properties
-        ///<summary>The decrypted activation.</summary> 
-        public ActivationApplicationMail Activation { get; set; }
+    }
+#endregion
+#region // ApplicationEntryMail
 
-        #endregion
-        #region // Methods
+public partial class ApplicationEntryMail {
 
-        ///<inheritdoc/>
-        public override void Decode(IKeyCollection keyCollection) => 
-            Activation = EnvelopedActivation.Decode(keyCollection);
-        
-        #endregion
+    #region // Properties
+    ///<summary>The decrypted activation.</summary> 
+    public ActivationApplicationMail Activation { get; set; }
 
-        }
     #endregion
-    #region // CatalogedApplicationMail
-    public partial class CatalogedApplicationMail {
-        #region // Properties
-        /// <summary>
-        /// The primary key used to catalog the entry.
-        /// </summary>
-        public override string _PrimaryKey => Key;
+    #region // Methods
 
-        ///<summary>The S/MIME signature key.</summary> 
-        public KeyPair SmimeSignKeyPair {  get; init; }
-        ///<summary>The S/MIME encryption key.</summary> 
-        public KeyPair SmimeEncryptKeyPair {  get; init; }
+    ///<inheritdoc/>
+    public override void Decode(IKeyCollection keyCollection) =>
+        Activation = EnvelopedActivation.Decode(keyCollection);
 
-        ///<summary>The OpenPGP signature key.</summary> 
-        public KeyPair OpenpgpSignKeyPair {  get; init; }
-        ///<summary>The OpenPGP encryption key.</summary> 
-        public KeyPair OpenpgpEncryptKeyPair {  get; init; }
+    #endregion
 
-        /// <summary>
-        /// Return an escrow record for the application.
-        /// </summary>
-        /// <returns>The escrow record.</returns>
-        public override KeyData[] GetEscrow() => new KeyData[] {
+    }
+#endregion
+#region // CatalogedApplicationMail
+public partial class CatalogedApplicationMail {
+    #region // Properties
+    /// <summary>
+    /// The primary key used to catalog the entry.
+    /// </summary>
+    public override string _PrimaryKey => Key;
+
+    ///<summary>The S/MIME signature key.</summary> 
+    public KeyPair SmimeSignKeyPair { get; init; }
+    ///<summary>The S/MIME encryption key.</summary> 
+    public KeyPair SmimeEncryptKeyPair { get; init; }
+
+    ///<summary>The OpenPGP signature key.</summary> 
+    public KeyPair OpenpgpSignKeyPair { get; init; }
+    ///<summary>The OpenPGP encryption key.</summary> 
+    public KeyPair OpenpgpEncryptKeyPair { get; init; }
+
+    /// <summary>
+    /// Return an escrow record for the application.
+    /// </summary>
+    /// <returns>The escrow record.</returns>
+    public override KeyData[] GetEscrow() => new KeyData[] {
                 new KeyData(SmimeSignKeyPair, true),
                 new KeyData(SmimeEncryptKeyPair, true),
                 new KeyData(OpenpgpSignKeyPair, true),
                 new KeyData(OpenpgpEncryptKeyPair, true)
             };
 
-        #endregion
-        #region // Constructors and factories
-        /// <summary>
-        /// Create a new mail application instance.
-        /// </summary>
-        /// <param name="address">The email address.</param>
-        /// <param name="roles">The roles to which the application is granted.</param>
-        /// <returns></returns>
-        public static CatalogedApplicationMail Create(string address, List<string> roles) {
-            var key = GetKey(address);
-            var smimeSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                     KeySecurity.Exportable, keySize: 2048);
-            var smimeEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                    KeySecurity.Exportable, keySize: 2048);
-            var openpgpSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                    KeySecurity.Exportable, keySize: 2048);
-            var openpgpEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                   KeySecurity.Exportable, keySize: 2048);
+    #endregion
+    #region // Constructors and factories
+    /// <summary>
+    /// Create a new mail application instance.
+    /// </summary>
+    /// <param name="address">The email address.</param>
+    /// <param name="roles">The roles to which the application is granted.</param>
+    /// <returns></returns>
+    public static CatalogedApplicationMail Create(string address, List<string> roles) {
+        var key = GetKey(address);
+        var smimeSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                 KeySecurity.Exportable, keySize: 2048);
+        var smimeEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                KeySecurity.Exportable, keySize: 2048);
+        var openpgpSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                KeySecurity.Exportable, keySize: 2048);
+        var openpgpEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+               KeySecurity.Exportable, keySize: 2048);
 
-            return new CatalogedApplicationMail() {
-                AccountAddress = address,
-                Key = key,
-                Grant = roles,
-                SmimeSignKeyPair = smimeSignKeyPair,
-                SmimeEncryptKeyPair = smimeEncryptKeyPair,
-                OpenpgpSignKeyPair = openpgpSignKeyPair,
-                OpenpgpEncryptKeyPair = openpgpEncryptKeyPair,
-                SmimeSign = new KeyData(smimeSignKeyPair),
-                SmimeEncrypt = new KeyData(smimeEncryptKeyPair),
-                OpenpgpSign = new KeyData(openpgpSignKeyPair),
-                OpenpgpEncrypt = new KeyData(openpgpEncryptKeyPair)
-                };
-            }
-        #endregion
-        #region // Methods
-
-        /// <summary>
-        /// Return a catalog key for the SMTP mail account <paramref name="address"/>.
-        /// </summary>
-        /// <param name="address">The input, an RFC822 address.</param>
-        /// <returns>The catalog key.</returns>
-        public static string GetKey (string address) => $"mailto:{address}";
-
-
-        ///<inheritdoc/>
-        public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
-            var activation = new ActivationApplicationMail() {
-                SmimeSign = new KeyData(SmimeSignKeyPair, true),
-                SmimeEncrypt = new KeyData(SmimeEncryptKeyPair, true),
-                OpenpgpSign = new KeyData(OpenpgpSignKeyPair, true),
-                OpenpgpEncrypt = new KeyData(OpenpgpEncryptKeyPair, true)
-                };
-
-            activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
-
-            return new ApplicationEntryMail() {
-                Identifier = Key,
-                EnvelopedActivation = activation.GetEnvelopedActivationApplicationMail()
-                };
-            }
-
-        ///<inheritdoc/>
-        public override void ToBuilder(StringBuilder output) {
-            output.AppendNotNull(AccountAddress,        $"Account:         {AccountAddress}");
-            output.AppendNotNull(InboundConnect,        $"Inbound Server:  {InboundConnect}");
-            output.AppendNotNull(OutboundConnect,       $"Outbound Server: {OutboundConnect}");
-            output.AppendNotNull(SmimeSign?.Udf,        $"S/Mime Sign:     {SmimeSign?.Udf}");
-            output.AppendNotNull(SmimeEncrypt?.Udf,     $"S/Mime Encrypt:  {SmimeEncrypt?.Udf}");
-            output.AppendNotNull(OpenpgpSign?.Udf,      $"OpenPGP Sign:    {OpenpgpSign?.Udf}");
-            output.AppendNotNull(OpenpgpEncrypt?.Udf,   $"OpenPGP Encrypt: {OpenpgpEncrypt?.Udf}");
-            }
-
-
-        #endregion
-
+        return new CatalogedApplicationMail() {
+            AccountAddress = address,
+            Key = key,
+            Grant = roles,
+            SmimeSignKeyPair = smimeSignKeyPair,
+            SmimeEncryptKeyPair = smimeEncryptKeyPair,
+            OpenpgpSignKeyPair = openpgpSignKeyPair,
+            OpenpgpEncryptKeyPair = openpgpEncryptKeyPair,
+            SmimeSign = new KeyData(smimeSignKeyPair),
+            SmimeEncrypt = new KeyData(smimeEncryptKeyPair),
+            OpenpgpSign = new KeyData(openpgpSignKeyPair),
+            OpenpgpEncrypt = new KeyData(openpgpEncryptKeyPair)
+            };
         }
+    #endregion
+    #region // Methods
+
+    /// <summary>
+    /// Return a catalog key for the SMTP mail account <paramref name="address"/>.
+    /// </summary>
+    /// <param name="address">The input, an RFC822 address.</param>
+    /// <returns>The catalog key.</returns>
+    public static string GetKey(string address) => $"mailto:{address}";
+
+
+    ///<inheritdoc/>
+    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+        var activation = new ActivationApplicationMail() {
+            SmimeSign = new KeyData(SmimeSignKeyPair, true),
+            SmimeEncrypt = new KeyData(SmimeEncryptKeyPair, true),
+            OpenpgpSign = new KeyData(OpenpgpSignKeyPair, true),
+            OpenpgpEncrypt = new KeyData(OpenpgpEncryptKeyPair, true)
+            };
+
+        activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
+
+        return new ApplicationEntryMail() {
+            Identifier = Key,
+            EnvelopedActivation = activation.GetEnvelopedActivationApplicationMail()
+            };
+        }
+
+    ///<inheritdoc/>
+    public override void ToBuilder(StringBuilder output) {
+        output.AppendNotNull(AccountAddress, $"Account:         {AccountAddress}");
+        output.AppendNotNull(InboundConnect, $"Inbound Server:  {InboundConnect}");
+        output.AppendNotNull(OutboundConnect, $"Outbound Server: {OutboundConnect}");
+        output.AppendNotNull(SmimeSign?.Udf, $"S/Mime Sign:     {SmimeSign?.Udf}");
+        output.AppendNotNull(SmimeEncrypt?.Udf, $"S/Mime Encrypt:  {SmimeEncrypt?.Udf}");
+        output.AppendNotNull(OpenpgpSign?.Udf, $"OpenPGP Sign:    {OpenpgpSign?.Udf}");
+        output.AppendNotNull(OpenpgpEncrypt?.Udf, $"OpenPGP Encrypt: {OpenpgpEncrypt?.Udf}");
+        }
+
 
     #endregion
 
     }
 
+#endregion

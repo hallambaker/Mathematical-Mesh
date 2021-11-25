@@ -21,37 +21,36 @@
 #endregion
 using System.Diagnostics;
 
-namespace Goedel.Utilities {
+namespace Goedel.Utilities;
+
+/// <summary>
+/// Utility functions using reflection to extract information from the stack.
+/// </summary>
+public static class AssemblyStack {
 
     /// <summary>
-    /// Utility functions using reflection to extract information from the stack.
+    /// Return the name of the calling method.
     /// </summary>
-    public static class AssemblyStack {
+    /// <returns>The name of the calling method.</returns>
+    public static string GetMethodName() {
+        var stack = new StackTrace();
+        var frame = stack.GetFrame(1);
+        var method = frame.GetMethod();
 
-        /// <summary>
-        /// Return the name of the calling method.
-        /// </summary>
-        /// <returns>The name of the calling method.</returns>
-        public static string GetMethodName() {
-            var stack = new StackTrace();
-            var frame = stack.GetFrame(1);
-            var method = frame.GetMethod();
-
-            return method.Name;
-            }
-
-        /// <summary>
-        /// Return the name of the caller of the calling method.
-        /// </summary>
-        /// <returns>The name of the caller of the calling method.</returns>
-        public static string GetCallerMethodName() {
-            var stack = new StackTrace();
-            var frame = stack.GetFrame(2);
-            var method = frame.GetMethod();
-
-            return method.Name;
-            }
-
-
+        return method.Name;
         }
+
+    /// <summary>
+    /// Return the name of the caller of the calling method.
+    /// </summary>
+    /// <returns>The name of the caller of the calling method.</returns>
+    public static string GetCallerMethodName() {
+        var stack = new StackTrace();
+        var frame = stack.GetFrame(2);
+        var method = frame.GetMethod();
+
+        return method.Name;
+        }
+
+
     }

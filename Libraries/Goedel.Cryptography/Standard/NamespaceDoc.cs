@@ -1,13 +1,11 @@
 ﻿
-namespace Goedel.Cryptography.Standard {
+namespace Goedel.Cryptography.Standard;
 
-    /// <summary>
-    /// Implementation of Goedel.Cryptography algorithms using the native .NET Standard
-    /// libraries. 
-    /// </summary>
+/// <summary>
+/// Implementation of Goedel.Cryptography algorithms using the native .NET Standard
+/// libraries. 
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

@@ -26,111 +26,108 @@ using System.IO;
 using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 
-namespace Goedel.Test.Core {
+namespace Goedel.Test.Core;
+
+
+/// <summary>
+/// Expanded test session that captures RUD packet traces.
+/// </summary>
+public partial class TestSessionRud : TestSession {
+
+    TestServiceRud TestServiceRud { get; }
+
+    ConnectionInitiatorTest ConnectionInitiatorTest { get; }
+
+    public RudStream RudStream { get; }
+
+    /// <summary>
+    /// Create a remote session with authentication under the
+    /// specified credential.
+    /// </summary>
+    /// <param name="host">The host implementation</param>
+    /// <param name="Domain">Portal address</param>
+    /// <param name="Account">User account</param>
+    /// <param name="UDF">Authentication key identifier.</param>
+    public TestSessionRud(TestServiceRud testServiceRud, ICredentialPrivate clientCredential,
+                List<Trace> meshProtocolMessages, object machine) :
+                    base(testServiceRud.Host, clientCredential, meshProtocolMessages, machine) {
+        TestServiceRud = testServiceRud;
+        Machine = machine;
+        MeshProtocolMessages = meshProtocolMessages;
+
+
+        ConnectionInitiatorTest = new ConnectionInitiatorTest(clientCredential, null);
+        RudStream = new RudStream(null, null, clientCredential, null, ConnectionInitiatorTest);
+        }
+
 
 
     /// <summary>
-    /// Expanded test session that captures RUD packet traces.
+    /// Post a request and retrieve the response.
     /// </summary>
-    public partial class TestSessionRud : TestSession {
+    /// <param name="data">StreamBuffer object containing JSON encoded request.</param>
+    /// <returns>StreamBuffer object containing JSON encoded response.</returns>
+    public override Stream Post(MemoryStream data, JsonObject Request) {
+        var requestBytes = data.ToArray();
 
-        TestServiceRud TestServiceRud { get; }
+        var (responseBytes, trace) = TestServiceRud.Dispatch(requestBytes, this);
 
-        ConnectionInitiatorTest ConnectionInitiatorTest { get; }
-
-        public RudStream RudStream { get; }
-
-        /// <summary>
-        /// Create a remote session with authentication under the
-        /// specified credential.
-        /// </summary>
-        /// <param name="host">The host implementation</param>
-        /// <param name="Domain">Portal address</param>
-        /// <param name="Account">User account</param>
-        /// <param name="UDF">Authentication key identifier.</param>
-        public TestSessionRud(TestServiceRud testServiceRud, ICredentialPrivate clientCredential,
-                    List<Trace> meshProtocolMessages, object machine) :
-                        base(testServiceRud.Host, clientCredential, meshProtocolMessages, machine) {
-            TestServiceRud = testServiceRud;
-            Machine = machine;
-            MeshProtocolMessages = meshProtocolMessages;
-
-
-            ConnectionInitiatorTest = new ConnectionInitiatorTest(clientCredential, null);
-            RudStream = new RudStream(null, null, clientCredential, null, ConnectionInitiatorTest);
-            }
-
-
-
-        /// <summary>
-        /// Post a request and retrieve the response.
-        /// </summary>
-        /// <param name="data">StreamBuffer object containing JSON encoded request.</param>
-        /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override Stream Post(MemoryStream data, JsonObject Request) {
-            var requestBytes = data.ToArray();
-
-            var (responseBytes, trace) = TestServiceRud.Dispatch(requestBytes, this);
-
-            MeshProtocolMessages.Add(trace);
-            return new MemoryStream(responseBytes);
-            }
-
-
-
-        }
-
-    public class RudStreamTest : RudStream {
-
-
-        public RudStreamTest(
-                    RudStream parent,
-                    string protocol,
-                    ICredentialPrivate credentialSelf = null,
-                    ICredentialPublic credentialOther = null,
-                        RudConnection rudConnection = null,
-                    string accountAddress = null) : base(
-                parent, protocol, credentialSelf, credentialOther, rudConnection, accountAddress) {
-            }
-
+        MeshProtocolMessages.Add(trace);
+        return new MemoryStream(responseBytes);
         }
 
 
-    public class TestServiceRud {
+
+    }
+
+public class RudStreamTest : RudStream {
 
 
-        RudListenerTest RudListenerTest { get; }
+    public RudStreamTest(
+                RudStream parent,
+                string protocol,
+                ICredentialPrivate credentialSelf = null,
+                ICredentialPublic credentialOther = null,
+                    RudConnection rudConnection = null,
+                string accountAddress = null) : base(
+            parent, protocol, credentialSelf, credentialOther, rudConnection, accountAddress) {
+        }
+
+    }
 
 
-        public JpcInterface Host { get; }
+public class TestServiceRud {
 
-        public TestServiceRud(JpcInterface host, ICredentialPrivate hostCredential) {
-            Host = host;
-            var rudProvider = new List<RudProvider> {
+
+    RudListenerTest RudListenerTest { get; }
+
+
+    public JpcInterface Host { get; }
+
+    public TestServiceRud(JpcInterface host, ICredentialPrivate hostCredential) {
+        Host = host;
+        var rudProvider = new List<RudProvider> {
                 new RudProvider(new List<Endpoint>(), host)
             };
-            RudListenerTest = new RudListenerTest(hostCredential, rudProvider);
-
-            }
-
-
-        public (byte[], Trace) Dispatch(byte[] requestBytes, TestSessionRud session) =>
-                RudListenerTest.Dispatch(requestBytes, session);
-
-
-            //{
-            //var jsonReader = new JsonReader(requestBytes);
-
-        //var result = Host.Dispatch(session, jsonReader);
-
-        //var responseBytes = result.GetBytes();
-        //var trace = new Trace(requestBytes, responseBytes, Host);
-        //return (responseBytes, trace);
-        //}
-
-
+        RudListenerTest = new RudListenerTest(hostCredential, rudProvider);
 
         }
+
+
+    public (byte[], Trace) Dispatch(byte[] requestBytes, TestSessionRud session) =>
+            RudListenerTest.Dispatch(requestBytes, session);
+
+
+    //{
+    //var jsonReader = new JsonReader(requestBytes);
+
+    //var result = Host.Dispatch(session, jsonReader);
+
+    //var responseBytes = result.GetBytes();
+    //var trace = new Trace(requestBytes, responseBytes, Host);
+    //return (responseBytes, trace);
+    //}
+
 
 
     }

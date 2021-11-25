@@ -827,25 +827,25 @@
             <summary>
             Set parameter text.
             </summary>
-            <param name="TextIn">Text to set.</param>
+            <param name="textIn">Text to set.</param>
         </member>
         <member name="M:Goedel.Command.Type.Default(System.String)">
             <summary>
             Set the default value for the type.
             </summary>
-            <param name="TextIn">The default value as it would be given on the command line.</param>
+            <param name="textIn">The default value as it would be given on the command line.</param>
         </member>
         <member name="M:Goedel.Command.Type.Complete(Goedel.Command.Type[])">
             <summary>
             Completion routine. This is called at the end of parameter processing to finalize default values.
             </summary>
-            <param name="Data">The final data.</param>
+            <param name="data">The final data.</param>
         </member>
         <member name="M:Goedel.Command.Type.SetFlag(System.Boolean)">
             <summary>
             Set the flag value.
             </summary>
-            <param name="Negated">If true, flag is negated.</param>
+            <param name="negated">If true, flag is negated.</param>
         </member>
         <member name="T:Goedel.Command._Flag">
             <summary>
@@ -859,7 +859,7 @@
             <summary>
             Construct flag with specified value
             </summary>
-            <param name="Value">The flag value to set</param>
+            <param name="value">The flag value to set</param>
         </member>
         <member name="P:Goedel.Command._Flag.Value">
             <summary>
@@ -870,14 +870,14 @@
             <summary>
             Set tag value from parameter.
             </summary>
-            <param name="Text">The values true and 1 set a true value, 0 and false set a false value.
+            <param name="text">The values true and 1 set a true value, 0 and false set a false value.
             Otherwise an exception is thrown.</param>
         </member>
         <member name="M:Goedel.Command._Flag.SetFlag(System.Boolean)">
             <summary>
             Set the negated flag
             </summary>
-            <param name="Negated">If true, command is negated.</param>
+            <param name="negated">If true, command is negated.</param>
         </member>
         <member name="M:Goedel.Command._Flag.ToString">
             <summary>
@@ -894,7 +894,7 @@
             <summary>
             Constructor with specified default value.
             </summary>
-            <param name="Value">The default value text for this entry</param>
+            <param name="value">The default value text for this entry</param>
         </member>
         <member name="F:Goedel.Command._File.Extension">
             <summary>
@@ -905,7 +905,7 @@
             <summary>
             Set the default.
             </summary>
-            <param name="TextIn">The default value text for this entry</param>
+            <param name="textIn">The default value text for this entry</param>
         </member>
         <member name="P:Goedel.Command._File.Value">
             <summary>
@@ -916,15 +916,17 @@
             <summary>
             Construct extension defaulted file name for specified file.
             </summary>
-            <param name="Source">The source file.</param>
+            <param name="source">The source file.</param>
             <returns>File name.</returns>
         </member>
         <member name="M:Goedel.Command._File.DefaultFile(System.String,System.String)">
             <summary>
             Construct extension defaulted file name for specified file.
             </summary>
-            <param name="Source">The source file.</param>
-            <param name="Extension">The extension.</param>
+            <param name="source">The source file.</param>
+            <param name="extension">The extension.</param>
+            <param name="path">Optional file path, will override relative path but
+            not if <paramref name="source"/> is rooted.</param>
             <returns>File name.</returns>
         </member>
         <member name="T:Goedel.Command._NewFile">
@@ -936,7 +938,7 @@
             <summary>
             Construct flag with specified value
             </summary>
-            <param name="Value">The flag value to set</param>
+            <param name="value">The flag value to set</param>
         </member>
         <member name="M:Goedel.Command._NewFile.SetFlag(System.Boolean)">
             <summary>

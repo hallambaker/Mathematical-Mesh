@@ -15,7 +15,177 @@
       "ProjectGuid": "bc5c1868-1628-47de-b28f-47d6489cc59d",
       "DisplayName": "serviceadmin",
       "ColorIndex": 2
+    },
+    "479601e3-3dc5-40da-ba5e-403d5346e50d": {
+      "ProjectGuid": "479601e3-3dc5-40da-ba5e-403d5346e50d",
+      "DisplayName": "Solution Items",
+      "ColorIndex": 3
+    },
+    "bac4ba76-b434-4eb0-90f8-c9727db2816f": {
+      "ProjectGuid": "bac4ba76-b434-4eb0-90f8-c9727db2816f",
+      "DisplayName": "Goedel.Mesh.Shell.ServiceAdmin",
+      "ColorIndex": 4
+    },
+    "ab1a8e04-e59d-4903-ae53-1dfe036ea724": {
+      "ProjectGuid": "ab1a8e04-e59d-4903-ae53-1dfe036ea724",
+      "DisplayName": "Goedel.Protocol.Service",
+      "ColorIndex": 5
+    },
+    "2f4e3947-e0be-4b27-bfc1-0541c8ca7b23": {
+      "ProjectGuid": "2f4e3947-e0be-4b27-bfc1-0541c8ca7b23",
+      "DisplayName": "Goedel.Protocol.Presentation",
+      "ColorIndex": 6
+    },
+    "f345341f-c902-47d8-8014-7d76fb652726": {
+      "ProjectGuid": "f345341f-c902-47d8-8014-7d76fb652726",
+      "DisplayName": "Goedel.Mesh.Shell.Test-xunit",
+      "ColorIndex": 7
+    },
+    "bc20b849-1839-4f07-82c3-e2d705deba79": {
+      "ProjectGuid": "bc20b849-1839-4f07-82c3-e2d705deba79",
+      "DisplayName": "MakeSiteDocs",
+      "ColorIndex": 8
+    },
+    "d0842bd6-df8a-4b36-9cf2-3507682b7c88": {
+      "ProjectGuid": "d0842bd6-df8a-4b36-9cf2-3507682b7c88",
+      "DisplayName": "Scratchpad",
+      "ColorIndex": 9
+    },
+    "6b2d9659-e2a6-4e0f-a6e4-2af27bdaea89": {
+      "ProjectGuid": "6b2d9659-e2a6-4e0f-a6e4-2af27bdaea89",
+      "DisplayName": "Goedel.Mesh",
+      "ColorIndex": 10
+    },
+    "e831f24c-571d-4779-b02a-2bd23e1dcd7a": {
+      "ProjectGuid": "e831f24c-571d-4779-b02a-2bd23e1dcd7a",
+      "DisplayName": "Goedel.Mesh.Protocol.Test-xunit",
+      "ColorIndex": 11
+    },
+    "0fa406e8-ee81-45da-bcf8-1f72c66a2ea0": {
+      "ProjectGuid": "0fa406e8-ee81-45da-bcf8-1f72c66a2ea0",
+      "DisplayName": "Goedel.Cryptography.Dare",
+      "ColorIndex": 12
+    },
+    "c4b778bf-808c-4681-8e66-906218d86b5a": {
+      "ProjectGuid": "c4b778bf-808c-4681-8e66-906218d86b5a",
+      "DisplayName": "Goedel.Test.Core",
+      "ColorIndex": 13
+    },
+    "5b919409-8341-4d0a-bcdf-43a6841b6d7b": {
+      "ProjectGuid": "5b919409-8341-4d0a-bcdf-43a6841b6d7b",
+      "DisplayName": "Goedel.Protocol",
+      "ColorIndex": 14
+    },
+    "602358c6-28b7-446d-86d3-02b3fd1b3d6c": {
+      "ProjectGuid": "602358c6-28b7-446d-86d3-02b3fd1b3d6c",
+      "DisplayName": "Goedel.Mesh.Server",
+      "ColorIndex": 15
+    },
+    "0e631986-5213-4fb5-b4ca-09488ea5c4b5": {
+      "ProjectGuid": "0e631986-5213-4fb5-b4ca-09488ea5c4b5",
+      "DisplayName": "Goedel.Mesh.Shell",
+      "ColorIndex": 0
+    },
+    "79f3c448-a1ef-4bf9-866b-b0a03fb22195": {
+      "ProjectGuid": "79f3c448-a1ef-4bf9-866b-b0a03fb22195",
+      "DisplayName": "Goedel.Cryptography.Windows",
+      "ColorIndex": 1
+    },
+    "ab63da2b-ec91-4413-820a-3f755f15861d": {
+      "ProjectGuid": "ab63da2b-ec91-4413-820a-3f755f15861d",
+      "DisplayName": "Goedel.Mesh.Core",
+      "ColorIndex": 2
+    },
+    "baa85316-3cbf-4d38-a52e-1f16f2895a29": {
+      "ProjectGuid": "baa85316-3cbf-4d38-a52e-1f16f2895a29",
+      "DisplayName": "Goedel.Cryptography.Core",
+      "ColorIndex": 3
+    },
+    "13c72979-9555-4a79-830e-6d4a620ad606": {
+      "ProjectGuid": "13c72979-9555-4a79-830e-6d4a620ad606",
+      "DisplayName": "Goedel.Mesh.Test",
+      "ColorIndex": 4
+    },
+    "e9341173-6212-4a7a-8a59-21fd11c32360": {
+      "ProjectGuid": "e9341173-6212-4a7a-8a59-21fd11c32360",
+      "DisplayName": "Goedel.IO",
+      "ColorIndex": 5
+    },
+    "92374241-b365-4366-8c08-6db92b0460b7": {
+      "ProjectGuid": "92374241-b365-4366-8c08-6db92b0460b7",
+      "DisplayName": "Goedel.Command",
+      "ColorIndex": 6
+    },
+    "6fce4c05-9fcf-4719-9be0-eb38563e490c": {
+      "ProjectGuid": "6fce4c05-9fcf-4719-9be0-eb38563e490c",
+      "DisplayName": "TestResults2",
+      "ColorIndex": 7
+    },
+    "b43b339e-2ff0-417c-887a-4014bc57ad55": {
+      "ProjectGuid": "b43b339e-2ff0-417c-887a-4014bc57ad55",
+      "DisplayName": "Goedel.Mesh.Shell.Host",
+      "ColorIndex": 8
+    },
+    "ca6633db-b8d7-4059-a53f-d96d0686989a": {
+      "ProjectGuid": "ca6633db-b8d7-4059-a53f-d96d0686989a",
+      "DisplayName": "TestResults",
+      "ColorIndex": 9
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "171f782c-4d04-40bd-8d12-ead48eefb79a": {
+      "ProjectGuid": "171f782c-4d04-40bd-8d12-ead48eefb79a",
+      "DisplayName": "Goedel.Utilities",
+      "ColorIndex": 10
+    },
+    "c6ab7fed-46c8-43f1-ba55-790921adfdd5": {
+      "ProjectGuid": "c6ab7fed-46c8-43f1-ba55-790921adfdd5",
+      "DisplayName": "Goedel.Registry",
+      "ColorIndex": 11
+    },
+    "82e63726-ab12-4a40-b9e0-184b8e657ef7": {
+      "ProjectGuid": "82e63726-ab12-4a40-b9e0-184b8e657ef7",
+      "DisplayName": "Goedel.Cryptography.Linux",
+      "ColorIndex": 12
+    },
+    "9617263c-992b-4456-af7f-cf3083dfcbad": {
+      "ProjectGuid": "9617263c-992b-4456-af7f-cf3083dfcbad",
+      "DisplayName": "Goedel.Cryptography.Base",
+      "ColorIndex": 13
+    },
+    "d50b8ed2-945d-44e0-8c1d-12191c9409c0": {
+      "ProjectGuid": "d50b8ed2-945d-44e0-8c1d-12191c9409c0",
+      "DisplayName": "Goedel.Cryptography.macos",
+      "ColorIndex": 14
+    },
+    "b8319c05-ea98-405d-94eb-acb9de6da975": {
+      "ProjectGuid": "b8319c05-ea98-405d-94eb-acb9de6da975",
+      "DisplayName": "Goedel.Cryptography",
+      "ColorIndex": 15
+    },
+    "60b17b43-2b43-4c1e-b971-cf1b6ff7f206": {
+      "ProjectGuid": "60b17b43-2b43-4c1e-b971-cf1b6ff7f206",
+      "DisplayName": "Goedel.Cryptography.Windows.Test-xunit",
+      "ColorIndex": 0
+    },
+    "91b1d80b-02d2-4168-a8db-5de3744d7a0d": {
+      "ProjectGuid": "91b1d80b-02d2-4168-a8db-5de3744d7a0d",
+      "DisplayName": "Goedel.Mesh.ServiceAdmin",
+      "ColorIndex": 1
+    },
+    "8c3faaaa-4187-4368-8c10-4f3f7c31ab51": {
+      "ProjectGuid": "8c3faaaa-4187-4368-8c10-4f3f7c31ab51",
+      "DisplayName": "Goedel.ASN",
+      "ColorIndex": 2
+    },
+    "1a14c73e-960c-4e21-aeb7-184b6d5a0ab3": {
+      "ProjectGuid": "1a14c73e-960c-4e21-aeb7-184b6d5a0ab3",
+      "DisplayName": "Goedel.Mesh.Client",
+      "ColorIndex": 3
     }
   },
-  "NextColorIndex": 3
+  "NextColorIndex": 4
 }

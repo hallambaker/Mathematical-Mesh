@@ -26,23 +26,18 @@ using Goedel.Utilities;
 
 
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
+
+/// <summary>
+/// </summary>
+abstract public partial class ApplicationEntry {
+
     /// <summary>
+    /// Decode the application entry using keys from <paramref name="keyCollection"/>.
     /// </summary>
-    abstract public partial class ApplicationEntry {
+    /// <param name="keyCollection">Key collection to use to resolve decryption keys</param>
 
-        /// <summary>
-        /// Decode the application entry using keys from <paramref name="keyCollection"/>.
-        /// </summary>
-        /// <param name="keyCollection">Key collection to use to resolve decryption keys</param>
-
-        public abstract void Decode(IKeyCollection keyCollection);
-
-        }
-
-
-
-
+    public abstract void Decode(IKeyCollection keyCollection);
 
     }
 

@@ -26,43 +26,42 @@ using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 
-namespace Goedel.Test.Core {
+namespace Goedel.Test.Core;
 
-    public class TestFile {
+public class TestFile {
 
-        string PlaintextFilename { get; }
+    string PlaintextFilename { get; }
 
-        string EncryptedtFilename => PlaintextFilename + ".dare";
+    string EncryptedtFilename => PlaintextFilename + ".dare";
 
-        int PlaintextLength { get; }
+    int PlaintextLength { get; }
 
-        int index = 0;
+    int index = 0;
 
-        public TestFile(string plaintext) {
-            PlaintextFilename = plaintext.ToFileUnique();
-            PlaintextLength = plaintext.Length;
-            }
-
-
-        public void Encrypt(IKeyLocate keyLocate,
-            string recipient,
-                    string signer = null) {
-
-            var cryptoParameters = new CryptoParameters(keyLocate,
-                new List<string> { recipient },
-                signer == null? null:new List<string> { signer });
-            DareEnvelope.Encode(cryptoParameters, PlaintextFilename, EncryptedtFilename);
-            }
-
-
-        public void Decrypt (IKeyLocate keyLocate) {
-            var outputFile = $"{PlaintextFilename}_{index++}";
-            var bytes_1 = DareEnvelope.Decode(EncryptedtFilename, outputFile, 
-                keyCollection: keyLocate);
-
-            bytes_1.AssertEqual(PlaintextLength, NYI.Throw);
-            }
-
-
+    public TestFile(string plaintext) {
+        PlaintextFilename = plaintext.ToFileUnique();
+        PlaintextLength = plaintext.Length;
         }
+
+
+    public void Encrypt(IKeyLocate keyLocate,
+        string recipient,
+                string signer = null) {
+
+        var cryptoParameters = new CryptoParameters(keyLocate,
+            new List<string> { recipient },
+            signer == null ? null : new List<string> { signer });
+        DareEnvelope.Encode(cryptoParameters, PlaintextFilename, EncryptedtFilename);
+        }
+
+
+    public void Decrypt(IKeyLocate keyLocate) {
+        var outputFile = $"{PlaintextFilename}_{index++}";
+        var bytes_1 = DareEnvelope.Decode(EncryptedtFilename, outputFile,
+            keyCollection: keyLocate);
+
+        bytes_1.AssertEqual(PlaintextLength, NYI.Throw);
+        }
+
+
     }

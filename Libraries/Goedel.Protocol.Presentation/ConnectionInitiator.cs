@@ -23,131 +23,130 @@
 using System.Collections.Generic;
 using System.Net;
 using System;
-namespace Goedel.Protocol.Presentation {
+namespace Goedel.Protocol.Presentation;
+
+/// <summary>
+/// Presentation client connection. Tracks the state of a client connection.
+/// </summary>
+public partial class ConnectionInitiator : RudConnection {
+
+    #region // Properties
+    ///<inheritdoc/>
+    public override byte[] ClientKeyIn => ClientKeyHostToClient;
+    ///<inheritdoc/>
+    public override byte[] ClientKeyOut => ClientKeyClientToHost;
+    ///<inheritdoc/>
+    public override byte[] MutualKeyIn => MutualKeyHostToClient;
+    ///<inheritdoc/> 
+    public override byte[] MutualKeyOut => MutualKeyClientToHost;
+    ///<inheritdoc/>
+    public override ICredentialPublic HostCredential => CredentialOther;
+    ///<inheritdoc/>
+    public override ICredentialPublic ClientCredential => CredentialSelf;
+
+
+    /////<summary>The verified account.</summary> 
+    //public VerifiedAccount VerifiedAccount { get; set; }
+
+    ///<summary>The connection domain.</summary> 
+    public string Domain { get; set; }
+
+    ///<summary>The connection instance specifier (to allow multiple services
+    ///to be run for testing, etc.</summary> 
+    public string Instance { get; set; }
+
+
+
+
+
+    ///<summary>Reusable packet challenge</summary> 
+    public Packet PacketChallenge;
+
+    ///<summary>The primary RUD stream.</summary> 
+    public RudStream RudStreamInitial { get; set; }
+
+
+    ///<inheritdoc/>
+    public override void AddResponse(
+            List<PacketExtension> extensions) => extensions.Add(new PacketExtension() {
+                Tag = Constants.ExtensionTagsChallengeTag,
+                Value = RudStreamInitial.ChallengeNonce
+                });
+
+
+    ///<summary>The Web Client</summary> 
+    public WebClient WebClient { get; set; }
+
+
+    #endregion
+    #region // Constructors
+
     /// <summary>
-    /// Presentation client connection. Tracks the state of a client connection.
+    /// Return an instance of a client connecting to host <paramref name="domain"/> using
+    /// device credential <paramref name="initiatorCredential"/> with client protocol binding
+    /// <paramref name="protocol"/>.
     /// </summary>
-    public partial class ConnectionInitiator : RudConnection {
+    /// <param name="initiatorCredential">The device credential of the initiator</param>
+    /// <param name="domain">The domain of the responder being connected to.</param>
+    /// <param name="instance"></param>
+    /// <param name="transportTypes">The transport types.</param>
+    /// <param name="protocol">The service protocol to return a client stream for.</param>
+    public ConnectionInitiator(
+                ICredentialPrivate initiatorCredential,
+                string domain,
+                string instance = null,
+                TransportType transportTypes = TransportType.All,
+                string protocol = null) {
 
-        #region // Properties
-        ///<inheritdoc/>
-        public override byte[] ClientKeyIn => ClientKeyHostToClient;
-        ///<inheritdoc/>
-        public override byte[] ClientKeyOut => ClientKeyClientToHost;
-        ///<inheritdoc/>
-        public override byte[] MutualKeyIn => MutualKeyHostToClient;
-        ///<inheritdoc/> 
-        public override byte[] MutualKeyOut => MutualKeyClientToHost;
-        ///<inheritdoc/>
-        public override ICredentialPublic HostCredential => CredentialOther;
-        ///<inheritdoc/>
-        public override ICredentialPublic ClientCredential => CredentialSelf;
+        Domain = domain;
+        Instance = instance;
+        CredentialSelf = initiatorCredential;
 
-
-        /////<summary>The verified account.</summary> 
-        //public VerifiedAccount VerifiedAccount { get; set; }
-
-        ///<summary>The connection domain.</summary> 
-        public string Domain { get; set; }
-
-        ///<summary>The connection instance specifier (to allow multiple services
-        ///to be run for testing, etc.</summary> 
-        public string Instance { get; set; }
-
-
-
-
-
-        ///<summary>Reusable packet challenge</summary> 
-        public Packet PacketChallenge;
-
-        ///<summary>The primary RUD stream.</summary> 
-        public RudStream RudStreamInitial { get; set; }
-
-
-        ///<inheritdoc/>
-        public override void AddResponse(
-                List<PacketExtension> extensions) => extensions.Add(new PacketExtension() {
-                    Tag = Constants.ExtensionTagsChallengeTag,
-                    Value = RudStreamInitial.ChallengeNonce
-                    });
-
-
-        ///<summary>The Web Client</summary> 
-        public WebClient WebClient { get; set; }
-
-
-        #endregion
-        #region // Constructors
-
-        /// <summary>
-        /// Return an instance of a client connecting to host <paramref name="domain"/> using
-        /// device credential <paramref name="initiatorCredential"/> with client protocol binding
-        /// <paramref name="protocol"/>.
-        /// </summary>
-        /// <param name="initiatorCredential">The device credential of the initiator</param>
-        /// <param name="domain">The domain of the responder being connected to.</param>
-        /// <param name="instance"></param>
-        /// <param name="transportTypes">The transport types.</param>
-        /// <param name="protocol">The service protocol to return a client stream for.</param>
-        public ConnectionInitiator(
-                    ICredentialPrivate initiatorCredential,
-                    string domain,
-                    string instance = null,
-                    TransportType transportTypes = TransportType.All,
-                    string protocol = null) {
-
-            Domain = domain;
-            Instance = instance;
-            CredentialSelf = initiatorCredential;
-
-            if (transportTypes.HasFlag(TransportType.Http)) {
-                WebClient = new WebClient();
-                }
-
-            //// Create the initial stream NB Do NOT re-present the credential used to
-            //// initialize the connection.
-            //RudStreamInitial = new RudStreamClient(null, protocol, null, this) {
-            //    StreamState = StreamState.Initial
-            //    };
+        if (transportTypes.HasFlag(TransportType.Http)) {
+            WebClient = new WebClient();
             }
 
-
-
-
-
-
-        #endregion
-        #region // Destructor
-
-        ///<inheritdoc/>
-        protected override void Disposing() => WebClient?.Dispose();
-
-        #endregion
-        #region // Methods
-
-
-        /// <summary>
-        /// Return a client bound to the connection via the relevant protocol
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public T GetClient<T>(ICredentialPrivate credential = null,
-                    string accountAddress = null) where T : JpcClientInterface, new() {
-
-            var client = new T();
-
-            client.JpcSession = new RudStreamClient(null, client.GetWellKnown,
-                credential ?? CredentialSelf, rudConnection: this);
-
-
-            //RudStreamInitial.MakeStreamClient(client.GetWellKnown, credential);
-
-            return client;
-            }
-
-        #endregion
-
+        //// Create the initial stream NB Do NOT re-present the credential used to
+        //// initialize the connection.
+        //RudStreamInitial = new RudStreamClient(null, protocol, null, this) {
+        //    StreamState = StreamState.Initial
+        //    };
         }
+
+
+
+
+
+
+    #endregion
+    #region // Destructor
+
+    ///<inheritdoc/>
+    protected override void Disposing() => WebClient?.Dispose();
+
+    #endregion
+    #region // Methods
+
+
+    /// <summary>
+    /// Return a client bound to the connection via the relevant protocol
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public T GetClient<T>(ICredentialPrivate credential = null,
+                string accountAddress = null) where T : JpcClientInterface, new() {
+
+        var client = new T();
+
+        client.JpcSession = new RudStreamClient(null, client.GetWellKnown,
+            credential ?? CredentialSelf, rudConnection: this);
+
+
+        //RudStreamInitial.MakeStreamClient(client.GetWellKnown, credential);
+
+        return client;
+        }
+
+    #endregion
 
     }

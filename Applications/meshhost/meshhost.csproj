@@ -1,10 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(SolutionDir)CommonSettingsWindows.xml" />
   <PropertyGroup>
-    <Product>Meshhost</Product>
+    <AssemblyName>meshhost</AssemblyName>    
+    <Product>meshhost</Product>
     <Description>Mesh service host.</Description>
     <Copyright>© 2021</Copyright>
-    <Title>Meshhost</Title>
+    <Title>meshhost</Title>
+
   </PropertyGroup>
 
 

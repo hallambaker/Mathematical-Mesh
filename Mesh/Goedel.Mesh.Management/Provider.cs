@@ -30,82 +30,81 @@ using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
 
-namespace Goedel.Mesh.Management {
+namespace Goedel.Mesh.Management;
+
+/// <summary>
+/// The Service Management Provider.
+/// </summary>
+public class ServiceManagementProvider : ServiceManagementService {
+
+    ///<inheritdoc cref="ServiceFactoryDelegate"/>
+    public static RudProvider Factory(
+        IMeshMachine meshMachine,
+        ServiceConfiguration serviceConfiguration,
+        HostConfiguration hostConfiguration) {
+
+
+        // Since it is the host that responds, the service binds to the host endpoints
+        // in addition to the service.
+
+
+        var wellKnown = ServiceManagementProvider.WellKnown + "/" + serviceConfiguration.Id;
+
+        var endpoints = hostConfiguration.GetEndpoints(wellKnown);
+        //endpoints.AddRange(hostConfiguration.GetEndpoints());
+        var provider = new ServiceManagementProvider(serviceConfiguration, hostConfiguration);
+
+        return new RudProvider(endpoints, provider);
+        }
+
+
+    ///<summary>The service description for a service reporting a single host.</summary> 
+    public static ServiceDescription ServiceDescriptionHost => new(WellKnown, Factory);
+
+    ///<summary>The service description for a service reporting a set of hosts.</summary> 
+    public static ServiceDescription ServiceDescriptionMeta => throw new NYI();
+
+
+    #region // Properties
+    HostConfiguration HostConfiguration { get; }
+
+    ServiceConfiguration ServiceConfiguration { get; }
+    #endregion
+
+    #region // Destructor
+    #endregion
+
+    #region // Constructors
 
     /// <summary>
-    /// The Service Management Provider.
+    /// Return a new <see cref="ServiceManagementProvider"/> instance.
     /// </summary>
-    public class ServiceManagementProvider : ServiceManagementService {
-
-        ///<inheritdoc cref="ServiceFactoryDelegate"/>
-        public static RudProvider Factory(
-            IMeshMachine meshMachine,
+    /// <param name="serviceConfiguration"></param>
+    /// <param name="hostConfiguration"></param>
+    public ServiceManagementProvider(
             ServiceConfiguration serviceConfiguration,
             HostConfiguration hostConfiguration) {
 
-
-            // Since it is the host that responds, the service binds to the host endpoints
-            // in addition to the service.
-
-
-            var wellKnown = ServiceManagementProvider.WellKnown + "/" + serviceConfiguration.Id;
-
-            var endpoints = hostConfiguration.GetEndpoints(wellKnown);
-            //endpoints.AddRange(hostConfiguration.GetEndpoints());
-            var provider = new ServiceManagementProvider(serviceConfiguration, hostConfiguration);
-
-            return new RudProvider(endpoints, provider);
-            }
-
-
-        ///<summary>The service description for a service reporting a single host.</summary> 
-        public static ServiceDescription ServiceDescriptionHost => new(WellKnown, Factory);
-
-        ///<summary>The service description for a service reporting a set of hosts.</summary> 
-        public static ServiceDescription ServiceDescriptionMeta => throw new NYI();
-
-
-        #region // Properties
-        HostConfiguration HostConfiguration { get; }
-
-        ServiceConfiguration ServiceConfiguration { get; }
-        #endregion
-
-        #region // Destructor
-        #endregion
-
-        #region // Constructors
-
-        /// <summary>
-        /// Return a new <see cref="ServiceManagementProvider"/> instance.
-        /// </summary>
-        /// <param name="serviceConfiguration"></param>
-        /// <param name="hostConfiguration"></param>
-        public ServiceManagementProvider(
-                ServiceConfiguration serviceConfiguration,
-                HostConfiguration hostConfiguration) {
-
-            // Stash these away to report if needed.
-            HostConfiguration = hostConfiguration;
-            ServiceConfiguration = serviceConfiguration;
-            }
-
-
-        #endregion
-
-        #region // Implement Interface: Ixxx
-        #endregion
-
-        #region // Methods 
-
-        ///<inheritdoc/>
-        public override ServiceStatusResponse ServiceStatus(ServiceStatusRequest request, IJpcSession session) {
-            throw new System.NotImplementedException();
-            }
-
-        ///<inheritdoc/>
-        public override ServiceConfigResponse ServiceConfig(ServiceConfigRequest request, IJpcSession session) => throw new NotImplementedException();
-
-        #endregion
+        // Stash these away to report if needed.
+        HostConfiguration = hostConfiguration;
+        ServiceConfiguration = serviceConfiguration;
         }
+
+
+    #endregion
+
+    #region // Implement Interface: Ixxx
+    #endregion
+
+    #region // Methods 
+
+    ///<inheritdoc/>
+    public override ServiceStatusResponse ServiceStatus(ServiceStatusRequest request, IJpcSession session) {
+        throw new System.NotImplementedException();
+        }
+
+    ///<inheritdoc/>
+    public override ServiceConfigResponse ServiceConfig(ServiceConfigRequest request, IJpcSession session) => throw new NotImplementedException();
+
+    #endregion
     }

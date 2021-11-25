@@ -27,109 +27,107 @@ using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
 using Goedel.Utilities;
-namespace Goedel.Mesh {
-    public partial class ProfileService {
-        #region // Properties
-        ///<summary>The actor type</summary> 
-        public override MeshActor MeshActor => MeshActor.Service;
+namespace Goedel.Mesh;
 
-        ///<summary>Typed enveloped data</summary> 
-        public Enveloped<ProfileService> GetEnvelopedProfileService() => new(DareEnvelope);
+public partial class ProfileService {
+    #region // Properties
+    ///<summary>The actor type</summary> 
+    public override MeshActor MeshActor => MeshActor.Service;
 
-        ///<summary>The service signature key</summary> 
-        public KeyPair KeySignature { get; private set; }
+    ///<summary>Typed enveloped data</summary> 
+    public Enveloped<ProfileService> GetEnvelopedProfileService() => new(DareEnvelope);
 
-        ///<summary>The service encryption key</summary> 
-        public KeyPair KeyEncryption { get; private set; }
+    ///<summary>The service signature key</summary> 
+    public KeyPair KeySignature { get; private set; }
 
-        ///<summary>The service authentication key</summary> 
-        public KeyPair KeyAuthentication { get; private set; }
-        #endregion
-        #region // Constructors
-        /// <summary>
-        /// Blank constructor for use by deserializers.
-        /// </summary>
-        public ProfileService() { }
+    ///<summary>The service encryption key</summary> 
+    public KeyPair KeyEncryption { get; private set; }
 
-        /// <summary>
-        /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
-        /// </summary>
-        /// <param name="secretSeed">The secret seed value.</param>
-        /// <param name="keyCollection">The base key collection</param>
-        /// <param name="persist">If true, persist the service record to the local machine
-        /// store.</param>
-        ProfileService(
-                    IKeyCollection keyCollection,
-                    PrivateKeyUDF secretSeed,
-                    bool persist = false) : base(secretSeed, keyCollection, persist) {
-            }
-        #endregion
-        #region // Methods 
+    ///<summary>The service authentication key</summary> 
+    public KeyPair KeyAuthentication { get; private set; }
+    #endregion
+    #region // Constructors
+    /// <summary>
+    /// Blank constructor for use by deserializers.
+    /// </summary>
+    public ProfileService() { }
 
-        /// <summary>
-        /// Generate profile specific keys.
-        /// </summary>
-        protected override void Generate() {
-            base.Generate();
-            (KeySignature, ServiceSignature) = SecretSeed.GenerateContributionKey(
-                    MeshKeyType, MeshActor, MeshKeyOperation.Sign);
-            (KeyAuthentication, ServiceAuthentication) = SecretSeed.GenerateContributionKey(
-                    MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
-            (KeyEncryption, ServiceEncryption) = SecretSeed.GenerateContributionKey(
-                    MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
-            }
+    /// <summary>
+    /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
+    /// </summary>
+    /// <param name="secretSeed">The secret seed value.</param>
+    /// <param name="keyCollection">The base key collection</param>
+    /// <param name="persist">If true, persist the service record to the local machine
+    /// store.</param>
+    ProfileService(
+                IKeyCollection keyCollection,
+                PrivateKeyUDF secretSeed,
+                bool persist = false) : base(secretSeed, keyCollection, persist) {
+        }
+    #endregion
+    #region // Methods 
 
-        /// <summary>
-        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
-        /// seed.
-        /// </summary>
-        /// <param name="secretSeed">The secret seed value.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        /// <param name="algorithmSign">The signature algorithm</param>
-        /// <param name="algorithmAuthenticate">The signature algorithm</param>
-        /// <param name="bits">The size of key to generate in bits/</param>
-        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
-        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
-        /// <paramref name="keyCollection"/>.</param>
-        /// <returns>The created profile.</returns>
-        public static ProfileService Generate(
-                    IKeyCollection keyCollection,
-                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                    CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                    int bits = 256,
-                    PrivateKeyUDF secretSeed = null,
-                    bool persist = false) {
-            secretSeed ??= new PrivateKeyUDF(
-                udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount, secret: null, algorithmEncrypt: algorithmEncrypt,
-                algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
-            return new ProfileService(keyCollection, secretSeed, persist);
-            }
+    /// <summary>
+    /// Generate profile specific keys.
+    /// </summary>
+    protected override void Generate() {
+        base.Generate();
+        (KeySignature, ServiceSignature) = SecretSeed.GenerateContributionKey(
+                MeshKeyType, MeshActor, MeshKeyOperation.Sign);
+        (KeyAuthentication, ServiceAuthentication) = SecretSeed.GenerateContributionKey(
+                MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
+        (KeyEncryption, ServiceEncryption) = SecretSeed.GenerateContributionKey(
+                MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
+        }
 
-        /// <summary>
-        /// Constructor create service with the signature key <paramref name="keySign"/>
-        /// </summary>
-        /// <param name="keySign">The offline signature key.</param>
-        /// <param name="keyEncrypt">The service encryption key.</param>
-        public ProfileService(KeyPair keySign, KeyPair keyEncrypt) {
-            KeySignature = keySign;
-            KeyEncryption = keyEncrypt;
+    /// <summary>
+    /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
+    /// seed.
+    /// </summary>
+    /// <param name="secretSeed">The secret seed value.</param>
+    /// <param name="algorithmEncrypt">The encryption algorithm.</param>
+    /// <param name="algorithmSign">The signature algorithm</param>
+    /// <param name="algorithmAuthenticate">The signature algorithm</param>
+    /// <param name="bits">The size of key to generate in bits/</param>
+    /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+    /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+    /// <paramref name="keyCollection"/>.</param>
+    /// <returns>The created profile.</returns>
+    public static ProfileService Generate(
+                IKeyCollection keyCollection,
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
+                int bits = 256,
+                PrivateKeyUDF secretSeed = null,
+                bool persist = false) {
+        secretSeed ??= new PrivateKeyUDF(
+            udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount, secret: null, algorithmEncrypt: algorithmEncrypt,
+            algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
+        return new ProfileService(keyCollection, secretSeed, persist);
+        }
 
-            ProfileSignature = new KeyData(keySign.KeyPairPublic());
-            ServiceEncryption = new KeyData(keyEncrypt.KeyPairPublic());
-            }
+    /// <summary>
+    /// Constructor create service with the signature key <paramref name="keySign"/>
+    /// </summary>
+    /// <param name="keySign">The offline signature key.</param>
+    /// <param name="keyEncrypt">The service encryption key.</param>
+    public ProfileService(KeyPair keySign, KeyPair keyEncrypt) {
+        KeySignature = keySign;
+        KeyEncryption = keyEncrypt;
 
-
-        /// <summary>
-        /// Sign a host connection.
-        /// </summary>
-        /// <param name="connection">The connection to sign.</param>
-        /// <param name="objectEncoding">The encoding for the connection object.</param>
-        public void Sign(Connection connection, ObjectEncoding objectEncoding) =>
-            connection.Envelope(KeySignature, objectEncoding:
-                        objectEncoding);
-        #endregion
+        ProfileSignature = new KeyData(keySign.KeyPairPublic());
+        ServiceEncryption = new KeyData(keyEncrypt.KeyPairPublic());
         }
 
 
+    /// <summary>
+    /// Sign a host connection.
+    /// </summary>
+    /// <param name="connection">The connection to sign.</param>
+    /// <param name="objectEncoding">The encoding for the connection object.</param>
+    public void Sign(Connection connection, ObjectEncoding objectEncoding) =>
+        connection.Envelope(KeySignature, objectEncoding:
+                    objectEncoding);
+    #endregion
     }

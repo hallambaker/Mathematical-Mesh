@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 11/17/2021 11:08:33 AM
+//  This file was automatically generated at 11/24/2021 2:34:36 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.719
+//  Generator:  protogen version 3.0.0.740
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -49,873 +49,873 @@ using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 
 
-namespace Goedel.Mesh.Client {
+namespace Goedel.Mesh.Client;
 
 
 	/// <summary>
 	///
 	/// An entry in the Mesh linked logchain.
 	/// </summary>
-	public abstract partial class HostCatalogItem : global::Goedel.Protocol.JsonObject {
+public abstract partial class HostCatalogItem : global::Goedel.Protocol.JsonObject {
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag =>__Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag =>__Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "HostCatalogItem";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "HostCatalogItem";
 
-		/// <summary>
-        /// Dictionary mapping tags to factory methods
-        /// </summary>
-		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-		static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-				new Dictionary<string, JsonFactoryDelegate> () {
+	/// <summary>
+    /// Dictionary mapping tags to factory methods
+    /// </summary>
+	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
+	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
+			new Dictionary<string, JsonFactoryDelegate> () {
 
-			{"CatalogedMachine", CatalogedMachine._Factory},
-			{"CatalogedService", CatalogedService._Factory},
-			{"CatalogedStandard", CatalogedStandard._Factory},
-			{"CatalogedPending", CatalogedPending._Factory},
-			{"CatalogedPreconfigured", CatalogedPreconfigured._Factory}			};
+	    {"CatalogedMachine", CatalogedMachine._Factory},
+	    {"CatalogedService", CatalogedService._Factory},
+	    {"CatalogedStandard", CatalogedStandard._Factory},
+	    {"CatalogedPending", CatalogedPending._Factory},
+	    {"CatalogedPreconfigured", CatalogedPreconfigured._Factory}		};
 
-        [ModuleInitializer]
-        internal static void _Initialize() => AddDictionary(ref _tagDictionary);
-
-
-		/// <summary>
-        /// Construct an instance from the specified tagged JsonReader stream.
-        /// </summary>
-        /// <param name="jsonReader">Input stream</param>
-        /// <param name="result">The created object</param>
-        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-			result = jsonReader.ReadTaggedObject(_TagDictionary);
-
-		}
+    [ModuleInitializer]
+    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
 
 
+	/// <summary>
+    /// Construct an instance from the specified tagged JsonReader stream.
+    /// </summary>
+    /// <param name="jsonReader">Input stream</param>
+    /// <param name="result">The created object</param>
+    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
+		result = jsonReader.ReadTaggedObject(_TagDictionary);
 
-		// Service Dispatch Classes
+	}
 
 
 
-		// Transaction Classes
+// Service Dispatch Classes
+
+
+
+	// Transaction Classes
 	/// <summary>
 	///
 	/// Describes a current or pending connection to a Mesh
 	/// </summary>
-	public partial class CatalogedMachine : HostCatalogItem {
+public partial class CatalogedMachine : HostCatalogItem {
         /// <summary>
         ///Unique object instance identifier.
         /// </summary>
 
-		public virtual string						Id  {get; set;}
+	public virtual string						Id  {get; set;}
         /// <summary>
         ///Local short name for the profile
         /// </summary>
 
-		public virtual string						Local  {get; set;}
-		bool								__Default = false;
-		private bool						_Default;
+	public virtual string						Local  {get; set;}
+	bool								__Default = false;
+	private bool						_Default;
         /// <summary>
         ///If true, this is the default for the profile type (master, account)
         /// </summary>
 
-		public virtual bool						Default {
-			get => _Default;
-			set {_Default = value; __Default = true; }
-			}
+	public virtual bool						Default {
+		get => _Default;
+		set {_Default = value; __Default = true; }
+		}
         /// <summary>
         ///The master profile that provides the root of trust for this Mesh
         /// </summary>
 
-		public virtual Enveloped<ProfileAccount>						EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>						EnvelopedProfileAccount  {get; set;}
         /// <summary>
         ///The cataloged device profile
         /// </summary>
 
-		public virtual CatalogedDevice						CatalogedDevice  {get; set;}
+	public virtual CatalogedDevice						CatalogedDevice  {get; set;}
         /// <summary>
         ///The digest of the cataloged device.
         /// </summary>
 
-		public virtual string						CatalogedDeviceDigest  {get; set;}
+	public virtual string						CatalogedDeviceDigest  {get; set;}
         /// <summary>
         ///The enveloped assignment describing how the client should
         ///discover the host and encrypt data to it.
         /// </summary>
 
-		public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "CatalogedMachine";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedMachine";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new CatalogedMachine();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedMachine();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (Id != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Id", 1);
-					_writer.WriteString (Id);
-				}
-			if (Local != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Local", 1);
-					_writer.WriteString (Local);
-				}
-			if (__Default){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Default", 1);
-					_writer.WriteBoolean (Default);
-				}
-			if (EnvelopedProfileAccount != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedProfileAccount", 1);
-					EnvelopedProfileAccount.Serialize (_writer, false);
-				}
-			if (CatalogedDevice != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("CatalogedDevice", 1);
-					CatalogedDevice.Serialize (_writer, false);
-				}
-			if (CatalogedDeviceDigest != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("CatalogedDeviceDigest", 1);
-					_writer.WriteString (CatalogedDeviceDigest);
-				}
-			if (EnvelopedAccountHostAssignment != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedAccountHostAssignment", 1);
-					EnvelopedAccountHostAssignment.Serialize (_writer, false);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
 			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new CatalogedMachine FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogedMachine;
-				}
-		    var Result = new CatalogedMachine ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+		if (Id != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Id", 1);
+				_writer.WriteString (Id);
 			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "Id" : {
-					Id = jsonReader.ReadString ();
-					break;
-					}
-				case "Local" : {
-					Local = jsonReader.ReadString ();
-					break;
-					}
-				case "Default" : {
-					Default = jsonReader.ReadBoolean ();
-					break;
-					}
-				case "EnvelopedProfileAccount" : {
-					// An untagged structure
-					EnvelopedProfileAccount = new Enveloped<ProfileAccount> ();
-					EnvelopedProfileAccount.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "CatalogedDevice" : {
-					// An untagged structure
-					CatalogedDevice = new CatalogedDevice ();
-					CatalogedDevice.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "CatalogedDeviceDigest" : {
-					CatalogedDeviceDigest = jsonReader.ReadString ();
-					break;
-					}
-				case "EnvelopedAccountHostAssignment" : {
-					// An untagged structure
-					EnvelopedAccountHostAssignment = new Enveloped<AccountHostAssignment> ();
-					EnvelopedAccountHostAssignment.Deserialize (jsonReader);
- 
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
+		if (Local != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Local", 1);
+				_writer.WriteString (Local);
 			}
-
-
+		if (__Default){
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Default", 1);
+				_writer.WriteBoolean (Default);
+			}
+		if (EnvelopedProfileAccount != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedProfileAccount", 1);
+				EnvelopedProfileAccount.Serialize (_writer, false);
+			}
+		if (CatalogedDevice != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("CatalogedDevice", 1);
+				CatalogedDevice.Serialize (_writer, false);
+			}
+		if (CatalogedDeviceDigest != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("CatalogedDeviceDigest", 1);
+				_writer.WriteString (CatalogedDeviceDigest);
+			}
+		if (EnvelopedAccountHostAssignment != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedAccountHostAssignment", 1);
+				EnvelopedAccountHostAssignment.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
 		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedMachine FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedMachine;
+			}
+		var Result = new CatalogedMachine ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "Id" : {
+				Id = jsonReader.ReadString ();
+				break;
+				}
+			case "Local" : {
+				Local = jsonReader.ReadString ();
+				break;
+				}
+			case "Default" : {
+				Default = jsonReader.ReadBoolean ();
+				break;
+				}
+			case "EnvelopedProfileAccount" : {
+				// An untagged structure
+				EnvelopedProfileAccount = new Enveloped<ProfileAccount> ();
+				EnvelopedProfileAccount.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "CatalogedDevice" : {
+				// An untagged structure
+				CatalogedDevice = new CatalogedDevice ();
+				CatalogedDevice.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "CatalogedDeviceDigest" : {
+				CatalogedDeviceDigest = jsonReader.ReadString ();
+				break;
+				}
+			case "EnvelopedAccountHostAssignment" : {
+				// An untagged structure
+				EnvelopedAccountHostAssignment = new Enveloped<AccountHostAssignment> ();
+				EnvelopedAccountHostAssignment.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	///
 	/// Describes an ordinary device connected to a Mesh
 	/// </summary>
-	public partial class CatalogedService : CatalogedMachine {
+public partial class CatalogedService : CatalogedMachine {
         /// <summary>
         ///The service profile
         /// </summary>
 
-		public virtual Enveloped<ProfileService>						EnvelopedProfileService  {get; set;}
+	public virtual Enveloped<ProfileService>						EnvelopedProfileService  {get; set;}
         /// <summary>
         ///The host profile
         /// </summary>
 
-		public virtual Enveloped<ProfileHost>						EnvelopedProfileHost  {get; set;}
+	public virtual Enveloped<ProfileHost>						EnvelopedProfileHost  {get; set;}
         /// <summary>
         ///The activation record for this host
         /// </summary>
 
-		public virtual Enveloped<ActivationHost>						EnvelopedActivationHost  {get; set;}
+	public virtual Enveloped<ActivationHost>						EnvelopedActivationHost  {get; set;}
         /// <summary>
         ///The connection of the host to the service
         /// </summary>
 
-		public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "CatalogedService";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedService";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new CatalogedService();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedService();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
-			if (EnvelopedProfileService != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedProfileService", 1);
-					EnvelopedProfileService.Serialize (_writer, false);
-				}
-			if (EnvelopedProfileHost != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedProfileHost", 1);
-					EnvelopedProfileHost.Serialize (_writer, false);
-				}
-			if (EnvelopedActivationHost != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedActivationHost", 1);
-					EnvelopedActivationHost.Serialize (_writer, false);
-				}
-			if (EnvelopedConnectionService != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedConnectionService", 1);
-					EnvelopedConnectionService.Serialize (_writer, false);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
 			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new CatalogedService FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogedService;
-				}
-		    var Result = new CatalogedService ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+		((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
+		if (EnvelopedProfileService != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedProfileService", 1);
+				EnvelopedProfileService.Serialize (_writer, false);
 			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "EnvelopedProfileService" : {
-					// An untagged structure
-					EnvelopedProfileService = new Enveloped<ProfileService> ();
-					EnvelopedProfileService.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "EnvelopedProfileHost" : {
-					// An untagged structure
-					EnvelopedProfileHost = new Enveloped<ProfileHost> ();
-					EnvelopedProfileHost.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "EnvelopedActivationHost" : {
-					// An untagged structure
-					EnvelopedActivationHost = new Enveloped<ActivationHost> ();
-					EnvelopedActivationHost.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "EnvelopedConnectionService" : {
-					// An untagged structure
-					EnvelopedConnectionService = new Enveloped<ConnectionService> ();
-					EnvelopedConnectionService.Deserialize (jsonReader);
- 
-					break;
-					}
-				default : {
-					base.DeserializeToken(jsonReader, tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
+		if (EnvelopedProfileHost != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedProfileHost", 1);
+				EnvelopedProfileHost.Serialize (_writer, false);
 			}
-
-
+		if (EnvelopedActivationHost != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedActivationHost", 1);
+				EnvelopedActivationHost.Serialize (_writer, false);
+			}
+		if (EnvelopedConnectionService != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedConnectionService", 1);
+				EnvelopedConnectionService.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
 		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedService FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedService;
+			}
+		var Result = new CatalogedService ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "EnvelopedProfileService" : {
+				// An untagged structure
+				EnvelopedProfileService = new Enveloped<ProfileService> ();
+				EnvelopedProfileService.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedProfileHost" : {
+				// An untagged structure
+				EnvelopedProfileHost = new Enveloped<ProfileHost> ();
+				EnvelopedProfileHost.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedActivationHost" : {
+				// An untagged structure
+				EnvelopedActivationHost = new Enveloped<ActivationHost> ();
+				EnvelopedActivationHost.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedConnectionService" : {
+				// An untagged structure
+				EnvelopedConnectionService = new Enveloped<ConnectionService> ();
+				EnvelopedConnectionService.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	///
 	/// Describes an ordinary device connected to a Mesh
 	/// </summary>
-	public partial class CatalogedStandard : CatalogedMachine {
+public partial class CatalogedStandard : CatalogedMachine {
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "CatalogedStandard";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedStandard";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new CatalogedStandard();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedStandard();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
 			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new CatalogedStandard FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogedStandard;
-				}
-		    var Result = new CatalogedStandard ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+		((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
 			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				default : {
-					base.DeserializeToken(jsonReader, tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
 		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedStandard FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedStandard;
+			}
+		var Result = new CatalogedStandard ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	///
 	/// Describes a pending connection to a Mesh account believed to have been 
 	/// created and posted to a service.
 	/// </summary>
-	public partial class CatalogedPending : CatalogedMachine {
+public partial class CatalogedPending : CatalogedMachine {
         /// <summary>
         ///UDF of the connected device
         /// </summary>
 
-		public virtual string						DeviceUDF  {get; set;}
+	public virtual string						DeviceUDF  {get; set;}
         /// <summary>
         ///The device profile presented to the service.
         /// </summary>
 
-		public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
         /// <summary>
         ///The response returned by the service when the registration was requested.
         /// </summary>
 
-		public virtual Enveloped<AcknowledgeConnection>						EnvelopedAcknowledgeConnection  {get; set;}
+	public virtual Enveloped<AcknowledgeConnection>						EnvelopedAcknowledgeConnection  {get; set;}
         /// <summary>
         ///The account at which the request is pending.
         /// </summary>
 
-		public virtual string						AccountAddress  {get; set;}
+	public virtual string						AccountAddress  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "CatalogedPending";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedPending";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new CatalogedPending();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedPending();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
-			if (DeviceUDF != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("DeviceUDF", 1);
-					_writer.WriteString (DeviceUDF);
-				}
-			if (EnvelopedProfileDevice != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedProfileDevice", 1);
-					EnvelopedProfileDevice.Serialize (_writer, false);
-				}
-			if (EnvelopedAcknowledgeConnection != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedAcknowledgeConnection", 1);
-					EnvelopedAcknowledgeConnection.Serialize (_writer, false);
-				}
-			if (AccountAddress != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("AccountAddress", 1);
-					_writer.WriteString (AccountAddress);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
 			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new CatalogedPending FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogedPending;
-				}
-		    var Result = new CatalogedPending ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+		((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
+		if (DeviceUDF != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("DeviceUDF", 1);
+				_writer.WriteString (DeviceUDF);
 			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "DeviceUDF" : {
-					DeviceUDF = jsonReader.ReadString ();
-					break;
-					}
-				case "EnvelopedProfileDevice" : {
-					// An untagged structure
-					EnvelopedProfileDevice = new Enveloped<ProfileDevice> ();
-					EnvelopedProfileDevice.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "EnvelopedAcknowledgeConnection" : {
-					// An untagged structure
-					EnvelopedAcknowledgeConnection = new Enveloped<AcknowledgeConnection> ();
-					EnvelopedAcknowledgeConnection.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "AccountAddress" : {
-					AccountAddress = jsonReader.ReadString ();
-					break;
-					}
-				default : {
-					base.DeserializeToken(jsonReader, tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
+		if (EnvelopedProfileDevice != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedProfileDevice", 1);
+				EnvelopedProfileDevice.Serialize (_writer, false);
 			}
-
-
+		if (EnvelopedAcknowledgeConnection != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedAcknowledgeConnection", 1);
+				EnvelopedAcknowledgeConnection.Serialize (_writer, false);
+			}
+		if (AccountAddress != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("AccountAddress", 1);
+				_writer.WriteString (AccountAddress);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
 		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedPending FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedPending;
+			}
+		var Result = new CatalogedPending ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "DeviceUDF" : {
+				DeviceUDF = jsonReader.ReadString ();
+				break;
+				}
+			case "EnvelopedProfileDevice" : {
+				// An untagged structure
+				EnvelopedProfileDevice = new Enveloped<ProfileDevice> ();
+				EnvelopedProfileDevice.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedAcknowledgeConnection" : {
+				// An untagged structure
+				EnvelopedAcknowledgeConnection = new Enveloped<AcknowledgeConnection> ();
+				EnvelopedAcknowledgeConnection.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "AccountAddress" : {
+				AccountAddress = jsonReader.ReadString ();
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	///
 	/// Describes a preconfigured Device Profile bound to a remote 
 	/// manufacturer profile.
 	/// </summary>
-	public partial class CatalogedPreconfigured : CatalogedMachine {
+public partial class CatalogedPreconfigured : CatalogedMachine {
         /// <summary>
         ///The device profile presented to the service.
         /// </summary>
 
-		public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
         /// <summary>
         ///The device connection used to authenticate to the service.
         /// </summary>
 
-		public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
         /// <summary>
         ///The device connection used to authenticate to the service.
         /// </summary>
 
-		public virtual Enveloped<ConnectionDevice>						EnvelopedConnectionDevice  {get; set;}
+	public virtual Enveloped<ConnectionDevice>						EnvelopedConnectionDevice  {get; set;}
         /// <summary>
         ///The account to which claims will be posted
         /// </summary>
 
-		public virtual string						AccountAddress  {get; set;}
+	public virtual string						AccountAddress  {get; set;}
         /// <summary>
         ///The publication identifier
         /// </summary>
 
-		public virtual string						PublicationId  {get; set;}
+	public virtual string						PublicationId  {get; set;}
         /// <summary>
         ///Authenticator key used to authenticate claim to the service.
         /// </summary>
 
-		public virtual string						ServiceAuthenticator  {get; set;}
+	public virtual string						ServiceAuthenticator  {get; set;}
         /// <summary>
         ///Authenticator key used to authenticate claim to the device.	
         /// </summary>
 
-		public virtual string						DeviceAuthenticator  {get; set;}
+	public virtual string						DeviceAuthenticator  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "CatalogedPreconfigured";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedPreconfigured";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new CatalogedPreconfigured();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedPreconfigured();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
-			if (EnvelopedProfileDevice != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedProfileDevice", 1);
-					EnvelopedProfileDevice.Serialize (_writer, false);
-				}
-			if (EnvelopedConnectionService != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedConnectionService", 1);
-					EnvelopedConnectionService.Serialize (_writer, false);
-				}
-			if (EnvelopedConnectionDevice != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedConnectionDevice", 1);
-					EnvelopedConnectionDevice.Serialize (_writer, false);
-				}
-			if (AccountAddress != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("AccountAddress", 1);
-					_writer.WriteString (AccountAddress);
-				}
-			if (PublicationId != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("PublicationId", 1);
-					_writer.WriteString (PublicationId);
-				}
-			if (ServiceAuthenticator != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceAuthenticator", 1);
-					_writer.WriteString (ServiceAuthenticator);
-				}
-			if (DeviceAuthenticator != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("DeviceAuthenticator", 1);
-					_writer.WriteString (DeviceAuthenticator);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
 			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new CatalogedPreconfigured FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogedPreconfigured;
-				}
-		    var Result = new CatalogedPreconfigured ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+		((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
+		if (EnvelopedProfileDevice != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedProfileDevice", 1);
+				EnvelopedProfileDevice.Serialize (_writer, false);
 			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "EnvelopedProfileDevice" : {
-					// An untagged structure
-					EnvelopedProfileDevice = new Enveloped<ProfileDevice> ();
-					EnvelopedProfileDevice.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "EnvelopedConnectionService" : {
-					// An untagged structure
-					EnvelopedConnectionService = new Enveloped<ConnectionService> ();
-					EnvelopedConnectionService.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "EnvelopedConnectionDevice" : {
-					// An untagged structure
-					EnvelopedConnectionDevice = new Enveloped<ConnectionDevice> ();
-					EnvelopedConnectionDevice.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "AccountAddress" : {
-					AccountAddress = jsonReader.ReadString ();
-					break;
-					}
-				case "PublicationId" : {
-					PublicationId = jsonReader.ReadString ();
-					break;
-					}
-				case "ServiceAuthenticator" : {
-					ServiceAuthenticator = jsonReader.ReadString ();
-					break;
-					}
-				case "DeviceAuthenticator" : {
-					DeviceAuthenticator = jsonReader.ReadString ();
-					break;
-					}
-				default : {
-					base.DeserializeToken(jsonReader, tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
+		if (EnvelopedConnectionService != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedConnectionService", 1);
+				EnvelopedConnectionService.Serialize (_writer, false);
 			}
-
-
+		if (EnvelopedConnectionDevice != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedConnectionDevice", 1);
+				EnvelopedConnectionDevice.Serialize (_writer, false);
+			}
+		if (AccountAddress != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("AccountAddress", 1);
+				_writer.WriteString (AccountAddress);
+			}
+		if (PublicationId != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("PublicationId", 1);
+				_writer.WriteString (PublicationId);
+			}
+		if (ServiceAuthenticator != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("ServiceAuthenticator", 1);
+				_writer.WriteString (ServiceAuthenticator);
+			}
+		if (DeviceAuthenticator != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("DeviceAuthenticator", 1);
+				_writer.WriteString (DeviceAuthenticator);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
 		}
 
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedPreconfigured FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedPreconfigured;
+			}
+		var Result = new CatalogedPreconfigured ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "EnvelopedProfileDevice" : {
+				// An untagged structure
+				EnvelopedProfileDevice = new Enveloped<ProfileDevice> ();
+				EnvelopedProfileDevice.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedConnectionService" : {
+				// An untagged structure
+				EnvelopedConnectionService = new Enveloped<ConnectionService> ();
+				EnvelopedConnectionService.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedConnectionDevice" : {
+				// An untagged structure
+				EnvelopedConnectionDevice = new Enveloped<ConnectionDevice> ();
+				EnvelopedConnectionDevice.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "AccountAddress" : {
+				AccountAddress = jsonReader.ReadString ();
+				break;
+				}
+			case "PublicationId" : {
+				PublicationId = jsonReader.ReadString ();
+				break;
+				}
+			case "ServiceAuthenticator" : {
+				ServiceAuthenticator = jsonReader.ReadString ();
+				break;
+				}
+			case "DeviceAuthenticator" : {
+				DeviceAuthenticator = jsonReader.ReadString ();
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
 	}
+
+
 

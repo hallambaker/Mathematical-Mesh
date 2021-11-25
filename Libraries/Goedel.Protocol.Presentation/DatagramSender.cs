@@ -27,73 +27,72 @@ using System.Collections.Generic;
 using Goedel.Utilities;
 
 
-namespace Goedel.Protocol.Presentation {
+namespace Goedel.Protocol.Presentation;
+
+/// <summary>
+/// Management of outbound UDP packets sent to a single destination.
+/// </summary>
+public class DatagramSender {
+
+    #region // Properties
+
+    ///<summary>The output queue</summary> 
+    public List<Datagram> OutputQueue { get; } = new();
+
+    ///<summary>Pending acknowledgements</summary> 
+    List<uint> PendingAck { get; } = new();
+
+    ///<summary>Sent packets waiting to be acknowledged</summary> 
+    List<Packet> Unacknowledged { get; } = new();
+
+
+    ///<summary>Time to schedule the next sender action.</summary> 
+    public TimeSpan NextAction => throw new NYI();
+
+    ///<summary>The transmit window specifying the maximum flight.</summary> 
+    public int Window { get; private set; } = 2;
+
+    #endregion
+
+    #region // Destructor
+    #endregion
+
+    #region // Constructors
+    #endregion
+
+
+    #region // Methods 
 
     /// <summary>
-    /// Management of outbound UDP packets sent to a single destination.
+    /// Queue the datagram <paramref name="datagram"/> for output at the priority 
+    /// specified in the datagram.
     /// </summary>
-    public class DatagramSender {
-
-        #region // Properties
-
-        ///<summary>The output queue</summary> 
-        public List<Datagram> OutputQueue { get; } = new();
-
-        ///<summary>Pending acknowledgements</summary> 
-        List<uint> PendingAck { get; } = new();
-
-        ///<summary>Sent packets waiting to be acknowledged</summary> 
-        List<Packet> Unacknowledged { get; } = new();
-
-
-        ///<summary>Time to schedule the next sender action.</summary> 
-        public TimeSpan NextAction => throw new NYI();
-
-        ///<summary>The transmit window specifying the maximum flight.</summary> 
-        public int Window { get; private set; } = 2;
-
-        #endregion
-
-        #region // Destructor
-        #endregion
-
-        #region // Constructors
-        #endregion
-
-
-        #region // Methods 
-
-        /// <summary>
-        /// Queue the datagram <paramref name="datagram"/> for output at the priority 
-        /// specified in the datagram.
-        /// </summary>
-        /// <param name="datagram">The datagram to queue.</param>
-        public void QueueDatagram(Datagram datagram) {
-            }
-
-
-        /// <summary>
-        /// Perform the next actions in queue.
-        /// </summary>
-        public void ProcessSend() {
-
-            }
-
-        /// <summary>
-        /// Process acknowledgements in packet <paramref name="packet"/>
-        /// </summary>
-        /// <param name="packet">Received packet</param>
-        public void ProcessReceipt(Packet packet) {
-            // add packet sequence number to pending ack.
-
-            // read list of acknowledgements, mark packets as acknowledged.
-
-            // Determine space in output window
-
-            // Send packets
-            ProcessSend();
-            }
-
-        #endregion
+    /// <param name="datagram">The datagram to queue.</param>
+    public void QueueDatagram(Datagram datagram) {
         }
+
+
+    /// <summary>
+    /// Perform the next actions in queue.
+    /// </summary>
+    public void ProcessSend() {
+
+        }
+
+    /// <summary>
+    /// Process acknowledgements in packet <paramref name="packet"/>
+    /// </summary>
+    /// <param name="packet">Received packet</param>
+    public void ProcessReceipt(Packet packet) {
+        // add packet sequence number to pending ack.
+
+        // read list of acknowledgements, mark packets as acknowledged.
+
+        // Determine space in output window
+
+        // Send packets
+        ProcessSend();
+        }
+
+    #endregion
     }

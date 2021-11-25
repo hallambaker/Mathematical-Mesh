@@ -19,31 +19,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-namespace Goedel.Protocol.Presentation {
+namespace Goedel.Protocol.Presentation;
+
+/// <summary>
+/// Extensions class.
+/// </summary>
+public static partial class Extensions {
+    #region // Methods 
 
     /// <summary>
-    /// Extensions class.
+    /// Return true if the address is a valid DNS address
     /// </summary>
-    public static partial class Extensions {
-        #region // Methods 
+    /// <param name="address">The address to parse.</param>
+    /// <returns>True if the address is a valid DNS address</returns>
+    public static bool IsDns(this string address) => !IsCallSign(address);
 
-        /// <summary>
-        /// Return true if the address is a valid DNS address
-        /// </summary>
-        /// <param name="address">The address to parse.</param>
-        /// <returns>True if the address is a valid DNS address</returns>
-        public static bool IsDns(this string address) => !IsCallSign(address);
+    /// <summary>
+    /// Return true if the address is a valid callsign address
+    /// </summary>
+    /// <param name="address">The address to parse.</param>
+    /// <returns>True if the address is a valid callsign address</returns>
+    public static bool IsCallSign(this string address) => address[0] == '@';
 
-        /// <summary>
-        /// Return true if the address is a valid callsign address
-        /// </summary>
-        /// <param name="address">The address to parse.</param>
-        /// <returns>True if the address is a valid callsign address</returns>
-        public static bool IsCallSign(this string address) => address[0] == '@';
+    // Hack: these methods should enforce the correct syntax.
 
-        // Hack: these methods should enforce the correct syntax.
-
-        #endregion 
-        }
-
+    #endregion
     }

@@ -82,6 +82,10 @@
 
 	Structure LocalLog
 		Inherits LogEntry
+		String Readers
+			Multiple
+			Description
+				|Identifiers of users 
 		String Path
 			Description
 				|Path specifying the directory to which the log is to be written.

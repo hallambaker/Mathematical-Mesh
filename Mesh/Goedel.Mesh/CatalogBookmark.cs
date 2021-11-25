@@ -24,79 +24,76 @@
 
 using Goedel.Cryptography.Dare;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
+
+/// <summary>
+/// Bookmark catalog. Describes the bookmarks in the user's Mesh account.
+/// </summary>
+public class CatalogBookmark : Catalog<CatalogedBookmark> {
+    #region // Properties
+    ///<summary>The canonical label for the catalog</summary>
+    public const string Label = MeshConstants.MMM_Bookmark;
+
+    ///<summary>The catalog label</summary>
+    public override string ContainerDefault => Label;
+    #endregion
+    #region // Factory methods and constructors
+    /// <summary>
+    /// Factory delegate
+    /// </summary>
+    /// <param name="directory">Directory of store file on local machine.</param>
+    /// <param name="storeId">Store identifier.</param>
+    /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+    /// <param name="policy">The cryptographic policy to be applied to the catalog.</param>
+    /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+    /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+    /// <param name="create">If true, create a new file if none exists.</param>
+    /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    public static new Store Factory(
+            string directory,
+                string storeId,
+                IMeshClient meshClient = null,
+                DarePolicy policy = null,
+                CryptoParameters cryptoParameters = null,
+                IKeyCollection keyCollection = null,
+                bool decrypt = true,
+                bool create = true) =>
+        new CatalogBookmark(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
 
     /// <summary>
-    /// Bookmark catalog. Describes the bookmarks in the user's Mesh account.
+    /// Constructor for a catalog named <paramref name="storeName"/> in directory
+    /// <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+    /// and key collection <paramref name="keyCollection"/>.
     /// </summary>
-    public class CatalogBookmark : Catalog<CatalogedBookmark> {
-        #region // Properties
-        ///<summary>The canonical label for the catalog</summary>
-        public const string Label = MeshConstants.MMM_Bookmark;
-
-        ///<summary>The catalog label</summary>
-        public override string ContainerDefault => Label;
-        #endregion
-        #region // Factory methods and constructors
-        /// <summary>
-        /// Factory delegate
-        /// </summary>
-        /// <param name="directory">Directory of store file on local machine.</param>
-        /// <param name="storeId">Store identifier.</param>
-        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
-        /// <param name="policy">The cryptographic policy to be applied to the catalog.</param>
-        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
-        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
-        /// <param name="create">If true, create a new file if none exists.</param>
-        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        public static new Store Factory(
+    /// <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+    /// <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+    /// <param name="directory">The directory in which the catalog persistence container is stored.</param>
+    /// <param name="storeName">The catalog persistence container file name.</param>
+    /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+    /// <param name="policy">The cryptographic policy to be applied to the container.</param>
+    /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+    /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    public CatalogBookmark(
                 string directory,
-                    string storeId,
-                    IMeshClient meshClient = null,
-                    DarePolicy policy = null,
-                    CryptoParameters cryptoParameters = null,
-                    IKeyCollection keyCollection = null,
-                    bool decrypt = true,
-                    bool create = true) =>
-            new CatalogBookmark(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
-
-        /// <summary>
-        /// Constructor for a catalog named <paramref name="storeName"/> in directory
-        /// <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
-        /// and key collection <paramref name="keyCollection"/>.
-        /// </summary>
-        /// <param name="create">Create a new persistence store on disk if it does not already exist.</param>
-        /// <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
-        /// <param name="directory">The directory in which the catalog persistence container is stored.</param>
-        /// <param name="storeName">The catalog persistence container file name.</param>
-        /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
-        /// <param name="policy">The cryptographic policy to be applied to the container.</param>
-        /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
-        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        public CatalogBookmark(
-                    string directory,
-                    string storeName = null,
-                    DarePolicy policy = null,
-                    CryptoParameters cryptoParameters = null,
-                    IKeyCollection keyCollection = null,
-                    IMeshClient meshClient = null,
-                    bool decrypt = true,
-                    bool create = true) :
-            base(directory, storeName ?? Label,
-                        policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
-            }
-
-        #endregion
+                string storeName = null,
+                DarePolicy policy = null,
+                CryptoParameters cryptoParameters = null,
+                IKeyCollection keyCollection = null,
+                IMeshClient meshClient = null,
+                bool decrypt = true,
+                bool create = true) :
+        base(directory, storeName ?? Label,
+                    policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
         }
 
-
-    public partial class CatalogedBookmark {
-        #region // Properties
-        ///<summary>The primary key is protocol:site </summary>
-        public override string _PrimaryKey => Path;
-        #endregion
-        }
+    #endregion
+    }
 
 
+public partial class CatalogedBookmark {
+    #region // Properties
+    ///<summary>The primary key is protocol:site </summary>
+    public override string _PrimaryKey => Path;
+    #endregion
     }

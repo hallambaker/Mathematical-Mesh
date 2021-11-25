@@ -22,24 +22,22 @@
 
 //  
 
-namespace Goedel.Cryptography.Jose {
+namespace Goedel.Cryptography.Jose;
+
+/// <summary>
+/// Represents a JOSE KeyData structure
+/// </summary>
+public partial class KeyCore {
+    /// <summary>
+    /// Default Constructor
+    /// </summary>
+    public KeyCore() { }
 
     /// <summary>
-    /// Represents a JOSE KeyData structure
+    /// Builds a KeyData object from a key.
     /// </summary>
-    public partial class KeyCore {
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public KeyCore() { }
-
-        /// <summary>
-        /// Builds a KeyData object from a key.
-        /// </summary>
-        /// <param name="CryptoKey">The input data</param>
-        public KeyCore(CryptoKey CryptoKey) {
-            }
-
+    /// <param name="CryptoKey">The input data</param>
+    public KeyCore(CryptoKey CryptoKey) {
         }
 
     }

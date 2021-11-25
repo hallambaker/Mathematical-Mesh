@@ -22,11 +22,22 @@
 
 using System;
 
-using Goedel.Cryptography.Core;
 using Goedel.Mesh.Management;
 using Goedel.Mesh.Server;
 using Goedel.Mesh.Shell.Host;
 using Goedel.Utilities;
+using Goedel.Mesh;
+
+#if NET6_0_WINDOWS_OR_GREATER
+using Goedel.Cryptography.Windows;
+#elif NET6_0_MACOS_OR_GREATER
+using Goedel.Cryptography.Core;
+#else
+using Goedel.Cryptography.Core;
+#endif
+
+
+
 
 // Should change this so that it makes use of dependency injection...
 
@@ -35,25 +46,29 @@ using Goedel.Utilities;
 #endif
 
 
-namespace meshhost {
-    ///<summary>Main calling program.</summary> 
-    public class Program {
+namespace meshhost;
 
-        static Program() => Initialization.Initialized.AssertTrue(Internal.Throw);
+///<summary>Main calling program.</summary> 
+public class Program {
 
-        static void Main(string[] args) {
+    static Program() => Goedel.Cryptography.Windows.Initialization.Initialized.AssertTrue(
+        Goedel.Mesh.Internal.Throw);
 
-
-            Shell shell = new Shell(
-                        PublicMeshService.ServiceDescription,
-                        ServiceManagementProvider.ServiceDescriptionHost);
-            shell.Dispatch(args, Console.Out);
+    static void Main(string[] args) {
 
 
-            }
-
-
+        Shell shell = new Shell(
+                    PublicMeshService.ServiceDescription,
+                    ServiceManagementProvider.ServiceDescriptionHost
+                    ) {
+            MeshMachine = new MeshMachineCore()
+            };
+        shell.Dispatch(args, Console.Out);
 
 
         }
+
+
+
+
     }

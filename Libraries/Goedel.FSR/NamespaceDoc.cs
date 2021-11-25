@@ -2,14 +2,12 @@
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace Goedel.FSR {
+namespace Goedel.FSR;
 
-    /// <summary>
-    /// Support library for Finite State Recognizers built using the FSR tool.
-    /// </summary>
+/// <summary>
+/// Support library for Finite State Recognizers built using the FSR tool.
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

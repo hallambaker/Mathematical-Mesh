@@ -39,312 +39,311 @@ using Goedel.Mesh.Server;
 
 #pragma warning disable CA1822
 
-namespace Goedel.XUnit {
-    public partial class TestService {
-        List<string> RightsDirect => new() { Rights.IdRolesWeb };
-        List<string> RightsThreshold => new() { Rights.IdRolesThreshold };
-        string TestFileText { get; } = "Test plaintext data";
+namespace Goedel.XUnit;
 
-        #region // Device access to account decryption key
-        /// <summary>
-        /// Connect a device by approving a request
-        /// </summary>
-        [Fact]
-        public void MeshDeviceDirectKey() => MeshCheckAccountAuth(Rights.IdRolesWeb);
+public partial class TestService {
+    List<string> RightsDirect => new() { Rights.IdRolesWeb };
+    List<string> RightsThreshold => new() { Rights.IdRolesThreshold };
+    string TestFileText { get; } = "Test plaintext data";
 
-        /// <summary>
-        /// Connect a device by approving a request
-        /// </summary>
-        [Fact]
-        public void MeshDeviceThresholdKey() => MeshCheckAccountAuth(Rights.IdRolesThreshold);
+    #region // Device access to account decryption key
+    /// <summary>
+    /// Connect a device by approving a request
+    /// </summary>
+    [Fact]
+    public void MeshDeviceDirectKey() => MeshCheckAccountAuth(Rights.IdRolesWeb);
 
-        void MeshCheckAccountAuth(string role)    {
-            var rights = new List<string> { role };
+    /// <summary>
+    /// Connect a device by approving a request
+    /// </summary>
+    [Fact]
+    public void MeshDeviceThresholdKey() => MeshCheckAccountAuth(Rights.IdRolesThreshold);
 
-            var testEnvironmentCommon = GetTestEnvironmentCommon();
-            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                    DeviceAliceAdmin, AccountAlice, "main");
+    void MeshCheckAccountAuth(string role) {
+        var rights = new List<string> { role };
 
-            // Encrypt file here
-            var testFile = new TestFile(TestFileText);
-            testFile.Encrypt(contextAccountAlice, AccountAlice, AccountAlice);
-            testFile.Decrypt(contextAccountAlice.KeyCollection);
+        var testEnvironmentCommon = GetTestEnvironmentCommon();
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                DeviceAliceAdmin, AccountAlice, "main");
 
-            // New Device
-            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
-                    AccountAlice);
+        // Encrypt file here
+        var testFile = new TestFile(TestFileText);
+        testFile.Encrypt(contextAccountAlice, AccountAlice, AccountAlice);
+        testFile.Decrypt(contextAccountAlice.KeyCollection);
 
-            // test decrypt - onbaording FAIL
-            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
-                testFile.Decrypt(contextOnboardPending.KeyCollection));
+        // New Device
+        var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+                AccountAlice);
 
-            // Admin Device
-            contextAccountAlice.Sync();
-            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest, roles: rights);
+        // test decrypt - onbaording FAIL
+        Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
+            testFile.Decrypt(contextOnboardPending.KeyCollection));
 
-            // Check second device
-            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+        // Admin Device
+        contextAccountAlice.Sync();
+        var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+        contextAccountAlice.Process(connectRequest, roles: rights);
 
-            // test decrypt, sync - onbaording Success
+        // Check second device
+        var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
 
-            contextOnboarded.Sync();
+        // test decrypt, sync - onbaording Success
 
-            var newContext = MeshMachineTest.RefetchContextUser(contextOnboarded);
-            testFile.Decrypt(contextOnboarded);
+        contextOnboarded.Sync();
 
-            contextAccountAlice.DeleteDevice(contextOnboarded.CatalogedDevice.DeviceUdf);
+        var newContext = MeshMachineTest.RefetchContextUser(contextOnboarded);
+        testFile.Decrypt(contextOnboarded);
 
-            // test sync, decrypt - FAIL
-            Xunit.Assert.Throws<ServerResponseInvalid>(() => newContext.Sync());
+        contextAccountAlice.DeleteDevice(contextOnboarded.CatalogedDevice.DeviceUdf);
 
-            if (role == Rights.IdRolesThreshold) {
-                Xunit.Assert.Throws<CryptographicOperationRefused>(() => testFile.Decrypt(newContext.KeyCollection));
+        // test sync, decrypt - FAIL
+        Xunit.Assert.Throws<ServerResponseInvalid>(() => newContext.Sync());
 
-                }
-            else {
-                testFile.Decrypt(contextOnboarded.KeyCollection);
-                }
+        if (role == Rights.IdRolesThreshold) {
+            Xunit.Assert.Throws<CryptographicOperationRefused>(() => testFile.Decrypt(newContext.KeyCollection));
 
             }
-        #endregion
-        #region // Device access to applications
-
-        [Fact]
-        public void MeshDeviceSsh() {
-            var roles = new List<string> { Rights.IdRolesWeb };
-
-            var testEnvironmentCommon = GetTestEnvironmentCommon();
-            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                    DeviceAliceAdmin, AccountAlice, "main");
-
-            // New Device
-            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, AccountAlice);
-
-            // Admin Device
-            contextAccountAlice.Sync();
-            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest, roles: roles);
-
-            // Check second device
-            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
-            ExerciseAccount(contextOnboarded);
-
-            var id = "ssh";
-            // Create an ssh application
-            var applicationSSH = CatalogedApplicationSsh.Create(id, roles);
-
-            var transaction1 = contextAccountAlice.TransactBegin();
-            transaction1.ApplicationCreate(applicationSSH);
-            var result1 = transaction1.Transact();
-
-
-            // Connect a third device
-            var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);
-
-            // Admin Device
-            contextAccountAlice.Sync();
-            var connectRequest2 = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest2, roles: roles);
-
-
-            var contextOnboarded2 = TestCompletionSuccess(contextOnboardPending2);
-            ExerciseAccount(contextOnboarded2);
-
-            contextOnboarded.Sync();
-
-            var applicationSsh1 = contextAccountAlice.GetApplicationSsh(id);
-            var applicationEntrySsh1 = contextAccountAlice.GetApplicationEntrySsh(id);
-            var applicationSsh2 = contextOnboarded.GetApplicationSsh(id);
-            var applicationEntrySsh2 = contextOnboarded.GetApplicationEntrySsh(id);
-            var applicationSsh3 = contextOnboarded2.GetApplicationSsh(id);
-            var applicationEntrySsh3 = contextOnboarded2.GetApplicationEntrySsh(id);
-            // check applicationSsh1 == applicationSsh2
-            // check we have a private key for each device.
-
-            applicationSsh1.TestNotNull();
-            applicationEntrySsh1.TestNotNull();
-            applicationSsh2.TestNotNull();
-            applicationEntrySsh2.TestNotNull();
-
-
-            applicationSsh3.TestNotNull();
-            applicationEntrySsh3.TestNotNull();
-
-            CheckKeysMatch(applicationSsh1.ClientKey, applicationSsh2.ClientKey, applicationSsh3.ClientKey,
-                    applicationEntrySsh1.Activation.ClientKey, applicationEntrySsh2.Activation.ClientKey,
-                    applicationEntrySsh3.Activation.ClientKey);
-
-            // Extract some files
-
-            applicationSsh1.ClientKey.ToKeyFile("MeshDeviceSshPublic1", KeyFileFormat.OpenSSH);
-            applicationSsh2.ClientKey.ToKeyFile("MeshDeviceSshPublic2", KeyFileFormat.OpenSSH);
-
-            applicationEntrySsh1.Activation.ClientKey.ToKeyFile("MeshDeviceSshPrivate1", KeyFileFormat.PEMPrivate);
-            applicationEntrySsh2.Activation.ClientKey.ToKeyFile("MeshDeviceSshPrivate2", KeyFileFormat.PEMPrivate);
-
+        else {
+            testFile.Decrypt(contextOnboarded.KeyCollection);
             }
-
-
-        [Fact]
-        public void MeshDeviceMail() {
-            var roles = new List<string> { Rights.IdRolesWeb };
-
-            var testEnvironmentCommon = GetTestEnvironmentCommon();
-            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                    DeviceAliceAdmin, AccountAlice, "main");
-
-            // New Device
-            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, AccountAlice);
-
-            // Admin Device
-            contextAccountAlice.Sync();
-            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest, roles: roles);
-
-            // Check second device
-            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
-            ExerciseAccount(contextOnboarded);
-
-            var id = "alice@example.net";
-            // Create an ssh application
-            var applicationMail = CatalogedApplicationMail.Create(id, roles);
-
-            var transaction1 = contextAccountAlice.TransactBegin();
-            transaction1.ApplicationCreate(applicationMail);
-            var result1 = transaction1.Transact();
-
-
-            // Connect a third device
-            var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);
-
-            // Admin Device
-            contextAccountAlice.Sync();
-            var connectRequest2 = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest2, roles: roles);
-
-
-            var contextOnboarded2 = TestCompletionSuccess(contextOnboardPending2);
-            ExerciseAccount(contextOnboarded2);
-
-            contextOnboarded.Sync();
-
-            var application1 = contextAccountAlice.GetApplicationMail(id);
-            var applicationEntry1 = contextAccountAlice.GetApplicationEntryMail(id);
-            var application2 = contextOnboarded.GetApplicationMail(id);
-            var applicationEntry2 = contextOnboarded.GetApplicationEntryMail(id);
-            var application3 = contextOnboarded2.GetApplicationMail(id);
-            var applicationEntry3 = contextOnboarded2.GetApplicationEntryMail(id);
-            // check applicationSsh1 == applicationSsh2
-            // check we have a private key for each device.
-
-            application1.TestNotNull();
-            applicationEntry1.TestNotNull();
-            application2.TestNotNull();
-            applicationEntry2.TestNotNull();
-
-
-            application3.TestNotNull();
-            applicationEntry3.TestNotNull();
-
-            CheckKeysMatch(application1.OpenpgpEncrypt, application2.OpenpgpEncrypt, application3.OpenpgpEncrypt,
-                    applicationEntry1.Activation.OpenpgpEncrypt, applicationEntry2.Activation.OpenpgpEncrypt,
-                    applicationEntry3.Activation.OpenpgpEncrypt);
-
-            CheckKeysMatch(application1.OpenpgpSign, application2.OpenpgpSign, application3.OpenpgpSign,
-                    applicationEntry1.Activation.OpenpgpSign, applicationEntry2.Activation.OpenpgpSign,
-                    applicationEntry3.Activation.OpenpgpSign);
-
-            CheckKeysMatch(application1.SmimeEncrypt, application2.SmimeEncrypt, application3.SmimeEncrypt,
-                    applicationEntry1.Activation.SmimeEncrypt, applicationEntry2.Activation.SmimeEncrypt,
-                    applicationEntry3.Activation.SmimeEncrypt);
-            CheckKeysMatch(application1.SmimeSign, application2.SmimeSign, application3.SmimeSign,
-                    applicationEntry1.Activation.SmimeSign, applicationEntry2.Activation.SmimeSign,
-                    applicationEntry3.Activation.SmimeSign);
-
-            // Check the keys differ and are not null
-            CheckKeysDiffer(application1.OpenpgpEncrypt, application1.OpenpgpSign, application1.SmimeEncrypt,
-                applicationEntry1.Activation.SmimeSign);
-
-            // Extract some files
-
-            application1.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic1", KeyFileFormat.PEMPublic);
-            application2.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic2", KeyFileFormat.PEMPublic);
-
-            applicationEntry1.Activation.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate1", KeyFileFormat.PEMPrivate);
-            applicationEntry2.Activation.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate2", KeyFileFormat.PEMPrivate);
-
-
-            // Phase2: Bagging on these for now, export in S/MIME formats
-
-            //application1.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic1", KeyFileFormat.X509DER);
-            //application2.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic2", KeyFileFormat.X509DER);
-
-            //applicationEntry1.Activation.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate1", KeyFileFormat.PKCS12);
-            //applicationEntry2.Activation.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate2", KeyFileFormat.PKCS12);
-
-            }
-
-
-
-        void CheckKeysDiffer(params KeyData[] keys) {
-
-            var dictionary = new SortedSet<string>();
-
-            foreach (var key in keys) {
-                key.TestNotNull();
-                dictionary.Add(key.GetKeyPair().KeyIdentifier).TestTrue();
-                }
-            }
-
-
-        void CheckKeysMatch(params KeyData[] keys) {
-
-            keys.TestNotNull();
-            if (keys.Length == 0) {
-                return;
-                }
-            var keyIdentifier = keys[0].GetKeyPair().KeyIdentifier;
-            foreach (var key in keys) {
-                (keyIdentifier == key.GetKeyPair().KeyIdentifier).TestTrue();
-                }
-            }
-
-        /// <summary>
-        /// Connect a device by approving a request
-        /// </summary>
-        [Fact]
-        public void MeshDeviceDeveloper() {
-            var rights = new List<string> { Rights.IdRolesDeveloper, Rights.IdRolesWeb};
-
-
-            var testEnvironmentCommon = GetTestEnvironmentCommon();
-            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                    DeviceAliceAdmin, AccountAlice, "main");
-
-            // New Device
-            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
-                    AccountAlice);
-
-            // Admin Device
-            contextAccountAlice.Sync();
-            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest, roles: rights);
-
-            // Check second device
-            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
-            ExerciseAccount(contextOnboarded);
-
-            //Check the access catalog
-            //   Should have no threshold entry
-            //   Should have service auth entry
-
-            }
-
-        #endregion
-
-
 
         }
+    #endregion
+    #region // Device access to applications
+
+    [Fact]
+    public void MeshDeviceSsh() {
+        var roles = new List<string> { Rights.IdRolesWeb };
+
+        var testEnvironmentCommon = GetTestEnvironmentCommon();
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                DeviceAliceAdmin, AccountAlice, "main");
+
+        // New Device
+        var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, AccountAlice);
+
+        // Admin Device
+        contextAccountAlice.Sync();
+        var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+        contextAccountAlice.Process(connectRequest, roles: roles);
+
+        // Check second device
+        var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+        ExerciseAccount(contextOnboarded);
+
+        var id = "ssh";
+        // Create an ssh application
+        var applicationSSH = CatalogedApplicationSsh.Create(id, roles);
+
+        var transaction1 = contextAccountAlice.TransactBegin();
+        transaction1.ApplicationCreate(applicationSSH);
+        var result1 = transaction1.Transact();
+
+
+        // Connect a third device
+        var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);
+
+        // Admin Device
+        contextAccountAlice.Sync();
+        var connectRequest2 = contextAccountAlice.GetPendingMessageConnectionRequest();
+        contextAccountAlice.Process(connectRequest2, roles: roles);
+
+
+        var contextOnboarded2 = TestCompletionSuccess(contextOnboardPending2);
+        ExerciseAccount(contextOnboarded2);
+
+        contextOnboarded.Sync();
+
+        var applicationSsh1 = contextAccountAlice.GetApplicationSsh(id);
+        var applicationEntrySsh1 = contextAccountAlice.GetApplicationEntrySsh(id);
+        var applicationSsh2 = contextOnboarded.GetApplicationSsh(id);
+        var applicationEntrySsh2 = contextOnboarded.GetApplicationEntrySsh(id);
+        var applicationSsh3 = contextOnboarded2.GetApplicationSsh(id);
+        var applicationEntrySsh3 = contextOnboarded2.GetApplicationEntrySsh(id);
+        // check applicationSsh1 == applicationSsh2
+        // check we have a private key for each device.
+
+        applicationSsh1.TestNotNull();
+        applicationEntrySsh1.TestNotNull();
+        applicationSsh2.TestNotNull();
+        applicationEntrySsh2.TestNotNull();
+
+
+        applicationSsh3.TestNotNull();
+        applicationEntrySsh3.TestNotNull();
+
+        CheckKeysMatch(applicationSsh1.ClientKey, applicationSsh2.ClientKey, applicationSsh3.ClientKey,
+                applicationEntrySsh1.Activation.ClientKey, applicationEntrySsh2.Activation.ClientKey,
+                applicationEntrySsh3.Activation.ClientKey);
+
+        // Extract some files
+
+        applicationSsh1.ClientKey.ToKeyFile("MeshDeviceSshPublic1", KeyFileFormat.OpenSSH);
+        applicationSsh2.ClientKey.ToKeyFile("MeshDeviceSshPublic2", KeyFileFormat.OpenSSH);
+
+        applicationEntrySsh1.Activation.ClientKey.ToKeyFile("MeshDeviceSshPrivate1", KeyFileFormat.PEMPrivate);
+        applicationEntrySsh2.Activation.ClientKey.ToKeyFile("MeshDeviceSshPrivate2", KeyFileFormat.PEMPrivate);
+
+        }
+
+
+    [Fact]
+    public void MeshDeviceMail() {
+        var roles = new List<string> { Rights.IdRolesWeb };
+
+        var testEnvironmentCommon = GetTestEnvironmentCommon();
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                DeviceAliceAdmin, AccountAlice, "main");
+
+        // New Device
+        var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, AccountAlice);
+
+        // Admin Device
+        contextAccountAlice.Sync();
+        var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+        contextAccountAlice.Process(connectRequest, roles: roles);
+
+        // Check second device
+        var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+        ExerciseAccount(contextOnboarded);
+
+        var id = "alice@example.net";
+        // Create an ssh application
+        var applicationMail = CatalogedApplicationMail.Create(id, roles);
+
+        var transaction1 = contextAccountAlice.TransactBegin();
+        transaction1.ApplicationCreate(applicationMail);
+        var result1 = transaction1.Transact();
+
+
+        // Connect a third device
+        var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);
+
+        // Admin Device
+        contextAccountAlice.Sync();
+        var connectRequest2 = contextAccountAlice.GetPendingMessageConnectionRequest();
+        contextAccountAlice.Process(connectRequest2, roles: roles);
+
+
+        var contextOnboarded2 = TestCompletionSuccess(contextOnboardPending2);
+        ExerciseAccount(contextOnboarded2);
+
+        contextOnboarded.Sync();
+
+        var application1 = contextAccountAlice.GetApplicationMail(id);
+        var applicationEntry1 = contextAccountAlice.GetApplicationEntryMail(id);
+        var application2 = contextOnboarded.GetApplicationMail(id);
+        var applicationEntry2 = contextOnboarded.GetApplicationEntryMail(id);
+        var application3 = contextOnboarded2.GetApplicationMail(id);
+        var applicationEntry3 = contextOnboarded2.GetApplicationEntryMail(id);
+        // check applicationSsh1 == applicationSsh2
+        // check we have a private key for each device.
+
+        application1.TestNotNull();
+        applicationEntry1.TestNotNull();
+        application2.TestNotNull();
+        applicationEntry2.TestNotNull();
+
+
+        application3.TestNotNull();
+        applicationEntry3.TestNotNull();
+
+        CheckKeysMatch(application1.OpenpgpEncrypt, application2.OpenpgpEncrypt, application3.OpenpgpEncrypt,
+                applicationEntry1.Activation.OpenpgpEncrypt, applicationEntry2.Activation.OpenpgpEncrypt,
+                applicationEntry3.Activation.OpenpgpEncrypt);
+
+        CheckKeysMatch(application1.OpenpgpSign, application2.OpenpgpSign, application3.OpenpgpSign,
+                applicationEntry1.Activation.OpenpgpSign, applicationEntry2.Activation.OpenpgpSign,
+                applicationEntry3.Activation.OpenpgpSign);
+
+        CheckKeysMatch(application1.SmimeEncrypt, application2.SmimeEncrypt, application3.SmimeEncrypt,
+                applicationEntry1.Activation.SmimeEncrypt, applicationEntry2.Activation.SmimeEncrypt,
+                applicationEntry3.Activation.SmimeEncrypt);
+        CheckKeysMatch(application1.SmimeSign, application2.SmimeSign, application3.SmimeSign,
+                applicationEntry1.Activation.SmimeSign, applicationEntry2.Activation.SmimeSign,
+                applicationEntry3.Activation.SmimeSign);
+
+        // Check the keys differ and are not null
+        CheckKeysDiffer(application1.OpenpgpEncrypt, application1.OpenpgpSign, application1.SmimeEncrypt,
+            applicationEntry1.Activation.SmimeSign);
+
+        // Extract some files
+
+        application1.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic1", KeyFileFormat.PEMPublic);
+        application2.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic2", KeyFileFormat.PEMPublic);
+
+        applicationEntry1.Activation.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate1", KeyFileFormat.PEMPrivate);
+        applicationEntry2.Activation.OpenpgpEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate2", KeyFileFormat.PEMPrivate);
+
+
+        // Phase2: Bagging on these for now, export in S/MIME formats
+
+        //application1.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic1", KeyFileFormat.X509DER);
+        //application2.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPublic2", KeyFileFormat.X509DER);
+
+        //applicationEntry1.Activation.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate1", KeyFileFormat.PKCS12);
+        //applicationEntry2.Activation.SmimeEncrypt.ToKeyFile("MeshDeviceOpenpgpEncryptPrivate2", KeyFileFormat.PKCS12);
+
+        }
+
+
+
+    void CheckKeysDiffer(params KeyData[] keys) {
+
+        var dictionary = new SortedSet<string>();
+
+        foreach (var key in keys) {
+            key.TestNotNull();
+            dictionary.Add(key.GetKeyPair().KeyIdentifier).TestTrue();
+            }
+        }
+
+
+    void CheckKeysMatch(params KeyData[] keys) {
+
+        keys.TestNotNull();
+        if (keys.Length == 0) {
+            return;
+            }
+        var keyIdentifier = keys[0].GetKeyPair().KeyIdentifier;
+        foreach (var key in keys) {
+            (keyIdentifier == key.GetKeyPair().KeyIdentifier).TestTrue();
+            }
+        }
+
+    /// <summary>
+    /// Connect a device by approving a request
+    /// </summary>
+    [Fact]
+    public void MeshDeviceDeveloper() {
+        var rights = new List<string> { Rights.IdRolesDeveloper, Rights.IdRolesWeb };
+
+
+        var testEnvironmentCommon = GetTestEnvironmentCommon();
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                DeviceAliceAdmin, AccountAlice, "main");
+
+        // New Device
+        var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+                AccountAlice);
+
+        // Admin Device
+        contextAccountAlice.Sync();
+        var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+        contextAccountAlice.Process(connectRequest, roles: rights);
+
+        // Check second device
+        var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+        ExerciseAccount(contextOnboarded);
+
+        //Check the access catalog
+        //   Should have no threshold entry
+        //   Should have service auth entry
+
+        }
+
+    #endregion
+
+
 
     }

@@ -23,243 +23,240 @@ using System;
 
 using Goedel.Utilities;
 
-namespace Goedel.Cryptography {
+namespace Goedel.Cryptography;
+
+/// <summary>
+/// Wrapper around a partial key pair.
+/// </summary>
+public class CryptoKeySymmetric : CryptoKey {
+
+    /// <summary>UDF fingerprint of the key.</summary>
+    public override string KeyIdentifier { get; }
+
+    /// <summary>Binary fingerprint of the key</summary>
+    public override byte[] UDFBytes => throw new NYI();
+
+    ///<summary>The UDF presentation of the secret key</summary>
+    public string SecretKey;
+
+    ///<summary>The secret key.</summary>
+    private byte[] SecretValue { get; }
+
+
     /// <summary>
-    /// Wrapper around a partial key pair.
+    /// Constructor taking the secret value from the binary value 
+    /// <paramref name="secretValue"/>
     /// </summary>
-    public class CryptoKeySymmetric : CryptoKey {
+    /// <param name="secretValue">The secret value.</param>
+    /// <param name="udfTypeIdentifier">The UDF type identifier to create. This
+    /// is either <see cref="UdfTypeIdentifier.Encryption_HKDF_AES_512"/> or
+    /// <see cref="UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512"/></param>
+    public CryptoKeySymmetric(byte[] secretValue,
+                UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption_HKDF_AES_512) {
 
-        /// <summary>UDF fingerprint of the key.</summary>
-        public override string KeyIdentifier { get; }
-
-        /// <summary>Binary fingerprint of the key</summary>
-        public override byte[] UDFBytes => throw new NYI();
-
-        ///<summary>The UDF presentation of the secret key</summary>
-        public string SecretKey;
-
-        ///<summary>The secret key.</summary>
-        private byte[] SecretValue { get; }
+        // Create the presentation of the secret value.
+        SecretValue = secretValue;
+        SecretKey = UDF.TypeBDSToString(udfTypeIdentifier, SecretValue, 8 * (secretValue.Length + 1));
 
 
-        /// <summary>
-        /// Constructor taking the secret value from the binary value 
-        /// <paramref name="secretValue"/>
-        /// </summary>
-        /// <param name="secretValue">The secret value.</param>
-        /// <param name="udfTypeIdentifier">The UDF type identifier to create. This
-        /// is either <see cref="UdfTypeIdentifier.Encryption_HKDF_AES_512"/> or
-        /// <see cref="UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512"/></param>
-        public CryptoKeySymmetric(byte[] secretValue,
-                    UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption_HKDF_AES_512) {
-
-            // Create the presentation of the secret value.
-            SecretValue = secretValue;
-            SecretKey = UDF.TypeBDSToString(udfTypeIdentifier, SecretValue, 8 * (secretValue.Length + 1));
+        KeyIdentifier = UDF.SymetricKeyId(SecretKey);
 
 
-            KeyIdentifier = UDF.SymetricKeyId(SecretKey);
-
-
-            //Console.WriteLine($"SecretKey {SecretKey}/{KeyIdentifier} {secretValue.ToStringBase16FormatHex()}");
-
-            }
-
-        /// <summary>
-        /// Constructor taking the secret value from the UDF presentation of the secret key
-        /// <paramref name="encryptionKey"/>
-        /// </summary>
-        /// <param name="encryptionKey">The UDF presentation of the secret value.</param>
-        public CryptoKeySymmetric(string encryptionKey) :
-                this(UDF.SymmetricKeyData(encryptionKey)) {
-            }
-
-        /// <summary>
-        /// Encrypt the bulk key.
-        /// </summary>
-        /// <returns>The encoder</returns>
-        public override void Encrypt(
-            byte[] key,
-            out byte[] exchange,
-            out KeyPair ephemeral,
-            byte[] info = null) {
-
-            var keyDerive = new KeyDeriveHKDF(SecretValue, (byte[])null);
-            var encryptionKey = keyDerive.Derive(info, 256);
-            exchange = Platform.KeyWrapRFC3394.Wrap(encryptionKey, key);
-
-
-            //Console.WriteLine($"Encryption Key = {encryptionKey.ToStringBase16FormatHex()}");
-
-            ephemeral = null;
-            }
-
-
-        /// <summary>
-        /// Perform a key exchange to decrypt a bulk or wrapped key under this one.
-        /// </summary>
-        /// <param name="encryptedKey">The encrypted session key</param>
-        /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
-        /// <param name="partial">Partial key agreement value (for recryption)</param>
-        /// <param name="info">Optional info value for use in key derivation. If specified
-        /// must match the info value used to encrypt.</param>
-        /// <param name="algorithmID">The algorithm to use (redundant?)</param>
-        /// <returns>The decoded data instance</returns>
-        public override byte[] Decrypt(
-                    byte[] encryptedKey,
-                    KeyPair ephemeral = null,
-                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                    KeyAgreementResult partial = null,
-                    byte[] info = null) {
-
-            var keyDerive = new KeyDeriveHKDF(SecretValue, (byte[])null);
-            var encryptionKey = keyDerive.Derive(info, 256);
-
-            var result = Platform.KeyWrapRFC3394.Unwrap(encryptionKey, encryptedKey);
-
-            //Console.WriteLine($"Encryption Key = {result.ToStringBase16FormatHex()}");
-
-            return result;
-            }
-
-
-        /// <summary>
-        /// Sign a precomputed digest (Not implemented)
-        /// </summary>
-        /// <param name="data">The data to sign.</param>
-        /// <param name="algorithmID">The algorithm to use.</param>
-        /// <param name="context">Additional data added to the signature scope
-        /// for protocol isolation.</param>
-        /// <returns>The signature data</returns>
-        public override byte[] SignHash(byte[] data, CryptoAlgorithmId algorithmID =
-            CryptoAlgorithmId.Default, byte[] context = null) => throw new NotImplementedException();
-
-
-        /// <summary>
-        /// Verify a signature over the purported data digest.
-        /// </summary>
-        /// <param name="signature">The signature blob value.</param>
-        /// <param name="algorithmID">The signature and hash algorithm to use.</param>
-        /// <param name="context">Additional data added to the signature scope
-        /// for protocol isolation.</param>
-        /// <param name="digest">The digest value to be verified.</param>
-        /// <returns>True if the signature is valid, otherwise false.</returns>
-        public override bool VerifyHash(
-                byte[] digest,
-                byte[] signature,
-                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                byte[] context = null) => throw new NotImplementedException();
-
-
-        /// <summary>
-        /// String presentation of the key pair
-        /// </summary>
-        /// <returns>The string representation</returns>
-        public override string ToString() =>
-                CryptoAlgorithmId.ToString() + ":Symetric:" + KeyIdentifier;
-
+        //Console.WriteLine($"SecretKey {SecretKey}/{KeyIdentifier} {secretValue.ToStringBase16FormatHex()}");
 
         }
 
     /// <summary>
-    /// Symmetric encryption with signature key.
+    /// Constructor taking the secret value from the UDF presentation of the secret key
+    /// <paramref name="encryptionKey"/>
     /// </summary>
-    public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
+    /// <param name="encryptionKey">The UDF presentation of the secret value.</param>
+    public CryptoKeySymmetric(string encryptionKey) :
+            this(UDF.SymmetricKeyData(encryptionKey)) {
+        }
 
-        ///<summary>If true, the key can only be used for verification.</summary>
-        public bool VerifyOnly => SigningKey == null || SigningKey.PublicOnly;
+    /// <summary>
+    /// Encrypt the bulk key.
+    /// </summary>
+    /// <returns>The encoder</returns>
+    public override void Encrypt(
+        byte[] key,
+        out byte[] exchange,
+        out KeyPair ephemeral,
+        byte[] info = null) {
 
-        ///<summary>The signature key. This is only populated if either the private signature key
-        ///value is available or the key has been used to verify a signature that provided 
-        ///the public parameters.</summary>
-        public KeyPair SigningKey { get; }
-
-        /// <summary>
-        /// Constructor creating an instance with a new signing key. 
-        /// </summary>
-        /// <param name="keySecurity">The key security model.</param>
-        /// <param name="bits">Number of bits precision, if less than the minimum number
-        /// of bits will be set equal to <see cref="UDF.MinimumBits"/></param>
-        /// <param name="algorithmSign">The signature algorithm to use.</param>
-        /// <param name="algorithmDigest">The digest algorithm to use.</param>
-        public CryptoKeySymmetricSigner(
-                KeySecurity keySecurity = KeySecurity.Exportable,
-                int bits = 0,
-                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Ed448,
-                CryptoAlgorithmId algorithmDigest = CryptoAlgorithmId.SHA_2_512) :
-                    base(CreateKey(out var keyPair, keySecurity, bits, algorithmSign, algorithmDigest), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) => SigningKey = keyPair;
+        var keyDerive = new KeyDeriveHKDF(SecretValue, (byte[])null);
+        var encryptionKey = keyDerive.Derive(info, 256);
+        exchange = Platform.KeyWrapRFC3394.Wrap(encryptionKey, key);
 
 
-        static byte[] CreateKey(
-                out KeyPair signingKey,
-                KeySecurity keySecurity,
-                int bits,
-                CryptoAlgorithmId algorithmSign,
-                CryptoAlgorithmId algorithmDigest) {
+        //Console.WriteLine($"Encryption Key = {encryptionKey.ToStringBase16FormatHex()}");
 
-            algorithmDigest.AssertEqual(CryptoAlgorithmId.SHA_2_512, Internal.Throw); // NYI: Algorithm agility.
-
-            bits = bits.Minimum(UDF.MinimumBits);
-            signingKey = KeyPair.Factory(algorithmSign, keySecurity);
-
-            var secretValue = signingKey.UDFBytes.OrTruncated(bits);
+        ephemeral = null;
+        }
 
 
-            return secretValue;
-            }
-
-        /// <summary>
-        /// Constructor creating an instance from the key identifier <paramref name="keyIdentifier"/>.
-        /// </summary>
-        /// <param name="keyIdentifier">The decryption/verification key.</param>
-        public CryptoKeySymmetricSigner(
-                string keyIdentifier) :
-                    base(UDF.SymmetricKeyData(keyIdentifier), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
-
-            }
-
-
-
-
-
-        /// <summary>
-        /// Sign a precomputed digest 
-        /// </summary>
-        /// <param name="data">The data to sign.</param>
-        /// <param name="algorithmID">The algorithm to use.</param>
-        /// <param name="context">Additional data added to the signature scope
-        /// for protocol isolation.</param>
-        /// <returns>The signature data</returns>
-        public override byte[] SignHash(byte[] data, CryptoAlgorithmId algorithmID =
-            CryptoAlgorithmId.Default, byte[] context = null) => SigningKey.SignHash(data, algorithmID, context);
-
-
-        /// <summary>
-        /// Verify a signature over the purported data digest.
-        /// </summary>
-        /// <param name="signature">The signature blob value.</param>
-        /// <param name="algorithmID">The signature and hash algorithm to use.</param>
-        /// <param name="context">Additional data added to the signature scope
-        /// for protocol isolation.</param>
-        /// <param name="digest">The digest value to be verified.</param>
-        /// <returns>True if the signature is valid, otherwise false.</returns>
-        public override bool VerifyHash(
-                byte[] digest,
-                byte[] signature,
+    /// <summary>
+    /// Perform a key exchange to decrypt a bulk or wrapped key under this one.
+    /// </summary>
+    /// <param name="encryptedKey">The encrypted session key</param>
+    /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
+    /// <param name="partial">Partial key agreement value (for recryption)</param>
+    /// <param name="info">Optional info value for use in key derivation. If specified
+    /// must match the info value used to encrypt.</param>
+    /// <param name="algorithmID">The algorithm to use (redundant?)</param>
+    /// <returns>The decoded data instance</returns>
+    public override byte[] Decrypt(
+                byte[] encryptedKey,
+                KeyPair ephemeral = null,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                byte[] context = null) => SigningKey.VerifyHash(digest, signature, algorithmID, context);
+                KeyAgreementResult partial = null,
+                byte[] info = null) {
+
+        var keyDerive = new KeyDeriveHKDF(SecretValue, (byte[])null);
+        var encryptionKey = keyDerive.Derive(info, 256);
+
+        var result = Platform.KeyWrapRFC3394.Unwrap(encryptionKey, encryptedKey);
+
+        //Console.WriteLine($"Encryption Key = {result.ToStringBase16FormatHex()}");
+
+        return result;
+        }
 
 
-        /// <summary>
-        /// String presentation of the key pair
-        /// </summary>
-        /// <returns>The string representation</returns>
-        public override string ToString() =>
-                CryptoAlgorithmId.ToString() + (VerifyOnly ? ":Verify:" : ":Sign:") + KeyIdentifier;
+    /// <summary>
+    /// Sign a precomputed digest (Not implemented)
+    /// </summary>
+    /// <param name="data">The data to sign.</param>
+    /// <param name="algorithmID">The algorithm to use.</param>
+    /// <param name="context">Additional data added to the signature scope
+    /// for protocol isolation.</param>
+    /// <returns>The signature data</returns>
+    public override byte[] SignHash(byte[] data, CryptoAlgorithmId algorithmID =
+        CryptoAlgorithmId.Default, byte[] context = null) => throw new NotImplementedException();
 
 
+    /// <summary>
+    /// Verify a signature over the purported data digest.
+    /// </summary>
+    /// <param name="signature">The signature blob value.</param>
+    /// <param name="algorithmID">The signature and hash algorithm to use.</param>
+    /// <param name="context">Additional data added to the signature scope
+    /// for protocol isolation.</param>
+    /// <param name="digest">The digest value to be verified.</param>
+    /// <returns>True if the signature is valid, otherwise false.</returns>
+    public override bool VerifyHash(
+            byte[] digest,
+            byte[] signature,
+            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+            byte[] context = null) => throw new NotImplementedException();
+
+
+    /// <summary>
+    /// String presentation of the key pair
+    /// </summary>
+    /// <returns>The string representation</returns>
+    public override string ToString() =>
+            CryptoAlgorithmId.ToString() + ":Symetric:" + KeyIdentifier;
+
+
+    }
+
+/// <summary>
+/// Symmetric encryption with signature key.
+/// </summary>
+public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
+
+    ///<summary>If true, the key can only be used for verification.</summary>
+    public bool VerifyOnly => SigningKey == null || SigningKey.PublicOnly;
+
+    ///<summary>The signature key. This is only populated if either the private signature key
+    ///value is available or the key has been used to verify a signature that provided 
+    ///the public parameters.</summary>
+    public KeyPair SigningKey { get; }
+
+    /// <summary>
+    /// Constructor creating an instance with a new signing key. 
+    /// </summary>
+    /// <param name="keySecurity">The key security model.</param>
+    /// <param name="bits">Number of bits precision, if less than the minimum number
+    /// of bits will be set equal to <see cref="UDF.MinimumBits"/></param>
+    /// <param name="algorithmSign">The signature algorithm to use.</param>
+    /// <param name="algorithmDigest">The digest algorithm to use.</param>
+    public CryptoKeySymmetricSigner(
+            KeySecurity keySecurity = KeySecurity.Exportable,
+            int bits = 0,
+            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Ed448,
+            CryptoAlgorithmId algorithmDigest = CryptoAlgorithmId.SHA_2_512) :
+                base(CreateKey(out var keyPair, keySecurity, bits, algorithmSign, algorithmDigest), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) => SigningKey = keyPair;
+
+
+    static byte[] CreateKey(
+            out KeyPair signingKey,
+            KeySecurity keySecurity,
+            int bits,
+            CryptoAlgorithmId algorithmSign,
+            CryptoAlgorithmId algorithmDigest) {
+
+        algorithmDigest.AssertEqual(CryptoAlgorithmId.SHA_2_512, Internal.Throw); // NYI: Algorithm agility.
+
+        bits = bits.Minimum(UDF.MinimumBits);
+        signingKey = KeyPair.Factory(algorithmSign, keySecurity);
+
+        var secretValue = signingKey.UDFBytes.OrTruncated(bits);
+
+
+        return secretValue;
+        }
+
+    /// <summary>
+    /// Constructor creating an instance from the key identifier <paramref name="keyIdentifier"/>.
+    /// </summary>
+    /// <param name="keyIdentifier">The decryption/verification key.</param>
+    public CryptoKeySymmetricSigner(
+            string keyIdentifier) :
+                base(UDF.SymmetricKeyData(keyIdentifier), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
 
         }
+
+
+
+
+
+    /// <summary>
+    /// Sign a precomputed digest 
+    /// </summary>
+    /// <param name="data">The data to sign.</param>
+    /// <param name="algorithmID">The algorithm to use.</param>
+    /// <param name="context">Additional data added to the signature scope
+    /// for protocol isolation.</param>
+    /// <returns>The signature data</returns>
+    public override byte[] SignHash(byte[] data, CryptoAlgorithmId algorithmID =
+        CryptoAlgorithmId.Default, byte[] context = null) => SigningKey.SignHash(data, algorithmID, context);
+
+
+    /// <summary>
+    /// Verify a signature over the purported data digest.
+    /// </summary>
+    /// <param name="signature">The signature blob value.</param>
+    /// <param name="algorithmID">The signature and hash algorithm to use.</param>
+    /// <param name="context">Additional data added to the signature scope
+    /// for protocol isolation.</param>
+    /// <param name="digest">The digest value to be verified.</param>
+    /// <returns>True if the signature is valid, otherwise false.</returns>
+    public override bool VerifyHash(
+            byte[] digest,
+            byte[] signature,
+            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+            byte[] context = null) => SigningKey.VerifyHash(digest, signature, algorithmID, context);
+
+
+    /// <summary>
+    /// String presentation of the key pair
+    /// </summary>
+    /// <returns>The string representation</returns>
+    public override string ToString() =>
+            CryptoAlgorithmId.ToString() + (VerifyOnly ? ":Verify:" : ":Sign:") + KeyIdentifier;
 
 
 

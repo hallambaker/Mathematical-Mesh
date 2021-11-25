@@ -23,129 +23,127 @@
 
 using Goedel.Utilities;
 
-namespace Goedel.Cryptography.Algorithms {
+namespace Goedel.Cryptography.Algorithms;
+
+/// <summary>
+/// Short block permutation.
+/// </summary>
+public class ShortBlockPermute {
+    #region // Properties
+    ///<summary>The bitmask masking the lower n bits of the data channel</summary> 
+    public ulong Mask;
+
+    ///<summary>The number of bits to permute.</summary> 
+    public int Bits;
+
+    ///<summary>The number of rounds to perform.</summary> 
+    public int Rounds;
+
+
+    ///<summary>The key schedule, this is stored for reuse.</summary> 
+    ulong[] keySchedule;
+
+    int[] rotateSchedule;
+    #endregion
+
+    #region // Constructors
 
     /// <summary>
-    /// Short block permutation.
+    /// Constructor, creates a permutation function mapping an input of 
+    /// length <paramref name="bits"/> to an output of length <paramref name="bits"/>
+    /// according to the value of <paramref name="key"/>.
+    /// <para>Once the key schedule is set up, calls to Permute will always return
+    /// a different output if the low order bits <paramref name="bits"/> are 
+    /// different and the same otherwise.</para>
     /// </summary>
-    public class ShortBlockPermute {
-        #region // Properties
-        ///<summary>The bitmask masking the lower n bits of the data channel</summary> 
-        public ulong Mask;
+    /// <param name="key"></param>
+    /// <param name="bits"></param>
+    /// <param name="rounds"></param>
+    public ShortBlockPermute(byte[] key, int bits, int rounds = 0) {
 
-        ///<summary>The number of bits to permute.</summary> 
-        public int Bits;
+        (bits <= 64).AssertTrue(NYI.Throw); ; // Block size is 64 bits or less.
+        Bits = bits;
 
-        ///<summary>The number of rounds to perform.</summary> 
-        public int Rounds;
+        // If not specified, set the number of rounds to be the number of bits plus 12
+        // This is arbitrary at this point.
+        Rounds = rounds > 0 ? rounds : Bits + 12;
+        (Rounds <= 255).AssertTrue(NYI.Throw); ; // Number of rounds is 255 or less.
 
+        // Create the bitmask
+        Mask = 1;
+        for (var i = 1; i < Bits; i++) {
+            Mask |= Mask >> 1;
+            }
 
-        ///<summary>The key schedule, this is stored for reuse.</summary> 
-        ulong[] keySchedule;
+        // Create the key schedule. This is almost certainly more baroque than needed.
+        keySchedule = new ulong[Rounds];
+        rotateSchedule = new int[Rounds];
+        var kdf = new KeyDeriveHKDF(key, "ShortBlockPermute");
+        var info = new byte[1];
+        for (var i = 0; i < Rounds; i++) {
+            info[0] = (byte)i;
+            var bytes = kdf.Derive(info, 8).BigEndianInt(8);
+            keySchedule[i] = Mask & bytes;
+            rotateSchedule[i] = (int)bytes % Bits;
+            }
+        }
+    #endregion
+    #region // Private methods 
 
-        int[] rotateSchedule;
-        #endregion
+    ulong Rotate(ulong input, int bits) =>
+            input << bits | (input >> Bits - bits);
 
-        #region // Constructors
+    #endregion
+    #region // Public methods 
 
-        /// <summary>
-        /// Constructor, creates a permutation function mapping an input of 
-        /// length <paramref name="bits"/> to an output of length <paramref name="bits"/>
-        /// according to the value of <paramref name="key"/>.
-        /// <para>Once the key schedule is set up, calls to Permute will always return
-        /// a different output if the low order bits <paramref name="bits"/> are 
-        /// different and the same otherwise.</para>
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="bits"></param>
-        /// <param name="rounds"></param>
-        public ShortBlockPermute(byte[] key, int bits, int rounds = 0) {
+    /// <summary>
+    /// Permute the lower n bits of <paramref name="input"/> according to the 
+    /// schedule established by the constructor.
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public ulong Permute(ulong input) {
+        var data = input & Mask;
 
-            (bits <= 64).AssertTrue(NYI.Throw); ; // Block size is 64 bits or less.
-            Bits = bits;
-
-            // If not specified, set the number of rounds to be the number of bits plus 12
-            // This is arbitrary at this point.
-            Rounds = rounds > 0 ? rounds : Bits + 12;
-            (Rounds <= 255).AssertTrue(NYI.Throw); ; // Number of rounds is 255 or less.
-
-            // Create the bitmask
-            Mask = 1;
-            for (var i = 1; i < Bits; i++) {
-                Mask |= Mask >> 1;
-                }
-
-            // Create the key schedule. This is almost certainly more baroque than needed.
-            keySchedule = new ulong[Rounds];
-            rotateSchedule = new int[Rounds];
-            var kdf = new KeyDeriveHKDF(key, "ShortBlockPermute");
-            var info = new byte[1];
+        unchecked {
+            // If I did this right, each of the three operations is reversible and no data is lost.
+            // The operations are chosen to provide non-linearity relative to each other while
+            // working the key at each step.
             for (var i = 0; i < Rounds; i++) {
-                info[0] = (byte)i;
-                var bytes = kdf.Derive(info, 8).BigEndianInt(8);
-                keySchedule[i] = Mask & bytes;
-                rotateSchedule[i] = (int)bytes % Bits;
+                data ^= keySchedule[i];
+                data &= Mask;                   // for clarity, can remove
+                data = Rotate(data, rotateSchedule[i]);
+                data &= Mask;                   // for clarity, can remove
+                data += keySchedule[i];
+                data &= Mask;                   // This one is essential.
                 }
             }
-        #endregion
-        #region // Private methods 
-
-        ulong Rotate(ulong input, int bits) =>
-                input << bits | (input >> Bits - bits);
-
-        #endregion
-        #region // Public methods 
-
-        /// <summary>
-        /// Permute the lower n bits of <paramref name="input"/> according to the 
-        /// schedule established by the constructor.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public ulong Permute(ulong input) {
-            var data = input & Mask;
-
-            unchecked {
-                // If I did this right, each of the three operations is reversible and no data is lost.
-                // The operations are chosen to provide non-linearity relative to each other while
-                // working the key at each step.
-                for (var i = 0; i < Rounds; i++) {
-                    data ^= keySchedule[i];
-                    data &= Mask;                   // for clarity, can remove
-                    data = Rotate(data, rotateSchedule[i]);
-                    data &= Mask;                   // for clarity, can remove
-                    data += keySchedule[i];
-                    data &= Mask;                   // This one is essential.
-                    }
-                }
-            return data;
-            }
-
-        /// <summary>
-        /// A depermutation function could be implemented but that would encourage people
-        /// to use this for encrypting data. This is implemented here for use in testing.
-        /// </summary>
-        /// <param name="input">The cipertext.</param>
-        /// <returns>The depermuted input.</returns>
-        public ulong Depermute(ulong input) {
-            var data = input & Mask;
-
-            unchecked {
-                // If I did this right, each of the three operations is reversible and no data is lost.
-                // The operations are chosen to provide non-linearity relative to each other while
-                // working the key at each step.
-                for (var i = 0; i < Rounds; i++) {
-                    data += keySchedule[i];
-                    data &= Mask;                   // This one is essential.
-                    data = Rotate(data, rotateSchedule[i]);
-                    data &= Mask;                   // for clarity, can remove
-                    data ^= keySchedule[i];
-                    data &= Mask;                   // for clarity, can remove
-                    }
-                }
-            return data;
-            }
-        #endregion
+        return data;
         }
 
+    /// <summary>
+    /// A depermutation function could be implemented but that would encourage people
+    /// to use this for encrypting data. This is implemented here for use in testing.
+    /// </summary>
+    /// <param name="input">The cipertext.</param>
+    /// <returns>The depermuted input.</returns>
+    public ulong Depermute(ulong input) {
+        var data = input & Mask;
+
+        unchecked {
+            // If I did this right, each of the three operations is reversible and no data is lost.
+            // The operations are chosen to provide non-linearity relative to each other while
+            // working the key at each step.
+            for (var i = 0; i < Rounds; i++) {
+                data += keySchedule[i];
+                data &= Mask;                   // This one is essential.
+                data = Rotate(data, rotateSchedule[i]);
+                data &= Mask;                   // for clarity, can remove
+                data ^= keySchedule[i];
+                data &= Mask;                   // for clarity, can remove
+                }
+            }
+        return data;
+        }
+    #endregion
     }

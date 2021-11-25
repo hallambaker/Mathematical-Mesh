@@ -25,55 +25,55 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh {
-    public partial class Activation {
-        #region // Properties
+namespace Goedel.Mesh;
+
+public partial class Activation {
+    #region // Properties
 
 
-        ///<summary>The <see cref="ProfileDevice"/> that this activation activates.</summary>
-        public ProfileDevice ProfileDevice { get; set; }
+    ///<summary>The <see cref="ProfileDevice"/> that this activation activates.</summary>
+    public ProfileDevice ProfileDevice { get; set; }
 
 
-        ///<summary>The connection value.</summary>
-        public virtual Connection Connection => throw new NYI();
+    ///<summary>The connection value.</summary>
+    public virtual Connection Connection => throw new NYI();
 
-        ///<summary>The activation seed key.</summary> 
-        public PrivateKeyUDF ActivationSeed { get; set; }
-        #endregion
-        #region // Constructors
-        /// <summary>
-        /// Base constructor.
-        /// </summary>
-        public Activation() {
-            }
-
-
-        /// <summary>
-        /// Constructor creating a new <see cref="Activation"/> for a profile of type
-        /// <paramref name="profile"/>. The property <see cref="ActivationSeed"/> is
-        /// calculated from the values <paramref name="udfAlgorithmIdentifier"/>. 
-        /// If the value <paramref name="masterSecret"/> is
-        /// specified, it is used as the seed value. Otherwise, a seed value of
-        /// length <paramref name="bits"/> is generated.
-        /// </summary>
-        /// <param name="profile">The base profile that the activation activates.</param>
-        /// <param name="udfAlgorithmIdentifier">The UDF key derivation specifier.</param>
-        /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
-        /// a seed value of <paramref name="bits"/> length is generated.</param>
-        /// <param name="bits">The size of the seed to be generated if 
-        /// <paramref name="masterSecret"/> is null.</param>
-        protected Activation(
-                Profile profile,
-                UdfAlgorithmIdentifier udfAlgorithmIdentifier,
-                byte[] masterSecret = null,
-                int bits = 256) {
-            (var actor, var keytype) = udfAlgorithmIdentifier.GetMeshKeyType();
-            ActivationKey = Cryptography.UDF.DerivedKey(udfAlgorithmIdentifier, data: masterSecret, bits);
-            ActivationSeed = new PrivateKeyUDF(ActivationKey);
-            //ProfileSignature = ActivationSeed.ActivatePublic(
-            //        profile.ProfileSignature.GetKeyPairAdvanced(), actor, MeshKeyOperation.Profile);
-
-            }
-        #endregion
+    ///<summary>The activation seed key.</summary> 
+    public PrivateKeyUDF ActivationSeed { get; set; }
+    #endregion
+    #region // Constructors
+    /// <summary>
+    /// Base constructor.
+    /// </summary>
+    public Activation() {
         }
+
+
+    /// <summary>
+    /// Constructor creating a new <see cref="Activation"/> for a profile of type
+    /// <paramref name="profile"/>. The property <see cref="ActivationSeed"/> is
+    /// calculated from the values <paramref name="udfAlgorithmIdentifier"/>. 
+    /// If the value <paramref name="masterSecret"/> is
+    /// specified, it is used as the seed value. Otherwise, a seed value of
+    /// length <paramref name="bits"/> is generated.
+    /// </summary>
+    /// <param name="profile">The base profile that the activation activates.</param>
+    /// <param name="udfAlgorithmIdentifier">The UDF key derivation specifier.</param>
+    /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
+    /// a seed value of <paramref name="bits"/> length is generated.</param>
+    /// <param name="bits">The size of the seed to be generated if 
+    /// <paramref name="masterSecret"/> is null.</param>
+    protected Activation(
+            Profile profile,
+            UdfAlgorithmIdentifier udfAlgorithmIdentifier,
+            byte[] masterSecret = null,
+            int bits = 256) {
+        (var actor, var keytype) = udfAlgorithmIdentifier.GetMeshKeyType();
+        ActivationKey = Cryptography.UDF.DerivedKey(udfAlgorithmIdentifier, data: masterSecret, bits);
+        ActivationSeed = new PrivateKeyUDF(ActivationKey);
+        //ProfileSignature = ActivationSeed.ActivatePublic(
+        //        profile.ProfileSignature.GetKeyPairAdvanced(), actor, MeshKeyOperation.Profile);
+
+        }
+    #endregion
     }

@@ -24,61 +24,59 @@
 using Goedel.Utilities;
 
 
-namespace Goedel.Protocol.Presentation {
+namespace Goedel.Protocol.Presentation;
+
+/// <summary>
+/// A RUD datagram.
+/// </summary>
+public class Datagram {
+
+    #region // Properties
+
+    ///<summary>The number of packets this datagram is divided into.</summary> 
+    public int PacketCount => throw new NYI();
+
+    ///<summary>The maximum size of each packet.</summary> 
+    public int MaxPacketSize => throw new NYI();
+
+    ///<summary>Index of the last packet sent out.</summary> 
+    public int PacketIndexLast => throw new NYI();
+
+    /////<summary>Per packet payload size.</summary> 
+    //int payloadLength;
+
+    ///<summary>The datagram payload (may be in construction.</summary> 
+    public byte[] Payload;
+
+    ///<summary>The datagram packets that have been received.</summary> 
+    public bool[] Arrived;
+
+    #endregion
+
+    #region // Destructor
+    #endregion
+
+    #region // Constructors
+    #endregion
+
+    #region // Implement Interface: Ixxx
+    #endregion
+
+    #region // Methods 
 
     /// <summary>
-    /// A RUD datagram.
+    /// Encode packet index <paramref name="i"/>.
     /// </summary>
-    public class Datagram {
+    /// <param name="i">Packet to encode.</param>
+    /// <returns>The encoded packet.</returns>
+    public Packet GetPacket(int i) => throw new NYI();
 
-        #region // Properties
-
-        ///<summary>The number of packets this datagram is divided into.</summary> 
-        public int PacketCount => throw new NYI();
-
-        ///<summary>The maximum size of each packet.</summary> 
-        public int MaxPacketSize => throw new NYI();
-
-        ///<summary>Index of the last packet sent out.</summary> 
-        public int PacketIndexLast => throw new NYI();
-
-        /////<summary>Per packet payload size.</summary> 
-        //int payloadLength;
-
-        ///<summary>The datagram payload (may be in construction.</summary> 
-        public byte[] Payload;
-
-        ///<summary>The datagram packets that have been received.</summary> 
-        public bool[] Arrived;
-
-        #endregion
-
-        #region // Destructor
-        #endregion
-
-        #region // Constructors
-        #endregion
-
-        #region // Implement Interface: Ixxx
-        #endregion
-
-        #region // Methods 
-
-        /// <summary>
-        /// Encode packet index <paramref name="i"/>.
-        /// </summary>
-        /// <param name="i">Packet to encode.</param>
-        /// <returns>The encoded packet.</returns>
-        public Packet GetPacket(int i) => throw new NYI();
-
-        /// <summary>
-        /// Get the next packet.
-        /// </summary>
-        /// <returns></returns>
-        public Packet GetNextPacket() => throw new NYI();
+    /// <summary>
+    /// Get the next packet.
+    /// </summary>
+    /// <returns></returns>
+    public Packet GetNextPacket() => throw new NYI();
 
 
-        #endregion
-        }
-
+    #endregion
     }

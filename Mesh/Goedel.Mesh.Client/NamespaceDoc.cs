@@ -2,14 +2,12 @@
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace Goedel.Mesh.Client {
+namespace Goedel.Mesh.Client;
 
-    /// <summary>
-    /// Mesh client implementation.
-    /// </summary>
+/// <summary>
+/// Mesh client implementation.
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

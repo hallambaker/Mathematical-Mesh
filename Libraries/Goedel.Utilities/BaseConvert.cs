@@ -25,57 +25,58 @@ using System.IO;
 using System.Text;
 
 
-namespace Goedel.Utilities {
-    /// <summary>Specify formatting options fdor conversion</summary>
-    public enum ConversionFormat {
-        /// <summary>Apply no additional formatting</summary>
-        None = 0,
-        /// <summary>Perform linewrapping at 72 charcters and insert 
-        /// leading spaces as per an Internet Draft.</summary>
-        Draft = 2,
-        /// <summary>Perform hexadecimal spacing</summary>
-        Hex = 4,
-        /// <summary>Insert a dash every 4 output characters</summary>
-        Dash4 = 6,
-        /// <summary>Insert a dash every 5 output characters</summary>
-        Dash5 = 8,
-        /// <summary>Add trailing base64 equals characters if required.</summary>
-        Terminal = 1
-        }
+namespace Goedel.Utilities;
+
+/// <summary>Specify formatting options fdor conversion</summary>
+public enum ConversionFormat {
+    /// <summary>Apply no additional formatting</summary>
+    None = 0,
+    /// <summary>Perform linewrapping at 72 charcters and insert 
+    /// leading spaces as per an Internet Draft.</summary>
+    Draft = 2,
+    /// <summary>Perform hexadecimal spacing</summary>
+    Hex = 4,
+    /// <summary>Insert a dash every 4 output characters</summary>
+    Dash4 = 6,
+    /// <summary>Insert a dash every 5 output characters</summary>
+    Dash5 = 8,
+    /// <summary>Add trailing base64 equals characters if required.</summary>
+    Terminal = 1
+    }
 
 
-    /// <summary>
-    /// Routines to convert binary data to various character representations.
-    /// Supported representations include Base16, Base32 and Base64 and common
-    /// variations thereof.
-    /// </summary>
-    public static partial class BaseConvert {
+/// <summary>
+/// Routines to convert binary data to various character representations.
+/// Supported representations include Base16, Base32 and Base64 and common
+/// variations thereof.
+/// </summary>
+public static partial class BaseConvert {
 
 
 
-        #region // Conversion table constants
+    #region // Conversion table constants
 
-        /// <summary>Base16 conversion table</summary>
-        public static readonly char[] BASE16 = new char[]{
+    /// <summary>Base16 conversion table</summary>
+    public static readonly char[] BASE16 = new char[]{
                     '0', '1', '2', '3', '4', '5', '6', '7',
                     '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
-        /// <summary>Base32 conversion table</summary>
-        public static readonly char[] BASE32 = new char[]{
+    /// <summary>Base32 conversion table</summary>
+    public static readonly char[] BASE32 = new char[]{
                     'A' , 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                      'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                      'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
                      'Y', 'Z', '2', '3', '4', '5', '6', '7'};
 
-        /// <summary>Base32Hex conversion table</summary>
-        public static readonly char[] BASE32HEX = new char[]{
+    /// <summary>Base32Hex conversion table</summary>
+    public static readonly char[] BASE32HEX = new char[]{
                     '0' , '1', '2', '3', '4', '5', '6', '7',
                      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
                      'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
                      'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'};
 
-        /// <summary>Base64URL conversion table</summary>
-        public static readonly char[] BASE64URL = new char[]{
+    /// <summary>Base64URL conversion table</summary>
+    public static readonly char[] BASE64URL = new char[]{
                     'A' , 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                      'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                      'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -85,8 +86,8 @@ namespace Goedel.Utilities {
                      'w', 'x', 'y', 'z', '0', '1', '2', '3',
                      '4', '5', '6', '7', '8', '9', '-', '_'};
 
-        /// <summary>Base64 conversion table</summary>
-        public static readonly char[] BASE64 = new char[]{
+    /// <summary>Base64 conversion table</summary>
+    public static readonly char[] BASE64 = new char[]{
                     'A' , 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                      'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                      'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -96,8 +97,8 @@ namespace Goedel.Utilities {
                      'w', 'x', 'y', 'z', '0', '1', '2', '3',
                      '4', '5', '6', '7', '8', '9', '+', '/'};
 
-        /// <summary>Base 16 conversion table</summary>
-        public static readonly byte[] BASE16Value = new byte[] {
+    /// <summary>Base 16 conversion table</summary>
+    public static readonly byte[] BASE16Value = new byte[] {
                     255, 255, 255, 255,  255, 255, 255, 255,   //  0-7
                     255, 255, 255, 255,  255, 255, 255, 255,   //  8-15
                     255, 255, 255, 255,  255, 255, 255, 255,   //  16-23
@@ -116,8 +117,8 @@ namespace Goedel.Utilities {
                     255, 255, 255, 255,  255, 255, 255, 255,   // 120-127
         };
 
-        /// <summary>Base 32 conversion table</summary>
-        public static readonly byte[] BASE32Value = new byte[] {
+    /// <summary>Base 32 conversion table</summary>
+    public static readonly byte[] BASE32Value = new byte[] {
                     255, 255, 255, 255,  255, 255, 255, 255,   //  0-7
                     255, 255, 255, 255,  255, 255, 255, 255,   //  8-15
                     255, 255, 255, 255,  255, 255, 255, 255,   //  16-23
@@ -136,12 +137,12 @@ namespace Goedel.Utilities {
                      23,  24,  25, 255, 255,  255, 255, 255,    // 120-127
             };
 
-        //
-        // For reverse conversion permit either Base64 (+/) 
-        // or Base64Url (-_) encodings of 62 and 63
-        // 
-        /// <summary>Base 64 conversion table</summary>
-        public static readonly byte[] BASE64Value = new byte[] {
+    //
+    // For reverse conversion permit either Base64 (+/) 
+    // or Base64Url (-_) encodings of 62 and 63
+    // 
+    /// <summary>Base 64 conversion table</summary>
+    public static readonly byte[] BASE64Value = new byte[] {
                     255, 255, 255, 255,  255, 255, 255, 255,   //  0-7
                     255, 255, 255, 255,  255, 255, 255, 255,   //  8-15
                     255, 255, 255, 255,  255, 255, 255, 255,   //  16-23
@@ -159,399 +160,398 @@ namespace Goedel.Utilities {
                      41,  42,  43,  44,   45,  46,  47,  48,   // 112
                      49,  50,  51, 255,  255, 255, 255, 255,   // 120-127
         };
-        #endregion
+    #endregion
 
-        /// <summary>
-        /// Convenience function returning the number of characters that will be returned by converting
-        /// a string of <paramref name="precision"/> bits to Base32 encoding.
-        /// </summary>
-        /// <param name="precision">Output precision</param>
-        /// <returns>The output length</returns>
-        public static int OutputLength32(int precision) => (precision + 4) / 5;
+    /// <summary>
+    /// Convenience function returning the number of characters that will be returned by converting
+    /// a string of <paramref name="precision"/> bits to Base32 encoding.
+    /// </summary>
+    /// <param name="precision">Output precision</param>
+    /// <returns>The output length</returns>
+    public static int OutputLength32(int precision) => (precision + 4) / 5;
 
-        #region // Base16
+    #region // Base16
 
-        /// <summary>
-        /// Return reusable stream converter to convert data input to 
-        /// base 16 (hexadecimal) with uppercase characters 
-        /// and write characters to specified stream in ASCII/UTF8.
-        /// </summary>
-        /// <param name="output">The stream to write the output to.</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase16(
-            this Stream output,
-            ConversionFormat format = ConversionFormat.None) =>
-                new StreamConvertBits(output, BASE16, 4, format);
+    /// <summary>
+    /// Return reusable stream converter to convert data input to 
+    /// base 16 (hexadecimal) with uppercase characters 
+    /// and write characters to specified stream in ASCII/UTF8.
+    /// </summary>
+    /// <param name="output">The stream to write the output to.</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <returns>The stream converter</returns>
+    public static IBytesToStream ToStreamBase16(
+        this Stream output,
+        ConversionFormat format = ConversionFormat.None) =>
+            new StreamConvertBits(output, BASE16, 4, format);
 
-        /// <summary>
-        /// Return reusable stream converter to convert data input to 
-        /// base 16 (hexadecimal) with uppercase characters 
-        /// and write characters to specified stream in ASCII/UTF8.
-        /// </summary>
-        /// <param name="output">The stream to write the output to.</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase16(
-            this StringBuilder output,
-            ConversionFormat format = ConversionFormat.None) =>
-                new StringBuilderConvertBits(output, BASE16, 4, format);
+    /// <summary>
+    /// Return reusable stream converter to convert data input to 
+    /// base 16 (hexadecimal) with uppercase characters 
+    /// and write characters to specified stream in ASCII/UTF8.
+    /// </summary>
+    /// <param name="output">The stream to write the output to.</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <returns>The stream converter</returns>
+    public static IBytesToStream ToStreamBase16(
+        this StringBuilder output,
+        ConversionFormat format = ConversionFormat.None) =>
+            new StringBuilderConvertBits(output, BASE16, 4, format);
 
-        /// <summary>
-        /// Convert data to base32 encoded string
-        /// </summary>
-        /// <param name="data">The data to convert</param>
-        /// <param name="First">The index position of the first byte to convert.</param>
-        /// <param name="Length">The number of bytes to convert</param>
-        /// <param name="Format">Specifies the output format</param>
-        /// <returns>The encoded data</returns>
-        public static string ToStringBase16(
-                this byte[] data,
-                int First = 0,
-                int Length = -1,
-                ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Convert(
-                        data, BASE16, 4, Format, First, Length);
+    /// <summary>
+    /// Convert data to base32 encoded string
+    /// </summary>
+    /// <param name="data">The data to convert</param>
+    /// <param name="First">The index position of the first byte to convert.</param>
+    /// <param name="Length">The number of bytes to convert</param>
+    /// <param name="Format">Specifies the output format</param>
+    /// <returns>The encoded data</returns>
+    public static string ToStringBase16(
+            this byte[] data,
+            int First = 0,
+            int Length = -1,
+            ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Convert(
+                    data, BASE16, 4, Format, First, Length);
 
-        /// <summary>
-        /// Convert data to base32 encoded string
-        /// </summary>
-        /// <param name="data">The data to convert</param>
-        /// <param name="first">The index position of the first byte to convert.</param>
-        /// <param name="length">The number of bytes to convert</param>
-        /// <returns>The encoded data</returns>
-        public static string ToStringBase16FormatHex(
-                this byte[] data,
+    /// <summary>
+    /// Convert data to base32 encoded string
+    /// </summary>
+    /// <param name="data">The data to convert</param>
+    /// <param name="first">The index position of the first byte to convert.</param>
+    /// <param name="length">The number of bytes to convert</param>
+    /// <returns>The encoded data</returns>
+    public static string ToStringBase16FormatHex(
+            this byte[] data,
+            int first = 0,
+            int length = -1) => StringBuilderConvertBits.Convert(
+                    data, BASE16, 4, ConversionFormat.Hex, first, length);
+
+
+    /// <summary>
+    /// Convert data to Base16 (hexadecimal) and append to the specified stringbuilder.
+    /// </summary>
+    /// <param name="stringBuilder">String builder to append data to</param>
+    /// <param name="first">Position of first byte to send.</param>
+    /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+    /// <param name="data">The data to be encoded.</param>
+    /// <param name="Format">Specifies the output format</param>
+    public static void ToStringBase16(
+                this StringBuilder stringBuilder,
+                byte[] data,
                 int first = 0,
-                int length = -1) => StringBuilderConvertBits.Convert(
-                        data, BASE16, 4, ConversionFormat.Hex, first, length);
+                int length = -1,
+                ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Append(data, BASE16, 4, Format, stringBuilder, first, length);
 
+    #endregion
+    #region // Base32
 
-        /// <summary>
-        /// Convert data to Base16 (hexadecimal) and append to the specified stringbuilder.
-        /// </summary>
-        /// <param name="stringBuilder">String builder to append data to</param>
-        /// <param name="first">Position of first byte to send.</param>
-        /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
-        /// <param name="data">The data to be encoded.</param>
-        /// <param name="Format">Specifies the output format</param>
-        public static void ToStringBase16(
-                    this StringBuilder stringBuilder,
-                    byte[] data,
-                    int first = 0,
-                    int length = -1,
-                    ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Append(data, BASE16, 4, Format, stringBuilder, first, length);
+    /// <summary>
+    /// Return reusable stream converter to convert data input to 
+    /// base 32 with prefered (disambiguated) characters 
+    /// and write characters to specified stream in ASCII/UTF8.
+    /// </summary>
+    /// <param name="output">The stream to write the output to.</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <returns>The stream converter</returns>
+    public static IBytesToStream ToStreamBase32(
+        Stream output,
+        ConversionFormat format = ConversionFormat.None) =>
+            new StreamConvertBits(output, BASE32, 5, format);
 
-        #endregion
-        #region // Base32
+    /// <summary>
+    /// Return reusable stream converter to convert data input to 
+    /// base 32 with prefered (disambiguated) characters 
+    /// and write characters to specified stream in ASCII/UTF8.
+    /// </summary>
+    /// <param name="output">The stream to write the output to.</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <param name="outputMax">The maximum number of significant bits in the output.</param>
+    /// <returns>The stream converter</returns>
+    public static IBytesToStream ToStreamBase32(
+        StringBuilder output,
+        ConversionFormat format = ConversionFormat.None,
+        int outputMax = -1) =>
+            new StringBuilderConvertBits(output, BASE32, 5, format, outputMax: outputMax);
 
-        /// <summary>
-        /// Return reusable stream converter to convert data input to 
-        /// base 32 with prefered (disambiguated) characters 
-        /// and write characters to specified stream in ASCII/UTF8.
-        /// </summary>
-        /// <param name="output">The stream to write the output to.</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase32(
-            Stream output,
-            ConversionFormat format = ConversionFormat.None) =>
-                new StreamConvertBits(output, BASE32, 5, format);
-
-        /// <summary>
-        /// Return reusable stream converter to convert data input to 
-        /// base 32 with prefered (disambiguated) characters 
-        /// and write characters to specified stream in ASCII/UTF8.
-        /// </summary>
-        /// <param name="output">The stream to write the output to.</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <param name="outputMax">The maximum number of significant bits in the output.</param>
-        /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase32(
-            StringBuilder output,
+    /// <summary>
+    /// Convert data to base32 encoded string
+    /// </summary>
+    /// <param name="data">The data to convert</param>
+    /// <param name="first">The index position of the first byte to convert.</param>
+    /// <param name="length">The number of bytes to convert</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <param name="outputMax">The maximum number of significant bits in the output.</param>
+    /// <returns>The encoded data</returns>
+    public static string ToStringBase32(
+            this byte[] data,
+            int first = 0,
+            int length = -1,
             ConversionFormat format = ConversionFormat.None,
             int outputMax = -1) =>
-                new StringBuilderConvertBits(output, BASE32, 5, format, outputMax: outputMax);
+                StringBuilderConvertBits.Convert(
+                    data, BASE32, 5, format, first, length, outputMax: outputMax);
 
-        /// <summary>
-        /// Convert data to base32 encoded string
-        /// </summary>
-        /// <param name="data">The data to convert</param>
-        /// <param name="first">The index position of the first byte to convert.</param>
-        /// <param name="length">The number of bytes to convert</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <param name="outputMax">The maximum number of significant bits in the output.</param>
-        /// <returns>The encoded data</returns>
-        public static string ToStringBase32(
-                this byte[] data,
+    /// <summary>
+    /// Convert data to Base32 and append to the specified stringbuilder.
+    /// </summary>
+    /// <param name="stringBuilder">String builder to append data to</param>
+    /// <param name="first">Position of first byte to send.</param>
+    /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+    /// <param name="data">The data to be encoded.</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <param name="outputMax">The maximum number of significant bits in the output.</param>
+    public static void ToStringBase32(
+                this StringBuilder stringBuilder,
+                byte[] data,
                 int first = 0,
                 int length = -1,
                 ConversionFormat format = ConversionFormat.None,
-                int outputMax = -1) =>
-                    StringBuilderConvertBits.Convert(
-                        data, BASE32, 5, format, first, length, outputMax: outputMax);
+                int outputMax = -1) => StringBuilderConvertBits.Append(data, BASE32, 5, format, stringBuilder, first, length, outputMax: outputMax);
 
-        /// <summary>
-        /// Convert data to Base32 and append to the specified stringbuilder.
-        /// </summary>
-        /// <param name="stringBuilder">String builder to append data to</param>
-        /// <param name="first">Position of first byte to send.</param>
-        /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
-        /// <param name="data">The data to be encoded.</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <param name="outputMax">The maximum number of significant bits in the output.</param>
-        public static void ToStringBase32(
-                    this StringBuilder stringBuilder,
-                    byte[] data,
-                    int first = 0,
-                    int length = -1,
-                    ConversionFormat format = ConversionFormat.None,
-                    int outputMax = -1) => StringBuilderConvertBits.Append(data, BASE32, 5, format, stringBuilder, first, length, outputMax: outputMax);
+    #endregion
+    #region // Base32Hex
 
-        #endregion
-        #region // Base32Hex
+    /// <summary>
+    /// Return reusable stream converter to convert data input to 
+    /// base 32 using the extended hexadecimal encoding
+    /// and write characters to specified stream in ASCII/UTF8.
+    /// </summary>
+    /// <param name="output">The stream to write the output to.</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <returns>The stream converter</returns>
+    public static IBytesToStream ToStreamBase32Hex(
+        Stream output,
+        ConversionFormat format = ConversionFormat.None) =>
+            new StreamConvertBits(output, BASE32HEX, 5, format);
 
-        /// <summary>
-        /// Return reusable stream converter to convert data input to 
-        /// base 32 using the extended hexadecimal encoding
-        /// and write characters to specified stream in ASCII/UTF8.
-        /// </summary>
-        /// <param name="output">The stream to write the output to.</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase32Hex(
-            Stream output,
-            ConversionFormat format = ConversionFormat.None) =>
-                new StreamConvertBits(output, BASE32HEX, 5, format);
+    /// <summary>
+    /// Return reusable stream converter to convert data input to 
+    /// base 32 using the extended hexadecimal encoding
+    /// and write characters to specified stream in ASCII/UTF8.
+    /// </summary>
+    /// <param name="output">The stream to write the output to.</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <returns>The stream converter</returns>
+    public static IBytesToStream ToStreamBase32Hex(
+        StringBuilder output,
+        ConversionFormat format = ConversionFormat.None) =>
+            new StringBuilderConvertBits(output, BASE32HEX, 5, format);
 
-        /// <summary>
-        /// Return reusable stream converter to convert data input to 
-        /// base 32 using the extended hexadecimal encoding
-        /// and write characters to specified stream in ASCII/UTF8.
-        /// </summary>
-        /// <param name="output">The stream to write the output to.</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase32Hex(
-            StringBuilder output,
-            ConversionFormat format = ConversionFormat.None) =>
-                new StringBuilderConvertBits(output, BASE32HEX, 5, format);
+    /// <summary>
+    /// Convert data to base32Hex encoded string
+    /// </summary>
+    /// <param name="data">The data to convert</param>
+    /// <param name="first">The index position of the first byte to convert.</param>
+    /// <param name="length">The number of bytes to convert</param>
+    /// <param name="Format">Specifies the output format</param>
+    /// <returns>The encoded data</returns>
+    public static string ToStringBase32Hex(
+            this byte[] data,
+            int first = 0,
+            int length = -1,
+            ConversionFormat Format = ConversionFormat.None) =>
+                StringBuilderConvertBits.Convert(
+                    data, BASE32HEX, 5, Format, first, length);
 
-        /// <summary>
-        /// Convert data to base32Hex encoded string
-        /// </summary>
-        /// <param name="data">The data to convert</param>
-        /// <param name="first">The index position of the first byte to convert.</param>
-        /// <param name="length">The number of bytes to convert</param>
-        /// <param name="Format">Specifies the output format</param>
-        /// <returns>The encoded data</returns>
-        public static string ToStringBase32Hex(
-                this byte[] data,
+    /// <summary>
+    /// Convert data to Base32 (with hexadecimal characters) and append to the specified stringbuilder.
+    /// </summary>
+    /// <param name="stringBuilder">String builder to append data to</param>
+    /// <param name="first">Position of first byte to send.</param>
+    /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+    /// <param name="data">The data to be encoded.</param>
+    /// <param name="format">Specifies the output format</param>
+    public static void ToStringBase32Hex(
+                this StringBuilder stringBuilder,
+                byte[] data,
                 int first = 0,
                 int length = -1,
-                ConversionFormat Format = ConversionFormat.None) =>
-                    StringBuilderConvertBits.Convert(
-                        data, BASE32HEX, 5, Format, first, length);
+                ConversionFormat format = ConversionFormat.None) => StringBuilderConvertBits.Append(data, BASE32HEX, 5, format, stringBuilder, first, length);
 
-        /// <summary>
-        /// Convert data to Base32 (with hexadecimal characters) and append to the specified stringbuilder.
-        /// </summary>
-        /// <param name="stringBuilder">String builder to append data to</param>
-        /// <param name="first">Position of first byte to send.</param>
-        /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
-        /// <param name="data">The data to be encoded.</param>
-        /// <param name="format">Specifies the output format</param>
-        public static void ToStringBase32Hex(
-                    this StringBuilder stringBuilder,
-                    byte[] data,
-                    int first = 0,
-                    int length = -1,
-                    ConversionFormat format = ConversionFormat.None) => StringBuilderConvertBits.Append(data, BASE32HEX, 5, format, stringBuilder, first, length);
+    #endregion
+    #region // Base64
 
-        #endregion
-        #region // Base64
+    /// <summary>
+    /// Return reusable stream converter to convert data input to 
+    /// base 64 (original) characters
+    /// and write characters to specified stream in ASCII/UTF8.
+    /// </summary>
+    /// <param name="output">The stream to write the output to.</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <returns>The stream converter</returns>
+    public static IBytesToStream ToStreamBase64(
+        Stream output,
+        ConversionFormat format = ConversionFormat.None) =>
+            new StreamConvertBits(output, BASE64, 6, format);
 
-        /// <summary>
-        /// Return reusable stream converter to convert data input to 
-        /// base 64 (original) characters
-        /// and write characters to specified stream in ASCII/UTF8.
-        /// </summary>
-        /// <param name="output">The stream to write the output to.</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase64(
-            Stream output,
-            ConversionFormat format = ConversionFormat.None) =>
-                new StreamConvertBits(output, BASE64, 6, format);
+    /// <summary>
+    /// Return reusable stream converter to convert data input to 
+    /// base 64 (original) characters
+    /// and write characters to specified stream in ASCII/UTF8.
+    /// </summary>
+    /// <param name="output">The stream to write the output to.</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <returns>The stream converter</returns>
+    public static IBytesToStream ToStreamBase64(
+        StringBuilder output,
+        ConversionFormat format = ConversionFormat.None) =>
+            new StringBuilderConvertBits(output, BASE64, 6, format);
 
-        /// <summary>
-        /// Return reusable stream converter to convert data input to 
-        /// base 64 (original) characters
-        /// and write characters to specified stream in ASCII/UTF8.
-        /// </summary>
-        /// <param name="output">The stream to write the output to.</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase64(
-            StringBuilder output,
-            ConversionFormat format = ConversionFormat.None) =>
-                new StringBuilderConvertBits(output, BASE64, 6, format);
+    /// <summary>
+    /// Convert data to base64 encoded string
+    /// </summary>
+    /// <param name="data">The data to convert</param>
+    /// <param name="first">The index position of the first byte to convert.</param>
+    /// <param name="length">The number of bytes to convert</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <returns>The encoded data</returns>
+    public static string ToStringBase64(
+            this byte[] data,
+            int first = 0,
+            int length = -1,
+            ConversionFormat format = ConversionFormat.None) => StringBuilderConvertBits.Convert(
+                    data, BASE64, 6, format, first, length);
 
-        /// <summary>
-        /// Convert data to base64 encoded string
-        /// </summary>
-        /// <param name="data">The data to convert</param>
-        /// <param name="first">The index position of the first byte to convert.</param>
-        /// <param name="length">The number of bytes to convert</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <returns>The encoded data</returns>
-        public static string ToStringBase64(
-                this byte[] data,
+    /// <summary>
+    /// Convert data to Base64 and append to the specified stringbuilder.
+    /// </summary>
+    /// <param name="stringBuilder">String builder to append data to</param>
+    /// <param name="first">Position of first byte to send.</param>
+    /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+    /// <param name="data">The data to be encoded.</param>
+    /// <param name="format">Specifies the output format</param>
+    public static void ToStringBase64(
+                this StringBuilder stringBuilder,
+                byte[] data,
                 int first = 0,
                 int length = -1,
-                ConversionFormat format = ConversionFormat.None) => StringBuilderConvertBits.Convert(
-                        data, BASE64, 6, format, first, length);
+                ConversionFormat format = ConversionFormat.None) => StringBuilderConvertBits.Append(data, BASE64, 6, format, stringBuilder, first, length);
 
-        /// <summary>
-        /// Convert data to Base64 and append to the specified stringbuilder.
-        /// </summary>
-        /// <param name="stringBuilder">String builder to append data to</param>
-        /// <param name="first">Position of first byte to send.</param>
-        /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
-        /// <param name="data">The data to be encoded.</param>
-        /// <param name="format">Specifies the output format</param>
-        public static void ToStringBase64(
-                    this StringBuilder stringBuilder,
-                    byte[] data,
-                    int first = 0,
-                    int length = -1,
-                    ConversionFormat format = ConversionFormat.None) => StringBuilderConvertBits.Append(data, BASE64, 6, format, stringBuilder, first, length);
+    #endregion
+    #region // Base64Url
 
-        #endregion
-        #region // Base64Url
+    /// <summary>
+    /// Return reusable stream converter to convert data input to 
+    /// base 64 URL-safe characters 
+    /// and write characters to specified stream in ASCII/UTF8.
+    /// </summary>
+    /// <param name="output">The stream to write the output to.</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <returns>The stream converter</returns>
+    public static IBytesToStream ToStreamBase64Url(
+        Stream output,
+        ConversionFormat format = ConversionFormat.None) =>
+            new StreamConvertBits(output, BASE64URL, 6, format);
 
-        /// <summary>
-        /// Return reusable stream converter to convert data input to 
-        /// base 64 URL-safe characters 
-        /// and write characters to specified stream in ASCII/UTF8.
-        /// </summary>
-        /// <param name="output">The stream to write the output to.</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase64Url(
-            Stream output,
-            ConversionFormat format = ConversionFormat.None) =>
-                new StreamConvertBits(output, BASE64URL, 6, format);
+    /// <summary>
+    /// Return reusable stream converter to convert data input to 
+    /// base 64 URL-safe characters 
+    /// and write characters to specified stream in ASCII/UTF8.
+    /// </summary>
+    /// <param name="output">The stream to write the output to.</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <returns>The stream converter</returns>
+    public static IBytesToStream ToStreamBase64Url(
+        StringBuilder output,
+        ConversionFormat format = ConversionFormat.None) =>
+            new StringBuilderConvertBits(output, BASE64URL, 6, format);
 
-        /// <summary>
-        /// Return reusable stream converter to convert data input to 
-        /// base 64 URL-safe characters 
-        /// and write characters to specified stream in ASCII/UTF8.
-        /// </summary>
-        /// <param name="output">The stream to write the output to.</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase64Url(
-            StringBuilder output,
-            ConversionFormat format = ConversionFormat.None) =>
-                new StringBuilderConvertBits(output, BASE64URL, 6, format);
+    /// <summary>
+    /// Convert data to base64URL encoded string
+    /// </summary>
+    /// <param name="data">The data to convert</param>
+    /// <param name="first">The index position of the first byte to convert.</param>
+    /// <param name="length">The number of bytes to convert</param>
+    /// <param name="format">Specifies the output format</param>
+    /// <param name="outputCol">The initial ouput column</param>
+    /// <param name="outputMax">The maximum output width.</param>
+    /// <returns>The encoded data</returns>
+    public static string ToStringBase64url(
+            this byte[] data,
+            int first = 0,
+            int length = -1,
+            ConversionFormat format = ConversionFormat.None,
+            int outputCol = 0,
+            int outputMax = 70) =>
+                StringBuilderConvertBits.Convert(data, BASE64URL, 6, format, first, length,
+                    outputCol, outputMax);
 
-        /// <summary>
-        /// Convert data to base64URL encoded string
-        /// </summary>
-        /// <param name="data">The data to convert</param>
-        /// <param name="first">The index position of the first byte to convert.</param>
-        /// <param name="length">The number of bytes to convert</param>
-        /// <param name="format">Specifies the output format</param>
-        /// <param name="outputCol">The initial ouput column</param>
-        /// <param name="outputMax">The maximum output width.</param>
-        /// <returns>The encoded data</returns>
-        public static string ToStringBase64url(
-                this byte[] data,
+    /// <summary>
+    /// Convert data to Base64URL and append to the specified stringbuilder.
+    /// </summary>
+    /// <param name="stringBuilder">String builder to append data to</param>
+    /// <param name="first">Position of first byte to send.</param>
+    /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+    /// <param name="data">The data to be encoded.</param>
+    /// <param name="Format">Specifies the output format</param>
+    public static void ToStringBase64URL(
+                this StringBuilder stringBuilder,
+                byte[] data,
                 int first = 0,
                 int length = -1,
-                ConversionFormat format = ConversionFormat.None,
-                int outputCol = 0,
-                int outputMax = 70) =>
-                    StringBuilderConvertBits.Convert(data, BASE64URL, 6, format, first, length,
-                        outputCol, outputMax);
+                ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Append(data, BASE64URL, 6, Format, stringBuilder, first, length);
 
-        /// <summary>
-        /// Convert data to Base64URL and append to the specified stringbuilder.
-        /// </summary>
-        /// <param name="stringBuilder">String builder to append data to</param>
-        /// <param name="first">Position of first byte to send.</param>
-        /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
-        /// <param name="data">The data to be encoded.</param>
-        /// <param name="Format">Specifies the output format</param>
-        public static void ToStringBase64URL(
-                    this StringBuilder stringBuilder,
-                    byte[] data,
-                    int first = 0,
-                    int length = -1,
-                    ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Append(data, BASE64URL, 6, Format, stringBuilder, first, length);
-
-        #endregion
+    #endregion
 
 
 
 
-        /*
-         * These routines still use the old mechanism
-         */
+    /*
+     * These routines still use the old mechanism
+     */
 
 
-        /// <summary>
-        /// Convert data to Base32HS string. This is probably not necessary as 
-        /// the ticket mechanism needs to be overhauled anyway.
-        /// </summary>
-        /// <param name="data">The data to convert</param>
-        /// <param name="Length">The maximum number of characters in the output string</param>
-        /// <returns>The resulting string.</returns>
-        public static string ToStringBase32hs(this byte[] data, int Length) =>
-            ToStringBase32(data, format: ConversionFormat.Dash4, length: Length);
+    /// <summary>
+    /// Convert data to Base32HS string. This is probably not necessary as 
+    /// the ticket mechanism needs to be overhauled anyway.
+    /// </summary>
+    /// <param name="data">The data to convert</param>
+    /// <param name="Length">The maximum number of characters in the output string</param>
+    /// <returns>The resulting string.</returns>
+    public static string ToStringBase32hs(this byte[] data, int Length) =>
+        ToStringBase32(data, format: ConversionFormat.Dash4, length: Length);
 
 
-        /// <summary>
-        /// Convert Base64/Base64URL character string data to binary data. Note
-        /// that because the two character sets are unambiguous, a single conversion
-        /// function converts both types of data.
-        /// </summary>
-        /// <param name="Data">The string to convert</param>
-        /// <returns>The resulting binary data.</returns>
-        public static byte[] FromBase64(this string Data) =>
-            StreamConvertString.Convert(BASE64Value, 6, Data);
+    /// <summary>
+    /// Convert Base64/Base64URL character string data to binary data. Note
+    /// that because the two character sets are unambiguous, a single conversion
+    /// function converts both types of data.
+    /// </summary>
+    /// <param name="Data">The string to convert</param>
+    /// <returns>The resulting binary data.</returns>
+    public static byte[] FromBase64(this string Data) =>
+        StreamConvertString.Convert(BASE64Value, 6, Data);
 
-        /// <summary>
-        /// Return a streaming converter to 
-        /// convert Base32 character string data to binary data.
-        /// </summary>
-        /// <returns>The resulting binary data.</returns>
-        public static IStringToStream FromBase32() =>
-            new StreamConvertString(BASE32Value, 6);
+    /// <summary>
+    /// Return a streaming converter to 
+    /// convert Base32 character string data to binary data.
+    /// </summary>
+    /// <returns>The resulting binary data.</returns>
+    public static IStringToStream FromBase32() =>
+        new StreamConvertString(BASE32Value, 6);
 
-        /// <summary>
-        /// Convert Base32 character string data to binary data.
-        /// </summary>
-        /// <param name="Data">The string to convert</param>
-        /// <returns>The resulting binary data.</returns>
-        public static byte[] FromBase32(this string Data) =>
-            StreamConvertString.Convert(BASE32Value, 5, Data);
+    /// <summary>
+    /// Convert Base32 character string data to binary data.
+    /// </summary>
+    /// <param name="Data">The string to convert</param>
+    /// <returns>The resulting binary data.</returns>
+    public static byte[] FromBase32(this string Data) =>
+        StreamConvertString.Convert(BASE32Value, 5, Data);
 
-        /// <summary>
-        /// Return a streaming converter to 
-        /// convert Base32 character string data to binary data.
-        /// </summary>
-        /// <returns>The resulting binary data.</returns>
-        public static IStringToStream FromBase16() =>
-            new StreamConvertString(BASE16Value, 6);
+    /// <summary>
+    /// Return a streaming converter to 
+    /// convert Base32 character string data to binary data.
+    /// </summary>
+    /// <returns>The resulting binary data.</returns>
+    public static IStringToStream FromBase16() =>
+        new StreamConvertString(BASE16Value, 6);
 
-        /// <summary>
-        /// Convert Base16 character string data to binary data.
-        /// </summary>
-        /// <param name="Data">The string to convert</param>
-        /// <returns>The resulting binary data.</returns>
-        public static byte[] FromBase16(this string Data) =>
-            StreamConvertString.Convert(BASE16Value, 4, Data);
+    /// <summary>
+    /// Convert Base16 character string data to binary data.
+    /// </summary>
+    /// <param name="Data">The string to convert</param>
+    /// <returns>The resulting binary data.</returns>
+    public static byte[] FromBase16(this string Data) =>
+        StreamConvertString.Convert(BASE16Value, 4, Data);
 
-        }
     }

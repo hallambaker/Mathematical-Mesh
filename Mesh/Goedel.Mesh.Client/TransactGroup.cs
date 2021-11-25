@@ -21,28 +21,28 @@
 #endregion
 
 
-namespace Goedel.Mesh.Client {
+namespace Goedel.Mesh.Client;
+
+/// <summary>
+/// Transaction on a Mesh group account. Provides access to the account catalogs and spools.
+/// </summary>
+public partial class TransactGroup : Transaction<ContextGroup> {
+
+    /// <summary>The account context in which this transaction takes place.</summary>
+    public override ContextGroup ContextAccount => ContextGroup;
+
+    /// <summary>The account context in which this transaction takes place.</summary>
+    public ContextGroup ContextGroup { get; }
+
     /// <summary>
-    /// Transaction on a Mesh group account. Provides access to the account catalogs and spools.
+    /// Constructor creating transaction instance under the account context
+    /// <paramref name="contextGroup"/>
     /// </summary>
-    public partial class TransactGroup : Transaction<ContextGroup> {
+    /// <param name="contextGroup">The account context in which the update
+    /// is to be applied.</param>
+    public TransactGroup(ContextGroup contextGroup) => ContextGroup = contextGroup;
 
-        /// <summary>The account context in which this transaction takes place.</summary>
-        public override ContextGroup ContextAccount => ContextGroup;
+    ///<summary>Returns the network catalog for the account</summary>
+    public CatalogMember GetCatalogMember() => ContextGroup.GetStore(CatalogMember.Label) as CatalogMember;
 
-        /// <summary>The account context in which this transaction takes place.</summary>
-        public ContextGroup ContextGroup { get; }
-
-        /// <summary>
-        /// Constructor creating transaction instance under the account context
-        /// <paramref name="contextGroup"/>
-        /// </summary>
-        /// <param name="contextGroup">The account context in which the update
-        /// is to be applied.</param>
-        public TransactGroup(ContextGroup contextGroup) => ContextGroup = contextGroup;
-
-        ///<summary>Returns the network catalog for the account</summary>
-        public CatalogMember GetCatalogMember() => ContextGroup.GetStore(CatalogMember.Label) as CatalogMember;
-
-        }
     }

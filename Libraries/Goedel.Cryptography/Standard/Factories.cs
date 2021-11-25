@@ -24,26 +24,25 @@ using System.Security.Cryptography;
 
 using Goedel.Cryptography.PKIX;
 
-namespace Goedel.Cryptography.Standard {
+namespace Goedel.Cryptography.Standard;
+
+/// <summary>
+/// Formatting class for representing RSA Public Keys in ASN.1 and
+/// calculating the PKIX keyinfo version of the UDF fingerprint.
+/// </summary>
+public partial class Factory {
 
     /// <summary>
-    /// Formatting class for representing RSA Public Keys in ASN.1 and
-    /// calculating the PKIX keyinfo version of the UDF fingerprint.
+    /// Create instance from RSAParameters structure.
     /// </summary>
-    public partial class Factory {
-
-        /// <summary>
-        /// Create instance from RSAParameters structure.
-        /// </summary>
-        /// <param name="RSAParameters">Input parameters in System.Security.Cryotography format</param>
-        /// <returns>The public key</returns>
-        public static PkixPublicKeyRsa RSAPublicKey(RSAParameters RSAParameters) {
-            var RSAPublicKey = new PkixPublicKeyRsa() {
-                Modulus = RSAParameters.Modulus,
-                PublicExponent = RSAParameters.Exponent
-                };
-            return RSAPublicKey;
-            }
-
+    /// <param name="RSAParameters">Input parameters in System.Security.Cryotography format</param>
+    /// <returns>The public key</returns>
+    public static PkixPublicKeyRsa RSAPublicKey(RSAParameters RSAParameters) {
+        var RSAPublicKey = new PkixPublicKeyRsa() {
+            Modulus = RSAParameters.Modulus,
+            PublicExponent = RSAParameters.Exponent
+            };
+        return RSAPublicKey;
         }
+
     }

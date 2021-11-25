@@ -1,8 +1,9 @@
 {
   "profiles": {
-    "meshman": {
+    "MeshService": {
       "commandName": "Project",
-      "commandLineArgs": "key nonce"
+      "commandLineArgs": "key nonce",
+      "workingDirectory": "..\\..\\TestResults\\Service"
     }
   }
 }

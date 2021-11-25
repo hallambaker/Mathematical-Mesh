@@ -19,12 +19,4 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-namespace Goedel.Cryptography.Windows {
-    //public class Windows {
-    //    [ModuleInitializer]
-    //    internal static void Initialize() {
-    //        }
-    //    }
-
-
-    }
+namespace Goedel.Cryptography.Windows;

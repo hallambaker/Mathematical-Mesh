@@ -2,14 +2,12 @@
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace Goedel.Protocol.Service {
+namespace Goedel.Protocol.Service;
 
-    /// <summary>
-    /// Service monitoring classes.
-    /// </summary>
+/// <summary>
+/// Service monitoring classes.
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

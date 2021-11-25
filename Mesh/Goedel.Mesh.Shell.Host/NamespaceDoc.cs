@@ -29,14 +29,12 @@
 
 
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
-    /// <summary>
-    /// Host shell. Runs an actual host instance with minimal command line options.
-    /// </summary>
+/// <summary>
+/// Host shell. Runs an actual host instance with minimal command line options.
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

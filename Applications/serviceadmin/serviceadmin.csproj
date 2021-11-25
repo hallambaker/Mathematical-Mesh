@@ -2,14 +2,16 @@
   <!-- Import Project="$(SolutionDir)CommonSettingsApplication.xml" / -->
   <Import Project="$(SolutionDir)CommonSettingsWindows.xml" />
   <PropertyGroup>
-    <Product>Meshhost</Product>
+    <AssemblyName>serviceadmin</AssemblyName>
+    <Product>serviceadmin</Product>
     <Description>Mesh service host.</Description>
     <Copyright>© 2021</Copyright>
-    <Title>Meshhost</Title>
+    <Title>serviceadmin</Title>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell.ServiceAdmin\Goedel.Mesh.Shell.ServiceAdmin.csproj" />
+
   </ItemGroup>
 
 </Project>

@@ -25,77 +25,73 @@ using System.Threading.Tasks;
 
 using Goedel.Protocol.Presentation;
 
-namespace Goedel.Protocol.Service {
+namespace Goedel.Protocol.Service;
+
+/// <summary>
+/// UDP Host type.
+/// </summary>
+public class HostUDP {
+
+    #region // Properties
+    #endregion
+
+    #region // Destructor
+    #endregion
+
+    #region // Constructors
+    #endregion
+
+    #region // Implement Interface: Ixxx
+    #endregion
+
+    #region // Methods 
+    #endregion
+    }
+
+/// <summary>
+/// UDP Connection type (obsolete?)
+/// </summary>
+public class ConnectionUDP {
+
+    #region // Properties
+
+    ///<summary>This really goes in the stream</summary> 
+    TaskCompletionSource<Packet> CompletionInbound;
+
+
+    ///<summary>This really goes in the stream</summary> 
+    Task<Packet> TaskInbound;
+
+    /////<summary>These are bound to the specific connection.</summary> 
+    //List<Packet> PacketsOutbound;
+
+
+    #endregion
+
+    #region // Destructor
+    #endregion
+
+    #region // Constructors
 
     /// <summary>
-    /// UDP Host type.
+    /// Constructor
     /// </summary>
-    public class HostUDP {
+    public ConnectionUDP() {
+        CompletionInbound = new();
 
-        #region // Properties
-        #endregion
+        TaskInbound = CompletionInbound.Task;
 
-        #region // Destructor
-        #endregion
 
-        #region // Constructors
-        #endregion
+        // Do this when we have completely assembled a datagram.
+        CompletionInbound.SetResult(null);
 
-        #region // Implement Interface: Ixxx
-        #endregion
-
-        #region // Methods 
-        #endregion
         }
 
-    /// <summary>
-    /// UDP Connection type (obsolete?)
-    /// </summary>
-    public class ConnectionUDP {
+    #endregion
 
-        #region // Properties
+    #region // Implement Interface: Ixxx
+    #endregion
 
-        ///<summary>This really goes in the stream</summary> 
-        TaskCompletionSource<Packet> CompletionInbound;
-
-
-        ///<summary>This really goes in the stream</summary> 
-        Task<Packet> TaskInbound;
-
-        /////<summary>These are bound to the specific connection.</summary> 
-        //List<Packet> PacketsOutbound;
-
-
-        #endregion
-
-        #region // Destructor
-        #endregion
-
-        #region // Constructors
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public ConnectionUDP() {
-            CompletionInbound = new();
-
-            TaskInbound = CompletionInbound.Task;
-
-
-            // Do this when we have completely assembled a datagram.
-            CompletionInbound.SetResult(null);
-
-            }
-
-        #endregion
-
-        #region // Implement Interface: Ixxx
-        #endregion
-
-        #region // Methods 
-        #endregion
-        }
-
-
-
+    #region // Methods 
+    #endregion
     }

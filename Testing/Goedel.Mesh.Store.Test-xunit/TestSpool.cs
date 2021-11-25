@@ -31,153 +31,153 @@ using Goedel.Utilities;
 
 using Xunit;
 
-namespace Goedel.XUnit {
-    public partial class StoreTests {
-        ///<summary>The test environment, base for all </summary>
-        public TestEnvironmentCommon TestEnvironment => testEnvironment ??
-            new TestEnvironmentCommon().CacheValue(out testEnvironment);
-        TestEnvironmentCommon testEnvironment;
+namespace Goedel.XUnit;
 
-        public MeshMachineTest MeshMachineTest => meshMachineTest ??
-                new MeshMachineTest(TestEnvironment, "SpoolTest").CacheValue(out meshMachineTest);
-        MeshMachineTest meshMachineTest;
+public partial class StoreTests {
+    ///<summary>The test environment, base for all </summary>
+    public TestEnvironmentCommon TestEnvironment => testEnvironment ??
+        new TestEnvironmentCommon().CacheValue(out testEnvironment);
+    TestEnvironmentCommon testEnvironment;
 
-        public IKeyCollection KeyCollection => keyCollection ??
-            MeshMachineTest.GetKeyCollection().CacheValue(out keyCollection);
-        IKeyCollection keyCollection;
+    public MeshMachineTest MeshMachineTest => meshMachineTest ??
+            new MeshMachineTest(TestEnvironment, "SpoolTest").CacheValue(out meshMachineTest);
+    MeshMachineTest meshMachineTest;
 
-        static StoreTests() {
-            }
+    public IKeyCollection KeyCollection => keyCollection ??
+        MeshMachineTest.GetKeyCollection().CacheValue(out keyCollection);
+    IKeyCollection keyCollection;
 
-        public static StoreTests Test() => new();
+    static StoreTests() {
+        }
 
-
-        [Fact]
-        public void TestSpoolSingle() {
-            var id = UDF.Nonce();
-
-            var directory = TestEnvironment.Path;
-            var file = "TestSpoolSingle";
-
-            var signingKey = KeyPair.Factory(CryptoAlgorithmId.Ed448, KeySecurity.Exportable,
-                KeyCollection);
+    public static StoreTests Test() => new();
 
 
-            // create spool
-            var spool = new Spool(directory, file, keyCollection: KeyCollection);
+    [Fact]
+    public void TestSpoolSingle() {
+        var id = UDF.Nonce();
+
+        var directory = TestEnvironment.Path;
+        var file = "TestSpoolSingle";
+
+        var signingKey = KeyPair.Factory(CryptoAlgorithmId.Ed448, KeySecurity.Exportable,
+            KeyCollection);
 
 
-            CheckEntry(directory, file, spool, id).TestNull();
+        // create spool
+        var spool = new Spool(directory, file, keyCollection: KeyCollection);
 
-            // add element
-            var entry1 = spool.Add(MakeMessage(id, signingKey));
 
-            var entry = CheckEntry(directory, file, spool, id);
-            entry.TestNotNull();
-            entry.Open.TestTrue();
-            entry.Closed.TestFalse();
+        CheckEntry(directory, file, spool, id).TestNull();
 
-            // mark element closed
-            SetStatus(spool, id, MessageStatus.Closed, signingKey);
+        // add element
+        var entry1 = spool.Add(MakeMessage(id, signingKey));
 
-            var entry2 = CheckEntry(directory, file, spool, id);
-            entry2.TestNotNull();
-            entry2.Closed.TestTrue();
-            entry2.Open.TestFalse();
+        var entry = CheckEntry(directory, file, spool, id);
+        entry.TestNotNull();
+        entry.Open.TestTrue();
+        entry.Closed.TestFalse();
 
-            // mark element open (again)
-            SetStatus(spool, id, MessageStatus.Open, signingKey);
+        // mark element closed
+        SetStatus(spool, id, MessageStatus.Closed, signingKey);
 
-            var entry3 = CheckEntry(directory, file, spool, id);
-            entry3.TestNotNull();
-            entry3.Open.TestTrue();
-            entry3.Closed.TestFalse();
+        var entry2 = CheckEntry(directory, file, spool, id);
+        entry2.TestNotNull();
+        entry2.Closed.TestTrue();
+        entry2.Open.TestFalse();
 
-            }
+        // mark element open (again)
+        SetStatus(spool, id, MessageStatus.Open, signingKey);
 
-        static DareEnvelope MakeMessage(string id, KeyPair signingKey) {
-            var message = new Message() {
-                MessageId = id
-                };
-            return message.Envelope(signingKey);
-            }
+        var entry3 = CheckEntry(directory, file, spool, id);
+        entry3.TestNotNull();
+        entry3.Open.TestTrue();
+        entry3.Closed.TestFalse();
 
-        static MessageComplete SetStatus(Spool spool, string id, MessageStatus messageStatus, KeyPair signingKey) {
+        }
 
-            var message = new MessageComplete() {
+    static DareEnvelope MakeMessage(string id, KeyPair signingKey) {
+        var message = new Message() {
+            MessageId = id
+            };
+        return message.Envelope(signingKey);
+        }
 
-                References = new List<Reference> {
+    static MessageComplete SetStatus(Spool spool, string id, MessageStatus messageStatus, KeyPair signingKey) {
+
+        var message = new MessageComplete() {
+
+            References = new List<Reference> {
                     new Reference () {
                         MessageId = id,
                         MessageStatus = messageStatus
                         }
                     }
-                };
-            var envelope = message.Envelope(signingKey);
-            spool.Add(envelope);
+            };
+        var envelope = message.Envelope(signingKey);
+        spool.Add(envelope);
 
-            return message;
+        return message;
+        }
+
+
+    /// <summary>
+    /// Check entry 
+    /// </summary>
+    /// <param name="directory"></param>
+    /// <param name="file"></param>
+    /// <param name="spool"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    SpoolEntry CheckEntry(string directory, string file, Spool spool, string id) {
+        var spoolEntry = spool.GetByMessageId(id);
+
+
+        using var spool2 = new Spool(directory, file, keyCollection: KeyCollection);
+        var spoolEntry2 = spool.GetByMessageId(id);
+
+        if (spoolEntry == null) {
+            (spoolEntry2 == null).TestTrue();
+
+            }
+        else {
+            (spoolEntry2 != null).TestTrue();
+            (spoolEntry.MessageStatus == spoolEntry2.MessageStatus).TestTrue();
             }
 
 
-        /// <summary>
-        /// Check entry 
-        /// </summary>
-        /// <param name="directory"></param>
-        /// <param name="file"></param>
-        /// <param name="spool"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        SpoolEntry CheckEntry(string directory, string file, Spool spool, string id) {
-            var spoolEntry = spool.GetByMessageId(id);
+        return spoolEntry;
+        }
 
 
-            using var spool2 = new Spool(directory, file, keyCollection: KeyCollection);
-            var spoolEntry2 = spool.GetByMessageId(id);
+    [Fact]
+    public void TestCatalog() {
 
-            if (spoolEntry == null) {
-                (spoolEntry2 == null).TestTrue();
+        var directory = TestEnvironment.Path;
+        var file = "TestCatalogSingle";
 
-                }
-            else {
-                (spoolEntry2 != null).TestTrue();
-                (spoolEntry.MessageStatus == spoolEntry2.MessageStatus).TestTrue();
-                }
+        var encryptionKey = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Exportable,
+            KeyCollection);
 
+        var catalog = new CatalogContact(directory, file, keyCollection: KeyCollection);
 
-            return spoolEntry;
-            }
+        // Alice
+        var contactAlice = new ContactPerson("Alice", "Example");
+        var catalogedAlice = new CatalogedContact(contactAlice, false);
 
+        catalog.New(catalogedAlice);
 
-        [Fact]
-        public void TestCatalog() {
+        // Bob
+        var contactBob = new ContactPerson("Alice", "Example");
+        var catalogedBob = new CatalogedContact(contactBob, false);
 
-            var directory = TestEnvironment.Path;
-            var file = "TestCatalogSingle";
-
-            var encryptionKey = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Exportable,
-                KeyCollection);
-
-            var catalog = new CatalogContact(directory, file, keyCollection: KeyCollection);
-
-            // Alice
-            var contactAlice = new ContactPerson("Alice", "Example");
-            var catalogedAlice = new CatalogedContact(contactAlice, false);
-
-            catalog.New(catalogedAlice);
-
-            // Bob
-            var contactBob = new ContactPerson("Alice", "Example");
-            var catalogedBob = new CatalogedContact(contactBob, false);
-
-            catalog.New(catalogedBob);
+        catalog.New(catalogedBob);
 
 
-            // try to read back.
-
-
-            }
+        // try to read back.
 
 
         }
+
+
     }

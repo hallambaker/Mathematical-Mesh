@@ -21,62 +21,60 @@
 #endregion
 
 
-namespace Goedel.Protocol {
+namespace Goedel.Protocol;
 
-    // Transaction Classes
+// Transaction Classes
+/// <summary>
+/// The base class for transaction requests
+/// </summary>
+public abstract partial class Request {
+
+
+    }
+
+/// <summary>
+/// Base class for all responses.
+/// </summary>
+public abstract partial class Response {
+
     /// <summary>
-    /// The base class for transaction requests
+    /// Numeric status return code value
     /// </summary>
-    public abstract partial class Request {
-
-
+    public virtual int StatusCode {
+        get => Status;
+        set => Status = value;
         }
 
     /// <summary>
-    /// Base class for all responses.
+    /// Description of the status code (for debugging).
     /// </summary>
-    public abstract partial class Response {
-
-        /// <summary>
-        /// Numeric status return code value
-        /// </summary>
-		public virtual int StatusCode {
-            get => Status;
-            set => Status = value;
-            }
-
-        /// <summary>
-        /// Description of the status code (for debugging).
-        /// </summary>
-        public virtual string StatusDescriptionCode {
-            get => StatusDescription;
-            set => StatusDescription = value;
-            }
-
+    public virtual string StatusDescriptionCode {
+        get => StatusDescription;
+        set => StatusDescription = value;
         }
 
+    }
+
+
+/// <summary>
+/// 
+/// </summary>
+public interface IVerifiedAccount {
+    #region // Properties
+    /// <summary>
+    /// The account identifier.
+    /// </summary>
+    string AccountAddress { get; }
 
     /// <summary>
-    /// 
+    /// The profile identifer.
     /// </summary>
-    public interface IVerifiedAccount {
-        #region // Properties
-        /// <summary>
-        /// The account identifier.
-        /// </summary>
-        string AccountAddress { get; }
+    string AuthenticatedProfileUDF { get; }
 
-        /// <summary>
-        /// The profile identifer.
-        /// </summary>
-        string AuthenticatedProfileUDF { get; }
-
-        /// <summary>
-        /// The authentication key identifier.
-        /// </summary>
-        string AuthenticationKeyIdentifier { get; }
-        #endregion
-
-        }
+    /// <summary>
+    /// The authentication key identifier.
+    /// </summary>
+    string AuthenticationKeyIdentifier { get; }
+    #endregion
 
     }

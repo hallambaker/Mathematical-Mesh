@@ -28,16 +28,14 @@
 
 
 
-namespace Goedel.Mesh.Shell.ServiceAdmin {
+namespace Goedel.Mesh.Shell.ServiceAdmin;
 
-    /// <summary>
-    /// Service administration shell. Dispatches over methods defined in 
-    /// <see cref="Goedel.Mesh.ServiceAdmin"/> relating to administration of a service of
-    /// multiple hosts.
-    /// </summary>
+/// <summary>
+/// Service administration shell. Dispatches over methods defined in 
+/// <see cref="Goedel.Mesh.ServiceAdmin"/> relating to administration of a service of
+/// multiple hosts.
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

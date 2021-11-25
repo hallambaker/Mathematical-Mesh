@@ -21,24 +21,37 @@
 #endregion
 
 
-using Goedel.Cryptography.Core;
 using Goedel.Mesh.Shell;
 using Goedel.Utilities;
+using System;
+
+
+#if NET6_0_WINDOWS_OR_GREATER
+using Goedel.Cryptography.Windows;
+//using Goedel.Cryptography.Core;
+#elif NET6_0_MACOS_OR_GREATER
+using Goedel.Cryptography.Core;
+#else
+using Goedel.Cryptography.Core;
+#endif
+
+
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace meshman {
+namespace meshman;
 
-    ///<summary>Main calling program.</summary> 
-    public class Program {
+///<summary>Main calling program.</summary> 
+public class Program {
 
-        static Program() => Initialization.Initialized.AssertTrue(Internal.Throw);
 
-        static void Main(string[] args) {
-            var commandLineInterpreter = new CommandLineInterpreter();
-            commandLineInterpreter.MainMethod(args);
-            }
+    static Program() => Initialization.Initialized.AssertTrue(Internal.Throw);
+
+    static void Main(string[] args) {
+
+        var commandLineInterpreter = new CommandLineInterpreter();
+        commandLineInterpreter.MainMethod(args);
         }
     }

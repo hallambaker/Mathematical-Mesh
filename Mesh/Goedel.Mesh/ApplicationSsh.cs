@@ -38,102 +38,99 @@ using Goedel.Cryptography.Jose;
 
 
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
-    #region // ActivationApplicationSsh
-    public partial class ActivationApplicationSsh {
-        #region // Properties
-        ///<summary>The enveloped object</summary> 
-        public Enveloped<ActivationApplicationSsh> GetEnvelopedActivationApplicationSsh() =>
-            new(DareEnvelope);
-
-        #endregion
-
-        }
-    #endregion
-    #region // ApplicationEntrySsh
-    public partial class ApplicationEntrySsh {
-        #region // Properties
-        ///<summary>The decrypted activation.</summary> 
-        public ActivationApplicationSsh Activation { get; set; }
-        #endregion
-        #region // Methods
-
-        ///<inheritdoc/>
-        public override void Decode(IKeyCollection keyCollection) => Activation = EnvelopedActivation.Decode(keyCollection);
-
-        #endregion
-
-        }
-    #endregion
-    #region // CatalogedApplicationSsh
-    public partial class CatalogedApplicationSsh {
-        #region // Properties
-        /// <summary>
-        /// The primary key used to catalog the entry.
-        /// </summary>
-        public override string _PrimaryKey => Key;
-
-        ///<summary>The privatge client key</summary> 
-        public KeyPair ClientKeyPrivate { get; init; }
-        #endregion
-        #region // Constructors and factories
-
-        /// <summary>
-        /// Create a new catalog entry for a set of client authentication keys.
-        /// </summary>
-        /// <param name="key">The application key.</param>
-        /// <param name="roles">The roles to which the key is to be granted.</param>
-        /// <returns></returns>
-        public static CatalogedApplicationSsh Create(string key, List<string> roles) {
-            // generate an RSA client key here.
-            var clientKey = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                    KeySecurity.Exportable, keySize: 2048);
-
-            // don't need to add it to the application record though because every device will have a copy.
-            var applicationSSH = new CatalogedApplicationSsh() {
-                Key = key,
-                Grant = roles,
-                ClientKeyPrivate = clientKey,
-                ClientKey = new KeyData(clientKey)
-                };
-
-            return applicationSSH;
-            }
-
-        #endregion
-        #region // Methods
-        ///<inheritdoc/>
-        public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
-            var activation = new ActivationApplicationSsh() {
-                ClientKey = new KeyData(ClientKeyPrivate, true)
-                };
-
-            activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
-
-
-            return new ApplicationEntrySsh() {
-                Identifier = Key,
-                EnvelopedActivation = activation.GetEnvelopedActivationApplicationSsh()
-                };
-
-            }
-
-        ///<inheritdoc/>
-        public override KeyData[] GetEscrow() => 
-            new KeyData[] {
-            new KeyData(ClientKeyPrivate, true)};
-
-        ///<inheritdoc/>
-        public override void ToBuilder(StringBuilder output) {
-            output.AppendNotNull(ClientKey?.Udf, $"UDF: {ClientKey?.Udf}");
-
-            }
-
-        #endregion
-        }
+#region // ActivationApplicationSsh
+public partial class ActivationApplicationSsh {
+    #region // Properties
+    ///<summary>The enveloped object</summary> 
+    public Enveloped<ActivationApplicationSsh> GetEnvelopedActivationApplicationSsh() =>
+        new(DareEnvelope);
 
     #endregion
 
     }
+#endregion
+#region // ApplicationEntrySsh
+public partial class ApplicationEntrySsh {
+    #region // Properties
+    ///<summary>The decrypted activation.</summary> 
+    public ActivationApplicationSsh Activation { get; set; }
+    #endregion
+    #region // Methods
 
+    ///<inheritdoc/>
+    public override void Decode(IKeyCollection keyCollection) => Activation = EnvelopedActivation.Decode(keyCollection);
+
+    #endregion
+
+    }
+#endregion
+#region // CatalogedApplicationSsh
+public partial class CatalogedApplicationSsh {
+    #region // Properties
+    /// <summary>
+    /// The primary key used to catalog the entry.
+    /// </summary>
+    public override string _PrimaryKey => Key;
+
+    ///<summary>The privatge client key</summary> 
+    public KeyPair ClientKeyPrivate { get; init; }
+    #endregion
+    #region // Constructors and factories
+
+    /// <summary>
+    /// Create a new catalog entry for a set of client authentication keys.
+    /// </summary>
+    /// <param name="key">The application key.</param>
+    /// <param name="roles">The roles to which the key is to be granted.</param>
+    /// <returns></returns>
+    public static CatalogedApplicationSsh Create(string key, List<string> roles) {
+        // generate an RSA client key here.
+        var clientKey = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
+                KeySecurity.Exportable, keySize: 2048);
+
+        // don't need to add it to the application record though because every device will have a copy.
+        var applicationSSH = new CatalogedApplicationSsh() {
+            Key = key,
+            Grant = roles,
+            ClientKeyPrivate = clientKey,
+            ClientKey = new KeyData(clientKey)
+            };
+
+        return applicationSSH;
+        }
+
+    #endregion
+    #region // Methods
+    ///<inheritdoc/>
+    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+        var activation = new ActivationApplicationSsh() {
+            ClientKey = new KeyData(ClientKeyPrivate, true)
+            };
+
+        activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
+
+
+        return new ApplicationEntrySsh() {
+            Identifier = Key,
+            EnvelopedActivation = activation.GetEnvelopedActivationApplicationSsh()
+            };
+
+        }
+
+    ///<inheritdoc/>
+    public override KeyData[] GetEscrow() =>
+        new KeyData[] {
+            new KeyData(ClientKeyPrivate, true)};
+
+    ///<inheritdoc/>
+    public override void ToBuilder(StringBuilder output) {
+        output.AppendNotNull(ClientKey?.Udf, $"UDF: {ClientKey?.Udf}");
+
+        }
+
+    #endregion
+    }
+
+#endregion

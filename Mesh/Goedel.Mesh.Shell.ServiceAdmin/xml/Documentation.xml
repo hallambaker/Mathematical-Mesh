@@ -519,6 +519,9 @@
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Create(Goedel.Mesh.Shell.ServiceAdmin.Create)">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.DNS(Goedel.Mesh.Shell.ServiceAdmin.DNS)">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Start(Goedel.Mesh.Shell.ServiceAdmin.Start)">
             <inheritdoc/>
         </member>
@@ -535,9 +538,6 @@
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Verify(Goedel.Mesh.Shell.ServiceAdmin.Verify)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.DNS(Goedel.Mesh.Shell.ServiceAdmin.DNS)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Credential(Goedel.Mesh.Shell.ServiceAdmin.Credential)">

@@ -31,165 +31,161 @@ using Goedel.Protocol;
 
 
 
-namespace Goedel.Cryptography.Core {
+namespace Goedel.Cryptography.Core;
 
 
 
-    /// <summary>
-    /// KeyCollection implementation using platform agnostic .NET 5.0 
-    /// </summary>
-    public class KeyCollectionCore : KeyCollection, IKeyCollection {
-        const string WindowsMeshKeys = @"Mesh\Keys";
-        const string WindowsMeshProfiles = @"Mesh\Profiles";
-        const string LinuxMeshKeys = @".Mesh/Keys";
-        const string LinuxMeshProfiles = @".Mesh/Profiles";
+/// <summary>
+/// KeyCollection implementation using platform agnostic .NET 5.0 
+/// </summary>
+public class KeyCollectionCore : KeyCollection, IKeyCollection {
+    const string WindowsMeshKeys = @"Mesh\Keys";
+    const string WindowsMeshProfiles = @"Mesh\Profiles";
+    const string LinuxMeshKeys = @".Mesh/Keys";
+    const string LinuxMeshProfiles = @".Mesh/Profiles";
 
-        static string _DirectoryKeys;
-        static string _DirectoryMesh;
+    static string _DirectoryKeys;
+    static string _DirectoryMesh;
 
-        ///<summary>Directory in which to store keys</summary> 
-        public virtual string DirectoryKeys => _DirectoryKeys;
+    ///<summary>Directory in which to store keys</summary> 
+    public virtual string DirectoryKeys => _DirectoryKeys;
 
-        ///<summary>Directory in which to store Mesh application data.</summary> 
-        public virtual string DirectoryMesh => _DirectoryMesh;
-        //</summary>    @"~\.Mesh\Keys\";
+    ///<summary>Directory in which to store Mesh application data.</summary> 
+    public virtual string DirectoryMesh => _DirectoryMesh;
+    //</summary>    @"~\.Mesh\Keys\";
 
 
-        static KeyCollectionCore() {
-            var platform = Environment.OSVersion.Platform;
+    static KeyCollectionCore() {
+        var platform = Environment.OSVersion.Platform;
 
-            switch (platform) {
-                case PlatformID.Unix: {
+        switch (platform) {
+            case PlatformID.Unix: {
                     SetPlatformUnix();
                     break;
                     }
-                case PlatformID.Win32NT: {
+            case PlatformID.Win32NT: {
                     SetPlatformWindows();
                     break;
                     }
-                case PlatformID.MacOSX: {
+            case PlatformID.MacOSX: {
                     SetPlatformUnix();
                     break;
                     }
 
-                case PlatformID.Win32S:
+            case PlatformID.Win32S:
                 break;
-                case PlatformID.Win32Windows:
+            case PlatformID.Win32Windows:
                 break;
-                case PlatformID.WinCE:
+            case PlatformID.WinCE:
                 break;
-                case PlatformID.Xbox:
+            case PlatformID.Xbox:
                 break;
-                default:
+            default:
                 break;
-                }
-
-
             }
 
 
-        static void SetPlatformWindows() {
-            var appsRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            _DirectoryKeys = Path.Combine(appsRoot, WindowsMeshKeys);
-            _DirectoryMesh = Path.Combine(appsRoot, WindowsMeshProfiles);
-            }
-
-        static void SetPlatformUnix() {
-            var userRoot = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            _DirectoryKeys = Path.Combine(userRoot, LinuxMeshKeys);
-            _DirectoryMesh = Path.Combine(userRoot, LinuxMeshProfiles);
-            }
-
-        ///<inheritdoc/>
-        public override void Persist(string udf, IPKIXPrivateKey privateKey, bool exportable) {
-            var fileName = Path.Combine(DirectoryKeys, udf);
-
-            // keys are persisted as plaintext for now.
-
-            var joseKey = Key.Factory(privateKey);
-            joseKey.Exportable = exportable;
-            var plaintext = joseKey.ToJson(true);
-
-            Directory.CreateDirectory(DirectoryKeys);
-            fileName.WriteFileNew(plaintext);
-
-
-            }
-        ///<inheritdoc/>
-        public override void Persist(string udf, IJson joseKey, bool exportable) {
-            var fileName = Path.Combine(DirectoryKeys, udf);
-
-            joseKey.Exportable = exportable;
-            var plaintext = joseKey.ToJson(true);
-
-            Directory.CreateDirectory(DirectoryKeys);
-            fileName.WriteFileNew(plaintext);
-
-
-            }
-
-        /// <summary>
-        /// Erase the private key <paramref name="udf"/> from storage.
-        /// </summary>
-        /// <param name="udf">The key to erase.</param>
-        public void ErasePrivateKey(string udf) {
-            var fileName = Path.Combine(DirectoryKeys, udf);
-
-            try {
-                File.Delete(fileName);
-                }
-            catch {
-                throw new KeyErasureFailed();
-                }
-            }
-
-        ///<inheritdoc/>
-        public override IJson LocatePrivateKey(string udf) {
-
-            var fileName = Path.Combine(DirectoryKeys, udf);
-
-            try {
-
-                fileName.OpenReadToEnd(out var data);
-                return Key.FromJson(data.JsonReader(), true);
-                }
-            catch {
-                throw new PrivateKeyNotFound();
-                }
-            }
-
-        ///<inheritdoc/>
-        public override bool LocatePrivateKeyPair(string udf, out CryptoKey cryptoKey) {
-
-            var fileName = Path.Combine(DirectoryKeys, udf);
-
-            try {
-
-                fileName.OpenReadToEnd(out var data);
-                var key = Key.FromJson(data.JsonReader(), true);
-                cryptoKey = key.GetKeyPair(key.Exportable ? KeySecurity.Exportable : KeySecurity.Bound, this);
-                return true;
-                }
-            catch {
-                return base.LocatePrivateKeyPair(udf, out cryptoKey);
-                }
-            }
-
-        /// <summary>
-        /// Validate the trust path specified in <paramref name="dareSignature"/> relative to the
-        /// trust anchor <paramref name="anchor"/> and return the result.
-        /// </summary>
-        /// <param name="dareSignature">The signature to evaluate.</param>
-        /// <param name="anchor">The trust anchor to evaluate relative to.</param>
-        /// <returns>The trust result.</returns>
-        public TrustResult ValidateTrustPath(DareSignature dareSignature, string anchor = null) => throw new NotImplementedException();
-        
-        ///<inheritdoc/>
-        public override KeyAgreementResult RemoteAgreement(string serviceAddress, KeyPairAdvanced ephemeral, string shareId) => throw new NotImplementedException();
         }
 
 
+    static void SetPlatformWindows() {
+        var appsRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        _DirectoryKeys = Path.Combine(appsRoot, WindowsMeshKeys);
+        _DirectoryMesh = Path.Combine(appsRoot, WindowsMeshProfiles);
+        }
 
+    static void SetPlatformUnix() {
+        var userRoot = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        _DirectoryKeys = Path.Combine(userRoot, LinuxMeshKeys);
+        _DirectoryMesh = Path.Combine(userRoot, LinuxMeshProfiles);
+        }
+
+    ///<inheritdoc/>
+    public override void Persist(string udf, IPKIXPrivateKey privateKey, bool exportable) {
+        var fileName = Path.Combine(DirectoryKeys, udf);
+
+        // keys are persisted as plaintext for now.
+
+        var joseKey = Key.Factory(privateKey);
+        joseKey.Exportable = exportable;
+        var plaintext = joseKey.ToJson(true);
+
+        Directory.CreateDirectory(DirectoryKeys);
+        fileName.WriteFileNew(plaintext);
+
+
+        }
+    ///<inheritdoc/>
+    public override void Persist(string udf, IJson joseKey, bool exportable) {
+        var fileName = Path.Combine(DirectoryKeys, udf);
+
+        joseKey.Exportable = exportable;
+        var plaintext = joseKey.ToJson(true);
+
+        Directory.CreateDirectory(DirectoryKeys);
+        fileName.WriteFileNew(plaintext);
+
+
+        }
+
+    /// <summary>
+    /// Erase the private key <paramref name="udf"/> from storage.
+    /// </summary>
+    /// <param name="udf">The key to erase.</param>
+    public void ErasePrivateKey(string udf) {
+        var fileName = Path.Combine(DirectoryKeys, udf);
+
+        try {
+            File.Delete(fileName);
+            }
+        catch {
+            throw new KeyErasureFailed();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override IJson LocatePrivateKey(string udf) {
+
+        var fileName = Path.Combine(DirectoryKeys, udf);
+
+        try {
+
+            fileName.OpenReadToEnd(out var data);
+            return Key.FromJson(data.JsonReader(), true);
+            }
+        catch {
+            throw new PrivateKeyNotFound();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool LocatePrivateKeyPair(string udf, out CryptoKey cryptoKey) {
+
+        var fileName = Path.Combine(DirectoryKeys, udf);
+
+        try {
+
+            fileName.OpenReadToEnd(out var data);
+            var key = Key.FromJson(data.JsonReader(), true);
+            cryptoKey = key.GetKeyPair(key.Exportable ? KeySecurity.Exportable : KeySecurity.Bound, this);
+            return true;
+            }
+        catch {
+            return base.LocatePrivateKeyPair(udf, out cryptoKey);
+            }
+        }
+
+    /// <summary>
+    /// Validate the trust path specified in <paramref name="dareSignature"/> relative to the
+    /// trust anchor <paramref name="anchor"/> and return the result.
+    /// </summary>
+    /// <param name="dareSignature">The signature to evaluate.</param>
+    /// <param name="anchor">The trust anchor to evaluate relative to.</param>
+    /// <returns>The trust result.</returns>
+    public TrustResult ValidateTrustPath(DareSignature dareSignature, string anchor = null) => throw new NotImplementedException();
+
+    ///<inheritdoc/>
+    public override KeyAgreementResult RemoteAgreement(string serviceAddress, KeyPairAdvanced ephemeral, string shareId) => throw new NotImplementedException();
     }
 
 

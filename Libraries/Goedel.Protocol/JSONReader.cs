@@ -30,105 +30,105 @@ using System.Text;
 using Goedel.IO;
 using Goedel.Utilities;
 
-namespace Goedel.Protocol {
+namespace Goedel.Protocol;
+
+/// <summary>
+/// Delegate method for creating structured readers
+/// </summary>
+/// <param name="Data"></param>
+/// <returns></returns>
+public delegate JsonReader JSONReaderFactoryDelegate(byte[] Data);
+
+/// <summary>
+/// JSON Reader base class. Note that this implementation uses a hand coded
+/// FSR rather than one generated with FSRGen. This should be fixed.
+/// </summary>
+public partial class JsonReader : Reader {
+
+    #region // Tokenizer tables
 
     /// <summary>
-    /// Delegate method for creating structured readers
+    /// Character type used by the FSM.
     /// </summary>
-    /// <param name="Data"></param>
-    /// <returns></returns>
-    public delegate JsonReader JSONReaderFactoryDelegate(byte[] Data);
+    protected enum CharType {
+        /// <summary></summary>
+        Quote = 0,
+        /// <summary></summary>
+        LeftBrace = 1,
+        /// <summary></summary>
+        RightBrace = 2,
+        /// <summary></summary>
+        LeftSquare = 3,
+        /// <summary></summary>
+        RightSquare = 4,
+        /// <summary></summary>
+        Solidus = 5,
+        /// <summary></summary>
+        Zero = 6,
+        /// <summary></summary>
+        Digit = 7,
+        /// <summary></summary>
+        Period = 8,
+        /// <summary></summary>
+        Colon = 9,
+        /// <summary></summary>
+        Comma = 10,
+        /// <summary></summary>
+        Minus = 11,
+        /// <summary></summary>
+        Plus = 12,
+        /// <summary></summary>
+        Ee = 13,
+        /// <summary></summary>
+        L_u = 14,
+        /// <summary></summary>
+        Escaped = 15,
+        /// <summary></summary>
+        Hex = 16,
+        /// <summary></summary>
+        Lower = 17,
+        /// <summary></summary>
+        WS = 18,
+        /// <summary></summary>
+        EOR = 19,
+        /// <summary></summary>
+        Other = 20,
+        }
 
     /// <summary>
-    /// JSON Reader base class. Note that this implementation uses a hand coded
-    /// FSR rather than one generated with FSRGen. This should be fixed.
+    /// Convert character to character type.
     /// </summary>
-    public partial class JsonReader : Reader {
+    /// <param name="c">Input character</param>
+    /// <returns>Character class</returns>
+    protected static CharType GetCharType(char c) {
+        if (c == '\"') { return CharType.Quote; }
+        if (c == '{') { return CharType.LeftBrace; }
+        if (c == '}') { return CharType.RightBrace; }
+        if (c == '[') { return CharType.LeftSquare; }
+        if (c == ']') { return CharType.RightSquare; }
+        if (c == '0') { return CharType.Zero; }
+        if ((c >= '0') & (c <= '9')) { return CharType.Digit; }
+        if (c == '.') { return CharType.Period; }
+        if (c == ':') { return CharType.Colon; }
+        if (c == ',') { return CharType.Comma; }
+        if (c == '-') { return CharType.Minus; }
+        if (c == '\\') { return CharType.Solidus; }
+        if (c == '+') { return CharType.Plus; }
+        if ((c == 'e') | (c == 'E')) { return CharType.Ee; }
+        if (c == 'u') { return CharType.L_u; }
+        if ((c == '/') | (c == 't') | (c == 'r') | (c == 'n') | (c == 'f') | (c == 'b')) { return CharType.Escaped; }
+        if ((c >= 'a') & (c <= 'f')) { return CharType.Hex; }
+        if ((c >= 'A') & (c <= 'F')) { return CharType.Hex; }
+        if ((c >= 'a') & (c <= 'z')) { return CharType.Lower; }
+        if ((c == ' ') | (c == '\t') | (c == '\r') | (c == '\n') | (c == '\f') | (c == '\b')) { return CharType.WS; }
+        if (c == 0x1e) { return CharType.EOR; }
+        return CharType.Other;
+        }
 
-        #region // Tokenizer tables
+    /// <summary>State transition table</summary>
+    protected int[,] States =
 
-        /// <summary>
-        /// Character type used by the FSM.
-        /// </summary>
-        protected enum CharType {
-            /// <summary></summary>
-            Quote = 0,
-            /// <summary></summary>
-            LeftBrace = 1,
-            /// <summary></summary>
-            RightBrace = 2,
-            /// <summary></summary>
-            LeftSquare = 3,
-            /// <summary></summary>
-            RightSquare = 4,
-            /// <summary></summary>
-            Solidus = 5,
-            /// <summary></summary>
-            Zero = 6,
-            /// <summary></summary>
-            Digit = 7,
-            /// <summary></summary>
-            Period = 8,
-            /// <summary></summary>
-            Colon = 9,
-            /// <summary></summary>
-            Comma = 10,
-            /// <summary></summary>
-            Minus = 11,
-            /// <summary></summary>
-            Plus = 12,
-            /// <summary></summary>
-            Ee = 13,
-            /// <summary></summary>
-            L_u = 14,
-            /// <summary></summary>
-            Escaped = 15,
-            /// <summary></summary>
-            Hex = 16,
-            /// <summary></summary>
-            Lower = 17,
-            /// <summary></summary>
-            WS = 18,
-            /// <summary></summary>
-            EOR = 19,
-            /// <summary></summary>
-            Other = 20,
-            }
-
-        /// <summary>
-        /// Convert character to character type.
-        /// </summary>
-        /// <param name="c">Input character</param>
-        /// <returns>Character class</returns>
-        protected static CharType GetCharType(char c) {
-            if (c == '\"') { return CharType.Quote; }
-            if (c == '{') { return CharType.LeftBrace; }
-            if (c == '}') { return CharType.RightBrace; }
-            if (c == '[') { return CharType.LeftSquare; }
-            if (c == ']') { return CharType.RightSquare; }
-            if (c == '0') { return CharType.Zero; }
-            if ((c >= '0') & (c <= '9')) { return CharType.Digit; }
-            if (c == '.') { return CharType.Period; }
-            if (c == ':') { return CharType.Colon; }
-            if (c == ',') { return CharType.Comma; }
-            if (c == '-') { return CharType.Minus; }
-            if (c == '\\') { return CharType.Solidus; }
-            if (c == '+') { return CharType.Plus; }
-            if ((c == 'e') | (c == 'E')) { return CharType.Ee; }
-            if (c == 'u') { return CharType.L_u; }
-            if ((c == '/') | (c == 't') | (c == 'r') | (c == 'n') | (c == 'f') | (c == 'b')) { return CharType.Escaped; }
-            if ((c >= 'a') & (c <= 'f')) { return CharType.Hex; }
-            if ((c >= 'A') & (c <= 'F')) { return CharType.Hex; }
-            if ((c >= 'a') & (c <= 'z')) { return CharType.Lower; }
-            if ((c == ' ') | (c == '\t') | (c == '\r') | (c == '\n') | (c == '\f') | (c == '\b')) { return CharType.WS; }
-            if (c == 0x1e) { return CharType.EOR; }
-            return CharType.Other;
-            }
-
-        /// <summary>State transition table</summary>
-        protected int[,] States =
-
-            {
+        {
                 // ",  {,  },  [,  ],  \,  0, 19,  .,  :,  ,,  -,  +, Ee,  u,esc,hex, az, WS, EOR, *   
                 { 15,  1,  2,  3,  4, -1,  7,  9, -1, 16,  6,  8, -1,  5,  5,  5,  5,  5,  0, 18, -1}, //  0 Start - eat WS
                 { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}, // 1 StartObject
@@ -166,22 +166,22 @@ namespace Goedel.Protocol {
                 { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}   // 27=18  EOR
             };
 
-        /// <summary>Actions to perform on transitions</summary>
-        protected enum Action {
-            /// <summary></summary>
-            Ignore,
-            /// <summary></summary>
-            Add,
-            /// <summary></summary>
-            Complete,
-            /// <summary></summary>
-            AddComplete,
-            /// <summary></summary>
-            Incomplete
-            }
+    /// <summary>Actions to perform on transitions</summary>
+    protected enum Action {
+        /// <summary></summary>
+        Ignore,
+        /// <summary></summary>
+        Add,
+        /// <summary></summary>
+        Complete,
+        /// <summary></summary>
+        AddComplete,
+        /// <summary></summary>
+        Incomplete
+        }
 
-        /// <summary>Actions to perform on transitions</summary>
-        protected Action[] Actions = {
+    /// <summary>Actions to perform on transitions</summary>
+    protected Action[] Actions = {
             Action.Ignore,          //  0
             Action.Complete,     //  1
             Action.Complete,     //  2
@@ -212,59 +212,59 @@ namespace Goedel.Protocol {
             Action.Ignore           // 27=18
             };
 
-        /// <summary>Tokens to return.</summary>
-        public enum Token {
-            /// <summary>The token is invalid</summary>
-            Invalid,
-            /// <summary>Start object token '{' </summary>
-            StartObject,
-            /// <summary>End object token '}' </summary>
-            EndObject,
-            /// <summary>Start array token '{'</summary>
-            StartArray,
-            /// <summary>End array token '}'</summary>
-            EndArray,
-            /// <summary>Colon</summary>
-            Colon,
-            /// <summary>Comma</summary>
-            Comma,
-            /// <summary>String (UTF8)</summary>
-            String,
-            /// <summary>String Tag(UTF8)</summary>
-            Tag,
+    /// <summary>Tokens to return.</summary>
+    public enum Token {
+        /// <summary>The token is invalid</summary>
+        Invalid,
+        /// <summary>Start object token '{' </summary>
+        StartObject,
+        /// <summary>End object token '}' </summary>
+        EndObject,
+        /// <summary>Start array token '{'</summary>
+        StartArray,
+        /// <summary>End array token '}'</summary>
+        EndArray,
+        /// <summary>Colon</summary>
+        Colon,
+        /// <summary>Comma</summary>
+        Comma,
+        /// <summary>String (UTF8)</summary>
+        String,
+        /// <summary>String Tag(UTF8)</summary>
+        Tag,
 
-            /// <summary>Number</summary>
-            Number,
+        /// <summary>Number</summary>
+        Number,
 
-            /// <summary>An Integer Number</summary>
-            Integer,
-            /// <summary>A Real32 Number</summary>
-            Real32,
-            /// <summary>A Real64 Number</summary>
-            Real64,
+        /// <summary>An Integer Number</summary>
+        Integer,
+        /// <summary>A Real32 Number</summary>
+        Real32,
+        /// <summary>A Real64 Number</summary>
+        Real64,
 
-            /// <summary>A string litteral, for internal use.</summary>
-            Litteral,
-            /// <summary>The string litteral true</summary>
-            True,
-            /// <summary>The string litteral false</summary>
-            False,
-            /// <summary>The string litteral null</summary>
-            Null,
-            /// <summary>End of record</summary>
-            EndRecord,
-            /// <summary>Binary data</summary>
-            Binary,
-            /// <summary>JSON-BCD extended tag, for internal use</summary>
-            JSONBCD,
-            /// <summary>Byte Order Mark</summary>
-            BOM,
-            /// <summary></summary>
-            Empty
-            }
+        /// <summary>A string litteral, for internal use.</summary>
+        Litteral,
+        /// <summary>The string litteral true</summary>
+        True,
+        /// <summary>The string litteral false</summary>
+        False,
+        /// <summary>The string litteral null</summary>
+        Null,
+        /// <summary>End of record</summary>
+        EndRecord,
+        /// <summary>Binary data</summary>
+        Binary,
+        /// <summary>JSON-BCD extended tag, for internal use</summary>
+        JSONBCD,
+        /// <summary>Byte Order Mark</summary>
+        BOM,
+        /// <summary></summary>
+        Empty
+        }
 
-        /// <summary>Tokens to be returned if the FSR stops in the specified state.</summary>
-        protected Token[] Tokens = {
+    /// <summary>Tokens to be returned if the FSR stops in the specified state.</summary>
+    protected Token[] Tokens = {
             Token.Empty,                //  0
             Token.StartObject,          //  1
             Token.EndObject,            //  2
@@ -295,335 +295,335 @@ namespace Goedel.Protocol {
             Token.EndRecord               // 26
                                   };
 
-        #endregion
+    #endregion
 
 
-        ///<summary>The Line Number (used for error reporting)</summary> 
-        public int Line = 1;
+    ///<summary>The Line Number (used for error reporting)</summary> 
+    public int Line = 1;
 
-        ///<summary>The Colum number (used for error reporting)</summary> 
-        public int Column = 1;
+    ///<summary>The Colum number (used for error reporting)</summary> 
+    public int Column = 1;
 
-        /// <summary>If true there is a token in the lookahead buffer.</summary>
-        protected bool Lookahead = false;
+    /// <summary>If true there is a token in the lookahead buffer.</summary>
+    protected bool Lookahead = false;
 
-        /// <summary>The current token string value</summary>
-        protected virtual string ResultString { get; set; }
+    /// <summary>The current token string value</summary>
+    protected virtual string ResultString { get; set; }
 
-        /// <summary>The current token binary value</summary>
-        protected virtual byte[] ResultBinary { get; set; }
+    /// <summary>The current token binary value</summary>
+    protected virtual byte[] ResultBinary { get; set; }
 
-        /// <summary>Last Real32/single precision floating point value.</summary>
-        public float ResultFloat;
+    /// <summary>Last Real32/single precision floating point value.</summary>
+    public float ResultFloat;
 
-        /// <summary>Last Real64/double precision floating point value.</summary>
-        public double ResultDouble;
+    /// <summary>Last Real64/double precision floating point value.</summary>
+    public double ResultDouble;
 
-        /// <summary>Last integer value.</summary>
-        public long ResultInt64;
+    /// <summary>Last integer value.</summary>
+    public long ResultInt64;
 
-        /// <summary>Last big integer value.</summary>
-        public BigInteger ResultBigInteger;
-
-
-        /// <summary>The last token type read</summary>
-        public Token TokenType = Token.Invalid;
-
-        /// <summary>If true, have reached the end of the current record.</summary>
-        public bool EOF => CharacterInput.EOF;
-
-        /// <summary>If true, emit trace value for debugging.</summary>
-        public static bool Trace { get; set; } = false;
-
-        /// <summary>
-        /// Delegate method for creating structured readers
-        /// </summary>
-        public static JSONReaderFactoryDelegate JSONReaderFactory => JsonReaderFactoryByte;
-        static JsonReader JsonReaderFactoryByte(byte[] Data) => new(Data);
+    /// <summary>Last big integer value.</summary>
+    public BigInteger ResultBigInteger;
 
 
-        StringBuilder stringBuilder = new();
+    /// <summary>The last token type read</summary>
+    public Token TokenType = Token.Invalid;
 
-        /// <summary>
-        /// The underlying character stream.
-        /// </summary>
-        protected ICharacterStream CharacterInput;
+    /// <summary>If true, have reached the end of the current record.</summary>
+    public bool EOF => CharacterInput.EOF;
 
-        /// <summary>
-        /// Construct a JSONReader from a TextReader stream.
-        /// </summary>
-        /// <param name="Input">The stream to be read.</param>
-        public JsonReader(TextReader Input) => CharacterInput = new CharacterStreamTextReader(Input);
+    /// <summary>If true, emit trace value for debugging.</summary>
+    public static bool Trace { get; set; } = false;
 
-        /// <summary>
-        /// Construct a JSONReader from a string.
-        /// </summary>
-        /// <param name="Input">The string to be read.</param>
-        public JsonReader(string Input) => CharacterInput = new CharacterStreamStringReader(Input);
-
-        /// <summary>
-        /// Construct a JSONReader from a byte Stream.
-        /// </summary>
-        /// <param name="Input">The stream to be read.</param>
-        public JsonReader(Stream Input) => CharacterInput = (Input.CanSeek) ?
-                new CharacterStreamSeekReader(Input) : new CharacterStreamReader(Input);
-
-        /// <summary>
-        /// Construct a JSONReader from a byte array.
-        /// </summary>
-        /// <param name="Input">The data to be read.</param>
-        public JsonReader(byte[] Input) => CharacterInput = new CharacterStreamDataReader(Input);
-
-        /// <summary>
-        /// If true, the last token returned was a non-terminal, i.e. chunked production.
-        /// </summary>
-        public bool Terminal { get; protected set; } = true;
+    /// <summary>
+    /// Delegate method for creating structured readers
+    /// </summary>
+    public static JSONReaderFactoryDelegate JSONReaderFactory => JsonReaderFactoryByte;
+    static JsonReader JsonReaderFactoryByte(byte[] Data) => new(Data);
 
 
-        /// <summary>Get the next token.</summary>
-        public virtual void PeekToken() {
-            if (EOF) {
-                return;
-                }
-            if (!Lookahead) {
-                TokenType = Lexer();
-                Lookahead = true;
-                }
-            if (Trace) {
-                //Screen.WriteLine("Peek {0} \"{1}\"", TokenType, ResultString);
-                }
+    StringBuilder stringBuilder = new();
+
+    /// <summary>
+    /// The underlying character stream.
+    /// </summary>
+    protected ICharacterStream CharacterInput;
+
+    /// <summary>
+    /// Construct a JSONReader from a TextReader stream.
+    /// </summary>
+    /// <param name="Input">The stream to be read.</param>
+    public JsonReader(TextReader Input) => CharacterInput = new CharacterStreamTextReader(Input);
+
+    /// <summary>
+    /// Construct a JSONReader from a string.
+    /// </summary>
+    /// <param name="Input">The string to be read.</param>
+    public JsonReader(string Input) => CharacterInput = new CharacterStreamStringReader(Input);
+
+    /// <summary>
+    /// Construct a JSONReader from a byte Stream.
+    /// </summary>
+    /// <param name="Input">The stream to be read.</param>
+    public JsonReader(Stream Input) => CharacterInput = (Input.CanSeek) ?
+            new CharacterStreamSeekReader(Input) : new CharacterStreamReader(Input);
+
+    /// <summary>
+    /// Construct a JSONReader from a byte array.
+    /// </summary>
+    /// <param name="Input">The data to be read.</param>
+    public JsonReader(byte[] Input) => CharacterInput = new CharacterStreamDataReader(Input);
+
+    /// <summary>
+    /// If true, the last token returned was a non-terminal, i.e. chunked production.
+    /// </summary>
+    public bool Terminal { get; protected set; } = true;
+
+
+    /// <summary>Get the next token.</summary>
+    public virtual void PeekToken() {
+        if (EOF) {
+            return;
             }
-
-        /// <summary>
-        /// If true, there is additional data to be collected.
-        /// </summary>
-        protected bool Incomplete = false;
-
-        /// <summary>Get the next token.</summary>
-        public virtual void GetToken(bool Binary = false) {
-            if (EOF) {
-                return;
-                }
-            PeekToken();
-            if (Incomplete) {
-                if (Binary) {
-                    ResultBinary = CharacterInput.GetBinaryBase64();
-                    }
-                else {
-                    ResultString = CharacterInput.GetStringJSON();
-                    }
-                Incomplete = false;
-                }
-            Lookahead = false;
-
-            if (Trace) {
-                Screen.WriteInfo($"Got  {TokenType} \"{ResultString}\"");
-                }
+        if (!Lookahead) {
+            TokenType = Lexer();
+            Lookahead = true;
             }
+        if (Trace) {
+            //Screen.WriteLine("Peek {0} \"{1}\"", TokenType, ResultString);
+            }
+        }
 
+    /// <summary>
+    /// If true, there is additional data to be collected.
+    /// </summary>
+    protected bool Incomplete = false;
 
-        /// <summary>Get the next lexical token.
-        /// <para>Note that this reader only performs lexical analysis of
-        /// the ASCII oriented parts of the JSON syntax, that is
-        /// everything other than strings.</para></summary>
-        protected virtual Token Lexer() {
-            stringBuilder.Clear();
-
-            bool Going = true;
-            bool Complete = false;
-            int State = 0;
-            Token Token = Token.Invalid;
+    /// <summary>Get the next token.</summary>
+    public virtual void GetToken(bool Binary = false) {
+        if (EOF) {
+            return;
+            }
+        PeekToken();
+        if (Incomplete) {
+            if (Binary) {
+                ResultBinary = CharacterInput.GetBinaryBase64();
+                }
+            else {
+                ResultString = CharacterInput.GetStringJSON();
+                }
             Incomplete = false;
+            }
+        Lookahead = false;
 
-            //string In = "";
-            while (Going & !EOF) {
-                var c = (char)CharacterInput.PeekByte();
-                //In = In + c;
+        if (Trace) {
+            Screen.WriteInfo($"Got  {TokenType} \"{ResultString}\"");
+            }
+        }
 
-                if (State == 0 & c == 0xEF) {
-                    CharacterInput.ReadByte();
 
-                    if (CharacterInput.ReadByte() != 0xBB) {
-                        return Token.Invalid;
-                        }
-                    if (CharacterInput.ReadByte() != 0xBF) {
-                        return Token.Invalid;
-                        }
-                    return Token.BOM;
+    /// <summary>Get the next lexical token.
+    /// <para>Note that this reader only performs lexical analysis of
+    /// the ASCII oriented parts of the JSON syntax, that is
+    /// everything other than strings.</para></summary>
+    protected virtual Token Lexer() {
+        stringBuilder.Clear();
+
+        bool Going = true;
+        bool Complete = false;
+        int State = 0;
+        Token Token = Token.Invalid;
+        Incomplete = false;
+
+        //string In = "";
+        while (Going & !EOF) {
+            var c = (char)CharacterInput.PeekByte();
+            //In = In + c;
+
+            if (State == 0 & c == 0xEF) {
+                CharacterInput.ReadByte();
+
+                if (CharacterInput.ReadByte() != 0xBB) {
+                    return Token.Invalid;
                     }
-
-
-                if (State == 0 & c > 127) {
-                    return Token.JSONBCD;
+                if (CharacterInput.ReadByte() != 0xBF) {
+                    return Token.Invalid;
                     }
+                return Token.BOM;
+                }
 
-                int Type = (int)GetCharType(c);
 
-                if (EOF) {
-                    if (State == 0) {
-                        return Token.Empty;
-                        }
+            if (State == 0 & c > 127) {
+                return Token.JSONBCD;
+                }
+
+            int Type = (int)GetCharType(c);
+
+            if (EOF) {
+                if (State == 0) {
+                    return Token.Empty;
                     }
-                State = States[State, Type];
-                if (State < 0) {
-                    if (!Complete) {
-                        return Token.Invalid;
-                        }
-                    else if (Token == Token.Litteral) {
-                        return (stringBuilder.ToString()) switch {
-                            "true" => Token.True,
-                            "false" => Token.False,
-                            "null" => Token.Null,
-                            _ => Token.Invalid,
-                            };
-                        }
-                    ResultString = stringBuilder.ToString();
-                    return Token;
-
+                }
+            State = States[State, Type];
+            if (State < 0) {
+                if (!Complete) {
+                    return Token.Invalid;
                     }
+                else if (Token == Token.Litteral) {
+                    return (stringBuilder.ToString()) switch {
+                        "true" => Token.True,
+                        "false" => Token.False,
+                        "null" => Token.Null,
+                        _ => Token.Invalid,
+                        };
+                    }
+                ResultString = stringBuilder.ToString();
+                return Token;
 
-                Token = Tokens[State];
+                }
 
-                CharacterInput.ReadByte(); // Consume character
-                switch (Actions[State]) {
-                    case Action.Add: {
+            Token = Tokens[State];
+
+            CharacterInput.ReadByte(); // Consume character
+            switch (Actions[State]) {
+                case Action.Add: {
                         stringBuilder.Append(c);
                         break;
                         }
-                    case Action.AddComplete: {
+                case Action.AddComplete: {
                         Complete = true;
                         stringBuilder.Append(c);
                         break;
                         }
-                    case Action.Complete: {
+                case Action.Complete: {
                         Complete = true;
                         break;
                         }
-                    case Action.Incomplete: {
+                case Action.Incomplete: {
                         Complete = true;
                         Incomplete = true;
                         break;
                         }
 
-                    case Action.Ignore:
+                case Action.Ignore:
                     break;
-                    default:
+                default:
                     break;
-                    }
                 }
-            return Token;
+            }
+        return Token;
+        }
+
+
+
+
+    /// <summary>
+    /// Attempt to read an object start from input.
+    /// </summary>
+    /// <returns>True if there is an object start item, otherwise 
+    /// false</returns> 
+    public override bool StartObject() {
+        GetToken();
+        if ((TokenType == Token.EndRecord) | EOF) {
+            return false;
             }
 
+        if (TokenType != Token.StartObject) {
+            throw new InvalidInput("Expected {");
+            }
 
-
-
-        /// <summary>
-        /// Attempt to read an object start from input.
-        /// </summary>
-        /// <returns>True if there is an object start item, otherwise 
-        /// false</returns> 
-        public override bool StartObject() {
+        PeekToken();
+        if (TokenType == Token.EndObject) {
             GetToken();
-            if ((TokenType == Token.EndRecord) | EOF) {
-                return false;
-                }
-
-            if (TokenType != Token.StartObject) {
-                throw new InvalidInput("Expected {");
-                }
-
-            PeekToken();
-            if (TokenType == Token.EndObject) {
-                GetToken();
-                return false;
-                }
-
-            return true;
+            return false;
             }
 
-        /// <summary>
-        /// Attempt to read an object end from input.
-        /// </summary>
-        public override void EndObject() {
-            GetToken();
-            if (TokenType != Token.EndObject) {
-                throw new InvalidInput("Expected }");
-                }
+        return true;
+        }
+
+    /// <summary>
+    /// Attempt to read an object end from input.
+    /// </summary>
+    public override void EndObject() {
+        GetToken();
+        if (TokenType != Token.EndObject) {
+            throw new InvalidInput("Expected }");
             }
+        }
 
 
-        /// <summary>
-        /// Attempt to read an object from input.
-        /// </summary>
-        /// <returns>True if there is a next object.</returns>
-        public override bool NextObject() {
-            PeekToken();
-            switch (TokenType) {
-                case Token.Comma: {
+    /// <summary>
+    /// Attempt to read an object from input.
+    /// </summary>
+    /// <returns>True if there is a next object.</returns>
+    public override bool NextObject() {
+        PeekToken();
+        switch (TokenType) {
+            case Token.Comma: {
                     GetToken();
                     return true; // another tag to come
                     }
-                case Token.EndObject: {
+            case Token.EndObject: {
                     GetToken();
                     return false; // end of object reached
                     }
 
-                case Token.Invalid:
+            case Token.Invalid:
                 break;
-                case Token.StartObject:
+            case Token.StartObject:
                 break;
-                case Token.StartArray:
+            case Token.StartArray:
                 break;
-                case Token.EndArray:
+            case Token.EndArray:
                 break;
-                case Token.Colon:
+            case Token.Colon:
                 break;
-                case Token.String:
+            case Token.String:
                 break;
-                case Token.Tag:
+            case Token.Tag:
                 break;
-                case Token.Number:
+            case Token.Number:
                 break;
-                case Token.Integer:
+            case Token.Integer:
                 break;
-                case Token.Real32:
+            case Token.Real32:
                 break;
-                case Token.Real64:
+            case Token.Real64:
                 break;
-                case Token.Litteral:
+            case Token.Litteral:
                 break;
-                case Token.True:
+            case Token.True:
                 break;
-                case Token.False:
+            case Token.False:
                 break;
-                case Token.Null:
+            case Token.Null:
                 break;
-                case Token.EndRecord:
+            case Token.EndRecord:
                 break;
-                case Token.Binary:
+            case Token.Binary:
                 break;
-                case Token.JSONBCD:
+            case Token.JSONBCD:
                 break;
-                case Token.Empty:
+            case Token.Empty:
                 break;
-                default:
+            default:
                 break;
-                }
-            throw new InvalidInput("Expected , or }");
             }
+        throw new InvalidInput("Expected , or }");
+        }
 
-        /// <summary>
-        /// Attempt to read a token from input.
-        /// </summary>
-        /// <returns>The token read.</returns>
-        public override string ReadToken() {
-            GetToken();
-            switch (TokenType) {
-                case Token.EndObject:
+    /// <summary>
+    /// Attempt to read a token from input.
+    /// </summary>
+    /// <returns>The token read.</returns>
+    public override string ReadToken() {
+        GetToken();
+        switch (TokenType) {
+            case Token.EndObject:
                 return null;
-                case Token.Tag:
+            case Token.Tag:
                 return ResultString;
-                case Token.String: {
+            case Token.String: {
                     var Result = ResultString;
                     GetToken();
                     if (TokenType != Token.Colon) {
@@ -631,214 +631,211 @@ namespace Goedel.Protocol {
                         }
                     return Result;
                     }
-                default:
+            default:
                 break;
-                }
-            throw new InvalidInput("Expected \"Tag\"");
             }
+        throw new InvalidInput("Expected \"Tag\"");
+        }
 
-        /// <summary>
-        /// Attempt to read Integer 32 from input.
-        /// </summary>
-        /// <returns>The data read</returns>
-        public override int ReadInteger32() {
-            GetToken();
-            return TokenType switch {
-                Token.Number => Convert.ToInt32(ResultString),
-                Token.Integer => (int)ResultInt64,
-                _ => throw new InvalidInput("Expected Number"),
-                };
-            }
+    /// <summary>
+    /// Attempt to read Integer 32 from input.
+    /// </summary>
+    /// <returns>The data read</returns>
+    public override int ReadInteger32() {
+        GetToken();
+        return TokenType switch {
+            Token.Number => Convert.ToInt32(ResultString),
+            Token.Integer => (int)ResultInt64,
+            _ => throw new InvalidInput("Expected Number"),
+            };
+        }
 
-        /// <summary>
-        /// Attempt to read Integer 64 from input.
-        /// </summary>
-        /// <returns>The data read</returns>
-        public override long ReadInteger64() {
-            GetToken();
-            return TokenType switch {
-                Token.Number => Convert.ToInt64(ResultString),
-                Token.Integer => ResultInt64,
-                _ => throw new InvalidInput("Expected Number"),
-                };
-            }
+    /// <summary>
+    /// Attempt to read Integer 64 from input.
+    /// </summary>
+    /// <returns>The data read</returns>
+    public override long ReadInteger64() {
+        GetToken();
+        return TokenType switch {
+            Token.Number => Convert.ToInt64(ResultString),
+            Token.Integer => ResultInt64,
+            _ => throw new InvalidInput("Expected Number"),
+            };
+        }
 
-        /// <summary>
-        /// Attempt to read boolean from input.
-        /// </summary>
-        /// <returns>The data read</returns>
-        public override bool ReadBoolean() {
-            GetToken();
-            if (TokenType == Token.True) {
-                return true;
-                }
-            if (TokenType == Token.False) {
-                return false;
-                }
-            throw new InvalidInput("Expected true or false");
-            }
-
-        /// <summary>
-        /// Attempt to read binary data from input.
-        /// </summary>
-        /// <returns>The data read</returns>
-        public override byte[] ReadBinary() {
-            GetToken(true);
-            return TokenType switch {
-                Token.String => ResultBinary,
-                Token.Binary => ReadBinaryData(),
-                _ => throw new InvalidInput("Expected BASE64 encoded binary"),
-                };
-            }
-
-        /// <summary>
-        /// Attempt to read a binary object in incremental mode.
-        /// </summary>
-        /// <param name="Chunk">The data read.</param>
-        /// <returns>True if there is more data to be read</returns>
-        public override bool ReadBinaryIncremental(out byte[] Chunk) {
-            Chunk = ReadBinary();
-            return false;
-            }
-
-
-        /// <summary>
-        /// Read binary data. This method is not supported on the base JSON reader.
-        /// </summary>
-        /// <returns>The binary data read.</returns>
-        public virtual byte[] ReadBinaryData() => throw new NYI();
-
-
-        /// <summary>
-        /// Attempt to read string from input.
-        /// </summary>
-        /// <returns>The data read</returns>
-        public override string ReadString() {
-            GetToken();
-            if (TokenType != Token.String) {
-                throw new InvalidInput("Expected \"String\"");
-                }
-            return ResultString;
-            }
-
-        /// <summary>
-        /// Attempt to read date time from input.
-        /// </summary>
-        /// <returns>The data read</returns>
-        public override DateTime ReadDateTime() {
-            GetToken();
-            if (TokenType != Token.String) {
-                throw new InvalidInput("Expected \"DateTime\"");
-                }
-            return ResultString.FromRFC3339();
-            }
-
-        /// <summary>
-        /// Attempt to read start of array from input.
-        /// </summary>
-        /// <returns>True if there is an array start token, otherwise 
-        /// false</returns>
-        public override bool StartArray() {
-            GetToken();
-            if (TokenType != Token.StartArray) {
-                throw new InvalidInput("Expected [");
-                }
-            PeekToken();
-            if (TokenType == Token.EndArray) {
-                GetToken();
-                return false;
-                }
+    /// <summary>
+    /// Attempt to read boolean from input.
+    /// </summary>
+    /// <returns>The data read</returns>
+    public override bool ReadBoolean() {
+        GetToken();
+        if (TokenType == Token.True) {
             return true;
             }
+        if (TokenType == Token.False) {
+            return false;
+            }
+        throw new InvalidInput("Expected true or false");
+        }
 
-        /// <summary>
-        /// Return true if there is a following array item.
-        /// </summary>
-        /// <returns>True if there is a following array item, otherwise 
-        /// false</returns>
-        public override bool NextArray() {
+    /// <summary>
+    /// Attempt to read binary data from input.
+    /// </summary>
+    /// <returns>The data read</returns>
+    public override byte[] ReadBinary() {
+        GetToken(true);
+        return TokenType switch {
+            Token.String => ResultBinary,
+            Token.Binary => ReadBinaryData(),
+            _ => throw new InvalidInput("Expected BASE64 encoded binary"),
+            };
+        }
+
+    /// <summary>
+    /// Attempt to read a binary object in incremental mode.
+    /// </summary>
+    /// <param name="Chunk">The data read.</param>
+    /// <returns>True if there is more data to be read</returns>
+    public override bool ReadBinaryIncremental(out byte[] Chunk) {
+        Chunk = ReadBinary();
+        return false;
+        }
+
+
+    /// <summary>
+    /// Read binary data. This method is not supported on the base JSON reader.
+    /// </summary>
+    /// <returns>The binary data read.</returns>
+    public virtual byte[] ReadBinaryData() => throw new NYI();
+
+
+    /// <summary>
+    /// Attempt to read string from input.
+    /// </summary>
+    /// <returns>The data read</returns>
+    public override string ReadString() {
+        GetToken();
+        if (TokenType != Token.String) {
+            throw new InvalidInput("Expected \"String\"");
+            }
+        return ResultString;
+        }
+
+    /// <summary>
+    /// Attempt to read date time from input.
+    /// </summary>
+    /// <returns>The data read</returns>
+    public override DateTime ReadDateTime() {
+        GetToken();
+        if (TokenType != Token.String) {
+            throw new InvalidInput("Expected \"DateTime\"");
+            }
+        return ResultString.FromRFC3339();
+        }
+
+    /// <summary>
+    /// Attempt to read start of array from input.
+    /// </summary>
+    /// <returns>True if there is an array start token, otherwise 
+    /// false</returns>
+    public override bool StartArray() {
+        GetToken();
+        if (TokenType != Token.StartArray) {
+            throw new InvalidInput("Expected [");
+            }
+        PeekToken();
+        if (TokenType == Token.EndArray) {
             GetToken();
-            if (TokenType == Token.Comma) {
-                return true; // another tag to come
-                }
-            else if (TokenType == Token.EndArray) {
-                return false; // end of array reached
-                }
-            else {
-                throw new InvalidInput("Expected , or ]");
-                }
+            return false;
+            }
+        return true;
+        }
+
+    /// <summary>
+    /// Return true if there is a following array item.
+    /// </summary>
+    /// <returns>True if there is a following array item, otherwise 
+    /// false</returns>
+    public override bool NextArray() {
+        GetToken();
+        if (TokenType == Token.Comma) {
+            return true; // another tag to come
+            }
+        else if (TokenType == Token.EndArray) {
+            return false; // end of array reached
+            }
+        else {
+            throw new InvalidInput("Expected , or ]");
+            }
+        }
+
+
+    /// <summary>
+    /// Attempt to read an object end from input.
+    /// </summary>
+    public override void EndArray() {
+        GetToken();
+        if (TokenType != Token.EndArray) {
+            throw new InvalidInput("Expected ]");
+            }
+        }
+
+    /// <summary>
+    /// Read a tagged object from this stream.
+    /// </summary>
+    /// <param name="TagDictionary">Dictionary mapping tags to factory methods</param>
+    /// <returns>The deserialized object.</returns>
+    public JsonObject ReadTaggedObject(
+                Dictionary<string, JsonFactoryDelegate> TagDictionary) {
+
+        Assert.AssertNotNull(TagDictionary, DictionaryInitialization.Throw);
+
+        JsonObject Out = null;
+        StartObject();
+        if (EOF) {
+            return null;
+            }
+
+        var Token = ReadToken();
+
+        Assert.AssertTrue(TagDictionary.TryGetValue(Token, out var Delegate), UnknownTag.Throw);
+        Out = Delegate();
+        Out.Deserialize(this);
+        EndObject();
+        return Out;
+        }
+
+
+    /// <summary>
+    /// Convenience method, reads a file in the 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="file"></param>
+    /// <param name="tagged"></param>
+    /// <returns></returns>
+    public static T ReadFile<T>(string file, bool tagged) where T : JsonObject, new() {
+        var result = new T();
+        using var stream = file.OpenFileReadShared();
+        var countedStream = new CountedUtf8StreamReader(stream);
+        using var reader = new JsonReader(countedStream);
+
+        reader.PeekToken();
+        if (reader.TokenType == Token.BOM) {
+            reader.Lookahead = false; // skip BOM at start of file.
+            }
+
+        // Have only implemented untagged files so far.
+        tagged.AssertFalse(NYI.Throw);
+
+        try {
+            result.Deserialize(reader);
+            }
+        catch (Exception e) {
+            throw new ParseError(null, e, file, countedStream.Line, countedStream.Column);
             }
 
 
-        /// <summary>
-        /// Attempt to read an object end from input.
-        /// </summary>
-        public override void EndArray() {
-            GetToken();
-            if (TokenType != Token.EndArray) {
-                throw new InvalidInput("Expected ]");
-                }
-            }
-
-        /// <summary>
-        /// Read a tagged object from this stream.
-        /// </summary>
-        /// <param name="TagDictionary">Dictionary mapping tags to factory methods</param>
-        /// <returns>The deserialized object.</returns>
-        public JsonObject ReadTaggedObject(
-                    Dictionary<string, JsonFactoryDelegate> TagDictionary) {
-
-            Assert.AssertNotNull(TagDictionary, DictionaryInitialization.Throw);
-
-            JsonObject Out = null;
-            StartObject();
-            if (EOF) {
-                return null;
-                }
-
-            var Token = ReadToken();
-
-            Assert.AssertTrue(TagDictionary.TryGetValue(Token, out var Delegate), UnknownTag.Throw);
-            Out = Delegate();
-            Out.Deserialize(this);
-            EndObject();
-            return Out;
-            }
-
-
-        /// <summary>
-        /// Convenience method, reads a file in the 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="file"></param>
-        /// <param name="tagged"></param>
-        /// <returns></returns>
-        public static T ReadFile<T>(string file, bool tagged) where T : JsonObject, new() {
-            var result = new T();
-            using var stream = file.OpenFileReadShared();
-            var countedStream = new CountedUtf8StreamReader(stream);
-            using var reader = new JsonReader(countedStream);
-
-            reader.PeekToken();
-            if (reader.TokenType == Token.BOM) {
-                reader.Lookahead = false; // skip BOM at start of file.
-                }
-
-            // Have only implemented untagged files so far.
-            tagged.AssertFalse(NYI.Throw);
-
-            try {
-                result.Deserialize(reader);
-                }
-            catch (Exception e) {
-                throw new ParseError(null, e, file, countedStream.Line, countedStream.Column);
-                }
-
-
-            return result;
-            }
-
-
+        return result;
         }
 
 

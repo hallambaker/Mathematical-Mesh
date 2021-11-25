@@ -28,142 +28,137 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
-    #region // ActivationApplicationGroup
-    public partial class ActivationApplicationGroup {
-        #region // Properties
-        ///<summary>The enveloped object</summary> 
-        public Enveloped<ActivationApplicationGroup> GetEnvelopedActivationApplicationGroup() =>
-            new(DareEnvelope);
+#region // ActivationApplicationGroup
+public partial class ActivationApplicationGroup {
+    #region // Properties
+    ///<summary>The enveloped object</summary> 
+    public Enveloped<ActivationApplicationGroup> GetEnvelopedActivationApplicationGroup() =>
+        new(DareEnvelope);
 
-        #endregion
-
-
-        }
     #endregion
 
-    #region // ApplicationEntryGroup
 
-    public partial class ApplicationEntryGroup {
+    }
+#endregion
 
-        #region // Properties
-        ///<summary>The decrypted activation.</summary> 
-        public ActivationApplicationGroup Activation { get; set; }
+#region // ApplicationEntryGroup
 
-        #endregion
-        #region // Methods
+public partial class ApplicationEntryGroup {
 
-        ///<inheritdoc/>
-        public override void Decode(IKeyCollection keyCollection) =>
-            Activation = EnvelopedActivation.Decode(keyCollection);
+    #region // Properties
+    ///<summary>The decrypted activation.</summary> 
+    public ActivationApplicationGroup Activation { get; set; }
 
-        /// <summary>
-        /// Construct an activation record for the group.
-        /// </summary>
-        /// <returns></returns>
-        public ActivationAccount GetActivationAccount() => new(Activation);
+    #endregion
+    #region // Methods
+
+    ///<inheritdoc/>
+    public override void Decode(IKeyCollection keyCollection) =>
+        Activation = EnvelopedActivation.Decode(keyCollection);
+
+    /// <summary>
+    /// Construct an activation record for the group.
+    /// </summary>
+    /// <returns></returns>
+    public ActivationAccount GetActivationAccount() => new(Activation);
 
 
-        #endregion
-
-        }
     #endregion
 
-    public partial class CatalogedGroup {
-        #region // Properties
-        ///<summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
-        public static string GetGroupID(string groupAddress) => MeshConstants.PrefixCatalogedGroup + groupAddress;
+    }
+#endregion
 
-        /// <summary>
-        /// The primary key used to catalog the entry.
-        /// </summary>
-        public override string _PrimaryKey => GetGroupID(Key);
+public partial class CatalogedGroup {
+    #region // Properties
+    ///<summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
+    public static string GetGroupID(string groupAddress) => MeshConstants.PrefixCatalogedGroup + groupAddress;
+
+    /// <summary>
+    /// The primary key used to catalog the entry.
+    /// </summary>
+    public override string _PrimaryKey => GetGroupID(Key);
 
 
-        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileGroup"/>
-        ///to return the <see cref="ProfileUser"/> value.</summary>
-        public ProfileGroup ProfileGroup => profileGroup ??
-                    (EnvelopedProfileGroup.Decode(KeyCollection) as ProfileGroup).CacheValue(out profileGroup);
-        ProfileGroup profileGroup;
+    ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileGroup"/>
+    ///to return the <see cref="ProfileUser"/> value.</summary>
+    public ProfileGroup ProfileGroup => profileGroup ??
+                (EnvelopedProfileGroup.Decode(KeyCollection) as ProfileGroup).CacheValue(out profileGroup);
+    ProfileGroup profileGroup;
 
-        ActivationAccount ActivationAccount { get; set; }
+    ActivationAccount ActivationAccount { get; set; }
 
-        /// <summary>
-        /// Return the escrowed keys.
-        /// </summary>
-        /// <returns></returns>
-        public override KeyData[] GetEscrow() => 
-            new KeyData[] { new KeyData () {
+    /// <summary>
+    /// Return the escrowed keys.
+    /// </summary>
+    /// <returns></returns>
+    public override KeyData[] GetEscrow() =>
+        new KeyData[] { new KeyData () {
                 PrivateParameters =ActivationAccount.SecretSeed } };
 
 
 
-        #endregion
-            #region // Factory methods and constructors
-            /// <summary>
-            /// Default constructor for serialization.
-            /// </summary>     
-        public CatalogedGroup() {
-            }
+    #endregion
+    #region // Factory methods and constructors
+    /// <summary>
+    /// Default constructor for serialization.
+    /// </summary>     
+    public CatalogedGroup() {
+        }
 
 
-        /// <summary>
-        /// Create and return a new catalog entry for <paramref name="profileGroup"/> with
-        /// the activation data <paramref name="activationAccount"/>.
-        /// </summary>
-        /// <param name="profileGroup">The group profile.</param>
-        /// <param name="activationAccount">The activation data.</param>
-        /// <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
-        /// <param name="connectionAddress">Connection binding profile to an address.</param>
-        /// <returns>The created group.</returns>
-        public CatalogedGroup (
-                        ProfileGroup profileGroup,
-                        ActivationAccount activationAccount,
-                        CryptoKey encryptionKey,
-                        ConnectionAddress connectionAddress
-                        ) {
-            encryptionKey.Future();
-            connectionAddress.Future();
+    /// <summary>
+    /// Create and return a new catalog entry for <paramref name="profileGroup"/> with
+    /// the activation data <paramref name="activationAccount"/>.
+    /// </summary>
+    /// <param name="profileGroup">The group profile.</param>
+    /// <param name="activationAccount">The activation data.</param>
+    /// <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
+    /// <param name="connectionAddress">Connection binding profile to an address.</param>
+    /// <returns>The created group.</returns>
+    public CatalogedGroup(
+                    ProfileGroup profileGroup,
+                    ActivationAccount activationAccount,
+                    CryptoKey encryptionKey,
+                    ConnectionAddress connectionAddress
+                    ) {
+        encryptionKey.Future();
+        connectionAddress.Future();
 
-            profileGroup?.DareEnvelope.AssertNotNull(Internal.Throw);
+        profileGroup?.DareEnvelope.AssertNotNull(Internal.Throw);
 
-            ActivationAccount = activationAccount;
-            Key = profileGroup.AccountAddress;
-            EnvelopedProfileGroup = profileGroup.GetEnvelopedProfileAccount();
-            }
-
-
-
-        ///<inheritdoc/>
-        public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
-            var activation = new ActivationApplicationGroup() {
-                AccountEncryption = new KeyData(ActivationAccount.AccountEncryptionKey, true),
-                AdministratorSignature = new KeyData(ActivationAccount.AdministratorSignatureKey, true),
-                AccountAuthentication = new KeyData(ActivationAccount.AccountAuthenticationKey, true),
-                };
-
-            activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
-
-
-
-            return new ApplicationEntryGroup() {
-                Identifier = ProfileGroup.AccountAddress,
-                EnvelopedActivation = activation.GetEnvelopedActivationApplicationGroup()
-                };
-
-            }
-
-        ///<inheritdoc/>
-        public override void ToBuilder(StringBuilder output) {
-
-            }
-
-        #endregion
-
+        ActivationAccount = activationAccount;
+        Key = profileGroup.AccountAddress;
+        EnvelopedProfileGroup = profileGroup.GetEnvelopedProfileAccount();
         }
 
 
 
+    ///<inheritdoc/>
+    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+        var activation = new ActivationApplicationGroup() {
+            AccountEncryption = new KeyData(ActivationAccount.AccountEncryptionKey, true),
+            AdministratorSignature = new KeyData(ActivationAccount.AdministratorSignatureKey, true),
+            AccountAuthentication = new KeyData(ActivationAccount.AccountAuthenticationKey, true),
+            };
+
+        activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
+
+
+
+        return new ApplicationEntryGroup() {
+            Identifier = ProfileGroup.AccountAddress,
+            EnvelopedActivation = activation.GetEnvelopedActivationApplicationGroup()
+            };
+
+        }
+
+    ///<inheritdoc/>
+    public override void ToBuilder(StringBuilder output) {
+
+        }
+
+    #endregion
 
     }

@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 11/17/2021 11:08:25 AM
+//  This file was automatically generated at 11/24/2021 2:34:21 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.719
+//  Generator:  protogen version 3.0.0.740
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -48,65 +48,65 @@ using Goedel.Protocol;
 using Goedel.Cryptography.Jose;
 
 
-namespace Goedel.Cryptography.Dare {
+namespace Goedel.Cryptography.Dare;
 
 
 	/// <summary>
 	///
 	/// Support classes for JSON Object Signing and Encryption
 	/// </summary>
-	public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
+public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag =>__Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag =>__Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "Dare";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Dare";
 
-		/// <summary>
-        /// Dictionary mapping tags to factory methods
-        /// </summary>
-		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-		static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-				new Dictionary<string, JsonFactoryDelegate> () {
+	/// <summary>
+    /// Dictionary mapping tags to factory methods
+    /// </summary>
+	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
+	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
+			new Dictionary<string, JsonFactoryDelegate> () {
 
-			{"DareEnvelopeSequence", DareEnvelopeSequence._Factory},
-			{"DareTrailer", DareTrailer._Factory},
-			{"DareHeader", DareHeader._Factory},
-			{"ContentMeta", ContentMeta._Factory},
-			{"DareSignature", DareSignature._Factory},
-			{"X509Certificate", X509Certificate._Factory},
-			{"DareRecipient", DareRecipient._Factory},
-			{"DarePolicy", DarePolicy._Factory},
-			{"FileEntry", FileEntry._Factory},
-			{"Witness", Witness._Factory},
-			{"Proof", Proof._Factory}			};
+	    {"DareEnvelopeSequence", DareEnvelopeSequence._Factory},
+	    {"DareTrailer", DareTrailer._Factory},
+	    {"DareHeader", DareHeader._Factory},
+	    {"ContentMeta", ContentMeta._Factory},
+	    {"DareSignature", DareSignature._Factory},
+	    {"X509Certificate", X509Certificate._Factory},
+	    {"DareRecipient", DareRecipient._Factory},
+	    {"DarePolicy", DarePolicy._Factory},
+	    {"FileEntry", FileEntry._Factory},
+	    {"Witness", Witness._Factory},
+	    {"Proof", Proof._Factory}		};
 
-        [ModuleInitializer]
-        internal static void _Initialize() => AddDictionary(ref _tagDictionary);
-
-
-		/// <summary>
-        /// Construct an instance from the specified tagged JsonReader stream.
-        /// </summary>
-        /// <param name="jsonReader">Input stream</param>
-        /// <param name="result">The created object</param>
-        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-			result = jsonReader.ReadTaggedObject(_TagDictionary);
-
-		}
+    [ModuleInitializer]
+    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
 
 
+	/// <summary>
+    /// Construct an instance from the specified tagged JsonReader stream.
+    /// </summary>
+    /// <param name="jsonReader">Input stream</param>
+    /// <param name="result">The created object</param>
+    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
+		result = jsonReader.ReadTaggedObject(_TagDictionary);
 
-		// Service Dispatch Classes
+	}
 
 
 
-		// Transaction Classes
+// Service Dispatch Classes
+
+
+
+	// Transaction Classes
 	/// <summary>
 	///
 	/// A DARE envelope containing Header, EDS and Trailer in JSON object encoding.
@@ -117,360 +117,360 @@ namespace Goedel.Cryptography.Dare {
 	/// precede the body in a serialization, this allowing processing of the header
 	/// information to be performed before the entire body has been received.
 	/// </summary>
-	public partial class DareEnvelopeSequence : Dare {
+public partial class DareEnvelopeSequence : Dare {
         /// <summary>
         ///The envelope header. May specify the key exchange data, pre-signature 
         ///or signature data, cloaked headers and/or encrypted data sequences.
         /// </summary>
 
-		public virtual DareHeader						Header  {get; set;}
+	public virtual DareHeader						Header  {get; set;}
         /// <summary>
         ///The envelope body
         /// </summary>
 
-		public virtual byte[]						Body  {get; set;}
+	public virtual byte[]						Body  {get; set;}
         /// <summary>
         ///The envelope trailer. If present, this contains the signature.
         /// </summary>
 
-		public virtual DareTrailer						Trailer  {get; set;}
+	public virtual DareTrailer						Trailer  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "DareEnvelopeSequence";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DareEnvelopeSequence";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new DareEnvelopeSequence();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DareEnvelopeSequence();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (Header != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Header", 1);
-					Header.Serialize (_writer, false);
-				}
-			if (Body != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Body", 1);
-					_writer.WriteBinary (Body);
-				}
-			if (Trailer != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Trailer", 1);
-					Trailer.Serialize (_writer, false);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
 			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new DareEnvelopeSequence FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as DareEnvelopeSequence;
-				}
-		    var Result = new DareEnvelopeSequence ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+		if (Header != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Header", 1);
+				Header.Serialize (_writer, false);
 			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "Header" : {
-					// An untagged structure
-					Header = new DareHeader ();
-					Header.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "Body" : {
-					Body = jsonReader.ReadBinary ();
-					break;
-					}
-				case "Trailer" : {
-					// An untagged structure
-					Trailer = new DareTrailer ();
-					Trailer.Deserialize (jsonReader);
- 
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
+		if (Body != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Body", 1);
+				_writer.WriteBinary (Body);
 			}
-
-
+		if (Trailer != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Trailer", 1);
+				Trailer.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
 		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new DareEnvelopeSequence FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as DareEnvelopeSequence;
+			}
+		var Result = new DareEnvelopeSequence ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "Header" : {
+				// An untagged structure
+				Header = new DareHeader ();
+				Header.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "Body" : {
+				Body = jsonReader.ReadBinary ();
+				break;
+				}
+			case "Trailer" : {
+				// An untagged structure
+				Trailer = new DareTrailer ();
+				Trailer.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	///
 	/// A DARE envelope Trailer
 	/// </summary>
-	public partial class DareTrailer : Dare {
+public partial class DareTrailer : Dare {
         /// <summary>
         ///A list of signatures.
         ///A envelope trailer MUST NOT contain a signatures field if the header contains 
         ///a signatures field.
         /// </summary>
 
-		public virtual List<DareSignature>				Signatures  {get; set;}
+	public virtual List<DareSignature>				Signatures  {get; set;}
         /// <summary>
         ///Contains a DAREHeader object 
         /// </summary>
 
-		public virtual byte[]						SignedData  {get; set;}
+	public virtual byte[]						SignedData  {get; set;}
         /// <summary>
         ///If present, contains the digest of the Payload.
         /// </summary>
 
-		public virtual byte[]						PayloadDigest  {get; set;}
+	public virtual byte[]						PayloadDigest  {get; set;}
         /// <summary>
         ///If present, contains the digest of the PayloadDigest values of this
         ///frame and the frame immediately preceding.
         /// </summary>
 
-		public virtual byte[]						ChainDigest  {get; set;}
+	public virtual byte[]						ChainDigest  {get; set;}
         /// <summary>
         ///If present, contains the Binary Merkle Tree digest value.
         /// </summary>
 
-		public virtual byte[]						TreeDigest  {get; set;}
+	public virtual byte[]						TreeDigest  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "DareTrailer";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DareTrailer";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new DareTrailer();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DareTrailer();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (Signatures != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("signatures", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Signatures) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
 
-			if (SignedData != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SignedData", 1);
-					_writer.WriteBinary (SignedData);
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		if (Signatures != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("signatures", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in Signatures) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				// This is an untagged structure. Cannot inherit.
+                //_writer.WriteObjectStart();
+                //_writer.WriteToken(_index._Tag, 1);
+				bool firstinner = true;
+				_index.Serialize (_writer, true, ref firstinner);
+                //_writer.WriteObjectEnd();
 				}
-			if (PayloadDigest != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("PayloadDigest", 1);
-					_writer.WriteBinary (PayloadDigest);
-				}
-			if (ChainDigest != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ChainDigest", 1);
-					_writer.WriteBinary (ChainDigest);
-				}
-			if (TreeDigest != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("TreeDigest", 1);
-					_writer.WriteBinary (TreeDigest);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+			_writer.WriteArrayEnd ();
 			}
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new DareTrailer FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as DareTrailer;
-				}
-		    var Result = new DareTrailer ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+		if (SignedData != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("SignedData", 1);
+				_writer.WriteBinary (SignedData);
 			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "signatures" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Signatures = new List <DareSignature> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  DareSignature ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new DareSignature (jsonReader);
-						Signatures.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "SignedData" : {
-					SignedData = jsonReader.ReadBinary ();
-					break;
-					}
-				case "PayloadDigest" : {
-					PayloadDigest = jsonReader.ReadBinary ();
-					break;
-					}
-				case "ChainDigest" : {
-					ChainDigest = jsonReader.ReadBinary ();
-					break;
-					}
-				case "TreeDigest" : {
-					TreeDigest = jsonReader.ReadBinary ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
+		if (PayloadDigest != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("PayloadDigest", 1);
+				_writer.WriteBinary (PayloadDigest);
 			}
-
-
+		if (ChainDigest != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("ChainDigest", 1);
+				_writer.WriteBinary (ChainDigest);
+			}
+		if (TreeDigest != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("TreeDigest", 1);
+				_writer.WriteBinary (TreeDigest);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
 		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new DareTrailer FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as DareTrailer;
+			}
+		var Result = new DareTrailer ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "signatures" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				Signatures = new List <DareSignature> ();
+				while (_Going) {
+					// an untagged structure.
+					var _Item = new  DareSignature ();
+					_Item.Deserialize (jsonReader);
+					// var _Item = new DareSignature (jsonReader);
+					Signatures.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "SignedData" : {
+				SignedData = jsonReader.ReadBinary ();
+				break;
+				}
+			case "PayloadDigest" : {
+				PayloadDigest = jsonReader.ReadBinary ();
+				break;
+				}
+			case "ChainDigest" : {
+				ChainDigest = jsonReader.ReadBinary ();
+				break;
+				}
+			case "TreeDigest" : {
+				TreeDigest = jsonReader.ReadBinary ();
+				break;
+				}
+			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	///
 	/// A DARE Envelope Header. Since any field that is present in a trailer MAY be 
 	/// placed in a header instead, the envelope header inherits from the trailer.
 	/// </summary>
-	public partial class DareHeader : DareTrailer {
+public partial class DareHeader : DareTrailer {
         /// <summary>
         ///Unique identifier
         /// </summary>
 
-		public virtual string						EnvelopeId  {get; set;}
+	public virtual string						EnvelopeId  {get; set;}
         /// <summary>
         ///The encryption algorithm as specified in JWE
         /// </summary>
 
-		public virtual string						EncryptionAlgorithm  {get; set;}
+	public virtual string						EncryptionAlgorithm  {get; set;}
         /// <summary>
         ///Digest Algorithm. If specified, tells decoder that the digest algorithm is used to
         ///construct a signature over the envelope payload.
         /// </summary>
 
-		public virtual string						DigestAlgorithm  {get; set;}
+	public virtual string						DigestAlgorithm  {get; set;}
         /// <summary>
         ///Base seed identifier.
         /// </summary>
 
-		public virtual string						KeyIdentifier  {get; set;}
+	public virtual string						KeyIdentifier  {get; set;}
         /// <summary>
         ///Salt value used to derrive cryptographic parameters for the content data.
         /// </summary>
 
-		public virtual byte[]						Salt  {get; set;}
+	public virtual byte[]						Salt  {get; set;}
         /// <summary>
         ///Hash of the Salt value used to derrive cryptographic parameters for the content data.
         ///This field SHOULD NOT be present if the Salt field is present. It is used to
@@ -478,7 +478,7 @@ namespace Goedel.Cryptography.Dare {
         ///without affecting the ability to calculate the payload digest value.
         /// </summary>
 
-		public virtual byte[]						Malt  {get; set;}
+	public virtual byte[]						Malt  {get; set;}
         /// <summary>
         ///If present in a header or trailer, specifies an encrypted data block 
         ///containing additional header fields whose values override those specified 
@@ -490,1201 +490,1201 @@ namespace Goedel.Cryptography.Dare {
         ///Processing of cloaked data is described in…
         /// </summary>
 
-		public virtual byte[]						Cloaked  {get; set;}
+	public virtual byte[]						Cloaked  {get; set;}
         /// <summary>
         ///If present, the Annotations field contains a sequence of Encrypted Data 
         ///Segments encrypted under the envelope base seed. The interpretation of these fields 
         ///is application specific.
         /// </summary>
 
-		public virtual List<byte[]>				EDSS  {get; set;}
+	public virtual List<byte[]>				EDSS  {get; set;}
         /// <summary>
         ///A list of 'presignature'
         /// </summary>
 
-		public virtual List<DareSignature>				Signers  {get; set;}
+	public virtual List<DareSignature>				Signers  {get; set;}
         /// <summary>
         ///A list of recipient key exchange information blocks.
         /// </summary>
 
-		public virtual List<DareRecipient>				Recipients  {get; set;}
+	public virtual List<DareRecipient>				Recipients  {get; set;}
         /// <summary>
         ///A DARE security policy governing future additions to the container.
         /// </summary>
 
-		public virtual DarePolicy						Policy  {get; set;}
+	public virtual DarePolicy						Policy  {get; set;}
         /// <summary>
         ///If present contains a JSON encoded ContentInfo structure which specifies
         ///plaintext content metadata and forms one of the inputs to the envelope digest value.
         /// </summary>
 
-		public virtual byte[]						ContentMetaData  {get; set;}
+	public virtual byte[]						ContentMetaData  {get; set;}
         /// <summary>
         ///Information that describes container information
         /// </summary>
 
-		public virtual SequenceInfo						SequenceInfo  {get; set;}
+	public virtual SequenceInfo						SequenceInfo  {get; set;}
         /// <summary>
         ///An index of records in the current container up to but not including
         ///this one.
         /// </summary>
 
-		public virtual SequenceIndex						SequenceIndex  {get; set;}
+	public virtual SequenceIndex						SequenceIndex  {get; set;}
         /// <summary>
         ///Date on which the envelope was received.
         /// </summary>
 
-		public virtual DateTime?						Received  {get; set;}
+	public virtual DateTime?						Received  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "DareHeader";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DareHeader";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new DareHeader();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DareHeader();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			((DareTrailer)this).SerializeX(_writer, false, ref _first);
-			if (EnvelopeId != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopeId", 1);
-					_writer.WriteString (EnvelopeId);
-				}
-			if (EncryptionAlgorithm != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("enc", 1);
-					_writer.WriteString (EncryptionAlgorithm);
-				}
-			if (DigestAlgorithm != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("dig", 1);
-					_writer.WriteString (DigestAlgorithm);
-				}
-			if (KeyIdentifier != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("kid", 1);
-					_writer.WriteString (KeyIdentifier);
-				}
-			if (Salt != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Salt", 1);
-					_writer.WriteBinary (Salt);
-				}
-			if (Malt != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Malt", 1);
-					_writer.WriteBinary (Malt);
-				}
-			if (Cloaked != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("cloaked", 1);
-					_writer.WriteBinary (Cloaked);
-				}
-			if (EDSS != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("annotations", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in EDSS) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					_writer.WriteBinary (_index);
-					}
-				_writer.WriteArrayEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
 
-			if (Signers != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("signatures", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Signers) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
 
-			if (Recipients != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("recipients", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Recipients) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((DareTrailer)this).SerializeX(_writer, false, ref _first);
+		if (EnvelopeId != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopeId", 1);
+				_writer.WriteString (EnvelopeId);
+			}
+		if (EncryptionAlgorithm != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("enc", 1);
+				_writer.WriteString (EncryptionAlgorithm);
+			}
+		if (DigestAlgorithm != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("dig", 1);
+				_writer.WriteString (DigestAlgorithm);
+			}
+		if (KeyIdentifier != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("kid", 1);
+				_writer.WriteString (KeyIdentifier);
+			}
+		if (Salt != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Salt", 1);
+				_writer.WriteBinary (Salt);
+			}
+		if (Malt != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Malt", 1);
+				_writer.WriteBinary (Malt);
+			}
+		if (Cloaked != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("cloaked", 1);
+				_writer.WriteBinary (Cloaked);
+			}
+		if (EDSS != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("annotations", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in EDSS) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				_writer.WriteBinary (_index);
 				}
-
-			if (Policy != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("policy", 1);
-					Policy.Serialize (_writer, false);
-				}
-			if (ContentMetaData != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ContentMetaData", 1);
-					_writer.WriteBinary (ContentMetaData);
-				}
-			if (SequenceInfo != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SequenceInfo", 1);
-					SequenceInfo.Serialize (_writer, false);
-				}
-			if (SequenceIndex != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SequenceIndex", 1);
-					SequenceIndex.Serialize (_writer, false);
-				}
-			if (Received != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Received", 1);
-					_writer.WriteDateTime (Received);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+			_writer.WriteArrayEnd ();
 			}
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new DareHeader FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
+		if (Signers != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("signatures", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in Signers) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				// This is an untagged structure. Cannot inherit.
+                //_writer.WriteObjectStart();
+                //_writer.WriteToken(_index._Tag, 1);
+				bool firstinner = true;
+				_index.Serialize (_writer, true, ref firstinner);
+                //_writer.WriteObjectEnd();
 				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as DareHeader;
-				}
-		    var Result = new DareHeader ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+			_writer.WriteArrayEnd ();
 			}
 
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "EnvelopeId" : {
-					EnvelopeId = jsonReader.ReadString ();
-					break;
-					}
-				case "enc" : {
-					EncryptionAlgorithm = jsonReader.ReadString ();
-					break;
-					}
-				case "dig" : {
-					DigestAlgorithm = jsonReader.ReadString ();
-					break;
-					}
-				case "kid" : {
-					KeyIdentifier = jsonReader.ReadString ();
-					break;
-					}
-				case "Salt" : {
-					Salt = jsonReader.ReadBinary ();
-					break;
-					}
-				case "Malt" : {
-					Malt = jsonReader.ReadBinary ();
-					break;
-					}
-				case "cloaked" : {
-					Cloaked = jsonReader.ReadBinary ();
-					break;
-					}
-				case "annotations" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					EDSS = new List <byte[]> ();
-					while (_Going) {
-						byte[] _Item = jsonReader.ReadBinary ();
-						EDSS.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "signatures" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Signers = new List <DareSignature> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  DareSignature ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new DareSignature (jsonReader);
-						Signers.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "recipients" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Recipients = new List <DareRecipient> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  DareRecipient ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new DareRecipient (jsonReader);
-						Recipients.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "policy" : {
-					// An untagged structure
-					Policy = new DarePolicy ();
-					Policy.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "ContentMetaData" : {
-					ContentMetaData = jsonReader.ReadBinary ();
-					break;
-					}
-				case "SequenceInfo" : {
-					// An untagged structure
-					SequenceInfo = new SequenceInfo ();
-					SequenceInfo.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "SequenceIndex" : {
-					// An untagged structure
-					SequenceIndex = new SequenceIndex ();
-					SequenceIndex.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "Received" : {
-					Received = jsonReader.ReadDateTime ();
-					break;
-					}
-				default : {
-					base.DeserializeToken(jsonReader, tag);
-					break;
-					}
+		if (Recipients != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("recipients", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in Recipients) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				// This is an untagged structure. Cannot inherit.
+                //_writer.WriteObjectStart();
+                //_writer.WriteToken(_index._Tag, 1);
+				bool firstinner = true;
+				_index.Serialize (_writer, true, ref firstinner);
+                //_writer.WriteObjectEnd();
 				}
-			// check up that all the required elements are present
+			_writer.WriteArrayEnd ();
 			}
 
-
+		if (Policy != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("policy", 1);
+				Policy.Serialize (_writer, false);
+			}
+		if (ContentMetaData != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("ContentMetaData", 1);
+				_writer.WriteBinary (ContentMetaData);
+			}
+		if (SequenceInfo != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("SequenceInfo", 1);
+				SequenceInfo.Serialize (_writer, false);
+			}
+		if (SequenceIndex != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("SequenceIndex", 1);
+				SequenceIndex.Serialize (_writer, false);
+			}
+		if (Received != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Received", 1);
+				_writer.WriteDateTime (Received);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
 		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new DareHeader FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as DareHeader;
+			}
+		var Result = new DareHeader ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "EnvelopeId" : {
+				EnvelopeId = jsonReader.ReadString ();
+				break;
+				}
+			case "enc" : {
+				EncryptionAlgorithm = jsonReader.ReadString ();
+				break;
+				}
+			case "dig" : {
+				DigestAlgorithm = jsonReader.ReadString ();
+				break;
+				}
+			case "kid" : {
+				KeyIdentifier = jsonReader.ReadString ();
+				break;
+				}
+			case "Salt" : {
+				Salt = jsonReader.ReadBinary ();
+				break;
+				}
+			case "Malt" : {
+				Malt = jsonReader.ReadBinary ();
+				break;
+				}
+			case "cloaked" : {
+				Cloaked = jsonReader.ReadBinary ();
+				break;
+				}
+			case "annotations" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				EDSS = new List <byte[]> ();
+				while (_Going) {
+					byte[] _Item = jsonReader.ReadBinary ();
+					EDSS.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "signatures" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				Signers = new List <DareSignature> ();
+				while (_Going) {
+					// an untagged structure.
+					var _Item = new  DareSignature ();
+					_Item.Deserialize (jsonReader);
+					// var _Item = new DareSignature (jsonReader);
+					Signers.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "recipients" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				Recipients = new List <DareRecipient> ();
+				while (_Going) {
+					// an untagged structure.
+					var _Item = new  DareRecipient ();
+					_Item.Deserialize (jsonReader);
+					// var _Item = new DareRecipient (jsonReader);
+					Recipients.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "policy" : {
+				// An untagged structure
+				Policy = new DarePolicy ();
+				Policy.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "ContentMetaData" : {
+				ContentMetaData = jsonReader.ReadBinary ();
+				break;
+				}
+			case "SequenceInfo" : {
+				// An untagged structure
+				SequenceInfo = new SequenceInfo ();
+				SequenceInfo.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "SequenceIndex" : {
+				// An untagged structure
+				SequenceIndex = new SequenceIndex ();
+				SequenceIndex.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "Received" : {
+				Received = jsonReader.ReadDateTime ();
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	/// </summary>
-	public partial class ContentMeta : Dare {
+public partial class ContentMeta : Dare {
         /// <summary>
         ///Unique object identifier
         /// </summary>
 
-		public virtual string						UniqueId  {get; set;}
+	public virtual string						UniqueId  {get; set;}
         /// <summary>
         ///List of labels that are applied to the payload of the frame.
         /// </summary>
 
-		public virtual List<string>				Labels  {get; set;}
+	public virtual List<string>				Labels  {get; set;}
         /// <summary>
         ///List of key/value pairs describing the payload of the frame.
         /// </summary>
 
-		public virtual List<KeyValue>				KeyValues  {get; set;}
+	public virtual List<KeyValue>				KeyValues  {get; set;}
         /// <summary>
         ///The mesh message type
         /// </summary>
 
-		public virtual string						MessageType  {get; set;}
+	public virtual string						MessageType  {get; set;}
         /// <summary>
         ///The content type field as specified in JWE
         /// </summary>
 
-		public virtual string						ContentType  {get; set;}
+	public virtual string						ContentType  {get; set;}
         /// <summary>
         ///List of filename paths for the payload of the frame.
         /// </summary>
 
-		public virtual List<string>				Paths  {get; set;}
+	public virtual List<string>				Paths  {get; set;}
         /// <summary>
         ///The original filename under which the data was stored.
         /// </summary>
 
-		public virtual string						Filename  {get; set;}
+	public virtual string						Filename  {get; set;}
         /// <summary>
         ///Operation on the header
         /// </summary>
 
-		public virtual string						Event  {get; set;}
+	public virtual string						Event  {get; set;}
         /// <summary>
         ///Initial creation date.
         /// </summary>
 
-		public virtual DateTime?						Created  {get; set;}
+	public virtual DateTime?						Created  {get; set;}
         /// <summary>
         ///Date of last modification.
         /// </summary>
 
-		public virtual DateTime?						Modified  {get; set;}
+	public virtual DateTime?						Modified  {get; set;}
         /// <summary>
         ///Date at which the associated transaction will expire
         /// </summary>
 
-		public virtual DateTime?						Expire  {get; set;}
-		bool								__First = false;
-		private int						_First;
+	public virtual DateTime?						Expire  {get; set;}
+	bool								__First = false;
+	private int						_First;
         /// <summary>
         ///Frame number of the first object instance value.
         /// </summary>
 
-		public virtual int						First {
-			get => _First;
-			set {_First = value; __First = true; }
-			}
-		bool								__Previous = false;
-		private int						_Previous;
+	public virtual int						First {
+		get => _First;
+		set {_First = value; __First = true; }
+		}
+	bool								__Previous = false;
+	private int						_Previous;
         /// <summary>
         ///Frame number of the immediately prior object instance value	
         /// </summary>
 
-		public virtual int						Previous {
-			get => _Previous;
-			set {_Previous = value; __Previous = true; }
-			}
+	public virtual int						Previous {
+		get => _Previous;
+		set {_Previous = value; __Previous = true; }
+		}
         /// <summary>
         ///Information describing the file entry on disk.
         /// </summary>
 
-		public virtual FileEntry						FileEntry  {get; set;}
+	public virtual FileEntry						FileEntry  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "ContentMeta";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ContentMeta";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new ContentMeta();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ContentMeta();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (UniqueId != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("UniqueId", 1);
-					_writer.WriteString (UniqueId);
-				}
-			if (Labels != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Labels", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Labels) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					_writer.WriteString (_index);
-					}
-				_writer.WriteArrayEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
 
-			if (KeyValues != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("KeyValues", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in KeyValues) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
 
-			if (MessageType != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("MessageType", 1);
-					_writer.WriteString (MessageType);
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		if (UniqueId != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("UniqueId", 1);
+				_writer.WriteString (UniqueId);
+			}
+		if (Labels != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Labels", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in Labels) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				_writer.WriteString (_index);
 				}
-			if (ContentType != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("cty", 1);
-					_writer.WriteString (ContentType);
-				}
-			if (Paths != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Paths", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Paths) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					_writer.WriteString (_index);
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (Filename != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Filename", 1);
-					_writer.WriteString (Filename);
-				}
-			if (Event != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Event", 1);
-					_writer.WriteString (Event);
-				}
-			if (Created != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Created", 1);
-					_writer.WriteDateTime (Created);
-				}
-			if (Modified != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Modified", 1);
-					_writer.WriteDateTime (Modified);
-				}
-			if (Expire != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Expire", 1);
-					_writer.WriteDateTime (Expire);
-				}
-			if (__First){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("First", 1);
-					_writer.WriteInteger32 (First);
-				}
-			if (__Previous){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Previous", 1);
-					_writer.WriteInteger32 (Previous);
-				}
-			if (FileEntry != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("FileEntry", 1);
-					FileEntry.Serialize (_writer, false);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+			_writer.WriteArrayEnd ();
 			}
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new ContentMeta FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
+		if (KeyValues != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("KeyValues", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in KeyValues) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				// This is an untagged structure. Cannot inherit.
+                //_writer.WriteObjectStart();
+                //_writer.WriteToken(_index._Tag, 1);
+				bool firstinner = true;
+				_index.Serialize (_writer, true, ref firstinner);
+                //_writer.WriteObjectEnd();
 				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ContentMeta;
-				}
-		    var Result = new ContentMeta ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+			_writer.WriteArrayEnd ();
 			}
 
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "UniqueId" : {
-					UniqueId = jsonReader.ReadString ();
-					break;
-					}
-				case "Labels" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Labels = new List <string> ();
-					while (_Going) {
-						string _Item = jsonReader.ReadString ();
-						Labels.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "KeyValues" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					KeyValues = new List <KeyValue> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  KeyValue ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new KeyValue (jsonReader);
-						KeyValues.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "MessageType" : {
-					MessageType = jsonReader.ReadString ();
-					break;
-					}
-				case "cty" : {
-					ContentType = jsonReader.ReadString ();
-					break;
-					}
-				case "Paths" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Paths = new List <string> ();
-					while (_Going) {
-						string _Item = jsonReader.ReadString ();
-						Paths.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "Filename" : {
-					Filename = jsonReader.ReadString ();
-					break;
-					}
-				case "Event" : {
-					Event = jsonReader.ReadString ();
-					break;
-					}
-				case "Created" : {
-					Created = jsonReader.ReadDateTime ();
-					break;
-					}
-				case "Modified" : {
-					Modified = jsonReader.ReadDateTime ();
-					break;
-					}
-				case "Expire" : {
-					Expire = jsonReader.ReadDateTime ();
-					break;
-					}
-				case "First" : {
-					First = jsonReader.ReadInteger32 ();
-					break;
-					}
-				case "Previous" : {
-					Previous = jsonReader.ReadInteger32 ();
-					break;
-					}
-				case "FileEntry" : {
-					// An untagged structure
-					FileEntry = new FileEntry ();
-					FileEntry.Deserialize (jsonReader);
- 
-					break;
-					}
-				default : {
-					break;
-					}
+		if (MessageType != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("MessageType", 1);
+				_writer.WriteString (MessageType);
+			}
+		if (ContentType != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("cty", 1);
+				_writer.WriteString (ContentType);
+			}
+		if (Paths != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Paths", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in Paths) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				_writer.WriteString (_index);
 				}
-			// check up that all the required elements are present
+			_writer.WriteArrayEnd ();
 			}
 
-
+		if (Filename != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Filename", 1);
+				_writer.WriteString (Filename);
+			}
+		if (Event != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Event", 1);
+				_writer.WriteString (Event);
+			}
+		if (Created != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Created", 1);
+				_writer.WriteDateTime (Created);
+			}
+		if (Modified != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Modified", 1);
+				_writer.WriteDateTime (Modified);
+			}
+		if (Expire != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Expire", 1);
+				_writer.WriteDateTime (Expire);
+			}
+		if (__First){
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("First", 1);
+				_writer.WriteInteger32 (First);
+			}
+		if (__Previous){
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Previous", 1);
+				_writer.WriteInteger32 (Previous);
+			}
+		if (FileEntry != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("FileEntry", 1);
+				FileEntry.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
 		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ContentMeta FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ContentMeta;
+			}
+		var Result = new ContentMeta ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "UniqueId" : {
+				UniqueId = jsonReader.ReadString ();
+				break;
+				}
+			case "Labels" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				Labels = new List <string> ();
+				while (_Going) {
+					string _Item = jsonReader.ReadString ();
+					Labels.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "KeyValues" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				KeyValues = new List <KeyValue> ();
+				while (_Going) {
+					// an untagged structure.
+					var _Item = new  KeyValue ();
+					_Item.Deserialize (jsonReader);
+					// var _Item = new KeyValue (jsonReader);
+					KeyValues.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "MessageType" : {
+				MessageType = jsonReader.ReadString ();
+				break;
+				}
+			case "cty" : {
+				ContentType = jsonReader.ReadString ();
+				break;
+				}
+			case "Paths" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				Paths = new List <string> ();
+				while (_Going) {
+					string _Item = jsonReader.ReadString ();
+					Paths.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "Filename" : {
+				Filename = jsonReader.ReadString ();
+				break;
+				}
+			case "Event" : {
+				Event = jsonReader.ReadString ();
+				break;
+				}
+			case "Created" : {
+				Created = jsonReader.ReadDateTime ();
+				break;
+				}
+			case "Modified" : {
+				Modified = jsonReader.ReadDateTime ();
+				break;
+				}
+			case "Expire" : {
+				Expire = jsonReader.ReadDateTime ();
+				break;
+				}
+			case "First" : {
+				First = jsonReader.ReadInteger32 ();
+				break;
+				}
+			case "Previous" : {
+				Previous = jsonReader.ReadInteger32 ();
+				break;
+				}
+			case "FileEntry" : {
+				// An untagged structure
+				FileEntry = new FileEntry ();
+				FileEntry.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	///
 	/// The signature value
 	/// </summary>
-	public partial class DareSignature : Dare {
+public partial class DareSignature : Dare {
         /// <summary>
         ///Digest algorithm hint. Specifying the digest algorithm to be applied
         ///to the envelope body allows the body to be processed in streaming mode.
         /// </summary>
 
-		public virtual string						Dig  {get; set;}
+	public virtual string						Dig  {get; set;}
         /// <summary>
         ///Key exchange algorithm
         /// </summary>
 
-		public virtual string						Alg  {get; set;}
+	public virtual string						Alg  {get; set;}
         /// <summary>
         ///Key identifier of the signature key.
         /// </summary>
 
-		public virtual string						KeyIdentifier  {get; set;}
+	public virtual string						KeyIdentifier  {get; set;}
         /// <summary>
         ///PKIX certificate of signer.
         /// </summary>
 
-		public virtual X509Certificate						Certificate  {get; set;}
+	public virtual X509Certificate						Certificate  {get; set;}
         /// <summary>
         ///PKIX certificates that establish a trust path for the signer.
         /// </summary>
 
-		public virtual X509Certificate						Path  {get; set;}
+	public virtual X509Certificate						Path  {get; set;}
         /// <summary>
         ///The data description that was signed.
         /// </summary>
 
-		public virtual byte[]						Manifest  {get; set;}
+	public virtual byte[]						Manifest  {get; set;}
         /// <summary>
         ///The signature value as an Enhanced Data Sequence under the envelope base seed.
         /// </summary>
 
-		public virtual byte[]						SignatureValue  {get; set;}
+	public virtual byte[]						SignatureValue  {get; set;}
         /// <summary>
         ///The signature witness value used on an encrypted envelope to demonstrate that 
         ///the signature was authorized by a party with actual knowledge of the encryption 
         ///key used to encrypt the envelope.
         /// </summary>
 
-		public virtual byte[]						WitnessValue  {get; set;}
+	public virtual byte[]						WitnessValue  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "DareSignature";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DareSignature";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new DareSignature();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DareSignature();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (Dig != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("dig", 1);
-					_writer.WriteString (Dig);
-				}
-			if (Alg != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("alg", 1);
-					_writer.WriteString (Alg);
-				}
-			if (KeyIdentifier != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("kid", 1);
-					_writer.WriteString (KeyIdentifier);
-				}
-			if (Certificate != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("cert", 1);
-					Certificate.Serialize (_writer, false);
-				}
-			if (Path != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("path", 1);
-					Path.Serialize (_writer, false);
-				}
-			if (Manifest != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Manifest", 1);
-					_writer.WriteBinary (Manifest);
-				}
-			if (SignatureValue != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("signature", 1);
-					_writer.WriteBinary (SignatureValue);
-				}
-			if (WitnessValue != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("witness", 1);
-					_writer.WriteBinary (WitnessValue);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
 			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new DareSignature FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as DareSignature;
-				}
-		    var Result = new DareSignature ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+		if (Dig != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("dig", 1);
+				_writer.WriteString (Dig);
 			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "dig" : {
-					Dig = jsonReader.ReadString ();
-					break;
-					}
-				case "alg" : {
-					Alg = jsonReader.ReadString ();
-					break;
-					}
-				case "kid" : {
-					KeyIdentifier = jsonReader.ReadString ();
-					break;
-					}
-				case "cert" : {
-					// An untagged structure
-					Certificate = new X509Certificate ();
-					Certificate.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "path" : {
-					// An untagged structure
-					Path = new X509Certificate ();
-					Path.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "Manifest" : {
-					Manifest = jsonReader.ReadBinary ();
-					break;
-					}
-				case "signature" : {
-					SignatureValue = jsonReader.ReadBinary ();
-					break;
-					}
-				case "witness" : {
-					WitnessValue = jsonReader.ReadBinary ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
+		if (Alg != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("alg", 1);
+				_writer.WriteString (Alg);
 			}
-
-
+		if (KeyIdentifier != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("kid", 1);
+				_writer.WriteString (KeyIdentifier);
+			}
+		if (Certificate != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("cert", 1);
+				Certificate.Serialize (_writer, false);
+			}
+		if (Path != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("path", 1);
+				Path.Serialize (_writer, false);
+			}
+		if (Manifest != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Manifest", 1);
+				_writer.WriteBinary (Manifest);
+			}
+		if (SignatureValue != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("signature", 1);
+				_writer.WriteBinary (SignatureValue);
+			}
+		if (WitnessValue != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("witness", 1);
+				_writer.WriteBinary (WitnessValue);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
 		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new DareSignature FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as DareSignature;
+			}
+		var Result = new DareSignature ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "dig" : {
+				Dig = jsonReader.ReadString ();
+				break;
+				}
+			case "alg" : {
+				Alg = jsonReader.ReadString ();
+				break;
+				}
+			case "kid" : {
+				KeyIdentifier = jsonReader.ReadString ();
+				break;
+				}
+			case "cert" : {
+				// An untagged structure
+				Certificate = new X509Certificate ();
+				Certificate.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "path" : {
+				// An untagged structure
+				Path = new X509Certificate ();
+				Path.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "Manifest" : {
+				Manifest = jsonReader.ReadBinary ();
+				break;
+				}
+			case "signature" : {
+				SignatureValue = jsonReader.ReadBinary ();
+				break;
+				}
+			case "witness" : {
+				WitnessValue = jsonReader.ReadBinary ();
+				break;
+				}
+			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	/// </summary>
-	public partial class X509Certificate : Dare {
+public partial class X509Certificate : Dare {
         /// <summary>
         ///URL identifying an X.509 public key certificate
         /// </summary>
 
-		public virtual string						X5u  {get; set;}
+	public virtual string						X5u  {get; set;}
         /// <summary>
         ///An X.509 public key certificate
         /// </summary>
 
-		public virtual byte[]						X5  {get; set;}
+	public virtual byte[]						X5  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "X509Certificate";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "X509Certificate";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new X509Certificate();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new X509Certificate();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (X5u != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("x5u", 1);
-					_writer.WriteString (X5u);
-				}
-			if (X5 != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("x5c", 1);
-					_writer.WriteBinary (X5);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
 			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new X509Certificate FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as X509Certificate;
-				}
-		    var Result = new X509Certificate ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+		if (X5u != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("x5u", 1);
+				_writer.WriteString (X5u);
 			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "x5u" : {
-					X5u = jsonReader.ReadString ();
-					break;
-					}
-				case "x5c" : {
-					X5 = jsonReader.ReadBinary ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
+		if (X5 != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("x5c", 1);
+				_writer.WriteBinary (X5);
 			}
-
-
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
 		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new X509Certificate FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as X509Certificate;
+			}
+		var Result = new X509Certificate ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "x5u" : {
+				X5u = jsonReader.ReadString ();
+				break;
+				}
+			case "x5c" : {
+				X5 = jsonReader.ReadBinary ();
+				break;
+				}
+			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	///
 	/// Recipient information
 	/// </summary>
-	public partial class DareRecipient : Dare {
+public partial class DareRecipient : Dare {
         /// <summary>
         ///Key identifier for the encryption key.
         ///The Key identifier MUST be either a UDF fingerprint of a key or a Group Key Identifier
         /// </summary>
 
-		public virtual string						KeyIdentifier  {get; set;}
+	public virtual string						KeyIdentifier  {get; set;}
         /// <summary>
         ///The key wrapping and derivation algorithms.
         /// </summary>
 
-		public virtual string						KeyWrapDerivation  {get; set;}
+	public virtual string						KeyWrapDerivation  {get; set;}
         /// <summary>
         ///The key parameters of the ephemeral key as specified in JWE
         /// </summary>
 
-		public virtual Key						Epk  {get; set;}
+	public virtual Key						Epk  {get; set;}
         /// <summary>
         ///The wrapped base seed. The base seed is encrypted under the result of the key exchange.
         /// </summary>
 
-		public virtual byte[]						WrappedBaseSeed  {get; set;}
+	public virtual byte[]						WrappedBaseSeed  {get; set;}
         /// <summary>
         ///The per-recipient key exchange data.
         /// </summary>
 
-		public virtual string						RecipientKeyData  {get; set;}
+	public virtual string						RecipientKeyData  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "DareRecipient";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DareRecipient";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new DareRecipient();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DareRecipient();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (KeyIdentifier != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("kid", 1);
-					_writer.WriteString (KeyIdentifier);
-				}
-			if (KeyWrapDerivation != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("kwd", 1);
-					_writer.WriteString (KeyWrapDerivation);
-				}
-			if (Epk != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("epk", 1);
-					// expand this to a tagged structure
-					//Epk.Serialize (_writer, false);
-					{
-						_writer.WriteObjectStart();
-						_writer.WriteToken(Epk._Tag, 1);
-						bool firstinner = true;
-						Epk.Serialize (_writer, true, ref firstinner);
-						_writer.WriteObjectEnd();
-						}
-				}
-			if (WrappedBaseSeed != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("wmk", 1);
-					_writer.WriteBinary (WrappedBaseSeed);
-				}
-			if (RecipientKeyData != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("rkd", 1);
-					_writer.WriteString (RecipientKeyData);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
 			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new DareRecipient FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as DareRecipient;
-				}
-		    var Result = new DareRecipient ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+		if (KeyIdentifier != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("kid", 1);
+				_writer.WriteString (KeyIdentifier);
 			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "kid" : {
-					KeyIdentifier = jsonReader.ReadString ();
-					break;
-					}
-				case "kwd" : {
-					KeyWrapDerivation = jsonReader.ReadString ();
-					break;
-					}
-				case "epk" : {
-					Epk = Key.FromJson (jsonReader, true) ;  // A tagged structure
-					break;
-					}
-				case "wmk" : {
-					WrappedBaseSeed = jsonReader.ReadBinary ();
-					break;
-					}
-				case "rkd" : {
-					RecipientKeyData = jsonReader.ReadString ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
+		if (KeyWrapDerivation != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("kwd", 1);
+				_writer.WriteString (KeyWrapDerivation);
 			}
-
-
+		if (Epk != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("epk", 1);
+				// expand this to a tagged structure
+				//Epk.Serialize (_writer, false);
+				{
+					_writer.WriteObjectStart();
+					_writer.WriteToken(Epk._Tag, 1);
+					bool firstinner = true;
+					Epk.Serialize (_writer, true, ref firstinner);
+					_writer.WriteObjectEnd();
+					}
+			}
+		if (WrappedBaseSeed != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("wmk", 1);
+				_writer.WriteBinary (WrappedBaseSeed);
+			}
+		if (RecipientKeyData != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("rkd", 1);
+				_writer.WriteString (RecipientKeyData);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
 		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new DareRecipient FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as DareRecipient;
+			}
+		var Result = new DareRecipient ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "kid" : {
+				KeyIdentifier = jsonReader.ReadString ();
+				break;
+				}
+			case "kwd" : {
+				KeyWrapDerivation = jsonReader.ReadString ();
+				break;
+				}
+			case "epk" : {
+				Epk = Key.FromJson (jsonReader, true) ;  // A tagged structure
+				break;
+				}
+			case "wmk" : {
+				WrappedBaseSeed = jsonReader.ReadBinary ();
+				break;
+				}
+			case "rkd" : {
+				RecipientKeyData = jsonReader.ReadString ();
+				break;
+				}
+			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	/// </summary>
-	public partial class DarePolicy : Dare {
+public partial class DarePolicy : Dare {
         /// <summary>
         ///The encryption algorithm to be used to compute the payload.
         /// </summary>
 
-		public virtual string						EncryptionAlgorithm  {get; set;}
+	public virtual string						EncryptionAlgorithm  {get; set;}
         /// <summary>
         ///The digest algorithm to be used to compute the payload digest.
         /// </summary>
 
-		public virtual string						DigestAlgorithm  {get; set;}
+	public virtual string						DigestAlgorithm  {get; set;}
         /// <summary>
         ///The encryption policy specifier, determines how often a key exchange is required.
         ///'Single': All entries are encrypted under the key exchange specified in the 
@@ -1695,7 +1695,7 @@ namespace Goedel.Cryptography.Dare {
         ///Default value is 'None' if EncryptKeys is null, and 'All' otherwise.
         /// </summary>
 
-		public virtual string						Encryption  {get; set;}
+	public virtual string						Encryption  {get; set;}
         /// <summary>
         ///The signature policy
         ///'None': No entries are signed.
@@ -1705,697 +1705,697 @@ namespace Goedel.Cryptography.Dare {
         ///Default value is 'None' if SignKeys is null, and 'Any' otherwise.
         /// </summary>
 
-		public virtual string						Signature  {get; set;}
+	public virtual string						Signature  {get; set;}
         /// <summary>
         ///The public parameters of keys used for encryption
         /// </summary>
 
-		public virtual List<Key>				EncryptKeys  {get; set;}
+	public virtual List<Key>				EncryptKeys  {get; set;}
         /// <summary>
         ///The public parameters of keys to which entries MUST be encrypted.
         /// </summary>
 
-		public virtual List<Key>				SignKeys  {get; set;}
-		bool								__Sealed = false;
-		private bool						_Sealed;
+	public virtual List<Key>				SignKeys  {get; set;}
+	bool								__Sealed = false;
+	private bool						_Sealed;
         /// <summary>
         ///If true the policy is immutable and cannot be changed by a subsequent policy override.
         /// </summary>
 
-		public virtual bool						Sealed {
-			get => _Sealed;
-			set {_Sealed = value; __Sealed = true; }
-			}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "DarePolicy";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new DarePolicy();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (EncryptionAlgorithm != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("enc", 1);
-					_writer.WriteString (EncryptionAlgorithm);
-				}
-			if (DigestAlgorithm != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("dig", 1);
-					_writer.WriteString (DigestAlgorithm);
-				}
-			if (Encryption != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Encryption", 1);
-					_writer.WriteString (Encryption);
-				}
-			if (Signature != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Signature", 1);
-					_writer.WriteString (Signature);
-				}
-			if (EncryptKeys != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EncryptKeys", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in EncryptKeys) {
-					_writer.WriteArraySeparator (ref _firstarray);
-                    _writer.WriteObjectStart();
-                    _writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    _writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (SignKeys != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SignKeys", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in SignKeys) {
-					_writer.WriteArraySeparator (ref _firstarray);
-                    _writer.WriteObjectStart();
-                    _writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    _writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (__Sealed){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Sealed", 1);
-					_writer.WriteBoolean (Sealed);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new DarePolicy FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as DarePolicy;
-				}
-		    var Result = new DarePolicy ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "enc" : {
-					EncryptionAlgorithm = jsonReader.ReadString ();
-					break;
-					}
-				case "dig" : {
-					DigestAlgorithm = jsonReader.ReadString ();
-					break;
-					}
-				case "Encryption" : {
-					Encryption = jsonReader.ReadString ();
-					break;
-					}
-				case "Signature" : {
-					Signature = jsonReader.ReadString ();
-					break;
-					}
-				case "EncryptKeys" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					EncryptKeys = new List <Key> ();
-					while (_Going) {
-						var _Item = Key.FromJson (jsonReader, true); // a tagged structure
-						EncryptKeys.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "SignKeys" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					SignKeys = new List <Key> ();
-					while (_Going) {
-						var _Item = Key.FromJson (jsonReader, true); // a tagged structure
-						SignKeys.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "Sealed" : {
-					Sealed = jsonReader.ReadBoolean ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
+	public virtual bool						Sealed {
+		get => _Sealed;
+		set {_Sealed = value; __Sealed = true; }
 		}
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DarePolicy";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DarePolicy();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		if (EncryptionAlgorithm != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("enc", 1);
+				_writer.WriteString (EncryptionAlgorithm);
+			}
+		if (DigestAlgorithm != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("dig", 1);
+				_writer.WriteString (DigestAlgorithm);
+			}
+		if (Encryption != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Encryption", 1);
+				_writer.WriteString (Encryption);
+			}
+		if (Signature != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Signature", 1);
+				_writer.WriteString (Signature);
+			}
+		if (EncryptKeys != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EncryptKeys", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in EncryptKeys) {
+				_writer.WriteArraySeparator (ref _firstarray);
+                _writer.WriteObjectStart();
+                _writer.WriteToken(_index._Tag, 1);
+				bool firstinner = true;
+				_index.Serialize (_writer, true, ref firstinner);
+                _writer.WriteObjectEnd();
+				}
+			_writer.WriteArrayEnd ();
+			}
+
+		if (SignKeys != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("SignKeys", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in SignKeys) {
+				_writer.WriteArraySeparator (ref _firstarray);
+                _writer.WriteObjectStart();
+                _writer.WriteToken(_index._Tag, 1);
+				bool firstinner = true;
+				_index.Serialize (_writer, true, ref firstinner);
+                _writer.WriteObjectEnd();
+				}
+			_writer.WriteArrayEnd ();
+			}
+
+		if (__Sealed){
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Sealed", 1);
+				_writer.WriteBoolean (Sealed);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new DarePolicy FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as DarePolicy;
+			}
+		var Result = new DarePolicy ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "enc" : {
+				EncryptionAlgorithm = jsonReader.ReadString ();
+				break;
+				}
+			case "dig" : {
+				DigestAlgorithm = jsonReader.ReadString ();
+				break;
+				}
+			case "Encryption" : {
+				Encryption = jsonReader.ReadString ();
+				break;
+				}
+			case "Signature" : {
+				Signature = jsonReader.ReadString ();
+				break;
+				}
+			case "EncryptKeys" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				EncryptKeys = new List <Key> ();
+				while (_Going) {
+					var _Item = Key.FromJson (jsonReader, true); // a tagged structure
+					EncryptKeys.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "SignKeys" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				SignKeys = new List <Key> ();
+				while (_Going) {
+					var _Item = Key.FromJson (jsonReader, true); // a tagged structure
+					SignKeys.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "Sealed" : {
+				Sealed = jsonReader.ReadBoolean ();
+				break;
+				}
+			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	/// </summary>
-	public partial class FileEntry : Dare {
+public partial class FileEntry : Dare {
         /// <summary>
         ///The file path in canonical form. 
         /// </summary>
 
-		public virtual string						Path  {get; set;}
+	public virtual string						Path  {get; set;}
         /// <summary>
         ///The creation time of the file on disk in UTC
         /// </summary>
 
-		public virtual DateTime?						CreationTime  {get; set;}
+	public virtual DateTime?						CreationTime  {get; set;}
         /// <summary>
         ///The last access time of the file on disk in UTC
         /// </summary>
 
-		public virtual DateTime?						LastAccessTime  {get; set;}
+	public virtual DateTime?						LastAccessTime  {get; set;}
         /// <summary>
         ///The last write time of the file on disk in UTC
         /// </summary>
 
-		public virtual DateTime?						LastWriteTime  {get; set;}
-		bool								__Attributes = false;
-		private int						_Attributes;
+	public virtual DateTime?						LastWriteTime  {get; set;}
+	bool								__Attributes = false;
+	private int						_Attributes;
         /// <summary>
         ///The file attribues as a bitmapped integer.
         /// </summary>
 
-		public virtual int						Attributes {
-			get => _Attributes;
-			set {_Attributes = value; __Attributes = true; }
-			}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "FileEntry";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new FileEntry();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (Path != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Path", 1);
-					_writer.WriteString (Path);
-				}
-			if (CreationTime != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("CreationTime", 1);
-					_writer.WriteDateTime (CreationTime);
-				}
-			if (LastAccessTime != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("LastAccessTime", 1);
-					_writer.WriteDateTime (LastAccessTime);
-				}
-			if (LastWriteTime != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("LastWriteTime", 1);
-					_writer.WriteDateTime (LastWriteTime);
-				}
-			if (__Attributes){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Attributes", 1);
-					_writer.WriteInteger32 (Attributes);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new FileEntry FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as FileEntry;
-				}
-		    var Result = new FileEntry ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "Path" : {
-					Path = jsonReader.ReadString ();
-					break;
-					}
-				case "CreationTime" : {
-					CreationTime = jsonReader.ReadDateTime ();
-					break;
-					}
-				case "LastAccessTime" : {
-					LastAccessTime = jsonReader.ReadDateTime ();
-					break;
-					}
-				case "LastWriteTime" : {
-					LastWriteTime = jsonReader.ReadDateTime ();
-					break;
-					}
-				case "Attributes" : {
-					Attributes = jsonReader.ReadInteger32 ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
+	public virtual int						Attributes {
+		get => _Attributes;
+		set {_Attributes = value; __Attributes = true; }
 		}
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "FileEntry";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new FileEntry();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		if (Path != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Path", 1);
+				_writer.WriteString (Path);
+			}
+		if (CreationTime != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("CreationTime", 1);
+				_writer.WriteDateTime (CreationTime);
+			}
+		if (LastAccessTime != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("LastAccessTime", 1);
+				_writer.WriteDateTime (LastAccessTime);
+			}
+		if (LastWriteTime != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("LastWriteTime", 1);
+				_writer.WriteDateTime (LastWriteTime);
+			}
+		if (__Attributes){
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Attributes", 1);
+				_writer.WriteInteger32 (Attributes);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new FileEntry FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as FileEntry;
+			}
+		var Result = new FileEntry ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "Path" : {
+				Path = jsonReader.ReadString ();
+				break;
+				}
+			case "CreationTime" : {
+				CreationTime = jsonReader.ReadDateTime ();
+				break;
+				}
+			case "LastAccessTime" : {
+				LastAccessTime = jsonReader.ReadDateTime ();
+				break;
+				}
+			case "LastWriteTime" : {
+				LastWriteTime = jsonReader.ReadDateTime ();
+				break;
+				}
+			case "Attributes" : {
+				Attributes = jsonReader.ReadInteger32 ();
+				break;
+				}
+			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	///
 	/// Entry containing the latest apex value of a specified append only log.
 	/// </summary>
-	public partial class Witness : Dare {
+public partial class Witness : Dare {
         /// <summary>
         ///Globally unique log identifier
         /// </summary>
 
-		public virtual string						Id  {get; set;}
+	public virtual string						Id  {get; set;}
         /// <summary>
         ///The issuer of the log
         /// </summary>
 
-		public virtual string						Issuer  {get; set;}
+	public virtual string						Issuer  {get; set;}
         /// <summary>
         ///The Apex hash value
         /// </summary>
 
-		public virtual byte[]						Apex  {get; set;}
-		bool								__Index = false;
-		private int						_Index;
+	public virtual byte[]						Apex  {get; set;}
+	bool								__Index = false;
+	private int						_Index;
         /// <summary>
         ///Specifies the index number assigned to the entry in the log.
         /// </summary>
 
-		public virtual int						Index {
-			get => _Index;
-			set {_Index = value; __Index = true; }
-			}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "Witness";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new Witness();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (Id != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Id", 1);
-					_writer.WriteString (Id);
-				}
-			if (Issuer != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Issuer", 1);
-					_writer.WriteString (Issuer);
-				}
-			if (Apex != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Apex", 1);
-					_writer.WriteBinary (Apex);
-				}
-			if (__Index){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Index", 1);
-					_writer.WriteInteger32 (Index);
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new Witness FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as Witness;
-				}
-		    var Result = new Witness ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "Id" : {
-					Id = jsonReader.ReadString ();
-					break;
-					}
-				case "Issuer" : {
-					Issuer = jsonReader.ReadString ();
-					break;
-					}
-				case "Apex" : {
-					Apex = jsonReader.ReadBinary ();
-					break;
-					}
-				case "Index" : {
-					Index = jsonReader.ReadInteger32 ();
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
+	public virtual int						Index {
+		get => _Index;
+		set {_Index = value; __Index = true; }
 		}
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Witness";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Witness();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		if (Id != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Id", 1);
+				_writer.WriteString (Id);
+			}
+		if (Issuer != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Issuer", 1);
+				_writer.WriteString (Issuer);
+			}
+		if (Apex != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Apex", 1);
+				_writer.WriteBinary (Apex);
+			}
+		if (__Index){
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Index", 1);
+				_writer.WriteInteger32 (Index);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Witness FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Witness;
+			}
+		var Result = new Witness ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "Id" : {
+				Id = jsonReader.ReadString ();
+				break;
+				}
+			case "Issuer" : {
+				Issuer = jsonReader.ReadString ();
+				break;
+				}
+			case "Apex" : {
+				Apex = jsonReader.ReadBinary ();
+				break;
+				}
+			case "Index" : {
+				Index = jsonReader.ReadInteger32 ();
+				break;
+				}
+			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
 
 	/// <summary>
 	///
 	/// Provides a proof that the payload with digest [hash] in the log described by 
 	/// SignedWitness occurs at the index [Index]
 	/// </summary>
-	public partial class Proof : Dare {
+public partial class Proof : Dare {
         /// <summary>
         ///The signed apex under which this proof chain is established
         /// </summary>
 
-		public virtual DareEnvelope						SignedWitness  {get; set;}
+	public virtual DareEnvelope						SignedWitness  {get; set;}
         /// <summary>
         ///
         /// </summary>
 
-		public virtual byte[]						Hash  {get; set;}
-		bool								__Index = false;
-		private int						_Index;
+	public virtual byte[]						Hash  {get; set;}
+	bool								__Index = false;
+	private int						_Index;
         /// <summary>
         ///Specifies the index number assigned to the entry in the log.
         /// </summary>
 
-		public virtual int						Index {
-			get => _Index;
-			set {_Index = value; __Index = true; }
-			}
+	public virtual int						Index {
+		get => _Index;
+		set {_Index = value; __Index = true; }
+		}
         /// <summary>
         ///The list of entries from which the proof path is computed.
         /// </summary>
 
-		public virtual List<byte[]>				Path  {get; set;}
+	public virtual List<byte[]>				Path  {get; set;}
 		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
 
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "Proof";
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Proof";
 
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new Proof();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Proof();
 
 
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		if (SignedWitness != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("SignedWitness", 1);
+				SignedWitness.Serialize (_writer, false);
+			}
+		if (Hash != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Hash", 1);
+				_writer.WriteBinary (Hash);
+			}
+		if (__Index){
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Index", 1);
+				_writer.WriteInteger32 (Index);
+			}
+		if (Path != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Path", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in Path) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				_writer.WriteBinary (_index);
 				}
-			if (SignedWitness != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SignedWitness", 1);
-					SignedWitness.Serialize (_writer, false);
-				}
-			if (Hash != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Hash", 1);
-					_writer.WriteBinary (Hash);
-				}
-			if (__Index){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Index", 1);
-					_writer.WriteInteger32 (Index);
-				}
-			if (Path != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Path", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Path) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					_writer.WriteBinary (_index);
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
+			_writer.WriteArrayEnd ();
 			}
 
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new Proof FromJson (JsonReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as Proof;
-				}
-		    var Result = new Proof ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
 			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "SignedWitness" : {
-					// An untagged structure
-					SignedWitness = new DareEnvelope ();
-					SignedWitness.Deserialize (jsonReader);
- 
-					break;
-					}
-				case "Hash" : {
-					Hash = jsonReader.ReadBinary ();
-					break;
-					}
-				case "Index" : {
-					Index = jsonReader.ReadInteger32 ();
-					break;
-					}
-				case "Path" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Path = new List <byte[]> ();
-					while (_Going) {
-						byte[] _Item = jsonReader.ReadBinary ();
-						Path.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
 		}
 
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Proof FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Proof;
+			}
+		var Result = new Proof ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "SignedWitness" : {
+				// An untagged structure
+				SignedWitness = new DareEnvelope ();
+				SignedWitness.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "Hash" : {
+				Hash = jsonReader.ReadBinary ();
+				break;
+				}
+			case "Index" : {
+				Index = jsonReader.ReadInteger32 ();
+				break;
+				}
+			case "Path" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				Path = new List <byte[]> ();
+				while (_Going) {
+					byte[] _Item = jsonReader.ReadBinary ();
+					Path.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
 	}
+
+
 

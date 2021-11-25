@@ -19,19 +19,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-namespace Goedel.Discovery {
+namespace Goedel.Discovery;
 
-    /// <summary>
-    /// Contains static links to delegates to perform platform specific
-    /// operations not supported in the portable libraries. Delegates must 
-    /// be bound before use.
-    /// </summary>
-    public static class Platform {
-
-
+/// <summary>
+/// Contains static links to delegates to perform platform specific
+/// operations not supported in the portable libraries. Delegates must 
+/// be bound before use.
+/// </summary>
+public static class Platform {
 
 
 
 
-        }
+
+
     }

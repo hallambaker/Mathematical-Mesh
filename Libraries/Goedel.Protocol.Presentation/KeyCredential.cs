@@ -27,171 +27,170 @@ using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
 
 
-namespace Goedel.Protocol.Presentation {
+namespace Goedel.Protocol.Presentation;
+
+/// <summary>
+/// Connection credentialed by means of raw key alone.
+/// </summary>
+public class KeyCredentialPublic : ICredentialPublic {
+    #region // Properties
+
+    ///<inheritdoc/>
+    public KeyPairAdvanced AuthenticationPublic { get; init; }
+
+    ///<summary>The account being claimed (unverified).</summary> 
+    public string Account { get; init; }
+
+    ///<summary>The credential provider (always null)</summary> 
+    public string Provider => null;
+
+    ///<summary>The authentication key identifier.</summary> 
+    public string AuthenticationKeyId => AuthenticationPublic.KeyIdentifier;
+
+    ///<summary>The credential validation report (always fails as no provider)</summary> 
+    public CredentialValidation CredentialValidation { get; set; } = CredentialValidation.None;
+    #endregion
+    #region // Constructors
 
     /// <summary>
-    /// Connection credentialed by means of raw key alone.
+    /// Create a new instance with the public key <paramref name="authenticationPublic"/>
     /// </summary>
-    public class KeyCredentialPublic : ICredentialPublic {
-        #region // Properties
+    /// <param name="authenticationPublic">The public key.</param>
+    public KeyCredentialPublic(KeyPairAdvanced authenticationPublic) =>
+        AuthenticationPublic = authenticationPublic;
 
-        ///<inheritdoc/>
-        public KeyPairAdvanced AuthenticationPublic { get; init; }
+    #endregion
+    #region // Implement Interface: ICredentialPrivate
 
-        ///<summary>The account being claimed (unverified).</summary> 
-        public string Account { get; init ; }
+    ///<inheritdoc/>
+    public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
+        (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
+                    AuthenticationPublic);
 
-        ///<summary>The credential provider (always null)</summary> 
-        public string Provider => null;
+    ///<inheritdoc/>
+    public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
+            List<KeyPairAdvanced> ephemerals,
+            string keyId) =>
+        (ephemerals[0], AuthenticationPublic);
+    #endregion
+    }
 
-        ///<summary>The authentication key identifier.</summary> 
-        public string AuthenticationKeyId => AuthenticationPublic.KeyIdentifier;
+/// <summary>
+/// Private key credential specifying only a raw key.
+/// </summary>
+public class KeyCredentialPrivate : KeyCredentialPublic, ICredentialPrivate {
+    #region // Properties
 
-        ///<summary>The credential validation report (always fails as no provider)</summary> 
-        public CredentialValidation CredentialValidation { get; set; } = CredentialValidation.None;
-        #endregion
-        #region // Constructors
+    string Tag { get; }
 
-        /// <summary>
-        /// Create a new instance with the public key <paramref name="authenticationPublic"/>
-        /// </summary>
-        /// <param name="authenticationPublic">The public key.</param>
-        public KeyCredentialPublic(KeyPairAdvanced authenticationPublic) => 
-            AuthenticationPublic = authenticationPublic;
+    ///<summary>The packet extensions describing the private key.</summary> 
+    public List<PacketExtension> Extensions { get; } = new();
 
-        #endregion
-        #region // Implement Interface: ICredentialPrivate
+    ///<summary>The private key used to authenticate packets.</summary> 
+    public KeyPairAdvanced AuthenticationPrivate { get; init; }
+    #endregion
 
-        ///<inheritdoc/>
-        public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey() =>
-            (KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced,
-                        AuthenticationPublic);
+    #region // Destructor
+    #endregion
 
-        ///<inheritdoc/>
-        public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
-                List<KeyPairAdvanced> ephemerals, 
-                string keyId) =>
-            (ephemerals[0], AuthenticationPublic);
-        #endregion
-        }
+    #region // Constructors
 
     /// <summary>
-    /// Private key credential specifying only a raw key.
+    /// Create a new instance with the private key <paramref name="authenticationPrivate"/>
     /// </summary>
-    public class KeyCredentialPrivate : KeyCredentialPublic, ICredentialPrivate {
-        #region // Properties
+    /// <param name="authenticationPrivate">The private key.</param>
+    /// <param name="account">The account claimed.</param>
+    public KeyCredentialPrivate(KeyPairAdvanced authenticationPrivate,
+            string account) :
+                base(authenticationPrivate) {
+        AuthenticationPrivate = authenticationPrivate;
+        Account = account;
 
-        string Tag { get; }
+        if (authenticationPrivate != null) {
+            Tag = authenticationPrivate switch {
 
-        ///<summary>The packet extensions describing the private key.</summary> 
-        public List<PacketExtension> Extensions { get; } = new();
-
-        ///<summary>The private key used to authenticate packets.</summary> 
-        public KeyPairAdvanced AuthenticationPrivate { get; init;  }
-        #endregion
-
-        #region // Destructor
-        #endregion
-
-        #region // Constructors
-
-        /// <summary>
-        /// Create a new instance with the private key <paramref name="authenticationPrivate"/>
-        /// </summary>
-        /// <param name="authenticationPrivate">The private key.</param>
-        /// <param name="account">The account claimed.</param>
-        public KeyCredentialPrivate(KeyPairAdvanced authenticationPrivate,
-                string account) :
-                    base(authenticationPrivate) {
-            AuthenticationPrivate = authenticationPrivate;
-            Account = account;
-
-            if (authenticationPrivate != null) {
-                Tag = authenticationPrivate switch {
-
-                    KeyPairX448 => Constants.ExtensionTagsDirectX448Tag,
-                    //KeyPairX25519 => Constants.ExtensionTagsX25519Tag,
-                    _ => throw new NYI()
-                    };
-                Extensions.Add(new PacketExtension() {
-                    Tag = Tag,
-                    Value = AuthenticationPrivate.IKeyAdvancedPublic.Encoding
-                    });
-                }
-
-            if (account is not null) {
-                Extensions.Add(new PacketExtension() {
-                    Tag = Constants.ExtensionTagsClaimIdTag,
-                    Value = account.ToUTF8()
-                    });
-                }
-
-            }
-
-        #endregion
-        #region // Implement Interface: ICredentialPrivate
-
-        ///<inheritdoc/>
-        public KeyCredentialPublic GetKeyCredentialPublic() =>
-                    new(
-                    AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced);
-
-
-        ///<inheritdoc/>
-        public virtual void AddCredentials(
-                List<PacketExtension> extensions
-                ) {
-            foreach (var extension in Extensions) {
-                extensions.Add(extension);
-                }
-            }
-        ///<inheritdoc/>
-        public virtual void AddEphemerals(
-                List<PacketExtension> extensions,
-                ref List<KeyPairAdvanced> ephmeralsOffered) {
-            KeyPairAdvanced ephemeral;
-
-            if (ephmeralsOffered != null) {
-                ephemeral = ephmeralsOffered[0];
-                //Screen.WriteLine($"Re-Offer of = {ephemeral}");
-
-                }
-            else {
-                ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
-                ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
-                //Screen.WriteLine($"Make Offer of = {ephemeral}");
-                }
-
-            var extension = new PacketExtension() {
-                Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
-                Value = ephemeral.IKeyAdvancedPublic.Encoding
+                KeyPairX448 => Constants.ExtensionTagsDirectX448Tag,
+                //KeyPairX25519 => Constants.ExtensionTagsX25519Tag,
+                _ => throw new NYI()
                 };
-
-
-            extensions.Add(extension);
-
+            Extensions.Add(new PacketExtension() {
+                Tag = Tag,
+                Value = AuthenticationPrivate.IKeyAdvancedPublic.Encoding
+                });
             }
 
-        ///<inheritdoc/>
-        public virtual ICredentialPublic GetCredentials(List<PacketExtension> extensions) =>
-            throw new NotImplementedException();
-
-        ///<inheritdoc/>
-        public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
-            foreach (var extension in extensions) {
-                if (extension.Tag == Constants.ExtensionTagsX448Tag) {
-                    var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
-                    //Screen.WriteLine($"Select = {ephemeral}");
-                    return (AuthenticationPrivate, ephemeral);
-                    }
-                }
-            throw new NYI();
+        if (account is not null) {
+            Extensions.Add(new PacketExtension() {
+                Tag = Constants.ExtensionTagsClaimIdTag,
+                Value = account.ToUTF8()
+                });
             }
 
-        ///<inheritdoc/>
-        public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) =>
-            (AuthenticationPrivate, new KeyPairX448(ephemeral, KeySecurity.Public));
-
-        #endregion
         }
+
+    #endregion
+    #region // Implement Interface: ICredentialPrivate
+
+    ///<inheritdoc/>
+    public KeyCredentialPublic GetKeyCredentialPublic() =>
+                new(
+                AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced);
+
+
+    ///<inheritdoc/>
+    public virtual void AddCredentials(
+            List<PacketExtension> extensions
+            ) {
+        foreach (var extension in Extensions) {
+            extensions.Add(extension);
+            }
+        }
+    ///<inheritdoc/>
+    public virtual void AddEphemerals(
+            List<PacketExtension> extensions,
+            ref List<KeyPairAdvanced> ephmeralsOffered) {
+        KeyPairAdvanced ephemeral;
+
+        if (ephmeralsOffered != null) {
+            ephemeral = ephmeralsOffered[0];
+            //Screen.WriteLine($"Re-Offer of = {ephemeral}");
+
+            }
+        else {
+            ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+            ephmeralsOffered = new List<KeyPairAdvanced> { ephemeral };
+            //Screen.WriteLine($"Make Offer of = {ephemeral}");
+            }
+
+        var extension = new PacketExtension() {
+            Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
+            Value = ephemeral.IKeyAdvancedPublic.Encoding
+            };
+
+
+        extensions.Add(extension);
+
+        }
+
+    ///<inheritdoc/>
+    public virtual ICredentialPublic GetCredentials(List<PacketExtension> extensions) =>
+        throw new NotImplementedException();
+
+    ///<inheritdoc/>
+    public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
+        foreach (var extension in extensions) {
+            if (extension.Tag == Constants.ExtensionTagsX448Tag) {
+                var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
+                //Screen.WriteLine($"Select = {ephemeral}");
+                return (AuthenticationPrivate, ephemeral);
+                }
+            }
+        throw new NYI();
+        }
+
+    ///<inheritdoc/>
+    public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey(string keyId, byte[] ephemeral) =>
+        (AuthenticationPrivate, new KeyPairX448(ephemeral, KeySecurity.Public));
+
+    #endregion
     }

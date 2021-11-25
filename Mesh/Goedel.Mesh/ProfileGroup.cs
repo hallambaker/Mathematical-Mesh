@@ -22,32 +22,30 @@
 
 
 
-namespace Goedel.Mesh {
+namespace Goedel.Mesh;
 
 
 
 
-    public partial class ProfileGroup {
+public partial class ProfileGroup {
 
-        /// <summary>
-        /// Blank constructor for use by deserializers.
-        /// </summary>
-        public ProfileGroup() {
-            }
-
-        /// <summary>
-        /// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
-        /// </summary>
-        /// <param name="accountAddress">The account address</param>
-        /// <param name="activationAccount">The activation used to create the account data.</param>
-        public ProfileGroup(
-                    string accountAddress,
-                    ActivationAccount activationAccount) : base(accountAddress, activationAccount) =>
-
-            // Sign the profile
-            Envelope(activationAccount.ProfileSignatureKey);
-
-
+    /// <summary>
+    /// Blank constructor for use by deserializers.
+    /// </summary>
+    public ProfileGroup() {
         }
+
+    /// <summary>
+    /// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
+    /// </summary>
+    /// <param name="accountAddress">The account address</param>
+    /// <param name="activationAccount">The activation used to create the account data.</param>
+    public ProfileGroup(
+                string accountAddress,
+                ActivationAccount activationAccount) : base(accountAddress, activationAccount) =>
+
+        // Sign the profile
+        Envelope(activationAccount.ProfileSignatureKey);
+
 
     }

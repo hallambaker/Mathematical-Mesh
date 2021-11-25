@@ -29,40 +29,41 @@ using Goedel.Utilities;
 
 using Xunit;
 
-namespace Goedel.XUnit {
-    public partial class TestDigests {
-        static string Message1 = "abc";
-        static string Message2 = "";
-        static string Message3 = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
-        static string Message4 = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu";
-        static string Message5 = "a";
-        static string Message6 = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno";
+namespace Goedel.XUnit;
 
-        // Some algorithm variations are intentionally omitted from the support library.
-        // To enable testing in the future, the corresponding test vectors are specified
-        // in the test set with the algorithm ID set to null;
-        static CryptoAlgorithmId SHA_1 = CryptoAlgorithmId.NULL;
-        static CryptoAlgorithmId SHA_2_224 = CryptoAlgorithmId.NULL;
-        static CryptoAlgorithmId SHA_2_256 = CryptoAlgorithmId.SHA_2_256;
-        static CryptoAlgorithmId SHA_2_384 = CryptoAlgorithmId.NULL;
-        static CryptoAlgorithmId SHA_2_512 = CryptoAlgorithmId.SHA_2_512;
-        static CryptoAlgorithmId SHA_2_512T128 = CryptoAlgorithmId.SHA_2_512T128;
-        //static CryptoAlgorithmID SHA_3_224 = CryptoAlgorithmID.NULL;
-        static CryptoAlgorithmId SHA_3_256 = CryptoAlgorithmId.SHA_3_256;
-        //static CryptoAlgorithmID SHA_3_384 = CryptoAlgorithmID.NULL;
-        static CryptoAlgorithmId SHA_3_512 = CryptoAlgorithmId.SHA_3_512;
-        static CryptoAlgorithmId SHAKE_128 = CryptoAlgorithmId.SHAKE_128;
-        static CryptoAlgorithmId SHAKE_256 = CryptoAlgorithmId.SHAKE_256;
+public partial class TestDigests {
+    static string Message1 = "abc";
+    static string Message2 = "";
+    static string Message3 = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
+    static string Message4 = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu";
+    static string Message5 = "a";
+    static string Message6 = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno";
 
-        static CryptoAlgorithmId SHA_3_224 = CryptoAlgorithmId.NULL;
-        //static CryptoAlgorithmID SHA_3_256 = CryptoAlgorithmID.NULL;
-        static CryptoAlgorithmId SHA_3_384 = CryptoAlgorithmId.NULL;
-        //static CryptoAlgorithmID SHA_3_512 = CryptoAlgorithmID.NULL;
+    // Some algorithm variations are intentionally omitted from the support library.
+    // To enable testing in the future, the corresponding test vectors are specified
+    // in the test set with the algorithm ID set to null;
+    static CryptoAlgorithmId SHA_1 = CryptoAlgorithmId.NULL;
+    static CryptoAlgorithmId SHA_2_224 = CryptoAlgorithmId.NULL;
+    static CryptoAlgorithmId SHA_2_256 = CryptoAlgorithmId.SHA_2_256;
+    static CryptoAlgorithmId SHA_2_384 = CryptoAlgorithmId.NULL;
+    static CryptoAlgorithmId SHA_2_512 = CryptoAlgorithmId.SHA_2_512;
+    static CryptoAlgorithmId SHA_2_512T128 = CryptoAlgorithmId.SHA_2_512T128;
+    //static CryptoAlgorithmID SHA_3_224 = CryptoAlgorithmID.NULL;
+    static CryptoAlgorithmId SHA_3_256 = CryptoAlgorithmId.SHA_3_256;
+    //static CryptoAlgorithmID SHA_3_384 = CryptoAlgorithmID.NULL;
+    static CryptoAlgorithmId SHA_3_512 = CryptoAlgorithmId.SHA_3_512;
+    static CryptoAlgorithmId SHAKE_128 = CryptoAlgorithmId.SHAKE_128;
+    static CryptoAlgorithmId SHAKE_256 = CryptoAlgorithmId.SHAKE_256;
 
-        public class TestVectors_SHA_NIST : IEnumerable<object[]> {
+    static CryptoAlgorithmId SHA_3_224 = CryptoAlgorithmId.NULL;
+    //static CryptoAlgorithmID SHA_3_256 = CryptoAlgorithmID.NULL;
+    static CryptoAlgorithmId SHA_3_384 = CryptoAlgorithmId.NULL;
+    //static CryptoAlgorithmID SHA_3_512 = CryptoAlgorithmID.NULL;
 
-            public IEnumerator<object[]> GetEnumerator() {
-                yield return new object[] {
+    public class TestVectors_SHA_NIST : IEnumerable<object[]> {
+
+        public IEnumerator<object[]> GetEnumerator() {
+            yield return new object[] {
                     Message1, 1,
                     new List<TestVector> () {
                         new TestVector (SHA_1,         "a9993e36 4706816a ba3e2571 7850c26c 9cd0d89d"),
@@ -78,7 +79,7 @@ namespace Goedel.XUnit {
                         new TestVector (SHAKE_128,     "5881092dd818bf5c f8a3ddb793fbcba7 4097d5c526a6d35f 97b83351940f2cc8"),
                         new TestVector (SHAKE_256,     "483366601360a877 1c6863080cc4114d 8db44530f8f1e1ee 4f94ea37e78b5739 d5a15bef186a5386 c75744c0527e1faa 9f8726e462a12a4f eb06bd8801e751e4") },
                     };
-                yield return new object[] {
+            yield return new object[] {
                     Message2, 1,
                     new List<TestVector> () {
                         new TestVector (SHA_1,         "da39a3ee 5e6b4b0d 3255bfef 95601890 afd80709"),
@@ -94,7 +95,7 @@ namespace Goedel.XUnit {
                         new TestVector (SHAKE_128,     "7f9c2ba4e88f827d 616045507605853e d73b8093f6efbc88 eb1a6eacfa66ef26"),
                         new TestVector (SHAKE_256,     "46b9dd2b0ba88d13 233b3feb743eeb24 3fcd52ea62b81b82 b50c27646ed5762f d75dc4ddd8c0f200 cb05019d67b592f6 fc821c49479ab486 40292eacb3b7c4be") },
                     };
-                yield return new object[] {
+            yield return new object[] {
                     Message3, 1,
                     new List<TestVector> () {
                         new TestVector (SHA_1,         "84983e44 1c3bd26e baae4aa1 f95129e5 e54670f1"),
@@ -110,7 +111,7 @@ namespace Goedel.XUnit {
                         new TestVector (SHAKE_128,     "1a96182b50fb8c7e 74e0a707788f55e9 8209b8d91fade8f3 2f8dd5cff7bf21f5"),
                         new TestVector (SHAKE_256,     "4d8c2dd2435a0128 eefbb8c36f6f8713 3a7911e18d979ee1 ae6be5d4fd2e3329 40d8688a4e6a59aa 8060f1f9bc996c05 aca3c696a8b66279 dc672c740bb224ec") },
                     };
-                yield return new object[] {
+            yield return new object[] {
                     Message4, 1,
                     new List<TestVector> () {
                         new TestVector (SHA_1,         "a49b2446 a02c645b f419f995 b6709125 3a04a259"),
@@ -126,14 +127,14 @@ namespace Goedel.XUnit {
                         new TestVector (SHAKE_128,     "7b6df6ff181173b6 d7898d7ff63fb07b 7c237daf471a5ae5 602adbccef9ccf4b"),
                         new TestVector (SHAKE_256,     "98be04516c04cc73 593fef3ed0352ea9 f6443942d6950e29 a372a681c3deaf45 35423709b0284394 8684e029010badcc 0acd8303fc85fdad 3eabf4f78cae1656")  },
                     };
-                }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
             }
 
-        public class TestVectors_SHA_NIST_Long : IEnumerable<object[]> {
-            public IEnumerator<object[]> GetEnumerator() {
-                yield return new object[] {
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+    public class TestVectors_SHA_NIST_Long : IEnumerable<object[]> {
+        public IEnumerator<object[]> GetEnumerator() {
+            yield return new object[] {
                     Message5,
                     1_000_000,
                     new List<TestVector> () {
@@ -148,7 +149,7 @@ namespace Goedel.XUnit {
                         new TestVector (SHA_3_384,     "eee9e24d78c18553 37983451df97c8ad 9eedf256c6334f8e 948d252d5e0e7684 7aa0774ddb90a842 190d2c558b4b8340"),
                         new TestVector (SHA_3_512,     "3c3a876da14034ab 60627c077bb98f7e 120a2a5370212dff b3385a18d4f38859 ed311d0a9d5141ce 9cc5c66ee689b266 a8aa18ace8282a0e 0db596c90b0a7b87") },
                     };
-                yield return new object[] {
+            yield return new object[] {
                     Message6,
                     16_777_216,
                     new List<TestVector> () {
@@ -164,71 +165,70 @@ namespace Goedel.XUnit {
                         new TestVector (SHA_3_512,     "235ffd53504ef836 a1342b488f483b39 6eabbfe642cf78ee 0d31feec788b23d0 d18d5c339550dd59 58a500d4b95363da 1b5fa18affc1bab2 292dc63b7d85097c") },
                     };
 
-                }
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+            }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-            };
-
-
+        };
 
 
-        [Theory]
-        [ClassData(typeof(TestVectors_SHA_NIST))]
-        public void TestSHA_Direct(string Message, int Repeat, List<TestVector> TestData) {
-            Xunit.Assert.True(Repeat == 1);
-            foreach (var TestVector in TestData) {
-                if (TestVector.ID != CryptoAlgorithmId.NULL) {
-                    var Provider = CryptoCatalog.Default.GetDigest(TestVector.ID);
-                    TestVector.Verify(Provider, Message, TestVector);
-                    }
+
+
+    [Theory]
+    [ClassData(typeof(TestVectors_SHA_NIST))]
+    public void TestSHA_Direct(string Message, int Repeat, List<TestVector> TestData) {
+        Xunit.Assert.True(Repeat == 1);
+        foreach (var TestVector in TestData) {
+            if (TestVector.ID != CryptoAlgorithmId.NULL) {
+                var Provider = CryptoCatalog.Default.GetDigest(TestVector.ID);
+                TestVector.Verify(Provider, Message, TestVector);
                 }
             }
-        [Theory]
-        [ClassData(typeof(TestVectors_SHA_NIST))]
-        [ClassData(typeof(TestVectors_SHA_NIST_Long))]
-        public void TestSHA_Stream(string Message, int Repeat, List<TestVector> TestData) {
-            foreach (var TestVector in TestData) {
-                if (TestVector.ID != CryptoAlgorithmId.NULL) {
-                    var Provider = CryptoCatalog.Default.GetDigest(TestVector.ID);
-                    XUnit.TestVector.Verify_Streamed(Provider, Message, Repeat, TestVector);
-                    }
+        }
+    [Theory]
+    [ClassData(typeof(TestVectors_SHA_NIST))]
+    [ClassData(typeof(TestVectors_SHA_NIST_Long))]
+    public void TestSHA_Stream(string Message, int Repeat, List<TestVector> TestData) {
+        foreach (var TestVector in TestData) {
+            if (TestVector.ID != CryptoAlgorithmId.NULL) {
+                var Provider = CryptoCatalog.Default.GetDigest(TestVector.ID);
+                XUnit.TestVector.Verify_Streamed(Provider, Message, Repeat, TestVector);
                 }
             }
-
-
         }
 
-    public class TestVector {
-        public CryptoAlgorithmId ID { get; set; }
-        public byte[] Digest { get; set; }
+
+    }
+
+public class TestVector {
+    public CryptoAlgorithmId ID { get; set; }
+    public byte[] Digest { get; set; }
 
 
-        public static void Verify(CryptoProviderDigest Provider, string MessageString, TestVector TestVector) {
-            var Message = MessageString.ToBytes();
-            var Result = Provider.ProcessData(Message);
+    public static void Verify(CryptoProviderDigest Provider, string MessageString, TestVector TestVector) {
+        var Message = MessageString.ToBytes();
+        var Result = Provider.ProcessData(Message);
 
-            Xunit.Assert.True(Result.IsEqualTo(TestVector.Digest));
+        Xunit.Assert.True(Result.IsEqualTo(TestVector.Digest));
+        }
+
+    public static void Verify_Streamed(CryptoProviderDigest Provider, string MessageString,
+            int Repeat, TestVector TestVector) {
+        var Message = MessageString.ToBytes();
+        var Encoder = Provider.MakeEncoder();
+        for (var i = 0; i < Repeat; i++) {
+            Encoder.Write(Message);
             }
+        Encoder.Complete();
+        var Result = Encoder.Integrity;
 
-        public static void Verify_Streamed(CryptoProviderDigest Provider, string MessageString,
-                int Repeat, TestVector TestVector) {
-            var Message = MessageString.ToBytes();
-            var Encoder = Provider.MakeEncoder();
-            for (var i = 0; i < Repeat; i++) {
-                Encoder.Write(Message);
-                }
-            Encoder.Complete();
-            var Result = Encoder.Integrity;
-
-            Xunit.Assert.True(Result.IsEqualTo(TestVector.Digest));
-            }
+        Xunit.Assert.True(Result.IsEqualTo(TestVector.Digest));
+        }
 
 
-        public TestVector(CryptoAlgorithmId CryptoAlgorithmID, String Digest) {
-            ID = CryptoAlgorithmID;
-            this.Digest = Digest.FromBase16();
+    public TestVector(CryptoAlgorithmId CryptoAlgorithmID, String Digest) {
+        ID = CryptoAlgorithmID;
+        this.Digest = Digest.FromBase16();
 
 
-            }
         }
     }

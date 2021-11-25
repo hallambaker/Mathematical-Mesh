@@ -24,54 +24,54 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Goedel.Protocol {
-    //
-    //  JSON Writer code
-    //
+namespace Goedel.Protocol;
+
+//
+//  JSON Writer code
+//
+
+
+
+/// <summary>
+/// JSON Writer for JSON-C, which extends the JSON-B format to add support 
+/// for compression.
+/// </summary>
+public class JSONCWriter : JsonBWriter {
+
+    Dictionary<string, int> TagDictionary;
 
 
 
     /// <summary>
-    /// JSON Writer for JSON-C, which extends the JSON-B format to add support 
-    /// for compression.
+    /// Create a new JSON Writer using the specified output buffer. If the buffer has
+    /// an output stream defined, text will be written to the stream.
     /// </summary>
-    public class JSONCWriter : JsonBWriter {
-
-        Dictionary<string, int> TagDictionary;
-
-
-
-        /// <summary>
-        /// Create a new JSON Writer using the specified output buffer. If the buffer has
-        /// an output stream defined, text will be written to the stream.
-        /// </summary>
-        /// <param name="Output">Output buffer</param>
-        /// <param name="TagDictionary">Tag dictionary to ues for compression</param>
-        public JSONCWriter(Stream Output = null,
-                    Dictionary<string, int> TagDictionary = null) {
-            this.Output = Output ?? new MemoryStream();
-            this.TagDictionary = TagDictionary ?? new Dictionary<string, int>();
-            }
-
-        /// <summary>
-        /// Write Tag to the stream
-        /// </summary>
-        /// <param name="Tag">Tag text.</param>
-        /// <param name="IndentIn">Current indent level.</param>
-        public override void WriteToken(string Tag, int IndentIn) => WriteString(Tag);
-
-        /// <summary>Write string.</summary>
-        /// <param name="Data">Value to write</param>
-        public override void WriteString(string Data) {
-
-            if (TagDictionary.TryGetValue(Data, out var Index)) {
-                WriteTag(JSONBCD.TagCode, Index);
-                }
-            else {
-                WriteTag(JSONBCD.StringTerm, Data.Length);
-                Output.Write(Data);
-                }
-            }
-
+    /// <param name="Output">Output buffer</param>
+    /// <param name="TagDictionary">Tag dictionary to ues for compression</param>
+    public JSONCWriter(Stream Output = null,
+                Dictionary<string, int> TagDictionary = null) {
+        this.Output = Output ?? new MemoryStream();
+        this.TagDictionary = TagDictionary ?? new Dictionary<string, int>();
         }
+
+    /// <summary>
+    /// Write Tag to the stream
+    /// </summary>
+    /// <param name="Tag">Tag text.</param>
+    /// <param name="IndentIn">Current indent level.</param>
+    public override void WriteToken(string Tag, int IndentIn) => WriteString(Tag);
+
+    /// <summary>Write string.</summary>
+    /// <param name="Data">Value to write</param>
+    public override void WriteString(string Data) {
+
+        if (TagDictionary.TryGetValue(Data, out var Index)) {
+            WriteTag(JSONBCD.TagCode, Index);
+            }
+        else {
+            WriteTag(JSONBCD.StringTerm, Data.Length);
+            Output.Write(Data);
+            }
+        }
+
     }

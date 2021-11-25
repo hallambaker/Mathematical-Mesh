@@ -29,14 +29,12 @@
 
 
 
-namespace Goedel.Mesh.Management {
+namespace Goedel.Mesh.Management;
 
-    /// <summary>
-    /// Service management interface provides host and service telemetry.
-    /// </summary>
+/// <summary>
+/// Service management interface provides host and service telemetry.
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

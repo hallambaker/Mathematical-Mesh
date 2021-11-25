@@ -28,116 +28,115 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 
 
-namespace Goedel.Protocol.Presentation {
+namespace Goedel.Protocol.Presentation;
+
+/// <summary>
+/// Presentation host connection. Tracks the state of a host connection.
+/// </summary>
+public partial class ConnectionResponder : RudConnection {
+
+    #region // Properties
+
+    ///<inheritdoc/> 
+    public override byte[] ClientKeyIn => ClientKeyClientToHost;
+    ///<inheritdoc/>
+    public override byte[] ClientKeyOut => ClientKeyHostToClient;
+    ///<inheritdoc/> 
+    public override byte[] MutualKeyIn => MutualKeyClientToHost;
+    ///<inheritdoc/>
+    public override byte[] MutualKeyOut => MutualKeyHostToClient;
+    ///<inheritdoc/> 
+    public override ICredentialPublic HostCredential => CredentialSelf;
+    ///<inheritdoc/> 
+    public override ICredentialPublic ClientCredential => CredentialOther;
+
+
+
+
+
+    ///<summary>The source Id to be used by this responder when returning packets.</summary> 
+
+    public StreamId SourceId;
+
+    static List<PacketExtension> EphemeralExtensionsCurrent;
+
+    static List<KeyPairAdvanced> EphemeralsPrevious;
+
+    static List<KeyPairAdvanced> EphemeralsCurrent;
+
+    //static DateTime EphemeralsCreated;
+
+    static DateTime EphemeralsExpire;
+
+    static TimeSpan EphemeralValidity = new(1, 0, 0);
+
+    #endregion
+    #region // Constructors
+
     /// <summary>
-    /// Presentation host connection. Tracks the state of a host connection.
+    /// Constructor for a connection host instance connected to <paramref name="listener"/>
     /// </summary>
-    public partial class ConnectionResponder : RudConnection {
+    /// <param name="listener">The listener this connection is to service.</param>
+    /// <param name="packetIn">The packet resulting in creation of the responder.</param>
+    public ConnectionResponder(Listener listener,
+            Packet packetIn = null) {
+        Listener = listener;
+        CredentialSelf = Listener?.CredentialSelf;
 
-        #region // Properties
+        if (packetIn != null) {
+            //LocalStreamId = StreamId.GetStreamId();
+            //ReturnStreamId = LocalStreamId.GetValue();
 
-        ///<inheritdoc/> 
-        public override byte[] ClientKeyIn => ClientKeyClientToHost;
-        ///<inheritdoc/>
-        public override byte[] ClientKeyOut => ClientKeyHostToClient;
-        ///<inheritdoc/> 
-        public override byte[] MutualKeyIn => MutualKeyClientToHost;
-        ///<inheritdoc/>
-        public override byte[] MutualKeyOut => MutualKeyHostToClient;
-        ///<inheritdoc/> 
-        public override ICredentialPublic HostCredential => CredentialSelf;
-        ///<inheritdoc/> 
-        public override ICredentialPublic ClientCredential => CredentialOther;
-
-
-
-
-
-        ///<summary>The source Id to be used by this responder when returning packets.</summary> 
-
-        public StreamId SourceId;
-
-        static List<PacketExtension> EphemeralExtensionsCurrent;
-
-        static List<KeyPairAdvanced> EphemeralsPrevious;
-
-        static List<KeyPairAdvanced> EphemeralsCurrent;
-
-        //static DateTime EphemeralsCreated;
-
-        static DateTime EphemeralsExpire;
-
-        static TimeSpan EphemeralValidity = new(1, 0, 0);
-
-        #endregion
-        #region // Constructors
-
-        /// <summary>
-        /// Constructor for a connection host instance connected to <paramref name="listener"/>
-        /// </summary>
-        /// <param name="listener">The listener this connection is to service.</param>
-        /// <param name="packetIn">The packet resulting in creation of the responder.</param>
-        public ConnectionResponder(Listener listener,
-                Packet packetIn = null) {
-            Listener = listener;
-            CredentialSelf = Listener?.CredentialSelf;
-
-            if (packetIn != null) {
-                //LocalStreamId = StreamId.GetStreamId();
-                //ReturnStreamId = LocalStreamId.GetValue();
-
-                PacketIn = packetIn;
-                }
-
+            PacketIn = packetIn;
             }
 
-        #endregion
-        #region // Methods 
-        /// <summary>
-        /// Generate a new set of ephemerals
-        /// </summary>
-        public virtual void RollEphemerals() {
-            EphemeralsPrevious = EphemeralsCurrent;
-            var ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
-            EphemeralsCurrent = new List<KeyPairAdvanced> { ephemeral };
-            var extension = new PacketExtension() {
-                Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
-                Value = ephemeral.IKeyAdvancedPublic.Encoding
-                };
-
-            EphemeralExtensionsCurrent = new List<PacketExtension> { extension };
-            //EphemeralsCreated = DateTime.Now;
-            EphemeralsExpire = DateTime.Now + EphemeralValidity;
-            }
-
-
-        /// <summary>
-        /// Add a challenge value over the current state to <paramref name="extensions"/>
-        /// </summary>
-        /// <param name="extensions">List of extensions to add the ephemerals to.</param>
-        public override void AddChallenge(
-                List<PacketExtension> extensions) {
-
-            }
-
-
-        ///<inheritdoc/>
-        public override void AddEphemerals(byte[] destinationId, List<PacketExtension> extensions) {
-            if (EphemeralsCurrent == null | DateTime.Now > EphemeralsExpire) {
-                RollEphemerals();
-                }
-            foreach (var ephemeral in EphemeralExtensionsCurrent) {
-                extensions.Add(ephemeral);
-                }
-            }
-
-        ///<inheritdoc/>
-        public override void MutualKeyExchange(string keyId) {
-            var privateEphemeral = EphemeralsCurrent[0];  // hack, should pull ephemeral properly by Id.
-            MutualKeyExchange(privateEphemeral, CredentialOther.AuthenticationPublic);
-            }
-
-        #endregion
         }
 
+    #endregion
+    #region // Methods 
+    /// <summary>
+    /// Generate a new set of ephemerals
+    /// </summary>
+    public virtual void RollEphemerals() {
+        EphemeralsPrevious = EphemeralsCurrent;
+        var ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device) as KeyPairAdvanced;
+        EphemeralsCurrent = new List<KeyPairAdvanced> { ephemeral };
+        var extension = new PacketExtension() {
+            Tag = ephemeral.CryptoAlgorithmId.ToJoseID(),
+            Value = ephemeral.IKeyAdvancedPublic.Encoding
+            };
+
+        EphemeralExtensionsCurrent = new List<PacketExtension> { extension };
+        //EphemeralsCreated = DateTime.Now;
+        EphemeralsExpire = DateTime.Now + EphemeralValidity;
+        }
+
+
+    /// <summary>
+    /// Add a challenge value over the current state to <paramref name="extensions"/>
+    /// </summary>
+    /// <param name="extensions">List of extensions to add the ephemerals to.</param>
+    public override void AddChallenge(
+            List<PacketExtension> extensions) {
+
+        }
+
+
+    ///<inheritdoc/>
+    public override void AddEphemerals(byte[] destinationId, List<PacketExtension> extensions) {
+        if (EphemeralsCurrent == null | DateTime.Now > EphemeralsExpire) {
+            RollEphemerals();
+            }
+        foreach (var ephemeral in EphemeralExtensionsCurrent) {
+            extensions.Add(ephemeral);
+            }
+        }
+
+    ///<inheritdoc/>
+    public override void MutualKeyExchange(string keyId) {
+        var privateEphemeral = EphemeralsCurrent[0];  // hack, should pull ephemeral properly by Id.
+        MutualKeyExchange(privateEphemeral, CredentialOther.AuthenticationPublic);
+        }
+
+    #endregion
     }

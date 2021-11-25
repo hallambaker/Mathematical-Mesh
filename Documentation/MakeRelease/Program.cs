@@ -4,179 +4,178 @@ using System.IO;
 
 using Goedel.Registry;
 
-namespace Goedel.Tool.Version {
-    class Program {
-        static string PathDistribution = "prismproof\\Downloads";
-        //static string PathSummary = "Sources\\" + PathDistribution;
+namespace Goedel.Tool.Version;
 
-        public Distribution Distribution = new();
+class Program {
+    static string PathDistribution = "prismproof\\Downloads";
+    //static string PathSummary = "Sources\\" + PathDistribution;
 
-        static void Main() {
-            var _ = new Program();
-            }
+    public Distribution Distribution = new();
 
-        public Program() {
-            var Directories = Directory.GetDirectories(PathDistribution);
-            foreach (var Directory in Directories) {
-                //Console.WriteLine($"Directory {Directory}");
-                ParseManifest(Directory);
-                }
-
-            //var Generate = new MakeRelease();
-            MakeRelease.MakeIndex(Distribution);
-            MakeRelease.MakeVersionID(Distribution);
-            }
-
-
-
-
-        public void ParseManifest(string Path) {
-            var inputfile = Path + "\\Manifest.txt";
-            var Parse = new Release() {
-                };
-
-            using (Stream infile = new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
-                Lexer Schema = new Lexer(inputfile);
-                Schema.Process(infile, Parse);
-                }
-
-            foreach (var Item in Parse.Top) {
-                if (Item as Version != null) {
-                    var Version = Item as Version;
-                    Version.Parse();
-                    if (Version.Stable) {
-                        Distribution.Stable ??= Version;
-                        }
-                    if (Version > Distribution.Latest) {
-                        if (Distribution.Latest != null) {
-                            Distribution.Versions.Add(Distribution.Latest);
-                            }
-                        Distribution.Latest = Version;
-                        }
-                    else {
-                        Distribution.Versions.Add(Version);
-                        }
-                    }
-                }
-            }
-
+    static void Main() {
+        var _ = new Program();
         }
 
-    public class Distribution {
-        public Version Stable;
+    public Program() {
+        var Directories = Directory.GetDirectories(PathDistribution);
+        foreach (var Directory in Directories) {
+            //Console.WriteLine($"Directory {Directory}");
+            ParseManifest(Directory);
+            }
 
-        public Version Latest;
-
-
-        public SortedSet<Version> Versions = new(new Version());
-
+        //var Generate = new MakeRelease();
+        MakeRelease.MakeIndex(Distribution);
+        MakeRelease.MakeVersionID(Distribution);
         }
 
-    public partial class Version : IComparer<Version> {
-        public int Major = 0;
-        public int Minor = 8;
-        public int Revision = 0;
-        public List<Platform> Platforms = new();
 
-        public bool Stable = false;
 
-        public void Parse() {
-            var Digits = Code.Split('.');
 
-            Major = Convert.ToInt32(Digits[0]);
-            Minor = Convert.ToInt32(Digits[1]);
-            Revision = Convert.ToInt32(Digits[2]);
+    public void ParseManifest(string Path) {
+        var inputfile = Path + "\\Manifest.txt";
+        var Parse = new Release() {
+            };
 
-            foreach (var Entry in Entries) {
-                if (Entry is Platform) {
-                    var Platform = Entry as Platform;
-                    Platforms.Add(Platform);
-                    Platform.Parse();
+        using (Stream infile = new FileStream(inputfile, FileMode.Open, FileAccess.Read)) {
+            Lexer Schema = new Lexer(inputfile);
+            Schema.Process(infile, Parse);
+            }
+
+        foreach (var Item in Parse.Top) {
+            if (Item as Version != null) {
+                var Version = Item as Version;
+                Version.Parse();
+                if (Version.Stable) {
+                    Distribution.Stable ??= Version;
                     }
-                else if (Entry is Stable) {
-                    Stable = true;
+                if (Version > Distribution.Latest) {
+                    if (Distribution.Latest != null) {
+                        Distribution.Versions.Add(Distribution.Latest);
+                        }
+                    Distribution.Latest = Version;
+                    }
+                else {
+                    Distribution.Versions.Add(Version);
                     }
                 }
             }
+        }
 
-        public override string ToString() => $"{Major}.{Minor}.{Revision}";
+    }
 
-        public int CompareTo(Version y) => Compare(this, y);
+public class Distribution {
+    public Version Stable;
 
-        public int Compare(Version x, Version y) => Version.CompareV(x, y);
+    public Version Latest;
 
-        public static int CompareV(Version x, Version y) {
-            if (y == null) {
-                return 1;
+
+    public SortedSet<Version> Versions = new(new Version());
+
+    }
+
+public partial class Version : IComparer<Version> {
+    public int Major = 0;
+    public int Minor = 8;
+    public int Revision = 0;
+    public List<Platform> Platforms = new();
+
+    public bool Stable = false;
+
+    public void Parse() {
+        var Digits = Code.Split('.');
+
+        Major = Convert.ToInt32(Digits[0]);
+        Minor = Convert.ToInt32(Digits[1]);
+        Revision = Convert.ToInt32(Digits[2]);
+
+        foreach (var Entry in Entries) {
+            if (Entry is Platform) {
+                var Platform = Entry as Platform;
+                Platforms.Add(Platform);
+                Platform.Parse();
                 }
-            if (x == null) {
-                return 0;
+            else if (Entry is Stable) {
+                Stable = true;
                 }
-            if (x.Major != y.Major) {
-                return x.Major > y.Major ? 1 : -1;
-                }
-            if (x.Minor != y.Minor) {
-                return x.Minor > y.Minor ? 1 : -1;
-                }
-            if (x.Revision != y.Revision) {
-                return x.Revision > y.Revision ? 1 : -1;
-                }
+            }
+        }
+
+    public override string ToString() => $"{Major}.{Minor}.{Revision}";
+
+    public int CompareTo(Version y) => Compare(this, y);
+
+    public int Compare(Version x, Version y) => Version.CompareV(x, y);
+
+    public static int CompareV(Version x, Version y) {
+        if (y == null) {
+            return 1;
+            }
+        if (x == null) {
             return 0;
             }
-
-
-        public static bool operator <(Version left, Version right) => (CompareV(left, right) < 0);
-        public static bool operator >(Version left, Version right) => (CompareV(left, right) > 0);
-        }
-
-
-    public partial class Platform {
-        static Dictionary<string, string> MapPlatform = new() {
-                { "windows", "Windows" },
-                { "osx", "macOS" },
-                { "linux", "Linux" },
-                { "any", "Universal" },
-            };
-        public string PlatformName;
-        public List<File> Files = new();
-
-        public void Parse() {
-            MapPlatform.TryGetValue(Name, out PlatformName);
-            foreach (var Entry in Entries) {
-                var File = Entry as File;
-                Files.Add(File);
-                File.Parse();
-                File.Platform = this;
-                }
+        if (x.Major != y.Major) {
+            return x.Major > y.Major ? 1 : -1;
             }
-
+        if (x.Minor != y.Minor) {
+            return x.Minor > y.Minor ? 1 : -1;
+            }
+        if (x.Revision != y.Revision) {
+            return x.Revision > y.Revision ? 1 : -1;
+            }
+        return 0;
         }
 
 
+    public static bool operator <(Version left, Version right) => (CompareV(left, right) < 0);
+    public static bool operator >(Version left, Version right) => (CompareV(left, right) > 0);
+    }
 
 
-    public partial class File {
-        public Platform Platform;
+public partial class Platform {
+    static Dictionary<string, string> MapPlatform = new() {
+            { "windows", "Windows" },
+            { "osx", "macOS" },
+            { "linux", "Linux" },
+            { "any", "Universal" },
+        };
+    public string PlatformName;
+    public List<File> Files = new();
 
-
-        static Dictionary<string, string> MapRID = new() {
-                { "win-x64", "Intel & AMD 64 bit (Windows 7 or later)" },
-                { "win10-arm", "Windows ARM, 64 bit (Windows 10 only)" },
-                { "osx-x64", "macOS (OSX) (Sierra (10.12) or later)" },
-                { "linux-x64", "Any 64 bit Intel" },
-                { "linux-arm", "Any 64 bit ARM" },
-                { "any", "Universal (requires dotnet runtime)" }
-            };
-
-        public string Icon = "fa-file-archive-o";
-
-        public string PlatformDescription = "unknown";
-
-
-        public void Parse() => MapRID.TryGetValue(RID, out PlatformDescription);
-
-
+    public void Parse() {
+        MapPlatform.TryGetValue(Name, out PlatformName);
+        foreach (var Entry in Entries) {
+            var File = Entry as File;
+            Files.Add(File);
+            File.Parse();
+            File.Platform = this;
+            }
         }
+
+    }
+
+
+
+
+public partial class File {
+    public Platform Platform;
+
+
+    static Dictionary<string, string> MapRID = new() {
+            { "win-x64", "Intel & AMD 64 bit (Windows 7 or later)" },
+            { "win10-arm", "Windows ARM, 64 bit (Windows 10 only)" },
+            { "osx-x64", "macOS (OSX) (Sierra (10.12) or later)" },
+            { "linux-x64", "Any 64 bit Intel" },
+            { "linux-arm", "Any 64 bit ARM" },
+            { "any", "Universal (requires dotnet runtime)" }
+        };
+
+    public string Icon = "fa-file-archive-o";
+
+    public string PlatformDescription = "unknown";
+
+
+    public void Parse() => MapRID.TryGetValue(RID, out PlatformDescription);
+
 
     }
 

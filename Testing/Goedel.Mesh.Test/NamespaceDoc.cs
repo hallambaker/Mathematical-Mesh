@@ -29,14 +29,12 @@
 
 
 
-namespace Goedel.Mesh.Test {
+namespace Goedel.Mesh.Test;
 
-    /// <summary>
-    /// Test support library
-    /// </summary>
+/// <summary>
+/// Test support library
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

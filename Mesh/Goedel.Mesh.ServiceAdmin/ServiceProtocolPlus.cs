@@ -22,44 +22,43 @@
 
 
 
-namespace Goedel.Mesh.ServiceAdmin {
-    public partial class Configuration {
+namespace Goedel.Mesh.ServiceAdmin;
+
+public partial class Configuration {
 
 
 
-        }
+    }
 
 
-    /// <summary>
-    /// Service administration request
-    /// </summary>
-    public partial class ServiceConfiguration {
+/// <summary>
+/// Service administration request
+/// </summary>
+public partial class ServiceConfiguration {
 
-        #region // Properties
-
-
-
-
-
-
-        #endregion
-        #region // Destructor
-        #endregion
-        #region // Constructors
-        #endregion
-
-        #region // Implement Interface: Ixxx
-        #endregion
-
-        #region // Methods 
-        #endregion
-        }
-
-    public partial class HostConfiguration {
+    #region // Properties
 
 
 
 
-        }
+
+
+    #endregion
+    #region // Destructor
+    #endregion
+    #region // Constructors
+    #endregion
+
+    #region // Implement Interface: Ixxx
+    #endregion
+
+    #region // Methods 
+    #endregion
+    }
+
+public partial class HostConfiguration {
+
+
+
 
     }

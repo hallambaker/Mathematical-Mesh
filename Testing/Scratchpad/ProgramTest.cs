@@ -32,51 +32,51 @@ using Goedel.Mesh.Test;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Test.Core;
 
-namespace Scratchpad {
+namespace Scratchpad;
 
 
-    // ToDo: Server logging
-    // ToDo: Server status info
-    // ToDo: Test write validator, read in all catalogs and check encryption etc. status
+// ToDo: Server logging
+// ToDo: Server status info
+// ToDo: Test write validator, read in all catalogs and check encryption etc. status
 
-    // ToDo: RUD Documentation - Grab examples from connection formation
-    // ToDo: RUD Documentation - Describe stream lifecycle
-    // ToDo: RUD Documentation - Describe account binding
+// ToDo: RUD Documentation - Grab examples from connection formation
+// ToDo: RUD Documentation - Describe stream lifecycle
+// ToDo: RUD Documentation - Describe account binding
 
-    partial class Program {
-        static void Main() {
-            Screen.WriteInfo($"Start test  {DateTime.Now}");
+partial class Program {
+    static void Main() {
+        Screen.WriteInfo($"Start test  {DateTime.Now}");
 
-            //for (var i = 0; i < 100; i++) {
-            //    Screen.WriteLine($"Test {i}");
+        //for (var i = 0; i < 100; i++) {
+        //    Screen.WriteLine($"Test {i}");
 
-            //    ShellTestsAdmin.Test().TestAccountDelete();
-            //    ShellTestsAdmin.Test().TestAccount();
-            //    }
+        //    ShellTestsAdmin.Test().TestAccountDelete();
+        //    ShellTestsAdmin.Test().TestAccount();
+        //    }
 
 
 
 
 
-            //ShellTestsAdmin.Test().TestMessageContactRemote();
-            //ShellTestsAdmin.Test().TestMessageContactRemote();
+        //ShellTestsAdmin.Test().TestMessageContactRemote();
+        //ShellTestsAdmin.Test().TestMessageContactRemote();
 
 
 
-            //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
-            ShellTestsAdmin.Test().TestProfileSSHPrivate();
+        ShellTestsAdmin.Test().TestProfileSSHPrivate();
 
-            //ShellTestsAdmin.Test().TestProfileMail();
+        //ShellTestsAdmin.Test().TestProfileMail();
 
-            //ShellTestsAdmin.Test().TestMessageContactRemote();
-            //ShellTestsAdmin.Test().TestFilePlain();
+        //ShellTestsAdmin.Test().TestMessageContactRemote();
+        //ShellTestsAdmin.Test().TestFilePlain();
 
-            ShellTestsAdmin.Test().TestHello();
-            ShellTestsAdmin.Test().TestAccountDelete();
-            ShellTestsAdmin.Test().TestProfileConnectPin();
-            ShellTestsAdmin.Test().TestProfileConnectPinExpired();
-            ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
+        ShellTestsAdmin.Test().TestHello();
+        ShellTestsAdmin.Test().TestAccountDelete();
+        ShellTestsAdmin.Test().TestProfileConnectPin();
+        ShellTestsAdmin.Test().TestProfileConnectPinExpired();
+        ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
 
 
 
@@ -84,169 +84,168 @@ namespace Scratchpad {
 
 
 
-            //TestService.Test().MeshCatalogGroup();
-            //TestService.Test().MeshDeviceThresholdKey();
+        //TestService.Test().MeshCatalogGroup();
+        //TestService.Test().MeshDeviceThresholdKey();
 
 
 
 
-            //ShellTestsAdmin.Test().TestProfileConnectStaticQR();
+        //ShellTestsAdmin.Test().TestProfileConnectStaticQR();
 
 
 
-            //ShellTestsAdmin.Test().TestCreateSuper();
+        //ShellTestsAdmin.Test().TestCreateSuper();
 
 
-            //ShellTestsAdmin.Test().TestMessageConfirmationAccept();
-            //ShellTestsAdmin.Test().TestProfileConnect();
+        //ShellTestsAdmin.Test().TestMessageConfirmationAccept();
+        //ShellTestsAdmin.Test().TestProfileConnect();
 
-            //ShellTestsAdmin.Test().TestProfileConnect();
+        //ShellTestsAdmin.Test().TestProfileConnect();
 
 
-            //ShellTestsAdmin.Test().TestCreateDevice();
+        //ShellTestsAdmin.Test().TestCreateDevice();
 
 
 
 
-            //ShellTestsAdmin.Test().TestHello();
-            //ShellTestsRud.Test().TestHello();
+        //ShellTestsAdmin.Test().TestHello();
+        //ShellTestsRud.Test().TestHello();
 
 
-            // Refactor to make KeyCredential Mesh a subclass and chain Mesh credential off that.
-            //ShellTestsHTTP.Test().TestAccount();
+        // Refactor to make KeyCredential Mesh a subclass and chain Mesh credential off that.
+        //ShellTestsHTTP.Test().TestAccount();
 
-            //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
-            //ShellTests.Test().TestMessageGroup();
+        //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+        //ShellTests.Test().TestMessageGroup();
 
 
 
-            //TestService.Test().MeshDeviceDirectKey();
+        //TestService.Test().MeshDeviceDirectKey();
 
 
 
-            //Debug();
+        //Debug();
 
 
-            //TestService.Test().MeshEscrowRecover();
+        //TestService.Test().MeshEscrowRecover();
 
 
 
-            //TestService.Test().MeshDeviceConnectPIN();
-            //TestService.Test().MeshDeviceConnectDynamicQR();
-            //TestService.Test().MeshDeviceConnectStaticQR();
+        //TestService.Test().MeshDeviceConnectPIN();
+        //TestService.Test().MeshDeviceConnectDynamicQR();
+        //TestService.Test().MeshDeviceConnectStaticQR();
 
-            //TestService.Test().MeshDeviceMail();
+        //TestService.Test().MeshDeviceMail();
 
 
-            //ShellTests.Test().TestProfileConnectPinReused();
-            //ShellTests.Test().TestProfileMail();
-            //ShellTests.Test().TestProfileSSHPrivate();
-            //ShellTests.Test().TestProfileSSHPublic();
+        //ShellTests.Test().TestProfileConnectPinReused();
+        //ShellTests.Test().TestProfileMail();
+        //ShellTests.Test().TestProfileSSHPrivate();
+        //ShellTests.Test().TestProfileSSHPublic();
 
-            //TestService.Test().MeshDeviceSsh();
+        //TestService.Test().MeshDeviceSsh();
 
 
-            //TestService.Test().MeshDeviceDeveloper();
+        //TestService.Test().MeshDeviceDeveloper();
 
 
 
-            //TestService.Test().MeshDeviceConnectPIN();
-            //TestService.Test().MeshDeviceConnectDynamicQR();
+        //TestService.Test().MeshDeviceConnectPIN();
+        //TestService.Test().MeshDeviceConnectDynamicQR();
 
 
 
-            //ShellTests.Test().TestProfileConnectPin();
+        //ShellTests.Test().TestProfileConnectPin();
 
 
-            //ShellTests.Test().TestProfileConnect();
-            //ShellTests.Test().TestProfileConnectDynamicQR();
+        //ShellTests.Test().TestProfileConnect();
+        //ShellTests.Test().TestProfileConnectDynamicQR();
 
 
-            //ShellTestsHTTP.Test().TestMessageGroup();
-            //TestPresentationMesh.Test().TestMeshService();
+        //ShellTestsHTTP.Test().TestMessageGroup();
+        //TestPresentationMesh.Test().TestMeshService();
 
 
-            //// This is failing as a result of Operate having a lock that is acquired but not released.
-            //ShellTestsAdmin.Test().TestAccount();
+        //// This is failing as a result of Operate having a lock that is acquired but not released.
+        //ShellTestsAdmin.Test().TestAccount();
 
 
-            //TestPresentationMesh.Test().TestAccountDeletion();
-            //TestPresentationMesh.Test().TestDeviceDeletion();
+        //TestPresentationMesh.Test().TestAccountDeletion();
+        //TestPresentationMesh.Test().TestDeviceDeletion();
 
-            //TestPresentationMesh.Test().TestImpersonationConfirm();
+        //TestPresentationMesh.Test().TestImpersonationConfirm();
 
-            //TestPresentationMesh.Test().TestImpersonationGroup();
+        //TestPresentationMesh.Test().TestImpersonationGroup();
 
-
-            }
-
-        public static void Debug() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
-            var meshMachine = new MeshMachineTest(testEnvironmentCommon);
-            var keyCollection = new KeyCollectionTest(meshMachine);
-
-            var keyEncrypt = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Exportable, keyCollection) as KeyPairX448;
-            var keyService = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device);
-            keyCollection.Add(keyService);
-
-
-            var (keyData, capability) = CatalogAccess.MakeShare(keyEncrypt, "example", keyService, null, null);
-
-
-            var deviceShare = keyData.GetKeyPair() as KeyPairServiced;
-
-            var ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) as KeyPairX448;
-
-            var agreement1 = ephemeral.Agreement(keyEncrypt);
-            var agreement2 = keyEncrypt.Agreement(ephemeral);
-
-
-            var remoteShare = capability.DecryptShare(keyCollection) as KeyPairServiced;
-            var partial1 = remoteShare.Agreement(ephemeral) as CurveX448Result;
-            var partial2 = deviceShare.Agreement(ephemeral) as CurveX448Result;
-
-
-            //Screen.WriteLine($"Remote {remoteShare.Share.KeyIdentifier} Device {deviceShare.Share.KeyIdentifier}");
-
-
-            partial2.AgreementX448.Accumulate(partial1.AgreementX448);
-            var aggre3 = new CurveX448Result() { AgreementX448 = partial2.AgreementX448 };
-
-            agreement1.IKM.TestEqual(agreement2.IKM);
-            agreement1.IKM.TestEqual(aggre3.IKM);
-
-
-            var agreement3 = (deviceShare.Share as KeyPairX448).Agreement(ephemeral, partial1 as CurveX448Result);
-
-            agreement1.IKM.TestEqual(agreement3.IKM);
-            }
-
-
-
-        public static void Find(
-                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_3_512) {
-            //  Magic number for SHA2 is 4187123
-            //  Magic number for SHA3 is  774665
-            for (var i = 0; true; i++) {
-                if ((i % 1000) == 0) {
-                    Console.WriteLine(i);
-                    }
-
-                var document = $"UDF Compressed Document {i}";
-                var contentType = "text/plain";
-                var utf8 = document.ToUTF8();
-                var digest = Platform.SHA3_512.Process(utf8);
-
-                var buffer = UDF.UDFBuffer(digest, contentType);
-                var UDFData = buffer.GetDigest(cryptoAlgorithmID);
-
-                if (UDF.GetCompression(UDFData) > 0) {
-                    Console.WriteLine($"!!!!!!!!!!!!!!!!  {i}");
-                    return;
-                    }
-
-                }
-            }
 
         }
+
+    public static void Debug() {
+        var testEnvironmentCommon = new TestEnvironmentCommon();
+        var meshMachine = new MeshMachineTest(testEnvironmentCommon);
+        var keyCollection = new KeyCollectionTest(meshMachine);
+
+        var keyEncrypt = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Exportable, keyCollection) as KeyPairX448;
+        var keyService = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device);
+        keyCollection.Add(keyService);
+
+
+        var (keyData, capability) = CatalogAccess.MakeShare(keyEncrypt, "example", keyService, null, null);
+
+
+        var deviceShare = keyData.GetKeyPair() as KeyPairServiced;
+
+        var ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) as KeyPairX448;
+
+        var agreement1 = ephemeral.Agreement(keyEncrypt);
+        var agreement2 = keyEncrypt.Agreement(ephemeral);
+
+
+        var remoteShare = capability.DecryptShare(keyCollection) as KeyPairServiced;
+        var partial1 = remoteShare.Agreement(ephemeral) as CurveX448Result;
+        var partial2 = deviceShare.Agreement(ephemeral) as CurveX448Result;
+
+
+        //Screen.WriteLine($"Remote {remoteShare.Share.KeyIdentifier} Device {deviceShare.Share.KeyIdentifier}");
+
+
+        partial2.AgreementX448.Accumulate(partial1.AgreementX448);
+        var aggre3 = new CurveX448Result() { AgreementX448 = partial2.AgreementX448 };
+
+        agreement1.IKM.TestEqual(agreement2.IKM);
+        agreement1.IKM.TestEqual(aggre3.IKM);
+
+
+        var agreement3 = (deviceShare.Share as KeyPairX448).Agreement(ephemeral, partial1 as CurveX448Result);
+
+        agreement1.IKM.TestEqual(agreement3.IKM);
+        }
+
+
+
+    public static void Find(
+                CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_3_512) {
+        //  Magic number for SHA2 is 4187123
+        //  Magic number for SHA3 is  774665
+        for (var i = 0; true; i++) {
+            if ((i % 1000) == 0) {
+                Console.WriteLine(i);
+                }
+
+            var document = $"UDF Compressed Document {i}";
+            var contentType = "text/plain";
+            var utf8 = document.ToUTF8();
+            var digest = Platform.SHA3_512.Process(utf8);
+
+            var buffer = UDF.UDFBuffer(digest, contentType);
+            var UDFData = buffer.GetDigest(cryptoAlgorithmID);
+
+            if (UDF.GetCompression(UDFData) > 0) {
+                Console.WriteLine($"!!!!!!!!!!!!!!!!  {i}");
+                return;
+                }
+
+            }
+        }
+
     }

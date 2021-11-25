@@ -28,148 +28,148 @@ using System.Collections.Generic;
 using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
-namespace Goedel.Mesh.Server {
+namespace Goedel.Mesh.Server;
+
+/// <summary>
+/// Wrapper for the AccountEntry permitting the context in which the account entry
+/// is used to be cached and shared between operations.
+/// </summary>
+public class AccountContext : Disposable {
+
+    #region // Public and private properties
+
+    ///<summary>Timestamp of context creation.</summary> 
+    public DateTime Created { get; }
+
+    ///<summary>Timestamp of context last accessed</summary> 
+    public DateTime Accessed { get; private set; }
+
+    ///<summary>The account entry from the host store.</summary> 
+    public AccountEntry AccountEntry { get; init; }
+
+    ///<summary>The directory in which all the account data is stored.</summary> 
+    public string Directory => AccountEntry.Directory;
+
+    ///<summary>The access capability.</summary> 
+    public AccessCapability AccessCapability => CatalogedAccess?.Capability as AccessCapability;
+
+    ///<summary>The access catalog entry.</summary> 
+    public CatalogedAccess CatalogedAccess { get; set; }
+
+
+    #endregion
+    #region // Dispose
+
+    ///<inheritdoc/>
+    protected override void Disposing() {
+        if (catalogAccess != null) {
+            Screen.WriteLine($"Dispose {catalogAccess}");
+            }
+        catalogAccess?.Dispose();
+        Screen.WriteLine($"Dispose Done!");
+        }
+
+    #endregion
+    #region // Constructors
     /// <summary>
-    /// Wrapper for the AccountEntry permitting the context in which the account entry
-    /// is used to be cached and shared between operations.
+    /// Return a new instance.
     /// </summary>
-    public class AccountContext : Disposable {
+    public AccountContext() => Created = Accessed = DateTime.Now;
 
-        #region // Public and private properties
+    #endregion
+    #region // Methods
 
-        ///<summary>Timestamp of context creation.</summary> 
-        public DateTime Created { get; }
-
-        ///<summary>Timestamp of context last accessed</summary> 
-        public DateTime Accessed { get; private set; }
-
-        ///<summary>The account entry from the host store.</summary> 
-        public AccountEntry AccountEntry { get; init; }
-
-        ///<summary>The directory in which all the account data is stored.</summary> 
-        public string Directory => AccountEntry.Directory;
-
-        ///<summary>The access capability.</summary> 
-        public AccessCapability AccessCapability => CatalogedAccess?.Capability as AccessCapability;
-
-        ///<summary>The access catalog entry.</summary> 
-        public CatalogedAccess CatalogedAccess { get; set; }
+    /// <summary>
+    /// Return the publication catalog. This is a catalog that the service MUST have
+    /// read access to. Not clear that the clients need access though.
+    /// </summary>
+    /// <returns></returns>
+    public CatalogAccess GetCatalogCapability() => catalogAccess ??
+        new CatalogAccess(Directory).CacheValue(out catalogAccess);
+    //public CatalogAccess CatalogAccess { get => catalogAccess; set => value = catalogAccess; }
+    CatalogAccess catalogAccess;
 
 
-        #endregion
-        #region // Dispose
+    /// <summary>
+    /// Called just before a caller unlocks the file, Updates the 
+    /// last access timestamp to allow intelligent cache management.
+    /// </summary>
+    public void Close() {
+        Accessed = DateTime.Now;
+        }
 
-        ///<inheritdoc/>
-        protected override void Disposing() {
-            if (catalogAccess != null) {
-                Screen.WriteLine($"Dispose {catalogAccess}");
-                }
-            catalogAccess?.Dispose();
-            Screen.WriteLine($"Dispose Done!");
-            }
-
-        #endregion
-        #region // Constructors
-        /// <summary>
-        /// Return a new instance.
-        /// </summary>
-        public AccountContext() => Created = Accessed = DateTime.Now;
-
-        #endregion
-        #region // Methods
-
-        /// <summary>
-        /// Return the publication catalog. This is a catalog that the service MUST have
-        /// read access to. Not clear that the clients need access though.
-        /// </summary>
-        /// <returns></returns>
-        public CatalogAccess GetCatalogCapability() => catalogAccess ??
-            new CatalogAccess(Directory).CacheValue(out catalogAccess);
-        //public CatalogAccess CatalogAccess { get => catalogAccess; set => value = catalogAccess; }
-        CatalogAccess catalogAccess;
-
-
-        /// <summary>
-        /// Called just before a caller unlocks the file, Updates the 
-        /// last access timestamp to allow intelligent cache management.
-        /// </summary>
-        public void Close() {
-            Accessed = DateTime.Now;
-            }
-
-        /// <summary>
-        /// Verify that the request <paramref name="session"/> has the 
-        /// privileges <paramref name="accountPrivilege"/>.
-        /// </summary>
-        /// <param name="session">The request session.</param>
-        /// <param name="accountPrivilege">The privileges required to perform the operation.</param>
-        /// <returns>True if all the privileges are granted, otherwise false.</returns>
-        public bool Authenticate(
-                    IJpcSession session, 
-                    AccountPrivilege accountPrivilege) {
-            switch (session.Credential) {
-                case MeshCredentialPublic meshCredential: {
+    /// <summary>
+    /// Verify that the request <paramref name="session"/> has the 
+    /// privileges <paramref name="accountPrivilege"/>.
+    /// </summary>
+    /// <param name="session">The request session.</param>
+    /// <param name="accountPrivilege">The privileges required to perform the operation.</param>
+    /// <returns>True if all the privileges are granted, otherwise false.</returns>
+    public bool Authenticate(
+                IJpcSession session,
+                AccountPrivilege accountPrivilege) {
+        switch (session.Credential) {
+            case MeshCredentialPublic meshCredential: {
                     return Authenticate(meshCredential, accountPrivilege);
                     }
-                case KeyCredentialPublic keyCredentialPublic: {
+            case KeyCredentialPublic keyCredentialPublic: {
                     return Authenticate(keyCredentialPublic, accountPrivilege);
                     }
 
-                }
-            return false;
             }
+        return false;
+        }
 
-        bool Authenticate(
-                    KeyCredentialPublic credential,
-                    AccountPrivilege accountPrivilege) {
+    bool Authenticate(
+                KeyCredentialPublic credential,
+                AccountPrivilege accountPrivilege) {
 
-            var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();
+        var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();
 
-            // To operate under the account authentication key, the request must be
-            // authenticated under the AccountAuthenticationKey
+        // To operate under the account authentication key, the request must be
+        // authenticated under the AccountAuthenticationKey
 
-            switch (accountPrivilege) {
-                case AccountPrivilege.Post:
-                case AccountPrivilege.Device: {
+        switch (accountPrivilege) {
+            case AccountPrivilege.Post:
+            case AccountPrivilege.Device: {
                     break;
                     }
-                default: {
+            default: {
                     (profileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
                             credential.AuthenticationKeyId)).AssertTrue(NotAuthorized.Throw);
                     break;
                     }
-                }
-
-
-
-
-            return true;
             }
 
-        bool Authenticate(
-            MeshCredentialPublic credential,
-            AccountPrivilege accountPrivilege) {
 
-            var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();
 
-            var catalogCapability = GetCatalogCapability();
 
-            CatalogedAccess = catalogCapability.Locate(credential.AuthenticationKeyId);
+        return true;
+        }
 
-            switch (accountPrivilege) {
-                case AccountPrivilege.Post:
-                case AccountPrivilege.Device: {
+    bool Authenticate(
+        MeshCredentialPublic credential,
+        AccountPrivilege accountPrivilege) {
+
+        var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();
+
+        var catalogCapability = GetCatalogCapability();
+
+        CatalogedAccess = catalogCapability.Locate(credential.AuthenticationKeyId);
+
+        switch (accountPrivilege) {
+            case AccountPrivilege.Post:
+            case AccountPrivilege.Device: {
                     break;
                     }
-                default: {
+            default: {
                     (AccessCapability?.Active == true).AssertTrue(NotAuthorized.Throw);
                     break;
                     }
-                }
-
-            return true;
             }
 
-        #endregion
+        return true;
         }
+
+    #endregion
     }

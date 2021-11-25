@@ -22,24 +22,24 @@
 
 
 using Goedel.Utilities;
-namespace Goedel.Mesh {
-    public partial class Assertion {
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public Assertion() {
-            }
+namespace Goedel.Mesh;
 
-
-        /// <summary>
-        /// Verify the profile to check that it is correctly signed and consistent.
-        /// </summary>
-        /// <returns></returns>
-        public virtual void Validate(ProfileAccount profile) =>
-            DareEnvelope.Verify(profile.AdministratorSignatureKey).
-                    AssertTrue(InvalidAssertion.Throw);
-
-
-
+public partial class Assertion {
+    /// <summary>
+    /// Default Constructor
+    /// </summary>
+    public Assertion() {
         }
+
+
+    /// <summary>
+    /// Verify the profile to check that it is correctly signed and consistent.
+    /// </summary>
+    /// <returns></returns>
+    public virtual void Validate(ProfileAccount profile) =>
+        DareEnvelope.Verify(profile.AdministratorSignatureKey).
+                AssertTrue(InvalidAssertion.Throw);
+
+
+
     }

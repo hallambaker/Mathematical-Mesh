@@ -20,122 +20,131 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.IO;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Server;
 using Goedel.Mesh.ServiceAdmin;
 using Goedel.Protocol;
 
-namespace Goedel.Mesh.Shell.ServiceAdmin {
+namespace Goedel.Mesh.Shell.ServiceAdmin;
+
+/// <summary>
+/// Service administration CLI
+/// </summary>
+public partial class CommandLineInterpreter {
+
+
+
+    }
+
+
+
+
+
+/// <summary>
+/// The command shell.
+/// </summary>
+public partial class Shell : _Shell {
+
+    string GetFile(Goedel.Command._File file) =>
+        file.DefaultExtension("json", MeshMachine.DirectoryMesh);
+
+
+
+
+
+    string GetFile(ExistingFile file) => MeshMachine.GetFilePath(file.Value);
+    string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Value);
+
+    ///<summary>The Mesh Machine (Must support client catalog)</summary> 
+    public IMeshMachineClient MeshMachine { get; init; }
+
+    /////<summary>The Mesh Service Provider.</summary> 
+    //public PublicMeshService PublicMeshService { get; set; }
 
     /// <summary>
-    /// Service administration CLI
+    /// Post processing action
     /// </summary>
-    public partial class CommandLineInterpreter {
-
-
-
+    /// <param name="result"></param>
+    public void _PostProcess(ShellResult result) {
         }
 
 
 
+    ///<inheritdoc/>
+    public override ShellResult Create(Create Options) {
+        var serviceConfig = GetFile(Options.ServiceConfig);
+        var serviceDns = Options.ServiceDns.Value;
+        var hostIp = Options.HostIp.Value;
+        var hostDns = Options.HostDns.Value;
+        var admin = Options.Admin.Value;
+        var newFile = GetFile(Options.NewFile);
+
+        using var _ = PublicMeshService.Create(MeshMachine, serviceConfig, serviceDns, hostIp, hostDns, admin, newFile);
+
+        return null;
+        }
 
 
-    /// <summary>
-    /// The command shell.
-    /// </summary>
-    public partial class Shell : _Shell {
+    ///<inheritdoc/>
+    public override ShellResult DNS(DNS Options) {
+        CommandLineInterpreter.DescribeValues(Options);
+
+        var hostConfig = GetFile(Options.HostConfig);
+        var dnsConfig = GetFile(Options.DnsConfig);
+
+        var pathService = Path.Combine(MeshMachine.DirectoryMesh, "service", hostConfig);
 
 
-        string GetFile(ExistingFile file) => MeshMachine.GetFilePath(file.Value);
-        string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Value);
+        var configuration = JsonReader.ReadFile<Configuration>(pathService, false);
 
-        ///<summary>The Mesh Machine (Must support client catalog)</summary> 
-        public IMeshMachineClient MeshMachine { get; init; }
+        DnsConfiguration.BindConfig(configuration, dnsConfig);
 
-        /////<summary>The Mesh Service Provider.</summary> 
-        //public PublicMeshService PublicMeshService { get; set; }
-
-        /// <summary>
-        /// Post processing action
-        /// </summary>
-        /// <param name="result"></param>
-        public void _PostProcess(ShellResult result) {
-            }
-
-        ///<inheritdoc/>
-        public override ShellResult Create(Create Options) {
-            var serviceConfig = GetFile(Options.ServiceConfig);
-            var serviceDns = Options.ServiceDns.Value;
-            var hostIp = Options.HostIp.Value;
-            var hostDns = Options.HostDns.Value;
-            var admin = Options.Admin.Value;
-            var newFile = GetFile(Options.NewFile);
-
-           using var _ = PublicMeshService.Create(MeshMachine, serviceConfig, serviceDns, hostIp, hostDns, admin, newFile);
+        return null;
+        }
 
 
+    ///<inheritdoc/>
+    public override ShellResult Start(Start Options) {
+        CommandLineInterpreter.DescribeValues(Options);
+        return null;
+        }
 
-            return null;
-            }
+    ///<inheritdoc/>
+    public override ShellResult Stop(Stop Options) {
+        CommandLineInterpreter.DescribeValues(Options);
+        return null;
+        }
 
-        ///<inheritdoc/>
-        public override ShellResult Start(Start Options) {
-            CommandLineInterpreter.DescribeValues(Options);
-            return null;
-            }
+    ///<inheritdoc/>
+    public override ShellResult Pause(Pause Options) {
+        CommandLineInterpreter.DescribeValues(Options);
+        return null;
+        }
 
-        ///<inheritdoc/>
-        public override ShellResult Stop(Stop Options) {
-            CommandLineInterpreter.DescribeValues(Options);
-            return null;
-            }
+    ///<inheritdoc/>
+    public override ShellResult Fetch(Fetch Options) {
+        CommandLineInterpreter.DescribeValues(Options);
+        return null;
+        }
 
-        ///<inheritdoc/>
-        public override ShellResult Pause(Pause Options) {
-            CommandLineInterpreter.DescribeValues(Options);
-            return null;
-            }
+    ///<inheritdoc/>
+    public override ShellResult Update(Update Options) {
+        CommandLineInterpreter.DescribeValues(Options);
+        return null;
+        }
 
-        ///<inheritdoc/>
-        public override ShellResult Fetch(Fetch Options) {
-            CommandLineInterpreter.DescribeValues(Options);
-            return null;
-            }
-
-        ///<inheritdoc/>
-        public override ShellResult Update(Update Options) {
-            CommandLineInterpreter.DescribeValues(Options);
-            return null;
-            }
-
-        ///<inheritdoc/>
-        public override ShellResult Verify(Verify Options) {
-            CommandLineInterpreter.DescribeValues(Options);
-            return null;
-            }
-
-        ///<inheritdoc/>
-        public override ShellResult DNS(DNS Options) {
-            CommandLineInterpreter.DescribeValues(Options);
-
-            var hostConfig = GetFile(Options.HostConfig);
-            var dnsConfig = GetFile(Options.DnsConfig);
+    ///<inheritdoc/>
+    public override ShellResult Verify(Verify Options) {
+        CommandLineInterpreter.DescribeValues(Options);
+        return null;
+        }
 
 
-            var configuration = JsonReader.ReadFile<Configuration>(hostConfig, false);
-
-            DnsConfiguration.BindConfig(configuration, dnsConfig);
-
-            return null;
-            }
-
-        ///<inheritdoc/>
-        public override ShellResult Credential(Credential Options) {
-            CommandLineInterpreter.DescribeValues(Options);
-            return null;
-            }
-
-
+    ///<inheritdoc/>
+    public override ShellResult Credential(Credential Options) {
+        CommandLineInterpreter.DescribeValues(Options);
+        return null;
         }
 
 

@@ -21,14 +21,14 @@
 #endregion
 
 
-namespace Goedel.Mesh.Client {
-    /// <summary>
-    /// Interface exposing the properties and methods required to obtain a Mesh Client.
-    /// </summary>
-    public interface IMeshMachineClient : IMeshMachine {
-        ///<summary>Direct access to the Catalog, should remove this</summary>
-        MeshHost MeshHost { get; }
+namespace Goedel.Mesh.Client;
+
+/// <summary>
+/// Interface exposing the properties and methods required to obtain a Mesh Client.
+/// </summary>
+public interface IMeshMachineClient : IMeshMachine {
+    ///<summary>Direct access to the Catalog, should remove this</summary>
+    MeshHost MeshHost { get; }
 
 
-        }
     }

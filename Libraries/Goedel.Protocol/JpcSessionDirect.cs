@@ -21,36 +21,34 @@
 #endregion
 
 
-namespace Goedel.Protocol {
+namespace Goedel.Protocol;
+
+/// <summary>
+/// Direct connection between client and service host. Useful for debugging
+/// and for direct access to a service on the same machine.
+/// </summary>
+public partial class JpcSessionDirect : JpcSession {
+    JpcInterface JpcInterface { get; }
+
     /// <summary>
-    /// Direct connection between client and service host. Useful for debugging
-    /// and for direct access to a service on the same machine.
+    /// Create a direct session for the specified account.
     /// </summary>
-    public partial class JpcSessionDirect : JpcSession {
-        JpcInterface JpcInterface { get; }
-
-        /// <summary>
-        /// Create a direct session for the specified account.
-        /// </summary>
-        /// <param name="credential">The credential to be used.</param>
-        /// <param name="jpcInterface">The interfact to which the direct session is bound</param>
-        public JpcSessionDirect(JpcInterface jpcInterface, ICredential credential) : base(credential) {
-            JpcInterface = jpcInterface;
-            }
-
-        /// <summary>
-        /// Return a client bound to the interface using the session.
-        /// </summary>
-        /// <typeparam name="T">The client type</typeparam>
-        /// <returns>The client</returns>
-        public override T GetWebClient<T>() => JpcInterface.GetDirect(this) as T;
-        ///<inheritdoc/>
-        public override IJpcSession Rebind(ICredential credential) {
-            Credential = credential;
-            return this;
-            }
+    /// <param name="credential">The credential to be used.</param>
+    /// <param name="jpcInterface">The interfact to which the direct session is bound</param>
+    public JpcSessionDirect(JpcInterface jpcInterface, ICredential credential) : base(credential) {
+        JpcInterface = jpcInterface;
         }
 
-
+    /// <summary>
+    /// Return a client bound to the interface using the session.
+    /// </summary>
+    /// <typeparam name="T">The client type</typeparam>
+    /// <returns>The client</returns>
+    public override T GetWebClient<T>() => JpcInterface.GetDirect(this) as T;
+    ///<inheritdoc/>
+    public override IJpcSession Rebind(ICredential credential) {
+        Credential = credential;
+        return this;
+        }
     }
 

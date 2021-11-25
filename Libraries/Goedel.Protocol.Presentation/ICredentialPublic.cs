@@ -25,113 +25,113 @@ using System.Collections.Generic;
 using Goedel.Cryptography;
 
 
-namespace Goedel.Protocol.Presentation {
-    /// <summary>
-    /// Credential interface
-    /// </summary>
-    public interface ICredentialPublic : ICredential {
-        #region // Properties
+namespace Goedel.Protocol.Presentation;
 
-        ///<summary>The public authentication key.</summary> 
-        public KeyPairAdvanced AuthenticationPublic { get; }
+/// <summary>
+/// Credential interface
+/// </summary>
+public interface ICredentialPublic : ICredential {
+    #region // Properties
 
-        #endregion
-        #region // Methods 
+    ///<summary>The public authentication key.</summary> 
+    public KeyPairAdvanced AuthenticationPublic { get; }
 
+    #endregion
+    #region // Methods 
 
-        /// <summary>
-        /// Return a private ephemeral key and compatible public key from the 
-        /// credential keys
-        /// </summary>
-        /// <returns>The ephemeral private key and credential public key.</returns>
-        (KeyPairAdvanced, KeyPairAdvanced) SelectKey();
-
-
-        /// <summary>
-        /// Select an ephemeral from <paramref name="ephemerals"/> that is compatible with 
-        /// the creedential key <paramref name="keyId"/>.
-        /// </summary>
-        /// <param name="keyId">If specified, the first ephemeral in the list compatible
-        /// with the specified key will be used.</param> 
-        /// <param name="ephemerals">List of ephemerals previously offered to
-        /// perform a key agreement against.</param>
-
-        /// <returns>The ephemeral private key and credential public key.</returns>
-        (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
-                List<KeyPairAdvanced> ephemerals,
-                string keyId);
-
-
-        #endregion
-        }
 
     /// <summary>
-    /// Credential with private key affordances.
+    /// Return a private ephemeral key and compatible public key from the 
+    /// credential keys
     /// </summary>
-    public interface ICredentialPrivate : ICredentialPublic {
-        #region // Properties
+    /// <returns>The ephemeral private key and credential public key.</returns>
+    (KeyPairAdvanced, KeyPairAdvanced) SelectKey();
 
 
-        #endregion
-        #region // Methods 
+    /// <summary>
+    /// Select an ephemeral from <paramref name="ephemerals"/> that is compatible with 
+    /// the creedential key <paramref name="keyId"/>.
+    /// </summary>
+    /// <param name="keyId">If specified, the first ephemeral in the list compatible
+    /// with the specified key will be used.</param> 
+    /// <param name="ephemerals">List of ephemerals previously offered to
+    /// perform a key agreement against.</param>
+
+    /// <returns>The ephemeral private key and credential public key.</returns>
+    (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
+            List<KeyPairAdvanced> ephemerals,
+            string keyId);
 
 
-        /// <summary>
-        /// Extract the first recognized credential from the exension list 
-        /// <paramref name="extensions"/>
-        /// </summary>
-        /// <param name="extensions">List of extensions to parse.</param>
-        /// <returns>The credential if found, otherwise null.</returns>
-        ICredentialPublic GetCredentials(
-                    List<PacketExtension> extensions);
+    #endregion
+    }
+
+/// <summary>
+/// Credential with private key affordances.
+/// </summary>
+public interface ICredentialPrivate : ICredentialPublic {
+    #region // Properties
 
 
-        /// <summary>
-        /// Generate a set of ephemerals for the supported algorithms to offer for 
-        /// key agreement and add to <paramref name="extensions"/>.
-        /// </summary>
-        /// <param name="extensions">List of extensions to add the ephemerals to.</param>
-        /// <param name="ephmeralsOffered">List of ephemerals that have been offered, if
-        /// this is not null, the ephemerals in this list will be returned. Otherwise a list
-        /// will be created and populated with the ephemerals offered.</param>
-        public void AddEphemerals(
-            List<PacketExtension> extensions,
-            ref List<KeyPairAdvanced> ephmeralsOffered);
-
-        /// <summary>
-        /// Add an extension containing this credential to <paramref name="extensions"/>.
-        /// </summary>
-        /// <param name="extensions">List of extensions to add the credential to.</param>
-        void AddCredentials(
-                    List<PacketExtension> extensions
-                    );
+    #endregion
+    #region // Methods 
 
 
-        /// <summary>
-        /// Select a private key compatible with the ephemeral keys offered in 
-        /// <paramref name="extensions"/> and return the private key and ephemeral
-        /// chosen.
-        /// </summary>
-        /// <param name="extensions">List of extensions offering ephemeral keys to
-        /// perform a key agreement against.</param>
-
-        /// <returns>The private key and public key.</returns>
-        (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
+    /// <summary>
+    /// Extract the first recognized credential from the exension list 
+    /// <paramref name="extensions"/>
+    /// </summary>
+    /// <param name="extensions">List of extensions to parse.</param>
+    /// <returns>The credential if found, otherwise null.</returns>
+    ICredentialPublic GetCredentials(
                 List<PacketExtension> extensions);
 
 
+    /// <summary>
+    /// Generate a set of ephemerals for the supported algorithms to offer for 
+    /// key agreement and add to <paramref name="extensions"/>.
+    /// </summary>
+    /// <param name="extensions">List of extensions to add the ephemerals to.</param>
+    /// <param name="ephmeralsOffered">List of ephemerals that have been offered, if
+    /// this is not null, the ephemerals in this list will be returned. Otherwise a list
+    /// will be created and populated with the ephemerals offered.</param>
+    public void AddEphemerals(
+        List<PacketExtension> extensions,
+        ref List<KeyPairAdvanced> ephmeralsOffered);
 
-        /// <summary>
-        /// Return a private key and public key compatible with the values specified
-        /// by <paramref name="keyId"/> and <paramref name="ephemeral"/>.
-        /// chosen.
-        /// </summary>
-        /// <param name="keyId">The key identifier.</param>
-        /// <param name="ephemeral">Ephemeral data specifying a public key </param>
-        /// <returns>The ephemeral private key and credential public key.</returns>
-        (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
-                string keyId, byte[] ephemeral);
+    /// <summary>
+    /// Add an extension containing this credential to <paramref name="extensions"/>.
+    /// </summary>
+    /// <param name="extensions">List of extensions to add the credential to.</param>
+    void AddCredentials(
+                List<PacketExtension> extensions
+                );
 
-        #endregion
-        }
+
+    /// <summary>
+    /// Select a private key compatible with the ephemeral keys offered in 
+    /// <paramref name="extensions"/> and return the private key and ephemeral
+    /// chosen.
+    /// </summary>
+    /// <param name="extensions">List of extensions offering ephemeral keys to
+    /// perform a key agreement against.</param>
+
+    /// <returns>The private key and public key.</returns>
+    (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
+            List<PacketExtension> extensions);
+
+
+
+    /// <summary>
+    /// Return a private key and public key compatible with the values specified
+    /// by <paramref name="keyId"/> and <paramref name="ephemeral"/>.
+    /// chosen.
+    /// </summary>
+    /// <param name="keyId">The key identifier.</param>
+    /// <param name="ephemeral">Ephemeral data specifying a public key </param>
+    /// <returns>The ephemeral private key and credential public key.</returns>
+    (KeyPairAdvanced, KeyPairAdvanced) SelectKey(
+            string keyId, byte[] ephemeral);
+
+    #endregion
     }
