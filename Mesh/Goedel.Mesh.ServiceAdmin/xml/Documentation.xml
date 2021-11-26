@@ -9,7 +9,7 @@
             DNS configuration generator class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.BindConfig(Goedel.Mesh.ServiceAdmin.Configuration,System.String)">
+        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.BindConfig(Goedel.Mesh.ServiceAdmin.Configuration,System.String,System.String)">
             <summary>
             Generate a BIND configuration file for the service config.
             </summary>
@@ -200,6 +200,13 @@
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.DictionaryService">
             <summary>Dictionary mapping service name to configuiration.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.ReadFile(System.String)">
+            <summary>
+            Read a service configuration from the file <paramref name="filePath"/>.
+            </summary>
+            <param name="filePath">The file path.</param>
+            <returns>The configuration.</returns>
         </member>
         <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.PostProcess">
             <summary>

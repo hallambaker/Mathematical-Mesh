@@ -224,6 +224,17 @@
             <param name="path">The path to verify</param>
             <returns>True if the path is canonical, otherwise false.</returns>
         </member>
+        <member name="M:Goedel.Utilities.Extension.ApplyExtensionDefault(System.String,System.String)">
+            <summary>
+            Apply the default extension <paramref name="extension"/> to the file name
+            <paramref name="fileName"/> if and only if it does not already have an extension
+            specified.
+            </summary>
+            <param name="fileName">The file name to apply the default to.</param>
+            <param name="extension">The default extension to apply</param>
+            <returns>The <paramref name="fileName"/> with the original extension if specified, the
+            extension <paramref name="extension"/> otherwise.</returns>
+        </member>
         <member name="M:Goedel.Utilities.Extension.UnixCanonicalPath(System.String)">
             <summary>
             Parse file path and return canonical unix path. Relative directory references will

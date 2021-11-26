@@ -36,8 +36,13 @@
 
 	Command HostStart "start"
 		Brief "Start the host service"
-		Parameter HostConfig "hostconfig" ExistingFile
+
+		Parameter HostConfig "hostconfig" String
 			Brief "The host configuration file"
+		Option ServiceConfig "config" ExistingFile
+			Brief "The service configuration file, is created if necessary"
+			Default "ServiceConfig"
+
 		Option Console "console" Flag
 			Default "false"
 
@@ -46,8 +51,11 @@
 
 	Command HostVerify "verify"
 		Brief "Verify that the host configuration file is correct."
-		Parameter HostConfig "hostconfig" ExistingFile
+		Parameter HostConfig "hostconfig" String
 			Brief "The host configuration file"
+		Option ServiceConfig "config" ExistingFile
+			Brief "The service configuration file, is created if necessary"
+			Default "ServiceConfig"
 		Option Console "console" Flag
 			Default "false"
 

@@ -24,6 +24,7 @@ using System.Collections.Generic;
 
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh.ServiceAdmin;
 
@@ -59,7 +60,17 @@ public partial class Configuration {
     public Dictionary<string, ServiceConfiguration> DictionaryService { get; } = new();
 
     #endregion
+    #region // Constructors and Factory Methods
 
+    /// <summary>
+    /// Read a service configuration from the file <paramref name="filePath"/>.
+    /// </summary>
+    /// <param name="filePath">The file path.</param>
+    /// <returns>The configuration.</returns>
+    public static Configuration ReadFile(string filePath) =>
+        JsonReader.ReadFile<Configuration>(filePath, false);
+    
+    #endregion
     #region // Methods 
 
     /// <summary>
@@ -148,6 +159,7 @@ public partial class Configuration {
 
         return hostConfiguration.ServiceConfigs[0];
         }
+
 
 
     #endregion

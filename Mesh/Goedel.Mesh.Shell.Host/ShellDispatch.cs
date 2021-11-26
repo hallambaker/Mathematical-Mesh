@@ -31,6 +31,8 @@ using Goedel.Protocol.Presentation;
 using Goedel.Protocol.Service;
 using Goedel.Utilities;
 using Goedel.Mesh.Client;
+using Goedel.Mesh.ServiceAdmin;
+using Goedel.Mesh.Server;
 
 namespace Goedel.Mesh.Shell.Host;
 
@@ -120,18 +122,18 @@ public partial class Shell : _Shell {
     bool Console { get; set; }
     string MachineName { get; set; }
     Configuration Configuration { get; set; }
-    HostConfiguration HostConfiguration { get; set; }
-    ServiceConfiguration ServiceConfiguration { get; set; }
+    //HostConfiguration HostConfiguration { get; set; }
+    //ServiceConfiguration ServiceConfiguration { get; set; }
     RudService RudService { get; set; }
 
-    string GetFile(ExistingFile file) => MeshMachine.GetFilePath(file.Value);
-    string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Value);
+    string GetServiceConfig(Command._File file) =>
+        PublicMeshService.GetService(MeshMachine, file.Value);
 
 
     ///<inheritdoc/>
     public override ShellResult HostStart(HostStart Options) {
-
-        var hostConfig = GetFile(Options.HostConfig);
+        var serviceConfig = GetServiceConfig(Options.ServiceConfig);
+        var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
 
 
         var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, hostConfig);
@@ -139,8 +141,12 @@ public partial class Shell : _Shell {
 
         // Start the service.
 
-        ServiceConfiguration.Instance ??= Instance;
-        RudService = StartService(HostConfiguration, ServiceConfiguration);
+        var configuration = Configuration.ReadFile(serviceConfig);
+        var hostConfiguration = configuration.GetHostConfiguration(hostConfig);
+        var serviceConfiguration = configuration.GetServiceConfiguration(hostConfiguration);
+
+        //ServiceConfiguration.Instance ??= Instance;
+        RudService = StartService(hostConfiguration, serviceConfiguration, Options.Console.Value);
 
 
         return new ResultStartService() {
@@ -151,7 +157,8 @@ public partial class Shell : _Shell {
 
     ///<inheritdoc/>
     public override ShellResult HostVerify(HostVerify Options) {
-        var hostConfig = GetFile(Options.HostConfig);
+        var serviceConfig = GetServiceConfig(Options.ServiceConfig);
+        var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
 
         var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, hostConfig);
 
@@ -195,8 +202,8 @@ public partial class Shell : _Shell {
 
         Configuration = JsonReader.ReadFile<Configuration>(hostConfig, false);
 
-        HostConfiguration = Configuration.GetHostConfiguration(MachineName);
-        ServiceConfiguration = Configuration.GetServiceConfiguration(HostConfiguration);
+        //HostConfiguration = Configuration.GetHostConfiguration(MachineName);
+        //ServiceConfiguration = Configuration.GetServiceConfiguration(HostConfiguration);
 
 
         return true;
@@ -209,7 +216,17 @@ public partial class Shell : _Shell {
     /// <param name="hostConfiguration">The host configuration.</param>
     /// <param name="serviceConfiguration">The service configuration</param>
     /// <returns>The RUD service</returns>
-    public RudService StartService(HostConfiguration hostConfiguration, ServiceConfiguration serviceConfiguration) {
+    public RudService StartService(
+            HostConfiguration hostConfiguration, 
+            ServiceConfiguration serviceConfiguration,
+            bool console) {
+
+
+        // This is a mess, need to 
+        // 1) Check the credential is being configuired correctly
+        // 2) Support multiple service configurations (mmm, presence, etc.)
+
+
 
         var providers = new List<RudProvider>();
 
@@ -226,10 +243,10 @@ public partial class Shell : _Shell {
             MeshMachine, serviceConfiguration, hostConfiguration));
 
         // retrieve the credential
-        var credential = HostConfiguration.GetCredential(MeshMachine);
+        var credential = hostConfiguration.GetCredential(MeshMachine);
 
         // start the service
-        var service = new RudService(providers, credential);
+        var service = new RudService(providers, credential, console: console);
 
         var sigintReceived = false;
         // Catch SIGINT

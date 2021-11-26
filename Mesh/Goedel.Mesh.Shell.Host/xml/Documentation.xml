@@ -49,6 +49,9 @@
         <member name="P:Goedel.Mesh.Shell.Host._HostStart.HostConfig">
             <summary>Field accessor for parameter []</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostStart.ServiceConfig">
+            <summary>Field accessor for option [config]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.Host._HostStart.Console">
             <summary>Field accessor for option [console]</summary>
         </member>
@@ -69,6 +72,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell.Host._HostVerify.HostConfig">
             <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host._HostVerify.ServiceConfig">
+            <summary>Field accessor for option [config]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.Host._HostVerify.Console">
             <summary>Field accessor for option [console]</summary>

@@ -39,11 +39,11 @@
 	Command Create "create"
 		Include Reporting
 		Brief "Initialize a new Mesh service and administration account"
-	
-		Parameter ServiceConfig "config" ExistingFile
-			Brief "The service configuration file, is created if necessary"
+
 		Parameter ServiceDns "dns" String
 			Brief "The DNS address of the service"	
+		Option HostConfig "hostconfig" String
+			Brief "The host configuration name (defaults to name of this host)"
 		Option HostIp "ip" String
 			Brief "The external IP address of the host."
 		Option HostDns "host" String
@@ -52,6 +52,22 @@
 			Brief "The administrator account address, also default for the host domain."
 		Option NewFile "out" NewFile
 			Brief "File to write the configuration to"
+		Option ServiceConfig "config" ExistingFile
+			Brief "The service configuration file, is created if necessary"
+			Default "ServiceConfig"
+
+	Command DNS "dns"
+		Include Reporting
+		Brief "Compute the DNS configuration from the service config."
+		Parameter DnsConfig "dnsconfig" NewFile
+			Brief "The file to write the DNS configuration to"
+
+		Parameter HostConfig "hostconfig" String
+			Brief "The host configuration name"
+
+		Option ServiceConfig "config" ExistingFile
+			Brief "The service configuration file, is created if necessary"
+			Default "ServiceConfig"
 
 
 	Command Start "start"
@@ -101,13 +117,7 @@
 		Parameter HostConfig "hostconfig" ExistingFile
 			Brief "The host configuration file"
 
-	Command DNS "dns"
-		Include Reporting
-		Brief "Compute the DNS configuration from the service config."
-		Parameter HostConfig "hostconfig" ExistingFile
-			Brief "The host configuration file"
-		Parameter DnsConfig "dnsconfig" ExistingFile
-			Brief "The DNS configuration file"
+
 
 	Command Credential "credential"
 		Include Reporting

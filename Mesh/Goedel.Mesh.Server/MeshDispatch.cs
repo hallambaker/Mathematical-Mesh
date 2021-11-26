@@ -182,7 +182,7 @@ public class PublicMeshService : MeshService {
             string type) {
         var defaulted = fileSpec.ApplyExtensionDefault(ConfigurationFileExtension);
 
-        if (Path.IsPathRooted(fileSpec) | fileSpec.StartsWith(".")) {
+        if (Path.IsPathRooted(fileSpec) | Path.HasExtension(fileSpec)) {
             return defaulted;
             }
         return Path.Combine(meshMachine.DirectoryMesh, type, defaulted);
@@ -190,15 +190,35 @@ public class PublicMeshService : MeshService {
 
         }
 
-
+    /// <summary>
+    /// Return the file path for the service description <paramref name="fileSpec"/>.
+    /// <para>If <paramref name="fileSpec"/> contains no file path specifier, it is
+    /// interpreted as a named service description to be stored in the location 
+    /// specified by <paramref name="meshMachine"/>. Otherwise, the specified file
+    /// path is used.
+    /// </para>
+    /// </summary>
+    /// <param name="meshMachine">The Mesh machine specification (used to determine
+    /// the location of system configuration files).</param>
+    /// <param name="fileSpec">The service description specifier.</param>
+    /// <returns>The file path.</returns>
     public static string GetService(
         IMeshMachineClient meshMachine, string fileSpec) => GetFilePath(
             meshMachine, fileSpec, "Service");
 
+    /// <summary>
+    /// Return the file path for the service specified <paramref name="hostname"/>. The
+    /// host description is always stored in a location determined by 
+    /// <paramref name="meshMachine"/>.
+    /// </summary>
+    /// <param name="meshMachine">The Mesh machine specification (used to determine
+    /// the location of system configuration files).</param>
+    /// <param name="fileSpec">The service specification.</param>
+    /// <param name="hostname">The host name.</param>
+    /// <returns>The file path.</returns>
     public static string GetHost(
-        IMeshMachineClient meshMachine, string fileSpec, string hostname) =>
-        Path.Combine(meshMachine.DirectoryMesh, "Hosts", hostname,
-            fileSpec.ApplyExtensionDefault(ConfigurationFileExtension));
+        IMeshMachineClient meshMachine, string hostname) =>
+        Path.Combine(meshMachine.DirectoryMesh, "Hosts", hostname);
 
 
         //GetFilePath(
@@ -218,27 +238,31 @@ public class PublicMeshService : MeshService {
     /// <returns></returns>
     public static PublicMeshService Create(
         IMeshMachineClient meshMachine,
-        string serviceConfig, string serviceDns, string hostIp, string hostDns,
-        string admin, string newFile) {
+        string serviceConfig, 
+        string serviceDns, 
+        string hostConfig,
+        string hostIp, string hostDns,
+        string admin) {
 
         var serviceName = "MeshService";
 
         hostDns ??= Dns.GetHostName();
         hostIp ??= "127.0.0.1:666";
         //var hostIpv6 = "[::1]:15099";
-        var hostName = System.Environment.MachineName;
+
 
         hostDns ??= serviceDns;
 
-        var pathService = Path.Combine(meshMachine.DirectoryMesh, "services");
-        var pathServiceConfig = Path.Combine(pathService, serviceConfig??newFile);
-        var pathHost = Path.Combine(meshMachine.DirectoryMesh, "hosts", hostName, MeshService.WellKnown);
-        var pathLog = Path.Combine(pathHost, "log");
+
+        var pathHost = GetHost(meshMachine, hostConfig);
+
+        var pathLog = Path.Combine(pathHost, "Logs");
         // Create the initial service application
+        
         var ServiceConfiguration = new ServiceConfiguration() {
             Id = serviceName,
             DNS = new List<string> { serviceDns },
-            Path = pathService,
+            Path = meshMachine.DirectoryMesh,
             WellKnown = "mmm",
             Addresses = new List<string> { serviceDns }
             };
@@ -294,7 +318,7 @@ public class PublicMeshService : MeshService {
 
         // write the configuration out.
         //configuration.ToFile(newFile ?? serviceConfig);
-        configuration.ToFile(pathServiceConfig);
+        configuration.ToFile(serviceConfig);
         
         return service;
         }

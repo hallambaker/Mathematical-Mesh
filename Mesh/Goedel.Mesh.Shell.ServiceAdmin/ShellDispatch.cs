@@ -52,8 +52,10 @@ public partial class Shell : _Shell {
 
 
 
+    string GetServiceConfig(Command._File file) =>
+        PublicMeshService.GetService(MeshMachine, file.Value);
 
-    string GetFile(ExistingFile file) => MeshMachine.GetFilePath(file.Value);
+
     string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Value);
 
     ///<summary>The Mesh Machine (Must support client catalog)</summary> 
@@ -73,14 +75,14 @@ public partial class Shell : _Shell {
 
     ///<inheritdoc/>
     public override ShellResult Create(Create Options) {
-        var serviceConfig = GetFile(Options.ServiceConfig);
+        var serviceConfig = GetServiceConfig(Options.ServiceConfig);
         var serviceDns = Options.ServiceDns.Value;
         var hostIp = Options.HostIp.Value;
         var hostDns = Options.HostDns.Value;
         var admin = Options.Admin.Value;
-        var newFile = GetFile(Options.NewFile);
+        var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
 
-        using var _ = PublicMeshService.Create(MeshMachine, serviceConfig, serviceDns, hostIp, hostDns, admin, newFile);
+        using var _ = PublicMeshService.Create(MeshMachine, serviceConfig, serviceDns, hostConfig, hostIp, hostDns, admin);
 
         return null;
         }
@@ -88,17 +90,13 @@ public partial class Shell : _Shell {
 
     ///<inheritdoc/>
     public override ShellResult DNS(DNS Options) {
-        CommandLineInterpreter.DescribeValues(Options);
+        var serviceConfig = GetServiceConfig(Options.ServiceConfig);
+        var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
+        var dnsConfig = Options.DnsConfig.Value;
 
-        var hostConfig = GetFile(Options.HostConfig);
-        var dnsConfig = GetFile(Options.DnsConfig);
+        var configuration = Configuration.ReadFile(serviceConfig);
 
-        var pathService = Path.Combine(MeshMachine.DirectoryMesh, "service", hostConfig);
-
-
-        var configuration = JsonReader.ReadFile<Configuration>(pathService, false);
-
-        DnsConfiguration.BindConfig(configuration, dnsConfig);
+        DnsConfiguration.BindConfig(configuration, dnsConfig, hostConfig);
 
         return null;
         }

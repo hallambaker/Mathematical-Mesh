@@ -1023,6 +1023,32 @@
              </summary>
             <inheritdoc cref="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate"/>
         </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.GetService(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
+            <summary>
+            Return the file path for the service description <paramref name="fileSpec"/>.
+            <para>If <paramref name="fileSpec"/> contains no file path specifier, it is
+            interpreted as a named service description to be stored in the location 
+            specified by <paramref name="meshMachine"/>. Otherwise, the specified file
+            path is used.
+            </para>
+            </summary>
+            <param name="meshMachine">The Mesh machine specification (used to determine
+            the location of system configuration files).</param>
+            <param name="fileSpec">The service description specifier.</param>
+            <returns>The file path.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.GetHost(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
+            <summary>
+            Return the file path for the service specified <paramref name="hostname"/>. The
+            host description is always stored in a location determined by 
+            <paramref name="meshMachine"/>.
+            </summary>
+            <param name="meshMachine">The Mesh machine specification (used to determine
+            the location of system configuration files).</param>
+            <param name="fileSpec">The service specification.</param>
+            <param name="hostname">The host name.</param>
+            <returns>The file path.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Create a new Mesh Service

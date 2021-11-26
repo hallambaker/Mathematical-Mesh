@@ -26,9 +26,17 @@ namespace Goedel.Utilities;
 
 public static partial class Extension {
 
-
-    public static string ApplyExtensionDefault(this string file, string extension)=>
-        Path.HasExtension(file)? file : Path.ChangeExtension (file, extension);
+    /// <summary>
+    /// Apply the default extension <paramref name="extension"/> to the file name
+    /// <paramref name="fileName"/> if and only if it does not already have an extension
+    /// specified.
+    /// </summary>
+    /// <param name="fileName">The file name to apply the default to.</param>
+    /// <param name="extension">The default extension to apply</param>
+    /// <returns>The <paramref name="fileName"/> with the original extension if specified, the
+    /// extension <paramref name="extension"/> otherwise.</returns>
+    public static string ApplyExtensionDefault(this string fileName, string extension)=>
+        Path.HasExtension(fileName)? fileName : Path.ChangeExtension (fileName, extension);
 
 
 

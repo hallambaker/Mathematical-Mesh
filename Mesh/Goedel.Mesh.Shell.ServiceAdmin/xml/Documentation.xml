@@ -343,11 +343,11 @@
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.ServiceConfig">
-            <summary>Field accessor for parameter []</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.ServiceDns">
             <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.HostConfig">
+            <summary>Field accessor for option [hostconfig]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.HostIp">
             <summary>Field accessor for option [ip]</summary>
@@ -360,6 +360,30 @@
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.NewFile">
             <summary>Field accessor for option [out]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.ServiceConfig">
+            <summary>Field accessor for option [config]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.DnsConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.ServiceConfig">
+            <summary>Field accessor for option [config]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -464,24 +488,6 @@
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Verify.HostConfig">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.HostConfig">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.DnsConfig">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Credential.EnumReporting">

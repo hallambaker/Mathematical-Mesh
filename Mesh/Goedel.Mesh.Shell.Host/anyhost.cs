@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 11/24/2021 2:34:47 PM
+//  This file was automatically generated at 11/26/2021 3:49:21 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -205,6 +205,7 @@ namespace Goedel.Mesh.Shell.Host {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new ExistingFile (),
 			new Flag (),
 			new String (),
@@ -218,67 +219,76 @@ namespace Goedel.Mesh.Shell.Host {
 
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile HostConfig {
-			get => _Data[0] as ExistingFile;
+		public virtual String HostConfig {
+			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
 		public virtual string _HostConfig {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [console]</summary>
-		public virtual Flag Console {
-			get => _Data[1] as Flag;
+		/// <summary>Field accessor for option [config]</summary>
+		public virtual ExistingFile ServiceConfig {
+			get => _Data[1] as ExistingFile;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _Console {
+		public virtual string _ServiceConfig {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [host]</summary>
-		public virtual String MachineName {
-			get => _Data[2] as String;
+		/// <summary>Field accessor for option [console]</summary>
+		public virtual Flag Console {
+			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _MachineName {
+		public virtual string _Console {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[3] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [host]</summary>
+		public virtual String MachineName {
+			get => _Data[3] as String;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _MachineName {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[4] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[4] as Enumeration<EnumReporting>;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[6] as Flag;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -296,45 +306,52 @@ namespace Goedel.Mesh.Shell.Host {
 					Key = ""
 					},
 				new DescribeEntryOption () {
+					Identifier = "ServiceConfig", 
+					Default = "ServiceConfig", // null if null
+					Brief = "The service configuration file, is created if necessary",
+					Index = 1,
+					Key = "config"
+					},
+				new DescribeEntryOption () {
 					Identifier = "Console", 
 					Default = "false", // null if null
 					Brief = "<Unspecified>",
-					Index = 1,
+					Index = 2,
 					Key = "console"
 					},
 				new DescribeEntryOption () {
 					Identifier = "MachineName", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 2,
+					Index = 3,
 					Key = "host"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 4,
+					Index = 5,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 5,
+					Index = 6,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 6,
+					Index = 7,
 					Key = "json"
 					}
 				}
@@ -348,6 +365,7 @@ namespace Goedel.Mesh.Shell.Host {
     public class _HostVerify : Goedel.Command.Dispatch  {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new ExistingFile (),
 			new Flag (),
 			new String ()			} ;
@@ -357,31 +375,40 @@ namespace Goedel.Mesh.Shell.Host {
 
 
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile HostConfig {
-			get => _Data[0] as ExistingFile;
+		public virtual String HostConfig {
+			get => _Data[0] as String;
 			set => _Data[0]  = value;
 			}
 
 		public virtual string _HostConfig {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for option [console]</summary>
-		public virtual Flag Console {
-			get => _Data[1] as Flag;
+		/// <summary>Field accessor for option [config]</summary>
+		public virtual ExistingFile ServiceConfig {
+			get => _Data[1] as ExistingFile;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _Console {
+		public virtual string _ServiceConfig {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [host]</summary>
-		public virtual String MachineName {
-			get => _Data[2] as String;
+		/// <summary>Field accessor for option [console]</summary>
+		public virtual Flag Console {
+			get => _Data[2] as Flag;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _MachineName {
+		public virtual string _Console {
 			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [host]</summary>
+		public virtual String MachineName {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _MachineName {
+			set => _Data[3].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -399,17 +426,24 @@ namespace Goedel.Mesh.Shell.Host {
 					Key = ""
 					},
 				new DescribeEntryOption () {
+					Identifier = "ServiceConfig", 
+					Default = "ServiceConfig", // null if null
+					Brief = "The service configuration file, is created if necessary",
+					Index = 1,
+					Key = "config"
+					},
+				new DescribeEntryOption () {
 					Identifier = "Console", 
 					Default = "false", // null if null
 					Brief = "<Unspecified>",
-					Index = 1,
+					Index = 2,
 					Key = "console"
 					},
 				new DescribeEntryOption () {
 					Identifier = "MachineName", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 2,
+					Index = 3,
 					Key = "host"
 					}
 				}

@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
     <ProjectReference Include="..\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
