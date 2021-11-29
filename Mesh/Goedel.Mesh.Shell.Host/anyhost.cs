@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 11/26/2021 3:49:21 PM
+//  This file was automatically generated at 11/29/2021 4:25:57 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -127,6 +127,7 @@ namespace Goedel.Mesh.Shell.Host {
                 FlagIndicator = WindowsFlag;
                 }
 
+				DefaultCommand = _HostStart._DescribeCommand;
 				Description = "Mathematical Mesh command tool";
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
@@ -228,12 +229,12 @@ namespace Goedel.Mesh.Shell.Host {
 			set => _Data[0].Parameter (value);
 			}
 		/// <summary>Field accessor for option [config]</summary>
-		public virtual ExistingFile ServiceConfig {
+		public virtual ExistingFile MultiConfig {
 			get => _Data[1] as ExistingFile;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _ServiceConfig {
+		public virtual string _MultiConfig {
 			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for option [console]</summary>
@@ -297,6 +298,7 @@ namespace Goedel.Mesh.Shell.Host {
 			Brief =  "Start the host service",
 			HandleDelegate =  CommandLineInterpreter.Handle_HostStart,
 			Lazy =  false,
+            IsDefault = true,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
 					Identifier = "HostConfig", 
@@ -306,9 +308,9 @@ namespace Goedel.Mesh.Shell.Host {
 					Key = ""
 					},
 				new DescribeEntryOption () {
-					Identifier = "ServiceConfig", 
-					Default = "ServiceConfig", // null if null
-					Brief = "The service configuration file, is created if necessary",
+					Identifier = "MultiConfig", 
+					Default = "HostsAndServices", // null if null
+					Brief = "The configuration file, is created if necessary",
 					Index = 1,
 					Key = "config"
 					},

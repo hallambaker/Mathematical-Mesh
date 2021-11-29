@@ -2,7 +2,7 @@
   "profiles": {
     "serviceadmin": {
       "commandName": "Project",
-      "commandLineArgs": "create MeshProvider.json example.com/host=host1.example.com /ip=108.20.156.67 /admin=admin@example.com",
+      "commandLineArgs": "create example.com /host=host1.example.com /ip=108.20.156.67 /admin=admin@example.com",
       "workingDirectory": "..\\..\\TestResults\\Service"
     }
   }

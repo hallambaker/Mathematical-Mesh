@@ -46,13 +46,15 @@ public partial class CommandLineInterpreter {
 /// </summary>
 public partial class Shell : _Shell {
 
+
+
     string GetFile(Goedel.Command._File file) =>
         file.DefaultExtension("json", MeshMachine.DirectoryMesh);
 
 
 
 
-    string GetServiceConfig(Command._File file) =>
+    string GetMultiConfig(Command._File file) =>
         PublicMeshService.GetService(MeshMachine, file.Value);
 
 
@@ -75,14 +77,14 @@ public partial class Shell : _Shell {
 
     ///<inheritdoc/>
     public override ShellResult Create(Create Options) {
-        var serviceConfig = GetServiceConfig(Options.ServiceConfig);
+        var multiConfig = GetMultiConfig(Options.MultiConfig);
         var serviceDns = Options.ServiceDns.Value;
         var hostIp = Options.HostIp.Value;
         var hostDns = Options.HostDns.Value;
         var admin = Options.Admin.Value;
         var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
 
-        using var _ = PublicMeshService.Create(MeshMachine, serviceConfig, serviceDns, hostConfig, hostIp, hostDns, admin);
+        using var _ = PublicMeshService.Create(MeshMachine, multiConfig, serviceDns, hostConfig, hostIp, hostDns, admin);
 
         return null;
         }
@@ -90,11 +92,11 @@ public partial class Shell : _Shell {
 
     ///<inheritdoc/>
     public override ShellResult DNS(DNS Options) {
-        var serviceConfig = GetServiceConfig(Options.ServiceConfig);
+        var multiConfig = GetMultiConfig(Options.MultiConfig);
         var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
         var dnsConfig = Options.DnsConfig.Value;
 
-        var configuration = Configuration.ReadFile(serviceConfig);
+        var configuration = Configuration.ReadFile(multiConfig);
 
         DnsConfiguration.BindConfig(configuration, dnsConfig, hostConfig);
 

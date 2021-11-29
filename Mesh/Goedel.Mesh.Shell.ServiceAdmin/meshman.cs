@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 11/26/2021 3:49:21 PM
+//  This file was automatically generated at 11/29/2021 5:15:02 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -291,7 +291,6 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 			new String (),
 			new String (),
 			new String (),
-			new NewFile (),
 			new ExistingFile ()			} ;
 
 
@@ -379,23 +378,14 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 		public virtual string _Admin {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [out]</summary>
-		public virtual NewFile NewFile {
-			get => _Data[9] as NewFile;
+		/// <summary>Field accessor for option [config]</summary>
+		public virtual ExistingFile MultiConfig {
+			get => _Data[9] as ExistingFile;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _NewFile {
+		public virtual string _MultiConfig {
 			set => _Data[9].Parameter (value);
-			}
-		/// <summary>Field accessor for option [config]</summary>
-		public virtual ExistingFile ServiceConfig {
-			get => _Data[10] as ExistingFile;
-			set => _Data[10]  = value;
-			}
-
-		public virtual string _ServiceConfig {
-			set => _Data[10].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -469,17 +459,10 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 					Key = "admin"
 					},
 				new DescribeEntryOption () {
-					Identifier = "NewFile", 
-					Default = null, // null if null
-					Brief = "File to write the configuration to",
+					Identifier = "MultiConfig", 
+					Default = "HostsAndServices", // null if null
+					Brief = "The configuration file, is created if necessary",
 					Index = 9,
-					Key = "out"
-					},
-				new DescribeEntryOption () {
-					Identifier = "ServiceConfig", 
-					Default = "ServiceConfig", // null if null
-					Brief = "The service configuration file, is created if necessary",
-					Index = 10,
 					Key = "config"
 					}
 				}
@@ -561,12 +544,12 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for option [config]</summary>
-		public virtual ExistingFile ServiceConfig {
+		public virtual ExistingFile MultiConfig {
 			get => _Data[6] as ExistingFile;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _ServiceConfig {
+		public virtual string _MultiConfig {
 			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -620,9 +603,9 @@ namespace Goedel.Mesh.Shell.ServiceAdmin {
 					Key = ""
 					},
 				new DescribeEntryOption () {
-					Identifier = "ServiceConfig", 
-					Default = "ServiceConfig", // null if null
-					Brief = "The service configuration file, is created if necessary",
+					Identifier = "MultiConfig", 
+					Default = "HostsAndServices", // null if null
+					Brief = "The configuration file, is created if necessary",
 					Index = 6,
 					Key = "config"
 					}

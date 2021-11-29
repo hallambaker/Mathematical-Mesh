@@ -45,6 +45,14 @@ public class PublicMeshService : MeshService {
 
     #region // Properties
 
+
+    ///<summary>Name for the default hosts and Services configuration file.</summary> 
+    public const string DefaultConfiguration = "HostsAndServices";
+
+    ///<summary>Extension for hosts and services configuration files.</summary> 
+    public const string ConfigurationFileExtension = ".hasconf";
+
+
     ///<summary>The Mesh Machine base</summary> 
     public IMeshMachine MeshMachine { get; init; }
 
@@ -120,7 +128,9 @@ public class PublicMeshService : MeshService {
 
         // Bugs? Seems like this is in initializing the service and host, not starting it.
 
+        if (hostConfiguration.ConsoleOutput) {
 
+            }
 
         MeshMachine = meshMachine;
         ServiceConfiguration = serviceConfiguration;
@@ -172,7 +182,7 @@ public class PublicMeshService : MeshService {
         this.ConnectionDevice.DareEnvelope.Strip();
         }
 
-    const string ConfigurationFileExtension = ".servconf";
+
 
 
 
@@ -204,7 +214,7 @@ public class PublicMeshService : MeshService {
     /// <returns>The file path.</returns>
     public static string GetService(
         IMeshMachineClient meshMachine, string fileSpec) => GetFilePath(
-            meshMachine, fileSpec, "Service");
+            meshMachine, fileSpec ?? DefaultConfiguration , "Service");
 
     /// <summary>
     /// Return the file path for the service specified <paramref name="hostname"/>. The
@@ -303,7 +313,7 @@ public class PublicMeshService : MeshService {
 
             // bind to the service instance directly
             var directMachine = new MeshMachineDirect(meshMachine, service);
-            var meshHost = directMachine.MeshHost;
+            var meshHost = new MeshHost(meshMachine.MeshHost, directMachine);
 
             // create an administrator profile
             using var contextUser = meshHost.ConfigureMesh(admin, "admin");

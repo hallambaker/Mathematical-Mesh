@@ -126,27 +126,29 @@ public partial class Shell : _Shell {
     //ServiceConfiguration ServiceConfiguration { get; set; }
     RudService RudService { get; set; }
 
-    string GetServiceConfig(Command._File file) =>
+    string GetMultiConfig(Command._File file) =>
         PublicMeshService.GetService(MeshMachine, file.Value);
 
 
     ///<inheritdoc/>
     public override ShellResult HostStart(HostStart Options) {
-        var serviceConfig = GetServiceConfig(Options.ServiceConfig);
+        var multiConfig = GetMultiConfig(Options.MultiConfig);
         var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
 
 
-        var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, hostConfig);
+        var result = VerifyConfig(multiConfig, hostConfig);
         result.AssertTrue(InvalidConfiguration.Throw, Options.HostConfig.Value ?? "<none>");
 
         // Start the service.
 
-        var configuration = Configuration.ReadFile(serviceConfig);
+        var configuration = Configuration.ReadFile(multiConfig);
         var hostConfiguration = configuration.GetHostConfiguration(hostConfig);
         var serviceConfiguration = configuration.GetServiceConfiguration(hostConfiguration);
 
+        hostConfiguration.ConsoleOutput = Options.Console.Value;
+
         //ServiceConfiguration.Instance ??= Instance;
-        RudService = StartService(hostConfiguration, serviceConfiguration, Options.Console.Value);
+        RudService = StartService(hostConfiguration, serviceConfiguration);
 
 
         return new ResultStartService() {
@@ -157,10 +159,10 @@ public partial class Shell : _Shell {
 
     ///<inheritdoc/>
     public override ShellResult HostVerify(HostVerify Options) {
-        var serviceConfig = GetServiceConfig(Options.ServiceConfig);
+        var serviceConfig = GetMultiConfig(Options.ServiceConfig);
         var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
 
-        var result = VerifyConfig(Options.Console.Value, Options.MachineName.Value, hostConfig);
+        var result = VerifyConfig(Options.MachineName.Value, hostConfig);
 
         result.AssertTrue(InvalidConfiguration.Throw);
 
@@ -180,11 +182,8 @@ public partial class Shell : _Shell {
     /// <param name="hostConfig"></param>
     /// <returns></returns>
     public bool VerifyConfig(
-            bool console,
             string machineName,
             string hostConfig) {
-
-        Console = console;
 
         // Fetch the canonical machine name from the system registry or equivalent and convert
         // to lower case.
@@ -218,8 +217,7 @@ public partial class Shell : _Shell {
     /// <returns>The RUD service</returns>
     public RudService StartService(
             HostConfiguration hostConfiguration, 
-            ServiceConfiguration serviceConfiguration,
-            bool console) {
+            ServiceConfiguration serviceConfiguration) {
 
 
         // This is a mess, need to 
@@ -246,7 +244,7 @@ public partial class Shell : _Shell {
         var credential = hostConfiguration.GetCredential(MeshMachine);
 
         // start the service
-        var service = new RudService(providers, credential, console: console);
+        var service = new RudService(providers, credential);
 
         var sigintReceived = false;
         // Catch SIGINT

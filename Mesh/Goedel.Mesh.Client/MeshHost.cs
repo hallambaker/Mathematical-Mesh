@@ -54,6 +54,16 @@ public class MeshHost : Disposable {
     ///<summary>The Key Collection of the Mesh Machine.</summary>
     public IKeyCollection KeyCollection => MeshMachine.KeyCollection;
 
+
+    ///<summary>Dictionary mapping mesh UDF to Context.</summary>
+    protected Dictionary<string, ContextAccount> DictionaryUDFContextMesh = new();
+
+    ///<summary>Dictionary mapping mesh local name to Context.</summary>
+    protected Dictionary<string, ContextAccount> DictionaryLocalContextMesh = new();
+
+
+
+
     //keyCollection ??
     //        new KeyCollectionClient(this, MeshMachine.KeyCollection).CacheValue(out keyCollection);
     //KeyCollection keyCollection;
@@ -82,6 +92,16 @@ public class MeshHost : Disposable {
             }
 
         }
+
+
+    public MeshHost(MeshHost parent, IMeshMachineClient meshMachine) {
+        this.MeshMachine = meshMachine;
+        ContainerHost = parent.ContainerHost;
+        DictionaryUDFContextMesh = parent.DictionaryUDFContextMesh;
+        DictionaryLocalContextMesh = parent.DictionaryLocalContextMesh;
+        }
+
+
 
     /// <summary>
     /// Create a context for the machine entry <paramref name="catalogedMachine"/>.
@@ -121,11 +141,6 @@ public class MeshHost : Disposable {
 
 
 
-    ///<summary>Dictionary mapping mesh UDF to Context.</summary>
-    protected Dictionary<string, ContextAccount> DictionaryUDFContextMesh = new();
-
-    ///<summary>Dictionary mapping mesh local name to Context.</summary>
-    protected Dictionary<string, ContextAccount> DictionaryLocalContextMesh = new();
 
     void Register(ContextAccount contextMesh) {
         var machine = contextMesh.CatalogedMachine;

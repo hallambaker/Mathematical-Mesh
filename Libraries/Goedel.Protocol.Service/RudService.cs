@@ -116,8 +116,7 @@ public class RudService : Disposable {
     public RudService(List<RudProvider> providers,
             ICredentialPrivate credential = null,
             Listener rdpListener = null,
-            int maxCores = 0,
-            bool console = false) {
+            int maxCores = 0) {
 
         Listener = rdpListener ?? new RudListener(credential, providers);
 

@@ -23,6 +23,7 @@
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Mesh.Client;
+using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 namespace Goedel.Mesh.Server;
 
@@ -61,6 +62,10 @@ public class MeshMachineDirect : IMeshMachineClient {
         MeshMachineClient.GetFilePath(filepath);
 
     ///<inheritdoc/>
-    public MeshServiceClient GetMeshClient(ICredentialPrivate credential, string service, string accountAddress) =>
-        PublicMeshService.GetDirect(null) as MeshServiceClient;
+    public MeshServiceClient GetMeshClient(ICredentialPrivate credential, string service, string accountAddress) {
+        var jpcSessionSerialized = new JpcSessionSerialized(PublicMeshService, credential);
+        return jpcSessionSerialized.GetWebClient<MeshServiceClient>();
+
+        }
+
     }

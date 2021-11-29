@@ -977,6 +977,12 @@
             work on to the <see cref="T:Goedel.Mesh.Server.MeshPersist"/> instance <see cref="P:Goedel.Mesh.Server.PublicMeshService.MeshPersist"/>
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.Server.PublicMeshService.DefaultConfiguration">
+            <summary>Name for the default hosts and Services configuration file.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.PublicMeshService.ConfigurationFileExtension">
+            <summary>Extension for hosts and services configuration files.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.MeshMachine">
             <summary>The Mesh Machine base</summary> 
         </member>

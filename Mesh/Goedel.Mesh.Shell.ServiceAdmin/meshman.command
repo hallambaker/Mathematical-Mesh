@@ -50,11 +50,9 @@
 			Brief "The DNS address of the host for service configuration"
 		Option Admin "admin" String
 			Brief "The administrator account address, also default for the host domain."
-		Option NewFile "out" NewFile
-			Brief "File to write the configuration to"
-		Option ServiceConfig "config" ExistingFile
-			Brief "The service configuration file, is created if necessary"
-			Default "ServiceConfig"
+		Option MultiConfig "config" ExistingFile
+			Brief "The configuration file, is created if necessary"
+			Default "HostsAndServices"
 
 	Command DNS "dns"
 		Include Reporting
@@ -65,9 +63,9 @@
 		Parameter HostConfig "hostconfig" String
 			Brief "The host configuration name"
 
-		Option ServiceConfig "config" ExistingFile
-			Brief "The service configuration file, is created if necessary"
-			Default "ServiceConfig"
+		Option MultiConfig "config" ExistingFile
+			Brief "The configuration file, is created if necessary"
+			Default "HostsAndServices"
 
 
 	Command Start "start"

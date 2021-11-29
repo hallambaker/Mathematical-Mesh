@@ -36,12 +36,13 @@
 
 	Command HostStart "start"
 		Brief "Start the host service"
+		DefaultCommand
 
 		Parameter HostConfig "hostconfig" String
 			Brief "The host configuration file"
-		Option ServiceConfig "config" ExistingFile
-			Brief "The service configuration file, is created if necessary"
-			Default "ServiceConfig"
+		Option MultiConfig "config" ExistingFile
+			Brief "The configuration file, is created if necessary"
+			Default "HostsAndServices"
 
 		Option Console "console" Flag
 			Default "false"
