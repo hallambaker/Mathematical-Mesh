@@ -328,6 +328,9 @@ public class PublicMeshService : MeshService {
 
         // write the configuration out.
         //configuration.ToFile(newFile ?? serviceConfig);
+
+        serviceConfig.MakePath();
+
         configuration.ToFile(serviceConfig);
         
         return service;

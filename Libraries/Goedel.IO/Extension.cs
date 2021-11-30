@@ -219,6 +219,20 @@ public static partial class Extension {
         }
 
     /// <summary>
+    /// Create the path specified in the file <paramref name="filename"/>
+    /// </summary>
+    /// <param name="filename">The file to create the path for.</param>
+    /// <returns>True if the directory already existed, otherwise false.</returns>
+    public static bool MakePath(this string filename) {
+        var directory = Path.GetDirectoryName(filename);
+        if (Directory.Exists(directory)) {
+            return true;
+            }
+        Directory.CreateDirectory(directory);
+        return false;
+        }
+
+    /// <summary>
     /// Open a file for read access allowing other processes to read the file..
     /// </summary>
     /// <param name="filename">The file name</param>

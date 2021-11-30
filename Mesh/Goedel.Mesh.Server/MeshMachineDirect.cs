@@ -63,7 +63,9 @@ public class MeshMachineDirect : IMeshMachineClient {
 
     ///<inheritdoc/>
     public MeshServiceClient GetMeshClient(ICredentialPrivate credential, string service, string accountAddress) {
-        var jpcSessionSerialized = new JpcSessionSerialized(PublicMeshService, credential);
+        var jpcSessionSerialized = new JpcSessionSerialized(PublicMeshService, credential) {
+            TargetAccount = accountAddress
+            };
         return jpcSessionSerialized.GetWebClient<MeshServiceClient>();
 
         }
