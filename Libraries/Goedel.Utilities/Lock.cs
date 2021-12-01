@@ -44,9 +44,9 @@ public class LockGlobal : Disposable {
     /// Dispose the lock releasing all mutexes and disposing the resources correctly.
     /// </summary>
     protected override void Disposing() {
-        if (haveWrite) {
-            writeLock?.ReleaseMutex();
-            }
+        //if (haveWrite) {
+        //    writeLock?.ReleaseMutex();
+        //    }
 
         writeLock.Dispose();
         }
@@ -88,7 +88,9 @@ public class LockGlobal : Disposable {
         if (haveWrite) {
             return; // Do not try to reacquire the lock.
             }
-        writeLock.WaitOne(millisecondsTimeout);
+        if (writeLock.WaitOne(millisecondsTimeout)) {
+            haveWrite = true;
+            }
         }
 
     /// <summary>
@@ -97,6 +99,7 @@ public class LockGlobal : Disposable {
     public void Exit() {
         if (haveWrite) {
             writeLock.ReleaseMutex();
+            haveWrite = false;
             }
         }
 

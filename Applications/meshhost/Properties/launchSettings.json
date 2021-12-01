@@ -2,8 +2,8 @@
   "profiles": {
     "meshhost": {
       "commandName": "Project",
-      "commandLineArgs": "/console ",
-      "workingDirectory": "..\\..\\TestResults"
+      "commandLineArgs": "start /console ",
+      "workingDirectory": "..\\..\\TestResults\\Service"
     }
   }
 }

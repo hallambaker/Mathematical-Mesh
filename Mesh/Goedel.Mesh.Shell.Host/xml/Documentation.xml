@@ -93,6 +93,9 @@
         <member name="P:Goedel.Mesh.Shell.Host.Shell.Instance">
             <summary>The service instance</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Shell.NoCatch">
+            <summary>If false, catch exceptions and interpret as an error.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Shell.Host.Shell.ShellResult">
             <summary>Result returned by last shell command.</summary> 
         </member>
@@ -134,12 +137,11 @@
         </member>
         <member name="M:Goedel.Mesh.Shell.Host.Shell.VerifyConfig(System.String,System.String)">
             <summary>
-            Verify the configuration specified in <paramref name="hostConfig"/> and extract the host 
-            description for <paramref name="hostConfig"/>.
+            Verify the configuration specified in <paramref name="hasConfig"/> and extract the host 
+            description for <paramref name="hasConfig"/>.
             </summary>
-            <param name="console"></param>
             <param name="machineName"></param>
-            <param name="hostConfig"></param>
+            <param name="hasConfig"></param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Host.Shell.StartService(Goedel.Mesh.ServiceAdmin.HostConfiguration,Goedel.Mesh.ServiceAdmin.ServiceConfiguration)">

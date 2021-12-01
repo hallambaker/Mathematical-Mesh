@@ -36,7 +36,6 @@
 
 	Command HostStart "start"
 		Brief "Start the host service"
-		DefaultCommand
 
 		Parameter HostConfig "hostconfig" String
 			Brief "The host configuration file"

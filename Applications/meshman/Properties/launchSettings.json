@@ -1,8 +1,13 @@
 {
   "profiles": {
-    "MeshService": {
+    "Nonce": {
       "commandName": "Project",
       "commandLineArgs": "key nonce",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "Hello": {
+      "commandName": "Project",
+      "commandLineArgs": "account hello /account=alice@example.com ",
       "workingDirectory": "..\\..\\TestResults\\Service"
     }
   }

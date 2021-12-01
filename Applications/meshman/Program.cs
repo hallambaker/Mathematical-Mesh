@@ -24,6 +24,7 @@
 using Goedel.Mesh.Shell;
 using Goedel.Utilities;
 using System;
+using Goedel.Mesh;
 
 
 #if NET6_0_WINDOWS_OR_GREATER
@@ -47,11 +48,20 @@ namespace meshman;
 public class Program {
 
 
-    static Program() => Initialization.Initialized.AssertTrue(Internal.Throw);
+    static Program() => Goedel.Cryptography.Windows.Initialization.Initialized.AssertTrue(
+        Goedel.Mesh.Internal.Throw);
 
     static void Main(string[] args) {
 
-        var commandLineInterpreter = new CommandLineInterpreter();
-        commandLineInterpreter.MainMethod(args);
+        Shell shell = new Shell(
+            ) {
+            NoCatch = true,
+            MeshMachine = new MeshMachineCore()
+            };
+        shell.Dispatch(args, Console.Out);
+
+
+        //var commandLineInterpreter = new CommandLineInterpreter();
+        //commandLineInterpreter.MainMethod(args);
         }
     }

@@ -49,6 +49,9 @@ public partial class Shell : _Shell {
     public string Instance { get; init; }
 
 
+    ///<summary>If false, catch exceptions and interpret as an error.</summary> 
+    public bool NoCatch { get; init; } 
+
 
 
     ///<summary>Result returned by last shell command.</summary> 
@@ -84,19 +87,27 @@ public partial class Shell : _Shell {
     public void Dispatch(string[] args, TextWriter console) {
         var commandLineInterpreter = new CommandLineInterpreter();
 
-        try {
+
+        if (NoCatch) {
             commandLineInterpreter.MainMethod(this, args);
             }
-        catch (Goedel.Command.ParserException) {
-            CommandLineInterpreter.Brief(
-                CommandLineInterpreter.Description,
-                CommandLineInterpreter.DefaultCommand,
-                CommandLineInterpreter.Entries);
-            }
-        catch (System.Exception Exception) {
-            console.WriteLine("Application: {0}", Exception.Message);
-            if (Exception.InnerException != null) {
-                console.WriteLine(Exception.InnerException.Message);
+        else {
+
+
+            try {
+                commandLineInterpreter.MainMethod(this, args);
+                }
+            catch (Goedel.Command.ParserException) {
+                CommandLineInterpreter.Brief(
+                    CommandLineInterpreter.Description,
+                    CommandLineInterpreter.DefaultCommand,
+                    CommandLineInterpreter.Entries);
+                }
+            catch (System.Exception Exception) {
+                console.WriteLine("Application: {0}", Exception.Message);
+                if (Exception.InnerException != null) {
+                    console.WriteLine(Exception.InnerException.Message);
+                    }
                 }
             }
         }
@@ -174,16 +185,16 @@ public partial class Shell : _Shell {
         }
 
     /// <summary>
-    /// Verify the configuration specified in <paramref name="hostConfig"/> and extract the host 
-    /// description for <paramref name="hostConfig"/>.
+    /// Verify the configuration specified in <paramref name="hasConfig"/> and extract the host 
+    /// description for <paramref name="hasConfig"/>.
     /// </summary>
-    /// <param name="console"></param>
     /// <param name="machineName"></param>
-    /// <param name="hostConfig"></param>
+    /// <param name="hasConfig"></param>
     /// <returns></returns>
     public bool VerifyConfig(
-            string machineName,
-            string hostConfig) {
+        string hasConfig,
+        string machineName
+            ) {
 
         // Fetch the canonical machine name from the system registry or equivalent and convert
         // to lower case.
@@ -199,7 +210,7 @@ public partial class Shell : _Shell {
             }
 
 
-        Configuration = JsonReader.ReadFile<Configuration>(hostConfig, false);
+        Configuration = JsonReader.ReadFile<Configuration>(hasConfig, false);
 
         //HostConfiguration = Configuration.GetHostConfiguration(MachineName);
         //ServiceConfiguration = Configuration.GetServiceConfiguration(HostConfiguration);

@@ -73,6 +73,11 @@ public class PublicMeshService : MeshService {
 
     ///<summary>The Host Configuration</summary> 
     public HostConfiguration HostConfiguration { get; init; }
+
+
+    public bool ConsoleOut => HostConfiguration.ConsoleOutput;
+    
+    
     /// <summary>
     /// The mesh persistence provider.
     /// </summary>
@@ -480,12 +485,27 @@ public class PublicMeshService : MeshService {
 
 
     void LogBegin(string token, JsonObject request) {
+        if (ConsoleOut) {
+            Console.WriteLine($"Start {token}");
+
+
+            }
         }
 
     void LogSuccess(JsonObject result) {
+        if (ConsoleOut) {
+            Console.WriteLine($"Success");
+
+
+            }
         }
 
     void LogError(Exception exception) {
+        if (ConsoleOut) {
+            Console.WriteLine($"Exception {exception}");
+
+
+            }
         }
 
 

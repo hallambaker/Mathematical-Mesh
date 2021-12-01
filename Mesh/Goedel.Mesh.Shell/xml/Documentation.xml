@@ -721,6 +721,9 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="P:Goedel.Mesh.Shell.Shell.NoCatch">
+            <summary>If false, catch exceptions and interpret as an error.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Shell.Shell.MeshMachine">
             <summary>The MeshMachine</summary>
         </member>
@@ -776,6 +779,14 @@
         </member>
         <member name="F:Goedel.Mesh.Shell.Shell.AlgorithmEncrypt">
             <summary>The encryption algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.AES256CBC"/></summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.Dispatch(System.String[],System.IO.TextWriter)">
+            <summary>
+            Dispatch command line instruction with arguments <paramref name="args"/> and
+            error output <paramref name="console"/>.
+            </summary>
+            <param name="args">The command line arguments.</param>
+            <param name="console">Error output stream.</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell._PreProcess(Goedel.Command.Dispatch)">
             <summary>

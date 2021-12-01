@@ -61,6 +61,7 @@ public class Program {
                     PublicMeshService.ServiceDescription,
                     ServiceManagementProvider.ServiceDescriptionHost
                     ) {
+            NoCatch = true,
             MeshMachine = new MeshMachineCore()
             };
         shell.Dispatch(args, Console.Out);

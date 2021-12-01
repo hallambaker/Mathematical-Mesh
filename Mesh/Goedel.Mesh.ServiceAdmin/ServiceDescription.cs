@@ -124,7 +124,7 @@ public partial class Configuration {
         bool nonHost = false;
         foreach (var entry in Entries) {
 
-            if (entry.Id?.ToLower() == id | (id == "*")) {
+            if (entry.Id?.ToLower() == id.ToLower() | (id == "*")) {
                 if (entry is HostConfiguration) {
                     return entry as HostConfiguration;
                     }

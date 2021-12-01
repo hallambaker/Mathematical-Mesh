@@ -40,7 +40,10 @@ namespace Goedel.Mesh.Shell;
 /// </summary>
 public partial class Shell : _Shell {
 
-    //CommandLineInterpreter CommandLineInterpreter;
+
+    ///<summary>If false, catch exceptions and interpret as an error.</summary> 
+    public bool NoCatch { get; init; }
+
 
     ///<summary>The MeshMachine</summary>
     public virtual IMeshMachineClient MeshMachine { get; set; }
@@ -105,6 +108,42 @@ public partial class Shell : _Shell {
 
     ///<summary>The encryption algorithm. Defaults to <see cref="CryptoAlgorithmId.AES256CBC"/></summary>
     public CryptoAlgorithmId AlgorithmEncrypt = CryptoAlgorithmId.Default;
+
+
+    /// <summary>
+    /// Dispatch command line instruction with arguments <paramref name="args"/> and
+    /// error output <paramref name="console"/>.
+    /// </summary>
+    /// <param name="args">The command line arguments.</param>
+    /// <param name="console">Error output stream.</param>
+    public void Dispatch(string[] args, TextWriter console) {
+        var commandLineInterpreter = new CommandLineInterpreter();
+
+
+        if (NoCatch) {
+            commandLineInterpreter.MainMethod(this, args);
+            }
+        else {
+            try {
+                commandLineInterpreter.MainMethod(this, args);
+                }
+            catch (Goedel.Command.ParserException) {
+                CommandLineInterpreter.Brief(
+                    CommandLineInterpreter.Description,
+                    CommandLineInterpreter.DefaultCommand,
+                    CommandLineInterpreter.Entries);
+                }
+            catch (System.Exception Exception) {
+                console.WriteLine("Application: {0}", Exception.Message);
+                if (Exception.InnerException != null) {
+                    console.WriteLine(Exception.InnerException.Message);
+                    }
+                }
+            }
+        }
+
+
+
 
     /// <summary>
     /// Preprocess the common command options <paramref name="options"/>.
