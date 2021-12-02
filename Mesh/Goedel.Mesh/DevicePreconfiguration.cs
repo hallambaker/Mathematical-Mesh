@@ -21,8 +21,6 @@
 #endregion
 
 
-using Goedel.IO;
-using Goedel.Protocol;
 namespace Goedel.Mesh;
 
 public partial class DevicePreconfigurationPrivate {

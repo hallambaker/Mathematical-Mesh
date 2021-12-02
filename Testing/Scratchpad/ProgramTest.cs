@@ -22,15 +22,13 @@
 
 
 using System;
-
 using Goedel.Cryptography;
-using Goedel.Utilities;
-using Goedel.Mesh;
-using Goedel.XUnit;
-using Goedel.Test;
-using Goedel.Mesh.Test;
 using Goedel.Cryptography.Algorithms;
-using Goedel.Test.Core;
+using Goedel.Mesh;
+using Goedel.Mesh.Test;
+using Goedel.Test;
+using Goedel.Utilities;
+using Goedel.XUnit;
 
 namespace Scratchpad;
 

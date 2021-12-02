@@ -20,10 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-
 using Goedel.Cryptography;
-using Goedel.Utilities;
 
 namespace Goedel.Protocol.Presentation;
 
@@ -71,7 +68,7 @@ public class RudListener : Listener {
             byte[] payload = null) {
         var bytes = Platform.GetRandomBytes(16);
         var challenge = new PacketExtension() {
-            Tag = Constants.ExtensionTagsChallengeTag,
+            Tag = PresentationConstants.ExtensionTagsChallengeTag,
             Value = bytes
             };
         return new List<PacketExtension> { challenge };
@@ -122,17 +119,17 @@ public class RudListener : Listener {
         foreach (var extension in packetExtensions) {
 
             switch (extension.Tag) {
-                case Constants.ExtensionTagsStreamReceiverTag:
-                case Constants.ExtensionTagsStreamClientTag: {
+                case PresentationConstants.ExtensionTagsStreamReceiverTag:
+                case PresentationConstants.ExtensionTagsStreamClientTag: {
                         streamType = extension.Tag;
                         protocol = extension.Value.ToUTF8();
                         break;
                         }
-                case Constants.ExtensionTagsStreamIdTag: {
+                case PresentationConstants.ExtensionTagsStreamIdTag: {
                         streamId = extension.Value;
                         break;
                         }
-                case Constants.ExtensionTagsEncryptTag: {
+                case PresentationConstants.ExtensionTagsEncryptTag: {
                         streamId = extension.Value;
                         break;
                         }
@@ -144,11 +141,11 @@ public class RudListener : Listener {
             }
 
         switch (streamType) {
-            case Constants.ExtensionTagsStreamClientTag: {
+            case PresentationConstants.ExtensionTagsStreamClientTag: {
                     child = new RudStreamService(stream, protocol, accountAddress: account, rudConnection: rudConnection);
                     break;
                     }
-            case Constants.ExtensionTagsStreamReceiverTag: {
+            case PresentationConstants.ExtensionTagsStreamReceiverTag: {
                     child = new RudStreamReceiver(stream, protocol, accountAddress: account);
                     break;
                     }

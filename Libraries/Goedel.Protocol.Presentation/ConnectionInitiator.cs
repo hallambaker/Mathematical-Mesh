@@ -20,9 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
 using System.Net;
-using System;
 namespace Goedel.Protocol.Presentation;
 
 /// <summary>
@@ -69,7 +67,7 @@ public partial class ConnectionInitiator : RudConnection {
     ///<inheritdoc/>
     public override void AddResponse(
             List<PacketExtension> extensions) => extensions.Add(new PacketExtension() {
-                Tag = Constants.ExtensionTagsChallengeTag,
+                Tag = PresentationConstants.ExtensionTagsChallengeTag,
                 Value = RudStreamInitial.ChallengeNonce
                 });
 

@@ -21,7 +21,6 @@
 #endregion
 
 
-using Goedel.Utilities;
 namespace Goedel.Mesh;
 
 public partial class Assertion {

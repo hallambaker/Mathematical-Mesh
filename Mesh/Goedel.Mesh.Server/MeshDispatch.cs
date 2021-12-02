@@ -20,17 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
-using Goedel.Cryptography.Dare;
-using Goedel.IO;
-using Goedel.Mesh.Client;
-using Goedel.Mesh.ServiceAdmin;
-using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
-using Goedel.Utilities;
+
+
 namespace Goedel.Mesh.Server;
 
 
@@ -76,8 +68,8 @@ public class PublicMeshService : MeshService {
 
 
     public bool ConsoleOut => HostConfiguration.ConsoleOutput;
-    
-    
+
+
     /// <summary>
     /// The mesh persistence provider.
     /// </summary>
@@ -89,6 +81,8 @@ public class PublicMeshService : MeshService {
     ///<summary>Key collection giving access to host and service keys.</summary> 
     public IKeyCollection KeyCollection { get; }
 
+
+    public LogService LogService { get; }
 
     #endregion
     #region // Disposing
@@ -133,9 +127,10 @@ public class PublicMeshService : MeshService {
 
         // Bugs? Seems like this is in initializing the service and host, not starting it.
 
-        if (hostConfiguration.ConsoleOutput) {
-
-            }
+        LogService = new LogService(null) {
+            ConsoleOutput = hostConfiguration.ConsoleOutput ?
+                ReportMode.Brief : ReportMode.None
+            };
 
         MeshMachine = meshMachine;
         ServiceConfiguration = serviceConfiguration;
@@ -192,7 +187,7 @@ public class PublicMeshService : MeshService {
 
 
     static string GetFilePath(
-            IMeshMachineClient meshMachine, 
+            IMeshMachineClient meshMachine,
             string fileSpec,
             string type) {
         var defaulted = fileSpec.ApplyExtensionDefault(ConfigurationFileExtension);
@@ -219,7 +214,7 @@ public class PublicMeshService : MeshService {
     /// <returns>The file path.</returns>
     public static string GetService(
         IMeshMachineClient meshMachine, string fileSpec) => GetFilePath(
-            meshMachine, fileSpec ?? DefaultConfiguration , "Service");
+            meshMachine, fileSpec ?? DefaultConfiguration, "Service");
 
     /// <summary>
     /// Return the file path for the service specified <paramref name="hostname"/>. The
@@ -236,8 +231,8 @@ public class PublicMeshService : MeshService {
         Path.Combine(meshMachine.DirectoryMesh, "Hosts", hostname);
 
 
-        //GetFilePath(
-        //    meshMachine, fileSpec, "Hosts", hostname);
+    //GetFilePath(
+    //    meshMachine, fileSpec, "Hosts", hostname);
 
 
     /// <summary>
@@ -253,8 +248,8 @@ public class PublicMeshService : MeshService {
     /// <returns></returns>
     public static PublicMeshService Create(
         IMeshMachineClient meshMachine,
-        string serviceConfig, 
-        string serviceDns, 
+        string serviceConfig,
+        string serviceDns,
         string hostConfig,
         string hostIp, string hostDns,
         string admin) {
@@ -273,7 +268,7 @@ public class PublicMeshService : MeshService {
 
         var pathLog = Path.Combine(pathHost, "Logs");
         // Create the initial service application
-        
+
         var ServiceConfiguration = new ServiceConfiguration() {
             Id = serviceName,
             DNS = new List<string> { serviceDns },
@@ -337,7 +332,7 @@ public class PublicMeshService : MeshService {
         serviceConfig.MakePath();
 
         configuration.ToFile(serviceConfig);
-        
+
         return service;
         }
 
@@ -464,59 +459,24 @@ public class PublicMeshService : MeshService {
             }
         catch (Exception exception) {
             var result = new StatusResponse(exception);
-            LogError(exception);
+            LogService.UnknownCommand(exception);
             return result;
             }
 
+        var log = LogService.Start(token, request as IReport);
 
         try {
-            LogBegin(token, request);
             var result = Dispatch(token, request, session);
-            LogSuccess(result);
+            log.Success(result as IReport);
 
             return result;
             }
         catch (Exception exception) {
             var result = new StatusResponse(exception);
-            LogError(exception);
+            log.Fail(exception, result as IReport);
             return result;
             }
         }
-
-
-    void LogBegin(string token, JsonObject request) {
-        if (ConsoleOut) {
-            Console.WriteLine($"Start {token}");
-
-
-            }
-        }
-
-    void LogSuccess(JsonObject result) {
-        if (ConsoleOut) {
-            Console.WriteLine($"Success");
-
-
-            }
-        }
-
-    void LogError(Exception exception) {
-        if (ConsoleOut) {
-            Console.WriteLine($"Exception {exception}");
-
-
-            }
-        }
-
-
-
-
-    //private MeshVerifiedDevice VerifyDevice(IJpcSession jpcSession) =>
-    //    (jpcSession.Credential as MeshCredential).VerifyDevice();
-
-
-    //private MeshVerifiedAccount VerifyAccount(IJpcSession jpcSession) =>
-    //    (jpcSession.Credential as MeshCredential).VerifyAccount();
 
 
     /// <summary>

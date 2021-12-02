@@ -19,10 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System.Collections.Generic;
-using System.Numerics;
-
-using Goedel.Utilities;
 
 #pragma warning disable IDE0060  // NYI: Pretty much the whole of this scheme
 

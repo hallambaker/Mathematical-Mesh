@@ -181,7 +181,7 @@
             Perform key exchanges and complete parsing of the packet
             </summary>
         </member>
-        <member name="T:Goedel.Protocol.Presentation.Constants">
+        <member name="T:Goedel.Protocol.Presentation.PresentationConstants">
             <summary>
             Constants class
             </summary>
@@ -189,40 +189,40 @@
             Constants specified in hallambaker-mesh-schema
             </summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.MinimumPacketSize">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.MinimumPacketSize">
             <summary>The minimum packet size.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.SizeReservedInitialStreamId">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.SizeReservedInitialStreamId">
             <summary>The number of bytes reserved for the initial stream identifier (all zeros)</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.SizeNonceAesGcm">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.SizeNonceAesGcm">
             <summary>Size of packet nonce to be used in AES-GCM packet.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.SizeIvAesGcm">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.SizeIvAesGcm">
             <summary>Size of initialization vector / AES nonce to be used in AES-GCM packet.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.SizeTagAesGcm">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.SizeTagAesGcm">
             <summary>Size of authentication tag to be used in AES-GCM packet.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.SizeKeyAesGcm">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.SizeKeyAesGcm">
             <summary>Size of key to be used in AES-GCM packet.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.TagIv">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.TagIv">
             <summary>The KDF info tag to be used to derive initialization vectors.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.TagKey">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.TagKey">
             <summary>The KDF info tag to be used to derive keys.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.StreamIdClientInitial">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.StreamIdClientInitial">
             <summary>Fixed constant containing the reserved client initial stream identifier.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ByteKeyInitiatorResponder">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ByteKeyInitiatorResponder">
             <summary>The KDF info tag to be used to derive keys.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ByteKeyResponderInitiator">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ByteKeyResponderInitiator">
             <summary>The KDF info tag to be used to derive keys.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.Derive(System.Byte[],System.Byte[]@,System.Byte[]@,System.Byte[]@)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.Derive(System.Byte[],System.Byte[]@,System.Byte[]@,System.Byte[]@)">
             <summary>
             Using the primary key <paramref name="ikm"/> and generated nonce <paramref name="nonce"/>,
             derive key <paramref name="key"/> and initialization vector <paramref name="iv"/>.
@@ -232,7 +232,7 @@
             <param name="iv">The generated initialization vector.</param>
             <param name="key">The generated key.</param>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.Derive2(System.Byte[],System.Byte[],System.Byte[]@,System.Byte[]@)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.Derive2(System.Byte[],System.Byte[],System.Byte[]@,System.Byte[]@)">
             <summary>
             Using the primary key <paramref name="ikm"/> and provided nonce <paramref name="nonce"/>,
             derive key <paramref name="key"/> and initialization vector <paramref name="iv"/>.
@@ -242,37 +242,37 @@
             <param name="iv">The generated initialization vector.</param>
             <param name="key">The generated key.</param>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeErrorTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.InitiatorMessageTypeErrorTag">
             <summary>Jose enumeration tag for InitiatorMessageType.Error</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeErrorTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.InitiatorMessageTypeErrorTitle">
             <summary>Description for InitiatorMessageType.Error</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeDataTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.InitiatorMessageTypeDataTag">
             <summary>Jose enumeration tag for InitiatorMessageType.Data</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeDataTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.InitiatorMessageTypeDataTitle">
             <summary>Description for InitiatorMessageType.Data</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorHelloTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.InitiatorMessageTypeInitiatorHelloTag">
             <summary>Jose enumeration tag for InitiatorMessageType.InitiatorHello</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorHelloTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.InitiatorMessageTypeInitiatorHelloTitle">
             <summary>Description for InitiatorMessageType.InitiatorHello</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorExchangeTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.InitiatorMessageTypeInitiatorExchangeTag">
             <summary>Jose enumeration tag for InitiatorMessageType.InitiatorExchange</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorExchangeTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.InitiatorMessageTypeInitiatorExchangeTitle">
             <summary>Description for InitiatorMessageType.InitiatorExchange</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorCompleteTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.InitiatorMessageTypeInitiatorCompleteTag">
             <summary>Jose enumeration tag for InitiatorMessageType.InitiatorComplete</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.InitiatorMessageTypeInitiatorCompleteTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.InitiatorMessageTypeInitiatorCompleteTitle">
             <summary>Description for InitiatorMessageType.InitiatorComplete</summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToInitiatorMessageType(System.String)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.ToInitiatorMessageType(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
             value.
@@ -280,7 +280,7 @@
             <param name="text">The string to convert.</param>
             <returns>The enumeration value.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.InitiatorMessageType)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.ToLabel(Goedel.Protocol.Presentation.InitiatorMessageType)">
             <summary>
             Convert the enumerated value <paramref name="data"/> to the corresponding string
             value.
@@ -288,31 +288,31 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeErrorTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ResponderMessageTypeErrorTag">
             <summary>Jose enumeration tag for ResponderMessageType.Error</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeErrorTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ResponderMessageTypeErrorTitle">
             <summary>Description for ResponderMessageType.Error</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeDataTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ResponderMessageTypeDataTag">
             <summary>Jose enumeration tag for ResponderMessageType.Data</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeDataTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ResponderMessageTypeDataTitle">
             <summary>Description for ResponderMessageType.Data</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeResponderChallengeTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ResponderMessageTypeResponderChallengeTag">
             <summary>Jose enumeration tag for ResponderMessageType.ResponderChallenge</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeResponderChallengeTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ResponderMessageTypeResponderChallengeTitle">
             <summary>Description for ResponderMessageType.ResponderChallenge</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeResponderCompleteTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ResponderMessageTypeResponderCompleteTag">
             <summary>Jose enumeration tag for ResponderMessageType.ResponderComplete</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ResponderMessageTypeResponderCompleteTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ResponderMessageTypeResponderCompleteTitle">
             <summary>Description for ResponderMessageType.ResponderComplete</summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToResponderMessageType(System.String)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.ToResponderMessageType(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
             value.
@@ -320,7 +320,7 @@
             <param name="text">The string to convert.</param>
             <returns>The enumeration value.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.ResponderMessageType)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.ToLabel(Goedel.Protocol.Presentation.ResponderMessageType)">
             <summary>
             Convert the enumerated value <paramref name="data"/> to the corresponding string
             value.
@@ -328,43 +328,43 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesBadRequestTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesBadRequestTag">
             <summary>Jose enumeration tag for ErrorCodes.BadRequest</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesBadRequestTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesBadRequestTitle">
             <summary>Description for ErrorCodes.BadRequest</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesUnauthorizedTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesUnauthorizedTag">
             <summary>Jose enumeration tag for ErrorCodes.Unauthorized</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesUnauthorizedTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesUnauthorizedTitle">
             <summary>Description for ErrorCodes.Unauthorized</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesForbiddenTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesForbiddenTag">
             <summary>Jose enumeration tag for ErrorCodes.Forbidden</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesForbiddenTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesForbiddenTitle">
             <summary>Description for ErrorCodes.Forbidden</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesTimeoutTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesTimeoutTag">
             <summary>Jose enumeration tag for ErrorCodes.Timeout</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesTimeoutTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesTimeoutTitle">
             <summary>Description for ErrorCodes.Timeout</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesTooManyRequestsTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesTooManyRequestsTag">
             <summary>Jose enumeration tag for ErrorCodes.TooManyRequests</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesTooManyRequestsTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesTooManyRequestsTitle">
             <summary>Description for ErrorCodes.TooManyRequests</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesServiceUnavailableTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesServiceUnavailableTag">
             <summary>Jose enumeration tag for ErrorCodes.ServiceUnavailable</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ErrorCodesServiceUnavailableTitle">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ErrorCodesServiceUnavailableTitle">
             <summary>Description for ErrorCodes.ServiceUnavailable</summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToErrorCodes(System.String)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.ToErrorCodes(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
             value.
@@ -372,7 +372,7 @@
             <param name="text">The string to convert.</param>
             <returns>The enumeration value.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.ErrorCodes)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.ToLabel(Goedel.Protocol.Presentation.ErrorCodes)">
             <summary>
             Convert the enumerated value <paramref name="data"/> to the corresponding string
             value.
@@ -380,28 +380,28 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.TagKeyInitiatorResponder">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.TagKeyInitiatorResponder">
             <summary>InitiatorResponder</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.TagKeyResponderInitiator">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.TagKeyResponderInitiator">
             <summary>ResponderInitiator</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ProtocolIdRud">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ProtocolIdRud">
             <summary>RUD</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.EncryptionOptionsAesGcmTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.EncryptionOptionsAesGcmTag">
             <summary>Jose enumeration tag for EncryptionOptions.AesGcm</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.EncryptionOptionsAesCfbTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.EncryptionOptionsAesCfbTag">
             <summary>Jose enumeration tag for EncryptionOptions.AesCfb</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.EncryptionOptionsEncryptPacketHeaderTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.EncryptionOptionsEncryptPacketHeaderTag">
             <summary>Jose enumeration tag for EncryptionOptions.EncryptPacketHeader</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.EncryptionOptionsRequireOneTimeIdTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.EncryptionOptionsRequireOneTimeIdTag">
             <summary>Jose enumeration tag for EncryptionOptions.RequireOneTimeId</summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToEncryptionOptions(System.String)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.ToEncryptionOptions(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
             value.
@@ -409,7 +409,7 @@
             <param name="text">The string to convert.</param>
             <returns>The enumeration value.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.EncryptionOptions)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.ToLabel(Goedel.Protocol.Presentation.EncryptionOptions)">
             <summary>
             Convert the enumerated value <paramref name="data"/> to the corresponding string
             value.
@@ -417,85 +417,85 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsDirectX448Tag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsDirectX448Tag">
             <summary>Jose enumeration tag for ExtensionTags.DirectX448</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsDirectX25519Tag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsDirectX25519Tag">
             <summary>Jose enumeration tag for ExtensionTags.DirectX25519</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsX448Tag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsX448Tag">
             <summary>Jose enumeration tag for ExtensionTags.X448</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsX25519Tag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsX25519Tag">
             <summary>Jose enumeration tag for ExtensionTags.X25519</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsPkixX509Tag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsPkixX509Tag">
             <summary>Jose enumeration tag for ExtensionTags.PkixX509</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsPkixOcspTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsPkixOcspTag">
             <summary>Jose enumeration tag for ExtensionTags.PkixOcsp</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsMeshProfileDeviceTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshProfileDeviceTag">
             <summary>Jose enumeration tag for ExtensionTags.MeshProfileDevice</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsMeshConnectionDeviceTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshConnectionDeviceTag">
             <summary>Jose enumeration tag for ExtensionTags.MeshConnectionDevice</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsMeshConnectionAddressTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshConnectionAddressTag">
             <summary>Jose enumeration tag for ExtensionTags.MeshConnectionAddress</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsClaimIdTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsClaimIdTag">
             <summary>Jose enumeration tag for ExtensionTags.ClaimId</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsStreamIdTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsStreamIdTag">
             <summary>Jose enumeration tag for ExtensionTags.StreamId</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsOneTimeStreamIdTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsOneTimeStreamIdTag">
             <summary>Jose enumeration tag for ExtensionTags.OneTimeStreamId</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsRollTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsRollTag">
             <summary>Jose enumeration tag for ExtensionTags.Roll</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsChallengeTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsChallengeTag">
             <summary>Jose enumeration tag for ExtensionTags.Challenge</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsChallengeProofOfWorkTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsChallengeProofOfWorkTag">
             <summary>Jose enumeration tag for ExtensionTags.ChallengeProofOfWork</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsRefuseTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsRefuseTag">
             <summary>Jose enumeration tag for ExtensionTags.Refuse</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsNotKnownTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsNotKnownTag">
             <summary>Jose enumeration tag for ExtensionTags.NotKnown</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsAuthorizeTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsAuthorizeTag">
             <summary>Jose enumeration tag for ExtensionTags.Authorize</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsEncryptTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsEncryptTag">
             <summary>Jose enumeration tag for ExtensionTags.Encrypt</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsCloseStreamTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsCloseStreamTag">
             <summary>Jose enumeration tag for ExtensionTags.CloseStream</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsCloseConnectionTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsCloseConnectionTag">
             <summary>Jose enumeration tag for ExtensionTags.CloseConnection</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsStreamClientTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsStreamClientTag">
             <summary>Jose enumeration tag for ExtensionTags.StreamClient</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsStreamReceiverTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsStreamReceiverTag">
             <summary>Jose enumeration tag for ExtensionTags.StreamReceiver</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsStreamNewTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsStreamNewTag">
             <summary>Jose enumeration tag for ExtensionTags.StreamNew</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsStreamSenderTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsStreamSenderTag">
             <summary>Jose enumeration tag for ExtensionTags.StreamSender</summary>
         </member>
-        <member name="F:Goedel.Protocol.Presentation.Constants.ExtensionTagsStreamServiceTag">
+        <member name="F:Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsStreamServiceTag">
             <summary>Jose enumeration tag for ExtensionTags.StreamService</summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToExtensionTags(System.String)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.ToExtensionTags(System.String)">
             <summary>
             Convert the string <paramref name="text"/> to the corresponding enumeration
             value.
@@ -503,7 +503,7 @@
             <param name="text">The string to convert.</param>
             <returns>The enumeration value.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Constants.ToLabel(Goedel.Protocol.Presentation.ExtensionTags)">
+        <member name="M:Goedel.Protocol.Presentation.PresentationConstants.ToLabel(Goedel.Protocol.Presentation.ExtensionTags)">
             <summary>
             Convert the enumerated value <paramref name="data"/> to the corresponding string
             value.

@@ -19,6 +19,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+
+global using System;
+global using System.Collections.Generic;
+global using Goedel.Utilities;
+
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
@@ -26,9 +31,9 @@
 
 namespace Goedel.ASN;
 
-    /// <summary>
-    /// Support library for ASN.1 encoding and decoding using the ASN tool.
-    /// </summary>
+/// <summary>
+/// Support library for ASN.1 encoding and decoding using the ASN tool.
+/// </summary>
 
 [System.Runtime.CompilerServices.CompilerGenerated]
 class NamespaceDoc {

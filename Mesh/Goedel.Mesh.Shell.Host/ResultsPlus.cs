@@ -20,9 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Text;
-
-using Goedel.Protocol.Service;
 
 namespace Goedel.Mesh.Shell.Host;
 

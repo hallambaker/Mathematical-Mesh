@@ -21,11 +21,7 @@
 #endregion
 
 
-using System;
-using System.Collections.Generic;
 using System.Net;
-
-using Goedel.Utilities;
 
 
 namespace Goedel.Protocol.Presentation;

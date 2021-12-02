@@ -20,19 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-
-using Goedel.Mesh.Management;
-using Goedel.Mesh.ServiceAdmin;
-using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
-using Goedel.Protocol.Service;
-using Goedel.Utilities;
-using Goedel.Mesh.Client;
-using Goedel.Mesh.ServiceAdmin;
-using Goedel.Mesh.Server;
 
 namespace Goedel.Mesh.Shell.Host;
 
@@ -50,7 +37,7 @@ public partial class Shell : _Shell {
 
 
     ///<summary>If false, catch exceptions and interpret as an error.</summary> 
-    public bool NoCatch { get; init; } 
+    public bool NoCatch { get; init; }
 
 
 
@@ -227,7 +214,7 @@ public partial class Shell : _Shell {
     /// <param name="serviceConfiguration">The service configuration</param>
     /// <returns>The RUD service</returns>
     public RudService StartService(
-            HostConfiguration hostConfiguration, 
+            HostConfiguration hostConfiguration,
             ServiceConfiguration serviceConfiguration) {
 
 

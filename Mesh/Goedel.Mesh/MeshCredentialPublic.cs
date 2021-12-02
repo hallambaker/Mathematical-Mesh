@@ -21,15 +21,6 @@
 #endregion
 
 
-using System.Collections.Generic;
-
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
-using Goedel.Utilities;
-
 namespace Goedel.Mesh;
 
 
@@ -184,7 +175,7 @@ public class MeshCredentialPrivate : MeshKeyCredentialPrivate {
 
         if (meshCredentialPrivate?.ProfileDevice is null & profileDevice is not null) {
             Extensions.Add(new PacketExtension() {
-                Tag = Constants.ExtensionTagsMeshProfileDeviceTag,
+                Tag = Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshProfileDeviceTag,
                 Value = profileDevice.DareEnvelope.GetBytes(false)
                 });
             }
@@ -192,13 +183,13 @@ public class MeshCredentialPrivate : MeshKeyCredentialPrivate {
             authenticationKey.MatchKeyIdentifier(
                     connectionDevice.Authentication.PublicParameters.KeyPair.KeyIdentifier).AssertTrue(NYI.Throw);
             Extensions.Add(new PacketExtension() {
-                Tag = Constants.ExtensionTagsMeshConnectionDeviceTag,
+                Tag = Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshConnectionDeviceTag,
                 Value = connectionDevice.DareEnvelope.GetBytes(false)
                 });
             }
         if (meshCredentialPrivate?.ConnectionAccount is null & connectionAccount is not null) {
             Extensions.Add(new PacketExtension() {
-                Tag = Constants.ExtensionTagsMeshConnectionAddressTag,
+                Tag = Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshConnectionAddressTag,
                 Value = connectionAccount.DareEnvelope.GetBytes(false)
                 });
             }

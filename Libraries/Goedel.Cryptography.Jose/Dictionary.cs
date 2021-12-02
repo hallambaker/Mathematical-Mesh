@@ -20,7 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
 
 namespace Goedel.Cryptography.Jose;
 

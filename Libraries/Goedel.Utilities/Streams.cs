@@ -19,17 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System;
-using System.
-/* Unmerged change from project 'Goedel.Utilities'
-Before:
-using System.Text;
-using System.IO;
-After:
-using System.IO;
-using System.Text;
-*/
-IO;
 
 namespace Goedel.Utilities;
 

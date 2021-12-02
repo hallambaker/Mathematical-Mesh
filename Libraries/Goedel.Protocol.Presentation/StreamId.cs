@@ -23,8 +23,6 @@
 
 using System.Threading;
 
-using Goedel.Utilities;
-
 
 namespace Goedel.Protocol.Presentation;
 
@@ -57,7 +55,7 @@ public struct StreamId {
 
     ///<summary>Factory method, creates a packet extension wrapping the stream identifier.</summary> 
     public PacketExtension PacketExtension => new() {
-        Tag = Constants.ExtensionTagsStreamIdTag,
+        Tag = PresentationConstants.ExtensionTagsStreamIdTag,
         Value = Bytes
         };
 

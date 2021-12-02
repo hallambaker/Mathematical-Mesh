@@ -21,8 +21,6 @@
 #endregion
 
 
-using System.Collections.Generic;
-
 namespace Goedel.Mesh.Shell;
 
 public partial class Shell {

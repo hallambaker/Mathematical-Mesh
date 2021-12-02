@@ -19,8 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System.IO;
-using System.Text;
 
 namespace Goedel.Utilities;
 
@@ -35,8 +33,8 @@ public static partial class Extension {
     /// <param name="extension">The default extension to apply</param>
     /// <returns>The <paramref name="fileName"/> with the original extension if specified, the
     /// extension <paramref name="extension"/> otherwise.</returns>
-    public static string ApplyExtensionDefault(this string fileName, string extension)=>
-        Path.HasExtension(fileName)? fileName : Path.ChangeExtension (fileName, extension);
+    public static string ApplyExtensionDefault(this string fileName, string extension) =>
+        Path.HasExtension(fileName) ? fileName : Path.ChangeExtension(fileName, extension);
 
 
 

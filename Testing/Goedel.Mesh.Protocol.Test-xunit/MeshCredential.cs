@@ -28,7 +28,6 @@ using Goedel.Mesh;
 using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Test.Core;
-using Goedel.Utilities;
 
 using Xunit;
 

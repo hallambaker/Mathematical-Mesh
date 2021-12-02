@@ -19,14 +19,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System;
-using System.Collections.Generic;
-using System.IO;
+
 using System.Net;
 using System.Net.Sockets;
 
 using Goedel.Protocol.Presentation;
-using Goedel.Utilities;
 
 namespace Goedel.Protocol.Service;
 
@@ -125,7 +122,7 @@ public abstract class ServiceRequest {
         RudStream stream = null;
 
         if (sourceId.Value == 0) {
-            offset = Constants.SizeReservedInitialStreamId;
+            offset = Goedel.Protocol.Presentation.PresentationConstants.SizeReservedInitialStreamId;
             var messageType = PacketReader.ReadInitiatorMessageType(Buffer, ref offset);
 
             switch (messageType) {
@@ -197,7 +194,7 @@ public abstract class ServiceRequest {
 
                     if (stream.StreamState != StreamState.Data) {
                         var returnExtension = new PacketExtension() {
-                            Tag = Constants.ExtensionTagsStreamIdTag,
+                            Tag = Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsStreamIdTag,
                             Value = stream.RemoteStreamId
                             };
                         packetExtensions = new List<PacketExtension> { returnExtension };
@@ -261,15 +258,15 @@ public abstract class ServiceRequest {
         if (packet.CiphertextExtensions != null) {
             foreach (var extension in packet.CiphertextExtensions) {
                 switch (extension.Tag) {
-                    case Constants.ExtensionTagsRollTag: {
+                    case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsRollTag: {
 
                             break;
                             }
-                    case Constants.ExtensionTagsCloseStreamTag: {
+                    case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsCloseStreamTag: {
 
                             break;
                             }
-                    case Constants.ExtensionTagsCloseConnectionTag: {
+                    case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsCloseConnectionTag: {
 
                             break;
                             }

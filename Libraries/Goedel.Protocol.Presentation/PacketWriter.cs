@@ -19,13 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Security.Cryptography;
-
 using Goedel.Cryptography;
-using Goedel.Utilities;
 
 namespace Goedel.Protocol.Presentation;
 
@@ -73,7 +67,7 @@ public class PacketWriter : Disposable {
     /// </summary>
     /// <param name="parent">Parent writer </param>
     public PacketWriter(PacketWriter parent = null) =>
-        MemoryStream = new MemoryStream(Constants.MinimumPacketSize);
+        MemoryStream = new MemoryStream(PresentationConstants.MinimumPacketSize);
 
 
     /// <summary>
@@ -175,7 +169,7 @@ public class PacketWriter : Disposable {
     /// </summary>
     /// <param name="data"></param>
     public virtual void WriteStreamId(byte[] data) {
-        data ??= Constants.StreamIdClientInitial;
+        data ??= PresentationConstants.StreamIdClientInitial;
         // We could just increment Position, but the buffer might not be clean on entry.
         // This is the safest approach.
         MemoryStream.Write(data, 0, data.Length);
@@ -254,21 +248,21 @@ public class PacketWriter : Disposable {
         //Screen.Write("Auth: ");
         var authSpan = GetSpan(0, MemoryStream.Position);
 
-        var iv = Platform.GetRandomBytes(Constants.SizeIvAesGcm);
+        var iv = Platform.GetRandomBytes(PresentationConstants.SizeIvAesGcm);
         MemoryStream.Write(iv, 0, iv.Length);
 
         //Screen.Write("IV: ");
-        var ivSpan = GetReadOnlySpan(MemoryStream.Position - Constants.SizeIvAesGcm, Constants.SizeIvAesGcm);
+        var ivSpan = GetReadOnlySpan(MemoryStream.Position - PresentationConstants.SizeIvAesGcm, PresentationConstants.SizeIvAesGcm);
 
 
         long lengthCiphertext;
         if (pad) {
             lengthCiphertext = (int)writerIn.MemoryStream.Position;
-            var unpaddedLength = MemoryStream.Position + lengthCiphertext + Constants.SizeTagAesGcm;
+            var unpaddedLength = MemoryStream.Position + lengthCiphertext + PresentationConstants.SizeTagAesGcm;
 
 
-            var padBytes = unpaddedLength < Constants.MinimumPacketSize ?
-                 Constants.MinimumPacketSize - unpaddedLength : 0;
+            var padBytes = unpaddedLength < PresentationConstants.MinimumPacketSize ?
+                 PresentationConstants.MinimumPacketSize - unpaddedLength : 0;
 
 
             lengthCiphertext += padBytes;
@@ -282,7 +276,7 @@ public class PacketWriter : Disposable {
             Write((int)lengthCiphertext);
             }
 
-        var totalLength = MemoryStream.Position + lengthCiphertext + Constants.SizeTagAesGcm;
+        var totalLength = MemoryStream.Position + lengthCiphertext + PresentationConstants.SizeTagAesGcm;
         MemoryStream.SetLength(totalLength);
 
 
@@ -294,7 +288,7 @@ public class PacketWriter : Disposable {
         var plaintextSpan = writerIn.GetReadOnlySpan(0, lengthCiphertext);
 
         //Screen.Write("Tag: ");
-        var TagSpan = GetSpan(MemoryStream.Position + lengthCiphertext, Constants.SizeTagAesGcm);
+        var TagSpan = GetSpan(MemoryStream.Position + lengthCiphertext, PresentationConstants.SizeTagAesGcm);
 
         aes.Encrypt(ivSpan, plaintextSpan, ciphertextSpan, TagSpan, authSpan);
         MemoryStream.Position = totalLength;
@@ -306,8 +300,8 @@ public class PacketWriter : Disposable {
         //Constants.Derive(ikm, out var nonce, out var iv, out var key);
         //Screen.WriteLine($"Encrypt Key {key.ToStringBase16()}");
 
-        var resultLength = streamId.Length + Constants.SizeIvAesGcm +
-                MemoryStream.Position + Constants.SizeTagAesGcm;
+        var resultLength = streamId.Length + PresentationConstants.SizeIvAesGcm +
+                MemoryStream.Position + PresentationConstants.SizeTagAesGcm;
 
         var result = new byte[resultLength];
 
@@ -321,7 +315,7 @@ public class PacketWriter : Disposable {
 
         var aes = new AesGcm(key);
 
-        var iv = Platform.GetRandomBytes(Constants.SizeIvAesGcm);
+        var iv = Platform.GetRandomBytes(PresentationConstants.SizeIvAesGcm);
         var ivSpan = new ReadOnlySpan<byte>(iv);
 
         Buffer.BlockCopy(iv, 0, result, count, iv.Length);
@@ -330,14 +324,14 @@ public class PacketWriter : Disposable {
         count += iv.Length;
 
 
-        var length = result.Length - count - Constants.SizeTagAesGcm;
+        var length = result.Length - count - PresentationConstants.SizeTagAesGcm;
         var ciphertextSpan = new Span<byte>(result, count, length);
         //Screen.WriteLine($"Ciphertext {count} {length}");
 
         count += length;
 
 
-        var tagSpan = new Span<byte>(result, count, Constants.SizeTagAesGcm);
+        var tagSpan = new Span<byte>(result, count, PresentationConstants.SizeTagAesGcm);
         //Screen.WriteLine($"TagSpan {count} {tagSpan.Length}");
 
         var plaintextSpan = GetReadOnlySpan(0, MemoryStream.Position);

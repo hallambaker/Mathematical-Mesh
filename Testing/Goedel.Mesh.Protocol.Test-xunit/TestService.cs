@@ -21,13 +21,11 @@
 #endregion
 
 using System.Collections.Generic;
-using System.Data;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 using Goedel.Mesh.Client;
-using Goedel.Mesh.Server;
 using Goedel.Mesh.Test;
 using Goedel.Protocol;
 using Goedel.Test;

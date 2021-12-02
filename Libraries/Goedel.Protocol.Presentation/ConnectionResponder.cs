@@ -21,9 +21,6 @@
 #endregion
 
 
-using System;
-using System.Collections.Generic;
-
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 

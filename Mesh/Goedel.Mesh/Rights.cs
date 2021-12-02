@@ -21,11 +21,6 @@
 #endregion
 
 
-
-using System.Collections.Generic;
-
-using Goedel.Utilities;
-
 namespace Goedel.Mesh;
 
 /// <summary>
@@ -267,8 +262,8 @@ public static partial class Rights {
     ///<summary>Account access administration rights</summary> 
     public static List<Right> RightsGrantUser =
                 new() {
-                        // Needed to create and publish device connection
-                        new Right(Resource.AccountEncrypt, Access.ReadWrite),
+                    // Needed to create and publish device connection
+                    new Right(Resource.AccountEncrypt, Access.ReadWrite),
                     new Right(Resource.AccountAuthenticate, Access.ReadWrite),
                     new Right(Resource.AccountSign, Access.ReadWrite),
                     new Right(Resource.Store, Access.GrantReadWrite, CatalogDevice.Label, Degree.Direct),
@@ -405,10 +400,10 @@ public static partial class Rights {
             [IdRolesMessage] = RightsMessage,
             [IdRolesWeb] = RightsWeb,
             [IdRolesDeveloper] = RightsDeveloper,
-                //[IdRightsSsh] = RightsSSH,
-                //[IdRightsPgp] = RightsPgp,
-                //[IdRightsSmime] = RightsSmime,
-                [IdRolesGroupmember] = RightsGroupAdministrator,
+            //[IdRightsSsh] = RightsSSH,
+            //[IdRightsPgp] = RightsPgp,
+            //[IdRightsSmime] = RightsSmime,
+            [IdRolesGroupmember] = RightsGroupAdministrator,
             [IdRolesStore] = RightsGroupMember,
             [IdRolesThreshold] = RightsGrantThreashold,
             };

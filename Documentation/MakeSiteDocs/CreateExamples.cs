@@ -20,10 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.Net.Mail;
-using System.Text.RegularExpressions;
 
 using Goedel.Cryptography.Dare;
 using Goedel.IO;

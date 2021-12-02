@@ -19,14 +19,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System;
-using System.Collections.Generic;
 
 
 // should add in a class that the _Parser class can inherit from.
 // Will make it easier to then pass the parser to the lexer as a class rather than
 // as a delegate.
-
 
 namespace Goedel.Registry;
 

@@ -19,12 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Reflection;
-using System.Text;
 
 #pragma warning disable IDE0022
 #pragma warning disable IDE0060

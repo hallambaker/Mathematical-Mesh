@@ -21,7 +21,6 @@
 #endregion
 
 using Goedel.Cryptography;
-using Goedel.Utilities;
 
 namespace Goedel.Protocol.Presentation;
 
@@ -29,7 +28,7 @@ namespace Goedel.Protocol.Presentation;
 /// <summary>
 /// Constants class
 /// </summary>
-public static partial class Constants {
+public static partial class PresentationConstants {
     #region // Properties
     ///<summary>The minimum packet size.</summary> 
     public const int MinimumPacketSize = 1200;
@@ -54,7 +53,7 @@ public static partial class Constants {
     public readonly static byte[] TagKey = "Key".ToUTF8();
 
     ///<summary>Fixed constant containing the reserved client initial stream identifier.</summary> 
-    public readonly static byte[] StreamIdClientInitial = new byte[Constants.SizeReservedInitialStreamId];
+    public readonly static byte[] StreamIdClientInitial = new byte[PresentationConstants.SizeReservedInitialStreamId];
 
     ///<summary>The KDF info tag to be used to derive keys.</summary> 
     public readonly static byte[] ByteKeyInitiatorResponder = TagKeyInitiatorResponder.ToUTF8();

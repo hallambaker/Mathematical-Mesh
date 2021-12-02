@@ -20,15 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Protocol.Presentation;
-using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client;
 

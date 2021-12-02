@@ -21,11 +21,6 @@
 #endregion
 
 
-
-using System.Text;
-
-using Goedel.Cryptography.Dare;
-
 namespace Goedel.Mesh;
 
 #region // The data classes CatalogNetwork, CatalogedNetwork

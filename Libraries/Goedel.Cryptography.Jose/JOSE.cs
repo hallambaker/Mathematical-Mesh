@@ -21,10 +21,6 @@
 #endregion
 
 
-using System.Collections.Generic;
-
-using Goedel.Protocol;
-
 namespace Goedel.Cryptography.Jose;
 
 public partial class Jose {

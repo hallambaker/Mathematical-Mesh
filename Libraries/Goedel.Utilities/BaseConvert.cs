@@ -21,10 +21,6 @@
 #endregion
 
 
-using System.IO;
-using System.Text;
-
-
 namespace Goedel.Utilities;
 
 /// <summary>Specify formatting options fdor conversion</summary>

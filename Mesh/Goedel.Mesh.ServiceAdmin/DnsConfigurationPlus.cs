@@ -24,8 +24,6 @@
 
 using System.Net;
 
-using Goedel.IO;
-
 namespace Goedel.Mesh.ServiceAdmin;
 
 /// <summary>
@@ -51,7 +49,7 @@ public partial class DnsConfiguration {
     /// </summary>
     /// <param name="Configuration"></param>
     /// <param name="output"></param>
-    public static void BindConfig(Configuration Configuration, 
+    public static void BindConfig(Configuration Configuration,
                 string output, string hostname) {
         using var outputWriter = output.OpenTextWriterNew();
         var dnsConfiguration = new DnsConfiguration() {

@@ -19,11 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-
-using Goedel.Utilities;
 namespace Goedel.Protocol.Presentation;
 
 /// <summary>
@@ -281,13 +276,13 @@ public class PacketReader {
         var authSpan = GetReadOnlySpan(0, Position);
 
         //Screen.Write("D-IV: ");
-        var ivSpan = GetReadOnlySpan(Position, Constants.SizeIvAesGcm);
+        var ivSpan = GetReadOnlySpan(Position, PresentationConstants.SizeIvAesGcm);
 
 
 
         int length;
         if (pad) {
-            length = Last - Position - Constants.SizeTagAesGcm;
+            length = Last - Position - PresentationConstants.SizeTagAesGcm;
             }
         else {
             length = ReadInteger();
@@ -300,7 +295,7 @@ public class PacketReader {
         var ciphertextSpan = GetReadOnlySpan(Position, length);
 
         //Screen.Write("D-Tag: ");
-        var tagSpan = GetReadOnlySpan(Position, Constants.SizeTagAesGcm);
+        var tagSpan = GetReadOnlySpan(Position, PresentationConstants.SizeTagAesGcm);
 
         DecryptDataDelegate(key, ivSpan, ciphertextSpan, tagSpan, plaintextSpan, authSpan);
 
@@ -326,20 +321,20 @@ public class PacketReader {
         //Screen.WriteLine($"Decrypt Key {key.ToStringBase16()}");
 
         //var aes = new AesGcm(key);
-        var ivSpan = new ReadOnlySpan<byte>(packet, offset, Constants.SizeIvAesGcm);
+        var ivSpan = new ReadOnlySpan<byte>(packet, offset, PresentationConstants.SizeIvAesGcm);
         //Screen.WriteLine($"IvSpan {offset}  {ivSpan.Length}");
 
         var position = offset + ivSpan.Length;
 
 
 
-        var length = last - position - Constants.SizeTagAesGcm;
+        var length = last - position - PresentationConstants.SizeTagAesGcm;
         var ciphertextSpan = new ReadOnlySpan<byte>(packet, position, length);
         //Screen.WriteLine($"Ciphertext {position} {ciphertextSpan.Length}");
 
         position += length;
 
-        var tagSpan = new ReadOnlySpan<byte>(packet, position, Constants.SizeTagAesGcm);
+        var tagSpan = new ReadOnlySpan<byte>(packet, position, PresentationConstants.SizeTagAesGcm);
         //Screen.WriteLine($"TagSpan {position} {tagSpan.Length}");
 
         var result = new byte[length];

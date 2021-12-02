@@ -19,12 +19,8 @@
 //  THE SOFTWARE.
 //  
 
-using System;
-using System.Collections.Generic;
-
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
-using Goedel.Utilities;
 
 
 namespace Goedel.Protocol.Presentation;
@@ -109,7 +105,7 @@ public class KeyCredentialPrivate : KeyCredentialPublic, ICredentialPrivate {
         if (authenticationPrivate != null) {
             Tag = authenticationPrivate switch {
 
-                KeyPairX448 => Constants.ExtensionTagsDirectX448Tag,
+                KeyPairX448 => PresentationConstants.ExtensionTagsDirectX448Tag,
                 //KeyPairX25519 => Constants.ExtensionTagsX25519Tag,
                 _ => throw new NYI()
                 };
@@ -121,7 +117,7 @@ public class KeyCredentialPrivate : KeyCredentialPublic, ICredentialPrivate {
 
         if (account is not null) {
             Extensions.Add(new PacketExtension() {
-                Tag = Constants.ExtensionTagsClaimIdTag,
+                Tag = PresentationConstants.ExtensionTagsClaimIdTag,
                 Value = account.ToUTF8()
                 });
             }
@@ -179,7 +175,7 @@ public class KeyCredentialPrivate : KeyCredentialPublic, ICredentialPrivate {
     ///<inheritdoc/>
     public virtual (KeyPairAdvanced, KeyPairAdvanced) SelectKey(List<PacketExtension> extensions) {
         foreach (var extension in extensions) {
-            if (extension.Tag == Constants.ExtensionTagsX448Tag) {
+            if (extension.Tag == PresentationConstants.ExtensionTagsX448Tag) {
                 var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
                 //Screen.WriteLine($"Select = {ephemeral}");
                 return (AuthenticationPrivate, ephemeral);

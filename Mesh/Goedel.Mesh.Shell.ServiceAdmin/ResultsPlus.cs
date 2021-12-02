@@ -20,8 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Text;
-
 
 namespace Goedel.Mesh.Shell.ServiceAdmin;
 

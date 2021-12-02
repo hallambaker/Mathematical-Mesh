@@ -20,7 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Threading;
 
 namespace Goedel.Utilities;
 

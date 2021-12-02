@@ -21,10 +21,6 @@
 #endregion
 
 
-using System.Collections.Generic;
-
-using Goedel.Utilities;
-
 namespace Goedel.Protocol;
 
 /// <summary>
@@ -74,11 +70,11 @@ public abstract class JpcInterface : Disposable {
         jsonReader.StartObject();
         string token = jsonReader.ReadToken();
 
-        if (!GetTagDictionary().TryGetValue (token, out var factory)) {
+        if (!GetTagDictionary().TryGetValue(token, out var factory)) {
             throw new UnknownOperation();
             }
 
-        var request = factory ();
+        var request = factory();
         request.Deserialize(jsonReader);
 
         return (token, request);

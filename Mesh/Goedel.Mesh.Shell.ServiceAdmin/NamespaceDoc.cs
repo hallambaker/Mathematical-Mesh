@@ -20,6 +20,15 @@
 //  THE SOFTWARE.
 #endregion
 
+global using System;
+global using System.Collections.Generic;
+global using System.Text;
+global using Goedel.Mesh.Client;
+global using Goedel.Mesh.Server;
+global using Goedel.Mesh.ServiceAdmin;
+global using Goedel.Protocol;
+
+
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

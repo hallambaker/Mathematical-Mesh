@@ -1,8 +1,4 @@
-﻿using System.Text;
-
-using Goedel.Utilities;
-
-namespace Goedel.Cryptography.KeyFile;
+﻿namespace Goedel.Cryptography.KeyFile;
 
 /// <summary>
 /// Lexical analyzer for parsing the OpenSSH public key format and

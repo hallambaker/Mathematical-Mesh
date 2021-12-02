@@ -1,5 +1,4 @@
-﻿
-//  © 2021 by Phill Hallam-Baker
+﻿//  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,10 +32,6 @@
 //  Build Platform: Win32NT 10.0.18362.0
 //  
 //  
-using System.Collections.Generic;
-
-using Goedel.Utilities;
-
 
 namespace Goedel.Protocol.Presentation;
 

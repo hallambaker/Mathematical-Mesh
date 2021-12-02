@@ -19,6 +19,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+
+global using System;
+global using System.Collections.Generic;
+global using System.Diagnostics;
+global using System.Globalization;
+global using System.IO;
+global using System.Text;
+global using System.Threading;
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif

@@ -21,12 +21,6 @@
 #endregion
 
 
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-using Goedel.IO;
-using Goedel.Utilities;
 
 #pragma warning disable IDE1006
 
@@ -75,7 +69,7 @@ public delegate JsonObject JsonDispatchDelegate(
 /// </summary>
 /// <param name="JsonFactoryDelegate">Delegate returning object of the request type.</param>
 /// <param name="JsonDispatchDelegate">Dispatch method</param>
-public readonly record struct JsonMethodDescription (
+public readonly record struct JsonMethodDescription(
     JsonFactoryDelegate JsonFactoryDelegate,
     JsonDispatchDelegate JsonDispatchDelegate);
 

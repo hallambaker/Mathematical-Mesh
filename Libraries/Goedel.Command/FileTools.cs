@@ -19,7 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System;
 using System.IO;
 
 using Goedel.Registry;
@@ -87,7 +86,7 @@ public class FileTools {
     /// <param name="Extension">The default extension.</param>
     /// <param name="Default">The base file name.</param>
     /// <returns>The defaulted output file.</returns>
-    public static string DefaultFile(string Extension, string Default) => 
+    public static string DefaultFile(string Extension, string Default) =>
         Path.GetFileNameWithoutExtension(Default) + "." + Extension;
 
     /// <summary>

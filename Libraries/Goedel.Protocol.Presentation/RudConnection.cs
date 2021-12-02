@@ -20,10 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-
 using Goedel.Cryptography;
-using Goedel.Utilities;
 
 namespace Goedel.Protocol.Presentation;
 
@@ -164,7 +161,7 @@ public abstract class RudConnection : Disposable {
     /// <param name="length">The minimum length to return.</param>
     /// <returns>The Quantized length.</returns>
     public int QuantizePacketLength(int length) =>
-        length < Constants.MinimumPacketSize ? Constants.MinimumPacketSize :
+        length < PresentationConstants.MinimumPacketSize ? PresentationConstants.MinimumPacketSize :
                 PacketQuanta * ((length + 200 + PacketQuanta) / PacketQuanta);
 
 
@@ -243,8 +240,8 @@ public abstract class RudConnection : Disposable {
         //Screen.WriteLine($"Key Agreement {privateKey.KeyIdentifier}.{keyPublic.KeyIdentifier}");
         //Screen.WriteLine($"     {clientKeyAgreementResult.IKM.ToStringBase16()}");
 
-        ClientKeyClientToHost = keyDerive.Derive(Constants.ByteKeyInitiatorResponder, Constants.SizeKeyAesGcm * 8);
-        ClientKeyHostToClient = keyDerive.Derive(Constants.ByteKeyResponderInitiator, Constants.SizeKeyAesGcm * 8);
+        ClientKeyClientToHost = keyDerive.Derive(PresentationConstants.ByteKeyInitiatorResponder, PresentationConstants.SizeKeyAesGcm * 8);
+        ClientKeyHostToClient = keyDerive.Derive(PresentationConstants.ByteKeyResponderInitiator, PresentationConstants.SizeKeyAesGcm * 8);
         }
 
 
@@ -319,8 +316,8 @@ public abstract class RudConnection : Disposable {
 
         var keyDerive = new KeyDeriveHKDF(ikm);
 
-        MutualKeyClientToHost = keyDerive.Derive(Constants.ByteKeyInitiatorResponder, Constants.SizeKeyAesGcm * 8);
-        MutualKeyHostToClient = keyDerive.Derive(Constants.ByteKeyResponderInitiator, Constants.SizeKeyAesGcm * 8);
+        MutualKeyClientToHost = keyDerive.Derive(PresentationConstants.ByteKeyInitiatorResponder, PresentationConstants.SizeKeyAesGcm * 8);
+        MutualKeyHostToClient = keyDerive.Derive(PresentationConstants.ByteKeyResponderInitiator, PresentationConstants.SizeKeyAesGcm * 8);
         }
 
 

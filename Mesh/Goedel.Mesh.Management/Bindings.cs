@@ -20,11 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Protocol.Service;
-
 namespace Goedel.Mesh.Management;
-
-
 
 
 /// <summary>
@@ -33,7 +29,7 @@ namespace Goedel.Mesh.Management;
 public partial class ServiceManagementServiceProvider : IMonitorProvider {
 
     ///<summary>The monitor being reported.</summary> 
-    public Monitor Monitor { get; set; }
+    public Goedel.Protocol.Service.HostMonitor Monitor { get; set; }
 
 
 

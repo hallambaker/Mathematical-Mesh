@@ -20,12 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Diagnostics;
-using System.Text;
-
-using Goedel.Utilities;
-
-
 
 namespace Goedel.FSR;
 

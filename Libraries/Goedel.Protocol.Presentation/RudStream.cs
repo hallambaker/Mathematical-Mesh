@@ -21,16 +21,6 @@
 #endregion
 
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Sockets;
-using System.Threading.Tasks;
-
-using Goedel.Utilities;
-
-
-
 namespace Goedel.Protocol.Presentation;
 
 /// <summary>
@@ -272,10 +262,10 @@ public class RudStream {
         extensions.Add(LocalStreamId.PacketExtension);
 
         string streamType = this switch {
-            RudStreamClient => Constants.ExtensionTagsStreamClientTag,
-            RudStreamService => Constants.ExtensionTagsStreamServiceTag,
-            RudStreamSender => Constants.ExtensionTagsStreamSenderTag,
-            RudStreamReceiver => Constants.ExtensionTagsStreamReceiverTag,
+            RudStreamClient => PresentationConstants.ExtensionTagsStreamClientTag,
+            RudStreamService => PresentationConstants.ExtensionTagsStreamServiceTag,
+            RudStreamSender => PresentationConstants.ExtensionTagsStreamSenderTag,
+            RudStreamReceiver => PresentationConstants.ExtensionTagsStreamReceiverTag,
 
             _ => null
             };
@@ -297,7 +287,7 @@ public class RudStream {
 
         if (AccountAddress != null) {
             extensions.Add(new() {
-                Tag = Constants.ExtensionTagsClaimIdTag,
+                Tag = PresentationConstants.ExtensionTagsClaimIdTag,
                 Value = AccountAddress.ToUTF8()
                 });
             }
@@ -443,17 +433,17 @@ public class RudStream {
 
 
     void Process(PacketData packetData) => RemoteStreamId ??= PacketExtension.GetExtensionByTag(packetData?.CiphertextExtensions,
-                Constants.ExtensionTagsStreamIdTag);
+                PresentationConstants.ExtensionTagsStreamIdTag);
 
     void Process(PacketResponderChallenge packetResponderChallenge) {
         if (packetResponderChallenge.PlaintextExtensions != null) {
             foreach (var extension in packetResponderChallenge.PlaintextExtensions) {
                 switch (extension.Tag) {
-                    case Constants.ExtensionTagsChallengeTag: {
+                    case PresentationConstants.ExtensionTagsChallengeTag: {
                             ChallengeNonce = extension.Value;
                             break;
                             }
-                    case Constants.ExtensionTagsChallengeProofOfWorkTag: {
+                    case PresentationConstants.ExtensionTagsChallengeProofOfWorkTag: {
                             ChallengePoW = extension.Value;
                             break;
                             }

@@ -1,4 +1,4 @@
-﻿Namespace Goedel.Protocol.Presentation Constants
+﻿Namespace Goedel.Protocol.Presentation PresentationConstants
 	|Constants specified in hallambaker-mesh-schema
 
 File PresentationConstants

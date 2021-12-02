@@ -44,18 +44,18 @@
         <member name="P:Goedel.Protocol.Service.IMonitorProvider.Monitor">
             <summary>The monitor class to be exposed.</summary> 
         </member>
-        <member name="T:Goedel.Protocol.Service.Monitor">
+        <member name="T:Goedel.Protocol.Service.HostMonitor">
             <summary>
             Service monitoring class.
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.Service.Monitor.Total">
+        <member name="P:Goedel.Protocol.Service.HostMonitor.Total">
             <summary>Total result since the Monitor was last restarted.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Service.Monitor.Recent">
+        <member name="P:Goedel.Protocol.Service.HostMonitor.Recent">
             <summary>Total results in the most recent sample interval.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Service.Monitor.#ctor(System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Service.HostMonitor.#ctor(System.Int32,System.Int32)">
             <summary>
             Constructor returning a monitor instance for <paramref name="listeners"/>
             listeners and <paramref name="dispatchers"/> dispatchers.
@@ -63,39 +63,170 @@
             <param name="listeners">The number of listener threads.</param>
             <param name="dispatchers">The number of dispatcher threads.</param>
         </member>
-        <member name="M:Goedel.Protocol.Service.Monitor.StartBusy">
+        <member name="M:Goedel.Protocol.Service.HostMonitor.StartBusy">
             <summary>
             Mark the start of period when the service is blocked because no dispatcher threads are available.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Service.Monitor.EndBusy">
+        <member name="M:Goedel.Protocol.Service.HostMonitor.EndBusy">
             <summary>
             Mark the end of period when the service is blocked because no dispatcher threads are available.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Service.Monitor.StartDispatch(System.Int32)">
+        <member name="M:Goedel.Protocol.Service.HostMonitor.StartDispatch(System.Int32)">
             <summary>
             Mark the start of dispatch on thread <paramref name="dispatch"/>
             </summary>
             <param name="dispatch">Index of the thread that was started.</param>
         </member>
-        <member name="M:Goedel.Protocol.Service.Monitor.EndDispatch(System.Int32)">
+        <member name="M:Goedel.Protocol.Service.HostMonitor.EndDispatch(System.Int32)">
             <summary>
             Mark the end of dispatch on thread <paramref name="dispatch"/>
             </summary>
             <param name="dispatch">Index of the thread that was ended.</param>
         </member>
-        <member name="M:Goedel.Protocol.Service.Monitor.MarkRecent">
+        <member name="M:Goedel.Protocol.Service.HostMonitor.MarkRecent">
             <summary>
             Mark the end of the 'Recent' period.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Service.Monitor.GetStats">
+        <member name="M:Goedel.Protocol.Service.HostMonitor.GetStats">
             <summary>
             Return a snapshot of the server status for the total time since the 
             collection period began and for the most recent collection interval.
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:Goedel.Protocol.Service.IReport">
+            <summary>
+            Reporting instance, report on the result.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.ReportMode">
+            <summary>
+            The reporting mode, may be turned into flags.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ReportMode.None">
+            <summary>No report</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.ReportMode.Brief">
+            <summary>Brief description on transaction exit.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.ReportMode.Event">
+            <summary>Brief description on transaction start and exit.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.ReportMode.Full">
+            <summary>Detailed description of transaction including full request and response.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.ReportMode.State">
+            <summary>Record of changes written to service state.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Service.LogService">
+            <summary>
+            Service level logging class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogService.ConsoleOutput">
+            <summary>Reporting mode for console output</summary>  
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogService.HostMonitor">
+            <summary>The host monitor tracking start and end of host requests.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogService.#ctor(Goedel.Protocol.Service.HostMonitor,System.Int64)">
+            <summary>
+            Default constructor.
+            </summary>
+            <param name="hostMonitor">The host montior describing the lower level connection
+            status.</param>
+            <param name="first">The first transaction number to be issued.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogService.Start(System.String,Goedel.Protocol.Service.IReport)">
+            <summary>
+            Begin a new transaction.
+            </summary>
+            <param name="token">The transaction token.</param>
+            <param name="request">The request identifier.</param>
+            <returns>The transaction record.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogService.UnknownCommand(System.Exception)">
+            <summary>
+            Report an error before transaction was begun.
+            </summary>
+            <param name="exception">The exception thrown.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogService.WriteToConsole(System.Text.StringBuilder)">
+            <summary>
+            Atomic write to console.
+            </summary>
+            <param name="output">The text to write.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogService.Start(Goedel.Protocol.Service.LogTransaction)">
+            <summary>
+            Record the start of the transaction <paramref name="logTransaction"/>.
+            </summary>
+            <param name="logTransaction">Transaction to log.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogService.Success(Goedel.Protocol.Service.LogTransaction)">
+            <summary>
+            Record successful completion of the transaction <paramref name="logTransaction"/>.
+            </summary>
+            <param name="logTransaction">Transaction to log.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogService.Fail(Goedel.Protocol.Service.LogTransaction)">
+            <summary>
+            Record failure of the transaction <paramref name="logTransaction"/>.
+            </summary>
+            <param name="logTransaction">Transaction to log.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Service.LogTransaction">
+            <summary>
+            Record describing a specific transaction.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogTransaction.Start">
+            <summary>Transaction start time.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogTransaction.Finish">
+            <summary>Transaction finish time.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogTransaction.LogService">
+            <summary>The service logging instance.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogTransaction.TransactionIdentifier">
+            <summary>Unique, monotonically increasing transaction identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogTransaction.Token">
+            <summary>The transaction method identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogTransaction.Request">
+            <summary>The request object.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogTransaction.Response">
+            <summary>The response object</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogTransaction.Exception">
+            <summary>Exception (if occurred)</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogTransaction.#ctor(Goedel.Protocol.Service.LogService)">
+            <summary>
+            Constructor, create new instance of a transaction log entry for 
+            <paramref name="logService"/>.
+            </summary>
+            <param name="logService">The service to log.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogTransaction.Success(Goedel.Protocol.Service.IReport)">
+            <summary>
+            Report successful completion.
+            </summary>
+            <param name="response">The response object.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogTransaction.Fail(System.Exception,Goedel.Protocol.Service.IReport)">
+            <summary>
+            Report failure.
+            </summary>
+            <param name="exception">The exception raised.</param>
+            <param name="response">The response object.</param>
         </member>
         <member name="T:Goedel.Protocol.Service.MonitorResult">
             <summary>

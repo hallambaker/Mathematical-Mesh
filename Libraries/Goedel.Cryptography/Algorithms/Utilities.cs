@@ -21,8 +21,6 @@
 #endregion
 
 
-using System.Security.Cryptography;
-
 namespace Goedel.Cryptography.Algorithms;
 
 internal static class Utilities {

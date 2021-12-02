@@ -20,7 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
 
 #pragma warning disable CA1707
 

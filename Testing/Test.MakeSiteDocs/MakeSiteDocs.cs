@@ -21,8 +21,6 @@
 #endregion
 
 
-using System;
-
 using ExampleGenerator;
 
 using Goedel.Mesh.Test;

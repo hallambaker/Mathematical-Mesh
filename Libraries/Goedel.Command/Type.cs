@@ -26,8 +26,6 @@
 
 using System.IO;
 
-using Goedel.Utilities;
-
 namespace Goedel.Command;
 
 /// <summary>Base class for Command line parser types. This could do with
@@ -216,7 +214,7 @@ public abstract class _File : Goedel.Command.Type {
 
 
 
-    public string DefaultExtension (string extension, string path) {
+    public string DefaultExtension(string extension, string path) {
 
         return "";
 

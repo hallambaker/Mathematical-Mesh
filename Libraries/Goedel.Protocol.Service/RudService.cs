@@ -19,15 +19,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using System;
-using System.Collections.Generic;
+
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Goedel.Protocol.Presentation;
-using Goedel.Utilities;
 
 namespace Goedel.Protocol.Service;
 
@@ -72,7 +68,7 @@ public class RudService : Disposable {
     bool[] dispatchTaskActive;
 
     ///<summary>Service instrumentation.</summary> 
-    public Monitor Monitor;
+    public HostMonitor Monitor;
 
     Dictionary<string, RudProvider> providerMap = new();
 
@@ -158,7 +154,7 @@ public class RudService : Disposable {
         udpListenerCount = 0; // Hack - disable UDP for now, is throwing errors.
 
         // Start the monitoring service and bind values to every provider returning the JPC interface.
-        Monitor = new Monitor(ListenerCount, MaxDispatch);
+        Monitor = new HostMonitor(ListenerCount, MaxDispatch);
 
         foreach (var provider in providers) {
             if (provider.JpcInterface is IMonitorProvider monitorProvider) {

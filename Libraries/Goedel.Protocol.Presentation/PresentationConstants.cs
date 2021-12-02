@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 12/1/2021 6:30:05 PM
+//  This file was automatically generated at 12/2/2021 5:24:47 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -141,7 +141,7 @@ namespace Goedel.Protocol.Presentation {
     ///<summary>
     ///Constants specified in hallambaker-mesh-schema
     ///</summary>
-    public static partial class Constants {
+    public static partial class PresentationConstants {
 
         // File: PresentationConstants
 

@@ -21,8 +21,6 @@
 #endregion
 
 
-using System.IO;
-
 namespace Goedel.Protocol;
 
 /// <summary>

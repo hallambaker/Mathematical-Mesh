@@ -21,13 +21,6 @@
 #endregion
 
 
-using System.Collections.Generic;
-
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Protocol.Presentation;
-using Goedel.Utilities;
-
 namespace Goedel.Mesh;
 
 /// <summary>
@@ -96,34 +89,34 @@ public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate
 
         foreach (var extension in extensions) {
             switch (extension.Tag) {
-                case Constants.ExtensionTagsDirectX25519Tag: {
+                case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsDirectX25519Tag: {
                         keyDirect = new KeyPairX25519(extension.Value);
                         break;
                         }
-                case Constants.ExtensionTagsDirectX448Tag: {
+                case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsDirectX448Tag: {
                         keyDirect = new KeyPairX448(extension.Value);
                         break;
                         }
-                case Constants.ExtensionTagsClaimIdTag: {
+                case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsClaimIdTag: {
                         account = extension.Value.ToUTF8();
                         break;
                         }
 
-                case Constants.ExtensionTagsMeshProfileDeviceTag: {
+                case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshProfileDeviceTag: {
                         // convert the enveloped ConnectionDevice
                         var envelope = DareEnvelope.FromJSON(extension.Value, false);
                         profileDevice = envelope.DecodeJsonObject() as ProfileDevice;
                         keyAuthentication ??= profileDevice.Authentication.GetKeyPairAdvanced();
                         break;
                         }
-                case Constants.ExtensionTagsMeshConnectionDeviceTag: {
+                case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshConnectionDeviceTag: {
                         // convert the enveloped ConnectionDevice
                         var envelope = DareEnvelope.FromJSON(extension.Value, false);
                         connectionDevice = envelope.DecodeJsonObject() as ConnectionService;
                         keyAuthentication = connectionDevice.AuthenticationPublic;
                         break;
                         }
-                case Constants.ExtensionTagsMeshConnectionAddressTag: {
+                case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshConnectionAddressTag: {
                         // convert the enveloped ConnectionDevice
                         var envelope = DareEnvelope.FromJSON(extension.Value, false);
                         connectionAddress = envelope.DecodeJsonObject() as ConnectionAddress;
