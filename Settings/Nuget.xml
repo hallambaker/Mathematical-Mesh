@@ -1,0 +1,34 @@
+<Project>
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>hallambaker</Authors>
+    <Company>Threshold Secrets LLC</Company>
+    <Copyright>© 2021 Threshold Secrets LLC</Copyright>
+    <PackageProjectUrl>https://mathmesh.com/</PackageProjectUrl>
+    <PackageIcon>MathMeshBrand256.png</PackageIcon>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/hallambaker/Mathematical-Mesh</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>Cryptography, Mathematical Mesh, Threshold Encryption</PackageTags>
+    <OutputType>Library</OutputType>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\MathMeshBrand256.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

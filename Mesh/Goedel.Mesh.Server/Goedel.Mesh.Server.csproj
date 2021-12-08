@@ -5,7 +5,7 @@
     <OutputType>Library</OutputType>
     <Product>Goedel.Mesh.Server</Product>
     <Description>Mesh Server implementation.</Description>
-    <Copyright>© 2020</Copyright>
+    <Copyright>© 2021 Threshold Secrets LLC</Copyright>
     <Title>Goedel.Mesh.Server</Title>
   </PropertyGroup>
 

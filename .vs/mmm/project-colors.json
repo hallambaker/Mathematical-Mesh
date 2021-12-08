@@ -185,7 +185,72 @@
       "ProjectGuid": "1a14c73e-960c-4e21-aeb7-184b6d5a0ab3",
       "DisplayName": "Goedel.Mesh.Client",
       "ColorIndex": 3
+    },
+    "7abdf4e7-8f7e-41af-bdf0-18c88fa054c2": {
+      "ProjectGuid": "7abdf4e7-8f7e-41af-bdf0-18c88fa054c2",
+      "DisplayName": "Goedel.Mesh.Management",
+      "ColorIndex": 4
+    },
+    "2ba97c8a-2fa2-4d02-a977-566848ed2d55": {
+      "ProjectGuid": "2ba97c8a-2fa2-4d02-a977-566848ed2d55",
+      "DisplayName": "Goedel.Cryptography.Jose",
+      "ColorIndex": 5
+    },
+    "8340d6c4-d1ba-4369-b9cc-0e0eb36387d7": {
+      "ProjectGuid": "8340d6c4-d1ba-4369-b9cc-0e0eb36387d7",
+      "DisplayName": "Goedel.Cryptography.KeyFile",
+      "ColorIndex": 6
+    },
+    "c67e9a8e-c56d-43d8-9cbd-4fd3f5e3956a": {
+      "ProjectGuid": "c67e9a8e-c56d-43d8-9cbd-4fd3f5e3956a",
+      "DisplayName": "Goedel.Discovery",
+      "ColorIndex": 7
+    },
+    "70abeecf-b15c-4d36-83d3-df9508bee1c5": {
+      "ProjectGuid": "70abeecf-b15c-4d36-83d3-df9508bee1c5",
+      "DisplayName": "Goedel.FSR",
+      "ColorIndex": 8
+    },
+    "dfd86335-edec-4503-9a31-247c401d6342": {
+      "ProjectGuid": "dfd86335-edec-4503-9a31-247c401d6342",
+      "DisplayName": "Goedel.Protocol.Debug",
+      "ColorIndex": 9
+    },
+    "8a74d219-ed84-4943-bba7-e4b00aacbaf4": {
+      "ProjectGuid": "8a74d219-ed84-4943-bba7-e4b00aacbaf4",
+      "DisplayName": "Goedel.Test",
+      "ColorIndex": 10
+    },
+    "b45430e4-c0c7-4531-9558-87bd58635bb1": {
+      "ProjectGuid": "b45430e4-c0c7-4531-9558-87bd58635bb1",
+      "DisplayName": "MeshReferenceLibraryClient",
+      "ColorIndex": 11
+    },
+    "db3a82fa-7ec9-4cb8-a315-e6e801c17dec": {
+      "ProjectGuid": "db3a82fa-7ec9-4cb8-a315-e6e801c17dec",
+      "DisplayName": "Web",
+      "ColorIndex": 12
+    },
+    "121dcb8b-2358-49e4-9277-ecba1eebc4d0": {
+      "ProjectGuid": "121dcb8b-2358-49e4-9277-ecba1eebc4d0",
+      "DisplayName": "MeshReferenceLibraryService",
+      "ColorIndex": 13
+    },
+    "a2a4c4f5-f867-4473-997d-7ab5ece15773": {
+      "ProjectGuid": "a2a4c4f5-f867-4473-997d-7ab5ece15773",
+      "DisplayName": "MeshReferenceLibraryLinux",
+      "ColorIndex": 14
+    },
+    "fe20a051-817d-4df9-a8f4-221306cf335d": {
+      "ProjectGuid": "fe20a051-817d-4df9-a8f4-221306cf335d",
+      "DisplayName": "MeshReferenceLibraryMacos",
+      "ColorIndex": 15
+    },
+    "983b8263-6f5b-4327-860a-ba32649930ef": {
+      "ProjectGuid": "983b8263-6f5b-4327-860a-ba32649930ef",
+      "DisplayName": "MeshReferenceLibraryWindows",
+      "ColorIndex": 0
     }
   },
-  "NextColorIndex": 4
+  "NextColorIndex": 1
 }
