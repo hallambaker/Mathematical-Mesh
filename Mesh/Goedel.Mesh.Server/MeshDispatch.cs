@@ -67,7 +67,6 @@ public class PublicMeshService : MeshService {
     public HostConfiguration HostConfiguration { get; init; }
 
 
-    public bool ConsoleOut => HostConfiguration.ConsoleOutput;
 
 
     /// <summary>
@@ -127,10 +126,8 @@ public class PublicMeshService : MeshService {
 
         // Bugs? Seems like this is in initializing the service and host, not starting it.
 
-        LogService = new LogService(null) {
-            ConsoleOutput = hostConfiguration.ConsoleOutput ?
-                ReportMode.Brief : ReportMode.None
-            };
+        LogService = new LogService(serviceConfiguration,
+            hostConfiguration, null) ;
 
         MeshMachine = meshMachine;
         ServiceConfiguration = serviceConfiguration;

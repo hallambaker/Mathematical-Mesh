@@ -20,41 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
+
+
 namespace Goedel.Protocol.Service;
-
-
-/// <summary>
-/// Reporting instance, report on the result.
-/// </summary>
-public interface IReport {
-
-    public void Report(StringBuilder output, ReportMode reportMode) {
-
-        }
-
-    }
-
-
-/// <summary>
-/// The reporting mode, may be turned into flags.
-/// </summary>
-public enum ReportMode {
-
-    ///<summary>No report</summary> 
-    None,
-
-    ///<summary>Brief description on transaction exit.</summary> 
-    Brief,
-
-    ///<summary>Brief description on transaction start and exit.</summary> 
-    Event,
-
-    ///<summary>Detailed description of transaction including full request and response.</summary> 
-    Full,
-
-    ///<summary>Record of changes written to service state.</summary> 
-    State
-    }
 
 
 /// <summary>
@@ -76,14 +44,36 @@ public class LogService {
     /// <param name="hostMonitor">The host montior describing the lower level connection
     /// status.</param>
     /// <param name="first">The first transaction number to be issued.</param>
-    public LogService(HostMonitor hostMonitor, long first = 0) {
+    public LogService(
+            IServiceConfiguration serviceConfiguration,
+            IHostConfiguration hostConfiguration,
+            HostMonitor hostMonitor, long first = 0) {
         HostMonitor = hostMonitor;
         transactionIdentifier = first - 1;
+
+        ConsoleOutput = hostConfiguration.ConsoleOutput;
 
         if (ConsoleOutput != ReportMode.None) {
             var output = new StringBuilder();
             output.Append(DateTime.Now.ToRFC3339());
-            output.Append(" Start Service ");
+            output.AppendLine(
+                $" {Resources.StartService}: {serviceConfiguration.WellKnown}" +
+                $" {Resources.Host} {hostConfiguration.Id}" +
+                $" {Resources.Port} {hostConfiguration.Port}");
+            output.AppendLine($"    { Resources.ServiceProfile}: { hostConfiguration.ProfileUdf}");
+            output.AppendLine($"    { Resources.DeviceProfile}: { hostConfiguration.DeviceUdf}");
+            output.AppendLine($"    { Resources.Path}: {hostConfiguration.Path}");
+            if (serviceConfiguration.Addresses != null) {
+                foreach (var address in serviceConfiguration.Addresses) {
+                    output.AppendLine($"    { Resources.ServiceAddress}: {address}");
+                    }
+                }
+            if (serviceConfiguration.Addresses != null) {
+                foreach (var dns in hostConfiguration.DNS) {
+                    output.AppendLine($"    { Resources.HostAddress}: {dns}");
+                    }
+                }
+            WriteToConsole(output);
             }
         }
 
@@ -116,7 +106,7 @@ public class LogService {
         var output = new StringBuilder();
 
         output.Append(DateTime.Now.ToRFC3339());
-        output.Append(" Error Unknown-Command");
+        output.Append($" { Resources.Error} { Resources.UnknownCommand} {exception}");
 
         WriteToConsole(output);
         }
@@ -143,7 +133,7 @@ public class LogService {
 
         var output = new StringBuilder();
         output.Append(logTransaction.Start.ToRFC3339());
-        output.Append(" Start ");
+        output.Append($" { Resources.TransactionStart} ");
         output.Append(logTransaction.TransactionIdentifier);
         output.Append(" ");
         output.Append(logTransaction.Token);
@@ -160,7 +150,7 @@ public class LogService {
         var output = new StringBuilder();
 
         output.Append(logTransaction.Start.ToRFC3339());
-        output.Append(" Success ");
+        output.Append($" { Resources.TransactionSuccess} ");
 
         if (!ReportStart(ConsoleOutput)) {
             output.Append(logTransaction.Token);
@@ -183,7 +173,7 @@ public class LogService {
         var output = new StringBuilder();
 
         output.Append(logTransaction.Start.ToRFC3339());
-        output.Append(" Error ");
+        output.Append($" { Resources.TransactionFail} ");
 
         if (!ReportStart(ConsoleOutput)) {
             output.Append(logTransaction.Token);

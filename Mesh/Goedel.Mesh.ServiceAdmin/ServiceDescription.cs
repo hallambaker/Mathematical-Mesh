@@ -207,7 +207,7 @@ public partial class HostConfiguration {
     public List<ServiceConfiguration> ServiceConfigs { get; set; }
 
 
-    public bool ConsoleOutput { get; set; }
+    public ReportMode ConsoleOutput { get; set; }
 
 
     #endregion

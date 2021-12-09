@@ -1168,6 +1168,37 @@
              <param name="credential">Credential to bind.</param>
              <returns>The new session.</returns>
         </member>
+        <member name="T:Goedel.Protocol.IReport">
+            <summary>
+            Reporting instance, report on the result.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.IReport.Report(System.Text.StringBuilder,Goedel.Protocol.ReportMode)">
+            <summary>
+            The reporting mode, may be turned into flags.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.ReportMode">
+            <summary>
+            Enumerated reporting modes. These may be replaced by flags at a later date
+            to permit greater control.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.ReportMode.None">
+            <summary>No report</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.ReportMode.Brief">
+            <summary>Brief description on transaction exit.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.ReportMode.Event">
+            <summary>Brief description on transaction start and exit.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.ReportMode.Full">
+            <summary>Detailed description of transaction including full request and response.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.ReportMode.State">
+            <summary>Record of changes written to service state.</summary> 
+        </member>
         <member name="T:Goedel.Protocol.JpcInterface">
             <summary>
             Base class for all JPC server classes.

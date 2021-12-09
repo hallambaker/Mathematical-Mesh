@@ -5,7 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Product>MeshReferenceLibraryMacos</Product>
     <PackageId>MeshReferenceLibraryMacos</PackageId>
-    <Description>MeshReferenceLibraryWindows Mesh macOS Platform Profile.</Description>
+    <Description>Mesh Reference Library Mesh macOS Platform Profile.</Description>
   </PropertyGroup>
 
   <ItemGroup>

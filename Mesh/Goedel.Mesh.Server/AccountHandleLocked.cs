@@ -108,7 +108,7 @@ public class AccountHandleLocked : Disposable {
         System.Threading.Monitor.Exit(AccountContext.AccountEntry);
         AccountContext?.Dispose();
 
-        Screen.WriteLine($"Deleted context");
+        //Screen.WriteLine($"Deleted context");
         }
 
     #endregion

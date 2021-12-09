@@ -143,7 +143,8 @@ public partial class Shell : _Shell {
         var hostConfiguration = configuration.GetHostConfiguration(hostConfig);
         var serviceConfiguration = configuration.GetServiceConfiguration(hostConfiguration);
 
-        hostConfiguration.ConsoleOutput = Options.Console.Value;
+        hostConfiguration.ConsoleOutput = 
+            Options.Console.Value ? ReportMode.Brief: ReportMode.None;
 
         //ServiceConfiguration.Instance ??= Instance;
         RudService = StartService(hostConfiguration, serviceConfiguration);
@@ -187,13 +188,13 @@ public partial class Shell : _Shell {
         // to lower case.
         if (machineName == null) {
             MachineName = System.Environment.MachineName.ToLower();
-            if (Console) {
-                System.Console.WriteLine($"HostName: {MachineName} (default)");
-                }
+            //if (Console) {
+            //    System.Console.WriteLine($"HostName: {MachineName} (default)");
+            //    }
             }
         else {
             MachineName = machineName.ToLower();
-            System.Console.WriteLine($"HostName: {MachineName}");
+            //System.Console.WriteLine($"HostName: {MachineName}");
             }
 
 
@@ -250,7 +251,7 @@ public partial class Shell : _Shell {
             // Tell .NET to not terminate the process
             ea.Cancel = true;
 
-            Screen.WriteInfo("Received SIGINT (Ctrl+C)");
+            Screen.WriteInfo(Resources.ReceivedSIGINT);
             service.Dispose();
             sigintReceived = true;
         };
@@ -258,11 +259,11 @@ public partial class Shell : _Shell {
         // Catch SIGTERM
         AppDomain.CurrentDomain.ProcessExit += (_, _) => {
             if (!sigintReceived) {
-                Screen.WriteInfo("Received SIGTERM");
+                Screen.WriteInfo(Resources.ReceivedSIGTERM);
                 service.Dispose();
                 }
             else {
-                Screen.WriteInfo("Received SIGTERM, ignoring it because already processed SIGINT");
+                Screen.WriteInfo(Resources.IgnoreSIGTERM);
                 }
         };
 

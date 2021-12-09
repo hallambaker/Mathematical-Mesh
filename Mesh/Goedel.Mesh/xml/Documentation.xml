@@ -10211,6 +10211,9 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Mesh.MeshHelloResponse.Report(System.Text.StringBuilder,Goedel.Protocol.ReportMode)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Mesh.BindRequest">
              <summary>
             
@@ -10278,6 +10281,9 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Mesh.BindRequest.Report(System.Text.StringBuilder,Goedel.Protocol.ReportMode)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Mesh.BindResponse">
              <summary>
             
@@ -10297,7 +10303,7 @@
         </member>
         <member name="P:Goedel.Mesh.BindResponse.EnvelopedAccountHostAssignment">
              <summary>
-            The enveloped assignment describing hos the client should
+            The enveloped assignment describing how the client should
             discover the host and encrypt data to it.
              </summary>
         </member>
@@ -10357,6 +10363,9 @@
             Default constructor. 
             </summary>
             <param name="exception">Optional exception specifier.</param>
+        </member>
+        <member name="M:Goedel.Mesh.BindResponse.Report(System.Text.StringBuilder,Goedel.Protocol.ReportMode)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.UnbindRequest">
              <summary>

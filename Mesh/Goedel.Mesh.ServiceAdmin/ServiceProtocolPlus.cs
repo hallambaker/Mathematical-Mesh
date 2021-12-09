@@ -22,6 +22,8 @@
 
 
 
+using Goedel.Protocol.Service;
+
 namespace Goedel.Mesh.ServiceAdmin;
 
 public partial class Configuration {
@@ -34,7 +36,7 @@ public partial class Configuration {
 /// <summary>
 /// Service administration request
 /// </summary>
-public partial class ServiceConfiguration {
+public partial class ServiceConfiguration : IServiceConfiguration {
 
     #region // Properties
 
@@ -56,7 +58,7 @@ public partial class ServiceConfiguration {
     #endregion
     }
 
-public partial class HostConfiguration {
+public partial class HostConfiguration : IHostConfiguration {
 
 
 

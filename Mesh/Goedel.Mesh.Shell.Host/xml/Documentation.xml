@@ -152,6 +152,37 @@
             <param name="serviceConfiguration">The service configuration</param>
             <returns>The RUD service</returns>
         </member>
+        <member name="T:Goedel.Mesh.Shell.Host.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Resources.IgnoreSIGTERM">
+            <summary>
+              Looks up a localized string similar to Received SIGTERM, ignoring it because already processed SIGINT.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Resources.ReceivedSIGINT">
+            <summary>
+              Looks up a localized string similar to Received SIGINT (Ctrl+C).
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Resources.ReceivedSIGTERM">
+            <summary>
+              Looks up a localized string similar to Received SIGTERM.
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Shell.Host.ShellResult">
              <summary>
             

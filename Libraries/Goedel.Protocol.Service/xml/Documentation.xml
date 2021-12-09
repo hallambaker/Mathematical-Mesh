@@ -97,31 +97,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:Goedel.Protocol.Service.IReport">
-            <summary>
-            Reporting instance, report on the result.
-            </summary>
-        </member>
-        <member name="T:Goedel.Protocol.Service.ReportMode">
-            <summary>
-            The reporting mode, may be turned into flags.
-            </summary>
-        </member>
-        <member name="F:Goedel.Protocol.Service.ReportMode.None">
-            <summary>No report</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.ReportMode.Brief">
-            <summary>Brief description on transaction exit.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.ReportMode.Event">
-            <summary>Brief description on transaction start and exit.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.ReportMode.Full">
-            <summary>Detailed description of transaction including full request and response.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.ReportMode.State">
-            <summary>Record of changes written to service state.</summary> 
-        </member>
         <member name="T:Goedel.Protocol.Service.LogService">
             <summary>
             Service level logging class.
@@ -133,7 +108,7 @@
         <member name="P:Goedel.Protocol.Service.LogService.HostMonitor">
             <summary>The host monitor tracking start and end of host requests.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Service.LogService.#ctor(Goedel.Protocol.Service.HostMonitor,System.Int64)">
+        <member name="M:Goedel.Protocol.Service.LogService.#ctor(Goedel.Protocol.Service.IServiceConfiguration,Goedel.Protocol.Service.IHostConfiguration,Goedel.Protocol.Service.HostMonitor,System.Int64)">
             <summary>
             Default constructor.
             </summary>
@@ -141,7 +116,7 @@
             status.</param>
             <param name="first">The first transaction number to be issued.</param>
         </member>
-        <member name="M:Goedel.Protocol.Service.LogService.Start(System.String,Goedel.Protocol.Service.IReport)">
+        <member name="M:Goedel.Protocol.Service.LogService.Start(System.String,Goedel.Protocol.IReport)">
             <summary>
             Begin a new transaction.
             </summary>
@@ -215,13 +190,13 @@
             </summary>
             <param name="logService">The service to log.</param>
         </member>
-        <member name="M:Goedel.Protocol.Service.LogTransaction.Success(Goedel.Protocol.Service.IReport)">
+        <member name="M:Goedel.Protocol.Service.LogTransaction.Success(Goedel.Protocol.IReport)">
             <summary>
             Report successful completion.
             </summary>
             <param name="response">The response object.</param>
         </member>
-        <member name="M:Goedel.Protocol.Service.LogTransaction.Fail(System.Exception,Goedel.Protocol.Service.IReport)">
+        <member name="M:Goedel.Protocol.Service.LogTransaction.Fail(System.Exception,Goedel.Protocol.IReport)">
             <summary>
             Report failure.
             </summary>
@@ -285,6 +260,87 @@
         <member name="T:Goedel.Protocol.Service.NamespaceDoc">
             <summary>
             Service monitoring classes.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.DeviceProfile">
+            <summary>
+              Looks up a localized string similar to Device Profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.Error">
+            <summary>
+              Looks up a localized string similar to Error.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.Host">
+            <summary>
+              Looks up a localized string similar to Host.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.HostAddress">
+            <summary>
+              Looks up a localized string similar to Host Address.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.Path">
+            <summary>
+              Looks up a localized string similar to Path.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.Port">
+            <summary>
+              Looks up a localized string similar to Port.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.ServiceAddress">
+            <summary>
+              Looks up a localized string similar to Service Address.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.ServiceProfile">
+            <summary>
+              Looks up a localized string similar to Service Profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.StartService">
+            <summary>
+              Looks up a localized string similar to Start service.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.TransactionFail">
+            <summary>
+              Looks up a localized string similar to Fail.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.TransactionStart">
+            <summary>
+              Looks up a localized string similar to Start.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.TransactionSuccess">
+            <summary>
+              Looks up a localized string similar to Success.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.UnknownCommand">
+            <summary>
+              Looks up a localized string similar to Unknown-Command.
             </summary>
         </member>
         <member name="T:Goedel.Protocol.Service.RudService">

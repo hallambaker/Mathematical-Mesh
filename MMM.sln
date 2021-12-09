@@ -69,8 +69,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Server", "Mesh\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Shell", "Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj", "{0E631986-5213-4FB5-B4CA-09488EA5C4B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Test-xunit", "Testing\Goedel.Mesh.xunit\Goedel.Mesh.Test-xunit.csproj", "{40FE220D-247A-4C25-BF06-AF1B4378AF75}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XUnit", "XUnit", "{D1FDE60F-FECA-4925-BFDE-A3CC9F40FCE9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{21335470-2C7E-418E-A7CD-9EB6D3A45190}"
@@ -109,11 +107,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		BaseSettings.xml = BaseSettings.xml
 		bogus.runsettings = bogus.runsettings
-		CommonSettings.xml = CommonSettings.xml
-		CommonSettingsApplication.xml = CommonSettingsApplication.xml
-		CommonSettingsNoDocs.xml = CommonSettingsNoDocs.xml
-		CommonSettingsTest.xml = CommonSettingsTest.xml
-		CommonSettingsWindows.xml = CommonSettingsWindows.xml
 		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
 		LICENSE.txt = LICENSE.txt
 		readme.md = readme.md
@@ -823,30 +816,6 @@ Global
 		{0E631986-5213-4FB5-B4CA-09488EA5C4B5}.Sandcastle|x64.Build.0 = Sandcastle|Any CPU
 		{0E631986-5213-4FB5-B4CA-09488EA5C4B5}.Sandcastle|x86.ActiveCfg = Sandcastle|Any CPU
 		{0E631986-5213-4FB5-B4CA-09488EA5C4B5}.Sandcastle|x86.Build.0 = Sandcastle|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Debug|x64.Build.0 = Debug|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Debug|x86.Build.0 = Debug|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Github|Any CPU.ActiveCfg = Github|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Github|Any CPU.Build.0 = Github|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Github|x64.ActiveCfg = Github|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Github|x64.Build.0 = Github|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Github|x86.ActiveCfg = Github|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Github|x86.Build.0 = Github|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Release|x64.ActiveCfg = Release|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Release|x64.Build.0 = Release|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Release|x86.ActiveCfg = Release|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Release|x86.Build.0 = Release|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Sandcastle|Any CPU.ActiveCfg = Sandcastle|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Sandcastle|Any CPU.Build.0 = Sandcastle|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Sandcastle|x64.ActiveCfg = Sandcastle|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Sandcastle|x64.Build.0 = Sandcastle|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Sandcastle|x86.ActiveCfg = Sandcastle|Any CPU
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75}.Sandcastle|x86.Build.0 = Sandcastle|Any CPU
 		{13C72979-9555-4A79-830E-6D4A620AD606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{13C72979-9555-4A79-830E-6D4A620AD606}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13C72979-9555-4A79-830E-6D4A620AD606}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -1873,7 +1842,6 @@ Global
 		{1A14C73E-960C-4E21-AEB7-184B6D5A0AB3} = {5EC1032D-6112-4154-B52F-2DA29CD605E3}
 		{602358C6-28B7-446D-86D3-02B3FD1B3D6C} = {5EC1032D-6112-4154-B52F-2DA29CD605E3}
 		{0E631986-5213-4FB5-B4CA-09488EA5C4B5} = {27BE7355-4837-465B-81DC-EF2579516464}
-		{40FE220D-247A-4C25-BF06-AF1B4378AF75} = {D1FDE60F-FECA-4925-BFDE-A3CC9F40FCE9}
 		{D1FDE60F-FECA-4925-BFDE-A3CC9F40FCE9} = {E9EAA6CF-ACFD-4F68-A4B9-18DBB8A98B48}
 		{21335470-2C7E-418E-A7CD-9EB6D3A45190} = {E9EAA6CF-ACFD-4F68-A4B9-18DBB8A98B48}
 		{13C72979-9555-4A79-830E-6D4A620AD606} = {6319D855-7BE8-4691-9638-2183778EE5B7}

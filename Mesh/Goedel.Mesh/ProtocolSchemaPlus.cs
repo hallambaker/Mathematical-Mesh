@@ -144,7 +144,39 @@ public partial class MeshRequest {
     }
 
 
-public partial class BindResponse {
+
+public partial class MeshHelloResponse : IReport {
+    
+    ///<inheritdoc/>
+    public void Report(StringBuilder output, ReportMode reportMode) {
+
+        if (reportMode == ReportMode.None) {
+            return;
+            }
+        output.Append($" Version {Version}");
+
+        }
+
+    }
+
+
+public partial class BindRequest : IReport {
+
+    ///<inheritdoc/>
+    public void Report(StringBuilder output, ReportMode reportMode) {
+
+        if (reportMode == ReportMode.None) {
+            return;
+            }
+        output.Append($" Account {AccountAddress}");
+
+        }
+
+
+    }
+
+
+public partial class BindResponse : IReport {
 
     /// <summary>
     /// Default constructor. 
@@ -152,6 +184,19 @@ public partial class BindResponse {
     /// <param name="exception">Optional exception specifier.</param>
     public BindResponse(Exception exception = null) : base(exception) {
         }
+
+    ///<inheritdoc/>
+    public void Report(StringBuilder output, ReportMode reportMode) {
+
+        if (reportMode == ReportMode.None) {
+            return;
+            }
+        output.Append($" Created");
+
+        }
+
+
+
     }
 
 

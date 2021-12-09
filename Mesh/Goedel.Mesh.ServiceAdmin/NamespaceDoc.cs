@@ -21,6 +21,8 @@
 #endregion
 
 global using System;
+global using System.Threading;
+global using System.Globalization;
 global using System.Collections.Generic;
 global using Goedel.IO;
 global using Goedel.Protocol;

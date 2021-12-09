@@ -5,7 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Product>MeshReferenceLibraryWindows</Product>
     <PackageId>MeshReferenceLibraryWindows</PackageId>
-    <Description>MeshReferenceLibraryWindows Mesh Windows Platform Profile.</Description>
+    <Description>Mesh Reference Library Windows Platform Profile.</Description>
   </PropertyGroup>
 
   <ItemGroup>

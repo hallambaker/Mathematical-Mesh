@@ -56,10 +56,10 @@ public class AccountContext : Disposable {
     ///<inheritdoc/>
     protected override void Disposing() {
         if (catalogAccess != null) {
-            Screen.WriteLine($"Dispose {catalogAccess}");
+            //Screen.WriteLine($"Dispose {catalogAccess}");
             }
         catalogAccess?.Dispose();
-        Screen.WriteLine($"Dispose Done!");
+        //Screen.WriteLine($"Dispose Done!");
         }
 
     #endregion

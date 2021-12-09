@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/7/2021 5:41:54 PM
+//  This file was automatically generated at 12/8/2021 6:06:28 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2223,7 +2223,7 @@ public partial class BindResponse : MeshResponse {
 
 	public virtual string						URL  {get; set;}
         /// <summary>
-        ///The enveloped assignment describing hos the client should
+        ///The enveloped assignment describing how the client should
         ///discover the host and encrypt data to it.
         /// </summary>
 

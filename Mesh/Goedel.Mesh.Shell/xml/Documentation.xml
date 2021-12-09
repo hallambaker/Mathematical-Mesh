@@ -4065,6 +4065,212 @@
             <param name="fileName">The file to process.</param>
             <returns>The IANA content type if found.</returns>
         </member>
+        <member name="T:Goedel.Mesh.Shell.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Accept">
+            <summary>
+              Looks up a localized string similar to Accept.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.AccountAddress">
+            <summary>
+              Looks up a localized string similar to Account Address.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.AccountProfileUDF">
+            <summary>
+              Looks up a localized string similar to Account UDF.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.AddedDevice">
+            <summary>
+              Looks up a localized string similar to Added device.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Device">
+            <summary>
+              Looks up a localized string similar to Device.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.DeviceProfileUDF">
+            <summary>
+              Looks up a localized string similar to Device UDF.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.DigestAlgorithm">
+            <summary>
+              Looks up a localized string similar to Digest Algorithm.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.EncryptionAlgorithm">
+            <summary>
+              Looks up a localized string similar to Encryption Algorithm.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.EnvelopeId">
+            <summary>
+              Looks up a localized string similar to Envelope Id.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Error">
+            <summary>
+              Looks up a localized string similar to Error.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Expires">
+            <summary>
+              Looks up a localized string similar to Expires.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.File">
+            <summary>
+              Looks up a localized string similar to File.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.GroupInvitation">
+            <summary>
+              Looks up a localized string similar to Group invitation.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Host">
+            <summary>
+              Looks up a localized string similar to Host.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.HostAddress">
+            <summary>
+              Looks up a localized string similar to Host Address.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.MessageId">
+            <summary>
+              Looks up a localized string similar to Message Id.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.NotDareEnvelope">
+            <summary>
+              Looks up a localized string similar to Not a DARE Envelope.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Path">
+            <summary>
+              Looks up a localized string similar to Path.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.PayloadDigest">
+            <summary>
+              Looks up a localized string similar to Payload Digest.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.PIN">
+            <summary>
+              Looks up a localized string similar to PIN.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Port">
+            <summary>
+              Looks up a localized string similar to Port.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Recipient">
+            <summary>
+              Looks up a localized string similar to To.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.RequestId">
+            <summary>
+              Looks up a localized string similar to Request Id.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.ResponseId">
+            <summary>
+              Looks up a localized string similar to Response Id.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Result">
+            <summary>
+              Looks up a localized string similar to Result.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Sender">
+            <summary>
+              Looks up a localized string similar to From.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.ServiceAddress">
+            <summary>
+              Looks up a localized string similar to Service Address.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.ServiceProfileUDF">
+            <summary>
+              Looks up a localized string similar to Service UDF.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Share">
+            <summary>
+              Looks up a localized string similar to Share.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Signer">
+            <summary>
+              Looks up a localized string similar to Signer.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.StartService">
+            <summary>
+              Looks up a localized string similar to Start service.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Text">
+            <summary>
+              Looks up a localized string similar to Text.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.TransactionFail">
+            <summary>
+              Looks up a localized string similar to Fail.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.TransactionStart">
+            <summary>
+              Looks up a localized string similar to Start.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.TransactionSuccess">
+            <summary>
+              Looks up a localized string similar to Success.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.UnknownCommand">
+            <summary>
+              Looks up a localized string similar to Unknown-Command.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.URI">
+            <summary>
+              Looks up a localized string similar to URI.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Resources.Witness">
+            <summary>
+              Looks up a localized string similar to Witness.
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Shell.ShellResult">
              <summary>
             
