@@ -4,9 +4,9 @@ her closest friends:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> group create groupw@example.com /web
+<cmd>Alice> meshman group create groupw@example.com /web
 <rsp>Account=groupw@example.com
-UDF=MCCO-UT5H-HMT6-FUDI-H7X7-WLAT-IATS
+UDF=MDVV-D6SV-DHPM-BSBF-GT5Q-VYO3-NFZC
 </div>
 ~~~~
 
@@ -16,11 +16,11 @@ to the group yet.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> type grouptext.txt
+<cmd>Alice> meshman type grouptext.txt
 <rsp>The group secret handshake
-<cmd>Alice> dare encode grouptext.txt groupsecret.dare /encrypt ^
+<cmd>Alice> meshman dare encode grouptext.txt groupsecret.dare /encrypt ^
     groupw@example.com
-<cmd>Alice> dare decode groupsecret.dare grouptext_alice.dare
+<cmd>Alice> meshman dare decode groupsecret.dare grouptext_alice.dare
 <rsp>ERROR - No decryption key is available
 </div>
 ~~~~
@@ -31,14 +31,14 @@ Alice adds herself to the group, now she can decrypt:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> group add groupw@example.com alice@example.com
+<cmd>Alice> meshman group add groupw@example.com alice@example.com
 <rsp>{
   "ContactAddress": "alice@example.com",
-  "MemberCapabilityId": "MBSM-4BZO-HIQ2-HVF7-CKRF-FHDY-A4CU",
-  "ServiceCapabilityId": "MASB-AUST-H3AD-SKPR-SZEI-WNR3-SWBU"}
-<cmd>Alice> account sync /auto
-<cmd>Alice> dare decode groupsecret.dare grouptext_alice.dare
-<cmd>Alice> type grouptext_alice.dare
+  "MemberCapabilityId": "MDR7-O4AE-5S4R-IQKE-Q2W5-N5V6-AJCU",
+  "ServiceCapabilityId": "MBTQ-QJNP-D3XU-HKDK-KSGS-IXR5-FXGC"}
+<cmd>Alice> meshman account sync /auto
+<cmd>Alice> meshman dare decode groupsecret.dare grouptext_alice.dare
+<cmd>Alice> meshman type grouptext_alice.dare
 <rsp>The group secret handshake
 </div>
 ~~~~
@@ -51,11 +51,11 @@ Instead she adds Bob to the group as a member:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> group add groupw@example.com bob@example.com
+<cmd>Alice> meshman group add groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MBSM-4BZO-HIQ2-HVF7-CKRF-FHDY-A4CU",
-  "ServiceCapabilityId": "MD6W-KDFX-PSF7-5NBQ-WFJE-34PL-7JWQ"}
+  "MemberCapabilityId": "MDR7-O4AE-5S4R-IQKE-Q2W5-N5V6-AJCU",
+  "ServiceCapabilityId": "MAJG-TYPX-QNJH-AX6Q-LVTW-J7DL-SV3U"}
 </div>
 ~~~~
 
@@ -65,9 +65,9 @@ the group key without making any change to the encrypted files:
 
 ~~~~
 <div="terminal">
-<cmd>Bob> account sync  /auto
-<cmd>Bob> dare decode groupsecret.dare grouptext_bob.dare
-<cmd>Bob> type grouptext_bob.dare
+<cmd>Bob> meshman account sync  /auto
+<cmd>Bob> meshman dare decode groupsecret.dare grouptext_bob.dare
+<cmd>Bob> meshman type grouptext_bob.dare
 <rsp>The group secret handshake
 </div>
 ~~~~
@@ -77,11 +77,11 @@ Removing Bob from the group immediately withdraws his access.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> group delete groupw@example.com bob@example.com
+<cmd>Alice> meshman group delete groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MBSM-4BZO-HIQ2-HVF7-CKRF-FHDY-A4CU",
-  "ServiceCapabilityId": "MD6W-KDFX-PSF7-5NBQ-WFJE-34PL-7JWQ"}
+  "MemberCapabilityId": "MDR7-O4AE-5S4R-IQKE-Q2W5-N5V6-AJCU",
+  "ServiceCapabilityId": "MAJG-TYPX-QNJH-AX6Q-LVTW-J7DL-SV3U"}
 </div>
 ~~~~
 
@@ -91,9 +91,9 @@ still has access to the file grouptext_bob.dare he decrypted earlier.
 
 ~~~~
 <div="terminal">
-<cmd>Bob> dare decode groupsecret.dare grouptext_bob2.dare
+<cmd>Bob> meshman dare decode groupsecret.dare grouptext_bob2.dare
 <rsp>ERROR - A cryptographic operation was refused.
-<cmd>Bob> type grouptext_bob.dare
+<cmd>Bob> meshman type grouptext_bob.dare
 <rsp>The group secret handshake
 </div>
 ~~~~

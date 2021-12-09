@@ -6,8 +6,8 @@ private key information available to devices she has connected to her Mesh with 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> ssh create /web
-<rsp>UDF: MA7Z-CDPN-MRFL-XNJA-J2FQ-MQK6-ESHI
+<cmd>Alice> meshman ssh create /web
+<rsp>UDF: MB5X-VON2-LW3D-KDIO-7WAZ-2GO2-ICCU
 </div>
 ~~~~
 
@@ -16,7 +16,7 @@ She can extract the private key to configure her SSH clients:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> ssh private /file=alice1_ssh_prv.pem
+<cmd>Alice> meshman ssh private /file=alice1_ssh_prv.pem
 </div>
 ~~~~
 
@@ -26,7 +26,7 @@ the machine:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> ssh public /file=alice1_ssh_pub.pem
+<cmd>Alice> meshman ssh public /file=alice1_ssh_pub.pem
 </div>
 ~~~~
 
@@ -40,8 +40,8 @@ right:
 
 ~~~~
 <div="terminal">
-<cmd>Alice2> account sync
-<cmd>Alice2> ssh private /file=alice2_ssh_prv.pem
+<cmd>Alice2> meshman account sync
+<cmd>Alice2> meshman ssh private /file=alice2_ssh_prv.pem
 </div>
 ~~~~
 

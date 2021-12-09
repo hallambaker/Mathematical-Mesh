@@ -4,7 +4,7 @@ The service sends out the following request:
 ~~~~
 {
   "RequestConfirmation":{
-    "MessageId":"NDAD-KLJY-C5JO-JGXL-VUWG-Y6PP-PSFJ",
+    "MessageId":"NDW5-TTEF-B4JG-BZQN-FNPA-CQRM-3AEE",
     "Sender":"console@example.com",
     "Recipient":"alice@example.com",
     "Text":"start"}}
@@ -15,21 +15,21 @@ Alice accepts the request and returns the following response:
 ~~~~
 {
   "ResponseConfirmation":{
-    "MessageId":"MCT4-SVZ2-BL5Y-DR5B-TF4S-WIGH-CJTM",
+    "MessageId":"MASC-XJTW-W6W3-SCZM-M27S-APLS-I46I",
     "Sender":"alice@example.com",
     "Recipient":"console@example.com",
     "Request":[{
-        "EnvelopeId":"MDVA-HSIH-UJBT-PEVO-GZNQ-JF3O-YHTM",
-        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOREFELUtMSlktQz
-  VKTy1KR1hMLVZVV0ctWTZQUC1QU0ZKIiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
+        "EnvelopeId":"MB5O-RPD7-T7WG-7W4R-NBDV-L4OM-GSEN",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJORFc1LVRURUYtQj
+  RKRy1CWlFOLUZOUEEtQ1FSTS0zQUVFIiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
   zdENvbmZpcm1hdGlvbiIsCiAgImN0eSI6ICJhcHBsaWNhdGlvbi9tbW0vb2JqZWN0
-  IiwKICAiQ3JlYXRlZCI6ICIyMDIxLTEwLTI1VDE1OjQ4OjU3WiJ9",
+  IiwKICAiQ3JlYXRlZCI6ICIyMDIxLTEyLTA5VDE2OjQ2OjEwWiJ9",
         "SequenceInfo":{
           "Index":4,
           "TreePosition":6201},
-        "Received":"2021-10-25T15:48:57Z"},
+        "Received":"2021-12-09T16:46:10Z"},
       "ewogICJSZXF1ZXN0Q29uZmlybWF0aW9uIjogewogICAgIk1lc3NhZ2VJZC
-  I6ICJOREFELUtMSlktQzVKTy1KR1hMLVZVV0ctWTZQUC1QU0ZKIiwKICAgICJTZW5
+  I6ICJORFc1LVRURUYtQjRKRy1CWlFOLUZOUEEtQ1FSTS0zQUVFIiwKICAgICJTZW5
   kZXIiOiAiY29uc29sZUBleGFtcGxlLmNvbSIsCiAgICAiUmVjaXBpZW50IjogImFs
   aWNlQGV4YW1wbGUuY29tIiwKICAgICJUZXh0IjogInN0YXJ0In19",
       {}

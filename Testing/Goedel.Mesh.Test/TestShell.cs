@@ -44,16 +44,9 @@ public partial class TestShell : Goedel.Mesh.Shell.Shell {
     public override IMeshMachineClient MeshMachine => MeshMachineTest;
 
     public MeshMachineTest MeshMachineTest => meshMachineTest ??
-       new MeshMachineTest(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest);
-    //new MeshMachineTestWeb(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest));
+            new MeshMachineTest(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest);
+
     MeshMachineTest meshMachineTest;
-
-    //MeshServiceClient MeshClient => meshClient ??
-    //    GetMeshClient(null).CacheValue(out meshClient);
-    //MeshServiceClient meshClient;
-
-
-    //public bool Direct { get; }
 
     /// <summary>
     /// Create a new test shell
@@ -65,13 +58,6 @@ public partial class TestShell : Goedel.Mesh.Shell.Shell {
         //Direct = direct;
         }
 
-
-    //public MeshServiceClient GetMeshClient(ICredentialPrivate credential) =>
-    //    MeshMachine.GetMeshClient(credential);
-
-    /////<inheritdoc/>
-    //public override MeshServiceClient GetMeshClient(IAccountOptions Options) => throw new NYI();
-    //MeshClient;
 
     public ShellResult ShellResult;
 
@@ -119,7 +105,7 @@ public partial class ExampleResult {
 
     public ExampleResult(TestCLI testCLI, string command, Result result) {
         Result = result;
-        Command = "meshman" + command;
+        Command = "meshman " + command;
         TestCLI = testCLI;
         }
 

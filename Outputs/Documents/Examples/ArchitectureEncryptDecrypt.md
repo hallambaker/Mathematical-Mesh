@@ -5,19 +5,19 @@ readable only by Alice:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> type plaintext.txt
+<cmd>Alice> meshman type plaintext.txt
 <rsp>This is a test
-<cmd>Alice> dare encode plaintext.txt ciphertext.dare /encrypt ^
+<cmd>Alice> meshman dare encode plaintext.txt ciphertext.dare /encrypt ^
     alice@example.com 
-<cmd>Alice> dare verify ciphertext.dare
+<cmd>Alice> meshman dare verify ciphertext.dare
 <rsp>File: ciphertext.dare
     Bytes: 16
     Encryption Algorithm: A256CBC
-        Recipient: MBUH-FY45-DVNF-XMQV-SQC4-LTLI-K5AV
+        Recipient: MDJ6-6I36-OCND-X224-DSD3-LMDU-37Z4
     Digest Algorithm: S512
-    Payload Digest: DEC39D5F400DD76180EBF5AA9739D8DD863DA660B7A3E463A
-2734AE75D29459B382D9937FAB02D41F2952A21C66EB18A01F0425A4588D0056D828A
-2E6C318C28
+    Payload Digest: C0B8A8C1B0CC4B804C731A0CC9D9160FE07A7AB53B44B3EE3
+B23F9D1379958F0BE514B23D78A5FBAE94C44C9341CFE9B0C3072A1E049BC50AD20D7
+F7F0782B3C
 </div>
 ~~~~
 
@@ -26,8 +26,8 @@ Alice can recover the file at any time using the decryption command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode ciphertext.dare plaintext1.txt
-<cmd>Alice> type plaintext1.txt
+<cmd>Alice> meshman dare decode ciphertext.dare plaintext1.txt
+<cmd>Alice> meshman type plaintext1.txt
 <rsp>This is a test
 </div>
 ~~~~

@@ -143,6 +143,9 @@ public partial class Shell : _Shell {
         var hostConfiguration = configuration.GetHostConfiguration(hostConfig);
         var serviceConfiguration = configuration.GetServiceConfiguration(hostConfiguration);
 
+        serviceConfiguration.Instance = Instance;
+        hostConfiguration.Instance = Instance;
+
         hostConfiguration.ConsoleOutput = 
             Options.Console.Value ? ReportMode.Brief: ReportMode.None;
 

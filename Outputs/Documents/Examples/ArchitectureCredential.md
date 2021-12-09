@@ -5,10 +5,11 @@ to her credentials catalog:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> password add ftp.example.com alice1 password
+<cmd>Alice> meshman password add ftp.example.com alice1 password
 <rsp>alice1@ftp.example.com = [password]
 
-<cmd>Alice> password add www.example.com alice@example.com newpassword
+<cmd>Alice> meshman password add www.example.com alice@example.com ^
+    newpassword
 <rsp>alice@example.com@www.example.com = [newpassword]
 
 </div>
@@ -23,7 +24,7 @@ resource to which access is required:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> password get ftp.example.com
+<cmd>Alice> meshman password get ftp.example.com
 <rsp>alice1@ftp.example.com = [password]
 
 </div>

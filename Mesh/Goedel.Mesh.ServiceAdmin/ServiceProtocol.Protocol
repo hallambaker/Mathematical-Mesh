@@ -69,6 +69,7 @@
 		Integer Storage
 		String Role
 		Integer Port
+		String Instance
 		String IP
 			Multiple
 		String Services

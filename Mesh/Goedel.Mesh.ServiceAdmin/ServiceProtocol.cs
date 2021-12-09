@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/9/2021 12:24:41 AM
+//  This file was automatically generated at 12/9/2021 4:43:07 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -673,6 +673,10 @@ public partial class HostConfiguration : ConfigurationEntry {
         /// <summary>
         /// </summary>
 
+	public virtual string						Instance  {get; set;}
+        /// <summary>
+        /// </summary>
+
 	public virtual List<string>				IP  {get; set;}
         /// <summary>
         /// </summary>
@@ -746,6 +750,11 @@ public partial class HostConfiguration : ConfigurationEntry {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Port", 1);
 				_writer.WriteInteger32 (Port);
+			}
+		if (Instance != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Instance", 1);
+				_writer.WriteString (Instance);
 			}
 		if (IP != null) {
 			_writer.WriteObjectSeparator (ref _first);
@@ -822,6 +831,10 @@ public partial class HostConfiguration : ConfigurationEntry {
 				}
 			case "Port" : {
 				Port = jsonReader.ReadInteger32 ();
+				break;
+				}
+			case "Instance" : {
+				Instance = jsonReader.ReadString ();
 				break;
 				}
 			case "IP" : {

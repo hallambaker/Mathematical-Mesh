@@ -30,6 +30,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Mesh.Management;
 using Goedel.Mesh.Server;
+using Goedel.Mesh.ServiceAdmin;
 using Goedel.Mesh.Shell.Host;
 using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
@@ -61,7 +62,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
         }
 
     public override RudService StartService() {
-        var serviceConfig = "ServiceConfig.json";
+        var serviceConfig = "/Console";
         var dnsConfig = "ServiceDNS.bind";
 
         HostMachine = new MeshMachineTest(this, "host1");
@@ -71,9 +72,9 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
             MeshMachine = HostMachine
             };
         ServiceAdminCLI = new();
-        ServiceAdmin($"create {serviceConfig} {ServiceDns}");
+        ServiceAdmin($"create {ServiceDns}");
 
-        ServiceAdmin($"dns {serviceConfig} {dnsConfig}");
+        ServiceAdmin($"dns {dnsConfig}");
 
 
         // Start the host
@@ -200,8 +201,18 @@ public class TestEnvironmentCommon : Disposable {
 
     public JpcConnection JpcConnection = JpcConnection.Serialized;
 
+
+    public HostConfiguration HostConfiguration { get; } = new() {
+        ConsoleOutput = ReportMode.Brief
+        };
+
+    public ServiceConfiguration ServiceConfiguration { get; } = new() {
+        };
+
+
     public virtual PublicMeshService MeshService => meshService ??
-        new PublicMeshService(new MeshMachineCoreServer(ServiceDirectory), null, null).CacheValue(out meshService);
+        new PublicMeshService(new MeshMachineCoreServer(ServiceDirectory), 
+            ServiceConfiguration, HostConfiguration).CacheValue(out meshService);
     PublicMeshService meshService;
 
 

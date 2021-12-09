@@ -449,6 +449,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.Instance">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.IP">
             <summary>
             </summary>

@@ -5,7 +5,7 @@ way as before.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device delete MCVN-XLLT-LLNW-U4HR-BOMG-RA6Z-UWRR
+<cmd>Alice> meshman device delete MBXK-HB52-35LF-V3CX-ZRBG-W6IJ-G4NB
 </div>
 ~~~~
 
@@ -14,9 +14,9 @@ The device can no longer access the password catalog or decrypt files:
 
 ~~~~
 <div="terminal">
-<cmd>Alice3> account sync
+<cmd>Alice3> meshman account sync
 <rsp>ERROR - The server returned an invalid response.
-<cmd>Alice3> dare decode ciphertext.dare plaintext3.txt
+<cmd>Alice3> meshman dare decode ciphertext.dare plaintext3.txt
 <rsp>ERROR - A cryptographic operation was refused.
 </div>
 ~~~~

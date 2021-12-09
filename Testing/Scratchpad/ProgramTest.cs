@@ -45,6 +45,9 @@ partial class Program {
     static void Main() {
         Screen.WriteInfo($"Start test  {DateTime.Now}");
 
+        ShellTestsAdmin.Test().TestHello();
+
+
         //for (var i = 0; i < 100; i++) {
         //    Screen.WriteLine($"Test {i}");
 
@@ -53,28 +56,28 @@ partial class Program {
         //    }
 
 
-
+        //ShellTests.Test().TestProfileMail();
 
 
         //ShellTestsAdmin.Test().TestMessageContactRemote();
         //ShellTestsAdmin.Test().TestMessageContactRemote();
 
-
+        //TestService.Test().MeshCatalogAccount();
 
         //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
-        ShellTestsAdmin.Test().TestProfileSSHPrivate();
+        //ShellTestsAdmin.Test().TestProfileSSHPrivate();
 
-        //ShellTestsAdmin.Test().TestProfileMail();
+        ////ShellTestsAdmin.Test().TestProfileMail();
 
-        //ShellTestsAdmin.Test().TestMessageContactRemote();
-        //ShellTestsAdmin.Test().TestFilePlain();
+        ////ShellTestsAdmin.Test().TestMessageContactRemote();
+        ////ShellTestsAdmin.Test().TestFilePlain();
 
-        ShellTestsAdmin.Test().TestHello();
-        ShellTestsAdmin.Test().TestAccountDelete();
-        ShellTestsAdmin.Test().TestProfileConnectPin();
-        ShellTestsAdmin.Test().TestProfileConnectPinExpired();
-        ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
+
+        //ShellTestsAdmin.Test().TestAccountDelete();
+        //ShellTestsAdmin.Test().TestProfileConnectPin();
+        //ShellTestsAdmin.Test().TestProfileConnectPinExpired();
+        //ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
 
 
 
