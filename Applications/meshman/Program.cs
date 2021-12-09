@@ -21,10 +21,8 @@
 #endregion
 
 
-using System;
-using Goedel.Mesh;
 using Goedel.Mesh.Shell;
-using Goedel.Utilities;
+
 
 
 #if NET6_0_WINDOWS_OR_GREATER
@@ -35,11 +33,6 @@ using Goedel.Cryptography.Core;
 #else
 #endif
 
-
-
-#if !(_Github_)
-[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
-#endif
 
 namespace meshman;
 

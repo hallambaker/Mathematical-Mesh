@@ -20,12 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-using Goedel.Mesh;
-using Goedel.Mesh.Management;
-using Goedel.Mesh.Server;
-using Goedel.Mesh.Shell.Host;
-using Goedel.Utilities;
+
 
 #if NET6_0_WINDOWS_OR_GREATER
 using Goedel.Cryptography.Windows;
@@ -35,13 +30,6 @@ using Goedel.Cryptography.Core;
 #endif
 
 
-
-
-// Should change this so that it makes use of dependency injection...
-
-#if !(_Github_)
-[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
-#endif
 
 
 namespace meshhost;

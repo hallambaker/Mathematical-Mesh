@@ -194,8 +194,7 @@ public abstract class _File : Goedel.Command.Type {
     /// </summary>
     /// <param name="source">The source file.</param>
     /// <param name="extension">The extension.</param>
-    /// <param name="path">Optional file path, will override relative path but
-    /// not if <paramref name="source"/> is rooted.</param>
+
     /// <returns>File name.</returns>
     public string DefaultFile(string source, string extension = null) {
         //if (path != null) {
@@ -212,13 +211,6 @@ public abstract class _File : Goedel.Command.Type {
         }
 
 
-
-
-    public string DefaultExtension(string extension, string path) {
-
-        return "";
-
-        }
 
 
     }

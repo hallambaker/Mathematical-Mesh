@@ -49,6 +49,7 @@ public partial class DnsConfiguration {
     /// </summary>
     /// <param name="Configuration"></param>
     /// <param name="output"></param>
+    /// <param name="hostname">The host name.</param>
     public static void BindConfig(Configuration Configuration,
                 string output, string hostname) {
         using var outputWriter = output.OpenTextWriterNew();

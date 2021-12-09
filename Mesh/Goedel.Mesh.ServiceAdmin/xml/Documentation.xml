@@ -15,6 +15,7 @@
             </summary>
             <param name="Configuration"></param>
             <param name="output"></param>
+            <param name="hostname">The host name.</param>
         </member>
         <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.GetPort(System.String)">
             <summary>
@@ -411,6 +412,9 @@
         </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.ServiceConfigs">
             <summary>List of referenced service configurations.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.HostConfiguration.ConsoleOutput">
+            <summary>The reporting mode for console output.</summary> 
         </member>
         <member name="M:Goedel.Mesh.ServiceAdmin.HostConfiguration.GetEndpoints(System.String)">
             <summary>

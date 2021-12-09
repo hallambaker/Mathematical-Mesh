@@ -86,7 +86,13 @@ public class MeshHost : Disposable {
 
         }
 
-
+    /// <summary>
+    /// Return a new MeshHost instance with the fields and properties of <paramref name="parent"/>
+    /// but with the mesh machine <paramref name="meshMachine"/>. This is used during service
+    /// creation to allow for operations such as creating an administration account.
+    /// </summary>
+    /// <param name="parent">The parent MeshHost instance.</param>
+    /// <param name="meshMachine">The substitute MeshMachine.</param>
     public MeshHost(MeshHost parent, IMeshMachineClient meshMachine) {
         this.MeshMachine = meshMachine;
         ContainerHost = parent.ContainerHost;

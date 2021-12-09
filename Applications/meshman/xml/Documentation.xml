@@ -4,6 +4,11 @@
         <name>meshman</name>
     </assembly>
     <members>
+        <member name="T:meshman.NamespaceDoc">
+            <summary>
+            The meshhost command line app
+            </summary>
+        </member>
         <member name="T:meshman.Program">
             <summary>Main calling program.</summary> 
         </member>

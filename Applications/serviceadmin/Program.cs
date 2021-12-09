@@ -21,21 +21,15 @@
 #endregion
 
 
-using Goedel.Mesh;
+
 using Goedel.Mesh.Shell.ServiceAdmin;
-using Goedel.Utilities;
+
 
 #if NET6_0_WINDOWS_OR_GREATER
 using Goedel.Cryptography.Windows;
 #elif NET6_0_MACOS_OR_GREATER
 using Goedel.Cryptography.Core;
 #else
-#endif
-
-
-
-#if !(_Github_)
-[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
 namespace serviceadmin;

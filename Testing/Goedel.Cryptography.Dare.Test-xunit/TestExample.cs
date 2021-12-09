@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/8/2021 6:05:04 PM
+//  This file was automatically generated at 12/8/2021 11:33:07 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.740
+//  Generator:  protogen version 3.0.0.742
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -76,7 +76,10 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 	    {"TestEntry", TestEntry._Factory},
 	    {"TestItem", TestItem._Factory}		};
 
+#pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
     [ModuleInitializer]
+#pragma warning restore CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
+
     internal static void _Initialize() => AddDictionary(ref _tagDictionary);
 
 

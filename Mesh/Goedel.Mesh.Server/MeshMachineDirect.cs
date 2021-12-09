@@ -22,11 +22,22 @@
 
 namespace Goedel.Mesh.Server;
 
+/// <summary>
+/// Machine using a client directly bound to the underlying service.
+/// </summary>
 public class MeshMachineDirect : IMeshMachineClient {
 
     IMeshMachineClient MeshMachineClient { get; }
     PublicMeshService PublicMeshService { get; }
 
+    /// <summary>
+    /// Constructor returning a new instance connecting to the service 
+    /// <paramref name="publicMeshService"/> by means of the client 
+    /// <paramref name="meshMachineClient"/>.
+    /// </summary>
+    /// <param name="meshMachineClient">A client instance provisioned with the
+    /// necessary credential.</param>
+    /// <param name="publicMeshService">The service instance.</param>
     public MeshMachineDirect(
                 IMeshMachineClient meshMachineClient,
                 PublicMeshService publicMeshService

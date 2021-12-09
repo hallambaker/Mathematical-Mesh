@@ -196,17 +196,10 @@ public partial class HostConfiguration {
 
     #region // Properties
 
-    ///// <summary>The host profile </summary>
-    //public ProfileHost ProfileHost => EnvelopedProfileHost.Decode ();
-
-    /////<summary>The connection of the host to the service.</summary> 
-    //public ConnectionDevice ConnectionDevice => EnvelopedConnectionDevice.Decode();
-
-
     ///<summary>List of referenced service configurations.</summary> 
     public List<ServiceConfiguration> ServiceConfigs { get; set; }
 
-
+    ///<summary>The reporting mode for console output.</summary> 
     public ReportMode ConsoleOutput { get; set; }
 
 

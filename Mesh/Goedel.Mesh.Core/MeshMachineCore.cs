@@ -77,6 +77,10 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     //    }
     #endregion
 
+    /// <summary>
+    /// Return a new key collection.
+    /// </summary>
+    /// <returns>The key collection created.</returns>
     public virtual IKeyCollection GetKeyCollection() => new KeyCollectionCore();
 
 

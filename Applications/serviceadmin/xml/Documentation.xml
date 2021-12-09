@@ -4,6 +4,11 @@
         <name>serviceadmin</name>
     </assembly>
     <members>
+        <member name="T:serviceadmin.NamespaceDoc">
+            <summary>
+            The meshhost command line app
+            </summary>
+        </member>
         <member name="T:serviceadmin.Program">
             <summary>Main calling program.</summary> 
         </member>

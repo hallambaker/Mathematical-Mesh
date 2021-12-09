@@ -43,10 +43,6 @@ public partial class Shell : _Shell {
 
 
 
-    string GetFile(Goedel.Command._File file) =>
-        file.DefaultExtension("json", MeshMachine.DirectoryMesh);
-
-
 
 
     string GetMultiConfig(Command._File file) =>

@@ -925,8 +925,6 @@
             </summary>
             <param name="source">The source file.</param>
             <param name="extension">The extension.</param>
-            <param name="path">Optional file path, will override relative path but
-            not if <paramref name="source"/> is rooted.</param>
             <returns>File name.</returns>
         </member>
         <member name="T:Goedel.Command._NewFile">

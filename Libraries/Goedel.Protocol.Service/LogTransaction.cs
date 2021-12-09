@@ -44,6 +44,8 @@ public class LogService {
     /// <param name="hostMonitor">The host montior describing the lower level connection
     /// status.</param>
     /// <param name="first">The first transaction number to be issued.</param>
+    /// <param name="hostConfiguration">The host configuration description.</param>
+    /// <param name="serviceConfiguration">The service configuration description.</param>
     public LogService(
             IServiceConfiguration serviceConfiguration,
             IHostConfiguration hostConfiguration,

@@ -80,7 +80,7 @@ public class PublicMeshService : MeshService {
     ///<summary>Key collection giving access to host and service keys.</summary> 
     public IKeyCollection KeyCollection { get; }
 
-
+    ///<summary>The logging service.</summary> 
     public LogService LogService { get; }
 
     #endregion
@@ -220,7 +220,6 @@ public class PublicMeshService : MeshService {
     /// </summary>
     /// <param name="meshMachine">The Mesh machine specification (used to determine
     /// the location of system configuration files).</param>
-    /// <param name="fileSpec">The service specification.</param>
     /// <param name="hostname">The host name.</param>
     /// <returns>The file path.</returns>
     public static string GetHost(
@@ -239,10 +238,10 @@ public class PublicMeshService : MeshService {
     /// <param name="serviceConfig">The service configuration file.</param>
     /// <param name="serviceDns">The canonical DNS name of the service</param>
     /// <param name="hostIp">The host IP address</param>
+    /// <param name="hostConfig">The host configuration identifier.</param>
     /// <param name="hostDns">The host DNS name</param>
     /// <param name="admin">The administrative account to create.</param>
-    /// <param name="newFile">The file to write the new service configuration to.</param>
-    /// <returns></returns>
+    /// <returns>The created service</returns>
     public static PublicMeshService Create(
         IMeshMachineClient meshMachine,
         string serviceConfig,

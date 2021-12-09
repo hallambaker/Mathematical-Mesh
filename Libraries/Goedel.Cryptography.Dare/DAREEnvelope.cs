@@ -41,7 +41,9 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <summary>
     /// The module initializer. This is called during initialization of the module.
     /// </summary>
+#pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
     [ModuleInitializer]
+#pragma warning restore CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
     internal static void Initialize() => AddDictionary(ref ThisTagDictionary);
 
     /// <summary>

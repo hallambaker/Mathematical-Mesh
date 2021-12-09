@@ -37,7 +37,9 @@ public static class Initialization {
     /// Initialization routine for cryptographic functions on the dotNet Core platform.
     /// </summary>
 
+#pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
     [ModuleInitializer]
+#pragma warning restore CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
     internal static void Initialize() {
         // Force initialization of dependent modules.
         Initialized = Goedel.Cryptography.Initialization.Initialized &

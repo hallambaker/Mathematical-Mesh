@@ -2607,6 +2607,15 @@
             <param name="meshMachine">The Mesh Machine.</param>
             <param name="containerHost">The host catalog.</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.IMeshMachineClient)">
+            <summary>
+            Return a new MeshHost instance with the fields and properties of <paramref name="parent"/>
+            but with the mesh machine <paramref name="meshMachine"/>. This is used during service
+            creation to allow for operations such as creating an administration account.
+            </summary>
+            <param name="parent">The parent MeshHost instance.</param>
+            <param name="meshMachine">The substitute MeshMachine.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.GetContext(Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
             Create a context for the machine entry <paramref name="catalogedMachine"/>.

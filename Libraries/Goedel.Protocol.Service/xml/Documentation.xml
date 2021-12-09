@@ -97,6 +97,43 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Goedel.Protocol.Service.IServiceConfiguration">
+            <summary>
+            Service configuration
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.IServiceConfiguration.WellKnown">
+            <summary>The IANA well known service name.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.IServiceConfiguration.Addresses">
+            <summary>List of service addresses.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Service.IHostConfiguration">
+            <summary>
+            Host configuration
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.IHostConfiguration.ConsoleOutput">
+            <summary>The console output mode</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.IHostConfiguration.Path">
+            <summary>Path to the host data store.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.IHostConfiguration.ProfileUdf">
+            <summary>The UDF of the sevice profile.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.IHostConfiguration.DeviceUdf">
+            <summary>The UDF of the device profile.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.IHostConfiguration.Id">
+            <summary>The Host name.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.IHostConfiguration.DNS">
+            <summary>List of DNS addresses of the host.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.IHostConfiguration.Port">
+            <summary>The port number.</summary> 
+        </member>
         <member name="T:Goedel.Protocol.Service.LogService">
             <summary>
             Service level logging class.
@@ -115,6 +152,8 @@
             <param name="hostMonitor">The host montior describing the lower level connection
             status.</param>
             <param name="first">The first transaction number to be issued.</param>
+            <param name="hostConfiguration">The host configuration description.</param>
+            <param name="serviceConfiguration">The service configuration description.</param>
         </member>
         <member name="M:Goedel.Protocol.Service.LogService.Start(System.String,Goedel.Protocol.IReport)">
             <summary>

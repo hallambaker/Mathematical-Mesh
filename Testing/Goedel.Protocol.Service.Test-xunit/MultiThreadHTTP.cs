@@ -20,10 +20,10 @@
 //  THE SOFTWARE.
 #endregion
 
-namespace Goedel.XUnit {
-    public partial class TestPresentationGeneric {
+namespace Goedel.XUnit;
+
+public partial class TestPresentationGeneric {
 
 
 
-        }
     }
