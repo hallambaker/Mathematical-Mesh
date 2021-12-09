@@ -46,7 +46,7 @@
         <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.AddResponse(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Protocol.Presentation.ConnectionInitiator.WebClient">
+        <member name="P:Goedel.Protocol.Presentation.ConnectionInitiator.HttpClient">
             <summary>The Web Client</summary> 
         </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.#ctor(Goedel.Protocol.Presentation.ICredentialPrivate,System.String,System.String,Goedel.Protocol.Presentation.TransportType,System.String)">

@@ -405,7 +405,7 @@ public class CryptoProviderEncryptAES : CryptoProviderEncryption {
     public CryptoProviderEncryptAES(int KeySize,
                     CipherMode CipherMode = CipherMode.CBC,
                     PaddingMode PaddingMode = PaddingMode.PKCS7)
-        : base(new AesManaged(), KeySize, CipherMode, PaddingMode) {
+        : base(Aes.Create(), KeySize, CipherMode, PaddingMode) {
         }
 
 

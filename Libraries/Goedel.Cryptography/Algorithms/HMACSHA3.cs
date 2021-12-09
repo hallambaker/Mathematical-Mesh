@@ -35,11 +35,6 @@ namespace Goedel.Cryptography.Algorithms;
 public class HMACSHA3 : HMAC {
 
 
-    /// <summary>
-    /// Constructor for an HMACSHA3 HMAC.
-    /// </summary>
-    /// <param name="hashBitLength">The hash bit length, must be 224, 256, 384 or 512</param>
-    public HMACSHA3(int hashBitLength = 512) : this(Utilities.GenerateRandom(0x80), hashBitLength) { }
 
     /// <summary>
     /// 

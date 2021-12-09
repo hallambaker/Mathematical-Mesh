@@ -23,7 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-
+using System.Net.Http;
+using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using Goedel.Utilities;
 
@@ -64,16 +65,24 @@ public class TestClient {
 
 
     public void HTTPRequest(byte[] requestData) {
-        using var client = new WebClient();
-        client.Headers.Add(HttpRequestHeader.UserAgent, "MeshTestClient");
-        client.Headers.Add(HttpRequestHeader.CacheControl, "no-store,no-transform");
+
+        var handler = new HttpClientHandler();
+        using var client = new HttpClient(handler);
+        client.DefaultRequestHeaders.Add("UserAgent", "MeshTestClient");
+        client.DefaultRequestHeaders.Add("CacheControl", "no-store,no-transform");
 
         var uri = httpEndpoint.GetServiceUri();
 
 
         //Screen.WriteLine($"Connect to {uri}");
         try {
-            var responseData = client.UploadData(uri, requestData);
+
+            var content = new ByteArrayContent(requestData);
+
+            var response =  client.PostAsync(uri, content);
+            response.Wait();
+            var responseData = response.Result.Content;
+
             }
         catch (Exception e) {
             e.Future();

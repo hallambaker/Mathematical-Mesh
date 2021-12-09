@@ -352,7 +352,7 @@ public class RudStream {
         //Screen.WriteLine($"URI: {Uri}");
 
 
-        var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
+        var responsepacketData = await ConnectionInitiator.HttpClient.UploadDataTaskAsync(Uri, encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
         //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
@@ -383,7 +383,7 @@ public class RudStream {
 
 
         //Screen.WriteLine($"Complete");
-        var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
+        var responsepacketData = await ConnectionInitiator.HttpClient.UploadDataTaskAsync(Uri, encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
         //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
@@ -406,7 +406,7 @@ public class RudStream {
 
         //Screen.WriteLine($"Child");
 
-        var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
+        var responsepacketData = await ConnectionInitiator.HttpClient.UploadDataTaskAsync(Uri, encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
         //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
@@ -421,7 +421,7 @@ public class RudStream {
             ciphertextExtensions: extensions);
 
         //Screen.WriteLine($"Data");
-        var responsepacketData = await ConnectionInitiator.WebClient.UploadDataTaskAsync(Uri, encoded);
+        var responsepacketData = await ConnectionInitiator.HttpClient.UploadDataTaskAsync(Uri, encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
         //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 

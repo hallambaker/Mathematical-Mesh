@@ -35,10 +35,12 @@ public class AesBlock : BlockProvider {
     /// </summary>
     public override int BlockSize => Provider.BlockSize;
 
-    static AesBlock() => Provider = new AesManaged() {
-        Mode = CipherMode.ECB,
-        Padding = PaddingMode.None
-        };
+    static AesBlock() {
+        Provider = Aes.Create();
+        Provider.Mode = CipherMode.ECB;
+        Provider.Padding = PaddingMode.None;
+        }
+
 
     /// <summary>
     /// Constructor

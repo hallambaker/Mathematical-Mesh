@@ -2547,12 +2547,6 @@
             
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Algorithms.HMACSHA3.#ctor(System.Int32)">
-            <summary>
-            Constructor for an HMACSHA3 HMAC.
-            </summary>
-            <param name="hashBitLength">The hash bit length, must be 224, 256, 384 or 512</param>
-        </member>
         <member name="M:Goedel.Cryptography.Algorithms.HMACSHA3.#ctor(System.Byte[],System.Int32)">
             <summary>
             
@@ -13312,7 +13306,7 @@
             Initialize the cryptographic framework
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptographyCommon.RNGCryptoServiceProvider">
+        <member name="F:Goedel.Cryptography.CryptographyCommon.RandomNumberGenerator">
             <summary>
             Cryptographic random number generator.
             </summary>

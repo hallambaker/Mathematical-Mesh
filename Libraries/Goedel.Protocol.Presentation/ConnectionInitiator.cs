@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Net;
+
 namespace Goedel.Protocol.Presentation;
 
 /// <summary>
@@ -73,8 +73,8 @@ public partial class ConnectionInitiator : RudConnection {
 
 
     ///<summary>The Web Client</summary> 
-    public WebClient WebClient { get; set; }
-
+    //public HttpClient HttpClient { get; set; }
+    public WebClient HttpClient { get; set; }
 
     #endregion
     #region // Constructors
@@ -101,7 +101,8 @@ public partial class ConnectionInitiator : RudConnection {
         CredentialSelf = initiatorCredential;
 
         if (transportTypes.HasFlag(TransportType.Http)) {
-            WebClient = new WebClient();
+            //HttpClient = new HttpClient();
+            HttpClient = new WebClient();
             }
 
         //// Create the initial stream NB Do NOT re-present the credential used to
@@ -120,7 +121,7 @@ public partial class ConnectionInitiator : RudConnection {
     #region // Destructor
 
     ///<inheritdoc/>
-    protected override void Disposing() => WebClient?.Dispose();
+    protected override void Disposing() => HttpClient?.Dispose();
 
     #endregion
     #region // Methods
