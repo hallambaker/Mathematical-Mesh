@@ -119,7 +119,7 @@ public partial class ExampleResult {
 
     public ExampleResult(TestCLI testCLI, string command, Result result) {
         Result = result;
-        Command = command;
+        Command = "meshman" + command;
         TestCLI = testCLI;
         }
 
