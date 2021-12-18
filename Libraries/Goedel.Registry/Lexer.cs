@@ -20,8 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-#pragma warning disable IDE1006
-
 namespace Goedel.Registry;
 
 /// <summary>
@@ -139,7 +137,7 @@ public class Lexer {
         Other = 17
         }
 
-    static int[,] StateTable = new int[19, 18] {
+    static readonly int[,] StateTable = new int[19, 18] {
             //  WS 0-9  a-z  A-Z    _    /    \    "    @    {    }    .    ,    |   CR    <    >  ANY
             //  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13, 14. 15
             {   0,   5,   1,   1,   2,   6,  -1,   8,  11,   3,   4,  -1,  16,  17,  -1,  -1,  -1,  -1 }, // 0
@@ -177,7 +175,7 @@ public class Lexer {
             {  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  -1,  18,  18,  18  }  // 18
             };
 
-    static TokenType[] TokenTable = {
+    static readonly TokenType[] TokenTable = {
             TokenType.NULL,             // 0
             TokenType.LABEL,            // 1
             TokenType.INVALID,          // 2
@@ -208,7 +206,7 @@ public class Lexer {
         Escape
         }
 
-    static ActionType[] ActionTable = {
+    static readonly ActionType[] ActionTable = {
             ActionType.Null,    //  0
             ActionType.Add,     //  1
             ActionType.Add,     //  2
@@ -261,7 +259,7 @@ public class Lexer {
     public Lexer(string filename) => Position = new Position(filename);
 
 
-    static int TabSize = 4;
+    static readonly int TabSize = 4;
 
     /// <summary>
     /// Process the input to create a parse tree.

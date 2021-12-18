@@ -95,7 +95,7 @@ public class AccountHandleLocked : Disposable {
 
     ///<inheritdoc/>
     protected override void Disposing() {
-        Screen.Write($"AccountContext close {AccountContext?.AccountEntry?.AccountAddress}");
+        //Screen.Write($"AccountContext close {AccountContext?.AccountEntry?.AccountAddress}");
         if (DictionarySequences != null) {
             foreach (var sequenceEntry in DictionarySequences) {
                 //Screen.WriteLine($"Delete Sequence {sequenceEntry.Key}");

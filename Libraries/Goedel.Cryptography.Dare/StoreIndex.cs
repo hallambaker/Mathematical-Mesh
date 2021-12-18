@@ -53,8 +53,7 @@ public class ContainerStoreIndexEntry : IPersistenceIndexEntry {
     /// Enumerator class. 
     /// </summary>
     class Enumerator : IEnumerator<IPersistenceIndexEntry> {
-
-        ContainerStoreIndexEntry First;
+        readonly ContainerStoreIndexEntry First;
         public IPersistenceIndexEntry Current { get; private set; }
 
         object IEnumerator.Current => Current;
@@ -136,8 +135,7 @@ public class ContainerStoreIndexEntry : IPersistenceIndexEntry {
 /// but at a significantly higher memory overhead than an index-on disk approach.
 /// </summary>
 public class StoreIndex : IPersistenceIndex {
-
-    Dictionary<string, ContainerStoreIndexEntry> Dictionary =
+    readonly Dictionary<string, ContainerStoreIndexEntry> Dictionary =
                 new();
 
 

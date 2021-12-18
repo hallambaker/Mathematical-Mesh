@@ -134,16 +134,16 @@ public abstract class DNSContext : Disposable {
     //public DnsClient DNSClient = Goedel.Discovery.DNSClient.Default;
 
     /// <summary>Scoreboard of current requests.</summary>
-    List<DNSRequest> pendingRequests = new();
+    readonly List<DNSRequest> pendingRequests = new();
 
     /// <summary>The timeout value</summary>
-    int timeout;
-    int retry;
+    readonly int timeout;
+    readonly int retry;
 
     CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
 
     Task taskRetry; // A task that expires when it is time to retry requests
-    Task taskTimeout; // A task that expires when it is time to give up
+    readonly Task taskTimeout; // A task that expires when it is time to give up
 
     /// <summary>
     /// A task listening on the DNS port

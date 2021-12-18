@@ -17,8 +17,8 @@ The `key nonce` command is used to generate a new random nonce value:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key nonce
-<rsp>NAC4-FVVP-OG4R-RGQS-XCTC-3ECI-LWTA
+<cmd>Alice> meshman key nonce
+<rsp>NC7Q-WQA7-HBRG-ND3N-BMPF-V5HW-HAZQ
 </div>
 ~~~~
 
@@ -30,8 +30,8 @@ generated using the `/bits` option:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key nonce /bits=256
-<rsp>NAMM-5PMM-NBI5-TA33-T7HK-YMU7-LLBT-B6CR-ICKL-WRYQ-MN33-KZB2-KS3Q-6
+<cmd>Alice> meshman key nonce /bits=256
+<rsp>NBQW-Z5AM-JX5V-XBHA-F32A-GNHI-4RYY-XAM4-SYOE-ZVGG-WMBI-6UU4-H437-Y
 </div>
 ~~~~
 
@@ -40,8 +40,8 @@ Secrets are generated in the same way using the command `key secret`:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key secret
-<rsp>ECZS-MCZV-Q4PT-2V7C-B4EO-BZXY-CMOA
+<cmd>Alice> meshman key secret
+<rsp>ED7E-NMBL-IK4D-FL7T-2Q2S-J6YW-D7HA
 </div>
 ~~~~
 
@@ -51,8 +51,8 @@ Again, any output length can be requested up to the platform limit:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key secret /bits=256
-<rsp>ED4M-PLLJ-XNIY-PDRQ-QY32-6TF7-VZMN-KDV6-VJSC-DD4M-EBRG-B7BH-O6XW-C
+<cmd>Alice> meshman key secret /bits=256
+<rsp>ED2W-52FX-4SIS-KW4Y-P5KT-UWHP-2WIR-UT6W-DZPB-VCMT-J5F4-AUFT-A52V-E
 </div>
 ~~~~
 
@@ -70,9 +70,9 @@ a new secret/digest pair which are then used to process the content data:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key earl
-<rsp>EAMA-F3Z3-KOXN-6T2S-LXJN-M3RP-YHBA-YH
-MAG7-QZVX-DYJZ-7BNZ-CAS6-NU6O-7NC7-LW7D-MJZJ-LHHT-WJR7-YOIW-4IEY-ZG7W
+<cmd>Alice> meshman key earl
+<rsp>EA66-QPMP-VQBA-6ZMZ-W4HT-PY35-S2X3-AG
+MAMK-7RM3-FWRH-MZKQ-4H4M-QHXH-PXE4-HSZT-XBXU-GJG7-AFRS-DQIC-AZAB-CLQ7
 
 </div>
 ~~~~
@@ -81,7 +81,7 @@ Alternatively, the `dare earl` command may be used to perform both operations:
 
 
 ~~~~
-Missing example 4
+Missing example 7
 ~~~~
 
 ## Sharing and recovering secrets
@@ -96,12 +96,12 @@ bit secret is created and three shares are created with a quorum of two:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key share
-<rsp>INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
-MARI-JIJ7-MN3S-JHRE-GVQC-Z3H4-727N-W3QY-UHBJ-4KZT-4O3G-OPXC-GCZR
-SAQJ-BYIM-G42W-ZED7-DTNL-KY3Q-YGJC-I
-SAQ5-4UM3-TYJC-FBQV-VVLB-TCVK-PNYP-W
-SARC-XQRL-ATXN-Q65M-HXIX-3MPE-GVHZ-6
+<cmd>Alice> meshman key share
+<rsp>K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
+MAAW-T3UJ-4XQL-RTFJ-BXXH-STPN-LZ5D-LLK3-5MWF-WYAM-6JQC-V4KS-HTEU
+SAQD-VDTI-E3YM-XF7X-3FUV-D6CO-BO3O-I
+SAQR-2YQ6-F4JS-3ZFD-QVEG-JIHM-QC3W-W
+SARA-ANOU-G42Z-AMKP-GETX-OSMK-6W37-E
 </div>
 ~~~~
 
@@ -113,15 +113,15 @@ obtain the result as a JSON structure:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key share /json
+<cmd>Alice> meshman key share /json
 <rsp>{
   "ResultKey": {
     "Success": true,
-    "Key": "INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU",
-    "Identifier": "MARI-JIJ7-MN3S-JHRE-GVQC-Z3H4-727N-W3QY-UHBJ-4KZT-4O3G-OPXC-GCZR",
-    "Shares": ["SAQJ-BYIM-G42W-ZED7-DTNL-KY3Q-YGJC-I",
-      "SAQ5-4UM3-TYJC-FBQV-VVLB-TCVK-PNYP-W",
-      "SARC-XQRL-ATXN-Q65M-HXIX-3MPE-GVHZ-6"]}}
+    "Key": "K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU",
+    "Identifier": "MAAW-T3UJ-4XQL-RTFJ-BXXH-STPN-LZ5D-LLK3-5MWF-WYAM-6JQC-V4KS-HTEU",
+    "Shares": ["SAQD-VDTI-E3YM-XF7X-3FUV-D6CO-BO3O-I",
+      "SAQR-2YQ6-F4JS-3ZFD-QVEG-JIHM-QC3W-W",
+      "SARA-ANOU-G42Z-AMKP-GETX-OSMK-6W37-E"]}}
 </div>
 ~~~~
 
@@ -131,9 +131,9 @@ meet the quorum using the `key recover`:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key recover SAQJ-BYIM-G42W-ZED7-DTNL-KY3Q-YGJC-I ^
-    SARC-XQRL-ATXN-Q65M-HXIX-3MPE-GVHZ-6
-<rsp>INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
+<cmd>Alice> meshman key recover SAQD-VDTI-E3YM-XF7X-3FUV-D6CO-BO3O-I ^
+    SARA-ANOU-G42Z-AMKP-GETX-OSMK-6W37-E
+<rsp>K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
 </div>
 ~~~~
 
@@ -148,14 +148,14 @@ of three:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key share /quorum=3 /shares=5
-<rsp>KEDS-KBYY-CI5T-UTDB-PE7J-ZGRL-4M
-MCRD-5IS2-7TN7-FIPS-AUQO-BTIM-FX4L-67J3-C5KJ-IIDX-HCMA-K6IH-WTM7
-SAYM-VGSC-BELD-TFJS-X7YP-WWLH-VELD-W
-SAYU-C4C3-FXH4-MPVQ-C5I2-DH3P-ZRBP-Y
-SAZL-LCLQ-OVCL-QN5S-KKBW-YEFV-AOZI-Y
-SAZS-NZMB-352Q-7ABZ-OGDF-VLJX-J5SI-K
-SA2J-LBEP-NRQM-YGCF-ORNG-25HW-V5MU-2
+<cmd>Alice> meshman key share /quorum=3 /shares=5
+<rsp>VQ6V-H3H4-KOIP-VGX4-5TRR-4R3I-CU
+MD7Q-CF6S-YBBS-BEVN-TXXG-DJMW-N7VV-M5YL-B6EH-C37R-TDUE-LZDE-KAQL
+SAYD-GCOY-YSFX-HA6I-CQD2-2V3J-JAXT-K
+SAYQ-P6XV-RMV4-AUMK-BWME-FALO-2YN5-K
+SAZC-WEFK-IDOT-T6SA-Q6XK-YYJO-6EW7-K
+SAZZ-YSXW-4WP6-A7PL-QJFO-V5VJ-TFSZ-K
+SA2F-XKO3-PFZ3-HXEK-7VWP-4QO6-Z3BI-E
 </div>
 ~~~~
 
@@ -167,7 +167,7 @@ be different:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key share INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
+<cmd>Alice> meshman key share K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
 <rsp>ERROR - Attempted to divide by zero.
 </div>
 ~~~~

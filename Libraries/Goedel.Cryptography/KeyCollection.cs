@@ -28,7 +28,7 @@ namespace Goedel.Cryptography;
 public abstract class KeyCollection : IKeyLocate {
 
     ///<summary>Lock used to ensure exclusive access during updates.</summary>
-    Object exclusiveAccess = new();
+    readonly Object exclusiveAccess = new();
 
     /// <summary>
     /// The default collection.

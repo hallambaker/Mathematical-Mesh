@@ -4927,6 +4927,14 @@
             <param name="position">Position within the sequence file.</param>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.FileCollection.Remove(Goedel.Cryptography.Dare.DareHeader,System.Int64)">
+            <summary>
+            Remove a file entry by appending a record saying it is deleted.
+            </summary>
+            <param name="dareHeader">DARE header describing the entry.</param>
+            <param name="position">Position within the sequence file.</param>
+            <returns>The original file entry if found.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.FileCollection.Add(Goedel.Cryptography.Dare.FileEntry)">
             <summary>
             Add a file entry.
@@ -5164,6 +5172,9 @@
             <summary>
             The underlying stream for stream write operations
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.JbcdStream.Filename">
+            <summary>The file name, used for error reporting.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Dare.JbcdStream.PositionWrite">
             <summary>

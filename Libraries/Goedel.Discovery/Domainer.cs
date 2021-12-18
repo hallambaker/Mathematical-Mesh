@@ -30,7 +30,7 @@ public partial class DNS {
     // if (DictionaryType.ContainsKey("RR") {
     //    int value = dictionary["RR"];
     //    }
-    static Dictionary<string, ushort> DictionaryType = new() {
+    static readonly Dictionary<string, ushort> DictionaryType = new() {
             { "A", 1 },
             { "NS", 2 },
             { "MD", 3 },
@@ -90,7 +90,7 @@ public partial class DNS {
             { "*", 255 } // End of list * = ALL
         };
 
-    static Dictionary<ushort, string> DictionaryCode = new() {
+    static readonly Dictionary<ushort, string> DictionaryCode = new() {
             { 1, "A" },
             { 2, "NS" },
             { 3, "MD" },
@@ -769,7 +769,7 @@ public class DNSRecord_A : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("A", Domain);
+        Canonicalize Canonicalize = new("A", Domain);
         Canonicalize.IPv4(Address);
         return Canonicalize.Text;
         }
@@ -778,7 +778,7 @@ public class DNSRecord_A : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_A Parse(Parse Parse) {
-        DNSRecord_A NewRecord = new DNSRecord_A() {
+        DNSRecord_A NewRecord = new() {
             Address = Parse.IPv4(),
             };
         return NewRecord;
@@ -794,7 +794,7 @@ public class DNSRecord_A : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_A Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_A NewRecord = new DNSRecord_A() {
+        DNSRecord_A NewRecord = new() {
             Start = Index.Start,
             Address = Index.ReadIPv4()
             };
@@ -823,7 +823,7 @@ public class DNSRecord_NS : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("NS", Domain);
+        Canonicalize Canonicalize = new("NS", Domain);
         Canonicalize.Domain(NSDNAME);
         return Canonicalize.Text;
         }
@@ -832,7 +832,7 @@ public class DNSRecord_NS : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NS Parse(Parse Parse) {
-        DNSRecord_NS NewRecord = new DNSRecord_NS() {
+        DNSRecord_NS NewRecord = new() {
             NSDNAME = Parse.Domain(),
             };
         return NewRecord;
@@ -848,7 +848,7 @@ public class DNSRecord_NS : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NS Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_NS NewRecord = new DNSRecord_NS() {
+        DNSRecord_NS NewRecord = new() {
             Start = Index.Start,
             NSDNAME = Index.ReadDomain()
             };
@@ -877,7 +877,7 @@ public class DNSRecord_MD : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("MD", Domain);
+        Canonicalize Canonicalize = new("MD", Domain);
         Canonicalize.Domain(MADNAME);
         return Canonicalize.Text;
         }
@@ -886,7 +886,7 @@ public class DNSRecord_MD : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MD Parse(Parse Parse) {
-        DNSRecord_MD NewRecord = new DNSRecord_MD() {
+        DNSRecord_MD NewRecord = new() {
             MADNAME = Parse.Domain(),
             };
         return NewRecord;
@@ -902,7 +902,7 @@ public class DNSRecord_MD : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MD Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_MD NewRecord = new DNSRecord_MD() {
+        DNSRecord_MD NewRecord = new() {
             Start = Index.Start,
             MADNAME = Index.ReadDomain()
             };
@@ -931,7 +931,7 @@ public class DNSRecord_MF : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("MF", Domain);
+        Canonicalize Canonicalize = new("MF", Domain);
         Canonicalize.Domain(MADNAME);
         return Canonicalize.Text;
         }
@@ -940,7 +940,7 @@ public class DNSRecord_MF : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MF Parse(Parse Parse) {
-        DNSRecord_MF NewRecord = new DNSRecord_MF() {
+        DNSRecord_MF NewRecord = new() {
             MADNAME = Parse.Domain(),
             };
         return NewRecord;
@@ -956,7 +956,7 @@ public class DNSRecord_MF : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MF Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_MF NewRecord = new DNSRecord_MF() {
+        DNSRecord_MF NewRecord = new() {
             Start = Index.Start,
             MADNAME = Index.ReadDomain()
             };
@@ -985,7 +985,7 @@ public class DNSRecord_CNAME : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("CNAME", Domain);
+        Canonicalize Canonicalize = new("CNAME", Domain);
         Canonicalize.Domain(CNAME);
         return Canonicalize.Text;
         }
@@ -994,7 +994,7 @@ public class DNSRecord_CNAME : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_CNAME Parse(Parse Parse) {
-        DNSRecord_CNAME NewRecord = new DNSRecord_CNAME() {
+        DNSRecord_CNAME NewRecord = new() {
             CNAME = Parse.Domain(),
             };
         return NewRecord;
@@ -1010,7 +1010,7 @@ public class DNSRecord_CNAME : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_CNAME Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_CNAME NewRecord = new DNSRecord_CNAME() {
+        DNSRecord_CNAME NewRecord = new() {
             Start = Index.Start,
             CNAME = Index.ReadDomain()
             };
@@ -1051,7 +1051,7 @@ public class DNSRecord_SOA : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("SOA", Domain);
+        Canonicalize Canonicalize = new("SOA", Domain);
         Canonicalize.Domain(MNAME);
         Canonicalize.Domain(RNAME);
         Canonicalize.Int32(SERIAL);
@@ -1066,7 +1066,7 @@ public class DNSRecord_SOA : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_SOA Parse(Parse Parse) {
-        DNSRecord_SOA NewRecord = new DNSRecord_SOA() {
+        DNSRecord_SOA NewRecord = new() {
             MNAME = Parse.Domain(),
             RNAME = Parse.Domain(),
             SERIAL = Parse.Int32(),
@@ -1104,7 +1104,7 @@ public class DNSRecord_SOA : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_SOA Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_SOA NewRecord = new DNSRecord_SOA() {
+        DNSRecord_SOA NewRecord = new() {
             Start = Index.Start,
             MNAME = Index.ReadDomain(),
             RNAME = Index.ReadDomain(),
@@ -1139,7 +1139,7 @@ public class DNSRecord_MB : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("MB", Domain);
+        Canonicalize Canonicalize = new("MB", Domain);
         Canonicalize.Domain(MadName);
         return Canonicalize.Text;
         }
@@ -1148,7 +1148,7 @@ public class DNSRecord_MB : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MB Parse(Parse Parse) {
-        DNSRecord_MB NewRecord = new DNSRecord_MB() {
+        DNSRecord_MB NewRecord = new() {
             MadName = Parse.Domain(),
             };
         return NewRecord;
@@ -1164,7 +1164,7 @@ public class DNSRecord_MB : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MB Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_MB NewRecord = new DNSRecord_MB() {
+        DNSRecord_MB NewRecord = new() {
             Start = Index.Start,
             MadName = Index.ReadDomain()
             };
@@ -1193,7 +1193,7 @@ public class DNSRecord_MG : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("MG", Domain);
+        Canonicalize Canonicalize = new("MG", Domain);
         Canonicalize.Domain(MGMNAME);
         return Canonicalize.Text;
         }
@@ -1202,7 +1202,7 @@ public class DNSRecord_MG : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MG Parse(Parse Parse) {
-        DNSRecord_MG NewRecord = new DNSRecord_MG() {
+        DNSRecord_MG NewRecord = new() {
             MGMNAME = Parse.Domain(),
             };
         return NewRecord;
@@ -1218,7 +1218,7 @@ public class DNSRecord_MG : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MG Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_MG NewRecord = new DNSRecord_MG() {
+        DNSRecord_MG NewRecord = new() {
             Start = Index.Start,
             MGMNAME = Index.ReadDomain()
             };
@@ -1247,7 +1247,7 @@ public class DNSRecord_MR : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("MR", Domain);
+        Canonicalize Canonicalize = new("MR", Domain);
         Canonicalize.Domain(NEWNAME);
         return Canonicalize.Text;
         }
@@ -1256,7 +1256,7 @@ public class DNSRecord_MR : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MR Parse(Parse Parse) {
-        DNSRecord_MR NewRecord = new DNSRecord_MR() {
+        DNSRecord_MR NewRecord = new() {
             NEWNAME = Parse.Domain(),
             };
         return NewRecord;
@@ -1272,7 +1272,7 @@ public class DNSRecord_MR : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MR Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_MR NewRecord = new DNSRecord_MR() {
+        DNSRecord_MR NewRecord = new() {
             Start = Index.Start,
             NEWNAME = Index.ReadDomain()
             };
@@ -1301,7 +1301,7 @@ public class DNSRecord_NULL : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("NULL", Domain);
+        Canonicalize Canonicalize = new("NULL", Domain);
         Canonicalize.Binary(Anything);
         return Canonicalize.Text;
         }
@@ -1310,7 +1310,7 @@ public class DNSRecord_NULL : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NULL Parse(Parse Parse) {
-        DNSRecord_NULL NewRecord = new DNSRecord_NULL() {
+        DNSRecord_NULL NewRecord = new() {
             Anything = Parse.Binary(),
             };
         return NewRecord;
@@ -1326,7 +1326,7 @@ public class DNSRecord_NULL : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NULL Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_NULL NewRecord = new DNSRecord_NULL() {
+        DNSRecord_NULL NewRecord = new() {
             Start = Index.Start,
             Anything = Index.ReadData(Index.Remainder(Length))
             };
@@ -1359,7 +1359,7 @@ public class DNSRecord_WKS : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("WKS", Domain);
+        Canonicalize Canonicalize = new("WKS", Domain);
         Canonicalize.IPv4(Address);
         Canonicalize.Byte(Protocol);
         Canonicalize.Binary(BITMAP);
@@ -1370,7 +1370,7 @@ public class DNSRecord_WKS : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_WKS Parse(Parse Parse) {
-        DNSRecord_WKS NewRecord = new DNSRecord_WKS() {
+        DNSRecord_WKS NewRecord = new() {
             Address = Parse.IPv4(),
             Protocol = Parse.Byte(),
             BITMAP = Parse.Binary(),
@@ -1396,7 +1396,7 @@ public class DNSRecord_WKS : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_WKS Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_WKS NewRecord = new DNSRecord_WKS() {
+        DNSRecord_WKS NewRecord = new() {
             Start = Index.Start,
             Address = Index.ReadIPv4(),
             Protocol = Index.ReadByte(),
@@ -1427,7 +1427,7 @@ public class DNSRecord_PTR : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("PTR", Domain);
+        Canonicalize Canonicalize = new("PTR", Domain);
         Canonicalize.Domain(PTRDNAME);
         return Canonicalize.Text;
         }
@@ -1436,7 +1436,7 @@ public class DNSRecord_PTR : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_PTR Parse(Parse Parse) {
-        DNSRecord_PTR NewRecord = new DNSRecord_PTR() {
+        DNSRecord_PTR NewRecord = new() {
             PTRDNAME = Parse.Domain(),
             };
         return NewRecord;
@@ -1452,7 +1452,7 @@ public class DNSRecord_PTR : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_PTR Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_PTR NewRecord = new DNSRecord_PTR() {
+        DNSRecord_PTR NewRecord = new() {
             Start = Index.Start,
             PTRDNAME = Index.ReadDomain()
             };
@@ -1483,7 +1483,7 @@ public class DNSRecord_HINFO : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("HINFO", Domain);
+        Canonicalize Canonicalize = new("HINFO", Domain);
         Canonicalize.String(CPU);
         Canonicalize.String(OS);
         return Canonicalize.Text;
@@ -1493,7 +1493,7 @@ public class DNSRecord_HINFO : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_HINFO Parse(Parse Parse) {
-        DNSRecord_HINFO NewRecord = new DNSRecord_HINFO() {
+        DNSRecord_HINFO NewRecord = new() {
             CPU = Parse.String(),
             OS = Parse.String(),
             };
@@ -1516,7 +1516,7 @@ public class DNSRecord_HINFO : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_HINFO Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_HINFO NewRecord = new DNSRecord_HINFO() {
+        DNSRecord_HINFO NewRecord = new() {
             Start = Index.Start,
             CPU = Index.ReadString(),
             OS = Index.ReadString()
@@ -1548,7 +1548,7 @@ public class DNSRecord_MINFO : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("MINFO", Domain);
+        Canonicalize Canonicalize = new("MINFO", Domain);
         Canonicalize.Domain(RMAILBX);
         Canonicalize.Domain(EMAILBX);
         return Canonicalize.Text;
@@ -1558,7 +1558,7 @@ public class DNSRecord_MINFO : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MINFO Parse(Parse Parse) {
-        DNSRecord_MINFO NewRecord = new DNSRecord_MINFO() {
+        DNSRecord_MINFO NewRecord = new() {
             RMAILBX = Parse.Domain(),
             EMAILBX = Parse.Domain(),
             };
@@ -1582,7 +1582,7 @@ public class DNSRecord_MINFO : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MINFO Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_MINFO NewRecord = new DNSRecord_MINFO() {
+        DNSRecord_MINFO NewRecord = new() {
             Start = Index.Start,
             RMAILBX = Index.ReadDomain(),
             EMAILBX = Index.ReadDomain()
@@ -1614,7 +1614,7 @@ public class DNSRecord_MX : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("MX", Domain);
+        Canonicalize Canonicalize = new("MX", Domain);
         Canonicalize.Int16(Preference);
         Canonicalize.Domain(Exchange);
         return Canonicalize.Text;
@@ -1624,7 +1624,7 @@ public class DNSRecord_MX : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MX Parse(Parse Parse) {
-        DNSRecord_MX NewRecord = new DNSRecord_MX() {
+        DNSRecord_MX NewRecord = new() {
             Preference = Parse.Int16(),
             Exchange = Parse.Domain(),
             };
@@ -1647,7 +1647,7 @@ public class DNSRecord_MX : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_MX Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_MX NewRecord = new DNSRecord_MX() {
+        DNSRecord_MX NewRecord = new() {
             Start = Index.Start,
             Preference = Index.ReadInt16(),
             Exchange = Index.ReadDomain()
@@ -1677,7 +1677,7 @@ public class DNSRecord_TXT : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("TXT", Domain);
+        Canonicalize Canonicalize = new("TXT", Domain);
         Canonicalize.Strings(Text);
         return Canonicalize.Text;
         }
@@ -1686,7 +1686,7 @@ public class DNSRecord_TXT : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_TXT Parse(Parse Parse) {
-        DNSRecord_TXT NewRecord = new DNSRecord_TXT() {
+        DNSRecord_TXT NewRecord = new() {
             Text = Parse.Strings(),
             };
         return NewRecord;
@@ -1708,7 +1708,7 @@ public class DNSRecord_TXT : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_TXT Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_TXT NewRecord = new DNSRecord_TXT() {
+        DNSRecord_TXT NewRecord = new() {
             Start = Index.Start,
             Text = Index.ReadStrings(Index.Remainder(Length))
             };
@@ -1739,7 +1739,7 @@ public class DNSRecord_RP : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("RP", Domain);
+        Canonicalize Canonicalize = new("RP", Domain);
         Canonicalize.Mail(MBox);
         Canonicalize.Domain(Txt);
         return Canonicalize.Text;
@@ -1749,7 +1749,7 @@ public class DNSRecord_RP : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_RP Parse(Parse Parse) {
-        DNSRecord_RP NewRecord = new DNSRecord_RP() {
+        DNSRecord_RP NewRecord = new() {
             MBox = Parse.Mail(),
             Txt = Parse.Domain(),
             };
@@ -1772,7 +1772,7 @@ public class DNSRecord_RP : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_RP Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_RP NewRecord = new DNSRecord_RP() {
+        DNSRecord_RP NewRecord = new() {
             Start = Index.Start,
             MBox = DNSBufferIndex.ReadMail(),
             Txt = Index.ReadDomain()
@@ -1804,7 +1804,7 @@ public class DNSRecord_AFSDB : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("AFSDB", Domain);
+        Canonicalize Canonicalize = new("AFSDB", Domain);
         Canonicalize.Int16(SubType);
         Canonicalize.Domain(HostName);
         return Canonicalize.Text;
@@ -1814,7 +1814,7 @@ public class DNSRecord_AFSDB : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_AFSDB Parse(Parse Parse) {
-        DNSRecord_AFSDB NewRecord = new DNSRecord_AFSDB() {
+        DNSRecord_AFSDB NewRecord = new() {
             SubType = Parse.Int16(),
             HostName = Parse.Domain(),
             };
@@ -1837,7 +1837,7 @@ public class DNSRecord_AFSDB : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_AFSDB Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_AFSDB NewRecord = new DNSRecord_AFSDB() {
+        DNSRecord_AFSDB NewRecord = new() {
             Start = Index.Start,
             SubType = Index.ReadInt16(),
             HostName = Index.ReadDomain()
@@ -1867,7 +1867,7 @@ public class DNSRecord_X25 : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("X25", Domain);
+        Canonicalize Canonicalize = new("X25", Domain);
         Canonicalize.String(PSDN);
         return Canonicalize.Text;
         }
@@ -1876,7 +1876,7 @@ public class DNSRecord_X25 : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_X25 Parse(Parse Parse) {
-        DNSRecord_X25 NewRecord = new DNSRecord_X25() {
+        DNSRecord_X25 NewRecord = new() {
             PSDN = Parse.String(),
             };
         return NewRecord;
@@ -1892,7 +1892,7 @@ public class DNSRecord_X25 : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_X25 Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_X25 NewRecord = new DNSRecord_X25() {
+        DNSRecord_X25 NewRecord = new() {
             Start = Index.Start,
             PSDN = Index.ReadString()
             };
@@ -1923,7 +1923,7 @@ public class DNSRecord_ISDN : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("ISDN", Domain);
+        Canonicalize Canonicalize = new("ISDN", Domain);
         Canonicalize.String(ISDN);
         Canonicalize.OptionalString(SA);
         return Canonicalize.Text;
@@ -1933,7 +1933,7 @@ public class DNSRecord_ISDN : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_ISDN Parse(Parse Parse) {
-        DNSRecord_ISDN NewRecord = new DNSRecord_ISDN() {
+        DNSRecord_ISDN NewRecord = new() {
             ISDN = Parse.String(),
             SA = Parse.OptionalString(),
             };
@@ -1959,7 +1959,7 @@ public class DNSRecord_ISDN : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_ISDN Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_ISDN NewRecord = new DNSRecord_ISDN() {
+        DNSRecord_ISDN NewRecord = new() {
             Start = Index.Start,
             ISDN = Index.ReadString(),
             SA = (Index.Remainder(Length) > 0) ? Index.ReadString() : null
@@ -1991,7 +1991,7 @@ public class DNSRecord_RT : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("RT", Domain);
+        Canonicalize Canonicalize = new("RT", Domain);
         Canonicalize.Int16(Preference);
         Canonicalize.Domain(Exchange);
         return Canonicalize.Text;
@@ -2001,7 +2001,7 @@ public class DNSRecord_RT : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_RT Parse(Parse Parse) {
-        DNSRecord_RT NewRecord = new DNSRecord_RT() {
+        DNSRecord_RT NewRecord = new() {
             Preference = Parse.Int16(),
             Exchange = Parse.Domain(),
             };
@@ -2025,7 +2025,7 @@ public class DNSRecord_RT : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_RT Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_RT NewRecord = new DNSRecord_RT() {
+        DNSRecord_RT NewRecord = new() {
             Start = Index.Start,
             Preference = Index.ReadInt16(),
             Exchange = Index.ReadDomain()
@@ -2071,7 +2071,7 @@ public class DNSRecord_SIG : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("SIG", Domain);
+        Canonicalize Canonicalize = new("SIG", Domain);
         Canonicalize.Int16(TypeCovered);
         Canonicalize.Byte(Algorithm);
         Canonicalize.Byte(Labels);
@@ -2088,7 +2088,7 @@ public class DNSRecord_SIG : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_SIG Parse(Parse Parse) {
-        DNSRecord_SIG NewRecord = new DNSRecord_SIG() {
+        DNSRecord_SIG NewRecord = new() {
             TypeCovered = Parse.Int16(),
             Algorithm = Parse.Byte(),
             Labels = Parse.Byte(),
@@ -2132,7 +2132,7 @@ public class DNSRecord_SIG : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_SIG Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_SIG NewRecord = new DNSRecord_SIG() {
+        DNSRecord_SIG NewRecord = new() {
             Start = Index.Start,
             TypeCovered = Index.ReadInt16(),
             Algorithm = Index.ReadByte(),
@@ -2175,7 +2175,7 @@ public class DNSRecord_KEY : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("KEY", Domain);
+        Canonicalize Canonicalize = new("KEY", Domain);
         Canonicalize.Int16(Flags);
         Canonicalize.Byte(Protocol);
         Canonicalize.Byte(Algorithm);
@@ -2187,7 +2187,7 @@ public class DNSRecord_KEY : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_KEY Parse(Parse Parse) {
-        DNSRecord_KEY NewRecord = new DNSRecord_KEY() {
+        DNSRecord_KEY NewRecord = new() {
             Flags = Parse.Int16(),
             Protocol = Parse.Byte(),
             Algorithm = Parse.Byte(),
@@ -2216,7 +2216,7 @@ public class DNSRecord_KEY : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_KEY Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_KEY NewRecord = new DNSRecord_KEY() {
+        DNSRecord_KEY NewRecord = new() {
             Start = Index.Start,
             Flags = Index.ReadInt16(),
             Protocol = Index.ReadByte(),
@@ -2248,7 +2248,7 @@ public class DNSRecord_AAAA : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("AAAA", Domain);
+        Canonicalize Canonicalize = new("AAAA", Domain);
         Canonicalize.IPv6(Address);
         return Canonicalize.Text;
         }
@@ -2257,7 +2257,7 @@ public class DNSRecord_AAAA : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_AAAA Parse(Parse Parse) {
-        DNSRecord_AAAA NewRecord = new DNSRecord_AAAA() {
+        DNSRecord_AAAA NewRecord = new() {
             Address = Parse.IPv6(),
             };
         return NewRecord;
@@ -2273,7 +2273,7 @@ public class DNSRecord_AAAA : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_AAAA Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_AAAA NewRecord = new DNSRecord_AAAA() {
+        DNSRecord_AAAA NewRecord = new() {
             Start = Index.Start,
             Address = Index.ReadIPv6()
             };
@@ -2308,7 +2308,7 @@ public class DNSRecord_SRV : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("SRV", Domain);
+        Canonicalize Canonicalize = new("SRV", Domain);
         Canonicalize.Int16(Priority);
         Canonicalize.Int16(Weight);
         Canonicalize.Int16(Port);
@@ -2320,7 +2320,7 @@ public class DNSRecord_SRV : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_SRV Parse(Parse Parse) {
-        DNSRecord_SRV NewRecord = new DNSRecord_SRV() {
+        DNSRecord_SRV NewRecord = new() {
             Priority = Parse.Int16(),
             Weight = Parse.Int16(),
             Port = Parse.Int16(),
@@ -2349,7 +2349,7 @@ public class DNSRecord_SRV : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_SRV Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_SRV NewRecord = new DNSRecord_SRV() {
+        DNSRecord_SRV NewRecord = new() {
             Start = Index.Start,
             Priority = Index.ReadInt16(),
             Weight = Index.ReadInt16(),
@@ -2391,7 +2391,7 @@ public class DNSRecord_NAPTR : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("NAPTR", Domain);
+        Canonicalize Canonicalize = new("NAPTR", Domain);
         Canonicalize.Int16(Order);
         Canonicalize.Int16(Preference);
         Canonicalize.String(Flags);
@@ -2405,7 +2405,7 @@ public class DNSRecord_NAPTR : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NAPTR Parse(Parse Parse) {
-        DNSRecord_NAPTR NewRecord = new DNSRecord_NAPTR() {
+        DNSRecord_NAPTR NewRecord = new() {
             Order = Parse.Int16(),
             Preference = Parse.Int16(),
             Flags = Parse.String(),
@@ -2440,7 +2440,7 @@ public class DNSRecord_NAPTR : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NAPTR Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_NAPTR NewRecord = new DNSRecord_NAPTR() {
+        DNSRecord_NAPTR NewRecord = new() {
             Start = Index.Start,
             Order = Index.ReadInt16(),
             Preference = Index.ReadInt16(),
@@ -2476,7 +2476,7 @@ public class DNSRecord_KX : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("KX", Domain);
+        Canonicalize Canonicalize = new("KX", Domain);
         Canonicalize.Int16(Preference);
         Canonicalize.Domain(Exchange);
         return Canonicalize.Text;
@@ -2486,7 +2486,7 @@ public class DNSRecord_KX : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_KX Parse(Parse Parse) {
-        DNSRecord_KX NewRecord = new DNSRecord_KX() {
+        DNSRecord_KX NewRecord = new() {
             Preference = Parse.Int16(),
             Exchange = Parse.Domain(),
             };
@@ -2509,7 +2509,7 @@ public class DNSRecord_KX : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_KX Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_KX NewRecord = new DNSRecord_KX() {
+        DNSRecord_KX NewRecord = new() {
             Start = Index.Start,
             Preference = Index.ReadInt16(),
             Exchange = Index.ReadDomain()
@@ -2545,7 +2545,7 @@ public class DNSRecord_CERT : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("CERT", Domain);
+        Canonicalize Canonicalize = new("CERT", Domain);
         Canonicalize.Int16(Type);
         Canonicalize.Int16(KeyTag);
         Canonicalize.Byte(Algorithm);
@@ -2557,7 +2557,7 @@ public class DNSRecord_CERT : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_CERT Parse(Parse Parse) {
-        DNSRecord_CERT NewRecord = new DNSRecord_CERT() {
+        DNSRecord_CERT NewRecord = new() {
             Type = Parse.Int16(),
             KeyTag = Parse.Int16(),
             Algorithm = Parse.Byte(),
@@ -2586,7 +2586,7 @@ public class DNSRecord_CERT : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_CERT Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_CERT NewRecord = new DNSRecord_CERT() {
+        DNSRecord_CERT NewRecord = new() {
             Start = Index.Start,
             Type = Index.ReadInt16(),
             KeyTag = Index.ReadInt16(),
@@ -2618,7 +2618,7 @@ public class DNSRecord_DNAME : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("DNAME", Domain);
+        Canonicalize Canonicalize = new("DNAME", Domain);
         Canonicalize.Domain(Target);
         return Canonicalize.Text;
         }
@@ -2627,7 +2627,7 @@ public class DNSRecord_DNAME : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_DNAME Parse(Parse Parse) {
-        DNSRecord_DNAME NewRecord = new DNSRecord_DNAME() {
+        DNSRecord_DNAME NewRecord = new() {
             Target = Parse.Domain(),
             };
         return NewRecord;
@@ -2643,7 +2643,7 @@ public class DNSRecord_DNAME : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_DNAME Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_DNAME NewRecord = new DNSRecord_DNAME() {
+        DNSRecord_DNAME NewRecord = new() {
             Start = Index.Start,
             Target = Index.ReadDomain()
             };
@@ -2672,7 +2672,7 @@ public class DNSRecord_OPT : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("OPT", Domain);
+        Canonicalize Canonicalize = new("OPT", Domain);
         return Canonicalize.Text;
         }
 
@@ -2680,7 +2680,7 @@ public class DNSRecord_OPT : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_OPT Parse(Parse Parse) {
-        DNSRecord_OPT NewRecord = new DNSRecord_OPT() {
+        DNSRecord_OPT NewRecord = new() {
             };
         return NewRecord;
         }
@@ -2704,7 +2704,7 @@ public class DNSRecord_OPT : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_OPT Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_OPT NewRecord = new DNSRecord_OPT() {
+        DNSRecord_OPT NewRecord = new() {
             Start = Index.Start
             };
 
@@ -2738,7 +2738,7 @@ public class DNSRecord_DS : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("DS", Domain);
+        Canonicalize Canonicalize = new("DS", Domain);
         Canonicalize.Int16(KeyTag);
         Canonicalize.Byte(Algorithm);
         Canonicalize.Byte(DigestType);
@@ -2750,7 +2750,7 @@ public class DNSRecord_DS : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_DS Parse(Parse Parse) {
-        DNSRecord_DS NewRecord = new DNSRecord_DS() {
+        DNSRecord_DS NewRecord = new() {
             KeyTag = Parse.Int16(),
             Algorithm = Parse.Byte(),
             DigestType = Parse.Byte(),
@@ -2779,7 +2779,7 @@ public class DNSRecord_DS : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_DS Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_DS NewRecord = new DNSRecord_DS() {
+        DNSRecord_DS NewRecord = new() {
             Start = Index.Start,
             KeyTag = Index.ReadInt16(),
             Algorithm = Index.ReadByte(),
@@ -2815,7 +2815,7 @@ public class DNSRecord_SSHFP : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("SSHFP", Domain);
+        Canonicalize Canonicalize = new("SSHFP", Domain);
         Canonicalize.Byte(Algorithm);
         Canonicalize.Byte(FPType);
         Canonicalize.Hex(Fingerprint);
@@ -2826,7 +2826,7 @@ public class DNSRecord_SSHFP : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_SSHFP Parse(Parse Parse) {
-        DNSRecord_SSHFP NewRecord = new DNSRecord_SSHFP() {
+        DNSRecord_SSHFP NewRecord = new() {
             Algorithm = Parse.Byte(),
             FPType = Parse.Byte(),
             Fingerprint = Parse.Hex(),
@@ -2852,7 +2852,7 @@ public class DNSRecord_SSHFP : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_SSHFP Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_SSHFP NewRecord = new DNSRecord_SSHFP() {
+        DNSRecord_SSHFP NewRecord = new() {
             Start = Index.Start,
             Algorithm = Index.ReadByte(),
             FPType = Index.ReadByte(),
@@ -2891,7 +2891,7 @@ public class DNSRecord_IPSECKEY : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("IPSECKEY", Domain);
+        Canonicalize Canonicalize = new("IPSECKEY", Domain);
         Canonicalize.Byte(Precedence);
         Canonicalize.Byte(GatewayType);
         Canonicalize.Byte(Algorithm);
@@ -2903,7 +2903,7 @@ public class DNSRecord_IPSECKEY : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_IPSECKEY Parse(Parse Parse) {
-        DNSRecord_IPSECKEY NewRecord = new DNSRecord_IPSECKEY() {
+        DNSRecord_IPSECKEY NewRecord = new() {
             Precedence = Parse.Byte(),
             GatewayType = Parse.Byte(),
             Algorithm = Parse.Byte(),
@@ -2933,7 +2933,7 @@ public class DNSRecord_IPSECKEY : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_IPSECKEY Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_IPSECKEY NewRecord = new DNSRecord_IPSECKEY() {
+        DNSRecord_IPSECKEY NewRecord = new() {
             Start = Index.Start,
             Precedence = Index.ReadByte(),
             GatewayType = Index.ReadByte(),
@@ -2981,7 +2981,7 @@ public class DNSRecord_RRSIG : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("RRSIG", Domain);
+        Canonicalize Canonicalize = new("RRSIG", Domain);
         Canonicalize.Int16(TypeCovered);
         Canonicalize.Byte(Algorithm);
         Canonicalize.Byte(Labels);
@@ -2998,7 +2998,7 @@ public class DNSRecord_RRSIG : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_RRSIG Parse(Parse Parse) {
-        DNSRecord_RRSIG NewRecord = new DNSRecord_RRSIG() {
+        DNSRecord_RRSIG NewRecord = new() {
             TypeCovered = Parse.Int16(),
             Algorithm = Parse.Byte(),
             Labels = Parse.Byte(),
@@ -3042,7 +3042,7 @@ public class DNSRecord_RRSIG : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_RRSIG Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_RRSIG NewRecord = new DNSRecord_RRSIG() {
+        DNSRecord_RRSIG NewRecord = new() {
             Start = Index.Start,
             TypeCovered = Index.ReadInt16(),
             Algorithm = Index.ReadByte(),
@@ -3081,7 +3081,7 @@ public class DNSRecord_NSEC : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("NSEC", Domain);
+        Canonicalize Canonicalize = new("NSEC", Domain);
         Canonicalize.Domain(NextDomain);
         Canonicalize.Binary(TypeBitMaps);
         return Canonicalize.Text;
@@ -3091,7 +3091,7 @@ public class DNSRecord_NSEC : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NSEC Parse(Parse Parse) {
-        DNSRecord_NSEC NewRecord = new DNSRecord_NSEC() {
+        DNSRecord_NSEC NewRecord = new() {
             NextDomain = Parse.Domain(),
             TypeBitMaps = Parse.Binary(),
             };
@@ -3115,7 +3115,7 @@ public class DNSRecord_NSEC : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NSEC Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_NSEC NewRecord = new DNSRecord_NSEC() {
+        DNSRecord_NSEC NewRecord = new() {
             Start = Index.Start,
             NextDomain = Index.ReadDomain(),
             TypeBitMaps = Index.ReadData(Index.Remainder(Length))
@@ -3151,7 +3151,7 @@ public class DNSRecord_DNSKEY : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("DNSKEY", Domain);
+        Canonicalize Canonicalize = new("DNSKEY", Domain);
         Canonicalize.Int16(Flags);
         Canonicalize.Byte(Protocol);
         Canonicalize.Byte(Algorithm);
@@ -3163,7 +3163,7 @@ public class DNSRecord_DNSKEY : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_DNSKEY Parse(Parse Parse) {
-        DNSRecord_DNSKEY NewRecord = new DNSRecord_DNSKEY() {
+        DNSRecord_DNSKEY NewRecord = new() {
             Flags = Parse.Int16(),
             Protocol = Parse.Byte(),
             Algorithm = Parse.Byte(),
@@ -3192,7 +3192,7 @@ public class DNSRecord_DNSKEY : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_DNSKEY Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_DNSKEY NewRecord = new DNSRecord_DNSKEY() {
+        DNSRecord_DNSKEY NewRecord = new() {
             Start = Index.Start,
             Flags = Index.ReadInt16(),
             Protocol = Index.ReadByte(),
@@ -3224,7 +3224,7 @@ public class DNSRecord_DHCID : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("DHCID", Domain);
+        Canonicalize Canonicalize = new("DHCID", Domain);
         Canonicalize.Binary(Identifier);
         return Canonicalize.Text;
         }
@@ -3233,7 +3233,7 @@ public class DNSRecord_DHCID : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_DHCID Parse(Parse Parse) {
-        DNSRecord_DHCID NewRecord = new DNSRecord_DHCID() {
+        DNSRecord_DHCID NewRecord = new() {
             Identifier = Parse.Binary(),
             };
         return NewRecord;
@@ -3249,7 +3249,7 @@ public class DNSRecord_DHCID : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_DHCID Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_DHCID NewRecord = new DNSRecord_DHCID() {
+        DNSRecord_DHCID NewRecord = new() {
             Start = Index.Start,
             Identifier = Index.ReadData(Index.Remainder(Length))
             };
@@ -3288,7 +3288,7 @@ public class DNSRecord_NSEC3 : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("NSEC3", Domain);
+        Canonicalize Canonicalize = new("NSEC3", Domain);
         Canonicalize.Byte(HashAlgorithm);
         Canonicalize.Byte(Flags);
         Canonicalize.Int16(Iterations);
@@ -3302,7 +3302,7 @@ public class DNSRecord_NSEC3 : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NSEC3 Parse(Parse Parse) {
-        DNSRecord_NSEC3 NewRecord = new DNSRecord_NSEC3() {
+        DNSRecord_NSEC3 NewRecord = new() {
             HashAlgorithm = Parse.Byte(),
             Flags = Parse.Byte(),
             Iterations = Parse.Int16(),
@@ -3339,7 +3339,7 @@ public class DNSRecord_NSEC3 : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NSEC3 Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_NSEC3 NewRecord = new DNSRecord_NSEC3() {
+        DNSRecord_NSEC3 NewRecord = new() {
             Start = Index.Start,
             HashAlgorithm = Index.ReadByte(),
             Flags = Index.ReadByte(),
@@ -3379,7 +3379,7 @@ public class DNSRecord_NSEC3PARAM : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("NSEC3PARAM", Domain);
+        Canonicalize Canonicalize = new("NSEC3PARAM", Domain);
         Canonicalize.Byte(HashAlgorithm);
         Canonicalize.Byte(Flags);
         Canonicalize.Int16(Iterations);
@@ -3391,7 +3391,7 @@ public class DNSRecord_NSEC3PARAM : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NSEC3PARAM Parse(Parse Parse) {
-        DNSRecord_NSEC3PARAM NewRecord = new DNSRecord_NSEC3PARAM() {
+        DNSRecord_NSEC3PARAM NewRecord = new() {
             HashAlgorithm = Parse.Byte(),
             Flags = Parse.Byte(),
             Iterations = Parse.Int16(),
@@ -3421,7 +3421,7 @@ public class DNSRecord_NSEC3PARAM : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NSEC3PARAM Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_NSEC3PARAM NewRecord = new DNSRecord_NSEC3PARAM() {
+        DNSRecord_NSEC3PARAM NewRecord = new() {
             Start = Index.Start,
             HashAlgorithm = Index.ReadByte(),
             Flags = Index.ReadByte(),
@@ -3459,7 +3459,7 @@ public class DNSRecord_TLSA : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("TLSA", Domain);
+        Canonicalize Canonicalize = new("TLSA", Domain);
         Canonicalize.Byte(CertificateUsage);
         Canonicalize.Byte(Selector);
         Canonicalize.Byte(MatchingType);
@@ -3471,7 +3471,7 @@ public class DNSRecord_TLSA : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_TLSA Parse(Parse Parse) {
-        DNSRecord_TLSA NewRecord = new DNSRecord_TLSA() {
+        DNSRecord_TLSA NewRecord = new() {
             CertificateUsage = Parse.Byte(),
             Selector = Parse.Byte(),
             MatchingType = Parse.Byte(),
@@ -3500,7 +3500,7 @@ public class DNSRecord_TLSA : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_TLSA Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_TLSA NewRecord = new DNSRecord_TLSA() {
+        DNSRecord_TLSA NewRecord = new() {
             Start = Index.Start,
             CertificateUsage = Index.ReadByte(),
             Selector = Index.ReadByte(),
@@ -3532,7 +3532,7 @@ public class DNSRecord_SPF : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("SPF", Domain);
+        Canonicalize Canonicalize = new("SPF", Domain);
         Canonicalize.Strings(Text);
         return Canonicalize.Text;
         }
@@ -3541,7 +3541,7 @@ public class DNSRecord_SPF : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_SPF Parse(Parse Parse) {
-        DNSRecord_SPF NewRecord = new DNSRecord_SPF() {
+        DNSRecord_SPF NewRecord = new() {
             Text = Parse.Strings(),
             };
         return NewRecord;
@@ -3563,7 +3563,7 @@ public class DNSRecord_SPF : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_SPF Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_SPF NewRecord = new DNSRecord_SPF() {
+        DNSRecord_SPF NewRecord = new() {
             Start = Index.Start,
             Text = Index.ReadStrings(Index.Remainder(Length))
             };
@@ -3594,7 +3594,7 @@ public class DNSRecord_NID : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("NID", Domain);
+        Canonicalize Canonicalize = new("NID", Domain);
         Canonicalize.Int16(Preference);
         Discovery.Canonicalize.NodeID(NodeID);
         return Canonicalize.Text;
@@ -3604,7 +3604,7 @@ public class DNSRecord_NID : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NID Parse(Parse Parse) {
-        DNSRecord_NID NewRecord = new DNSRecord_NID() {
+        DNSRecord_NID NewRecord = new() {
             Preference = Parse.Int16(),
             NodeID = Parse.NodeID(),
             };
@@ -3627,7 +3627,7 @@ public class DNSRecord_NID : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_NID Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_NID NewRecord = new DNSRecord_NID() {
+        DNSRecord_NID NewRecord = new() {
             Start = Index.Start,
             Preference = Index.ReadInt16(),
             NodeID = Index.ReadNodeID()
@@ -3659,7 +3659,7 @@ public class DNSRecord_L32 : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("L32", Domain);
+        Canonicalize Canonicalize = new("L32", Domain);
         Canonicalize.Int16(Preference);
         Canonicalize.IPv4(Locator);
         return Canonicalize.Text;
@@ -3669,7 +3669,7 @@ public class DNSRecord_L32 : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_L32 Parse(Parse Parse) {
-        DNSRecord_L32 NewRecord = new DNSRecord_L32() {
+        DNSRecord_L32 NewRecord = new() {
             Preference = Parse.Int16(),
             Locator = Parse.IPv4(),
             };
@@ -3692,7 +3692,7 @@ public class DNSRecord_L32 : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_L32 Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_L32 NewRecord = new DNSRecord_L32() {
+        DNSRecord_L32 NewRecord = new() {
             Start = Index.Start,
             Preference = Index.ReadInt16(),
             Locator = Index.ReadIPv4()
@@ -3724,7 +3724,7 @@ public class DNSRecord_L64 : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("L64", Domain);
+        Canonicalize Canonicalize = new("L64", Domain);
         Canonicalize.Int16(Preference);
         Discovery.Canonicalize.NodeID(Locator);
         return Canonicalize.Text;
@@ -3734,7 +3734,7 @@ public class DNSRecord_L64 : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_L64 Parse(Parse Parse) {
-        DNSRecord_L64 NewRecord = new DNSRecord_L64() {
+        DNSRecord_L64 NewRecord = new() {
             Preference = Parse.Int16(),
             Locator = Parse.NodeID(),
             };
@@ -3757,7 +3757,7 @@ public class DNSRecord_L64 : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_L64 Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_L64 NewRecord = new DNSRecord_L64() {
+        DNSRecord_L64 NewRecord = new() {
             Start = Index.Start,
             Preference = Index.ReadInt16(),
             Locator = Index.ReadNodeID()
@@ -3789,7 +3789,7 @@ public class DNSRecord_LP : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("LP", Domain);
+        Canonicalize Canonicalize = new("LP", Domain);
         Canonicalize.Int16(Preference);
         Canonicalize.Domain(FQDN);
         return Canonicalize.Text;
@@ -3799,7 +3799,7 @@ public class DNSRecord_LP : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_LP Parse(Parse Parse) {
-        DNSRecord_LP NewRecord = new DNSRecord_LP() {
+        DNSRecord_LP NewRecord = new() {
             Preference = Parse.Int16(),
             FQDN = Parse.Domain(),
             };
@@ -3822,7 +3822,7 @@ public class DNSRecord_LP : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_LP Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_LP NewRecord = new DNSRecord_LP() {
+        DNSRecord_LP NewRecord = new() {
             Start = Index.Start,
             Preference = Index.ReadInt16(),
             FQDN = Index.ReadDomain()
@@ -3864,7 +3864,7 @@ public class DNSRecord_TKEY : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("TKEY", Domain);
+        Canonicalize Canonicalize = new("TKEY", Domain);
         Canonicalize.Domain(Algorithm);
         Canonicalize.Time32(Inception);
         Canonicalize.Time32(Expiration);
@@ -3879,7 +3879,7 @@ public class DNSRecord_TKEY : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_TKEY Parse(Parse Parse) {
-        DNSRecord_TKEY NewRecord = new DNSRecord_TKEY() {
+        DNSRecord_TKEY NewRecord = new() {
             Algorithm = Parse.Domain(),
             Inception = Parse.Time32(),
             Expiration = Parse.Time32(),
@@ -3919,7 +3919,7 @@ public class DNSRecord_TKEY : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_TKEY Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_TKEY NewRecord = new DNSRecord_TKEY() {
+        DNSRecord_TKEY NewRecord = new() {
             Start = Index.Start,
             Algorithm = Index.ReadDomain(),
             Inception = DNSBufferIndex.ReadTime32(),
@@ -3966,7 +3966,7 @@ public class DNSRecord_TSIG : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("TSIG", Domain);
+        Canonicalize Canonicalize = new("TSIG", Domain);
         Canonicalize.Domain(Algorithm);
         Canonicalize.Time48(TimeSigned);
         Canonicalize.Int16(Fudge);
@@ -3981,7 +3981,7 @@ public class DNSRecord_TSIG : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_TSIG Parse(Parse Parse) {
-        DNSRecord_TSIG NewRecord = new DNSRecord_TSIG() {
+        DNSRecord_TSIG NewRecord = new() {
             Algorithm = Parse.Domain(),
             TimeSigned = Parse.Time48(),
             Fudge = Parse.Int16(),
@@ -4021,7 +4021,7 @@ public class DNSRecord_TSIG : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_TSIG Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_TSIG NewRecord = new DNSRecord_TSIG() {
+        DNSRecord_TSIG NewRecord = new() {
             Start = Index.Start,
             Algorithm = Index.ReadDomain(),
             TimeSigned = DNSBufferIndex.ReadTime48(),
@@ -4060,7 +4060,7 @@ public class DNSRecord_URI : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("URI", Domain);
+        Canonicalize Canonicalize = new("URI", Domain);
         Canonicalize.Int16(Priority);
         Canonicalize.Int16(Weight);
         Canonicalize.Strings(Target);
@@ -4071,7 +4071,7 @@ public class DNSRecord_URI : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_URI Parse(Parse Parse) {
-        DNSRecord_URI NewRecord = new DNSRecord_URI() {
+        DNSRecord_URI NewRecord = new() {
             Priority = Parse.Int16(),
             Weight = Parse.Int16(),
             Target = Parse.Strings(),
@@ -4099,7 +4099,7 @@ public class DNSRecord_URI : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_URI Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_URI NewRecord = new DNSRecord_URI() {
+        DNSRecord_URI NewRecord = new() {
             Start = Index.Start,
             Priority = Index.ReadInt16(),
             Weight = Index.ReadInt16(),
@@ -4134,7 +4134,7 @@ public class DNSRecord_CAA : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("CAA", Domain);
+        Canonicalize Canonicalize = new("CAA", Domain);
         Canonicalize.Byte(Flags);
         Canonicalize.String(Tag);
         Canonicalize.StringX(Value);
@@ -4145,7 +4145,7 @@ public class DNSRecord_CAA : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_CAA Parse(Parse Parse) {
-        DNSRecord_CAA NewRecord = new DNSRecord_CAA() {
+        DNSRecord_CAA NewRecord = new() {
             Flags = Parse.Byte(),
             Tag = Parse.String(),
             Value = Parse.StringX(),
@@ -4171,7 +4171,7 @@ public class DNSRecord_CAA : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_CAA Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_CAA NewRecord = new DNSRecord_CAA() {
+        DNSRecord_CAA NewRecord = new() {
             Start = Index.Start,
             Flags = Index.ReadByte(),
             Tag = Index.ReadString(),
@@ -4208,7 +4208,7 @@ public class DNSRecord_TA : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("TA", Domain);
+        Canonicalize Canonicalize = new("TA", Domain);
         Canonicalize.Int16(KeyTag);
         Canonicalize.Byte(Algorithm);
         Canonicalize.Byte(DigestType);
@@ -4220,7 +4220,7 @@ public class DNSRecord_TA : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_TA Parse(Parse Parse) {
-        DNSRecord_TA NewRecord = new DNSRecord_TA() {
+        DNSRecord_TA NewRecord = new() {
             KeyTag = Parse.Int16(),
             Algorithm = Parse.Byte(),
             DigestType = Parse.Byte(),
@@ -4250,7 +4250,7 @@ public class DNSRecord_TA : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_TA Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_TA NewRecord = new DNSRecord_TA() {
+        DNSRecord_TA NewRecord = new() {
             Start = Index.Start,
             KeyTag = Index.ReadInt16(),
             Algorithm = Index.ReadByte(),
@@ -4288,7 +4288,7 @@ public class DNSRecord_DLV : DNSRecord {
     /// <summary>Convert to canonical form</summary>
     /// <returns>Canonical form of record data contents</returns>
     public override string Canonical() {
-        Canonicalize Canonicalize = new Canonicalize("DLV", Domain);
+        Canonicalize Canonicalize = new("DLV", Domain);
         Canonicalize.Int16(KeyTag);
         Canonicalize.Byte(Algorithm);
         Canonicalize.Byte(DigestType);
@@ -4300,7 +4300,7 @@ public class DNSRecord_DLV : DNSRecord {
     /// <param name="Parse">Input data</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_DLV Parse(Parse Parse) {
-        DNSRecord_DLV NewRecord = new DNSRecord_DLV() {
+        DNSRecord_DLV NewRecord = new() {
             KeyTag = Parse.Int16(),
             Algorithm = Parse.Byte(),
             DigestType = Parse.Byte(),
@@ -4329,7 +4329,7 @@ public class DNSRecord_DLV : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_DLV Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_DLV NewRecord = new DNSRecord_DLV() {
+        DNSRecord_DLV NewRecord = new() {
             Start = Index.Start,
             KeyTag = Index.ReadInt16(),
             Algorithm = Index.ReadByte(),

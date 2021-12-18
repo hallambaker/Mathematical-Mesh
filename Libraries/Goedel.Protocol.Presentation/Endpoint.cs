@@ -25,10 +25,13 @@ using Goedel.Discovery;
 
 namespace Goedel.Protocol.Presentation;
 
-#pragma warning disable CS1591
-#pragma warning disable CS1572
-#pragma warning disable CS1573
+//#pragma warning disable CS1591
+//#pragma warning disable CS1573
 
+
+/// <summary>
+/// Transport types
+/// </summary>
 [Flags]
 public enum TransportType {
 
@@ -52,6 +55,8 @@ public enum TransportType {
 /// Record describing a listener endpoint.
 /// </summary>
 /// <param name="Protocol">Directory to store persistence data.</param>
+/// <param name="Instance">Optional instance tag to allow multiple instances to be run 
+/// for testing etc.</param>
 public record Endpoint(
          string Protocol,
          string Instance = null) {
@@ -61,6 +66,13 @@ public record Endpoint(
 
     }
 
+/// <summary>
+/// A HTTP Endpoint
+/// </summary>
+/// <param name="Domain">The DNS address specified in the original HTTP URI</param>
+/// <param name="Protocol">The protocol serviced.</param>
+/// <param name="Instance">The protocol instance.</param>
+/// <param name="Port">The port number.</param>
 public record HttpEndpoint(
          string Domain,
          string Protocol,
@@ -70,31 +82,64 @@ public record HttpEndpoint(
     #endregion
     #region // Methods 
 
-    public string Account(string username) => $"{username}@{Domain}";
 
+
+    /// <summary>
+    /// Return the specializer path element, if used.
+    /// </summary>
+    /// <param name="instance">The instance value.</param>
+    /// <returns>The specializer path.</returns>
     public static string Specializer(string instance) => instance == null ? "" : $"{instance}/";
 
     //public string GetUri() => GetUri(, Port, Protocol, Instance);
 
 
-    public string GetUriPrefix() => GetUriBase("+", Port, Protocol, Instance);
 
+    /// <summary>
+    /// Return the URI for the endpoint.
+    /// </summary>
+    /// <param name="domain">The DNS address specified in the original HTTP URI</param>
+    /// <param name="protocol">The protocol serviced.</param>
+    /// <param name="instance">The protocol instance.</param>
+    /// <param name="port">The port number.</param>
+    /// <returns>the URI for the endpoint.</returns>
     public static string GetUri(string domain, int port, string protocol, string instance) =>
-        GetUriBase("voodoo", port, protocol, instance);
+        GetUriBase(domain, port, protocol, instance);
 
+    /// <summary>
+    /// Return the URI base for the specified parameters
+    /// </summary>
+    /// <param name="domain">The DNS address specified in the original HTTP URI</param>
+    /// <param name="protocol">The protocol serviced.</param>
+    /// <param name="instance">The protocol instance.</param>
+    /// <param name="port">The port number.</param>>
+    /// <returns>the URI base</returns>
     static string GetUriBase(string domain, int port, string protocol, string instance) =>
         $"http://{domain}:{port}/.well-known/{protocol}/{Specializer(instance)}";
 
 
+    /// <summary>
+    /// Return the URI prefix for the endpoint.
+    /// </summary>
+    /// <returns>the URI prefix for the endpoint.</returns>
+    public string GetUriPrefix() => GetUriBase("+", Port, Protocol, Instance);
 
-
-    // used for testing.
+    /// <summary>
+    /// Return the service URI for the endpoint.
+    /// </summary>
+    /// <returns>The service URI.</returns>
     public string GetServiceUri() => WebServiceEndpoint.GetEndpoint(Domain, Protocol, null, Instance);
 
     #endregion
     }
 
-
+/// <summary>
+/// A UDP endpoint.
+/// </summary>
+/// <param name="Protocol">The protocol serviced.</param>
+/// <param name="Instance">The protocol instance.</param>
+/// <param name="Port">The port number.</param>
+/// <param name="AddressFamily">The address family.</param>
 public record UdpEndpoint(
          string Protocol,
          string Instance = null,
@@ -102,6 +147,10 @@ public record UdpEndpoint(
          AddressFamily AddressFamily = AddressFamily.InterNetwork) : Endpoint(Protocol, Instance) {
     #region // Methods 
 
+    /// <summary>
+    /// Return a ned UDP client bound to the endpoint as a promiscuous listener.
+    /// </summary>
+    /// <returns>The port created.</returns>
     public UdpClient GetClient() {
         if (Port > 0) {
             return new UdpClient(Port, AddressFamily);

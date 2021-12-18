@@ -28,7 +28,7 @@ using Xunit;
 namespace Goedel.XUnit;
 
 public class TestLifecycle {
-    KeyCollection keyCollection;
+    readonly KeyCollection keyCollection;
 
     public MeshMachineTest MeshMachine;
 

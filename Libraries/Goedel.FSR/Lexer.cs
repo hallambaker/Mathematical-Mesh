@@ -28,8 +28,8 @@ namespace Goedel.FSR;
 /// String builder stripping leading and trailing whitespace.
 /// </summary>
 public class Accumulate {
-    StringBuilder current = new();
-    StringBuilder whiteSpace = new();
+    readonly StringBuilder current = new();
+    readonly StringBuilder whiteSpace = new();
 
 
     bool haveCharacter = false;
@@ -60,7 +60,7 @@ public class Accumulate {
                 startQuote = true;
                 }
             else if (!(startQuote & Character == '\"')) {
-                current.Append(whiteSpace.ToString());
+                current.Append(whiteSpace);
                 whiteSpace.Clear();
                 current.Append(Character);
                 }
@@ -102,7 +102,7 @@ public abstract class Lexer : Disposable {
     /// <summary>
     /// If set true, debug tracing is enabled
     /// </summary>
-    public static bool Trace = false;
+    public static bool Trace { get; set; } = false;
 
     /// <summary>
     /// Get the next token calling all token actions while the

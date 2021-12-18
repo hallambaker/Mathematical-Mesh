@@ -582,6 +582,11 @@
             </summary>
             <param name="packet">Received packet</param>
         </member>
+        <member name="T:Goedel.Protocol.Presentation.TransportType">
+            <summary>
+            Transport types
+            </summary>
+        </member>
         <member name="F:Goedel.Protocol.Presentation.TransportType.Http">
             <summary>HTTP/Fred binding.</summary> 
         </member>
@@ -599,12 +604,97 @@
             Record describing a listener endpoint.
             </summary>
             <param name="Protocol">Directory to store persistence data.</param>
+            <param name="Instance">Optional instance tag to allow multiple instances to be run 
+            for testing etc.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.Endpoint.#ctor(System.String,System.String)">
             <summary>
             Record describing a listener endpoint.
             </summary>
             <param name="Protocol">Directory to store persistence data.</param>
+            <param name="Instance">Optional instance tag to allow multiple instances to be run 
+            for testing etc.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.HttpEndpoint">
+            <summary>
+            A HTTP Endpoint
+            </summary>
+            <param name="Domain">The DNS address specified in the original HTTP URI</param>
+            <param name="Protocol">The protocol serviced.</param>
+            <param name="Instance">The protocol instance.</param>
+            <param name="Port">The port number.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.HttpEndpoint.#ctor(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            A HTTP Endpoint
+            </summary>
+            <param name="Domain">The DNS address specified in the original HTTP URI</param>
+            <param name="Protocol">The protocol serviced.</param>
+            <param name="Instance">The protocol instance.</param>
+            <param name="Port">The port number.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.HttpEndpoint.Specializer(System.String)">
+            <summary>
+            Return the specializer path element, if used.
+            </summary>
+            <param name="instance">The instance value.</param>
+            <returns>The specializer path.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.HttpEndpoint.GetUri(System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Return the URI for the endpoint.
+            </summary>
+            <param name="domain">The DNS address specified in the original HTTP URI</param>
+            <param name="protocol">The protocol serviced.</param>
+            <param name="instance">The protocol instance.</param>
+            <param name="port">The port number.</param>
+            <returns>the URI for the endpoint.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.HttpEndpoint.GetUriBase(System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Return the URI base for the specified parameters
+            </summary>
+            <param name="domain">The DNS address specified in the original HTTP URI</param>
+            <param name="protocol">The protocol serviced.</param>
+            <param name="instance">The protocol instance.</param>
+            <param name="port">The port number.</param>>
+            <returns>the URI base</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.HttpEndpoint.GetUriPrefix">
+            <summary>
+            Return the URI prefix for the endpoint.
+            </summary>
+            <returns>the URI prefix for the endpoint.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.HttpEndpoint.GetServiceUri">
+            <summary>
+            Return the service URI for the endpoint.
+            </summary>
+            <returns>The service URI.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.UdpEndpoint">
+            <summary>
+            A UDP endpoint.
+            </summary>
+            <param name="Protocol">The protocol serviced.</param>
+            <param name="Instance">The protocol instance.</param>
+            <param name="Port">The port number.</param>
+            <param name="AddressFamily">The address family.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.UdpEndpoint.#ctor(System.String,System.String,System.Int32,System.Net.Sockets.AddressFamily)">
+            <summary>
+            A UDP endpoint.
+            </summary>
+            <param name="Protocol">The protocol serviced.</param>
+            <param name="Instance">The protocol instance.</param>
+            <param name="Port">The port number.</param>
+            <param name="AddressFamily">The address family.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.UdpEndpoint.GetClient">
+            <summary>
+            Return a ned UDP client bound to the endpoint as a promiscuous listener.
+            </summary>
+            <returns>The port created.</returns>
         </member>
         <member name="T:Goedel.Protocol.Presentation.Extensions">
             <summary>

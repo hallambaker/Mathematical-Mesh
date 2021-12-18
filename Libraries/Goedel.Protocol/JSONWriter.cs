@@ -38,7 +38,7 @@ public delegate JsonWriter JSONWriterFactoryDelegate();
 public class JsonWriter : Writer {
 
     /// <summary>The conversion format to be used for Base64 Binary encoding.</summary>
-    public static ConversionFormat ConversionFormat = ConversionFormat.Draft;
+    public static ConversionFormat ConversionFormat { get; set; } = ConversionFormat.Draft;
 
     /// <summary>The current indent level</summary>
     protected int Indent = 0;

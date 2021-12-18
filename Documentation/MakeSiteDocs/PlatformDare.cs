@@ -216,7 +216,7 @@ public partial class CreateExamples {
 
 
 
-    byte[] testData300 = TestData(300);
+    readonly byte[] testData300 = TestData(300);
     KeyCollection keyCollection;
     List<byte[]> dataSequences;
 

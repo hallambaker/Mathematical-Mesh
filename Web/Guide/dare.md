@@ -11,7 +11,7 @@ The `dare encode` command is used to encode files as DARE Messages:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt
+<cmd>Alice> meshman dare encode TestFile1.txt
 </div>
 ~~~~
 
@@ -25,8 +25,9 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare ^
-    /key=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
+<cmd>Alice> meshman dare encode TestFile1.txt ^
+    /out=TestFile1.txt.symmetric.dare ^
+    /key=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -37,8 +38,9 @@ encoded:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestDir1 /encrypt=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman dare encode TestDir1 ^
+    /encrypt=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
+<rsp>ERROR - No encryption key is available
 </div>
 ~~~~
 
@@ -50,10 +52,11 @@ public encryption key.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt ^
+<cmd>Alice> meshman dare encode TestFile1.txt ^
     TestFile1.txt.mesh.dare/encrypt=bob@example.com ^
     /sign=alice@example.com
-<rsp>ERROR - Object reference not set to an instance of an object.
+<rsp>ERROR - Could not find a part of the path 'C:\Users\hallam\Test\Worki
+ngDirectory\TestFile1.txt.mesh.dare\encrypt=bob@example.com'.
 </div>
 ~~~~
 
@@ -66,7 +69,7 @@ digest values on a DARE Message without decoding the message body:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.dare
+<cmd>Alice> meshman dare verify TestFile1.txt.dare
 <rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
 stFile1.txt.dare'.
 </div>
@@ -77,7 +80,7 @@ The command to verify a signed message is identical:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.mesh.dare
+<cmd>Alice> meshman dare verify TestFile1.txt.mesh.dare
 <rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
 stFile1.txt.mesh.dare'.
 </div>
@@ -90,8 +93,8 @@ level otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare ^
-    /encrypt=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
+<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare ^
+    /encrypt=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -100,7 +103,7 @@ level otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare
+<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare
 <rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
 stFile1.txt.symmetric.dare'.
 </div>
@@ -113,7 +116,7 @@ The `dare decode` command is used to decode and verify DARE Messages:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.dare
+<cmd>Alice> meshman dare decode TestFile1.txt.dare
 <rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
 stFile1.txt.dare'.
 </div>
@@ -124,8 +127,8 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare ^
-    /encrypt=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
+<cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare ^
+    /encrypt=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -136,7 +139,7 @@ the necessary decryption key(s) automatically:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.mesh.dare
+<cmd>Alice> meshman dare decode TestFile1.txt.mesh.dare
 <rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
 stFile1.txt.mesh.dare'.
 </div>
@@ -149,7 +152,7 @@ The `dare earl` command is used to create an EARL:
 
 
 ~~~~
-Missing example 5
+Missing example 8
 ~~~~
 
 A new secret is generated with the specified number of bits, this is then used
@@ -161,7 +164,7 @@ the transaction to be written to a DARE Container Log.
 
 
 ~~~~
-Missing example 6
+Missing example 9
 ~~~~
 
 The `/new` option causes the file to be encoded if and only if it has not 
@@ -169,7 +172,7 @@ been processed already.
 
 
 ~~~~
-Missing example 7
+Missing example 10
 ~~~~
 
 
@@ -184,7 +187,7 @@ a container archive.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container create Container.dcon
+<cmd>Alice> meshman container create Container.dcon
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -202,7 +205,7 @@ member of the group groupw@example.com;
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container create ContainerEncrypt.dcon ^
+<cmd>Alice> meshman container create ContainerEncrypt.dcon ^
     /encrypt=groupw@example.com
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
@@ -217,7 +220,7 @@ specified file(s) as entries and appends an index as the final record:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container archive ContainerArchive.dcon TestDir1
+<cmd>Alice> meshman container archive ContainerArchive.dcon TestDir1
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -227,9 +230,9 @@ An archive may be signed and encrypted:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container create ContainerArchiveEncrypt.dcon TestDir1
+<cmd>Alice> meshman container create ContainerArchiveEncrypt.dcon TestDir1
 <rsp>ERROR - The command System.Object[] is not known.
-<cmd>Alice> /encrypt=groupw@example.com /sign=alice@example.com
+<cmd>Alice> meshman /encrypt=groupw@example.com /sign=alice@example.com
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -245,7 +248,7 @@ The `dare verify` command verifies the contents of a container:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container verify ContainerArchiveEncrypt.dcon
+<cmd>Alice> meshman container verify ContainerArchiveEncrypt.dcon
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -264,7 +267,7 @@ the files are extracted by default:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container extract Container.dcon TestOut
+<cmd>Alice> meshman container extract Container.dcon TestOut
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -274,7 +277,8 @@ Alternatively, the `/file` option may be used to extract a specific file:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container extract Container.dcon /file=TestDir1\TestFile4.txt
+<cmd>Alice> meshman container extract Container.dcon ^
+    /file=TestDir1\TestFile4.txt
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -287,9 +291,9 @@ The `dare append` command adds an entry to a container:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container append Container.dcon TestFile1.txtcontainer append ^
-    Container.dcon TestFile2.txtcontainer append Container.dcon ^
-    TestFile3.txt
+<cmd>Alice> meshman container append Container.dcon TestFile1.txtcontainer ^
+    append Container.dcon TestFile2.txtcontainer append ^
+    Container.dcon TestFile3.txt
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -305,7 +309,7 @@ marking an entry as deleted:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container delete Container.dcon  TestFile2.txt
+<cmd>Alice> meshman container delete Container.dcon  TestFile2.txt
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -323,7 +327,7 @@ container:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container index Container.dcon
+<cmd>Alice> meshman container index Container.dcon
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -346,7 +350,7 @@ at the end:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container copy Container2.dcon
+<cmd>Alice> meshman container copy Container2.dcon
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -357,7 +361,7 @@ the copy:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container copy ContainerArchiveEncrypt.dcon /decrypt
+<cmd>Alice> meshman container copy ContainerArchiveEncrypt.dcon /decrypt
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -367,7 +371,7 @@ The copy command may also be used to reclaim space used by deleted items:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container copy Container2.dcon /purge
+<cmd>Alice> meshman container copy Container2.dcon /purge
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~

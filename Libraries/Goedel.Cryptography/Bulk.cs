@@ -46,7 +46,7 @@ public abstract class CryptoProviderBulk : CryptoProvider {
 /// </summary>
 public abstract class CryptoProviderDigest : CryptoProviderBulk {
 
-    readonly static byte[] emptyByteArray = new byte[0];
+    readonly static byte[] emptyByteArray = Array.Empty<byte>();
 
     ///<summary>Return the digest value of a empty byte array. The value is calculated once and cached.</summary>
     public byte[] NullDigest => nullDigest ?? ProcessData(emptyByteArray, emptyByteArray).CacheValue(out nullDigest);
@@ -88,7 +88,7 @@ public abstract class CryptoProviderDigest : CryptoProviderBulk {
 
 
     /// <summary>The crypto algorithm class.</summary>
-    protected static CryptoAlgorithmClasses _AlgorithmClass =
+    protected static readonly CryptoAlgorithmClasses _AlgorithmClass =
         CryptoAlgorithmClasses.Digest;
 
     /// <summary>Return the crypto algorithm class.</summary>
@@ -103,7 +103,7 @@ public abstract class CryptoProviderDigest : CryptoProviderBulk {
 public abstract class CryptoProviderAuthentication : CryptoProviderDigest {
 
     /// <summary>The crypto algorithm class.</summary>
-    protected static new CryptoAlgorithmClasses _AlgorithmClass =
+    protected static readonly new CryptoAlgorithmClasses _AlgorithmClass =
         CryptoAlgorithmClasses.MAC;
 
     /// <summary>Return the crypto algorithm class.</summary>
@@ -231,7 +231,7 @@ public abstract class CryptoProviderEncryption : CryptoProviderBulk {
     public override CryptoAlgorithmClasses AlgorithmClass => _AlgorithmClass;
 
     /// <summary>The crypto algorithm class.</summary>
-    protected static CryptoAlgorithmClasses _AlgorithmClass =
+    protected static readonly CryptoAlgorithmClasses _AlgorithmClass =
         CryptoAlgorithmClasses.Encryption;
 
     /// <summary>

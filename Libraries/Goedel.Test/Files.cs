@@ -89,8 +89,8 @@ public static class Files {
         }
 
     public static bool FileStreamEquals(Stream Stream1, Stream Stream2) {
-        using BufferedStream BufferedStream1 = new BufferedStream(Stream1);
-        using BufferedStream BufferedStream2 = new BufferedStream(Stream2);
+        using BufferedStream BufferedStream1 = new(Stream1);
+        using BufferedStream BufferedStream2 = new(Stream2);
         while (true) {
             var B1 = BufferedStream1.ReadByte();
             var B2 = BufferedStream2.ReadByte();

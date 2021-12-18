@@ -110,14 +110,14 @@ public partial class ShellTests {
     [Fact]
     public void TestArchive() => TestSequence();
 
-    int[] counts = { 10, 20 };
+    readonly int[] counts = { 10, 20 };
 
     [Fact]
     public void TestLog() => LogTest(counts);
 
-    string archive1 = "../CommonData/Archive1";
-    string archive2 = "../CommonData/Archive2";
-    string archive3 = "../CommonData/Archive3";
+    readonly string archive1 = "../CommonData/Archive1";
+    readonly string archive2 = "../CommonData/Archive2";
+    readonly string archive3 = "../CommonData/Archive3";
 
     [Theory]
     [InlineData(100)]

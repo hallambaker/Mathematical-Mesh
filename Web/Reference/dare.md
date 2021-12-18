@@ -56,7 +56,7 @@ enhancements.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container archive ContainerArchive.dcon TestDir1
+<cmd>Alice> meshman container archive ContainerArchive.dcon TestDir1
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -65,7 +65,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container archive ContainerArchive.dcon TestDir1 /json
+<cmd>Alice> meshman container archive ContainerArchive.dcon TestDir1 /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -102,7 +102,7 @@ enhancements.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container create Container.dcon
+<cmd>Alice> meshman container create Container.dcon
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -111,7 +111,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container create Container.dcon /json
+<cmd>Alice> meshman container create Container.dcon /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -148,7 +148,7 @@ to files.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container extract Container.dcon TestOut
+<cmd>Alice> meshman container extract Container.dcon TestOut
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -157,7 +157,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container extract Container.dcon TestOut /json
+<cmd>Alice> meshman container extract Container.dcon TestOut /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -195,7 +195,7 @@ The `dare append` command appends the specified file to the container.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
+<cmd>Alice> meshman container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -204,7 +204,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt /json
+<cmd>Alice> meshman container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -233,7 +233,7 @@ container but does not erase the data from the file.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container delete Container.dcon  TestFile2.txt
+<cmd>Alice> meshman container delete Container.dcon  TestFile2.txt
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -242,7 +242,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container delete Container.dcon  TestFile2.txt /json
+<cmd>Alice> meshman container delete Container.dcon  TestFile2.txt /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -277,7 +277,7 @@ The `dare index` command appends an index record to the end of the container.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container index Container.dcon
+<cmd>Alice> meshman container index Container.dcon
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -286,7 +286,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container index Container.dcon /json
+<cmd>Alice> meshman container index Container.dcon /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -327,7 +327,7 @@ and indexing criteria.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container copy Container2.dcon
+<cmd>Alice> meshman container copy Container2.dcon
 <rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
@@ -336,7 +336,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> container copy Container2.dcon /json
+<cmd>Alice> meshman container copy Container2.dcon /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -405,7 +405,7 @@ file name is the input file name with the additional extension `.dare`.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
+<cmd>Alice> meshman dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -414,7 +414,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU /json
+<cmd>Alice> meshman dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -454,7 +454,7 @@ with the extension `.undare` otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
+<cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare /encrypt=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -463,7 +463,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU /json
+<cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare /encrypt=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -498,7 +498,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU
+<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare /encrypt=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -507,7 +507,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=INYH-ZUCY-W2NO-RDC7-KE6D-OB5T-JU /json
+<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare /encrypt=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU /json
 <rsp>{
   "Result": {
     "Success": false,

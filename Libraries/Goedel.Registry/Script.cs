@@ -23,7 +23,6 @@ using System.Globalization;
 using System.Reflection;
 
 #pragma warning disable IDE0022
-#pragma warning disable IDE0060
 #pragma warning disable IDE1006
 
 namespace Goedel.Registry;
@@ -79,12 +78,12 @@ public partial class Script {
 
         foreach (char c in text) {
             if (c == '\n') {
-                builder.Append("\n");
+                builder.Append('\n');
                 col = 0;
                 }
             else {
                 if (col >= cols) {
-                    builder.Append("\n");
+                    builder.Append('\n');
                     col = 0;
                     }
                 builder.Append(c);
@@ -127,11 +126,11 @@ public partial class Script {
                     if (continuation != null) {
                         builder.Append(continuation);
                         }
-                    builder.Append("\n");
+                    builder.Append('\n');
                     first = true;
                     position = 0;
                     for (var i = 0; i < indent; i++) {
-                        builder.Append(" ");
+                        builder.Append(' ');
                         position++;
                         }
                     }
@@ -140,7 +139,7 @@ public partial class Script {
                     first = false;
                     }
                 else {
-                    builder.Append(" ");
+                    builder.Append(' ');
                     position++;
                     }
 
@@ -184,9 +183,9 @@ public partial class Script {
         }
 
     /// <summary>If true, the entry assembly is unknown.</summary>
-    public static bool _TestEntryAssembly = true;
+    public static bool _TestEntryAssembly { get; set; } = true;
     /// <summary>The entry assembly</summary>
-    public static Assembly _EntryAssembly = null;
+    public static Assembly _EntryAssembly { get; set; } = null;
 
     /// <summary>
     /// Get the current entry assembly.
@@ -202,7 +201,7 @@ public partial class Script {
         }
 
     /// <summary>The operating system version.</summary>
-    static System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
+    static readonly System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
     /// <summary>The operating system platform name.</summary>
     public static string Platform => OperatingSystem.Platform.ToString();
@@ -259,7 +258,7 @@ public partial class Script {
             var value = attribute.InformationalVersion;
             var index = value.IndexOf(BuildVersionMetadataPrefix);
             if (index > 0) {
-                value = value.Substring(index + BuildVersionMetadataPrefix.Length);
+                value = value[(index + BuildVersionMetadataPrefix.Length)..];
                 if (DateTime.TryParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result)) {
                     return result;
                     }
@@ -311,7 +310,7 @@ public partial class Script {
             Builder.Append(Indent);
             Builder.Append("///");
             Builder.Append(Part);
-            Builder.Append("\n");
+            Builder.Append('\n');
             }
 
         Builder.Append(Indent);
@@ -339,7 +338,7 @@ public partial class Script {
             Builder.Append(Indent);
             Builder.Append("///");
             Builder.Append(Part);
-            Builder.Append("\n");
+            Builder.Append('\n');
             }
 
         Builder.Append(Indent);

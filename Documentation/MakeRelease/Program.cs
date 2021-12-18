@@ -7,7 +7,7 @@ using Goedel.Registry;
 namespace Goedel.Tool.Version;
 
 class Program {
-    static string PathDistribution = "prismproof\\Downloads";
+    static readonly string PathDistribution = "prismproof\\Downloads";
     //static string PathSummary = "Sources\\" + PathDistribution;
 
     public Distribution Distribution = new();
@@ -132,7 +132,7 @@ public partial class Version : IComparer<Version> {
 
 
 public partial class Platform {
-    static Dictionary<string, string> MapPlatform = new() {
+    static readonly Dictionary<string, string> MapPlatform = new() {
             { "windows", "Windows" },
             { "osx", "macOS" },
             { "linux", "Linux" },
@@ -160,7 +160,7 @@ public partial class File {
     public Platform Platform;
 
 
-    static Dictionary<string, string> MapRID = new() {
+    static readonly Dictionary<string, string> MapRID = new() {
             { "win-x64", "Intel & AMD 64 bit (Windows 7 or later)" },
             { "win10-arm", "Windows ARM, 64 bit (Windows 10 only)" },
             { "osx-x64", "macOS (OSX) (Sierra (10.12) or later)" },

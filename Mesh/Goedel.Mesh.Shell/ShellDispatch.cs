@@ -72,7 +72,7 @@ public partial class Shell : _Shell {
     ///<summary>The current Mesh UDF.</summary>
     public string MeshID { get; set; }
 
-    TextWriter output;
+    readonly TextWriter output;
 
     /// <summary>
     /// Default constructor. If not null, output is directed to

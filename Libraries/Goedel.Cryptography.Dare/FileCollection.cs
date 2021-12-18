@@ -149,8 +149,13 @@ public class FileCollection {
         return (fileEntry);
         }
 
-
-    FileEntry Remove(DareHeader dareHeader, long position) {
+    /// <summary>
+    /// Remove a file entry by appending a record saying it is deleted.
+    /// </summary>
+    /// <param name="dareHeader">DARE header describing the entry.</param>
+    /// <param name="position">Position within the sequence file.</param>
+    /// <returns>The original file entry if found.</returns>
+    public FileEntry Remove(DareHeader dareHeader, long position) {
         if (!DictionaryByPath.TryGetValue(dareHeader.ContentMeta?.Filename, out var previous)) {
             return null; // didn't exist, return null
             }

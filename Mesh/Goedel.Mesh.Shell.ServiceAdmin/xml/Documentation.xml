@@ -306,13 +306,13 @@
             Service administration CLI
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.Entries">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.DefaultCommand">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.Description">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.Help(Goedel.Command.DispatchShell,System.String[],System.Int32)">

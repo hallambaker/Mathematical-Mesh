@@ -135,7 +135,7 @@ public enum CharType {
 /// <summary>Stub DNS parser class. Not currently implemented. 
 /// Could be the basis for a DNS config file parser.</summary>
 public class Parse {
-    TextBuffer TextBuffer;
+    readonly TextBuffer TextBuffer;
     bool LastEOL = false;
 
     /// <summary>Construct from specified string.</summary>
@@ -145,7 +145,7 @@ public class Parse {
     // -1 End of current production (token is valid)
     // -2 Invalid token
 
-    static int[,] NextState = {
+    static readonly int[,] NextState = {
             // ?,  WS,  09,  az,  AZ,   .,   _,   -,   ",   $,   ;,   (,   ),  \n    @,   \,   #
             { -2,   0,   6,   7,   7,  -1,   4,   4,  12,   3,   1,   8,   9,  -1,   2,  10,  -2 }, // 0 "   "
             {  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  -1,  -2,  -2,  -2 }, // 1 "  ;blah"
@@ -172,7 +172,7 @@ public class Parse {
     // 0 Do nothing
     // 1 Add to string
 
-    static int[,] Action = {
+    static readonly int[,] Action = {
             // ?,  WS,  09,  az,  AZ,   .,   _,   -,   ",   $,   ;,   (,   ),  \n    @,   \,   #
             {  0,   0,   1,   1,   1,   1,   1,   1,   0,   1,   0,   0,   0,   0,   1,   0,   1 }, // 0 "   "
             {  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1 "  ;blah"
@@ -194,7 +194,7 @@ public class Parse {
             {  0,   0,   0,   0,   0,   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }  // 17 "ww"                              
             };
 
-    static TokenType[] FinalToken = {
+    static readonly TokenType[] FinalToken = {
                 TokenType.EOL,          // 0
                 TokenType.EOL,          // 1
                 TokenType.At,           // 2
@@ -442,7 +442,10 @@ public class Parse {
 
     /// <summary>Get String</summary>
     /// <returns>The value returned</returns>
-    public static string String() => null;
+    public string String() {
+        this.Future();
+        return null;
+        }
 
     /// <summary>Get Optional String</summary>
     /// <returns>The value returned</returns>
@@ -455,7 +458,7 @@ public class Parse {
     /// <summary>Get multiple strings</summary>
     /// <returns>The value returned</returns>
     public List<string> Strings() {
-        List<string> ListString = new List<string>();
+        List<string> ListString = new();
         while (true) {
             string token = Token(out var TokenType);
             if (TokenType == TokenType.EOL) {
@@ -468,7 +471,10 @@ public class Parse {
 
     /// <summary>Get Binary data</summary>
     /// <returns>The value returned</returns>
-    public static byte[] Binary() => null;
+    public byte[] Binary() {
+        this.Future();
+        return null;
+        }
 
     /// <summary>Get Binary data with 8 bit length value</summary>
     /// <returns>The value returned</returns>
@@ -480,12 +486,14 @@ public class Parse {
 
     /// <summary>Get Binary data with L production</summary>
     /// <returns>The value returned</returns>
-    public static byte[] LBinary() => null;
+    public byte[] LBinary() => Binary();
 
     /// <summary>Get Hex data</summary>
     /// <returns>The value returned</returns>>
-    public static byte[] Hex() => null;
-
+    public byte[] Hex() {
+        this.Future();
+        return null;
+        }
     /// <summary>Get Hex data with 8 bit length value</summary>
     /// <returns>The value returned</returns>
     public byte[] Hex8() => Hex();

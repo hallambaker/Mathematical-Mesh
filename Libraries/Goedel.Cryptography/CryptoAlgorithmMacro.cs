@@ -30,19 +30,19 @@ namespace Goedel.Cryptography;
 public static class CryptoID {
 
     ///<summary>The default signature algorithm</summary>
-    public static CryptoAlgorithmId DefaultSignatureId = CryptoAlgorithmId.Ed448;
+    public static CryptoAlgorithmId DefaultSignatureId { get; set; } = CryptoAlgorithmId.Ed448;
 
     ///<summary>The default public encryption algorithm</summary>
-    public static CryptoAlgorithmId DefaultExchangeId = CryptoAlgorithmId.X448;
+    public static CryptoAlgorithmId DefaultExchangeId { get; set; } = CryptoAlgorithmId.X448;
 
     ///<summary>The default digest algorithm</summary>
-    public static CryptoAlgorithmId DefaultEncryptionId = CryptoAlgorithmId.AES256CBC;
+    public static CryptoAlgorithmId DefaultEncryptionId { get; set; } = CryptoAlgorithmId.AES256CBC;
 
     ///<summary>The default digest algorithm</summary>
-    public static CryptoAlgorithmId DefaultDigestId = CryptoAlgorithmId.SHA_2_512;
+    public static CryptoAlgorithmId DefaultDigestId { get; set; } = CryptoAlgorithmId.SHA_2_512;
 
     ///<summary>The default digest algorithm</summary>
-    public static CryptoAlgorithmId DefaultMACId = CryptoAlgorithmId.HMAC_SHA_2_512;
+    public static CryptoAlgorithmId DefaultMACId { get; set; } = CryptoAlgorithmId.HMAC_SHA_2_512;
 
 
     /// <summary>

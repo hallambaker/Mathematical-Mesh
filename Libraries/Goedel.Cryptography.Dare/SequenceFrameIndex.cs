@@ -70,7 +70,7 @@ public partial class SequenceFrameIndex {
     ///<summary>Convenience property, set true iff header contains direct key exchange.</summary> 
     public bool KeyExchange => Header?.Recipients != null;
 
-    JbcdStream jbcdStream;
+    readonly JbcdStream jbcdStream;
 
     /// <summary>
     /// Return the frame payload.

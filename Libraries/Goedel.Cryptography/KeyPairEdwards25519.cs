@@ -63,8 +63,8 @@ public class KeyPairEd25519 : KeyPairEdwards {
     #endregion
 
 
-    KeySecurity KeyType = KeySecurity.Public;
-    byte[] EncodedPrivateKey = null;
+    readonly KeySecurity KeyType = KeySecurity.Public;
+    readonly byte[] EncodedPrivateKey = null;
 
 
     /// <summary>

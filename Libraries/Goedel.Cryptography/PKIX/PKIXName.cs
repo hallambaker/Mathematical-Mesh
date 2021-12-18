@@ -74,7 +74,7 @@ public partial class Name {
     /// <param name="Value">Text value.</param>
     /// <param name="Type">Text encoding.</param>
     public void Add(int[] OID, string Value, StringType Type) {
-        AttributeTypeValue AttributeTypeValue = new AttributeTypeValue(OID, Value, Type);
+        AttributeTypeValue AttributeTypeValue = new(OID, Value, Type);
         Member.Add(AttributeTypeValue);
         }
 
@@ -83,7 +83,7 @@ public partial class Name {
     /// </summary>
     /// <returns>Singleton list with this as the only member.</returns>
     public List<Name> ToList() {
-        List<Name> Result = new List<Name> {
+        List<Name> Result = new() {
                 this
                 };
         return Result;

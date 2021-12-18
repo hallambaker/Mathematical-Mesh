@@ -1149,10 +1149,10 @@
             Close the current output file.
             </summary>
         </member>
-        <member name="F:Goedel.Registry.Script._TestEntryAssembly">
+        <member name="P:Goedel.Registry.Script._TestEntryAssembly">
             <summary>If true, the entry assembly is unknown.</summary>
         </member>
-        <member name="F:Goedel.Registry.Script._EntryAssembly">
+        <member name="P:Goedel.Registry.Script._EntryAssembly">
             <summary>The entry assembly</summary>
         </member>
         <member name="P:Goedel.Registry.Script.EntryAssembly">

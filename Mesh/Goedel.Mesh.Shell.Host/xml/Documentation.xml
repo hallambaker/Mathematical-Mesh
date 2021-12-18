@@ -21,13 +21,13 @@
             Host Shell Command Line Interpreter.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.Host.CommandLineInterpreter.Entries">
+        <member name="P:Goedel.Mesh.Shell.Host.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.Host.CommandLineInterpreter.DefaultCommand">
+        <member name="P:Goedel.Mesh.Shell.Host.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.Host.CommandLineInterpreter.Description">
+        <member name="P:Goedel.Mesh.Shell.Host.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.Host.CommandLineInterpreter.Help(Goedel.Command.DispatchShell,System.String[],System.Int32)">
@@ -128,6 +128,12 @@
             Post processing action
             </summary>
             <param name="result"></param>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Shell.MachineName">
+            <summary>The Machine name</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Shell.Configuration">
+            <summary>The service configuration.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Shell.Host.Shell.HostStart(Goedel.Mesh.Shell.Host.HostStart)">
             <inheritdoc/>

@@ -470,7 +470,8 @@ public partial class JbcdStream {
 
         }
 
-    static byte[] Empty = new byte[0];
+    static readonly byte[] Empty = Array.Empty<byte>();
+
 
     /// <summary>
     ///  Read a frame in the forward direction.

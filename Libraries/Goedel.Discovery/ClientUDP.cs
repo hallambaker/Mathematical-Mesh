@@ -29,11 +29,10 @@ namespace Goedel.Discovery;
 /// UDP Client wrapper. Performs buffering on reads.
 /// </summary>
 public class ClientUDP : Disposable {
-
-    IPEndPoint endPoint;
+    readonly IPEndPoint endPoint;
     UdpClient udpClient = null;
-    Thread listenerThread;
-    int maxRead;
+    readonly Thread listenerThread;
+    readonly int maxRead;
 
     ///<summary>The last data read.</summary>
     public byte[] Data;
@@ -58,14 +57,14 @@ public class ClientUDP : Disposable {
             udpClient.Client.ReceiveTimeout = timeOut;
             }
         this.maxRead = maxRead;
+        this.maxRead.Future();
 
         // Start the listener
         listenerThread = new Thread(Listen);
         listenerThread.Start();
         }
 
-
-    bool active = true;
+    readonly bool active = true;
 
 
 

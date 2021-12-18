@@ -32,32 +32,32 @@ using Xunit;
 namespace Goedel.XUnit;
 
 public partial class TestDigests {
-    static string Message1 = "abc";
-    static string Message2 = "";
-    static string Message3 = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
-    static string Message4 = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu";
-    static string Message5 = "a";
-    static string Message6 = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno";
+    static readonly string Message1 = "abc";
+    static readonly string Message2 = "";
+    static readonly string Message3 = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
+    static readonly string Message4 = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu";
+    static readonly string Message5 = "a";
+    static readonly string Message6 = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno";
 
     // Some algorithm variations are intentionally omitted from the support library.
     // To enable testing in the future, the corresponding test vectors are specified
     // in the test set with the algorithm ID set to null;
-    static CryptoAlgorithmId SHA_1 = CryptoAlgorithmId.NULL;
-    static CryptoAlgorithmId SHA_2_224 = CryptoAlgorithmId.NULL;
-    static CryptoAlgorithmId SHA_2_256 = CryptoAlgorithmId.SHA_2_256;
-    static CryptoAlgorithmId SHA_2_384 = CryptoAlgorithmId.NULL;
-    static CryptoAlgorithmId SHA_2_512 = CryptoAlgorithmId.SHA_2_512;
-    static CryptoAlgorithmId SHA_2_512T128 = CryptoAlgorithmId.SHA_2_512T128;
+    static readonly CryptoAlgorithmId SHA_1 = CryptoAlgorithmId.NULL;
+    static readonly CryptoAlgorithmId SHA_2_224 = CryptoAlgorithmId.NULL;
+    static readonly CryptoAlgorithmId SHA_2_256 = CryptoAlgorithmId.SHA_2_256;
+    static readonly CryptoAlgorithmId SHA_2_384 = CryptoAlgorithmId.NULL;
+    static readonly CryptoAlgorithmId SHA_2_512 = CryptoAlgorithmId.SHA_2_512;
+    static readonly CryptoAlgorithmId SHA_2_512T128 = CryptoAlgorithmId.SHA_2_512T128;
     //static CryptoAlgorithmID SHA_3_224 = CryptoAlgorithmID.NULL;
-    static CryptoAlgorithmId SHA_3_256 = CryptoAlgorithmId.SHA_3_256;
+    static readonly CryptoAlgorithmId SHA_3_256 = CryptoAlgorithmId.SHA_3_256;
     //static CryptoAlgorithmID SHA_3_384 = CryptoAlgorithmID.NULL;
-    static CryptoAlgorithmId SHA_3_512 = CryptoAlgorithmId.SHA_3_512;
-    static CryptoAlgorithmId SHAKE_128 = CryptoAlgorithmId.SHAKE_128;
-    static CryptoAlgorithmId SHAKE_256 = CryptoAlgorithmId.SHAKE_256;
+    static readonly CryptoAlgorithmId SHA_3_512 = CryptoAlgorithmId.SHA_3_512;
+    static readonly CryptoAlgorithmId SHAKE_128 = CryptoAlgorithmId.SHAKE_128;
+    static readonly CryptoAlgorithmId SHAKE_256 = CryptoAlgorithmId.SHAKE_256;
 
-    static CryptoAlgorithmId SHA_3_224 = CryptoAlgorithmId.NULL;
+    static readonly CryptoAlgorithmId SHA_3_224 = CryptoAlgorithmId.NULL;
     //static CryptoAlgorithmID SHA_3_256 = CryptoAlgorithmID.NULL;
-    static CryptoAlgorithmId SHA_3_384 = CryptoAlgorithmId.NULL;
+    static readonly CryptoAlgorithmId SHA_3_384 = CryptoAlgorithmId.NULL;
     //static CryptoAlgorithmID SHA_3_512 = CryptoAlgorithmID.NULL;
 
     public class TestVectors_SHA_NIST : IEnumerable<object[]> {

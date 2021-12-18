@@ -37,7 +37,7 @@ public static class KeyFileDecode {
     /// <returns>List of authorized keys</returns>
     public static List<AuthorizedKey> DecodeAuthHost(string fileName) {
         using var TextReader = fileName.OpenFileReadShared();
-        using LexReader LexReader = new LexReader(TextReader);
+        using LexReader LexReader = new(TextReader);
         return DecodeAuthHost(LexReader);
         }
 
@@ -47,7 +47,7 @@ public static class KeyFileDecode {
     /// <param name="lexReader">Input</param>
     /// <returns>List of authorized keys</returns>
     public static List<AuthorizedKey> DecodeAuthHost(LexReader lexReader) {
-        List<AuthorizedKey> Result = new List<AuthorizedKey>();
+        List<AuthorizedKey> Result = new();
 
         try {
             using var Lexer = new AuthKeysFileLex(lexReader);
@@ -78,7 +78,7 @@ public static class KeyFileDecode {
     public static KeyPair DecodePEM(string fileName,
         KeySecurity keySecurity, KeyCollection keyCollection) {
         using var TextReader = fileName.OpenFileReadShared();
-        LexReader LexReader = new LexReader(TextReader);
+        LexReader LexReader = new(TextReader);
         return DecodePEM(LexReader, keySecurity, keyCollection);
         }
 
@@ -93,7 +93,7 @@ public static class KeyFileDecode {
     public static KeyPair DecodePEMText(string text,
         KeySecurity keySecurity, KeyCollection keyCollection) {
         var Reader = new System.IO.StringReader(text);
-        LexReader LexReader = new LexReader(Reader);
+        LexReader LexReader = new(Reader);
         return DecodePEM(LexReader, keySecurity, keyCollection);
         }
 

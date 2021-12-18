@@ -32,8 +32,7 @@ using Xunit;
 namespace Goedel.XUnit;
 
 public partial class TestGoedelCryptography {
-
-    List<TestVectorWrap> testVectorsAESWrap = new() {
+    readonly List<TestVectorWrap> testVectorsAESWrap = new() {
         // 128 Key with 128 KEK
         new TestVectorWrap() {
             KEK = "000102030405060708090A0B0C0D0E0F".FromBase16(),

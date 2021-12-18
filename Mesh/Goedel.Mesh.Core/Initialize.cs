@@ -22,6 +22,8 @@
 
 using System.Runtime.CompilerServices;
 
+#pragma warning disable IDE0079
+#pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
 namespace Goedel.Mesh;
 
 ///<summary>Static class whose only function is to contain the initialization 
@@ -37,9 +39,8 @@ public static class Initialization {
     /// Initialization routine for cryptographic functions on the dotNet Core platform.
     /// </summary>
 
-#pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
+
     [ModuleInitializer]
-#pragma warning restore CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
     internal static void Initialize() {
         // Force initialization of dependent modules.
         Initialized = Goedel.Cryptography.Initialization.Initialized &

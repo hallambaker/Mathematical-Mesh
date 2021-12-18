@@ -155,7 +155,7 @@ class CryptoDataEncoderDigest : CryptoDataEncoder {
 public class CryptoProviderSHA2_256 : CryptoProviderDigest {
 
 
-    static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_2_256;
+    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_2_256;
 
     /// <summary>
     /// The CryptoAlgorithmID Identifier.
@@ -168,7 +168,7 @@ public class CryptoProviderSHA2_256 : CryptoProviderDigest {
     public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
 
-    static CryptoAlgorithm _CryptoAlgorithm = new(
+    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
                 _CryptoAlgorithmID, _AlgorithmClass, Factory, 256);
 
     /// <summary>
@@ -206,7 +206,7 @@ public class CryptoProviderSHA2_256 : CryptoProviderDigest {
 /// </summary>
 public class CryptoProviderSHA2_512 : CryptoProviderDigest {
 
-    static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512;
+    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512;
 
     /// <summary>
     /// The CryptoAlgorithmID Identifier.
@@ -219,7 +219,7 @@ public class CryptoProviderSHA2_512 : CryptoProviderDigest {
     public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
 
-    static CryptoAlgorithm _CryptoAlgorithm = new(
+    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
                 _CryptoAlgorithmID, _AlgorithmClass, Factory, 512);
 
     /// <summary>
@@ -277,7 +277,7 @@ public class CryptoProviderSHA2_512 : CryptoProviderDigest {
 public class CryptoProviderSHA1 : CryptoProviderDigest {
 
 
-    static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_1_DEPRECATED;
+    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_1_DEPRECATED;
 
     /// <summary>
     /// The CryptoAlgorithmID Identifier.
@@ -289,7 +289,7 @@ public class CryptoProviderSHA1 : CryptoProviderDigest {
     /// </summary>
     public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
-    static CryptoAlgorithm _CryptoAlgorithm = new(
+    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
                 _CryptoAlgorithmID, _AlgorithmClass, Factory, 160);
 
     /// <summary>
@@ -333,7 +333,7 @@ public class CryptoProviderSHA1 : CryptoProviderDigest {
 public class CryptoProviderSHA3_256 : CryptoProviderDigest {
 
 
-    static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_3_256;
+    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_3_256;
 
     /// <summary>
     /// The CryptoAlgorithmID Identifier.
@@ -346,7 +346,7 @@ public class CryptoProviderSHA3_256 : CryptoProviderDigest {
     public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
 
-    static CryptoAlgorithm _CryptoAlgorithm = new(
+    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
                 _CryptoAlgorithmID, _AlgorithmClass, Factory, 256);
 
     /// <summary>
@@ -385,7 +385,7 @@ public class CryptoProviderSHA3_256 : CryptoProviderDigest {
 public class CryptoProviderSHA3_512 : CryptoProviderDigest {
 
 
-    static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_3_512;
+    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_3_512;
 
     /// <summary>
     /// The CryptoAlgorithmID Identifier.
@@ -398,7 +398,7 @@ public class CryptoProviderSHA3_512 : CryptoProviderDigest {
     public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
 
-    static CryptoAlgorithm _CryptoAlgorithm = new(
+    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
                 _CryptoAlgorithmID, _AlgorithmClass, Factory, 512);
 
     /// <summary>
@@ -438,7 +438,7 @@ public class CryptoProviderSHA3_512 : CryptoProviderDigest {
 public class CryptoProviderSHAKE128 : CryptoProviderDigest {
 
 
-    static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHAKE_128;
+    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHAKE_128;
 
     /// <summary>
     /// The CryptoAlgorithmID Identifier.
@@ -451,7 +451,7 @@ public class CryptoProviderSHAKE128 : CryptoProviderDigest {
     public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
 
-    static CryptoAlgorithm _CryptoAlgorithm = new(
+    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
                 _CryptoAlgorithmID, _AlgorithmClass, Factory, 128);
 
     /// <summary>
@@ -489,7 +489,7 @@ public class CryptoProviderSHAKE128 : CryptoProviderDigest {
 public class CryptoProviderSHAKE256 : CryptoProviderDigest {
 
 
-    static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHAKE_256;
+    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHAKE_256;
 
     /// <summary>
     /// The CryptoAlgorithmID Identifier.
@@ -502,7 +502,7 @@ public class CryptoProviderSHAKE256 : CryptoProviderDigest {
     public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
 
-    static CryptoAlgorithm _CryptoAlgorithm = new(
+    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
                 _CryptoAlgorithmID, _AlgorithmClass, Factory, 256);
 
     /// <summary>

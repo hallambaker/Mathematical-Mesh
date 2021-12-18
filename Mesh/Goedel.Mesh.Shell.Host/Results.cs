@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 12/9/2021 4:43:20 PM
+//  This file was automatically generated at 12/18/2021 2:40:22 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.742
+//  Generator:  protogen version 3.0.0.774
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -41,9 +41,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
 
-
+#pragma warning disable IDE0079
 #pragma warning disable IDE1006
-
+#pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
 
 using Goedel.Mesh;
 using Goedel.Mesh.Client;
@@ -75,14 +75,13 @@ public abstract partial class ShellResult : global::Goedel.Protocol.JsonObject {
     /// </summary>
 	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
 	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new Dictionary<string, JsonFactoryDelegate> () {
+			new () {
 
 	    {"Result", Result._Factory},
-	    {"ResultStartService", ResultStartService._Factory}		};
+	    {"ResultStartService", ResultStartService._Factory}
+		};
 
-#pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
     [ModuleInitializer]
-#pragma warning restore CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
 
     internal static void _Initialize() => AddDictionary(ref _tagDictionary);
 

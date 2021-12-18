@@ -42,7 +42,7 @@ namespace Goedel.XUnit;
 public partial class TestDare {
     public static TestDare Test() => new();
 
-    static CryptoParameters CryptoParametersNull = new CryptoParametersTest();
+    static readonly CryptoParameters CryptoParametersNull = new CryptoParametersTest();
 
     //static string AccountAlice = "alice@example.com";
 

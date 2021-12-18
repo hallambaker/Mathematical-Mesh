@@ -31,8 +31,7 @@ using Goedel.Utilities;
 namespace Goedel.Mesh.Test;
 
 public class TestClient {
-
-    HttpEndpoint httpEndpoint;
+    readonly HttpEndpoint httpEndpoint;
     bool Created { get; set; } = false;
 
 

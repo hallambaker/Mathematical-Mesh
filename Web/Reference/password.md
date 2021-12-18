@@ -35,20 +35,25 @@ add   Add password entry
 
 ~~~~
 <div="terminal">
-<cmd>Alice> password add ftp.example.com alice1 password
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman password add ftp.example.com alice1 password
+<rsp>alice1@ftp.example.com = [password]
+
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> password add ftp.example.com alice1 password /json
+<cmd>Alice> meshman password add ftp.example.com alice1 password /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedCredential": {
+        "Service": "ftp.example.com",
+        "Username": "alice1",
+        "Password": "password"}}}}
 </div>
 ~~~~
 
@@ -71,20 +76,25 @@ get   Lookup password entry
 
 ~~~~
 <div="terminal">
-<cmd>Alice> password get ftp.example.com
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman password get ftp.example.com
+<rsp>alice1@ftp.example.com = [newpassword]
+
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> password get ftp.example.com /json
+<cmd>Alice> meshman password get ftp.example.com /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedCredential": {
+        "Service": "ftp.example.com",
+        "Username": "alice1",
+        "Password": "newpassword"}}}}
 </div>
 ~~~~
 
@@ -107,20 +117,18 @@ delete   Delete password entry
 
 ~~~~
 <div="terminal">
-<cmd>Alice> password delete www.example.com
-<rsp>ERROR - Object reference not set to an instance of an object.
-</div>
+<cmd>Alice> meshman password delete www.example.com
+<rsp></div>
 ~~~~
 
 Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> password delete www.example.com /json
+<cmd>Alice> meshman password delete www.example.com /json
 <rsp>{
   "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+    "Success": true}}
 </div>
 ~~~~
 
@@ -143,20 +151,32 @@ list   List password entries
 
 ~~~~
 <div="terminal">
-<cmd>Alice> password list
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman password list
+<rsp>CatalogedCredential
+
+CatalogedCredential
+
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultDump:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> password list /json
+<cmd>Alice> meshman password list /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": [{
+        "CatalogedCredential": {
+          "Service": "ftp.example.com",
+          "Username": "alice1",
+          "Password": "password"}},
+      {
+        "CatalogedCredential": {
+          "Service": "www.example.com",
+          "Username": "alice@example.com",
+          "Password": "newpassword"}}]}}
 </div>
 ~~~~
 

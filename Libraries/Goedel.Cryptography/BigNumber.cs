@@ -27,14 +27,13 @@ namespace Goedel.Cryptography;
 /// beginning with the most significant and ending with the least.
 /// </summary>
 public struct BitIndex {
-
-    byte[] bitField;
+    readonly byte[] bitField;
 
     int downByte;
     int downBit;
     int upByte;
     int upBit;
-    int length;
+    readonly int length;
     byte dataDown, dataUp;
 
     //bool CountUp;
@@ -303,7 +302,7 @@ public static class BigNumber {
     public static BigInteger Sqrt(this BigInteger x2, BigInteger p,
                 BigInteger? SqrtMinus1 = null,
                 bool? Odd = null) {
-        BigInteger x = 0;
+        BigInteger x;
         if (p % 4 == 3) {
             x = BigInteger.ModPow(x2, (p + 1) / 4, p);
             }

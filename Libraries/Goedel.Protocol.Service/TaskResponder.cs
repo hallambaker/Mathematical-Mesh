@@ -54,11 +54,11 @@ public class ConnectionUDP {
     #region // Properties
 
     ///<summary>This really goes in the stream</summary> 
-    TaskCompletionSource<Packet> CompletionInbound;
+    readonly TaskCompletionSource<Packet> CompletionInbound;
 
 
-    ///<summary>This really goes in the stream</summary> 
-    Task<Packet> TaskInbound;
+    /////<summary>This really goes in the stream</summary> 
+    //readonly Task<Packet> TaskInbound;
 
     /////<summary>These are bound to the specific connection.</summary> 
     //List<Packet> PacketsOutbound;
@@ -77,7 +77,7 @@ public class ConnectionUDP {
     public ConnectionUDP() {
         CompletionInbound = new();
 
-        TaskInbound = CompletionInbound.Task;
+        //TaskInbound = CompletionInbound.Task;
 
 
         // Do this when we have completely assembled a datagram.

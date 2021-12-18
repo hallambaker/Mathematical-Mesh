@@ -14,10 +14,14 @@ The `password add` command adds a calendar entry to a catalog:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar add CalendarEntry1.json CalID1
-<rsp>ERROR - Object reference not set to an instance of an object.
-<cmd>Alice> calendar add CalendarEntry2.json CalID2
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
+<rsp>{
+  "Title": "CalendarEntry1.json",
+  "Key": "NDJD-2XYH-E7DS-OUQM-GYDR-MSDR-AGJD"}
+<cmd>Alice> meshman calendar add CalendarEntry2.json CalID2
+<rsp>{
+  "Title": "CalendarEntry2.json",
+  "Key": "NCLP-3LS4-EU2Z-JUAR-U7SW-WB2V-XG3Z"}
 </div>
 ~~~~
 
@@ -29,8 +33,8 @@ The `password get`  command retreives a calendar entry by label:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar get CalID1
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman calendar get CalID1
+<rsp>
 </div>
 ~~~~
 
@@ -41,10 +45,15 @@ Calendar entries may be deleted using the  `calendar delete` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar delete CalID1
-<rsp>ERROR - Object reference not set to an instance of an object.
-<cmd>Alice> calendar list
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman calendar delete CalID1
+<rsp>ERROR - The entry could not be found in the store.
+<cmd>Alice> meshman calendar list
+<rsp>CatalogedTask
+
+CatalogedTask
+
+CatalogedTask
+
 </div>
 ~~~~
 
@@ -55,8 +64,13 @@ A complete list of calendars is obtained using the  `calendar list` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar list
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman calendar list
+<rsp>CatalogedTask
+
+CatalogedTask
+
+CatalogedTask
+
 </div>
 ~~~~
 

@@ -3828,79 +3828,79 @@
             Extension methods to extract algorithm sub types
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptoID.DefaultSignatureId">
+        <member name="P:Goedel.Cryptography.CryptoID.DefaultSignatureId">
             <summary>The default signature algorithm</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptoID.DefaultExchangeId">
+        <member name="P:Goedel.Cryptography.CryptoID.DefaultExchangeId">
             <summary>The default public encryption algorithm</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptoID.DefaultEncryptionId">
+        <member name="P:Goedel.Cryptography.CryptoID.DefaultEncryptionId">
             <summary>The default digest algorithm</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptoID.DefaultDigestId">
+        <member name="P:Goedel.Cryptography.CryptoID.DefaultDigestId">
             <summary>The default digest algorithm</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptoID.DefaultMACId">
+        <member name="P:Goedel.Cryptography.CryptoID.DefaultMACId">
             <summary>The default digest algorithm</summary>
         </member>
         <member name="M:Goedel.Cryptography.CryptoID.DefaultExchange(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
-            Apply the default signature algorithm specified in <see cref="F:Goedel.Cryptography.CryptoID.DefaultExchangeId"/> 
+            Apply the default signature algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultExchangeId"/> 
             if required.
             </summary>
             <param name="algorithmId">The algorithm identifier to be defaulted.</param>
             <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
-            returns the value <see cref="F:Goedel.Cryptography.CryptoID.DefaultExchangeId"/>, 
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultExchangeId"/>, 
             otherwise returns <paramref name="algorithmId"/>.</returns>
         </member>
         <member name="M:Goedel.Cryptography.CryptoID.DefaultSignature(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
-            Apply the default signature algorithm specified in <see cref="F:Goedel.Cryptography.CryptoID.DefaultSignatureId"/> 
+            Apply the default signature algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultSignatureId"/> 
             if required.
             </summary>
             <param name="algorithmId">The algorithm identifier to be defaulted.</param>
             <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
-            returns the value <see cref="F:Goedel.Cryptography.CryptoID.DefaultSignatureId"/>, 
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultSignatureId"/>, 
             otherwise returns <paramref name="algorithmId"/>.</returns>
         </member>
         <member name="M:Goedel.Cryptography.CryptoID.DefaultMac(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
-            Apply the default digest algorithm specified in <see cref="F:Goedel.Cryptography.CryptoID.DefaultMACId"/> 
+            Apply the default digest algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultMACId"/> 
             if required.
             </summary>
             <param name="algorithmId">The algorithm identifier to be defaulted.</param>
             <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
-            returns the value <see cref="F:Goedel.Cryptography.CryptoID.DefaultMACId"/>, 
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultMACId"/>, 
             otherwise returns <paramref name="algorithmId"/>.</returns>
         </member>
         <member name="M:Goedel.Cryptography.CryptoID.DefaultEncryption(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
-            Apply the default digest algorithm specified in <see cref="F:Goedel.Cryptography.CryptoID.DefaultEncryptionId"/> 
+            Apply the default digest algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultEncryptionId"/> 
             if required.
             </summary>
             <param name="algorithmId">The algorithm identifier to be defaulted.</param>
             <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
-            returns the value <see cref="F:Goedel.Cryptography.CryptoID.DefaultEncryptionId"/>, 
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultEncryptionId"/>, 
             otherwise returns <paramref name="algorithmId"/>.</returns>
         </member>
         <member name="M:Goedel.Cryptography.CryptoID.DefaultDigest(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
-            Apply the default digest algorithm specified in <see cref="F:Goedel.Cryptography.CryptoID.DefaultDigestId"/> 
+            Apply the default digest algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultDigestId"/> 
             if required.
             </summary>
             <param name="algorithmId">The algorithm identifier to be defaulted.</param>
             <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
-            returns the value <see cref="F:Goedel.Cryptography.CryptoID.DefaultDigestId"/>, 
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultDigestId"/>, 
             otherwise returns <paramref name="algorithmId"/>.</returns>
         </member>
         <member name="M:Goedel.Cryptography.CryptoID.ForceExchange(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
-            Apply the default signature algorithm specified in <see cref="F:Goedel.Cryptography.CryptoID.DefaultExchangeId"/> 
+            Apply the default signature algorithm specified in <see cref="P:Goedel.Cryptography.CryptoID.DefaultExchangeId"/> 
             if required.
             </summary>
             <param name="algorithmId">The algorithm identifier to be defaulted.</param>
             <returns>If <paramref name="algorithmId"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>
-            returns the value <see cref="F:Goedel.Cryptography.CryptoID.DefaultExchangeId"/>, 
+            returns the value <see cref="P:Goedel.Cryptography.CryptoID.DefaultExchangeId"/>, 
             otherwise returns <paramref name="algorithmId"/>.</returns>
         </member>
         <member name="M:Goedel.Cryptography.CryptoID.ExtractMAC(Goedel.Cryptography.CryptoAlgorithmId)">
@@ -12310,7 +12310,7 @@
             for that type of certificate.
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.CertificateStore.PlatformRegister">
+        <member name="P:Goedel.Cryptography.CertificateStore.PlatformRegister">
             <summary>
             The delegate for Register(GCP.Certificate Certificate)
             </summary>
@@ -12328,7 +12328,7 @@
             for that type of certificate.
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.CertificateStore.PlatformRegisterTrustedRoot">
+        <member name="P:Goedel.Cryptography.CertificateStore.PlatformRegisterTrustedRoot">
             <summary>
             The delegate for Register(GCP.Certificate Certificate)
             </summary>
@@ -12346,7 +12346,7 @@
             for that type of certificate.
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.CertificateStore.PlatformRegisterTrustedRootByte">
+        <member name="P:Goedel.Cryptography.CertificateStore.PlatformRegisterTrustedRootByte">
             <summary>
             The delegate for Register(GCP.Certificate Certificate)
             </summary>
@@ -12364,7 +12364,7 @@
             for that type of certificate.
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.CertificateStore.PlatformGet">
+        <member name="P:Goedel.Cryptography.CertificateStore.PlatformGet">
             <summary>
             The delegate for Register(GCP.Certificate Certificate)
             </summary>
@@ -12382,7 +12382,7 @@
             for that type of certificate.
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.CertificateStore.PlatformClean">
+        <member name="P:Goedel.Cryptography.CertificateStore.PlatformClean">
             <summary>
             The delegate for Register(GCP.Certificate Certificate)
             </summary>

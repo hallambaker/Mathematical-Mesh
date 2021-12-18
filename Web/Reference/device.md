@@ -35,6 +35,7 @@ accept   Accept a pending connection
     /message   Authorize rights for Mesh messaging
     /web   Authorize rights for Mesh messaging and Web.
     /device   Device restrictive access
+    /threshold   Authorize threshold rights for Mesh messaging and Web.
     /ssh   Authorize rights for specified SSH account
     /email   Authorize rights for specified smtp email account
     /member   Authorize member rights for specified Mesh group
@@ -64,6 +65,7 @@ auth   Authorize device to use application
     /message   Authorize rights for Mesh messaging
     /web   Authorize rights for Mesh messaging and Web.
     /device   Device restrictive access
+    /threshold   Authorize threshold rights for Mesh messaging and Web.
     /ssh   Authorize rights for specified SSH account
     /email   Authorize rights for specified smtp email account
     /member   Authorize member rights for specified Mesh group
@@ -124,6 +126,7 @@ accept   Accept a pending connection
     /message   Authorize rights for Mesh messaging
     /web   Authorize rights for Mesh messaging and Web.
     /device   Device restrictive access
+    /threshold   Authorize threshold rights for Mesh messaging and Web.
     /ssh   Authorize rights for specified SSH account
     /email   Authorize rights for specified smtp email account
     /member   Authorize member rights for specified Mesh group
@@ -275,6 +278,7 @@ request   Connect to an existing profile registered at a portal
     /message   Authorize rights for Mesh messaging
     /web   Authorize rights for Mesh messaging and Web.
     /device   Device restrictive access
+    /threshold   Authorize threshold rights for Mesh messaging and Web.
     /ssh   Authorize rights for specified SSH account
     /email   Authorize rights for specified smtp email account
     /member   Authorize member rights for specified Mesh group

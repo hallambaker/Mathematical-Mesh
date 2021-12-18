@@ -125,9 +125,9 @@ public static class ExtensionMethods {
             //Subject = Parse(X509Cert.SubjectName),
             Extensions = new List<Goedel.Cryptography.PKIX.Extension>(),
             };
-        foreach (var Extension in x509Cert.Extensions) {
-            //TBSCertificate.Extensions.Add(Parse(Extension));
-            }
+        //foreach (var Extension in x509Cert.Extensions) {
+        //    //TBSCertificate.Extensions.Add(Parse(Extension));
+        //    }
         return TBSCertificate;
         }
 

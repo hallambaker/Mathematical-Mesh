@@ -94,7 +94,8 @@ public partial class ContextGroup : ContextAccount {
 
     ///<summary>Dictionarry used to create stores</summary>
     public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => stores;
-    Dictionary<string, StoreFactoryDelegate> stores = new() {
+
+    readonly Dictionary<string, StoreFactoryDelegate> stores = new() {
             { CatalogMember.Label, CatalogMember.Factory },
 
         // All contexts have a capability catalog:

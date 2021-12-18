@@ -43,7 +43,7 @@ public class Program {
     static void Main(string[] args) {
         var commandLineInterpreter = new CommandLineInterpreter();
 
-        Shell Dispatch = new Shell() {
+        Shell Dispatch = new() {
             MeshMachine = new MeshMachineCore()
             };
 

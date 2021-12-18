@@ -563,9 +563,6 @@
         <member name="F:Goedel.Protocol.Service.ConnectionUDP.CompletionInbound">
             <summary>This really goes in the stream</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Service.ConnectionUDP.TaskInbound">
-            <summary>This really goes in the stream</summary> 
-        </member>
         <member name="M:Goedel.Protocol.Service.ConnectionUDP.#ctor">
             <summary>
             Constructor

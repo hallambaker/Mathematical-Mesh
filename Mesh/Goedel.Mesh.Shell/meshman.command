@@ -217,10 +217,6 @@
 			Include DeviceAuthOptions
 
 
-		Command AccountPublish "publish"
-			Brief "Create a new device profile and register the corresponding URI."
-			Include AccountOptions
-			Include Reporting
 
 		Command AccountConnect "connect"
 			Brief "Connect by means of a connection uri"

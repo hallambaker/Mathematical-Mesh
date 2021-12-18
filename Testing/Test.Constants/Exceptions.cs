@@ -1,13 +1,13 @@
 ﻿
-//  This file was automatically generated at 12/9/2021 4:43:07 PM
+//  This file was automatically generated at 12/18/2021 2:40:11 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.711
+//  Generator:  exceptional version 3.0.0.766
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
-//      Copyright : © 2015-2019
+//      Copyright : © 2015-2021
 //  
 //  Build Platform: Win32NT 10.0.18362.0
 //  
@@ -18,10 +18,63 @@
 
 
 
+#pragma warning disable IDE0079
 #pragma warning disable IDE1006 // Naming Styles
-namespace Template {
+namespace Template ;
 
 
 
 
-	}
+/// <summary>
+/// An invalid Test was specified.
+/// </summary>
+[global::System.Serializable]
+public partial class InvalidTest : global::Goedel.Utilities.GoedelException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"The Test {0} is invalid."
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public InvalidTest  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new InvalidTest(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+

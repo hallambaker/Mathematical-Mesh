@@ -2,9 +2,6 @@
 #using Goedel.Mesh
 #using Goedel.Mesh.Shell
 #using Goedel.Protocol
-#% #pragma warning disable IDE0022
-#% #pragma warning disable IDE0060
-#% #pragma warning disable IDE1006
 #xclass ExampleGenerator CreateExamples
 
 
@@ -12,23 +9,116 @@
 #zfile CreateExamples WebAccount "Guide/account.md" Examples
 #% MakeTitle ("account");
 
-The account command set contains commands used to create and manage
-Mesh accounts.
+The 'account' command set groups commands relating to account creation, maintenance and 
+connection to the service.
+
+#### Contacting a Mesh Service.
+
+The 'hello' command is used to test connection to a Mesh service. This allows connectivity
+to the service to be tested before attempting other operations.
+
+Connectivity may be tested by specifying an account or just a DNS service name:
+
+#%  ConsoleExample (Service.Hello);
 
 
 #### Creating a Mesh Account
 
-Create a new Mesh profile
+A Mesh account is created using the 'create' command. 
 
-#%  ConsoleExample (Examples.ProfileCreateAlice);
+The user specifies the initial account address to be used (#{AliceAccount}). Use of this address
+is of course dependent on authorization by the Mesh Service Provider (#{MeshServiceProvider})
+and is likely to require authentication and possibly payment. 
+
+#%  ConsoleExample (Account.CreateAlice);
+
+The command returns the value of Alice's Mesh Account fingerprint #{AliceFingerprint}. 
+This value is used as a unique identifier that is cryptographically bound to the signature key used
+to authenticate the account profile.
+
+When creating an account, creation of an escrow recovery keyset is highly recommended.
+
+#### Account description 
+
+A device may be connected to multiple accounts at the same time. The 'list' command
+returns a list of the accounts to which the device is connected and the 'get'
+command returns information about a particular account.
+
+#{FutureFeature("ListGet")} These are not currently implemented.
 
 
+#%  ConsoleExample (Account.ListGetAccountAlice);
 
-#### Contacting a Mesh Service.
-
-#### Registering an account with a service.
 
 #### Synchronizing an account with a service
+
+The sync command is used to synchronize the account to the service. 
+
+#{FutureFeature("AutoSync")} Currently, the tool requires
+synchronization to be requested manually before each command. This should be performed 
+automatically with an option to suppress.
+
+#%  ConsoleExample (Account.SyncAlice);
+
+Synchronization will fail if a device has been removed from the account or not yet connected.
+
+
+#### Escrow and Recovery
+
+The Mesh uses strong cryptography to protect the confidentiality and integrity of data. If
+the private keys used to secure a Mesh account are lost, all data stored under the account 
+is lost and cannot be recovered.
+
+Creation of at least one key escrow set is highly recommended.
+
+
+
+To create a set of recovery shares, the escrow command is used specifying the number of 
+shares to create and the number of shares required for recovery:
+
+#%  ConsoleExample (Account.ProfileEscrow);
+
+The recovery command is used to recover access to the account from another device if the
+original administration device is lost or compromized.
+
+#%  ConsoleExample (Account.ProfileRecover);
+
+
+After verifying that the account can be recovered on another device, the primary secret 
+may be purged from the administration device using the 'purge' command. This command is
+of course irrevocable.
+
+#%  ConsoleExample (Account.ProfilePurge);
+
+
+#### Account import/export
+
+#{FutureFeature("Import/Export")} These features are not currently implemented.
+
+It should be possible to transfer accounts between devices without going through a service.
+
+
+#### Device connection commands
+
+The 'pin' command is used to create a PIN code to provide an out-of-band pre-authentication 
+code for use in device connection. This command is only available to an administration device.
+
+The authorizations to be granted to the device may be specified during PIN creation. This
+allows the device connection process to be completed without additional user interaction. But
+the connection can still only complete when an administration device creates the necessary 
+credentials.
+
+#%  ConsoleExample (Account.PinAlice);
+
+#{FutureExample("DeviceConnect")} 
+
+The 'publish' and 'connect' commands are used to 
+
+#%  ConsoleExample (Connect.ConnectStaticClaim);
+
+
+
+
 
 
 
@@ -40,27 +130,73 @@ Create a new Mesh profile
 
 #% Describe(CommandSet);
 
+The 'account' command set groups commands relating to account creation, maintenance and 
+connection to the service.
+
+The '/local', '/verbose', '/report' and '/json' options are supported by every command
+in the set.
+
 
 #% Describe(CommandSet, _AccountConnect._DescribeCommand);
 
-The `account connect` command 
+The `account connect` command is used to initiate the process of device connection by means
+of an account connection URI such as a URI encoded in a QR code on the device housing.
+
+The request must specify the connection URI as the first (and only) parameter.
+
+The '/account' option may be used to specify the Mesh account to which the device is 
+connected. If unspecified, the default account is used.
+
+The '/local' option may be used to specify a local name for the device.
+
+The '/auth' option may be used to specify authorizations to be granted to the device by
+name. Alternatively the flags '/admin', '/root', '/message', '/web', '/threshold', etc. 
+may be used to specify the most commonly used authorizations.
+
 
 
 #% Describe(CommandSet, _AccountCreate._DescribeCommand);
 
-The `account create` command
+The `account create` command is used to create accounts.
+
+The command takes a single parameter, the make of the account to be created. This is always
+specified in RFC822 style even if it is intended to bind the account to a callsign.
+
+The '/localname' parameter may be used to specify a local (friendly) name for the account.
+
+If the device has an existing device profile provisioned, this will be reused unless
+the '/new' option is used to force creation of a new profile. The '/did' and 'dd'
+options may be used to specify a name and description for the device. If not specified,
+a default name will be used.
+
+
+#% Describe(CommandSet, _AccountDelete._DescribeCommand);
+
+The `account delete` command is used to delete an account from the service and local machine
+once completed, the command cannot be undone unless the service provides a recovery capability.
+
+The principle use for the current implementation is to test use of the escrow and recovery
+functions and it is not particularly recommended for any other purpose. To avoid accidental
+use, the UDF of the device profile must be specified.
+
 
 #% Describe(CommandSet, _AccountEscrow._DescribeCommand);
 
-The `account escrow` command
+The `account escrow` command is used to create a set of key recovery shares for the account
+primary secret from which the escrow and signature keys are derrived.
 
-#% Describe(CommandSet, _AccountGet._DescribeCommand);
+The options 'shares' and 'quorum' are used to specify the number of shares to be created
+(e.g. 5) and the threshold number of shares required to perform recovery (e.g. 3).
 
-The `account get` command
 
 #% Describe(CommandSet, _AccountExport._DescribeCommand);
 
 The `account export` command
+
+
+#% Describe(CommandSet, _AccountGet._DescribeCommand);
+
+The `account get` command
 
 
 #% Describe(CommandSet, _AccountHello._DescribeCommand);
@@ -88,15 +224,21 @@ followed by the letter m, h or d for minutes, hours and days respectively.
 #%  ConsoleReference (ShellAccount.ConnectGetPin);
 
 
-#% Describe(CommandSet, _AccountPublish._DescribeCommand);
+#% Describe(CommandSet, _AccountList._DescribeCommand);
 
-The `account publish` command 
+The `account list` command 
+
+
 
 
 #% Describe(CommandSet, _AccountPurge._DescribeCommand);
 
 The `account purge` command
 
+
+#% Describe(CommandSet, _AccountRecover._DescribeCommand);
+
+The `account recover` command 
 
 
 #% Describe(CommandSet, _AccountStatus._DescribeCommand);

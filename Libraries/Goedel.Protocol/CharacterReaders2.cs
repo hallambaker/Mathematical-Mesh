@@ -33,7 +33,7 @@ public class CharacterStreamTextReader : ICharacterStream {
     public bool EOF { get; private set; } = false;
     #endregion
 
-    TextReader Input;
+    readonly TextReader Input;
 
     /// <summary>
     /// Creatre an instance from the specified TextReader.
@@ -104,7 +104,7 @@ public class CharacterStreamStringReader : ICharacterBufferedStream {
     public bool EOF { get; private set; } = false;
     #endregion
 
-    string Input;
+    readonly string Input;
     int Position = 0;
 
     /// <summary>
@@ -417,10 +417,9 @@ public class CharacterStreamSeekReader : CharacterStreamReader, IBufferedStream 
 /// An IBinaryStream that reads from a byte array.
 /// </summary>
 public class CharacterStreamDataReader : BinaryStreamReader {
-
-    byte[] Input;
+    readonly byte[] Input;
     int Position;
-    int Last;
+    readonly int Last;
 
     /// <summary>
     /// Return a CharacterStreamDataReader for the specified byte array.

@@ -51,6 +51,12 @@ public partial class LayerAccount : ExampleSet {
     public List<ExampleResult> SyncAlice;
 
 
+    public List<ExampleResult> ListGetAccountAlice;
+    public List<ExampleResult> PublishAlice;
+    public List<ExampleResult> PinAlice;
+    public List<ExampleResult> ProfilePurge;
+    public List<ExampleResult> ConnectUri;
+
     public LayerAccount(CreateExamples createExamples) :
             base(createExamples) {
         }

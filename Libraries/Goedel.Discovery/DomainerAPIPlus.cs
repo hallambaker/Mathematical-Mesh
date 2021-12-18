@@ -46,7 +46,7 @@ public abstract partial class DNSRecord {
     /// <param name="encoding">Encoded parameters in byte form</param>
     /// <returns>Encoding of record in unknown text encoding.</returns>
     public string Unknown(out byte[] encoding) {
-        DNSBufferIndex DNSBufferIndex = new DNSBufferIndex();
+        DNSBufferIndex DNSBufferIndex = new();
         this.Encode(DNSBufferIndex);
         encoding = DNSBufferIndex.Bytes;
 
@@ -68,7 +68,7 @@ public partial class DNSRecord_Unknown : DNSRecord {
     /// <param name="Length">Maximum amount of data to read</param>
     /// <returns>Parsed record.</returns>
     public static DNSRecord_Unknown Decode(DNSBufferIndex Index, int Length) {
-        DNSRecord_Unknown NewRecord = new DNSRecord_Unknown();
+        DNSRecord_Unknown NewRecord = new();
 
         Index.ReadL16Data(out NewRecord.RData);
 

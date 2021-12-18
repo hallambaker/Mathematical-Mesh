@@ -80,14 +80,12 @@ public static partial class BaseConvert {
     /// is no formatting required of the target.
     /// </summary>
     private struct StreamConvertString : IStringToStream {
-
-        MemoryStream stream;
+        readonly MemoryStream stream;
         public byte[] ToArray;
-
-        byte[] table;
+        readonly byte[] table;
         int bits;
         uint register;
-        int stride;
+        readonly int stride;
 
         /// <summary>
         /// Constructore using conversion table <paramref name="table"/> with taking 
@@ -166,18 +164,18 @@ public static partial class BaseConvert {
     /// </summary>
     private abstract class ByteStreamFormatter : IBytesToStream {
         delegate void FormatCharDelegate(char c);
-        FormatCharDelegate formatChar;
 
-        char[] table;
+        readonly FormatCharDelegate formatChar;
+        readonly char[] table;
         int offset;
-        bool terminal;
+        readonly bool terminal;
         int a;
-        int bits;
-        int dash;
+        readonly int bits;
+        readonly int dash;
 
         int outputCount = 0;
         int outputCol = 0;
-        int outputMax;
+        readonly int outputMax;
 
         /// <summary>
         /// Converter from binary to text form.
@@ -358,8 +356,7 @@ public static partial class BaseConvert {
     /// General purpose converter used for every conversion to a stream except for Base32UDF.
     /// </summary>
     private class StreamConvertBits : ByteStreamFormatter {
-
-        Stream output;
+        readonly Stream output;
 
         /// <summary>
         /// Constructor for stream converter.
@@ -388,8 +385,7 @@ public static partial class BaseConvert {
     /// General purpose converter used for every conversion to a string except for Base32UDF.
     /// </summary>
     private class StringBuilderConvertBits : ByteStreamFormatter {
-
-        StringBuilder output;
+        readonly StringBuilder output;
 
         /// <summary>
         /// Constructor for converter from binary to string form.

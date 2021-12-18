@@ -42,35 +42,34 @@ public class RudService : Disposable {
 
     bool active = true;
 
-    private Thread serviceThread;
+    private readonly Thread serviceThread;
 
 
 
-    private Task<ServiceRequest>[] serviceTasks;
+    private readonly Task<ServiceRequest>[] serviceTasks;
 
     private HttpListener httpListener = null;
 
-    private UdpClient[] udpListeners = null;
+    private readonly UdpClient[] udpListeners = null;
 
     ///<summary>The RDP Listener.</summary> 
     public Listener Listener;
 
 
 
-    private CancellationTokenSource cancellationTokenSource;
-    private CancellationToken cancellationToken;
-    private int udpListenerCount;
-    private int httpListenerCount = 1;
+    private readonly CancellationTokenSource cancellationTokenSource;
+    private readonly CancellationToken cancellationToken;
+    private readonly int udpListenerCount;
+    private readonly int httpListenerCount = 1;
     private int ListenerCount => udpListenerCount + httpListenerCount;
 
-    Task[] dispatchTasks;
-    string[] dispatchTaskResource;
-    bool[] dispatchTaskActive;
+    readonly Task[] dispatchTasks;
+    readonly string[] dispatchTaskResource;
+    readonly bool[] dispatchTaskActive;
 
     ///<summary>Service instrumentation.</summary> 
     public HostMonitor Monitor;
-
-    Dictionary<string, RudProvider> providerMap = new();
+    readonly Dictionary<string, RudProvider> providerMap = new();
 
     #endregion
     #region // Destructor

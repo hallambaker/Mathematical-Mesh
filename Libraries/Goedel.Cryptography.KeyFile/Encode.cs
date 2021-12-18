@@ -181,7 +181,7 @@ public static class Extension {
         var Builder = new StringBuilder();
         Builder.Append("ssh-rsa ");
         Builder.ToStringBase64(Data, 0, Data.Length);
-        Builder.Append(" ");
+        Builder.Append(' ');
         Builder.Append(Tag ?? "");
         return Builder.ToString();
         }

@@ -930,7 +930,7 @@ public static class UDF {
         var First = true;
         foreach (var Label in DNS) {
             if (Label.StartsWith("mm--")) {
-                uDF = Label.Substring(4);
+                uDF = Label[4..];
                 }
             else {
                 if (!First) {

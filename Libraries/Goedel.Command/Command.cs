@@ -39,7 +39,7 @@ public abstract class CommandLineInterpreterBase {
 
     /// <summary>The default flag indicator for display to terminal, this is a forward slash / for Windows
     /// and a double dash -- for UNIX.</summary>
-    public static char FlagIndicator = '/';
+    public static char FlagIndicator { get; set; } = '/';
 
     /// <summary>
     /// Provide the summary of a command set
@@ -206,7 +206,7 @@ public abstract class CommandLineInterpreterBase {
         var Arg = Args[Index];
         Assert.AssertTrue(Arg.Length > 0, UnknownCommand.Throw); // Should never happen.
         var Flagged = IsFlagged(Arg);
-        var Command = Flagged ? Arg.Substring(1).ToLower() : Arg.ToLower();
+        var Command = Flagged ? Arg[1..].ToLower() : Arg.ToLower();
 
         if (DefaultCommand != null & !Flagged) {
             DefaultCommand.HandleDelegate(Dispatch, Args, Index);

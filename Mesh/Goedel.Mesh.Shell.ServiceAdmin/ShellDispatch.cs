@@ -61,7 +61,10 @@ public partial class Shell : _Shell {
     /// Post processing action
     /// </summary>
     /// <param name="result"></param>
+#pragma warning disable IDE1006 // Naming Styles
     public void _PostProcess(ShellResult result) {
+#pragma warning restore IDE1006 // Naming Styles
+        this.Future();
         }
 
 

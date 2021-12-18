@@ -36,20 +36,27 @@ add   Add bookmark
 
 ~~~~
 <div="terminal">
-<cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman bookmark add Folder1/1 http://example.com/ "Example Dot Com"
+<rsp>{
+  "Uri": "http://example.com/",
+  "Title": "\"Example",
+  "Path": "Folder1/1"}
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
+<cmd>Alice> meshman bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedBookmark": {
+        "Uri": "http://example.com/",
+        "Title": "\"Example",
+        "Path": "Folder1/1"}}}}
 </div>
 ~~~~
 
@@ -73,8 +80,8 @@ delete   Delete bookmark entry
 
 ~~~~
 <div="terminal">
-<cmd>Alice> bookmark delete BookmarkPath2
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman bookmark delete BookmarkPath2
+<rsp>ERROR - The entry could not be found in the store.
 </div>
 ~~~~
 
@@ -82,11 +89,11 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> bookmark delete BookmarkPath2 /json
+<cmd>Alice> meshman bookmark delete BookmarkPath2 /json
 <rsp>{
   "Result": {
     "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+    "Reason": "The entry could not be found in the store."}}
 </div>
 ~~~~
 
@@ -109,20 +116,27 @@ get   Lookup bookmark entry
 
 ~~~~
 <div="terminal">
-<cmd>Alice> bookmark get Folder1/2
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman bookmark get Folder1/2
+<rsp>{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> bookmark get Folder1/2 /json
+<cmd>Alice> meshman bookmark get Folder1/2 /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedBookmark": {
+        "Uri": "http://example.net/Bananas",
+        "Title": "\"Banana",
+        "Path": "Folder1/2"}}}}
 </div>
 ~~~~
 
@@ -144,20 +158,46 @@ list   List bookmark entries
 
 ~~~~
 <div="terminal">
-<cmd>Alice> bookmark list
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman bookmark list
+<rsp>CatalogedBookmark
+
+CatalogedBookmark
+
+CatalogedBookmark
+
+CatalogedBookmark
+
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultDump:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> bookmark list /json
+<cmd>Alice> meshman bookmark list /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": [{
+        "CatalogedBookmark": {
+          "Uri": "http://www.example.com",
+          "Title": "site1",
+          "Path": "Sites.1"}},
+      {
+        "CatalogedBookmark": {
+          "Uri": "http://example.com/",
+          "Title": "\"Example",
+          "Path": "Folder1/1"}},
+      {
+        "CatalogedBookmark": {
+          "Uri": "http://example.net/Bananas",
+          "Title": "\"Banana",
+          "Path": "Folder1/2"}},
+      {
+        "CatalogedBookmark": {
+          "Uri": "http://example.com/Fred",
+          "Title": "\"The",
+          "Path": "Folder1/1a"}}]}}
 </div>
 ~~~~
 

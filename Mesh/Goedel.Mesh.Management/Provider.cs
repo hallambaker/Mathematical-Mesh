@@ -79,6 +79,10 @@ public class ServiceManagementProvider : ServiceManagementService {
         // Stash these away to report if needed.
         HostConfiguration = hostConfiguration;
         ServiceConfiguration = serviceConfiguration;
+
+
+        HostConfiguration.Future();
+        ServiceConfiguration.Future();
         }
 
 

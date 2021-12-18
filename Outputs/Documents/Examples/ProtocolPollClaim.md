@@ -9,7 +9,7 @@ and the publication ID:
 ~~~~
 {
   "PollClaimRequest":{
-    "PublicationId":"EBQG-PIN7-QL6B-TJOP-UPV2-O4OA-RM2U",
+    "PublicationId":"EBQO-M2NS-6AV4-BEC4-CBZM-DH7X-VTAO",
     "TargetAccountAddress":"maker@example.com"}}
 ~~~~
 
@@ -23,32 +23,32 @@ The response returns the latest claim made as signed message:
     "Status":201,
     "StatusDescription":"Operation completed successfully",
     "EnvelopedMessage":[{
-        "PayloadDigest":"DvkJj7SyTc7CgsWiXT2Tt1A-xkn9c0a397Ebswe1
-  RYUXnlwr9NgwsLFIajMAi3MCVqlbSAovw37tZgSp-FpWpw",
-        "EnvelopeId":"MB67-UVQX-J6CR-P4XX-PSGH-U7CP-ANCE",
+        "PayloadDigest":"VsR2nTKVewXHnM--nNKni2QArz6zOI-1xpWfIj5p
+  EolqlSILJ1Bdtqtv8I-GVVyvoNfQbknsloT_M52jrz6iWA",
+        "EnvelopeId":"MA6J-V5XE-YHSM-7DQM-TQWT-M2DH-GT4R",
         "dig":"S512",
         "signatures":[{
             "alg":"S512",
-            "kid":"MBYT-6KBR-3GF7-E3CS-HTYV-63RU-LUSG",
-            "signature":"lFbww93VPOD07Cvq5fcDyatFecuc66s6_kEwVGo3
-  P8cQUV2y6Uxab6uDJlAomYp-qOd2m1_0B1WARzwNeJiyfaCeAlslHDSTGAYQ_I7F9
-  A5Eliy2lr3xMGjvAD1ahZqqCcXKGF2TK6s9vNANp_PLtg0A"}
+            "kid":"MDO2-SNPT-H5ZY-U5HK-BPC5-MVGF-WHT4",
+            "signature":"j-PmlnPB11PQbDWp2OBkls8yYp7fp_cv8WZ4SSGq
+  56pT7XvKL25c8miXkIlftLn4d3AEb4UYqfCADK39gJtqG1ou_dEN10kyrrQwwG8nB
+  pVShMnKtbyvpeJzJN05004tPADQbh4YnBRVLvzsKdxgDwMA"}
           ],
-        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQ0g0LUdSWE4tTU
-  1ERS1VRFk2LUZRRFgtQUxLQy1NNVdIIiwKICAiTWVzc2FnZVR5cGUiOiAiTWVzc2F
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQTdBLVdTMk4tTk
+  ZWRC1KR0M1LUVUREQtSk9OSC1CV1QyIiwKICAiTWVzc2FnZVR5cGUiOiAiTWVzc2F
   nZUNsYWltIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJD
-  cmVhdGVkIjogIjIwMjEtMTItMDlUMTY6NDY6MjJaIn0",
+  cmVhdGVkIjogIjIwMjEtMTItMThUMDE6NTc6MjlaIn0",
         "SequenceInfo":{
           "Index":1,
           "TreePosition":0},
-        "Received":"2021-12-09T16:46:22Z"},
-      "ewogICJNZXNzYWdlQ2xhaW0iOiB7CiAgICAiTWVzc2FnZUlkIjogIk5DSD
-  QtR1JYTi1NTURFLVVEWTYtRlFEWC1BTEtDLU01V0giLAogICAgIlNlbmRlciI6ICJ
+        "Received":"2021-12-18T01:57:29Z"},
+      "ewogICJNZXNzYWdlQ2xhaW0iOiB7CiAgICAiTWVzc2FnZUlkIjogIk5BN0
+  EtV1MyTi1ORlZELUpHQzUtRVRERC1KT05ILUJXVDIiLAogICAgIlNlbmRlciI6ICJ
   hbGljZUBleGFtcGxlLmNvbSIsCiAgICAiUmVjaXBpZW50IjogIm1ha2VyQGV4YW1w
-  bGUuY29tIiwKICAgICJQdWJsaWNhdGlvbklkIjogIkVCUUctUElONy1RTDZCLVRKT
-  1AtVVBWMi1PNE9BLVJNMlUiLAogICAgIlNlcnZpY2VBdXRoZW50aWNhdGUiOiAiQU
-  QzTS1YTVJQLUdTTUwtQjdJWS1UUFVVLTdQTjctTU1YUCIsCiAgICAiRGV2aWNlQXV
-  0aGVudGljYXRlIjogIkFES1ItUE1XUy01WkNMLU5RTDItN0xCNi1LUjVBLTVISlYi
+  bGUuY29tIiwKICAgICJQdWJsaWNhdGlvbklkIjogIkVCUU8tTTJOUy02QVY0LUJFQ
+  zQtQ0JaTS1ESDdYLVZUQU8iLAogICAgIlNlcnZpY2VBdXRoZW50aWNhdGUiOiAiQU
+  RXQy0zWk5WLVQyWEMtTlk1WS0yVVFJLU4yRDMtWlhKUSIsCiAgICAiRGV2aWNlQXV
+  0aGVudGljYXRlIjogIkFCUTYtRzMyWC0zT0xYLVlaTzQtUFRYTS01RVlLLUhFWkUi
   fX0",
       {}
       ]}}

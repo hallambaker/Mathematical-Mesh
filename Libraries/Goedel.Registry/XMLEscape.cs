@@ -76,9 +76,8 @@ public static class XMLEscape {
 /// Write XML tags out using the 
 /// </summary>
 public class XMLTextWriter {
-
-    Stack<string> StackIndent = new();
-    Stack<string> StackTag = new();
+    readonly Stack<string> StackIndent = new();
+    readonly Stack<string> StackTag = new();
 
     /// <summary>Tracks the indentation level.</summary>
     public int Stack => StackIndent.Count;

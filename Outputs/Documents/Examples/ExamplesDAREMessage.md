@@ -7,7 +7,7 @@ In the following examples, Alice's encryption private key parameters are:
 {
   "PrivateKeyECDH":{
     "crv":"Ed25519",
-    "Private":"C-3cHR6YUzvtwsJ3UiXwNPx9SL4Pd7d4jAp_-TNZjbA"}}
+    "Private":"eeBzVt0pqTfjR86SpldtcX1QFgXM_mBiiDU4Oaol7Do"}}
 ~~~~
 
  Alice's signature private key parameters are:
@@ -16,7 +16,7 @@ In the following examples, Alice's encryption private key parameters are:
 {
   "PrivateKeyECDH":{
     "crv":"Ed25519",
-    "Private":"VGSwyDlvmob7n1DlnnC_TCTNkfY30mAwYSd9ZnzU3P4"}}
+    "Private":"gdZNTLY77lyNxTwTcyQU4Y7fM01l3L-RGeNzLYXVJWg"}}
 ~~~~
 
 The body of the test message is the UTF8 representation of the following string:
@@ -67,8 +67,8 @@ The creator generates a base seed:
 
 ~~~~
 
-  99 A3 E4 99  CD 6E 40 5B  C0 3D 25 42  B1 B0 98 84
-  05 8E 3E AF  9A 73 DC B2  0F 3C 66 E2  35 9D 91 86
+  FB 80 55 EA  E1 73 8A 58  BD 41 01 64  2D 63 FA 63
+  86 44 C5 C5  DC 65 1D 28  33 B5 97 AE  C1 A2 50 74
 ~~~~
 
 For each recipient of the message:
@@ -79,15 +79,15 @@ The creator generates an ephemeral key:
 {
   "PrivateKeyECDH":{
     "crv":"Ed25519",
-    "Private":"JFs9s_q-HXnq46UN9bHhPG9G5j080-VsqOlqGQnOylE"}}
+    "Private":"eD7pE_1kacfka_A8y7PqKiWXNU5w5U29XOrc4_tCSNg"}}
 ~~~~
 
 The key agreement value is calculated:
 
 ~~~~
 
-  93 BF D0 A6  B9 4B B4 33  0C 7B 78 15  53 4F 98 65
-  9F 48 15 98  D8 49 19 DA  FF 16 44 83  53 57 E2 9A
+  BC 16 30 D6  22 5E 57 54  DC 8A 8B 3A  19 F7 4B 62
+  E6 F1 77 0A  12 16 BD 66  30 BB 2D 06  AF EA AA 18
 ~~~~
 
 The key agreement value is used as the input to a HKDF key
@@ -96,17 +96,17 @@ master to create the key used to wrap the base seed:
 
 ~~~~
 
-  7E FB 8F 0F  6C C1 08 95  70 98 7C 11  AF D1 DD 42
-  60 9E 72 43  63 F3 1D 0E  BF 70 1B BA  FD 14 3E BC
+  A1 FA 62 DC  58 01 13 B0  9E E8 2C A0  16 C6 4A C4
+  C6 07 9E 2A  72 05 73 B2  A2 6C D0 06  6A C9 6A E4
 ~~~~
 
 The wrapped base seed is:
 
 ~~~~
 
-  AF D7 AC CA  3E C9 97 77  D3 94 95 1F  69 8D EF F5
-  52 E2 46 29  A1 C9 40 0B  A9 52 7C 38  8A A7 97 E3
-  65 E4 8B 76  E6 A1 71 F4
+  1D 77 B1 DB  19 88 F5 96  6A 1A 3A B7  41 F4 8C 6A
+  72 7E B1 16  C9 9B E9 65  40 69 F5 38  0C 9E C8 CB
+  50 30 97 D3  8E 90 4C 1C
 ~~~~
 
 This information is used to calculate the Recipient information
@@ -117,7 +117,7 @@ To encrypt a message, we first generate a unique salt value:
 
 ~~~~
 
-  67 DA 49 8B  CA BF 94 5C  0B 08 F7 35  FC 5B 58 B9
+  51 5D 21 88  2E ED D5 9E  E2 DD 49 72  80 DF B0 F2
 ~~~~
 
 The base seed and salt value are used to generate the payload encryption
@@ -125,25 +125,25 @@ key:
 
 ~~~~
 
-  46 6D 37 CA  80 5E 8C 24  7E 03 C9 4F  F6 ED 3F 24
-  5C 47 59 2A  E8 FD E9 8F  EC 88 F4 6C  40 AE D1 12
+  0F 89 3A 14  24 FA FE 67  8F D5 5D 18  CD AC 93 9C
+  1D EF 30 F1  9E EA D1 34  3A 60 22 01  B2 9C 80 9B
 ~~~~
 
 Since AES is a block cipher, we also require an initializarion vector:
 
 ~~~~
 
-  25 64 3F E9  E8 FA 15 F4  D2 74 8C 91  05 7E 48 87
+  AC 64 5B E5  0F AF B2 2D  52 F4 F6 4A  DD 2D 6F 73
 ~~~~
 
 The output sequence is the encrypted bytes:
 
 ~~~~
 
-  DE 7B 00 CF  67 33 7B 39  8A 74 45 47  20 78 AA 98
-  51 77 0E 7B  9F A5 EC 03  AB F2 90 37  2A ED 97 3D
-  49 49 0A 10  F8 39 E2 EB  FD C5 B1 57  CC EA E3 31
-  61 E2 19 7C  AB BB EA 89  28 CD DE A9  1C 87 81 BF
+  9C A3 F9 0E  AB 16 67 3D  42 9B C8 1D  5C 18 08 7D
+  CB D4 8C 1F  3D 07 57 E0  2B 56 26 14  59 F8 3B FD
+  76 AE A1 5A  31 8A 28 52  2A DB 14 CD  F3 0C 2F 8B
+  DD E9 C7 F6  1C F2 10 BA  D8 9E 71 75  C7 F2 7F DE
 ~~~~
 
 Since the message is not signed, there is no need for a trailer.
@@ -153,20 +153,20 @@ The completed message is:
 {
   "DareEnvelope":[{
       "enc":"A256CBC",
-      "kid":"EBQB-5QND-PTLB-UV3U-RWZP-U7DW-BCJL",
-      "Salt":"Z9pJi8q_lFwLCPc1_FtYuQ",
+      "kid":"EBQM-HQC2-L3DM-UPSY-Y2VJ-B3EU-4YMZ",
+      "Salt":"UV0hiC7t1Z7i3UlygN-w8g",
       "recipients":[{
-          "kid":"MBWZ-WJJH-XO63-6ZXQ-CPE2-D5CQ-HW53",
+          "kid":"MA56-GZFJ-N6CJ-DZTT-4SG6-TEAH-DYVS",
           "epk":{
             "PublicKeyECDH":{
               "crv":"Ed25519",
-              "Public":"G7i3coByLB9jcVUSVkvs7slgGjKLY_cnHiOWxf64S
-  go"}},
-          "wmk":"Cz8RSYrWdwICJi7IQQpZTdRIQXrQpd--u3s2lNZt3BKMYR2A
-  oTpfpA"}
+              "Public":"AE56FrJyU0Zcrd8rkLuJX4lM6_QIGU5FufE_Si5v9
+  tU"}},
+          "wmk":"XrXng5Yy-q88XjSefXOUdsn9uiXSSUF9EmzgIu2p3C-iG4d0
+  gamXFw"}
         ]},
-    "3nsAz2czezmKdEVHIHiqmFF3DnufpewDq_KQNyrtlz1JSQoQ-Dni6_3FsVfM
-  6uMxYeIZfKu76okozd6pHIeBvw"
+    "nKP5DqsWZz1Cm8gdXBgIfcvUjB89B1fgK1YmFFn4O_12rqFaMYooUirbFM3z
+  DC-L3enH9hzyELrYnnF1x_J_3g"
     ]}
 ~~~~
 
@@ -186,9 +186,9 @@ to enable signature verification.
     {
       "signatures":[{
           "alg":"S512",
-          "kid":"MCFV-JXDG-N5RY-ZHNM-VHYQ-DU7F-XERW",
-          "signature":"pktqBYIF0Z-PctciD7mZ_69CLYTEzWQrLK1IK7_Uon
-  PY2VIL96Sh-G5bOo1YgsTZoR5GhKht0fcWx_72-Jm9Bw"}
+          "kid":"MDNV-C3IE-XERP-KFK2-WSPE-46WU-SCVP",
+          "signature":"HGg7oOqGk9JQHM5SEZLhvtJ6tyb43-qli2yaxpd5lj
+  gxZhDZAtopkoHrLWvMV-p9XIA6bLY2B_Pb4hHSEBuNBA"}
         ],
       "PayloadDigest":"raim8SV5adPbWWn8FMM4mrRAQCO9A2jZ0NZAnFXWlG
   0xF6sWGJbnKSdtIJMmMU_hjarlIPEoY3vy9UdVlH5KAg"}
@@ -206,30 +206,30 @@ plaintext witness value.
   "DareEnvelope":[{
       "enc":"A256CBC",
       "dig":"S512",
-      "kid":"EBQD-MFU5-GM4C-SKAO-S2MU-FXEU-REV2",
-      "Salt":"XNqO3SQaZXnkzL2vzpOC2A",
+      "kid":"EBQK-PV7W-GZL7-VOPV-MV3S-Q7KZ-DJAL",
+      "Salt":"3Vi-To_UnAuSj3Uc6xrOfA",
       "recipients":[{
-          "kid":"MBWZ-WJJH-XO63-6ZXQ-CPE2-D5CQ-HW53",
+          "kid":"MA56-GZFJ-N6CJ-DZTT-4SG6-TEAH-DYVS",
           "epk":{
             "PublicKeyECDH":{
               "crv":"Ed25519",
-              "Public":"JuunKpaUAQBNLKG2DyJCL4VQz5WEfN0_S0289wKD_
-  5k"}},
-          "wmk":"DhCVt4GSB5zWtedSwYnLmxD-BxzRa8xt5Bk2N8tITyq-5npn
-  SMRUig"}
+              "Public":"B0jSmhTtwz31DWnM1m7dmtBOB69U8zqBDhO2h9J-C
+  Wc"}},
+          "wmk":"Z1CtPB-YF-XdoXJie_eZa_nja1tEg3VOQFgr7cPVO1ZddoZd
+  4U0djQ"}
         ]},
-    "XmsgwQ5NybCZzenhNho1-CtnuYkKZB8lR2Nc2sVc1Tg0vp_skj3S9Cz07VHI
-  cPv3fCkcjt2Rpr1pBwrJLSW24A",
+    "Ns-5nnV64a3ICuAErs4vlHfo5BwTa4FFl-Ggi8J9QI12DRlnCaFdeZZLds46
+  BnVZUpX9DTaGvzbejArs9t3o6Q",
     {
       "signatures":[{
           "alg":"S512",
-          "kid":"MCFV-JXDG-N5RY-ZHNM-VHYQ-DU7F-XERW",
-          "signature":"CLdnEQhEkLEA3C6dMTIACyMlG9TBX15wlKzajCXf-f
-  lZzxsf9WIJj5ySEBmQiFxjRmLmqFXn_KXOMDet3lblDg",
-          "witness":"aNoAtOL_3LoFAoJAoC_BjPSwIdQsma5yTHPRiYFa87E"}
+          "kid":"MDNV-C3IE-XERP-KFK2-WSPE-46WU-SCVP",
+          "signature":"7Q9QFd8buaxfGbZEwbqwgWN8C8w0b6GyD8lP0ghueU
+  GTI2Diot-1BOQluJG0CtoijkaYEkje0UCkGspWZ73ZAw",
+          "witness":"aa4g_VrkNrW0FXSLf1PoIdQgbFNw7z01rRYCJJJsncA"}
         ],
-      "PayloadDigest":"VtzFXbn7sOjbLinh34AVGIfnS-n17OqXbtmgaCAJpY
-  PYHMetYH0WyKTBAiqOIGFkH5lZhNyagyfpqaJS0jKfXg"}
+      "PayloadDigest":"gN-se1Af19E3SGT96hcSU4XHK2QbgmC3hHOZyRzb4i
+  VBSOCvdUW7G8l18nL91zLl7f7x7JE16lL_P_Mprxoadg"}
     ]}
 ~~~~
 

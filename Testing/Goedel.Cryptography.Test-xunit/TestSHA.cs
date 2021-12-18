@@ -38,7 +38,7 @@ public partial class TestGoedelCryptography {
 
     // http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA_All.pdf
     // https://www.di-mgt.com.au/sha_testvectors.html
-    List<TestVectorSHA> TestVectors_SHA_NIST = new() {
+    readonly List<TestVectorSHA> TestVectors_SHA_NIST = new() {
 
         new TestVectorSHA() {
             ID = CryptoAlgorithmId.SHA_1_DEPRECATED,

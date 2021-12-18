@@ -32,14 +32,14 @@ namespace Goedel.Cryptography.Windows;
 public class KeyContainer {
 
     //static long CRYPT_MACHINE_KEYSET = 0x20;
-    static long CRYPT_VERIFYCONTEXT = 0xF0000000;
-    static uint CRYPT_FIRST = 1;
-    static uint CRYPT_NEXT = 2;
+    static readonly long CRYPT_VERIFYCONTEXT = 0xF0000000;
+    static readonly uint CRYPT_FIRST = 1;
+    static readonly uint CRYPT_NEXT = 2;
 
-    static uint PROV_RSA_FULL = 1;
-    static uint PP_ENUMCONTAINERS = 2;
+    static readonly uint PROV_RSA_FULL = 1;
+    static readonly uint PP_ENUMCONTAINERS = 2;
 
-    [DllImport("advapi32.dll", SetLastError = true)]
+    [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     static extern bool CryptGetProvParam(
        IntPtr hProv,
        uint dwParam,
@@ -47,7 +47,7 @@ public class KeyContainer {
        ref uint dwDataLen,
        uint dwFlags);
 
-    [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     static extern bool CryptAcquireContext(
         ref IntPtr hProv,
@@ -77,7 +77,7 @@ public class KeyContainer {
             }
 
         uint bufferLength = 2048;
-        StringBuilder stringBuilder = new StringBuilder((int)bufferLength);
+        StringBuilder stringBuilder = new((int)bufferLength);
         if (CryptGetProvParam(hProv, PP_ENUMCONTAINERS, stringBuilder, ref bufferLength, CRYPT_FIRST) == false) {
             return keyContainerNameList;
             }
@@ -111,6 +111,8 @@ public class KeyContainer {
     /// <summary>Delete the specified key</summary>
     /// <param name="Key">Key to delete.</param>
     void Delete(string Key) {
+        this.Future();
+
         try {
             var CSP = new CspParameters() {
                 KeyContainerName = Key

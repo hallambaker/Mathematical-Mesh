@@ -27,7 +27,7 @@ namespace Goedel.Cryptography.Dare;
 /// Debugging version of JBCDStream
 /// </summary>
 public class JBCDStreamDebug : JbcdStream {
-    TextWriter Output;
+    readonly TextWriter Output;
 
     /// <summary>
     /// Output flag. 

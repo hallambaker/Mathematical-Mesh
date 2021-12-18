@@ -1181,13 +1181,13 @@
         <member name="F:Goedel.Mesh.Shell.EnumUse.eCatalog">
             <summary>Case "catalog": Object catalog</summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.CommandLineInterpreter.Entries">
+        <member name="P:Goedel.Mesh.Shell.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.CommandLineInterpreter.DefaultCommand">
+        <member name="P:Goedel.Mesh.Shell.CommandLineInterpreter.DefaultCommand">
             <summary>The default command.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.CommandLineInterpreter.Description">
+        <member name="P:Goedel.Mesh.Shell.CommandLineInterpreter.Description">
             <summary>Description of the comman</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.CommandLineInterpreter.Help(Goedel.Command.DispatchShell,System.String[],System.Int32)">
@@ -1355,24 +1355,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthGroupAdmin">
             <summary>Field accessor for option [group]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountPublish.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountPublish.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountPublish.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountPublish.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountPublish.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountPublish.Json">
-            <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.Uri">
             <summary>Field accessor for parameter []</summary>

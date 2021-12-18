@@ -84,7 +84,7 @@ public class MeshUri {
         try {
             var uri = new Uri(uriAddress);
             (uri.Scheme == MeshConstants.MeshConnectURI).AssertTrue(InvalidUriMethod.Throw);
-            var pin = uri.LocalPath.Substring(1);
+            var pin = uri.LocalPath[1..];
             var accountAddress = $"{uri.UserInfo}@{uri.Authority}";
 
             return (accountAddress, pin);

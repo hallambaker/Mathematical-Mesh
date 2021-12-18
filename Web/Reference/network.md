@@ -35,20 +35,23 @@ add   Add calendar entry from file
 
 ~~~~
 <div="terminal">
-<cmd>Alice> network add NetworkEntry1.json NetID1
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman network add NetworkEntry1.json NetID1
+<rsp>{Username}@{Service} = [{Password}]
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> network add NetworkEntry1.json NetID1 /json
+<cmd>Alice> meshman network add NetworkEntry1.json NetID1 /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedNetwork": {
+        "Service": "NetworkEntry1.json",
+        "Password": "NetID1"}}}}
 </div>
 ~~~~
 
@@ -71,8 +74,8 @@ delete   Delete calendar entry
 
 ~~~~
 <div="terminal">
-<cmd>Alice> network delete NetID2
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman network delete NetID2
+<rsp>ERROR - The entry could not be found in the store.
 </div>
 ~~~~
 
@@ -80,11 +83,11 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> network delete NetID2 /json
+<cmd>Alice> meshman network delete NetID2 /json
 <rsp>{
   "Result": {
     "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+    "Reason": "The entry could not be found in the store."}}
 </div>
 ~~~~
 
@@ -107,20 +110,19 @@ get   Lookup calendar entry
 
 ~~~~
 <div="terminal">
-<cmd>Alice> network get NetID2
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman network get NetID2
+<rsp>
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> network get NetID2 /json
+<cmd>Alice> meshman network get NetID2 /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": false}}
 </div>
 ~~~~
 
@@ -142,20 +144,36 @@ list   List network entries
 
 ~~~~
 <div="terminal">
-<cmd>Alice> network list
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman network list
+<rsp>CatalogedNetwork
+
+CatalogedNetwork
+
+CatalogedNetwork
+
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultDump:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> network list /json
+<cmd>Alice> meshman network list /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": [{
+        "CatalogedNetwork": {
+          "Service": "myWiFi",
+          "Password": "securePassword"}},
+      {
+        "CatalogedNetwork": {
+          "Service": "NetworkEntry1.json",
+          "Password": "NetID1"}},
+      {
+        "CatalogedNetwork": {
+          "Service": "NetworkEntry2.json",
+          "Password": "NetID2"}}]}}
 </div>
 ~~~~
 

@@ -160,7 +160,7 @@ public abstract class CryptoProviderAuthentication :
 /// Provider for HMAC SHA-2 256 bits.
 /// </summary>
 public class CryptoProviderHMACSHA2_256 : CryptoProviderAuthentication {
-    static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.HMAC_SHA_2_256;
+    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.HMAC_SHA_2_256;
 
     /// <summary>
     /// The CryptoAlgorithmID Identifier.
@@ -172,7 +172,7 @@ public class CryptoProviderHMACSHA2_256 : CryptoProviderAuthentication {
     /// </summary>
     public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
-    static CryptoAlgorithm _CryptoAlgorithm = new(
+    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
                 _CryptoAlgorithmID, _AlgorithmClass, Factory, 256);
 
 
@@ -212,7 +212,7 @@ public class CryptoProviderHMACSHA2_256 : CryptoProviderAuthentication {
 /// </summary>
 public class CryptoProviderHMACSHA2_512 : CryptoProviderAuthentication {
 
-    static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.HMAC_SHA_2_512;
+    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.HMAC_SHA_2_512;
 
     /// <summary>
     /// The CryptoAlgorithmID Identifier.
@@ -226,7 +226,7 @@ public class CryptoProviderHMACSHA2_512 : CryptoProviderAuthentication {
     public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
 
-    static CryptoAlgorithm _CryptoAlgorithm = new(
+    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
                 _CryptoAlgorithmID, _AlgorithmClass, Factory, 512);
 
 

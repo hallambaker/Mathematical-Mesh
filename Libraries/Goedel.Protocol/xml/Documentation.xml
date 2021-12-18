@@ -1878,7 +1878,7 @@
             Large data items are replaced with ellipsis, etc.
             </summary>
         </member>
-        <member name="F:Goedel.Protocol.JSONDebugWriter.Threshold">
+        <member name="P:Goedel.Protocol.JSONDebugWriter.Threshold">
             <summary>Threshold for redacting binary data blocks.</summary>
         </member>
         <member name="M:Goedel.Protocol.JSONDebugWriter.#ctor">
@@ -2809,7 +2809,7 @@
             JSONWriter subclasses.
             </summary>
         </member>
-        <member name="F:Goedel.Protocol.JsonWriter.ConversionFormat">
+        <member name="P:Goedel.Protocol.JsonWriter.ConversionFormat">
             <summary>The conversion format to be used for Base64 Binary encoding.</summary>
         </member>
         <member name="F:Goedel.Protocol.JsonWriter.Indent">
@@ -2979,13 +2979,13 @@
         <member name="T:Goedel.Protocol.BoundResponse">
             <summary>The response message</summary>
         </member>
-        <member name="F:Goedel.Protocol.BoundResponse.ErrorBadMac">
+        <member name="P:Goedel.Protocol.BoundResponse.ErrorBadMac">
             <summary>Constant for invalid Mac response.</summary>
         </member>
-        <member name="F:Goedel.Protocol.BoundResponse.ErrorUnknown">
+        <member name="P:Goedel.Protocol.BoundResponse.ErrorUnknown">
             <summary>Constant for invalid message error.</summary>
         </member>
-        <member name="F:Goedel.Protocol.BoundResponse.ErrorSyntax">
+        <member name="P:Goedel.Protocol.BoundResponse.ErrorSyntax">
             <summary>Constant for bad request.</summary>
         </member>
         <member name="F:Goedel.Protocol.BoundResponse.Status">

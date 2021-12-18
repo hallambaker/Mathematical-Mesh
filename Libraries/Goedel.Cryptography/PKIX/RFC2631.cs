@@ -24,8 +24,8 @@ namespace Goedel.Cryptography.PKIX;
 
 public partial class RFC2631OtherInfo {
     int Count;
-    int AgreedBits;
-    byte[] AgreementData;
+    readonly int AgreedBits;
+    readonly byte[] AgreementData;
 
     /// <summary>
     /// Principal constructor

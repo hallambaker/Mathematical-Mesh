@@ -115,11 +115,10 @@ public partial class Shell : _Shell {
     public void _PostProcess(ShellResult result) {
         ShellResult = result;
         }
-
-
-    bool Console { get; set; }
-    string MachineName { get; set; }
-    Configuration Configuration { get; set; }
+    ///<summary>The Machine name</summary> 
+    public string MachineName { get; set; }
+    ///<summary>The service configuration.</summary> 
+    public Configuration Configuration { get; set; }
     //HostConfiguration HostConfiguration { get; set; }
     //ServiceConfiguration ServiceConfiguration { get; set; }
     RudService RudService { get; set; }

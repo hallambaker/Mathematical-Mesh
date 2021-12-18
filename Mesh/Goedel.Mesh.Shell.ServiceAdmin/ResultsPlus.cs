@@ -54,7 +54,7 @@ public partial class Result {
                 Builder.Append(" - ");
                 Builder.Append(Reason);
                 }
-            Builder.Append("\n");
+            Builder.Append('\n');
             }
         return Builder;
 

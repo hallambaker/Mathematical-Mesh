@@ -79,7 +79,7 @@
             <summary>The state to transition to. This can be overriden in an action
             to change the state table</summary>
         </member>
-        <member name="F:Goedel.FSR.Lexer.Trace">
+        <member name="P:Goedel.FSR.Lexer.Trace">
             <summary>
             If set true, debug tracing is enabled
             </summary>

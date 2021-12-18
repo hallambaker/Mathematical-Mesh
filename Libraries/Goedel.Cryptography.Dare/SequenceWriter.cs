@@ -66,7 +66,8 @@ public class SequenceWriterFile : SequenceWriter {
 
     ///<summary>Position of the frame start.</summary>
     public override long FrameStart => frameStart;
-    long frameStart;
+
+    readonly long frameStart;
 
     /// <summary>
     /// Main constructor.

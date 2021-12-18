@@ -29,7 +29,7 @@ namespace Goedel.Cryptography;
 /// </summary>
 public static class CryptoStreamFromID {
 
-    private static Aes Aes = Aes.Create();
+    private static readonly Aes Aes = Aes.Create();
 
     /// <summary>
     /// Return the key size and block size for the algorithm specified by <paramref name="cryptoAlgorithmID"/>.
@@ -40,32 +40,16 @@ public static class CryptoStreamFromID {
                 this CryptoAlgorithmId cryptoAlgorithmID
                 ) {
 
-        switch (cryptoAlgorithmID) {
-            case CryptoAlgorithmId.AES128:
-            case CryptoAlgorithmId.AES128GCM:
-            case CryptoAlgorithmId.AES128CTS:
-            case CryptoAlgorithmId.AES128HMAC:
-            case CryptoAlgorithmId.AES128CBCNone:
-            case CryptoAlgorithmId.AES128ECB: return (128, 128);
-
-            case CryptoAlgorithmId.Default:
-            case CryptoAlgorithmId.AES256:
-            case CryptoAlgorithmId.AES256CBC:
-            case CryptoAlgorithmId.AES256GCM:
-            case CryptoAlgorithmId.AES256CTS:
-            case CryptoAlgorithmId.AES256HMAC:
-            case CryptoAlgorithmId.AES256CBCNone:
-            case CryptoAlgorithmId.AES256ECB: return (256, 128);
-
-            case CryptoAlgorithmId.HMAC_SHA_2_256: return (128, 0);
-
-            case CryptoAlgorithmId.HMAC_SHA_2_512:
-            case CryptoAlgorithmId.HMAC_SHA_2_512T128: return (256, 0);
-
-            }
-
-
-        return (-1, -1);
+        return cryptoAlgorithmID switch {
+            CryptoAlgorithmId.AES128 or CryptoAlgorithmId.AES128GCM or CryptoAlgorithmId.AES128CTS or 
+            CryptoAlgorithmId.AES128HMAC or CryptoAlgorithmId.AES128CBCNone or CryptoAlgorithmId.AES128ECB => (128, 128),
+            CryptoAlgorithmId.Default or CryptoAlgorithmId.AES256 or CryptoAlgorithmId.AES256CBC or 
+            CryptoAlgorithmId.AES256GCM or CryptoAlgorithmId.AES256CTS or CryptoAlgorithmId.AES256HMAC or 
+            CryptoAlgorithmId.AES256CBCNone or CryptoAlgorithmId.AES256ECB => (256, 128),
+            CryptoAlgorithmId.HMAC_SHA_2_256 => (128, 0),
+            CryptoAlgorithmId.HMAC_SHA_2_512 or CryptoAlgorithmId.HMAC_SHA_2_512T128 => (256, 0),
+            _ => (-1, -1),
+            };
         }
 
     /// <summary>
@@ -98,9 +82,9 @@ public static class CryptoStreamFromID {
             case CryptoAlgorithmId.AES256HMAC: {
                     return Aes.CreateEncryptor(key, iv);
                     }
-
+            default:
+                return null;
             }
-        return null;
         }
 
     /// <summary>
@@ -148,17 +132,14 @@ public static class CryptoStreamFromID {
     public static HashAlgorithm CreateMac(
                     this CryptoAlgorithmId cryptoAlgorithmID) {
 
-        switch (cryptoAlgorithmID) {
-            case CryptoAlgorithmId.HMAC_SHA_2_256: return new HMACSHA256();
-            case CryptoAlgorithmId.Default:
-            case CryptoAlgorithmId.HMAC_SHA_2_512: return new HMACSHA512();
-            case CryptoAlgorithmId.HMAC_SHA_2_512T128: return new HMACSHA512();
-
-            case CryptoAlgorithmId.AES128HMAC: return new HMACSHA256();
-            case CryptoAlgorithmId.AES256HMAC: return new HMACSHA512();
-
-            }
-        return null;
+        return cryptoAlgorithmID switch {
+            CryptoAlgorithmId.HMAC_SHA_2_256 => new HMACSHA256(),
+            CryptoAlgorithmId.Default or CryptoAlgorithmId.HMAC_SHA_2_512 => new HMACSHA512(),
+            CryptoAlgorithmId.HMAC_SHA_2_512T128 => new HMACSHA512(),
+            CryptoAlgorithmId.AES128HMAC => new HMACSHA256(),
+            CryptoAlgorithmId.AES256HMAC => new HMACSHA512(),
+            _ => null,
+            };
         }
 
     /// <summary>
@@ -172,17 +153,14 @@ public static class CryptoStreamFromID {
                     this CryptoAlgorithmId cryptoAlgorithmID,
                     byte[] key) {
 
-        switch (cryptoAlgorithmID) {
-            case CryptoAlgorithmId.HMAC_SHA_2_256: return new HMACSHA256(key);
-            case CryptoAlgorithmId.Default:
-            case CryptoAlgorithmId.HMAC_SHA_2_512: return new HMACSHA512(key);
-            case CryptoAlgorithmId.HMAC_SHA_2_512T128: return new HMACSHA512(key);
-
-            case CryptoAlgorithmId.AES128HMAC: return new HMACSHA256(key);
-            case CryptoAlgorithmId.AES256HMAC: return new HMACSHA512(key);
-
-            }
-        return null;
+        return cryptoAlgorithmID switch {
+            CryptoAlgorithmId.HMAC_SHA_2_256 => new HMACSHA256(key),
+            CryptoAlgorithmId.Default or CryptoAlgorithmId.HMAC_SHA_2_512 => new HMACSHA512(key),
+            CryptoAlgorithmId.HMAC_SHA_2_512T128 => new HMACSHA512(key),
+            CryptoAlgorithmId.AES128HMAC => new HMACSHA256(key),
+            CryptoAlgorithmId.AES256HMAC => new HMACSHA512(key),
+            _ => null,
+            };
         }
 
     /// <summary>
@@ -195,19 +173,16 @@ public static class CryptoStreamFromID {
                     this CryptoAlgorithmId cryptoAlgorithmID
                     ) {
 
-        switch (cryptoAlgorithmID) {
-            case CryptoAlgorithmId.SHA_2_256: return SHA256.Create();
-            case CryptoAlgorithmId.Default:
-            case CryptoAlgorithmId.SHA_2_512: return SHA512.Create();
-            case CryptoAlgorithmId.SHA_2_512T128: return SHA512.Create();
-
-            case CryptoAlgorithmId.SHA_3_256: return new SHA3Managed(256);
-            case CryptoAlgorithmId.SHA_3_512: return new SHA3Managed(512);
-            case CryptoAlgorithmId.SHAKE_128: return new SHAKE128();
-            case CryptoAlgorithmId.SHAKE_256: return new SHAKE256();
-
-            }
-        return null;
+        return cryptoAlgorithmID switch {
+            CryptoAlgorithmId.SHA_2_256 => SHA256.Create(),
+            CryptoAlgorithmId.Default or CryptoAlgorithmId.SHA_2_512 => SHA512.Create(),
+            CryptoAlgorithmId.SHA_2_512T128 => SHA512.Create(),
+            CryptoAlgorithmId.SHA_3_256 => new SHA3Managed(256),
+            CryptoAlgorithmId.SHA_3_512 => new SHA3Managed(512),
+            CryptoAlgorithmId.SHAKE_128 => new SHAKE128(),
+            CryptoAlgorithmId.SHAKE_256 => new SHAKE256(),
+            _ => null,
+            };
         }
 
     /// <summary>

@@ -52,7 +52,7 @@ public partial class CertificateStore {
     /// <summary>
     /// The delegate for Register(GCP.Certificate Certificate)
     /// </summary>
-    protected static RegisterDelegate PlatformRegister;
+    protected static RegisterDelegate PlatformRegister { get; set; }
 
     /// <summary>
     /// Register a certificate in the default Windows store and location
@@ -72,7 +72,7 @@ public partial class CertificateStore {
     /// <summary>
     /// The delegate for Register(GCP.Certificate Certificate)
     /// </summary>
-    protected static RegisterTrustedRootDelegate PlatformRegisterTrustedRoot;
+    protected static RegisterTrustedRootDelegate PlatformRegisterTrustedRoot { get; set; }
 
 
     /// <summary>
@@ -92,7 +92,7 @@ public partial class CertificateStore {
     /// <summary>
     /// The delegate for Register(GCP.Certificate Certificate)
     /// </summary>
-    protected static RegisterTrustedRootByteDelegate PlatformRegisterTrustedRootByte;
+    protected static RegisterTrustedRootByteDelegate PlatformRegisterTrustedRootByte { get; set; }
 
     /// <summary>
     /// Register a certificate in the default Windows store and location
@@ -111,7 +111,7 @@ public partial class CertificateStore {
     /// <summary>
     /// The delegate for Register(GCP.Certificate Certificate)
     /// </summary>
-    protected static GetDelegate PlatformGet;
+    protected static GetDelegate PlatformGet { get; set; }
 
 
     /// <summary>
@@ -131,7 +131,7 @@ public partial class CertificateStore {
     /// <summary>
     /// The delegate for Register(GCP.Certificate Certificate)
     /// </summary>
-    protected static CleanDelegate PlatformClean;
+    protected static CleanDelegate PlatformClean { get; set; }
 
     /// <summary>
     /// Clean all certificate stores to remove test certificates

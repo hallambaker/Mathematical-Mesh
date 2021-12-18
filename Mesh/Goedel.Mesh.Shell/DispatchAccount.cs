@@ -299,13 +299,12 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult AccountExport(AccountExport options) {
-        var catalogedMachines = new List<CatalogedMachine>();
+        //var catalogedMachines = new List<CatalogedMachine>();
 
         "export host data".TaskFunctionality();
 
-        return new ResultMachine() {
-            Success = true,
-            CatalogedMachines = catalogedMachines
+        return new ResultFile() {
+            Success = false
             };
         }
 
@@ -315,12 +314,12 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult AccountImport(AccountImport options) {
-        var catalogedMachines = new List<CatalogedMachine>();
+        //var catalogedMachines = new List<CatalogedMachine>();
 
         "import host data".TaskFunctionality();
 
         return new ResultFile() {
-            Success = true
+            Success = false
             };
         }
     }

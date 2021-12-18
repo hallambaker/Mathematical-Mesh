@@ -251,21 +251,13 @@ public abstract class KeyPairECDH : KeyPairBaseECDH {
     /// <returns>The created key pair.</returns>
     public static KeyPairECDH KeyPairFactory(byte[] key, KeySecurity keyType = KeySecurity.Public,
         CryptoAlgorithmId CryptoAlgorithmID = CryptoAlgorithmId.NULL) {
-        switch (CryptoAlgorithmID) {
-            case CryptoAlgorithmId.Ed448:
-            case CryptoAlgorithmId.Ed448ph:
-                return new KeyPairEd448(key, keyType);
-            case CryptoAlgorithmId.Ed25519:
-            case CryptoAlgorithmId.Ed25519ph:
-            case CryptoAlgorithmId.Ed25519ctx: return new KeyPairEd25519(key, keyType);
-            case CryptoAlgorithmId.X448:
-                return new KeyPairX448(key, keyType);
-            case CryptoAlgorithmId.X25519:
-                return new KeyPairX25519(key, keyType);
-
-            }
-
-        throw new NYI();
+        return CryptoAlgorithmID switch {
+            CryptoAlgorithmId.Ed448 or CryptoAlgorithmId.Ed448ph => new KeyPairEd448(key, keyType),
+            CryptoAlgorithmId.Ed25519 or CryptoAlgorithmId.Ed25519ph or CryptoAlgorithmId.Ed25519ctx => new KeyPairEd25519(key, keyType),
+            CryptoAlgorithmId.X448 => new KeyPairX448(key, keyType),
+            CryptoAlgorithmId.X25519 => new KeyPairX25519(key, keyType),
+            _ => throw new NYI(),
+            };
         }
 
 

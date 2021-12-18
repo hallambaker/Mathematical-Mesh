@@ -42,8 +42,8 @@ public class ContextMeshPending : ContextAccount {
     ///<summary>Convenience accessor for the pending context.</summary>
     public CatalogedPending CatalogedPending => CatalogedMachine as CatalogedPending;
 
-    KeyPair keyAuthentication;
-    KeyPair keyEncryption;
+    readonly KeyPair keyAuthentication;
+    readonly KeyPair keyEncryption;
     //KeyPair keySignature;
 
     ///<summary>The account address from the cataloged pending record. Note that this

@@ -6,7 +6,11 @@
 <div="helptext">
 <over>
 ssh    Manage SSH profiles connected to a personal profile
+    add<Unspecified>
+    merge<Unspecified>
+    show<Unspecified>
     create   Generate a new SSH public keypair for the current machine and add to the personal profile
+    list   List ssh account information
     private   Extract the private key for this device
     public   Extract the public key for this device
 <over>
@@ -27,6 +31,17 @@ create   Generate a new SSH public keypair for the current machine and add to th
     /json   Report output in JSON format
     /application   The application format
     /alg   List of algorithm specifiers
+    /auth   (De)Authorize the specified function on the device
+    /root   Device as super administration device
+    /admin   Device as administration device
+    /message   Authorize rights for Mesh messaging
+    /web   Authorize rights for Mesh messaging and Web.
+    /device   Device restrictive access
+    /threshold   Authorize threshold rights for Mesh messaging and Web.
+    /ssh   Authorize rights for specified SSH account
+    /email   Authorize rights for specified smtp email account
+    /member   Authorize member rights for specified Mesh group
+    /group   Authorize group administrator rights for specified Mesh group
     /id   Key identifier
 <over>
 </div>
@@ -44,8 +59,10 @@ private   Extract the private key for this device
     /report   Report output (default)
     /json   Report output in JSON format
     /format   File format
-    /password   Password to encrypt private key
     /file   Output file
+    /password   Password to encrypt private key
+    /private   <Unspecified>
+    /id   Key identifier
 <over>
 </div>
 ~~~~
@@ -63,6 +80,9 @@ public   Extract the public key for this device
     /json   Report output in JSON format
     /format   File format
     /file   Output file
+    /password   Password to encrypt private key
+    /private   <Unspecified>
+    /id   Key identifier
 <over>
 </div>
 ~~~~
@@ -79,6 +99,7 @@ host   Add one or more hosts to the known_hosts file
     /report   Report output (default)
     /json   Report output in JSON format
     /application   The application format
+    /id   Key identifier
 <over>
 </div>
 ~~~~
@@ -96,6 +117,7 @@ host   Add one or more hosts to the known_hosts file
     /report   Report output (default)
     /json   Report output in JSON format
     /application   The application format
+    /id   Key identifier
 <over>
 </div>
 ~~~~
@@ -113,6 +135,7 @@ client   Add one or more keys to the authorized_keys file
     /report   Report output (default)
     /json   Report output in JSON format
     /application   The application format
+    /id   Key identifier
 <over>
 </div>
 ~~~~
@@ -129,6 +152,7 @@ host   List the known SSH sites (aka known hosts)
     /report   Report output (default)
     /json   Report output in JSON format
     /application   The application format
+    /id   Key identifier
 <over>
 </div>
 ~~~~
@@ -145,6 +169,7 @@ client   List the authorized device keys (aka authorized_keys)
     /report   Report output (default)
     /json   Report output in JSON format
     /application   The application format
+    /id   Key identifier
 <over>
 </div>
 ~~~~

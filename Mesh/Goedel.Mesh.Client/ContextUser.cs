@@ -500,7 +500,7 @@ public partial class ContextUser : ContextAccount {
 
     ///<summary>Dictionarry used to create stores</summary>
     public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => StaticCatalogDelegates;
-    static Dictionary<string, StoreFactoryDelegate> StaticCatalogDelegates = new() {
+    static readonly Dictionary<string, StoreFactoryDelegate> StaticCatalogDelegates = new() {
             { CatalogCredential.Label, CatalogCredential.Factory },
             { CatalogContact.Label, CatalogContact.Factory },
             { CatalogTask.Label, CatalogTask.Factory },
@@ -514,7 +514,7 @@ public partial class ContextUser : ContextAccount {
             { CatalogPublication.Label, CatalogPublication.Factory }
         };
 
-    static SortedSet<string> ServiceCatalogs = new() {
+    static readonly SortedSet<string> ServiceCatalogs = new() {
         CatalogAccess.Label,
         //CatalogPublication.Label
         };

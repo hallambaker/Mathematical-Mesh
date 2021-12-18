@@ -7,6 +7,18 @@
     <Copyright>© 2020</Copyright>
     <Title>Mesh Documentation</Title>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;ide0161</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;ide0161</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sandcastle|AnyCPU'">
+    <NoWarn>1701;1702;ide0161</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Github|AnyCPU'">
+    <NoWarn>1701;1702;ide0161</NoWarn>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj" />
@@ -149,6 +161,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+	  <Compile Update="Web\CommandsetKey.cs">
+		  <DependentUpon>CommandsetKey.script</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+	  </Compile>
       <Compile Update="Web\CommandsetDevice.cs">
       <DependentUpon>CommandsetDevice.script</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -198,7 +215,7 @@
       <Generator>gscript</Generator>
     </None>
 
-    <None Update="Web\CommandsetAccount.script">
+    <None Update="Web\CommandsetKey.script">
       <LastGenOutput>CommandsetKey.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>

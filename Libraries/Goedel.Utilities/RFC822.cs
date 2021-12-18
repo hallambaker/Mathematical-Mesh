@@ -46,7 +46,7 @@ public static partial class Extension {
     /// including the separator, otherwise null.</returns>
     public static string Left(this string Input, char Separator) {
         var Index = Input.IndexOf(Separator);
-        return Index < 0 ? null : Input.Substring(0, Index);
+        return Index < 0 ? null : Input[..Index];
         }
 
     /// <summary>
@@ -59,7 +59,7 @@ public static partial class Extension {
     /// including the separator, otherwise null.</returns>
     public static string Right(this string Input, char Separator) {
         var Index = Input.IndexOf(Separator);
-        return Index < 0 ? null : Input.Substring(Index + 1);
+        return Index < 0 ? null : Input[(Index + 1)..];
         }
 
 
@@ -76,8 +76,8 @@ public static partial class Extension {
     public static void Separate(this string Input, char Separator,
         out string Left, out string Right) {
         var Index = Input.IndexOf(Separator);
-        Left = Index < 0 ? null : Input.Substring(0, Index);
-        Right = Index < 0 ? null : Input.Substring(Index + 1);
+        Left = Index < 0 ? null : Input[..Index];
+        Right = Index < 0 ? null : Input[(Index + 1)..];
         }
 
     /// <summary>
@@ -117,8 +117,8 @@ public static partial class Extension {
             return;
             }
 
-        account = identifier.Substring(0, at);
-        service = identifier.Substring(at + 1);
+        account = identifier[..at];
+        service = identifier[(at + 1)..];
         }
 
     /// <summary>
@@ -145,7 +145,7 @@ public static partial class Extension {
             }
 
 
-        return identifier.Substring(At + 1);
+        return identifier[(At + 1)..];
         }
 
     }

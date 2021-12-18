@@ -40,8 +40,8 @@ public partial class TestCryptographyJose {
     public static TestCryptographyJose Test() => new();
 
 
-    static string TestString = "This is a test";
-    static string TestStringBad = "This is a Test"; // Flip one bit
+    static readonly string TestString = "This is a test";
+    static readonly string TestStringBad = "This is a Test"; // Flip one bit
 
 
     [Theory]

@@ -64,8 +64,8 @@ public class KeyPairX25519 : KeyPairECDH {
     #endregion
 
 
-    KeySecurity keyType = KeySecurity.Public;
-    byte[] encodedPrivateKey = null;
+    readonly KeySecurity keyType = KeySecurity.Public;
+    readonly byte[] encodedPrivateKey = null;
 
 
     /// <summary>

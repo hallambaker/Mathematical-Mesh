@@ -44,7 +44,7 @@ public static partial class Extension {
     /// important. Don't tamper with it unless you understand how the
     /// different storage classes affect the moves permitted by the optimizer.
     /// </summary>
-    static bool AlwaysTrue = true; // DO NOT DELETE
+    static readonly bool AlwaysTrue = true; // DO NOT DELETE
 
     /// <summary>
     /// Convert constant truth value to static. This allows the programmer 

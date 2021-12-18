@@ -234,8 +234,7 @@ public class KeyWrapRFC3394 : KeyWrap {
 /// <summary>Represents a block of data to be processed by cryptographic operations.
 /// This is used as a building block in key wrapping and derrivation functions.</summary>
 public struct Block {
-
-    byte[] data;
+    readonly byte[] data;
 
     /// <summary>
     /// Constructor from binary data.

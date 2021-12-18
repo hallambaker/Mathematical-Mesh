@@ -27,7 +27,6 @@ namespace Goedel.Discovery;
 /// </summary>
 public class WebServiceEndpoint {
 
-    static int port => 15099;
 
     /// <summary>
     /// Return a host endpoint to allow a client to access the service <paramref name="srv"/>

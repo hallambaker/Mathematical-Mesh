@@ -26,10 +26,9 @@ namespace Goedel.Cryptography.Dare;
 /// Enumerator that returns the raw, unencrypted container data.
 /// </summary>
 public class SequenceEnumeratorRaw : IEnumerator<DareEnvelope> {
-
-    Sequence container;
-    int lowIndex;
-    bool reverse;
+    readonly Sequence container;
+    readonly int lowIndex;
+    readonly bool reverse;
     bool active;
 
     /// <summary>
@@ -64,7 +63,9 @@ public class SequenceEnumeratorRaw : IEnumerator<DareEnvelope> {
     /// <summary>
     /// Dispose method.
     /// </summary>
-    public void Dispose() { }
+    public void Dispose() {
+        GC.SuppressFinalize(this);
+        }
 
     /// <summary>
     /// Move to the next item in the enumeration.
@@ -107,8 +108,7 @@ public class SequenceEnumeratorRaw : IEnumerator<DareEnvelope> {
 /// Enumerator for frames in a container beginning with frame 1.
 /// </summary>
 public class ContainerEnumerator : IEnumerator<SequenceFrameIndex> {
-
-    Sequence container;
+    readonly Sequence container;
 
     /// <summary>
     /// Gets the element in the collection at the current position of the enumerator.
@@ -140,7 +140,9 @@ public class ContainerEnumerator : IEnumerator<SequenceFrameIndex> {
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
     /// 
-    public void Dispose() { }
+    public void Dispose() {
+        GC.SuppressFinalize(this);
+        }
 
     /// <summary>
     /// Advances the enumerator to the next element of the collection.

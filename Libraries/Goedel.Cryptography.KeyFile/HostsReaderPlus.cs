@@ -5,9 +5,9 @@
 /// authorized_keys file.
 /// </summary>
 public partial class AuthKeysFileLex {
-    StringBuilder BuildTag1 = new();
-    StringBuilder BuildTag2 = new();
-    StringBuilder BuildBase64 = new();
+    readonly StringBuilder BuildTag1 = new();
+    readonly StringBuilder BuildTag2 = new();
+    readonly StringBuilder BuildBase64 = new();
 
     /// <summary>
     /// Add characters to the algorithm

@@ -43,9 +43,7 @@ public partial class GoedelCryptography {
                     + "ae2d8a571e03ac9c9eb76fac45af8e51"
                     + "30c81c46a35ce411e5fbc1191a0a52ef"
                     + "f69f2445df4f9b17ad2b417be66c3710.").FromBase16();
-
-
-    List<TestVectorAES> testVectors_AES_NIST = new() {
+    readonly List<TestVectorAES> testVectors_AES_NIST = new() {
         // TestCase 2:1/2
         new TestVectorAES() {
             ID = CryptoAlgorithmId.AES128CBCNone,
@@ -76,8 +74,8 @@ public partial class GoedelCryptography {
             ID = CryptoAlgorithmId.AES128GCM,
             Key = "00000000000000000000000000000000".FromBase16(),
             IV = "000000000000000000000000".FromBase16(),
-            Plaintext = new byte[0],
-            Ciphertext = new byte[0],
+            Plaintext = System.Array.Empty<byte>(),
+            Ciphertext = System.Array.Empty<byte>(),
             Tag = "58e2fccefa7e3061367f1d57a4e7455a".FromBase16(),
             },
         // GCM 2
@@ -161,8 +159,8 @@ public partial class GoedelCryptography {
             ID = CryptoAlgorithmId.AES256GCM,
             Key = "0000000000000000000000000000000000000000000000000000000000000000".FromBase16(),
             IV = "000000000000000000000000".FromBase16(),
-            Plaintext = new byte[0],
-            Ciphertext = new byte[0],
+            Plaintext = System.Array.Empty<byte>(),
+            Ciphertext = System.Array.Empty<byte>(),
             Tag = "530f8afbc74536b9a963b4f1c4cb738b".FromBase16(),
             },
         // GCM 14

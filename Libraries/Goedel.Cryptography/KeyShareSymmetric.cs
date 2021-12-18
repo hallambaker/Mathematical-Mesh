@@ -273,7 +273,7 @@ public class SharedSecret : Shared {
         if (obj == null) {
             return false;
             }
-        if (!(obj is SharedSecret p)) {
+        if (obj is not SharedSecret p) {
             return false;
             }
         if (KeyBytes != p.KeyBytes) {
@@ -437,7 +437,7 @@ public class SharedSecret : Shared {
         Assert.AssertFalse(shares.Length < threshold, InsufficientShares.Throw);
 
         var secretBits = shares[0].KeyBits - 8;
-        var modulus = GetPrime(secretBits, out var secretMax, out var shareChunks);
+        var modulus = GetPrime(secretBits, out var _, out var shareChunks);
 
         var accum = CombineNT(shares, modulus, threshold);
         //Console.WriteLine($"Reconstructed value = {accum}");

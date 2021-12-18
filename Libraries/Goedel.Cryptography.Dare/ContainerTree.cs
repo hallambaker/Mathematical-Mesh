@@ -346,7 +346,7 @@ public class ContainerTree : ContainerList {
     /// </summary>
     public override void VerifySequence() {
 
-        SortedDictionary<long, DareHeader> headerDictionary = new SortedDictionary<long, DareHeader>();
+        SortedDictionary<long, DareHeader> headerDictionary = new();
 
         // Check the first frame
         JbcdStream.PositionRead = 0;

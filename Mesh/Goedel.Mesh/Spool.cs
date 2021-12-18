@@ -453,7 +453,7 @@ public class SpoolEnumeratorRaw : IEnumerator<SpoolEntry> {
     private readonly SpoolEntry last;
 
     // Mask parameters.
-    private bool checkMaxResults;
+    private readonly bool checkMaxResults;
 
 
     // Local variables
@@ -495,6 +495,8 @@ public class SpoolEnumeratorRaw : IEnumerator<SpoolEntry> {
         this.select = select;
         this.last = last;
         this.maxResults = maxResults;
+
+        this.select.Future();
 
         checkMaxResults = maxResults >= 0;
 

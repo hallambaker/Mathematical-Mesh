@@ -41,12 +41,11 @@ public partial class JbcdStream : Disposable {
     /// The underlying stream for stream write operations
     /// </summary>
     public Stream StreamRead;
+    readonly Stream disposeStreamRead = null;
+    readonly Stream disposeStreamWrite = null;
 
-    Stream disposeStreamRead = null;
-    Stream disposeStreamWrite = null;
-
-
-    string Filename { get; }
+    ///<summary>The file name, used for error reporting.</summary> 
+    public string Filename { get; }
 
     /// <summary>
     /// The current position within the stream.

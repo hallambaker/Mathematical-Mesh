@@ -36,7 +36,7 @@ public static class Unique {
     public static string Next() {
 
         var code = Interlocked.Increment(ref Counter);
-        var id = Thread.CurrentThread.ManagedThreadId;
+        var id = Environment.CurrentManagedThreadId;
 
         return $"{code}-{id}";
         }

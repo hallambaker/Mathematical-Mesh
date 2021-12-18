@@ -113,16 +113,16 @@ public static class Linewrap {
         void addCurrent() {
             if (current.Length > max) {
                 var chunk = length - col();
-                var left = current.ToString().Substring(0, chunk);
-                var right = current.ToString().Substring(chunk);
+                var left = current.ToString()[..chunk];
+                var right = current.ToString()[chunk..];
 
                 line.Append(left);
                 newline();
                 while (right.Length > max) {
-                    left = right.Substring(0, max);
+                    left = right[..max];
                     line.Append(left);
                     newline();
-                    right = right.Substring(max);
+                    right = right[max..];
                     }
                 line.Append(right); // the remainder
                 current.Clear();

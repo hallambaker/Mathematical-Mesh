@@ -32,7 +32,7 @@ namespace Goedel.Protocol;
 public class JSONDebugWriter : JsonWriter {
 
     /// <summary>Threshold for redacting binary data blocks.</summary>
-    static public int Threshold = 260;
+    static public int Threshold { get; set; } = 260;
 
 
     /// <summary>

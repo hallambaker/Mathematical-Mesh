@@ -27,8 +27,8 @@ namespace Goedel.Cryptography.Standard;
 /// other routines to wrap the block encryption provided at the platform level.
 /// </summary>
 public class AesBlock : BlockProvider {
-    static Aes Provider;
-    ICryptoTransform Transform;
+    static readonly Aes Provider;
+    readonly ICryptoTransform Transform;
 
     /// <summary>
     /// Return the block size in bits.

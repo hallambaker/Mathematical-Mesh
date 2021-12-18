@@ -105,7 +105,7 @@ public abstract class Root {
     /// </summary>
     /// <returns>The DER encoded value.</returns>
     public virtual byte[] DER() {
-        Goedel.ASN.Buffer Buffer = new Buffer();
+        Goedel.ASN.Buffer Buffer = new();
         this.Encode(Buffer);
 
         return Buffer.Data;
@@ -153,7 +153,7 @@ public class ByteArrayVerbatim : Root {
 /// Utility class containing static methods.
 /// </summary>
 public static class ASN {
-    static char[] Dot = new char[] { '.' };
+    static readonly char[] Dot = new char[] { '.' };
 
     /// <summary>Convert an OID value to an array of integers</summary>
     /// <param name="OID">The string value of the OID.</param>

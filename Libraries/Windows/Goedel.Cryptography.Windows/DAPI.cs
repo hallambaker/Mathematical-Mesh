@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
-#pragma warning disable IDE1006
+//#pragma warning disable IDE1006
 
 namespace Goedel.Cryptography.Windows;
 
@@ -81,7 +81,7 @@ public class DPAPI {
         }
 
     // Null values
-    static IntPtr NullPtr = ((IntPtr)((int)(0)));
+    static readonly IntPtr NullPtr = ((IntPtr)((int)(0)));
     static DATA_BLOB NullBlob = new();
     //readonly byte[] EmptyBytes = new byte[0];
 
@@ -117,11 +117,11 @@ public class DPAPI {
         Description ??= "";
 
         // Create native structures
-        DATA_BLOB CipherTextBlob = new DATA_BLOB();
+        DATA_BLOB CipherTextBlob = new();
         DATA_BLOB PlainTextBlob = NullBlob;
         DATA_BLOB EntropyBlob = NullBlob;
 
-        CRYPTPROTECT_PROMPTSTRUCT prompt = new CRYPTPROTECT_PROMPTSTRUCT() {
+        CRYPTPROTECT_PROMPTSTRUCT prompt = new() {
             cbSize = Marshal.SizeOf(typeof(CRYPTPROTECT_PROMPTSTRUCT)),
             dwPromptFlags = 0,
             hwndApp = NullPtr,
@@ -177,9 +177,9 @@ public class DPAPI {
 
         DATA_BLOB CipherTextBlob = NullBlob;
         DATA_BLOB EntropyBlob = NullBlob;
-        DATA_BLOB PlainTextBlob = new DATA_BLOB();
+        DATA_BLOB PlainTextBlob = new();
 
-        CRYPTPROTECT_PROMPTSTRUCT Prompt = new CRYPTPROTECT_PROMPTSTRUCT() {
+        CRYPTPROTECT_PROMPTSTRUCT Prompt = new() {
             cbSize = Marshal.SizeOf(typeof(CRYPTPROTECT_PROMPTSTRUCT)),
             dwPromptFlags = 0,
             hwndApp = NullPtr,

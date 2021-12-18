@@ -74,8 +74,7 @@ public partial class TestItem {
 
 
 public class TestItemContainerPersistenceStore : PersistenceStore {
-
-    IPersistenceIndex indexKeyUserProfileUDF;
+    readonly IPersistenceIndex indexKeyUserProfileUDF;
 
 
     /// <summary>

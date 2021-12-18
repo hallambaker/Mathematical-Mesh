@@ -46,9 +46,10 @@ public partial class MeshResponse {
     /// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     public new static Dictionary<string, JsonFactoryDelegate> _TagDictionary { get; set; } =
             MeshProtocol._TagDictionary;
-
+#pragma warning restore IDE1006 // Naming Styles
 
     /// <summary>
     /// Default constructor
@@ -124,7 +125,9 @@ public partial class MeshRequest {
     /// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     public static new Dictionary<string, JsonFactoryDelegate> _TagDictionary { get; set; } =
+#pragma warning restore IDE1006 // Naming Styles
             MeshProtocol._TagDictionary;
 
     /// <summary>

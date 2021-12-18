@@ -92,7 +92,7 @@ public partial class TBSCertificate {
     /// </summary>
     /// <param name="Years">Number of years for certificate to be valid</param>
     public void SetValidity(int Years) {
-        TimeSpan TimeSpan = new TimeSpan(366 * Years, 0, 0, 0);
+        TimeSpan TimeSpan = new(366 * Years, 0, 0, 0);
         SetValidity(TimeSpan);
         }
 
@@ -144,7 +144,7 @@ public partial class TBSCertificate {
 
     public void SetAuthorityKeyIdentifier(byte[] ID) {
         AuthorityKeyIdentifier AuthorityKeyIdentifier =
-                    new AuthorityKeyIdentifier {
+                    new() {
                         AuthorityCertSerialNumber = System.Int32.MinValue,
                         KeyIdentifier = ID
                         };
@@ -156,7 +156,7 @@ public partial class TBSCertificate {
     /// </summary>
     /// <param name="ID">The key identifier</param>
     public void SetSubjectKeyIdentifier(byte[] ID) {
-        SubjectKeyIdentifier SubjectKeyIdentifier = new SubjectKeyIdentifier {
+        SubjectKeyIdentifier SubjectKeyIdentifier = new() {
             Value = ID
             };
         AddExtension(new Extension(SubjectKeyIdentifier, false));
@@ -167,8 +167,8 @@ public partial class TBSCertificate {
     /// </summary>
     /// <param name="Name">Name to set</param>
     public void SetSubjectAltName(string Name) {
-        GeneralName GeneralName = new GeneralName(Name);
-        SubjectAltName SubjectAltName = new SubjectAltName(GeneralName);
+        GeneralName GeneralName = new(Name);
+        SubjectAltName SubjectAltName = new(GeneralName);
         AddExtension(new Extension(SubjectAltName, false));
         }
 
@@ -181,7 +181,7 @@ public partial class TBSCertificate {
 
         bool CA = false;
 
-        List<int[]> Uses = new List<int[]>();
+        List<int[]> Uses = new();
         KeyUses KeyUses = 0;
 
         if ((Use & Application.ServerAuth) > 0) {
@@ -269,7 +269,7 @@ public partial class TBSCertificate {
     /// <param name="PathLength">Maximum path length of a chain.</param>
     public void SetBasicConstraints(bool CA, int PathLength) {
         BasicConstraints BasicConstraints =
-                    new BasicConstraints {
+                    new() {
                         CA = CA,
                         PathLenConstraint = PathLength < 0 ?
             System.Int32.MinValue : PathLength
@@ -286,7 +286,7 @@ public partial class TBSCertificate {
         int Uses = (int)KeyUses;
         byte[] Value = Assanine_wankathon(Uses);
 
-        KeyUsage KeyUsage = new KeyUsage {
+        KeyUsage KeyUsage = new() {
             Value = Value
             };
         AddExtension(new Extension(KeyUsage, true));
@@ -297,7 +297,7 @@ public partial class TBSCertificate {
     /// </summary>
     /// <param name="Values">The key usage values</param>
     public void SetExtendedKeyUsage(List<int[]> Values) {
-        ExtendedKeyUsage ExtendedKeyUsage = new ExtendedKeyUsage {
+        ExtendedKeyUsage ExtendedKeyUsage = new() {
             KeyPurpose = Values
             };
         AddExtension(new Extension(ExtendedKeyUsage, false));
@@ -416,8 +416,8 @@ public partial class Name {
     /// <param name="CommonName">Common name to convert</param>
     /// <returns>List of Name segments.</returns>
     public static List<Name> ToName(string CommonName) {
-        List<Name> Result = new List<Name>();
-        Name Segment = new Name(CommonName);
+        List<Name> Result = new();
+        Name Segment = new(CommonName);
         Result.Add(Segment);
         return Result;
         }

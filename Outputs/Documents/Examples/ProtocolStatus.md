@@ -8,7 +8,7 @@ account that it has access rights for:
 ~~~~
 {
   "StatusRequest":{
-    "CatalogedDeviceDigest":"MDGC-JPCI-BEK5-ALX2-Y6FR-MHJ4-XQ"}}
+    "CatalogedDeviceDigest":"MAMX-UE46-MNGQ-3XDY-5ADB-2HAL-IU"}}
 ~~~~
 
 

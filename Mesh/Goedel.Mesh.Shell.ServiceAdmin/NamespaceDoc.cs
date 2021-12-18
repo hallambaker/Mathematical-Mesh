@@ -27,7 +27,7 @@ global using Goedel.Mesh.Client;
 global using Goedel.Mesh.Server;
 global using Goedel.Mesh.ServiceAdmin;
 global using Goedel.Protocol;
-
+global using Goedel.Utilities;
 
 
 #if !(_Github_)

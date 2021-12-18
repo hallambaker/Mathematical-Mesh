@@ -43,7 +43,7 @@ public class Program {
     static void Main(string[] args) {
 
 
-        Shell shell = new Shell(
+        Shell shell = new(
                     PublicMeshService.ServiceDescription,
                     ServiceManagementProvider.ServiceDescriptionHost
                     ) {

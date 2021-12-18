@@ -144,7 +144,7 @@ public abstract class Writer : Disposable {
 
     abstract public void WriteBinary(byte[] buffer, int offset = 0, int count = -1);
 
-    readonly static byte[] NullBuffer = new byte[0];
+    readonly static byte[] NullBuffer = Array.Empty<byte>();
     /// <summary>Write empty binary data sequence</summary>
     public void WriteBinary() => WriteBinary(NullBuffer);
 

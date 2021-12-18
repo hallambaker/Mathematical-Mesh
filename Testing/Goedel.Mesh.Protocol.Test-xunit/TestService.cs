@@ -33,9 +33,8 @@ using Goedel.Utilities;
 
 using Xunit;
 
-#pragma warning disable IDE0059
-#pragma warning disable IDE0060
-#pragma warning disable CA1822
+//#pragma warning disable IDE0059
+//#pragma warning disable CA1822
 
 namespace Goedel.XUnit;
 
@@ -59,11 +58,11 @@ public partial class TestService {
     static TestService() => Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
 
 
-    static string AccountAlice = "alice@example.com";
-    static string ServiceName = "example.com";
-    static string AccountBob = "bob@example.com";
-    static string AccountQ = "q@example.com";
-    static string AccountMallet = "mallet@example.com";
+    static readonly string AccountAlice = "alice@example.com";
+    static readonly string ServiceName = "example.com";
+    static readonly string AccountBob = "bob@example.com";
+    static readonly string AccountQ = "q@example.com";
+    static readonly string AccountMallet = "mallet@example.com";
 
     public string DeviceAliceAdmin = "Alice Admin";
     public string DeviceAlice2 = "Alice Device 2";
@@ -72,18 +71,17 @@ public partial class TestService {
     public string DeviceQ = "DeviceQ";
     public string DeviceMallet = "DeviceMallet";
 
-    static string AccountGroup = "groupw@example.com";
+    static readonly string AccountGroup = "groupw@example.com";
 
     public static Contact ContactAlice => MeshMachineTest.ContactAlice;
     public static Contact ContactBob => MeshMachineTest.ContactBob;
 
-
-    CatalogedCredential password1 = new() {
+    readonly CatalogedCredential password1 = new() {
         Username = "fred",
         Password = "password",
         Service = "example.com"
         };
-    CatalogedCredential password2 = new() {
+    readonly CatalogedCredential password2 = new() {
         Username = "fred",
         Password = "password",
         Service = "example.net"
@@ -647,7 +645,7 @@ public partial class TestService {
 
 
 
-    public bool VerifyContainers(ContextUser contextUser) {
+    public static bool VerifyContainers(ContextUser contextUser) {
 
         var profileuser = contextUser.ProfileUser;
         using (var transaction1 = contextUser.TransactBegin()) {
@@ -689,7 +687,7 @@ public partial class TestService {
         return true;
         }
 
-    bool Verify(ContextUser first, ContextUser second) {
+    static bool Verify(ContextUser first, ContextUser second) {
         //(first.ProfileDevice.UDF == second.ProfileDevice.UDF).AssertTrue();
 
         Verify(first.ActivationDevice, second.ActivationDevice);

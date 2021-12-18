@@ -17,7 +17,7 @@
             Base class for command line interpreters
             </summary>
         </member>
-        <member name="F:Goedel.Command.CommandLineInterpreterBase.FlagIndicator">
+        <member name="P:Goedel.Command.CommandLineInterpreterBase.FlagIndicator">
             <summary>The default flag indicator for display to terminal, this is a forward slash / for Windows
             and a double dash -- for UNIX.</summary>
         </member>

@@ -137,7 +137,7 @@ public class LogService {
         output.Append(logTransaction.Start.ToRFC3339());
         output.Append($" { Resources.TransactionStart} ");
         output.Append(logTransaction.TransactionIdentifier);
-        output.Append(" ");
+        output.Append(' ');
         output.Append(logTransaction.Token);
         logTransaction.Request?.Report(output, ConsoleOutput);
 

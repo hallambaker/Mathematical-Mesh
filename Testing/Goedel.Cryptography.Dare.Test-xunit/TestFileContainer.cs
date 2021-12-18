@@ -160,7 +160,7 @@ public partial class TestDareArchive {
             }
         }
 
-    static Random Random = new();
+    static readonly Random Random = new();
 
     static byte[] CreateBytes(int length) => CryptoCatalog.GetBytes(length);
 

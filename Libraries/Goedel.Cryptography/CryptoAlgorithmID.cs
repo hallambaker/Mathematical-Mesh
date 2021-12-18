@@ -21,8 +21,6 @@
 #endregion
 
 
-#pragma warning disable CA1707
-
 namespace Goedel.Cryptography;
 
 // Having realized that all crypto applications invariably end up with nested
@@ -112,7 +110,7 @@ public enum CryptoAlgorithmId {
     // Bulk algorithms
 
     /// <summary>SHA1 (Highly deprecated but often necessary)</summary>
-    SHA_1_DEPRECATED = 1,
+    SHA_1_DEPRECATED = Bulk,
 
     /// <summary>SHA2 256 bit</summary>
     SHA_2_256 = Digest + 2,
@@ -138,7 +136,7 @@ public enum CryptoAlgorithmId {
 
 
     /// <summary>Flag for CBC mode with PKCS#7 padding</summary>
-    ModeCBC = 1,
+    ModeCBC = Bulk,
 
     /// <summary>Flag for Cipher Text Stealing Mode</summary>
     ModeCTS = 2,

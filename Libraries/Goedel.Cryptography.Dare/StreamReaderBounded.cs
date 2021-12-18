@@ -34,8 +34,8 @@ public partial class StreamReaderBounded : StreamReaderBase {
     public override long Length { get; }
     #endregion
 
-    Stream Stream;
-    long Start;
+    readonly Stream Stream;
+    readonly long Start;
 
     /// <summary>
     /// The number of bytes remaining to be read.

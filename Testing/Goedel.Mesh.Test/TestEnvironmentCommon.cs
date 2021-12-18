@@ -187,7 +187,7 @@ public class TestEnvironmentCommon : Disposable {
 
     public virtual string ServiceDns => "example.com";
 
-    static string TestPath = "TestPath";
+    static readonly string TestPath = "TestPath";
     public static string TestRoot { get; set; }
 
     public static string CommonData => System.IO.Path.Combine(TestRoot, "CommonData");

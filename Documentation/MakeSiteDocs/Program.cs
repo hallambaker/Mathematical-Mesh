@@ -226,8 +226,8 @@ public partial class CreateExamples {
         Directory.SetCurrentDirectory(outputPath);
         var CreateExamples = new CreateExamples();
 
-        //Console.WriteLine($"***** WebDocs");
-        //WebDocs(this);
+        Console.WriteLine($"***** WebDocs");
+        WebDocs(this);
 
         Directory.SetCurrentDirectory("..\\Outputs\\Documents");
         GitHub = false;
@@ -273,6 +273,17 @@ public partial class CreateExamples {
             System.Diagnostics.Process.Start("CMD.exe", "/C MakeOneDoc");
         Process.WaitForExit();
         }
+    public string FutureFeature(string example = null)
+    {
+        this.Future();
+        return $"[Future Feature: {example}]\n\n" ?? "[Future Feature]";
+    }
+
+    public string FutureExample(string example = null)
+    {
+        this.Future();
+        return $"[Future Example: {example}]\n\n" ?? "[Future Example]";
+    }
 
 
     public string Unfinished(string example = null) {

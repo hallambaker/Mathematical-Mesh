@@ -41,7 +41,7 @@ public partial class CommandSplitLex {
         return CommandSplitLex.Value.ToArray();
         }
 
-    LexStringReader lexStringReader;
+    readonly LexStringReader lexStringReader;
 
     /// <summary>
     /// Construct a parser to read from a string to be specified in GetToken (data)
@@ -80,8 +80,8 @@ public partial class CommandSplitLex {
     // Private variables
     bool pending = false; // if true, there is an incomplete value to be added.
     int escapeCount = 0;
-    List<string> arguments = new();
-    StringBuilder buildValue = new();
+    readonly List<string> arguments = new();
+    readonly StringBuilder buildValue = new();
 
     /// <summary>
     /// Reset the value buffers to start a new parse.

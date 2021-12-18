@@ -31,11 +31,11 @@ namespace Goedel.XUnit;
 
 public partial class TestCryptographyJose {
 
-    static KeyPairBaseRSA EncrypterKeyPair;
-    static KeyPairBaseRSA SignerKeyPair;
+    static readonly KeyPairBaseRSA EncrypterKeyPair;
+    static readonly KeyPairBaseRSA SignerKeyPair;
 
-    static KeyPairDH TestKeyPairDH;
-    static KeyPairBaseRSA TestKeyPairRSA;
+    static readonly KeyPairDH TestKeyPairDH;
+    static readonly KeyPairBaseRSA TestKeyPairRSA;
 
     static TestCryptographyJose() {
         Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();

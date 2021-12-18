@@ -19,8 +19,9 @@ a file.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> contact add email carol@example.com
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman contact add email carol@example.com
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\em
+ail'.
 </div>
 ~~~~
 
@@ -37,8 +38,8 @@ details:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> contact self email alice@example.com
-<rsp>ERROR - The feature has not been implemented
+<cmd>Alice> meshman contact self email alice@example.com
+<rsp>ERROR - An unknown error occurred
 </div>
 ~~~~
 
@@ -48,8 +49,8 @@ Contacts may also be added by accepting contact request messages using the
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message accept tbs
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman message accept tbs
+<rsp>ERROR - The specified message could not be found.
 </div>
 ~~~~
 
@@ -61,8 +62,8 @@ email address or label:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> contact get carol@example.com
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman contact get carol@example.com
+<rsp>
 </div>
 ~~~~
 
@@ -73,8 +74,32 @@ A complete list of contacts is obtained using the  `contact list` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> contact list
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman contact list
+<rsp>Entry<CatalogedContact>: MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
+  Person MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
+  Anchor MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
+  Address alice@example.com
+
+Entry<CatalogedContact>: NAWB-M7G7-OXPC-I6YS-SIXH-JQ7E-OOXA
+  Person 
+  Anchor MBYX-JPOL-7H24-YL2Z-LOHO-7MWV-IFGG
+  Address bob@example.com
+
+Entry<CatalogedContact>: NBLD-QB2F-UVQD-MHP5-PHY3-J2MO-YUKD
+  Person 
+  Anchor MCIG-57G4-CKMG-SLW5-I75I-LQNC-J5MK
+  Address groupw@example.com
+
+Entry<CatalogedContact>: NDXP-NDKS-PFFD-WBA7-VQ74-5KM5-355Y
+  Person 
+  Anchor MCIG-57G4-CKMG-SLW5-I75I-LQNC-J5MK
+  Address groupw@example.com
+
+Entry<CatalogedContact>: NCC4-BLBH-RHO3-UHOG-YRJO-W4J2-JCNL
+  Person 
+  Anchor MCIG-57G4-CKMG-SLW5-I75I-LQNC-J5MK
+  Address groupw@example.com
+
 </div>
 ~~~~
 
@@ -85,8 +110,8 @@ Contact entries may be deleted using the  `contact delete` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> contact delete carol@example.com
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman contact delete carol@example.com
+<rsp>ERROR - The entry could not be found in the store.
 </div>
 ~~~~
 

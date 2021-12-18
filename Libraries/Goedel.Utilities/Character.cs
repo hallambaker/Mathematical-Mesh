@@ -112,7 +112,7 @@ public static partial class Extension {
     public static bool IsWhite(this int c) => (c == ' ' | c == '\t' | c == '\n' | c == '\r');
 
     // Encoder, is just used to call static methods.
-    static UTF8Encoding UTF8Encoding = new();
+    static readonly UTF8Encoding UTF8Encoding = new();
 
     /// <summary>
     /// Count the number of bytes that are required to encode

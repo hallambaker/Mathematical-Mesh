@@ -41,7 +41,7 @@ with the `/bits`, `/cty` and `/alg` options.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> hash udf TestFile1.txt
+<cmd>Alice> meshman hash udf TestFile1.txt
 <rsp>MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
 </div>
 ~~~~
@@ -50,7 +50,7 @@ Specifying the /json option returns a result of type ResultDigest:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> hash udf TestFile1.txt /json
+<cmd>Alice> meshman hash udf TestFile1.txt /json
 <rsp>{
   "ResultDigest": {
     "Success": true,
@@ -82,7 +82,7 @@ file according to the digest algorithm specifiedwith the `/alg` option.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> hash digest TestFile1.txt
+<cmd>Alice> meshman hash digest TestFile1.txt
 <rsp>A028D4F74B602BA45EB0A93C9A4677240DCF281A1A9322F183BD32F0BED82EC72DE9C3957B2F4C9A1CCF7ED14F85D73498DF38017E703D47EBB9F0B3BF116F69
 </div>
 ~~~~
@@ -91,7 +91,7 @@ Specifying the /json option returns a result of type ResultDigest:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> hash digest TestFile1.txt /json
+<cmd>Alice> meshman hash digest TestFile1.txt /json
 <rsp>{
   "ResultDigest": {
     "Success": true,
@@ -134,9 +134,9 @@ true returned if and only if it matches the value specified.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> hash mac TestFile1.txt
-<rsp>ACFH-BJQS-B73O-HFXF-B3SL-WQGO-OEKI
-NCGR-VIRQ-YSI2-V6MB-MVF5-4RQ2-LUDL
+<cmd>Alice> meshman hash mac TestFile1.txt
+<rsp>ACYI-4NS4-IDKK-B2AB-VKIL-HJ67-6ZPC
+NDOC-SUKC-BF4B-YLEP-5FKG-KTEW-RS5R
 </div>
 ~~~~
 
@@ -144,12 +144,12 @@ Specifying the /json option returns a result of type ResultDigest:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> hash mac TestFile1.txt /json
+<cmd>Alice> meshman hash mac TestFile1.txt /json
 <rsp>{
   "ResultDigest": {
     "Success": true,
-    "Digest": "ACFH-BJQS-B73O-HFXF-B3SL-WQGO-OEKI",
-    "Key": "NCGR-VIRQ-YSI2-V6MB-MVF5-4RQ2-LUDL"}}
+    "Digest": "ACYI-4NS4-IDKK-B2AB-VKIL-HJ67-6ZPC",
+    "Key": "NDOC-SUKC-BF4B-YLEP-5FKG-KTEW-RS5R"}}
 </div>
 ~~~~
 

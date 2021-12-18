@@ -45,10 +45,10 @@ class StackEntry {
 /// Buffer used to decode ASN1 data
 /// </summary>
 public class DecodeBuffer {
-    byte[] Input;
+    readonly byte[] Input;
     int ReadPointer = 0;
     int ReadLimit;
-    List<StackEntry> Stack = new();
+    readonly List<StackEntry> Stack = new();
 
     /// <summary>
     /// Create a decode buffer from the specified byte array

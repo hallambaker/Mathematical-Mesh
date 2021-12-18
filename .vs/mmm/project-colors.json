@@ -275,7 +275,27 @@
       "ProjectGuid": "d2ab97dd-b0e2-4485-9697-7122b2e9c72a",
       "DisplayName": "Goedel.Cryptography.Test",
       "ColorIndex": 5
+    },
+    "c6e22a32-d923-4598-9552-347562f3f3ab": {
+      "ProjectGuid": "c6e22a32-d923-4598-9552-347562f3f3ab",
+      "DisplayName": "Goedel.Protocol.Test-xunit",
+      "ColorIndex": 6
+    },
+    "a0de7974-409e-495a-82cf-238331a797c6": {
+      "ProjectGuid": "a0de7974-409e-495a-82cf-238331a797c6",
+      "DisplayName": "MakeRelease",
+      "ColorIndex": 7
+    },
+    "7e0fa8f1-6242-417e-a1b9-3fd29a6f2d33": {
+      "ProjectGuid": "7e0fa8f1-6242-417e-a1b9-3fd29a6f2d33",
+      "DisplayName": "Goedel.Cryptography.Dare.Test-xunit",
+      "ColorIndex": 8
+    },
+    "896fc296-8eb1-426d-9d34-3f0ab0c73e22": {
+      "ProjectGuid": "896fc296-8eb1-426d-9d34-3f0ab0c73e22",
+      "DisplayName": "Test.Common",
+      "ColorIndex": 9
     }
   },
-  "NextColorIndex": 6
+  "NextColorIndex": 10
 }

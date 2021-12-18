@@ -66,7 +66,7 @@ public class MeshMachineTest : MeshMachineCore {
     //List<Trace> meshProtocolMessages;
 
 
-    TestEnvironmentCommon testEnvironmentCommon;
+    readonly TestEnvironmentCommon testEnvironmentCommon;
 
     public string Name;
     public string Path => System.IO.Path.Combine(testEnvironmentCommon.Path, Name);
@@ -87,10 +87,10 @@ public class MeshMachineTest : MeshMachineCore {
         testEnvironmentCommon.GetMeshClient(this, credential, service, accountAddress);
 
 
-    public static Contact ContactAlice = new ContactPerson(
+    public static Contact ContactAlice { get; } = new ContactPerson(
         "Alice", "Aardvark", email: "alice@example.com");
 
-    public static Contact ContactBob = new ContactPerson(
+    public static Contact ContactBob { get; } = new ContactPerson(
         "Bob", "Baker", email: "bob@example.com");
 
 
@@ -145,8 +145,7 @@ public class MeshMachineTest : MeshMachineCore {
         return machine.MeshHost.Connect(accountId, localName, pin: PIN);
         }
 
-
-    Dictionary<string, KeyPair> dictionaryKeyPairByUDF = new();
+    readonly Dictionary<string, KeyPair> dictionaryKeyPairByUDF = new();
 
 
 
@@ -195,7 +194,7 @@ public class MeshMachineTest : MeshMachineCore {
 
 
 public class KeyCollectionTest : KeyCollectionCore {
-    MeshMachineTest meshMachine;
+    readonly MeshMachineTest meshMachine;
 
     public override string DirectoryKeys => meshMachine.DirectoryKeys;
 
@@ -208,7 +207,7 @@ public class KeyCollectionTest : KeyCollectionCore {
 
 
 public class KeyCollectionTestEnv : KeyCollectionCore {
-    string path;
+    readonly string path;
 
     public override string DirectoryKeys => Path.Combine(path, "Keys");
 

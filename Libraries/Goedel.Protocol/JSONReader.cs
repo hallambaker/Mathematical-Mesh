@@ -334,8 +334,7 @@ public partial class JsonReader : Reader {
     public static JSONReaderFactoryDelegate JSONReaderFactory => JsonReaderFactoryByte;
     static JsonReader JsonReaderFactoryByte(byte[] Data) => new(Data);
 
-
-    StringBuilder stringBuilder = new();
+    readonly StringBuilder stringBuilder = new();
 
     /// <summary>
     /// The underlying character stream.

@@ -48,7 +48,7 @@ The `ssh create` command adds an SSH profile named `ssh` to a Mesh account:
 
 
 ~~~~
-Missing example 27
+Missing example 30
 ~~~~
 
 Since the command creates a new application catalog, the command must be given to 
@@ -65,7 +65,7 @@ an SSH client:
 
 
 ~~~~
-Missing example 28
+Missing example 31
 ~~~~
 
 The `ssh public` command extracts the public key required top configure
@@ -73,7 +73,7 @@ an SSH client:
 
 
 ~~~~
-Missing example 29
+Missing example 32
 ~~~~
 
 If a script is being used to automate this process, the best practice is for the
@@ -92,7 +92,7 @@ corresponding SSH device public keys added:
 
 
 ~~~~
-Missing example 30
+Missing example 33
 ~~~~
 
 The `ssh merge host`  command reads the `known_hosts` file on a client machine and adds
@@ -100,7 +100,7 @@ the listed hosts to the user's ssh catalog.
 
 
 ~~~~
-Missing example 31
+Missing example 34
 ~~~~
 
 ## Client Key management
@@ -111,14 +111,14 @@ SSH keys belonging to the user that are not part of the Mesh profile may be adde
 
 
 ~~~~
-Missing example 32
+Missing example 35
 ~~~~
 
 The list of known clients may be returned in various formats using the `ssh show client`  command.
 
 
 ~~~~
-Missing example 33
+Missing example 36
 ~~~~
 
 ## Host Key Management
@@ -127,7 +127,7 @@ The `ssh add host`  command adds specific host entries to the user's SSH profile
 
 
 ~~~~
-Missing example 34
+Missing example 37
 ~~~~
 
 The current list of known hosts in the SSH catalog is returned by the `ssh show known` 
@@ -135,7 +135,7 @@ command.
 
 
 ~~~~
-Missing example 35
+Missing example 38
 ~~~~
 
 ## Additional Devices
@@ -151,13 +151,13 @@ enable use of ssh on the machine:
 
 
 ~~~~
-Missing example 36
+Missing example 39
 ~~~~
 
 Once the device has been authorized, the client machine can start using SSH immediately:
 
 
 ~~~~
-Missing example 37
+Missing example 40
 ~~~~
 

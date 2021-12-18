@@ -42,7 +42,7 @@ public partial class ShellTests {
 
     public static ShellTests Test() => new();
     #region // Commitment
-    List<TestVectorDigest> commitmentTests = new() {
+    readonly List<TestVectorDigest> commitmentTests = new() {
         new TestVectorDigest("Konrad is the traitor", "ADFI-EPKG-VKPP-NHHM-5DCA-QBRW-AVRJ",
                 null, key: "NC56-CJPL-HRLU-MGTU-PUEW-S5WU-PYGP"),
         new TestVectorDigest("", "AASY-DPYV-3WLT-OIQZ-ZBZF-OMSB-PEMH",
@@ -172,7 +172,7 @@ public partial class ShellTests {
     #endregion
     #region // UDF
 
-    List<TestVectorDigest> uDFTests = new() {
+    readonly List<TestVectorDigest> uDFTests = new() {
         new TestVectorDigest("UDF Data Value", "MDDK-7N6A-727A-JZNO-STRX-XKS7-DJAF",
             "KCFI-NCQG-DRKG-47R7-OVPT-TCHZ-7UXY", null),
         new TestVectorDigest("290668103", "MAAA-AAB3-VVFO-FE2C-LRWO-SCAA-HVFI",
@@ -246,7 +246,7 @@ public partial class ShellTests {
 
 
 
-    List<TestVectorDigest> digestTests = new() {
+    readonly List<TestVectorDigest> digestTests = new() {
         new TestVectorDigest("abc",
             "ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
             "b751850b1a57168a5693cd924b6b096e08f621827444f70d884f5d0240d2712e10e116e9192af3c91a7ec57647e3934057340b4cf408d5a56592f8274eec53f0"),

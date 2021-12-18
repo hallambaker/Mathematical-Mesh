@@ -46,8 +46,8 @@ public class HostMonitor {
     ///<summary>Total results in the most recent sample interval.</summary> 
     public MonitorResult Recent { get; private set; }
 
-    private MonitorResult current;
-    DateTime[] dispatcherStart;
+    private readonly MonitorResult current;
+    readonly DateTime[] dispatcherStart;
     DateTime busyStart;
 
     #endregion

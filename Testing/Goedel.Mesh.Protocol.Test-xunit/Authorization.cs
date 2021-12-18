@@ -30,7 +30,7 @@ using Goedel.Test;
 using Goedel.Test.Core;
 using Xunit;
 
-#pragma warning disable CA1822
+//#pragma warning disable CA1822
 
 namespace Goedel.XUnit;
 

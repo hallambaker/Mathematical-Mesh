@@ -78,14 +78,14 @@ public class CryptoCatalog {
     public CryptoAlgorithmId EncryptionDefaults(CryptoAlgorithmId baseId) => baseId.Default(AlgorithmExchange, AlgorithmEncryption);
 
 
-    static CryptoAlgorithmId SetDefault(CryptoAlgorithmId Current, CryptoAlgorithm New, CryptoAlgorithmId ID,
-            CryptoAlgorithmClasses Class) {
+    //static CryptoAlgorithmId SetDefault(CryptoAlgorithmId Current, CryptoAlgorithm New, CryptoAlgorithmId ID,
+    //        CryptoAlgorithmClasses Class) {
 
-        if (Current == CryptoAlgorithmId.NULL & (New.AlgorithmClass == Class)) {
-            Current = ID;
-            }
-        return Current;
-        }
+    //    if (Current == CryptoAlgorithmId.NULL & (New.AlgorithmClass == Class)) {
+    //        Current = ID;
+    //        }
+    //    return Current;
+    //    }
 
     /// <summary>Map crypto identifier to crypto algorithm.</summary>
     public Dictionary<CryptoAlgorithmId, CryptoAlgorithm> Dictionary { get; } =

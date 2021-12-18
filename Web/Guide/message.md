@@ -29,7 +29,10 @@ using the `message contact` command:
 
 ~~~~
 <div="terminal">
-<cmd>Bob> message contact alice@example.com
+<cmd>Bob> meshman message contact alice@example.com
+<rsp>Envelope ID: MATB-4AMD-PDBP-VKTJ-SNIZ-ZRZB-WWRR
+Message ID: NAPF-EUXY-TEQV-J34J-QTFZ-HBJI-GHNM
+Response ID: MB5A-R3RP-B2KE-YFC5-U3JU-T5TO-GICN
 </div>
 ~~~~
 
@@ -38,8 +41,26 @@ Alice reviews her pending messages using the `message pending` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message pending
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman message pending
+<rsp>MessageID: NAPF-EUXY-TEQV-J34J-QTFZ-HBJI-GHNM
+        Contact Request::
+        MessageID: NAPF-EUXY-TEQV-J34J-QTFZ-HBJI-GHNM
+        To: alice@example.com From: bob@example.com
+        PIN: AAPI-4OUO-YUQZ-7SXT-PRM7-KOAM-2EGA
+MessageID: NDZE-G3GP-G45D-WAOM-SXOH-24EC-JED2
+        Group invitation::
+        MessageID: NDZE-G3GP-G45D-WAOM-SXOH-24EC-JED2
+        To: alice@example.com From: alice@example.com
+MessageID: NDLR-BUDO-M7WU-JBTA-W4G2-AAOU-4NJB
+        Confirmation Request::
+        MessageID: NDLR-BUDO-M7WU-JBTA-W4G2-AAOU-4NJB
+        To: alice@example.com From: console@example.com
+        Text: start
+MessageID: NDCL-O2LD-ODCU-MB2I-6EY3-RXRR-OSSK
+        Contact Request::
+        MessageID: NDCL-O2LD-ODCU-MB2I-6EY3-RXRR-OSSK
+        To: alice@example.com From: bob@example.com
+        PIN: AB3F-U7X5-Q2PE-ESFS-S2PH-7AGC-TKBA
 </div>
 ~~~~
 
@@ -48,8 +69,8 @@ Alice sees the request from Bob and accepts it with the `message accept` command
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message accept tbs
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman message accept tbs
+<rsp>ERROR - The specified message could not be found.
 </div>
 ~~~~
 
@@ -58,8 +79,32 @@ Bob's contact information has been added to Alice's address book:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> contact list
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman contact list
+<rsp>Entry<CatalogedContact>: MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
+  Person MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
+  Anchor MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
+  Address alice@example.com
+
+Entry<CatalogedContact>: NAWB-M7G7-OXPC-I6YS-SIXH-JQ7E-OOXA
+  Person 
+  Anchor MBYX-JPOL-7H24-YL2Z-LOHO-7MWV-IFGG
+  Address bob@example.com
+
+Entry<CatalogedContact>: NBLD-QB2F-UVQD-MHP5-PHY3-J2MO-YUKD
+  Person 
+  Anchor MCIG-57G4-CKMG-SLW5-I75I-LQNC-J5MK
+  Address groupw@example.com
+
+Entry<CatalogedContact>: NDXP-NDKS-PFFD-WBA7-VQ74-5KM5-355Y
+  Person 
+  Anchor MCIG-57G4-CKMG-SLW5-I75I-LQNC-J5MK
+  Address groupw@example.com
+
+Entry<CatalogedContact>: NCC4-BLBH-RHO3-UHOG-YRJO-W4J2-JCNL
+  Person 
+  Anchor MCIG-57G4-CKMG-SLW5-I75I-LQNC-J5MK
+  Address groupw@example.com
+
 </div>
 ~~~~
 
@@ -69,7 +114,7 @@ Bob can find out if Alice has accepted his contact request using the
 
 ~~~~
 <div="terminal">
-<cmd>Bob> message status tbs
+<cmd>Bob> meshman message status tbs
 <rsp>Pending
 </div>
 ~~~~
@@ -83,8 +128,8 @@ using the `message reject` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message reject tbs
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman message reject tbs
+<rsp>ERROR - The specified message could not be found.
 </div>
 ~~~~
 
@@ -93,7 +138,7 @@ For good measure, she decides to block further requests:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message block mallet@example.com
+<cmd>Alice> meshman message block mallet@example.com
 </div>
 ~~~~
 
@@ -126,7 +171,11 @@ a confirmation request `Purchase equipment for $6,000?` using the
 
 ~~~~
 <div="terminal">
-<cmd>Bob> message confirm alice@example.com "Purchase equipment for $6,000?"
+<cmd>Bob> meshman message confirm alice@example.com "Purchase equipment for ^
+    $6,000?"
+<rsp>Envelope ID: MCTO-U5LM-SCZU-GEQ6-VGRE-2VWP-ALZT
+Message ID: NAIC-ZEKO-AOAR-2DMY-5B3W-J3MD-LHH4
+Response ID: MCS5-G7NX-KTKD-RE6X-7YZX-BIQF-I55E
 </div>
 ~~~~
 
@@ -135,8 +184,31 @@ Alice reviews her pending messages using the using the `message pending` command
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message pending
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman message pending
+<rsp>MessageID: NAIC-ZEKO-AOAR-2DMY-5B3W-J3MD-LHH4
+        Confirmation Request::
+        MessageID: NAIC-ZEKO-AOAR-2DMY-5B3W-J3MD-LHH4
+        To: alice@example.com From: bob@example.com
+        Text: "Purchase
+MessageID: NAPF-EUXY-TEQV-J34J-QTFZ-HBJI-GHNM
+        Contact Request::
+        MessageID: NAPF-EUXY-TEQV-J34J-QTFZ-HBJI-GHNM
+        To: alice@example.com From: bob@example.com
+        PIN: AAPI-4OUO-YUQZ-7SXT-PRM7-KOAM-2EGA
+MessageID: NDZE-G3GP-G45D-WAOM-SXOH-24EC-JED2
+        Group invitation::
+        MessageID: NDZE-G3GP-G45D-WAOM-SXOH-24EC-JED2
+        To: alice@example.com From: alice@example.com
+MessageID: NDLR-BUDO-M7WU-JBTA-W4G2-AAOU-4NJB
+        Confirmation Request::
+        MessageID: NDLR-BUDO-M7WU-JBTA-W4G2-AAOU-4NJB
+        To: alice@example.com From: console@example.com
+        Text: start
+MessageID: NDCL-O2LD-ODCU-MB2I-6EY3-RXRR-OSSK
+        Contact Request::
+        MessageID: NDCL-O2LD-ODCU-MB2I-6EY3-RXRR-OSSK
+        To: alice@example.com From: bob@example.com
+        PIN: AB3F-U7X5-Q2PE-ESFS-S2PH-7AGC-TKBA
 </div>
 ~~~~
 
@@ -145,8 +217,8 @@ Alice she accepts Bob's request using the `message pending` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message accept tbs
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman message accept tbs
+<rsp>ERROR - The specified message could not be found.
 </div>
 ~~~~
 
@@ -155,7 +227,7 @@ Bob receives Alice's approval using the `message status` command:
 
 ~~~~
 <div="terminal">
-<cmd>Bob> message status tbs
+<cmd>Bob> meshman message status tbs
 <rsp>Pending
 </div>
 ~~~~
@@ -168,8 +240,8 @@ Alice can also reject requests using the `message reject` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> message reject tbs
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman message reject tbs
+<rsp>ERROR - The specified message could not be found.
 </div>
 ~~~~
 
@@ -178,7 +250,7 @@ Bob receives a reply telling him the request was rejected:
 
 ~~~~
 <div="terminal">
-<cmd>Bob> message status tbs
+<cmd>Bob> meshman message status tbs
 <rsp>Pending
 </div>
 ~~~~
@@ -189,7 +261,7 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 
 ~~~~
-Missing example 49
+Missing example 52
 ~~~~
 
 

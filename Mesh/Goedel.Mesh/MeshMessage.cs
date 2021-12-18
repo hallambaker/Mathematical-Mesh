@@ -444,7 +444,7 @@ public partial class RespondConnection {
 public partial class MessageContact {
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<MessageContact> EnvelopedRequestContact =>
-        new Enveloped<MessageContact>(DareEnvelope);
+        new(DareEnvelope);
 
     ///<summary>The action for pin code validation.</summary> 
     public override string Action => MeshConstants.MessagePINActionContact;
@@ -459,7 +459,7 @@ public partial class RequestConfirmation {
 
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<RequestConfirmation> GetEnvelopedRequestConfirmation() =>
-        new Enveloped<RequestConfirmation>(DareEnvelope);
+        new(DareEnvelope);
 
     }
 public partial class ResponseConfirmation {
@@ -469,7 +469,7 @@ public partial class ResponseConfirmation {
 public partial class RequestTask {
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<RequestTask> GetEnvelopedRequestTask() =>
-        new Enveloped<RequestTask>(DareEnvelope);
+        new(DareEnvelope);
     }
 public partial class ProcessResult {
     ///<summary>Typed enveloped data</summary> 

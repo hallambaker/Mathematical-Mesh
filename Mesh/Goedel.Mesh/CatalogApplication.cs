@@ -227,7 +227,7 @@ public partial class CatalogedApplication {
 public partial class CatalogedApplicationNetwork {
 
     ///<inheritdoc/>
-    public override KeyData[] GetEscrow() => new KeyData[0];
+    public override KeyData[] GetEscrow() => Array.Empty<KeyData>();
 
     ///<inheritdoc/>
     public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();

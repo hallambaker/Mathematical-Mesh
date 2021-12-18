@@ -743,9 +743,6 @@
         <member name="F:Goedel.Discovery.DNSFlags.OPCODE_QUERY">
             <summary>Query</summary>
         </member>
-        <member name="F:Goedel.Discovery.DNSFlags.OPCODE_IQUERY">
-            <summary>I Query</summary>
-        </member>
         <member name="F:Goedel.Discovery.DNSFlags.OPCODE_STATUS">
             <summary>Status </summary>
         </member>
@@ -766,9 +763,6 @@
         </member>
         <member name="F:Goedel.Discovery.DNSFlags.RCODE_Mask">
             <summary>Result code Flags</summary>
-        </member>
-        <member name="F:Goedel.Discovery.DNSFlags.RCODE_Success">
-            <summary>Success</summary>
         </member>
         <member name="F:Goedel.Discovery.DNSFlags.RCODE_FormatError">
             <summary>Format error</summary>

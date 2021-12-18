@@ -56,7 +56,7 @@ public class AsCatalogedType<T> : IEnumerable<T> where T : CatalogedEntry {
 /// store.
 /// </summary>
 public class EnumeratorAsCatalogedType<T> : IEnumerator<T> where T : CatalogedEntry {
-    IEnumerator<StoreEntry> baseEnumerator;
+    readonly IEnumerator<StoreEntry> baseEnumerator;
 
     ///<summary>The current item in the enumeration.</summary>
     public T Current => baseEnumerator.Current.JsonObject as T;

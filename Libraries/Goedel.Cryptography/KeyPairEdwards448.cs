@@ -65,7 +65,7 @@ public class KeyPairEd448 : KeyPairEdwards {
     #endregion
 
 
-    byte[] encodedPrivateKey = null;
+    readonly byte[] encodedPrivateKey = null;
 
     /// <summary>
     /// Construct a KeyPairEd25519 instance for the specified key data in interchange 

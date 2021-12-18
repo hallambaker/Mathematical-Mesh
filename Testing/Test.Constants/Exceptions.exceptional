@@ -1,3 +1,7 @@
 ﻿
 Namespace Template
 
+	Exception InvalidTest
+        Console "The Test {0} is invalid."
+		Description
+			|An invalid Test was specified.

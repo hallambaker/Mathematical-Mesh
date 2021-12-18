@@ -39,9 +39,8 @@ public class ShortBlockPermute {
 
 
     ///<summary>The key schedule, this is stored for reuse.</summary> 
-    ulong[] keySchedule;
-
-    int[] rotateSchedule;
+    readonly ulong[] keySchedule;
+    readonly int[] rotateSchedule;
     #endregion
 
     #region // Constructors

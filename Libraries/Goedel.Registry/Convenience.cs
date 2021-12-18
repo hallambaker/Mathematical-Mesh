@@ -87,9 +87,9 @@ public static partial class ExtensionMethods {
     /// <returns>Quoted escaped string.</returns>
     public static string Quoted(this string text) {
         var StringBuilder = new StringBuilder();
-        StringBuilder.Append("\"");
+        StringBuilder.Append('\"');
         Escape(StringBuilder, text);
-        StringBuilder.Append("\"");
+        StringBuilder.Append('\"');
 
         return StringBuilder.ToString();
         }
@@ -105,16 +105,16 @@ public static partial class ExtensionMethods {
             }
 
         var StringBuilder = new StringBuilder();
-        StringBuilder.Append("\"");
+        StringBuilder.Append('\"');
         bool Space = false;
         foreach (var Text in @base) {
             if (Space) {
-                StringBuilder.Append(" ");
+                StringBuilder.Append(' ');
                 }
             Space = true;
             Escape(StringBuilder, Text);
             }
-        StringBuilder.Append("\"");
+        StringBuilder.Append('\"');
 
         return StringBuilder.ToString();
         }

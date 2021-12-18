@@ -5,6 +5,7 @@
 #using Goedel.Protocol
 #using Goedel.Command
 #using Goedel.Test.Core 
+
 #xclass ExampleGenerator CreateExamples
 
 

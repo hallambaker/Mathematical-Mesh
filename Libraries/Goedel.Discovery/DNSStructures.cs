@@ -159,8 +159,8 @@ public enum DNSFlags : ushort {
     OPCODE_Mask = 0x7800,
     /// <summary>Query</summary>
     OPCODE_QUERY = 0x0000,
-    /// <summary>I Query</summary>
-    OPCODE_IQUERY = 0x8000,
+    ///// <summary>I Query</summary>
+    //OPCODE_IQUERY = 0x8000,
     /// <summary>Status </summary>
     OPCODE_STATUS = 0x1000,
     /// <summary>AA</summary>
@@ -175,8 +175,8 @@ public enum DNSFlags : ushort {
     Z_Mask = 0x0070,
     /// <summary>Result code Flags</summary>
     RCODE_Mask = 0xF,
-    /// <summary>Success</summary>
-    RCODE_Success = 0,
+    ///// <summary>Success</summary>
+    //RCODE_Success = 0,
     /// <summary>Format error</summary>
     RCODE_FormatError = 1,
     /// <summary>Failure at server</summary>
@@ -231,7 +231,7 @@ public class DNSMessage {
     /// <summary>The message data</summary>
     public byte[] Data {
         get {
-            DNSBufferIndex Index = new DNSBufferIndex();
+            DNSBufferIndex Index = new();
             Encode(Index);
             return Index.Bytes;
             }
@@ -240,7 +240,7 @@ public class DNSMessage {
     /// <summary>The message data buffer</summary>
     public DNSBuffer Buffer {
         get {
-            DNSBufferIndex Index = new DNSBufferIndex();
+            DNSBufferIndex Index = new();
             Encode(Index);
             return Index.Buffer;
             }
@@ -270,11 +270,11 @@ public class DNSMessage {
     /// <summary>The DNS Query</summary>
     public DNSQuery Query;
     /// <summary>The authoritative answers</summary>
-    public DNSRecord[] Answers = { };
+    public DNSRecord[] Answers = Array.Empty<DNSRecord>();
     /// <summary>The authorities answering</summary>
-    public DNSRecord[] Authorities = { };
+    public DNSRecord[] Authorities = Array.Empty<DNSRecord>();
     /// <summary>Additional records</summary>
-    public DNSRecord[] Additional = { };
+    public DNSRecord[] Additional = Array.Empty<DNSRecord>();
 
 
     int QueryCount, AnswerCount, AuthorityCount, AdditionalCount;
@@ -340,7 +340,7 @@ public class DNSMessage {
     /// <summary>Parse the data in the buffer BufferIn </summary>
     /// <param name="data">The encoded message</param>
     public DNSMessage(byte[] data) {
-        DNSBufferIndex Index = new DNSBufferIndex(data);
+        DNSBufferIndex Index = new(data);
 
         Decode(Index);
         }
@@ -401,7 +401,7 @@ public class DNSResponse : DNSMessage {
         //Dump (Data);
 
         try {
-            DNSBufferIndex Index = new DNSBufferIndex(Data);
+            DNSBufferIndex Index = new(Data);
 
             Decode(Index);
             }

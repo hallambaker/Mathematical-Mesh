@@ -181,8 +181,7 @@ public class TracePoint {
 /// Represents a single trace message
 /// </summary>
 public class TraceMessage {
-
-    TracePoint TracePoint;
+    readonly TracePoint TracePoint;
     TraceDictionary TraceDictionary => TracePoint.TraceDictionary;
 
     /// <summary>

@@ -148,7 +148,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
     ///<summary>List of catalogs</summary>
     public virtual Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;
-    Dictionary<string, StoreFactoryDelegate> catalogDelegates = new() {
+
+    readonly Dictionary<string, StoreFactoryDelegate> catalogDelegates = new() {
         // All contexts have a capability catalog:
             { CatalogAccess.Label, CatalogAccess.Factory },
             { CatalogPublication.Label, CatalogPublication.Factory }

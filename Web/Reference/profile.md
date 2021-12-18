@@ -16,7 +16,6 @@ account    Account creation and management commands.
     import   Import the specified profile data to the specified file
     list   List all profiles on the local machine
     pin   Get a pin value to pre-authorize a connection
-    publish   Create a new device profile and register the corresponding URI.
     purge   Purge the Mesh recovery key from this device
     recover   Recover escrowed profile
     status   Return the status of the account catalogs and spools
@@ -24,6 +23,12 @@ account    Account creation and management commands.
 <over>
 </div>
 ~~~~
+
+The 'account' command set groups commands relating to account creation, maintenance and 
+connection to the service.
+
+The '/local', '/verbose', '/report' and '/json' options are supported by every command
+in the set.
 
 
 # account connect
@@ -44,6 +49,7 @@ connect   Connect by means of a connection uri
     /message   Authorize rights for Mesh messaging
     /web   Authorize rights for Mesh messaging and Web.
     /device   Device restrictive access
+    /threshold   Authorize threshold rights for Mesh messaging and Web.
     /ssh   Authorize rights for specified SSH account
     /email   Authorize rights for specified smtp email account
     /member   Authorize member rights for specified Mesh group
@@ -52,7 +58,20 @@ connect   Connect by means of a connection uri
 </div>
 ~~~~
 
-The `account connect` command 
+The `account connect` command is used to initiate the process of device connection by means
+of an account connection URI such as a URI encoded in a QR code on the device housing.
+
+The request must specify the connection URI as the first (and only) parameter.
+
+The '/account' option may be used to specify the Mesh account to which the device is 
+connected. If unspecified, the default account is used.
+
+The '/local' option may be used to specify a local name for the device.
+
+The '/auth' option may be used to specify authorizations to be granted to the device by
+name. Alternatively the flags '/admin', '/root', '/message', '/web', '/threshold', etc. 
+may be used to specify the most commonly used authorizations.
+
 
 
 # account create
@@ -75,7 +94,40 @@ create   Create new account profile
 </div>
 ~~~~
 
-The `account create` command
+The `account create` command is used to create accounts.
+
+The command takes a single parameter, the make of the account to be created. This is always
+specified in RFC822 style even if it is intended to bind the account to a callsign.
+
+The '/localname' parameter may be used to specify a local (friendly) name for the account.
+
+If the device has an existing device profile provisioned, this will be reused unless
+the '/new' option is used to force creation of a new profile. The '/did' and 'dd'
+options may be used to specify a name and description for the device. If not specified,
+a default name will be used.
+
+
+# account delete
+
+~~~~
+<div="helptext">
+<over>
+delete   Delete an account profile
+       Fingerprint of the account to be removed from this device
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
+
+The `account delete` command is used to delete an account from the service and local machine
+once completed, the command cannot be undone unless the service provides a recovery capability.
+
+The principle use for the current implementation is to test use of the escrow and recovery
+functions and it is not particularly recommended for any other purpose. To avoid accidental
+use, the UDF of the device profile must be specified.
+
 
 # account escrow
 
@@ -95,24 +147,12 @@ escrow   Create a set of key escrow shares
 </div>
 ~~~~
 
-The `account escrow` command
+The `account escrow` command is used to create a set of key recovery shares for the account
+primary secret from which the escrow and signature keys are derrived.
 
-# account get
+The options 'shares' and 'quorum' are used to specify the number of shares to be created
+(e.g. 5) and the threshold number of shares required to perform recovery (e.g. 3).
 
-~~~~
-<div="helptext">
-<over>
-get   Describe the specified profile
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-<over>
-</div>
-~~~~
-
-The `account get` command
 
 # account export
 
@@ -131,6 +171,24 @@ export   Export the specified profile data to the specified file
 ~~~~
 
 The `account export` command
+
+
+# account get
+
+~~~~
+<div="helptext">
+<over>
+get   Describe the specified profile
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
+
+The `account get` command
 
 
 # account hello
@@ -173,13 +231,24 @@ The `account import` command
 <div="helptext">
 <over>
 pin   Get a pin value to pre-authorize a connection
-    /length   Length of PIN to generate (default is 8 characters)
+    /length   Length of PIN to generate in characters
     /expire   <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
+    /auth   (De)Authorize the specified function on the device
+    /root   Device as super administration device
+    /admin   Device as administration device
+    /message   Authorize rights for Mesh messaging
+    /web   Authorize rights for Mesh messaging and Web.
+    /device   Device restrictive access
+    /threshold   Authorize threshold rights for Mesh messaging and Web.
+    /ssh   Authorize rights for specified SSH account
+    /email   Authorize rights for specified smtp email account
+    /member   Authorize member rights for specified Mesh group
+    /group   Authorize group administrator rights for specified Mesh group
 <over>
 </div>
 ~~~~
@@ -195,22 +264,24 @@ followed by the letter m, h or d for minutes, hours and days respectively.
 
 
 
-# account publish
+# account list
 
 ~~~~
 <div="helptext">
 <over>
-publish   Create a new device profile and register the corresponding URI.
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
+list   List all profiles on the local machine
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
 <over>
 </div>
 ~~~~
 
-The `account publish` command 
+The `account list` command 
+
+
 
 
 # account purge
@@ -230,6 +301,33 @@ purge   Purge the Mesh recovery key from this device
 
 The `account purge` command
 
+
+# account recover
+
+~~~~
+<div="helptext">
+<over>
+recover   Recover escrowed profile
+       <Unspecified>
+       <Unspecified>
+       <Unspecified>
+       <Unspecified>
+       <Unspecified>
+       <Unspecified>
+       <Unspecified>
+       <Unspecified>
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+    /file   <Unspecified>
+    /verify   <Unspecified>
+<over>
+</div>
+~~~~
+
+The `account recover` command 
 
 
 # account status

@@ -29,7 +29,7 @@ namespace Goedel.Cryptography.Dare;
 /// </summary>
 public static class ContainerMasterStore {
 
-    static Dictionary<string, ContainerPersistenceStoreThreadSafe> DictionaryChildren =
+    static readonly Dictionary<string, ContainerPersistenceStoreThreadSafe> DictionaryChildren =
                 new();
 
 

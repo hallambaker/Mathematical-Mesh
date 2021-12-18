@@ -65,7 +65,7 @@ public partial class ConnectionResponder : RudConnection {
 
     static DateTime EphemeralsExpire;
 
-    static TimeSpan EphemeralValidity = new(1, 0, 0);
+    static readonly TimeSpan EphemeralValidity = new(1, 0, 0);
 
     #endregion
     #region // Constructors

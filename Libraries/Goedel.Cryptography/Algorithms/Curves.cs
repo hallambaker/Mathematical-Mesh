@@ -573,7 +573,7 @@ public abstract class CurveEdwards : Curve {
     /// <param name="other">The parameters to test against</param>
     /// <returns>True if the parameters are equal, otherwise false.</returns>
     public override bool Equals(object other) {
-        if (!(other is CurveEdwards)) {
+        if (other is not CurveEdwards) {
             return false;
             }
 
@@ -932,7 +932,7 @@ public struct DomainParameters : IEquatable<DomainParameters> {
     /// <param name="other">The parameters to test against</param>
     /// <returns>True if the parameters are equal, otherwise false.</returns>
     public override bool Equals(object other) {
-        if (!(other is DomainParameters)) {
+        if (other is not DomainParameters) {
             return false;
             }
 

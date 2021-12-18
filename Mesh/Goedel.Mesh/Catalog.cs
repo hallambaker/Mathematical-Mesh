@@ -349,7 +349,7 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
 /// store.
 /// </summary>
 public class EnumeratorCatalogEntry : IEnumerator<CatalogedEntry> {
-    IEnumerator<StoreEntry> baseEnumerator;
+    readonly IEnumerator<StoreEntry> baseEnumerator;
 
     ///<summary>The current item in the enumeration.</summary>
     public CatalogedEntry Current => baseEnumerator.Current.JsonObject as CatalogedEntry;

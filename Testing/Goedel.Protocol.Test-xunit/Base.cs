@@ -133,7 +133,7 @@ public partial class GoedelProtocol {
 
 
     #region // Test Data
-    static MultiInstance TestDataBasic = new() {
+    static readonly MultiInstance TestDataBasic = new() {
         FieldBoolean = true,
         FieldInteger = 1,
         FieldDateTime = DateTime.Now,
@@ -141,7 +141,7 @@ public partial class GoedelProtocol {
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 }
         };
 
-    static MultiArray TestDataArray = new() {
+    static readonly MultiArray TestDataArray = new() {
         FieldBoolean = true,
         FieldInteger = 1,
         FieldDateTime = DateTime.Now,
@@ -154,7 +154,7 @@ public partial class GoedelProtocol {
         ArrayBinary = new List<byte[]> { "One".ToBytes(), "Two".ToBytes() }
         };
 
-    static MultiInstance Struct1 = new() {
+    static readonly MultiInstance Struct1 = new() {
         FieldBoolean = true,
         FieldInteger = 1,
         FieldDateTime = DateTime.Now,
@@ -162,7 +162,7 @@ public partial class GoedelProtocol {
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 }
         };
 
-    static MultiInstance Struct2 = new() {
+    static readonly MultiInstance Struct2 = new() {
         FieldBoolean = true,
         FieldInteger = 1,
         FieldDateTime = DateTime.Now,
@@ -170,7 +170,7 @@ public partial class GoedelProtocol {
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 }
         };
 
-    static MultiArray Struct3 = new() {
+    static readonly MultiArray Struct3 = new() {
         FieldBoolean = true,
         FieldInteger = 1,
         FieldDateTime = DateTime.Now,
@@ -180,7 +180,7 @@ public partial class GoedelProtocol {
         };
 
 
-    static MultiStruct TestDataStruct = new() {
+    static readonly MultiStruct TestDataStruct = new() {
         FieldBoolean = true,
         FieldInteger = 1,
         FieldDateTime = DateTime.Now,

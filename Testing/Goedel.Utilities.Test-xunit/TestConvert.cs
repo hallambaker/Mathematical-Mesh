@@ -70,7 +70,7 @@ public class Utilities {
         }
 
     readonly TestVectorBaseConvert[] TestVector = new TestVectorBaseConvert[] {
-            new TestVectorBaseConvert (new byte[] { },
+            new TestVectorBaseConvert (System.Array.Empty<byte>(),
                     "", "", "", "", ""),
 
             new TestVectorBaseConvert ("This is a test",
@@ -95,17 +95,16 @@ public class Utilities {
                     "PFRlc3Q-Tm8_")
 
             };
-
-    string TestFormat1 = "4C07219E8B5CBC9FD99C8A0CB1CEC050B1BB91796F136FEEFFBE1A2C869E643875407E72237CEC46E2A615DD361B88A1C6F264AD651DEE7F63CF1361918AB010AF";
-    string TestFormat1Draft = "TAchnotcvJ/ZnIoMsc7AULG7kXlvE2/u/74aLIaeZDh1QH5yI3zsRuKmFd02G4ihxvJkrWUd\n  7n9jzxNhkYqwEK8";
-    string TestFormat1Hex =
+    readonly string TestFormat1 = "4C07219E8B5CBC9FD99C8A0CB1CEC050B1BB91796F136FEEFFBE1A2C869E643875407E72237CEC46E2A615DD361B88A1C6F264AD651DEE7F63CF1361918AB010AF";
+    readonly string TestFormat1Draft = "TAchnotcvJ/ZnIoMsc7AULG7kXlvE2/u/74aLIaeZDh1QH5yI3zsRuKmFd02G4ihxvJkrWUd\n  7n9jzxNhkYqwEK8";
+    readonly string TestFormat1Hex =
             "\n  4C 07 21 9E  8B 5C BC 9F  D9 9C 8A 0C  B1 CE C0 50\n" +
             "  B1 BB 91 79  6F 13 6F EE  FF BE 1A 2C  86 9E 64 38\n" +
             "  75 40 7E 72  23 7C EC 46  E2 A6 15 DD  36 1B 88 A1\n" +
             "  C6 F2 64 AD  65 1D EE 7F  63 CF 13 61  91 8A B0 10\n" +
             "  AF";
-    string TestFormat1Dash6 = "JQDS-DHUL-LS6J-7WM4-RIGL-DTWA-KCY3-XELZ";
-    string TestFormat1Dash5 = "JQDSD-HULLS-6J7WM-4RIGL-DTWAK";
+    readonly string TestFormat1Dash6 = "JQDS-DHUL-LS6J-7WM4-RIGL-DTWA-KCY3-XELZ";
+    readonly string TestFormat1Dash5 = "JQDSD-HULLS-6J7WM-4RIGL-DTWAK";
 
     [Fact]
     public void BaseConversionFormatting() {

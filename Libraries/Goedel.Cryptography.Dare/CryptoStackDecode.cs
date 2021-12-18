@@ -39,7 +39,8 @@ public partial class CryptoStackDecode : CryptoStack {
     /// cryptographic operations.
     /// </summary>
     public override byte[] BaseSeed => baseSeed;
-    byte[] baseSeed;
+
+    readonly byte[] baseSeed;
 
     /// <summary>The authentication algorithm to use</summary>
     public override CryptoAlgorithmId DigestId { get; }

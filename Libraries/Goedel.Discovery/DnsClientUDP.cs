@@ -117,7 +117,7 @@ public partial class DnsClientUDP : DnsClient {
     /// <returns>List of DNS servers.</returns>
     static public List<IPAddress> GetHostDNS() {
 
-        List<IPAddress> DNSServices = new List<IPAddress>();
+        List<IPAddress> DNSServices = new();
 
         NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
         foreach (NetworkInterface adapter in adapters) {
@@ -135,36 +135,36 @@ public partial class DnsClientUDP : DnsClient {
                             }
                         }
                     //string lifeTimeFormat = "dddd, MMMM dd, yyyy  hh:mm:ss tt";
-                    foreach (UnicastIPAddressInformation uni in uniCast) {
-                        DateTime when;
+                    //foreach (UnicastIPAddressInformation uni in uniCast) {
+                    //    //DateTime when;
 
-                        //Console.WriteLine("  Unicast Address ......................... : {0}", uni.Address);
-                        //Console.WriteLine("     Prefix Origin ........................ : {0}", uni.PrefixOrigin);
-                        //Console.WriteLine("     Suffix Origin ........................ : {0}", uni.SuffixOrigin);
-                        //Console.WriteLine("     Duplicate Address Detection .......... : {0}",
-                        //    uni.DuplicateAddressDetectionState);
+                    //    //Console.WriteLine("  Unicast Address ......................... : {0}", uni.Address);
+                    //    //Console.WriteLine("     Prefix Origin ........................ : {0}", uni.PrefixOrigin);
+                    //    //Console.WriteLine("     Suffix Origin ........................ : {0}", uni.SuffixOrigin);
+                    //    //Console.WriteLine("     Duplicate Address Detection .......... : {0}",
+                    //    //    uni.DuplicateAddressDetectionState);
 
-                        // Format the lifetimes as Sunday, February 16, 2003 11:33:44 PM 
-                        // if en-us is the current culture. 
+                    //    // Format the lifetimes as Sunday, February 16, 2003 11:33:44 PM 
+                    //    // if en-us is the current culture. 
 
-                        //// Calculate the date and time at the end of the lifetimes.    
-                        //when = DateTime.UtcNow + TimeSpan.FromSeconds(uni.AddressValidLifetime);
-                        //when = when.ToLocalTime();    
-                        //Console.WriteLine("     Valid Life Time ...................... : {0}", 
-                        //    when.ToString(lifeTimeFormat,System.Globalization.CultureInfo.CurrentCulture)
-                        //);
-                        //when = DateTime.UtcNow + TimeSpan.FromSeconds(uni.AddressPreferredLifetime);   
-                        //when = when.ToLocalTime();
-                        //Console.WriteLine("     Preferred life time .................. : {0}", 
-                        //    when.ToString(lifeTimeFormat,System.Globalization.CultureInfo.CurrentCulture)
-                        //); 
+                    //    //// Calculate the date and time at the end of the lifetimes.    
+                    //    //when = DateTime.UtcNow + TimeSpan.FromSeconds(uni.AddressValidLifetime);
+                    //    //when = when.ToLocalTime();    
+                    //    //Console.WriteLine("     Valid Life Time ...................... : {0}", 
+                    //    //    when.ToString(lifeTimeFormat,System.Globalization.CultureInfo.CurrentCulture)
+                    //    //);
+                    //    //when = DateTime.UtcNow + TimeSpan.FromSeconds(uni.AddressPreferredLifetime);   
+                    //    //when = when.ToLocalTime();
+                    //    //Console.WriteLine("     Preferred life time .................. : {0}", 
+                    //    //    when.ToString(lifeTimeFormat,System.Globalization.CultureInfo.CurrentCulture)
+                    //    //); 
 
-                        when = DateTime.UtcNow + TimeSpan.FromSeconds(uni.DhcpLeaseLifetime);
-                        when = when.ToLocalTime();
-                        //Console.WriteLine("     DHCP Leased Life Time ................ : {0}",
-                        //    when.ToString(lifeTimeFormat, System.Globalization.CultureInfo.CurrentCulture)
-                        //);
-                        }
+                    //    //when = DateTime.UtcNow + TimeSpan.FromSeconds(uni.DhcpLeaseLifetime);
+                    //    //when = when.ToLocalTime();
+                    //    //Console.WriteLine("     DHCP Leased Life Time ................ : {0}",
+                    //    //    when.ToString(lifeTimeFormat, System.Globalization.CultureInfo.CurrentCulture)
+                    //    //);
+                    //    }
                     //Console.WriteLine();
                     }
                 }
@@ -189,7 +189,7 @@ public partial class DnsClientUDP : DnsClient {
 /// DNS client implementation
 /// </summary>
 public partial class DNSContextUDP : DNSContext {
-    UdpClient UdpClient = null;
+    readonly UdpClient UdpClient = null;
 
     /// <summary>
     /// The disposal method, frees the UdpClient if allocated.

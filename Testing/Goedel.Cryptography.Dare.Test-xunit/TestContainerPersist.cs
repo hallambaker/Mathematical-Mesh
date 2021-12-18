@@ -48,10 +48,10 @@ public partial class TestPersist {
 
     public static TestPersist Test() => new();
 
-    static string FileTest = "TestStore.jcx";
-    static string AccountIDAlice = "alice@whatever";
-    static string AccountIDBob = "bob@whatever";
-    static string AccountIDInvalid = "invalid";
+    static readonly string FileTest = "TestStore.jcx";
+    static readonly string AccountIDAlice = "alice@whatever";
+    static readonly string AccountIDBob = "bob@whatever";
+    static readonly string AccountIDInvalid = "invalid";
 
     // create new
     readonly static DateTime Now = DateTime.Now;

@@ -5,7 +5,7 @@ using Goedel.Mesh.Test;
 namespace Goedel.XUnit;
 
 public partial class TestPlatform {
-    KeyCollection KeyCollection;
+    public readonly KeyCollection KeyCollection;
 
     public MeshMachineTest MeshMachine;
 

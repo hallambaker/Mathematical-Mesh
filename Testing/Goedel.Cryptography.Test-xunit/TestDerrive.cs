@@ -31,8 +31,7 @@ using Xunit;
 namespace Goedel.XUnit;
 
 public partial class TestGoedelCryptography {
-
-    List<TestVectorDerive> TestVectors_Derive_5869_SHA256 = new() {
+    readonly List<TestVectorDerive> TestVectors_Derive_5869_SHA256 = new() {
         // Case 1
         new TestVectorDerive() {
             IKM = MakeConstant.FillConstant(22, 0x0b),

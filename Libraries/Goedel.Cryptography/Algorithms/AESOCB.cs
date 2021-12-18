@@ -161,20 +161,16 @@ public class AesOCB {
 
     int TagLengthBytes { get; }
 
-    byte[] stretch = new byte[24];
-    byte[] offset = new byte[16];
-    byte[] checksum = new byte[16];
-
-    byte[] lAsterisk = new byte[AesBlock];
-    byte[] lDollar = new byte[AesBlock];
-
-    List<byte[]> l = new();
-
-    Aes aesEngine;
-    ICryptoTransform aesHash;
-    ICryptoTransform aesMain;
-
-    byte[] sum = new byte[16];
+    readonly byte[] stretch = new byte[24];
+    readonly byte[] offset = new byte[16];
+    readonly byte[] checksum = new byte[16];
+    readonly byte[] lAsterisk = new byte[AesBlock];
+    readonly byte[] lDollar = new byte[AesBlock];
+    readonly List<byte[]> l = new();
+    readonly Aes aesEngine;
+    readonly ICryptoTransform aesHash;
+    readonly ICryptoTransform aesMain;
+    readonly byte[] sum = new byte[16];
 
 
     /// <summary>
@@ -329,7 +325,7 @@ public class AesOCB {
             Xor(sum, hashBlock);
             }
 
-        Console.WriteLine($"My sum1 {sum.ToStringBase16()}");
+        //Console.WriteLine($"My sum1 {sum.ToStringBase16()}");
         }
 
     /// <summary>
@@ -359,7 +355,7 @@ public class AesOCB {
                 // add the data to the checksum on the input.
                 Xor(checksum, input, offsetBytes);
 
-                Console.WriteLine($"Enc  Checksum {checksum.ToStringBase16()}");
+                //Console.WriteLine($"Enc  Checksum {checksum.ToStringBase16()}");
                 }
 
             // Calculate L
@@ -388,12 +384,12 @@ public class AesOCB {
 
             if (!Encrypt) {
 
-                Console.WriteLine();
+                //Console.WriteLine();
                 //Console.WriteLine($"My Checksum {Checksum.ToStringBase16()}");
 
                 Xor(checksum, output, posOut);
 
-                Console.WriteLine($"Dec Checksum {checksum.ToStringBase16()}");
+                //Console.WriteLine($"Dec Checksum {checksum.ToStringBase16()}");
                 }
 
             //offsetIn += 16;

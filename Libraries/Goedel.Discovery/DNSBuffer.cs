@@ -73,8 +73,7 @@ public class DNSBufferIndex {
 
     /// <summary>The underlying buffer.</summary>
     public DNSBuffer Buffer;
-
-    ASCIIEncoding ASCIIEncoding = new();
+    readonly ASCIIEncoding ASCIIEncoding = new();
 
     /// <summary>Return the buffer data window as a byte array.</summary>
     public byte[] Bytes {
@@ -565,7 +564,7 @@ public class DNSBufferIndex {
     /// <returns>Null list, this is a stub</returns>
     /// <remarks>Not yet implemented.</remarks>
     public List<String> ReadStrings(int Extent) {
-        List<String> ListString = new List<string>();
+        List<String> ListString = new();
         //int length = ReadByte ();
         while (Pointer < MaxRead) {
             var Text = ReadString();

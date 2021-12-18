@@ -30,10 +30,9 @@ public partial class KeyFileLex {
     int armor2 = 0;
     int armor3 = 0;
     int armor4 = 0;
-
-    StringBuilder buildTag1 = new();
-    StringBuilder buildTag2 = new();
-    StringBuilder buildBase64 = new();
+    readonly StringBuilder buildTag1 = new();
+    readonly StringBuilder buildTag2 = new();
+    readonly StringBuilder buildBase64 = new();
 
     //StringBuilder BuildHeader = new StringBuilder();
 
@@ -102,8 +101,7 @@ public partial class KeyFileLex {
             }
         }
 
-
-    StringBuilder BuildTagBegin = new();
+    readonly StringBuilder BuildTagBegin = new();
 
     /// <summary>
     /// Verify the initial BEGIN tag
@@ -115,7 +113,7 @@ public partial class KeyFileLex {
             }
         }
 
-    StringBuilder buildTagEnd = new();
+    readonly StringBuilder buildTagEnd = new();
     /// <summary>
     /// Verify the final End tag
     /// </summary>
@@ -140,8 +138,7 @@ public partial class KeyFileLex {
     public virtual void Abort(int c) {
         }
 
-
-    StringBuilder buildHeaderValue = new();
+    readonly StringBuilder buildHeaderValue = new();
     /// <summary>
     /// Do nothing
     /// </summary>

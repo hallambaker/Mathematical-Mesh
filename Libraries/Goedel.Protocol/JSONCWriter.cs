@@ -34,8 +34,7 @@ namespace Goedel.Protocol;
 /// for compression.
 /// </summary>
 public class JSONCWriter : JsonBWriter {
-
-    Dictionary<string, int> TagDictionary;
+    readonly Dictionary<string, int> TagDictionary;
 
 
 

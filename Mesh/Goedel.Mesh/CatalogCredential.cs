@@ -95,8 +95,8 @@ public class CatalogCredential : Catalog<CatalogedCredential> {
 
 
 
-    void UpdateLocal(CatalogedEntry catalogedEntry) {
-        }
+    //void UpdateLocal(CatalogedEntry catalogedEntry) {
+    //    }
 
     /// <summary>
     /// Locate credential matching the specified service name, ignoring the protocol value.

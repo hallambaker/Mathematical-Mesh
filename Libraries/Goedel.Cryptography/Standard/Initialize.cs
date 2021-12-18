@@ -31,7 +31,7 @@ public static class CryptographyCommon {
     /// <summary>
     /// Cryptographic random number generator.
     /// </summary>
-    private static RandomNumberGenerator RandomNumberGenerator =
+    private static readonly RandomNumberGenerator RandomNumberGenerator =
         RandomNumberGenerator.Create();
 
 

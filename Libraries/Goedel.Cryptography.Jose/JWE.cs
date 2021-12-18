@@ -432,8 +432,8 @@ public partial class JoseWebEncryption {
         DecryptionKey ??= MatchDecryptionKey(Recipients, out Recipient);
 
         Recipient ??= MatchRecipient(DecryptionKey);
-        var AlgorithmJose = Recipient?.Header.Alg;
-        var ExchangeID = AlgorithmJose.FromJoseID();
+        //var AlgorithmJose = Recipient?.Header.Alg;
+        //var ExchangeID = AlgorithmJose.FromJoseID();
 
         var ProtectedText = Protected.ToUTF8();
         var Header = new Header();

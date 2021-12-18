@@ -50,7 +50,7 @@ Recryption groups are created using the `group create` command:
 
 
 ~~~~
-Missing example 60
+Missing example 63
 ~~~~
 
 This command creates the group groupw@example.com. Since Alice created the
@@ -61,7 +61,7 @@ public key but he is unable to read it:
 
 
 ~~~~
-Missing example 61
+Missing example 64
 ~~~~
 
 Since Alice is the group administrator, she can decrypt the file using her 
@@ -69,7 +69,7 @@ administrator key:
 
 
 ~~~~
-Missing example 62
+Missing example 65
 ~~~~
 
 
@@ -81,14 +81,14 @@ Alice adds Bob as a member of the group:
 
 
 ~~~~
-Missing example 63
+Missing example 66
 ~~~~
 
 Bob can now decrypt the file.
 
 
 ~~~~
-Missing example 64
+Missing example 67
 ~~~~
 
 ## Reporting users
@@ -97,7 +97,7 @@ The `connect ` command returns a list of group members:
 
 
 ~~~~
-Missing example 65
+Missing example 68
 ~~~~
 
 The group currently has one administrator and one member.
@@ -108,14 +108,14 @@ Users may be removed from a recryption group using the `group delete` command:
 
 
 ~~~~
-Missing example 66
+Missing example 69
 ~~~~
 
 Bob is no longer a member of the group and his decryption request now fails:
 
 
 ~~~~
-Missing example 67
+Missing example 70
 ~~~~
 
 

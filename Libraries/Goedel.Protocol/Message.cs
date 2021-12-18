@@ -71,7 +71,7 @@ public abstract class BoundMessage {
     /// <summary>Default constructor.</summary>
     public BoundMessage() => Payload = "{NOT-YET-IMPLEMENTED}";
 
-    System.Text.Encoding UTF8 = new UTF8Encoding(false);
+    readonly System.Text.Encoding UTF8 = new UTF8Encoding(false);
 
     /// <summary>The length of the payload data.</summary>
     public int ByteCount => UTF8.GetByteCount(Payload);
@@ -99,13 +99,13 @@ public abstract class BoundMessage {
 /// <summary>The request message</summary>
 public class BoundRequest : BoundMessage {
 
-    static string HeaderFormat = @"Post {0} HTTP/1.1
+    static readonly string HeaderFormat = @"Post {0} HTTP/1.1
 Host: {1}
 Cache-Control: no-store
 Content-Type: Application/json;charset=UTF-8
 Content-Length: {2}
 ";
-    static string ContentIntegrityFormat = "Session: Value={0}; Id={1}\n";
+    static readonly string ContentIntegrityFormat = "Session: Value={0}; Id={1}\n";
 
 
     //public BoundRequest(string PayloadIn, Cryptographic Cryptographic)
@@ -139,13 +139,13 @@ Content-Length: {2}
 public class BoundResponse : BoundMessage {
 
     /// <summary>Constant for invalid Mac response.</summary>
-    public static BoundResponse ErrorBadMac = new(401, "Not Authorized");
+    public static BoundResponse ErrorBadMac { get; } = new(401, "Not Authorized");
 
     /// <summary>Constant for invalid message error.</summary>
-    public static BoundResponse ErrorUnknown = new(500, "Internal Server Error");
+    public static BoundResponse ErrorUnknown { get; } = new(500, "Internal Server Error");
 
     /// <summary>Constant for bad request.</summary>
-    public static BoundResponse ErrorSyntax = new(400, "Bad Request");
+    public static BoundResponse ErrorSyntax { get; } = new(400, "Bad Request");
 
 
     /// <summary>The status value (defaults to 200)</summary>
@@ -154,11 +154,11 @@ public class BoundResponse : BoundMessage {
     /// <summary>The status description.</summary>
     public string StatusDescription = "OK";
 
-    static string HeaderFormat = @"HTTP/1.1 {0} {1}
+    static readonly string HeaderFormat = @"HTTP/1.1 {0} {1}
 Content-Type: application/json;charset=UTF-8
 Content-Length: {2}
 ";
-    static string ContentIntegrityFormat = "Session: Value={0}; Id={1}\n";
+    static readonly string ContentIntegrityFormat = "Session: Value={0}; Id={1}\n";
     //public BoundResponse(string PayloadIn, Cryptographic Cryptographic)
     //    : base(PayloadIn, Cryptographic) { }
 

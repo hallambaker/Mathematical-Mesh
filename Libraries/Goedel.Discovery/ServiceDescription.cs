@@ -28,7 +28,7 @@ namespace Goedel.Discovery;
 /// address or a sequence of prioritized IP addresses.
 /// </summary>
 public class ServiceDescription {
-    Random Random = new();
+    readonly Random Random = new();
 
     /// <summary>The list of policy entries</summary>
     public List<ServiceEntry> Entries = new();
@@ -54,7 +54,7 @@ public class ServiceDescription {
     /// <summary>The default path for the Web Service Endpoint</summary>
     string DefaultPath => "/.well-known/" + Service + "/";
 
-    List<string> _TXT = new();
+    readonly List<string> _TXT = new();
     /// <summary>Text policy records</summary>
     public virtual List<string> TXT => _TXT;
 
@@ -257,7 +257,7 @@ public class ServiceEntry {
         set => _UDF = value;
         }
 
-    List<string> _TXT = new();
+    readonly List<string> _TXT = new();
     /// <summary>Text policy records</summary>
     public virtual List<string> TXT => _TXT;
 

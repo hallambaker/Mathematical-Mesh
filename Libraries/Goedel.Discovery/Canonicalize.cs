@@ -24,23 +24,23 @@ using System.Net;
 namespace Goedel.Discovery;
 
 class Canonicalize {
-    StringBuilder Build;
+    readonly StringBuilder Build;
     public string Text => Build.ToString();
 
     public Canonicalize(string Result) => Build = new StringBuilder(Result);
 
     public void Add(string Text) {
-        Build.Append(" ");
+        Build.Append(' ');
         Build.Append(Text);
         }
     public void AddBinary(string Text) {
-        Build.Append(" ");
+        Build.Append(' ');
         Build.Append(Text);
         }
     public void AddQuoted(string Text) {
         Build.Append(" \"");
         Build.Append(Text);
-        Build.Append("\"");
+        Build.Append('"');
         }
 
     public Canonicalize(string Tag, Domain Domain) => Build = new StringBuilder(Domain.Name + ".    " + Tag);
@@ -78,7 +78,7 @@ class Canonicalize {
 
 
 
-    static string[] HexChars = {"0", "1", "2", "3", "4", "5", "6", "7",
+    static readonly string[] HexChars = {"0", "1", "2", "3", "4", "5", "6", "7",
                                   "8", "9", "A", "B", "C", "D", "E", "F"};
 
     public static string Hex(byte b) {

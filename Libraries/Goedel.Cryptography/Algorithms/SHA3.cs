@@ -208,7 +208,7 @@ public abstract class SHA3 : HashAlgorithm {
         ulong Eka, Eke, Eki, Eko, Eku;
         ulong Ema, Eme, Emi, Emo, Emu;
         ulong Esa, Ese, Esi, Eso, Esu;
-        int round = laneCount;
+        int round;
 
         //copyFromState(A, state)
         Aba = state[0];
@@ -470,16 +470,17 @@ public abstract class SHA3 : HashAlgorithm {
 
         //Console.WriteLine($"array {array.ToBase16String()} ibStart {ibStart} cbSize {cbSize}");
         if (array == null) {
-            throw new ArgumentNullException("array");
+            throw new ArgumentNullException(nameof(array));
             }
         if (ibStart < 0) {
-            throw new ArgumentOutOfRangeException("ibStart");
+            throw new ArgumentOutOfRangeException(nameof(ibStart));
             }
         if (cbSize > array.Length) {
-            throw new ArgumentOutOfRangeException("cbSize");
+            throw new ArgumentOutOfRangeException(nameof(cbSize));
             }
         if (ibStart + cbSize > array.Length) {
-            throw new ArgumentOutOfRangeException("ibStart or cbSize");
+            var desc = $"{nameof(ibStart)} or {nameof(cbSize)}";
+            throw new ArgumentOutOfRangeException(desc);
             }
 
         if (cbSize == 0) {

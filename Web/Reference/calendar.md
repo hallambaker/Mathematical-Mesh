@@ -35,20 +35,25 @@ add   Add calendar entry
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar add CalendarEntry1.json CalID1
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
+<rsp>{
+  "Title": "CalendarEntry1.json",
+  "Key": "NDJD-2XYH-E7DS-OUQM-GYDR-MSDR-AGJD"}
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar add CalendarEntry1.json CalID1 /json
+<cmd>Alice> meshman calendar add CalendarEntry1.json CalID1 /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedTask": {
+        "Title": "CalendarEntry1.json",
+        "Key": "NDJD-2XYH-E7DS-OUQM-GYDR-MSDR-AGJD"}}}}
 </div>
 ~~~~
 
@@ -71,8 +76,8 @@ delete   Delete calendar entry
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar delete CalID1
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman calendar delete CalID1
+<rsp>ERROR - The entry could not be found in the store.
 </div>
 ~~~~
 
@@ -80,11 +85,11 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar delete CalID1 /json
+<cmd>Alice> meshman calendar delete CalID1 /json
 <rsp>{
   "Result": {
     "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+    "Reason": "The entry could not be found in the store."}}
 </div>
 ~~~~
 
@@ -107,20 +112,19 @@ get   Lookup calendar entry
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar get CalID1
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman calendar get CalID1
+<rsp>
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultEntry:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar get CalID1 /json
+<cmd>Alice> meshman calendar get CalID1 /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultEntry": {
+    "Success": false}}
 </div>
 ~~~~
 
@@ -142,20 +146,36 @@ list   List calendar entries
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar list
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> meshman calendar list
+<rsp>CatalogedTask
+
+CatalogedTask
+
+CatalogedTask
+
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultDump:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> calendar list /json
+<cmd>Alice> meshman calendar list /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": [{
+        "CatalogedTask": {
+          "Title": "SomeItem",
+          "Key": "NCWV-7AKM-KGLI-5IQE-XUGG-UTLC-VTRX"}},
+      {
+        "CatalogedTask": {
+          "Title": "CalendarEntry1.json",
+          "Key": "NDJD-2XYH-E7DS-OUQM-GYDR-MSDR-AGJD"}},
+      {
+        "CatalogedTask": {
+          "Title": "CalendarEntry2.json",
+          "Key": "NCLP-3LS4-EU2Z-JUAR-U7SW-WB2V-XG3Z"}}]}}
 </div>
 ~~~~
 

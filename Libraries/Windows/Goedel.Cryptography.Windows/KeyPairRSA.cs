@@ -31,7 +31,7 @@ public partial class KeyPairRSA1 : KeyPairBaseRSA {
     /// Return the underlying .NET cryptographic provider.
     /// </summary>
     public virtual AsymmetricAlgorithm AsymmetricAlgorithm => provider;
-    private RSACryptoServiceProvider provider;
+    private readonly RSACryptoServiceProvider provider;
     private RSAParameters publicParameters;
 
 

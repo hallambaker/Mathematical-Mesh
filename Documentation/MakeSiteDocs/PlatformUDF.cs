@@ -199,17 +199,16 @@ public partial class DerivedKeyEC : DerivedKey {
 public partial class DerivedKeyNIST : DerivedKey {
 
     ///<summary>2 ^ (256) - 2 ^ (224) + 2 ^ (192) + 2 ^ (96) - 1;</summary>
-    BigInteger p256 = BigInteger.Pow(2, 256) - BigInteger.Pow(2, 224) +
+    readonly BigInteger p256 = BigInteger.Pow(2, 256) - BigInteger.Pow(2, 224) +
         BigInteger.Pow(2, 192) + BigInteger.Pow(2, 96) - 1;
 
     ///<summary>2 ^ (384) - 2 ^ (128) - 2 ^ (96) + 2 ^ (32) - 1</summary>    
-    BigInteger p384 = BigInteger.Pow(2, 384) - BigInteger.Pow(2, 128)
+    readonly BigInteger p384 = BigInteger.Pow(2, 384) - BigInteger.Pow(2, 128)
         - BigInteger.Pow(2, 96) + BigInteger.Pow(2, 32) - 1;
 
     ///<summary>2 ^ (521) - 1</summary>
-    BigInteger p521 = BigInteger.Pow(2, 521) - 1;
-
-    BigInteger prime;
+    readonly BigInteger p521 = BigInteger.Pow(2, 521) - 1;
+    readonly BigInteger prime;
     public BigInteger Key;
     public byte[] OKM;
 

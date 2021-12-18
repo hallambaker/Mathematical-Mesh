@@ -135,7 +135,7 @@ public class Registry<T> where T : class {
     /// <param name="file">The file name.</param>
     /// <returns>The source record.</returns>
     public Source SetFile(string file) {
-        Source result = new Source(file);
+        Source result = new(file);
         Files.Add(result);
         return result;
         }
@@ -178,7 +178,7 @@ public class Registry<T> where T : class {
     /// <param name="Text">The name to find</param>
     /// <returns>The type label.</returns>
     public TYPE<T> TYPE(string Text) {
-        TYPE<T> result = new TYPE<T>() {
+        TYPE<T> result = new() {
             Label = Text
             };
         Types.Add(result);
@@ -232,7 +232,7 @@ public class Registry<T> where T : class {
             //Type.IDs.Add (ID);
             }
 
-        REF<T> result = new REF<T>(Position, ID, ObjectIn);
+        REF<T> result = new(Position, ID, ObjectIn);
 
         return result;
         }
@@ -254,7 +254,7 @@ public class Registry<T> where T : class {
             //Type.IDs.Add (ID);
             }
 
-        TOKEN<T> result = new TOKEN<T>(Position, ID, ObjectIn);
+        TOKEN<T> result = new(Position, ID, ObjectIn);
 
         return result;
         }

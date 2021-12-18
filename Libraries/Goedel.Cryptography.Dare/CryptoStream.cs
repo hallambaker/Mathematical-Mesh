@@ -248,9 +248,9 @@ public class CryptoStackStreamReader : CryptoStackStream {
     /// </summary>
     public override bool CanWrite => false;
 
-    JsonBcdReader jbcdReader;
-    CryptoStream streamMac;
-    CryptoStream streamDigest;
+    readonly JsonBcdReader jbcdReader;
+    readonly CryptoStream streamMac;
+    readonly CryptoStream streamDigest;
 
     /// <summary>
     /// Create a CryptoStack
@@ -345,9 +345,9 @@ public class CryptoStackJBCDStreamReader : CryptoStackStream {
     /// </summary>
     public override bool CanWrite => false;
 
-    Stream inputStream;
-    CryptoStream streamMac;
-    CryptoStream streamDigest;
+    readonly Stream inputStream;
+    readonly CryptoStream streamMac;
+    readonly CryptoStream streamDigest;
 
 
     /// <summary>
@@ -435,11 +435,10 @@ public class CryptoStackStreamWriter : CryptoStackStream {
 
     CryptoStream streamMac;
     CryptoStream streamDigest;
-    Stream output;
-    PackagingFormat packagingFormat;
+    readonly Stream output;
+    readonly PackagingFormat packagingFormat;
     long payloadLength;
-
-    bool specifiedLength;
+    readonly bool specifiedLength;
 
     CryptoStream CryptoStream { get; set; }
 
@@ -552,7 +551,8 @@ public class CryptoStackStreamWriter : CryptoStackStream {
     /// </summary>
     public override void Flush() => output?.Flush();
 
-    readonly static byte[] Empty = new byte[0];
+    readonly static byte[] Empty = Array.Empty<byte>();
+
 
     bool closed = false;
 

@@ -31,8 +31,7 @@ using Xunit;
 namespace Goedel.XUnit;
 
 public partial class TestGoedelCryptography {
-
-    List<TestVectorHMAC> TestVectors_HMAC_4231 = new() {
+    readonly List<TestVectorHMAC> TestVectors_HMAC_4231 = new() {
         // Case 1
         new TestVectorHMAC {
             Key = "0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b".FromBase16(),

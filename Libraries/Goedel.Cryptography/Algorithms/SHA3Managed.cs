@@ -40,7 +40,7 @@ public class SHA3Managed : SHA3 {
             256 => 1088,
             384 => 832,
             512 => 576,
-            _ => throw new ArgumentException("hashBitLength must be 224, 256, 384, or 512", "hashBitLength"),
+            _ => throw new ArgumentException("hashBitLength must be 224, 256, 384, or 512", nameof(hashBitLength)),
             };
     }
 

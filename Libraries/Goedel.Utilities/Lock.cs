@@ -26,14 +26,13 @@ namespace Goedel.Utilities;
 /// Wrapper for system wide lock with convenience accessors.
 /// </summary>
 public class LockGlobal : Disposable {
-
-
-    Mutex writeLock;
+    readonly Mutex writeLock;
     //Semaphore ReadLock;
 
     bool haveWrite = false;
+
     //bool HaveRead = false;
-    int millisecondsTimeout;
+    readonly int millisecondsTimeout;
 
     ///<summary>Maximum number of readers</summary>
     public int MaxRead { get; private set; }

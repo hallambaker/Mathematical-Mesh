@@ -657,7 +657,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
     /// <param name="witness">The witness value.</param>
     /// <param name="publicKey">The resulting private key.</param>
     /// <returns>True if the value was correctly constructed using the specified witness, otherwise false.</returns>
-    public bool VerifyWitness(byte[] blind, CurveEdwards448 witness, CurveEdwards448 publicKey) {
+    public static bool VerifyWitness(byte[] blind, CurveEdwards448 witness, CurveEdwards448 publicKey) {
         var SecretBlind = ExtractPrivate(blind);
         var PublicBlind = CurveEdwards448.GetPublic(SecretBlind);
 
@@ -672,7 +672,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
     /// </summary>
     /// <param name="hash">The hash value</param>
     /// <returns>The private key.</returns>
-    public BigInteger ExtractPrivate(byte[] hash) => ValidatePrivateBytes(hash).BigIntegerLittleEndian();
+    public static BigInteger ExtractPrivate(byte[] hash) => ValidatePrivateBytes(hash).BigIntegerLittleEndian();
 
 
     /// <summary>

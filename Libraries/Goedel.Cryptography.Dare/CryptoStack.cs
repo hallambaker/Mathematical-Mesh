@@ -271,7 +271,7 @@ public abstract partial class CryptoStack {
         return output.ToArray();
         }
 
-    readonly static byte[] NullArray = new byte[] { };
+    readonly static byte[] NullArray = Array.Empty<byte>();
 
     /// <summary>
     /// Encode a payload data block
