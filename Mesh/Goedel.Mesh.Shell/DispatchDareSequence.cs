@@ -105,15 +105,15 @@ public partial class Shell {
         var inputFile = options.File.Value;
         var outputFile = options.Sequence.Value;
         var index = options.Index.Value;
-        var key = options.Key.Value;
+        var id = options.Id.Value;
 
         using (var Writer = new DareLogWriter(
                 outputFile, null, true, fileStatus: FileStatus.Existing)) {
 
             ContentMeta contentMeta = null;
-            if (key != null) {
+            if (id != null) {
                 contentMeta = new ContentMeta() {
-                    Filename = key
+                    Filename = id
                     };
                 }
 

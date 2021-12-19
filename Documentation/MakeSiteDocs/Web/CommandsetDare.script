@@ -231,27 +231,6 @@ The `dare` command set contains commands that encode, decode and verify
 DARE envelopes and sequences.
 
 
-#% Describe(CommandSet, _DareArchive._DescribeCommand);
-
-The `dare archive` command creates an archive with the specified cryptographic
-enhancements.
-
-#% ConsoleReference (ShellSequence.ContainerArchive);
-
-#% Describe(CommandSet, _DareLog._DescribeCommand);
-
-The `dare log` command creates a sequence with the specified cryptographic
-enhancements.
-
-#% ConsoleReference (ShellSequence.ContainerCreate);
-
-
-
-#% Describe(CommandSet, _DareExtract._DescribeCommand);
-
-The `dare extract` command extracts the specified container entries and writes them
-to files.
-
 #% ConsoleReference (ShellSequence.ContainerArchiveExtractAll);
 
 #% Describe(CommandSet, _DareAppend._DescribeCommand);
@@ -261,6 +240,37 @@ The `dare append` command appends the specified file to the container.
 #% ConsoleReference (ShellSequence.ContainerAppend);
 
 
+#% Describe(CommandSet, _DareArchive._DescribeCommand);
+
+The `dare archive` command creates an archive with the specified cryptographic
+enhancements.
+
+#% ConsoleReference (ShellSequence.ContainerArchive);
+
+
+
+
+
+
+
+
+
+
+#% Describe(CommandSet, _DareDecode._DescribeCommand);
+
+The `dare decode` command decodes the specified input file using keys found in the
+currently active key collection.
+
+The active key collection may be overriden using the `/mesh` option.
+
+The `/out` option may be used to specify the output file name. Otherwise the output
+file name is the input file name stripped of the extension `.dare` if present or
+with the extension `.undare` otherwise.
+
+#% ConsoleReference (ShellDare.DareDecodeSymmetric);
+
+
+
 #% Describe(CommandSet, _DareDelete._DescribeCommand);
 
 The `dare delete` command marks the specified file entry as deleted in the
@@ -268,18 +278,37 @@ container but does not erase the data from the file.
 
 #% ConsoleReference (ShellSequence.ContainerDelete);
 
-#% Describe(CommandSet, _DareIndex._DescribeCommand);
 
-The `dare index` command appends an index record to the end of the container.
 
-#% ConsoleReference (ShellSequence.ContainerIndex);
 
-#% Describe(CommandSet, _DarePurge._DescribeCommand);
 
-The `dare purge` command copies a container applying the specified filtering 
-and indexing criteria.
 
-#% ConsoleReference (ShellSequence.ContainerArchiveCopy);
+#% Describe(CommandSet, _DareDir._DescribeCommand);
+
+The `dare dir` command returns a directory listing for the specified archive.
+
+#% Describe(CommandSet, _DareEARL._DescribeCommand);
+
+The #{ToCommand("dare earl")} command is used to encode an input file and return
+(or log) the corresponding identifier information in a format that enables use
+as an Encrypted Authenticated Resource Locator.
+
+If the input file specified is a file, the tool processes that file. If the
+input file is a directory, the tool processes all the files in the directory. If the
+`/sub` option is specified, subdirectories are processed recursively.
+
+If the `/log` or `/new` option is specified, the filename, encryption key and other details of
+each completed transaction are written to a DARE Container Log. If `/log` is specified, the 
+file is always processed. If `/new` is specified, files are only
+processed if there is no existing entry in the specified log.
+
+The log file must be initialized before use (eg. using the #{ToCommand("container create")} 
+command). Log entries are written with the cryptographic enhancements specified in
+the container using the active key collection.
+
+The active key collection may be overriden using the `/mesh` option.
+
+#% ConsoleReference (ShellDare.DareEarl);
 
 
 
@@ -318,19 +347,37 @@ file name is the input file name with the additional extension `.dare`.
 
 #% ConsoleReference (ShellDare.DareSymmetric);
 
+#% Describe(CommandSet, _DareExtract._DescribeCommand);
 
-#% Describe(CommandSet, _DareDecode._DescribeCommand);
+The `dare extract` command extracts the specified container entries and writes them
+to files.
 
-The `dare decode` command decodes the specified input file using keys found in the
-currently active key collection.
 
-The active key collection may be overriden using the `/mesh` option.
+#% Describe(CommandSet, _DareIndex._DescribeCommand);
 
-The `/out` option may be used to specify the output file name. Otherwise the output
-file name is the input file name stripped of the extension `.dare` if present or
-with the extension `.undare` otherwise.
+The `dare index` command appends an index record to the end of the container.
 
-#% ConsoleReference (ShellDare.DareDecodeSymmetric);
+#% ConsoleReference (ShellSequence.ContainerIndex);
+
+
+
+
+#% Describe(CommandSet, _DareList._DescribeCommand);
+#% Describe(CommandSet, _DareLog._DescribeCommand);
+
+The `dare log` command creates a sequence with the specified cryptographic
+enhancements.
+
+#% ConsoleReference (ShellSequence.ContainerCreate);
+
+#% Describe(CommandSet, _DarePurge._DescribeCommand);
+
+The `dare purge` command copies a container applying the specified filtering 
+and indexing criteria.
+
+#% ConsoleReference (ShellSequence.ContainerArchiveCopy);
+
+#% Describe(CommandSet, _DareSequence._DescribeCommand);
 
 #% Describe(CommandSet, _DareVerify._DescribeCommand);
 
@@ -342,28 +389,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 #% ConsoleReference (ShellDare.DareVerifySymmetric);
 
-#% Describe(CommandSet, _DareEARL._DescribeCommand);
 
-The #{ToCommand("dare earl")} command is used to encode an input file and return
-(or log) the corresponding identifier information in a format that enables use
-as an Encrypted Authenticated Resource Locator.
-
-If the input file specified is a file, the tool processes that file. If the
-input file is a directory, the tool processes all the files in the directory. If the
-`/sub` option is specified, subdirectories are processed recursively.
-
-If the `/log` or `/new` option is specified, the filename, encryption key and other details of
-each completed transaction are written to a DARE Container Log. If `/log` is specified, the 
-file is always processed. If `/new` is specified, files are only
-processed if there is no existing entry in the specified log.
-
-The log file must be initialized before use (eg. using the #{ToCommand("container create")} 
-command). Log entries are written with the cryptographic enhancements specified in
-the container using the active key collection.
-
-The active key collection may be overriden using the `/mesh` option.
-
-#% ConsoleReference (ShellDare.DareEarl);
 
 #end zfile
 

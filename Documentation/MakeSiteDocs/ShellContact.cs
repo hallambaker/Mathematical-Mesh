@@ -39,7 +39,7 @@ public class ShellContact : ExampleSet {
     public List<ExampleResult> ContactList;
 
     public List<ExampleResult> ContactDelete;
-
+    public List<ExampleResult> ContactImport;
 
 
     public ShellContact(CreateExamples createExamples) :

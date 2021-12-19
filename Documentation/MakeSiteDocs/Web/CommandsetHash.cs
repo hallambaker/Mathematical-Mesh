@@ -106,13 +106,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The `hash` command set contains commands that perform Content Digest and \n{0}", _Indent);
 			_Output.Write ("Message Authentication Code operations on the contents of a file.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			 Describe( CommandSet, _HashUDF._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `hash udf` command returns the UDF Content digest of the specified input \n{0}", _Indent);
-			_Output.Write ("file according to the precision, IANA media type and digest algorithm specified\n{0}", _Indent);
-			_Output.Write ("with the `/bits`, `/cty` and `/alg` options.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			 ConsoleReference (ShellHash.HashUDF2);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe( CommandSet, _HashDigest._DescribeCommand);
@@ -138,6 +132,15 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("true returned if and only if it matches the value specified.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellHash.MAC1);
+			_Output.Write ("\n{0}", _Indent);
+			 Describe( CommandSet, _HashUDF._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `hash udf` command returns the UDF Content digest of the specified input \n{0}", _Indent);
+			_Output.Write ("file according to the precision, IANA media type and digest algorithm specified\n{0}", _Indent);
+			_Output.Write ("with the `/bits`, `/cty` and `/alg` options.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			 ConsoleReference (ShellHash.HashUDF2);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
 		}

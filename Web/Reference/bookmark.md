@@ -1,30 +1,42 @@
 
 
-# network
+# bookmark
 
 ~~~~
 <div="helptext">
 <over>
-network    Manage network profile settings
-    add   Add calendar entry from file
-    delete   Delete calendar entry
-    get   Lookup calendar entry
-    import   Add calendar entry from file
-    list   List network entries
+bookmark    Manage bookmark catalogs connected to an account
+    add   Add bookmark entry from specified parameters
+    delete   Delete bookmark entry
+    get   Lookup bookmark entry
+    import   Add bookmark entry from file
+    list   List bookmark entries
 <over>
 </div>
 ~~~~
 
+The `bookmark` command set is used to manage a bookmarks catalog which contains
+a collection of bookmarks and citations and shares them between devices connected 
+to the profile with the relevant access authorization.
 
-# network add
+It should be noted that by its very nature, a bookmark manager is most likely 
+to be useful within an application that uses bookmarks for navigation. The
+commands provided in the 'meshman' tool are intended to support debuging and 
+maintenance of such applications and afford a means of interacting through scripts.
+
+
+# bookmark add
 
 ~~~~
 <div="helptext">
 <over>
-add   Add bookmark
-       <Unspecified>
-       <Unspecified>
-       <Unspecified>
+add   Add bookmark entry from specified parameters
+       Keywords under which the bookmark is to be indexed
+       The recorded link
+       Title of the recorded item
+    /abstract   Abstract of the recorded item
+    /comment   Comment on reason for adding
+    /react   Reactions to the recorded item
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -33,6 +45,13 @@ add   Add bookmark
 <over>
 </div>
 ~~~~
+
+The 'bookmark add' command is used to add bookmarks to the catalog.
+
+The catalog labels, uri and title are specified as parameters.
+
+An abstract, comment and reaction tags may be specified as options.
+
 
 ~~~~
 <div="terminal">
@@ -44,24 +63,9 @@ add   Add bookmark
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
-<rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "CatalogedBookmark": {
-        "Uri": "http://example.com/",
-        "Title": "\"Example",
-        "Path": "Folder1/1"}}}}
-</div>
-~~~~
 
 
-# network delete
+# bookmark delete
 
 ~~~~
 <div="helptext">
@@ -78,6 +82,9 @@ delete   Delete bookmark entry
 </div>
 ~~~~
 
+The 'bookmark delete' command deletes a bookmark by means of its unique catalog identifier.
+
+
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman bookmark delete BookmarkPath2
@@ -85,26 +92,15 @@ delete   Delete bookmark entry
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman bookmark delete BookmarkPath2 /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The entry could not be found in the store."}}
-</div>
-~~~~
 
 
-# network get
+# bookmark get
 
 ~~~~
 <div="helptext">
 <over>
 get   Lookup bookmark entry
-       <Unspecified>
+       The unique entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -113,6 +109,9 @@ get   Lookup bookmark entry
 <over>
 </div>
 ~~~~
+
+The 'bookmark get' command retrieves a bookmark by means of its unique catalog identifier.
+
 
 ~~~~
 <div="terminal">
@@ -124,24 +123,30 @@ get   Lookup bookmark entry
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
+
+
+# bookmark import
 
 ~~~~
-<div="terminal">
-<cmd>Alice> meshman bookmark get Folder1/2 /json
-<rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "CatalogedBookmark": {
-        "Uri": "http://example.net/Bananas",
-        "Title": "\"Banana",
-        "Path": "Folder1/2"}}}}
+<div="helptext">
+<over>
+import   Add calendar entry from file
+       File containing the network entry to add
+    /id   Unique entry identifier
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
 </div>
 ~~~~
 
+The 'bookmark import' command is used to add a bookmark entry to the catalog
+from a file
 
-# network list
+
+# bookmark list
 
 ~~~~
 <div="helptext">
@@ -155,6 +160,9 @@ list   List bookmark entries
 <over>
 </div>
 ~~~~
+
+The 'bookmark list' command lists all data in the bookmark catalog.
+
 
 ~~~~
 <div="terminal">
@@ -170,35 +178,5 @@ CatalogedBookmark
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultDump:
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman bookmark list /json
-<rsp>{
-  "ResultDump": {
-    "Success": true,
-    "CatalogedEntries": [{
-        "CatalogedBookmark": {
-          "Uri": "http://www.example.com",
-          "Title": "site1",
-          "Path": "Sites.1"}},
-      {
-        "CatalogedBookmark": {
-          "Uri": "http://example.com/",
-          "Title": "\"Example",
-          "Path": "Folder1/1"}},
-      {
-        "CatalogedBookmark": {
-          "Uri": "http://example.net/Bananas",
-          "Title": "\"Banana",
-          "Path": "Folder1/2"}},
-      {
-        "CatalogedBookmark": {
-          "Uri": "http://example.com/Fred",
-          "Title": "\"The",
-          "Path": "Folder1/1a"}}]}}
-</div>
-~~~~
 
 

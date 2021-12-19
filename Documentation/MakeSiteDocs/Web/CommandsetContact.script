@@ -8,23 +8,29 @@
 #xclass ExampleGenerator CreateExamples
 
 
-
 #zfile CreateExamples WebContact "Guide/contact.md" Examples
-#% MakeTitle ("contacts");
+#% MakeTitle ("contact");
 
-The `contacts` command set is used to manage the user's contacts catalogue.
+The `contact` command set is used to manage the user's contacts catalogue.
 
 The contacts catalogue plays an important role in Mesh messaging as it is used to 
-determine the security policy for sending outbound messages and is one of the
-sources used to perform access control (i.e. spam filtering) on inbound messages.
+manage the security policy for sending outbound messages and is one of the
+sources used to compile the access control authorizations (i.e. spam filtering) 
+on inbound messages.
+
+The Mesh Service cannot read the contacts catalog entries themselves but
+the data in the contact catalog is used to compile the access catalog entries
+that do.
 
 Although the `meshman` tool is capable of adding, deleting and retrieving
 contact entries, it is intended to serve as a component to be used to build user
 interfaces rather than a tool designed for daily use.
 
-#### Adding contacts
+#{FutureFeature("Contact/Auth", "Specify messaging authorizations")}
 
-The #{ToCommand("contact add")} command adds a contact entry to a catalog from
+#### Adding contacts from a file
+
+The #{ToCommand("contact import")} command adds a contact entry to a catalog from
 a file. 
 
 #%  ConsoleExample (ShellContact.ContactAdd);
@@ -36,15 +42,48 @@ JSON format:
 [Carol's contact information]
 ~~~~
 
-The `/self` option is used to mark the contact as being the user's own contact
-details:
+The  #{ToCommand("contact self")} command is used to inport a contact and mark it as 
+being the user's own contact details:
 
 #%  ConsoleExample (ShellContact.ContactAddSelf);
 
-Contacts may also be added by accepting contact request messages using the 
-#{ToCommand("message accept")} command:
+#### Exchanging contacts with other users.
+
+Every Mesh Messaging communication is mediated through access control. Unlike
+a telephone number, a postal or email address, mere knowledge of a Mesh
+Messaging address does not grant the ability to use it to send a message. This
+makes exchange of contact information considerably easier since we are only
+concerned with the authenticity and accuracy of the identity claims made, 
+the mesh address information itself is not confidential.
+
+Contacts may be acquired from other users through a variety of approaches. If the 
+parties meet in person, the exchange may be performed through a QR code or near
+field communication exchange. If they are remote from each other, a network
+mediated exchange may be used.
+
+Exchange need not be reciprocated. A unidirectional exchange may be effected by
+means of a URI or QR code printed on a business card or a Web site.
+
+
+###### Message Exchange
+
+#{ToCommand("message contact")}
+#{ToCommand("message accept")}
+#{ToCommand("message accept")}
+
+###### Dynamic Exchange
+
+#{ToCommand("contact dynamic")}
+#{ToCommand("contact fetch")} / #{ToCommand("contact exchange")}
+#{ToCommand("message accept")}
+
 
 #% ConsoleExample (ShellMessage.ContactAccept);
+
+###### Static Exchange
+
+#{ToCommand("contact static")}
+#{ToCommand("contact fetch")}
 
 #### Finding contacts
 
@@ -67,16 +106,16 @@ Contact entries may be deleted using the  #{ToCommand("contact delete")} command
 
 
 
-#### Adding devicesF
+#### Adding devices
 
 Devices are given authorization to access the contacts catalog using the 
  #{ToCommand("device auth")} command:
 
- #%  ConsoleExample (ShellContact.ContactAuth);
+#%  ConsoleExample (ShellContact.ContactAuth);
 
- The newly authorized device can now access the contacts catalog:
+The newly authorized device can now access the contacts catalog:
 
- #%  ConsoleExample (ShellContact.ContactList2);
+#%  ConsoleExample (ShellContact.ContactList2);
 
 #end zfile
 
@@ -86,18 +125,74 @@ Devices are given authorization to access the contacts catalog using the
 
 #% Describe(CommandSet);
 
-
-#% Describe(CommandSet, _ContactAdd._DescribeCommand);
-#% ConsoleReference (ShellContact.ContactAdd);
-
 #% Describe(CommandSet, _ContactDelete._DescribeCommand);
+
+The 'contact delete' command deletes a contact entry entry by means of 
+its unique catalog identifier.
+
 #% ConsoleReference (ShellContact.ContactDelete);
 
+
+
+#% Describe(CommandSet, _ContactDynamic._DescribeCommand);
+
+The 'contact dynamic' command creates a dynamic contact URI such as
+might be presented to another user as a QR code. The URI combines the
+location data for the contact with an PIN that may
+be used to authenticate the response in a mutual exchange.
+
+#% Describe(CommandSet, _ContactExchange._DescribeCommand);
+
+The 'contact exchange' command is used to complete a mutual contact exchange
+by means of a dynamic URI.
+
+
+#% Describe(CommandSet, _ContactExport._DescribeCommand);
+
+The  'contact export' command exports the spcified contact entry to a file
+in the specified format.
+
+#% Describe(CommandSet, _ContactFetch._DescribeCommand);
+
+The 'contact fetch' command is used to acquire a dynamic or static contact
+presented as a URI or QR code without reciprocating the exchange.
+
+
+
 #% Describe(CommandSet, _ContactGet._DescribeCommand);
+
+The 'contact get' command retrieves a contact entry by means of its 
+unique catalog identifier.
+
+
 #% ConsoleReference (ShellContact.ContactGet);
 
+
+#% Describe(CommandSet, _ContactImport._DescribeCommand);
+
+The 'contact import' command is used to add a contact entry to the catalog
+from a file
+
+
+#% ConsoleReference (ShellContact.ContactImport);
+
+
+
+
+
 #% Describe(CommandSet, _ContactDump._DescribeCommand);
+
+The 'contact list' command lists all data in the contact catalog.
+
 #% ConsoleReference (ShellContact.ContactList);
+
+#% Describe(CommandSet, _ContactSelf._DescribeCommand);
+
+The 'contact static' command creates a URI from which a static QR code may be created
+to allow contact information to be published on a business card etc. in machine
+readable form.
+
+#% Describe(CommandSet, _ContactStatic._DescribeCommand);
 
 #end zfile
 

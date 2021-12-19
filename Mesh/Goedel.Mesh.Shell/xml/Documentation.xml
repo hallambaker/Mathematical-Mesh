@@ -213,7 +213,7 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.ContactAdd(Goedel.Mesh.Shell.ContactAdd)">
+        <member name="M:Goedel.Mesh.Shell.Shell.ContactImport(Goedel.Mesh.Shell.ContactImport)">
             <summary>
             Dispatch method
             </summary>
@@ -2436,25 +2436,25 @@
         <member name="P:Goedel.Mesh.Shell._ContactExport.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactAdd.File">
+        <member name="P:Goedel.Mesh.Shell._ContactImport.File">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactAdd.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._ContactImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactAdd.LocalName">
+        <member name="P:Goedel.Mesh.Shell._ContactImport.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactAdd.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell._ContactImport.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactAdd.Verbose">
+        <member name="P:Goedel.Mesh.Shell._ContactImport.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactAdd.Report">
+        <member name="P:Goedel.Mesh.Shell._ContactImport.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactAdd.Json">
+        <member name="P:Goedel.Mesh.Shell._ContactImport.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDelete.Identifier">
@@ -2520,6 +2520,33 @@
         <member name="P:Goedel.Mesh.Shell._ContactDump.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkImport.File">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkImport.Identifier">
+            <summary>Field accessor for option [id]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkImport.Format">
+            <summary>Field accessor for option [format]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkImport.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkImport.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkImport.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkImport.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkImport.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkImport.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Path">
             <summary>Field accessor for parameter []</summary>
         </member>
@@ -2528,6 +2555,15 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Title">
             <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Abstract">
+            <summary>Field accessor for option [abstract]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Comment">
+            <summary>Field accessor for option [comment]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.React">
+            <summary>Field accessor for option [react]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -2615,6 +2651,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarImport.Identifier">
             <summary>Field accessor for option [id]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CalendarImport.Format">
+            <summary>Field accessor for option [format]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -3321,8 +3360,8 @@
         <member name="P:Goedel.Mesh.Shell._DareAppend.File">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareAppend.Key">
-            <summary>Field accessor for option [key]</summary>
+        <member name="P:Goedel.Mesh.Shell._DareAppend.Id">
+            <summary>Field accessor for option [id]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareAppend.Index">
             <summary>Field accessor for option [index]</summary>

@@ -142,7 +142,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult ContactAdd(ContactAdd options) {
+    public override ShellResult ContactImport(ContactImport options) {
         var contextUser = GetContextUser(options);
         var file = options.File.Value;
 

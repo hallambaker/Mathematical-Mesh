@@ -99,6 +99,7 @@ The public key may be exported likewise:
 
 
 #% Describe(CommandSet, _MailAdd._DescribeCommand);
+#% Describe(CommandSet, _MailList._DescribeCommand);
 #% Describe(CommandSet, _MailUpdate._DescribeCommand);
 #% Describe(CommandSet, _SmimeSign._DescribeCommand);
 #% Describe(CommandSet, _SmimeEncrypt._DescribeCommand);

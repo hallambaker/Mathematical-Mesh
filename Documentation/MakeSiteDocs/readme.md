@@ -1,5 +1,54 @@
 ﻿# Stuff to do
 
+## Bootmaker
+
+Need to recognize 'command' as inline emphasis style.
+
+Need to recognize GitHub style preformatted areas.
+
+## Documentation for meshhost / serviceadmin
+
+Need docs for both of course.
+
+## Missing examples in meshman reference 
+
+
+Need to fix command description of nested commands...
+
+### Account 
+
+Missing examples
+
+* Import/Export
+* List/Status/Get
+* Account recovery / purge secret
+* Pin example
+
+[All missing from reference section as well.]
+
+
+### Bookmark
+
+* Add support for Abstract/react in the code
+* The delete command is really bad
+* Need to actually return useful stuff in the dump dialog.
+* Add device simply doesn't work.
+* Add via JSON blob.
+
+### Calendar
+
+* The ID scheme is really not working
+* Need to add labels
+* Add via iCal data
+
+
+### Contact 
+
+* Need to fill in the contact exchange schemes
+* Need to consider the authorization scheme
+
+# Prior stuff - check if fixed!
+
 
 ## Bug fixes
 

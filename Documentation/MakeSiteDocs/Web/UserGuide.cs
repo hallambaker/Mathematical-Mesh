@@ -18,38 +18,45 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	// WebDocs
 	//
 	public void WebDocs (CreateExamples Index) {
-		 WebAccount (Index);
-		 AccountReference (Index);
 		 Web (Index);
 		 UserGuide (Index);
 		 Reference (Index);
+		//
+		// *****Utility crypto functions
 		 WebKey (Index);
 		 KeyReference (Index);
 		 WebHash (Index);
 		 HashReference (Index);
 		 WebDare (Index);
 		 DareReference (Index);
-		 WebConnect (Index);
-		 ConnectReference (Index);
-		
-		 WebSSH (Index);
-		 SSHReference (Index);
+		//
+		// *****Mesh Core
+		 WebAccount (Index);
+		 AccountReference (Index);
+		 WebDevice (Index);
+		 DeviceReference (Index);
+		 WebMessage (Index);
+		 MessageReference (Index);
+		 WebGroup (Index);
+		 GroupReference (Index);
+		//
+		// ***** Mesh Catalog
 		 WebBookmark (Index);
 		 BookmarkReference (Index);
 		 WebPassword (Index);
 		 PasswordReference (Index);
 		 WebNetwork (Index);
 		 NetworkReference (Index);
-		 WebMessage (Index);
-		 MessageReference (Index);
-		 WebMail (Index);
-		 MailReference (Index);
-		 WebGroup (Index);
-		 GroupReference (Index);
 		 WebContact (Index);
 		 ContactReference (Index);
 		 WebCalendar (Index);
 		 CalendarReference (Index);
+		//
+		// ***** Mesh Applications
+		 WebSSH (Index);
+		 SSHReference (Index);
+		 WebMail (Index);
+		 MailReference (Index);
 		}
 	
 
@@ -164,6 +171,24 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		_Output.Write ("</div>\n{0}", _Indent);
 		_Output.Write ("~~~~\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
+		}
+	
+
+	//
+	// ConsoleReference2
+	//
+	public void ConsoleReference2 (List<ExampleResult> exampleResults) {
+		 if (exampleResults == null) {ReportMissing(); return;}
+		 var exampleResult = exampleResults[0];
+		_Output.Write ("\n{0}", _Indent);
+		_Output.Write ("~~~~\n{0}", _Indent);
+		_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
+		_Output.Write ("<cmd>{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
+		_Output.Write ("<rsp>{1}", _Indent, exampleResult.ResultText);
+		_Output.Write ("</div>\n{0}", _Indent);
+		_Output.Write ("~~~~\n{0}", _Indent);
+		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("Specifying the /json option returns a result of type {1}:\n{0}", _Indent, exampleResult.ResultType);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("~~~~\n{0}", _Indent);
@@ -180,7 +205,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	// Web
 	//
 	public static void Web(CreateExamples Index) { /* XFile  */
-		using var _Output = new StreamWriter("readme.md");		var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "readme.md" };
+		using var _Output = new StreamWriter("index.md");		var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "index.md" };
 		obj._Web(Index);
 		}
 	public void _Web(CreateExamples Index) {
@@ -268,7 +293,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	// UserGuide
 	//
 	public static void UserGuide(CreateExamples Index) { /* XFile  */
-		using var _Output = new StreamWriter("Guide/readme.md");		var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/readme.md" };
+		using var _Output = new StreamWriter("Guide/index.md");		var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/index.md" };
 		obj._UserGuide(Index);
 		}
 	public void _UserGuide(CreateExamples Index) {
@@ -292,7 +317,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	// Reference
 	//
 	public static void Reference(CreateExamples Index) { /* XFile  */
-		using var _Output = new StreamWriter("Reference/readme.md");		var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/readme.md" };
+		using var _Output = new StreamWriter("Reference/index.md");		var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/index.md" };
 		obj._Reference(Index);
 		}
 	public void _Reference(CreateExamples Index) {

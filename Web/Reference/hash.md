@@ -16,47 +16,6 @@ hash    Content Digest and Message Authentication Code operations on files
 The `hash` command set contains commands that perform Content Digest and 
 Message Authentication Code operations on the contents of a file.
 
-# hash udf
-
-~~~~
-<div="helptext">
-<over>
-udf   Calculate the Uniform Data Fingerprint of the input data
-       File to take digest of
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-    /alg   List of algorithm specifiers
-    /bits   Secret size in bits
-    /cty   Content Type
-    /expect   Expected value
-<over>
-</div>
-~~~~
-
-The `hash udf` command returns the UDF Content digest of the specified input 
-file according to the precision, IANA media type and digest algorithm specified
-with the `/bits`, `/cty` and `/alg` options.
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman hash udf TestFile1.txt
-<rsp>MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultDigest:
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman hash udf TestFile1.txt /json
-<rsp>{
-  "ResultDigest": {
-    "Success": true,
-    "Digest": "MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R"}}
-</div>
-~~~~
 
 
 
@@ -87,17 +46,6 @@ file according to the digest algorithm specifiedwith the `/alg` option.
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultDigest:
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman hash digest TestFile1.txt /json
-<rsp>{
-  "ResultDigest": {
-    "Success": true,
-    "Digest": "A028D4F74B602BA45EB0A93C9A4677240DCF281A1A9322F183BD32F0BED82EC72DE9C3957B2F4C9A1CCF7ED14F85D73498DF38017E703D47EBB9F0B3BF116F69"}}
-</div>
-~~~~
 
 
 The `/alg` option allows the digest algorithm to be specified.
@@ -135,22 +83,43 @@ true returned if and only if it matches the value specified.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman hash mac TestFile1.txt
-<rsp>ACYI-4NS4-IDKK-B2AB-VKIL-HJ67-6ZPC
-NDOC-SUKC-BF4B-YLEP-5FKG-KTEW-RS5R
+<rsp>AAYI-TUGO-UZ24-OPU2-7MOF-X7DR-JOAA
+NBO2-PH6N-W4GT-ET2M-RLMU-XXDM-MYEJ
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultDigest:
+
+
+# hash udf
+
+~~~~
+<div="helptext">
+<over>
+udf   Calculate the Uniform Data Fingerprint of the input data
+       File to take digest of
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+    /alg   List of algorithm specifiers
+    /bits   Secret size in bits
+    /cty   Content Type
+    /expect   Expected value
+<over>
+</div>
+~~~~
+
+The `hash udf` command returns the UDF Content digest of the specified input 
+file according to the precision, IANA media type and digest algorithm specified
+with the `/bits`, `/cty` and `/alg` options.
+
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman hash mac TestFile1.txt /json
-<rsp>{
-  "ResultDigest": {
-    "Success": true,
-    "Digest": "ACYI-4NS4-IDKK-B2AB-VKIL-HJ67-6ZPC",
-    "Key": "NDOC-SUKC-BF4B-YLEP-5FKG-KTEW-RS5R"}}
+<cmd>Alice> meshman hash udf TestFile1.txt
+<rsp>MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
 </div>
 ~~~~
+
+
 
 

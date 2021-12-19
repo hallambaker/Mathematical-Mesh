@@ -295,7 +295,12 @@
       "ProjectGuid": "896fc296-8eb1-426d-9d34-3f0ab0c73e22",
       "DisplayName": "Test.Common",
       "ColorIndex": 9
+    },
+    "589167a8-a30f-4242-ac75-faf4a7f8567a": {
+      "ProjectGuid": "589167a8-a30f-4242-ac75-faf4a7f8567a",
+      "DisplayName": "Goedel.Cryptography.Platform.Test-xunit",
+      "ColorIndex": 10
     }
   },
-  "NextColorIndex": 10
+  "NextColorIndex": 11
 }

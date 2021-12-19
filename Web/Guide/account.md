@@ -16,7 +16,7 @@ Connectivity may be tested by specifying an account or just a DNS service name:
 <div="terminal">
 <cmd>Alice> meshman account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MAWW-D3T6-T5C5-P7SQ-QDYF-JGD7-KHHU
+   Service UDF = MCAO-XTIB-YRN5-OZY7-PQY2-V677-UTBG
 </div>
 ~~~~
 
@@ -29,12 +29,16 @@ The user specifies the initial account address to be used (alice@example.com). U
 is of course dependent on authorization by the Mesh Service Provider (example.com)
 and is likely to require authentication and possibly payment. 
 
+of some form of one time use token to allow binding of a Web interaction providing payment
+details to the request to bind the account to a service.
+
+
 
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
+UDF=MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
 </div>
 ~~~~
 
@@ -50,14 +54,12 @@ A device may be connected to multiple accounts at the same time. The 'list' comm
 returns a list of the accounts to which the device is connected and the 'get'
 command returns information about a particular account.
 
-[Future Feature: ListGet]
-
- These are not currently implemented.
+[Future Feature: ListGet] List/get not currently implemented. 
 
 
 
 ~~~~
-Missing example 1
+Missing example 6
 ~~~~
 
 
@@ -65,9 +67,7 @@ Missing example 1
 
 The sync command is used to synchronize the account to the service. 
 
-[Future Feature: AutoSync]
-
- Currently, the tool requires
+[Future Feature: AutoSync] The tool should sync before each operation requiring it. Currently, the tool requires
 synchronization to be requested manually before each command. This should be performed 
 automatically with an option to suppress.
 
@@ -79,6 +79,9 @@ automatically with an option to suppress.
 ~~~~
 
 Synchronization will fail if a device has been removed from the account or not yet connected.
+
+The 'account status' command returns the same information as 'account sync' without attempting
+synchronization. 
 
 
 ## Escrow and Recovery
@@ -98,12 +101,12 @@ shares to create and the number of shares required for recovery:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account escrow
-<rsp>Share: SAQO-T6ME-QKJ4-QQZW-MLYG-O7EO-LOYT-MHVP-N65F-MUII-WL6D-4H6I-5Z
-S3-5TX3-42UA
-Share: SAQQ-X4QG-INU4-FWLG-MOQY-VGP6-TWZT-JN47-H26J-AOA3-E65C-DLLW-J3
-SW-ZICZ-I7BA
-Share: SARC-32UI-AQ73-234W-MRJK-3N3O-362T-GUEP-BW7M-UHZN-TR4A-KOZD-V5
-SR-U4NW-VEEQ
+<rsp>Share: SAQF-PZER-T2XO-6OIJ-CXPY-DEAG-IL3C-ICGC-KM4H-SAHW-F4WO-MWZT-EF
+67-LUCU-PVFA
+Share: SAQ6-PSBA-J6OA-KZAA-KYVI-K4WQ-ECF6-EXSZ-OT4H-YN6B-2ENC-6U6T-OV
+HT-3BPB-BWUA
+Share: SARH-PK5P-ACER-XDXX-SZ2Y-SVMZ-7YQ2-BM7Q-S24H-63UN-OMDX-QTDT-ZE
+QI-KO3N-TXMQ
 </div>
 ~~~~
 
@@ -112,7 +115,7 @@ original administration device is lost or compromized.
 
 
 ~~~~
-Missing example 2
+Missing example 7
 ~~~~
 
 
@@ -122,18 +125,29 @@ of course irrevocable.
 
 
 ~~~~
-Missing example 3
+Missing example 8
 ~~~~
 
 
 ## Account import/export
 
-[Future Feature: Import/Export]
+[Future Feature: Import/Export] ? These features are not currently implemented.
 
- These features are not currently implemented.
+The export command causes the entire account profile to be written to an archive.
+This may be used to create a backup copy of the account for archiving purposes
+or to facilitate provisioning the account to a new machine.
 
-It should be possible to transfer accounts between devices without going through a service.
 
+~~~~
+Missing example 9
+~~~~
+
+The import command causes the account profile to be read back from the archive.
+
+
+~~~~
+Missing example 10
+~~~~
 
 ## Device connection commands
 
@@ -147,26 +161,25 @@ credentials.
 
 
 ~~~~
-Missing example 4
+Missing example 11
 ~~~~
 
-[Future Example: DeviceConnect]
+[Future Example: DeviceConnect] ? 
 
- 
-
-The 'publish' and 'connect' commands are used to 
+The 'connect' command is used to connect a device to the account by means of a 
+connection URI. This is usually used to connect devices by means of a QR code 
+printed on the device itself.
 
 
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account connect ^
-    mcu://maker@example.com/EDIW-AY5A-RCNT-KNG3-3MBV-WVLT-24 /web
+    mcu://maker@example.com/EC7U-PEKJ-TG45-LVJY-QBWT-ERB6-UQ /web
 </div>
 ~~~~
 
-
-
-
-
+The connecting device will only receive notice of the connection request if it
+has some form of network connectivity allowing it to discover that the connection
+request is pending.
 
 

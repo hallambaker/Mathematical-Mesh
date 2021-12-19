@@ -123,6 +123,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _MailAdd._DescribeCommand);
+			 Describe(CommandSet, _MailList._DescribeCommand);
 			 Describe(CommandSet, _MailUpdate._DescribeCommand);
 			 Describe(CommandSet, _SmimeSign._DescribeCommand);
 			 Describe(CommandSet, _SmimeEncrypt._DescribeCommand);

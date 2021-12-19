@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 12/18/2021 2:40:16 AM
+//  This file was automatically generated at 12/19/2021 2:14:05 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -281,7 +281,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			{"fetch", _ContactFetch._DescribeCommand },
 			{"exchange", _ContactExchange._DescribeCommand },
 			{"export", _ContactExport._DescribeCommand },
-			{"add", _ContactAdd._DescribeCommand },
+			{"import", _ContactImport._DescribeCommand },
 			{"delete", _ContactDelete._DescribeCommand },
 			{"get", _ContactGet._DescribeCommand },
 			{"list", _ContactDump._DescribeCommand }
@@ -292,6 +292,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         Identifier = "bookmark",
 		Brief = "Manage bookmark catalogs connected to an account",
 		Entries = new  () {
+			{"import", _BookmarkImport._DescribeCommand },
 			{"add", _BookmarkAdd._DescribeCommand },
 			{"delete", _BookmarkDelete._DescribeCommand },
 			{"get", _BookmarkGet._DescribeCommand },
@@ -380,7 +381,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
 	public static DescribeCommandSet DescribeCommandSet_SMIME => new  () {
         Identifier = "smime",
-		Brief = "<Unspecified>",
+		Brief = "Commands for managing S/MIME entries",
 		Entries = new  () {
 			{"sign", _SmimeSign._DescribeCommand },
 			{"encrypt", _SmimeEncrypt._DescribeCommand }
@@ -389,7 +390,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
 	public static DescribeCommandSet DescribeCommandSet_PGP => new  () {
         Identifier = "openpgp",
-		Brief = "<Unspecified>",
+		Brief = "Commands for managing PGP entries",
 		Entries = new  () {
 			{"sign", _OpenpgpSign._DescribeCommand },
 			{"encrypt", _OpenpgpEncrypt._DescribeCommand }
@@ -967,13 +968,13 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_ContactAdd (
+	public static void Handle_ContactImport (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		ContactAdd		Options = new ();
+		ContactImport		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.ContactAdd (Options);
+		var result = Dispatch.ContactImport (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -1004,6 +1005,16 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
 		var result = Dispatch.ContactDump (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_BookmarkImport (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		BookmarkImport		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.BookmarkImport (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -2500,7 +2511,7 @@ public class _AccountGetPIN : Goedel.Command.Dispatch ,
 			new DescribeEntryOption () {
 				Identifier = "Expire", 
 				Default = "1", // null if null
-				Brief = "<Unspecified>",
+				Brief = "Expiry time in days (1d), hours (1, 1h) or minutes (10m).",
 				Index = 1,
 				Key = "expire"
 				},
@@ -3495,70 +3506,70 @@ public class _AccountRecover : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Share1", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Recovery share",
 				Index = 6,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Share2", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Recovery share",
 				Index = 7,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Share3", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Recovery share",
 				Index = 8,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Share4", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Recovery share",
 				Index = 9,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Share5", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Recovery share",
 				Index = 10,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Share6", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Recovery share",
 				Index = 11,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Share7", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Recovery share",
 				Index = 12,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Share8", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Recovery share",
 				Index = 13,
 				Key = ""
 				},
 			new DescribeEntryOption () {
 				Identifier = "File", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "File containing the recovery key blob",
 				Index = 14,
 				Key = "file"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verify", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Check that the shares are valid for recovery without performing recovery.",
 				Index = 15,
 				Key = "verify"
 				}
@@ -3917,7 +3928,7 @@ public class _AccountExport : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "File", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Name of the file to which the archive is to be written.",
 				Index = 0,
 				Key = ""
 				},
@@ -4062,7 +4073,7 @@ public class _AccountImport : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "File", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Name of the file file which the archive is to be read.",
 				Index = 0,
 				Key = ""
 				},
@@ -8472,21 +8483,21 @@ public class _PasswordAdd : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Site", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "The site(s) at which the password is to be used.",
 				Index = 0,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Username", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "The username",
 				Index = 1,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Password", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "The password",
 				Index = 2,
 				Key = ""
 				},
@@ -8631,7 +8642,7 @@ public class _PasswordGet : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Site", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "The site name",
 				Index = 0,
 				Key = ""
 				},
@@ -8921,7 +8932,7 @@ public class _PasswordDump : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Site", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "The site or sites to return.",
 				Index = 0,
 				Key = ""
 				},
@@ -9066,7 +9077,7 @@ public class _ContactSelf : Goedel.Command.Dispatch ,
 			new DescribeEntryOption () {
 				Identifier = "File", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "File containing the contact entry to add",
 				Index = 0,
 				Key = "file"
 				},
@@ -9612,7 +9623,7 @@ public class _ContactExchange : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Uri", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Contact exchange URI",
 				Index = 0,
 				Key = ""
 				},
@@ -9828,7 +9839,7 @@ public class _ContactExport : Goedel.Command.Dispatch ,
 public partial class ContactExport : _ContactExport {
     } // class ContactExport
 
-public class _ContactAdd : Goedel.Command.Dispatch ,
+public class _ContactImport : Goedel.Command.Dispatch ,
 						IAccountOptions,
 						IReporting{
 
@@ -9911,15 +9922,15 @@ public class _ContactAdd : Goedel.Command.Dispatch ,
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "add",
-		Brief =  "Add contact entry from file",
-		HandleDelegate =  CommandLineInterpreter.Handle_ContactAdd,
+		Identifier = "import",
+		Brief =  "Import contact entry from file",
+		HandleDelegate =  CommandLineInterpreter.Handle_ContactImport,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryParameter () {
 				Identifier = "File", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "File containing the contact entry to add",
 				Index = 0,
 				Key = ""
 				},
@@ -9970,8 +9981,8 @@ public class _ContactAdd : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class ContactAdd : _ContactAdd {
-    } // class ContactAdd
+public partial class ContactImport : _ContactImport {
+    } // class ContactImport
 
 public class _ContactDelete : Goedel.Command.Dispatch ,
 						IAccountOptions,
@@ -10408,12 +10419,12 @@ public class _ContactDump : Goedel.Command.Dispatch ,
 public partial class ContactDump : _ContactDump {
     } // class ContactDump
 
-public class _BookmarkAdd : Goedel.Command.Dispatch ,
+public class _BookmarkImport : Goedel.Command.Dispatch ,
 						IAccountOptions,
 						IReporting{
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new String (),
+		new ExistingFile (),
 		new String (),
 		new String (),
 		new String (),
@@ -10428,30 +10439,30 @@ public class _BookmarkAdd : Goedel.Command.Dispatch ,
 
 
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Path {
-		get => _Data[0] as String;
+	public virtual ExistingFile File {
+		get => _Data[0] as ExistingFile;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _Path {
+	public virtual string _File {
 		set => _Data[0].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Uri {
+	/// <summary>Field accessor for option [id]</summary>
+	public virtual String Identifier {
 		get => _Data[1] as String;
 		set => _Data[1]  = value;
 		}
 
-	public virtual string _Uri {
+	public virtual string _Identifier {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Title {
+	/// <summary>Field accessor for option [format]</summary>
+	public virtual String Format {
 		get => _Data[2] as String;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _Title {
+	public virtual string _Format {
 		set => _Data[2].Parameter (value);
 		}
 	/// <summary>Field accessor for option [account]</summary>
@@ -10511,31 +10522,31 @@ public class _BookmarkAdd : Goedel.Command.Dispatch ,
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "add",
-		Brief =  "Add bookmark",
-		HandleDelegate =  CommandLineInterpreter.Handle_BookmarkAdd,
+		Identifier = "import",
+		Brief =  "Add bookmark entry from file",
+		HandleDelegate =  CommandLineInterpreter.Handle_BookmarkImport,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryParameter () {
-				Identifier = "Path", 
+				Identifier = "File", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "File containing the bookmark entry to add",
 				Index = 0,
 				Key = ""
 				},
-			new DescribeEntryParameter () {
-				Identifier = "Uri", 
+			new DescribeEntryOption () {
+				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Unique entry identifier",
 				Index = 1,
-				Key = ""
+				Key = "id"
 				},
-			new DescribeEntryParameter () {
-				Identifier = "Title", 
+			new DescribeEntryOption () {
+				Identifier = "Format", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Specifies the file format.",
 				Index = 2,
-				Key = ""
+				Key = "format"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
@@ -10577,6 +10588,236 @@ public class _BookmarkAdd : Goedel.Command.Dispatch ,
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
 				Index = 8,
+				Key = "json"
+				}
+			}
+		};
+
+	}
+
+public partial class BookmarkImport : _BookmarkImport {
+    } // class BookmarkImport
+
+public class _BookmarkAdd : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new String (),
+		new String (),
+		new String (),
+		new String (),
+		new String (),
+		new String (),
+		new String (),
+		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+		new Flag (),
+		new Flag (),
+		new Flag ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Path {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _Path {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Uri {
+		get => _Data[1] as String;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _Uri {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Title {
+		get => _Data[2] as String;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _Title {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [abstract]</summary>
+	public virtual String Abstract {
+		get => _Data[3] as String;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Abstract {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [comment]</summary>
+	public virtual String Comment {
+		get => _Data[4] as String;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Comment {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [react]</summary>
+	public virtual String React {
+		get => _Data[5] as String;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _React {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[6] as String;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[6].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[7] as String;
+		set => _Data[7]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[7].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[8] as Enumeration<EnumReporting>;
+		set => _Data[8]  = value;
+		}
+
+	public virtual string _EnumReporting {
+		set => _Data[8].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[9] as Flag;
+		set => _Data[9]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[9].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[10] as Flag;
+		set => _Data[10]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[10].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[11] as Flag;
+		set => _Data[11]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[11].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "add",
+		Brief =  "Add bookmark entry from specified parameters",
+		HandleDelegate =  CommandLineInterpreter.Handle_BookmarkAdd,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryParameter () {
+				Identifier = "Path", 
+				Default = null, // null if null
+				Brief = "Keywords under which the bookmark is to be indexed",
+				Index = 0,
+				Key = ""
+				},
+			new DescribeEntryParameter () {
+				Identifier = "Uri", 
+				Default = null, // null if null
+				Brief = "The recorded link",
+				Index = 1,
+				Key = ""
+				},
+			new DescribeEntryParameter () {
+				Identifier = "Title", 
+				Default = null, // null if null
+				Brief = "Title of the recorded item",
+				Index = 2,
+				Key = ""
+				},
+			new DescribeEntryOption () {
+				Identifier = "Abstract", 
+				Default = null, // null if null
+				Brief = "Abstract of the recorded item",
+				Index = 3,
+				Key = "abstract"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Comment", 
+				Default = null, // null if null
+				Brief = "Comment on reason for adding",
+				Index = 4,
+				Key = "comment"
+				},
+			new DescribeEntryOption () {
+				Identifier = "React", 
+				Default = null, // null if null
+				Brief = "Reactions to the recorded item",
+				Index = 5,
+				Key = "react"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 6,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 7,
+				Key = "local"
+				},
+			new DescribeEntryEnumerate () {
+				Identifier = "EnumReporting", 
+				Default = null, // null if null
+				Brief = "Reporting level",
+				Index = 8,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 9,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 10,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 11,
 				Key = "json"
 				}
 			}
@@ -10840,7 +11081,7 @@ public class _BookmarkGet : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "The unique entry identifier",
 				Index = 0,
 				Key = ""
 				},
@@ -11031,6 +11272,7 @@ public class _CalendarImport : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new String (),
 		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 		new Flag (),
 		new Flag (),
@@ -11058,59 +11300,68 @@ public class _CalendarImport : Goedel.Command.Dispatch ,
 	public virtual string _Identifier {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
+	/// <summary>Field accessor for option [format]</summary>
+	public virtual String Format {
 		get => _Data[2] as String;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _Format {
 		set => _Data[2].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[3] as String;
 		set => _Data[3]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[4] as Enumeration<EnumReporting>;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[4] as String;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _EnumReporting {
+	public virtual string _LocalName {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[5] as Flag;
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[5] as Enumeration<EnumReporting>;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _EnumReporting {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[6] as Flag;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[7] as Flag;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[7].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[8] as Flag;
+		set => _Data[8]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[8].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -11123,57 +11374,64 @@ public class _CalendarImport : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "File", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "File containing the calendar entry to add",
 				Index = 0,
 				Key = ""
 				},
 			new DescribeEntryOption () {
 				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Unique entry identifier",
 				Index = 1,
 				Key = "id"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Format", 
+				Default = null, // null if null
+				Brief = "Specifies the file format.",
+				Index = 2,
+				Key = "format"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 2,
+				Index = 3,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 3,
+				Index = 4,
 				Key = "local"
 				},
 			new DescribeEntryEnumerate () {
 				Identifier = "EnumReporting", 
 				Default = null, // null if null
 				Brief = "Reporting level",
-				Index = 4,
+				Index = 5,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "true", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 5,
+				Index = 6,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 6,
+				Index = 7,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 7,
+				Index = 8,
 				Key = "json"
 				}
 			}
@@ -11285,14 +11543,14 @@ public class _CalendarAdd : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Title", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "The entry title.",
 				Index = 0,
 				Key = ""
 				},
 			new DescribeEntryOption () {
 				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Unique entry identifier",
 				Index = 1,
 				Key = "id"
 				},
@@ -11437,7 +11695,7 @@ public class _CalendarGet : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Unique entry identifier",
 				Index = 0,
 				Key = ""
 				},
@@ -11582,7 +11840,7 @@ public class _CalendarDelete : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "Contact entry identifier",
+				Brief = "Unique entry identifier",
 				Index = 0,
 				Key = ""
 				},
@@ -11865,14 +12123,14 @@ public class _NetworkImport : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "File", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "File containing the network entry to add",
 				Index = 0,
 				Key = ""
 				},
 			new DescribeEntryOption () {
 				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Unique entry identifier",
 				Index = 1,
 				Key = "id"
 				},
@@ -12027,14 +12285,14 @@ public class _NetworkAdd : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "WiFi SSID parameter",
 				Index = 0,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Password", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Password value",
 				Index = 1,
 				Key = ""
 				},
@@ -12179,7 +12437,7 @@ public class _NetworkGet : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Unique entry identifier",
 				Index = 0,
 				Key = ""
 				},
@@ -15639,13 +15897,13 @@ public class _DareAppend : Goedel.Command.Dispatch ,
 	public virtual string _File {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for option [key]</summary>
-	public virtual String Key {
+	/// <summary>Field accessor for option [id]</summary>
+	public virtual String Id {
 		get => _Data[13] as String;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _Key {
+	public virtual string _Id {
 		set => _Data[13].Parameter (value);
 		}
 	/// <summary>Field accessor for option [index]</summary>
@@ -15757,11 +16015,11 @@ public class _DareAppend : Goedel.Command.Dispatch ,
 				Key = ""
 				},
 			new DescribeEntryOption () {
-				Identifier = "Key", 
+				Identifier = "Id", 
 				Default = null, // null if null
-				Brief = "<Unspecified>",
+				Brief = "Identifier of the file in the sequence",
 				Index = 13,
-				Key = "key"
+				Key = "id"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Index", 
@@ -15820,7 +16078,7 @@ public class _DareDelete : Goedel.Command.Dispatch {
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "delete",
-		Brief =  "<Unspecified>",
+		Brief =  "Delete file from archive index.",
 		HandleDelegate =  CommandLineInterpreter.Handle_DareDelete,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
@@ -20663,7 +20921,7 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		return null;
 		}
 
-	public virtual ShellResult ContactAdd ( ContactAdd Options) {
+	public virtual ShellResult ContactImport ( ContactImport Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
@@ -20679,6 +20937,11 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		}
 
 	public virtual ShellResult ContactDump ( ContactDump Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult BookmarkImport ( BookmarkImport Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}

@@ -56,6 +56,8 @@ public partial class LayerAccount : ExampleSet {
     public List<ExampleResult> PinAlice;
     public List<ExampleResult> ProfilePurge;
     public List<ExampleResult> ConnectUri;
+    public List<ExampleResult> Export;
+    public List<ExampleResult> Import;
 
     public LayerAccount(CreateExamples createExamples) :
             base(createExamples) {

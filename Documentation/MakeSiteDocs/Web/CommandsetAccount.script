@@ -30,6 +30,11 @@ The user specifies the initial account address to be used (#{AliceAccount}). Use
 is of course dependent on authorization by the Mesh Service Provider (#{MeshServiceProvider})
 and is likely to require authentication and possibly payment. 
 
+#{FutureFeature("Create token", "Presentation of payment proof") The account create command should support the presentation
+of some form of one time use token to allow binding of a Web interaction providing payment
+details to the request to bind the account to a service.
+
+
 #%  ConsoleExample (Account.CreateAlice);
 
 The command returns the value of Alice's Mesh Account fingerprint #{AliceFingerprint}. 
@@ -44,7 +49,7 @@ A device may be connected to multiple accounts at the same time. The 'list' comm
 returns a list of the accounts to which the device is connected and the 'get'
 command returns information about a particular account.
 
-#{FutureFeature("ListGet")} These are not currently implemented.
+#{FutureFeature("ListGet", "List/get not currently implemented.")} 
 
 
 #%  ConsoleExample (Account.ListGetAccountAlice);
@@ -54,13 +59,16 @@ command returns information about a particular account.
 
 The sync command is used to synchronize the account to the service. 
 
-#{FutureFeature("AutoSync")} Currently, the tool requires
+#{FutureFeature("AutoSync", "The tool should sync before each operation requiring it.")} Currently, the tool requires
 synchronization to be requested manually before each command. This should be performed 
 automatically with an option to suppress.
 
 #%  ConsoleExample (Account.SyncAlice);
 
 Synchronization will fail if a device has been removed from the account or not yet connected.
+
+The 'account status' command returns the same information as 'account sync' without attempting
+synchronization. 
 
 
 #### Escrow and Recovery
@@ -95,8 +103,15 @@ of course irrevocable.
 
 #{FutureFeature("Import/Export")} These features are not currently implemented.
 
-It should be possible to transfer accounts between devices without going through a service.
+The export command causes the entire account profile to be written to an archive.
+This may be used to create a backup copy of the account for archiving purposes
+or to facilitate provisioning the account to a new machine.
 
+#%  ConsoleExample (Account.Export);
+
+The import command causes the account profile to be read back from the archive.
+
+#%  ConsoleExample (Account.Import);
 
 #### Device connection commands
 
@@ -112,14 +127,15 @@ credentials.
 
 #{FutureExample("DeviceConnect")} 
 
-The 'publish' and 'connect' commands are used to 
+The 'connect' command is used to connect a device to the account by means of a 
+connection URI. This is usually used to connect devices by means of a QR code 
+printed on the device itself.
 
 #%  ConsoleExample (Connect.ConnectStaticClaim);
 
-
-
-
-
+The connecting device will only receive notice of the connection request if it
+has some form of network connectivity allowing it to discover that the connection
+request is pending.
 
 
 #end zfile
@@ -135,6 +151,9 @@ connection to the service.
 
 The '/local', '/verbose', '/report' and '/json' options are supported by every command
 in the set.
+
+The '/account' option may be used to specify the Mesh account on which the device is 
+to be performed. If unspecified, the default account is used.
 
 
 #% Describe(CommandSet, _AccountConnect._DescribeCommand);
@@ -191,12 +210,17 @@ The options 'shares' and 'quorum' are used to specify the number of shares to be
 
 #% Describe(CommandSet, _AccountExport._DescribeCommand);
 
-The `account export` command
+The `account export` command is used to export all data except for private keys associated with 
+the account to a DARE archive.
+
+
 
 
 #% Describe(CommandSet, _AccountGet._DescribeCommand);
 
-The `account get` command
+The `account get` command returns a description of the account. This includes the 
+account UDF fingerprint, the current service binding and the date of the most recent 
+synchronization operation.
 
 
 #% Describe(CommandSet, _AccountHello._DescribeCommand);
@@ -204,11 +228,12 @@ The `account get` command
 The `account hello` command attempts to contact a Mesh service and reports the
 service configuration if successful.
 
-#%  ConsoleReference (Examples.ProfileHello);
+#%  ConsoleReference (Service.Hello);
 
 #% Describe(CommandSet, _AccountImport._DescribeCommand);
 
-The `account import` command
+The `account import` command imports Mesh account data from a DARE archive such as 
+an archive created by the 'account export' command.
 
 #% Describe(CommandSet, _AccountGetPIN._DescribeCommand);
 
@@ -221,39 +246,45 @@ characters.
 The '/expire' option specifies an expiry time for the request as an integer 
 followed by the letter m, h or d for minutes, hours and days respectively.
 
-#%  ConsoleReference (ShellAccount.ConnectGetPin);
+The remaining options allow the authorization(s) of the device to be specified so
+that the connection can be completed without additional user interaction.
+
+
+#%  ConsoleReference (Account.PinAlice);
 
 
 #% Describe(CommandSet, _AccountList._DescribeCommand);
 
-The `account list` command 
-
-
+The `account list` command lists all the Mesh accounts the current device is connected 
+to.
 
 
 #% Describe(CommandSet, _AccountPurge._DescribeCommand);
 
-The `account purge` command
-
+The `account purge` command eliminates deleted objects and messages from the catalogs
+and spools stored on the current device. The Purge command does not cause data to be
+deleted from the service.
 
 #% Describe(CommandSet, _AccountRecover._DescribeCommand);
 
-The `account recover` command 
+The `account recover` command reassembles the account primary secret from a set of
+recovery shares.
 
 
 #% Describe(CommandSet, _AccountStatus._DescribeCommand);
 
-The `account status` command 
-
-
-
+The `account status` command returns the current status of the account catalogs and spools 
+without attempting to synchronize with the service.
 
 #% Describe(CommandSet, _AccountSync._DescribeCommand);
 
-The `account sync` command 
+The `account sync` command attempts to synchronize the account catalogs and spools with
+the service and reports on the status of each.
 
-#!%  ConsoleReference (Examples.ProfileSync);
+If the '/auto' flag is set, pre-authorized device connection and contact exchange requests
+in inbound messages will be performed automatically without further user interaction.
 
+#%  ConsoleReference (Account.SyncAlice);
 
 
 #end zfile

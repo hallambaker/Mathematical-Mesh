@@ -27,7 +27,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 <div="terminal">
 <cmd>Alice> meshman dare encode TestFile1.txt ^
     /out=TestFile1.txt.symmetric.dare ^
-    /key=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
+    /key=WT77-HFZI-42AW-IV6J-PXUZ-NNSC-TM
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -39,7 +39,7 @@ encoded:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare encode TestDir1 ^
-    /encrypt=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
+    /encrypt=WT77-HFZI-42AW-IV6J-PXUZ-NNSC-TM
 <rsp>ERROR - No encryption key is available
 </div>
 ~~~~
@@ -94,7 +94,7 @@ level otherwise.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare ^
-    /encrypt=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
+    /encrypt=WT77-HFZI-42AW-IV6J-PXUZ-NNSC-TM
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -128,7 +128,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare ^
-    /encrypt=K65L-EHWO-NFFU-YLMK-H5H2-7FVW-LU
+    /encrypt=WT77-HFZI-42AW-IV6J-PXUZ-NNSC-TM
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -152,7 +152,7 @@ The `dare earl` command is used to create an EARL:
 
 
 ~~~~
-Missing example 8
+Missing example 2
 ~~~~
 
 A new secret is generated with the specified number of bits, this is then used
@@ -164,7 +164,7 @@ the transaction to be written to a DARE Container Log.
 
 
 ~~~~
-Missing example 9
+Missing example 3
 ~~~~
 
 The `/new` option causes the file to be encoded if and only if it has not 
@@ -172,7 +172,7 @@ been processed already.
 
 
 ~~~~
-Missing example 10
+Missing example 4
 ~~~~
 
 

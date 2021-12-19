@@ -110,6 +110,14 @@ be different:
 The Key command set contains commands that operate on cryptographic keys and
 nonces.
 
+#% Describe(CommandSet, _KeyEarl._DescribeCommand);
+
+The `key earl` command returns a randomized secret value and a fingerprint of the secret 
+value, formatted as a UDF Encryption key type and Content Digest Type
+
+#% ConsoleReference (ShellKey.KeyEarl);
+
+
 
 #% Describe(CommandSet, _KeyNonce._DescribeCommand);
 
@@ -122,6 +130,15 @@ protocol.
 
 #% ConsoleReference (ShellKey.KeyNonce);
 
+
+#% Describe(CommandSet, _KeyRecover._DescribeCommand);
+
+The `key recover` command combines the specified set of share to recover the original secret 
+value as a UDF Encryption key type.
+
+#%  ConsoleReference (ShellKey.KeyRecover);
+
+
 #% Describe(CommandSet, _KeySecret._DescribeCommand);
 
 The `key secret` command returns a randomized secret value formatted as a UDF Encryption 
@@ -129,13 +146,6 @@ key type.
 
 #% ConsoleReference (ShellKey.KeySecret);
 
-
-#% Describe(CommandSet, _KeyEarl._DescribeCommand);
-
-The `key earl` command returns a randomized secret value and a fingerprint of the secret 
-value, formatted as a UDF Encryption key type and Content Digest Type
-
-#% ConsoleReference (ShellKey.KeyEarl);
 
 #% Describe(CommandSet, _KeyShare._DescribeCommand);
 
@@ -145,12 +155,7 @@ formatted as a UDF Encryption key type and Share types
 #% ConsoleReference (ShellKey.KeyShare);
 
 
-#% Describe(CommandSet, _KeyRecover._DescribeCommand);
 
-The `key recover` command combines the specified set of share to recover the original secret 
-value as a UDF Encryption key type.
-
-#%  ConsoleReference (ShellKey.KeyRecover);
 
 
 #end zfile

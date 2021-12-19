@@ -114,15 +114,20 @@ Bob is no longer a member of the group and his decryption request now fails:
 
 #% Describe( CommandSet);
 
+#% Describe( CommandSet, _GroupAdd._DescribeCommand);
+#%  ConsoleReference (ShellGroup.GroupAdd);
 
 #% Describe( CommandSet, _GroupCreate._DescribeCommand);
 #%  ConsoleReference (ShellGroup.GroupCreate);
 
-#% Describe( CommandSet, _GroupAdd._DescribeCommand);
-#%  ConsoleReference (ShellGroup.GroupAdd);
+
 
 #% Describe( CommandSet, _GroupDelete._DescribeCommand);
 #%  ConsoleReference (ShellGroup.GroupDelete);
+
+
+#% Describe( CommandSet, _GroupGet._DescribeCommand);
+
 
 #% Describe( CommandSet, _GroupList._DescribeCommand);
 #%  ConsoleReference (ShellGroup.GroupList1);

@@ -186,13 +186,11 @@
 			Include Reporting
 			Include CryptoOptions
 
-
 		Command AccountDelete "delete"
 			Brief "Delete an account profile"
 			Parameter ProfileUdf "udf" String
 				Brief "Fingerprint of the account to be removed from this device"
 			Include Reporting
-
 
 		Command AccountStatus "status"
 			Brief "Return the status of the account catalogs and spools"
@@ -211,12 +209,11 @@
 				Brief "Length of PIN to generate in characters"
 				Default "24"
 			Option Expire "expire" String
+				Brief "Expiry time in days (1d), hours (1, 1h) or minutes (10m)."
 				Default "1"
 			Include AccountOptions
 			Include Reporting
 			Include DeviceAuthOptions
-
-
 
 		Command AccountConnect "connect"
 			Brief "Connect by means of a connection uri"
@@ -225,8 +222,6 @@
 			Include AccountOptions
 			Include Reporting
 			Include DeviceAuthOptions
-
-
 
 		Command AccountEscrow "escrow"
 			Return ResultEscrow
@@ -251,16 +246,25 @@
 			Include AccountOptions
 			Include Reporting
 			Parameter Share1 "s1" String
+				Brief "Recovery share"
 			Parameter Share2 "s2" String
+				Brief "Recovery share"
 			Parameter Share3 "s3" String
+				Brief "Recovery share"
 			Parameter Share4 "s4" String
+				Brief "Recovery share"
 			Parameter Share5 "s5" String
+				Brief "Recovery share"
 			Parameter Share6 "s6" String
+				Brief "Recovery share"
 			Parameter Share7 "s7" String
+				Brief "Recovery share"
 			Parameter Share8 "s8" String
+				Brief "Recovery share"
 			Option File "file" ExistingFile
+				Brief "File containing the recovery key blob"
 			Option Verify "verify" Flag
-
+				Brief "Check that the shares are valid for recovery without performing recovery."
 
 		// Describe configuration
 		Command AccountList "list"
@@ -277,9 +281,10 @@
 
 		// Export and import of profiles
 		Command AccountExport "export"
+			Parameter File "file" NewFile
+				Brief "Name of the file to which the archive is to be written."	
 			Return ResultMachine
 			Brief "Export the specified profile data to the specified file"
-			Parameter File "file" NewFile
 			Include AccountOptions
 			Include Reporting
 
@@ -287,6 +292,7 @@
 			Return ResultMachine
 			Brief "Import the specified profile data to the specified file"
 			Parameter File "file" NewFile
+				Brief "Name of the file file which the archive is to be read."	
 			Include AccountOptions
 			Include Reporting
 
@@ -498,14 +504,18 @@
 		Command PasswordAdd "add"
 			Brief "Add password entry"
 			Parameter Site "site" String
+				Brief "The site(s) at which the password is to be used."
 			Parameter Username "user" String
+				Brief "The username"
 			Parameter Password "password" String
+				Brief "The password"
 			Include AccountOptions
 			Include Reporting
 
 		Command PasswordGet "get"
 			Brief "Lookup password entry"
 			Parameter Site "site" String
+				Brief "The site name"
 			Include AccountOptions
 			Include Reporting
 
@@ -519,6 +529,7 @@
 		Command PasswordDump "list"
 			Brief "List password entries"
 			Parameter Site "site" String
+				Brief "The site or sites to return."
 			Include AccountOptions
 			Include Reporting
 
@@ -528,6 +539,7 @@
 		Command ContactSelf "self"
 			Brief "Update contact entry for self"
 			Option File "file" ExistingFile
+				Brief "File containing the contact entry to add"
 			Include AccountOptions
 			Include Reporting
 
@@ -549,7 +561,8 @@
 
 		Command ContactExchange "exchange"
 			Brief "Request contact from URI presenting own contact"
-			Parameter Uri "uri" String			
+			Parameter Uri "uri" String
+				Brief "Contact exchange URI"
 			Include AccountOptions
 			Include Reporting
 
@@ -561,9 +574,10 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command ContactAdd "add"
-			Brief "Add contact entry from file"
+		Command ContactImport "import"
+			Brief "Import contact entry from file"
 			Parameter File "file" ExistingFile
+				Brief "File containing the contact entry to add"
 			Include AccountOptions
 			Include Reporting
 
@@ -591,11 +605,32 @@
 	CommandSet Bookmark "bookmark"
 		Brief "Manage bookmark catalogs connected to an account"
 
+
+		Command BookmarkImport "import"
+			Brief "Add bookmark entry from file"
+			Parameter File "in" ExistingFile
+				Brief "File containing the bookmark entry to add"
+			Option Identifier "id" String
+				Brief "Unique entry identifier"
+			Option Format "format" String
+				Brief "Specifies the file format."
+			Include AccountOptions
+			Include Reporting
+
 		Command BookmarkAdd "add"
-			Brief "Add bookmark"
+			Brief "Add bookmark entry from specified parameters"
 			Parameter Path "path" String
+				Brief "Keywords under which the bookmark is to be indexed"
 			Parameter Uri "uri" String
+				Brief "The recorded link"
 			Parameter Title "title" String
+				Brief "Title of the recorded item"
+			Option Abstract "abstract" String
+				Brief "Abstract of the recorded item"
+			Option Comment "comment" String
+				Brief "Comment on reason for adding"
+			Option React "react" String
+				Brief "Reactions to the recorded item"
 			Include AccountOptions
 			Include Reporting
 
@@ -610,6 +645,7 @@
 		Command BookmarkGet "get"
 			Brief "Lookup bookmark entry"
 			Parameter Identifier "site" String
+				Brief "The unique entry identifier"
 			Include AccountOptions
 			Include Reporting
 
@@ -625,27 +661,34 @@
 		Command CalendarImport "import"
 			Brief "Add calendar entry from file"
 			Parameter File "in" ExistingFile
+				Brief "File containing the calendar entry to add"
 			Option Identifier "id" String
+				Brief "Unique entry identifier"
+			Option Format "format" String
+				Brief "Specifies the file format."
 			Include AccountOptions
 			Include Reporting
 
 		Command CalendarAdd "add"
 			Brief "Add calendar entry"
 			Parameter Title "title" String
+				Brief "The entry title."
 			Option Identifier "id" String
+				Brief "Unique entry identifier"
 			Include AccountOptions
 			Include Reporting
 
 		Command CalendarGet "get"
 			Brief "Lookup calendar entry"
 			Parameter Identifier "id" String
+				Brief "Unique entry identifier"
 			Include AccountOptions
 			Include Reporting
 
 		Command CalendarDelete "delete"
 			Brief "Delete calendar entry"
 			Parameter Identifier "id" String
-				Brief "Contact entry identifier"
+				Brief "Unique entry identifier"
 			Include AccountOptions
 			Include Reporting
 
@@ -660,20 +703,25 @@
 		Command NetworkImport "import"
 			Brief "Add calendar entry from file"
 			Parameter File "in" ExistingFile
+				Brief "File containing the network entry to add"
 			Option Identifier "id" String
+				Brief "Unique entry identifier"
 			Include AccountOptions
 			Include Reporting
 
 		Command NetworkAdd "add"
 			Brief "Add calendar entry from file"
 			Parameter Identifier "ssid" String
+				Brief "WiFi SSID parameter"
 			Parameter Password "password" ExistingFile
+				Brief "Password value"
 			Include AccountOptions
 			Include Reporting
 
 		Command NetworkGet "get"
 			Brief "Lookup calendar entry"
 			Parameter Identifier "id" String
+				Brief "Unique entry identifier"
 			Include AccountOptions
 			Include Reporting
 
@@ -893,12 +941,14 @@
 				Brief "Sequence to append to"
 			Parameter File "file" NewFile
 				Brief "File to append"
-			Option Key "key" String
+			Option Id "id" String
+				Brief "Identifier of the file in the sequence"
 			Option Index "index" Flag
 				Default "false"
 				Brief "Append index to the archive"	
 
 		Command DareDelete "delete"
+			Brief "Delete file from archive index."
 			Parameter Sequence "in" ExistingFile
 				Brief "Sequence to append to"
 			Option Filename "file" String
@@ -990,6 +1040,7 @@
 			Include Reporting
 
 		CommandSet SMIME "smime"
+			Brief "Commands for managing S/MIME entries"
 			Command SmimeSign "sign"
 				Brief "Extract the signature key for the specified account"
 				Include AccountOptions
@@ -1007,6 +1058,7 @@
 					Brief "Mail account identifier"
 
 		CommandSet PGP "openpgp"
+			Brief "Commands for managing PGP entries"
 			Command OpenpgpSign "sign"
 				Brief "Extract the signature key for the specified account"
 				Include AccountOptions

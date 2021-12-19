@@ -261,7 +261,7 @@ public partial class CreateExamples {
 
     //public bool All = true;
 
-    public bool All = true;
+    public bool All = false;
 
     public static void MakeClean() {
         var Process = System.Diagnostics.Process.Start("CMD.exe", "/C MakeClean");
@@ -273,17 +273,15 @@ public partial class CreateExamples {
             System.Diagnostics.Process.Start("CMD.exe", "/C MakeOneDoc");
         Process.WaitForExit();
         }
-    public string FutureFeature(string example = null)
-    {
+    public string FutureFeature(string example = null, string explanation = null) {
         this.Future();
-        return $"[Future Feature: {example}]\n\n" ?? "[Future Feature]";
-    }
+        return $"[Future Feature: {example ?? "Future"}] {explanation ?? "?"}";
+        }
 
-    public string FutureExample(string example = null)
-    {
+    public string FutureExample(string example = null, string explanation = null) {
         this.Future();
-        return $"[Future Example: {example}]\n\n" ?? "[Future Example]";
-    }
+        return $"[Future Example: {example ?? "Future"}] {explanation ?? "?"}" ?? "[Future Example]";
+        }
 
 
     public string Unfinished(string example = null) {

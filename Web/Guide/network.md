@@ -72,6 +72,9 @@ CatalogedNetwork
 Devices are given authorization to access the networks catalog using the 
  `device auth` command:
 
- %  ConsoleExample (ShellNetwork.NetworkAuth);
+
+~~~~
+Missing example 46
+~~~~
 
 

@@ -134,29 +134,35 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 #% Describe(CommandSet);
 
+#% Describe(CommandSet, _MessageAccept._DescribeCommand);
+#%  ConsoleReference (ShellMessage.ContactAccept);
+
+#% Describe(CommandSet, _MessageBlock._DescribeCommand);
+#%  ConsoleReference (ShellMessage.ContactBlock);
+
+#% Describe(CommandSet, _MessageConfirm._DescribeCommand);
+#%  ConsoleReference (ShellMessage.ConfirmRequest);
+
 
 #% Describe(CommandSet, _MessageContact._DescribeCommand);
 #%  ConsoleReference (ShellMessage.ContactRequest);
 
-#% Describe(CommandSet, _MessageConfirm._DescribeCommand);
-#%  ConsoleReference (ShellMessage.ConfirmRequest);
+
 
 
 #% Describe(CommandSet, _MessagePending._DescribeCommand);
 #%  ConsoleReference (ShellMessage.ContactPending);
 
 
-#% Describe(CommandSet, _MessageStatus._DescribeCommand);
-#%  ConsoleReference (ShellMessage.ConfirmGetAccept);
-
-#% Describe(CommandSet, _MessageAccept._DescribeCommand);
-#%  ConsoleReference (ShellMessage.ContactAccept);
-
 #% Describe(CommandSet, _MessageReject._DescribeCommand);
 #%  ConsoleReference (ShellMessage.ContactReject);
 
-#% Describe(CommandSet, _MessageBlock._DescribeCommand);
-#%  ConsoleReference (ShellMessage.ContactBlock);
+#% Describe(CommandSet, _MessageStatus._DescribeCommand);
+#%  ConsoleReference (ShellMessage.ConfirmGetAccept);
+
+
+
+
 
 #end zfile
 

@@ -10,38 +10,45 @@
 
 
 #method WebDocs CreateExamples Index
-#% WebAccount (Index);
-#% AccountReference (Index);
 #% Web (Index);
 #% UserGuide (Index);
 #% Reference (Index);
+#!
+#! *****Utility crypto functions
 #% WebKey (Index);
 #% KeyReference (Index);
 #% WebHash (Index);
 #% HashReference (Index);
 #% WebDare (Index);
 #% DareReference (Index);
-#% WebConnect (Index);
-#% ConnectReference (Index);
-#%
-#% WebSSH (Index);
-#% SSHReference (Index);
+#!
+#! *****Mesh Core
+#% WebAccount (Index);
+#% AccountReference (Index);
+#% WebDevice (Index);
+#% DeviceReference (Index);
+#% WebMessage (Index);
+#% MessageReference (Index);
+#% WebGroup (Index);
+#% GroupReference (Index);
+#!
+#! ***** Mesh Catalog
 #% WebBookmark (Index);
 #% BookmarkReference (Index);
 #% WebPassword (Index);
 #% PasswordReference (Index);
 #% WebNetwork (Index);
 #% NetworkReference (Index);
-#% WebMessage (Index);
-#% MessageReference (Index);
-#% WebMail (Index);
-#% MailReference (Index);
-#% WebGroup (Index);
-#% GroupReference (Index);
 #% WebContact (Index);
 #% ContactReference (Index);
 #% WebCalendar (Index);
 #% CalendarReference (Index);
+#!
+#! ***** Mesh Applications
+#% WebSSH (Index);
+#% SSHReference (Index);
+#% WebMail (Index);
+#% MailReference (Index);
 #end method
 
 #method ConsoleExample List<ExampleResult> exampleResults
@@ -131,6 +138,20 @@
 </div>
 ~~~~
 
+
+#end method
+
+#method ConsoleReference2 List<ExampleResult> exampleResults
+#% if (exampleResults == null) {ReportMissing(); return;}
+#% var exampleResult = exampleResults[0];
+
+~~~~
+<div="terminal">
+<cmd>#{exampleResult.MachineName}> #{exampleResult.Command}
+<rsp>#{exampleResult.ResultText}#!
+</div>
+~~~~
+
 Specifying the /json option returns a result of type #{exampleResult.ResultType}:
 
 ~~~~
@@ -142,9 +163,7 @@ Specifying the /json option returns a result of type #{exampleResult.ResultType}
 
 #end method
 
-
-
-#xfile CreateExamples Web "readme.md" CreateExamples Index
+#xfile CreateExamples Web "index.md" CreateExamples Index
 
 ## meshman Documentation
 
@@ -214,7 +233,7 @@ Synchronous
 
 #end xfile
 
-#xfile CreateExamples UserGuide "Guide/readme.md" CreateExamples Index
+#xfile CreateExamples UserGuide "Guide/index.md" CreateExamples Index
 ## meshman User Guide
 
 <dl>
@@ -231,7 +250,7 @@ Synchronous
 
 
 
-#xfile CreateExamples Reference "Reference/readme.md" CreateExamples Index
+#xfile CreateExamples Reference "Reference/index.md" CreateExamples Index
 ## meshman Reference Manual
 
 <dl>

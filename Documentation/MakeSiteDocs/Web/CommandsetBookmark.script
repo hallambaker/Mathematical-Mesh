@@ -16,6 +16,11 @@ The `bookmark` command set is used to manage a bookmarks catalog which contains
 a collection of bookmarks and citations and shares them between devices connected 
 to the profile with the relevant access authorization.
 
+It should be noted that by its very nature, a bookmark manager is most likely 
+to be useful within an application that uses bookmarks for navigation. The
+commands provided in the 'meshman' tool are intended to support debuging and 
+maintenance of such applications and afford a means of interacting through scripts.
+
 The term 'bookmark' is interpreted loosely to mean any piece of index information
 that the user might want to index and add to a catalog for future use. This
 includes traditional Web bookmarks and citations to academic articles.
@@ -24,11 +29,24 @@ The current version of the Mesh protocols only support access to a single person
 bookmark catalog but the approach could, in principle, be extanded to support multiple
 named bookmark catalogs per user and catalogs sharted between multiple users.
 
+#{FutureFeature("Bookmark/Abstract", "The abstract and reaction features are not yet implemented")}
+
+#{FutureFeature("Bookmark/JSON", "Allow upload of a JSON file with the bookmark entey")}
+
+
 #### Adding bookmarks
 
 The #{ToCommand("bookmark add")} command adds a bookmark entry to a catalog:
 
 #%  ConsoleExample (ShellBookmark.BookmarkAdd);
+
+The path mechanism is clearly clunky and should be eliminated in favor or a series of
+hashtag type search terms which may be hierarchical if this seems useful.
+
+The add command should be expanded to allow an abstract and reaction to be included.
+So if I find material useful, I give it thumbs up, terrible, a thumbs down.
+
+It should also be possible to attach comments to bookmarks giving a longer explanation.
 
 
 #### Finding bookmarks
@@ -62,22 +80,53 @@ The new device now has access to the Bookmarks catalog:
 #end zfile
 
 #zfile CreateExamples BookmarkReference "Reference/bookmark.md" Examples
-#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Network;
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Bookmark;
 
 
 #% Describe(CommandSet);
 
+The `bookmark` command set is used to manage a bookmarks catalog which contains
+a collection of bookmarks and citations and shares them between devices connected 
+to the profile with the relevant access authorization.
+
+It should be noted that by its very nature, a bookmark manager is most likely 
+to be useful within an application that uses bookmarks for navigation. The
+commands provided in the 'meshman' tool are intended to support debuging and 
+maintenance of such applications and afford a means of interacting through scripts.
+
 
 #% Describe(CommandSet, _BookmarkAdd._DescribeCommand);
+
+The 'bookmark add' command is used to add bookmarks to the catalog.
+
+The catalog labels, uri and title are specified as parameters.
+
+An abstract, comment and reaction tags may be specified as options.
+
 #% ConsoleReference (ShellBookmark.BookmarkAdd);
 
 #% Describe(CommandSet, _BookmarkDelete._DescribeCommand);
+
+The 'bookmark delete' command deletes a bookmark by means of its unique catalog identifier.
+
 #% ConsoleReference (ShellBookmark.BookmarkDelete);
 
 #% Describe(CommandSet, _BookmarkGet._DescribeCommand);
+
+The 'bookmark get' command retrieves a bookmark by means of its unique catalog identifier.
+
 #% ConsoleReference (ShellBookmark.BookmarkGet);
 
+#% Describe(CommandSet, _NetworkImport._DescribeCommand);
+
+The 'bookmark import' command is used to add a bookmark entry to the catalog
+from a file
+
+
 #% Describe(CommandSet, _BookmarkDump._DescribeCommand);
+
+The 'bookmark list' command lists all data in the bookmark catalog.
+
 #% ConsoleReference (ShellBookmark.BookmarkList);
 
 #end zfile

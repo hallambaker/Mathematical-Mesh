@@ -1,7 +1,7 @@
 ~~~~
 KeyValue:
-  35 27 9D BC  3E F5 D5 1F  00 AD E1 0A  22 23 1F
+  5E 02 8B 82  5B 1A A6 CD  96 16 2D E7  AE 22 5A
 
 Encryption/Authenticator UDF:
-  L42S-PHN4-H325-KHYA-VXQQ-UIRD-D4
+  JBPA-FC4C-LMNK-NTMW-CYW6-PLRC-LI
 ~~~~

@@ -148,8 +148,29 @@ Once the device has been authorized, the client machine can start using SSH imme
 #% Describe(CommandSet);
 
 
+#% Describe(CommandSet, _SSHAddClient._DescribeCommand);
+#%  ConsoleReference (ShellSSH.SSHAddClient);
+
+#% Describe(CommandSet, _SSHAddHost._DescribeCommand);
+#%  ConsoleReference (ShellSSH.SSHAddHost);
+
 #% Describe(CommandSet, _SSHCreate._DescribeCommand);
 #%  ConsoleReference (ShellSSH.SSHCreate);
+
+#% Describe(CommandSet, _SSHList._DescribeCommand);
+#%  ConsoleReference (ShellSSH.SSHCreate);
+
+
+
+#% Describe(CommandSet, _SSHMergeClient._DescribeCommand);
+
+
+
+
+#% Describe(CommandSet, _SSHMergeKnown._DescribeCommand);
+#%  ConsoleReference (ShellSSH.SSHMergeHosts);
+
+
 
 #% Describe(CommandSet, _SSHPrivate._DescribeCommand);
 #%  ConsoleReference (ShellSSH.SSHPrivate);
@@ -157,20 +178,17 @@ Once the device has been authorized, the client machine can start using SSH imme
 #% Describe(CommandSet, _SSHPublic._DescribeCommand);
 #%  ConsoleReference (ShellSSH.SSHPublic);
 
-#% Describe(CommandSet, _SSHAddHost._DescribeCommand);
-#%  ConsoleReference (ShellSSH.SSHAddHost);
-
-#% Describe(CommandSet, _SSHMergeKnown._DescribeCommand);
-#%  ConsoleReference (ShellSSH.SSHMergeHosts);
-
-#% Describe(CommandSet, _SSHAddClient._DescribeCommand);
-#%  ConsoleReference (ShellSSH.SSHAddClient);
 
 #% Describe(CommandSet, _SSHKnown._DescribeCommand);
 #%  ConsoleReference (ShellSSH.SSHShowKnown);
 
 #% Describe(CommandSet, _SSHAuth._DescribeCommand);
-#%  ConsoleReference (ShellSSH.SSHAuthDev);
+#%  ConsoleReference (ShellSSH.SSHShowKnown);
+
+
+
+
+
 
 
 #end zfile

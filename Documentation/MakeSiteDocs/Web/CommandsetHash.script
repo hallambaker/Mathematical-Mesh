@@ -82,13 +82,7 @@ If the expected digest value is specified, this is used to check the calculated 
 The `hash` command set contains commands that perform Content Digest and 
 Message Authentication Code operations on the contents of a file.
 
-#% Describe( CommandSet, _HashUDF._DescribeCommand);
 
-The `hash udf` command returns the UDF Content digest of the specified input 
-file according to the precision, IANA media type and digest algorithm specified
-with the `/bits`, `/cty` and `/alg` options.
-
-#% ConsoleReference (ShellHash.HashUDF2);
 
 
 #% Describe( CommandSet, _HashDigest._DescribeCommand);
@@ -114,6 +108,15 @@ If a MAC value is specified, it is compared to the calculated value and the valu
 true returned if and only if it matches the value specified.
 
 #% ConsoleReference (ShellHash.MAC1);
+
+#% Describe( CommandSet, _HashUDF._DescribeCommand);
+
+The `hash udf` command returns the UDF Content digest of the specified input 
+file according to the precision, IANA media type and digest algorithm specified
+with the `/bits`, `/cty` and `/alg` options.
+
+#% ConsoleReference (ShellHash.HashUDF2);
+
 
 #end zfile
 

@@ -22,8 +22,8 @@ network    Manage network profile settings
 <div="helptext">
 <over>
 add   Add calendar entry from file
-       <Unspecified>
-       <Unspecified>
+       WiFi SSID parameter
+       Password value
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -33,6 +33,12 @@ add   Add calendar entry from file
 </div>
 ~~~~
 
+The 'network add' command is used to add a network entry to the catalog.
+
+Note that the options supported are limited. The  `network import`
+command should be used to add complex network entries.
+
+
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network add NetworkEntry1.json NetID1
@@ -40,20 +46,6 @@ add   Add calendar entry from file
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman network add NetworkEntry1.json NetID1 /json
-<rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "CatalogedNetwork": {
-        "Service": "NetworkEntry1.json",
-        "Password": "NetID1"}}}}
-</div>
-~~~~
 
 
 # network delete
@@ -72,6 +64,10 @@ delete   Delete calendar entry
 </div>
 ~~~~
 
+The 'network delete' command deletes a contact entry entry by means of 
+its unique catalog identifier.
+
+
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network delete NetID2
@@ -79,17 +75,6 @@ delete   Delete calendar entry
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman network delete NetID2 /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The entry could not be found in the store."}}
-</div>
-~~~~
 
 
 # network get
@@ -98,7 +83,7 @@ Specifying the /json option returns a result of type Result:
 <div="helptext">
 <over>
 get   Lookup calendar entry
-       <Unspecified>
+       Unique entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -108,6 +93,11 @@ get   Lookup calendar entry
 </div>
 ~~~~
 
+The 'network get' command retrieves a contact entry by means of its 
+unique catalog identifier.
+
+
+
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network get NetID2
@@ -115,16 +105,27 @@ get   Lookup calendar entry
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultEntry:
+
+
+# network import
 
 ~~~~
-<div="terminal">
-<cmd>Alice> meshman network get NetID2 /json
-<rsp>{
-  "ResultEntry": {
-    "Success": false}}
+<div="helptext">
+<over>
+import   Add calendar entry from file
+       File containing the network entry to add
+    /id   Unique entry identifier
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
 </div>
 ~~~~
+
+The 'network import' command is used to add appointment and task entries to the catalog
+from a file
 
 
 # network list
@@ -142,6 +143,9 @@ list   List network entries
 </div>
 ~~~~
 
+The 'network list' command lists all data in the network catalog.
+
+
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network list
@@ -154,27 +158,5 @@ CatalogedNetwork
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type ResultDump:
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman network list /json
-<rsp>{
-  "ResultDump": {
-    "Success": true,
-    "CatalogedEntries": [{
-        "CatalogedNetwork": {
-          "Service": "myWiFi",
-          "Password": "securePassword"}},
-      {
-        "CatalogedNetwork": {
-          "Service": "NetworkEntry1.json",
-          "Password": "NetID1"}},
-      {
-        "CatalogedNetwork": {
-          "Service": "NetworkEntry2.json",
-          "Password": "NetID2"}}]}}
-</div>
-~~~~
 
 

@@ -59,7 +59,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("Devices are given authorization to access the networks catalog using the \n{0}", _Indent);
 			_Output.Write (" {1} command:\n{0}", _Indent, ToCommand("device auth"));
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write (" %  ConsoleExample (ShellNetwork.NetworkAuth);\n{0}", _Indent);
+			  ConsoleExample (ShellNetwork.NetworkAuth);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
@@ -82,15 +82,39 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _NetworkAdd._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The 'network add' command is used to add a network entry to the catalog.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Note that the options supported are limited. The  {1}\n{0}", _Indent, ToCommand("network import"));
+			_Output.Write ("command should be used to add complex network entries.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellNetwork.NetworkAdd);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _NetworkDelete._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The 'network delete' command deletes a contact entry entry by means of \n{0}", _Indent);
+			_Output.Write ("its unique catalog identifier.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellNetwork.NetworkDelete);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _NetworkGet._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The 'network get' command retrieves a contact entry by means of its \n{0}", _Indent);
+			_Output.Write ("unique catalog identifier.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellNetwork.NetworkGet);
 			_Output.Write ("\n{0}", _Indent);
+			 Describe(CommandSet, _NetworkImport._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The 'network import' command is used to add appointment and task entries to the catalog\n{0}", _Indent);
+			_Output.Write ("from a file\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _NetworkDump._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The 'network list' command lists all data in the network catalog.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellNetwork.NetworkList);
 			_Output.Write ("\n{0}", _Indent);
 				}

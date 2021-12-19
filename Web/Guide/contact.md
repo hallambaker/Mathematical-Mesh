@@ -1,27 +1,33 @@
-<title>contacts
-# Using the contacts Command Set
+<title>contact
+# Using the contact Command Set
 
-The `contacts` command set is used to manage the user's contacts catalogue.
+The `contact` command set is used to manage the user's contacts catalogue.
 
 The contacts catalogue plays an important role in Mesh messaging as it is used to 
-determine the security policy for sending outbound messages and is one of the
-sources used to perform access control (i.e. spam filtering) on inbound messages.
+manage the security policy for sending outbound messages and is one of the
+sources used to compile the access control authorizations (i.e. spam filtering) 
+on inbound messages.
+
+The Mesh Service cannot read the contacts catalog entries themselves but
+the data in the contact catalog is used to compile the access catalog entries
+that do.
 
 Although the `meshman` tool is capable of adding, deleting and retrieving
 contact entries, it is intended to serve as a component to be used to build user
 interfaces rather than a tool designed for daily use.
 
-## Adding contacts
+[Future Feature: Contact/Auth] Specify messaging authorizations
 
-The `contact add` command adds a contact entry to a catalog from
+## Adding contacts from a file
+
+The `contact import` command adds a contact entry to a catalog from
 a file. 
 
 
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact add email carol@example.com
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\em
-ail'.
+<rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
 
@@ -32,8 +38,8 @@ JSON format:
 [Carol's contact information]
 ~~~~
 
-The `/self` option is used to mark the contact as being the user's own contact
-details:
+The  `contact self` command is used to inport a contact and mark it as 
+being the user's own contact details:
 
 
 ~~~~
@@ -43,8 +49,36 @@ details:
 </div>
 ~~~~
 
-Contacts may also be added by accepting contact request messages using the 
-`message accept` command:
+## Exchanging contacts with other users.
+
+Every Mesh Messaging communication is mediated through access control. Unlike
+a telephone number, a postal or email address, mere knowledge of a Mesh
+Messaging address does not grant the ability to use it to send a message. This
+makes exchange of contact information considerably easier since we are only
+concerned with the authenticity and accuracy of the identity claims made, 
+the mesh address information itself is not confidential.
+
+Contacts may be acquired from other users through a variety of approaches. If the 
+parties meet in person, the exchange may be performed through a QR code or near
+field communication exchange. If they are remote from each other, a network
+mediated exchange may be used.
+
+Exchange need not be reciprocated. A unidirectional exchange may be effected by
+means of a URI or QR code printed on a business card or a Web site.
+
+
+### Message Exchange
+
+`message contact`
+`message accept`
+`message accept`
+
+### Dynamic Exchange
+
+`contact dynamic`
+`contact fetch` / `contact exchange`
+`message accept`
+
 
 
 ~~~~
@@ -53,6 +87,11 @@ Contacts may also be added by accepting contact request messages using the
 <rsp>ERROR - The specified message could not be found.
 </div>
 ~~~~
+
+### Static Exchange
+
+`contact static`
+`contact fetch`
 
 ## Finding contacts
 
@@ -75,29 +114,29 @@ A complete list of contacts is obtained using the  `contact list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
-  Person MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
-  Anchor MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
+<rsp>Entry<CatalogedContact>: MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
+  Person MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
+  Anchor MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
   Address alice@example.com
 
-Entry<CatalogedContact>: NAWB-M7G7-OXPC-I6YS-SIXH-JQ7E-OOXA
+Entry<CatalogedContact>: NDF5-DIN6-FBRI-UI2D-XLQF-SKWC-TCB5
   Person 
-  Anchor MBYX-JPOL-7H24-YL2Z-LOHO-7MWV-IFGG
+  Anchor MDBR-EJYT-5KJY-Z73B-IG7E-WFSN-MRKH
   Address bob@example.com
 
-Entry<CatalogedContact>: NBLD-QB2F-UVQD-MHP5-PHY3-J2MO-YUKD
+Entry<CatalogedContact>: NCPX-63X3-SRNM-KJDU-VED6-MYU2-EUG6
   Person 
-  Anchor MCIG-57G4-CKMG-SLW5-I75I-LQNC-J5MK
+  Anchor MCVG-W4LF-4BAI-2ZCY-NHCU-E3HO-VVHY
   Address groupw@example.com
 
-Entry<CatalogedContact>: NDXP-NDKS-PFFD-WBA7-VQ74-5KM5-355Y
+Entry<CatalogedContact>: NCPH-YMTN-5HKG-E3GR-YFZC-RDC5-ZM4D
   Person 
-  Anchor MCIG-57G4-CKMG-SLW5-I75I-LQNC-J5MK
+  Anchor MCVG-W4LF-4BAI-2ZCY-NHCU-E3HO-VVHY
   Address groupw@example.com
 
-Entry<CatalogedContact>: NCC4-BLBH-RHO3-UHOG-YRJO-W4J2-JCNL
+Entry<CatalogedContact>: NDR4-XO5G-PIYW-6H47-ZAGK-ISPY-H2ES
   Person 
-  Anchor MCIG-57G4-CKMG-SLW5-I75I-LQNC-J5MK
+  Anchor MCVG-W4LF-4BAI-2ZCY-NHCU-E3HO-VVHY
   Address groupw@example.com
 
 </div>
@@ -117,14 +156,20 @@ Contact entries may be deleted using the  `contact delete` command:
 
 
 
-## Adding devicesF
+## Adding devices
 
 Devices are given authorization to access the contacts catalog using the 
  `device auth` command:
 
- %  ConsoleExample (ShellContact.ContactAuth);
 
- The newly authorized device can now access the contacts catalog:
+~~~~
+Missing example 47
+~~~~
 
- %  ConsoleExample (ShellContact.ContactList2);
+The newly authorized device can now access the contacts catalog:
+
+
+~~~~
+Missing example 48
+~~~~
 

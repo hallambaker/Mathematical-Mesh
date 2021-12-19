@@ -134,6 +134,14 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The Key command set contains commands that operate on cryptographic keys and\n{0}", _Indent);
 			_Output.Write ("nonces.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			 Describe(CommandSet, _KeyEarl._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `key earl` command returns a randomized secret value and a fingerprint of the secret \n{0}", _Indent);
+			_Output.Write ("value, formatted as a UDF Encryption key type and Content Digest Type\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			 ConsoleReference (ShellKey.KeyEarl);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _KeyNonce._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
@@ -146,6 +154,15 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellKey.KeyNonce);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			 Describe(CommandSet, _KeyRecover._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `key recover` command combines the specified set of share to recover the original secret \n{0}", _Indent);
+			_Output.Write ("value as a UDF Encryption key type.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (ShellKey.KeyRecover);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _KeySecret._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `key secret` command returns a randomized secret value formatted as a UDF Encryption \n{0}", _Indent);
@@ -153,13 +170,6 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellKey.KeySecret);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			 Describe(CommandSet, _KeyEarl._DescribeCommand);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `key earl` command returns a randomized secret value and a fingerprint of the secret \n{0}", _Indent);
-			_Output.Write ("value, formatted as a UDF Encryption key type and Content Digest Type\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			 ConsoleReference (ShellKey.KeyEarl);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _KeyShare._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
@@ -169,12 +179,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			 ConsoleReference (ShellKey.KeyShare);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			 Describe(CommandSet, _KeyRecover._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `key recover` command combines the specified set of share to recover the original secret \n{0}", _Indent);
-			_Output.Write ("value as a UDF Encryption key type.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			  ConsoleReference (ShellKey.KeyRecover);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}

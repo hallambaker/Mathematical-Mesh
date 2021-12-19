@@ -15,6 +15,22 @@ group    Group management commands
 </div>
 ~~~~
 
+# group add
+
+~~~~
+<div="helptext">
+<over>
+add   Add user to recryption group
+       Recryption group name in user@example.com format
+       User to add
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
 
 # group create
 
@@ -44,22 +60,7 @@ create   Create recryption group
 </div>
 ~~~~
 
-# group add
 
-~~~~
-<div="helptext">
-<over>
-add   Add user to recryption group
-       Recryption group name in user@example.com format
-       User to add
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-<over>
-</div>
-~~~~
 
 # group delete
 
@@ -77,6 +78,25 @@ delete   Remove user from recryption group
 <over>
 </div>
 ~~~~
+
+
+# group get
+
+~~~~
+<div="helptext">
+<over>
+get   Find member in recryption group
+       Recryption group name in user@example.com format
+       User to find
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
+
 
 # group list
 

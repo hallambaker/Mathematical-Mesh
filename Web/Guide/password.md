@@ -68,17 +68,17 @@ The commands for doing this vary according to the scripting environment.
 
 Windows
 
-````
+~~~~
 set credential = ""
 for /f "delims=" %%a in ('meshman password get ftp.example.com')^
   do @set credential=%%a
-````
+~~~~
 
 Most Unix shells, including Bash, the following syntax may be used:
 
-````
+~~~~
 set credential=`meshman password get ftp.example.com`
-````
+~~~~
 
 ## Updating passwords
 
@@ -113,7 +113,7 @@ When a device is added, it gets a copy of the password file:
 
 
 ~~~~
-Missing example 51
+Missing example 45
 ~~~~
 
 

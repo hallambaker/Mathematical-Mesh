@@ -30,6 +30,9 @@ connection to the service.
 The '/local', '/verbose', '/report' and '/json' options are supported by every command
 in the set.
 
+The '/account' option may be used to specify the Mesh account on which the device is 
+to be performed. If unspecified, the default account is used.
+
 
 # account connect
 
@@ -160,7 +163,7 @@ The options 'shares' and 'quorum' are used to specify the number of shares to be
 <div="helptext">
 <over>
 export   Export the specified profile data to the specified file
-       <Unspecified>
+       Name of the file to which the archive is to be written.
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -170,7 +173,10 @@ export   Export the specified profile data to the specified file
 </div>
 ~~~~
 
-The `account export` command
+The `account export` command is used to export all data except for private keys associated with 
+the account to a DARE archive.
+
+
 
 
 # account get
@@ -188,7 +194,9 @@ get   Describe the specified profile
 </div>
 ~~~~
 
-The `account get` command
+The `account get` command returns a description of the account. This includes the 
+account UDF fingerprint, the current service binding and the date of the most recent 
+synchronization operation.
 
 
 # account hello
@@ -207,13 +215,23 @@ The `account hello` command attempts to contact a Mesh service and reports the
 service configuration if successful.
 
 
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account hello alice@example.com
+<rsp>MeshService 3.0
+   Service UDF = MCAO-XTIB-YRN5-OZY7-PQY2-V677-UTBG
+</div>
+~~~~
+
+
+
 # account import
 
 ~~~~
 <div="helptext">
 <over>
 import   Import the specified profile data to the specified file
-       <Unspecified>
+       Name of the file file which the archive is to be read.
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -223,7 +241,8 @@ import   Import the specified profile data to the specified file
 </div>
 ~~~~
 
-The `account import` command
+The `account import` command imports Mesh account data from a DARE archive such as 
+an archive created by the 'account export' command.
 
 # account pin
 
@@ -232,7 +251,7 @@ The `account import` command
 <over>
 pin   Get a pin value to pre-authorize a connection
     /length   Length of PIN to generate in characters
-    /expire   <Unspecified>
+    /expire   Expiry time in days (1d), hours (1, 1h) or minutes (10m).
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -262,6 +281,10 @@ characters.
 The '/expire' option specifies an expiry time for the request as an integer 
 followed by the letter m, h or d for minutes, hours and days respectively.
 
+The remaining options allow the authorization(s) of the device to be specified so
+that the connection can be completed without additional user interaction.
+
+
 
 
 # account list
@@ -279,9 +302,8 @@ list   List all profiles on the local machine
 </div>
 ~~~~
 
-The `account list` command 
-
-
+The `account list` command lists all the Mesh accounts the current device is connected 
+to.
 
 
 # account purge
@@ -299,8 +321,9 @@ purge   Purge the Mesh recovery key from this device
 </div>
 ~~~~
 
-The `account purge` command
-
+The `account purge` command eliminates deleted objects and messages from the catalogs
+and spools stored on the current device. The Purge command does not cause data to be
+deleted from the service.
 
 # account recover
 
@@ -308,26 +331,27 @@ The `account purge` command
 <div="helptext">
 <over>
 recover   Recover escrowed profile
-       <Unspecified>
-       <Unspecified>
-       <Unspecified>
-       <Unspecified>
-       <Unspecified>
-       <Unspecified>
-       <Unspecified>
-       <Unspecified>
+       Recovery share
+       Recovery share
+       Recovery share
+       Recovery share
+       Recovery share
+       Recovery share
+       Recovery share
+       Recovery share
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-    /file   <Unspecified>
-    /verify   <Unspecified>
+    /file   File containing the recovery key blob
+    /verify   Check that the shares are valid for recovery without performing recovery.
 <over>
 </div>
 ~~~~
 
-The `account recover` command 
+The `account recover` command reassembles the account primary secret from a set of
+recovery shares.
 
 
 # account status
@@ -345,10 +369,8 @@ status   Return the status of the account catalogs and spools
 </div>
 ~~~~
 
-The `account status` command 
-
-
-
+The `account status` command returns the current status of the account catalogs and spools 
+without attempting to synchronize with the service.
 
 # account sync
 
@@ -366,7 +388,18 @@ sync   Synchronize local copies of Mesh profiles with the server
 </div>
 ~~~~
 
-The `account sync` command 
+The `account sync` command attempts to synchronize the account catalogs and spools with
+the service and reports on the status of each.
+
+If the '/auto' flag is set, pre-authorized device connection and contact exchange requests
+in inbound messages will be performed automatically without further user interaction.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice2> meshman account sync
+<rsp></div>
+~~~~
 
 
 

@@ -18,6 +18,41 @@ ssh    Manage SSH profiles connected to a personal profile
 ~~~~
 
 
+# ssh client
+
+~~~~
+<div="helptext">
+<over>
+client   Add one or more keys to the authorized_keys file
+       <Unspecified>
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+    /application   The application format
+    /id   Key identifier
+<over>
+</div>
+~~~~
+
+# ssh host
+
+~~~~
+<div="helptext">
+<over>
+host   Add one or more hosts to the known_hosts file
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+    /application   The application format
+    /id   Key identifier
+<over>
+</div>
+~~~~
+
 # ssh create
 
 ~~~~
@@ -46,6 +81,58 @@ create   Generate a new SSH public keypair for the current machine and add to th
 <over>
 </div>
 ~~~~
+
+# ssh list
+
+~~~~
+<div="helptext">
+<over>
+list   List ssh account information
+       SSH account identifier
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
+
+
+
+# ssh client
+
+~~~~
+<div="helptext">
+<over>
+client   Add one or more hosts to the known_hosts file
+    /id   Key identifier
+<over>
+</div>
+~~~~
+
+
+
+
+# ssh host
+
+~~~~
+<div="helptext">
+<over>
+host   Add one or more hosts to the known_hosts file
+       <Unspecified>
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+    /application   The application format
+    /id   Key identifier
+<over>
+</div>
+~~~~
+
+
 
 # ssh private
 
@@ -87,58 +174,6 @@ public   Extract the public key for this device
 </div>
 ~~~~
 
-# ssh host
-
-~~~~
-<div="helptext">
-<over>
-host   Add one or more hosts to the known_hosts file
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-    /application   The application format
-    /id   Key identifier
-<over>
-</div>
-~~~~
-
-# ssh host
-
-~~~~
-<div="helptext">
-<over>
-host   Add one or more hosts to the known_hosts file
-       <Unspecified>
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-    /application   The application format
-    /id   Key identifier
-<over>
-</div>
-~~~~
-
-# ssh client
-
-~~~~
-<div="helptext">
-<over>
-client   Add one or more keys to the authorized_keys file
-       <Unspecified>
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-    /application   The application format
-    /id   Key identifier
-<over>
-</div>
-~~~~
 
 # ssh host
 
@@ -173,5 +208,10 @@ client   List the authorized device keys (aka authorized_keys)
 <over>
 </div>
 ~~~~
+
+
+
+
+
 
 

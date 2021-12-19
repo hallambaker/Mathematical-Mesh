@@ -15,14 +15,14 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	
 
 	//
-	// WebConnect
+	// WebDevice
 	//
-	public static void WebConnect(CreateExamples Examples) { /* XFile  */
+	public static void WebDevice(CreateExamples Examples) { /* XFile  */
 			using var _Output = new StreamWriter("Guide/device.md");
 		Examples._Output = _Output;
-		Examples._WebConnect(Examples);
+		Examples._WebDevice(Examples);
 		}
-	public void _WebConnect(CreateExamples Examples) {
+	public void _WebDevice(CreateExamples Examples) {
 
 			 MakeTitle ("device");
 			_Output.Write ("\n{0}", _Indent);
@@ -173,14 +173,14 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	
 
 	//
-	// ConnectReference
+	// DeviceReference
 	//
-	public static void ConnectReference(CreateExamples Examples) { /* XFile  */
+	public static void DeviceReference(CreateExamples Examples) { /* XFile  */
 			using var _Output = new StreamWriter("Reference/device.md");
 		Examples._Output = _Output;
-		Examples._ConnectReference(Examples);
+		Examples._DeviceReference(Examples);
 		}
-	public void _ConnectReference(CreateExamples Examples) {
+	public void _DeviceReference(CreateExamples Examples) {
 
 			 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Connect;
 			_Output.Write ("\n{0}", _Indent);
@@ -189,7 +189,18 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _DeviceAccept._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Accept a pending connection request.\n{0}", _Indent);
+			_Output.Write ("The `device accept` command accepts the specified connection request.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The command must specify the connection identifier of the request \n{0}", _Indent);
+			_Output.Write ("being accepted. The connection identifier may be abbreviated provided that\n{0}", _Indent);
+			_Output.Write ("this uniquely identifies the connection being accepted and that at least \n{0}", _Indent);
+			_Output.Write ("four characters are given.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `/id` option may be used to specify a friendly name for the device.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The authorizations to be granted to the device may be specified using\n{0}", _Indent);
+			_Output.Write ("the same syntax as for the `device auth` command with the default authorization\n{0}", _Indent);
+			_Output.Write ("being that all authorizations are denied.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellAccount.ConnectAccept);
 			_Output.Write ("\n{0}", _Indent);
@@ -229,22 +240,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellContact.ContactAuth);
 			_Output.Write ("\n{0}", _Indent);
-			 Describe(CommandSet, _DeviceAccept._DescribeCommand);
+			 Describe(CommandSet, _DeviceComplete._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `device accept` command accepts the specified connection request.\n{0}", _Indent);
+			_Output.Write ("The `device complete` command attempts to complete a pending connection request.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The command must specify the connection identifier of the request \n{0}", _Indent);
-			_Output.Write ("being accepted. The connection identifier may be abbreviated provided that\n{0}", _Indent);
-			_Output.Write ("this uniquely identifies the connection being accepted and that at least \n{0}", _Indent);
-			_Output.Write ("four characters are given.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `/id` option may be used to specify a friendly name for the device.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The authorizations to be granted to the device may be specified using\n{0}", _Indent);
-			_Output.Write ("the same syntax as for the `device auth` command with the default authorization\n{0}", _Indent);
-			_Output.Write ("being that all authorizations are denied.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			  ConsoleReference (ShellAccount.ConnectAccept);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _DeviceDelete._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
@@ -254,6 +253,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("the UDF of the device profile or the device identifier.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellAccount.ConnectDelete);
+			_Output.Write ("\n{0}", _Indent);
+			 Describe(CommandSet, _DeviceInstall._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _DeviceJoin._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
@@ -272,6 +273,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("the inbound message spool.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellAccount.ConnectPending);
+			_Output.Write ("\n{0}", _Indent);
+			 Describe(CommandSet, _DevicePreconfigure._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _DeviceReject._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);

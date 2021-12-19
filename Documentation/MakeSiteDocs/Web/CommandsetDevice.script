@@ -9,7 +9,7 @@
 
 
 
-#zfile CreateExamples WebConnect "Guide/device.md" Examples
+#zfile CreateExamples WebDevice "Guide/device.md" Examples
 #% MakeTitle ("device");
 
 The `device` command set contains commands used to connect devices to a 
@@ -157,7 +157,7 @@ reset.
 
 #end zfile
 
-#zfile CreateExamples ConnectReference "Reference/device.md" Examples
+#zfile CreateExamples DeviceReference "Reference/device.md" Examples
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Connect;
 
 
@@ -165,7 +165,18 @@ reset.
 
 #% Describe(CommandSet, _DeviceAccept._DescribeCommand);
 
-Accept a pending connection request.
+The `device accept` command accepts the specified connection request.
+
+The command must specify the connection identifier of the request 
+being accepted. The connection identifier may be abbreviated provided that
+this uniquely identifies the connection being accepted and that at least 
+four characters are given.
+
+The `/id` option may be used to specify a friendly name for the device.
+
+The authorizations to be granted to the device may be specified using
+the same syntax as for the `device auth` command with the default authorization
+being that all authorizations are denied.
 
 #%  ConsoleReference (ShellAccount.ConnectAccept);
 
@@ -205,22 +216,10 @@ The following authorizations may be granted or denied:
 
 #%  ConsoleReference (ShellContact.ContactAuth);
 
-#% Describe(CommandSet, _DeviceAccept._DescribeCommand);
+#% Describe(CommandSet, _DeviceComplete._DescribeCommand);
 
-The `device accept` command accepts the specified connection request.
+The `device complete` command attempts to complete a pending connection request.
 
-The command must specify the connection identifier of the request 
-being accepted. The connection identifier may be abbreviated provided that
-this uniquely identifies the connection being accepted and that at least 
-four characters are given.
-
-The `/id` option may be used to specify a friendly name for the device.
-
-The authorizations to be granted to the device may be specified using
-the same syntax as for the `device auth` command with the default authorization
-being that all authorizations are denied.
-
-#%  ConsoleReference (ShellAccount.ConnectAccept);
 
 #% Describe(CommandSet, _DeviceDelete._DescribeCommand);
 
@@ -230,6 +229,8 @@ The parameter specifies the device being configured by means of either
 the UDF of the device profile or the device identifier.
 
 #%  ConsoleReference (ShellAccount.ConnectDelete);
+
+#% Describe(CommandSet, _DeviceInstall._DescribeCommand);
 
 #% Describe(CommandSet, _DeviceJoin._DescribeCommand);
 
@@ -248,6 +249,8 @@ The `device pending` command lists the pending device connection requests in
 the inbound message spool.
 
 #%  ConsoleReference (ShellAccount.ConnectPending);
+
+#% Describe(CommandSet, _DevicePreconfigure._DescribeCommand);
 
 #% Describe(CommandSet, _DeviceReject._DescribeCommand);
 

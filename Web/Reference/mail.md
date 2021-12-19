@@ -6,8 +6,8 @@
 <div="helptext">
 <over>
 mail    Manage mail profiles connected to a personal profile
-    openpgp<Unspecified>
-    smime<Unspecified>
+    openpgpCommands for managing PGP entries
+    smimeCommands for managing S/MIME entries
     add   Add a mail application profile to a personal profile
     list   List mail account information
     update   Update an existing mail application profile
@@ -46,6 +46,21 @@ add   Add a mail application profile to a personal profile
     /inbound   inbound service configuration
     /outbound   outbound service configuration
     /alg   List of algorithm specifiers
+<over>
+</div>
+~~~~
+# mail list
+
+~~~~
+<div="helptext">
+<over>
+list   List mail account information
+       Mail account identifier
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
 <over>
 </div>
 ~~~~

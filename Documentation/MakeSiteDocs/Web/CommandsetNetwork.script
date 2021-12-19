@@ -45,7 +45,7 @@ A complete list of networks is obtained using the  #{ToCommand("network list")} 
 Devices are given authorization to access the networks catalog using the 
  #{ToCommand("device auth")} command:
 
- #%  ConsoleExample (ShellNetwork.NetworkAuth);
+#%  ConsoleExample (ShellNetwork.NetworkAuth);
 
 
 #end zfile
@@ -58,15 +58,39 @@ Devices are given authorization to access the networks catalog using the
 
 
 #% Describe(CommandSet, _NetworkAdd._DescribeCommand);
+
+The 'network add' command is used to add a network entry to the catalog.
+
+Note that the options supported are limited. The  #{ToCommand("network import")}
+command should be used to add complex network entries.
+
 #% ConsoleReference (ShellNetwork.NetworkAdd);
 
 #% Describe(CommandSet, _NetworkDelete._DescribeCommand);
+
+The 'network delete' command deletes a contact entry entry by means of 
+its unique catalog identifier.
+
 #% ConsoleReference (ShellNetwork.NetworkDelete);
 
 #% Describe(CommandSet, _NetworkGet._DescribeCommand);
+
+The 'network get' command retrieves a contact entry by means of its 
+unique catalog identifier.
+
+
 #% ConsoleReference (ShellNetwork.NetworkGet);
 
+#% Describe(CommandSet, _NetworkImport._DescribeCommand);
+
+The 'network import' command is used to add appointment and task entries to the catalog
+from a file
+
+
 #% Describe(CommandSet, _NetworkDump._DescribeCommand);
+
+The 'network list' command lists all data in the network catalog.
+
 #% ConsoleReference (ShellNetwork.NetworkList);
 
 #end zfile

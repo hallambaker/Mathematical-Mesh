@@ -49,7 +49,18 @@ accept   Accept a pending connection
 </div>
 ~~~~
 
-Accept a pending connection request.
+The `device accept` command accepts the specified connection request.
+
+The command must specify the connection identifier of the request 
+being accepted. The connection identifier may be abbreviated provided that
+this uniquely identifies the connection being accepted and that at least 
+four characters are given.
+
+The `/id` option may be used to specify a friendly name for the device.
+
+The authorizations to be granted to the device may be specified using
+the same syntax as for the `device auth` command with the default authorization
+being that all authorizations are denied.
 
 
 # device auth
@@ -112,25 +123,12 @@ The following authorizations may be granted or denied:
 * `ssh`: Authorize use of SSH
 
 
-# device accept
+# device complete
 
 ~~~~
 <div="helptext">
 <over>
-accept   Accept a pending connection
-       Fingerprint of connection to accept
-       Device identifier
-    /auth   (De)Authorize the specified function on the device
-    /root   Device as super administration device
-    /admin   Device as administration device
-    /message   Authorize rights for Mesh messaging
-    /web   Authorize rights for Mesh messaging and Web.
-    /device   Device restrictive access
-    /threshold   Authorize threshold rights for Mesh messaging and Web.
-    /ssh   Authorize rights for specified SSH account
-    /email   Authorize rights for specified smtp email account
-    /member   Authorize member rights for specified Mesh group
-    /group   Authorize group administrator rights for specified Mesh group
+complete   Complete a pending request
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -140,18 +138,7 @@ accept   Accept a pending connection
 </div>
 ~~~~
 
-The `device accept` command accepts the specified connection request.
-
-The command must specify the connection identifier of the request 
-being accepted. The connection identifier may be abbreviated provided that
-this uniquely identifies the connection being accepted and that at least 
-four characters are given.
-
-The `/id` option may be used to specify a friendly name for the device.
-
-The authorizations to be granted to the device may be specified using
-the same syntax as for the `device auth` command with the default authorization
-being that all authorizations are denied.
+The `device complete` command attempts to complete a pending connection request.
 
 
 # device delete
@@ -175,6 +162,22 @@ The `device delete` command removes the specified device from the catalog.
 The parameter specifies the device being configured by means of either
 the UDF of the device profile or the device identifier.
 
+
+# device install
+
+~~~~
+<div="helptext">
+<over>
+install   Connect by means of a connection URI from an administration device.
+       The device profile
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
 
 # device join
 
@@ -232,6 +235,22 @@ pending   Get list of pending connection requests
 The `device pending` command lists the pending device connection requests in
 the inbound message spool.
 
+
+# device preconfig
+
+~~~~
+<div="helptext">
+<over>
+preconfig   Generate new device profile and publish as an EARL
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+    /length   Length of PIN to generate in characters
+<over>
+</div>
+~~~~
 
 # device reject
 

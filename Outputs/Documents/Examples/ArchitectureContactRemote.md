@@ -9,9 +9,9 @@ Bob sends Alice a contact exchange request:
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message contact alice@example.com
-<rsp>Envelope ID: MD6O-HQ75-OMLP-7W22-P7VD-VADS-LCQY
-Message ID: NDCL-O2LD-ODCU-MB2I-6EY3-RXRR-OSSK
-Response ID: MAWJ-CQGL-SA3D-4GMF-BSCF-QSGG-5CSM
+<rsp>Envelope ID: MBQD-DFIE-ZKB4-XGV2-G27M-TRGD-ARXU
+Message ID: NDRW-AINC-CW2Z-REBY-UILU-O2EI-MZPK
+Response ID: MAD7-BJYO-IJHS-FQ26-ENSJ-2M6C-KVP4
 </div>
 ~~~~
 
@@ -23,21 +23,21 @@ Alice checks his Mesh messages and approves Bob's request:
 <cmd>Alice> meshman account sync
 <rsp>ERROR - The entry already exists in the store.
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NDCL-O2LD-ODCU-MB2I-6EY3-RXRR-OSSK
+<rsp>MessageID: NDRW-AINC-CW2Z-REBY-UILU-O2EI-MZPK
         Contact Request::
-        MessageID: NDCL-O2LD-ODCU-MB2I-6EY3-RXRR-OSSK
+        MessageID: NDRW-AINC-CW2Z-REBY-UILU-O2EI-MZPK
         To: alice@example.com From: bob@example.com
-        PIN: AB3F-U7X5-Q2PE-ESFS-S2PH-7AGC-TKBA
-<cmd>Alice> meshman message accept NDCL-O2LD-ODCU-MB2I-6EY3-RXRR-OSSK
+        PIN: ADXO-VQ4V-WNRY-WD65-PHYE-GK2E-TWZQ
+<cmd>Alice> meshman message accept NDRW-AINC-CW2Z-REBY-UILU-O2EI-MZPK
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
-  Person MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
-  Anchor MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
+<rsp>Entry<CatalogedContact>: MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
+  Person MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
+  Anchor MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
   Address alice@example.com
 
-Entry<CatalogedContact>: NAWB-M7G7-OXPC-I6YS-SIXH-JQ7E-OOXA
+Entry<CatalogedContact>: NDF5-DIN6-FBRI-UI2D-XLQF-SKWC-TCB5
   Person 
-  Anchor MBYX-JPOL-7H24-YL2Z-LOHO-7MWV-IFGG
+  Anchor MDBR-EJYT-5KJY-Z73B-IG7E-WFSN-MRKH
   Address bob@example.com
 
 </div>
@@ -50,14 +50,14 @@ Bob can now collect Alice's contact:
 <div="terminal">
 <cmd>Bob> meshman account sync /auto
 <cmd>Bob> meshman contact list
-<rsp>Entry<CatalogedContact>: MBYX-JPOL-7H24-YL2Z-LOHO-7MWV-IFGG
-  Person MBYX-JPOL-7H24-YL2Z-LOHO-7MWV-IFGG
-  Anchor MBYX-JPOL-7H24-YL2Z-LOHO-7MWV-IFGG
+<rsp>Entry<CatalogedContact>: MDBR-EJYT-5KJY-Z73B-IG7E-WFSN-MRKH
+  Person MDBR-EJYT-5KJY-Z73B-IG7E-WFSN-MRKH
+  Anchor MDBR-EJYT-5KJY-Z73B-IG7E-WFSN-MRKH
   Address bob@example.com
 
-Entry<CatalogedContact>: NAEF-7UJO-67XF-HIVD-I3V5-XJG5-APHS
+Entry<CatalogedContact>: ND6B-4YRG-5CTV-HCSL-BZVM-EPPC-UKBZ
   Person 
-  Anchor MCF2-WY7A-YHLR-W2N3-4GXF-4PUO-ZO7N
+  Anchor MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
   Address alice@example.com
 
 </div>
