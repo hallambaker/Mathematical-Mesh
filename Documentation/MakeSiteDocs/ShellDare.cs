@@ -52,7 +52,7 @@ public class ShellDare : ExampleSet {
         DareSymmetric = Alice1.Example($"dare encode {TestFile1} /out={TestFile1}.symmetric.dare " +
                     $"/key={Secret1}");
         DareSub = Alice1.Example($"dare encode {TestDir1} /encrypt={Secret1}");
-        DareMesh = Alice1.Example($"dare encode {TestFile1} {TestFile1}.mesh.dare" +
+        DareMesh = Alice1.Example($"dare encode {TestFile1} {TestFile1}.mesh.dare " +
                     $"/encrypt={BobAccount} /sign={AliceAccount}");
 
         DareVerifyDigest = Alice1.Example($"dare verify {TestFile1}.dare");
@@ -64,10 +64,10 @@ public class ShellDare : ExampleSet {
         DareDecodeSymmetric = Alice1.Example($"dare decode {TestFile1}.symmetric.dare /encrypt={Secret1}");
         DareDecodePrivate = Alice1.Example($"dare decode {TestFile1}.mesh.dare");
 
-        //            DareEarl = testCLIAlice1.Example($"dare earl {TestFile1} {EARLDomain}");
-        //            DareEARLLog = testCLIAlice1.Example($"dare container create {DareLogEarl} /encrypt={AliceService1}",
-        //                                                    $"dare earl {TestFile1} /log={DareLogEarl}");
-        //            DareEARLLogNew = testCLIAlice1.Example($"dare earl {TestFile1} /new={DareLogEarl}");
+        DareEarl = Alice1.Example($"dare earl {TestFile1} {EARLService}");
+        DareEARLLog = Alice1.Example($"dare earl create {DareLogEarl} /encrypt={AliceAccount}",
+                                                $"dare earl {TestFile1} /log={DareLogEarl}");
+        DareEARLLogNew = Alice1.Example($"dare earl {TestFile1} /new={DareLogEarl}");
 
         }
     }

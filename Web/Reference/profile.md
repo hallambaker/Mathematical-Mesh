@@ -33,7 +33,6 @@ in the set.
 The '/account' option may be used to specify the Mesh account on which the device is 
 to be performed. If unspecified, the default account is used.
 
-
 # account connect
 
 ~~~~
@@ -76,6 +75,13 @@ name. Alternatively the flags '/admin', '/root', '/message', '/web', '/threshold
 may be used to specify the most commonly used authorizations.
 
 
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account connect mcu://maker@example.com/EAVO-F5LN-W5EH-LUDH-NWHC-FM27-EY /web
+<rsp></div>
+~~~~
+
+
 
 # account create
 
@@ -110,6 +116,17 @@ options may be used to specify a name and description for the device. If not spe
 a default name will be used.
 
 
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account create alice@example.com
+<rsp>Account=alice@example.com
+UDF=MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+</div>
+~~~~
+
+
+
+
 # account delete
 
 ~~~~
@@ -130,6 +147,16 @@ once completed, the command cannot be undone unless the service provides a recov
 The principle use for the current implementation is to test use of the escrow and recovery
 functions and it is not particularly recommended for any other purpose. To avoid accidental
 use, the UDF of the device profile must be specified.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account delete MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+<rsp>Device Profile UDF=
+</div>
+~~~~
+
+
 
 
 # account escrow
@@ -157,6 +184,18 @@ The options 'shares' and 'quorum' are used to specify the number of shares to be
 (e.g. 5) and the threshold number of shares required to perform recovery (e.g. 3).
 
 
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account escrow
+<rsp>Share: SAQJ-D3JH-U5TX-6F3D-5OYG-RJ7R-OC24-6RVG-PEXA-DNEV-KXMG-F2KA-MHD6-BUP3-VDAA
+Share: SAQV-XWKM-OT2I-R5CX-MDI6-FPKE-DZKO-OE3W-RGS5-7PRT-5DOM-QEVU-CVCP-2QXI-BJGA
+Share: SARC-LRLR-IKAZ-FUKK-2XZV-ZUUW-ZPZ7-5YCG-TIO3-3R6S-PPQS-2PBH-ZDBB-TM6U-NPMA
+</div>
+~~~~
+
+
+
+
 # account export
 
 ~~~~
@@ -176,6 +215,13 @@ export   Export the specified profile data to the specified file
 The `account export` command is used to export all data except for private keys associated with 
 the account to a DARE archive.
 
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account import
+<rsp>ERROR
+</div>
+~~~~
 
 
 
@@ -199,6 +245,15 @@ account UDF fingerprint, the current service binding and the date of the most re
 synchronization operation.
 
 
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account get
+<rsp></div>
+~~~~
+
+
+
+
 # account hello
 
 ~~~~
@@ -219,7 +274,7 @@ service configuration if successful.
 <div="terminal">
 <cmd>Alice> meshman account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MCAO-XTIB-YRN5-OZY7-PQY2-V677-UTBG
+   Service UDF = MCMP-LOU5-4CBD-VDOW-2FCF-CCCQ-GESF
 </div>
 ~~~~
 
@@ -243,6 +298,45 @@ import   Import the specified profile data to the specified file
 
 The `account import` command imports Mesh account data from a DARE archive such as 
 an archive created by the 'account export' command.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account import
+<rsp>ERROR
+</div>
+~~~~
+
+
+
+
+# account list
+
+~~~~
+<div="helptext">
+<over>
+list   List all profiles on the local machine
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+<over>
+</div>
+~~~~
+
+The `account list` command lists all the Mesh accounts the current device is connected 
+to.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account list
+<rsp></div>
+~~~~
+
+
+
 
 # account pin
 
@@ -286,24 +380,15 @@ that the connection can be completed without additional user interaction.
 
 
 
-
-# account list
-
 ~~~~
-<div="helptext">
-<over>
-list   List all profiles on the local machine
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-<over>
+<div="terminal">
+<cmd>Alice> meshman account pin /threshold
+<rsp>PIN=ABHT-VP25-WUQY-ZNTF-CJ4F-5AWU-ZA
+ (Expires=2021-12-20T19:21:17Z)
 </div>
 ~~~~
 
-The `account list` command lists all the Mesh accounts the current device is connected 
-to.
+
 
 
 # account purge
@@ -324,6 +409,17 @@ purge   Purge the Mesh recovery key from this device
 The `account purge` command eliminates deleted objects and messages from the catalogs
 and spools stored on the current device. The Purge command does not cause data to be
 deleted from the service.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account purge MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+<rsp>ERROR - An unknown error occurred
+</div>
+~~~~
+
+
+
 
 # account recover
 
@@ -354,6 +450,16 @@ The `account recover` command reassembles the account primary secret from a set 
 recovery shares.
 
 
+~~~~
+<div="terminal">
+<cmd>Alice2> meshman account recover SAQJ-D3JH-U5TX-6F3D-5OYG-RJ7R-OC24-6RVG-PEXA-DNEV-KXMG-F2KA-MHD6-BUP3-VDAA SARC-LRLR-IKAZ-FUKK-2XZV-ZUUW-ZPZ7-5YCG-TIO3-3R6S-PPQS-2PBH-ZDBB-TM6U-NPMA /verify
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
+
+
+
+
 # account status
 
 ~~~~
@@ -371,6 +477,28 @@ status   Return the status of the account catalogs and spools
 
 The `account status` command returns the current status of the account catalogs and spools 
 without attempting to synchronize with the service.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice2> meshman account status
+<rsp>   [MMM_Inbound] 3  
+   [MMM_Outbound] 1  CRA7-FW4G-HJYL-GKDU-GXLB-67LE-KXGZ-VXJX-MGGX-H2FA-UHUS-YBXW-EW5Q-5VME-E4TI-SZVD-AXAG-A6DE-HBTD-JEQN-4OWK-GU4N-3M2J-WJ7Y-B4GW-Y5Q
+   [MMM_Local] 2  
+   [MMM_Access] 3  
+   [MMM_Credential] 3  
+   [MMM_Device] 3  
+   [MMM_Contact] 2  
+   [MMM_Application] 1  
+   [MMM_Publication] 1  
+   [MMM_Bookmark] 1  
+   [MMM_Task] 1  
+</div>
+~~~~
+
+
+
+
 
 # account sync
 
@@ -400,6 +528,9 @@ in inbound messages will be performed automatically without further user interac
 <cmd>Alice2> meshman account sync
 <rsp></div>
 ~~~~
+
+
+
 
 
 

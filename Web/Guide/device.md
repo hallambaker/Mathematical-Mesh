@@ -12,7 +12,11 @@ the mesh service account alice@example.com to which connection is requested:
 
 
 ~~~~
-Missing example 13
+<div="terminal">
+<cmd>Alice2> meshman device request alice@example.com
+<rsp>   Device UDF = MDF6-V33U-HPP4-FDY2-IH4G-BVCE-PTOS
+   Witness value = JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+</div>
 ~~~~
 
 In this case there is no existing device profile and so a new profile is
@@ -30,7 +34,15 @@ messages.
 
 
 ~~~~
-Missing example 14
+<div="terminal">
+<cmd>Alice> meshman device pending
+<rsp>MessageID: JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+        Connection Request::
+        MessageID: JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+        To:  From: 
+        Device:  MDF6-V33U-HPP4-FDY2-IH4G-BVCE-PTOS
+        Witness: JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+</div>
 ~~~~
 
 Alice sees the request that she posted and approves it with the connect
@@ -38,7 +50,10 @@ Alice sees the request that she posted and approves it with the connect
 
 
 ~~~~
-Missing example 15
+<div="terminal">
+<cmd>Alice> meshman device accept JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ ^
+    /message /web
+</div>
 ~~~~
 
 There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
@@ -46,7 +61,7 @@ request:
 
 
 ~~~~
-Missing example 16
+Missing example 1
 ~~~~
 
 The connection process is completed by synchronizing the new device. At this point,
@@ -55,7 +70,9 @@ second:
 
 
 ~~~~
-Missing example 17
+<div="terminal">
+<cmd>Alice2> meshman account sync
+</div>
 ~~~~
 
 ##Managing connected devices
@@ -65,14 +82,14 @@ catalog:
 
 
 ~~~~
-Missing example 18
+Missing example 2
 ~~~~
 
 The `device delete` command removes a device from the catalog:
 
 
 ~~~~
-Missing example 19
+Missing example 3
 ~~~~
 
 
@@ -90,14 +107,23 @@ a new PIN code:
 
 
 ~~~~
-Missing example 20
+<div="terminal">
+<cmd>Alice> meshman account pin /threshold
+<rsp>PIN=ABHT-VP25-WUQY-ZNTF-CJ4F-5AWU-ZA
+ (Expires=2021-12-20T19:21:17Z)
+</div>
 ~~~~
 
 The pin code can now be used to authenticate the connection request:
 
 
 ~~~~
-Missing example 21
+<div="terminal">
+<cmd>Alice3> meshman device request alice@example.com /pin ^
+    ABHT-VP25-WUQY-ZNTF-CJ4F-5AWU-ZA
+<rsp>   Device UDF = MBJ4-APU2-QYGV-OPLC-TDDY-5SOJ-PUYN
+   Witness value = FC4F-LTCQ-MEOC-NS22-2Q5U-CVI7-KHM7
+</div>
 ~~~~
 
 Since the PIN code that was issued was set to be self-authorizing, the device
@@ -106,11 +132,34 @@ administrator device:
 
 
 ~~~~
-Missing example 22
+<div="terminal">
+<cmd>Alice> meshman message pending
+<rsp>MessageID: FC4F-LTCQ-MEOC-NS22-2Q5U-CVI7-KHM7
+        Connection Request::
+        MessageID: FC4F-LTCQ-MEOC-NS22-2Q5U-CVI7-KHM7
+        To:  From: 
+        Device:  MBJ4-APU2-QYGV-OPLC-TDDY-5SOJ-PUYN
+        Witness: FC4F-LTCQ-MEOC-NS22-2Q5U-CVI7-KHM7
+MessageID: NDVT-POHA-PJWP-AABG-YXO2-JU2C-4LYT
+        Group invitation::
+        MessageID: NDVT-POHA-PJWP-AABG-YXO2-JU2C-4LYT
+        To: alice@example.com From: alice@example.com
+MessageID: NCM5-RFA7-MCBH-UTRQ-2DPH-RIUN-DZEE
+        Confirmation Request::
+        MessageID: NCM5-RFA7-MCBH-UTRQ-2DPH-RIUN-DZEE
+        To: alice@example.com From: console@example.com
+        Text: start
+MessageID: NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
+        Contact Request::
+        MessageID: NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
+        To: alice@example.com From: bob@example.com
+        PIN: ABS6-M3HZ-3XC3-T2MP-5KAC-7UQW-M65A
+<cmd>Alice> meshman account sync /auto
+</div>
 ~~~~
 
 
-### Requesting a connection using an EARL
+### Static Device Connection Mechanism
 
 Encrypted Authenticated Resource Locators provide one means of preconfiguring
 a device to enable simple and straightforward connection to a Mesh profile.
@@ -135,16 +184,36 @@ To enable this connection mode, the manufacturer performs the steps of
 
 * Converting the EARL to a QR code which is printed on the device or its packaging.
 
-These steps may be performed on the device to be connected using the 
-`device request` command with the `/earl` option. Instead of requesting
-connection to a user account, the device requests connection to a special purpose
-account established for the purpose of providing a hailing account for enabling
-this type of device connection.
+These steps are performed by executing the `device preconfig` command
+on an administration device at the manufacturer facility:
 
+
+~~~~
+<div="terminal">
+<cmd>Maker> meshman device preconfig
+<rsp>Device UDF: MB43-ZZ44-PWCH-SJME-GZBJ-HZKC-TZUT
+File: EAVO-F5LN-W5EH-LUDH-NWHC-FM27-EY.medk
+</div>
+~~~~
+
+This creates a configuration file that is installed on the device by executing the
+`device install` command on the device itself:
+
+
+~~~~
+<div="terminal">
+<cmd>Alice4> meshman device install EAVO-F5LN-W5EH-LUDH-NWHC-FM27-EY.medk
+</div>
+~~~~
 
 The device can attempt to complete the connection whenever it is provided with power 
-and network connectivity using the `profile sync` command.
+and network connectivity using the `device complete` command. Attempts to
+connect before there has been a connection request posted will fail of course.
 
+
+~~~~
+Missing example 4
+~~~~
 
 The key specified in the '/earl' option is used to create a UDF EARL specifying a 
 location from which a device description document may be obtained. Note that 
@@ -157,16 +226,85 @@ activity LED at a rate suitable to allow transmission of a short message to a
 smart phone camera.
 
 A QR code or other scanning application can use the meshman tool to resolve the EARL 
-and retrieve the data using the `device earl` command:
+and retrieve the data using the `account connect` command:
 
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account connect ^
+    mcu://maker@example.com/EAVO-F5LN-W5EH-LUDH-NWHC-FM27-EY /web
+</div>
+~~~~
 
 The tool performs the tasks of resolving the EARL, decrypting the discovery record
 and posting a connection response to both the hailing account and the profile account.
 The next time the device polls the hailing account, it retrieves the connection data:
 
 
+~~~~
+<div="terminal">
+<cmd>Alice4> meshman device complete
+<rsp>   Device UDF = MB43-ZZ44-PWCH-SJME-GZBJ-HZKC-TZUT
+   Account = alice@example.com
+   Account UDF = MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+</div>
+~~~~
+
 Once connected to an account, a device does not attempt to poll the hailing account. 
 Further attempts to make a connection are thus ignored unless the device is 
 reset.
+
+
+## Dynamic QR connection and Post Authentication
+
+
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman account pin
+<rsp>PIN=ABC4-P362-QUHA-EWAD-IUYC-EINM-I4
+ (Expires=2021-12-20T19:21:26Z)
+</div>
+~~~~
+
+~~~~
+<div="terminal">
+<cmd>Alice5> meshman device join tbs
+<rsp>ERROR - The specified connection URI was invalid
+</div>
+~~~~
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman message pending
+<rsp>MessageID: NDVT-POHA-PJWP-AABG-YXO2-JU2C-4LYT
+        Group invitation::
+        MessageID: NDVT-POHA-PJWP-AABG-YXO2-JU2C-4LYT
+        To: alice@example.com From: alice@example.com
+MessageID: NCM5-RFA7-MCBH-UTRQ-2DPH-RIUN-DZEE
+        Confirmation Request::
+        MessageID: NCM5-RFA7-MCBH-UTRQ-2DPH-RIUN-DZEE
+        To: alice@example.com From: console@example.com
+        Text: start
+MessageID: NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
+        Contact Request::
+        MessageID: NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
+        To: alice@example.com From: bob@example.com
+        PIN: ABS6-M3HZ-3XC3-T2MP-5KAC-7UQW-M65A
+<cmd>Alice> meshman account sync /auto
+</div>
+~~~~
+
+~~~~
+Missing example 5
+~~~~
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman device auth Alice5 /all
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
+~~~~
 
 

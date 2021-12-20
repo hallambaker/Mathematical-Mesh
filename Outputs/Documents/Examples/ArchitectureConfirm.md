@@ -7,9 +7,9 @@ registered account asking if she would like to log into the secure console:
 ~~~~
 <div="terminal">
 <cmd>Console> meshman message confirm alice@example.com start
-<rsp>Envelope ID: MAVA-YC46-S4IK-DNG4-ZNW7-J6RT-ANGC
-Message ID: NBW3-QGBQ-U26Q-ECMH-3BAD-BYI5-7J4J
-Response ID: MABU-Y3OX-IZRP-XCUQ-C5NY-POKX-HXVT
+<rsp>Envelope ID: MANZ-CZCQ-BZU4-FT5Q-ELDK-SPNE-S7SN
+Message ID: NCM5-RFA7-MCBH-UTRQ-2DPH-RIUN-DZEE
+Response ID: MDRC-MK3S-7RYC-JEHG-CAWE-2N7E-JKWS
 </div>
 ~~~~
 
@@ -18,7 +18,7 @@ Alice checks her pending messages and accepts the request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message accept NBW3-QGBQ-U26Q-ECMH-3BAD-BYI5-7J4J
+<cmd>Alice> meshman message accept NCM5-RFA7-MCBH-UTRQ-2DPH-RIUN-DZEE
 </div>
 ~~~~
 
@@ -27,7 +27,7 @@ The secure console verifies the response and grants access:
 
 ~~~~
 <div="terminal">
-<cmd>Console> meshman message status MABU-Y3OX-IZRP-XCUQ-C5NY-POKX-HXVT
+<cmd>Console> meshman message status MDRC-MK3S-7RYC-JEHG-CAWE-2N7E-JKWS
 <rsp>Accept
 </div>
 ~~~~

@@ -57,6 +57,12 @@ command returns information about a particular account.
 
 #### Synchronizing an account with a service
 
+The 'account status' command returns the status of the account on the device without attempting
+synchronization. 
+
+#%  ConsoleExample (Account.StatusAlice);
+
+
 The sync command is used to synchronize the account to the service. 
 
 #{FutureFeature("AutoSync", "The tool should sync before each operation requiring it.")} Currently, the tool requires
@@ -67,8 +73,7 @@ automatically with an option to suppress.
 
 Synchronization will fail if a device has been removed from the account or not yet connected.
 
-The 'account status' command returns the same information as 'account sync' without attempting
-synchronization. 
+
 
 
 #### Escrow and Recovery
@@ -107,6 +112,7 @@ The export command causes the entire account profile to be written to an archive
 This may be used to create a backup copy of the account for archiving purposes
 or to facilitate provisioning the account to a new machine.
 
+
 #%  ConsoleExample (Account.Export);
 
 The import command causes the account profile to be read back from the archive.
@@ -123,9 +129,7 @@ allows the device connection process to be completed without additional user int
 the connection can still only complete when an administration device creates the necessary 
 credentials.
 
-#%  ConsoleExample (Account.PinAlice);
-
-#{FutureExample("DeviceConnect")} 
+#%  ConsoleExample (Connect.ConnectPINCreate);
 
 The 'connect' command is used to connect a device to the account by means of a 
 connection URI. This is usually used to connect devices by means of a QR code 
@@ -155,7 +159,7 @@ in the set.
 The '/account' option may be used to specify the Mesh account on which the device is 
 to be performed. If unspecified, the default account is used.
 
-
+#! ------------------ account connect
 #% Describe(CommandSet, _AccountConnect._DescribeCommand);
 
 The `account connect` command is used to initiate the process of device connection by means
@@ -172,8 +176,9 @@ The '/auth' option may be used to specify authorizations to be granted to the de
 name. Alternatively the flags '/admin', '/root', '/message', '/web', '/threshold', etc. 
 may be used to specify the most commonly used authorizations.
 
+#%  ConsoleReference (Connect.ConnectStaticClaim);
 
-
+#! ------------------ account create
 #% Describe(CommandSet, _AccountCreate._DescribeCommand);
 
 The `account create` command is used to create accounts.
@@ -188,7 +193,10 @@ the '/new' option is used to force creation of a new profile. The '/did' and 'dd
 options may be used to specify a name and description for the device. If not specified,
 a default name will be used.
 
+#%  ConsoleReference (Account.CreateAlice);
 
+
+#! ------------------ account delete
 #% Describe(CommandSet, _AccountDelete._DescribeCommand);
 
 The `account delete` command is used to delete an account from the service and local machine
@@ -198,7 +206,10 @@ The principle use for the current implementation is to test use of the escrow an
 functions and it is not particularly recommended for any other purpose. To avoid accidental
 use, the UDF of the device profile must be specified.
 
+#%  ConsoleReference (Account.DeleteAlice);
 
+
+#! ------------------ account escrow
 #% Describe(CommandSet, _AccountEscrow._DescribeCommand);
 
 The `account escrow` command is used to create a set of key recovery shares for the account
@@ -207,22 +218,28 @@ primary secret from which the escrow and signature keys are derrived.
 The options 'shares' and 'quorum' are used to specify the number of shares to be created
 (e.g. 5) and the threshold number of shares required to perform recovery (e.g. 3).
 
+#%  ConsoleReference (Account.ProfileEscrow);
 
+
+#! ------------------ account export
 #% Describe(CommandSet, _AccountExport._DescribeCommand);
 
 The `account export` command is used to export all data except for private keys associated with 
 the account to a DARE archive.
 
+#%  ConsoleReference (Account.Import);
 
-
-
+#! ------------------ account get
 #% Describe(CommandSet, _AccountGet._DescribeCommand);
 
 The `account get` command returns a description of the account. This includes the 
 account UDF fingerprint, the current service binding and the date of the most recent 
 synchronization operation.
 
+#%  ConsoleReference (Account.GetAccountAlice);
 
+
+#! ------------------ account hello
 #% Describe(CommandSet, _AccountHello._DescribeCommand);
 
 The `account hello` command attempts to contact a Mesh service and reports the
@@ -230,11 +247,25 @@ service configuration if successful.
 
 #%  ConsoleReference (Service.Hello);
 
+#! ------------------ account import
 #% Describe(CommandSet, _AccountImport._DescribeCommand);
 
 The `account import` command imports Mesh account data from a DARE archive such as 
 an archive created by the 'account export' command.
 
+#%  ConsoleReference (Account.Import);
+
+
+#! ------------------ account list
+#% Describe(CommandSet, _AccountList._DescribeCommand);
+
+The `account list` command lists all the Mesh accounts the current device is connected 
+to.
+
+#%  ConsoleReference (Account.ListAlice);
+
+
+#! ------------------ account pin
 #% Describe(CommandSet, _AccountGetPIN._DescribeCommand);
 
 The `account pin` command generates and registers a new PIN code that may be used
@@ -250,32 +281,39 @@ The remaining options allow the authorization(s) of the device to be specified s
 that the connection can be completed without additional user interaction.
 
 
-#%  ConsoleReference (Account.PinAlice);
+#%  ConsoleReference (Connect.ConnectPINCreate);
 
 
-#% Describe(CommandSet, _AccountList._DescribeCommand);
-
-The `account list` command lists all the Mesh accounts the current device is connected 
-to.
-
-
+#! ------------------ account purge
 #% Describe(CommandSet, _AccountPurge._DescribeCommand);
 
 The `account purge` command eliminates deleted objects and messages from the catalogs
 and spools stored on the current device. The Purge command does not cause data to be
 deleted from the service.
 
+#%  ConsoleReference (Account.ProfilePurge);
+
+
+#! ------------------ account recover
 #% Describe(CommandSet, _AccountRecover._DescribeCommand);
 
 The `account recover` command reassembles the account primary secret from a set of
 recovery shares.
 
+#%  ConsoleReference (Account.ProfileRecover);
 
+
+#! ------------------ account status
 #% Describe(CommandSet, _AccountStatus._DescribeCommand);
 
 The `account status` command returns the current status of the account catalogs and spools 
 without attempting to synchronize with the service.
 
+#%  ConsoleReference (Account.StatusAlice);
+
+
+
+#! ------------------ account sync
 #% Describe(CommandSet, _AccountSync._DescribeCommand);
 
 The `account sync` command attempts to synchronize the account catalogs and spools with
@@ -285,6 +323,9 @@ If the '/auto' flag is set, pre-authorized device connection and contact exchang
 in inbound messages will be performed automatically without further user interaction.
 
 #%  ConsoleReference (Account.SyncAlice);
+
+
+
 
 
 #end zfile

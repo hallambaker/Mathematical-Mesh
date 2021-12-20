@@ -32,6 +32,10 @@ add   Add user to recryption group
 </div>
 ~~~~
 
+~~~~
+Missing example 18
+~~~~
+
 # group create
 
 ~~~~
@@ -60,6 +64,10 @@ create   Create recryption group
 </div>
 ~~~~
 
+~~~~
+Missing example 19
+~~~~
+
 
 
 # group delete
@@ -77,6 +85,10 @@ delete   Remove user from recryption group
     /json   Report output in JSON format
 <over>
 </div>
+~~~~
+
+~~~~
+Missing example 20
 ~~~~
 
 
@@ -112,5 +124,9 @@ list   List members of a recryption group
     /json   Report output in JSON format
 <over>
 </div>
+~~~~
+
+~~~~
+Missing example 21
 ~~~~
 

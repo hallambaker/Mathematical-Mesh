@@ -5,7 +5,8 @@ way as before.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman device delete MCQT-B7NG-QZ7M-4LXE-5AZN-W4A5-5FSF
+<cmd>Alice> meshman device delete MBJ4-APU2-QYGV-OPLC-TDDY-5SOJ-PUYN
+<rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~
 

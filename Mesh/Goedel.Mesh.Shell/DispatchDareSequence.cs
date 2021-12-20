@@ -60,7 +60,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DareSequence(DareSequence options) {
+    public override ShellResult DareCreate(DareCreate options) {
         var outputFile = options.Sequence.Value;
 
         var keyLocate = GetKeyCollection(options);
@@ -280,7 +280,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DarePurge(DarePurge options) {
+    public override ShellResult DareCopy(DareCopy options) {
         var inputFile = options.Input.Value;
         var outputFile = options.Output.Value;
         var index = options.Index.Value;

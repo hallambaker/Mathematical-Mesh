@@ -895,7 +895,7 @@
 			Include Reporting
 
 
-		Command DareSequence "sequence"
+		Command DareCreate "create"
 			Brief "Create a new DARE Sequence"
 			Include EncodeOptions
 			Include CryptoOptions
@@ -997,7 +997,7 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command DarePurge "purge"
+		Command DareCopy "copy"
 			Brief "Copy sequence contents to create a new sequence removing deleted elements"
 			Parameter Input "in" ExistingFile
 				Brief "Sequence to read"

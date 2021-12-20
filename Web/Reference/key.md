@@ -39,8 +39,8 @@ value, formatted as a UDF Encryption key type and Content Digest Type
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key earl
-<rsp>EBYF-T3I3-HMDO-4EVH-OJKN-CUJA-S6BG-DZ
-MD2T-MLE3-3XLQ-I6UJ-ETRP-GT24-OG77-XIGO-GJDI-WDLL-WJRU-DRL5-4GPL-AUW3
+<rsp>EC4Q-7GAG-H76D-KINT-RWUG-VY2D-INNE-B3
+MD6U-G3XB-5U5L-HRZH-ASFU-Q7JI-62CF-BEEY-Q3FT-ILMM-JKW6-KLKG-T4ZX-DI6M
 </div>
 ~~~~
 
@@ -73,7 +73,7 @@ protocol.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key nonce
-<rsp>NDFI-5WRA-L5R6-EALN-NPFG-EU66-QTHQ
+<rsp>NAAX-5THA-IQI4-H7YJ-CPVQ-GSKM-MEOQ
 </div>
 ~~~~
 
@@ -102,13 +102,13 @@ recover   Recover a secret value from the shares provided
 ~~~~
 
 The `key recover` command combines the specified set of share to recover the original secret 
-value as a UDF Encryption key type.
+value as a UDF Encryption key type. It is not necessary to enter the shares in a particular order.
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman key recover SAQH-JUCJ-A57X-JRPW-QDLL-K2C5-UI5A-O SARP-I4HT-5AWJ-CTY2-2LYS-IZPL-PIUR-E
-<rsp>WT77-HFZI-42AW-IV6J-PXUZ-NNSC-TM
+<cmd>Alice> meshman key recover SAQJ-Z77K-VFL4-VPXC-UEDV-HCMK-6F6J-G SARL-DHCT-5FKI-ZOCF-SXPZ-SXND-VPWC-U
+<rsp>CKY3-MCKZ-NHBD-CJU3-GCPX-5FCE-VY
 </div>
 ~~~~
 
@@ -136,7 +136,7 @@ key type.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key secret
-<rsp>ECOW-HR6W-TWLF-WCXW-OF7K-H55J-CH2Q
+<rsp>EALE-Y32T-5UEM-DWK2-RR7N-ACWL-2WCA
 </div>
 ~~~~
 
@@ -168,11 +168,11 @@ formatted as a UDF Encryption key type and Share types
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key share
-<rsp>WT77-HFZI-42AW-IV6J-PXUZ-NNSC-TM
-MAUQ-VI4X-E57W-WRA6-A773-JWKG-EQ6G-J25H-WEJW-3AIZ-B2B3-DDJS-MZYI
-SAQH-JUCJ-A57X-JRPW-QDLL-K2C5-UI5A-O
-SAQT-JIE6-O7LA-GCUI-VHR6-ZZZE-RYYX-G
-SARP-I4HT-5AWJ-CTY2-2LYS-IZPL-PIUR-E
+<rsp>CKY3-MCKZ-NHBD-CJU3-GCPX-5FCE-VY
+MCYP-ZJOS-UEMA-6UW2-ECNY-ICHL-QBFA-ABDD-TNIP-LVT4-R37M-7ARN-Q5NL
+SAQJ-Z77K-VFL4-VPXC-UEDV-HCMK-6F6J-G
+SAQS-OTQ7-JFLC-XO4U-DNZX-M44X-J22E-K
+SARL-DHCT-5FKI-ZOCF-SXPZ-SXND-VPWC-U
 </div>
 ~~~~
 

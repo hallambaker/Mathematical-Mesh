@@ -134,7 +134,7 @@ protocol.
 #% Describe(CommandSet, _KeyRecover._DescribeCommand);
 
 The `key recover` command combines the specified set of share to recover the original secret 
-value as a UDF Encryption key type.
+value as a UDF Encryption key type. It is not necessary to enter the shares in a particular order.
 
 #%  ConsoleReference (ShellKey.KeyRecover);
 

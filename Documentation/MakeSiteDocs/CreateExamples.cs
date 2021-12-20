@@ -29,7 +29,8 @@ using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
-
+using System.Diagnostics;
+using System.Net.NetworkInformation;
 
 namespace ExampleGenerator;
 
@@ -60,24 +61,47 @@ public partial class CreateExamples {
     public void ReportMissingExample() {
 
         ReportMissing();
-        _Output.Write("\n{0}", _Indent);
-        _Output.Write("~~~~\n{0}", _Indent);
-        _Output.Write("Missing example {1}{0}\n", _Indent, CountMissing);
-        _Output.Write("~~~~\n{0}", _Indent);
+
         }
-    public void ReportObsoleteExample() {
-        CountObsolete++;
-        ReportMissing();
-        _Output.Write("\n{0}", _Indent);
-        _Output.Write("~~~~\n{0}", _Indent);
-        _Output.Write("Obsolete example {1}{0}\n", _Indent, CountObsolete);
-        _Output.Write("~~~~\n{0}", _Indent);
+    //public void ReportObsoleteExample() {
+    //    CountObsolete++;
+    //    ReportMissing();
+    //    _Output.Write("\n{0}", _Indent);
+    //    _Output.Write("~~~~\n{0}", _Indent);
+    //    _Output.Write("Obsolete example {1}{0}\n", _Indent, CountObsolete);
+    //    _Output.Write("~~~~\n{0}", _Indent);
+    //    }
+
+
+    string GetModule() {
+        var stackTrace = new StackTrace();
+        for (var i = 0; i < stackTrace.FrameCount; i++) {
+            if (stackTrace.GetFrame(i).GetMethod().Name.StartsWith("_")) {
+                if ((i + 1) < stackTrace.FrameCount) {
+
+                    return stackTrace.GetFrame(i + 1).GetMethod().Name;
+                    }
+
+                }
+
+
+            }
+        return "";
+
         }
 
 
     public void ReportMissing() {
         CountMissing++;
-        Screen.WriteInfo("Missing example!");
+
+        var stackTrace = new StackTrace();
+        Screen.WriteInfo($"Missing example! {GetModule() }");
+
+        _Output.Write("\n{0}", _Indent);
+        _Output.Write("~~~~\n{0}", _Indent);
+        _Output.Write($"Missing example {CountMissing}\n");
+        _Output.Write("~~~~\n{0}", _Indent);
+
         }
 
 
@@ -118,7 +142,7 @@ public partial class CreateExamples {
         GroupOperations();
         ConnectPINDynamicQR();
         ConnectStaticQR();
-
+        DelayedAuth();
 
 
 
@@ -148,6 +172,16 @@ public partial class CreateExamples {
         var aliceCreateAccount = Account.CreateAlice.GetResultCreateAccount();
         AliceProfileAccount = aliceCreateAccount.ProfileAccount;
 
+        Account.ListAlice = Alice1.Example(
+            $"account list"
+            );
+
+
+        Account.GetAccountAlice = Alice1.Example(
+            $"account get"
+            );
+
+        Account.ListGetAccountAlice = Concat(Account.ListAlice, Account.GetAccountAlice);
 
         // Check the passwords work - enable checks later on.
         Account.PasswordAdd = Alice1.Example(
@@ -300,6 +334,9 @@ public partial class CreateExamples {
         Connect.ConnectAccept.GetResult().Success.TestTrue();
         Connect.ConnectComplete.GetResult().Success.TestTrue();
 
+        Account.StatusAlice = Alice2.Example(
+            $"account status"
+            );
 
         Account.SyncAlice = Alice2.Example(
             $"account sync"
@@ -746,6 +783,41 @@ public partial class CreateExamples {
 
         }
 
+
+    public void DelayedAuth() {
+        Alice5 = GetTestCLI(AliceDevice5);
+
+        Connect.ConnectJoinPinCreate = Alice1.Example(
+                $"account pin");
+        var uri = "tbs";
+
+        Connect.ConnectJoin = Alice5.Example(
+                $"device join {uri}"
+                );
+
+        Connect.ConnectJoinPending = Alice1.Example(
+                $"message pending",
+                $"account sync /auto"  // Failing because object already created
+                );
+
+        //Connect.ConnectJoinComplete = Alice5.Example(
+        //    $"device complete",
+        //    $"account sync"
+        //    );
+
+
+        // failing catalog requests here
+
+        Connect.ConnectJoinAuth = Alice1.Example(
+                $"device auth Alice5 /all");
+
+        // succeeding catalog requests here.
+
+
+        }
+
+
+
     public void EscrowAndRecover() {
         Alice2 = GetTestCLI(AliceDevice2);
 
@@ -757,27 +829,38 @@ public partial class CreateExamples {
         var share1 = resultEscrow.Shares[0];
         var share2 = resultEscrow.Shares[2];
 
-        //Account.DeleteAlice = Alice1.Example(
-        //    $"account delete {AliceProfileAccount.Udf}"
-        //    );
+        Account.Export = Alice1.Example(
+            $"account export"
+            );
 
-        //Account.ProfileRecover = Alice2.Example(
-        //    $"account recover {share1} {share2} /verify"
-        //    );
+        // Should really spin up a new blank device for this
+        Account.ProfilePurge = Alice1.Example(
+            $"account purge {AliceProfileAccount.Udf}"
+            );
+
+
+        // Should really spin up a new blank device for this
+        Account.Import = Alice1.Example(
+            $"account import"
+            );
+
+        Account.ProfileRecover = Alice2.Example(
+            $"account recover {share1} {share2} /verify"
+            );
+
+        Account.DeleteAlice = Alice1.Example(
+            $"account delete {AliceProfileAccount.Udf}"
+            );
+
 
 
         //Account.ProfileEscrow.GetResult().Success.TestTrue();
         //Account.DeleteAlice.GetResult().Success.TestTrue();
         //Account.ProfileRecover.GetResult().Success.TestTrue();
-
+        //Account.Export.GetResult().Success.TestTrue();
+        //Account.Import.GetResult().Success.TestTrue();
 
         }
-
-
-
-
-
-
 
 
     }

@@ -7,10 +7,10 @@ a completion message to the Local spool.
 ~~~~
 {
   "MessageComplete":{
-    "MessageId":"NAIE-AC7P-AM3K-MLMV-MY5F-NZ4K-EUOJ",
+    "MessageId":"NCVZ-SLTK-LBCD-TNQI-7KLC-HMZK-7TSP",
     "References":[{
-        "MessageId":"ACUE-FBCM-67AA-KNQE-IXZ3-EWLN-E6F4",
-        "ResponseId":"MCY3-5C2F-4VFN-XOTT-AANK-474N-623W",
+        "MessageId":"AARB-FDVG-KWFO-YWCU-4CGT-ROEQ-TJSV",
+        "ResponseId":"MANC-ASWS-EKPK-67HT-3EES-BVSU-SETJ",
         "Relationship":"Closed"}
       ]}}
 ~~~~

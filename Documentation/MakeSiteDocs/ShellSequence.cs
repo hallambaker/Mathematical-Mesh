@@ -28,49 +28,56 @@ namespace ExampleGenerator;
 
 public class ShellSequence : ExampleSet {
 
-    public string TestContainer = "Container.dcon";
-    public string TestContainerEncrypt = "ContainerEncrypt.dcon";
-    public string TestContainerArchive = "ContainerArchive.dcon";
-    public string TestContainerArchiveEnhance = "ContainerArchiveEncrypt.dcon";
+    public string TestSequence = "Sequence.dcon";
+    public string TestSequenceEncrypt = "SequenceEncrypt.dcon";
+    public string TestSequenceArchive = "SequenceArchive.dcon";
+    public string TestSequenceArchiveEnhance = "SequenceArchiveEncrypt.dcon";
 
-    public string TestContainer2 = "Container2.dcon";
-    public string TestContainerEncrypt2 = "ContainerEncrypt2.dcon";
-    public string TestContainerArchive2 = "ContainerArchive2.dcon";
-    public string TestContainerArchiveEnhance2 = "ContainerArchiveEncrypt2.dcon";
+    public string TestSequence2 = "Sequence2.dcon";
+    public string TestSequenceEncrypt2 = "SequenceEncrypt2.dcon";
+    public string TestSequenceArchive2 = "SequenceArchive2.dcon";
+    public string TestSequenceArchiveEnhance2 = "SequenceArchiveEncrypt2.dcon";
 
-    public List<ExampleResult> ContainerCreate;
-    public List<ExampleResult> ContainerCreateEncrypt;
-    public List<ExampleResult> ContainerArchive;
-    public List<ExampleResult> ContainerArchiveEnhance;
-    public List<ExampleResult> ContainerArchiveVerify;
-    public List<ExampleResult> ContainerArchiveExtractAll;
-    public List<ExampleResult> ContainerArchiveExtractFile;
+    public List<ExampleResult> SequenceCreate;
+    public List<ExampleResult> SequenceCreateEncrypt;
+    public List<ExampleResult> SequenceArchive;
+    public List<ExampleResult> SequenceArchiveEnhance;
+    public List<ExampleResult> SequenceArchiveVerify;
+    public List<ExampleResult> SequenceArchiveExtractAll;
+    public List<ExampleResult> SequenceArchiveExtractFile;
 
-    public List<ExampleResult> ContainerAppend;
-    public List<ExampleResult> ContainerDelete;
-    public List<ExampleResult> ContainerIndex;
-    public List<ExampleResult> ContainerArchiveCopy;
-    public List<ExampleResult> ContainerArchiveCopyDecrypt;
-    public List<ExampleResult> ContainerArchiveCopyPurge;
+    public List<ExampleResult> SequenceAppend;
+    public List<ExampleResult> SequenceDelete;
+    public List<ExampleResult> SequenceIndex;
+    public List<ExampleResult> SequenceArchiveCopy;
+    public List<ExampleResult> SequenceArchiveCopyDecrypt;
+    public List<ExampleResult> SequenceArchiveCopyPurge;
+
+
+    public List<ExampleResult> SequenceList;
+
 
     public ShellSequence(CreateExamples createExamples) :
     base(createExamples) {
-        ContainerCreate = Alice1.Example($"container create {TestContainer}");
-        ContainerCreateEncrypt = Alice1.Example($"container create {TestContainerEncrypt} /encrypt={GroupAccount}");
-        ContainerArchive = Alice1.Example($"container archive {TestContainerArchive} {TestDir1}");
-        ContainerArchiveEnhance = Alice1.Example($"container create {TestContainerArchiveEnhance} {TestDir1}",
-                                                        $"/encrypt={GroupAccount} /sign={AliceAccount}");
-        ContainerArchiveVerify = Alice1.Example($"container verify {TestContainerArchiveEnhance}");
-        ContainerArchiveExtractAll = Alice1.Example($"container extract {TestContainer} {TestDir2}");
-        ContainerArchiveExtractFile = Alice1.Example($"container extract {TestContainer} /file={TestFile4}");
-        ContainerAppend = Alice1.Example($"container append {TestContainer} {TestFile1}" +
-                                                        $"container append {TestContainer} {TestFile2}" +
-                                                        $"container append {TestContainer} {TestFile3}");
-        ContainerDelete = Alice1.Example($"container delete {TestContainer}  {TestFile2}");
-        ContainerIndex = Alice1.Example($"container index {TestContainer}");
-        ContainerArchiveCopy = Alice1.Example($"container copy {TestContainer2}");
-        ContainerArchiveCopyDecrypt = Alice1.Example($"container copy {TestContainerArchiveEnhance} /decrypt");
-        ContainerArchiveCopyPurge = Alice1.Example($"container copy {TestContainer2} /purge");
+        SequenceCreate = Alice1.Example($"dare create {TestSequence}");
+        SequenceCreateEncrypt = Alice1.Example($"dare create {TestSequenceEncrypt} /encrypt={GroupAccount}");
+        SequenceArchive = Alice1.Example($"dare archive {TestSequenceArchive} {TestDir1}");
+        SequenceArchiveEnhance = Alice1.Example($"dare archive {TestSequenceArchiveEnhance} {TestDir1}" +
+                                                        $" /encrypt={GroupAccount} /sign={AliceAccount}");
+        SequenceArchiveVerify = Alice1.Example($"dare verify {TestSequenceArchiveEnhance}");
+        SequenceArchiveExtractAll = Alice1.Example($"dare extract {TestSequence} {TestDir2}");
+        SequenceArchiveExtractFile = Alice1.Example($"dare extract {TestSequence} /file={TestFile4}");
+        SequenceAppend = Alice1.Example($"dare append {TestSequence} {TestFile1}",
+                                                        $"dare append {TestSequence} {TestFile2}",
+                                                        $"dare append {TestSequence} {TestFile3}");
+        SequenceList = Alice1.Example($"dare list {TestSequence}");
+
+
+        SequenceDelete = Alice1.Example($"dare delete {TestSequence}  {TestFile2}");
+        SequenceIndex = Alice1.Example($"dare index {TestSequence}");
+        SequenceArchiveCopy = Alice1.Example($"dare copy {TestSequence2}");
+        SequenceArchiveCopyDecrypt = Alice1.Example($"dare copy {TestSequenceArchiveEnhance} /decrypt");
+        SequenceArchiveCopyPurge = Alice1.Example($"dare copy {TestSequence2} /purge");
 
         }
     }

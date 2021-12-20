@@ -84,6 +84,10 @@ public partial class CreateExamples {
     public virtual TestCLI Alice2 { get; protected set; }
     public virtual TestCLI Alice3 { get; protected set; }
     public virtual TestCLI Alice4 { get; protected set; }
+
+    public virtual TestCLI Alice5 { get; protected set; }
+
+
     public virtual TestCLI Bob1 { get; protected set; }
     public virtual TestCLI Mallet1 { get; protected set; }
     public virtual TestCLI Console1 { get; protected set; }
@@ -215,13 +219,15 @@ public partial class CreateExamples {
 
 
         LayerAccount();
+        //LayerService();
+
 
         // Dare uses the keys from the contacts catalog.
         PlatformDare();
 
         TestConnectDisconnect("");
         EscrowAndRecover();
-
+        //ImportAndExport();
 
         Directory.SetCurrentDirectory(outputPath);
         var CreateExamples = new CreateExamples();

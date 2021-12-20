@@ -6,6 +6,9 @@ Need to recognize 'command' as inline emphasis style.
 
 Need to recognize GitHub style preformatted areas.
 
+Need to fix the formatting of commands to wrap really long commands (e.g. recovery)
+
+
 ## Documentation for meshhost / serviceadmin
 
 Need docs for both of course.
@@ -15,17 +18,15 @@ Need docs for both of course.
 
 Need to fix command description of nested commands...
 
-### Account 
+### Device 
 
-Missing examples
+ConnectStaticPollFail is failing 
 
-* Import/Export
-* List/Status/Get
-* Account recovery / purge secret
-* Pin example
-
-[All missing from reference section as well.]
-
+~~~~
+        //Connect.ConnectStaticPollFail = Alice4.Example(
+        //    $"device complete"
+        //    );
+~~~~
 
 ### Bookmark
 

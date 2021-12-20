@@ -49,9 +49,11 @@ public partial class LayerAccount : ExampleSet {
     public List<ExampleResult> PasswordGet;
     public List<ExampleResult> DeleteAlice;
     public List<ExampleResult> SyncAlice;
-
+    public List<ExampleResult> StatusAlice;
 
     public List<ExampleResult> ListGetAccountAlice;
+    public List<ExampleResult> ListAlice;
+    public List<ExampleResult> GetAccountAlice;
     public List<ExampleResult> PublishAlice;
     public List<ExampleResult> PinAlice;
     public List<ExampleResult> ProfilePurge;
@@ -73,7 +75,14 @@ public partial class LayerConnect : ExampleSet {
     public List<ExampleResult> ConnectRequest;
     public List<ExampleResult> ConnectPending;
     public List<ExampleResult> ConnectAccept;
+    public List<ExampleResult> ConnectReject;
     public List<ExampleResult> ConnectComplete;
+
+    public List<ExampleResult> ConnectList;
+    public List<ExampleResult> ConnectDelete;
+
+
+
     public List<ExampleResult> PasswordList2;
     public List<ExampleResult> Disconnect;
     public List<ExampleResult> PasswordList2Disconnect;
@@ -158,6 +167,14 @@ public partial class LayerConnect : ExampleSet {
     public RespondConnection RespondConnectionWitness;
 
     public string ConnectDynamicURI;
+
+    public List<ExampleResult> ConnectJoin;
+
+    public List<ExampleResult> ConnectJoinPinCreate;
+    public List<ExampleResult> ConnectJoinPending;
+    public List<ExampleResult> ConnectJoinComplete;
+    public List<ExampleResult> ConnectJoinAuth;
+
 
 
 

@@ -269,7 +269,7 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.DareSequence(Goedel.Mesh.Shell.DareSequence)">
+        <member name="M:Goedel.Mesh.Shell.Shell.DareCreate(Goedel.Mesh.Shell.DareCreate)">
             <summary>
             Dispatch method
             </summary>
@@ -332,7 +332,7 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.DarePurge(Goedel.Mesh.Shell.DarePurge)">
+        <member name="M:Goedel.Mesh.Shell.Shell.DareCopy(Goedel.Mesh.Shell.DareCopy)">
             <summary>
             Dispatch method
             </summary>
@@ -3186,49 +3186,49 @@
         <member name="P:Goedel.Mesh.Shell._DareEARL.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.ContentType">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.ContentType">
             <summary>Field accessor for option [cty]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.Encrypt">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.Sign">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.Sign">
             <summary>Field accessor for option [sign]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.Hash">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.Hash">
             <summary>Field accessor for option [hash]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.Algorithms">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.Type">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.Type">
             <summary>Field accessor for option [type]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.EnumAuthentication">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.EnumAuthentication">
             <summary>Field accessor for parameter [auth]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.EnumUse">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.EnumUse">
             <summary>Field accessor for parameter [use]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.LocalName">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.Verbose">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.Report">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.Json">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareSequence.Sequence">
+        <member name="P:Goedel.Mesh.Shell._DareCreate.Sequence">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareArchive.ContentType">
@@ -3489,61 +3489,61 @@
         <member name="P:Goedel.Mesh.Shell._DareExtract.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Input">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Input">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Output">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Output">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.ContentType">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.ContentType">
             <summary>Field accessor for option [cty]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Encrypt">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Sign">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Sign">
             <summary>Field accessor for option [sign]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Hash">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Hash">
             <summary>Field accessor for option [hash]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Algorithms">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Type">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Type">
             <summary>Field accessor for option [type]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.EnumAuthentication">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.EnumAuthentication">
             <summary>Field accessor for parameter [auth]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.EnumUse">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.EnumUse">
             <summary>Field accessor for parameter [use]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.LocalName">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Verbose">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Report">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Json">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Decrypt">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Decrypt">
             <summary>Field accessor for option [decrypt]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Index">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Index">
             <summary>Field accessor for option [index]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DarePurge.Purge">
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Purge">
             <summary>Field accessor for option [purge]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailAdd.Address">

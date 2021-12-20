@@ -71,6 +71,12 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Synchronizing an account with a service\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The 'account status' command returns the status of the account on the device without attempting\n{0}", _Indent);
+			_Output.Write ("synchronization. \n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (Account.StatusAlice);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The sync command is used to synchronize the account to the service. \n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("{1} Currently, the tool requires\n{0}", _Indent, FutureFeature("AutoSync", "The tool should sync before each operation requiring it."));
@@ -81,8 +87,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Synchronization will fail if a device has been removed from the account or not yet connected.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The 'account status' command returns the same information as 'account sync' without attempting\n{0}", _Indent);
-			_Output.Write ("synchronization. \n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Escrow and Recovery\n{0}", _Indent);
@@ -121,6 +126,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("This may be used to create a backup copy of the account for archiving purposes\n{0}", _Indent);
 			_Output.Write ("or to facilitate provisioning the account to a new machine.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			  ConsoleExample (Account.Export);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The import command causes the account profile to be read back from the archive.\n{0}", _Indent);
@@ -137,9 +143,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("the connection can still only complete when an administration device creates the necessary \n{0}", _Indent);
 			_Output.Write ("credentials.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (Account.PinAlice);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("{1} \n{0}", _Indent, FutureExample("DeviceConnect"));
+			  ConsoleExample (Connect.ConnectPINCreate);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The 'connect' command is used to connect a device to the account by means of a \n{0}", _Indent);
 			_Output.Write ("connection URI. This is usually used to connect devices by means of a QR code \n{0}", _Indent);
@@ -179,7 +183,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The '/account' option may be used to specify the Mesh account on which the device is \n{0}", _Indent);
 			_Output.Write ("to be performed. If unspecified, the default account is used.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account connect
 			 Describe(CommandSet, _AccountConnect._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account connect` command is used to initiate the process of device connection by means\n{0}", _Indent);
@@ -196,8 +200,9 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("name. Alternatively the flags '/admin', '/root', '/message', '/web', '/threshold', etc. \n{0}", _Indent);
 			_Output.Write ("may be used to specify the most commonly used authorizations.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Connect.ConnectStaticClaim);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account create
 			 Describe(CommandSet, _AccountCreate._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account create` command is used to create accounts.\n{0}", _Indent);
@@ -212,7 +217,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("options may be used to specify a name and description for the device. If not specified,\n{0}", _Indent);
 			_Output.Write ("a default name will be used.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Account.CreateAlice);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account delete
 			 Describe(CommandSet, _AccountDelete._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account delete` command is used to delete an account from the service and local machine\n{0}", _Indent);
@@ -222,7 +230,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("functions and it is not particularly recommended for any other purpose. To avoid accidental\n{0}", _Indent);
 			_Output.Write ("use, the UDF of the device profile must be specified.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Account.DeleteAlice);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account escrow
 			 Describe(CommandSet, _AccountEscrow._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account escrow` command is used to create a set of key recovery shares for the account\n{0}", _Indent);
@@ -231,22 +242,28 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The options 'shares' and 'quorum' are used to specify the number of shares to be created\n{0}", _Indent);
 			_Output.Write ("(e.g. 5) and the threshold number of shares required to perform recovery (e.g. 3).\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Account.ProfileEscrow);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account export
 			 Describe(CommandSet, _AccountExport._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account export` command is used to export all data except for private keys associated with \n{0}", _Indent);
 			_Output.Write ("the account to a DARE archive.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Account.Import);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account get
 			 Describe(CommandSet, _AccountGet._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account get` command returns a description of the account. This includes the \n{0}", _Indent);
 			_Output.Write ("account UDF fingerprint, the current service binding and the date of the most recent \n{0}", _Indent);
 			_Output.Write ("synchronization operation.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Account.GetAccountAlice);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account hello
 			 Describe(CommandSet, _AccountHello._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account hello` command attempts to contact a Mesh service and reports the\n{0}", _Indent);
@@ -254,11 +271,25 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (Service.Hello);
 			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account import
 			 Describe(CommandSet, _AccountImport._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account import` command imports Mesh account data from a DARE archive such as \n{0}", _Indent);
 			_Output.Write ("an archive created by the 'account export' command.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Account.Import);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account list
+			 Describe(CommandSet, _AccountList._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `account list` command lists all the Mesh accounts the current device is connected \n{0}", _Indent);
+			_Output.Write ("to.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Account.ListAlice);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account pin
 			 Describe(CommandSet, _AccountGetPIN._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account pin` command generates and registers a new PIN code that may be used\n{0}", _Indent);
@@ -274,32 +305,39 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("that the connection can be completed without additional user interaction.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleReference (Account.PinAlice);
+			  ConsoleReference (Connect.ConnectPINCreate);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			 Describe(CommandSet, _AccountList._DescribeCommand);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `account list` command lists all the Mesh accounts the current device is connected \n{0}", _Indent);
-			_Output.Write ("to.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account purge
 			 Describe(CommandSet, _AccountPurge._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account purge` command eliminates deleted objects and messages from the catalogs\n{0}", _Indent);
 			_Output.Write ("and spools stored on the current device. The Purge command does not cause data to be\n{0}", _Indent);
 			_Output.Write ("deleted from the service.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Account.ProfilePurge);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account recover
 			 Describe(CommandSet, _AccountRecover._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account recover` command reassembles the account primary secret from a set of\n{0}", _Indent);
 			_Output.Write ("recovery shares.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Account.ProfileRecover);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account status
 			 Describe(CommandSet, _AccountStatus._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account status` command returns the current status of the account catalogs and spools \n{0}", _Indent);
 			_Output.Write ("without attempting to synchronize with the service.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Account.StatusAlice);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ account sync
 			 Describe(CommandSet, _AccountSync._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `account sync` command attempts to synchronize the account catalogs and spools with\n{0}", _Indent);
@@ -309,6 +347,9 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("in inbound messages will be performed automatically without further user interaction.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (Account.SyncAlice);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}

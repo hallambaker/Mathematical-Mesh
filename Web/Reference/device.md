@@ -63,6 +63,14 @@ the same syntax as for the `device auth` command with the default authorization
 being that all authorizations are denied.
 
 
+~~~~
+<div="terminal">
+<cmd>Alice> meshman device accept JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ /message /web
+<rsp></div>
+~~~~
+
+
+
 # device auth
 
 ~~~~
@@ -123,6 +131,15 @@ The following authorizations may be granted or denied:
 * `ssh`: Authorize use of SSH
 
 
+~~~~
+<div="terminal">
+<cmd>Alice> meshman device auth Alice5 /all
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
+~~~~
+
+
+
 # device complete
 
 ~~~~
@@ -138,7 +155,19 @@ complete   Complete a pending request
 </div>
 ~~~~
 
-The `device complete` command attempts to complete a pending connection request.
+The `device complete` command attempts to connect by means of a preconfigured
+device profile by polling the manufacturer service.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice4> meshman device complete
+<rsp>   Device UDF = MB43-ZZ44-PWCH-SJME-GZBJ-HZKC-TZUT
+   Account = alice@example.com
+   Account UDF = MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+</div>
+~~~~
+
 
 
 # device delete
@@ -163,6 +192,10 @@ The parameter specifies the device being configured by means of either
 the UDF of the device profile or the device identifier.
 
 
+~~~~
+Missing example 6
+~~~~
+
 # device install
 
 ~~~~
@@ -178,6 +211,15 @@ install   Connect by means of a connection URI from an administration device.
 <over>
 </div>
 ~~~~
+
+
+~~~~
+<div="terminal">
+<cmd>Alice4> meshman device install EAVO-F5LN-W5EH-LUDH-NWHC-FM27-EY.medk
+<rsp></div>
+~~~~
+
+
 
 # device join
 
@@ -198,6 +240,16 @@ join   Connect by means of a connection URI from an administration device.
 The `device join` command attempts to connect a device to a personal profile
 by means of a URI supplied by an administration device.
 
+
+~~~~
+<div="terminal">
+<cmd>Alice5> meshman device join tbs
+<rsp>ERROR - The specified connection URI was invalid
+</div>
+~~~~
+
+
+
 # device list
 
 ~~~~
@@ -216,6 +268,10 @@ list   List devices in the device catalog
 
 The `device list` command lists the device profiles in the device catalog.
 
+
+~~~~
+Missing example 7
+~~~~
 
 # device pending
 
@@ -236,6 +292,20 @@ The `device pending` command lists the pending device connection requests in
 the inbound message spool.
 
 
+~~~~
+<div="terminal">
+<cmd>Alice> meshman device pending
+<rsp>MessageID: JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+        Connection Request::
+        MessageID: JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+        To:  From: 
+        Device:  MDF6-V33U-HPP4-FDY2-IH4G-BVCE-PTOS
+        Witness: JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+</div>
+~~~~
+
+
+
 # device preconfig
 
 ~~~~
@@ -251,6 +321,18 @@ preconfig   Generate new device profile and publish as an EARL
 <over>
 </div>
 ~~~~
+
+
+~~~~
+<div="terminal">
+<cmd>Maker> meshman device preconfig
+<rsp>Device UDF: MB43-ZZ44-PWCH-SJME-GZBJ-HZKC-TZUT
+File: EAVO-F5LN-W5EH-LUDH-NWHC-FM27-EY.medk
+</div>
+~~~~
+
+
+
 
 # device reject
 
@@ -275,6 +357,10 @@ being accepted. The connection identifier may be abbreviated provided that
 this uniquely identifies the connection being accepted and that at least 
 four characters are given.
 
+
+~~~~
+Missing example 8
+~~~~
 
 # device request
 
@@ -314,6 +400,16 @@ made.
 If the account holder has generated an authentication code, this is specified by means of 
 the `/pin` option.
 
+
+
+
+~~~~
+<div="terminal">
+<cmd>Alice2> meshman device request alice@example.com
+<rsp>   Device UDF = MDF6-V33U-HPP4-FDY2-IH4G-BVCE-PTOS
+   Witness value = JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+</div>
+~~~~
 
 
 

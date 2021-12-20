@@ -30,9 +30,9 @@ using the `message contact` command:
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message contact alice@example.com
-<rsp>Envelope ID: MCYQ-CVAT-J4F3-DFAE-5R6T-JTKG-4VI6
-Message ID: NARA-7QXY-OIUO-A4VX-WRSG-FWED-W37V
-Response ID: MBST-46UM-4A2W-TQMR-TW77-7DWP-LQQG
+<rsp>Envelope ID: MAGS-FJA4-B3DP-75QH-LDH6-EVXN-EXLO
+Message ID: NBMT-K2BY-N7SO-2V7J-A2AF-LSDD-IIOV
+Response ID: MBNB-C33D-LD54-SUK7-UJ7Y-UZPZ-ZPPZ
 </div>
 ~~~~
 
@@ -42,25 +42,25 @@ Alice reviews her pending messages using the `message pending` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NARA-7QXY-OIUO-A4VX-WRSG-FWED-W37V
+<rsp>MessageID: NBMT-K2BY-N7SO-2V7J-A2AF-LSDD-IIOV
         Contact Request::
-        MessageID: NARA-7QXY-OIUO-A4VX-WRSG-FWED-W37V
+        MessageID: NBMT-K2BY-N7SO-2V7J-A2AF-LSDD-IIOV
         To: alice@example.com From: bob@example.com
-        PIN: ABII-GHTL-WP4P-XBLL-4RA2-AWIE-GFEA
-MessageID: NBKK-WDGA-Z36W-IOD6-HZBW-DSNB-2CR5
+        PIN: ADLY-QWJJ-CIZZ-P4PP-4MA5-CGRF-OCUQ
+MessageID: NDVT-POHA-PJWP-AABG-YXO2-JU2C-4LYT
         Group invitation::
-        MessageID: NBKK-WDGA-Z36W-IOD6-HZBW-DSNB-2CR5
+        MessageID: NDVT-POHA-PJWP-AABG-YXO2-JU2C-4LYT
         To: alice@example.com From: alice@example.com
-MessageID: NBW3-QGBQ-U26Q-ECMH-3BAD-BYI5-7J4J
+MessageID: NCM5-RFA7-MCBH-UTRQ-2DPH-RIUN-DZEE
         Confirmation Request::
-        MessageID: NBW3-QGBQ-U26Q-ECMH-3BAD-BYI5-7J4J
+        MessageID: NCM5-RFA7-MCBH-UTRQ-2DPH-RIUN-DZEE
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NDRW-AINC-CW2Z-REBY-UILU-O2EI-MZPK
+MessageID: NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
         Contact Request::
-        MessageID: NDRW-AINC-CW2Z-REBY-UILU-O2EI-MZPK
+        MessageID: NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
         To: alice@example.com From: bob@example.com
-        PIN: ADXO-VQ4V-WNRY-WD65-PHYE-GK2E-TWZQ
+        PIN: ABS6-M3HZ-3XC3-T2MP-5KAC-7UQW-M65A
 </div>
 ~~~~
 
@@ -80,29 +80,34 @@ Bob's contact information has been added to Alice's address book:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
-  Person MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
-  Anchor MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
+<rsp>Entry<CatalogedContact>: MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+  Person MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+  Anchor MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
   Address alice@example.com
 
-Entry<CatalogedContact>: NDF5-DIN6-FBRI-UI2D-XLQF-SKWC-TCB5
+Entry<CatalogedContact>: NDEM-WE24-3HOC-XLZC-GC2G-ZXOF-C6HU
   Person 
-  Anchor MDBR-EJYT-5KJY-Z73B-IG7E-WFSN-MRKH
+  Anchor MAEP-FJ5L-ZDUD-4PA4-MLEF-ZZJG-LDER
   Address bob@example.com
 
-Entry<CatalogedContact>: NCPX-63X3-SRNM-KJDU-VED6-MYU2-EUG6
+Entry<CatalogedContact>: NBMX-PJ74-OQ3W-ZBM3-U525-RJYR-2QCG
   Person 
-  Anchor MCVG-W4LF-4BAI-2ZCY-NHCU-E3HO-VVHY
+  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
   Address groupw@example.com
 
-Entry<CatalogedContact>: NCPH-YMTN-5HKG-E3GR-YFZC-RDC5-ZM4D
+Entry<CatalogedContact>: NDRA-RYQ6-BGI6-S6ST-3EQO-SIHS-SZ5N
   Person 
-  Anchor MCVG-W4LF-4BAI-2ZCY-NHCU-E3HO-VVHY
+  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
   Address groupw@example.com
 
-Entry<CatalogedContact>: NDR4-XO5G-PIYW-6H47-ZAGK-ISPY-H2ES
+Entry<CatalogedContact>: NBR7-T7B7-5BPM-Q6CO-4W7F-PCSK-CHMN
   Person 
-  Anchor MCVG-W4LF-4BAI-2ZCY-NHCU-E3HO-VVHY
+  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
+  Address groupw@example.com
+
+Entry<CatalogedContact>: NCNT-D7WI-7OGD-Q4X5-VKN5-2GYO-NQ6M
+  Person 
+  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
   Address groupw@example.com
 
 </div>
@@ -173,9 +178,9 @@ a confirmation request `Purchase equipment for $6,000?` using the
 <div="terminal">
 <cmd>Bob> meshman message confirm alice@example.com "Purchase equipment for ^
     $6,000?"
-<rsp>Envelope ID: MCK7-MAGD-TRMF-QQPS-NG64-IGG4-CXUS
-Message ID: NCAV-N6DG-ZWX2-VIPG-IBFH-JTKM-5YWR
-Response ID: MDL3-PED3-HL55-C62T-DANJ-SA67-BAZC
+<rsp>Envelope ID: MA2M-E7MJ-5DPC-TWHA-2WC4-3WKS-GZV7
+Message ID: NDL3-WREK-BPQQ-ZTOH-FSOR-FHD2-OYNW
+Response ID: MDB2-IBLG-657S-K43Q-IQVY-5UAF-3CHS
 </div>
 ~~~~
 
@@ -185,30 +190,30 @@ Alice reviews her pending messages using the using the `message pending` command
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NCAV-N6DG-ZWX2-VIPG-IBFH-JTKM-5YWR
+<rsp>MessageID: NDL3-WREK-BPQQ-ZTOH-FSOR-FHD2-OYNW
         Confirmation Request::
-        MessageID: NCAV-N6DG-ZWX2-VIPG-IBFH-JTKM-5YWR
+        MessageID: NDL3-WREK-BPQQ-ZTOH-FSOR-FHD2-OYNW
         To: alice@example.com From: bob@example.com
         Text: "Purchase
-MessageID: NARA-7QXY-OIUO-A4VX-WRSG-FWED-W37V
+MessageID: NBMT-K2BY-N7SO-2V7J-A2AF-LSDD-IIOV
         Contact Request::
-        MessageID: NARA-7QXY-OIUO-A4VX-WRSG-FWED-W37V
+        MessageID: NBMT-K2BY-N7SO-2V7J-A2AF-LSDD-IIOV
         To: alice@example.com From: bob@example.com
-        PIN: ABII-GHTL-WP4P-XBLL-4RA2-AWIE-GFEA
-MessageID: NBKK-WDGA-Z36W-IOD6-HZBW-DSNB-2CR5
+        PIN: ADLY-QWJJ-CIZZ-P4PP-4MA5-CGRF-OCUQ
+MessageID: NDVT-POHA-PJWP-AABG-YXO2-JU2C-4LYT
         Group invitation::
-        MessageID: NBKK-WDGA-Z36W-IOD6-HZBW-DSNB-2CR5
+        MessageID: NDVT-POHA-PJWP-AABG-YXO2-JU2C-4LYT
         To: alice@example.com From: alice@example.com
-MessageID: NBW3-QGBQ-U26Q-ECMH-3BAD-BYI5-7J4J
+MessageID: NCM5-RFA7-MCBH-UTRQ-2DPH-RIUN-DZEE
         Confirmation Request::
-        MessageID: NBW3-QGBQ-U26Q-ECMH-3BAD-BYI5-7J4J
+        MessageID: NCM5-RFA7-MCBH-UTRQ-2DPH-RIUN-DZEE
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NDRW-AINC-CW2Z-REBY-UILU-O2EI-MZPK
+MessageID: NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
         Contact Request::
-        MessageID: NDRW-AINC-CW2Z-REBY-UILU-O2EI-MZPK
+        MessageID: NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
         To: alice@example.com From: bob@example.com
-        PIN: ADXO-VQ4V-WNRY-WD65-PHYE-GK2E-TWZQ
+        PIN: ABS6-M3HZ-3XC3-T2MP-5KAC-7UQW-M65A
 </div>
 ~~~~
 
@@ -261,7 +266,7 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 
 ~~~~
-Missing example 30
+Missing example 9
 ~~~~
 
 

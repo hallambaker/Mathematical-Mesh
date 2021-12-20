@@ -158,7 +158,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			 Describe(CommandSet, _KeyRecover._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `key recover` command combines the specified set of share to recover the original secret \n{0}", _Indent);
-			_Output.Write ("value as a UDF Encryption key type.\n{0}", _Indent);
+			_Output.Write ("value as a UDF Encryption key type. It is not necessary to enter the shares in a particular order.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellKey.KeyRecover);
 			_Output.Write ("\n{0}", _Indent);

@@ -113,12 +113,12 @@ Devices are given authorization to access the bookmarks catalog using the
 
 
 ~~~~
-Missing example 43
+Missing example 22
 ~~~~
 
 The new device now has access to the Bookmarks catalog:
 
 
 ~~~~
-Missing example 44
+Missing example 23
 ~~~~

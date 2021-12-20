@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 12/19/2021 2:14:05 AM
+//  This file was automatically generated at 12/19/2021 7:10:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -354,7 +354,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			{"decode", _DareDecode._DescribeCommand },
 			{"verify", _DareVerify._DescribeCommand },
 			{"earl", _DareEARL._DescribeCommand },
-			{"sequence", _DareSequence._DescribeCommand },
+			{"create", _DareCreate._DescribeCommand },
 			{"archive", _DareArchive._DescribeCommand },
 			{"log", _DareLog._DescribeCommand },
 			{"append", _DareAppend._DescribeCommand },
@@ -363,7 +363,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			{"list", _DareList._DescribeCommand },
 			{"index", _DareIndex._DescribeCommand },
 			{"extract", _DareExtract._DescribeCommand },
-			{"purge", _DarePurge._DescribeCommand }
+			{"copy", _DareCopy._DescribeCommand }
 			} // End Entries
 		};
 
@@ -1278,13 +1278,13 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DareSequence (
+	public static void Handle_DareCreate (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DareSequence		Options = new ();
+		DareCreate		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DareSequence (Options);
+		var result = Dispatch.DareCreate (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -1368,13 +1368,13 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DarePurge (
+	public static void Handle_DareCopy (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DarePurge		Options = new ();
+		DareCopy		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DarePurge (Options);
+		var result = Dispatch.DareCopy (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -14902,7 +14902,7 @@ public class _DareEARL : Goedel.Command.Dispatch ,
 public partial class DareEARL : _DareEARL {
     } // class DareEARL
 
-public class _DareSequence : Goedel.Command.Dispatch ,
+public class _DareCreate : Goedel.Command.Dispatch ,
 						IEncodeOptions,
 						ICryptoOptions,
 						ISequenceOptions,
@@ -15068,9 +15068,9 @@ public class _DareSequence : Goedel.Command.Dispatch ,
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "sequence",
+		Identifier = "create",
 		Brief =  "Create a new DARE Sequence",
-		HandleDelegate =  CommandLineInterpreter.Handle_DareSequence,
+		HandleDelegate =  CommandLineInterpreter.Handle_DareCreate,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
@@ -15183,8 +15183,8 @@ public class _DareSequence : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class DareSequence : _DareSequence {
-    } // class DareSequence
+public partial class DareCreate : _DareCreate {
+    } // class DareCreate
 
 public class _DareArchive : Goedel.Command.Dispatch ,
 						IEncodeOptions,
@@ -16863,7 +16863,7 @@ public class _DareExtract : Goedel.Command.Dispatch ,
 public partial class DareExtract : _DareExtract {
     } // class DareExtract
 
-public class _DarePurge : Goedel.Command.Dispatch ,
+public class _DareCopy : Goedel.Command.Dispatch ,
 						IEncodeOptions,
 						ICryptoOptions,
 						ISequenceOptions,
@@ -17069,9 +17069,9 @@ public class _DarePurge : Goedel.Command.Dispatch ,
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "purge",
+		Identifier = "copy",
 		Brief =  "Copy sequence contents to create a new sequence removing deleted elements",
-		HandleDelegate =  CommandLineInterpreter.Handle_DarePurge,
+		HandleDelegate =  CommandLineInterpreter.Handle_DareCopy,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryParameter () {
@@ -17212,8 +17212,8 @@ public class _DarePurge : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class DarePurge : _DarePurge {
-    } // class DarePurge
+public partial class DareCopy : _DareCopy {
+    } // class DareCopy
 
 public class _MailAdd : Goedel.Command.Dispatch ,
 						IDeviceAuthOptions,
@@ -21076,7 +21076,7 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		return null;
 		}
 
-	public virtual ShellResult DareSequence ( DareSequence Options) {
+	public virtual ShellResult DareCreate ( DareCreate Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
@@ -21121,7 +21121,7 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		return null;
 		}
 
-	public virtual ShellResult DarePurge ( DarePurge Options) {
+	public virtual ShellResult DareCopy ( DareCopy Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}

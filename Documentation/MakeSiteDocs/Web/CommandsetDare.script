@@ -12,16 +12,20 @@
 #zfile CreateExamples WebDare "Guide/dare.md" Examples
 #% MakeTitle ("dare");
 
+**Under development**: This command set is currently under development and many
+features are documented but not yet implemented. Use with care!
+
 The `dare` command set contains commands that encode, decode and verify 
 DARE envelopes and sequences.
 
-#### Encoding a file as a DARE message.
+#### Encoding, decoding and verifying individual files in a DARE envelope.
 
-The #{ToCommand("dare encode")} command is used to encode files as DARE Messages:
+The #{ToCommand("dare encode")}, #{ToCommand("dare decode")} and
+#{ToCommand("dare verify")} commands are used to encode files as DARE Messages,
+decode and verify them respectively. If the '/encrypt' option is specified,
+the contents are encrypted under the corresponding encryption key:
 
-#% ConsoleExample (ShellDare.DarePlaintext);
-
-In this case, the file `#{TestFile1}` contains the text `"#{TestText1}"`.
+#% ConsoleExample (Account.ConsoleEncryptFile);
 
 By default, a content digest is calculated over the contents. This may be 
 suppressed using the `/nohash` flag.
@@ -43,7 +47,7 @@ public encryption key.
 #% ConsoleExample (ShellDare.DareMesh);
 
 
-#### Verifying a DARE message.
+###### Verifying a DARE message.
 
 The #{ToCommand("dare verify")} command is used to verify the signature and 
 digest values on a DARE Message without decoding the message body:
@@ -63,7 +67,7 @@ level otherwise.
 
 #% ConsoleExample (ShellDare.DareVerifySymmetricUnknown);
 
-#### Decoding a DARE message to a file.
+###### Decoding a DARE message to a file.
 
 The #{ToCommand("dare decode")} command is used to decode and verify DARE Messages:
 
@@ -90,7 +94,7 @@ to generate the key identifier and encrypt the input file to a file with the
 name of the key identifier.
 
 The `/log` option causes the filename, encryption key and other details of
-the transaction to be written to a DARE Container Log.
+the transaction to be written to a DARE Sequence Log.
 
 #% ConsoleExample (ShellDare.DareEARLLog);
 
@@ -102,123 +106,121 @@ been processed already.
 
 #### Creating Sequences
 
-Containers are created with either the #{ToCommand("dare archive")} or 
-#{ToCommand("dare log")}. Both commands create a sequence with the 
-specified cryptographic enhancements. The #{ToCommand("container archive")}
-command additionally adds the specified file(s) to the container to create 
-a container archive.
+Sequences are created with the #{ToCommand("dare create")},
+#{ToCommand("dare archive")} or #{ToCommand("dare log")} commands. 
 
-#% ConsoleExample (ShellSequence.ContainerCreate);
+#{ToCommand("dare archive")} creates a sequence that is specialized
+for use as a DARE archive while #{ToCommand("dare log")} creates a 
+sequence that is specialized for use as an event log. 
+#{ToCommand("dare sequence")} creates an unspecialized sequence.
 
-*catalog* *spool* *archive* *log*
+#% ConsoleExample (ShellSequence.SequenceCreate);
 
+A sequence may have a security policy specified when it is created. If
+no encryption or signature policy is specified on creation, the entries
+appended to the sequence will not be encrypted or signed 
 
-The cryptographic enhancements specified when a container is created have the 
-same format and function as for DARE Messages but their scope is the container
+The cryptographic enhancements specified when a sequence is created have the 
+same format and function as for DARE Messages but their scope is the sequence
 as a whole.
 
-For example, Alice creates an encrypted container readable by anyone who is a
+For example, Alice creates an encrypted sequence readable by anyone who is a
 member of the group #{GroupAccount};
 
-#% ConsoleExample (ShellSequence.ContainerCreateEncrypt);
+#% ConsoleExample (ShellSequence.SequenceCreateEncrypt);
 
-Since it is rarely desirable to sign every entry in a container, signatures
-are typically added to a container when entries or indexes are added. 
+Since it is rarely desirable to sign every entry in a sequence, signatures
+are typically added to a sequence when entries or indexes are added. 
 
-The #{ToCommand("container archive")} creates a new container, adds the
+###### Archives
+
+The #{ToCommand("dare archive")} creates a new archive, adds the
 specified file(s) as entries and appends an index as the final record:
 
-#% ConsoleExample (ShellSequence.ContainerArchive);
+#% ConsoleExample (ShellSequence.SequenceArchive);
 
 An archive may be signed and encrypted:
 
-#% ConsoleExample (ShellSequence.ContainerArchiveEnhance);
+#% ConsoleExample (ShellSequence.SequenceArchiveEnhance);
 
 The signature on a signed archive is calculated over the final apex of the 
 Merkel tree. Thus a single signature verification may be used to validate
-any or all entries in the container.
+any or all entries in the sequence.
 
-#### Reading Containers
+#### Reading Sequences
 
-The #{ToCommand("dare verify")} command verifies the contents of a container: 
+The #{ToCommand("dare verify")} command used to verify enveloped is also used to
+verify the contents of a sequence: 
 
-#% ConsoleExample (ShellSequence.ContainerArchiveVerify);
+#% ConsoleExample (ShellSequence.SequenceArchiveVerify);
 
 The verification performed depends on the type of authentication applied to the
-container and whether the verifier can provide the necessary authentication or
+sequence and whether the verifier can provide the necessary authentication or
 decryption keys.
 
-
-The #{ToCommand("dare extract")} 
-
-One or more container entries may be extracted to a file using the  
-#{ToCommand("container extract")} command. If the container is an archive, all
+One or more sequence entries may be extracted to a file using the  
+#{ToCommand("dare extract")} command. If the sequence is an archive, all
 the files are extracted by default:
 
-#% ConsoleExample (ShellSequence.ContainerArchiveExtractAll);
+#% ConsoleExample (ShellSequence.SequenceArchiveExtractAll);
 
 Alternatively, the `/file` option may be used to extract a specific file:
 
-#% ConsoleExample (ShellSequence.ContainerArchiveExtractFile);
+#% ConsoleExample (ShellSequence.SequenceArchiveExtractFile);
 
 
-#### Writing to Archives 
+#### Writing to Sequences 
 
-The #{ToCommand("dare append")} command adds an entry to a container:
+The #{ToCommand("dare append")} command adds an entry to a sequence:
 
-#% ConsoleExample (ShellSequence.ContainerAppend);
+#% ConsoleExample (ShellSequence.SequenceAppend);
 
 If no security enhancements are specified, the default enhancements specified 
 in the index entry are applied.
 
-The #{ToCommand("dare delete")} 
-
-The #{ToCommand("container delete")} command adds an entry to a container
+The #{ToCommand("dare delete")} command adds an entry to a sequence
 marking an entry as deleted:
 
-#% ConsoleExample (ShellSequence.ContainerDelete);
+#% ConsoleExample (ShellSequence.SequenceDelete);
 
 Marking an entry for deletion does not cause the entry itself to be modified.
 The entry is merely marked as having been deleted. To erase the entry contents,
-it is necessary to either make a copy of the container using the `/purge`
+it is necessary to either make a copy of the sequence using the `/purge`
 option to reclaim the space used by deleted entries or to use the 
 `/erase` or `overwrite` options.
 
 
 The #{ToCommand("dare index")} command adds an index entry to the end of
-container:
+sequence:
 
-#% ConsoleExample (ShellSequence.ContainerIndex);
+#% ConsoleExample (ShellSequence.SequenceIndex);
 
 The index entry may be complete, providing an index of the entire file 
 or incremental, only indexing the items added since the last index was created.
-Indexing containers allows the contents to be efficiently retrieved.
+Indexing sequences allows the contents to be efficiently retrieved.
 
 
-#### Writing to Logs
+#### Copying and Purging Sequences
 
-
-#### Purging Sequences
-
-The #{ToCommand("dare purge")} command makes a copy of a container with
+The #{ToCommand("dare copy")} command makes a copy of a sequence with
 the specified filtering rules. By default, no changes are made except to 
-collect tree index fields dispersed throughout the container with an index 
+collect tree index fields dispersed throughout the sequence with an index 
 at the end:
 
-#% ConsoleExample (ShellSequence.ContainerArchiveCopy);
+#% ConsoleExample (ShellSequence.SequenceArchiveCopy);
 
-The copy command may be used to encrypt or decrypt the container contents during 
+The #{ToCommand("dare copy")}  command may be used to encrypt or decrypt the sequence contents during 
 the copy:
 
-#% ConsoleExample (ShellSequence.ContainerArchiveCopyDecrypt);
+#% ConsoleExample (ShellSequence.SequenceArchiveCopyDecrypt);
 
-The copy command may also be used to reclaim space used by deleted items:
+The #{ToCommand("dare copy")}  command may also be used to reclaim space used by deleted items
+by specifying the '/purge' option:
 
-#% ConsoleExample (ShellSequence.ContainerArchiveCopyPurge);
+#% ConsoleExample (ShellSequence.SequenceArchiveCopyPurge);
 
-
-
-
+Note that it is not possible to purge a file in place writing the output to the input file
+using this command.
 
 
 #end zfile
@@ -227,35 +229,52 @@ The copy command may also be used to reclaim space used by deleted items:
 #% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Dare;
 #% Describe(CommandSet);
 
+**Under development**: This command set is currently under development and many
+features are documented but not yet implemented. Use with care!
+
 The `dare` command set contains commands that encode, decode and verify 
 DARE envelopes and sequences.
 
 
-#% ConsoleReference (ShellSequence.ContainerArchiveExtractAll);
 
+#! ------------------ dare append
 #% Describe(CommandSet, _DareAppend._DescribeCommand);
 
-The `dare append` command appends the specified file to the container.
+The `dare append` command appends the specified file to the sequence.
 
-#% ConsoleReference (ShellSequence.ContainerAppend);
+#% ConsoleReference (ShellSequence.SequenceAppend);
 
 
+#! ------------------ dare archive
 #% Describe(CommandSet, _DareArchive._DescribeCommand);
 
-The `dare archive` command creates an archive with the specified cryptographic
-enhancements.
+The `dare archive` command creates an archive sequence with the specified cryptographic
+enhancements. If a file or directory is specified, they are added to the archive and
+an index appended to the end.
 
-#% ConsoleReference (ShellSequence.ContainerArchive);
-
-
-
+#% ConsoleReference (ShellSequence.SequenceArchive);
 
 
+#! ------------------ dare create
+#% Describe(CommandSet, _DareCreate._DescribeCommand);
 
 
+The `dare create` command creates an empty DARE sequence with the specified
+security policy.
+
+#% ConsoleReference (ShellSequence.SequenceCreate);
 
 
+#! ------------------ dare copy
+#% Describe(CommandSet, _DareCopy._DescribeCommand);
 
+The `dare copy` command copies a sequence applying the specified filtering 
+and indexing criteria.
+
+#% ConsoleReference (ShellSequence.SequenceArchiveCopy);
+
+
+#! ------------------ dare decode
 #% Describe(CommandSet, _DareDecode._DescribeCommand);
 
 The `dare decode` command decodes the specified input file using keys found in the
@@ -270,23 +289,16 @@ with the extension `.undare` otherwise.
 #% ConsoleReference (ShellDare.DareDecodeSymmetric);
 
 
-
+#! ------------------ dare delete
 #% Describe(CommandSet, _DareDelete._DescribeCommand);
 
 The `dare delete` command marks the specified file entry as deleted in the
-container but does not erase the data from the file.
+sequence but does not erase the data from the file.
 
-#% ConsoleReference (ShellSequence.ContainerDelete);
-
-
+#% ConsoleReference (ShellSequence.SequenceDelete);
 
 
-
-
-#% Describe(CommandSet, _DareDir._DescribeCommand);
-
-The `dare dir` command returns a directory listing for the specified archive.
-
+#! ------------------ dare earl
 #% Describe(CommandSet, _DareEARL._DescribeCommand);
 
 The #{ToCommand("dare earl")} command is used to encode an input file and return
@@ -298,20 +310,20 @@ input file is a directory, the tool processes all the files in the directory. If
 `/sub` option is specified, subdirectories are processed recursively.
 
 If the `/log` or `/new` option is specified, the filename, encryption key and other details of
-each completed transaction are written to a DARE Container Log. If `/log` is specified, the 
+each completed transaction are written to a DARE Sequence Log. If `/log` is specified, the 
 file is always processed. If `/new` is specified, files are only
 processed if there is no existing entry in the specified log.
 
-The log file must be initialized before use (eg. using the #{ToCommand("container create")} 
+The log file must be initialized before use (eg. using the #{ToCommand("dare log")} 
 command). Log entries are written with the cryptographic enhancements specified in
-the container using the active key collection.
+the sequence using the active key collection.
 
 The active key collection may be overriden using the `/mesh` option.
 
 #% ConsoleReference (ShellDare.DareEarl);
 
 
-
+#! ------------------ dare encode
 #% Describe(CommandSet, _DareEncode._DescribeCommand);
 
 The `dare encode` command encrypts a file and writes the output to a DARE Message.
@@ -343,45 +355,50 @@ Algorithms for public key operations are inferred from the keys provided. The
 The `/out` option may be used to specify the output file name. Otherwise the output
 file name is the input file name with the additional extension `.dare`.
 
-
-
 #% ConsoleReference (ShellDare.DareSymmetric);
 
+
+#! ------------------ dare extract
 #% Describe(CommandSet, _DareExtract._DescribeCommand);
 
-The `dare extract` command extracts the specified container entries and writes them
+The `dare extract` command extracts the specified sequence entries and writes them
 to files.
 
+#% ConsoleReference (ShellSequence.SequenceArchiveExtractFile);
 
+
+#! ------------------ dare index
 #% Describe(CommandSet, _DareIndex._DescribeCommand);
 
-The `dare index` command appends an index record to the end of the container.
+The `dare index` command appends an index record to the end of the sequence.
 
-#% ConsoleReference (ShellSequence.ContainerIndex);
-
-
+#% ConsoleReference (ShellSequence.SequenceIndex);
 
 
+
+
+#! ------------------ dare list
 #% Describe(CommandSet, _DareList._DescribeCommand);
+
+The `dare list` command returns a list of items in the specified sequence..
+
+#% ConsoleReference (ShellSequence.SequenceList);
+
+
+#! ------------------ dare log
 #% Describe(CommandSet, _DareLog._DescribeCommand);
 
 The `dare log` command creates a sequence with the specified cryptographic
 enhancements.
 
-#% ConsoleReference (ShellSequence.ContainerCreate);
+#% ConsoleReference (ShellSequence.SequenceCreate);
 
-#% Describe(CommandSet, _DarePurge._DescribeCommand);
 
-The `dare purge` command copies a container applying the specified filtering 
-and indexing criteria.
 
-#% ConsoleReference (ShellSequence.ContainerArchiveCopy);
-
-#% Describe(CommandSet, _DareSequence._DescribeCommand);
-
+#! ------------------ dare verify
 #% Describe(CommandSet, _DareVerify._DescribeCommand);
 
-The `dare decode` command verifies the specified input file using keys found in the
+The `dare verify` command verifies the specified input file using keys found in the
 currently active key collection and reports success or failure.
 
 The active key collection may be overriden using the `/mesh` option.

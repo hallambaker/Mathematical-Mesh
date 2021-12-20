@@ -21,7 +21,7 @@ The #{ToCommand("device request")} command is used on the new device
 to request connection to the user's profile. Alice need only specify 
 the mesh service account #{AliceAccount} to which connection is requested:
 
-#%  ConsoleExample (ShellAccount.ConnectRequest);
+#%  ConsoleExample (Connect.ConnectRequest);
 
 In this case there is no existing device profile and so a new profile is
 created and used to create a registration request which is posted to the user's 
@@ -36,34 +36,34 @@ complete the connection process.
 The #{ToCommand("device pending")} command gives a list of pending connection
 messages.
 
-#%  ConsoleExample (ShellAccount.ConnectPending);
+#%  ConsoleExample (Connect.ConnectPending);
 
 Alice sees the request that she posted and approves it with the connect
 #{ToCommand("device accept")} command:
 
-#%  ConsoleExample (ShellAccount.ConnectAccept);
+#%  ConsoleExample (Connect.ConnectAccept);
 
 There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
 request:
 
-#%  ConsoleExample (ShellAccount.ConnectReject);
+#%  ConsoleExample (Connect.ConnectReject);
 
 The connection process is completed by synchronizing the new device. At this point,
 all the applications that were available to the first device are available to the
 second:
 
-#%  ConsoleExample (ShellAccount.ConnectSync);
+#%  ConsoleExample (Account.SyncAlice);
 
 ####Managing connected devices
 
 The #{ToCommand("device list")} command gives a list of devices in the device 
 catalog:
 
-#%  ConsoleExample (ShellAccount.ConnectList);
+#%  ConsoleExample (Connect.ConnectList);
 
 The #{ToCommand("device delete")} command removes a device from the catalog:
 
-#%  ConsoleExample (ShellAccount.ConnectDelete);
+#%  ConsoleExample (Connect.ConnectDelete);
 
 
 #### Requesting a connection using a PIN
@@ -78,20 +78,20 @@ Connection requests may be authenticated by means of a PIN created on an
 administration device. The #{ToCommand("device pin")} command generates
 a new PIN code:
 
-#%  ConsoleExample (ShellAccount.ConnectGetPin);
+#%  ConsoleExample (Connect.ConnectPINCreate);
 
 The pin code can now be used to authenticate the connection request:
 
-#%  ConsoleExample (ShellAccount.ConnectPin);
+#%  ConsoleExample (Connect.ConnectPINRequest);
 
 Since the PIN code that was issued was set to be self-authorizing, the device
 is connected automatically when the user synchronizes their account from an 
 administrator device:
 
-#%  ConsoleExample (ShellAccount.ConnectPending3);
+#%  ConsoleExample (Connect.ConnectPINPending);
 
 
-###### Requesting a connection using an EARL
+###### Static Device Connection Mechanism
 
 Encrypted Authenticated Resource Locators provide one means of preconfiguring
 a device to enable simple and straightforward connection to a Mesh profile.
@@ -116,18 +116,21 @@ To enable this connection mode, the manufacturer performs the steps of
 
 * Converting the EARL to a QR code which is printed on the device or its packaging.
 
-These steps may be performed on the device to be connected using the 
-#{ToCommand("device request")} command with the `/earl` option. Instead of requesting
-connection to a user account, the device requests connection to a special purpose
-account established for the purpose of providing a hailing account for enabling
-this type of device connection.
+These steps are performed by executing the #{ToCommand("device preconfig")} command
+on an administration device at the manufacturer facility:
 
-#! ConsoleExample (ShellAccount.DeviceEarl1);
+#% ConsoleExample (Connect.ConnectStaticPrepare);
+
+This creates a configuration file that is installed on the device by executing the
+#{ToCommand("device install")} command on the device itself:
+
+#% ConsoleExample (Connect.ConnectStaticInstall);
 
 The device can attempt to complete the connection whenever it is provided with power 
-and network connectivity using the #{ToCommand("profile sync")} command.
+and network connectivity using the #{ToCommand("device complete")} command. Attempts to
+connect before there has been a connection request posted will fail of course.
 
-#! ConsoleExample (ShellAccount.DeviceEarl2);
+#% ConsoleExample (Connect.ConnectStaticPollFail);
 
 The key specified in the '/earl' option is used to create a UDF EARL specifying a 
 location from which a device description document may be obtained. Note that 
@@ -140,19 +143,30 @@ activity LED at a rate suitable to allow transmission of a short message to a
 smart phone camera.
 
 A QR code or other scanning application can use the meshman tool to resolve the EARL 
-and retrieve the data using the #{ToCommand("device earl")} command:
+and retrieve the data using the #{ToCommand("account connect")} command:
 
-#! ConsoleExample (ShellAccount.DeviceEarl3);
+#% ConsoleExample (Connect.ConnectStaticClaim);
 
 The tool performs the tasks of resolving the EARL, decrypting the discovery record
 and posting a connection response to both the hailing account and the profile account.
 The next time the device polls the hailing account, it retrieves the connection data:
 
-#! ConsoleExample (ShellAccount.DeviceEarl4);
+#% ConsoleExample (Connect.ConnectStaticPollSuccess);
 
 Once connected to an account, a device does not attempt to poll the hailing account. 
 Further attempts to make a connection are thus ignored unless the device is 
 reset.
+
+
+#### Dynamic QR connection and Post Authentication
+
+
+
+#% ConsoleExample (Connect.ConnectJoinPinCreate);
+#% ConsoleExample (Connect.ConnectJoin);
+#% ConsoleExample (Connect.ConnectJoinPending);
+#% ConsoleExample (Connect.ConnectJoinComplete);
+#% ConsoleExample (Connect.ConnectJoinAuth);
 
 
 #end zfile
@@ -178,7 +192,7 @@ The authorizations to be granted to the device may be specified using
 the same syntax as for the `device auth` command with the default authorization
 being that all authorizations are denied.
 
-#%  ConsoleReference (ShellAccount.ConnectAccept);
+#%  ConsoleReference (Connect.ConnectAccept);
 
 #% Describe(CommandSet, _DeviceAuthorize._DescribeCommand);
 
@@ -214,13 +228,17 @@ The following authorizations may be granted or denied:
 * `password`: Authorize access to password catalog
 * `ssh`: Authorize use of SSH
 
-#%  ConsoleReference (ShellContact.ContactAuth);
+#%  ConsoleReference (Connect.ConnectJoinAuth);
 
+#! ------------------ device complete
 #% Describe(CommandSet, _DeviceComplete._DescribeCommand);
 
-The `device complete` command attempts to complete a pending connection request.
+The `device complete` command attempts to connect by means of a preconfigured
+device profile by polling the manufacturer service.
 
+#%  ConsoleReference (Connect.ConnectStaticPollSuccess);
 
+#! ------------------ device delete
 #% Describe(CommandSet, _DeviceDelete._DescribeCommand);
 
 The `device delete` command removes the specified device from the catalog.
@@ -228,30 +246,43 @@ The `device delete` command removes the specified device from the catalog.
 The parameter specifies the device being configured by means of either
 the UDF of the device profile or the device identifier.
 
-#%  ConsoleReference (ShellAccount.ConnectDelete);
+#%  ConsoleReference (Connect.ConnectDelete);
 
+#! ------------------ device install
 #% Describe(CommandSet, _DeviceInstall._DescribeCommand);
 
+#%  ConsoleReference (Connect.ConnectStaticInstall);
+
+#! ------------------ device 
 #% Describe(CommandSet, _DeviceJoin._DescribeCommand);
 
 The `device join` command attempts to connect a device to a personal profile
 by means of a URI supplied by an administration device.
 
+#%  ConsoleReference (Connect.ConnectJoin);
+
+#! ------------------ device 
 #% Describe(CommandSet, _DeviceList._DescribeCommand);
 
 The `device list` command lists the device profiles in the device catalog.
 
-#%  ConsoleReference (ShellAccount.ConnectList);
+#%  ConsoleReference (Connect.ConnectList);
 
+#! ------------------ device 
 #% Describe(CommandSet, _DevicePending._DescribeCommand);
 
 The `device pending` command lists the pending device connection requests in
 the inbound message spool.
 
-#%  ConsoleReference (ShellAccount.ConnectPending);
+#%  ConsoleReference (Connect.ConnectPending);
 
+#! ------------------ device 
 #% Describe(CommandSet, _DevicePreconfigure._DescribeCommand);
 
+#%  ConsoleReference (Connect.ConnectStaticPrepare);
+
+
+#! ------------------ device 
 #% Describe(CommandSet, _DeviceReject._DescribeCommand);
 
 The `device reject` command rejects the specified connection request.
@@ -261,8 +292,9 @@ being accepted. The connection identifier may be abbreviated provided that
 this uniquely identifies the connection being accepted and that at least 
 four characters are given.
 
-#%  ConsoleReference (ShellAccount.ConnectReject);
+#%  ConsoleReference (Connect.ConnectReject);
 
+#! ------------------ device 
 #% Describe(CommandSet, _DeviceRequestConnect._DescribeCommand);
 
 The `device request \<account\>` command requests connection of a device to a mesh profile.
@@ -275,7 +307,7 @@ the `/pin` option.
 
 
 
-#%  ConsoleReference (ShellAccount.ConnectRequest);
+#%  ConsoleReference (Connect.ConnectRequest);
 
 
 #end zfile

@@ -36,6 +36,10 @@ client   Add one or more keys to the authorized_keys file
 </div>
 ~~~~
 
+~~~~
+Missing example 42
+~~~~
+
 # ssh host
 
 ~~~~
@@ -51,6 +55,10 @@ host   Add one or more hosts to the known_hosts file
     /id   Key identifier
 <over>
 </div>
+~~~~
+
+~~~~
+Missing example 43
 ~~~~
 
 # ssh create
@@ -82,6 +90,10 @@ create   Generate a new SSH public keypair for the current machine and add to th
 </div>
 ~~~~
 
+~~~~
+Missing example 44
+~~~~
+
 # ssh list
 
 ~~~~
@@ -96,6 +108,10 @@ list   List ssh account information
     /json   Report output in JSON format
 <over>
 </div>
+~~~~
+
+~~~~
+Missing example 45
 ~~~~
 
 
@@ -132,6 +148,10 @@ host   Add one or more hosts to the known_hosts file
 </div>
 ~~~~
 
+~~~~
+Missing example 46
+~~~~
+
 
 
 # ssh private
@@ -154,6 +174,10 @@ private   Extract the private key for this device
 </div>
 ~~~~
 
+~~~~
+Missing example 47
+~~~~
+
 # ssh public
 
 ~~~~
@@ -174,6 +198,10 @@ public   Extract the public key for this device
 </div>
 ~~~~
 
+~~~~
+Missing example 48
+~~~~
+
 
 # ssh host
 
@@ -192,6 +220,10 @@ host   List the known SSH sites (aka known hosts)
 </div>
 ~~~~
 
+~~~~
+Missing example 49
+~~~~
+
 # ssh client
 
 ~~~~
@@ -207,6 +239,10 @@ client   List the authorized device keys (aka authorized_keys)
     /id   Key identifier
 <over>
 </div>
+~~~~
+
+~~~~
+Missing example 50
 ~~~~
 
 

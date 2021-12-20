@@ -114,29 +114,34 @@ A complete list of contacts is obtained using the  `contact list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
-  Person MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
-  Anchor MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
+<rsp>Entry<CatalogedContact>: MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+  Person MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+  Anchor MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
   Address alice@example.com
 
-Entry<CatalogedContact>: NDF5-DIN6-FBRI-UI2D-XLQF-SKWC-TCB5
+Entry<CatalogedContact>: NDEM-WE24-3HOC-XLZC-GC2G-ZXOF-C6HU
   Person 
-  Anchor MDBR-EJYT-5KJY-Z73B-IG7E-WFSN-MRKH
+  Anchor MAEP-FJ5L-ZDUD-4PA4-MLEF-ZZJG-LDER
   Address bob@example.com
 
-Entry<CatalogedContact>: NCPX-63X3-SRNM-KJDU-VED6-MYU2-EUG6
+Entry<CatalogedContact>: NBMX-PJ74-OQ3W-ZBM3-U525-RJYR-2QCG
   Person 
-  Anchor MCVG-W4LF-4BAI-2ZCY-NHCU-E3HO-VVHY
+  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
   Address groupw@example.com
 
-Entry<CatalogedContact>: NCPH-YMTN-5HKG-E3GR-YFZC-RDC5-ZM4D
+Entry<CatalogedContact>: NDRA-RYQ6-BGI6-S6ST-3EQO-SIHS-SZ5N
   Person 
-  Anchor MCVG-W4LF-4BAI-2ZCY-NHCU-E3HO-VVHY
+  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
   Address groupw@example.com
 
-Entry<CatalogedContact>: NDR4-XO5G-PIYW-6H47-ZAGK-ISPY-H2ES
+Entry<CatalogedContact>: NBR7-T7B7-5BPM-Q6CO-4W7F-PCSK-CHMN
   Person 
-  Anchor MCVG-W4LF-4BAI-2ZCY-NHCU-E3HO-VVHY
+  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
+  Address groupw@example.com
+
+Entry<CatalogedContact>: NCNT-D7WI-7OGD-Q4X5-VKN5-2GYO-NQ6M
+  Person 
+  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
   Address groupw@example.com
 
 </div>
@@ -163,13 +168,13 @@ Devices are given authorization to access the contacts catalog using the
 
 
 ~~~~
-Missing example 47
+Missing example 26
 ~~~~
 
 The newly authorized device can now access the contacts catalog:
 
 
 ~~~~
-Missing example 48
+Missing example 27
 ~~~~
 

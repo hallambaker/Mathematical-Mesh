@@ -6,6 +6,8 @@
 dare    DARE Message encryption and decryption commands
     append   Append the specified file as an entry to the specified sequence.
     archive   Create a new DARE archive and add the specified files
+    copy   Copy sequence contents to create a new sequence removing deleted elements
+    create   Create a new DARE Sequence
     decode   Decode a DARE Message.
     delete   Delete file from archive index.
     dir   Compile a catalog for the specified sequence.
@@ -15,24 +17,16 @@ dare    DARE Message encryption and decryption commands
     index   Compile an index for the specified sequence and append to the end.
     list   Compile a catalog for the specified sequence.
     log   Append the specified string to the sequence.
-    purge   Copy sequence contents to create a new sequence removing deleted elements
-    sequence   Create a new DARE Sequence
     verify   Verify a DARE Message.
 <over>
 </div>
 ~~~~
 
+**Under development**: This command set is currently under development and many
+features are documented but not yet implemented. Use with care!
+
 The `dare` command set contains commands that encode, decode and verify 
 DARE envelopes and sequences.
-
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman container extract Container.dcon TestOut
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
 
 
 
@@ -60,14 +54,13 @@ append   Append the specified file as an entry to the specified sequence.
 </div>
 ~~~~
 
-The `dare append` command appends the specified file to the container.
+The `dare append` command appends the specified file to the sequence.
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
+<cmd>Alice> meshman dare append Sequence.dcon TestFile1.txt
+<rsp></div>
 ~~~~
 
 
@@ -97,24 +90,93 @@ archive   Create a new DARE archive and add the specified files
 </div>
 ~~~~
 
-The `dare archive` command creates an archive with the specified cryptographic
-enhancements.
+The `dare archive` command creates an archive sequence with the specified cryptographic
+enhancements. If a file or directory is specified, they are added to the archive and
+an index appended to the end.
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman container archive ContainerArchive.dcon TestDir1
-<rsp>ERROR - The command System.Object[] is not known.
+<cmd>Alice> meshman dare archive SequenceArchive.dcon TestDir1
+<rsp>ERROR - Path cannot be null. (Parameter 'path')
 </div>
 ~~~~
 
 
 
 
+# dare create
+
+~~~~
+<div="helptext">
+<over>
+create   Create a new DARE Sequence
+       New sequence
+    /cty   Content Type
+    /encrypt   Encrypt data for specified recipient
+    /sign   Sign data with specified key
+    /hash   Compute hash of content
+    /alg   List of algorithm specifiers
+    /type   The sequence type, plain/tree/digest/chain/tree
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
+
+
+The `dare create` command creates an empty DARE sequence with the specified
+security policy.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman dare create Sequence.dcon
+<rsp></div>
+~~~~
 
 
 
 
+# dare copy
+
+~~~~
+<div="helptext">
+<over>
+copy   Copy sequence contents to create a new sequence removing deleted elements
+       Sequence to read
+       Copy
+    /cty   Content Type
+    /encrypt   Encrypt data for specified recipient
+    /sign   Sign data with specified key
+    /hash   Compute hash of content
+    /alg   List of algorithm specifiers
+    /type   The sequence type, plain/tree/digest/chain/tree
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+    /decrypt   Decrypt contents
+    /index   Append an index record to the end
+    /purge   Purge unused data etc.
+<over>
+</div>
+~~~~
+
+The `dare copy` command copies a sequence applying the specified filtering 
+and indexing criteria.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman dare copy Sequence2.dcon
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Sequence2.dcon'.
+</div>
+~~~~
 
 
 
@@ -149,11 +211,10 @@ with the extension `.undare` otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare /encrypt=WT77-HFZI-42AW-IV6J-PXUZ-NNSC-TM
+<cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare /encrypt=CKY3-MCKZ-NHBD-CJU3-GCPX-5FCE-VY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
-
 
 
 
@@ -172,40 +233,18 @@ delete   Delete file from archive index.
 ~~~~
 
 The `dare delete` command marks the specified file entry as deleted in the
-container but does not erase the data from the file.
+sequence but does not erase the data from the file.
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman container delete Container.dcon  TestFile2.txt
-<rsp>ERROR - The command System.Object[] is not known.
+<cmd>Alice> meshman dare delete Sequence.dcon  TestFile2.txt
+<rsp>ERROR - Value cannot be null. (Parameter 'key')
 </div>
 ~~~~
 
 
 
-
-
-
-
-
-# dare dir
-
-~~~~
-<div="helptext">
-<over>
-dir   Compile a catalog for the specified sequence.
-       Sequence to be cataloged
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-<over>
-</div>
-~~~~
-
-The `dare dir` command returns a directory listing for the specified archive.
 
 # dare earl
 
@@ -238,15 +277,23 @@ input file is a directory, the tool processes all the files in the directory. If
 `/sub` option is specified, subdirectories are processed recursively.
 
 If the `/log` or `/new` option is specified, the filename, encryption key and other details of
-each completed transaction are written to a DARE Container Log. If `/log` is specified, the 
+each completed transaction are written to a DARE Sequence Log. If `/log` is specified, the 
 file is always processed. If `/new` is specified, files are only
 processed if there is no existing entry in the specified log.
 
-The log file must be initialized before use (eg. using the `container create` 
+The log file must be initialized before use (eg. using the `dare log` 
 command). Log entries are written with the cryptographic enhancements specified in
-the container using the active key collection.
+the sequence using the active key collection.
 
 The active key collection may be overriden using the `/mesh` option.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman dare earl TestFile1.txt example.com
+<rsp>ERROR - An unknown error occurred
+</div>
+~~~~
 
 
 
@@ -305,14 +352,13 @@ The `/out` option may be used to specify the output file name. Otherwise the out
 file name is the input file name with the additional extension `.dare`.
 
 
-
-
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=WT77-HFZI-42AW-IV6J-PXUZ-NNSC-TM
+<cmd>Alice> meshman dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=CKY3-MCKZ-NHBD-CJU3-GCPX-5FCE-VY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
+
 
 
 
@@ -336,8 +382,18 @@ extract   Extract the specified record from the sequence
 </div>
 ~~~~
 
-The `dare extract` command extracts the specified container entries and writes them
+The `dare extract` command extracts the specified sequence entries and writes them
 to files.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman dare extract Sequence.dcon /file=TestDir1\TestFile4.txt
+<rsp>ERROR - The file was not found.
+</div>
+~~~~
+
+
 
 
 # dare index
@@ -361,14 +417,13 @@ index   Compile an index for the specified sequence and append to the end.
 </div>
 ~~~~
 
-The `dare index` command appends an index record to the end of the container.
+The `dare index` command appends an index record to the end of the sequence.
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman container index Container.dcon
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
+<cmd>Alice> meshman dare index Sequence.dcon
+<rsp></div>
 ~~~~
 
 
@@ -392,6 +447,20 @@ list   Compile a catalog for the specified sequence.
 <over>
 </div>
 ~~~~
+
+The `dare list` command returns a list of items in the specified sequence..
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman dare list Sequence.dcon
+<rsp>ERROR - Path cannot be null. (Parameter 'path')
+</div>
+~~~~
+
+
+
+
 # dare log
 
 ~~~~
@@ -420,73 +489,13 @@ enhancements.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman container create Container.dcon
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
+<cmd>Alice> meshman dare create Sequence.dcon
+<rsp></div>
 ~~~~
 
 
 
-# dare purge
 
-~~~~
-<div="helptext">
-<over>
-purge   Copy sequence contents to create a new sequence removing deleted elements
-       Sequence to read
-       Copy
-    /cty   Content Type
-    /encrypt   Encrypt data for specified recipient
-    /sign   Sign data with specified key
-    /hash   Compute hash of content
-    /alg   List of algorithm specifiers
-    /type   The sequence type, plain/tree/digest/chain/tree
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-    /decrypt   Decrypt contents
-    /index   Append an index record to the end
-    /purge   Purge unused data etc.
-<over>
-</div>
-~~~~
-
-The `dare purge` command copies a container applying the specified filtering 
-and indexing criteria.
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman container copy Container2.dcon
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
-
-
-
-# dare sequence
-
-~~~~
-<div="helptext">
-<over>
-sequence   Create a new DARE Sequence
-       New sequence
-    /cty   Content Type
-    /encrypt   Encrypt data for specified recipient
-    /sign   Sign data with specified key
-    /hash   Compute hash of content
-    /alg   List of algorithm specifiers
-    /type   The sequence type, plain/tree/digest/chain/tree
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-<over>
-</div>
-~~~~
 
 # dare verify
 
@@ -505,7 +514,7 @@ verify   Verify a DARE Message.
 </div>
 ~~~~
 
-The `dare decode` command verifies the specified input file using keys found in the
+The `dare verify` command verifies the specified input file using keys found in the
 currently active key collection and reports success or failure.
 
 The active key collection may be overriden using the `/mesh` option.
@@ -514,7 +523,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare /encrypt=WT77-HFZI-42AW-IV6J-PXUZ-NNSC-TM
+<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare /encrypt=CKY3-MCKZ-NHBD-CJU3-GCPX-5FCE-VY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~

@@ -15,7 +15,7 @@ A mail application profile is added to a Mesh profile using the
 
 
 ~~~~
-Missing example 72
+Missing example 51
 ~~~~
 
 The client attempts to obtain the network configuration for the inbound and
@@ -27,7 +27,7 @@ Alternatively, the configuration may be given explicitly using the form
 
 
 ~~~~
-Missing example 73
+Missing example 52
 ~~~~
 
 The mail profile only contains the network configuration information. Access 
@@ -39,7 +39,7 @@ Account profiles may be updated to change the network configuration using the
 
 
 ~~~~
-Missing example 74
+Missing example 53
 ~~~~
 
 Specifying no values causes the SRV auto configuration configuration data to be 
@@ -52,7 +52,7 @@ profile when it is created or as a later update using the `/openpgp` option:
 
 
 ~~~~
-Missing example 75
+Missing example 54
 ~~~~
 
 The private key may be extracted from the profile in a variety of interchange
@@ -60,14 +60,14 @@ formats to allow installation in a key service:
 
 
 ~~~~
-Missing example 76
+Missing example 55
 ~~~~
 
 The public key may be exported likewise:
 
 
 ~~~~
-Missing example 77
+Missing example 56
 ~~~~
 
 ## Creating an S/MIME Key Set
@@ -77,7 +77,7 @@ profile when it is created or as a later update using the `/smime` option:
 
 
 ~~~~
-Missing example 78
+Missing example 57
 ~~~~
 
 By default, a self signed certificate is created.
@@ -87,7 +87,7 @@ specified Certificate Authority service via ACME:
 
 
 ~~~~
-Missing example 79
+Missing example 58
 ~~~~
 
 Responding to the validation challenge requires an access credential for the 
@@ -98,13 +98,13 @@ formats to allow installation in a key service:
 
 
 ~~~~
-Missing example 80
+Missing example 59
 ~~~~
 
 The public key may be exported likewise:
 
 
 ~~~~
-Missing example 81
+Missing example 60
 ~~~~
 

@@ -16,7 +16,7 @@ Connectivity may be tested by specifying an account or just a DNS service name:
 <div="terminal">
 <cmd>Alice> meshman account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MCAO-XTIB-YRN5-OZY7-PQY2-V677-UTBG
+   Service UDF = MCMP-LOU5-4CBD-VDOW-2FCF-CCCQ-GESF
 </div>
 ~~~~
 
@@ -38,7 +38,7 @@ details to the request to bind the account to a service.
 <div="terminal">
 <cmd>Alice> meshman account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MCF4-6VUT-NOPK-4UIX-N5VC-6MYF-RMVT
+UDF=MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
 </div>
 ~~~~
 
@@ -59,11 +59,38 @@ command returns information about a particular account.
 
 
 ~~~~
-Missing example 6
+<div="terminal">
+<cmd>Alice> meshman account list
+<cmd>Alice> meshman account get
+</div>
 ~~~~
 
 
 ## Synchronizing an account with a service
+
+The 'account status' command returns the status of the account on the device without attempting
+synchronization. 
+
+
+~~~~
+<div="terminal">
+<cmd>Alice2> meshman account status
+<rsp>   [MMM_Inbound] 3  
+   [MMM_Outbound] 1  CRA7-FW4G-HJYL-GKDU-GXLB-67LE-KXGZ-VXJX-MGGX-H2F
+A-UHUS-YBXW-EW5Q-5VME-E4TI-SZVD-AXAG-A6DE-HBTD-JEQN-4OWK-GU4N-3M2J-WJ
+7Y-B4GW-Y5Q
+   [MMM_Local] 2  
+   [MMM_Access] 3  
+   [MMM_Credential] 3  
+   [MMM_Device] 3  
+   [MMM_Contact] 2  
+   [MMM_Application] 1  
+   [MMM_Publication] 1  
+   [MMM_Bookmark] 1  
+   [MMM_Task] 1  
+</div>
+~~~~
+
 
 The sync command is used to synchronize the account to the service. 
 
@@ -80,8 +107,7 @@ automatically with an option to suppress.
 
 Synchronization will fail if a device has been removed from the account or not yet connected.
 
-The 'account status' command returns the same information as 'account sync' without attempting
-synchronization. 
+
 
 
 ## Escrow and Recovery
@@ -101,12 +127,12 @@ shares to create and the number of shares required for recovery:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account escrow
-<rsp>Share: SAQF-PZER-T2XO-6OIJ-CXPY-DEAG-IL3C-ICGC-KM4H-SAHW-F4WO-MWZT-EF
-67-LUCU-PVFA
-Share: SAQ6-PSBA-J6OA-KZAA-KYVI-K4WQ-ECF6-EXSZ-OT4H-YN6B-2ENC-6U6T-OV
-HT-3BPB-BWUA
-Share: SARH-PK5P-ACER-XDXX-SZ2Y-SVMZ-7YQ2-BM7Q-S24H-63UN-OMDX-QTDT-ZE
-QI-KO3N-TXMQ
+<rsp>Share: SAQJ-D3JH-U5TX-6F3D-5OYG-RJ7R-OC24-6RVG-PEXA-DNEV-KXMG-F2KA-MH
+D6-BUP3-VDAA
+Share: SAQV-XWKM-OT2I-R5CX-MDI6-FPKE-DZKO-OE3W-RGS5-7PRT-5DOM-QEVU-CV
+CP-2QXI-BJGA
+Share: SARC-LRLR-IKAZ-FUKK-2XZV-ZUUW-ZPZ7-5YCG-TIO3-3R6S-PPQS-2PBH-ZD
+BB-TM6U-NPMA
 </div>
 ~~~~
 
@@ -115,7 +141,10 @@ original administration device is lost or compromized.
 
 
 ~~~~
-Missing example 7
+<div="terminal">
+<cmd>Alice2> meshman account recover /verify
+<rsp>ERROR - The feature has not been implemented
+</div>
 ~~~~
 
 
@@ -125,7 +154,10 @@ of course irrevocable.
 
 
 ~~~~
-Missing example 8
+<div="terminal">
+<cmd>Alice> meshman account purge MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+<rsp>ERROR - An unknown error occurred
+</div>
 ~~~~
 
 
@@ -138,15 +170,22 @@ This may be used to create a backup copy of the account for archiving purposes
 or to facilitate provisioning the account to a new machine.
 
 
+
 ~~~~
-Missing example 9
+<div="terminal">
+<cmd>Alice> meshman account export
+<rsp>ERROR
+</div>
 ~~~~
 
 The import command causes the account profile to be read back from the archive.
 
 
 ~~~~
-Missing example 10
+<div="terminal">
+<cmd>Alice> meshman account import
+<rsp>ERROR
+</div>
 ~~~~
 
 ## Device connection commands
@@ -161,10 +200,12 @@ credentials.
 
 
 ~~~~
-Missing example 11
+<div="terminal">
+<cmd>Alice> meshman account pin /threshold
+<rsp>PIN=ABHT-VP25-WUQY-ZNTF-CJ4F-5AWU-ZA
+ (Expires=2021-12-20T19:21:17Z)
+</div>
 ~~~~
-
-[Future Example: DeviceConnect] ? 
 
 The 'connect' command is used to connect a device to the account by means of a 
 connection URI. This is usually used to connect devices by means of a QR code 
@@ -174,7 +215,7 @@ printed on the device itself.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account connect ^
-    mcu://maker@example.com/EC7U-PEKJ-TG45-LVJY-QBWT-ERB6-UQ /web
+    mcu://maker@example.com/EAVO-F5LN-W5EH-LUDH-NWHC-FM27-EY /web
 </div>
 ~~~~
 

@@ -84,11 +84,12 @@ public class MakeSiteDocs : CreateExamples {
         GroupOperations();
         ConnectPINDynamicQR();
         ConnectStaticQR();
-
+        DelayedAuth();
         TestConnectDisconnect(index);
 
 
         EscrowAndRecover();
+
         }
 
     [Fact]

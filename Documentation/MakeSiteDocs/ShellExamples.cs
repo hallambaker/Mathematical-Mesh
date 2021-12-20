@@ -27,7 +27,7 @@ public partial class CreateExamples {
     public void LayerAccount() {
         //DoCommandsCreateAcount();
 
-        ShellAccount = new ShellAccount(this);
+        //ShellAccount = new ShellAccount(this);
 
         ShellBookmark = new ShellBookmark(this);
         ShellPassword = new ShellPassword(this);
