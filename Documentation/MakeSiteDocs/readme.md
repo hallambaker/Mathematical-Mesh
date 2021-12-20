@@ -28,6 +28,16 @@ ConnectStaticPollFail is failing
         //    );
 ~~~~
 
+### Message
+
+Pending messages are not being filtered to remove read messages. This is also causing 
+fails on the automatic execution side.
+
+~~~~
+    public override ShellResult MessagePending(MessagePending options) {
+~~~~
+
+
 ### Bookmark
 
 * Add support for Abstract/react in the code

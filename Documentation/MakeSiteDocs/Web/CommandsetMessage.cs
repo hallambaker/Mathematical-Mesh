@@ -24,7 +24,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		}
 	public void _WebMessage(CreateExamples Examples) {
 
-			 MakeTitle ("Message");
+			 MakeTitle ("message");
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The `message` command set contains commands that send, receive and respond to \n{0}", _Indent);
 			_Output.Write ("Mesh transactional messages. Currently, two Mesh messaging applications are defined:\n{0}", _Indent);
@@ -39,8 +39,6 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("signed response is returned stating the user's response.\n{0}", _Indent);
 			_Output.Write ("</dl>\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("For production use, most users will of course prefer a command line tool or that\n{0}", _Indent);
-			_Output.Write ("the Mesh functionality be built into their prefered messaging/mail client.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("# Contact Request\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -103,6 +101,9 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("# ConfirmationRequest\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The confirmation message exchange provides a form of second factor authentication in\n{0}", _Indent);
+			_Output.Write ("which the user provides explicit, non-repudiable authorization for a specific action.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Alice sends Bob an email asking him to buy some equipment costing $6,000. Since this\n{0}", _Indent);
 			_Output.Write ("is a significant sum, Bob needs an authorization for the purchase. He sends Alice\n{0}", _Indent);
 			_Output.Write ("a confirmation request `{1}` using the  \n{0}", _Indent, ShellMessage.BobPurchase);
@@ -139,6 +140,9 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleExample (ShellMessage.ConfirmMallet);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Mallet cannot respond to the request sent by Bob because he can't read Alice's\n{0}", _Indent);
+			_Output.Write ("messages to discover the request to reply to. Nor can he create a valid signature\n{0}", _Indent);
+			_Output.Write ("on the response should this information be accidentally disclosed.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
 	
@@ -158,30 +162,95 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `message` command set contains commands that send, receive and respond to \n{0}", _Indent);
+			_Output.Write ("Mesh transactional messages.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ message accept
 			 Describe(CommandSet, _MessageAccept._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `message accept` command accepts a confirmation request. A request message is\n{0}", _Indent);
+			_Output.Write ("created, signed under the device key and returned to the recipient's service\n{0}", _Indent);
+			_Output.Write ("provider for forwarding to the requestor.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The confirmation request to be accepted is specified by its message identifier.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The required parameter is the message identifier of the request to be accepted.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellMessage.ContactAccept);
 			_Output.Write ("\n{0}", _Indent);
+			// ------------------ message block
 			 Describe(CommandSet, _MessageBlock._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `message block` command adds a party to the user's blocklist.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The required parameter is the identifier of the party to be blocked. This may\n{0}", _Indent);
+			_Output.Write ("be a local name defined in the contacts book or an address.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellMessage.ContactBlock);
 			_Output.Write ("\n{0}", _Indent);
+			// ------------------ message confirm
 			 Describe(CommandSet, _MessageConfirm._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `message confirm` command initiates a confirmation interaction by sending a\n{0}", _Indent);
+			_Output.Write ("confirmation request to the named party.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The first parameter is required and specifies the intended recipient.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The second parameter specifies the request text and is currently required but\n{0}", _Indent);
+			_Output.Write ("may become optional if alternative means of specifying the request text are \n{0}", _Indent);
+			_Output.Write ("supported.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellMessage.ConfirmRequest);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			// ------------------ message contact
 			 Describe(CommandSet, _MessageContact._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `message contact` command  initiates a contact interaction by sending a\n{0}", _Indent);
+			_Output.Write ("confirmation request to the named party.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The first parameter is required and specifies the intended recipient.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellMessage.ContactRequest);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			// ------------------ message pending
 			 Describe(CommandSet, _MessagePending._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `message pending` command returns all pending messages in the spool. It\n{0}", _Indent);
+			_Output.Write ("is used in the same way as the `device pending` command except that it causes\n{0}", _Indent);
+			_Output.Write ("all pending messages matching the specified criteria to be returned, not just\n{0}", _Indent);
+			_Output.Write ("the pending messages.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The 'read' and 'unread' flags may be used to filter responses to return messages\n{0}", _Indent);
+			_Output.Write ("that have been read or are unread. By default, only unread messages are returned.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellMessage.ContactPending);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			// ------------------ message reject
 			 Describe(CommandSet, _MessageReject._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `message reject` command rejects a confirmation request. A request message is\n{0}", _Indent);
+			_Output.Write ("created, signed under the device key and returned to the recipient's service\n{0}", _Indent);
+			_Output.Write ("provider for forwarding to the requestor.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The confirmation request to be rejected is specified by its message identifier.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The required parameter is the message identifier of the request to be rejected.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellMessage.ContactReject);
 			_Output.Write ("\n{0}", _Indent);
+			// ------------------ message status
 			 Describe(CommandSet, _MessageStatus._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `message status` command returns the status of a previously sent confirmation\n{0}", _Indent);
+			_Output.Write ("request.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The confirmation request to be queried is specified by its message identifier.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (ShellMessage.ConfirmGetAccept);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

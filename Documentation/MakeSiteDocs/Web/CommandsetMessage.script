@@ -10,7 +10,7 @@
 
 
 #zfile CreateExamples WebMessage "Guide/message.md" Examples
-#% MakeTitle ("Message");
+#% MakeTitle ("message");
 
 The `message` command set contains commands that send, receive and respond to 
 Mesh transactional messages. Currently, two Mesh messaging applications are defined:
@@ -25,8 +25,6 @@ to be accepted or denied. If the recpient replies to a confirmation message, a
 signed response is returned stating the user's response.
 </dl>
 
-For production use, most users will of course prefer a command line tool or that
-the Mesh functionality be built into their prefered messaging/mail client.
 
 ## Contact Request
 
@@ -89,6 +87,9 @@ use of the available graphics and other affordances.
 
 ## ConfirmationRequest
 
+The confirmation message exchange provides a form of second factor authentication in
+which the user provides explicit, non-repudiable authorization for a specific action.
+
 Alice sends Bob an email asking him to buy some equipment costing $6,000. Since this
 is a significant sum, Bob needs an authorization for the purchase. He sends Alice
 a confirmation request `#{ShellMessage.BobPurchase}` using the  
@@ -125,6 +126,9 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 #%  ConsoleExample (ShellMessage.ConfirmMallet);
 
+Mallet cannot respond to the request sent by Bob because he can't read Alice's
+messages to discover the request to reply to. Nor can he create a valid signature
+on the response should this information be accidentally disclosed.
 
 #end zfile
 
@@ -134,30 +138,95 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 #% Describe(CommandSet);
 
+The `message` command set contains commands that send, receive and respond to 
+Mesh transactional messages.
+
+#! ------------------ message accept
 #% Describe(CommandSet, _MessageAccept._DescribeCommand);
+
+The `message accept` command accepts a confirmation request. A request message is
+created, signed under the device key and returned to the recipient's service
+provider for forwarding to the requestor.
+
+The confirmation request to be accepted is specified by its message identifier.
+
+The required parameter is the message identifier of the request to be accepted.
+
+
 #%  ConsoleReference (ShellMessage.ContactAccept);
 
+#! ------------------ message block
 #% Describe(CommandSet, _MessageBlock._DescribeCommand);
+
+The `message block` command adds a party to the user's blocklist.
+
+The required parameter is the identifier of the party to be blocked. This may
+be a local name defined in the contacts book or an address.
+
 #%  ConsoleReference (ShellMessage.ContactBlock);
 
+#! ------------------ message confirm
 #% Describe(CommandSet, _MessageConfirm._DescribeCommand);
+
+The `message confirm` command initiates a confirmation interaction by sending a
+confirmation request to the named party.
+
+The first parameter is required and specifies the intended recipient.
+
+The second parameter specifies the request text and is currently required but
+may become optional if alternative means of specifying the request text are 
+supported.
+
+
 #%  ConsoleReference (ShellMessage.ConfirmRequest);
 
-
+#! ------------------ message contact
 #% Describe(CommandSet, _MessageContact._DescribeCommand);
+
+The `message contact` command  initiates a contact interaction by sending a
+confirmation request to the named party.
+
+The first parameter is required and specifies the intended recipient.
+
 #%  ConsoleReference (ShellMessage.ContactRequest);
 
-
-
-
+#! ------------------ message pending
 #% Describe(CommandSet, _MessagePending._DescribeCommand);
+
+The `message pending` command returns all pending messages in the spool. It
+is used in the same way as the `device pending` command except that it causes
+all pending messages matching the specified criteria to be returned, not just
+the pending messages.
+
+The 'read' and 'unread' flags may be used to filter responses to return messages
+that have been read or are unread. By default, only unread messages are returned.
+
+
 #%  ConsoleReference (ShellMessage.ContactPending);
 
-
+#! ------------------ message reject
 #% Describe(CommandSet, _MessageReject._DescribeCommand);
+
+The `message reject` command rejects a confirmation request. A request message is
+created, signed under the device key and returned to the recipient's service
+provider for forwarding to the requestor.
+
+The confirmation request to be rejected is specified by its message identifier.
+
+The required parameter is the message identifier of the request to be rejected.
+
+
 #%  ConsoleReference (ShellMessage.ContactReject);
 
+#! ------------------ message status
 #% Describe(CommandSet, _MessageStatus._DescribeCommand);
+
+The `message status` command returns the status of a previously sent confirmation
+request.
+
+The confirmation request to be queried is specified by its message identifier.
+
+
 #%  ConsoleReference (ShellMessage.ConfirmGetAccept);
 
 

@@ -39,8 +39,8 @@ value, formatted as a UDF Encryption key type and Content Digest Type
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key earl
-<rsp>EC4Q-7GAG-H76D-KINT-RWUG-VY2D-INNE-B3
-MD6U-G3XB-5U5L-HRZH-ASFU-Q7JI-62CF-BEEY-Q3FT-ILMM-JKW6-KLKG-T4ZX-DI6M
+<rsp>EBB4-Q5GA-MBAW-XYHP-ZEA4-HY2S-LB3J-JX
+MCPO-5GTH-KCYZ-FZVS-T7GP-C7MG-TJQH-MLHB-A22Z-KBPS-77SZ-L3SW-XL4H-IRRY
 </div>
 ~~~~
 
@@ -73,7 +73,7 @@ protocol.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key nonce
-<rsp>NAAX-5THA-IQI4-H7YJ-CPVQ-GSKM-MEOQ
+<rsp>NAU5-F3CD-FBRB-2FQE-3XPL-NVKI-2BLQ
 </div>
 ~~~~
 
@@ -107,8 +107,8 @@ value as a UDF Encryption key type. It is not necessary to enter the shares in a
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman key recover SAQJ-Z77K-VFL4-VPXC-UEDV-HCMK-6F6J-G SARL-DHCT-5FKI-ZOCF-SXPZ-SXND-VPWC-U
-<rsp>CKY3-MCKZ-NHBD-CJU3-GCPX-5FCE-VY
+<cmd>Alice> meshman key recover SAQL-PIHW-KFCV-MVKU-3UO6-ZEY4-2DXB-O SARM-6FX7-H5SF-ZBOS-RZVC-LY7W-AEMW-6
+<rsp>VPS7-DWRV-2M6R-MBDX-Z7VL-AOGY-NM
 </div>
 ~~~~
 
@@ -136,7 +136,7 @@ key type.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key secret
-<rsp>EALE-Y32T-5UEM-DWK2-RR7N-ACWL-2WCA
+<rsp>EDS5-MX7W-FO2S-LMAP-QMZK-ZEG2-LEWA
 </div>
 ~~~~
 
@@ -168,11 +168,11 @@ formatted as a UDF Encryption key type and Share types
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key share
-<rsp>CKY3-MCKZ-NHBD-CJU3-GCPX-5FCE-VY
-MCYP-ZJOS-UEMA-6UW2-ECNY-ICHL-QBFA-ABDD-TNIP-LVT4-R37M-7ARN-Q5NL
-SAQJ-Z77K-VFL4-VPXC-UEDV-HCMK-6F6J-G
-SAQS-OTQ7-JFLC-XO4U-DNZX-M44X-J22E-K
-SARL-DHCT-5FKI-ZOCF-SXPZ-SXND-VPWC-U
+<rsp>VPS7-DWRV-2M6R-MBDX-Z7VL-AOGY-NM
+MBSG-RAUT-4OLX-TWJH-A337-RPHT-KRDE-KZWC-Q3M5-3Z25-QESB-24NW-URKR
+SAQL-PIHW-KFCV-MVKU-3UO6-ZEY4-2DXB-O
+SAQ4-GW72-ZBKN-S3MT-WXCA-SO4J-NEB4-G
+SARM-6FX7-H5SF-ZBOS-RZVC-LY7W-AEMW-6
 </div>
 ~~~~
 

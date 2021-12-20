@@ -65,7 +65,7 @@ being that all authorizations are denied.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman device accept JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ /message /web
+<cmd>Alice> meshman device accept UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6 /message /web
 <rsp></div>
 ~~~~
 
@@ -162,9 +162,9 @@ device profile by polling the manufacturer service.
 ~~~~
 <div="terminal">
 <cmd>Alice4> meshman device complete
-<rsp>   Device UDF = MB43-ZZ44-PWCH-SJME-GZBJ-HZKC-TZUT
+<rsp>   Device UDF = MAW6-O4D3-KIXK-YWBJ-QQNW-ICMT-QTGB
    Account = alice@example.com
-   Account UDF = MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+   Account UDF = MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
 </div>
 ~~~~
 
@@ -215,7 +215,7 @@ install   Connect by means of a connection URI from an administration device.
 
 ~~~~
 <div="terminal">
-<cmd>Alice4> meshman device install EAVO-F5LN-W5EH-LUDH-NWHC-FM27-EY.medk
+<cmd>Alice4> meshman device install EBBQ-LEUY-XIMX-I7QJ-IP7R-XQFR-EY.medk
 <rsp></div>
 ~~~~
 
@@ -295,12 +295,12 @@ the inbound message spool.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman device pending
-<rsp>MessageID: JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+<rsp>MessageID: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
         Connection Request::
-        MessageID: JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+        MessageID: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
         To:  From: 
-        Device:  MDF6-V33U-HPP4-FDY2-IH4G-BVCE-PTOS
-        Witness: JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+        Device:  MAT6-VBWS-466P-GHDQ-RLHL-S2IJ-PXY5
+        Witness: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
 </div>
 ~~~~
 
@@ -326,8 +326,8 @@ preconfig   Generate new device profile and publish as an EARL
 ~~~~
 <div="terminal">
 <cmd>Maker> meshman device preconfig
-<rsp>Device UDF: MB43-ZZ44-PWCH-SJME-GZBJ-HZKC-TZUT
-File: EAVO-F5LN-W5EH-LUDH-NWHC-FM27-EY.medk
+<rsp>Device UDF: MAW6-O4D3-KIXK-YWBJ-QQNW-ICMT-QTGB
+File: EBBQ-LEUY-XIMX-I7QJ-IP7R-XQFR-EY.medk
 </div>
 ~~~~
 
@@ -406,8 +406,8 @@ the `/pin` option.
 ~~~~
 <div="terminal">
 <cmd>Alice2> meshman device request alice@example.com
-<rsp>   Device UDF = MDF6-V33U-HPP4-FDY2-IH4G-BVCE-PTOS
-   Witness value = JFX3-4WGT-BQCQ-CXTW-SEJJ-YC6D-OBGJ
+<rsp>   Device UDF = MAT6-VBWS-466P-GHDQ-RLHL-S2IJ-PXY5
+   Witness value = UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
 </div>
 ~~~~
 

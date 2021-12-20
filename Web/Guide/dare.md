@@ -25,11 +25,11 @@ the contents are encrypted under the corresponding encryption key:
 <rsp>File: ciphertext.dare
     Bytes: 16
     Encryption Algorithm: A256CBC
-        Recipient: MDRQ-D4T6-ZXL2-BVBU-V3TG-RB5A-ERMA
+        Recipient: MCGS-T6PR-YQBN-KZI6-LUQO-XIVI-OSFJ
     Digest Algorithm: S512
-    Payload Digest: E5138679E155B7595869C4597AA1134F9163137FF29903032
-273657D07B98B3C75827BD7E60128671305FEB42FD85BAF7576C9700A9A671C8E924D
-28C00AB288
+    Payload Digest: A2AAD60FAE2F106FB3DFE0AF2A88D7B5C2CC48FB334B9B518
+121BBFCB691142E8AFBAB9479E680D598C50BFAF000B0F9B48843992FBFBE6BE837A7
+7507CF0E6F
 </div>
 ~~~~
 
@@ -43,7 +43,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 <div="terminal">
 <cmd>Alice> meshman dare encode TestFile1.txt ^
     /out=TestFile1.txt.symmetric.dare ^
-    /key=CKY3-MCKZ-NHBD-CJU3-GCPX-5FCE-VY
+    /key=VPS7-DWRV-2M6R-MBDX-Z7VL-AOGY-NM
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -55,7 +55,7 @@ encoded:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare encode TestDir1 ^
-    /encrypt=CKY3-MCKZ-NHBD-CJU3-GCPX-5FCE-VY
+    /encrypt=VPS7-DWRV-2M6R-MBDX-Z7VL-AOGY-NM
 <rsp>ERROR - No encryption key is available
 </div>
 ~~~~
@@ -97,12 +97,12 @@ The command to verify a signed message is identical:
 <rsp>File: TestFile1.txt.mesh.dare
     Bytes: 16
     Encryption Algorithm: A256CBC
-        Recipient: MAC4-LFZY-KNMG-SXTM-3IHW-35EX-ZDQR
+        Recipient: MD6O-BFVH-45Z6-K3S5-FMDH-WXW4-BCA7
     Digest Algorithm: S512
-    Payload Digest: 7E3644ABCEA10977B8A5AA9A6840DCD6E870E219D035D53BE
-72A4E7DFBB80A89D6F3903C5614A0023EACAF5AD69ADA156986DBCA4827CD7EA16192
-A3D0E46D0B
-        Signer: MAOO-H5MB-HWN6-4CSS-SJF3-6RDL-KD2M
+    Payload Digest: 2D506E53ED640D06237CB12E18B199FDB0D10C200ED063D1D
+C9C03EC8DB18FECEAC5CFACCFF1DA176873B147B6C1959A492972358F8390361E51BF
+0C53EF29BF
+        Signer: MCED-PMVZ-L4BE-WLJZ-2P4K-QINM-EHM2
 </div>
 ~~~~
 
@@ -114,7 +114,7 @@ level otherwise.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare ^
-    /encrypt=CKY3-MCKZ-NHBD-CJU3-GCPX-5FCE-VY
+    /encrypt=VPS7-DWRV-2M6R-MBDX-Z7VL-AOGY-NM
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -148,7 +148,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare ^
-    /encrypt=CKY3-MCKZ-NHBD-CJU3-GCPX-5FCE-VY
+    /encrypt=VPS7-DWRV-2M6R-MBDX-Z7VL-AOGY-NM
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~

@@ -469,6 +469,14 @@ public partial class CreateExamples {
         Account.CreateBob = Bob1.Example(
             $"account create {BobAccount}"
             );
+
+        // Interactions with Bob... create an account
+        Mallet1 = GetTestCLI("Mallet");
+        Account.CreateMallet = Mallet1.Example(
+            $"account create {MalletAccount}"
+            );
+
+
         }
 
     public ResultPending ContactExchange() {

@@ -45,11 +45,11 @@ implemented and a placeholder format is implemented instead.
 <cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NDYO-BNVO-TYOS-QLFP-2R7K-F6GL-UXVR"}
+  "Key": "NCZJ-NMBE-5VBL-UZ25-BI4P-5PLE-2R5B"}
 <cmd>Alice> meshman calendar add CalendarEntry2.json CalID2
 <rsp>{
   "Title": "CalendarEntry2.json",
-  "Key": "NDUZ-EM4Z-F4ZB-ELWZ-SQQT-3QID-V2RJ"}
+  "Key": "NCGD-XJUA-BGEP-VJWF-ZDZX-OZXN-TXXI"}
 </div>
 ~~~~
 
@@ -109,7 +109,7 @@ Devices are given authorization to access the calendars catalog using the
 
 
 ~~~~
-Missing example 29
+Missing example 28
 ~~~~
 
 
@@ -117,6 +117,6 @@ The new device now has access to the Calendar catalog:
 
 
 ~~~~
-Missing example 30
+Missing example 29
 ~~~~
 

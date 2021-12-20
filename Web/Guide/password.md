@@ -113,7 +113,7 @@ When a device is added, it gets a copy of the password file:
 
 
 ~~~~
-Missing example 24
+Missing example 23
 ~~~~
 
 

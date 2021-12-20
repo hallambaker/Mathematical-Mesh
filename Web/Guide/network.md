@@ -74,7 +74,7 @@ Devices are given authorization to access the networks catalog using the
 
 
 ~~~~
-Missing example 25
+Missing example 24
 ~~~~
 
 

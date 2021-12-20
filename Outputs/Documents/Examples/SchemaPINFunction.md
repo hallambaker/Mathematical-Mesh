@@ -1,10 +1,10 @@
 
 
 For example, to generate saltedPIN for the pin
-ABHT-VP25-WUQY-ZNTF-CJ4F-5AWU-ZA used to authenticate a an action of type Device:
+AC6L-KOKA-W62V-54R5-MU2D-KZVP-OA used to authenticate a an action of type Device:
 
 ~~~~
-pin = ABHT-VP25-WUQY-ZNTF-CJ4F-5AWU-ZA
+pin = AC6L-KOKA-W62V-54R5-MU2D-KZVP-OA
 action = message.
 
 alg = UdfAlg (PIN)
@@ -20,7 +20,7 @@ saltedPINData
     = System.Byte[]
 
 saltedPIN = UDFPresent (hashalg + saltedPINData)
-    = ACFR-GQFO-ORQH-GZJL-Z6HK-UGBU-Z5DZ
+    = AAF5-5UQV-C4ID-P76M-SXSA-7HEU-G2F7
 ~~~~
 
 The PinId binding the pin to the account alice@example.com is
@@ -29,6 +29,6 @@ The PinId binding the pin to the account alice@example.com is
 Account =  alice@example.com 
 
 PinId = UDFPresent (MAC (Account, saltedPINData))
-    = AD7H-TUMR-MFYW-HVZU-EZDH-XDE7-LNSG
+    = AAIH-N4XW-D6MP-LJKH-PQC7-5ETJ-TTKH
 ~~~~
 

@@ -7,7 +7,7 @@ and is likely to require authentication and possibly payment.
 <div="terminal">
 <cmd>Alice> meshman account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+UDF=MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
 </div>
 ~~~~
 

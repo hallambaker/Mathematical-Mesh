@@ -9,9 +9,9 @@ Bob sends Alice a contact exchange request:
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message contact alice@example.com
-<rsp>Envelope ID: MBRI-MR7H-YZXV-ZGOJ-SLJC-A43Y-ZAWY
-Message ID: NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
-Response ID: MAT4-XKXH-W3Y4-WIMV-6IBE-WGUB-NSAG
+<rsp>Envelope ID: MA3B-PQPI-JSKO-WF27-MZDL-S5U2-H2IQ
+Message ID: NAHB-XJ7W-IEJY-NB4D-27UK-Y2HS-WPEA
+Response ID: MDQQ-BUHB-2NZA-CB6U-KHQF-HFFT-43Y3
 </div>
 ~~~~
 
@@ -23,21 +23,21 @@ Alice checks his Mesh messages and approves Bob's request:
 <cmd>Alice> meshman account sync
 <rsp>ERROR - The entry already exists in the store.
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
+<rsp>MessageID: NAHB-XJ7W-IEJY-NB4D-27UK-Y2HS-WPEA
         Contact Request::
-        MessageID: NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
+        MessageID: NAHB-XJ7W-IEJY-NB4D-27UK-Y2HS-WPEA
         To: alice@example.com From: bob@example.com
-        PIN: ABS6-M3HZ-3XC3-T2MP-5KAC-7UQW-M65A
-<cmd>Alice> meshman message accept NDA2-TF33-S2GI-CUQB-W7MD-7SUH-TMHU
+        PIN: AA3C-HQL4-JNCZ-BJTD-IVOS-G5KU-2YIA
+<cmd>Alice> meshman message accept NAHB-XJ7W-IEJY-NB4D-27UK-Y2HS-WPEA
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
-  Person MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
-  Anchor MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+<rsp>Entry<CatalogedContact>: MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
+  Person MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
+  Anchor MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
   Address alice@example.com
 
-Entry<CatalogedContact>: NDEM-WE24-3HOC-XLZC-GC2G-ZXOF-C6HU
+Entry<CatalogedContact>: ND3C-FKIQ-OBU3-V4JR-DEKG-XMPY-TQMH
   Person 
-  Anchor MAEP-FJ5L-ZDUD-4PA4-MLEF-ZZJG-LDER
+  Anchor MCP6-3M76-EWWZ-BD3D-VAMF-HJ6X-H7A4
   Address bob@example.com
 
 </div>
@@ -50,14 +50,14 @@ Bob can now collect Alice's contact:
 <div="terminal">
 <cmd>Bob> meshman account sync /auto
 <cmd>Bob> meshman contact list
-<rsp>Entry<CatalogedContact>: MAEP-FJ5L-ZDUD-4PA4-MLEF-ZZJG-LDER
-  Person MAEP-FJ5L-ZDUD-4PA4-MLEF-ZZJG-LDER
-  Anchor MAEP-FJ5L-ZDUD-4PA4-MLEF-ZZJG-LDER
+<rsp>Entry<CatalogedContact>: MCP6-3M76-EWWZ-BD3D-VAMF-HJ6X-H7A4
+  Person MCP6-3M76-EWWZ-BD3D-VAMF-HJ6X-H7A4
+  Anchor MCP6-3M76-EWWZ-BD3D-VAMF-HJ6X-H7A4
   Address bob@example.com
 
-Entry<CatalogedContact>: NAD2-KDRO-4J26-YXZ4-ZS2J-EHUU-F23N
+Entry<CatalogedContact>: NCOP-R344-ZFGL-KKVB-RRQD-FVQT-YDM6
   Person 
-  Anchor MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+  Anchor MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
   Address alice@example.com
 
 </div>

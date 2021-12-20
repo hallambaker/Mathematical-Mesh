@@ -16,7 +16,7 @@ Connectivity may be tested by specifying an account or just a DNS service name:
 <div="terminal">
 <cmd>Alice> meshman account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MCMP-LOU5-4CBD-VDOW-2FCF-CCCQ-GESF
+   Service UDF = MCCO-ZKXM-VVYT-U7SD-OHAV-UYJZ-DCSA
 </div>
 ~~~~
 
@@ -38,7 +38,7 @@ details to the request to bind the account to a service.
 <div="terminal">
 <cmd>Alice> meshman account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+UDF=MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
 </div>
 ~~~~
 
@@ -127,12 +127,12 @@ shares to create and the number of shares required for recovery:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account escrow
-<rsp>Share: SAQJ-D3JH-U5TX-6F3D-5OYG-RJ7R-OC24-6RVG-PEXA-DNEV-KXMG-F2KA-MH
-D6-BUP3-VDAA
-Share: SAQV-XWKM-OT2I-R5CX-MDI6-FPKE-DZKO-OE3W-RGS5-7PRT-5DOM-QEVU-CV
-CP-2QXI-BJGA
-Share: SARC-LRLR-IKAZ-FUKK-2XZV-ZUUW-ZPZ7-5YCG-TIO3-3R6S-PPQS-2PBH-ZD
-BB-TM6U-NPMA
+<rsp>Share: SAQL-JN5I-6PIF-GWGY-WSFG-5H7G-5AQZ-UZJJ-SQTR-6EV7-YRLQ-MUVG-TW
+QG-CH37-5APA
+Share: SAQ2-C3SP-PI5F-ZIIB-VDQ6-3W6R-EKPD-SSQA-S2EY-HSZ3-XYFA-RM6Q-P5
+QU-YWXY-XDPQ
+Share: SARI-4JHW-ACSG-L2JK-TU4W-2F53-LUNN-QLWX-TDV6-RA5X-W66Q-WFH2-ME
+RD-PFTR-RGQA
 </div>
 ~~~~
 
@@ -155,7 +155,7 @@ of course irrevocable.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account purge MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+<cmd>Alice> meshman account purge MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
 <rsp>ERROR - An unknown error occurred
 </div>
 ~~~~
@@ -202,8 +202,8 @@ credentials.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account pin /threshold
-<rsp>PIN=ABHT-VP25-WUQY-ZNTF-CJ4F-5AWU-ZA
- (Expires=2021-12-20T19:21:17Z)
+<rsp>PIN=AC6L-KOKA-W62V-54R5-MU2D-KZVP-OA
+ (Expires=2021-12-21T14:00:30Z)
 </div>
 ~~~~
 
@@ -215,7 +215,7 @@ printed on the device itself.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account connect ^
-    mcu://maker@example.com/EAVO-F5LN-W5EH-LUDH-NWHC-FM27-EY /web
+    mcu://maker@example.com/EBBQ-LEUY-XIMX-I7QJ-IP7R-XQFR-EY /web
 </div>
 ~~~~
 

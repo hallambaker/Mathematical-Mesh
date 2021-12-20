@@ -83,8 +83,8 @@ true returned if and only if it matches the value specified.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman hash mac TestFile1.txt
-<rsp>AASQ-TMFI-T2CN-Y4AS-QEQM-GEFJ-FH5L
-NAVF-KSIQ-4J6C-ETDW-MQ5B-J6O7-DQ7K
+<rsp>AB7C-F36X-S42N-SYP7-KC62-63A2-ZMHW
+NBXR-TJC4-PPB2-FZOG-AUMU-WCID-UAGA
 </div>
 ~~~~
 

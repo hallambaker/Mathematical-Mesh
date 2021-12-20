@@ -40,6 +40,9 @@ public partial class LayerAccount : ExampleSet {
 
     public List<ExampleResult> CreateAlice;
     public List<ExampleResult> CreateBob;
+    public List<ExampleResult> CreateMallet;
+
+
     public List<ExampleResult> CreateConsole;
     public List<ExampleResult> ConsoleEncryptFile;
     public List<ExampleResult> ConsoleDecryptFile;

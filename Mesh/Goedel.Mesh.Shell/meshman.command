@@ -400,7 +400,7 @@
 			Parameter Recipient "recipient" String
 				Brief "The recipient to send the confirmation request to"
 			Parameter Text "text" String
-				Brief "The recipient to send the confirmation request to"
+				Brief "Text of the request message"
 			Include AccountOptions
 			Include Reporting
 
@@ -409,11 +409,14 @@
 			Include AccountOptions
 			Include Reporting
 			Option Unread "unread" Flag
-				Default "false"
-			Option Read "read" Flag
 				Default "true"
+					Brief "Return unread messages"
+			Option Read "read" Flag
+				Default "false"
+					Brief "Return read messages"
 			Option Raw "raw" Flag
 				Default "false"
+					Brief "Return messages in raw form"
 
 		Command MessageStatus "status"
 			Brief "Request status of pending request"

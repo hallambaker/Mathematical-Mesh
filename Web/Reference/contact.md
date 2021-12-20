@@ -186,7 +186,7 @@ from a file
 
 
 ~~~~
-Missing example 28
+Missing example 27
 ~~~~
 
 
@@ -214,34 +214,34 @@ The 'contact list' command lists all data in the contact catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
-  Person MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
-  Anchor MB4A-XOLR-2SXR-2HGA-G65C-OIEI-R53H
+<rsp>Entry<CatalogedContact>: MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
+  Person MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
+  Anchor MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
   Address alice@example.com
 
-Entry<CatalogedContact>: NDEM-WE24-3HOC-XLZC-GC2G-ZXOF-C6HU
+Entry<CatalogedContact>: ND3C-FKIQ-OBU3-V4JR-DEKG-XMPY-TQMH
   Person 
-  Anchor MAEP-FJ5L-ZDUD-4PA4-MLEF-ZZJG-LDER
+  Anchor MCP6-3M76-EWWZ-BD3D-VAMF-HJ6X-H7A4
   Address bob@example.com
 
-Entry<CatalogedContact>: NBMX-PJ74-OQ3W-ZBM3-U525-RJYR-2QCG
+Entry<CatalogedContact>: NCLZ-GAKI-BJC2-IHNB-RPF6-LOZP-YRSE
   Person 
-  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
+  Anchor MDXI-T5OT-YIXR-OLTB-YW7L-HKZC-OOT7
   Address groupw@example.com
 
-Entry<CatalogedContact>: NDRA-RYQ6-BGI6-S6ST-3EQO-SIHS-SZ5N
+Entry<CatalogedContact>: NDTC-2PDB-IB3B-MKSY-E4NR-ZJQB-UKOF
   Person 
-  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
+  Anchor MDXI-T5OT-YIXR-OLTB-YW7L-HKZC-OOT7
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBR7-T7B7-5BPM-Q6CO-4W7F-PCSK-CHMN
+Entry<CatalogedContact>: NBEH-4E2S-U5T2-6IFK-BZSV-SISO-AY5X
   Person 
-  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
+  Anchor MDXI-T5OT-YIXR-OLTB-YW7L-HKZC-OOT7
   Address groupw@example.com
 
-Entry<CatalogedContact>: NCNT-D7WI-7OGD-Q4X5-VKN5-2GYO-NQ6M
+Entry<CatalogedContact>: NBNJ-CW7O-UPNW-UAOF-LWME-TWPL-2QTQ
   Person 
-  Anchor MD2J-ZY5P-QMLE-2UBT-X7QH-C5OO-37K4
+  Anchor MDXI-T5OT-YIXR-OLTB-YW7L-HKZC-OOT7
   Address groupw@example.com
 
 </div>

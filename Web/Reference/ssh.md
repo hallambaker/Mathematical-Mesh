@@ -37,7 +37,7 @@ client   Add one or more keys to the authorized_keys file
 ~~~~
 
 ~~~~
-Missing example 42
+Missing example 41
 ~~~~
 
 # ssh host
@@ -58,7 +58,7 @@ host   Add one or more hosts to the known_hosts file
 ~~~~
 
 ~~~~
-Missing example 43
+Missing example 42
 ~~~~
 
 # ssh create
@@ -91,7 +91,7 @@ create   Generate a new SSH public keypair for the current machine and add to th
 ~~~~
 
 ~~~~
-Missing example 44
+Missing example 43
 ~~~~
 
 # ssh list
@@ -111,7 +111,7 @@ list   List ssh account information
 ~~~~
 
 ~~~~
-Missing example 45
+Missing example 44
 ~~~~
 
 
@@ -149,7 +149,7 @@ host   Add one or more hosts to the known_hosts file
 ~~~~
 
 ~~~~
-Missing example 46
+Missing example 45
 ~~~~
 
 
@@ -175,7 +175,7 @@ private   Extract the private key for this device
 ~~~~
 
 ~~~~
-Missing example 47
+Missing example 46
 ~~~~
 
 # ssh public
@@ -199,7 +199,7 @@ public   Extract the public key for this device
 ~~~~
 
 ~~~~
-Missing example 48
+Missing example 47
 ~~~~
 
 
@@ -221,7 +221,7 @@ host   List the known SSH sites (aka known hosts)
 ~~~~
 
 ~~~~
-Missing example 49
+Missing example 48
 ~~~~
 
 # ssh client
@@ -242,7 +242,7 @@ client   List the authorized device keys (aka authorized_keys)
 ~~~~
 
 ~~~~
-Missing example 50
+Missing example 49
 ~~~~
 
 

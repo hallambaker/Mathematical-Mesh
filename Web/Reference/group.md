@@ -33,7 +33,7 @@ add   Add user to recryption group
 ~~~~
 
 ~~~~
-Missing example 18
+Missing example 17
 ~~~~
 
 # group create
@@ -65,7 +65,7 @@ create   Create recryption group
 ~~~~
 
 ~~~~
-Missing example 19
+Missing example 18
 ~~~~
 
 
@@ -88,7 +88,7 @@ delete   Remove user from recryption group
 ~~~~
 
 ~~~~
-Missing example 20
+Missing example 19
 ~~~~
 
 
@@ -127,6 +127,6 @@ list   List members of a recryption group
 ~~~~
 
 ~~~~
-Missing example 21
+Missing example 20
 ~~~~
 

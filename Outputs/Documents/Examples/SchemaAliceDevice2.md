@@ -5,32 +5,32 @@ For example, the device profile corresponding to one of the devices belonging to
 {
   "ProfileDevice":{
     "ProfileSignature":{
-      "Udf":"MDF6-V33U-HPP4-FDY2-IH4G-BVCE-PTOS",
+      "Udf":"MAT6-VBWS-466P-GHDQ-RLHL-S2IJ-PXY5",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"rAtvIGae8yP1o9ULdvG23C0JiS7fdr_Kt3gLEGi5yUG4B
-  akZ6ag3hIBEkEkyTCMuBM6LCqWReOCA"}}},
+          "Public":"O_n5TuFi3zRk-pp3P9CM8sLlrsA2K3oMFR2855ieV3eN9
+  XV_67Lcl3oo5RqEO3jbIsynh7jjESOA"}}},
     "Encryption":{
-      "Udf":"MBFN-O74H-KHDJ-DMY7-SOUX-ZM2L-5HOL",
+      "Udf":"MCZ4-OCVJ-OD7I-4XYM-NZDT-UN7S-QGLJ",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"kY1ViT9x5m_kQKkqqkxEkchG6r0eL6FDZWaajkC6Io_Ey
-  YCcg0d1DMoeXrAoTUr3CjTF0ibEnw-A"}}},
+          "Public":"D9lT2CiCFSIcxxRYtIYHdBZu98L96FJQwyjgdw5ffEmG-
+  WuoMxRjXS-m--lGwZWBsaTnpoYy5msA"}}},
     "Signature":{
-      "Udf":"MD2H-42I2-S4LR-PCWL-IK73-C6CC-BLDA",
+      "Udf":"MA6D-QINE-45D2-LVK6-I562-R7YI-F75R",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"FdRieGMZYjZBaHJB9CvsNdiKfKqVwGKVOVQoqoq63jue5
-  BrvBo6dTIePGUorLmA6EtFfZr6MGs4A"}}},
+          "Public":"icprphyqXXnEJtJi1u3HqBFPfoDSSp1FnwBSQjdAc4oKB
+  jb1dcgRK6PUUhC-2vRo3FQg3h2LxNIA"}}},
     "Authentication":{
-      "Udf":"MBOL-D2NR-CH3C-52TD-B7QW-ZUOF-HAT3",
+      "Udf":"MBAL-7NO6-FT2G-ZTIL-4ABJ-YPMM-ZOB6",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"21QszEA85L-5VkkzlgECjh-gBtSTxQ7v1Rev3RXo7Tlx4
-  fFe1xZ0uzZEECYERb-cIvPT9jJ1UImA"}}}}}
+          "Public":"40aGWju8o6LhBLg_cvbwwvktqz-7y0lFW-jn5gE5U5adI
+  -8SPPhwqoNm181h5CC019rk0crtFDoA"}}}}}
 ~~~~
 

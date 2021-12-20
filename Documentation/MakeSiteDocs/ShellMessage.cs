@@ -82,7 +82,8 @@ public class ShellMessage : ExampleSet {
         ConfirmGetAccept = Bob1.Example($"message status {id1}");
         ConfirmReject = Alice1.Example($"message reject {id2}");
         ConfirmGetReject = Bob1.Example($"message status {id2}");
-        //ConfirmMallet = testCLIMallet1.Example($"message confirm {AliceService1} \"{BobPurchase}\"");
+
+        ConfirmMallet = Mallet1.Example($"message confirm {AliceAccount} \"{BobPurchase}\"");
         }
 
     }
