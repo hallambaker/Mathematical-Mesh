@@ -33,8 +33,6 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		// *****Mesh Core
 		 WebAccount (Index);
 		 AccountReference (Index);
-		 WebDevice (Index);
-		 DeviceReference (Index);
 		 WebMessage (Index);
 		 MessageReference (Index);
 		 WebGroup (Index);
@@ -47,16 +45,18 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		 PasswordReference (Index);
 		 WebNetwork (Index);
 		 NetworkReference (Index);
-		 WebContact (Index);
-		 ContactReference (Index);
 		 WebCalendar (Index);
 		 CalendarReference (Index);
 		//
-		// ***** Mesh Applications
+		// ***** Not really finished
 		 WebSSH (Index);
 		 SSHReference (Index);
 		 WebMail (Index);
 		 MailReference (Index);
+		 WebDevice (Index);
+		 DeviceReference (Index);
+		 WebContact (Index);
+		 ContactReference (Index);
 		}
 	
 

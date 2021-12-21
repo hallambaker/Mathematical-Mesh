@@ -25,24 +25,24 @@ namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult ContactSelf(ContactSelf options) {
-        var contextUser = GetContextUser(options);
-        var file = options.File.Value;
+    ///// <summary>
+    ///// Dispatch method
+    ///// </summary>
+    ///// <param name="options">The command line options.</param>
+    ///// <returns>Mesh result instance</returns>
+    //public override ShellResult ContactSelf(ContactSelf options) {
+    //    var contextUser = GetContextUser(options);
+    //    var file = options.File.Value;
 
-        "Need to merge in the self contact info and label with a name.".TaskFunctionality(true);
+    //    "Need to merge in the self contact info and label with a name.".TaskFunctionality(true);
 
-        var entry = contextUser.AddFromFile(file, self: true);
+    //    var entry = contextUser.AddFromFile(file, self: true);
 
-        return new ResultEntry() {
-            Success = true,
-            CatalogEntry = entry
-            };
-        }
+    //    return new ResultEntry() {
+    //        Success = true,
+    //        CatalogEntry = entry
+    //        };
+    //    }
 
     /// <summary>
     /// Dispatch method
@@ -116,26 +116,26 @@ public partial class Shell {
         }
 
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult ContactExport(ContactExport options) {
-        var contextUser = GetContextUser(options);
-        var file = options.File.Value;
-        var contactId = options.Identifier.Value;
+    ///// <summary>
+    ///// Dispatch method
+    ///// </summary>
+    ///// <param name="options">The command line options.</param>
+    ///// <returns>Mesh result instance</returns>
+    //public override ShellResult ContactExport(ContactExport options) {
+    //    var contextUser = GetContextUser(options);
+    //    var file = options.File.Value;
+    //    var contactId = options.Identifier.Value;
 
-        var entry = contextUser.GetContact(contactId);
+    //    var entry = contextUser.GetContact(contactId);
 
-        using var fileStream = file.OpenFileNew();
-        entry.WriteToStream(fileStream);
+    //    using var fileStream = file.OpenFileNew();
+    //    entry.WriteToStream(fileStream);
 
-        return new ResultEntry() {
-            Success = true,
-            CatalogEntry = entry
-            };
-        }
+    //    return new ResultEntry() {
+    //        Success = true,
+    //        CatalogEntry = entry
+    //        };
+    //    }
 
     /// <summary>
     /// Dispatch method

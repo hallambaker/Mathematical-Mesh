@@ -16,6 +16,12 @@ The `mail` command set contains commands used to manage Internet mail
 application profiles and to create and manage credentials for the 
 OpenPGP and S/MIME security enhancements for Internet mail.
 
+The current commands represent a draft designed to demonstrate key management
+functions that are related to Mesh functionality. Of course a full feature key manager
+would also create and submit CSRs for S/MIME, upload key blobs to OpenPGP
+key servers, support key rotation, etc. etc.
+
+
 Multiple mail profiles may be connected to a single Mesh profile to
 allow access to multiple accounts.
 
@@ -24,7 +30,7 @@ allow access to multiple accounts.
 A mail application profile is added to a Mesh profile using the 
 #{ToCommand("mail add")} command:
 
-#%  ConsoleExample (ShellMail.MailAdd);
+#%  ConsoleExample (Apps.Mail);
 
 The client attempts to obtain the network configuration for the inbound and
 outbound mail services using [SRV auto 
@@ -33,7 +39,7 @@ configuration](https://tools.ietf.org/html/draft-daboo-srv-email-02).
 Alternatively, the configuration may be given explicitly using the form 
 \<domain\>:\<port\>:
 
-#%  ConsoleExample (ShellMail.MailAddExplicit);
+#%  ConsoleExample (Apps.MailImport);
 
 The mail profile only contains the network configuration information. Access 
 credentials for the inbound and outbound mail services must be configured in the
@@ -42,52 +48,37 @@ email application(s) from which they are used or in the Mesh credential manager.
 Account profiles may be updated to change the network configuration using the
 #{ToCommand("mail add")} command:
 
-#%  ConsoleExample (ShellMail.MailUpdate);
+#%  ConsoleExample (Apps.MailUpdate);
 
 Specifying no values causes the SRV auto configuration configuration data to be 
 used replacing the values previously set.
 
 #### Creating an OpenPGP Key Set
 
-An OpenPGP public key pair for encryption and authentication may be added to the
-profile when it is created or as a later update using the `/openpgp` option:
-
-#%  ConsoleExample (ShellMail.MailUpdateOpenPGP);
+S/MIME and OpenPGP keys are created automatically whenever a mail profile is 
+created.
 
 The private key may be extracted from the profile in a variety of interchange
-formats to allow installation in a key service:
+formats to allow installation in an application:
 
-#%  ConsoleExample (ShellMail.MailOpenPGPPrivate);
+#%  ConsoleExample (Apps.MailOpenpgpSignP12);
 
 The public key may be exported likewise:
 
-#%  ConsoleExample (ShellMail.MailOpenPGPPublic);
+#%  ConsoleExample (Apps.MailOpenpgpSign);
 
 #### Creating an S/MIME Key Set
 
-An S/MIME public key pair for encryption and authentication may be added to the
-profile when it is created or as a later update using the `/smime` option:
 
-#%  ConsoleExample (ShellMail.MailUpdateSMIME);
-
-By default, a self signed certificate is created.
-
-The #{ToCommand("mail smime validate")}  causes a certificate request to be sent to the
-specified Certificate Authority service via ACME:
-
-#%  ConsoleExample (ShellMail.MailSMIMECA);
-
-Responding to the validation challenge requires an access credential for the 
-inbound email service to be specified.
 
 The private key may be extracted from the profile in a variety of interchange
 formats to allow installation in a key service:
 
-#%  ConsoleExample (ShellMail.MailSMIMEPrivate);
+#%  ConsoleExample (Apps.MailSmimeSign);
 
 The public key may be exported likewise:
 
-#%  ConsoleExample (ShellMail.MailSMIMEPublic);
+#%  ConsoleExample (Apps.MailSmimeSign);
 
 #end zfile
 
@@ -97,14 +88,53 @@ The public key may be exported likewise:
 
 #% Describe(CommandSet);
 
-
+#! ------------------ 
 #% Describe(CommandSet, _MailAdd._DescribeCommand);
+
+
+#%  ConsoleReference (Apps.Mail);
+
+#! ------------------ Mail
+#% Describe(CommandSet, _MailGet._DescribeCommand);
+
+
+#%  ConsoleReference (Apps.MailGet);
+
+#! ------------------ Mail
+#% Describe(CommandSet, MailImport._DescribeCommand);
+
+
+#%  ConsoleReference (Apps.MailImport);
+
+#! ------------------ Mail
 #% Describe(CommandSet, _MailList._DescribeCommand);
-#% Describe(CommandSet, _MailUpdate._DescribeCommand);
-#% Describe(CommandSet, _SmimeSign._DescribeCommand);
-#% Describe(CommandSet, _SmimeEncrypt._DescribeCommand);
+
+
+#%  ConsoleReference (Apps.MailList);
+
+#! ------------------ Mail
+
 #% Describe( CommandSet, _OpenpgpSign._DescribeCommand);
+
+
+#%  ConsoleReference (Apps.MailOpenpgpSign);
+
+#! ------------------ Mail
 #% Describe( CommandSet, _OpenpgpEncrypt._DescribeCommand);
+
+
+#%  ConsoleReference (Apps.MailOpenpgpEncrypt);
+
+#! ------------------ Mail
+#% Describe(CommandSet, _SmimeSign._DescribeCommand);
+
+
+#%  ConsoleReference (Apps.MailSmimeSign);
+
+#! ------------------ Mail
+#% Describe(CommandSet, _SmimeEncrypt._DescribeCommand);
+
+#%  ConsoleReference (Apps.MailSmimeEncrypt);
 
 
 #end zfile

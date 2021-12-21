@@ -77,7 +77,7 @@ may be used to specify the most commonly used authorizations.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account connect mcu://maker@example.com/EBBQ-LEUY-XIMX-I7QJ-IP7R-XQFR-EY /web
+<cmd>Alice> meshman account connect mcu://maker@example.com/ED6U-5FAQ-662T-BTCW-7YFY-W545-EY /web
 <rsp></div>
 ~~~~
 
@@ -120,7 +120,7 @@ a default name will be used.
 <div="terminal">
 <cmd>Alice> meshman account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
+UDF=MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
 </div>
 ~~~~
 
@@ -151,7 +151,7 @@ use, the UDF of the device profile must be specified.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account delete MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
+<cmd>Alice> meshman account delete MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
 <rsp>Device Profile UDF=
 </div>
 ~~~~
@@ -187,9 +187,9 @@ The options 'shares' and 'quorum' are used to specify the number of shares to be
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account escrow
-<rsp>Share: SAQL-JN5I-6PIF-GWGY-WSFG-5H7G-5AQZ-UZJJ-SQTR-6EV7-YRLQ-MUVG-TWQG-CH37-5APA
-Share: SAQ2-C3SP-PI5F-ZIIB-VDQ6-3W6R-EKPD-SSQA-S2EY-HSZ3-XYFA-RM6Q-P5QU-YWXY-XDPQ
-Share: SARI-4JHW-ACSG-L2JK-TU4W-2F53-LUNN-QLWX-TDV6-RA5X-W66Q-WFH2-MERD-PFTR-RGQA
+<rsp>Share: SAQA-YC4J-NLYN-D6TJ-ZA7Q-47UG-FVWB-MYAQ-3P3Q-V4QV-JEP6-N7UV-NF6J-W6WC-OO4A
+Share: SAQV-AFQQ-XN7D-MXCO-BE3Y-3X2Y-P3JD-U4VT-NFDO-5QYL-OSJE-ODX6-XXSR-CVVA-77BA
+Share: SARJ-IIEY-BQFZ-VPRS-JIYA-2QBK-2A4F-5BKV-62LN-FFAB-UACK-OH3I-CJGY-OMT7-RPGA
 </div>
 ~~~~
 
@@ -274,7 +274,7 @@ service configuration if successful.
 <div="terminal">
 <cmd>Alice> meshman account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MCCO-ZKXM-VVYT-U7SD-OHAV-UYJZ-DCSA
+   Service UDF = MBO3-YYGV-RKLJ-4JFD-OQD5-BEJS-4GYO
 </div>
 ~~~~
 
@@ -383,8 +383,8 @@ that the connection can be completed without additional user interaction.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account pin /threshold
-<rsp>PIN=AC6L-KOKA-W62V-54R5-MU2D-KZVP-OA
- (Expires=2021-12-21T14:00:30Z)
+<rsp>PIN=AD5M-D6JD-5QGC-YLLU-UM65-2NQX-4M
+ (Expires=2021-12-22T13:28:30Z)
 </div>
 ~~~~
 
@@ -413,7 +413,7 @@ deleted from the service.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account purge MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
+<cmd>Alice> meshman account purge MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
 <rsp>ERROR - An unknown error occurred
 </div>
 ~~~~
@@ -452,7 +452,7 @@ recovery shares.
 
 ~~~~
 <div="terminal">
-<cmd>Alice2> meshman account recover SAQL-JN5I-6PIF-GWGY-WSFG-5H7G-5AQZ-UZJJ-SQTR-6EV7-YRLQ-MUVG-TWQG-CH37-5APA SARI-4JHW-ACSG-L2JK-TU4W-2F53-LUNN-QLWX-TDV6-RA5X-W66Q-WFH2-MERD-PFTR-RGQA /verify
+<cmd>Alice2> meshman account recover SAQA-YC4J-NLYN-D6TJ-ZA7Q-47UG-FVWB-MYAQ-3P3Q-V4QV-JEP6-N7UV-NF6J-W6WC-OO4A SARJ-IIEY-BQFZ-VPRS-JIYA-2QBK-2A4F-5BKV-62LN-FFAB-UACK-OH3I-CJGY-OMT7-RPGA /verify
 <rsp>ERROR - The feature has not been implemented
 </div>
 ~~~~

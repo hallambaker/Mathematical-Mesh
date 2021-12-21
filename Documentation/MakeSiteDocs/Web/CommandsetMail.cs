@@ -30,6 +30,12 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("application profiles and to create and manage credentials for the \n{0}", _Indent);
 			_Output.Write ("OpenPGP and S/MIME security enhancements for Internet mail.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The current commands represent a draft designed to demonstrate key management\n{0}", _Indent);
+			_Output.Write ("functions that are related to Mesh functionality. Of course a full feature key manager\n{0}", _Indent);
+			_Output.Write ("would also create and submit CSRs for S/MIME, upload key blobs to OpenPGP\n{0}", _Indent);
+			_Output.Write ("key servers, support key rotation, etc. etc.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Multiple mail profiles may be connected to a single Mesh profile to\n{0}", _Indent);
 			_Output.Write ("allow access to multiple accounts.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -38,7 +44,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("A mail application profile is added to a Mesh profile using the \n{0}", _Indent);
 			_Output.Write ("{1} command:\n{0}", _Indent, ToCommand("mail add"));
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellMail.MailAdd);
+			  ConsoleExample (Apps.Mail);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The client attempts to obtain the network configuration for the inbound and\n{0}", _Indent);
 			_Output.Write ("outbound mail services using [SRV auto \n{0}", _Indent);
@@ -47,7 +53,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("Alternatively, the configuration may be given explicitly using the form \n{0}", _Indent);
 			_Output.Write ("\\<domain\\>:\\<port\\>:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellMail.MailAddExplicit);
+			  ConsoleExample (Apps.MailImport);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The mail profile only contains the network configuration information. Access \n{0}", _Indent);
 			_Output.Write ("credentials for the inbound and outbound mail services must be configured in the\n{0}", _Indent);
@@ -56,52 +62,37 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("Account profiles may be updated to change the network configuration using the\n{0}", _Indent);
 			_Output.Write ("{1} command:\n{0}", _Indent, ToCommand("mail add"));
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellMail.MailUpdate);
+			  ConsoleExample (Apps.MailUpdate);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Specifying no values causes the SRV auto configuration configuration data to be \n{0}", _Indent);
 			_Output.Write ("used replacing the values previously set.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Creating an OpenPGP Key Set\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("An OpenPGP public key pair for encryption and authentication may be added to the\n{0}", _Indent);
-			_Output.Write ("profile when it is created or as a later update using the `/openpgp` option:\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellMail.MailUpdateOpenPGP);
+			_Output.Write ("S/MIME and OpenPGP keys are created automatically whenever a mail profile is \n{0}", _Indent);
+			_Output.Write ("created.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The private key may be extracted from the profile in a variety of interchange\n{0}", _Indent);
-			_Output.Write ("formats to allow installation in a key service:\n{0}", _Indent);
+			_Output.Write ("formats to allow installation in an application:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellMail.MailOpenPGPPrivate);
+			  ConsoleExample (Apps.MailOpenpgpSignP12);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The public key may be exported likewise:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellMail.MailOpenPGPPublic);
+			  ConsoleExample (Apps.MailOpenpgpSign);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Creating an S/MIME Key Set\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("An S/MIME public key pair for encryption and authentication may be added to the\n{0}", _Indent);
-			_Output.Write ("profile when it is created or as a later update using the `/smime` option:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellMail.MailUpdateSMIME);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("By default, a self signed certificate is created.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The {1}  causes a certificate request to be sent to the\n{0}", _Indent, ToCommand("mail smime validate"));
-			_Output.Write ("specified Certificate Authority service via ACME:\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellMail.MailSMIMECA);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Responding to the validation challenge requires an access credential for the \n{0}", _Indent);
-			_Output.Write ("inbound email service to be specified.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The private key may be extracted from the profile in a variety of interchange\n{0}", _Indent);
 			_Output.Write ("formats to allow installation in a key service:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellMail.MailSMIMEPrivate);
+			  ConsoleExample (Apps.MailSmimeSign);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The public key may be exported likewise:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellMail.MailSMIMEPublic);
+			  ConsoleExample (Apps.MailSmimeSign);
 			_Output.Write ("\n{0}", _Indent);
 				}
 	
@@ -121,14 +112,53 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			// ------------------ 
 			 Describe(CommandSet, _MailAdd._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Apps.Mail);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ Mail
+			 Describe(CommandSet, _MailGet._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Apps.MailGet);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ Mail
+			 Describe(CommandSet, MailImport._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Apps.MailImport);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ Mail
 			 Describe(CommandSet, _MailList._DescribeCommand);
-			 Describe(CommandSet, _MailUpdate._DescribeCommand);
-			 Describe(CommandSet, _SmimeSign._DescribeCommand);
-			 Describe(CommandSet, _SmimeEncrypt._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Apps.MailList);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ Mail
+			_Output.Write ("\n{0}", _Indent);
 			 Describe( CommandSet, _OpenpgpSign._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Apps.MailOpenpgpSign);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ Mail
 			 Describe( CommandSet, _OpenpgpEncrypt._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Apps.MailOpenpgpEncrypt);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ Mail
+			 Describe(CommandSet, _SmimeSign._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Apps.MailSmimeSign);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ Mail
+			 Describe(CommandSet, _SmimeEncrypt._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Apps.MailSmimeEncrypt);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}

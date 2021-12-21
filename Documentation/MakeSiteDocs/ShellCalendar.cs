@@ -27,14 +27,15 @@ using Goedel.Mesh.Test;
 namespace ExampleGenerator;
 
 public class ShellCalendar : ExampleSet {
-    public List<ExampleResult> CalendarList2;
+
 
     public List<ExampleResult> CalendarAdd;
     public List<ExampleResult> CalendarGet;
     public List<ExampleResult> CalendarList;
     public List<ExampleResult> CalendarDelete;
     public List<ExampleResult> CalendarAuth;
-
+    public List<ExampleResult> CalendarList1;
+    public List<ExampleResult> CalendarList2;
 
     public const string CalendarFile1 = "CalendarEntry1.json";
     public const string CalendarFile2 = "CalendarEntry2.json";

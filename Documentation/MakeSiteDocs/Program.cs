@@ -89,7 +89,15 @@ public partial class CreateExamples {
 
 
     public virtual TestCLI Bob1 { get; protected set; }
+
+    public virtual TestCLI Carol1 { get; protected set; }
+    public virtual TestCLI Doug1 { get; protected set; }
+    public virtual TestCLI Edward1 { get; protected set; }
+
     public virtual TestCLI Mallet1 { get; protected set; }
+
+    public virtual TestCLI Mallet2 { get; protected set; }
+
     public virtual TestCLI Console1 { get; protected set; }
     public virtual TestCLI Maker1 { get; protected set; }
 
@@ -219,6 +227,9 @@ public partial class CreateExamples {
 
 
         LayerAccount();
+
+
+
         //LayerService();
 
 

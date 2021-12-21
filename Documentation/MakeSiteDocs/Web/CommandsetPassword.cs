@@ -95,10 +95,16 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Adding a Device.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("When a device is added, it gets a copy of the password file:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellPassword.PasswordAuth);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (ShellPassword.PasswordList1);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Devices are given authorization to access the networks catalog using the \n{0}", _Indent);
+			_Output.Write (" {1} command:\n{0}", _Indent, ToCommand("device auth"));
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (Connect.ConnectJoinAuth );
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (ShellPassword.PasswordList2);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

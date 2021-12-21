@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 12/19/2021 7:24:29 PM
+//  This file was automatically generated at 12/21/2021 12:56:33 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -275,12 +275,10 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         Identifier = "contact",
 		Brief = "Manage contact catalogs connected to an account",
 		Entries = new  () {
-			{"self", _ContactSelf._DescribeCommand },
 			{"static", _ContactStatic._DescribeCommand },
 			{"dynamic", _ContactDynamic._DescribeCommand },
 			{"fetch", _ContactFetch._DescribeCommand },
 			{"exchange", _ContactExchange._DescribeCommand },
-			{"export", _ContactExport._DescribeCommand },
 			{"import", _ContactImport._DescribeCommand },
 			{"delete", _ContactDelete._DescribeCommand },
 			{"get", _ContactGet._DescribeCommand },
@@ -372,10 +370,12 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Brief = "Manage mail profiles connected to a personal profile",
 		Entries = new  () {
 			{"add", _MailAdd._DescribeCommand },
-			{"update", _MailUpdate._DescribeCommand },
+			{"get", _MailGet._DescribeCommand },
+			{"list", _MailList._DescribeCommand },
+			{"import", _MailImport._DescribeCommand },
+			{"delete", _MailDelete._DescribeCommand },
 			{"smime", DescribeCommandSet_SMIME},
-			{"openpgp", DescribeCommandSet_PGP},
-			{"list", _MailList._DescribeCommand }
+			{"openpgp", DescribeCommandSet_PGP}
 			} // End Entries
 		};
 
@@ -402,39 +402,32 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Brief = "Manage SSH profiles connected to a personal profile",
 		Entries = new  () {
 			{"create", _SSHCreate._DescribeCommand },
+			{"get", _SSHGet._DescribeCommand },
+			{"list", _SSHList._DescribeCommand },
+			{"import", _SSHImport._DescribeCommand },
+			{"delete", _SSHDelete._DescribeCommand },
 			{"private", _SSHPrivate._DescribeCommand },
 			{"public", _SSHPublic._DescribeCommand },
 			{"merge", DescribeCommandSet_SSHMerge},
-			{"add", DescribeCommandSet_SSHAdd},
-			{"show", DescribeCommandSet_SSHShow},
-			{"list", _SSHList._DescribeCommand }
+			{"add", DescribeCommandSet_SSHAdd}
 			} // End Entries
 		};
 
 	public static DescribeCommandSet DescribeCommandSet_SSHMerge => new  () {
         Identifier = "merge",
-		Brief = "<Unspecified>",
+		Brief = "Merge the catalog with the specified local file",
 		Entries = new  () {
-			{"host", _SSHMergeKnown._DescribeCommand },
-			{"client", _SSHMergeClient._DescribeCommand }
+			{"hosts", _SSHMergeHosts._DescribeCommand },
+			{"client", _SSHMergeClients._DescribeCommand }
 			} // End Entries
 		};
 
 	public static DescribeCommandSet DescribeCommandSet_SSHAdd => new  () {
         Identifier = "add",
-		Brief = "<Unspecified>",
+		Brief = "Add a public key to the host or client configuration",
 		Entries = new  () {
 			{"host", _SSHAddHost._DescribeCommand },
 			{"client", _SSHAddClient._DescribeCommand }
-			} // End Entries
-		};
-
-	public static DescribeCommandSet DescribeCommandSet_SSHShow => new  () {
-        Identifier = "show",
-		Brief = "<Unspecified>",
-		Entries = new  () {
-			{"host", _SSHKnown._DescribeCommand },
-			{"client", _SSHAuth._DescribeCommand }
 			} // End Entries
 		};
 
@@ -908,16 +901,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_ContactSelf (
-				DispatchShell  DispatchIn, string[] Args, int Index) {
-		Shell Dispatch =	DispatchIn as Shell;
-		ContactSelf		Options = new ();
-		ProcessOptions (Args, Index, Options);
-		Dispatch._PreProcess (Options);
-		var result = Dispatch.ContactSelf (Options);
-		Dispatch._PostProcess (result);
-		}
-
 	public static void Handle_ContactStatic (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
@@ -955,16 +938,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
 		var result = Dispatch.ContactExchange (Options);
-		Dispatch._PostProcess (result);
-		}
-
-	public static void Handle_ContactExport (
-				DispatchShell  DispatchIn, string[] Args, int Index) {
-		Shell Dispatch =	DispatchIn as Shell;
-		ContactExport		Options = new ();
-		ProcessOptions (Args, Index, Options);
-		Dispatch._PreProcess (Options);
-		var result = Dispatch.ContactExport (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -1388,13 +1361,43 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_MailUpdate (
+	public static void Handle_MailGet (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		MailUpdate		Options = new ();
+		MailGet		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.MailUpdate (Options);
+		var result = Dispatch.MailGet (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_MailList (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		MailList		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.MailList (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_MailImport (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		MailImport		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.MailImport (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_MailDelete (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		MailDelete		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.MailDelete (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -1438,16 +1441,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_MailList (
-				DispatchShell  DispatchIn, string[] Args, int Index) {
-		Shell Dispatch =	DispatchIn as Shell;
-		MailList		Options = new ();
-		ProcessOptions (Args, Index, Options);
-		Dispatch._PreProcess (Options);
-		var result = Dispatch.MailList (Options);
-		Dispatch._PostProcess (result);
-		}
-
 	public static void Handle_SSHCreate (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
@@ -1455,6 +1448,46 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
 		var result = Dispatch.SSHCreate (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_SSHGet (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		SSHGet		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.SSHGet (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_SSHList (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		SSHList		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.SSHList (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_SSHImport (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		SSHImport		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.SSHImport (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_SSHDelete (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		SSHDelete		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.SSHDelete (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -1478,23 +1511,23 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_SSHMergeKnown (
+	public static void Handle_SSHMergeHosts (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		SSHMergeKnown		Options = new ();
+		SSHMergeHosts		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.SSHMergeKnown (Options);
+		var result = Dispatch.SSHMergeHosts (Options);
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_SSHMergeClient (
+	public static void Handle_SSHMergeClients (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		SSHMergeClient		Options = new ();
+		SSHMergeClients		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.SSHMergeClient (Options);
+		var result = Dispatch.SSHMergeClients (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -1515,36 +1548,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
 		var result = Dispatch.SSHAddClient (Options);
-		Dispatch._PostProcess (result);
-		}
-
-	public static void Handle_SSHKnown (
-				DispatchShell  DispatchIn, string[] Args, int Index) {
-		Shell Dispatch =	DispatchIn as Shell;
-		SSHKnown		Options = new ();
-		ProcessOptions (Args, Index, Options);
-		Dispatch._PreProcess (Options);
-		var result = Dispatch.SSHKnown (Options);
-		Dispatch._PostProcess (result);
-		}
-
-	public static void Handle_SSHAuth (
-				DispatchShell  DispatchIn, string[] Args, int Index) {
-		Shell Dispatch =	DispatchIn as Shell;
-		SSHAuth		Options = new ();
-		ProcessOptions (Args, Index, Options);
-		Dispatch._PreProcess (Options);
-		var result = Dispatch.SSHAuth (Options);
-		Dispatch._PostProcess (result);
-		}
-
-	public static void Handle_SSHList (
-				DispatchShell  DispatchIn, string[] Args, int Index) {
-		Shell Dispatch =	DispatchIn as Shell;
-		SSHList		Options = new ();
-		ProcessOptions (Args, Index, Options);
-		Dispatch._PreProcess (Options);
-		var result = Dispatch.SSHList (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -6573,7 +6576,7 @@ public class _MessageConfirm : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Text", 
 				Default = null, // null if null
-				Brief = "The recipient to send the confirmation request to",
+				Brief = "Text of the request message",
 				Index = 1,
 				Key = ""
 				},
@@ -6779,22 +6782,22 @@ public class _MessagePending : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Unread", 
-				Default = "false", // null if null
-				Brief = "<Unspecified>",
+				Default = "true", // null if null
+				Brief = "Return unread messages",
 				Index = 6,
 				Key = "unread"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Read", 
-				Default = "true", // null if null
-				Brief = "<Unspecified>",
+				Default = "false", // null if null
+				Brief = "Return read messages",
 				Index = 7,
 				Key = "read"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Raw", 
 				Default = "false", // null if null
-				Brief = "<Unspecified>",
+				Brief = "Return messages in raw form",
 				Index = 8,
 				Key = "raw"
 				}
@@ -8986,151 +8989,6 @@ public class _PasswordDump : Goedel.Command.Dispatch ,
 public partial class PasswordDump : _PasswordDump {
     } // class PasswordDump
 
-public class _ContactSelf : Goedel.Command.Dispatch ,
-						IAccountOptions,
-						IReporting{
-
-	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new ExistingFile (),
-		new String (),
-		new String (),
-		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-		new Flag (),
-		new Flag (),
-		new Flag ()		} ;
-
-
-
-
-
-	/// <summary>Field accessor for option [file]</summary>
-	public virtual ExistingFile File {
-		get => _Data[0] as ExistingFile;
-		set => _Data[0]  = value;
-		}
-
-	public virtual string _File {
-		set => _Data[0].Parameter (value);
-		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[1] as String;
-		set => _Data[1]  = value;
-		}
-
-	public virtual string _AccountAddress {
-		set => _Data[1].Parameter (value);
-		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
-		get => _Data[2] as String;
-		set => _Data[2]  = value;
-		}
-
-	public virtual string _LocalName {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[3] as Enumeration<EnumReporting>;
-		set => _Data[3]  = value;
-		}
-
-	public virtual string _EnumReporting {
-		set => _Data[3].Parameter (value);
-		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[4] as Flag;
-		set => _Data[4]  = value;
-		}
-
-	public virtual string _Verbose {
-		set => _Data[4].Parameter (value);
-		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
-		get => _Data[5] as Flag;
-		set => _Data[5]  = value;
-		}
-
-	public virtual string _Report {
-		set => _Data[5].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[6] as Flag;
-		set => _Data[6]  = value;
-		}
-
-	public virtual string _Json {
-		set => _Data[6].Parameter (value);
-		}
-	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "self",
-		Brief =  "Update contact entry for self",
-		HandleDelegate =  CommandLineInterpreter.Handle_ContactSelf,
-		Lazy =  false,
-		Entries = new List<DescribeEntry> () {
-			new DescribeEntryOption () {
-				Identifier = "File", 
-				Default = null, // null if null
-				Brief = "File containing the contact entry to add",
-				Index = 0,
-				Key = "file"
-				},
-			new DescribeEntryOption () {
-				Identifier = "AccountAddress", 
-				Default = null, // null if null
-				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 1,
-				Key = "account"
-				},
-			new DescribeEntryOption () {
-				Identifier = "LocalName", 
-				Default = null, // null if null
-				Brief = "Local name for account (e.g. personal)",
-				Index = 2,
-				Key = "local"
-				},
-			new DescribeEntryEnumerate () {
-				Identifier = "EnumReporting", 
-				Default = null, // null if null
-				Brief = "Reporting level",
-				Index = 3,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Verbose", 
-				Default = "true", // null if null
-				Brief = "Verbose reports (default)",
-				Index = 4,
-				Key = "verbose"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Report", 
-				Default = "true", // null if null
-				Brief = "Report output (default)",
-				Index = 5,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Json", 
-				Default = "false", // null if null
-				Brief = "Report output in JSON format",
-				Index = 6,
-				Key = "json"
-				}
-			}
-		};
-
-	}
-
-public partial class ContactSelf : _ContactSelf {
-    } // class ContactSelf
-
 public class _ContactStatic : Goedel.Command.Dispatch ,
 						IAccountOptions,
 						IReporting{
@@ -9676,168 +9534,6 @@ public class _ContactExchange : Goedel.Command.Dispatch ,
 
 public partial class ContactExchange : _ContactExchange {
     } // class ContactExchange
-
-public class _ContactExport : Goedel.Command.Dispatch ,
-						IAccountOptions,
-						IReporting{
-
-	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new String (),
-		new NewFile (),
-		new String (),
-		new String (),
-		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-		new Flag (),
-		new Flag (),
-		new Flag ()		} ;
-
-
-
-
-
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Identifier {
-		get => _Data[0] as String;
-		set => _Data[0]  = value;
-		}
-
-	public virtual string _Identifier {
-		set => _Data[0].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual NewFile File {
-		get => _Data[1] as NewFile;
-		set => _Data[1]  = value;
-		}
-
-	public virtual string _File {
-		set => _Data[1].Parameter (value);
-		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[2] as String;
-		set => _Data[2]  = value;
-		}
-
-	public virtual string _AccountAddress {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
-		get => _Data[3] as String;
-		set => _Data[3]  = value;
-		}
-
-	public virtual string _LocalName {
-		set => _Data[3].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[4] as Enumeration<EnumReporting>;
-		set => _Data[4]  = value;
-		}
-
-	public virtual string _EnumReporting {
-		set => _Data[4].Parameter (value);
-		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[5] as Flag;
-		set => _Data[5]  = value;
-		}
-
-	public virtual string _Verbose {
-		set => _Data[5].Parameter (value);
-		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
-		get => _Data[6] as Flag;
-		set => _Data[6]  = value;
-		}
-
-	public virtual string _Report {
-		set => _Data[6].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[7] as Flag;
-		set => _Data[7]  = value;
-		}
-
-	public virtual string _Json {
-		set => _Data[7].Parameter (value);
-		}
-	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "export",
-		Brief =  "Export contact entry from catalog",
-		HandleDelegate =  CommandLineInterpreter.Handle_ContactExport,
-		Lazy =  false,
-		Entries = new List<DescribeEntry> () {
-			new DescribeEntryParameter () {
-				Identifier = "Identifier", 
-				Default = null, // null if null
-				Brief = "Contact entry identifier",
-				Index = 0,
-				Key = ""
-				},
-			new DescribeEntryParameter () {
-				Identifier = "File", 
-				Default = null, // null if null
-				Brief = "<Unspecified>",
-				Index = 1,
-				Key = ""
-				},
-			new DescribeEntryOption () {
-				Identifier = "AccountAddress", 
-				Default = null, // null if null
-				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 2,
-				Key = "account"
-				},
-			new DescribeEntryOption () {
-				Identifier = "LocalName", 
-				Default = null, // null if null
-				Brief = "Local name for account (e.g. personal)",
-				Index = 3,
-				Key = "local"
-				},
-			new DescribeEntryEnumerate () {
-				Identifier = "EnumReporting", 
-				Default = null, // null if null
-				Brief = "Reporting level",
-				Index = 4,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Verbose", 
-				Default = "true", // null if null
-				Brief = "Verbose reports (default)",
-				Index = 5,
-				Key = "verbose"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Report", 
-				Default = "true", // null if null
-				Brief = "Report output (default)",
-				Index = 6,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Json", 
-				Default = "false", // null if null
-				Brief = "Report output in JSON format",
-				Index = 7,
-				Key = "json"
-				}
-			}
-		};
-
-	}
-
-public partial class ContactExport : _ContactExport {
-    } // class ContactExport
 
 public class _ContactImport : Goedel.Command.Dispatch ,
 						IAccountOptions,
@@ -12116,7 +11812,7 @@ public class _NetworkImport : Goedel.Command.Dispatch ,
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "import",
-		Brief =  "Add calendar entry from file",
+		Brief =  "Add network entry from file",
 		HandleDelegate =  CommandLineInterpreter.Handle_NetworkImport,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
@@ -12193,6 +11889,7 @@ public class _NetworkAdd : Goedel.Command.Dispatch ,
 		new ExistingFile (),
 		new String (),
 		new String (),
+		new String (),
 		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 		new Flag (),
 		new Flag (),
@@ -12203,12 +11900,12 @@ public class _NetworkAdd : Goedel.Command.Dispatch ,
 
 
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Identifier {
+	public virtual String SSID {
 		get => _Data[0] as String;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _Identifier {
+	public virtual string _SSID {
 		set => _Data[0].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
@@ -12220,70 +11917,79 @@ public class _NetworkAdd : Goedel.Command.Dispatch ,
 	public virtual string _Password {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
+	/// <summary>Field accessor for option [id]</summary>
+	public virtual String Identifier {
 		get => _Data[2] as String;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _Identifier {
 		set => _Data[2].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[3] as String;
 		set => _Data[3]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[4] as Enumeration<EnumReporting>;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[4] as String;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _EnumReporting {
+	public virtual string _LocalName {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[5] as Flag;
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[5] as Enumeration<EnumReporting>;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _EnumReporting {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[6] as Flag;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[7] as Flag;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[7].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[8] as Flag;
+		set => _Data[8]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[8].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "add",
-		Brief =  "Add calendar entry from file",
+		Brief =  "Add network entry ",
 		HandleDelegate =  CommandLineInterpreter.Handle_NetworkAdd,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryParameter () {
-				Identifier = "Identifier", 
+				Identifier = "SSID", 
 				Default = null, // null if null
 				Brief = "WiFi SSID parameter",
 				Index = 0,
@@ -12297,45 +12003,52 @@ public class _NetworkAdd : Goedel.Command.Dispatch ,
 				Key = ""
 				},
 			new DescribeEntryOption () {
+				Identifier = "Identifier", 
+				Default = null, // null if null
+				Brief = "Unique entry identifier",
+				Index = 2,
+				Key = "id"
+				},
+			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 2,
+				Index = 3,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 3,
+				Index = 4,
 				Key = "local"
 				},
 			new DescribeEntryEnumerate () {
 				Identifier = "EnumReporting", 
 				Default = null, // null if null
 				Brief = "Reporting level",
-				Index = 4,
+				Index = 5,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "true", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 5,
+				Index = 6,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 6,
+				Index = 7,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 7,
+				Index = 8,
 				Key = "json"
 				}
 			}
@@ -17669,7 +17382,7 @@ public class _MailAdd : Goedel.Command.Dispatch ,
 public partial class MailAdd : _MailAdd {
     } // class MailAdd
 
-public class _MailUpdate : Goedel.Command.Dispatch ,
+public class _MailGet : Goedel.Command.Dispatch ,
 						IAccountOptions,
 						IReporting{
 
@@ -17687,12 +17400,12 @@ public class _MailUpdate : Goedel.Command.Dispatch ,
 
 
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Address {
+	public virtual String Identifier {
 		get => _Data[0] as String;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _Address {
+	public virtual string _Identifier {
 		set => _Data[0].Parameter (value);
 		}
 	/// <summary>Field accessor for option [account]</summary>
@@ -17752,15 +17465,15 @@ public class _MailUpdate : Goedel.Command.Dispatch ,
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "update",
-		Brief =  "Update an existing mail application profile",
-		HandleDelegate =  CommandLineInterpreter.Handle_MailUpdate,
+		Identifier = "get",
+		Brief =  "Lookup mail entry",
+		HandleDelegate =  CommandLineInterpreter.Handle_MailGet,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryParameter () {
-				Identifier = "Address", 
+				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "Mail account to update",
+				Brief = "The mail account address",
 				Index = 0,
 				Key = ""
 				},
@@ -17811,8 +17524,409 @@ public class _MailUpdate : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class MailUpdate : _MailUpdate {
-    } // class MailUpdate
+public partial class MailGet : _MailGet {
+    } // class MailGet
+
+public class _MailList : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new String (),
+		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+		new Flag (),
+		new Flag (),
+		new Flag ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[1] as String;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[2] as Enumeration<EnumReporting>;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _EnumReporting {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[5].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "list",
+		Brief =  "List mail account information",
+		HandleDelegate =  CommandLineInterpreter.Handle_MailList,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 1,
+				Key = "local"
+				},
+			new DescribeEntryEnumerate () {
+				Identifier = "EnumReporting", 
+				Default = null, // null if null
+				Brief = "Reporting level",
+				Index = 2,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 3,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 4,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 5,
+				Key = "json"
+				}
+			}
+		};
+
+	}
+
+public partial class MailList : _MailList {
+    } // class MailList
+
+public class _MailImport : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new String (),
+		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+		new Flag (),
+		new Flag (),
+		new Flag ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[1] as String;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[2] as Enumeration<EnumReporting>;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _EnumReporting {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[5].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "import",
+		Brief =  "Import account information",
+		HandleDelegate =  CommandLineInterpreter.Handle_MailImport,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 1,
+				Key = "local"
+				},
+			new DescribeEntryEnumerate () {
+				Identifier = "EnumReporting", 
+				Default = null, // null if null
+				Brief = "Reporting level",
+				Index = 2,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 3,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 4,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 5,
+				Key = "json"
+				}
+			}
+		};
+
+	}
+
+public partial class MailImport : _MailImport {
+    } // class MailImport
+
+public class _MailDelete : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new String (),
+		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new String ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[1] as String;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[2] as Enumeration<EnumReporting>;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _EnumReporting {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Address {
+		get => _Data[6] as String;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _Address {
+		set => _Data[6].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "delete",
+		Brief =  "Delete mail account information",
+		HandleDelegate =  CommandLineInterpreter.Handle_MailDelete,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 1,
+				Key = "local"
+				},
+			new DescribeEntryEnumerate () {
+				Identifier = "EnumReporting", 
+				Default = null, // null if null
+				Brief = "Reporting level",
+				Index = 2,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 3,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 4,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 5,
+				Key = "json"
+				},
+			new DescribeEntryParameter () {
+				Identifier = "Address", 
+				Default = null, // null if null
+				Brief = "Mail account identifier",
+				Index = 6,
+				Key = ""
+				}
+			}
+		};
+
+	}
+
+public partial class MailDelete : _MailDelete {
+    } // class MailDelete
 
 public class _SmimeSign : Goedel.Command.Dispatch ,
 						IAccountOptions,
@@ -18670,151 +18784,6 @@ public class _OpenpgpEncrypt : Goedel.Command.Dispatch ,
 public partial class OpenpgpEncrypt : _OpenpgpEncrypt {
     } // class OpenpgpEncrypt
 
-public class _MailList : Goedel.Command.Dispatch ,
-						IAccountOptions,
-						IReporting{
-
-	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new String (),
-		new String (),
-		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-		new Flag (),
-		new Flag (),
-		new Flag (),
-		new String ()		} ;
-
-
-
-
-
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[0] as String;
-		set => _Data[0]  = value;
-		}
-
-	public virtual string _AccountAddress {
-		set => _Data[0].Parameter (value);
-		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
-		get => _Data[1] as String;
-		set => _Data[1]  = value;
-		}
-
-	public virtual string _LocalName {
-		set => _Data[1].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[2] as Enumeration<EnumReporting>;
-		set => _Data[2]  = value;
-		}
-
-	public virtual string _EnumReporting {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[3] as Flag;
-		set => _Data[3]  = value;
-		}
-
-	public virtual string _Verbose {
-		set => _Data[3].Parameter (value);
-		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
-		get => _Data[4] as Flag;
-		set => _Data[4]  = value;
-		}
-
-	public virtual string _Report {
-		set => _Data[4].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[5] as Flag;
-		set => _Data[5]  = value;
-		}
-
-	public virtual string _Json {
-		set => _Data[5].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Address {
-		get => _Data[6] as String;
-		set => _Data[6]  = value;
-		}
-
-	public virtual string _Address {
-		set => _Data[6].Parameter (value);
-		}
-	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "list",
-		Brief =  "List mail account information",
-		HandleDelegate =  CommandLineInterpreter.Handle_MailList,
-		Lazy =  false,
-		Entries = new List<DescribeEntry> () {
-			new DescribeEntryOption () {
-				Identifier = "AccountAddress", 
-				Default = null, // null if null
-				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 0,
-				Key = "account"
-				},
-			new DescribeEntryOption () {
-				Identifier = "LocalName", 
-				Default = null, // null if null
-				Brief = "Local name for account (e.g. personal)",
-				Index = 1,
-				Key = "local"
-				},
-			new DescribeEntryEnumerate () {
-				Identifier = "EnumReporting", 
-				Default = null, // null if null
-				Brief = "Reporting level",
-				Index = 2,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Verbose", 
-				Default = "true", // null if null
-				Brief = "Verbose reports (default)",
-				Index = 3,
-				Key = "verbose"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Report", 
-				Default = "true", // null if null
-				Brief = "Report output (default)",
-				Index = 4,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Json", 
-				Default = "false", // null if null
-				Brief = "Report output in JSON format",
-				Index = 5,
-				Key = "json"
-				},
-			new DescribeEntryParameter () {
-				Identifier = "Address", 
-				Default = null, // null if null
-				Brief = "Mail account identifier",
-				Index = 6,
-				Key = ""
-				}
-			}
-		};
-
-	}
-
-public partial class MailList : _MailList {
-    } // class MailList
-
 public class _SSHCreate : Goedel.Command.Dispatch ,
 						IAccountOptions,
 						IReporting,
@@ -19183,6 +19152,604 @@ public class _SSHCreate : Goedel.Command.Dispatch ,
 
 public partial class SSHCreate : _SSHCreate {
     } // class SSHCreate
+
+public class _SSHGet : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new String (),
+		new String (),
+		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+		new Flag (),
+		new Flag (),
+		new Flag ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Identifier {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _Identifier {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[1] as String;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[2] as String;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[3] as Enumeration<EnumReporting>;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _EnumReporting {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[6] as Flag;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[6].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "get",
+		Brief =  "Lookup mail entry",
+		HandleDelegate =  CommandLineInterpreter.Handle_SSHGet,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryParameter () {
+				Identifier = "Identifier", 
+				Default = null, // null if null
+				Brief = "The mail account address",
+				Index = 0,
+				Key = ""
+				},
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 1,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 2,
+				Key = "local"
+				},
+			new DescribeEntryEnumerate () {
+				Identifier = "EnumReporting", 
+				Default = null, // null if null
+				Brief = "Reporting level",
+				Index = 3,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 4,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 5,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 6,
+				Key = "json"
+				}
+			}
+		};
+
+	}
+
+public partial class SSHGet : _SSHGet {
+    } // class SSHGet
+
+public class _SSHList : Goedel.Command.Dispatch ,
+						ISSHOptions,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new Flag (),
+		new Flag (),
+		new String (),
+		new String (),
+		new String (),
+		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+		new Flag (),
+		new Flag (),
+		new Flag ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [known]</summary>
+	public virtual Flag Hosts {
+		get => _Data[0] as Flag;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _Hosts {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [auth]</summary>
+	public virtual Flag Client {
+		get => _Data[1] as Flag;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _Client {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [application]</summary>
+	public virtual String Application {
+		get => _Data[2] as String;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _Application {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[3] as String;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[4] as String;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[5] as Enumeration<EnumReporting>;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _EnumReporting {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[6] as Flag;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[6].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[7] as Flag;
+		set => _Data[7]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[7].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[8] as Flag;
+		set => _Data[8]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[8].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "list",
+		Brief =  "List mail account information",
+		HandleDelegate =  CommandLineInterpreter.Handle_SSHList,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "Hosts", 
+				Default = "true", // null if null
+				Brief = "List known host entries",
+				Index = 0,
+				Key = "known"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Client", 
+				Default = "true", // null if null
+				Brief = "List authorized client entries",
+				Index = 1,
+				Key = "auth"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Application", 
+				Default = null, // null if null
+				Brief = "The application format",
+				Index = 2,
+				Key = "application"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 3,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 4,
+				Key = "local"
+				},
+			new DescribeEntryEnumerate () {
+				Identifier = "EnumReporting", 
+				Default = null, // null if null
+				Brief = "Reporting level",
+				Index = 5,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 6,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 7,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 8,
+				Key = "json"
+				}
+			}
+		};
+
+	}
+
+public partial class SSHList : _SSHList {
+    } // class SSHList
+
+public class _SSHImport : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new String (),
+		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+		new Flag (),
+		new Flag (),
+		new Flag ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[1] as String;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[2] as Enumeration<EnumReporting>;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _EnumReporting {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[5].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "import",
+		Brief =  "Import account information",
+		HandleDelegate =  CommandLineInterpreter.Handle_SSHImport,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 1,
+				Key = "local"
+				},
+			new DescribeEntryEnumerate () {
+				Identifier = "EnumReporting", 
+				Default = null, // null if null
+				Brief = "Reporting level",
+				Index = 2,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 3,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 4,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 5,
+				Key = "json"
+				}
+			}
+		};
+
+	}
+
+public partial class SSHImport : _SSHImport {
+    } // class SSHImport
+
+public class _SSHDelete : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new String (),
+		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new String ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[1] as String;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[2] as Enumeration<EnumReporting>;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _EnumReporting {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Address {
+		get => _Data[6] as String;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _Address {
+		set => _Data[6].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "delete",
+		Brief =  "Delete mail account information",
+		HandleDelegate =  CommandLineInterpreter.Handle_SSHDelete,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 1,
+				Key = "local"
+				},
+			new DescribeEntryEnumerate () {
+				Identifier = "EnumReporting", 
+				Default = null, // null if null
+				Brief = "Reporting level",
+				Index = 2,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 3,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 4,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 5,
+				Key = "json"
+				},
+			new DescribeEntryParameter () {
+				Identifier = "Address", 
+				Default = null, // null if null
+				Brief = "Mail account identifier",
+				Index = 6,
+				Key = ""
+				}
+			}
+		};
+
+	}
+
+public partial class SSHDelete : _SSHDelete {
+    } // class SSHDelete
 
 public class _SSHPrivate : Goedel.Command.Dispatch ,
 						IAccountOptions,
@@ -19612,7 +20179,7 @@ public class _SSHPublic : Goedel.Command.Dispatch ,
 public partial class SSHPublic : _SSHPublic {
     } // class SSHPublic
 
-public class _SSHMergeKnown : Goedel.Command.Dispatch ,
+public class _SSHMergeHosts : Goedel.Command.Dispatch ,
 						IAccountOptions,
 						IReporting,
 						ISSHOptions{
@@ -19626,7 +20193,9 @@ public class _SSHMergeKnown : Goedel.Command.Dispatch ,
 		new Flag (),
 		new String (),
 		new ExistingFile (),
-		new String ()		} ;
+		new String (),
+		new Flag (),
+		new Flag ()		} ;
 
 
 
@@ -19713,12 +20282,30 @@ public class _SSHMergeKnown : Goedel.Command.Dispatch ,
 	public virtual string _ID {
 		set => _Data[8].Parameter (value);
 		}
+	/// <summary>Field accessor for option [read]</summary>
+	public virtual Flag Hosts {
+		get => _Data[9] as Flag;
+		set => _Data[9]  = value;
+		}
+
+	public virtual string _Hosts {
+		set => _Data[9].Parameter (value);
+		}
+	/// <summary>Field accessor for option [write]</summary>
+	public virtual Flag Client {
+		get => _Data[10] as Flag;
+		set => _Data[10]  = value;
+		}
+
+	public virtual string _Client {
+		set => _Data[10].Parameter (value);
+		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "host",
-		Brief =  "Add one or more hosts to the known_hosts file",
-		HandleDelegate =  CommandLineInterpreter.Handle_SSHMergeKnown,
+		Identifier = "hosts",
+		Brief =  "Merge the SSH known hosts catalog with the specified file",
+		HandleDelegate =  CommandLineInterpreter.Handle_SSHMergeHosts,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
@@ -19780,58 +20367,245 @@ public class _SSHMergeKnown : Goedel.Command.Dispatch ,
 			new DescribeEntryOption () {
 				Identifier = "ID", 
 				Default = null, // null if null
-				Brief = "Key identifier",
+				Brief = "Specify the SSH instance",
 				Index = 8,
 				Key = "id"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Hosts", 
+				Default = "true", // null if null
+				Brief = "Read the specified file and update the catalog.",
+				Index = 9,
+				Key = "read"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Client", 
+				Default = "true", // null if null
+				Brief = "Read the catalog and write unknown hosts to it.",
+				Index = 10,
+				Key = "write"
 				}
 			}
 		};
 
 	}
 
-public partial class SSHMergeKnown : _SSHMergeKnown {
-    } // class SSHMergeKnown
+public partial class SSHMergeHosts : _SSHMergeHosts {
+    } // class SSHMergeHosts
 
-public class _SSHMergeClient : Goedel.Command.Dispatch {
+public class _SSHMergeClients : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting,
+						ISSHOptions{
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new String ()		} ;
+		new String (),
+		new String (),
+		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new String (),
+		new ExistingFile (),
+		new String (),
+		new Flag (),
+		new Flag ()		} ;
 
 
 
 
 
-	/// <summary>Field accessor for option [id]</summary>
-	public virtual String ID {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[0] as String;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _ID {
+	public virtual string _AccountAddress {
 		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[1] as String;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[2] as Enumeration<EnumReporting>;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _EnumReporting {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for option [application]</summary>
+	public virtual String Application {
+		get => _Data[6] as String;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _Application {
+		set => _Data[6].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual ExistingFile File {
+		get => _Data[7] as ExistingFile;
+		set => _Data[7]  = value;
+		}
+
+	public virtual string _File {
+		set => _Data[7].Parameter (value);
+		}
+	/// <summary>Field accessor for option [id]</summary>
+	public virtual String ID {
+		get => _Data[8] as String;
+		set => _Data[8]  = value;
+		}
+
+	public virtual string _ID {
+		set => _Data[8].Parameter (value);
+		}
+	/// <summary>Field accessor for option [read]</summary>
+	public virtual Flag Hosts {
+		get => _Data[9] as Flag;
+		set => _Data[9]  = value;
+		}
+
+	public virtual string _Hosts {
+		set => _Data[9].Parameter (value);
+		}
+	/// <summary>Field accessor for option [write]</summary>
+	public virtual Flag Client {
+		get => _Data[10] as Flag;
+		set => _Data[10]  = value;
+		}
+
+	public virtual string _Client {
+		set => _Data[10].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "client",
-		Brief =  "Add one or more hosts to the known_hosts file",
-		HandleDelegate =  CommandLineInterpreter.Handle_SSHMergeClient,
+		Brief =  "Merge the SSH authorized keys catalog with the specified file",
+		HandleDelegate =  CommandLineInterpreter.Handle_SSHMergeClients,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 1,
+				Key = "local"
+				},
+			new DescribeEntryEnumerate () {
+				Identifier = "EnumReporting", 
+				Default = null, // null if null
+				Brief = "Reporting level",
+				Index = 2,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 3,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 4,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 5,
+				Key = "json"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Application", 
+				Default = null, // null if null
+				Brief = "The application format",
+				Index = 6,
+				Key = "application"
+				},
+			new DescribeEntryParameter () {
+				Identifier = "File", 
+				Default = null, // null if null
+				Brief = "<Unspecified>",
+				Index = 7,
+				Key = ""
+				},
+			new DescribeEntryOption () {
 				Identifier = "ID", 
 				Default = null, // null if null
-				Brief = "Key identifier",
-				Index = 0,
+				Brief = "Specify the SSH instance",
+				Index = 8,
 				Key = "id"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Hosts", 
+				Default = "true", // null if null
+				Brief = "Read the specified file and update the catalog.",
+				Index = 9,
+				Key = "read"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Client", 
+				Default = "true", // null if null
+				Brief = "Read the catalog and write unknown hosts to it.",
+				Index = 10,
+				Key = "write"
 				}
 			}
 		};
 
 	}
 
-public partial class SSHMergeClient : _SSHMergeClient {
-    } // class SSHMergeClient
+public partial class SSHMergeClients : _SSHMergeClients {
+    } // class SSHMergeClients
 
 public class _SSHAddHost : Goedel.Command.Dispatch ,
 						IAccountOptions,
@@ -19928,7 +20702,7 @@ public class _SSHAddHost : Goedel.Command.Dispatch ,
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "host",
-		Brief =  "Add one or more hosts to the known_hosts file",
+		Brief =  "Add host to the known_hosts catalog",
 		HandleDelegate =  CommandLineInterpreter.Handle_SSHAddHost,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
@@ -20101,7 +20875,7 @@ public class _SSHAddClient : Goedel.Command.Dispatch ,
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "client",
-		Brief =  "Add one or more keys to the authorized_keys file",
+		Brief =  "Add key to the authorized_keys file",
 		HandleDelegate =  CommandLineInterpreter.Handle_SSHAddClient,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
@@ -20175,477 +20949,6 @@ public class _SSHAddClient : Goedel.Command.Dispatch ,
 
 public partial class SSHAddClient : _SSHAddClient {
     } // class SSHAddClient
-
-public class _SSHKnown : Goedel.Command.Dispatch ,
-						IAccountOptions,
-						IReporting,
-						ISSHOptions{
-
-	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new String (),
-		new String (),
-		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-		new Flag (),
-		new Flag (),
-		new Flag (),
-		new String (),
-		new String ()		} ;
-
-
-
-
-
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[0] as String;
-		set => _Data[0]  = value;
-		}
-
-	public virtual string _AccountAddress {
-		set => _Data[0].Parameter (value);
-		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
-		get => _Data[1] as String;
-		set => _Data[1]  = value;
-		}
-
-	public virtual string _LocalName {
-		set => _Data[1].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[2] as Enumeration<EnumReporting>;
-		set => _Data[2]  = value;
-		}
-
-	public virtual string _EnumReporting {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[3] as Flag;
-		set => _Data[3]  = value;
-		}
-
-	public virtual string _Verbose {
-		set => _Data[3].Parameter (value);
-		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
-		get => _Data[4] as Flag;
-		set => _Data[4]  = value;
-		}
-
-	public virtual string _Report {
-		set => _Data[4].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[5] as Flag;
-		set => _Data[5]  = value;
-		}
-
-	public virtual string _Json {
-		set => _Data[5].Parameter (value);
-		}
-	/// <summary>Field accessor for option [application]</summary>
-	public virtual String Application {
-		get => _Data[6] as String;
-		set => _Data[6]  = value;
-		}
-
-	public virtual string _Application {
-		set => _Data[6].Parameter (value);
-		}
-	/// <summary>Field accessor for option [id]</summary>
-	public virtual String ID {
-		get => _Data[7] as String;
-		set => _Data[7]  = value;
-		}
-
-	public virtual string _ID {
-		set => _Data[7].Parameter (value);
-		}
-	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "host",
-		Brief =  "List the known SSH sites (aka known hosts)",
-		HandleDelegate =  CommandLineInterpreter.Handle_SSHKnown,
-		Lazy =  false,
-		Entries = new List<DescribeEntry> () {
-			new DescribeEntryOption () {
-				Identifier = "AccountAddress", 
-				Default = null, // null if null
-				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 0,
-				Key = "account"
-				},
-			new DescribeEntryOption () {
-				Identifier = "LocalName", 
-				Default = null, // null if null
-				Brief = "Local name for account (e.g. personal)",
-				Index = 1,
-				Key = "local"
-				},
-			new DescribeEntryEnumerate () {
-				Identifier = "EnumReporting", 
-				Default = null, // null if null
-				Brief = "Reporting level",
-				Index = 2,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Verbose", 
-				Default = "true", // null if null
-				Brief = "Verbose reports (default)",
-				Index = 3,
-				Key = "verbose"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Report", 
-				Default = "true", // null if null
-				Brief = "Report output (default)",
-				Index = 4,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Json", 
-				Default = "false", // null if null
-				Brief = "Report output in JSON format",
-				Index = 5,
-				Key = "json"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Application", 
-				Default = null, // null if null
-				Brief = "The application format",
-				Index = 6,
-				Key = "application"
-				},
-			new DescribeEntryOption () {
-				Identifier = "ID", 
-				Default = null, // null if null
-				Brief = "Key identifier",
-				Index = 7,
-				Key = "id"
-				}
-			}
-		};
-
-	}
-
-public partial class SSHKnown : _SSHKnown {
-    } // class SSHKnown
-
-public class _SSHAuth : Goedel.Command.Dispatch ,
-						IAccountOptions,
-						IReporting,
-						ISSHOptions{
-
-	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new String (),
-		new String (),
-		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-		new Flag (),
-		new Flag (),
-		new Flag (),
-		new String (),
-		new String ()		} ;
-
-
-
-
-
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[0] as String;
-		set => _Data[0]  = value;
-		}
-
-	public virtual string _AccountAddress {
-		set => _Data[0].Parameter (value);
-		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
-		get => _Data[1] as String;
-		set => _Data[1]  = value;
-		}
-
-	public virtual string _LocalName {
-		set => _Data[1].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[2] as Enumeration<EnumReporting>;
-		set => _Data[2]  = value;
-		}
-
-	public virtual string _EnumReporting {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[3] as Flag;
-		set => _Data[3]  = value;
-		}
-
-	public virtual string _Verbose {
-		set => _Data[3].Parameter (value);
-		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
-		get => _Data[4] as Flag;
-		set => _Data[4]  = value;
-		}
-
-	public virtual string _Report {
-		set => _Data[4].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[5] as Flag;
-		set => _Data[5]  = value;
-		}
-
-	public virtual string _Json {
-		set => _Data[5].Parameter (value);
-		}
-	/// <summary>Field accessor for option [application]</summary>
-	public virtual String Application {
-		get => _Data[6] as String;
-		set => _Data[6]  = value;
-		}
-
-	public virtual string _Application {
-		set => _Data[6].Parameter (value);
-		}
-	/// <summary>Field accessor for option [id]</summary>
-	public virtual String ID {
-		get => _Data[7] as String;
-		set => _Data[7]  = value;
-		}
-
-	public virtual string _ID {
-		set => _Data[7].Parameter (value);
-		}
-	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "client",
-		Brief =  "List the authorized device keys (aka authorized_keys)",
-		HandleDelegate =  CommandLineInterpreter.Handle_SSHAuth,
-		Lazy =  false,
-		Entries = new List<DescribeEntry> () {
-			new DescribeEntryOption () {
-				Identifier = "AccountAddress", 
-				Default = null, // null if null
-				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 0,
-				Key = "account"
-				},
-			new DescribeEntryOption () {
-				Identifier = "LocalName", 
-				Default = null, // null if null
-				Brief = "Local name for account (e.g. personal)",
-				Index = 1,
-				Key = "local"
-				},
-			new DescribeEntryEnumerate () {
-				Identifier = "EnumReporting", 
-				Default = null, // null if null
-				Brief = "Reporting level",
-				Index = 2,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Verbose", 
-				Default = "true", // null if null
-				Brief = "Verbose reports (default)",
-				Index = 3,
-				Key = "verbose"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Report", 
-				Default = "true", // null if null
-				Brief = "Report output (default)",
-				Index = 4,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Json", 
-				Default = "false", // null if null
-				Brief = "Report output in JSON format",
-				Index = 5,
-				Key = "json"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Application", 
-				Default = null, // null if null
-				Brief = "The application format",
-				Index = 6,
-				Key = "application"
-				},
-			new DescribeEntryOption () {
-				Identifier = "ID", 
-				Default = null, // null if null
-				Brief = "Key identifier",
-				Index = 7,
-				Key = "id"
-				}
-			}
-		};
-
-	}
-
-public partial class SSHAuth : _SSHAuth {
-    } // class SSHAuth
-
-public class _SSHList : Goedel.Command.Dispatch ,
-						IAccountOptions,
-						IReporting{
-
-	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new String (),
-		new String (),
-		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-		new Flag (),
-		new Flag (),
-		new Flag (),
-		new String ()		} ;
-
-
-
-
-
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[0] as String;
-		set => _Data[0]  = value;
-		}
-
-	public virtual string _AccountAddress {
-		set => _Data[0].Parameter (value);
-		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
-		get => _Data[1] as String;
-		set => _Data[1]  = value;
-		}
-
-	public virtual string _LocalName {
-		set => _Data[1].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[2] as Enumeration<EnumReporting>;
-		set => _Data[2]  = value;
-		}
-
-	public virtual string _EnumReporting {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[3] as Flag;
-		set => _Data[3]  = value;
-		}
-
-	public virtual string _Verbose {
-		set => _Data[3].Parameter (value);
-		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
-		get => _Data[4] as Flag;
-		set => _Data[4]  = value;
-		}
-
-	public virtual string _Report {
-		set => _Data[4].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[5] as Flag;
-		set => _Data[5]  = value;
-		}
-
-	public virtual string _Json {
-		set => _Data[5].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Address {
-		get => _Data[6] as String;
-		set => _Data[6]  = value;
-		}
-
-	public virtual string _Address {
-		set => _Data[6].Parameter (value);
-		}
-	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "list",
-		Brief =  "List ssh account information",
-		HandleDelegate =  CommandLineInterpreter.Handle_SSHList,
-		Lazy =  false,
-		Entries = new List<DescribeEntry> () {
-			new DescribeEntryOption () {
-				Identifier = "AccountAddress", 
-				Default = null, // null if null
-				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 0,
-				Key = "account"
-				},
-			new DescribeEntryOption () {
-				Identifier = "LocalName", 
-				Default = null, // null if null
-				Brief = "Local name for account (e.g. personal)",
-				Index = 1,
-				Key = "local"
-				},
-			new DescribeEntryEnumerate () {
-				Identifier = "EnumReporting", 
-				Default = null, // null if null
-				Brief = "Reporting level",
-				Index = 2,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Verbose", 
-				Default = "true", // null if null
-				Brief = "Verbose reports (default)",
-				Index = 3,
-				Key = "verbose"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Report", 
-				Default = "true", // null if null
-				Brief = "Report output (default)",
-				Index = 4,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Json", 
-				Default = "false", // null if null
-				Brief = "Report output in JSON format",
-				Index = 5,
-				Key = "json"
-				},
-			new DescribeEntryParameter () {
-				Identifier = "Address", 
-				Default = null, // null if null
-				Brief = "SSH account identifier",
-				Index = 6,
-				Key = ""
-				}
-			}
-		};
-
-	}
-
-public partial class SSHList : _SSHList {
-    } // class SSHList
 
 
 public partial class  Flag : Goedel.Command._Flag {
@@ -20891,11 +21194,6 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		return null;
 		}
 
-	public virtual ShellResult ContactSelf ( ContactSelf Options) {
-		CommandLineInterpreter.DescribeValues (Options);
-		return null;
-		}
-
 	public virtual ShellResult ContactStatic ( ContactStatic Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
@@ -20912,11 +21210,6 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		}
 
 	public virtual ShellResult ContactExchange ( ContactExchange Options) {
-		CommandLineInterpreter.DescribeValues (Options);
-		return null;
-		}
-
-	public virtual ShellResult ContactExport ( ContactExport Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
@@ -21131,7 +21424,22 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		return null;
 		}
 
-	public virtual ShellResult MailUpdate ( MailUpdate Options) {
+	public virtual ShellResult MailGet ( MailGet Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult MailList ( MailList Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult MailImport ( MailImport Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult MailDelete ( MailDelete Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
@@ -21156,12 +21464,27 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		return null;
 		}
 
-	public virtual ShellResult MailList ( MailList Options) {
+	public virtual ShellResult SSHCreate ( SSHCreate Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
 
-	public virtual ShellResult SSHCreate ( SSHCreate Options) {
+	public virtual ShellResult SSHGet ( SSHGet Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult SSHList ( SSHList Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult SSHImport ( SSHImport Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult SSHDelete ( SSHDelete Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
@@ -21176,12 +21499,12 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		return null;
 		}
 
-	public virtual ShellResult SSHMergeKnown ( SSHMergeKnown Options) {
+	public virtual ShellResult SSHMergeHosts ( SSHMergeHosts Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
 
-	public virtual ShellResult SSHMergeClient ( SSHMergeClient Options) {
+	public virtual ShellResult SSHMergeClients ( SSHMergeClients Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
@@ -21192,21 +21515,6 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		}
 
 	public virtual ShellResult SSHAddClient ( SSHAddClient Options) {
-		CommandLineInterpreter.DescribeValues (Options);
-		return null;
-		}
-
-	public virtual ShellResult SSHKnown ( SSHKnown Options) {
-		CommandLineInterpreter.DescribeValues (Options);
-		return null;
-		}
-
-	public virtual ShellResult SSHAuth ( SSHAuth Options) {
-		CommandLineInterpreter.DescribeValues (Options);
-		return null;
-		}
-
-	public virtual ShellResult SSHList ( SSHList Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}

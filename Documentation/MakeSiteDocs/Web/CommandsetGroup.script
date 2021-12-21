@@ -59,7 +59,7 @@ restrictions of this form do not appear to be frequently realized in practice.
 
 Recryption groups are created using the #{ToCommand("group create")} command:
 
-#%  ConsoleExample (ShellGroup.GroupCreate);
+#%  ConsoleExample (Group.GroupCreate);
 
 This command creates the group #{GroupAccount}. Since Alice created the
 account she is the administrator.
@@ -67,12 +67,15 @@ account she is the administrator.
 At this point, the group has no members. Bob can encrypt a file under the group
 public key but he is unable to read it:
 
-#%  ConsoleExample (ShellGroup.GroupEncrypt);
+#%  ConsoleExample (Group.GroupEncrypt);
 
-Since Alice is the group administrator, she can decrypt the file using her 
-administrator key:
+Even though Alice is the group administrator, she cannot decrypt the file by default:
 
-#%  ConsoleExample (ShellGroup.GroupDecryptAlice);
+#%  ConsoleExample (Group.GroupDecryptAlice);
+
+Alice adds herself to the group, now she can decrypt:
+
+#%  ConsoleExample (Group.GroupAddAlice);
 
 
 #### Adding users
@@ -81,29 +84,36 @@ The #{ToCommand("group add")} command is used to add users to the group:
 
 Alice adds Bob as a member of the group:
 
-#%  ConsoleExample (ShellGroup.GroupAdd);
+#%  ConsoleExample (Group.GroupAddBob);
 
 Bob can now decrypt the file.
 
-#%  ConsoleExample (ShellGroup.GroupDecryptBob2);
+#%  ConsoleExample (Group.GroupDecryptBobSuccess);
 
 #### Reporting users
 
-The #{ToCommand("connect ")} command returns a list of group members:
+The #{ToCommand("group list")} command returns a list of group members:
 
-#%  ConsoleExample (ShellGroup.GroupList1);
+#%  ConsoleExample (Group.GroupList);
 
 The group currently has one administrator and one member.
+
+The #{ToCommand("group get")} command returns information about a particular member.
+If the service hosting the key service tracks key operations, this might report the
+number of documents a user has viewed.
+
+#%  ConsoleExample (Group.GroupGet);
+
 
 #### Deleting users
 
 Users may be removed from a recryption group using the #{ToCommand("group delete")} command:
 
-#%  ConsoleExample (ShellGroup.GroupDelete);
+#%  ConsoleExample (Group.GroupDeleteBob);
 
 Bob is no longer a member of the group and his decryption request now fails:
 
-#%  ConsoleExample (ShellGroup.GroupDecryptBob3);
+#%  ConsoleExample (Group.GroupDecryptBobRevoked);
 
 
 #end zfile
@@ -114,23 +124,60 @@ Bob is no longer a member of the group and his decryption request now fails:
 
 #% Describe( CommandSet);
 
+#! ------------------ group add
 #% Describe( CommandSet, _GroupAdd._DescribeCommand);
-#%  ConsoleReference (ShellGroup.GroupAdd);
 
+
+The `group add` command adds a user to a group.
+
+The first required parameter specifies the name of the group, the second required parameter 
+specifies the name of the user to be added.
+
+
+#%  ConsoleReference (Group.GroupAddBob);
+
+#! ------------------ group create
 #% Describe( CommandSet, _GroupCreate._DescribeCommand);
-#%  ConsoleReference (ShellGroup.GroupCreate);
+
+The `group create` command creates a group.
+
+The parameters for group creation are the same as for account creation. This allows a group
+to be used to share a calendar or password catalog etc.
 
 
+#%  ConsoleReference (Group.GroupCreate);
 
+
+#! ------------------ group delete
 #% Describe( CommandSet, _GroupDelete._DescribeCommand);
-#%  ConsoleReference (ShellGroup.GroupDelete);
 
+The `group reject` command deletes a user from a group account.
 
+The first required parameter specifies the name of the group, the second required parameter 
+specifies the name of the user to be removed.
+
+To delete the group account itself, the 'account delete' command is required.
+
+#%  ConsoleReference (Group.GroupDeleteBob);
+
+#! ------------------ group get
 #% Describe( CommandSet, _GroupGet._DescribeCommand);
 
+The `group get` command returns details of the sepcified group member.
 
+The first required parameter specifies the name of the group, the second required parameter 
+specifies the name of the user whose information is requested.
+
+#%  ConsoleReference (Group.GroupGet);
+
+#! ------------------ group list
 #% Describe( CommandSet, _GroupList._DescribeCommand);
-#%  ConsoleReference (ShellGroup.GroupList1);
+
+The `group reject` command lists the names of the users in the specified group.
+
+The first parameter specifies the name of the group.
+
+#%  ConsoleReference (Group.GroupList);
 
 #end zfile
 

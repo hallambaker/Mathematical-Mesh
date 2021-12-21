@@ -71,7 +71,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The {1} command adds an SSH profile named `ssh` to a Mesh account:\n{0}", _Indent, ToCommand("ssh create"));
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellSSH.SSHCreate);
+			  ConsoleExample (Apps.SSHCreate);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Since the command creates a new application catalog, the command must be given to \n{0}", _Indent);
 			_Output.Write ("an administration device.\n{0}", _Indent);
@@ -85,12 +85,12 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The {1} command extracts the private key required top configure\n{0}", _Indent, ToCommand("ssh private"));
 			_Output.Write ("an SSH client:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellSSH.SSHPrivate);
+			  ConsoleExample (Apps.SSHPrivate);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The {1} command extracts the public key required top configure\n{0}", _Indent, ToCommand("ssh public"));
 			_Output.Write ("an SSH client:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellSSH.SSHPublic);
+			  ConsoleExample (Apps.SSHPublic);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("If a script is being used to automate this process, the best practice is for the\n{0}", _Indent);
 			_Output.Write ("script to first generate a random nonce and request that the private key file\n{0}", _Indent);
@@ -106,35 +106,49 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("(`alice@example.com.mm--ssss`), the corresponding profile is fetched and the \n{0}", _Indent);
 			_Output.Write ("corresponding SSH device public keys added:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellSSH.SSHMergeClients);
+			  ConsoleExample (Apps.SSHMergeClients);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The {1}  command reads the `known_hosts` file on a client machine and adds\n{0}", _Indent, ToCommand("ssh merge host"));
 			_Output.Write ("the listed hosts to the user's ssh catalog.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellSSH.SSHMergeHosts);
+			  ConsoleExample (Apps.SSHMergeHosts);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Client Key management\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("SSH keys belonging to the user that are not part of the Mesh profile may be added using the \n{0}", _Indent);
-			_Output.Write ("{1}  command.\n{0}", _Indent, ToCommand("ssh add client"));
+			_Output.Write ("{1}  command.\n{0}", _Indent, ToCommand("ssh import"));
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellSSH.SSHAddClient);
+			  ConsoleExample (Apps.SSHImport);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (Apps.SSHAddClient);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (Apps.SSHGet);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The list of known clients may be returned in various formats using the {1}  command.\n{0}", _Indent, ToCommand("ssh show client"));
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellSSH.SSHShowClient);
+			  ConsoleExample (Apps.SSHList);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (Apps.SSHDelete);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (Apps.SSHMergeClients);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Host Key Management\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The {1}  command adds specific host entries to the user's SSH profile.\n{0}", _Indent, ToCommand("ssh add host"));
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellSSH.SSHAddHost);
+			  ConsoleExample (Apps.SSHAddHost);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The current list of known hosts in the SSH catalog is returned by the {1} \n{0}", _Indent, ToCommand("ssh show known"));
 			_Output.Write ("command.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellSSH.SSHShowKnown);
+			  ConsoleExample (Apps.SSHListHosts);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (Apps.SSHMergeHosts);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Additional Devices\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -147,11 +161,11 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The {1}  command is used *from an administration device* to \n{0}", _Indent, ToCommand("device auth /ssh"));
 			_Output.Write ("enable use of ssh on the machine:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellSSH.SSHAuthDev);
+			  ConsoleExample (Connect.ConnectSSHAuth );
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Once the device has been authorized, the client machine can start using SSH immediately:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellSSH.SSHAuthProof);
+			  ConsoleExample (Apps.SSHAuthProof);
 			_Output.Write ("\n{0}", _Indent);
 				}
 	
@@ -172,42 +186,71 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			 Describe(CommandSet);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			// ------------------ ssh add client
 			 Describe(CommandSet, _SSHAddClient._DescribeCommand);
-			  ConsoleReference (ShellSSH.SSHAddClient);
+			  ConsoleReference (Apps.SSHAddClient);
 			_Output.Write ("\n{0}", _Indent);
+			// ------------------ ssh add host
 			 Describe(CommandSet, _SSHAddHost._DescribeCommand);
-			  ConsoleReference (ShellSSH.SSHAddHost);
+			  ConsoleReference (Apps.SSHAddHost);
 			_Output.Write ("\n{0}", _Indent);
+			// ------------------ ssh create
 			 Describe(CommandSet, _SSHCreate._DescribeCommand);
-			  ConsoleReference (ShellSSH.SSHCreate);
+			  ConsoleReference (Apps.SSHCreate);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ ssh delete
+			 Describe(CommandSet, _SSHDelete._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleReference (Apps.SSHDelete);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ ssh import
+			 Describe(CommandSet, _SSHImport._DescribeCommand);
+			  ConsoleReference (Apps.SSHImport);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ ssh get
+			 Describe(CommandSet, _SSHGet._DescribeCommand);
+			  ConsoleReference (Apps.SSHGet);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ ssh list
 			 Describe(CommandSet, _SSHList._DescribeCommand);
-			  ConsoleReference (ShellSSH.SSHCreate);
+			  ConsoleReference (Apps.SSHList);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			 Describe(CommandSet, _SSHMergeClient._DescribeCommand);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			 Describe(CommandSet, _SSHMergeKnown._DescribeCommand);
-			  ConsoleReference (ShellSSH.SSHMergeHosts);
+			// ------------------ ssh merge client
+			 Describe(CommandSet, _SSHMergeClients._DescribeCommand);
+			  ConsoleReference (Apps.SSHMergeClients);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			// ------------------ ssh merge host
+			 Describe(CommandSet, _SSHMergeHosts._DescribeCommand);
+			  ConsoleReference (Apps.SSHMergeHosts);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			// ------------------ ssh private
 			 Describe(CommandSet, _SSHPrivate._DescribeCommand);
-			  ConsoleReference (ShellSSH.SSHPrivate);
+			  ConsoleReference (Apps.SSHPrivate);
 			_Output.Write ("\n{0}", _Indent);
+			// ------------------ ssh public 
 			 Describe(CommandSet, _SSHPublic._DescribeCommand);
-			  ConsoleReference (ShellSSH.SSHPublic);
+			  ConsoleReference (Apps.SSHPublic);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			 Describe(CommandSet, _SSHKnown._DescribeCommand);
-			  ConsoleReference (ShellSSH.SSHShowKnown);
 			_Output.Write ("\n{0}", _Indent);
-			 Describe(CommandSet, _SSHAuth._DescribeCommand);
-			  ConsoleReference (ShellSSH.SSHShowKnown);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

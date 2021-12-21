@@ -31,9 +31,14 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Adding networks\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The {1} command adds a network entry to a catalog:\n{0}", _Indent, ToCommand("network add"));
+			_Output.Write ("The {1} command adds a simple network entry to a catalog. This is typically\n{0}", _Indent, ToCommand("network add"));
+			_Output.Write ("a WIfi network SSID and password:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleExample (ShellNetwork.NetworkAdd);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("More complicated network configurations are added using the {1} command:\n{0}", _Indent, ToCommand("network import"));
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (ShellNetwork.NetworkImport);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Finding networks\n{0}", _Indent);
@@ -56,11 +61,14 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Adding devices\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (ShellNetwork.NetworkList1);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Devices are given authorization to access the networks catalog using the \n{0}", _Indent);
 			_Output.Write (" {1} command:\n{0}", _Indent, ToCommand("device auth"));
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellNetwork.NetworkAuth);
+			  ConsoleExample (Connect.ConnectJoinAuth );
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (ShellNetwork.NetworkList2);
 			_Output.Write ("\n{0}", _Indent);
 				}
 	
@@ -92,14 +100,14 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _NetworkDelete._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The 'network delete' command deletes a contact entry entry by means of \n{0}", _Indent);
+			_Output.Write ("The 'network delete' command deletes a network entry entry by means of \n{0}", _Indent);
 			_Output.Write ("its unique catalog identifier.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellNetwork.NetworkDelete);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _NetworkGet._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The 'network get' command retrieves a contact entry by means of its \n{0}", _Indent);
+			_Output.Write ("The 'network get' command retrieves a network entry by means of its \n{0}", _Indent);
 			_Output.Write ("unique catalog identifier.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -107,9 +115,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _NetworkImport._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The 'network import' command is used to add appointment and task entries to the catalog\n{0}", _Indent);
+			_Output.Write ("The 'network import' command is used to add a network entry to the catalog\n{0}", _Indent);
 			_Output.Write ("from a file\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			 ConsoleReference (ShellNetwork.NetworkImport);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe(CommandSet, _NetworkDump._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);

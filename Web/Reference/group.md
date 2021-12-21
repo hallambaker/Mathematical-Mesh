@@ -32,9 +32,25 @@ add   Add user to recryption group
 </div>
 ~~~~
 
+
+The `group add` command adds a user to a group.
+
+The first required parameter specifies the name of the group, the second required parameter 
+specifies the name of the user to be added.
+
+
+
 ~~~~
-Missing example 17
+<div="terminal">
+<cmd>Alice> meshman group add groupw@example.com bob@example.com
+<rsp>{
+  "ContactAddress": "bob@example.com",
+  "MemberCapabilityId": "MBK4-3JBR-FQE6-SIGE-PBL7-BYFI-ZFPN",
+  "ServiceCapabilityId": "MCAL-TOGV-SG7G-N3I2-I6EB-HJ5A-D3FR"}
+</div>
 ~~~~
+
+
 
 # group create
 
@@ -64,9 +80,21 @@ create   Create recryption group
 </div>
 ~~~~
 
+The `group create` command creates a group.
+
+The parameters for group creation are the same as for account creation. This allows a group
+to be used to share a calendar or password catalog etc.
+
+
+
 ~~~~
-Missing example 18
+<div="terminal">
+<cmd>Alice> meshman group create groupw@example.com /web
+<rsp>Account=groupw@example.com
+UDF=MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+</div>
 ~~~~
+
 
 
 
@@ -87,9 +115,24 @@ delete   Remove user from recryption group
 </div>
 ~~~~
 
+The `group reject` command deletes a user from a group account.
+
+The first required parameter specifies the name of the group, the second required parameter 
+specifies the name of the user to be removed.
+
+To delete the group account itself, the 'account delete' command is required.
+
+
 ~~~~
-Missing example 19
+<div="terminal">
+<cmd>Alice> meshman group delete groupw@example.com bob@example.com
+<rsp>{
+  "ContactAddress": "bob@example.com",
+  "MemberCapabilityId": "MBK4-3JBR-FQE6-SIGE-PBL7-BYFI-ZFPN",
+  "ServiceCapabilityId": "MCAL-TOGV-SG7G-N3I2-I6EB-HJ5A-D3FR"}
+</div>
 ~~~~
+
 
 
 # group get
@@ -109,6 +152,20 @@ get   Find member in recryption group
 </div>
 ~~~~
 
+The `group get` command returns details of the sepcified group member.
+
+The first required parameter specifies the name of the group, the second required parameter 
+specifies the name of the user whose information is requested.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman group get groupw@example.com
+<rsp>ERROR - Value cannot be null. (Parameter 'key')
+</div>
+~~~~
+
+
 
 # group list
 
@@ -126,7 +183,16 @@ list   List members of a recryption group
 </div>
 ~~~~
 
+The `group reject` command lists the names of the users in the specified group.
+
+The first parameter specifies the name of the group.
+
+
 ~~~~
-Missing example 20
+<div="terminal">
+<cmd>Alice> meshman group list groupw@example.com
+<rsp></div>
 ~~~~
+
+
 

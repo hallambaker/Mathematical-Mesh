@@ -87,10 +87,12 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Adding devices\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (ShellCalendar.CalendarList1);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Devices are given authorization to access the calendars catalog using the \n{0}", _Indent);
 			_Output.Write (" {1} command:\n{0}", _Indent, ToCommand("device auth"));
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellCalendar.CalendarAuth);
+			  ConsoleExample (Connect.ConnectJoinAuth );
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The new device now has access to the Calendar catalog:\n{0}", _Indent);

@@ -65,7 +65,7 @@ being that all authorizations are denied.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman device accept UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6 /message /web
+<cmd>Alice> meshman device accept YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS /message /web
 <rsp></div>
 ~~~~
 
@@ -162,9 +162,9 @@ device profile by polling the manufacturer service.
 ~~~~
 <div="terminal">
 <cmd>Alice4> meshman device complete
-<rsp>   Device UDF = MAW6-O4D3-KIXK-YWBJ-QQNW-ICMT-QTGB
+<rsp>   Device UDF = MBM6-ONBJ-ESIY-SQUC-UNYK-2KWU-KELY
    Account = alice@example.com
-   Account UDF = MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
+   Account UDF = MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
 </div>
 ~~~~
 
@@ -193,8 +193,13 @@ the UDF of the device profile or the device identifier.
 
 
 ~~~~
-Missing example 6
+<div="terminal">
+<cmd>Alice> meshman device delete
+<rsp>ERROR - Value cannot be null. (Parameter 'key')
+</div>
 ~~~~
+
+
 
 # device install
 
@@ -215,7 +220,7 @@ install   Connect by means of a connection URI from an administration device.
 
 ~~~~
 <div="terminal">
-<cmd>Alice4> meshman device install EBBQ-LEUY-XIMX-I7QJ-IP7R-XQFR-EY.medk
+<cmd>Alice4> meshman device install ED6U-5FAQ-662T-BTCW-7YFY-W545-EY.medk
 <rsp></div>
 ~~~~
 
@@ -270,8 +275,12 @@ The `device list` command lists the device profiles in the device catalog.
 
 
 ~~~~
-Missing example 7
+<div="terminal">
+<cmd>Alice> meshman device list
+<rsp></div>
 ~~~~
+
+
 
 # device pending
 
@@ -295,12 +304,12 @@ the inbound message spool.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman device pending
-<rsp>MessageID: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
+<rsp>MessageID: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
         Connection Request::
-        MessageID: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
+        MessageID: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
         To:  From: 
-        Device:  MAT6-VBWS-466P-GHDQ-RLHL-S2IJ-PXY5
-        Witness: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
+        Device:  MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
+        Witness: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
 </div>
 ~~~~
 
@@ -326,8 +335,8 @@ preconfig   Generate new device profile and publish as an EARL
 ~~~~
 <div="terminal">
 <cmd>Maker> meshman device preconfig
-<rsp>Device UDF: MAW6-O4D3-KIXK-YWBJ-QQNW-ICMT-QTGB
-File: EBBQ-LEUY-XIMX-I7QJ-IP7R-XQFR-EY.medk
+<rsp>Device UDF: MBM6-ONBJ-ESIY-SQUC-UNYK-2KWU-KELY
+File: ED6U-5FAQ-662T-BTCW-7YFY-W545-EY.medk
 </div>
 ~~~~
 
@@ -359,7 +368,7 @@ four characters are given.
 
 
 ~~~~
-Missing example 8
+Missing example 4
 ~~~~
 
 # device request
@@ -406,8 +415,8 @@ the `/pin` option.
 ~~~~
 <div="terminal">
 <cmd>Alice2> meshman device request alice@example.com
-<rsp>   Device UDF = MAT6-VBWS-466P-GHDQ-RLHL-S2IJ-PXY5
-   Witness value = UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
+<rsp>   Device UDF = MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
+   Witness value = YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
 </div>
 ~~~~
 

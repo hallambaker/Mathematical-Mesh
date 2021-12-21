@@ -83,10 +83,15 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Adding devices\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (ShellBookmark.BookmarkList1);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Devices are given authorization to access the bookmarks catalog using the \n{0}", _Indent);
 			_Output.Write (" {1} command:\n{0}", _Indent, ToCommand("device auth"));
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellBookmark.BookmarkAuth);
+			_Output.Write ("\n{0}", _Indent);
+			  ConsoleExample (Connect.ConnectJoinAuth );
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The new device now has access to the Bookmarks catalog:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

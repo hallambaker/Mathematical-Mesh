@@ -33,6 +33,9 @@ public class ShellPassword : ExampleSet {
     public List<ExampleResult> PasswordList;
     public List<ExampleResult> PasswordDelete;
     public List<ExampleResult> PasswordAuth;
+
+    public List<ExampleResult> PasswordList1;
+    public List<ExampleResult> PasswordList2;
     public List<ExampleResult> PasswordSequence => CreateExamples.Concat(PasswordAdd, PasswordList, PasswordUpdate, PasswordGet);
 
 
@@ -44,8 +47,6 @@ public class ShellPassword : ExampleSet {
     public const string PasswordValue2 = "newpassword";
     public const string PasswordSite2 = "www.example.com";
 
-
-    public List<ExampleResult> PasswordList2;
 
     public ShellPassword(CreateExamples createExamples) :
                 base(createExamples) {

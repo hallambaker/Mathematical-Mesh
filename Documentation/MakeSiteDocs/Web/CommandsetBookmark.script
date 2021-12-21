@@ -69,10 +69,15 @@ A complete list of bookmarks is obtained using the  #{ToCommand("bookmark list")
 
 #### Adding devices
 
+
+
+#%  ConsoleExample (ShellBookmark.BookmarkList1);
+
 Devices are given authorization to access the bookmarks catalog using the 
  #{ToCommand("device auth")} command:
 
-#%  ConsoleExample (ShellBookmark.BookmarkAuth);
+
+#%  ConsoleExample (Connect.ConnectJoinAuth );
 
 The new device now has access to the Bookmarks catalog:
 

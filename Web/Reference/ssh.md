@@ -6,11 +6,13 @@
 <div="helptext">
 <over>
 ssh    Manage SSH profiles connected to a personal profile
-    add<Unspecified>
-    merge<Unspecified>
-    show<Unspecified>
+    addAdd a public key to the host or client configuration
+    mergeMerge the catalog with the specified local file
     create   Generate a new SSH public keypair for the current machine and add to the personal profile
-    list   List ssh account information
+    delete   Delete mail account information
+    get   Lookup mail entry
+    import   Import account information
+    list   List mail account information
     private   Extract the private key for this device
     public   Extract the public key for this device
 <over>
@@ -23,7 +25,7 @@ ssh    Manage SSH profiles connected to a personal profile
 ~~~~
 <div="helptext">
 <over>
-client   Add one or more keys to the authorized_keys file
+client   Add key to the authorized_keys file
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
@@ -37,15 +39,20 @@ client   Add one or more keys to the authorized_keys file
 ~~~~
 
 ~~~~
-Missing example 41
+<div="terminal">
+<cmd>Alice> meshman ssh add client
+<rsp>ERROR - An unknown error occurred
+</div>
 ~~~~
+
+
 
 # ssh host
 
 ~~~~
 <div="helptext">
 <over>
-host   Add one or more hosts to the known_hosts file
+host   Add host to the known_hosts catalog
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -58,8 +65,13 @@ host   Add one or more hosts to the known_hosts file
 ~~~~
 
 ~~~~
-Missing example 42
+<div="terminal">
+<cmd>Alice> meshman ssh add host
+<rsp>ERROR - TBS
+</div>
 ~~~~
+
+
 
 # ssh create
 
@@ -91,16 +103,48 @@ create   Generate a new SSH public keypair for the current machine and add to th
 ~~~~
 
 ~~~~
-Missing example 43
+<div="terminal">
+<cmd>Alice> meshman ssh create /web
+<rsp>UDF: MDDO-QOQ3-U6RO-HNBP-DCQX-S74X-MY27
+</div>
 ~~~~
 
-# ssh list
+
+
+
+# ssh delete
 
 ~~~~
 <div="helptext">
 <over>
-list   List ssh account information
-       SSH account identifier
+delete   Delete mail account information
+       Mail account identifier
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
+
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh delete
+<rsp>ERROR - TBS
+</div>
+~~~~
+
+
+
+# ssh import
+
+~~~~
+<div="helptext">
+<over>
+import   Import account information
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -111,8 +155,65 @@ list   List ssh account information
 ~~~~
 
 ~~~~
-Missing example 44
+<div="terminal">
+<cmd>Alice> meshman ssh import
+<rsp>ERROR - TBS
+</div>
 ~~~~
+
+
+
+# ssh get
+
+~~~~
+<div="helptext">
+<over>
+get   Lookup mail entry
+       The mail account address
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh get
+<rsp>ERROR - TBS
+</div>
+~~~~
+
+
+
+
+# ssh list
+
+~~~~
+<div="helptext">
+<over>
+list   List mail account information
+    /known   List known host entries
+    /auth   List authorized client entries
+    /application   The application format
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh import
+<rsp>ERROR - TBS
+</div>
+~~~~
+
 
 
 
@@ -121,21 +222,7 @@ Missing example 44
 ~~~~
 <div="helptext">
 <over>
-client   Add one or more hosts to the known_hosts file
-    /id   Key identifier
-<over>
-</div>
-~~~~
-
-
-
-
-# ssh host
-
-~~~~
-<div="helptext">
-<over>
-host   Add one or more hosts to the known_hosts file
+client   Merge the SSH authorized keys catalog with the specified file
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
@@ -143,14 +230,50 @@ host   Add one or more hosts to the known_hosts file
     /report   Report output (default)
     /json   Report output in JSON format
     /application   The application format
-    /id   Key identifier
+    /id   Specify the SSH instance
+    /read   Read the specified file and update the catalog.
+    /write   Read the catalog and write unknown hosts to it.
 <over>
 </div>
 ~~~~
 
 ~~~~
-Missing example 45
+<div="terminal">
+<cmd>Alice2> meshman ssh merge client
+<rsp>ERROR - TBS
+</div>
 ~~~~
+
+
+
+
+# ssh hosts
+
+~~~~
+<div="helptext">
+<over>
+hosts   Merge the SSH known hosts catalog with the specified file
+       <Unspecified>
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+    /application   The application format
+    /id   Specify the SSH instance
+    /read   Read the specified file and update the catalog.
+    /write   Read the catalog and write unknown hosts to it.
+<over>
+</div>
+~~~~
+
+~~~~
+<div="terminal">
+<cmd>Alice2> meshman ssh merge hosts
+<rsp>ERROR - TBS
+</div>
+~~~~
+
 
 
 
@@ -175,8 +298,12 @@ private   Extract the private key for this device
 ~~~~
 
 ~~~~
-Missing example 46
+<div="terminal">
+<cmd>Alice> meshman ssh private /file=alice1_ssh_prv.pem
+<rsp></div>
 ~~~~
+
+
 
 # ssh public
 
@@ -199,51 +326,27 @@ public   Extract the public key for this device
 ~~~~
 
 ~~~~
-Missing example 47
+<div="terminal">
+<cmd>Alice> meshman ssh public /file=alice1_ssh_pub.pem
+<rsp></div>
 ~~~~
 
 
-# ssh host
 
-~~~~
-<div="helptext">
-<over>
-host   List the known SSH sites (aka known hosts)
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-    /application   The application format
-    /id   Key identifier
-<over>
-</div>
-~~~~
 
-~~~~
-Missing example 48
-~~~~
 
-# ssh client
 
-~~~~
-<div="helptext">
-<over>
-client   List the authorized device keys (aka authorized_keys)
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-    /application   The application format
-    /id   Key identifier
-<over>
-</div>
-~~~~
 
-~~~~
-Missing example 49
-~~~~
+
+
+
+
+
+
+
+
+
+
 
 
 

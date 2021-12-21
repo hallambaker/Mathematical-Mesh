@@ -30,10 +30,10 @@ interfaces rather than a tool designed for daily use.
 
 #### Adding contacts from a file
 
-The #{ToCommand("contact import")} command adds a contact entry to a catalog from
-a file. 
+The '/self' option is used to mark an entry as being a contact entry for the account
+holder.
 
-#%  ConsoleExample (ShellContact.ContactAdd);
+#%  ConsoleExample (Contact.ContactAdd);
 
 The file #{CarolContactFile} contains Carol's contact information in
 JSON format:
@@ -45,7 +45,7 @@ JSON format:
 The  #{ToCommand("contact self")} command is used to inport a contact and mark it as 
 being the user's own contact details:
 
-#%  ConsoleExample (ShellContact.ContactAddSelf);
+#%  ConsoleExample (Contact.ContactAddSelf);
 
 #### Exchanging contacts with other users.
 
@@ -67,14 +67,36 @@ means of a URI or QR code printed on a business card or a Web site.
 
 ###### Message Exchange
 
+
 #{ToCommand("message contact")}
+
+#%  ConsoleExample (Contact.ContactBobRequest );
+
 #{ToCommand("message accept")}
-#{ToCommand("message accept")}
+#{ToCommand("contact list")}
+
+
+#%  ConsoleExample (Contact.ContactAliceResponse );
+
+#%  ConsoleExample (Contact.ContactBobFinal );
+
+
 
 ###### Dynamic Exchange
 
+
+#%  ConsoleExample (Contact.ContactCarolDynamicPin );
+
+#%  ConsoleExample (Concat (Contact.ContactCarolDynamicFetch, Contact.ContactCarolListAlice));
+
+#%  ConsoleExample (Concat (Contact.ContactCarolDynamicAliceGet, Contact.ContactCarolListCarol));
+
+
+
 #{ToCommand("contact dynamic")}
+
 #{ToCommand("contact fetch")} / #{ToCommand("contact exchange")}
+
 #{ToCommand("message accept")}
 
 
@@ -85,33 +107,40 @@ means of a URI or QR code printed on a business card or a Web site.
 #{ToCommand("contact static")}
 #{ToCommand("contact fetch")}
 
+#%  ConsoleExample (Contact.ContactEdwardStaticUri );
+
+#%  ConsoleExample (Concat (Contact.ContactEdwardStaticFetch, Contact.ContactEdwardListAlice));
+
+
 #### Finding contacts
 
 The #{ToCommand("contact get")} command retreives a contact by the contact's 
 email address or label:
 
-#%  ConsoleExample (ShellContact.ContactGet);
+#%  ConsoleExample (Contact.ContactGet);
 
 #### Listing contacts
 
 A complete list of contacts is obtained using the  #{ToCommand("contact list")} command:
 
-#%  ConsoleExample (ShellContact.ContactList);
+#%  ConsoleExample (Contact.ContactList);
 
 #### Deleting contacts
 
 Contact entries may be deleted using the  #{ToCommand("contact delete")} command:
 
-#%  ConsoleExample (ShellContact.ContactDelete);
+#%  ConsoleExample (Contact.ContactDelete);
 
 
 
 #### Adding devices
 
+#%  ConsoleExample (ShellContact.ContactList1);
+
 Devices are given authorization to access the contacts catalog using the 
  #{ToCommand("device auth")} command:
 
-#%  ConsoleExample (ShellContact.ContactAuth);
+#%  ConsoleExample (Connect.ConnectJoinAuth );
 
 The newly authorized device can now access the contacts catalog:
 
@@ -125,15 +154,15 @@ The newly authorized device can now access the contacts catalog:
 
 #% Describe(CommandSet);
 
+#! ------------------ contact delete
 #% Describe(CommandSet, _ContactDelete._DescribeCommand);
 
 The 'contact delete' command deletes a contact entry entry by means of 
 its unique catalog identifier.
 
-#% ConsoleReference (ShellContact.ContactDelete);
+#% ConsoleReference (Contact.ContactDelete);
 
-
-
+#! ------------------  contact dynamic
 #% Describe(CommandSet, _ContactDynamic._DescribeCommand);
 
 The 'contact dynamic' command creates a dynamic contact URI such as
@@ -141,58 +170,57 @@ might be presented to another user as a QR code. The URI combines the
 location data for the contact with an PIN that may
 be used to authenticate the response in a mutual exchange.
 
+
+#% ConsoleReference (Contact.ContactDougDynamicUri);
+
+#! ------------------ contact exchange
 #% Describe(CommandSet, _ContactExchange._DescribeCommand);
 
 The 'contact exchange' command is used to complete a mutual contact exchange
 by means of a dynamic URI.
 
+#% ConsoleReference (Contact.ContactDougDynamicFetch);
 
-#% Describe(CommandSet, _ContactExport._DescribeCommand);
 
-The  'contact export' command exports the spcified contact entry to a file
-in the specified format.
-
+#! ------------------ contact fetch
 #% Describe(CommandSet, _ContactFetch._DescribeCommand);
 
 The 'contact fetch' command is used to acquire a dynamic or static contact
 presented as a URI or QR code without reciprocating the exchange.
 
+#% ConsoleReference (Contact.ContactEdwardStaticFetch);
 
-
+#! ------------------ contact get
 #% Describe(CommandSet, _ContactGet._DescribeCommand);
 
 The 'contact get' command retrieves a contact entry by means of its 
 unique catalog identifier.
 
+#% ConsoleReference (Contact.ContactGet);
 
-#% ConsoleReference (ShellContact.ContactGet);
-
-
+#! ------------------ contact import
 #% Describe(CommandSet, _ContactImport._DescribeCommand);
 
 The 'contact import' command is used to add a contact entry to the catalog
 from a file
 
+#% ConsoleReference (Contact.ContactImport);
 
-#% ConsoleReference (ShellContact.ContactImport);
-
-
-
-
-
+#! ------------------ contact list
 #% Describe(CommandSet, _ContactDump._DescribeCommand);
 
 The 'contact list' command lists all data in the contact catalog.
 
-#% ConsoleReference (ShellContact.ContactList);
+#% ConsoleReference (Contact.ContactCarolListAlice);
 
-#% Describe(CommandSet, _ContactSelf._DescribeCommand);
+
+#! ------------------ contact static
+#% Describe(CommandSet, _ContactStatic._DescribeCommand);
 
 The 'contact static' command creates a URI from which a static QR code may be created
 to allow contact information to be published on a business card etc. in machine
 readable form.
-
-#% Describe(CommandSet, _ContactStatic._DescribeCommand);
+#% ConsoleReference (Contact.ContactEdwardStaticUri);
 
 #end zfile
 

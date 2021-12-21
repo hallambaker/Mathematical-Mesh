@@ -410,13 +410,13 @@
 			Include Reporting
 			Option Unread "unread" Flag
 				Default "true"
-					Brief "Return unread messages"
+				Brief "Return unread messages"
 			Option Read "read" Flag
 				Default "false"
-					Brief "Return read messages"
+				Brief "Return read messages"
 			Option Raw "raw" Flag
 				Default "false"
-					Brief "Return messages in raw form"
+				Brief "Return messages in raw form"
 
 		Command MessageStatus "status"
 			Brief "Request status of pending request"
@@ -539,13 +539,6 @@
 	CommandSet Contact "contact"
 		Brief "Manage contact catalogs connected to an account"
 
-		Command ContactSelf "self"
-			Brief "Update contact entry for self"
-			Option File "file" ExistingFile
-				Brief "File containing the contact entry to add"
-			Include AccountOptions
-			Include Reporting
-
 		Command ContactStatic "static"
 			Brief "Create static contact retrieval URI"
 			Include AccountOptions
@@ -569,13 +562,7 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command ContactExport "export"
-			Brief "Export contact entry from catalog"
-			Parameter Identifier "id" String
-				Brief "Contact entry identifier"
-			Parameter File "file" NewFile
-			Include AccountOptions
-			Include Reporting
+
 
 		Command ContactImport "import"
 			Brief "Import contact entry from file"
@@ -704,7 +691,7 @@
 		Brief "Manage network profile settings"
 
 		Command NetworkImport "import"
-			Brief "Add calendar entry from file"
+			Brief "Add network entry from file"
 			Parameter File "in" ExistingFile
 				Brief "File containing the network entry to add"
 			Option Identifier "id" String
@@ -713,11 +700,13 @@
 			Include Reporting
 
 		Command NetworkAdd "add"
-			Brief "Add calendar entry from file"
-			Parameter Identifier "ssid" String
+			Brief "Add network entry "
+			Parameter SSID "ssid" String
 				Brief "WiFi SSID parameter"
 			Parameter Password "password" ExistingFile
 				Brief "Password value"
+			Option Identifier "id" String
+				Brief "Unique entry identifier"
 			Include AccountOptions
 			Include Reporting
 
@@ -1035,12 +1024,32 @@
 			Include MailOptions
 			Include CryptoOptions
 
-		Command MailUpdate "update"
-			Brief "Update an existing mail application profile"
-			Parameter Address "address" String
-				Brief "Mail account to update"
+
+		Command MailGet "get"
+			Brief "Lookup mail entry"
+			Parameter Identifier "id" String
+				Brief "The mail account address"
 			Include AccountOptions
 			Include Reporting
+
+		Command MailList "list"
+			Brief "List mail account information"
+			Include AccountOptions
+			Include Reporting
+
+		Command MailImport "import"
+			Brief "Import account information"
+			Include AccountOptions
+			Include Reporting
+
+
+		Command MailDelete "delete"
+			Brief "Delete mail account information"
+			Include AccountOptions
+			Include Reporting
+			Parameter Address "address" String
+				Brief "Mail account identifier"
+
 
 		CommandSet SMIME "smime"
 			Brief "Commands for managing S/MIME entries"
@@ -1079,12 +1088,7 @@
 					Brief "Mail account identifier"
 
 
-		Command MailList "list"
-			Brief "List mail account information"
-			Include AccountOptions
-			Include Reporting
-			Parameter Address "address" String
-				Brief "Mail account identifier"
+
 
 	// SSH
 	CommandSet SSH "ssh"
@@ -1102,6 +1106,40 @@
 			Option ID "id" String
 				Brief "Key identifier"
 
+		Command SSHGet "get"
+			Brief "Lookup mail entry"
+			Parameter Identifier "id" String
+				Brief "The mail account address"
+			Include AccountOptions
+			Include Reporting
+
+		Command SSHList "list"
+			Brief "List mail account information"
+			Option Hosts "known" Flag
+				Brief "List known host entries"
+				Default "true"
+			Option Client "auth" Flag
+				Brief "List authorized client entries"
+				Default "true"
+			Include SSHOptions
+			Include AccountOptions
+			Include Reporting
+
+		Command SSHImport "import"
+			Brief "Import account information"
+			Include AccountOptions
+			Include Reporting
+
+
+		Command SSHDelete "delete"
+			Brief "Delete mail account information"
+			Include AccountOptions
+			Include Reporting
+			Parameter Address "address" String
+				Brief "Mail account identifier"
+
+
+
 		Command SSHPrivate "private"
 			Brief "Extract the private key for this device"
 			Include AccountOptions
@@ -1117,63 +1155,56 @@
 			Include KeyFileOptions
 			Option ID "id" String
 				Brief "Key identifier"
-				
-		CommandSet SSHMerge "merge"
-			Command SSHMergeKnown "host"
-				Brief "Add one or more hosts to the known_hosts file"
+		
+		CommandSet SSHMerge "merge"		
+			Brief "Merge the catalog with the specified local file"
+			Command SSHMergeHosts "hosts"
+				Brief "Merge the SSH known hosts catalog with the specified file"
 				Include AccountOptions
 				Include Reporting
 				Include SSHOptions
 				Parameter File "file" ExistingFile
 				Option ID "id" String
-					Brief "Key identifier"
-				
-			Command SSHMergeClient "client"
-				Brief "Add one or more hosts to the known_hosts file"
-				Option ID "id" String
-					Brief "Key identifier"
+					Brief "Specify the SSH instance"
+				Option Hosts "read" Flag
+					Brief "Read the specified file and update the catalog."
+					Default "true"
+				Option Client "write" Flag
+					Brief "Read the catalog and write unknown hosts to it."
+					Default "true"
 
-		// Add public keys to profile
-		CommandSet SSHAdd "add"
+			Command SSHMergeClients "client"
+				Brief "Merge the SSH authorized keys catalog with the specified file"
+				Include AccountOptions
+				Include Reporting
+				Include SSHOptions
+				Parameter File "file" ExistingFile
+				Option ID "id" String
+					Brief "Specify the SSH instance"
+				Option Hosts "read" Flag
+					Brief "Read the specified file and update the catalog."
+					Default "true"
+				Option Client "write" Flag
+					Brief "Read the catalog and write unknown hosts to it."
+					Default "true"
+
+		CommandSet SSHAdd "add"	
+			Brief "Add a public key to the host or client configuration"
 			Command SSHAddHost "host"
-				Brief "Add one or more hosts to the known_hosts file"
+				Brief "Add host to the known_hosts catalog"
 				Include AccountOptions
 				Include Reporting
 				Include SSHOptions
 				Option ID "id" String
 					Brief "Key identifier"
 
-			
+
 			Command SSHAddClient "client"
-				Brief "Add one or more keys to the authorized_keys file"
+				Brief "Add key to the authorized_keys file"
 				Include AccountOptions
 				Include Reporting
 				Include SSHOptions
-				Parameter File "file" ExistingFile
-				
+				Parameter File "file" ExistingFile			
 				Option ID "id" String
 					Brief "Key identifier"
 
-		CommandSet SSHShow "show"
-			Command SSHKnown "host"
-				Brief "List the known SSH sites (aka known hosts)"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-				Option ID "id" String
-					Brief "Key identifier"
-
-			Command SSHAuth "client"
-				Brief "List the authorized device keys (aka authorized_keys)"
-				Include AccountOptions
-				Include Reporting	
-				Include SSHOptions
-				Option ID "id" String
-					Brief "Key identifier"
-
-		Command SSHList "list"
-			Brief "List ssh account information"
-			Include AccountOptions
-			Include Reporting
-			Parameter Address "address" String
-				Brief "SSH account identifier"

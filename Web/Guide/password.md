@@ -109,13 +109,34 @@ Password entries may be deleted using the  `password delete` command:
 
 ## Adding a Device.
 
-When a device is added, it gets a copy of the password file:
+
 
 
 ~~~~
-Missing example 23
+<div="terminal">
+<cmd>Alice5> meshman bookmark list
+<rsp>ERROR - The feature has not been implemented
+</div>
 ~~~~
 
+Devices are given authorization to access the networks catalog using the 
+ `device auth` command:
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman device auth Alice5 /all
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
+~~~~
+
+
+~~~~
+<div="terminal">
+<cmd>Alice5> meshman bookmark list
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 
 

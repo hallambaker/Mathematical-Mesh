@@ -350,7 +350,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("private key information available to devices she has connected to her Mesh with the \n{0}", _Indent);
 			_Output.Write ("'web' access right.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (Example.Apps.SSH);
+			  ConsoleExample (Example.Apps.SSHCreate);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("She can extract the private key to configure her SSH clients:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

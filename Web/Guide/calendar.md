@@ -45,11 +45,11 @@ implemented and a placeholder format is implemented instead.
 <cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NCZJ-NMBE-5VBL-UZ25-BI4P-5PLE-2R5B"}
+  "Key": "NCCO-AW4T-O25V-DXZ2-2CYA-FFDL-XTRP"}
 <cmd>Alice> meshman calendar add CalendarEntry2.json CalID2
 <rsp>{
   "Title": "CalendarEntry2.json",
-  "Key": "NCGD-XJUA-BGEP-VJWF-ZDZX-OZXN-TXXI"}
+  "Key": "NDBN-TAS4-G554-PD2V-BNLM-A6CM-63SS"}
 </div>
 ~~~~
 
@@ -104,12 +104,23 @@ CatalogedTask
 
 ## Adding devices
 
+
+~~~~
+<div="terminal">
+<cmd>Alice5> meshman bookmark list
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
+
 Devices are given authorization to access the calendars catalog using the 
  `device auth` command:
 
 
 ~~~~
-Missing example 28
+<div="terminal">
+<cmd>Alice> meshman device auth Alice5 /all
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
 ~~~~
 
 
@@ -117,6 +128,9 @@ The new device now has access to the Calendar catalog:
 
 
 ~~~~
-Missing example 29
+<div="terminal">
+<cmd>Alice5> meshman bookmark list
+<rsp>ERROR - The feature has not been implemented
+</div>
 ~~~~
 

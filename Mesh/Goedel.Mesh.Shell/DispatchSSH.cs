@@ -79,7 +79,10 @@ public partial class Shell {
         //    };
         //catalogApplication.New(applicationSSH);
 
-        throw new NYI();
+        return new ResultFail() {
+            Success = false,
+            Reason = "TBS"
+            };
         }
 
     /// <summary>
@@ -87,18 +90,23 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult SSHKnown(SSHKnown options) {
-        var id = options.ID.Value ?? "ssh";
-        var contextUser = GetContextUser(options);
-        using var transaction = contextUser.TransactBegin();
+    public override ShellResult SSHImport(SSHImport options) {
+        //var id = options.ID.Value ?? "ssh";
+        //var contextUser = GetContextUser(options);
+        //using var transaction = contextUser.TransactBegin();
 
-        var catalogApplication = transaction.GetCatalogApplication();
-        //var known = catalogApplication.GetSshHosts(id);
-
+        //var catalogApplication = transaction.GetCatalogApplication();
 
 
+        //var applicationSSH = new CatalogedApplicationSshHost() {
+        //    Key = id
+        //    };
+        //catalogApplication.New(applicationSSH);
 
-        throw new NYI();
+        return new ResultFail() {
+            Success = false,
+            Reason = "TBS"
+            };
         }
 
     /// <summary>
@@ -106,15 +114,131 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult SSHAuth(SSHAuth options) {
-        var id = options.ID.Value ?? "ssh";
-        var contextUser = GetContextUser(options);
-        using var transaction = contextUser.TransactBegin();
+    public override ShellResult SSHMergeHosts(SSHMergeHosts options) {
+        //var id = options.ID.Value ?? "ssh";
+        //var contextUser = GetContextUser(options);
+        //using var transaction = contextUser.TransactBegin();
 
-        var catalogApplication = transaction.GetCatalogApplication();
-        //var known = catalogApplication.GetSshClients(id);
-        throw new NYI();
+        //var catalogApplication = transaction.GetCatalogApplication();
+
+
+        //var applicationSSH = new CatalogedApplicationSshHost() {
+        //    Key = id
+        //    };
+        //catalogApplication.New(applicationSSH);
+
+        return new ResultFail() {
+            Success = false,
+            Reason = "TBS"
+            };
         }
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult SSHMergeClients(SSHMergeClients options) {
+        //var id = options.ID.Value ?? "ssh";
+        //var contextUser = GetContextUser(options);
+        //using var transaction = contextUser.TransactBegin();
+
+        //var catalogApplication = transaction.GetCatalogApplication();
+
+
+        //var applicationSSH = new CatalogedApplicationSshHost() {
+        //    Key = id
+        //    };
+        //catalogApplication.New(applicationSSH);
+
+        return new ResultFail() {
+            Success = false,
+            Reason = "TBS"
+            };
+        }
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult SSHGet(SSHGet options) {
+        //var id = options.ID.Value ?? "ssh";
+        //var contextUser = GetContextUser(options);
+        //using var transaction = contextUser.TransactBegin();
+
+        //var catalogApplication = transaction.GetCatalogApplication();
+
+
+        //var applicationSSH = new CatalogedApplicationSshHost() {
+        //    Key = id
+        //    };
+        //catalogApplication.New(applicationSSH);
+
+        return new ResultFail() {
+            Success = false,
+            Reason = "TBS"
+            };
+        }
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult SSHDelete(SSHDelete options) {
+        //var id = options.ID.Value ?? "ssh";
+        //var contextUser = GetContextUser(options);
+        //using var transaction = contextUser.TransactBegin();
+
+        //var catalogApplication = transaction.GetCatalogApplication();
+
+
+        //var applicationSSH = new CatalogedApplicationSshHost() {
+        //    Key = id
+        //    };
+        //catalogApplication.New(applicationSSH);
+
+        return new ResultFail() {
+            Success = false,
+            Reason = "TBS"
+            };
+        }
+
+
+    ///// <summary>
+    ///// Dispatch method
+    ///// </summary>
+    ///// <param name="options">The command line options.</param>
+    ///// <returns>Mesh result instance</returns>
+    //public override ShellResult SSHKnown(SSHKnown options) {
+    //    var id = options.ID.Value ?? "ssh";
+    //    var contextUser = GetContextUser(options);
+    //    using var transaction = contextUser.TransactBegin();
+
+    //    var catalogApplication = transaction.GetCatalogApplication();
+    //    //var known = catalogApplication.GetSshHosts(id);
+
+
+
+
+    //    throw new NYI();
+    //    }
+
+    ///// <summary>
+    ///// Dispatch method
+    ///// </summary>
+    ///// <param name="options">The command line options.</param>
+    ///// <returns>Mesh result instance</returns>
+    //public override ShellResult SSHAuth(SSHAuth options) {
+    //    var id = options.ID.Value ?? "ssh";
+    //    var contextUser = GetContextUser(options);
+    //    using var transaction = contextUser.TransactBegin();
+
+    //    var catalogApplication = transaction.GetCatalogApplication();
+    //    //var known = catalogApplication.GetSshClients(id);
+    //    throw new NYI();
+    //    }
 
     /// <summary>
     /// Dispatch method

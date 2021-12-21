@@ -108,17 +108,34 @@ CatalogedBookmark
 
 ## Adding devices
 
+
+
+
+~~~~
+<div="terminal">
+<cmd>Alice5> meshman bookmark list
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
+
 Devices are given authorization to access the bookmarks catalog using the 
  `device auth` command:
 
 
+
 ~~~~
-Missing example 21
+<div="terminal">
+<cmd>Alice> meshman device auth Alice5 /all
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
 ~~~~
 
 The new device now has access to the Bookmarks catalog:
 
 
 ~~~~
-Missing example 22
+<div="terminal">
+<cmd>Alice5> meshman bookmark list
+<rsp>ERROR - The feature has not been implemented
+</div>
 ~~~~

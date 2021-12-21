@@ -39,6 +39,9 @@ public partial class CreateExamples {
 
         ShellSSH = new ShellSSH(this);
         ShellMail = new ShellMail(this);
+
+        // Do this last
+        DelayedAuth();
         }
 
 

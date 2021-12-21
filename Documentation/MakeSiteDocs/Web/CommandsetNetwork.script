@@ -17,9 +17,14 @@ a entries describing how to access particular networks.
 
 #### Adding networks
 
-The #{ToCommand("network add")} command adds a network entry to a catalog:
+The #{ToCommand("network add")} command adds a simple network entry to a catalog. This is typically
+a WIfi network SSID and password:
 
 #%  ConsoleExample (ShellNetwork.NetworkAdd);
+
+More complicated network configurations are added using the #{ToCommand("network import")} command:
+
+#%  ConsoleExample (ShellNetwork.NetworkImport);
 
 
 #### Finding networks
@@ -42,11 +47,14 @@ A complete list of networks is obtained using the  #{ToCommand("network list")} 
 
 #### Adding devices
 
+#%  ConsoleExample (ShellNetwork.NetworkList1);
+
 Devices are given authorization to access the networks catalog using the 
  #{ToCommand("device auth")} command:
 
-#%  ConsoleExample (ShellNetwork.NetworkAuth);
+#%  ConsoleExample (Connect.ConnectJoinAuth );
 
+#%  ConsoleExample (ShellNetwork.NetworkList2);
 
 #end zfile
 
@@ -68,14 +76,14 @@ command should be used to add complex network entries.
 
 #% Describe(CommandSet, _NetworkDelete._DescribeCommand);
 
-The 'network delete' command deletes a contact entry entry by means of 
+The 'network delete' command deletes a network entry entry by means of 
 its unique catalog identifier.
 
 #% ConsoleReference (ShellNetwork.NetworkDelete);
 
 #% Describe(CommandSet, _NetworkGet._DescribeCommand);
 
-The 'network get' command retrieves a contact entry by means of its 
+The 'network get' command retrieves a network entry by means of its 
 unique catalog identifier.
 
 
@@ -83,9 +91,10 @@ unique catalog identifier.
 
 #% Describe(CommandSet, _NetworkImport._DescribeCommand);
 
-The 'network import' command is used to add appointment and task entries to the catalog
+The 'network import' command is used to add a network entry to the catalog
 from a file
 
+#% ConsoleReference (ShellNetwork.NetworkImport);
 
 #% Describe(CommandSet, _NetworkDump._DescribeCommand);
 

@@ -58,33 +58,85 @@ public partial class Shell {
 
         }
 
+
     /// <summary>
     /// Dispatch method
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult MailUpdate(MailUpdate options) {
-        var address = options.Address.Value.AssertNotNull(NYI.Throw);
-        using var contextDevice = GetContextUser(options);
-        using var transaction = contextDevice.TransactBegin();
+    public override ShellResult MailGet(MailGet options) {
+        //var address = options.Address.Value.AssertNotNull(NYI.Throw);
+        //using var contextDevice = GetContextUser(options);
+        //using var transaction = contextDevice.TransactBegin();
 
-        var applicationMail = new CatalogedApplicationMail() {
-            Key = address
+        return new ResultFail() {
+            Success = false,
+            Reason = "TBS"
             };
-
-        transaction.ApplicationUpdate(applicationMail);
-
-        var resultTransact = transaction.Transact();
-        return resultTransact.Success() ?
-            new ResultApplication() {
-                Success = true,
-                Application = applicationMail
-                } :
-                new ResultFail() {
-                    Success = false,
-                    Reason = "TBS"
-                    };
         }
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult MailDelete(MailDelete options) {
+        //var address = options.Address.Value.AssertNotNull(NYI.Throw);
+        //using var contextDevice = GetContextUser(options);
+        //using var transaction = contextDevice.TransactBegin();
+
+        return new ResultFail() {
+            Success = false,
+            Reason = "TBS"
+            };
+        }
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult MailImport(MailImport options) {
+        //var address = options.Address.Value.AssertNotNull(NYI.Throw);
+        //using var contextDevice = GetContextUser(options);
+        //using var transaction = contextDevice.TransactBegin();
+
+        return new ResultFail() {
+            Success = false,
+            Reason = "TBS"
+            };
+        }
+
+
+
+
+    ///// <summary>
+    ///// Dispatch method
+    ///// </summary>
+    ///// <param name="options">The command line options.</param>
+    ///// <returns>Mesh result instance</returns>
+    //public override ShellResult MailUpdate(MailUpdate options) {
+    //    var address = options.Address.Value.AssertNotNull(NYI.Throw);
+    //    using var contextDevice = GetContextUser(options);
+    //    using var transaction = contextDevice.TransactBegin();
+
+    //    var applicationMail = new CatalogedApplicationMail() {
+    //        Key = address
+    //        };
+
+    //    transaction.ApplicationUpdate(applicationMail);
+
+    //    var resultTransact = transaction.Transact();
+    //    return resultTransact.Success() ?
+    //        new ResultApplication() {
+    //            Success = true,
+    //            Application = applicationMail
+    //            } :
+    //            new ResultFail() {
+    //                Success = false,
+    //                Reason = "TBS"
+    //                };
+    //    }
 
     /// <summary>
     /// Dispatch method
@@ -142,7 +194,7 @@ public partial class Shell {
         var fileName = options.File.Value;
         var password = options.Password.Value;
         var privateKey = options.Private.Value;
-        using var contextUser = GetContextUser(options);
+        var contextUser = GetContextUser(options);
 
 
         KeyPair keyPair;

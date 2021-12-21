@@ -6,15 +6,24 @@ a entries describing how to access particular networks.
 
 ## Adding networks
 
-The `network add` command adds a network entry to a catalog:
+The `network add` command adds a simple network entry to a catalog. This is typically
+a WIfi network SSID and password:
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman network add NetworkEntry1.json NetID1
+<cmd>Alice> meshman network add mywifi wifipassword /id=NetID1
 <rsp>{Username}@{Service} = [{Password}]
-<cmd>Alice> meshman network add NetworkEntry2.json NetID2
-<rsp>{Username}@{Service} = [{Password}]
+</div>
+~~~~
+
+More complicated network configurations are added using the `network import` command:
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman network import NetworkEntry2.json /id=NetID2
+<rsp>ERROR
 </div>
 ~~~~
 
@@ -45,8 +54,6 @@ Network entries may be deleted using the  `network delete` command:
 
 CatalogedNetwork
 
-CatalogedNetwork
-
 </div>
 ~~~~
 
@@ -62,19 +69,35 @@ A complete list of networks is obtained using the  `network list` command:
 
 CatalogedNetwork
 
-CatalogedNetwork
-
 </div>
 ~~~~
 
 ## Adding devices
+
+
+~~~~
+<div="terminal">
+<cmd>Alice5> meshman bookmark list
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 Devices are given authorization to access the networks catalog using the 
  `device auth` command:
 
 
 ~~~~
-Missing example 24
+<div="terminal">
+<cmd>Alice> meshman device auth Alice5 /all
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
 ~~~~
 
+
+~~~~
+<div="terminal">
+<cmd>Alice5> meshman bookmark list
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 

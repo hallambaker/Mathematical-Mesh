@@ -212,7 +212,7 @@ Alice creates an SSH profile within her Mesh on the administrative device making
 private key information available to devices she has connected to her Mesh with the 
 'web' access right.
 
-#%  ConsoleExample (Example.Apps.SSH);
+#%  ConsoleExample (Example.Apps.SSHCreate);
 
 She can extract the private key to configure her SSH clients:
 

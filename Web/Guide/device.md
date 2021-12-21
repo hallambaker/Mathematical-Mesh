@@ -14,8 +14,8 @@ the mesh service account alice@example.com to which connection is requested:
 ~~~~
 <div="terminal">
 <cmd>Alice2> meshman device request alice@example.com
-<rsp>   Device UDF = MAT6-VBWS-466P-GHDQ-RLHL-S2IJ-PXY5
-   Witness value = UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
+<rsp>   Device UDF = MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
+   Witness value = YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
 </div>
 ~~~~
 
@@ -36,12 +36,12 @@ messages.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman device pending
-<rsp>MessageID: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
+<rsp>MessageID: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
         Connection Request::
-        MessageID: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
+        MessageID: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
         To:  From: 
-        Device:  MAT6-VBWS-466P-GHDQ-RLHL-S2IJ-PXY5
-        Witness: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
+        Device:  MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
+        Witness: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
 </div>
 ~~~~
 
@@ -51,7 +51,7 @@ Alice sees the request that she posted and approves it with the connect
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman device accept UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6 ^
+<cmd>Alice> meshman device accept YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS ^
     /message /web
 </div>
 ~~~~
@@ -82,14 +82,19 @@ catalog:
 
 
 ~~~~
-Missing example 2
+<div="terminal">
+<cmd>Alice> meshman device list
+</div>
 ~~~~
 
 The `device delete` command removes a device from the catalog:
 
 
 ~~~~
-Missing example 3
+<div="terminal">
+<cmd>Alice> meshman device delete
+<rsp>ERROR - Value cannot be null. (Parameter 'key')
+</div>
 ~~~~
 
 
@@ -109,8 +114,8 @@ a new PIN code:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account pin /threshold
-<rsp>PIN=AC6L-KOKA-W62V-54R5-MU2D-KZVP-OA
- (Expires=2021-12-21T14:00:30Z)
+<rsp>PIN=AD5M-D6JD-5QGC-YLLU-UM65-2NQX-4M
+ (Expires=2021-12-22T13:28:30Z)
 </div>
 ~~~~
 
@@ -120,9 +125,9 @@ The pin code can now be used to authenticate the connection request:
 ~~~~
 <div="terminal">
 <cmd>Alice3> meshman device request alice@example.com /pin ^
-    AC6L-KOKA-W62V-54R5-MU2D-KZVP-OA
-<rsp>   Device UDF = MDEH-DBMY-63NX-TNKW-NRWT-ON6M-EOMJ
-   Witness value = 6PSU-AAB3-LGXS-E6ON-75LU-4LFP-YPNN
+    AD5M-D6JD-5QGC-YLLU-UM65-2NQX-4M
+<rsp>   Device UDF = MBUY-BN5A-736O-WRRZ-LJCK-UPZZ-CZ52
+   Witness value = TGCH-QM7T-2PRP-44HQ-YAZ6-HMR7-73LC
 </div>
 ~~~~
 
@@ -134,26 +139,26 @@ administrator device:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: 6PSU-AAB3-LGXS-E6ON-75LU-4LFP-YPNN
+<rsp>MessageID: TGCH-QM7T-2PRP-44HQ-YAZ6-HMR7-73LC
         Connection Request::
-        MessageID: 6PSU-AAB3-LGXS-E6ON-75LU-4LFP-YPNN
+        MessageID: TGCH-QM7T-2PRP-44HQ-YAZ6-HMR7-73LC
         To:  From: 
-        Device:  MDEH-DBMY-63NX-TNKW-NRWT-ON6M-EOMJ
-        Witness: 6PSU-AAB3-LGXS-E6ON-75LU-4LFP-YPNN
-MessageID: NBLB-D3DX-6Z6Z-PQCS-4NEO-RQGQ-HQUL
+        Device:  MBUY-BN5A-736O-WRRZ-LJCK-UPZZ-CZ52
+        Witness: TGCH-QM7T-2PRP-44HQ-YAZ6-HMR7-73LC
+MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
         Group invitation::
-        MessageID: NBLB-D3DX-6Z6Z-PQCS-4NEO-RQGQ-HQUL
+        MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
         To: alice@example.com From: alice@example.com
-MessageID: NDI6-772L-UUBU-RIFV-S5GM-3B3J-4LFV
+MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
         Confirmation Request::
-        MessageID: NDI6-772L-UUBU-RIFV-S5GM-3B3J-4LFV
+        MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NAHB-XJ7W-IEJY-NB4D-27UK-Y2HS-WPEA
+MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
         Contact Request::
-        MessageID: NAHB-XJ7W-IEJY-NB4D-27UK-Y2HS-WPEA
+        MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
         To: alice@example.com From: bob@example.com
-        PIN: AA3C-HQL4-JNCZ-BJTD-IVOS-G5KU-2YIA
+        PIN: ACPD-YENT-3EM4-PUHD-D4Q4-4TX5-C25A
 <cmd>Alice> meshman account sync /auto
 </div>
 ~~~~
@@ -191,8 +196,8 @@ on an administration device at the manufacturer facility:
 ~~~~
 <div="terminal">
 <cmd>Maker> meshman device preconfig
-<rsp>Device UDF: MAW6-O4D3-KIXK-YWBJ-QQNW-ICMT-QTGB
-File: EBBQ-LEUY-XIMX-I7QJ-IP7R-XQFR-EY.medk
+<rsp>Device UDF: MBM6-ONBJ-ESIY-SQUC-UNYK-2KWU-KELY
+File: ED6U-5FAQ-662T-BTCW-7YFY-W545-EY.medk
 </div>
 ~~~~
 
@@ -202,7 +207,7 @@ This creates a configuration file that is installed on the device by executing t
 
 ~~~~
 <div="terminal">
-<cmd>Alice4> meshman device install EBBQ-LEUY-XIMX-I7QJ-IP7R-XQFR-EY.medk
+<cmd>Alice4> meshman device install ED6U-5FAQ-662T-BTCW-7YFY-W545-EY.medk
 </div>
 ~~~~
 
@@ -212,7 +217,7 @@ connect before there has been a connection request posted will fail of course.
 
 
 ~~~~
-Missing example 4
+Missing example 2
 ~~~~
 
 The key specified in the '/earl' option is used to create a UDF EARL specifying a 
@@ -232,7 +237,7 @@ and retrieve the data using the `account connect` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account connect ^
-    mcu://maker@example.com/EBBQ-LEUY-XIMX-I7QJ-IP7R-XQFR-EY /web
+    mcu://maker@example.com/ED6U-5FAQ-662T-BTCW-7YFY-W545-EY /web
 </div>
 ~~~~
 
@@ -244,9 +249,9 @@ The next time the device polls the hailing account, it retrieves the connection 
 ~~~~
 <div="terminal">
 <cmd>Alice4> meshman device complete
-<rsp>   Device UDF = MAW6-O4D3-KIXK-YWBJ-QQNW-ICMT-QTGB
+<rsp>   Device UDF = MBM6-ONBJ-ESIY-SQUC-UNYK-2KWU-KELY
    Account = alice@example.com
-   Account UDF = MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
+   Account UDF = MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
 </div>
 ~~~~
 
@@ -263,8 +268,8 @@ reset.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account pin
-<rsp>PIN=AAGU-46ZA-IBXM-A5UE-YSJL-ARON-NI
- (Expires=2021-12-21T14:00:38Z)
+<rsp>PIN=AD6J-PWHH-QXWJ-HHKP-7GE7-DFFY-JY
+ (Expires=2021-12-22T13:28:42Z)
 </div>
 ~~~~
 
@@ -278,26 +283,41 @@ reset.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NBLB-D3DX-6Z6Z-PQCS-4NEO-RQGQ-HQUL
-        Group invitation::
-        MessageID: NBLB-D3DX-6Z6Z-PQCS-4NEO-RQGQ-HQUL
-        To: alice@example.com From: alice@example.com
-MessageID: NDI6-772L-UUBU-RIFV-S5GM-3B3J-4LFV
+<rsp>MessageID: NAGW-UCHM-Y4IZ-A44R-NQ6Y-JF47-FOVC
         Confirmation Request::
-        MessageID: NDI6-772L-UUBU-RIFV-S5GM-3B3J-4LFV
+        MessageID: NAGW-UCHM-Y4IZ-A44R-NQ6Y-JF47-FOVC
+        To: alice@example.com From: mallet@example.com
+        Text: "Purchase
+MessageID: NDS6-NWK7-4JYJ-ZQG3-VAEZ-JEYX-YSAE
+        Confirmation Request::
+        MessageID: NDS6-NWK7-4JYJ-ZQG3-VAEZ-JEYX-YSAE
+        To: alice@example.com From: bob@example.com
+        Text: "Purchase
+MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
+        Contact Request::
+        MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
+        To: alice@example.com From: bob@example.com
+        PIN: ACJZ-GFMD-MOFZ-RQKP-IQ3L-56BK-WURA
+MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        Group invitation::
+        MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        To: alice@example.com From: alice@example.com
+MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
+        Confirmation Request::
+        MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NAHB-XJ7W-IEJY-NB4D-27UK-Y2HS-WPEA
+MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
         Contact Request::
-        MessageID: NAHB-XJ7W-IEJY-NB4D-27UK-Y2HS-WPEA
+        MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
         To: alice@example.com From: bob@example.com
-        PIN: AA3C-HQL4-JNCZ-BJTD-IVOS-G5KU-2YIA
+        PIN: ACPD-YENT-3EM4-PUHD-D4Q4-4TX5-C25A
 <cmd>Alice> meshman account sync /auto
 </div>
 ~~~~
 
 ~~~~
-Missing example 5
+Missing example 3
 ~~~~
 
 ~~~~

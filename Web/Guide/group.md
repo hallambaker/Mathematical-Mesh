@@ -50,7 +50,11 @@ Recryption groups are created using the `group create` command:
 
 
 ~~~~
-Missing example 9
+<div="terminal">
+<cmd>Alice> meshman group create groupw@example.com /web
+<rsp>Account=groupw@example.com
+UDF=MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+</div>
 ~~~~
 
 This command creates the group groupw@example.com. Since Alice created the
@@ -61,15 +65,41 @@ public key but he is unable to read it:
 
 
 ~~~~
-Missing example 10
+<div="terminal">
+<cmd>Alice> meshman type grouptext.txt
+<rsp>The group secret handshake
+<cmd>Alice> meshman dare encode grouptext.txt groupsecret.dare /encrypt ^
+    groupw@example.com
+<cmd>Alice> meshman dare decode groupsecret.dare grouptext_alice.dare
+<rsp>ERROR - No decryption key is available
+</div>
 ~~~~
 
-Since Alice is the group administrator, she can decrypt the file using her 
-administrator key:
+Even though Alice is the group administrator, she cannot decrypt the file by default:
 
 
 ~~~~
-Missing example 11
+<div="terminal">
+<cmd>Alice> meshman dare decode groupsecret.dare
+<rsp>ERROR - No decryption key is available
+</div>
+~~~~
+
+Alice adds herself to the group, now she can decrypt:
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman group add groupw@example.com alice@example.com
+<rsp>{
+  "ContactAddress": "alice@example.com",
+  "MemberCapabilityId": "MBK4-3JBR-FQE6-SIGE-PBL7-BYFI-ZFPN",
+  "ServiceCapabilityId": "MCSE-AYRM-VEET-M3JA-AUNI-SUY3-E6HV"}
+<cmd>Alice> meshman account sync /auto
+<cmd>Alice> meshman dare decode groupsecret.dare grouptext_alice.dare
+<cmd>Alice> meshman type grouptext_alice.dare
+<rsp>The group secret handshake
+</div>
 ~~~~
 
 
@@ -81,26 +111,52 @@ Alice adds Bob as a member of the group:
 
 
 ~~~~
-Missing example 12
+<div="terminal">
+<cmd>Alice> meshman group add groupw@example.com bob@example.com
+<rsp>{
+  "ContactAddress": "bob@example.com",
+  "MemberCapabilityId": "MBK4-3JBR-FQE6-SIGE-PBL7-BYFI-ZFPN",
+  "ServiceCapabilityId": "MCAL-TOGV-SG7G-N3I2-I6EB-HJ5A-D3FR"}
+</div>
 ~~~~
 
 Bob can now decrypt the file.
 
 
 ~~~~
-Missing example 13
+<div="terminal">
+<cmd>Bob> meshman account sync  /auto
+<cmd>Bob> meshman dare decode groupsecret.dare grouptext_bob.dare
+<cmd>Bob> meshman type grouptext_bob.dare
+<rsp>The group secret handshake
+</div>
 ~~~~
 
 ## Reporting users
 
-The `connect ` command returns a list of group members:
+The `group list` command returns a list of group members:
 
 
 ~~~~
-Missing example 14
+<div="terminal">
+<cmd>Alice> meshman group list groupw@example.com
+</div>
 ~~~~
 
 The group currently has one administrator and one member.
+
+The `group get` command returns information about a particular member.
+If the service hosting the key service tracks key operations, this might report the
+number of documents a user has viewed.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman group get groupw@example.com
+<rsp>ERROR - Value cannot be null. (Parameter 'key')
+</div>
+~~~~
+
 
 ## Deleting users
 
@@ -108,14 +164,25 @@ Users may be removed from a recryption group using the `group delete` command:
 
 
 ~~~~
-Missing example 15
+<div="terminal">
+<cmd>Alice> meshman group delete groupw@example.com bob@example.com
+<rsp>{
+  "ContactAddress": "bob@example.com",
+  "MemberCapabilityId": "MBK4-3JBR-FQE6-SIGE-PBL7-BYFI-ZFPN",
+  "ServiceCapabilityId": "MCAL-TOGV-SG7G-N3I2-I6EB-HJ5A-D3FR"}
+</div>
 ~~~~
 
 Bob is no longer a member of the group and his decryption request now fails:
 
 
 ~~~~
-Missing example 16
+<div="terminal">
+<cmd>Bob> meshman dare decode groupsecret.dare grouptext_bob2.dare
+<rsp>ERROR - A cryptographic operation was refused.
+<cmd>Bob> meshman type grouptext_bob.dare
+<rsp>The group secret handshake
+</div>
 ~~~~
 
 

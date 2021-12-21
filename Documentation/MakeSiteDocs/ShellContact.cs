@@ -30,8 +30,8 @@ public class ShellContact : ExampleSet {
 
 
     public List<ExampleResult> ContactAuth;
+    public List<ExampleResult> ContactList1;
     public List<ExampleResult> ContactList2;
-
 
     public List<ExampleResult> ContactAdd;
     public List<ExampleResult> ContactAddSelf;

@@ -9,12 +9,13 @@ mail    Manage mail profiles connected to a personal profile
     openpgpCommands for managing PGP entries
     smimeCommands for managing S/MIME entries
     add   Add a mail application profile to a personal profile
+    delete   Delete mail account information
+    get   Lookup mail entry
+    import   Import account information
     list   List mail account information
-    update   Update an existing mail application profile
 <over>
 </div>
 ~~~~
-
 
 # mail add
 
@@ -49,13 +50,83 @@ add   Add a mail application profile to a personal profile
 <over>
 </div>
 ~~~~
+
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman mail add alice@example.net /inbound pop://alice@pop3.example.net /outbound submit://alice@submit.example.net
+<rsp>Account:         alice@example.net
+Inbound Server:  pop://alice@pop3.example.net
+Outbound Server: submit://alice@submit.example.net
+S/Mime Sign:     MCAA-UPQE-S6FN-MM3P-QLR7-ZW22-U6XI
+S/Mime Encrypt:  MC4F-CU7O-YNUY-IW7D-NG3F-PIW7-BVYI
+OpenPGP Sign:    MBWA-PARP-XY7A-DNRW-OLYT-4ZVJ-UERT
+OpenPGP Encrypt: MAV5-4VFZ-4RUE-U2NX-WAWS-3V3I-EJG2
+</div>
+~~~~
+
+
+
+# mail get
+
+~~~~
+<div="helptext">
+<over>
+get   Lookup mail entry
+       The mail account address
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
+
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman mail get alice@example.net
+<rsp>ERROR - TBS
+</div>
+~~~~
+
+
+
+# mail import
+
+~~~~
+<div="helptext">
+<over>
+import   Import account information
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /local   Local name for account (e.g. personal)
+    /verbose   Verbose reports (default)
+    /report   Report output (default)
+    /json   Report output in JSON format
+<over>
+</div>
+~~~~
+
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman mail import 
+<rsp>ERROR - TBS
+</div>
+~~~~
+
+
+
 # mail list
 
 ~~~~
 <div="helptext">
 <over>
 list   List mail account information
-       Mail account identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -64,21 +135,25 @@ list   List mail account information
 <over>
 </div>
 ~~~~
-# mail update
+
+
 
 ~~~~
-<div="helptext">
-<over>
-update   Update an existing mail application profile
-       Mail account to update
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /local   Local name for account (e.g. personal)
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-<over>
+<div="terminal">
+<cmd>Alice> meshman mail list
+<rsp>Account:         alice@example.net
+Inbound Server:  pop://alice@pop3.example.net
+Outbound Server: submit://alice@submit.example.net
+S/Mime Sign:     MCAA-UPQE-S6FN-MM3P-QLR7-ZW22-U6XI
+S/Mime Encrypt:  MC4F-CU7O-YNUY-IW7D-NG3F-PIW7-BVYI
+OpenPGP Sign:    MBWA-PARP-XY7A-DNRW-OLYT-4ZVJ-UERT
+OpenPGP Encrypt: MAV5-4VFZ-4RUE-U2NX-WAWS-3V3I-EJG2
 </div>
 ~~~~
+
+
+
+
 # mail sign
 
 ~~~~
@@ -98,6 +173,17 @@ sign   Extract the signature key for the specified account
 <over>
 </div>
 ~~~~
+
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman mail openpgp sign alice@example.net /file=alice1_opgp_sign.pem
+<rsp></div>
+~~~~
+
+
+
 # mail encrypt
 
 ~~~~
@@ -117,6 +203,17 @@ encrypt   Extract the public key/certificate for the specified account
 <over>
 </div>
 ~~~~
+
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman mail openpgp sign alice@example.net /file=alice1_smime_encrypt.pem
+<rsp></div>
+~~~~
+
+
+
 # mail sign
 
 ~~~~
@@ -136,6 +233,17 @@ sign   Extract the signature key for the specified account
 <over>
 </div>
 ~~~~
+
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman mail smime sign alice@example.net  /file=alice1_smime_sign.pem
+<rsp></div>
+~~~~
+
+
+
 # mail encrypt
 
 ~~~~
@@ -155,5 +263,14 @@ encrypt   Extract the public key/certificate for the specified account
 <over>
 </div>
 ~~~~
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman mail smime encrypt alice@example.net  /file=alice1_smime_encrypt.pem
+<rsp></div>
+~~~~
+
+
 
 

@@ -33,7 +33,7 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult NetworkAdd(NetworkAdd options) {
         var contextUser = GetContextUser(options);
-        var identifier = options.Identifier.Value;
+        var identifier = options.SSID.Value;
         var password = options.Password.Value;
 
         var entry = new CatalogedNetwork() {
@@ -51,6 +51,37 @@ public partial class Shell {
             CatalogEntry = entry
             };
         }
+
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult NetworkImport(NetworkImport options) {
+        var contextUser = GetContextUser(options);
+        //var identifier = options.SSID.Value;
+        //var password = options.Password.Value;
+
+        //var entry = new CatalogedNetwork() {
+        //    Service = identifier,
+        //    Password = password
+        //    };
+
+        //var transaction = contextUser.TransactBegin();
+        //var catalog = transaction.GetCatalogNetwork();
+        //transaction.CatalogUpdate(catalog, entry);
+        //transaction.Transact();
+
+
+        "Implement network import command".TaskFunctionality();
+
+        return new Result() {
+            Success = false,
+            //CatalogEntry = null
+            };
+        }
+
 
     /// <summary>
     /// Dispatch method

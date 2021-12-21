@@ -130,7 +130,7 @@ The 'bookmark get' command retrieves a bookmark by means of its unique catalog i
 ~~~~
 <div="helptext">
 <over>
-import   Add calendar entry from file
+import   Add network entry from file
        File containing the network entry to add
     /id   Unique entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint

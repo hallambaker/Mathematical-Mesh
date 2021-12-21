@@ -6,7 +6,7 @@ her closest friends:
 <div="terminal">
 <cmd>Alice> meshman group create groupw@example.com /web
 <rsp>Account=groupw@example.com
-UDF=MDXI-T5OT-YIXR-OLTB-YW7L-HKZC-OOT7
+UDF=MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
 </div>
 ~~~~
 
@@ -34,8 +34,8 @@ Alice adds herself to the group, now she can decrypt:
 <cmd>Alice> meshman group add groupw@example.com alice@example.com
 <rsp>{
   "ContactAddress": "alice@example.com",
-  "MemberCapabilityId": "MCKS-RUO6-M7XN-SIFI-7NYT-VUE5-37M3",
-  "ServiceCapabilityId": "MDXC-JE2A-OQAB-YRE5-WPLW-GNZT-CEQA"}
+  "MemberCapabilityId": "MBK4-3JBR-FQE6-SIGE-PBL7-BYFI-ZFPN",
+  "ServiceCapabilityId": "MCSE-AYRM-VEET-M3JA-AUNI-SUY3-E6HV"}
 <cmd>Alice> meshman account sync /auto
 <cmd>Alice> meshman dare decode groupsecret.dare grouptext_alice.dare
 <cmd>Alice> meshman type grouptext_alice.dare
@@ -54,8 +54,8 @@ Instead she adds Bob to the group as a member:
 <cmd>Alice> meshman group add groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MCKS-RUO6-M7XN-SIFI-7NYT-VUE5-37M3",
-  "ServiceCapabilityId": "MDOU-YNCK-RN72-PKKQ-LHKZ-HMO2-JPHC"}
+  "MemberCapabilityId": "MBK4-3JBR-FQE6-SIGE-PBL7-BYFI-ZFPN",
+  "ServiceCapabilityId": "MCAL-TOGV-SG7G-N3I2-I6EB-HJ5A-D3FR"}
 </div>
 ~~~~
 
@@ -80,8 +80,8 @@ Removing Bob from the group immediately withdraws his access.
 <cmd>Alice> meshman group delete groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MCKS-RUO6-M7XN-SIFI-7NYT-VUE5-37M3",
-  "ServiceCapabilityId": "MDOU-YNCK-RN72-PKKQ-LHKZ-HMO2-JPHC"}
+  "MemberCapabilityId": "MBK4-3JBR-FQE6-SIGE-PBL7-BYFI-ZFPN",
+  "ServiceCapabilityId": "MCAL-TOGV-SG7G-N3I2-I6EB-HJ5A-D3FR"}
 </div>
 ~~~~
 

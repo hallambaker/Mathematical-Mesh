@@ -4,8 +4,8 @@ The connection request is initiated on the device being connected:
 ~~~~
 <div="terminal">
 <cmd>Alice2> meshman device request alice@example.com
-<rsp>   Device UDF = MAT6-VBWS-466P-GHDQ-RLHL-S2IJ-PXY5
-   Witness value = UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
+<rsp>   Device UDF = MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
+   Witness value = YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
 </div>
 ~~~~
 
@@ -17,13 +17,13 @@ accepts the request, granting the new device the messaging and web roles:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman device pending
-<rsp>MessageID: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
+<rsp>MessageID: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
         Connection Request::
-        MessageID: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
+        MessageID: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
         To:  From: 
-        Device:  MAT6-VBWS-466P-GHDQ-RLHL-S2IJ-PXY5
-        Witness: UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6
-<cmd>Alice> meshman device accept UPXY-SS6S-L4AS-AKOW-6WSR-77J5-OGY6 ^
+        Device:  MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
+        Witness: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
+<cmd>Alice> meshman device accept YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS ^
     /message /web
 </div>
 ~~~~
@@ -34,9 +34,9 @@ Alice can now synchronize her newly connected device to her account:
 ~~~~
 <div="terminal">
 <cmd>Alice2> meshman device complete
-<rsp>   Device UDF = MAT6-VBWS-466P-GHDQ-RLHL-S2IJ-PXY5
+<rsp>   Device UDF = MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
    Account = alice@example.com
-   Account UDF = MDKO-KEIN-OCN2-C6UB-VS2K-TNA4-WXVJ
+   Account UDF = MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
 </div>
 ~~~~
 

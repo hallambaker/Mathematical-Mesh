@@ -6,10 +6,10 @@
 <div="helptext">
 <over>
 network    Manage network profile settings
-    add   Add calendar entry from file
+    add   Add network entry 
     delete   Delete calendar entry
     get   Lookup calendar entry
-    import   Add calendar entry from file
+    import   Add network entry from file
     list   List network entries
 <over>
 </div>
@@ -21,9 +21,10 @@ network    Manage network profile settings
 ~~~~
 <div="helptext">
 <over>
-add   Add calendar entry from file
+add   Add network entry 
        WiFi SSID parameter
        Password value
+    /id   Unique entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -41,7 +42,7 @@ command should be used to add complex network entries.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman network add NetworkEntry1.json NetID1
+<cmd>Alice> meshman network add mywifi wifipassword /id=NetID1
 <rsp>{Username}@{Service} = [{Password}]
 </div>
 ~~~~
@@ -64,7 +65,7 @@ delete   Delete calendar entry
 </div>
 ~~~~
 
-The 'network delete' command deletes a contact entry entry by means of 
+The 'network delete' command deletes a network entry entry by means of 
 its unique catalog identifier.
 
 
@@ -93,7 +94,7 @@ get   Lookup calendar entry
 </div>
 ~~~~
 
-The 'network get' command retrieves a contact entry by means of its 
+The 'network get' command retrieves a network entry by means of its 
 unique catalog identifier.
 
 
@@ -112,7 +113,7 @@ unique catalog identifier.
 ~~~~
 <div="helptext">
 <over>
-import   Add calendar entry from file
+import   Add network entry from file
        File containing the network entry to add
     /id   Unique entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
@@ -124,8 +125,17 @@ import   Add calendar entry from file
 </div>
 ~~~~
 
-The 'network import' command is used to add appointment and task entries to the catalog
+The 'network import' command is used to add a network entry to the catalog
 from a file
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman network import NetworkEntry2.json /id=NetID2
+<rsp>ERROR
+</div>
+~~~~
+
 
 
 # network list
@@ -150,8 +160,6 @@ The 'network list' command lists all data in the network catalog.
 <div="terminal">
 <cmd>Alice> meshman network list
 <rsp>CatalogedNetwork
-
-CatalogedNetwork
 
 CatalogedNetwork
 

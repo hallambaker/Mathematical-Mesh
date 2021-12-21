@@ -48,7 +48,10 @@ The `ssh create` command adds an SSH profile named `ssh` to a Mesh account:
 
 
 ~~~~
-Missing example 30
+<div="terminal">
+<cmd>Alice> meshman ssh create /web
+<rsp>UDF: MDDO-QOQ3-U6RO-HNBP-DCQX-S74X-MY27
+</div>
 ~~~~
 
 Since the command creates a new application catalog, the command must be given to 
@@ -65,7 +68,9 @@ an SSH client:
 
 
 ~~~~
-Missing example 31
+<div="terminal">
+<cmd>Alice> meshman ssh private /file=alice1_ssh_prv.pem
+</div>
 ~~~~
 
 The `ssh public` command extracts the public key required top configure
@@ -73,7 +78,9 @@ an SSH client:
 
 
 ~~~~
-Missing example 32
+<div="terminal">
+<cmd>Alice> meshman ssh public /file=alice1_ssh_pub.pem
+</div>
 ~~~~
 
 If a script is being used to automate this process, the best practice is for the
@@ -92,7 +99,10 @@ corresponding SSH device public keys added:
 
 
 ~~~~
-Missing example 33
+<div="terminal">
+<cmd>Alice2> meshman ssh merge client
+<rsp>ERROR - TBS
+</div>
 ~~~~
 
 The `ssh merge host`  command reads the `known_hosts` file on a client machine and adds
@@ -100,26 +110,70 @@ the listed hosts to the user's ssh catalog.
 
 
 ~~~~
-Missing example 34
+<div="terminal">
+<cmd>Alice2> meshman ssh merge hosts
+<rsp>ERROR - TBS
+</div>
 ~~~~
 
 ## Client Key management
 
 SSH keys belonging to the user that are not part of the Mesh profile may be added using the 
-`ssh add client`  command.
+`ssh import`  command.
 
 
 
 ~~~~
-Missing example 35
+<div="terminal">
+<cmd>Alice> meshman ssh import
+<rsp>ERROR - TBS
+</div>
 ~~~~
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh add client
+<rsp>ERROR - An unknown error occurred
+</div>
+~~~~
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh get
+<rsp>ERROR - TBS
+</div>
+~~~~
+
+
 
 The list of known clients may be returned in various formats using the `ssh show client`  command.
 
 
 ~~~~
-Missing example 36
+<div="terminal">
+<cmd>Alice> meshman ssh import
+<rsp>ERROR - TBS
+</div>
 ~~~~
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh delete
+<rsp>ERROR - TBS
+</div>
+~~~~
+
+
+~~~~
+<div="terminal">
+<cmd>Alice2> meshman ssh merge client
+<rsp>ERROR - TBS
+</div>
+~~~~
+
 
 ## Host Key Management
 
@@ -127,7 +181,10 @@ The `ssh add host`  command adds specific host entries to the user's SSH profile
 
 
 ~~~~
-Missing example 37
+<div="terminal">
+<cmd>Alice> meshman ssh add host
+<rsp>ERROR - TBS
+</div>
 ~~~~
 
 The current list of known hosts in the SSH catalog is returned by the `ssh show known` 
@@ -135,8 +192,20 @@ command.
 
 
 ~~~~
-Missing example 38
+<div="terminal">
+<cmd>Alice> meshman ssh list /hosts
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
 ~~~~
+
+
+~~~~
+<div="terminal">
+<cmd>Alice2> meshman ssh merge hosts
+<rsp>ERROR - TBS
+</div>
+~~~~
+
 
 ## Additional Devices
 
@@ -151,13 +220,19 @@ enable use of ssh on the machine:
 
 
 ~~~~
-Missing example 39
+<div="terminal">
+<cmd>Alice> meshman device auth Alice5 /ssh
+</div>
 ~~~~
 
 Once the device has been authorized, the client machine can start using SSH immediately:
 
 
 ~~~~
-Missing example 40
+<div="terminal">
+<cmd>Alice5> meshman openpgp sign alice@example.net ^
+    /file=alice1_opgp_sign.pem
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
 ~~~~
 

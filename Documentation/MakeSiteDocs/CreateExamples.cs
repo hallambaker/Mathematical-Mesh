@@ -142,9 +142,12 @@ public partial class CreateExamples {
         GroupOperations();
         ConnectPINDynamicQR();
         ConnectStaticQR();
-        DelayedAuth();
 
 
+        ContactExchangeDynamic();
+        ContactExchangeUri();
+
+        ContactExchangeStatic();
 
 
 
@@ -292,19 +295,23 @@ public partial class CreateExamples {
     public void ConnectDevice() {
 
 
-        Alice2 = GetTestCLI(AliceDevice2);
+        Alice2 ??= GetTestCLI(AliceDevice2);
         // Connect the second device
 
         Connect.ConnectRequest = Alice2.Example(
             $"device request {AliceAccount}"
             );
 
+        //Mallet2 = GetTestCLI("Mallet2");
+        //Connect.ConnectRequestMallet = Mallet2.Example(
+        //    $"device request {AliceAccount}"
+        //    );
+
+
         var connectRequest = Connect.ConnectRequest[0].Result as ResultConnect;
 
         Connect.ResponseIdentifierMessage = connectRequest.RequestConnection;
         Connect.ResponseIdentifierEnvelope = Connect.ResponseIdentifierMessage.DareEnvelope;
-
-
         var x = Connect.ResponseIdentifierEnvelope.EnvelopeId;
 
         Connect.ConnectPending = Alice1.Example(
@@ -313,7 +320,7 @@ public partial class CreateExamples {
 
         var resultPending = Connect.ConnectPending.GetResultPending();
         var id1 = resultPending.Messages[0].MessageId;
-
+        //var id2 = resultPending.Messages[1].MessageId;
 
         "Need to specify WHAT rights are being assigned!".TaskFunctionality();
 
@@ -324,6 +331,11 @@ public partial class CreateExamples {
         deviceId = (resultAccept.ProcessResult as ResultAcknowledgeConnection).
                 AcknowledgeConnection.MessageConnectionRequest.ProfileDevice.Udf;
         Connect.Device2Id = deviceId;
+
+        //Connect.ConnectReject = Alice1.Example(
+        //    $"device reject {id2} /message /web"
+        //    );
+
 
         Connect.ConnectComplete = Alice2.Example(
             $"device complete"
@@ -341,6 +353,11 @@ public partial class CreateExamples {
         Account.SyncAlice = Alice2.Example(
             $"account sync"
             );
+
+        Connect.ConnectList = Alice1.Example(
+            $"device list"
+            );
+
         }
 
 
@@ -421,7 +438,7 @@ public partial class CreateExamples {
     public void SSHApp() {
 
         // Add an SSH application profile 'SSH'
-        Apps.SSH = Alice1.Example(
+        Apps.SSHCreate = Alice1.Example(
             "ssh create /web");
 
         // Dump out the private key in SSH format
@@ -436,25 +453,80 @@ public partial class CreateExamples {
                 "account sync",
                 $"ssh private /file={Apps.SshPrivateKey2}");
 
-        var sshconnect = Alice2.Example(
+        Apps.SSHList = Alice2.Example(
                 "ssh list");
-        var appsResult = sshconnect[0].Result as ResultApplicationList;
+        var appsResult = Apps.SSHList[0].Result as ResultApplicationList;
         Apps.SSHCatalogEntry = appsResult.Applications[0];
+
+        /////
+        Apps.SSHImport = Alice1.Example(
+                "ssh import");
+
+        Apps.SSHAddClient = Alice1.Example(
+                "ssh add client");
+
+        Apps.SSHGet = Alice1.Example(
+                "ssh get");
+
+        Apps.SSHDelete = Alice1.Example(
+                "ssh delete");
+
+        Apps.SSHList = Alice1.Example(
+                "ssh import");
+
+        Apps.SSHMergeClients = Alice2.Example(
+                "ssh merge client");
+
+        Apps.SSHListHosts = Alice1.Example(
+                "ssh list /hosts");
+
+        Apps.SSHAddHost = Alice1.Example(
+                "ssh add host");
+
+        Apps.SSHListHosts = Alice1.Example(
+            "ssh list /hosts");
+
+        Apps.SSHMergeHosts = Alice2.Example(
+            "ssh merge hosts");
+
 
         }
 
     public void MailApp() {
         // Add an SSH application profile 'SSH'
         Apps.Mail = Alice1.Example(
-            $"mail add {Apps.Mailaddress} /inbound {Apps.Mailinbound1} /outbound {Apps.Mailoutbound} /web");
+            $"mail add {Apps.Mailaddress} /inbound {Apps.Mailinbound1} /outbound {Apps.Mailoutbound}");
+        Apps.MailImport = Alice1.Example(
+            $"mail import ");
+        Apps.MailUpdate = Alice1.Example(
+            $"mail add /inbound {Apps.Mailinbound2} /outbound {Apps.Mailoutbound} ");
+        Apps.MailGet = Alice1.Example(
+            $"mail get {Apps.Mailaddress}");
+
+        Apps.MailList = Alice1.Example(
+            $"mail list");
+
 
         // Dump out the private key in SSH format
         Apps.MailSmimeSign = Alice1.Example(
-            $"ssh smime sign {Apps.Mailaddress}  /file={Apps.MailSmimeFile}");
+            $"mail smime sign {Apps.Mailaddress}  /file={Apps.MailSmimeFile}");
+
+        Apps.MailSmimeSignP12 = Alice1.Example(
+            $"mail smime sign {Apps.Mailaddress}  /file={Apps.MailSmimeFile}");
+
+        Apps.MailSmimeEncrypt = Alice1.Example(
+            $"mail smime encrypt {Apps.Mailaddress}  /file={Apps.MailSmimeFileEncrypt}");
 
         // Dump out the public key in SSH format
         Apps.MailOpenpgpSign = Alice1.Example(
-            $"sshopenpgp sign {Apps.Mailaddress} /file={Apps.MailOpenpgpFile}");
+            $"mail openpgp sign {Apps.Mailaddress} /file={Apps.MailOpenpgpFile}");
+
+        Apps.MailOpenpgpSignP12 = Alice1.Example(
+            $"mail openpgp sign {Apps.Mailaddress} /file={Apps.MailOpenpgpFile}");
+
+        Apps.MailOpenpgpEncrypt = Alice1.Example(
+            $"mail openpgp sign {Apps.Mailaddress} /file={Apps.MailSmimeFileEncrypt}");
+
 
         Apps.MailConnect = Alice2.Example(
                 "account sync",
@@ -475,8 +547,18 @@ public partial class CreateExamples {
         Account.CreateMallet = Mallet1.Example(
             $"account create {MalletAccount}"
             );
-
-
+        Carol1 = GetTestCLI("Carol");
+        Account.CreateCarol = Carol1.Example(
+            $"account create {CarolAccount}"
+            );
+        Doug1 = GetTestCLI("Doug");
+        Account.CreateDoug = Doug1.Example(
+            $"account create {CarolAccount}"
+            );
+        Edward1 = GetTestCLI("Edward");
+        Account.CreateEdward = Edward1.Example(
+            $"account create {CarolAccount}"
+            );
         }
 
     public ResultPending ContactExchange() {
@@ -517,6 +599,90 @@ public partial class CreateExamples {
 
         return resultPending;
         }
+
+    // Carol
+    public void ContactExchangeDynamic() {
+
+
+        Contact.ContactCarolDynamicPin = Carol1.Example(
+            $"contact dynamic {AliceAccount}"
+             );
+        Contact.ContactCarolDynamicFetch = Alice1.Example(
+            $"message accept {"tbs"}"
+             );
+        Contact.ContactCarolListAlice = Alice1.Example(
+            $"contact list"
+            );
+
+
+        Contact.ContactCarolDynamicAliceGet = Carol1.Example(
+                $"account sync /auto"
+             );
+        Contact.ContactCarolListCarol = Carol1.Example(
+                 $"contact get {AliceAccount}"
+                 );
+
+
+        }
+
+    // Doug
+    public void ContactExchangeUri() {
+        Contact.ContactDougDynamicUri = Doug1.Example(
+                $"contact dynamic "
+                 );
+        Contact.ContactDougDynamicFetch = Alice1.Example(
+                $"contact exchange {"uri"}"
+                );
+        Contact.ContactDougListAlice = Alice1.Example(
+                 $"contact list"
+                 );
+
+        Contact.ContactDougDynamicDougGet = Doug1.Example(
+                $"account sync /auto"
+             );
+        Contact.ContactDougListDoug = Doug1.Example(
+                 $"contact list"
+                 );
+
+        }
+
+    // Edward
+    public void ContactExchangeStatic() {
+        Contact.ContactEdwardStaticUri = Doug1.Example(
+                $"contact static "
+                 );
+        Contact.ContactEdwardStaticFetch = Alice1.Example(
+                $"contact fetch {"uri"}"
+                );
+        Contact.ContactEdwardListAlice = Alice1.Example(
+                $"contact list"
+                );
+
+
+        Contact.ContactDelete = Alice1.Example(
+                $"contact delete {"tbs"}"
+                );
+
+        Contact.ContactAdd = Alice1.Example(
+                $"contact import {"tbs"}"
+                );
+
+        Contact.ContactAddSelf = Alice1.Example(
+                $"contact import {"tbs"} /self"
+                );
+        Contact.ContactImport = Alice1.Example(
+                $"contact import {"tbs"}"
+                );
+
+        Contact.ContactGet = Alice1.Example(
+         $"contact get {CarolAccount}"
+         );
+        Contact.ContactList = Alice1.Example(
+                $"contact list"
+        );
+
+        }
+
 
     public void Confirmation() {
         Console1 = GetTestCLI("Console");
@@ -595,9 +761,9 @@ public partial class CreateExamples {
         Group.GroupAddAlice.Add(Alice1.DumpFile(Group.GroupDecryptAliceFile));
         // dump EncryptTargetFile 
 
-        Group.GroupDecryptAlice = Alice1.Example(
-            $"dare decode {Group.EncryptTargetFile}"
-             );
+        //Group.GroupDecryptAlice = Alice1.Example(
+        //    $"dare decode {Group.EncryptTargetFile}"
+        //     );
 
 
 
@@ -631,6 +797,13 @@ public partial class CreateExamples {
 
         Group.GroupDecryptBobSuccess.Add(Bob1.DumpFile(Group.GroupDecryptBobFile));
         // dump EncryptTargetFile 
+
+        Group.GroupList = Alice1.Example(
+            $"group list {GroupAccount}"
+             );
+        Group.GroupGet = Alice1.Example(
+            $"group get {GroupAccount}"
+             );
 
         Group.GroupDeleteBob = Alice1.Example(
             $"group delete {GroupAccount} {BobAccount}"
@@ -816,18 +989,37 @@ public partial class CreateExamples {
 
         // failing catalog requests here
 
+        ShellBookmark.BookmarkList1 = Alice5.Example($"bookmark list");
+        ShellCalendar.CalendarList1 = Alice5.Example($"bookmark list");
+        ShellContact.ContactList1 = Alice5.Example($"bookmark list");
+        ShellNetwork.NetworkList1 = Alice5.Example($"bookmark list");
+        ShellPassword.PasswordList1 = Alice5.Example($"bookmark list");
+
+
         Connect.ConnectJoinAuth = Alice1.Example(
                 $"device auth Alice5 /all");
 
+        ShellBookmark.BookmarkList2 = Alice5.Example($"bookmark list");
+        ShellCalendar.CalendarList2 = Alice5.Example($"bookmark list");
+        ShellContact.ContactList2 = Alice5.Example($"bookmark list");
+        ShellNetwork.NetworkList2 = Alice5.Example($"bookmark list");
+        ShellPassword.PasswordList2 = Alice5.Example($"bookmark list");
+
         // succeeding catalog requests here.
 
+        Connect.ConnectSSHAuth = Alice1.Example(
+                $"device auth Alice5 /ssh");
 
+        Connect.ConnectMailAuth = Alice1.Example(
+                $"device auth Alice5 /mail");
+
+        Apps.SSHAuthProof = Alice5.Example($"openpgp sign {Apps.Mailaddress} /file={Apps.MailOpenpgpFile}");
         }
 
 
 
     public void EscrowAndRecover() {
-        Alice2 = GetTestCLI(AliceDevice2);
+        Alice2 ??= GetTestCLI(AliceDevice2);
 
 
         Account.ProfileEscrow = Alice1.Example(
@@ -846,6 +1038,11 @@ public partial class CreateExamples {
             $"account purge {AliceProfileAccount.Udf}"
             );
 
+
+        // Should really spin up a new blank device for this
+        Connect.ConnectDelete = Alice1.Example(
+            $"device delete"
+            );
 
         // Should really spin up a new blank device for this
         Account.Import = Alice1.Example(

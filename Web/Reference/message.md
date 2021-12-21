@@ -92,7 +92,7 @@ be a local name defined in the contacts book or an address.
 <over>
 confirm   Post a confirmation request to a user
        The recipient to send the confirmation request to
-       The recipient to send the confirmation request to
+       Text of the request message
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /verbose   Verbose reports (default)
@@ -116,9 +116,9 @@ supported.
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message confirm alice@example.com "Purchase equipment for $6,000?"
-<rsp>Envelope ID: MCG6-KORP-RH2E-275I-PCMR-PNOH-HSEM
-Message ID: NCSF-HZDX-U33H-7DDN-3GTI-N6Z7-43G4
-Response ID: MAK3-SFSS-JZ25-E26S-VC6T-NYY6-AQLK
+<rsp>Envelope ID: MDAB-MZBA-CXZJ-SWFW-TNFI-J5YP-V4WT
+Message ID: NDS6-NWK7-4JYJ-ZQG3-VAEZ-JEYX-YSAE
+Response ID: MAT5-O3G2-YC2V-TATX-VAXN-TVBD-2G3A
 </div>
 ~~~~
 
@@ -149,9 +149,9 @@ The first parameter is required and specifies the intended recipient.
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message contact alice@example.com
-<rsp>Envelope ID: MBD2-SNOX-GQ4O-EP2P-KPXY-4OMJ-EPI4
-Message ID: NAMZ-G5FP-OHEH-74PH-ZIII-IYCP-IOJ4
-Response ID: MBB7-ZU3T-CLUR-BTNY-3UI5-FNEH-FDUV
+<rsp>Envelope ID: MCRS-QOBP-HDE4-LOXR-CZ72-YGSZ-UI6B
+Message ID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
+Response ID: MD6W-HVP4-COYF-AXM5-5TE7-GHUJ-DZFA
 </div>
 ~~~~
 
@@ -168,9 +168,9 @@ pending   List pending requests
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-    /unread   <Unspecified>
-    /read   <Unspecified>
-    /raw   <Unspecified>
+    /unread   Return unread messages
+    /read   Return read messages
+    /raw   Return messages in raw form
 <over>
 </div>
 ~~~~
@@ -188,25 +188,25 @@ that have been read or are unread. By default, only unread messages are returned
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NAMZ-G5FP-OHEH-74PH-ZIII-IYCP-IOJ4
+<rsp>MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
         Contact Request::
-        MessageID: NAMZ-G5FP-OHEH-74PH-ZIII-IYCP-IOJ4
+        MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
         To: alice@example.com From: bob@example.com
-        PIN: AB4L-U4J7-LLTR-ERNG-QPQP-DHZO-CGLQ
-MessageID: NBLB-D3DX-6Z6Z-PQCS-4NEO-RQGQ-HQUL
+        PIN: ACJZ-GFMD-MOFZ-RQKP-IQ3L-56BK-WURA
+MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
         Group invitation::
-        MessageID: NBLB-D3DX-6Z6Z-PQCS-4NEO-RQGQ-HQUL
+        MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
         To: alice@example.com From: alice@example.com
-MessageID: NDI6-772L-UUBU-RIFV-S5GM-3B3J-4LFV
+MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
         Confirmation Request::
-        MessageID: NDI6-772L-UUBU-RIFV-S5GM-3B3J-4LFV
+        MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NAHB-XJ7W-IEJY-NB4D-27UK-Y2HS-WPEA
+MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
         Contact Request::
-        MessageID: NAHB-XJ7W-IEJY-NB4D-27UK-Y2HS-WPEA
+        MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
         To: alice@example.com From: bob@example.com
-        PIN: AA3C-HQL4-JNCZ-BJTD-IVOS-G5KU-2YIA
+        PIN: ACPD-YENT-3EM4-PUHD-D4Q4-4TX5-C25A
 </div>
 ~~~~
 

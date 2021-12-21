@@ -41,7 +41,9 @@ public partial class LayerAccount : ExampleSet {
     public List<ExampleResult> CreateAlice;
     public List<ExampleResult> CreateBob;
     public List<ExampleResult> CreateMallet;
-
+    public List<ExampleResult> CreateCarol;
+    public List<ExampleResult> CreateDoug;
+    public List<ExampleResult> CreateEdward;
 
     public List<ExampleResult> CreateConsole;
     public List<ExampleResult> ConsoleEncryptFile;
@@ -76,6 +78,7 @@ public partial class LayerConnect : ExampleSet {
     public string EncryptResultFile3 = "plaintext3.txt";
 
     public List<ExampleResult> ConnectRequest;
+    public List<ExampleResult> ConnectRequestMallet;
     public List<ExampleResult> ConnectPending;
     public List<ExampleResult> ConnectAccept;
     public List<ExampleResult> ConnectReject;
@@ -177,7 +180,8 @@ public partial class LayerConnect : ExampleSet {
     public List<ExampleResult> ConnectJoinPending;
     public List<ExampleResult> ConnectJoinComplete;
     public List<ExampleResult> ConnectJoinAuth;
-
+    public List<ExampleResult> ConnectSSHAuth;
+    public List<ExampleResult> ConnectMailAuth;
 
 
 
@@ -243,15 +247,41 @@ public partial class LayerApps : ExampleSet {
 
     public string MailSmimeFile = "alice1_smime_sign.pem";
     public string MailOpenpgpFile = "alice1_opgp_sign.pem";
+    public string MailSmimeFileEncrypt = "alice1_smime_encrypt.pem";
+    public string MailOpenpgpFileEncrypt = "alice1_opgp_encrypt.pem";
 
-    public List<ExampleResult> SSH;
+    public List<ExampleResult> SSHCreate;
+
+    public List<ExampleResult> SSHAddClient;
+    public List<ExampleResult> SSHAddHost;
+
+    public List<ExampleResult> SSHDelete;
+    public List<ExampleResult> SSHImport;
+    public List<ExampleResult> SSHGet;
+    public List<ExampleResult> SSHMergeClients;
+    public List<ExampleResult> SSHMergeHosts;
     public List<ExampleResult> SSHPublic;
     public List<ExampleResult> SSHPrivate;
     public List<ExampleResult> SSHConnect;
+    public List<ExampleResult> SSHAuthProof;
+    public List<ExampleResult> SSHList;
+    public List<ExampleResult> SSHListHosts;
 
     public List<ExampleResult> Mail;
+    public List<ExampleResult> MailGet;
+    public List<ExampleResult> MailList;
+    public List<ExampleResult> MailImport;
+    public List<ExampleResult> MailUpdate;
+
+
+
     public List<ExampleResult> MailSmimeSign;
+    public List<ExampleResult> MailSmimeSignP12;
+    public List<ExampleResult> MailSmimeEncrypt;
     public List<ExampleResult> MailOpenpgpSign;
+    public List<ExampleResult> MailOpenpgpSignP12;
+    public List<ExampleResult> MailOpenpgpEncrypt;
+
     public List<ExampleResult> MailConnect;
 
 
@@ -285,6 +315,19 @@ public partial class LayerContact : ExampleSet {
     public MessageContact AliceResponse;
 
 
+    public List<ExampleResult> ContactAdd;
+
+    public List<ExampleResult> ContactGet;
+
+    public List<ExampleResult> ContactList;
+    public List<ExampleResult> ContactList1;
+    public List<ExampleResult> ContactList2;
+
+    public List<ExampleResult> ContactDelete;
+    public List<ExampleResult> ContactAddSelf;
+    public List<ExampleResult> ContactImport;
+
+
     public LayerContact(CreateExamples createExamples) :
             base(createExamples) {
         }
@@ -292,6 +335,30 @@ public partial class LayerContact : ExampleSet {
 
     public string AliceDynamicQRCode;
     public string AliceStaticQRCode;
+
+    public List<ExampleResult> ContactCarolDynamicPin;
+    public List<ExampleResult> ContactCarolDynamicFetch;
+    public List<ExampleResult> ContactCarolDynamicAliceGet;
+
+    public List<ExampleResult> ContactCarolListAlice;
+    public List<ExampleResult> ContactCarolListCarol;
+
+
+
+    public List<ExampleResult> ContactDougDynamicUri;
+    public List<ExampleResult> ContactDougDynamicFetch;
+    public List<ExampleResult> ContactDougDynamicDougGet;
+    public List<ExampleResult> ContactDougListAlice;
+    public List<ExampleResult> ContactDougListDoug;
+
+
+    public List<ExampleResult> ContactEdwardStaticUri;
+    public List<ExampleResult> ContactEdwardStaticFetch;
+
+    public List<ExampleResult> ContactEdwardListAlice;
+
+
+
 
     }
 
@@ -325,12 +392,18 @@ public partial class LayerGroup : ExampleSet {
     public List<ExampleResult> GroupCreate;
     public List<ExampleResult> GroupEncrypt;
     public List<ExampleResult> GroupDecryptAlice;
+    //public List<ExampleResult> GroupDecryptAliceSuccess;
+
     public List<ExampleResult> GroupDecryptBobFail;
     public List<ExampleResult> GroupAddAlice;
     public List<ExampleResult> GroupAddBob;
     public List<ExampleResult> GroupDecryptBobSuccess;
     public List<ExampleResult> GroupDeleteBob;
     public List<ExampleResult> GroupDecryptBobRevoked;
+
+
+    public List<ExampleResult> GroupList;
+    public List<ExampleResult> GroupGet;
 
 
     public CatalogedAccess BobAccessEntry;

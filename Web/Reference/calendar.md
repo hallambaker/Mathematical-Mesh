@@ -53,7 +53,7 @@ The '/id' option may be used to specify a unique identifier for the entry.
 <cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NCZJ-NMBE-5VBL-UZ25-BI4P-5PLE-2R5B"}
+  "Key": "NCCO-AW4T-O25V-DXZ2-2CYA-FFDL-XTRP"}
 </div>
 ~~~~
 
@@ -149,7 +149,7 @@ The '/id' option may be used to specify a unique identifier for the entry.
 <cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NCZJ-NMBE-5VBL-UZ25-BI4P-5PLE-2R5B"}
+  "Key": "NCCO-AW4T-O25V-DXZ2-2CYA-FFDL-XTRP"}
 </div>
 ~~~~
 

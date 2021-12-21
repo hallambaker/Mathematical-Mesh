@@ -33,6 +33,7 @@ public class ShellBookmark : ExampleSet {
     public List<ExampleResult> BookmarkDelete;
     public List<ExampleResult> BookmarkAuth;
 
+    public List<ExampleResult> BookmarkList1;
     public List<ExampleResult> BookmarkList2;
 
     public const string BookmarkPath1 = "Folder1/1";
@@ -55,6 +56,7 @@ public class ShellBookmark : ExampleSet {
         BookmarkGet = Alice1.Example($"bookmark get {BookmarkPath2}");
         BookmarkList = Alice1.Example($"bookmark list");
         BookmarkDelete = Alice1.Example($"bookmark delete BookmarkPath2");
+
 
         }
 

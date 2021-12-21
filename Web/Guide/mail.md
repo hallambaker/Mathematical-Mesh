@@ -5,6 +5,12 @@ The `mail` command set contains commands used to manage Internet mail
 application profiles and to create and manage credentials for the 
 OpenPGP and S/MIME security enhancements for Internet mail.
 
+The current commands represent a draft designed to demonstrate key management
+functions that are related to Mesh functionality. Of course a full feature key manager
+would also create and submit CSRs for S/MIME, upload key blobs to OpenPGP
+key servers, support key rotation, etc. etc.
+
+
 Multiple mail profiles may be connected to a single Mesh profile to
 allow access to multiple accounts.
 
@@ -15,7 +21,18 @@ A mail application profile is added to a Mesh profile using the
 
 
 ~~~~
-Missing example 50
+<div="terminal">
+<cmd>Alice> meshman mail add alice@example.net /inbound ^
+    pop://alice@pop3.example.net /outbound ^
+    submit://alice@submit.example.net
+<rsp>Account:         alice@example.net
+Inbound Server:  pop://alice@pop3.example.net
+Outbound Server: submit://alice@submit.example.net
+S/Mime Sign:     MCAA-UPQE-S6FN-MM3P-QLR7-ZW22-U6XI
+S/Mime Encrypt:  MC4F-CU7O-YNUY-IW7D-NG3F-PIW7-BVYI
+OpenPGP Sign:    MBWA-PARP-XY7A-DNRW-OLYT-4ZVJ-UERT
+OpenPGP Encrypt: MAV5-4VFZ-4RUE-U2NX-WAWS-3V3I-EJG2
+</div>
 ~~~~
 
 The client attempts to obtain the network configuration for the inbound and
@@ -27,7 +44,10 @@ Alternatively, the configuration may be given explicitly using the form
 
 
 ~~~~
-Missing example 51
+<div="terminal">
+<cmd>Alice> meshman mail import 
+<rsp>ERROR - TBS
+</div>
 ~~~~
 
 The mail profile only contains the network configuration information. Access 
@@ -39,7 +59,11 @@ Account profiles may be updated to change the network configuration using the
 
 
 ~~~~
-Missing example 52
+<div="terminal">
+<cmd>Alice> meshman mail add /inbound imap://alice@imap.example.net ^
+    /outbound submit://alice@submit.example.net 
+<rsp>ERROR - The feature has not been implemented
+</div>
 ~~~~
 
 Specifying no values causes the SRV auto configuration configuration data to be 
@@ -47,64 +71,52 @@ used replacing the values previously set.
 
 ## Creating an OpenPGP Key Set
 
-An OpenPGP public key pair for encryption and authentication may be added to the
-profile when it is created or as a later update using the `/openpgp` option:
-
-
-~~~~
-Missing example 53
-~~~~
+S/MIME and OpenPGP keys are created automatically whenever a mail profile is 
+created.
 
 The private key may be extracted from the profile in a variety of interchange
-formats to allow installation in a key service:
+formats to allow installation in an application:
 
 
 ~~~~
-Missing example 54
+<div="terminal">
+<cmd>Alice> meshman mail openpgp sign alice@example.net ^
+    /file=alice1_opgp_sign.pem
+</div>
 ~~~~
 
 The public key may be exported likewise:
 
 
 ~~~~
-Missing example 55
+<div="terminal">
+<cmd>Alice> meshman mail openpgp sign alice@example.net ^
+    /file=alice1_opgp_sign.pem
+</div>
 ~~~~
 
 ## Creating an S/MIME Key Set
 
-An S/MIME public key pair for encryption and authentication may be added to the
-profile when it is created or as a later update using the `/smime` option:
 
-
-~~~~
-Missing example 56
-~~~~
-
-By default, a self signed certificate is created.
-
-The `mail smime validate`  causes a certificate request to be sent to the
-specified Certificate Authority service via ACME:
-
-
-~~~~
-Missing example 57
-~~~~
-
-Responding to the validation challenge requires an access credential for the 
-inbound email service to be specified.
 
 The private key may be extracted from the profile in a variety of interchange
 formats to allow installation in a key service:
 
 
 ~~~~
-Missing example 58
+<div="terminal">
+<cmd>Alice> meshman mail smime sign alice@example.net  ^
+    /file=alice1_smime_sign.pem
+</div>
 ~~~~
 
 The public key may be exported likewise:
 
 
 ~~~~
-Missing example 59
+<div="terminal">
+<cmd>Alice> meshman mail smime sign alice@example.net  ^
+    /file=alice1_smime_sign.pem
+</div>
 ~~~~
 
