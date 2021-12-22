@@ -53,11 +53,15 @@ implemented and a placeholder format is implemented instead.
 #%  ConsoleExample (ShellCalendar.CalendarAdd);
 
 
-#### Finding calendars
+#### Finding calendar entries
 
 The #{ToCommand("password get")}  command retreives a calendar entry by label:
 
 #%  ConsoleExample (ShellCalendar.CalendarGet);
+
+The ability to search for information by date ranges etc. is of course highly desirable
+but not currently supported.
+
 
 #### Deleting calendars
 

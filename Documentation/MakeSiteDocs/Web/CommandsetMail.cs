@@ -94,6 +94,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleExample (Apps.MailSmimeSign);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Various key formats are supported for export of public and private keys allowing\n{0}", _Indent);
+			_Output.Write ("their use in a wide variety of applications.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 				}
 	
 
@@ -115,24 +119,30 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			// ------------------ 
 			 Describe(CommandSet, _MailAdd._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The mail add command adds a mail entry to the application catalog using parameters\n{0}", _Indent);
+			_Output.Write ("specified on the command line.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (Apps.Mail);
 			_Output.Write ("\n{0}", _Indent);
 			// ------------------ Mail
 			 Describe(CommandSet, _MailGet._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The mail get command reports the specified mail configuration data.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (Apps.MailGet);
 			_Output.Write ("\n{0}", _Indent);
 			// ------------------ Mail
 			 Describe(CommandSet, MailImport._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The mail add command adds a mail entry to the application catalog using parameters\n{0}", _Indent);
+			_Output.Write ("specified in a configuration file.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (Apps.MailImport);
 			_Output.Write ("\n{0}", _Indent);
 			// ------------------ Mail
 			 Describe(CommandSet, _MailList._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The mail list command lists all the mail configurations in the applications catalog.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (Apps.MailList);
 			_Output.Write ("\n{0}", _Indent);
@@ -140,23 +150,32 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			 Describe( CommandSet, _OpenpgpSign._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The mail openpgp sign command returns the OpenPGP signature key in a variety of\n{0}", _Indent);
+			_Output.Write ("formats.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (Apps.MailOpenpgpSign);
 			_Output.Write ("\n{0}", _Indent);
 			// ------------------ Mail
 			 Describe( CommandSet, _OpenpgpEncrypt._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The mail openpgp sign command returns the OpenPGP encrypt key in a variety of\n{0}", _Indent);
+			_Output.Write ("formats.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (Apps.MailOpenpgpEncrypt);
 			_Output.Write ("\n{0}", _Indent);
 			// ------------------ Mail
 			 Describe(CommandSet, _SmimeSign._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The mail openpgp sign command returns the S/MIME signature key in a variety of\n{0}", _Indent);
+			_Output.Write ("formats.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (Apps.MailSmimeSign);
 			_Output.Write ("\n{0}", _Indent);
 			// ------------------ Mail
 			 Describe(CommandSet, _SmimeEncrypt._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The mail openpgp sign command returns the S/MIME encrypt key in a variety of\n{0}", _Indent);
+			_Output.Write ("formats.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (Apps.MailSmimeEncrypt);
 			_Output.Write ("\n{0}", _Indent);

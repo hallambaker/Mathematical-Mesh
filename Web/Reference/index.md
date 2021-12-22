@@ -62,3 +62,16 @@ The '/verbose' flag takes precedence over the /report option which is ignored if
 The /report flag is set by default. If /noreport is specified, the command is
 executed without any output being made to the console.
 
+
+In addition commands which require use of a Mesh account offer the 
+'account', 'local', 'sync' and 'auto' options as follows:
+
+* '/account'
+
+
+* '/local'
+
+* '/sync'
+
+* '/auto'
+

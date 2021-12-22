@@ -139,6 +139,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The `key earl` command returns a randomized secret value and a fingerprint of the secret \n{0}", _Indent);
 			_Output.Write ("value, formatted as a UDF Encryption key type and Content Digest Type\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `key earl` only creates the cryptographic material required to create an EARL.\n{0}", _Indent);
+			_Output.Write ("The 'dare earl' command generates the cryptographic material and applies it to the contents\n{0}", _Indent);
+			_Output.Write ("of a file.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellKey.KeyEarl);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

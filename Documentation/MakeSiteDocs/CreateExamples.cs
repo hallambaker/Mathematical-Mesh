@@ -472,7 +472,7 @@ public partial class CreateExamples {
                 "ssh delete");
 
         Apps.SSHList = Alice1.Example(
-                "ssh import");
+                "ssh list /client");
 
         Apps.SSHMergeClients = Alice2.Example(
                 "ssh merge client");
@@ -608,7 +608,7 @@ public partial class CreateExamples {
             $"contact dynamic {AliceAccount}"
              );
         Contact.ContactCarolDynamicFetch = Alice1.Example(
-            $"message accept {"tbs"}"
+            $"contact exchange {"uri"}"
              );
         Contact.ContactCarolListAlice = Alice1.Example(
             $"contact list"
@@ -627,34 +627,34 @@ public partial class CreateExamples {
 
     // Doug
     public void ContactExchangeUri() {
-        Contact.ContactDougDynamicUri = Doug1.Example(
-                $"contact dynamic "
-                 );
-        Contact.ContactDougDynamicFetch = Alice1.Example(
-                $"contact exchange {"uri"}"
-                );
-        Contact.ContactDougListAlice = Alice1.Example(
-                 $"contact list"
-                 );
+        //Contact.ContactDougDynamicUri = Doug1.Example(
+        //        $"contact dynamic {AliceAccount}"
+        //         );
+        //Contact.ContactDougDynamicFetch = Alice1.Example(
+        //        $"contact fetch {"uri"}"
+        //        );
+        //Contact.ContactDougListAlice = Alice1.Example(
+        //         $"contact list"
+        //         );
 
-        Contact.ContactDougDynamicDougGet = Doug1.Example(
-                $"account sync /auto"
-             );
-        Contact.ContactDougListDoug = Doug1.Example(
-                 $"contact list"
-                 );
+        //Contact.ContactDougDynamicDougGet = Doug1.Example(
+        //        $"account sync /auto"
+        //     );
+        //Contact.ContactDougListDoug = Doug1.Example(
+        //         $"contact list"
+        //         );
 
         }
 
     // Edward
     public void ContactExchangeStatic() {
-        Contact.ContactEdwardStaticUri = Doug1.Example(
+        Contact.ContactDougStaticUri = Doug1.Example(
                 $"contact static "
                  );
-        Contact.ContactEdwardStaticFetch = Alice1.Example(
+        Contact.ContactDougStaticFetch = Alice1.Example(
                 $"contact fetch {"uri"}"
                 );
-        Contact.ContactEdwardListAlice = Alice1.Example(
+        Contact.ContactStaticListAlice = Alice1.Example(
                 $"contact list"
                 );
 

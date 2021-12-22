@@ -18,7 +18,7 @@ The `key nonce` command is used to generate a new random nonce value:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key nonce
-<rsp>NCBK-6PZI-NG2X-PLYR-XPRV-HDVG-IYVA
+<rsp>NBZF-KCXZ-FVOO-VVIO-ALFR-5JVE-UO3A
 </div>
 ~~~~
 
@@ -31,7 +31,7 @@ generated using the `/bits` option:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key nonce /bits=256
-<rsp>NDCE-JXO6-STXG-2XYV-E22C-2P2G-BGHD-7DL4-L3OY-PJXK-RMKA-PXHQ-JW5A-6
+<rsp>NDJC-VMCV-MGYW-XVDA-FDNR-OXDQ-6YN7-5QCW-QPXZ-GUNC-KL7N-LELY-BPVU-E
 </div>
 ~~~~
 
@@ -41,7 +41,7 @@ Secrets are generated in the same way using the command `key secret`:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key secret
-<rsp>ECS3-TLWD-FDZZ-KTUT-KJE4-KNZL-FYGA
+<rsp>EDUS-AMYO-VAKG-FONE-IK3T-JWP7-JW6Q
 </div>
 ~~~~
 
@@ -52,7 +52,7 @@ Again, any output length can be requested up to the platform limit:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key secret /bits=256
-<rsp>ED5X-ICH2-IX5K-ACFH-CV4Y-FMLE-VS4T-C2YM-TWRJ-XBQ3-V6QK-HIBY-TCJN-4
+<rsp>ED57-7KJV-MFPI-3K53-C3X6-DRJ3-4R34-M7AJ-5OAI-BYCX-QG5G-2K6B-553R-K
 </div>
 ~~~~
 
@@ -71,8 +71,8 @@ a new secret/digest pair which are then used to process the content data:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key earl
-<rsp>EA5D-IE6G-4ZKG-3AGD-JV7Z-Q4IC-2KCA-J2
-MDCW-UTHJ-DZRM-Q4UX-WY5I-NIZP-XLTQ-DW6O-PKPL-MRZP-XJ3U-W2SR-G7RR-WWVL
+<rsp>EASN-PHWS-DJAI-DWS7-4BVK-MWFF-J4MR-NW
+MBRI-NYZW-2OIT-REUD-VMYC-2LUR-5BIB-VPSB-TX2A-OZ77-JPRT-K7CW-MKQF-PN2S
 
 </div>
 ~~~~
@@ -100,11 +100,11 @@ bit secret is created and three shares are created with a quorum of two:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key share
-<rsp>5QXJ-EEOG-DBDE-TEEU-AOYJ-PGZA-4U
-MDMD-ID7I-G2YZ-R3QL-ULBC-OJSC-JQYD-GXWL-E4HT-G2NB-G5IM-L6NK-2XHT
-SAQL-VGHG-CUSW-RMWH-GWGY-QQOH-LW4C-Y
-SAQY-SAZ2-DCCL-SH2E-3KDQ-ZUXX-EBHX-G
-SARF-O3MO-DPSA-TC6C-P6AJ-CZBG-4LTL-U
+<rsp>4YKU-TJ76-37Z7-3YOJ-WDFX-F4S4-NM
+MCCR-4JZO-JBIS-YKP3-7ZWS-DOFL-VTLY-EW2T-2WDJ-GZJY-VFYH-WEUS-M32U
+SAQD-5NHQ-BTGZ-DQEB-GOI4-A4VV-WMPN-A
+SAQZ-OVEW-OGOE-HDIE-QVM5-AGPY-OPQW-Q
+SARO-75B4-2ZVP-KWMH-24Q5-7QJ3-GSSA-A
 </div>
 ~~~~
 
@@ -120,11 +120,11 @@ obtain the result as a JSON structure:
 <rsp>{
   "ResultKey": {
     "Success": true,
-    "Key": "5QXJ-EEOG-DBDE-TEEU-AOYJ-PGZA-4U",
-    "Identifier": "MDMD-ID7I-G2YZ-R3QL-ULBC-OJSC-JQYD-GXWL-E4HT-G2NB-G5IM-L6NK-2XHT",
-    "Shares": ["SAQL-VGHG-CUSW-RMWH-GWGY-QQOH-LW4C-Y",
-      "SAQY-SAZ2-DCCL-SH2E-3KDQ-ZUXX-EBHX-G",
-      "SARF-O3MO-DPSA-TC6C-P6AJ-CZBG-4LTL-U"]}}
+    "Key": "4YKU-TJ76-37Z7-3YOJ-WDFX-F4S4-NM",
+    "Identifier": "MCCR-4JZO-JBIS-YKP3-7ZWS-DOFL-VTLY-EW2T-2WDJ-GZJY-VFYH-WEUS-M32U",
+    "Shares": ["SAQD-5NHQ-BTGZ-DQEB-GOI4-A4VV-WMPN-A",
+      "SAQZ-OVEW-OGOE-HDIE-QVM5-AGPY-OPQW-Q",
+      "SARO-75B4-2ZVP-KWMH-24Q5-7QJ3-GSSA-A"]}}
 </div>
 ~~~~
 
@@ -134,9 +134,9 @@ meet the quorum using the `key recover`:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman key recover SAQL-VGHG-CUSW-RMWH-GWGY-QQOH-LW4C-Y ^
-    SARF-O3MO-DPSA-TC6C-P6AJ-CZBG-4LTL-U
-<rsp>5QXJ-EEOG-DBDE-TEEU-AOYJ-PGZA-4U
+<cmd>Alice> meshman key recover SAQD-5NHQ-BTGZ-DQEB-GOI4-A4VV-WMPN-A ^
+    SARO-75B4-2ZVP-KWMH-24Q5-7QJ3-GSSA-A
+<rsp>4YKU-TJ76-37Z7-3YOJ-WDFX-F4S4-NM
 </div>
 ~~~~
 
@@ -152,13 +152,13 @@ of three:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key share /quorum=3 /shares=5
-<rsp>3Q2N-UTEH-6YXB-K73S-G5J4-IDDG-WA
-MACV-XQUO-RLBJ-7HUD-ZTFD-C7BO-I3LU-QYKZ-KYIH-HUM2-P5VL-JZCY-MX6K
-SAYM-UQOF-5SVE-BOQ2-FK2C-RFAL-INWN-2
-SAYT-KCYY-BZQK-PW3B-D4KF-NGQJ-RPB5-W
-SAZB-ZEGQ-WGVS-XEPK-LSJM-CZN6-4VV5-2
-SAZY-BUXP-22E4-XXNV-4MXW-R5ZL-KBSO-G
-SA2G-DULV-PT6I-RPWD-WLVE-2TSO-ZSXL-U
+<rsp>HOXO-W5B7-NBCM-7QDZ-S46P-3VJ5-YU
+MD3D-LIV5-GGFJ-FOXB-3BUE-2NUZ-VQWC-GNHC-4O7X-6Q7N-R64V-CFSQ-SBPC
+SAYB-SUK6-RMO2-5UAQ-56SB-5WDK-RN5W-Y
+SAYU-7ATM-FJXT-VUCS-BEOM-VMWF-7KFA-I
+SAZN-4QQU-KI2A-YRMT-BTRZ-VTAQ-EJUY-2
+SAZ4-LECX-AJWC-GL6T-7L4I-6JCJ-AMM5-I
+SA2A-K3JU-HMLX-7DYU-2NN2-PO3Q-TSNN-S
 </div>
 ~~~~
 
@@ -170,7 +170,7 @@ be different:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman key share 5QXJ-EEOG-DBDE-TEEU-AOYJ-PGZA-4U
+<cmd>Alice> meshman key share 4YKU-TJ76-37Z7-3YOJ-WDFX-F4S4-NM
 <rsp>ERROR - Attempted to divide by zero.
 </div>
 ~~~~

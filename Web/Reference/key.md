@@ -35,12 +35,16 @@ earl   Return a randomized secret value and locator as UDFs
 The `key earl` command returns a randomized secret value and a fingerprint of the secret 
 value, formatted as a UDF Encryption key type and Content Digest Type
 
+The `key earl` only creates the cryptographic material required to create an EARL.
+The 'dare earl' command generates the cryptographic material and applies it to the contents
+of a file.
+
 
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key earl
-<rsp>EA5D-IE6G-4ZKG-3AGD-JV7Z-Q4IC-2KCA-J2
-MDCW-UTHJ-DZRM-Q4UX-WY5I-NIZP-XLTQ-DW6O-PKPL-MRZP-XJ3U-W2SR-G7RR-WWVL
+<rsp>EASN-PHWS-DJAI-DWS7-4BVK-MWFF-J4MR-NW
+MBRI-NYZW-2OIT-REUD-VMYC-2LUR-5BIB-VPSB-TX2A-OZ77-JPRT-K7CW-MKQF-PN2S
 </div>
 ~~~~
 
@@ -73,7 +77,7 @@ protocol.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key nonce
-<rsp>NCBK-6PZI-NG2X-PLYR-XPRV-HDVG-IYVA
+<rsp>NBZF-KCXZ-FVOO-VVIO-ALFR-5JVE-UO3A
 </div>
 ~~~~
 
@@ -107,8 +111,8 @@ value as a UDF Encryption key type. It is not necessary to enter the shares in a
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman key recover SAQL-VGHG-CUSW-RMWH-GWGY-QQOH-LW4C-Y SARF-O3MO-DPSA-TC6C-P6AJ-CZBG-4LTL-U
-<rsp>5QXJ-EEOG-DBDE-TEEU-AOYJ-PGZA-4U
+<cmd>Alice> meshman key recover SAQD-5NHQ-BTGZ-DQEB-GOI4-A4VV-WMPN-A SARO-75B4-2ZVP-KWMH-24Q5-7QJ3-GSSA-A
+<rsp>4YKU-TJ76-37Z7-3YOJ-WDFX-F4S4-NM
 </div>
 ~~~~
 
@@ -136,7 +140,7 @@ key type.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key secret
-<rsp>ECS3-TLWD-FDZZ-KTUT-KJE4-KNZL-FYGA
+<rsp>EDUS-AMYO-VAKG-FONE-IK3T-JWP7-JW6Q
 </div>
 ~~~~
 
@@ -168,11 +172,11 @@ formatted as a UDF Encryption key type and Share types
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key share
-<rsp>5QXJ-EEOG-DBDE-TEEU-AOYJ-PGZA-4U
-MDMD-ID7I-G2YZ-R3QL-ULBC-OJSC-JQYD-GXWL-E4HT-G2NB-G5IM-L6NK-2XHT
-SAQL-VGHG-CUSW-RMWH-GWGY-QQOH-LW4C-Y
-SAQY-SAZ2-DCCL-SH2E-3KDQ-ZUXX-EBHX-G
-SARF-O3MO-DPSA-TC6C-P6AJ-CZBG-4LTL-U
+<rsp>4YKU-TJ76-37Z7-3YOJ-WDFX-F4S4-NM
+MCCR-4JZO-JBIS-YKP3-7ZWS-DOFL-VTLY-EW2T-2WDJ-GZJY-VFYH-WEUS-M32U
+SAQD-5NHQ-BTGZ-DQEB-GOI4-A4VV-WMPN-A
+SAQZ-OVEW-OGOE-HDIE-QVM5-AGPY-OPQW-Q
+SARO-75B4-2ZVP-KWMH-24Q5-7QJ3-GSSA-A
 </div>
 ~~~~
 

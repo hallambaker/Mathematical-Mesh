@@ -16,7 +16,7 @@ Connectivity may be tested by specifying an account or just a DNS service name:
 <div="terminal">
 <cmd>Alice> meshman account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MBO3-YYGV-RKLJ-4JFD-OQD5-BEJS-4GYO
+   Service UDF = MCLV-U6YX-P3TO-X3VD-LIXM-V7ID-ZV7H
 </div>
 ~~~~
 
@@ -29,6 +29,7 @@ The user specifies the initial account address to be used (alice@example.com). U
 is of course dependent on authorization by the Mesh Service Provider (example.com)
 and is likely to require authentication and possibly payment. 
 
+The account create command should support the presentation
 of some form of one time use token to allow binding of a Web interaction providing payment
 details to the request to bind the account to a service.
 
@@ -38,7 +39,7 @@ details to the request to bind the account to a service.
 <div="terminal">
 <cmd>Alice> meshman account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+UDF=MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
 </div>
 ~~~~
 
@@ -46,7 +47,7 @@ The command returns the value of Alice's Mesh Account fingerprint .
 This value is used as a unique identifier that is cryptographically bound to the signature key used
 to authenticate the account profile.
 
-When creating an account, creation of an escrow recovery keyset is highly recommended.
+When creating an account, creation of an escrow recovery keyset as described later, is highly recommended.
 
 ## Account description 
 
@@ -127,12 +128,12 @@ shares to create and the number of shares required for recovery:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account escrow
-<rsp>Share: SAQA-YC4J-NLYN-D6TJ-ZA7Q-47UG-FVWB-MYAQ-3P3Q-V4QV-JEP6-N7UV-NF
-6J-W6WC-OO4A
-Share: SAQV-AFQQ-XN7D-MXCO-BE3Y-3X2Y-P3JD-U4VT-NFDO-5QYL-OSJE-ODX6-XX
-SR-CVVA-77BA
-Share: SARJ-IIEY-BQFZ-VPRS-JIYA-2QBK-2A4F-5BKV-62LN-FFAB-UACK-OH3I-CJ
-GY-OMT7-RPGA
+<rsp>Share: SAQM-LBD6-ELSN-MCDY-V3KC-UBE3-FUN6-ZIXA-U2HY-UAQ6-TUO3-TACH-42
+5X-BFL7-PRRQ
+Share: SAQ4-GB72-CU7G-AMJP-XWZ6-CLNO-B3SM-NSWN-IWXO-FDO3-F42F-L4IP-YY
+22-O75A-EKXQ
+Share: SARM-BC3W-A6L6-UWPG-ZSJZ-QVWA-6CW2-B4VZ-4THD-WGMX-YFFP-EYOX-UW
+X5-42OA-ZD5Q
 </div>
 ~~~~
 
@@ -155,7 +156,7 @@ of course irrevocable.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account purge MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+<cmd>Alice> meshman account purge MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
 <rsp>ERROR - An unknown error occurred
 </div>
 ~~~~
@@ -202,8 +203,8 @@ credentials.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account pin /threshold
-<rsp>PIN=AD5M-D6JD-5QGC-YLLU-UM65-2NQX-4M
- (Expires=2021-12-22T13:28:30Z)
+<rsp>PIN=AAGV-IFMG-7JH7-VLYL-3PEB-PU4S-4E
+ (Expires=2021-12-23T01:13:18Z)
 </div>
 ~~~~
 
@@ -215,7 +216,7 @@ printed on the device itself.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account connect ^
-    mcu://maker@example.com/ED6U-5FAQ-662T-BTCW-7YFY-W545-EY /web
+    mcu://maker@example.com/EBFD-WARU-YCA7-WY6M-GYIP-IXWG-HQ /web
 </div>
 ~~~~
 

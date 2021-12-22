@@ -20,6 +20,7 @@ ssh    Manage SSH profiles connected to a personal profile
 ~~~~
 
 
+
 # ssh client
 
 ~~~~
@@ -29,6 +30,8 @@ client   Add key to the authorized_keys file
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -37,6 +40,9 @@ client   Add key to the authorized_keys file
 <over>
 </div>
 ~~~~
+
+The add client command adds a client entry to the catalog from a file.
+
 
 ~~~~
 <div="terminal">
@@ -55,6 +61,8 @@ client   Add key to the authorized_keys file
 host   Add host to the known_hosts catalog
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -63,6 +71,9 @@ host   Add host to the known_hosts catalog
 <over>
 </div>
 ~~~~
+
+The add client command adds a client entry to the catalog from a file.
+
 
 ~~~~
 <div="terminal">
@@ -81,6 +92,8 @@ host   Add host to the known_hosts catalog
 create   Generate a new SSH public keypair for the current machine and add to the personal profile
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -102,10 +115,13 @@ create   Generate a new SSH public keypair for the current machine and add to th
 </div>
 ~~~~
 
+The SSH create command creates an SSH application store.
+
+
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman ssh create /web
-<rsp>UDF: MDDO-QOQ3-U6RO-HNBP-DCQX-S74X-MY27
+<rsp>UDF: MDV6-UJ6A-2UIT-EZQ7-KDF7-N2I6-TGUI
 </div>
 ~~~~
 
@@ -121,6 +137,8 @@ delete   Delete mail account information
        Mail account identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -128,6 +146,7 @@ delete   Delete mail account information
 </div>
 ~~~~
 
+The SSH delete command deletes a client or host.
 
 
 ~~~~
@@ -147,12 +166,18 @@ delete   Delete mail account information
 import   Import account information
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
 <over>
 </div>
 ~~~~
+
+
+The SSH import command imports data from a file.
+
 
 ~~~~
 <div="terminal">
@@ -172,12 +197,18 @@ get   Lookup mail entry
        The mail account address
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
 <over>
 </div>
 ~~~~
+
+
+The SSH get command describes a client or host entry.
+
 
 ~~~~
 <div="terminal">
@@ -200,6 +231,8 @@ list   List mail account information
     /application   The application format
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -207,12 +240,20 @@ list   List mail account information
 </div>
 ~~~~
 
+The SSH get command lists the client and/or host entries.
+
+If the /client option is specified, only client entries are shown. If the /host option is
+specified, only host entries are shown. In all other cases, both types of entry are shown.
+
+
+
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman ssh import
-<rsp>ERROR - TBS
+<cmd>Alice> meshman ssh list /client
+<rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
+
 
 
 
@@ -226,6 +267,8 @@ client   Merge the SSH authorized keys catalog with the specified file
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -236,6 +279,10 @@ client   Merge the SSH authorized keys catalog with the specified file
 <over>
 </div>
 ~~~~
+
+The merge client command performs a two-way merge of data in the specified authorized 
+clients file with the SSH catalog.
+
 
 ~~~~
 <div="terminal">
@@ -256,6 +303,8 @@ hosts   Merge the SSH known hosts catalog with the specified file
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -266,6 +315,10 @@ hosts   Merge the SSH known hosts catalog with the specified file
 <over>
 </div>
 ~~~~
+
+The merge client command performs a two-way merge of data in the specified known 
+hosts file with the SSH catalog.
+
 
 ~~~~
 <div="terminal">
@@ -285,6 +338,8 @@ hosts   Merge the SSH known hosts catalog with the specified file
 private   Extract the private key for this device
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -296,6 +351,10 @@ private   Extract the private key for this device
 <over>
 </div>
 ~~~~
+
+The ssh private command exports the private key data of the device on which it is 
+executed in a range of formats.
+
 
 ~~~~
 <div="terminal">
@@ -313,6 +372,8 @@ private   Extract the private key for this device
 public   Extract the public key for this device
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -324,6 +385,10 @@ public   Extract the public key for this device
 <over>
 </div>
 ~~~~
+
+The ssh private command exports the public key data of the device on which it is 
+executed in a range of formats.
+
 
 ~~~~
 <div="terminal">

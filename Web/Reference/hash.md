@@ -79,12 +79,15 @@ key is used.
 If a MAC value is specified, it is compared to the calculated value and the value
 true returned if and only if it matches the value specified.
 
+The first value returned is the MAC value. The second value returned is the nonce
+used as a key.
+
 
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman hash mac TestFile1.txt
-<rsp>ADMY-QW4D-KJ27-NFDF-XZCN-OX4H-NDLD
-NDKD-JKPG-2EC2-WAH2-ZYPH-QUBD-UCSX
+<rsp>ACAM-X3GL-HDRZ-H2QU-YYX2-DWAU-2Q6D
+NAF4-5KQE-JZ4E-FA6J-3ERQ-URZ2-WE2U
 </div>
 ~~~~
 

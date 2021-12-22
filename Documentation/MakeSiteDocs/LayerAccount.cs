@@ -352,10 +352,10 @@ public partial class LayerContact : ExampleSet {
     public List<ExampleResult> ContactDougListDoug;
 
 
-    public List<ExampleResult> ContactEdwardStaticUri;
-    public List<ExampleResult> ContactEdwardStaticFetch;
+    public List<ExampleResult> ContactDougStaticUri;
+    public List<ExampleResult> ContactDougStaticFetch;
 
-    public List<ExampleResult> ContactEdwardListAlice;
+    public List<ExampleResult> ContactStaticListAlice;
 
 
 

@@ -27,18 +27,18 @@ In this case there is no existing device profile and so a new profile is
 created and used to create a registration request which is posted to the user's 
 account.
 
-The tool reports the connection request authenticator, a UDF fingerprint which
+The tool reports the witness value, a UDF fingerprint which
 authenticates this particular request.
 
-Alice must use a device already connected to her account to
-complete the connection process.
+Alice must use a device already connected to her account that has been granted the
+administration right to complete the connection process.
 
-The #{ToCommand("device pending")} command gives a list of pending connection
+The #{ToCommand("device pending")} command gives a list of pending device connection
 messages.
 
 #%  ConsoleExample (Connect.ConnectPending);
 
-Alice sees the request that she posted and approves it with the connect
+Alice sees the request that she posted and approves it with the
 #{ToCommand("device accept")} command:
 
 #%  ConsoleExample (Connect.ConnectAccept);
@@ -160,12 +160,39 @@ reset.
 
 #### Dynamic QR connection and Post Authentication
 
+A static QR code is printed on the device that is to connect which is read using the 
+camera on an administration device. The dynamic QR code connection mechanism presents
+a QR code on the administration device that is read by the connecting device.
 
+The QR code presented on the administration device comprises the account address of the
+service to connect to and a PIN to authenticate the connection request. The protocol
+implementation of this connection mechanism is identical to the PIN authenticated 
+connection described earlier.
+
+
+The pin is created using the #{ToCommand("account pin")} as before but with the
+'/uri' option. Note that in this case, the device was not pre-authorized with
+any rights.
 
 #% ConsoleExample (Connect.ConnectJoinPinCreate);
+
+The connecting device requests connection using the  #{ToCommand("device join")}
+command specifying the URI.
+
 #% ConsoleExample (Connect.ConnectJoin);
+
+The administration device processes the device connection request automatically,
+as before.
+
 #% ConsoleExample (Connect.ConnectJoinPending);
+
+The device completes the connection in the normal fashion.
+
 #% ConsoleExample (Connect.ConnectJoinComplete);
+
+Having completed the connection process, the administrator grants full privileges
+using the #{ToCommand("device auth")} command:
+
 #% ConsoleExample (Connect.ConnectJoinAuth);
 
 

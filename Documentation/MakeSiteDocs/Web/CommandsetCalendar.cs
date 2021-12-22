@@ -67,11 +67,15 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			  ConsoleExample (ShellCalendar.CalendarAdd);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("## Finding calendars\n{0}", _Indent);
+			_Output.Write ("## Finding calendar entries\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The {1}  command retreives a calendar entry by label:\n{0}", _Indent, ToCommand("password get"));
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleExample (ShellCalendar.CalendarGet);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The ability to search for information by date ranges etc. is of course highly desirable\n{0}", _Indent);
+			_Output.Write ("but not currently supported.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Deleting calendars\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

@@ -42,6 +42,8 @@ accept   Accept a pending connection
     /group   Authorize group administrator rights for specified Mesh group
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -65,7 +67,7 @@ being that all authorizations are denied.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman device accept YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS /message /web
+<cmd>Alice> meshman device accept FCG4-72L5-Z7Z5-ABWZ-HS7N-TG27-W4WU /message /web
 <rsp></div>
 ~~~~
 
@@ -91,6 +93,8 @@ auth   Authorize device to use application
     /group   Authorize group administrator rights for specified Mesh group
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -148,6 +152,8 @@ The following authorizations may be granted or denied:
 complete   Complete a pending request
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -162,9 +168,9 @@ device profile by polling the manufacturer service.
 ~~~~
 <div="terminal">
 <cmd>Alice4> meshman device complete
-<rsp>   Device UDF = MBM6-ONBJ-ESIY-SQUC-UNYK-2KWU-KELY
+<rsp>   Device UDF = MBFG-FGPL-RW44-SBP6-VSFX-J445-ANV6
    Account = alice@example.com
-   Account UDF = MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+   Account UDF = MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
 </div>
 ~~~~
 
@@ -179,6 +185,8 @@ delete   Remove device from device catalog
        Device identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -210,6 +218,8 @@ install   Connect by means of a connection URI from an administration device.
        The device profile
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -220,7 +230,7 @@ install   Connect by means of a connection URI from an administration device.
 
 ~~~~
 <div="terminal">
-<cmd>Alice4> meshman device install ED6U-5FAQ-662T-BTCW-7YFY-W545-EY.medk
+<cmd>Alice4> meshman device install EBFD-WARU-YCA7-WY6M-GYIP-IXWG-HQ.medk
 <rsp></div>
 ~~~~
 
@@ -235,6 +245,8 @@ join   Connect by means of a connection URI from an administration device.
        The device location URI
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -264,6 +276,8 @@ list   List devices in the device catalog
        Recryption group name in user@example.com format
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -290,6 +304,8 @@ The `device list` command lists the device profiles in the device catalog.
 pending   Get list of pending connection requests
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -304,12 +320,12 @@ the inbound message spool.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman device pending
-<rsp>MessageID: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
+<rsp>MessageID: FCG4-72L5-Z7Z5-ABWZ-HS7N-TG27-W4WU
         Connection Request::
-        MessageID: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
+        MessageID: FCG4-72L5-Z7Z5-ABWZ-HS7N-TG27-W4WU
         To:  From: 
-        Device:  MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
-        Witness: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
+        Device:  MBL2-EMUT-CLYH-Q2QK-3FQQ-PXWO-UJN6
+        Witness: FCG4-72L5-Z7Z5-ABWZ-HS7N-TG27-W4WU
 </div>
 ~~~~
 
@@ -323,6 +339,8 @@ the inbound message spool.
 preconfig   Generate new device profile and publish as an EARL
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -335,8 +353,8 @@ preconfig   Generate new device profile and publish as an EARL
 ~~~~
 <div="terminal">
 <cmd>Maker> meshman device preconfig
-<rsp>Device UDF: MBM6-ONBJ-ESIY-SQUC-UNYK-2KWU-KELY
-File: ED6U-5FAQ-662T-BTCW-7YFY-W545-EY.medk
+<rsp>Device UDF: MBFG-FGPL-RW44-SBP6-VSFX-J445-ANV6
+File: EBFD-WARU-YCA7-WY6M-GYIP-IXWG-HQ.medk
 </div>
 ~~~~
 
@@ -352,6 +370,8 @@ reject   Reject a pending connection
        Fingerprint of connection to reject
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -415,8 +435,8 @@ the `/pin` option.
 ~~~~
 <div="terminal">
 <cmd>Alice2> meshman device request alice@example.com
-<rsp>   Device UDF = MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
-   Witness value = YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
+<rsp>   Device UDF = MBL2-EMUT-CLYH-Q2QK-3FQQ-PXWO-UJN6
+   Witness value = FCG4-72L5-Z7Z5-ABWZ-HS7N-TG27-W4WU
 </div>
 ~~~~
 

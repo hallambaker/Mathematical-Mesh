@@ -5,9 +5,9 @@ For example, Alice connects the device whose profile is shown above to her accou
 ~~~~
 <div="terminal">
 <cmd>Alice2> meshman device complete
-<rsp>   Device UDF = MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
+<rsp>   Device UDF = MBL2-EMUT-CLYH-Q2QK-3FQQ-PXWO-UJN6
    Account = alice@example.com
-   Account UDF = MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+   Account UDF = MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
 </div>
 ~~~~
 
@@ -17,9 +17,9 @@ of the account is:
 ~~~~
 {
   "ActivationDevice":{
-    "ActivationKey":"ZAAQ-HYRK-PS5K-NBFW-RFTF-REXI-K52R-5WKM-TZS4-L
-BIL-HGCW-EMKW-I3TJ-KEMG",
-    "AccountUdf":"MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA"}}
+    "ActivationKey":"ZAAQ-GCUS-3XJK-IJ4P-QJTX-UMD6-XNB7-LVLJ-FKGN-Y
+QZT-MX62-2ONH-NE2E-72KN",
+    "AccountUdf":"MBL2-EMUT-CLYH-Q2QK-3FQQ-PXWO-UJN6"}}
 ~~~~
 
 And:
@@ -30,165 +30,165 @@ And:
     "Entries":[{
         "Resource":"MMM_Contact",
         "Key":{
-          "Udf":"MBMC-W5Y5-X3ZU-63JS-EI2F-IRCA-CMJT",
+          "Udf":"MC57-BIQW-GQXQ-YSTK-LOQQ-5WAU-NMZV",
           "PublicParameters":{
             "PublicKeyECDH":{
               "crv":"X448",
-              "Public":"45jGniayRC6U7e6xCecI5Krhht3w9097itE774ich
-  z9oDJiuh5MbPizwbwiQ_h3vn5qmzfbyk4mA"}},
+              "Public":"Q9wAVQhbkqr8QE0k6MyUfrTzeAdVD2Uv86MFuEQmd
+  Ozd2-_SN_Z5YfQzWQldM3D1SUlQaZCav6EA"}},
           "PrivateParameters":{
             "PrivateKeyECDH":{
               "crv":"X448",
-              "Private":"tz60Iy46OECVkq8TWeA8kIh8rxXUqO5GKvYNf3Sh
-  x4B9t2XdN8RQhFeM-zeeldDqhh0kuMcZRqM"}}}},
+              "Private":"DFf_NPSeeW-1F6eS4cMhjWN7j7sn3WVPvAeHjs1j
+  ZjGt5XXqqtS_t4PnDj_7uRVP3WGmIUPR0tU"}}}},
       {
         "Resource":"MMM_Publication",
         "Key":{
-          "Udf":"MBKS-XQY3-WW6I-M4YF-IUDN-XTGX-TPLB",
+          "Udf":"MD7Y-7BWO-ZXTL-WMUU-TSGS-JRHR-3IQO",
           "PublicParameters":{
             "PublicKeyECDH":{
               "crv":"X448",
-              "Public":"YyHrIR61ZFBSt5TxpS-oh3Q1czktxsRtIM0L0uyGb
-  qbbn3tfk42jxmxQ-iDtByH9w9ObSCHWm0QA"}},
+              "Public":"dXLJ0ChF1T-_btjLPVOoQ6IKRBCz_YnqCElpFHPAe
+  xSvs3pUqze4rVi8cGuhmictE7s_hJ4SLKMA"}},
           "PrivateParameters":{
             "PrivateKeyECDH":{
               "crv":"X448",
-              "Private":"ezW0tGJuQBAjGdt76aKvLwAwwaWWvuwHTbyCMtn9
-  s5KB-50L2GRxvwxtcAwa7H5uWJ5IlpuCWaY"}}}},
+              "Private":"4ZLzJROvPjo7xybSaqJavXTULrxKD3YRtuy8Hoty
+  1vFnfYuIlscUm2x0UK4AQEY47xTm6BId5Hk"}}}},
       {
         "Resource":"MMM_Inbound",
         "Key":{
-          "Udf":"MA2B-RNGM-I7VL-CNZF-KZS7-KG32-NZ6A",
+          "Udf":"MAYU-CHNO-DOX2-HPEZ-72ZB-33JC-4OY6",
           "PublicParameters":{
             "PublicKeyECDH":{
               "crv":"X448",
-              "Public":"V8f0EAbfCIwciWPaH1P_0WSuDo71LEPezLIa17Q6e
-  7z5VNw77HiwBwXc5hLN4Pk1355kRtdZXZEA"}},
+              "Public":"1NZZgc_gbsxXa-K-PsQXR3PxvlqPFcm-clXCsJz_c
+  8-KpzNZv32RvTb4AAkZqKzGnGyUENvUhH2A"}},
           "PrivateParameters":{
             "PrivateKeyECDH":{
               "crv":"X448",
-              "Private":"Mrq21Ek1yHpYtVNEt_tJlG5R-x0n5fsmHvY9fe6L
-  8iBlN3ITU-kht3eQy06bmVARrjgzYM0Awpw"}}}},
+              "Private":"EdnhOH26z5fDWySPrIz-Q59bY9M-WCwN2vHwQsVd
+  ru8fMG_K7o_r_iQ5eXJ8s6SLcuTertTCU14"}}}},
       {
         "Resource":"MMM_Outbound",
         "Key":{
-          "Udf":"MBYE-6QU3-NGDB-ICYR-75AS-IJI6-73OS",
+          "Udf":"MDJ6-HOGZ-2B7Q-OICR-4BC5-DKYD-RKAS",
           "PublicParameters":{
             "PublicKeyECDH":{
               "crv":"X448",
-              "Public":"MntJxdTDjZeF328QaBF2mqMc_RUT8QE_3WVZVArJ7
-  ve8bpPT-odRf-y73Yd_F7brtXU_bTZ_8hoA"}},
+              "Public":"Dz_leESeWYUuAxk08y-PDyQ6mYO9FqHlmB4k1JDSi
+  OPuRAmg8kjlfFmnPxmse4uuMkVQImeN-ocA"}},
           "PrivateParameters":{
             "PrivateKeyECDH":{
               "crv":"X448",
-              "Private":"EGt5cRetD5PmmjfPuW_2SvEV9L3sntGeNKbLjBTo
-  ccONMOcYvOO_ZtWiySFGXLptN5eQcmR22hw"}}}},
+              "Private":"BOt0JdRYqhV73IMe_rsvLRul9s9XNtq-Xa-xPNoj
+  ETBu82j8csmtzzC2tP4ec3A8lJvFICNUfOM"}}}},
       {
         "Resource":"MMM_Network",
         "Key":{
-          "Udf":"MDYV-JKMY-U3CW-QBC3-D5BB-BQXP-J4WW",
+          "Udf":"MBOT-7JFY-ASJ6-DCKU-BPNB-EKGH-6J4N",
           "PublicParameters":{
             "PublicKeyECDH":{
               "crv":"X448",
-              "Public":"pg4bExjZs3gg42zfCW2vw0hkxz3JZ1xk4ePCxHLvg
-  td1uMcr-uYSnfy4GK_IAo-2J_otlxlvHReA"}},
+              "Public":"yVfX9sEm4xu8jreAK9i6OMW4d4RL5PKVyDHuSdP3I
+  PVHZgg8KdjI3uBBKT2xukHpkDh1MiWvY9qA"}},
           "PrivateParameters":{
             "PrivateKeyECDH":{
               "crv":"X448",
-              "Private":"YRohH1fDG2gSparI82Pr17R5NIBx9GQBN4Z9EnqR
-  MpOQcGBM-wmJrtogN2CgNM5cdSMC8GclTA0"}}}},
+              "Private":"4Xu25ltoz31w-8qPSKyydxSS9_inxdeC6L2w_Ee-
+  0dP6arp4yOeC5CjRJVfw2Ziijsx8F21EaTg"}}}},
       {
         "Resource":"MMM_Application",
         "Key":{
-          "Udf":"MC6Y-3FCX-7W2Q-MH4H-COLN-TNM2-X7CL",
+          "Udf":"MBD7-KL6P-TJ32-45HO-RJTU-J242-JXG2",
           "PublicParameters":{
             "PublicKeyECDH":{
               "crv":"X448",
-              "Public":"RHdUGihgKWoNTZLgk2j8WDcTcIlTHu8Ea6wxi0PoR
-  QPl7XC8ETSaT8waVkrV8Uclfo95fWyZleqA"}},
+              "Public":"GLvwTIXvYCQNwzb2OHEOKbXsLmS2ZLBlwdo2LzWvV
+  LVYDHeNjiKt2yZxWNmcrn4UlHKklmT8FmaA"}},
           "PrivateParameters":{
             "PrivateKeyECDH":{
               "crv":"X448",
-              "Private":"BsJdZw-1Dbhifg5T7mPuuSrqk-Ls_aKFT7DrxXrU
-  zxzOmtk46btJJc_ai0NsXOaBZ3kqRTzlY_I"}}}},
+              "Private":"QD3U8MrylGzsbDKn290YVRgutZs7u4U_rtPuoPhC
+  WVA4BqOmsxGCI0fleZ2VsEUES-mcaxzh9i8"}}}},
       {
         "Resource":"MMM_Credential",
         "Key":{
-          "Udf":"MCHC-HLZ5-DO7Z-7LQS-G4RD-JHBN-DMKP",
+          "Udf":"MD5O-RLNT-3CUX-UCMN-CQBY-F7ZW-OKDD",
           "PublicParameters":{
             "PublicKeyECDH":{
               "crv":"X448",
-              "Public":"JXM2NnDMWHrFrQ7-7zXfWKcm5ocK0rxSuq0ctTyQX
-  Jlr029xEPXQ-MJaNZD2Jpfm7JtJ5itZSugA"}},
+              "Public":"UFbOYtjAb14P4MSLgims_fZ0BIVv6pxg4N65sCAmR
+  2SZm9I_kdUdXx5GuCwxGmJqpwHgFcUuOukA"}},
           "PrivateParameters":{
             "PrivateKeyECDH":{
               "crv":"X448",
-              "Private":"OskiXEX6J7sTClKI_hf3Zp9oF1F-W53MEKdPHarQ
-  tciO60jMq511AQoyILcK31u0RcrRCw99XjI"}}}},
+              "Private":"CznmHISNKUvbd6wgVHIddrty2dIXje1uMJCW66uO
+  Vp-l1BS8RscHKAfzl4vbp_rSpTdWZG2iKj8"}}}},
       {
         "Resource":"MMM_Task",
         "Key":{
-          "Udf":"MDHC-QKFP-JGHY-CYZE-4C42-LMEM-S6HI",
+          "Udf":"MD5V-7YMI-VMBY-V45W-COCJ-WM4S-I2H2",
           "PublicParameters":{
             "PublicKeyECDH":{
               "crv":"X448",
-              "Public":"18FhIaHxxZ0VMwSN3EIgFG4K41zhot4h8XvMXMj8f
-  mV4iGXez_lsjxhnmiyyATq6pcLoKnLvlDuA"}},
+              "Public":"k67__uiOgb8iHVztWVNsIrZ8pIkx89wGWoBmrPSP_
+  cb9wUjE9mF1SA5O_YSAO10Z0DiCOQ21hIOA"}},
           "PrivateParameters":{
             "PrivateKeyECDH":{
               "crv":"X448",
-              "Private":"SrxoKiz9LXadjBf9caxyNpZmFWUan5lnwjJIwE4Z
-  kIK-MVWZDTR5liBru-5iNcOQQ6vfaTAtnRo"}}}},
+              "Private":"rgmwU3mEViEEslA2H0vJAj9jb_cNQ1eoeXyCCRTi
+  hEf4x2r0LK0aELq9lJm4evrrR-oejJaXu5o"}}}},
       {
         "Resource":"MMM_Bookmark",
         "Key":{
-          "Udf":"MBSG-42MR-OBGR-QJPW-2DXO-JSRN-6LYF",
+          "Udf":"MAJE-LRDX-XVNZ-UCTF-OECC-KG24-6HAO",
           "PublicParameters":{
             "PublicKeyECDH":{
               "crv":"X448",
-              "Public":"kTKQeJ3rMum8W745j_RcfhT9z7zsBIbfPWko80v1Z
-  i5PNE4ukv4l5N6cCIn3M-eOVx6FO216lDuA"}},
+              "Public":"6rkk02S3EFTENq8Squ0wc5Po0srbmhvc6dQMXBTyL
+  FrsHFlHZftGan2S_xnnbqtzQOtBgo45IDGA"}},
           "PrivateParameters":{
             "PrivateKeyECDH":{
               "crv":"X448",
-              "Private":"LgWNAokyuJjFcxz9wWC3QrANaJszc5K1LzKI8rxj
-  lge3lSYtU-3Dyp5VVWXlWMe75VMw69yFXw0"}}}}
+              "Private":"4orix3S9Z8dy8_lX971IxFVMXr_f8Ry6d3Jzm18T
+  QU23vidFeb4xvMgRZ8yWd7V0cv0li4bU-zw"}}}}
       ],
     "AccountEncryption":{
-      "Udf":"MCX2-6Y4I-HVHM-JV5L-2DUX-OIAY-ZFLU",
+      "Udf":"MDRQ-KSVX-EF4Z-REJR-NSE2-5LNW-DDHY",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"JzMsYE7RJaoYZLNAX0X8dF1POxlHA4NYZ5wdPQIMRG3Rx
-  uC6p_eSVWoCNj1__Vxh4ONRpraQHu8A"}},
+          "Public":"D6RxRGSmXJUtRB_tVQ9nr9yNeEaJZQFxOyKYxVlwKcjfH
+  AVEwtrUyWBbrwQ3XAdYZIK2-T1p4uKA"}},
       "PrivateParameters":{
         "PrivateKeyECDH":{
           "crv":"X448",
-          "Private":"1Wx-XWBPMeMUqKTMdlIRw-14oN8U9jC1N3pQBf4EFDHZ
-  VeCQIUzSROEBvAapV-a2dE4cPu6pB-s"}}},
+          "Private":"BV-wbYBKhGZV3kZPhCDtbH1oNcP8l0OX_OvGoXdD5_jU
+  67scDwDQGQGxGgQ3cXlgeiXPZv5jZ24"}}},
     "AccountAuthentication":{
-      "Udf":"MBZQ-XJ7K-Y4NV-5IGT-FF3A-AIJ3-YXG2",
+      "Udf":"MBEA-E6VS-5R7B-VA5C-UOLV-GVFJ-YVS3",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"XJn42BWLChTXzJlCtxpOFBJNsv_y3jcMFGUbuRxT0UdeI
-  JbYX84k7X8Xc4thCe88xafQ9jdd8COA"}},
+          "Public":"HloBLUDLQKI_Cr5oRSiuiAn3JzAKwHGyoPRsoilN6EM3z
+  8nAjol_rpllJKTpYL-nDKmdap2A1f4A"}},
       "PrivateParameters":{
         "PrivateKeyECDH":{
           "crv":"X448",
-          "Private":"vMeuQNcSqhvX8RMeo9ZQV7d9eflX83xBUKGWngRCJfZA
-  g7D-dlHiiBlDy7Lmll10owMsbtNdY8Y"}}},
+          "Private":"HhtvkYk-diqvtt6Nxsl0mR6AGMeeY5G9dlnzgslJ2rqX
+  qu1KaddD101wTY-50EURrnqb2tbeUBY"}}},
     "AccountSignature":{
-      "Udf":"MC6B-Q2VW-SC2M-4357-CUXC-2MY4-USPV",
+      "Udf":"MD5U-ZIWM-OOMW-O5N3-F7SJ-VF4G-I35O",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"-WkLMkDYN2HrbKTXngllJVgLgOudAoXuMPgQWDtYIg2iS
-  yE-JYd2T4D-2lCz_IIntzRDmUDWhAoA"}},
+          "Public":"D789mNH9dH-oRQcgycKD8MEDn2VMR3TLprVyBeBQTV2X3
+  9A1NpBXsN18YhFVXxkPAFzGx8x7OkSA"}},
       "PrivateParameters":{
         "PrivateKeyECDH":{
           "crv":"Ed448",
-          "Private":"u2Mii-hPZKL6pxEoCi8Bi6qXaIWVq6eS-0zTI32w6TOk
-  rMfkNmrmCXYLtggSWyt8xbdluEsB3BQ"}}}}}
+          "Private":"Mtiswzpw2iKxLIe8ZSfRr-GmYuBaI-hCO4wdH5EhGgJz
+  pkk8ZWHLJeHXEZJxOg1ynKX7DH4lF-g"}}}}}
 ~~~~
 

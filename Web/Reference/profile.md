@@ -42,6 +42,8 @@ connect   Connect by means of a connection uri
        The device location URI
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -77,7 +79,7 @@ may be used to specify the most commonly used authorizations.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account connect mcu://maker@example.com/ED6U-5FAQ-662T-BTCW-7YFY-W545-EY /web
+<cmd>Alice> meshman account connect mcu://maker@example.com/EBFD-WARU-YCA7-WY6M-GYIP-IXWG-HQ /web
 <rsp></div>
 ~~~~
 
@@ -120,7 +122,7 @@ a default name will be used.
 <div="terminal">
 <cmd>Alice> meshman account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+UDF=MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
 </div>
 ~~~~
 
@@ -151,7 +153,7 @@ use, the UDF of the device profile must be specified.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account delete MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+<cmd>Alice> meshman account delete MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
 <rsp>Device Profile UDF=
 </div>
 ~~~~
@@ -168,6 +170,8 @@ escrow   Create a set of key escrow shares
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -187,9 +191,9 @@ The options 'shares' and 'quorum' are used to specify the number of shares to be
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account escrow
-<rsp>Share: SAQA-YC4J-NLYN-D6TJ-ZA7Q-47UG-FVWB-MYAQ-3P3Q-V4QV-JEP6-N7UV-NF6J-W6WC-OO4A
-Share: SAQV-AFQQ-XN7D-MXCO-BE3Y-3X2Y-P3JD-U4VT-NFDO-5QYL-OSJE-ODX6-XXSR-CVVA-77BA
-Share: SARJ-IIEY-BQFZ-VPRS-JIYA-2QBK-2A4F-5BKV-62LN-FFAB-UACK-OH3I-CJGY-OMT7-RPGA
+<rsp>Share: SAQM-LBD6-ELSN-MCDY-V3KC-UBE3-FUN6-ZIXA-U2HY-UAQ6-TUO3-TACH-425X-BFL7-PRRQ
+Share: SAQ4-GB72-CU7G-AMJP-XWZ6-CLNO-B3SM-NSWN-IWXO-FDO3-F42F-L4IP-YY22-O75A-EKXQ
+Share: SARM-BC3W-A6L6-UWPG-ZSJZ-QVWA-6CW2-B4VZ-4THD-WGMX-YFFP-EYOX-UWX5-42OA-ZD5Q
 </div>
 ~~~~
 
@@ -205,6 +209,8 @@ export   Export the specified profile data to the specified file
        Name of the file to which the archive is to be written.
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -233,6 +239,8 @@ the account to a DARE archive.
 get   Describe the specified profile
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -262,6 +270,8 @@ synchronization operation.
 hello   Connect to the service(s) a profile is connected to and report status.
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
 <over>
 </div>
 ~~~~
@@ -274,7 +284,7 @@ service configuration if successful.
 <div="terminal">
 <cmd>Alice> meshman account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MBO3-YYGV-RKLJ-4JFD-OQD5-BEJS-4GYO
+   Service UDF = MCLV-U6YX-P3TO-X3VD-LIXM-V7ID-ZV7H
 </div>
 ~~~~
 
@@ -289,6 +299,8 @@ import   Import the specified profile data to the specified file
        Name of the file file which the archive is to be read.
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -321,6 +333,8 @@ list   List all profiles on the local machine
     /json   Report output in JSON format
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
 <over>
 </div>
 ~~~~
@@ -346,8 +360,11 @@ to.
 pin   Get a pin value to pre-authorize a connection
     /length   Length of PIN to generate in characters
     /expire   Expiry time in days (1d), hours (1, 1h) or minutes (10m).
+    /uri   Return a dynamic connection URI
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -383,8 +400,8 @@ that the connection can be completed without additional user interaction.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account pin /threshold
-<rsp>PIN=AD5M-D6JD-5QGC-YLLU-UM65-2NQX-4M
- (Expires=2021-12-22T13:28:30Z)
+<rsp>PIN=AAGV-IFMG-7JH7-VLYL-3PEB-PU4S-4E
+ (Expires=2021-12-23T01:13:18Z)
 </div>
 ~~~~
 
@@ -399,6 +416,8 @@ that the connection can be completed without additional user interaction.
 purge   Purge the Mesh recovery key from this device
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -413,7 +432,7 @@ deleted from the service.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account purge MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+<cmd>Alice> meshman account purge MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
 <rsp>ERROR - An unknown error occurred
 </div>
 ~~~~
@@ -437,6 +456,8 @@ recover   Recover escrowed profile
        Recovery share
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -452,7 +473,7 @@ recovery shares.
 
 ~~~~
 <div="terminal">
-<cmd>Alice2> meshman account recover SAQA-YC4J-NLYN-D6TJ-ZA7Q-47UG-FVWB-MYAQ-3P3Q-V4QV-JEP6-N7UV-NF6J-W6WC-OO4A SARJ-IIEY-BQFZ-VPRS-JIYA-2QBK-2A4F-5BKV-62LN-FFAB-UACK-OH3I-CJGY-OMT7-RPGA /verify
+<cmd>Alice2> meshman account recover SAQM-LBD6-ELSN-MCDY-V3KC-UBE3-FUN6-ZIXA-U2HY-UAQ6-TUO3-TACH-425X-BFL7-PRRQ SARM-BC3W-A6L6-UWPG-ZSJZ-QVWA-6CW2-B4VZ-4THD-WGMX-YFFP-EYOX-UWX5-42OA-ZD5Q /verify
 <rsp>ERROR - The feature has not been implemented
 </div>
 ~~~~
@@ -468,6 +489,8 @@ recovery shares.
 status   Return the status of the account catalogs and spools
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -508,10 +531,11 @@ without attempting to synchronize with the service.
 sync   Synchronize local copies of Mesh profiles with the server
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-    /auto   <Unspecified>
 <over>
 </div>
 ~~~~

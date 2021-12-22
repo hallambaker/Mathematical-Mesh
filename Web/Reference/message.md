@@ -29,6 +29,8 @@ accept   Accept a pending request
        Specifies the request to accept
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -64,6 +66,8 @@ block   Reject a pending request and block requests from that source
        Specifies the request to reject and block
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -95,6 +99,8 @@ confirm   Post a confirmation request to a user
        Text of the request message
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -116,9 +122,9 @@ supported.
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message confirm alice@example.com "Purchase equipment for $6,000?"
-<rsp>Envelope ID: MDAB-MZBA-CXZJ-SWFW-TNFI-J5YP-V4WT
-Message ID: NDS6-NWK7-4JYJ-ZQG3-VAEZ-JEYX-YSAE
-Response ID: MAT5-O3G2-YC2V-TATX-VAXN-TVBD-2G3A
+<rsp>Envelope ID: MDXL-CQM2-QN3Q-QNSA-IGHG-AOGC-XIUN
+Message ID: NDVI-DOXS-3TK3-LGKN-XP6N-KRNU-ZPXK
+Response ID: MCNK-NIPX-SKWW-ADMX-45VJ-6P5O-ID7C
 </div>
 ~~~~
 
@@ -133,6 +139,8 @@ contact   Post a conection request to a user
        The recipient to send the conection request to
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -149,9 +157,9 @@ The first parameter is required and specifies the intended recipient.
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message contact alice@example.com
-<rsp>Envelope ID: MCRS-QOBP-HDE4-LOXR-CZ72-YGSZ-UI6B
-Message ID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
-Response ID: MD6W-HVP4-COYF-AXM5-5TE7-GHUJ-DZFA
+<rsp>Envelope ID: MAB6-SCSL-XSMY-KDEV-E6IW-KADQ-YONX
+Message ID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
+Response ID: MBTC-3L6R-CPOP-P3JY-Y34N-3PHS-UDYC
 </div>
 ~~~~
 
@@ -165,6 +173,8 @@ Response ID: MD6W-HVP4-COYF-AXM5-5TE7-GHUJ-DZFA
 pending   List pending requests
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -188,25 +198,25 @@ that have been read or are unread. By default, only unread messages are returned
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
+<rsp>MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
         Contact Request::
-        MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
+        MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
         To: alice@example.com From: bob@example.com
-        PIN: ACJZ-GFMD-MOFZ-RQKP-IQ3L-56BK-WURA
-MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        PIN: ACUN-WB2H-GIIO-ZMDB-WGEI-MFDX-73MA
+MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
         Group invitation::
-        MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
         To: alice@example.com From: alice@example.com
-MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
+MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
         Confirmation Request::
-        MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
+        MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         Contact Request::
-        MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+        MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         To: alice@example.com From: bob@example.com
-        PIN: ACPD-YENT-3EM4-PUHD-D4Q4-4TX5-C25A
+        PIN: AARR-TR4W-I3P2-Y5OF-KVMP-7KEJ-RVIQ
 </div>
 ~~~~
 
@@ -221,6 +231,8 @@ reject   Reject a pending request
        Specifies the request to reject
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -256,6 +268,8 @@ status   Request status of pending request
        Specifies the request to provide the status of
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

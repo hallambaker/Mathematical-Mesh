@@ -36,7 +36,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("<dt>Confirmation\n{0}", _Indent);
 			_Output.Write ("<dd>Confirmation messages allow authorized senders to ask for a specific request \n{0}", _Indent);
 			_Output.Write ("to be accepted or denied. If the recpient replies to a confirmation message, a\n{0}", _Indent);
-			_Output.Write ("signed response is returned stating the user's response.\n{0}", _Indent);
+			_Output.Write ("signed response is returned stating the user's response.</dd>\n{0}", _Indent);
 			_Output.Write ("</dl>\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

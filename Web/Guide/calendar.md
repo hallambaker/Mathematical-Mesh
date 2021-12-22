@@ -45,16 +45,16 @@ implemented and a placeholder format is implemented instead.
 <cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NCCO-AW4T-O25V-DXZ2-2CYA-FFDL-XTRP"}
+  "Key": "NDY7-GKFS-CQ24-OTV7-H3NV-7DXO-N5SD"}
 <cmd>Alice> meshman calendar add CalendarEntry2.json CalID2
 <rsp>{
   "Title": "CalendarEntry2.json",
-  "Key": "NDBN-TAS4-G554-PD2V-BNLM-A6CM-63SS"}
+  "Key": "NCCZ-OEXJ-XTJT-I25W-UVTB-ZK6I-MW5J"}
 </div>
 ~~~~
 
 
-## Finding calendars
+## Finding calendar entries
 
 The `password get`  command retreives a calendar entry by label:
 
@@ -65,6 +65,10 @@ The `password get`  command retreives a calendar entry by label:
 <rsp>
 </div>
 ~~~~
+
+The ability to search for information by date ranges etc. is of course highly desirable
+but not currently supported.
+
 
 ## Deleting calendars
 

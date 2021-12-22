@@ -45,6 +45,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("and is likely to require authentication and possibly payment. \n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("", _Indent);
+			_Output.Write ("The account create command should support the presentation\n{0}", _Indent);
 			_Output.Write ("of some form of one time use token to allow binding of a Web interaction providing payment\n{0}", _Indent);
 			_Output.Write ("details to the request to bind the account to a service.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -55,7 +56,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("This value is used as a unique identifier that is cryptographically bound to the signature key used\n{0}", _Indent);
 			_Output.Write ("to authenticate the account profile.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("When creating an account, creation of an escrow recovery keyset is highly recommended.\n{0}", _Indent);
+			_Output.Write ("When creating an account, creation of an escrow recovery keyset as described later, is highly recommended.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Account description \n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

@@ -22,7 +22,7 @@ is accepted, the contact details are added to the recipient's contact catalog.
 <dt>Confirmation
 <dd>Confirmation messages allow authorized senders to ask for a specific request 
 to be accepted or denied. If the recpient replies to a confirmation message, a
-signed response is returned stating the user's response.
+signed response is returned stating the user's response.</dd>
 </dl>
 
 

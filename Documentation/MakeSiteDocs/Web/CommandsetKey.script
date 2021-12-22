@@ -115,6 +115,10 @@ nonces.
 The `key earl` command returns a randomized secret value and a fingerprint of the secret 
 value, formatted as a UDF Encryption key type and Content Digest Type
 
+The `key earl` only creates the cryptographic material required to create an EARL.
+The 'dare earl' command generates the cryptographic material and applies it to the contents
+of a file.
+
 #% ConsoleReference (ShellKey.KeyEarl);
 
 

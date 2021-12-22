@@ -26,6 +26,8 @@ add   Add password entry
        The password
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -55,6 +57,8 @@ delete   Delete password entry
        Domain name of Web site
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -83,6 +87,8 @@ get   Lookup password entry
        The site name
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -113,6 +119,8 @@ list   List password entries
        The site or sites to return.
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

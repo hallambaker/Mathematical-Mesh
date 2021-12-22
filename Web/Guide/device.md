@@ -14,8 +14,8 @@ the mesh service account alice@example.com to which connection is requested:
 ~~~~
 <div="terminal">
 <cmd>Alice2> meshman device request alice@example.com
-<rsp>   Device UDF = MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
-   Witness value = YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
+<rsp>   Device UDF = MBL2-EMUT-CLYH-Q2QK-3FQQ-PXWO-UJN6
+   Witness value = FCG4-72L5-Z7Z5-ABWZ-HS7N-TG27-W4WU
 </div>
 ~~~~
 
@@ -23,35 +23,35 @@ In this case there is no existing device profile and so a new profile is
 created and used to create a registration request which is posted to the user's 
 account.
 
-The tool reports the connection request authenticator, a UDF fingerprint which
+The tool reports the witness value, a UDF fingerprint which
 authenticates this particular request.
 
-Alice must use a device already connected to her account to
-complete the connection process.
+Alice must use a device already connected to her account that has been granted the
+administration right to complete the connection process.
 
-The `device pending` command gives a list of pending connection
+The `device pending` command gives a list of pending device connection
 messages.
 
 
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman device pending
-<rsp>MessageID: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
+<rsp>MessageID: FCG4-72L5-Z7Z5-ABWZ-HS7N-TG27-W4WU
         Connection Request::
-        MessageID: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
+        MessageID: FCG4-72L5-Z7Z5-ABWZ-HS7N-TG27-W4WU
         To:  From: 
-        Device:  MCM4-ZJWE-RSWW-D6VX-KZDN-J5PU-5GHA
-        Witness: YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS
+        Device:  MBL2-EMUT-CLYH-Q2QK-3FQQ-PXWO-UJN6
+        Witness: FCG4-72L5-Z7Z5-ABWZ-HS7N-TG27-W4WU
 </div>
 ~~~~
 
-Alice sees the request that she posted and approves it with the connect
+Alice sees the request that she posted and approves it with the
 `device accept` command:
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman device accept YBUK-6XKN-2E3H-RXPT-SMKO-SF4O-STAS ^
+<cmd>Alice> meshman device accept FCG4-72L5-Z7Z5-ABWZ-HS7N-TG27-W4WU ^
     /message /web
 </div>
 ~~~~
@@ -114,8 +114,8 @@ a new PIN code:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account pin /threshold
-<rsp>PIN=AD5M-D6JD-5QGC-YLLU-UM65-2NQX-4M
- (Expires=2021-12-22T13:28:30Z)
+<rsp>PIN=AAGV-IFMG-7JH7-VLYL-3PEB-PU4S-4E
+ (Expires=2021-12-23T01:13:18Z)
 </div>
 ~~~~
 
@@ -125,9 +125,9 @@ The pin code can now be used to authenticate the connection request:
 ~~~~
 <div="terminal">
 <cmd>Alice3> meshman device request alice@example.com /pin ^
-    AD5M-D6JD-5QGC-YLLU-UM65-2NQX-4M
-<rsp>   Device UDF = MBUY-BN5A-736O-WRRZ-LJCK-UPZZ-CZ52
-   Witness value = TGCH-QM7T-2PRP-44HQ-YAZ6-HMR7-73LC
+    AAGV-IFMG-7JH7-VLYL-3PEB-PU4S-4E
+<rsp>   Device UDF = MC3V-V6L6-YHCW-26I5-XFE3-6WGR-BKVP
+   Witness value = Q7CA-IZV4-BB7C-7CNA-TQKW-W5HC-GJ6W
 </div>
 ~~~~
 
@@ -139,26 +139,26 @@ administrator device:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: TGCH-QM7T-2PRP-44HQ-YAZ6-HMR7-73LC
+<rsp>MessageID: Q7CA-IZV4-BB7C-7CNA-TQKW-W5HC-GJ6W
         Connection Request::
-        MessageID: TGCH-QM7T-2PRP-44HQ-YAZ6-HMR7-73LC
+        MessageID: Q7CA-IZV4-BB7C-7CNA-TQKW-W5HC-GJ6W
         To:  From: 
-        Device:  MBUY-BN5A-736O-WRRZ-LJCK-UPZZ-CZ52
-        Witness: TGCH-QM7T-2PRP-44HQ-YAZ6-HMR7-73LC
-MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        Device:  MC3V-V6L6-YHCW-26I5-XFE3-6WGR-BKVP
+        Witness: Q7CA-IZV4-BB7C-7CNA-TQKW-W5HC-GJ6W
+MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
         Group invitation::
-        MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
         To: alice@example.com From: alice@example.com
-MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
+MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
         Confirmation Request::
-        MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
+        MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         Contact Request::
-        MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+        MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         To: alice@example.com From: bob@example.com
-        PIN: ACPD-YENT-3EM4-PUHD-D4Q4-4TX5-C25A
+        PIN: AARR-TR4W-I3P2-Y5OF-KVMP-7KEJ-RVIQ
 <cmd>Alice> meshman account sync /auto
 </div>
 ~~~~
@@ -196,8 +196,8 @@ on an administration device at the manufacturer facility:
 ~~~~
 <div="terminal">
 <cmd>Maker> meshman device preconfig
-<rsp>Device UDF: MBM6-ONBJ-ESIY-SQUC-UNYK-2KWU-KELY
-File: ED6U-5FAQ-662T-BTCW-7YFY-W545-EY.medk
+<rsp>Device UDF: MBFG-FGPL-RW44-SBP6-VSFX-J445-ANV6
+File: EBFD-WARU-YCA7-WY6M-GYIP-IXWG-HQ.medk
 </div>
 ~~~~
 
@@ -207,7 +207,7 @@ This creates a configuration file that is installed on the device by executing t
 
 ~~~~
 <div="terminal">
-<cmd>Alice4> meshman device install ED6U-5FAQ-662T-BTCW-7YFY-W545-EY.medk
+<cmd>Alice4> meshman device install EBFD-WARU-YCA7-WY6M-GYIP-IXWG-HQ.medk
 </div>
 ~~~~
 
@@ -237,7 +237,7 @@ and retrieve the data using the `account connect` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account connect ^
-    mcu://maker@example.com/ED6U-5FAQ-662T-BTCW-7YFY-W545-EY /web
+    mcu://maker@example.com/EBFD-WARU-YCA7-WY6M-GYIP-IXWG-HQ /web
 </div>
 ~~~~
 
@@ -249,9 +249,9 @@ The next time the device polls the hailing account, it retrieves the connection 
 ~~~~
 <div="terminal">
 <cmd>Alice4> meshman device complete
-<rsp>   Device UDF = MBM6-ONBJ-ESIY-SQUC-UNYK-2KWU-KELY
+<rsp>   Device UDF = MBFG-FGPL-RW44-SBP6-VSFX-J445-ANV6
    Account = alice@example.com
-   Account UDF = MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+   Account UDF = MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
 </div>
 ~~~~
 
@@ -262,16 +262,32 @@ reset.
 
 ## Dynamic QR connection and Post Authentication
 
+A static QR code is printed on the device that is to connect which is read using the 
+camera on an administration device. The dynamic QR code connection mechanism presents
+a QR code on the administration device that is read by the connecting device.
 
+The QR code presented on the administration device comprises the account address of the
+service to connect to and a PIN to authenticate the connection request. The protocol
+implementation of this connection mechanism is identical to the PIN authenticated 
+connection described earlier.
+
+
+The pin is created using the `account pin` as before but with the
+'/uri' option. Note that in this case, the device was not pre-authorized with
+any rights.
 
 
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account pin
-<rsp>PIN=AD6J-PWHH-QXWJ-HHKP-7GE7-DFFY-JY
- (Expires=2021-12-22T13:28:42Z)
+<rsp>PIN=ACTZ-KN3F-4GLN-WGTE-YH3R-XN5Q-BU
+ (Expires=2021-12-23T01:13:31Z)
 </div>
 ~~~~
+
+The connecting device requests connection using the  `device join`
+command specifying the URI.
+
 
 ~~~~
 <div="terminal">
@@ -280,45 +296,56 @@ reset.
 </div>
 ~~~~
 
+The administration device processes the device connection request automatically,
+as before.
+
+
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NAGW-UCHM-Y4IZ-A44R-NQ6Y-JF47-FOVC
+<rsp>MessageID: NDWD-5CWJ-KV7A-HHB4-3TOO-S4OJ-445C
         Confirmation Request::
-        MessageID: NAGW-UCHM-Y4IZ-A44R-NQ6Y-JF47-FOVC
+        MessageID: NDWD-5CWJ-KV7A-HHB4-3TOO-S4OJ-445C
         To: alice@example.com From: mallet@example.com
         Text: "Purchase
-MessageID: NDS6-NWK7-4JYJ-ZQG3-VAEZ-JEYX-YSAE
+MessageID: NDVI-DOXS-3TK3-LGKN-XP6N-KRNU-ZPXK
         Confirmation Request::
-        MessageID: NDS6-NWK7-4JYJ-ZQG3-VAEZ-JEYX-YSAE
+        MessageID: NDVI-DOXS-3TK3-LGKN-XP6N-KRNU-ZPXK
         To: alice@example.com From: bob@example.com
         Text: "Purchase
-MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
+MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
         Contact Request::
-        MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
+        MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
         To: alice@example.com From: bob@example.com
-        PIN: ACJZ-GFMD-MOFZ-RQKP-IQ3L-56BK-WURA
-MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        PIN: ACUN-WB2H-GIIO-ZMDB-WGEI-MFDX-73MA
+MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
         Group invitation::
-        MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
         To: alice@example.com From: alice@example.com
-MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
+MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
         Confirmation Request::
-        MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
+        MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         Contact Request::
-        MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+        MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         To: alice@example.com From: bob@example.com
-        PIN: ACPD-YENT-3EM4-PUHD-D4Q4-4TX5-C25A
+        PIN: AARR-TR4W-I3P2-Y5OF-KVMP-7KEJ-RVIQ
 <cmd>Alice> meshman account sync /auto
 </div>
 ~~~~
 
+The device completes the connection in the normal fashion.
+
+
 ~~~~
 Missing example 3
 ~~~~
+
+Having completed the connection process, the administrator grants full privileges
+using the `device auth` command:
+
 
 ~~~~
 <div="terminal">

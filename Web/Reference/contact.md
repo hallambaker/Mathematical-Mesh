@@ -27,6 +27,8 @@ delete   Delete contact entry
        Contact entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -55,6 +57,8 @@ its unique catalog identifier.
 dynamic   Create dynamic contact retrieval URI
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -71,8 +75,8 @@ be used to authenticate the response in a mutual exchange.
 
 ~~~~
 <div="terminal">
-<cmd>Doug> meshman contact dynamic 
-<rsp>ERROR - The feature has not been implemented
+<cmd>Carol> meshman contact dynamic alice@example.com
+<rsp>Device Profile UDF=
 </div>
 ~~~~
 
@@ -87,6 +91,8 @@ exchange   Request contact from URI presenting own contact
        Contact exchange URI
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -117,6 +123,8 @@ fetch   Request contact from URI without presenting own contact
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -146,6 +154,8 @@ get   Lookup contact entry
        Contact entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -176,6 +186,8 @@ import   Import contact entry from file
        File containing the contact entry to add
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -204,6 +216,8 @@ from a file
 list   List contact entries
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -217,29 +231,29 @@ The 'contact list' command lists all data in the contact catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Person MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Anchor MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
   Address alice@example.com
 
-Entry<CatalogedContact>: NAQN-NQDL-LKHW-DY3U-QAFS-N2LW-6DHS
+Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
   Person 
-  Anchor MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
+  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
   Address bob@example.com
 
-Entry<CatalogedContact>: NBJM-J77F-WGI4-U42M-A273-L4LO-KUL4
+Entry<CatalogedContact>: NDAW-LPN7-CMK6-JNTR-A573-CIFE-K34V
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBYB-VQJX-5JFD-M35Q-OFJD-TXNQ-R3A2
+Entry<CatalogedContact>: NB2Y-J5D4-SHIA-WBWE-2EDA-D45R-56AU
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBDI-IEHI-35UN-DNGC-KVZN-37NZ-DCIH
+Entry<CatalogedContact>: NA4V-YEYP-3K74-6ESA-M22I-FFBL-3WWB
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
 </div>
@@ -256,6 +270,8 @@ Entry<CatalogedContact>: NBDI-IEHI-35UN-DNGC-KVZN-37NZ-DCIH
 static   Create static contact retrieval URI
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

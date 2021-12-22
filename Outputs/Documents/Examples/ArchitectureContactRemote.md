@@ -9,9 +9,9 @@ Bob sends Alice a contact exchange request:
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message contact alice@example.com
-<rsp>Envelope ID: MBD3-HVVY-FCMJ-FPHW-AYJB-ZTDN-EV25
-Message ID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
-Response ID: MDFD-KXCY-SQMH-TIUS-QREA-UFJQ-TTI2
+<rsp>Envelope ID: MDIT-XD5L-W7AF-2JWM-6UBG-DLZZ-MBXO
+Message ID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
+Response ID: MDWU-67CX-VMM6-NRVO-EUTV-KL56-AYZE
 </div>
 ~~~~
 
@@ -23,21 +23,21 @@ Alice checks his Mesh messages and approves Bob's request:
 <cmd>Alice> meshman account sync
 <rsp>ERROR - The entry already exists in the store.
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+<rsp>MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         Contact Request::
-        MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+        MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         To: alice@example.com From: bob@example.com
-        PIN: ACPD-YENT-3EM4-PUHD-D4Q4-4TX5-C25A
-<cmd>Alice> meshman message accept NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+        PIN: AARR-TR4W-I3P2-Y5OF-KVMP-7KEJ-RVIQ
+<cmd>Alice> meshman message accept ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Person MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Anchor MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
   Address alice@example.com
 
-Entry<CatalogedContact>: NAQN-NQDL-LKHW-DY3U-QAFS-N2LW-6DHS
+Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
   Person 
-  Anchor MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
+  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
   Address bob@example.com
 
 </div>
@@ -50,14 +50,14 @@ Bob can now collect Alice's contact:
 <div="terminal">
 <cmd>Bob> meshman account sync /auto
 <cmd>Bob> meshman contact list
-<rsp>Entry<CatalogedContact>: MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
-  Person MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
-  Anchor MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
+<rsp>Entry<CatalogedContact>: MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
+  Person MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
+  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
   Address bob@example.com
 
-Entry<CatalogedContact>: NC3T-S6WY-N6BC-ZSTR-64FV-BZPG-N73A
+Entry<CatalogedContact>: NAOK-BO5X-VXGF-GBQA-ALMQ-ZRYC-INTR
   Person 
-  Anchor MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
   Address alice@example.com
 
 </div>

@@ -131,6 +131,9 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("If a MAC value is specified, it is compared to the calculated value and the value\n{0}", _Indent);
 			_Output.Write ("true returned if and only if it matches the value specified.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The first value returned is the MAC value. The second value returned is the nonce\n{0}", _Indent);
+			_Output.Write ("used as a key.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellHash.MAC1);
 			_Output.Write ("\n{0}", _Indent);
 			 Describe( CommandSet, _HashUDF._DescribeCommand);

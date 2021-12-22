@@ -46,6 +46,12 @@
 			Brief "Account identifier (e.g. alice@example.com) or profile fingerprint"
 		Option LocalName "local" String
 			Brief "Local name for account (e.g. personal)"
+		Option AutoSync "sync" Flag
+			Default "true"
+			Brief "If true, attempt to synchronize the account to the service before operation"
+		Option AutoApprove "auto" Flag
+			Brief "If true, automatically approve pending requests with prior authorization."
+			Default "true"
 
 	OptionSet DeviceProfileInfo
 		Option DeviceNew "new" Flag
@@ -201,7 +207,7 @@
 			Brief "Synchronize local copies of Mesh profiles with the server"
 			Include AccountOptions
 			Include Reporting
-			Option AutoApprove "auto" Flag
+
 
 		Command AccountGetPIN "pin"
 			Brief "Get a pin value to pre-authorize a connection"
@@ -211,6 +217,8 @@
 			Option Expire "expire" String
 				Brief "Expiry time in days (1d), hours (1, 1h) or minutes (10m)."
 				Default "1"
+			Option URI "uri" Flag
+				Brief "Return a dynamic connection URI"
 			Include AccountOptions
 			Include Reporting
 			Include DeviceAuthOptions

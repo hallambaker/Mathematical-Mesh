@@ -37,6 +37,8 @@ add   Add a mail application profile to a personal profile
     /group   Authorize group administrator rights for specified Mesh group
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -51,6 +53,8 @@ add   Add a mail application profile to a personal profile
 </div>
 ~~~~
 
+The mail add command adds a mail entry to the application catalog using parameters
+specified on the command line.
 
 
 ~~~~
@@ -59,10 +63,10 @@ add   Add a mail application profile to a personal profile
 <rsp>Account:         alice@example.net
 Inbound Server:  pop://alice@pop3.example.net
 Outbound Server: submit://alice@submit.example.net
-S/Mime Sign:     MCAA-UPQE-S6FN-MM3P-QLR7-ZW22-U6XI
-S/Mime Encrypt:  MC4F-CU7O-YNUY-IW7D-NG3F-PIW7-BVYI
-OpenPGP Sign:    MBWA-PARP-XY7A-DNRW-OLYT-4ZVJ-UERT
-OpenPGP Encrypt: MAV5-4VFZ-4RUE-U2NX-WAWS-3V3I-EJG2
+S/Mime Sign:     MCQA-FSDW-MQZV-PFAR-SY5R-Z4I5-QHBR
+S/Mime Encrypt:  MAZG-3JTN-CNUK-5NR6-M5B2-2DP6-CYDB
+OpenPGP Sign:    MAIW-O736-45H2-ZDPR-WEEK-MHK3-ZG3N
+OpenPGP Encrypt: MCK3-TIRB-GYJ7-IERA-3WMI-J2EO-BPUT
 </div>
 ~~~~
 
@@ -77,6 +81,8 @@ get   Lookup mail entry
        The mail account address
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -84,6 +90,7 @@ get   Lookup mail entry
 </div>
 ~~~~
 
+The mail get command reports the specified mail configuration data.
 
 
 ~~~~
@@ -103,6 +110,8 @@ get   Lookup mail entry
 import   Import account information
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -110,6 +119,8 @@ import   Import account information
 </div>
 ~~~~
 
+The mail add command adds a mail entry to the application catalog using parameters
+specified in a configuration file.
 
 
 ~~~~
@@ -129,6 +140,8 @@ import   Import account information
 list   List mail account information
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -136,6 +149,7 @@ list   List mail account information
 </div>
 ~~~~
 
+The mail list command lists all the mail configurations in the applications catalog.
 
 
 ~~~~
@@ -144,10 +158,10 @@ list   List mail account information
 <rsp>Account:         alice@example.net
 Inbound Server:  pop://alice@pop3.example.net
 Outbound Server: submit://alice@submit.example.net
-S/Mime Sign:     MCAA-UPQE-S6FN-MM3P-QLR7-ZW22-U6XI
-S/Mime Encrypt:  MC4F-CU7O-YNUY-IW7D-NG3F-PIW7-BVYI
-OpenPGP Sign:    MBWA-PARP-XY7A-DNRW-OLYT-4ZVJ-UERT
-OpenPGP Encrypt: MAV5-4VFZ-4RUE-U2NX-WAWS-3V3I-EJG2
+S/Mime Sign:     MCQA-FSDW-MQZV-PFAR-SY5R-Z4I5-QHBR
+S/Mime Encrypt:  MAZG-3JTN-CNUK-5NR6-M5B2-2DP6-CYDB
+OpenPGP Sign:    MAIW-O736-45H2-ZDPR-WEEK-MHK3-ZG3N
+OpenPGP Encrypt: MCK3-TIRB-GYJ7-IERA-3WMI-J2EO-BPUT
 </div>
 ~~~~
 
@@ -163,6 +177,8 @@ sign   Extract the signature key for the specified account
        Mail account to update
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -174,6 +190,8 @@ sign   Extract the signature key for the specified account
 </div>
 ~~~~
 
+The mail openpgp sign command returns the OpenPGP signature key in a variety of
+formats.
 
 
 ~~~~
@@ -193,6 +211,8 @@ encrypt   Extract the public key/certificate for the specified account
        Mail account identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -204,6 +224,8 @@ encrypt   Extract the public key/certificate for the specified account
 </div>
 ~~~~
 
+The mail openpgp sign command returns the OpenPGP encrypt key in a variety of
+formats.
 
 
 ~~~~
@@ -223,6 +245,8 @@ sign   Extract the signature key for the specified account
        Mail account to update
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -234,6 +258,8 @@ sign   Extract the signature key for the specified account
 </div>
 ~~~~
 
+The mail openpgp sign command returns the S/MIME signature key in a variety of
+formats.
 
 
 ~~~~
@@ -253,6 +279,8 @@ encrypt   Extract the public key/certificate for the specified account
        Mail account identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -263,6 +291,9 @@ encrypt   Extract the public key/certificate for the specified account
 <over>
 </div>
 ~~~~
+
+The mail openpgp sign command returns the S/MIME encrypt key in a variety of
+formats.
 
 
 ~~~~

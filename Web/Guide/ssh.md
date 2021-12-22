@@ -30,16 +30,18 @@ its security.
 Since SSH authentication is bidirectional, an SSH profile is used to manage two separate
 sets of public keys.
 
-<dl>
-<dt>Client Authentication keys</dt>
-<dd>Public keypairs used to authenticate a client to a host. These are the keys whose
-private components are stored in user local storage and whose public components 
-appear in generate the <tt>authorized_keys</tt> file.</dd>
-<dt>Host Authentication keys</dt>
-<dd>Public keypairs used to authenticate a host to a client. These are keys whose
-private components are stored in a system wide storage and whose public components
-appear in the <tt>known_hosts</tt> file.</dd>
-</dl>
+* Client Authentication keys
+
+* Host Authentication keys
+
+Client Authentication public keypairs are used to authenticate a client to a host. 
+These are the keys whose private components are stored in user local storage and 
+whose public components appear in generate the <tt>authorized_keys</tt> file.
+
+Host Authentication keypairs are used to authenticate a host to a client. These are 
+keys whose private components are stored in a system wide storage and whose public 
+components appear in the <tt>known_hosts</tt> file.
+
 
 
 ## Creating an SSH profile
@@ -50,11 +52,11 @@ The `ssh create` command adds an SSH profile named `ssh` to a Mesh account:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman ssh create /web
-<rsp>UDF: MDDO-QOQ3-U6RO-HNBP-DCQX-S74X-MY27
+<rsp>UDF: MDV6-UJ6A-2UIT-EZQ7-KDF7-N2I6-TGUI
 </div>
 ~~~~
 
-Since the command creates a new application catalog, the command must be given to 
+Since the command creates a new application catalog entry, the command must be given to 
 an administration device.
 
 ## Client Configuration
@@ -88,6 +90,12 @@ script to first generate a random nonce and request that the private key file
 be extracted encrypted under the nonce which can be discarded after the key is
 successfully installed. [Not currently supported.]
 
+
+## Host Configuration
+
+Host configuration is not currently supported but is an obvious feature to add once
+support is introduced for SSH certificates.
+
 ## Configuring authentication entries on hosts and clients
 
 The `ssh merge client`  command is run on a host to update mesh key entries 
@@ -119,7 +127,20 @@ the listed hosts to the user's ssh catalog.
 ## Client Key management
 
 SSH keys belonging to the user that are not part of the Mesh profile may be added using the 
-`ssh import`  command.
+`ssh add client` and `ssh import client`  commands.
+
+The `ssh add client` adds key parameters specified on the command line.
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh add client
+<rsp>ERROR - An unknown error occurred
+</div>
+~~~~
+
+The `ssh import client` adds key parameters specified in a separate file. A 
+variety of SSH key formats is supported by means of options:
 
 
 
@@ -130,13 +151,7 @@ SSH keys belonging to the user that are not part of the Mesh profile may be adde
 </div>
 ~~~~
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman ssh add client
-<rsp>ERROR - An unknown error occurred
-</div>
-~~~~
+SSH client keys mayt be fetched using the `ssh get` command:
 
 
 ~~~~
@@ -148,15 +163,19 @@ SSH keys belonging to the user that are not part of the Mesh profile may be adde
 
 
 
-The list of known clients may be returned in various formats using the `ssh show client`  command.
+The list of authorized clients may be returned in various formats using the `ssh list`  command
+with the /client option.
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman ssh import
-<rsp>ERROR - TBS
+<cmd>Alice> meshman ssh list /client
+<rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
+
+
+A client key may be deleted using the  `ssh delete`  command:
 
 
 ~~~~
@@ -166,6 +185,9 @@ The list of known clients may be returned in various formats using the `ssh show
 </div>
 ~~~~
 
+Finally, the `ssh merge client` command performs a two way merge of keys from
+a authorized clients file and the ssh catalog entries:
+
 
 ~~~~
 <div="terminal">
@@ -173,6 +195,8 @@ The list of known clients may be returned in various formats using the `ssh show
 <rsp>ERROR - TBS
 </div>
 ~~~~
+
+
 
 
 ## Host Key Management
@@ -187,8 +211,8 @@ The `ssh add host`  command adds specific host entries to the user's SSH profile
 </div>
 ~~~~
 
-The current list of known hosts in the SSH catalog is returned by the `ssh show known` 
-command.
+The list of known hosts may be returned in various formats using the `ssh list`  command
+with the /host option.
 
 
 ~~~~
@@ -197,6 +221,10 @@ command.
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
+
+
+Finally, the `ssh merge host` command performs a two way merge of keys from
+a known hosts file and the ssh catalog entries:
 
 
 ~~~~

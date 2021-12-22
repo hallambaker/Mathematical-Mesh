@@ -10,18 +10,26 @@ on inbound messages.
 
 The Mesh Service cannot read the contacts catalog entries themselves but
 the data in the contact catalog is used to compile the access catalog entries
-that do.
+that grant the service the ability to act on the account holder's behalf..
 
 Although the `meshman` tool is capable of adding, deleting and retrieving
 contact entries, it is intended to serve as a component to be used to build user
-interfaces rather than a tool designed for daily use.
+interfaces rather than a contact book designed for daily use.
 
 [Future Feature: Contact/Auth] Specify messaging authorizations
 
 ## Adding contacts from a file
 
-The '/self' option is used to mark an entry as being a contact entry for the account
-holder.
+The `contact import` command adds contact information to the catalog directly.
+
+The file carol-contact.json contains Carol's contact information in
+JSON format:
+
+~~~~
+[Carol's contact information]
+~~~~
+
+Alice adds Carol's contact information to her contact catalog directly:
 
 
 ~~~~
@@ -30,13 +38,6 @@ holder.
 <rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\tb
 s'.
 </div>
-~~~~
-
-The file carol-contact.json contains Carol's contact information in
-JSON format:
-
-~~~~
-[Carol's contact information]
 ~~~~
 
 The  `contact self` command is used to inport a contact and mark it as 
@@ -68,24 +69,28 @@ Exchange need not be reciprocated. A unidirectional exchange may be effected by
 means of a URI or QR code printed on a business card or a Web site.
 
 
-### Message Exchange
+### Remote Contact Exchange
 
+The  `message contact` command begins a remote contact exchange.
+This form of exchange allows exchange of contact information between users
+who are not present in the same location.
 
-`message contact`
+To request an exchange of contact information with Alice, Bob specifies her 
+Mesh account address:
 
 
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message contact alice@example.com
-<rsp>Envelope ID: MBD3-HVVY-FCMJ-FPHW-AYJB-ZTDN-EV25
-Message ID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
-Response ID: MDFD-KXCY-SQMH-TIUS-QREA-UFJQ-TTI2
+<rsp>Envelope ID: MDIT-XD5L-W7AF-2JWM-6UBG-DLZZ-MBXO
+Message ID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
+Response ID: MDWU-67CX-VMM6-NRVO-EUTV-KL56-AYZE
 </div>
 ~~~~
 
-`message accept`
-`contact list`
-
+Alice accepts the contact exchange with the `message accept` 
+command. She can now check Bob's contact appears in her contacts catalog 
+with the `contact list` command:
 
 
 ~~~~
@@ -93,48 +98,58 @@ Response ID: MDFD-KXCY-SQMH-TIUS-QREA-UFJQ-TTI2
 <cmd>Alice> meshman account sync
 <rsp>ERROR - The entry already exists in the store.
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+<rsp>MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         Contact Request::
-        MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+        MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         To: alice@example.com From: bob@example.com
-        PIN: ACPD-YENT-3EM4-PUHD-D4Q4-4TX5-C25A
-<cmd>Alice> meshman message accept NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+        PIN: AARR-TR4W-I3P2-Y5OF-KVMP-7KEJ-RVIQ
+<cmd>Alice> meshman message accept ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Person MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Anchor MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
   Address alice@example.com
 
-Entry<CatalogedContact>: NAQN-NQDL-LKHW-DY3U-QAFS-N2LW-6DHS
+Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
   Person 
-  Anchor MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
+  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
   Address bob@example.com
 
 </div>
 ~~~~
+
+Since Bob initiated the contact exchange, the authorization to accept 
+Alice's contact information is implicit in Bobs original command. All he needs
+to do is synchronize his device with the service and Alice's contact
+information appears in his catalog.
 
 
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman account sync /auto
 <cmd>Bob> meshman contact list
-<rsp>Entry<CatalogedContact>: MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
-  Person MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
-  Anchor MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
+<rsp>Entry<CatalogedContact>: MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
+  Person MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
+  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
   Address bob@example.com
 
-Entry<CatalogedContact>: NC3T-S6WY-N6BC-ZSTR-64FV-BZPG-N73A
+Entry<CatalogedContact>: NAOK-BO5X-VXGF-GBQA-ALMQ-ZRYC-INTR
   Person 
-  Anchor MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
   Address alice@example.com
 
 </div>
 ~~~~
 
 
+### Dynamic Contact Exchange
 
-### Dynamic Exchange
+The Dynamic Contact Exchange is designed for situations where the parties are
+present in the same physical location. The contact exchange being typically mediated
+by means of a QR code or near field communication interaction.
 
+Carol begins a dynamic contact exchange with the `contact dynamic` 
+command.
 
 
 ~~~~
@@ -144,39 +159,51 @@ Entry<CatalogedContact>: NC3T-S6WY-N6BC-ZSTR-64FV-BZPG-N73A
 </div>
 ~~~~
 
+The URI generated by the contact dynamic command is really intended to be presented as
+a QR code or other machine readable form. In this case the URI is entered into the
+meshman tool directly using the `message contact` command 
+
+Alice can accept the contact using either the `contact fetch` 
+command if she wants to accept Carol's contact without reciprocating or
+the `contact exchange` if she wants to provide Carol with her
+contact information. In this case she authorizes a mutual exchange
+adding Carol to her contacts catalog:
+
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message accept tbs
-<rsp>ERROR - The specified message could not be found.
+<cmd>Alice> meshman contact exchange uri
+<rsp>ERROR - The specified connection URI was invalid
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Person MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Anchor MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
   Address alice@example.com
 
-Entry<CatalogedContact>: NAQN-NQDL-LKHW-DY3U-QAFS-N2LW-6DHS
+Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
   Person 
-  Anchor MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
+  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
   Address bob@example.com
 
-Entry<CatalogedContact>: NBJM-J77F-WGI4-U42M-A273-L4LO-KUL4
+Entry<CatalogedContact>: NDAW-LPN7-CMK6-JNTR-A573-CIFE-K34V
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBYB-VQJX-5JFD-M35Q-OFJD-TXNQ-R3A2
+Entry<CatalogedContact>: NB2Y-J5D4-SHIA-WBWE-2EDA-D45R-56AU
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBDI-IEHI-35UN-DNGC-KVZN-37NZ-DCIH
+Entry<CatalogedContact>: NA4V-YEYP-3K74-6ESA-M22I-FFBL-3WWB
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
 </div>
 ~~~~
+
+Carol can now complete the interaction by synchronizing one of her devices:
 
 
 ~~~~
@@ -187,27 +214,13 @@ Entry<CatalogedContact>: NBDI-IEHI-35UN-DNGC-KVZN-37NZ-DCIH
 </div>
 ~~~~
 
-
-
-`contact dynamic`
-
-`contact fetch` / `contact exchange`
-
-`message accept`
-
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman message accept tbs
-<rsp>ERROR - The specified message could not be found.
-</div>
-~~~~
-
 ### Static Exchange
 
-`contact static`
-`contact fetch`
+The static contact exchange allows a QR code or other machine readable presentation
+of a URI to be used to publish a contact in a form that allows another to add it to their
+catalog. Such a code might be printed on a business card for example.
+
+Doug creates a static contact URI with the `contact static` command:
 
 
 ~~~~
@@ -217,35 +230,38 @@ Entry<CatalogedContact>: NBDI-IEHI-35UN-DNGC-KVZN-37NZ-DCIH
 </div>
 ~~~~
 
+Alice scans the URI printed on Doug's business card and collects the contact information.
+using the `contact fetch` command:
+
 
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact fetch uri
 <rsp>ERROR - The specified connection URI was invalid
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Person MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Anchor MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
   Address alice@example.com
 
-Entry<CatalogedContact>: NAQN-NQDL-LKHW-DY3U-QAFS-N2LW-6DHS
+Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
   Person 
-  Anchor MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
+  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
   Address bob@example.com
 
-Entry<CatalogedContact>: NBJM-J77F-WGI4-U42M-A273-L4LO-KUL4
+Entry<CatalogedContact>: NDAW-LPN7-CMK6-JNTR-A573-CIFE-K34V
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBYB-VQJX-5JFD-M35Q-OFJD-TXNQ-R3A2
+Entry<CatalogedContact>: NB2Y-J5D4-SHIA-WBWE-2EDA-D45R-56AU
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBDI-IEHI-35UN-DNGC-KVZN-37NZ-DCIH
+Entry<CatalogedContact>: NA4V-YEYP-3K74-6ESA-M22I-FFBL-3WWB
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
 </div>
@@ -273,29 +289,29 @@ A complete list of contacts is obtained using the  `contact list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Person MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Anchor MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
   Address alice@example.com
 
-Entry<CatalogedContact>: NAQN-NQDL-LKHW-DY3U-QAFS-N2LW-6DHS
+Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
   Person 
-  Anchor MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
+  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
   Address bob@example.com
 
-Entry<CatalogedContact>: NBJM-J77F-WGI4-U42M-A273-L4LO-KUL4
+Entry<CatalogedContact>: NDAW-LPN7-CMK6-JNTR-A573-CIFE-K34V
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBYB-VQJX-5JFD-M35Q-OFJD-TXNQ-R3A2
+Entry<CatalogedContact>: NB2Y-J5D4-SHIA-WBWE-2EDA-D45R-56AU
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBDI-IEHI-35UN-DNGC-KVZN-37NZ-DCIH
+Entry<CatalogedContact>: NA4V-YEYP-3K74-6ESA-M22I-FFBL-3WWB
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
 </div>
@@ -317,6 +333,9 @@ Contact entries may be deleted using the  `contact delete` command:
 
 ## Adding devices
 
+The device Alice5 was connected to her account without the contact catalog right.
+Requests to access the contacts catalog fail:
+
 
 ~~~~
 <div="terminal">
@@ -325,8 +344,13 @@ Contact entries may be deleted using the  `contact delete` command:
 </div>
 ~~~~
 
+The ability to selectively grant access to devices allows realization of the 'least 
+privilege' principal in which each user and device is granted the bare minimum
+of functionality required to perform their task. What the device does not know, the
+device cannot disclose.
+
 Devices are given authorization to access the contacts catalog using the 
- `device auth` command:
+ `device auth` command.
 
 
 ~~~~

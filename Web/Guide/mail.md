@@ -28,10 +28,10 @@ A mail application profile is added to a Mesh profile using the
 <rsp>Account:         alice@example.net
 Inbound Server:  pop://alice@pop3.example.net
 Outbound Server: submit://alice@submit.example.net
-S/Mime Sign:     MCAA-UPQE-S6FN-MM3P-QLR7-ZW22-U6XI
-S/Mime Encrypt:  MC4F-CU7O-YNUY-IW7D-NG3F-PIW7-BVYI
-OpenPGP Sign:    MBWA-PARP-XY7A-DNRW-OLYT-4ZVJ-UERT
-OpenPGP Encrypt: MAV5-4VFZ-4RUE-U2NX-WAWS-3V3I-EJG2
+S/Mime Sign:     MCQA-FSDW-MQZV-PFAR-SY5R-Z4I5-QHBR
+S/Mime Encrypt:  MAZG-3JTN-CNUK-5NR6-M5B2-2DP6-CYDB
+OpenPGP Sign:    MAIW-O736-45H2-ZDPR-WEEK-MHK3-ZG3N
+OpenPGP Encrypt: MCK3-TIRB-GYJ7-IERA-3WMI-J2EO-BPUT
 </div>
 ~~~~
 
@@ -119,4 +119,8 @@ The public key may be exported likewise:
     /file=alice1_smime_sign.pem
 </div>
 ~~~~
+
+Various key formats are supported for export of public and private keys allowing
+their use in a wide variety of applications.
+
 

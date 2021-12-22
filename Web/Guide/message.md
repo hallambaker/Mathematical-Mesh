@@ -11,7 +11,7 @@ is accepted, the contact details are added to the recipient's contact catalog.
 <dt>Confirmation
 <dd>Confirmation messages allow authorized senders to ask for a specific request 
 to be accepted or denied. If the recpient replies to a confirmation message, a
-signed response is returned stating the user's response.
+signed response is returned stating the user's response.</dd>
 </dl>
 
 
@@ -28,9 +28,9 @@ using the `message contact` command:
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message contact alice@example.com
-<rsp>Envelope ID: MCRS-QOBP-HDE4-LOXR-CZ72-YGSZ-UI6B
-Message ID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
-Response ID: MD6W-HVP4-COYF-AXM5-5TE7-GHUJ-DZFA
+<rsp>Envelope ID: MAB6-SCSL-XSMY-KDEV-E6IW-KADQ-YONX
+Message ID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
+Response ID: MBTC-3L6R-CPOP-P3JY-Y34N-3PHS-UDYC
 </div>
 ~~~~
 
@@ -40,25 +40,25 @@ Alice reviews her pending messages using the `message pending` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
+<rsp>MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
         Contact Request::
-        MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
+        MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
         To: alice@example.com From: bob@example.com
-        PIN: ACJZ-GFMD-MOFZ-RQKP-IQ3L-56BK-WURA
-MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        PIN: ACUN-WB2H-GIIO-ZMDB-WGEI-MFDX-73MA
+MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
         Group invitation::
-        MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
         To: alice@example.com From: alice@example.com
-MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
+MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
         Confirmation Request::
-        MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
+        MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         Contact Request::
-        MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+        MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         To: alice@example.com From: bob@example.com
-        PIN: ACPD-YENT-3EM4-PUHD-D4Q4-4TX5-C25A
+        PIN: AARR-TR4W-I3P2-Y5OF-KVMP-7KEJ-RVIQ
 </div>
 ~~~~
 
@@ -78,29 +78,34 @@ Bob's contact information has been added to Alice's address book:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Person MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
-  Anchor MDLW-3UK4-IFWN-QV3C-LUAP-2JXB-VYXM
+<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
   Address alice@example.com
 
-Entry<CatalogedContact>: NAQN-NQDL-LKHW-DY3U-QAFS-N2LW-6DHS
+Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
   Person 
-  Anchor MCKB-VDWV-FXBV-ZEQC-62VO-UWU7-RKYC
+  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
   Address bob@example.com
 
-Entry<CatalogedContact>: NBJM-J77F-WGI4-U42M-A273-L4LO-KUL4
+Entry<CatalogedContact>: NDAW-LPN7-CMK6-JNTR-A573-CIFE-K34V
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBYB-VQJX-5JFD-M35Q-OFJD-TXNQ-R3A2
+Entry<CatalogedContact>: NB2Y-J5D4-SHIA-WBWE-2EDA-D45R-56AU
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
-Entry<CatalogedContact>: NBDI-IEHI-35UN-DNGC-KVZN-37NZ-DCIH
+Entry<CatalogedContact>: NA4V-YEYP-3K74-6ESA-M22I-FFBL-3WWB
   Person 
-  Anchor MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
+  Address groupw@example.com
+
+Entry<CatalogedContact>: NDX2-WVUN-C26G-UUXC-JJAA-2ZLD-23K2
+  Person 
+  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
   Address groupw@example.com
 
 </div>
@@ -174,9 +179,9 @@ a confirmation request `Purchase equipment for $6,000?` using the
 <div="terminal">
 <cmd>Bob> meshman message confirm alice@example.com "Purchase equipment for ^
     $6,000?"
-<rsp>Envelope ID: MDAB-MZBA-CXZJ-SWFW-TNFI-J5YP-V4WT
-Message ID: NDS6-NWK7-4JYJ-ZQG3-VAEZ-JEYX-YSAE
-Response ID: MAT5-O3G2-YC2V-TATX-VAXN-TVBD-2G3A
+<rsp>Envelope ID: MDXL-CQM2-QN3Q-QNSA-IGHG-AOGC-XIUN
+Message ID: NDVI-DOXS-3TK3-LGKN-XP6N-KRNU-ZPXK
+Response ID: MCNK-NIPX-SKWW-ADMX-45VJ-6P5O-ID7C
 </div>
 ~~~~
 
@@ -186,30 +191,30 @@ Alice reviews her pending messages using the using the `message pending` command
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NDS6-NWK7-4JYJ-ZQG3-VAEZ-JEYX-YSAE
+<rsp>MessageID: NDVI-DOXS-3TK3-LGKN-XP6N-KRNU-ZPXK
         Confirmation Request::
-        MessageID: NDS6-NWK7-4JYJ-ZQG3-VAEZ-JEYX-YSAE
+        MessageID: NDVI-DOXS-3TK3-LGKN-XP6N-KRNU-ZPXK
         To: alice@example.com From: bob@example.com
         Text: "Purchase
-MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
+MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
         Contact Request::
-        MessageID: NAI7-GORK-6QDL-CRCT-XJHC-CG4P-VNIS
+        MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
         To: alice@example.com From: bob@example.com
-        PIN: ACJZ-GFMD-MOFZ-RQKP-IQ3L-56BK-WURA
-MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        PIN: ACUN-WB2H-GIIO-ZMDB-WGEI-MFDX-73MA
+MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
         Group invitation::
-        MessageID: NCUH-QEYI-3V6A-IQ7Z-6RHR-IPLZ-4MMK
+        MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
         To: alice@example.com From: alice@example.com
-MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
+MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
         Confirmation Request::
-        MessageID: NDSA-RD52-JIV2-RVRU-BY4U-3SAN-HZWQ
+        MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         Contact Request::
-        MessageID: NB37-AILO-UATX-5MSL-SE5J-VW2M-ZIYL
+        MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
         To: alice@example.com From: bob@example.com
-        PIN: ACPD-YENT-3EM4-PUHD-D4Q4-4TX5-C25A
+        PIN: AARR-TR4W-I3P2-Y5OF-KVMP-7KEJ-RVIQ
 </div>
 ~~~~
 
@@ -265,9 +270,9 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 <div="terminal">
 <cmd>Mallet> meshman message confirm alice@example.com "Purchase equipment ^
     for $6,000?"
-<rsp>Envelope ID: MC4Y-MBEX-AESY-O7KD-RIHX-LOHB-BW3N
-Message ID: NAGW-UCHM-Y4IZ-A44R-NQ6Y-JF47-FOVC
-Response ID: MAPP-H6J7-HEB5-S4EW-EIEO-GTWK-D7IW
+<rsp>Envelope ID: MDWO-Y6YL-FLXM-2ACK-UG2P-P653-FT6Y
+Message ID: NDWD-5CWJ-KV7A-HHB4-3TOO-S4OJ-445C
+Response ID: MAQR-HQZD-ITHD-SWB3-ICTX-UZ5C-WKSI
 </div>
 ~~~~
 

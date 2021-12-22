@@ -1240,6 +1240,12 @@
         <member name="P:Goedel.Mesh.Shell._AccountHello.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountHello.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountHello.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountCreate.NewAccountID">
             <summary>Field accessor for parameter []</summary>
         </member>
@@ -1294,6 +1300,12 @@
         <member name="P:Goedel.Mesh.Shell._AccountStatus.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountStatus.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountStatus.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountStatus.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1312,6 +1324,12 @@
         <member name="P:Goedel.Mesh.Shell._AccountSync.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountSync.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountSync.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountSync.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1324,20 +1342,26 @@
         <member name="P:Goedel.Mesh.Shell._AccountSync.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountSync.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.Length">
             <summary>Field accessor for option [length]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.Expire">
             <summary>Field accessor for option [expire]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.URI">
+            <summary>Field accessor for option [uri]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -1393,6 +1417,12 @@
         <member name="P:Goedel.Mesh.Shell._AccountConnect.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1447,6 +1477,12 @@
         <member name="P:Goedel.Mesh.Shell._AccountEscrow.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountEscrow.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountEscrow.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountEscrow.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1471,6 +1507,12 @@
         <member name="P:Goedel.Mesh.Shell._AccountPurge.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPurge.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPurge.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountPurge.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1488,6 +1530,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountRecover.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountRecover.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -1549,11 +1597,23 @@
         <member name="P:Goedel.Mesh.Shell._AccountList.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountList.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountList.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGet.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGet.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGet.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGet.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -1576,6 +1636,12 @@
         <member name="P:Goedel.Mesh.Shell._AccountExport.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountExport.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountExport.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountExport.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1596,6 +1662,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountImport.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountImport.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountImport.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountImport.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -1678,6 +1750,12 @@
         <member name="P:Goedel.Mesh.Shell._DevicePending.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DevicePending.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevicePending.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DevicePending.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1695,6 +1773,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceComplete.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceComplete.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceComplete.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceComplete.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -1753,6 +1837,12 @@
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceAccept.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceAccept.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1773,6 +1863,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceReject.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceReject.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceReject.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceReject.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -1795,6 +1891,12 @@
         <member name="P:Goedel.Mesh.Shell._DeviceDelete.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceDelete.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceDelete.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceDelete.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1812,6 +1914,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceList.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceList.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceList.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceList.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -1870,6 +1978,12 @@
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1890,6 +2004,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceJoin.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceJoin.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceJoin.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceJoin.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -1912,6 +2032,12 @@
         <member name="P:Goedel.Mesh.Shell._DeviceInstall.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInstall.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInstall.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceInstall.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1929,6 +2055,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -1954,6 +2086,12 @@
         <member name="P:Goedel.Mesh.Shell._MessageContact.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._MessageContact.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageContact.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MessageContact.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1978,6 +2116,12 @@
         <member name="P:Goedel.Mesh.Shell._MessageConfirm.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._MessageConfirm.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageConfirm.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MessageConfirm.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -1995,6 +2139,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MessagePending.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessagePending.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessagePending.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessagePending.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2026,6 +2176,12 @@
         <member name="P:Goedel.Mesh.Shell._MessageStatus.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._MessageStatus.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageStatus.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MessageStatus.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2046,6 +2202,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageAccept.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageAccept.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageAccept.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageAccept.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2068,6 +2230,12 @@
         <member name="P:Goedel.Mesh.Shell._MessageReject.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._MessageReject.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageReject.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MessageReject.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2089,6 +2257,12 @@
         <member name="P:Goedel.Mesh.Shell._MessageBlock.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._MessageBlock.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageBlock.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MessageBlock.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2106,6 +2280,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupCreate.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupCreate.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2164,6 +2344,12 @@
         <member name="P:Goedel.Mesh.Shell._GroupAdd.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._GroupAdd.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupAdd.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._GroupAdd.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2187,6 +2373,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupGet.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupGet.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupGet.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupGet.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2212,6 +2404,12 @@
         <member name="P:Goedel.Mesh.Shell._GroupDelete.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._GroupDelete.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupDelete.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._GroupDelete.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2235,6 +2433,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupList.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupList.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupList.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupList.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2266,6 +2470,12 @@
         <member name="P:Goedel.Mesh.Shell._PasswordAdd.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._PasswordAdd.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._PasswordAdd.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._PasswordAdd.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2286,6 +2496,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordGet.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._PasswordGet.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._PasswordGet.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordGet.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2308,6 +2524,12 @@
         <member name="P:Goedel.Mesh.Shell._PasswordDelete.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._PasswordDelete.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._PasswordDelete.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._PasswordDelete.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2329,6 +2551,12 @@
         <member name="P:Goedel.Mesh.Shell._PasswordDump.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._PasswordDump.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._PasswordDump.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._PasswordDump.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2347,6 +2575,12 @@
         <member name="P:Goedel.Mesh.Shell._ContactStatic.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._ContactStatic.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactStatic.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._ContactStatic.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2364,6 +2598,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDynamic.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactDynamic.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactDynamic.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDynamic.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2386,6 +2626,12 @@
         <member name="P:Goedel.Mesh.Shell._ContactFetch.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._ContactFetch.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactFetch.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._ContactFetch.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2406,6 +2652,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactExchange.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExchange.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExchange.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactExchange.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2428,6 +2680,12 @@
         <member name="P:Goedel.Mesh.Shell._ContactImport.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._ContactImport.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactImport.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._ContactImport.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2448,6 +2706,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDelete.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactDelete.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactDelete.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDelete.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2470,6 +2734,12 @@
         <member name="P:Goedel.Mesh.Shell._ContactGet.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._ContactGet.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactGet.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._ContactGet.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2490,6 +2760,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDump.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactDump.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactDump.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDump.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2517,6 +2793,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkImport.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkImport.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkImport.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkImport.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2554,6 +2836,12 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2578,6 +2866,12 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkDelete.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkDelete.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkDelete.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkDelete.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2599,6 +2893,12 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkGet.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkGet.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkGet.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkGet.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2616,6 +2916,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkDump.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkDump.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkDump.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkDump.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2644,6 +2950,12 @@
         <member name="P:Goedel.Mesh.Shell._CalendarImport.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._CalendarImport.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CalendarImport.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._CalendarImport.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2668,6 +2980,12 @@
         <member name="P:Goedel.Mesh.Shell._CalendarAdd.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._CalendarAdd.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CalendarAdd.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._CalendarAdd.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2688,6 +3006,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarGet.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CalendarGet.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CalendarGet.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarGet.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2710,6 +3034,12 @@
         <member name="P:Goedel.Mesh.Shell._CalendarDelete.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._CalendarDelete.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CalendarDelete.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._CalendarDelete.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2727,6 +3057,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarDump.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CalendarDump.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CalendarDump.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarDump.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2751,6 +3087,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkImport.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._NetworkImport.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._NetworkImport.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkImport.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2779,6 +3121,12 @@
         <member name="P:Goedel.Mesh.Shell._NetworkAdd.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._NetworkAdd.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._NetworkAdd.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._NetworkAdd.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2799,6 +3147,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkGet.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._NetworkGet.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._NetworkGet.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkGet.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -2821,6 +3175,12 @@
         <member name="P:Goedel.Mesh.Shell._NetworkDelete.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._NetworkDelete.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._NetworkDelete.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._NetworkDelete.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -2838,6 +3198,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkDump.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._NetworkDump.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._NetworkDump.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkDump.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3064,6 +3430,12 @@
         <member name="P:Goedel.Mesh.Shell._DareEncode.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareEncode.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareEncode.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareEncode.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3087,6 +3459,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareDecode.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareDecode.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareDecode.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareDecode.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3114,6 +3492,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareVerify.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareVerify.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareVerify.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareVerify.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3160,6 +3544,12 @@
         <member name="P:Goedel.Mesh.Shell._DareEARL.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareEARL.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareEARL.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareEARL.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3202,6 +3592,12 @@
         <member name="P:Goedel.Mesh.Shell._DareCreate.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareCreate.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareCreate.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareCreate.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3237,6 +3633,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareArchive.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareArchive.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareArchive.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareArchive.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3289,6 +3691,12 @@
         <member name="P:Goedel.Mesh.Shell._DareLog.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareLog.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3327,6 +3735,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareAppend.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareAppend.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareAppend.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareAppend.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3379,6 +3793,12 @@
         <member name="P:Goedel.Mesh.Shell._DareDir.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareDir.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareDir.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareDir.Sequence">
             <summary>Field accessor for parameter []</summary>
         </member>
@@ -3399,6 +3819,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareList.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareList.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareList.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareList.Sequence">
             <summary>Field accessor for parameter []</summary>
@@ -3426,6 +3852,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareIndex.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareIndex.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareIndex.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareIndex.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3462,6 +3894,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareExtract.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareExtract.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareExtract.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareExtract.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3510,6 +3948,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareCopy.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareCopy.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareCopy.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareCopy.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3574,6 +4018,12 @@
         <member name="P:Goedel.Mesh.Shell._MailAdd.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._MailAdd.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MailAdd.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MailAdd.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3616,6 +4066,12 @@
         <member name="P:Goedel.Mesh.Shell._MailGet.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._MailGet.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MailGet.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MailGet.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3633,6 +4089,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MailList.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MailList.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MailList.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailList.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3652,6 +4114,12 @@
         <member name="P:Goedel.Mesh.Shell._MailImport.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._MailImport.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MailImport.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MailImport.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3669,6 +4137,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MailDelete.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MailDelete.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MailDelete.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailDelete.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3690,6 +4164,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SmimeSign.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SmimeSign.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SmimeSign.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3724,6 +4204,12 @@
         <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3756,6 +4242,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._OpenpgpSign.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._OpenpgpSign.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3790,6 +4282,12 @@
         <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3822,6 +4320,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHCreate.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHCreate.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3886,6 +4390,12 @@
         <member name="P:Goedel.Mesh.Shell._SSHGet.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHGet.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHGet.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHGet.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3913,6 +4423,12 @@
         <member name="P:Goedel.Mesh.Shell._SSHList.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHList.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3931,6 +4447,12 @@
         <member name="P:Goedel.Mesh.Shell._SSHImport.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHImport.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHImport.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHImport.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -3948,6 +4470,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHDelete.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHDelete.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHDelete.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHDelete.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -3969,6 +4497,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHPrivate.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHPrivate.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHPrivate.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHPrivate.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -4003,6 +4537,12 @@
         <member name="P:Goedel.Mesh.Shell._SSHPublic.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHPublic.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHPublic.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHPublic.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -4035,6 +4575,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -4069,6 +4615,12 @@
         <member name="P:Goedel.Mesh.Shell._SSHMergeClients.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHMergeClients.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -4102,6 +4654,12 @@
         <member name="P:Goedel.Mesh.Shell._SSHAddHost.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHAddHost.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHAddHost.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHAddHost.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
@@ -4125,6 +4683,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHAddClient.LocalName">
             <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHAddClient.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHAddClient.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHAddClient.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>

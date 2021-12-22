@@ -45,6 +45,8 @@ append   Append the specified file as an entry to the specified sequence.
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -80,6 +82,8 @@ archive   Create a new DARE archive and add the specified files
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -120,6 +124,8 @@ create   Create a new DARE Sequence
     /type   The sequence type, plain/tree/digest/chain/tree
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -157,6 +163,8 @@ copy   Copy sequence contents to create a new sequence removing deleted elements
     /type   The sequence type, plain/tree/digest/chain/tree
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -191,6 +199,8 @@ decode   Decode a DARE Message.
        Decrypted File
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -211,7 +221,7 @@ with the extension `.undare` otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare /encrypt=5QXJ-EEOG-DBDE-TEEU-AOYJ-PGZA-4U
+<cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare /encrypt=4YKU-TJ76-37Z7-3YOJ-WDFX-F4S4-NM
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -261,6 +271,8 @@ earl   Create an Encrypted Authenticated Resource Locator (EARL)
     /admin   Identifier of administrator authorized to read the log.
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -313,6 +325,8 @@ encode   Encode data as DARE Message.
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -354,7 +368,7 @@ file name is the input file name with the additional extension `.dare`.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=5QXJ-EEOG-DBDE-TEEU-AOYJ-PGZA-4U
+<cmd>Alice> meshman dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare/key=4YKU-TJ76-37Z7-3YOJ-WDFX-F4S4-NM
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -375,6 +389,8 @@ extract   Extract the specified record from the sequence
     /key   <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -410,6 +426,8 @@ index   Compile an index for the specified sequence and append to the end.
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -444,6 +462,8 @@ list   Compile a catalog for the specified sequence.
     /json   Report output in JSON format
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
 <over>
 </div>
 ~~~~
@@ -476,6 +496,8 @@ log   Append the specified string to the sequence.
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -506,6 +528,8 @@ verify   Verify a DARE Message.
        Encrypted File
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -523,7 +547,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare /encrypt=5QXJ-EEOG-DBDE-TEEU-AOYJ-PGZA-4U
+<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare /encrypt=4YKU-TJ76-37Z7-3YOJ-WDFX-F4S4-NM
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~

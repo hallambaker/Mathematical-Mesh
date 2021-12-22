@@ -25,6 +25,8 @@ add   Add user to recryption group
        User to add
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -45,8 +47,8 @@ specifies the name of the user to be added.
 <cmd>Alice> meshman group add groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MBK4-3JBR-FQE6-SIGE-PBL7-BYFI-ZFPN",
-  "ServiceCapabilityId": "MCAL-TOGV-SG7G-N3I2-I6EB-HJ5A-D3FR"}
+  "MemberCapabilityId": "MDBC-7BJT-T34D-M2GX-YRFN-RA6W-O4NR",
+  "ServiceCapabilityId": "MA77-JIYT-4UAX-CALM-J4UC-K5KZ-EOLU"}
 </div>
 ~~~~
 
@@ -61,6 +63,8 @@ create   Create recryption group
        Recryption group name in user@example.com format
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -91,7 +95,7 @@ to be used to share a calendar or password catalog etc.
 <div="terminal">
 <cmd>Alice> meshman group create groupw@example.com /web
 <rsp>Account=groupw@example.com
-UDF=MCXX-WFN3-4M63-LOT6-PO7W-PDME-JZCK
+UDF=MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
 </div>
 ~~~~
 
@@ -108,6 +112,8 @@ delete   Remove user from recryption group
        User to delete
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -128,8 +134,8 @@ To delete the group account itself, the 'account delete' command is required.
 <cmd>Alice> meshman group delete groupw@example.com bob@example.com
 <rsp>{
   "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MBK4-3JBR-FQE6-SIGE-PBL7-BYFI-ZFPN",
-  "ServiceCapabilityId": "MCAL-TOGV-SG7G-N3I2-I6EB-HJ5A-D3FR"}
+  "MemberCapabilityId": "MDBC-7BJT-T34D-M2GX-YRFN-RA6W-O4NR",
+  "ServiceCapabilityId": "MA77-JIYT-4UAX-CALM-J4UC-K5KZ-EOLU"}
 </div>
 ~~~~
 
@@ -145,6 +151,8 @@ get   Find member in recryption group
        User to find
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -176,6 +184,8 @@ list   List members of a recryption group
        Recryption group name in user@example.com format
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

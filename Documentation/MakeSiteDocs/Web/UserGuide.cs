@@ -33,12 +33,16 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		// *****Mesh Core
 		 WebAccount (Index);
 		 AccountReference (Index);
+		 WebDevice (Index);
+		 DeviceReference (Index);
 		 WebMessage (Index);
 		 MessageReference (Index);
 		 WebGroup (Index);
 		 GroupReference (Index);
 		//
 		// ***** Mesh Catalog
+		 WebContact (Index);
+		 ContactReference (Index);
 		 WebBookmark (Index);
 		 BookmarkReference (Index);
 		 WebPassword (Index);
@@ -53,10 +57,6 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		 SSHReference (Index);
 		 WebMail (Index);
 		 MailReference (Index);
-		 WebDevice (Index);
-		 DeviceReference (Index);
-		 WebContact (Index);
-		 ContactReference (Index);
 		}
 	
 
@@ -363,6 +363,19 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The /report flag is set by default. If /noreport is specified, the command is\n{0}", _Indent);
 			_Output.Write ("executed without any output being made to the console.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("In addition commands which require use of a Mesh account offer the \n{0}", _Indent);
+			_Output.Write ("'account', 'local', 'sync' and 'auto' options as follows:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("* '/account'\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("* '/local'\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("* '/sync'\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("* '/auto'\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
 	

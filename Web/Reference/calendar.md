@@ -33,6 +33,8 @@ add   Add calendar entry
     /id   Unique entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -53,7 +55,7 @@ The '/id' option may be used to specify a unique identifier for the entry.
 <cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NCCO-AW4T-O25V-DXZ2-2CYA-FFDL-XTRP"}
+  "Key": "NDY7-GKFS-CQ24-OTV7-H3NV-7DXO-N5SD"}
 </div>
 ~~~~
 
@@ -68,6 +70,8 @@ delete   Delete calendar entry
        Unique entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -97,6 +101,8 @@ get   Lookup calendar entry
        Unique entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -128,6 +134,8 @@ import   Add calendar entry from file
     /format   Specifies the file format.
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -149,7 +157,7 @@ The '/id' option may be used to specify a unique identifier for the entry.
 <cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NCCO-AW4T-O25V-DXZ2-2CYA-FFDL-XTRP"}
+  "Key": "NDY7-GKFS-CQ24-OTV7-H3NV-7DXO-N5SD"}
 </div>
 ~~~~
 
@@ -164,6 +172,8 @@ The '/id' option may be used to specify a unique identifier for the entry.
 list   List calendar entries
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
+    /sync   If true, attempt to synchronize the account to the service before operation
+    /auto   If true, automatically approve pending requests with prior authorization.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

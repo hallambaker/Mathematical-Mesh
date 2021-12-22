@@ -80,6 +80,10 @@ The public key may be exported likewise:
 
 #%  ConsoleExample (Apps.MailSmimeSign);
 
+Various key formats are supported for export of public and private keys allowing
+their use in a wide variety of applications.
+
+
 #end zfile
 
 #zfile CreateExamples MailReference "Reference/mail.md" Examples
@@ -91,24 +95,30 @@ The public key may be exported likewise:
 #! ------------------ 
 #% Describe(CommandSet, _MailAdd._DescribeCommand);
 
+The mail add command adds a mail entry to the application catalog using parameters
+specified on the command line.
 
 #%  ConsoleReference (Apps.Mail);
 
 #! ------------------ Mail
 #% Describe(CommandSet, _MailGet._DescribeCommand);
 
+The mail get command reports the specified mail configuration data.
 
 #%  ConsoleReference (Apps.MailGet);
 
 #! ------------------ Mail
 #% Describe(CommandSet, MailImport._DescribeCommand);
 
+The mail add command adds a mail entry to the application catalog using parameters
+specified in a configuration file.
 
 #%  ConsoleReference (Apps.MailImport);
 
 #! ------------------ Mail
 #% Describe(CommandSet, _MailList._DescribeCommand);
 
+The mail list command lists all the mail configurations in the applications catalog.
 
 #%  ConsoleReference (Apps.MailList);
 
@@ -116,23 +126,32 @@ The public key may be exported likewise:
 
 #% Describe( CommandSet, _OpenpgpSign._DescribeCommand);
 
+The mail openpgp sign command returns the OpenPGP signature key in a variety of
+formats.
 
 #%  ConsoleReference (Apps.MailOpenpgpSign);
 
 #! ------------------ Mail
 #% Describe( CommandSet, _OpenpgpEncrypt._DescribeCommand);
 
+The mail openpgp sign command returns the OpenPGP encrypt key in a variety of
+formats.
 
 #%  ConsoleReference (Apps.MailOpenpgpEncrypt);
 
 #! ------------------ Mail
 #% Describe(CommandSet, _SmimeSign._DescribeCommand);
 
+The mail openpgp sign command returns the S/MIME signature key in a variety of
+formats.
 
 #%  ConsoleReference (Apps.MailSmimeSign);
 
 #! ------------------ Mail
 #% Describe(CommandSet, _SmimeEncrypt._DescribeCommand);
+
+The mail openpgp sign command returns the S/MIME encrypt key in a variety of
+formats.
 
 #%  ConsoleReference (Apps.MailSmimeEncrypt);
 
