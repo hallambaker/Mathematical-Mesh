@@ -140,8 +140,25 @@ public partial class ContextAccount {
         transact.ContextAccount.AssertEqual(this, NYI.Throw);
 
 
+
+
+
         TransactResponse response = null;
         var transactRequest = transact.TransactRequest;
+
+        if (transactRequest.Updates != null) {
+            foreach (var update in transactRequest.Updates) {
+                if (update.Container == CatalogAccess.Label) {
+                    if (update.Envelopes != null) {
+                        foreach (var envelope in update.Envelopes) {
+                            if (envelope.Header?.Recipients?.Count != 2) {
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
 
         if (!transact.Local) {
 
@@ -290,7 +307,7 @@ public abstract class Transaction<TAccount> : Disposable
 
     ///<summary>Returns the capability catalog for the account</summary>
     public CatalogAccess GetCatalogAccess() =>
-        ContextAccount.GetStore(CatalogAccess.Label, decrypt:false) as CatalogAccess;
+        ContextAccount.GetStore(CatalogAccess.Label, decrypt:true) as CatalogAccess;
 
 
 

@@ -232,7 +232,7 @@ public partial class ShellTests {
         var options = encrypt == null ? "" : $" /encrypt={encrypt}" +
                     sign == null ? "" : $" /sign={sign}";
 
-        Dispatch($"dare sequence {filename} {options}");
+        Dispatch($"dare create {filename} {options}");
 
         var entries = new List<string>();
         foreach (var count in counts) {

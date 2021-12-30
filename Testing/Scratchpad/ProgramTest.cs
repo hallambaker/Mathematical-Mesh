@@ -48,8 +48,8 @@ partial class Program {
         //ShellTestsAdmin.Test().TestHello();
 
 
-        TestService.Test().MeshDeviceThresholdKey();
-
+        //TestService.Test().MeshDeviceThresholdKey();
+        ShellTestsAdmin.Test().TestLog();
 
         //for (var i = 0; i < 100; i++) {
         //    Screen.WriteLine($"Test {i}");
