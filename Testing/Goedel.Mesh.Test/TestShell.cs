@@ -167,16 +167,35 @@ public partial class TestCLI : CommandLineInterpreter {
         //Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
         //result.Add(new ExampleResult(command, Shell.ShellResult as Result));
 
-        foreach (var cmd in commands) {
+        Exception unexpectedResult = null;
+
+        foreach (var cmdx in commands) {
             Count++;
             CountTotal++;
+
+            var expectFail = cmdx.StartsWith('!');
+            if (expectFail) {
+                
+                }
+
+            var cmd = expectFail ? cmdx[1..] : cmdx;
             try {
                 Shell.MeshMachineTest.MeshProtocolMessages.Clear();
 
                 Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
-                result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result) {
+
+                var status = Shell.ShellResult as Result;
+                result.Add(new ExampleResult(this, cmd, status) {
                     Traces = new(Shell.MeshMachineTest.MeshProtocolMessages)
                     });
+
+                if (expectFail & status.Success) {
+                    unexpectedResult = new TestExpectedFail();
+                    }
+                else if (!expectFail & !status.Success) {
+                    unexpectedResult = new TestExpectedSuccess();
+                    }
+
                 }
             catch (Exception exception) {
                 ErrorCount++;
@@ -189,9 +208,15 @@ public partial class TestCLI : CommandLineInterpreter {
                 result.Add(new ExampleResult(this, cmd, cmdresult) {
                     Traces = Shell.MeshMachineTest.MeshProtocolMessages
                     });
+
+                if (!expectFail) {
+                    unexpectedResult = new TestExpectedSuccess();
+                    }
                 }
             }
-
+        if (unexpectedResult != null) {
+            throw unexpectedResult;
+            }
         return result;
         }
 

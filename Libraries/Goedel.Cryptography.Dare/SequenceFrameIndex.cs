@@ -145,6 +145,11 @@ public partial class SequenceFrameIndex {
         if (JsonObject != null) {
             return JsonObject;
             }
+        if (IsEncrypted & !sequence.Decrypt) {
+            return null;
+            }
+
+
         var bytes = GetPayload(sequence, sequence.KeyLocate);
         //var text = bytes.ToUTF8();
         return bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);

@@ -39,7 +39,7 @@ public class ContainerDigest : ContainerList {
     /// Default constructor
     /// </summary>
 
-    public ContainerDigest() {
+    public ContainerDigest(bool decrypt) : base(decrypt) {
         }
 
     /// <summary>
@@ -52,7 +52,8 @@ public class ContainerDigest : ContainerList {
     /// <returns>The newly constructed container.</returns>
 
     public static new Sequence MakeNewContainer(
-                    JbcdStream JBCDStream) {
+                    JbcdStream JBCDStream,
+                    bool decrypt) {
 
         var containerInfo = new SequenceInfo() {
             ContainerType = DareConstants.SequenceTypeDigestTag,
@@ -64,7 +65,7 @@ public class ContainerDigest : ContainerList {
             SequenceInfo = containerInfo
             };
 
-        var container = new ContainerDigest() {
+        var container = new ContainerDigest(decrypt) {
             JbcdStream = JBCDStream,
             HeaderFirst = containerHeader
             };

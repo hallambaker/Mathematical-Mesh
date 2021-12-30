@@ -100,6 +100,10 @@ public partial class ContextUser : ContextAccount {
     ///<summary>Device authentication key in account context.</summary>
     public KeyPairAdvanced DeviceAuthentication => ActivationDevice?.DeviceAuthentication;
 
+
+
+    
+
     /// <summary>
     /// Create a new ICredential.
     /// </summary>
@@ -144,6 +148,12 @@ public partial class ContextUser : ContextAccount {
         // Activate the device to communicate as the account (via threshold)
         ActivationAccount = CatalogedDevice?.GetActivationAccount(KeyCollection);
         ActivationAccount.Activate(this);
+
+        if (ActivationAccount.Entries != null) {
+            foreach (var entry in ActivationAccount.Entries) {
+                Privileges.Add(entry.Resource);
+                }
+            }
 
         if (KeyAccountEncryption != null) {
             KeyCollection.Add(KeyAccountEncryption);
@@ -1058,6 +1068,8 @@ public partial class ContextUser : ContextAccount {
             };
         transact.CatalogUpdate(catalogAccess, accessCapability);
 
+
+
         foreach (var entry in catalogAccess.AsCatalogedType) {
             if (entry.Capability is CryptographicCapability cryptographicCapability) {
                 if (cryptographicCapability.GranteeUdf ==
@@ -1148,7 +1160,10 @@ public partial class ContextUser : ContextAccount {
             // Must enforce this from now on. 
             //spoolEntry.Open.AssertTrue(Internal.Throw);
 
-            //Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageId}: Status {spoolEntry.MessageStatus}");
+            Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageId}: Status {spoolEntry.MessageStatus}");
+
+            // Add in check to see if the user has the appropriate catalog rights...
+
 
             if (!spoolEntry.Closed) {
                 switch (meshMessage) {
@@ -1187,6 +1202,10 @@ public partial class ContextUser : ContextAccount {
                     GroupInvitation request,
                     bool accept = true,
                     bool authorize = false) {
+        if (!Privileges.Contains(CatalogContact.Label)) {
+            return new InsufficientAuthorization(request);
+            }
+
         authorize.Future();
 
         if (!accept) {
@@ -1228,6 +1247,10 @@ public partial class ContextUser : ContextAccount {
     /// <param name="request">Connection request to be processed.</param>
     /// <returns>The result of requesting the connection.</returns>
     public ProcessResult ProcessAutomatic(AcknowledgeConnection request) {
+        if (!IsAdministrator || !Privileges.Contains (CatalogDevice.Label)) {
+            return new InsufficientAuthorization(request) ; 
+            }
+
         var messageConnectionRequest = request.MessageConnectionRequest;
 
         // get the pin value here
@@ -1457,6 +1480,11 @@ public partial class ContextUser : ContextAccount {
     public ProcessResult ProcessAutomatic(
                 MessageContact request,
                 bool authorize = false) {
+
+        if (!Privileges.Contains(CatalogContact.Label)) {
+            return new InsufficientAuthorization(request);
+            }
+
 
         // No pin specified? Request is not automatic.
         if (request.PinId == null) {

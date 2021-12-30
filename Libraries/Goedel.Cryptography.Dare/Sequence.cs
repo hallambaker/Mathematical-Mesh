@@ -73,6 +73,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
 
     #region // Properties
 
+    ///<summary>If true, decrypt payload contents.</summary> 
+    public bool Decrypt { get; }
+
+
     ///<summary>The apex digest value of the sequence as written to the file.</summary>
     public byte[] Digest;
 
@@ -178,7 +182,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// Default constructor.
     /// </summary>
 
-    public Sequence() { }
+    public Sequence(bool decrypt) { 
+        Decrypt=decrypt;
+        }
 
 
     #region // IDisposable
@@ -242,7 +248,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
 
             // Create new sequence if empty or read the old one.
             if (jbcdStream.Length == 0) {
-                Container = NewContainer(jbcdStream,
+                Container = NewContainer(jbcdStream, decrypt:decrypt,
                     keyLocate: keyLocate, sequenceType: sequenceType, policy: policy, contentType: contentType);
                 }
             else {
@@ -359,7 +365,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
         Sequence sequence;
         switch (sequenceInfo.ContainerType) {
             case DareConstants.SequenceTypeListTag: {
-                    sequence = new ContainerList() {
+                    sequence = new ContainerList(decrypt) {
                         JbcdStream = jbcdStream,
                         HeaderFirst = sequenceHeaderFirst,
                         StartOfData = position1,
@@ -370,7 +376,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
                     }
             case DareConstants.SequenceTypeDigestTag: {
                     cryptoParametersContainer.SetDigest();
-                    sequence = new ContainerDigest() {
+                    sequence = new ContainerDigest(decrypt) {
                         JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         HeaderFirst = sequenceHeaderFirst,
@@ -382,7 +388,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
                     }
             case DareConstants.SequenceTypeChainTag: {
                     cryptoParametersContainer.SetDigest();
-                    sequence = new ContainerChain() {
+                    sequence = new ContainerChain(decrypt) {
                         JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         HeaderFirst = sequenceHeaderFirst,
@@ -393,7 +399,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
                     break;
                     }
             case DareConstants.SequenceTypeTreeTag: {
-                    sequence = new ContainerTree() {
+                    sequence = new ContainerTree(decrypt) {
                         JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         HeaderFirst = sequenceHeaderFirst,
@@ -405,7 +411,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
                     }
             case DareConstants.SequenceTypeMerkleTag: {
                     cryptoParametersContainer.SetDigest();
-                    sequence = new ContainerMerkleTree() {
+                    sequence = new ContainerMerkleTree(decrypt) {
                         JbcdStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         HeaderFirst = sequenceHeaderFirst,
@@ -463,7 +469,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
                     string contentType = null,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     byte[] cloaked = null,
-                    List<byte[]> dataSequences = null
+                    List<byte[]> dataSequences = null,
+                    bool decrypt=true
                     ) {
 
         Assert.AssertTrue(fileStatus == FileStatus.New | fileStatus == FileStatus.Overwrite,
@@ -471,7 +478,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
 
         var jbcdStream = new JbcdStream(filename, fileStatus);
         var sequence = NewContainer(
-            jbcdStream, sequenceType: sequenceType, policy: policy, payload: payload, contentType: contentType, dataEncoding: dataEncoding,
+            jbcdStream, decrypt:decrypt, sequenceType: sequenceType, policy: policy, payload: payload, contentType: contentType, dataEncoding: dataEncoding,
             cloaked: cloaked, dataSequences: dataSequences);
 
         sequence.DisposeJBCDStream = jbcdStream;
@@ -508,8 +515,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
                     string contentType = null,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     byte[] cloaked = null,
-                    List<byte[]> dataSequences = null) {
-        var sequence = MakeNewSequence(jbcdStream, sequenceType: sequenceType);
+                    List<byte[]> dataSequences = null,
+                    bool decrypt=true) {
+        var sequence = MakeNewSequence(jbcdStream, decrypt, sequenceType: sequenceType);
         var sequenceHeaderFirst = sequence.HeaderFirst;
         var sequenceInfoFirst = sequenceHeaderFirst.SequenceInfo;
 
@@ -568,28 +576,29 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// <returns>The newly constructed sequence.</returns>
     public static Sequence MakeNewSequence(
                     JbcdStream jbcdStream,
+                    bool decrypt,
                     SequenceType sequenceType = SequenceType.Merkle) {
         Sequence result;
 
         switch (sequenceType) {
             case SequenceType.List: {
-                    result = ContainerList.MakeNewContainer(jbcdStream);
+                    result = ContainerList.MakeNewContainer(jbcdStream, decrypt);
                     break;
                     }
             case SequenceType.Digest: {
-                    result = ContainerDigest.MakeNewContainer(jbcdStream);
+                    result = ContainerDigest.MakeNewContainer(jbcdStream, decrypt);
                     break;
                     }
             case SequenceType.Chain: {
-                    result = ContainerChain.MakeNewContainer(jbcdStream);
+                    result = ContainerChain.MakeNewContainer(jbcdStream, decrypt);
                     break;
                     }
             case SequenceType.Tree: {
-                    result = ContainerTree.MakeNewContainer(jbcdStream);
+                    result = ContainerTree.MakeNewContainer(jbcdStream, decrypt);
                     break;
                     }
             case SequenceType.Merkle: {
-                    result = ContainerMerkleTree.MakeNewContainer(jbcdStream);
+                    result = ContainerMerkleTree.MakeNewContainer(jbcdStream, decrypt);
                     break;
                     }
             default: {

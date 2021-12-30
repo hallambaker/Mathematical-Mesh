@@ -135,8 +135,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ///<summary>The authentication key used to authenticate as the account.</summary>
     protected KeyPair KeyAccountAuthentication => ActivationAccount?.AccountAuthenticationKey;
 
-    ///<summary>The encryption key to be used for administration purposes.</summary> 
-    public KeyPair KeyAdministratorEncryption => ActivationAccount.AccountEncryptionKey;
+    ///<summary>True iff the device has administrator privilege.</summary> 
+    protected bool IsAdministrator => KeyAdministratorSign != null;
+
+    protected HashSet<string> Privileges { get; } = new();
+
 
     #endregion
     #region // Store definitions
@@ -310,6 +313,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             };
         return MeshClient.Status(statusRequest);
         }
+
+
+
 
 
     /// <summary>
@@ -556,13 +562,15 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="name">The store to open.</param>
     /// <param name="blind">If true, only the sequence header values are read</param>
     /// <returns>The <see cref="Store"/> instance.</returns>
-    public Store GetStore(string name, bool blind = false) {
+    public Store GetStore(string name, 
+                bool blind = false, 
+                bool decrypt = true) {
         if (DictionaryStores.TryGetValue(name, out var syncStore)) {
             if (!blind & (syncStore.Store is CatalogBlind)) {
                 // if we have a blind store from a sync operation but need a populated one,
                 // remake it.
                 syncStore.Store.Dispose();
-                syncStore.Store = MakeStore(name);
+                syncStore.Store = MakeStore(name, decrypt: decrypt);
                 }
 
             return syncStore.Store;
@@ -570,7 +578,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
 
-        var store = blind ? new CatalogBlind(StoresDirectory, name) : MakeStore(name);
+        var store = blind ? new CatalogBlind(StoresDirectory, name) : 
+                    MakeStore(name, decrypt: decrypt);
         syncStore = new SyncStatus(store);
 
         DictionaryStores.Add(name, syncStore);
@@ -583,7 +592,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="name">The name of the store to bind.</param>
     /// <param name="darePolicy">Policy to be applied to the store.</param>
     /// <returns>The store instance.</returns>
-    protected Store MakeStore(string name, DarePolicy darePolicy = null) {
+    protected Store MakeStore(string name, 
+                DarePolicy darePolicy = null,
+                bool decrypt=true) {
 
         //// special case this for now
         //switch (name) {
@@ -593,10 +604,10 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         if (DictionaryCatalogDelegates.TryGetValue(name, out var factory)) {
             darePolicy ??= ActivationAccount.GetDarePolicy(name);
-            return factory(StoresDirectory, name, this, darePolicy, null, this);
+            return factory(StoresDirectory, name, this, darePolicy, null, this, decrypt: decrypt);
             }
         if (DictionarySpoolDelegates.TryGetValue(name, out factory)) {
-            return factory(StoresDirectory, name, this, null, null, this);
+            return factory(StoresDirectory, name, this, null, null, this, decrypt: decrypt);
             }
 
 

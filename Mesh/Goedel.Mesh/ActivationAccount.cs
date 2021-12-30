@@ -532,8 +532,8 @@ public partial class ActivationAccount {
         else {
             return;
             }
-
-        var activationEntry = transactContextAccount.GetCatalogAccess().MakeActivation(
+        var catalogAccess = transactContextAccount.GetCatalogAccess();
+        var activationEntry = catalogAccess.MakeActivation(
             right, keyPair as KeyPairAdvanced, keyIdentifier, transactContextAccount);
 
         newActivation.Entries ??= new List<ActivationEntry>();

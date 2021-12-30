@@ -36,7 +36,7 @@ public class ContainerChain : ContainerDigest {
     /// <summary>
     /// Default constructor
     /// </summary>
-    public ContainerChain() {
+    public ContainerChain(bool decrypt) : base(decrypt) {
         }
 
 
@@ -48,7 +48,8 @@ public class ContainerChain : ContainerDigest {
     /// in a read access mode and should have exclusive read access. All existing
     /// content in the file will be overwritten.</param>
     public static new Sequence MakeNewContainer(
-                    JbcdStream JBCDStream) {
+                    JbcdStream JBCDStream,
+                    bool decrypt) {
 
 
         var containerInfo = new SequenceInfo() {
@@ -60,7 +61,7 @@ public class ContainerChain : ContainerDigest {
             SequenceInfo = containerInfo
             };
 
-        var container = new ContainerChain() {
+        var container = new ContainerChain(decrypt) {
             JbcdStream = JBCDStream,
             HeaderFirst = containerHeader
             };

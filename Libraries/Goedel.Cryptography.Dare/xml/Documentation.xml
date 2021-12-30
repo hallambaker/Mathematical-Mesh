@@ -11,12 +11,12 @@
             </summary>
             <threadsafety static="true" instance="false"/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerChain.#ctor">
+        <member name="M:Goedel.Cryptography.Dare.ContainerChain.#ctor(System.Boolean)">
             <summary>
             Default constructor
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerChain.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream)">
+        <member name="M:Goedel.Cryptography.Dare.ContainerChain.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream,System.Boolean)">
             <summary>
             Create a new container file of the specified type and write the initial
             data record
@@ -68,12 +68,12 @@
         <member name="P:Goedel.Cryptography.Dare.ContainerDigest.DigestRequired">
             <summary>If true, the Container type requires a digest calculated on the payload.</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerDigest.#ctor">
+        <member name="M:Goedel.Cryptography.Dare.ContainerDigest.#ctor(System.Boolean)">
             <summary>
             Default constructor
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerDigest.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream)">
+        <member name="M:Goedel.Cryptography.Dare.ContainerDigest.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream,System.Boolean)">
             <summary>
             Create a new container file of the specified type and write the initial
             data record
@@ -816,12 +816,12 @@
             </summary>
             <threadsafety static="true" instance="false"/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.#ctor">
+        <member name="M:Goedel.Cryptography.Dare.ContainerList.#ctor(System.Boolean)">
             <summary>
             Default constructor
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream)">
+        <member name="M:Goedel.Cryptography.Dare.ContainerList.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream,System.Boolean)">
             <summary>
             Create a new container file of the specified type and write the initial
             data record
@@ -1133,12 +1133,12 @@
         <member name="P:Goedel.Cryptography.Dare.ContainerMerkleTree.DigestRequired">
             <summary>If true, the Container type requires a digest calculated on the payload.</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.#ctor">
+        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.#ctor(System.Boolean)">
             <summary>
             Default constructor
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream)">
+        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream,System.Boolean)">
             <summary>
             Create a new container file of the specified type and write the initial
             data record
@@ -1440,12 +1440,12 @@
             </summary>
             <threadsafety static="true" instance="false"/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.#ctor">
+        <member name="M:Goedel.Cryptography.Dare.ContainerTree.#ctor(System.Boolean)">
             <summary>
             Default constructor
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream)">
+        <member name="M:Goedel.Cryptography.Dare.ContainerTree.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream,System.Boolean)">
             <summary>
             Create a new container file of the specified type and write the initial
             data record
@@ -5769,6 +5769,9 @@
             Base class for Sequence file implementations
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Sequence.Decrypt">
+            <summary>If true, decrypt payload contents.</summary> 
+        </member>
         <member name="F:Goedel.Cryptography.Dare.Sequence.Digest">
             <summary>The apex digest value of the sequence as written to the file.</summary>
         </member>
@@ -5848,7 +5851,7 @@
         <member name="P:Goedel.Cryptography.Dare.Sequence.Filename">
             <summary>Name of the underlying file (may be used to reconnect to file)</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.#ctor">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.#ctor(System.Boolean)">
             <summary>
             Default constructor.
             </summary>
@@ -5921,7 +5924,7 @@
             otherwise return payload contents as plaintext.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.NewContainer(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.NewContainer(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean)">
             <summary>
             Create a new sequence file of the specified type and write the initial
             data record
@@ -5938,7 +5941,7 @@
                 as an EDSS header entry.</param>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileModeException">The file mode specified was not valid.</exception>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.NewContainer(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.NewContainer(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean)">
             <summary>
             Create a new sequence file of the specified type and write the initial
             data record
@@ -5958,7 +5961,7 @@
             <param name="dataSequences">Data sequences to be converted to an EDS and presented 
                 as an EDSS header entry.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.Dare.SequenceType)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(Goedel.Cryptography.Dare.JbcdStream,System.Boolean,Goedel.Cryptography.Dare.SequenceType)">
             <summary>
             Create a new sequence file of the specified type and write the initial
             data record

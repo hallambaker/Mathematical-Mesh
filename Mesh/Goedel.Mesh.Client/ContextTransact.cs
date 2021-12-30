@@ -290,7 +290,7 @@ public abstract class Transaction<TAccount> : Disposable
 
     ///<summary>Returns the capability catalog for the account</summary>
     public CatalogAccess GetCatalogAccess() =>
-        ContextAccount.GetStore(CatalogAccess.Label) as CatalogAccess;
+        ContextAccount.GetStore(CatalogAccess.Label, decrypt:false) as CatalogAccess;
 
 
 

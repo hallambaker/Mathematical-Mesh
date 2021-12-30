@@ -149,9 +149,15 @@ public class SpoolEntry {
         if (DareEnvelope.JsonObject != null) {
             return DareEnvelope.JsonObject as Message;
             }
+        try {
 
-        DareEnvelope.JsonObject = Message.Decode(DareEnvelope, Spool.KeyCollection);
-        return DareEnvelope.JsonObject as Message;
+            DareEnvelope.JsonObject = Message.Decode(DareEnvelope, Spool.KeyCollection);
+            return DareEnvelope.JsonObject as Message;
+            }
+        catch (NoAvailableDecryptionKey) {
+            return null;
+            }
+
         }
 
 
@@ -336,6 +342,9 @@ public class Spool : Store {
             return null;
             }
 
+
+
+
         if (SpoolEntryById.TryGetValue(envelope.EnvelopeId, out var spoolEntry)) {
             spoolEntry.AddEnvelope(envelope, next);
 
@@ -353,6 +362,11 @@ public class Spool : Store {
                 }
             }
 
+        Screen.WriteLine($"Intern EnvelopeID {spoolEntry.EnvelopeID}, " +
+            $"Message {spoolEntry.Message?.MessageId} " +
+            $"Status {spoolEntry.MessageStatus}");
+
+
         if (KeyCollection == null) {
             // do nothing, we can't read the contents of the message
             }
@@ -360,6 +374,9 @@ public class Spool : Store {
             var message = spoolEntry.Message as MessageComplete;
             message.AssertNotNull(InvalidMessage.Throw);  // Hack - need to collect up the errors 
             foreach (var reference in message.References) {
+                Screen.WriteLine($"    Reference {reference.EnvelopeId}/{reference.MessageId}/{reference.MessageStatus}");
+
+
                 // Do we already have an entry?
                 var envelopeID = reference.EnvelopeId;
                 if (SpoolEntryById.TryGetValue(envelopeID, out var referenceEntry)) {

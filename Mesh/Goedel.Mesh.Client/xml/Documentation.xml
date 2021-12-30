@@ -472,8 +472,8 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAccountAuthentication">
             <summary>The authentication key used to authenticate as the account.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAdministratorEncryption">
-            <summary>The encryption key to be used for administration purposes.</summary> 
+        <member name="P:Goedel.Mesh.Client.ContextAccount.IsAdministrator">
+            <summary>True iff the device has administrator privilege.</summary> 
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
@@ -596,7 +596,7 @@
             <param name="containerUpdate">The update to apply.</param>
             <returns>The number of envelopes successfully added.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetStore(System.String,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetStore(System.String,System.Boolean,System.Boolean)">
             <summary>
             Return a <see cref="T:Goedel.Mesh.Store"/> instance for the store named <paramref name="name"/>. If the
             parameter <paramref name="blind"/> is true, only the sequence header values are read.
@@ -605,7 +605,7 @@
             <param name="blind">If true, only the sequence header values are read</param>
             <returns>The <see cref="T:Goedel.Mesh.Store"/> instance.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.MakeStore(System.String,Goedel.Cryptography.Dare.DarePolicy)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.MakeStore(System.String,Goedel.Cryptography.Dare.DarePolicy,System.Boolean)">
             <summary>
             Create a new instance bound to the specified core within this account context.
             </summary>

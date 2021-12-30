@@ -35,7 +35,7 @@ public class ContainerList : Sequence {
     /// Default constructor
     /// </summary>
 
-    public ContainerList() : base() {
+    public ContainerList(bool decrypt) : base(decrypt) {
         }
 
     /// <summary>
@@ -48,7 +48,8 @@ public class ContainerList : Sequence {
     /// <returns>The newly constructed container.</returns>
 
     public static Sequence MakeNewContainer(
-                    JbcdStream JBCDStream) {
+                    JbcdStream JBCDStream,
+                    bool decrypt) {
 
 
         var containerInfo = new SequenceInfo() {
@@ -60,7 +61,7 @@ public class ContainerList : Sequence {
             SequenceInfo = containerInfo
             };
 
-        var container = new ContainerList() {
+        var container = new ContainerList(decrypt) {
             JbcdStream = JBCDStream,
             HeaderFirst = containerHeader
             };

@@ -37,7 +37,7 @@ public class ContainerMerkleTree : ContainerTree {
     /// Default constructor
     /// </summary>
 
-    public ContainerMerkleTree() {
+    public ContainerMerkleTree(bool decrypt=true) : base(decrypt) {
         }
 
     /// <summary>
@@ -50,8 +50,8 @@ public class ContainerMerkleTree : ContainerTree {
     /// <returns>The newly constructed container.</returns>
 
     public static new Sequence MakeNewContainer(
-                    JbcdStream jbcdStream) {
-
+                    JbcdStream jbcdStream,
+                    bool decrypt=true) {
 
         var containerInfo = new SequenceInfo() {
             ContainerType = DareConstants.SequenceTypeMerkleTag,
@@ -63,7 +63,7 @@ public class ContainerMerkleTree : ContainerTree {
             SequenceInfo = containerInfo
             };
 
-        var container = new ContainerMerkleTree() {
+        var container = new ContainerMerkleTree(decrypt) {
             JbcdStream = jbcdStream,
             HeaderFirst = containerHeader
             };

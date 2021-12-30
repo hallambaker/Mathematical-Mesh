@@ -45,7 +45,10 @@ partial class Program {
     static void Main() {
         Screen.WriteInfo($"Start test  {DateTime.Now}");
 
-        ShellTestsAdmin.Test().TestHello();
+        //ShellTestsAdmin.Test().TestHello();
+
+
+        TestService.Test().MeshDeviceThresholdKey();
 
 
         //for (var i = 0; i < 100; i++) {
@@ -56,7 +59,7 @@ partial class Program {
         //    }
 
 
-        //ShellTests.Test().TestProfileMail();
+        //ShellTests.Test().TestProfileConnectPin();
 
 
         //ShellTestsAdmin.Test().TestMessageContactRemote();

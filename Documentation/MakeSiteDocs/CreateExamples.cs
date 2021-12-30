@@ -749,7 +749,7 @@ public partial class CreateExamples {
                 };
 
         Group.GroupDecryptAlice = Alice1.Example(
-            $"dare decode {Group.EncryptTargetFile}"
+            $"!dare decode {Group.EncryptTargetFile}"
              );
 
         Group.GroupAddAlice = Alice1.Example(
@@ -769,7 +769,7 @@ public partial class CreateExamples {
 
 
         Group.GroupDecryptBobFail = Bob1.Example(
-            $"dare decode {Group.EncryptTargetFile}"
+            $"!dare decode {Group.EncryptTargetFile}"
              );
 
 
@@ -810,13 +810,13 @@ public partial class CreateExamples {
              );
 
         Group.GroupDecryptBobRevoked = Bob1.Example(
-            $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile2}"
+            $"!dare decode {Group.EncryptTargetFile} {Group.GroupDecryptBobFile2}"
              );
         Group.GroupDecryptBobRevoked.Add(Bob1.DumpFile(Group.GroupDecryptBobFile));
 
 
 
-        Group.GroupDecryptAlice.GetResult().Success.TestTrue();
+        Group.GroupDecryptAlice.GetResult().Success.TestFalse();
         Group.GroupDecryptBobFail.GetResult().Success.TestFalse();
         Group.GroupAddBob.GetResult().Success.TestTrue();
         Group.GroupDecryptBobSuccess.GetResult(0).Success.TestTrue();

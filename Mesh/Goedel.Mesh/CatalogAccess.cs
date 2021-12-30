@@ -179,7 +179,7 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
 
     void UpdateLocal(CatalogedEntry catalogedEntry) {
         var catalogedCapability = catalogedEntry as CatalogedAccess;
-        switch (catalogedCapability.Capability) {
+        switch (catalogedCapability?.Capability) {
             case CapabilityDecrypt capabilityDecryption: {
                     DictionaryDecryptByKeyId.Add(capabilityDecryption.Id,
                         capabilityDecryption);

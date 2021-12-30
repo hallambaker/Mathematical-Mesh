@@ -134,7 +134,7 @@ public partial class Shell {
                                 }
                             break;
                             }
-                    default: {
+                    case AcknowledgeConnection : {
                             messages.Add(meshMessage);
                             break;
                             }

@@ -38,7 +38,16 @@ Namespace Goedel.Test
 			Console "The test expected arrays would be equal"
 			Description
 				|An test validation check failed.
+		
+		Exception TestExpectedFail
+			Console "The operation was expected to fail"
+			Description
+				|An test validation check failed.
 
+		Exception TestExpectedSuccess
+			Console "The operation was expected to succeed"
+			Description
+				|An test validation check failed.
 
 	Exception Compare
         Console "An comparison check on the produced result failed"

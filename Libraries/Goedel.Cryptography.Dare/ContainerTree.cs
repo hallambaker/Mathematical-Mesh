@@ -32,7 +32,7 @@ public class ContainerTree : ContainerList {
     /// <summary>
     /// Default constructor
     /// </summary>
-    public ContainerTree() {
+    public ContainerTree(bool decrypt) : base(decrypt) {
         }
 
 
@@ -45,7 +45,8 @@ public class ContainerTree : ContainerList {
     /// content in the file will be overwritten.</param>
     /// <returns>The newly constructed container.</returns>
     public static new Sequence MakeNewContainer(
-                    JbcdStream jbcdStream) {
+                    JbcdStream jbcdStream,
+                    bool decrypt) {
 
 
         var containerInfo = new SequenceInfo() {
@@ -59,7 +60,7 @@ public class ContainerTree : ContainerList {
             };
 
 
-        var container = new ContainerTree() {
+        var container = new ContainerTree(decrypt) {
             JbcdStream = jbcdStream,
             HeaderFirst = containerHeader
             };

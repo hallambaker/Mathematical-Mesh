@@ -305,7 +305,12 @@
       "ProjectGuid": "8ea5a8c4-8415-4532-b7b7-de116cf36d98",
       "DisplayName": "Test.MakeSiteDocs",
       "ColorIndex": 11
+    },
+    "2b4d8bac-91b7-4018-8efc-a7df970e01be": {
+      "ProjectGuid": "2b4d8bac-91b7-4018-8efc-a7df970e01be",
+      "DisplayName": "InstallWindows",
+      "ColorIndex": 12
     }
   },
-  "NextColorIndex": 12
+  "NextColorIndex": 13
 }

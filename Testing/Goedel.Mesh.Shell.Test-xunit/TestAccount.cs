@@ -169,6 +169,27 @@ public partial class ShellTests {
         EndTest();
         }
 
+    [Fact]
+    public void TestPendingMessages() {
+        var testCLIAlice1 = GetTestCLI(AliceDevice1);
+        var testCLIAlice2 = GetTestCLI(AliceDevice2);
+
+
+        var ProfileCreateAliceAccount = testCLIAlice1.ExampleNoCatch($"account create {AliceAccount}");
+        var ConnectRequest = testCLIAlice2.Example($"device request {AliceAccount}");
+        var ConnectPending = testCLIAlice1.ExampleNoCatch($"device pending");
+
+        var resultPending = (ConnectPending[0].Result as ResultPending);
+        var id1 = resultPending.Messages[0].MessageId;
+
+        var ConnectAccept = testCLIAlice1.Example($"device accept {id1} /web");
+
+        var ConnectPending2 = testCLIAlice1.ExampleNoCatch($"device pending");
+        ((ConnectPending2[0].Result as ResultPending).Messages.Count == 0).TestTrue();
+
+        EndTest();
+        }
+
 
 
     [Fact]
@@ -182,34 +203,21 @@ public partial class ShellTests {
 
         var ProfileCreateAliceAccount = testCLIAlice1.ExampleNoCatch($"account create {AliceAccount}");
 
-
-        // ToDo: need to add a flow for an administration QR code push and implement the QR code document.
-
         var ConnectRequest = testCLIAlice2.Example($"device request {AliceAccount}");
         var ConnectRequestMallet = testCLIMallet1.Example($"device request {AliceAccount}");
-
         var ConnectPending = testCLIAlice1.ExampleNoCatch($"device pending");
 
-
         var resultPending = (ConnectPending[0].Result as ResultPending);
-        var id1 = resultPending.Messages[1].MessageId;
-
+        var id1 = resultPending.Messages[1].MessageId; // Alice device 2
+        var id2 = resultPending.Messages[0].MessageId; // Mallet (latest)
 
         var ConnectAccept = testCLIAlice1.Example($"device accept {id1} /web");
-
-
-        var id2 = resultPending.Messages[0].MessageId;
-
-
         var ConnectReject = testCLIAlice1.Example($"device reject {id2}");
 
-
         // Test ability to synchronize
-
         var AliceDevice2Sync = testCLIAlice2.ExampleNoCatch($"device complete");
         var AliceDevice2Sync2 = testCLIAlice2.ExampleNoCatch($"account sync");
-        var MalletDevice2Sync = testCLIMallet1.Example($"device complete");
-        MalletDevice2Sync[0].Result.Success.TestFalse();
+        var MalletDevice2Sync = testCLIMallet1.Example($"!device complete");
 
         EndTest();
         }
