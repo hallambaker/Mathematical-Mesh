@@ -44,7 +44,7 @@ public partial class ContextUser : ContextAccount {
     public override Connection Connection => ConnectionDevice;
 
     ///<summary>Convenience accessor to the account address.</summary>
-    public override string AccountAddress => ProfileUser.AccountAddress;
+    public override string AccountAddress => ProfileUser?.AccountAddress;
 
 
 

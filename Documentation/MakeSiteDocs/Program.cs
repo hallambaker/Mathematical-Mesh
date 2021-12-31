@@ -163,6 +163,7 @@ public partial class CreateExamples {
     public const string MakerAccount = "maker@example.com";
     public const string CarolAccount = "carol@example.com";
     public const string DougAccount = "doug@example.com";
+    public const string EdwardAccount = "edward@example.com";
     public const string MalletAccount = "mallet@example.com";
     public const string GroupAccount = "groupw@example.com";
 

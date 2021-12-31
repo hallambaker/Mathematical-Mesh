@@ -160,7 +160,7 @@ public partial class ShellTests {
         var testCLIAlice1 = GetTestCLI(AliceDevice1);
         var account = testCLIAlice1.Dispatch($"account create {AliceAccount}") as ResultCreateAccount;
         var profileUdf = account.ProfileAccount.Udf;
-        var ProfileAliceDelete = testCLIAlice1.Example($"account delete {profileUdf}");
+        var ProfileAliceDelete = testCLIAlice1.ExampleNoCatch($"account delete {profileUdf}");
 
         // Failing because the device catalog is keypt open.
         testCLIAlice1.Dispatch($"account sync", fail: true);

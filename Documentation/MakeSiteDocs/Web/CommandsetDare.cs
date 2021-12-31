@@ -412,8 +412,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			// ------------------ dare log
 			 Describe(CommandSet, _DareLog._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `dare log` command creates a sequence with the specified cryptographic\n{0}", _Indent);
-			_Output.Write ("enhancements.\n{0}", _Indent);
+			_Output.Write ("The `dare log` command appends a text entry to the specified DARE sequence.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellSequence.SequenceCreate);
 			_Output.Write ("\n{0}", _Indent);

@@ -209,6 +209,17 @@ public class TestEnvironmentCommon : Disposable {
     public ServiceConfiguration ServiceConfiguration { get; } = new() {
         };
 
+    public List<TestCLI> testCLIs = new();
+
+
+    protected override void Disposing() {
+        foreach (var test in testCLIs) {
+            test.Shell.MeshHost.Dispose();
+            //test.Dispose();
+            }
+
+        base.Disposing();
+        }
 
     public virtual PublicMeshService MeshService => meshService ??
         new PublicMeshService(new MeshMachineCoreServer(ServiceDirectory), 
@@ -219,6 +230,15 @@ public class TestEnvironmentCommon : Disposable {
     public virtual TestServiceRud TestServiceRud => testServiceRud ??
         new TestServiceRud(MeshService, null).CacheValue(out testServiceRud);
     TestServiceRud testServiceRud;
+
+    public TestCLI GetTestCLI(string machineName = null) {
+        var testShell = new TestShell(this, machineName);
+        var result = new TestCLI(testShell);
+        testCLIs.Add(result);
+        return result;
+
+        }
+
 
     public virtual MeshServiceClient GetMeshClient(
             MeshMachineTest meshMachineTest,

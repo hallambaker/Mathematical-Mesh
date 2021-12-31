@@ -52,7 +52,7 @@ public partial class ContextGroup : ContextAccount {
     //public override ProfileService ProfileService => ContextUser.ProfileService;
 
     ///<inheritdoc/>
-    public override string AccountAddress => ProfileGroup.AccountAddress;
+    public override string AccountAddress => ProfileGroup?.AccountAddress;
 
     ///<summary>The group profile.</summary>
     public ProfileGroup ProfileGroup => CatalogedGroup.ProfileGroup;

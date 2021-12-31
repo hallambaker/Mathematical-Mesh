@@ -48,7 +48,7 @@ public class ContextMeshPending : ContextAccount {
 
     ///<summary>The account address from the cataloged pending record. Note that this
     ///address MUST be for the same service that the original request was made to.</summary>
-    public override string AccountAddress => CatalogedPending.AccountAddress;
+    public override string AccountAddress => CatalogedPending?.AccountAddress;
 
 
     ///<summary>The account profile. Always null.</summary>

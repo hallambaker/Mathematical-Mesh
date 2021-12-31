@@ -160,7 +160,7 @@ public partial class ShellTests {
         // Update old file.
         var filepath = getItem(entries, 0);
         var update = Path.Combine(archive2, Path.GetFileName(filepath));
-        Dispatch($"dare append {filename} {update} /key={filepath}");
+        Dispatch($"dare append {filename} {update} /id={filepath}");
 
         // update the entries directory
         entries.Remove(filepath);

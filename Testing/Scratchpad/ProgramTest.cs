@@ -45,21 +45,23 @@ partial class Program {
     static void Main() {
         Screen.WriteInfo($"Start test  {DateTime.Now}");
 
-        //ShellTestsAdmin.Test().TestHello();
+        //ShellTests.Test().TestAccountDelete();
 
+        //ShellTestsAdmin.Test().TestHello();
+        //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
 
         //TestService.Test().MeshDeviceThresholdKey();
-        ShellTestsAdmin.Test().TestLog();
+        //ShellTestsAdmin.Test().TestSequence(count:100);
 
-        //for (var i = 0; i < 100; i++) {
-        //    Screen.WriteLine($"Test {i}");
+        for (var i = 0; i < 100; i++) {
+            Screen.WriteLine($"Test {i}");
 
-        //    ShellTestsAdmin.Test().TestAccountDelete();
-        //    ShellTestsAdmin.Test().TestAccount();
-        //    }
+            ShellTestsAdmin.Test().TestAccountDelete();
+            ShellTestsAdmin.Test().TestAccount();
+            }
 
 
-        //ShellTests.Test().TestProfileConnectPin();
+        //ShellTests.Test().TestProfileContact();
 
 
         //ShellTestsAdmin.Test().TestMessageContactRemote();

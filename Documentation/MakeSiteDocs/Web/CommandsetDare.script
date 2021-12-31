@@ -388,8 +388,7 @@ The `dare list` command returns a list of items in the specified sequence..
 #! ------------------ dare log
 #% Describe(CommandSet, _DareLog._DescribeCommand);
 
-The `dare log` command creates a sequence with the specified cryptographic
-enhancements.
+The `dare log` command appends a text entry to the specified DARE sequence.
 
 #% ConsoleReference (ShellSequence.SequenceCreate);
 

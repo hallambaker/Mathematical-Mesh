@@ -170,10 +170,15 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     #endregion
     #endregion
 
+
+    static int countStores = 0;
+
     /// <summary>
     /// Disposal method called on exit.
     /// </summary>
     protected override void Disposing() {
+        Screen.WriteLine($"*** Dispose ContextAccount {AccountAddress} {countStores}");
+        countStores--;
         foreach (var status in DictionaryStores) {
             var store = status.Value.Store;
             store.Dispose();
@@ -192,19 +197,22 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public ContextAccount(
             MeshHost meshHost,
             CatalogedMachine catalogedMachine) {
+        countStores++;
+        Screen.WriteLine($"*** Create ContextAccount {AccountAddress} {countStores}");
+
 
         MeshHost = meshHost;
         CatalogedMachine = catalogedMachine;
         }
 
 
-    /// <summary>
-    /// Constructor, generate a new context from the activation record 
-    /// <paramref name="activationAccount"/>.
-    /// </summary>
-    /// <param name="activationAccount">The activation record.</param>
-    public ContextAccount(ActivationAccount activationAccount) =>
-        ActivationAccount = activationAccount;
+    ///// <summary>
+    ///// Constructor, generate a new context from the activation record 
+    ///// <paramref name="activationAccount"/>.
+    ///// </summary>
+    ///// <param name="activationAccount">The activation record.</param>
+    //public ContextAccount(ActivationAccount activationAccount) =>
+    //    ActivationAccount = activationAccount;
 
 
     #endregion

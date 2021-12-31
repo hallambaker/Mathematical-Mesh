@@ -106,18 +106,18 @@ public partial class ShellTests {
 
 
         // export the contact data to a file
-        device1.Dispatch($"contact export {AliceAccount} {fileA}");
-        device2.Dispatch($"contact export {AccountB} {fileB}");
-        device3.Dispatch($"contact export {AccountC} {fileC}");
+        device1.Dispatch($"contact get {AliceAccount} {fileA}");
+        device2.Dispatch($"contact get {AccountB} {fileB}");
+        device3.Dispatch($"contact get {AccountC} {fileC}");
 
         // Add a single entry and check that it is correctly registered.
-        var contactID1 = GetContactKey(device1.Dispatch($"contact add {fileB}"));
+        var contactID1 = GetContactKey(device1.Dispatch($"contact import {fileB}"));
         ValidContact(device1, AliceAccount, AccountB);
         ValidContact(device2, AccountB);
         ValidContact(device3, AccountC);
 
         // Add a second entry, check that the first and second are correctly registered,
-        var contactID2 = GetContactKey(device1.Dispatch($"contact add {fileC}"));
+        var contactID2 = GetContactKey(device1.Dispatch($"contact import {fileC}"));
         ValidContact(device1, AliceAccount, AccountB, AccountC);
         ValidContact(device2, AccountB);
         ValidContact(device3, AccountC);
@@ -130,7 +130,7 @@ public partial class ShellTests {
         ValidContact(device3, AccountC);
 
         // Add it back and check
-        var contactID3 = GetContactKey(device1.Dispatch($"contact add {fileB}"));
+        var contactID3 = GetContactKey(device1.Dispatch($"contact import {fileB}"));
         ValidContact(device1, AliceAccount, AccountB, AccountC);
         ValidContact(device2, AccountB);
         ValidContact(device3, AccountC);

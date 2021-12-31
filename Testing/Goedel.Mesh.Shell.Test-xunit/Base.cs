@@ -58,10 +58,10 @@ public partial class ShellTestsAdmin : ShellTests {
     public static new ShellTestsAdmin Test() => new();
 
 
-    public override TestCLI GetTestCLI(string MachineName = null) {
-        var testShell = new TestShell(TestEnvironment, MachineName);
-        return new TestCLI(testShell);
-        }
+    //public override TestCLI GetTestCLI(string MachineName = null) {
+    //    var testShell = new TestShell(TestEnvironment, MachineName);
+    //    return new TestCLI(testShell);
+    //    }
 
 
     }
@@ -123,8 +123,10 @@ public partial class ShellTests : Disposable {
 
 
 
-    void EndTest() => testEnvironment?.Dispose();
-
+    void EndTest() {
+        testEnvironment?.Dispose();
+        testEnvironment = null;
+        }
 
     public string ServiceDns => TestEnvironment.ServiceDns;
 
@@ -135,10 +137,12 @@ public partial class ShellTests : Disposable {
     #region // The test environment specific calls
     public virtual TestEnvironmentCommon GetTestEnvironment() => new();
 
-    public virtual TestCLI GetTestCLI(string MachineName = null) {
-        var testShell = new TestShell(TestEnvironment, MachineName);
-        return new TestCLI(testShell);
-        }
+    public virtual TestCLI GetTestCLI(string machineName = null) => TestEnvironment.GetTestCLI(machineName);
+
+        //{
+        //var testShell = new TestShell(TestEnvironment, MachineName);
+        //return new TestCLI(testShell);
+        //}
     #endregion
 
 

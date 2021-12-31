@@ -169,6 +169,7 @@ public class MakeSiteDocs : CreateExamples {
         ServiceConnect();
         CreateAliceAccount();
         CreateBobAccount();
+        CreateCarolAccount();
         ContactExchange();
 
         GroupOperations();

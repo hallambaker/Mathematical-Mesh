@@ -55,6 +55,16 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
 
     #endregion
     #region // Factory methods and constructors
+
+    static int countStores = 0;
+
+    protected override void Disposing() {
+        base.Disposing();
+        Screen.WriteLine($"*** Dispose Access {--countStores}");
+
+        }
+
+
     /// <summary>
     /// Factory delegate
     /// </summary>
@@ -102,7 +112,7 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
                 bool create = true) :
                 base(directory, storeName ?? Label,
                     policy, cryptoParameters, keyCollection, meshClient: meshClient, decrypt: decrypt, create: create) {
-
+        Screen.WriteLine($"*** Create Access {countStores++}");
         // Hack: likely to have issues here because the CatalogAccess needs to be readable by the service
         // Should treat this like any other account except that the service is granted access when it
         // connects.

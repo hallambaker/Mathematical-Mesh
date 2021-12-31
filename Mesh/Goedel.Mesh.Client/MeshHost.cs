@@ -55,7 +55,7 @@ public class MeshHost : Disposable {
     protected Dictionary<string, ContextAccount> DictionaryLocalContextMesh = new();
 
 
-
+    bool SuppressDispose { get; }  = false;
 
     //keyCollection ??
     //        new KeyCollectionClient(this, MeshMachine.KeyCollection).CacheValue(out keyCollection);
@@ -65,7 +65,13 @@ public class MeshHost : Disposable {
     #endregion
     #region // Boilerplate for disposal etc.
     ///<summary>Disposal routine.</summary>
-    protected override void Disposing() => ContainerHost.Dispose();
+    protected override void Disposing() {
+        ContainerHost.Dispose();
+        foreach (var item in DictionaryLocalContextMesh) {
+            item.Value.Dispose();
+            }
+        base.Disposing();
+        }
     #endregion
     #region // Constructors and factories
 
@@ -98,6 +104,7 @@ public class MeshHost : Disposable {
         ContainerHost = parent.ContainerHost;
         DictionaryUDFContextMesh = parent.DictionaryUDFContextMesh;
         DictionaryLocalContextMesh = parent.DictionaryLocalContextMesh;
+        SuppressDispose = true;
         }
 
 
@@ -260,7 +267,7 @@ public class MeshHost : Disposable {
             bool create = true) {
 
 
-        var contextUser = InitializeAdminContext(accountAddress, localName,
+        using var contextUser = InitializeAdminContext(accountAddress, localName,
             ref accountSeed, ref profileDevice, ref rights,
              out var _);
 
@@ -281,7 +288,9 @@ public class MeshHost : Disposable {
         //// Register the mesh description on the local machine.
         //Register(contextUser.CatalogedMachine, contextUser);
 
-        return GetContext(contextUser.CatalogedMachine) as ContextUser;
+        var result = GetContext(contextUser.CatalogedMachine) as ContextUser;
+
+        return result;
         }
 
 

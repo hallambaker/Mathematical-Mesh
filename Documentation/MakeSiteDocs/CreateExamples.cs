@@ -460,34 +460,34 @@ public partial class CreateExamples {
 
         /////
         Apps.SSHImport = Alice1.Example(
-                "ssh import");
+                "~ssh import");
 
         Apps.SSHAddClient = Alice1.Example(
-                "ssh add client");
+                "~ssh add client");
 
         Apps.SSHGet = Alice1.Example(
-                "ssh get");
+                "~ssh get");
 
         Apps.SSHDelete = Alice1.Example(
-                "ssh delete");
+                "~ssh delete");
 
         Apps.SSHList = Alice1.Example(
-                "ssh list /client");
+                "~ssh list /client");
 
         Apps.SSHMergeClients = Alice2.Example(
-                "ssh merge client");
+                "~ssh merge client");
 
         Apps.SSHListHosts = Alice1.Example(
-                "ssh list /hosts");
+                "~ssh list /hosts");
 
         Apps.SSHAddHost = Alice1.Example(
-                "ssh add host");
+                "~ssh add host");
 
         Apps.SSHListHosts = Alice1.Example(
-            "ssh list /hosts");
+                "~ssh list /hosts");
 
         Apps.SSHMergeHosts = Alice2.Example(
-            "ssh merge hosts");
+                "~ssh merge hosts");
 
 
         }
@@ -497,11 +497,11 @@ public partial class CreateExamples {
         Apps.Mail = Alice1.Example(
             $"mail add {Apps.Mailaddress} /inbound {Apps.Mailinbound1} /outbound {Apps.Mailoutbound}");
         Apps.MailImport = Alice1.Example(
-            $"mail import ");
+            $"~mail import ");
         Apps.MailUpdate = Alice1.Example(
-            $"mail add /inbound {Apps.Mailinbound2} /outbound {Apps.Mailoutbound} ");
+            $"~mail add /inbound {Apps.Mailinbound2} /outbound {Apps.Mailoutbound} ");
         Apps.MailGet = Alice1.Example(
-            $"mail get {Apps.Mailaddress}");
+            $"~mail get {Apps.Mailaddress}");
 
         Apps.MailList = Alice1.Example(
             $"mail list");
@@ -541,6 +541,9 @@ public partial class CreateExamples {
         Account.CreateBob = Bob1.Example(
             $"account create {BobAccount}"
             );
+        }
+    public void CreateCarolAccount() {
+
 
         // Interactions with Bob... create an account
         Mallet1 = GetTestCLI("Mallet");
@@ -553,13 +556,15 @@ public partial class CreateExamples {
             );
         Doug1 = GetTestCLI("Doug");
         Account.CreateDoug = Doug1.Example(
-            $"account create {CarolAccount}"
+            $"account create {DougAccount}"
             );
         Edward1 = GetTestCLI("Edward");
         Account.CreateEdward = Edward1.Example(
-            $"account create {CarolAccount}"
+            $"account create {EdwardAccount}"
             );
         }
+
+
 
     public ResultPending ContactExchange() {
         ResultPending resultPending;
@@ -740,7 +745,7 @@ public partial class CreateExamples {
         var dump = Alice1.DumpFile(Group.EncryptSourceFile);
         var encode = Alice1.Example(
             $"dare encode {Group.EncryptSourceFile} {Group.EncryptTargetFile} /encrypt {GroupAccount}",
-            $"dare decode {Group.EncryptTargetFile} {Group.GroupDecryptAliceFile}"
+            $"!dare decode {Group.EncryptTargetFile} {Group.GroupDecryptAliceFile}"
             );
 
 
@@ -802,7 +807,7 @@ public partial class CreateExamples {
             $"group list {GroupAccount}"
              );
         Group.GroupGet = Alice1.Example(
-            $"group get {GroupAccount}"
+            $"~group get {GroupAccount}"
              );
 
         Group.GroupDeleteBob = Alice1.Example(

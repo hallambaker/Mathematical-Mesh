@@ -174,11 +174,10 @@ public partial class TestCLI : CommandLineInterpreter {
             CountTotal++;
 
             var expectFail = cmdx.StartsWith('!');
-            if (expectFail) {
-                
-                }
+            var softFail = cmdx.StartsWith('~');
 
-            var cmd = expectFail ? cmdx[1..] : cmdx;
+
+            var cmd = (expectFail| softFail) ? cmdx[1..] : cmdx;
             try {
                 Shell.MeshMachineTest.MeshProtocolMessages.Clear();
 
@@ -189,7 +188,9 @@ public partial class TestCLI : CommandLineInterpreter {
                     Traces = new(Shell.MeshMachineTest.MeshProtocolMessages)
                     });
 
-                if (expectFail & status.Success) {
+                if (softFail) {
+                    }
+                else if (expectFail & status.Success) {
                     unexpectedResult = new TestExpectedFail();
                     }
                 else if (!expectFail & !status.Success) {
@@ -209,7 +210,9 @@ public partial class TestCLI : CommandLineInterpreter {
                     Traces = Shell.MeshMachineTest.MeshProtocolMessages
                     });
 
-                if (!expectFail) {
+                if (softFail) {
+                    }
+                else if (!expectFail) {
                     unexpectedResult = new TestExpectedSuccess();
                     }
                 }
