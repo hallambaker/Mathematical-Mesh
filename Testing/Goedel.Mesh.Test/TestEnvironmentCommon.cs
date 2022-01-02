@@ -57,8 +57,9 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
 
 
     protected override void Disposing() {
-        RudService?.Dispose();
+        //RudService?.Dispose();
         base.Disposing();
+        ServiceAdminShell?.MeshMachine?.MeshHost?.Dispose();
         }
 
     public override RudService StartService() {
@@ -134,6 +135,7 @@ public class TestEnvironmentRdp : TestEnvironmentCommon {
     protected override void Disposing() {
         RudService?.Dispose();
         base.Disposing();
+
         }
 
     RudService RudService { get; set; }
@@ -217,7 +219,6 @@ public class TestEnvironmentCommon : Disposable {
             test.Shell.MeshHost.Dispose();
             //test.Dispose();
             }
-
         base.Disposing();
         }
 

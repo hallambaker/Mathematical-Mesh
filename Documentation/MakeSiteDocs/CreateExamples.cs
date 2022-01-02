@@ -408,8 +408,8 @@ public partial class CreateExamples {
         Connect.Disconnect.GetResult().Success.TestTrue();
 
         Connect.PasswordList2Disconnect = Alice2.Example(
-            //$"password get {PasswordSite}",
-            $"account sync",
+            //$"!password get {PasswordSite}",
+            $"!account sync",
             $"dare decode {Account.EncryptTargetFile}{index} {Connect.EncryptResultFile3}"
             );
         Connect.PasswordList2Disconnect.Add(Alice2.DumpFile(Connect.EncryptResultFile3));
@@ -425,8 +425,8 @@ public partial class CreateExamples {
 
         Connect.DisconnectThreshDecrypt = Alice3.Example(
             //$"password get {PasswordSite}",
-            $"account sync",
-            $"dare decode {Account.EncryptTargetFile}{index} {Connect.EncryptResultFile3}"
+            $"!account sync",
+            $"!dare decode {Account.EncryptTargetFile}{index} {Connect.EncryptResultFile3}"
             );
         Connect.DisconnectThreshDecrypt.GetResult(0).Success.TestFalse();
         Connect.DisconnectThreshDecrypt.GetResult(1).Success.TestFalse();
@@ -807,7 +807,7 @@ public partial class CreateExamples {
             $"group list {GroupAccount}"
              );
         Group.GroupGet = Alice1.Example(
-            $"~group get {GroupAccount}"
+            $"group get {GroupAccount} {BobAccount}"
              );
 
         Group.GroupDeleteBob = Alice1.Example(
@@ -975,7 +975,9 @@ public partial class CreateExamples {
 
         Connect.ConnectJoinPinCreate = Alice1.Example(
                 $"account pin");
-        var uri = "tbs";
+        var message = ((Connect.ConnectJoinPinCreate[0].Result) as ResultPIN).MessagePIN;
+
+        var uri = message.GetURI();
 
         Connect.ConnectJoin = Alice5.Example(
                 $"device join {uri}"
@@ -994,31 +996,31 @@ public partial class CreateExamples {
 
         // failing catalog requests here
 
-        ShellBookmark.BookmarkList1 = Alice5.Example($"bookmark list");
-        ShellCalendar.CalendarList1 = Alice5.Example($"bookmark list");
-        ShellContact.ContactList1 = Alice5.Example($"bookmark list");
-        ShellNetwork.NetworkList1 = Alice5.Example($"bookmark list");
-        ShellPassword.PasswordList1 = Alice5.Example($"bookmark list");
+        ShellBookmark.BookmarkList1 = Alice5.Example($"!bookmark list");
+        ShellCalendar.CalendarList1 = Alice5.Example($"!calendar list");
+        ShellContact.ContactList1 = Alice5.Example($"!contact list");
+        ShellNetwork.NetworkList1 = Alice5.Example($"!network list");
+        ShellPassword.PasswordList1 = Alice5.Example($"!credential list");
 
 
         Connect.ConnectJoinAuth = Alice1.Example(
-                $"device auth Alice5 /all");
+                $"~device auth Alice5 /all");
 
-        ShellBookmark.BookmarkList2 = Alice5.Example($"bookmark list");
-        ShellCalendar.CalendarList2 = Alice5.Example($"bookmark list");
-        ShellContact.ContactList2 = Alice5.Example($"bookmark list");
-        ShellNetwork.NetworkList2 = Alice5.Example($"bookmark list");
-        ShellPassword.PasswordList2 = Alice5.Example($"bookmark list");
+        ShellBookmark.BookmarkList2 = Alice5.Example($"~bookmark list");
+        ShellCalendar.CalendarList2 = Alice5.Example($"~calendar list");
+        ShellContact.ContactList2 = Alice5.Example($"~contact list");
+        ShellNetwork.NetworkList2 = Alice5.Example($"~network list");
+        ShellPassword.PasswordList2 = Alice5.Example($"~credential list");
 
         // succeeding catalog requests here.
 
         Connect.ConnectSSHAuth = Alice1.Example(
-                $"device auth Alice5 /ssh");
+                $"~device auth Alice5 /ssh");
 
         Connect.ConnectMailAuth = Alice1.Example(
-                $"device auth Alice5 /mail");
+                $"~device auth Alice5 /mail");
 
-        Apps.SSHAuthProof = Alice5.Example($"openpgp sign {Apps.Mailaddress} /file={Apps.MailOpenpgpFile}");
+        Apps.SSHAuthProof = Alice5.Example($"~openpgp sign {Apps.Mailaddress} /file={Apps.MailOpenpgpFile}");
         }
 
 
@@ -1035,31 +1037,31 @@ public partial class CreateExamples {
         var share2 = resultEscrow.Shares[2];
 
         Account.Export = Alice1.Example(
-            $"account export"
+            $"~account export"
             );
 
         // Should really spin up a new blank device for this
         Account.ProfilePurge = Alice1.Example(
-            $"account purge {AliceProfileAccount.Udf}"
+            $"~account purge {AliceProfileAccount.Udf}"
             );
 
 
         // Should really spin up a new blank device for this
         Connect.ConnectDelete = Alice1.Example(
-            $"device delete"
+            $"~device delete"
             );
 
         // Should really spin up a new blank device for this
         Account.Import = Alice1.Example(
-            $"account import"
+            $"~account import"
             );
 
         Account.ProfileRecover = Alice2.Example(
-            $"account recover {share1} {share2} /verify"
+            $"~account recover {share1} {share2} /verify"
             );
 
         Account.DeleteAlice = Alice1.Example(
-            $"account delete {AliceProfileAccount.Udf}"
+            $"~account delete {AliceProfileAccount.Udf}"
             );
 
 

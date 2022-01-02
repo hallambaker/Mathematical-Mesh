@@ -22,9 +22,8 @@
 
 
 using ExampleGenerator;
-
+using Goedel.Utilities;
 using Goedel.Mesh.Test;
-
 using Xunit;
 
 
@@ -84,13 +83,44 @@ public class MakeSiteDocs : CreateExamples {
         GroupOperations();
         ConnectPINDynamicQR();
         ConnectStaticQR();
-        DelayedAuth();
+        LayerAccount();
         TestConnectDisconnect(index);
 
 
         EscrowAndRecover();
 
+
+
         }
+
+    [Fact]
+
+    public void QRAuth() {
+        var index = "QRAuth";
+
+        ServiceConnect();
+        CreateAliceAccount();
+        EncodeDecodeFile(index);
+
+        PasswordCatalog();
+        BookmarkCatalog();
+        ContactCatalog();
+        NetworkCatalog();
+        TaskCatalog();
+        ConnectDeviceCompare(index);
+
+
+        //SSHApp();
+        //MailApp();
+
+        CreateBobAccount();
+        ContactExchange();
+
+        LayerAccount();
+        }
+
+
+
 
     [Fact]
     public void CiphertextVerify() {

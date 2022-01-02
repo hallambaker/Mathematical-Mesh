@@ -292,7 +292,7 @@ public partial class ContextUser : ContextAccount {
         var policy = new DarePolicy() {
             EncryptKeys = recipients
             };
-        MakeStore(CatalogAccess.Label, policy);
+        using var store = MakeStore(CatalogAccess.Label, policy);
 
         LoadStores(); // Load all stores so that these are created on the service.
         SyncProgressUpload();
@@ -1781,39 +1781,10 @@ public partial class ContextUser : ContextAccount {
 
 
 
-    /// <summary>
-    /// Add the contact data specified in the file <paramref name="fileName"/>. If 
-    /// <paramref name="self"/> is true, register this as the self contact. If
-    /// <paramref name="merge"/> is true, merge this contact information.
-    /// </summary>
-    /// <param name="fileName">The file to fetch the contact data from.</param>
-    /// <param name="self">If true, contact data corresponds to this user.</param>
-    /// <param name="localName">Short name for the contact to distinguish it from
-    /// others.</param>
-    /// <param name="merge">Add this data to the existing contact.</param>
-    /// <param name="format">The format the input is written in.</param>
-    /// <returns></returns>
-    public CatalogedContact AddFromFile(
-                string fileName,
-                bool self,
-                CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
-                bool merge = true,
-                string localName = null) {
-        merge.Future();
-        localName.Future();
 
-        using var transaction = TransactBegin();
-        var catalog = transaction.GetCatalogContact();
-        using var stream = fileName.OpenFileReadShared();
-        var contact = catalog.ReadFromStream(stream, format);
 
-        contact.Self = self;
-        transaction.CatalogUpdate(catalog, contact);
-        transaction.Transact();
 
-        return contact;
 
-        }
 
     /// <summary>
     /// Return the network entry for the address <paramref name="networkAddress"/>

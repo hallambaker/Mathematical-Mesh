@@ -187,7 +187,10 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
     /// <param name="catalogedEntry">The entry being updated.</param>
     public override void UpdateEntry(CatalogedAccess catalogedEntry) => UpdateLocal(catalogedEntry);
 
-    void UpdateLocal(CatalogedEntry catalogedEntry) {
+    public override void UpdateLocal(CatalogedEntry catalogedEntry) {
+
+        base.UpdateLocal(catalogedEntry);
+
         var catalogedCapability = catalogedEntry as CatalogedAccess;
         switch (catalogedCapability?.Capability) {
             case CapabilityDecrypt capabilityDecryption: {

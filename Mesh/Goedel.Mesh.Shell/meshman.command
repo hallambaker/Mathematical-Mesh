@@ -732,7 +732,7 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command NetworkDump "list"
+		Command NetworkList "list"
 			Brief "List network entries"
 			Include AccountOptions
 			Include Reporting

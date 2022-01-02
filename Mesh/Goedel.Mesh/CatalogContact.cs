@@ -117,7 +117,11 @@ public class CatalogContact : Catalog<CatalogedContact> {
     #endregion
     #region // Class methods
 
-    void UpdateLocal(CatalogedEntry catalogedEntry) {
+
+    public override void UpdateLocal(CatalogedEntry catalogedEntry) {
+
+        base.UpdateLocal(catalogedEntry);
+
         var catalogedContact = catalogedEntry as CatalogedContact;
         var contact = catalogedContact.Contact;
 

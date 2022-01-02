@@ -352,6 +352,16 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
         var data = jsonObject?.GetBytes();
         var envelope = Sequence.Defer(contextWrite, contentInfo, data);
         envelope.JsonObject = jsonObject;
+
+        if (envelope.Trailer != null) {
+            envelope.Header.ChainDigest = envelope.Trailer.ChainDigest;
+            envelope.Header.PayloadDigest = envelope.Trailer.PayloadDigest;
+            envelope.Header.TreeDigest = envelope.Trailer.TreeDigest;
+            envelope.Header.Signatures = envelope.Trailer.Signatures;
+            envelope.Header.SignedData = envelope.Trailer.SignedData;
+            envelope.Trailer = null;
+            }
+
         return envelope;
         }
 

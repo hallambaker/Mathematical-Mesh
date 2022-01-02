@@ -689,6 +689,9 @@
 			Multiple
 			Description
 				|The set of labels describing the entry
+		String LocalName
+			Description
+				|User specified identifier.
 
 	Structure CatalogedDevice
 		Inherits CatalogedEntry

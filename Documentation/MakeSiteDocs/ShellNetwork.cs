@@ -23,6 +23,8 @@
 using System.Collections.Generic;
 
 using Goedel.Mesh.Test;
+using Goedel.Mesh;
+using Goedel.Mesh.Client;
 
 namespace ExampleGenerator;
 
@@ -46,14 +48,28 @@ public class ShellNetwork : ExampleSet {
 
     public ShellNetwork(CreateExamples createExamples) :
             base(createExamples) {
+
+        var network2 = new CatalogedNetwork() {
+            Protocol = "WPA2",
+            Service = "ssid",
+            Password = "Password"
+            };
+        network2.ToFile(NetworkFile2, tagged:true);
+
+
+
         NetworkAdd = Alice1.Example($"network add {NetworkSSID} {NetworkWiFi} /id={NetworkID1}");
         NetworkImport = Alice1.Example(
             $"network import {NetworkFile2} /id={NetworkID2}");
-        NetworkGet = Alice1.Example($"network get {NetworkID2}");
-        NetworkList = Alice1.Example($"network list");
 
-        NetworkDelete = Alice1.Example($"network delete {NetworkID2}",
-            $"network list");
+        var primaryKey = network2._PrimaryKey;
+
+        NetworkGet = Alice1.Example($"network get {primaryKey}");
+        NetworkGet = Alice1.Example($"network get {NetworkID2}");
+        NetworkList = Alice1.Example($"~network list");
+
+        NetworkDelete = Alice1.Example($"~network delete {NetworkID2}",
+            $"~network list");
 
 
 

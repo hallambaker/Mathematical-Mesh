@@ -48,17 +48,19 @@ partial class Program {
         //ShellTests.Test().TestAccountDelete();
 
         //ShellTestsAdmin.Test().TestHello();
-        //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+        Goedel.XUnit.MakeSiteDocs.Test().QRAuth();
+        //QRAuth
+        //FullTest
 
         //TestService.Test().MeshDeviceThresholdKey();
         //ShellTestsAdmin.Test().TestSequence(count:100);
 
-        for (var i = 0; i < 100; i++) {
-            Screen.WriteLine($"Test {i}");
+        //for (var i = 0; i < 1000; i++) {
+        //    Screen.WriteLine($"Test {i}");
 
-            ShellTestsAdmin.Test().TestAccountDelete();
-            ShellTestsAdmin.Test().TestAccount();
-            }
+        //    ShellTestsAdmin.Test().TestAccountDelete();
+        //    ShellTestsAdmin.Test().TestAccount();
+        //    }
 
 
         //ShellTests.Test().TestProfileContact();
@@ -183,7 +185,7 @@ partial class Program {
 
         //TestPresentationMesh.Test().TestImpersonationGroup();
 
-
+        Screen.WriteLine($"Total Soft fail {TestCLI.CountSoftFail}");
         }
 
     public static void Debug() {

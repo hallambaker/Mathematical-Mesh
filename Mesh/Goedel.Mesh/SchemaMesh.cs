@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 31-Dec-21 1:29:44 PM
+//  This file was automatically generated at 02-Jan-22 6:52:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -7051,6 +7051,11 @@ abstract public partial class CatalogedEntry : MeshItem {
         /// </summary>
 
 	public virtual List<string>				Labels  {get; set;}
+        /// <summary>
+        ///User specified identifier.
+        /// </summary>
+
+	public virtual string						LocalName  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -7106,6 +7111,11 @@ abstract public partial class CatalogedEntry : MeshItem {
 			_writer.WriteArrayEnd ();
 			}
 
+		if (LocalName != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("LocalName", 1);
+				_writer.WriteString (LocalName);
+			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
 			}
@@ -7145,6 +7155,10 @@ abstract public partial class CatalogedEntry : MeshItem {
 					Labels.Add (_Item);
 					_Going = jsonReader.NextArray ();
 					}
+				break;
+				}
+			case "LocalName" : {
+				LocalName = jsonReader.ReadString ();
 				break;
 				}
 			default : {

@@ -55,7 +55,7 @@ public partial class ContextGroup : ContextAccount {
     public override string AccountAddress => ProfileGroup?.AccountAddress;
 
     ///<summary>The group profile.</summary>
-    public ProfileGroup ProfileGroup => CatalogedGroup.ProfileGroup;
+    public ProfileGroup ProfileGroup => CatalogedGroup?.ProfileGroup;
 
     ///<summary>The group connection under which this context is formed.</summary>
     public ConnectionGroup ConnectionGroup;

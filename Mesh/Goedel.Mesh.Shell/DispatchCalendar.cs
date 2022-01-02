@@ -59,19 +59,10 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult CalendarImport(CalendarImport options) {
-        var contextAccount = GetContextUser(options);
-        "Implement file import functionality".TaskFunctionality(true);
+        var contextUser = GetContextUser(options);
+        var file = options.File.Value;
 
-        var identifier = options.Identifier.Value ?? UDF.Nonce();
-
-        var entry = new CatalogedTask() {
-            Key = identifier
-            };
-
-        var transaction = contextAccount.TransactBegin();
-        var catalog = transaction.GetCatalogCalendar();
-        transaction.CatalogUpdate(catalog, entry);
-        transaction.Transact();
+        var entry = contextUser.AddTaskFromFile(file);
 
         return new ResultEntry() {
             Success = true,

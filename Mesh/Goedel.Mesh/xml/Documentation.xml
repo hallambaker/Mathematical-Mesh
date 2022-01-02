@@ -3974,6 +3974,11 @@
             The set of labels describing the entry
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedEntry.LocalName">
+             <summary>
+            User specified identifier.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedEntry._Tag">
             <summary>
             Tag identifying this class

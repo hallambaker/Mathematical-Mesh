@@ -146,19 +146,19 @@ public partial class ContextAccount {
         TransactResponse response = null;
         var transactRequest = transact.TransactRequest;
 
-        if (transactRequest.Updates != null) {
-            foreach (var update in transactRequest.Updates) {
-                if (update.Container == CatalogAccess.Label) {
-                    if (update.Envelopes != null) {
-                        foreach (var envelope in update.Envelopes) {
-                            if (envelope.Header?.Recipients?.Count != 2) {
-                                }
-                            }
-                        }
-                    }
-                }
+        //if (transactRequest.Updates != null) {
+        //    foreach (var update in transactRequest.Updates) {
+        //        if (update.Container == CatalogAccess.Label) {
+        //            if (update.Envelopes != null) {
+        //                foreach (var envelope in update.Envelopes) {
+        //                    if (envelope.Header?.Recipients?.Count != 2) {
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
 
-            }
+        //    }
 
         if (!transact.Local) {
 

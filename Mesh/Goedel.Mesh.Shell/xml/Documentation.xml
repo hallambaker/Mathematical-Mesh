@@ -136,6 +136,13 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.BookmarkImport(Goedel.Mesh.Shell.BookmarkImport)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.CalendarAdd(Goedel.Mesh.Shell.CalendarAdd)">
             <summary>
             Dispatch method

@@ -140,6 +140,7 @@ public partial class TestCLI : CommandLineInterpreter {
     public TestCLI(TestShell shell) : base() => Shell = shell;
     public string MachineName => Shell.MachineName;
 
+    public static int CountSoftFail = 0;
 
     public ExampleResult DumpFile(string filename) {
         string output;
@@ -160,6 +161,7 @@ public partial class TestCLI : CommandLineInterpreter {
         }
 
 
+
     public List<ExampleResult> Example(params string[] commands) {
         var result = new List<ExampleResult>();
 
@@ -176,6 +178,9 @@ public partial class TestCLI : CommandLineInterpreter {
             var expectFail = cmdx.StartsWith('!');
             var softFail = cmdx.StartsWith('~');
 
+            if (softFail) {
+                CountSoftFail++;
+                }
 
             var cmd = (expectFail| softFail) ? cmdx[1..] : cmdx;
             try {

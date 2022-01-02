@@ -55,7 +55,7 @@ public class ShellBookmark : ExampleSet {
             $"bookmark add {BookmarkPath3} {BookmarkURI3} \"{BookmarkTitle3}\"");
         BookmarkGet = Alice1.Example($"bookmark get {BookmarkPath2}");
         BookmarkList = Alice1.Example($"bookmark list");
-        BookmarkDelete = Alice1.Example($"bookmark delete BookmarkPath2");
+        BookmarkDelete = Alice1.Example($"bookmark delete {BookmarkPath2}");
 
 
         }

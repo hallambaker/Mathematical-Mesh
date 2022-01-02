@@ -181,7 +181,7 @@ public class AccountHandleLocked : Disposable {
         var sequence = GetSequence(label, false);
         return sequence == null ? null : new ContainerStatus() {
             // Bug: This should populate the TreeDigest
-            Digest = sequence.TrailerLast?.TreeDigest,
+            Digest = sequence.HeaderFinal?.TreeDigest ?? sequence.TrailerLast?.TreeDigest,
             Index = (int)sequence.FrameCount,
             Container = label
             };

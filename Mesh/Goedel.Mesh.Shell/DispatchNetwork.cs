@@ -60,25 +60,14 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult NetworkImport(NetworkImport options) {
         var contextUser = GetContextUser(options);
-        //var identifier = options.SSID.Value;
-        //var password = options.Password.Value;
+        var file = options.File.Value;
+        var id = options.Identifier.Value;
 
-        //var entry = new CatalogedNetwork() {
-        //    Service = identifier,
-        //    Password = password
-        //    };
+        var entry = contextUser.AddNetworkFromFile(file, localName:id);
 
-        //var transaction = contextUser.TransactBegin();
-        //var catalog = transaction.GetCatalogNetwork();
-        //transaction.CatalogUpdate(catalog, entry);
-        //transaction.Transact();
-
-
-        "Implement network import command".TaskFunctionality();
-
-        return new Result() {
-            Success = false,
-            //CatalogEntry = null
+        return new ResultEntry() {
+            Success = true,
+            CatalogEntry = entry
             };
         }
 
@@ -115,9 +104,9 @@ public partial class Shell {
         var contextUser = GetContextUser(options);
         var catalog = contextUser.GetStore(CatalogNetwork.Label) as CatalogNetwork;
         var identifier = options.Identifier.Value;
-        var key = CatalogedNetwork.PrimaryKey(null, identifier);
+        //var key = CatalogedNetwork.PrimaryKey(null, identifier);
 
-        var result = contextUser.GetNetwork(key);
+        var result = contextUser.GetNetwork(identifier);
 
         return new ResultEntry() {
             Success = result != null,
@@ -130,7 +119,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult NetworkDump(NetworkDump options) {
+    public override ShellResult NetworkList(NetworkList options) {
         var contextUser = GetContextUser(options);
         var result = new ResultDump() {
             Success = true,

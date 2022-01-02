@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 31-Dec-21 1:29:49 PM
+//  This file was automatically generated at 02-Jan-22 6:52:58 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1124,10 +1124,10 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 	public static void Handle_NetworkDump (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		NetworkDump		Options = new ();
+		NetworkList		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.NetworkDump (Options);
+		var result = Dispatch.NetworkList (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -14550,7 +14550,7 @@ public class _NetworkDump : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class NetworkDump : _NetworkDump {
+public partial class NetworkList : _NetworkDump {
     } // class NetworkDump
 
 public class _KeyNonce : Goedel.Command.Dispatch ,
@@ -24502,7 +24502,7 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		return null;
 		}
 
-	public virtual ShellResult NetworkDump ( NetworkDump Options) {
+	public virtual ShellResult NetworkList ( NetworkList Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}

@@ -113,4 +113,23 @@ public partial class Shell {
 
         return result;
         }
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult BookmarkImport(BookmarkImport options) {
+        var contextUser = GetContextUser(options);
+        var file = options.File.Value;
+
+        var entry = contextUser.AddBookmarkFromFile(file);
+
+        return new ResultEntry() {
+            Success = true,
+            CatalogEntry = entry
+            };
+        }
+
+
     }

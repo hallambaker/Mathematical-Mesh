@@ -22,6 +22,7 @@
 
 
 
+using Goedel.Cryptography.Jose;
 using System.Collections;
 
 namespace Goedel.Mesh;
@@ -45,6 +46,10 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     ///<summary>Enumerate the catalog as the cataloged type.</summary>
     public AsCatalogedType<T> AsCatalogedType =>
             new(PersistenceStore);
+
+
+    public Dictionary<string, CatalogedEntry> DictionaryByLocalName { get; } = 
+            new Dictionary<string,CatalogedEntry>();
 
 
     /// <summary>
@@ -112,21 +117,34 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// derrived classes to update local indexes.
     /// </summary>
     /// <param name="catalogedEntry">The entry being added.</param>
-    public virtual void NewEntry(T catalogedEntry) { }
+    public virtual void NewEntry(T catalogedEntry) => UpdateLocal(catalogedEntry);
 
     /// <summary>
     /// Callback called before updating an entry in the catalog. May be overriden in 
     /// derrived classes to update local indexes.
     /// </summary>
     /// <param name="catalogedEntry">The entry being updated.</param>
-    public virtual void UpdateEntry(T catalogedEntry) { }
+    public virtual void UpdateEntry(T catalogedEntry) => UpdateLocal(catalogedEntry);
 
     /// <summary>
     /// Callback called before deleting an entry from the catalog. May be overriden in 
     /// derrived classes to update local indexes.
     /// </summary>
     /// <param name="Key">The entry being deleted.</param>
-    public virtual void DeleteEntry(string Key) { }
+    public virtual void DeleteEntry(string key) {
+        var entry = (PersistenceStore.Get(key) as StoreEntry)?.JsonObject as T;
+        if (entry?.LocalName != null) {
+            DictionaryByLocalName.Remove(entry.LocalName);
+            }
+
+
+        }
+
+
+
+    public virtual void UpdateLocal(CatalogedEntry catalogedEntry) {
+        DictionaryByLocalName.AddSafe(catalogedEntry.LocalName, catalogedEntry);
+        }
 
 
     // Test: Check what happens when an attempt is made to perform conflicting updates to a store.
@@ -233,6 +251,10 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
         throw new NYI();
         }
 
+
+
+
+
     /// <summary>
     /// Read list of catalog entries from the file <paramref name="fileName"/> in format <paramref name="format"/>.
     /// </summary>
@@ -261,9 +283,12 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// </summary>
     /// <param name="key">Unique identifier of the entry to locate.</param>
     /// <returns>The entry (if found).</returns>
-    public T Locate(string key) =>
-        (PersistenceStore.Get(key) as StoreEntry)?.JsonObject as T;
-
+    public T Locate(string key) {
+        if (DictionaryByLocalName.TryGetValue(key, out var value)) {
+            return value as T;
+            }
+        return (PersistenceStore.Get(key) as StoreEntry)?.JsonObject as T;
+        }
 
     /// <summary>
     /// Return the entry with unique identifier <paramref name="key"/>.
