@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 02-Jan-22 6:52:58 PM
+//  This file was automatically generated at 03-Jan-22 4:02:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -318,7 +318,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			{"add", _NetworkAdd._DescribeCommand },
 			{"get", _NetworkGet._DescribeCommand },
 			{"delete", _NetworkDelete._DescribeCommand },
-			{"list", _NetworkDump._DescribeCommand }
+			{"list", _NetworkList._DescribeCommand }
 			} // End Entries
 		};
 
@@ -1121,7 +1121,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_NetworkDump (
+	public static void Handle_NetworkList (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
 		NetworkList		Options = new ();
@@ -11907,6 +11907,7 @@ public class _BookmarkAdd : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new String (),
 		new Flag (),
 		new Flag (),
 		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -11919,130 +11920,139 @@ public class _BookmarkAdd : Goedel.Command.Dispatch ,
 
 
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Path {
+	public virtual String Uri {
 		get => _Data[0] as String;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _Path {
+	public virtual string _Uri {
 		set => _Data[0].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Uri {
+	public virtual String Title {
 		get => _Data[1] as String;
 		set => _Data[1]  = value;
 		}
 
-	public virtual string _Uri {
+	public virtual string _Title {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Title {
+	/// <summary>Field accessor for option [uid]</summary>
+	public virtual String Unique {
 		get => _Data[2] as String;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _Title {
+	public virtual string _Unique {
 		set => _Data[2].Parameter (value);
 		}
-	/// <summary>Field accessor for option [abstract]</summary>
-	public virtual String Abstract {
+	/// <summary>Field accessor for option [id]</summary>
+	public virtual String Identifier {
 		get => _Data[3] as String;
 		set => _Data[3]  = value;
 		}
 
-	public virtual string _Abstract {
+	public virtual string _Identifier {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for option [comment]</summary>
-	public virtual String Comment {
+	/// <summary>Field accessor for option [abstract]</summary>
+	public virtual String Abstract {
 		get => _Data[4] as String;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _Comment {
+	public virtual string _Abstract {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [react]</summary>
-	public virtual String React {
+	/// <summary>Field accessor for option [comment]</summary>
+	public virtual String Comment {
 		get => _Data[5] as String;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _React {
+	public virtual string _Comment {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
+	/// <summary>Field accessor for option [react]</summary>
+	public virtual String React {
 		get => _Data[6] as String;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _React {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[7] as String;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[7].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[8] as Flag;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[8] as String;
 		set => _Data[8]  = value;
 		}
 
-	public virtual string _AutoSync {
+	public virtual string _LocalName {
 		set => _Data[8].Parameter (value);
 		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
 		get => _Data[9] as Flag;
 		set => _Data[9]  = value;
 		}
 
-	public virtual string _AutoApprove {
+	public virtual string _AutoSync {
 		set => _Data[9].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[10] as Enumeration<EnumReporting>;
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
+		get => _Data[10] as Flag;
 		set => _Data[10]  = value;
 		}
 
-	public virtual string _EnumReporting {
+	public virtual string _AutoApprove {
 		set => _Data[10].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[11] as Flag;
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[11] as Enumeration<EnumReporting>;
 		set => _Data[11]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _EnumReporting {
 		set => _Data[11].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[12] as Flag;
 		set => _Data[12]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[13] as Flag;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[13].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[14] as Flag;
+		set => _Data[14]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[14].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -12053,101 +12063,108 @@ public class _BookmarkAdd : Goedel.Command.Dispatch ,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryParameter () {
-				Identifier = "Path", 
-				Default = null, // null if null
-				Brief = "Keywords under which the bookmark is to be indexed",
-				Index = 0,
-				Key = ""
-				},
-			new DescribeEntryParameter () {
 				Identifier = "Uri", 
 				Default = null, // null if null
 				Brief = "The recorded link",
-				Index = 1,
+				Index = 0,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Title", 
 				Default = null, // null if null
 				Brief = "Title of the recorded item",
-				Index = 2,
+				Index = 1,
 				Key = ""
+				},
+			new DescribeEntryOption () {
+				Identifier = "Unique", 
+				Default = null, // null if null
+				Brief = "Unique identifier",
+				Index = 2,
+				Key = "uid"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Identifier", 
+				Default = null, // null if null
+				Brief = "Local identifier",
+				Index = 3,
+				Key = "id"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Abstract", 
 				Default = null, // null if null
 				Brief = "Abstract of the recorded item",
-				Index = 3,
+				Index = 4,
 				Key = "abstract"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Comment", 
 				Default = null, // null if null
 				Brief = "Comment on reason for adding",
-				Index = 4,
+				Index = 5,
 				Key = "comment"
 				},
 			new DescribeEntryOption () {
 				Identifier = "React", 
 				Default = null, // null if null
 				Brief = "Reactions to the recorded item",
-				Index = 5,
+				Index = 6,
 				Key = "react"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 6,
+				Index = 7,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 7,
+				Index = 8,
 				Key = "local"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoSync", 
 				Default = "true", // null if null
 				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 8,
+				Index = 9,
 				Key = "sync"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoApprove", 
 				Default = "true", // null if null
 				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 9,
+				Index = 10,
 				Key = "auto"
 				},
 			new DescribeEntryEnumerate () {
 				Identifier = "EnumReporting", 
 				Default = null, // null if null
 				Brief = "Reporting level",
-				Index = 10,
+				Index = 11,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "true", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 11,
+				Index = 12,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 12,
+				Index = 13,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 13,
+				Index = 14,
 				Key = "json"
 				}
 			}
@@ -13036,7 +13053,7 @@ public class _CalendarAdd : Goedel.Command.Dispatch ,
 			new DescribeEntryOption () {
 				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "Unique entry identifier",
+				Brief = "Local identifier",
 				Index = 1,
 				Key = "id"
 				},
@@ -13965,7 +13982,7 @@ public class _NetworkAdd : Goedel.Command.Dispatch ,
 			new DescribeEntryOption () {
 				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "Unique entry identifier",
+				Brief = "Local identifier",
 				Index = 2,
 				Key = "id"
 				},
@@ -14144,7 +14161,7 @@ public class _NetworkGet : Goedel.Command.Dispatch ,
 			new DescribeEntryParameter () {
 				Identifier = "Identifier", 
 				Default = null, // null if null
-				Brief = "Unique entry identifier",
+				Brief = "Local identifier",
 				Index = 0,
 				Key = ""
 				},
@@ -14391,7 +14408,7 @@ public class _NetworkDelete : Goedel.Command.Dispatch ,
 public partial class NetworkDelete : _NetworkDelete {
     } // class NetworkDelete
 
-public class _NetworkDump : Goedel.Command.Dispatch ,
+public class _NetworkList : Goedel.Command.Dispatch ,
 						IAccountOptions,
 						IReporting{
 
@@ -14486,7 +14503,7 @@ public class _NetworkDump : Goedel.Command.Dispatch ,
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "list",
 		Brief =  "List network entries",
-		HandleDelegate =  CommandLineInterpreter.Handle_NetworkDump,
+		HandleDelegate =  CommandLineInterpreter.Handle_NetworkList,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
@@ -14550,8 +14567,8 @@ public class _NetworkDump : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class NetworkList : _NetworkDump {
-    } // class NetworkDump
+public partial class NetworkList : _NetworkList {
+    } // class NetworkList
 
 public class _KeyNonce : Goedel.Command.Dispatch ,
 						IReporting,

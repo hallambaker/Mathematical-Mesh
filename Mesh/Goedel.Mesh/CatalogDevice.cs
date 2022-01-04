@@ -110,7 +110,7 @@ public class CatalogDevice : Catalog<CatalogedDevice> {
 
         var builder = new StringBuilder();
         foreach (var catalog in AsCatalogedType) {
-            catalog.ToBuilder(builder, 1);
+            catalog.ItemToBuilder(builder, 1);
             }
 
         return builder.ToString();
@@ -194,7 +194,7 @@ public partial class CatalogedDevice {
     /// <returns>The string describing the cataloged device.</returns>
     public override string ToString() {
         var builder = new StringBuilder();
-        ToBuilder(builder, 0);
+        ItemToBuilder(builder, 0);
         return builder.ToString();
         }
 
@@ -206,7 +206,7 @@ public partial class CatalogedDevice {
     /// <param name="builder">The string builder to write to.</param>
     /// <param name="indent">The number of units to indent the presentation.</param>
     /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-    public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
+    public override void ItemToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
 
         builder.AppendIndent(indent, $"ContextDevice");

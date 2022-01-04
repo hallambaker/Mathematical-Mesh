@@ -34,12 +34,14 @@ public partial class Shell {
         var contextUser = GetContextUser(options);
         var uri = options.Uri.Value;
         var title = options.Title.Value;
-        var path = options.Path.Value;
+        var id = options.Identifier.Value;
+        var uid = options.Unique.Value ?? UDF.Nonce();
 
         var entry = new CatalogedBookmark() {
             Uri = uri,
             Title = title,
-            Path = path
+            LocalName = id,
+            Uid = uid
             };
 
         var transaction = contextUser.TransactBegin();

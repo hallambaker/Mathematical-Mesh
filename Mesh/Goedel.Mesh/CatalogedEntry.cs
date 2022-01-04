@@ -95,6 +95,18 @@ public partial class CatalogedEntry {
     /// <param name="detail">If true, provide a detailed description.</param>
     public virtual void Describe(StringBuilder builder, bool detail = false) => builder.AppendLine(_Tag);
 
+            /// <summary>
+    /// Converts the value of this instance to a <see langword="String"/>.
+    /// </summary>
+    /// <returns>The current string.</returns>
+    public override string ToString() {
+        var stringBuilder = new StringBuilder();
+        ItemToBuilder (stringBuilder);
+
+        return stringBuilder.ToString();
+
+        }
+
 
     // need to create a static method.
 

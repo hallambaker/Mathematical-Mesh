@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jan-22 6:52:53 PM
+//  This file was automatically generated at 03-Jan-22 4:02:46 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -7056,6 +7056,11 @@ abstract public partial class CatalogedEntry : MeshItem {
         /// </summary>
 
 	public virtual string						LocalName  {get; set;}
+        /// <summary>
+        ///Globaly unique identifier
+        /// </summary>
+
+	public virtual string						Uid  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -7116,6 +7121,11 @@ abstract public partial class CatalogedEntry : MeshItem {
 			_writer.WriteToken ("LocalName", 1);
 				_writer.WriteString (LocalName);
 			}
+		if (Uid != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Uid", 1);
+				_writer.WriteString (Uid);
+			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
 			}
@@ -7159,6 +7169,10 @@ abstract public partial class CatalogedEntry : MeshItem {
 				}
 			case "LocalName" : {
 				LocalName = jsonReader.ReadString ();
+				break;
+				}
+			case "Uid" : {
+				Uid = jsonReader.ReadString ();
 				break;
 				}
 			default : {
@@ -9450,9 +9464,10 @@ public partial class CatalogedBookmark : CatalogedEntry {
 
 	public virtual string						Title  {get; set;}
         /// <summary>
+        ///User comments on bookmark entry
         /// </summary>
 
-	public virtual string						Path  {get; set;}
+	public virtual List<string>				Comments  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -9507,11 +9522,18 @@ public partial class CatalogedBookmark : CatalogedEntry {
 			_writer.WriteToken ("Title", 1);
 				_writer.WriteString (Title);
 			}
-		if (Path != null) {
+		if (Comments != null) {
 			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Path", 1);
-				_writer.WriteString (Path);
+			_writer.WriteToken ("Comments", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in Comments) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				_writer.WriteString (_index);
+				}
+			_writer.WriteArrayEnd ();
 			}
+
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
 			}
@@ -9553,8 +9575,15 @@ public partial class CatalogedBookmark : CatalogedEntry {
 				Title = jsonReader.ReadString ();
 				break;
 				}
-			case "Path" : {
-				Path = jsonReader.ReadString ();
+			case "Comments" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				Comments = new List <string> ();
+				while (_Going) {
+					string _Item = jsonReader.ReadString ();
+					Comments.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
 				break;
 				}
 			default : {

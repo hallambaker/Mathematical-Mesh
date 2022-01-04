@@ -322,13 +322,14 @@ public partial class TestCLI : CommandLineInterpreter {
         return true;
         }
 
-    public bool CheckBookmarkResult(string path, string uri, string title) {
-        var result = Dispatch($"bookmark get {path}") as ResultEntry;
+    public bool CheckBookmarkResult(string local, string title, string uri) {
+        var result = Dispatch($"bookmark get {local}") as ResultEntry;
         var entry = result.CatalogEntry as CatalogedBookmark;
 
         (uri == entry.Uri).TestTrue();
         (title == entry.Title).TestTrue();
-        (path == entry.Path).TestTrue();
+        (local == entry.LocalName).TestTrue();
+
         return true;
         }
 

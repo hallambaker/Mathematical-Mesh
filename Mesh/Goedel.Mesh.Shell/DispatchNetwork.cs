@@ -35,10 +35,12 @@ public partial class Shell {
         var contextUser = GetContextUser(options);
         var identifier = options.SSID.Value;
         var password = options.Password.Value;
+        var id = options.Identifier.Value;
 
         var entry = new CatalogedNetwork() {
             Service = identifier,
-            Password = password
+            Password = password,
+            LocalName = id
             };
 
         var transaction = contextUser.TransactBegin();
@@ -80,12 +82,13 @@ public partial class Shell {
     public override ShellResult NetworkDelete(NetworkDelete options) {
         var contextUser = GetContextUser(options);
         var identifier = options.Identifier.Value;
-        var key = CatalogedNetwork.PrimaryKey(null, identifier);
+
 
         var transaction = contextUser.TransactBegin();
         var catalog = transaction.GetCatalogNetwork();
-        var result = catalog.Locate(key);
-        result.AssertNotNull(EntryNotFound.Throw, key);
+        var result = catalog.Get(identifier);
+
+        result.AssertNotNull(EntryNotFound.Throw, identifier);
         transaction.CatalogDelete(catalog, result);
         transaction.Transact();
 

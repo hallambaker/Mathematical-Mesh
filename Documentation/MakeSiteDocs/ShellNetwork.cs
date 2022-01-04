@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using Goedel.Mesh.Test;
 using Goedel.Mesh;
 using Goedel.Mesh.Client;
-
+using Goedel.Utilities;
 namespace ExampleGenerator;
 
 public class ShellNetwork : ExampleSet {
@@ -66,11 +66,16 @@ public class ShellNetwork : ExampleSet {
 
         NetworkGet = Alice1.Example($"network get {primaryKey}");
         NetworkGet = Alice1.Example($"network get {NetworkID2}");
-        NetworkList = Alice1.Example($"~network list");
+        NetworkList = Alice1.Example($"network list");
 
-        NetworkDelete = Alice1.Example($"~network delete {NetworkID2}",
-            $"~network list");
+        NetworkDelete = Alice1.Example(
+            $"network delete {NetworkID2}",
+            $"network list");
 
+        // check the entry is properly deleted.
+
+        NetworkGet = Alice1.Example($"!network get {primaryKey}");
+        NetworkGet = Alice1.Example($"!network get {NetworkID2}");
 
 
 

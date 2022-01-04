@@ -143,38 +143,38 @@ public partial class ShellTests {
     public void TestProfileBookmark() {
 
 
-        string uri1 = "http://www.site1.com", title1 = "site1", path1 = "Sites.1";
-        string uri2 = "http://www.site2.com", title2 = "site2", path2 = "Sites.2";
-        string uri3 = "http://www.site3.com", title3 = "site3", path3 = "Sites.3";
+        string uri1 = "http://www.site1.com", title1 = "site1", local1 = "Sites-1";
+        string uri2 = "http://www.site2.com", title2 = "site2", local2 = "Sites-2";
+        string uri3 = "http://www.site3.com", title3 = "site3", local3 = "Sites-3";
 
         CreateAccount(AliceAccount);
 
         // Check that looking for a non existent entry fails
         // This makes sure that we don't end up picking up stale results from prior tests etc.
-        FailBookmarkResult(path1);
+        FailBookmarkResult(local1);
 
         // Add a single entry and check that it is correctly registered.
-        Dispatch($"bookmark add {path1} {uri1} {title1}");
-        CheckBookmarkResult(path1, uri1, title1);
+        Dispatch($"bookmark add  {uri1} {title1} /id={local1}");
+        CheckBookmarkResult(local1, uri1, title1);
 
         // Add a second entry, check that the first and second are correctly registered,
-        Dispatch($"bookmark add {path2} {uri2} {title2}");
-        CheckBookmarkResult(path1, uri1, title1);
-        CheckBookmarkResult(path2, uri2, title2);
+        Dispatch($"bookmark add {uri2} {title2} /id={local2}");
+        CheckBookmarkResult(local1, uri1, title1);
+        CheckBookmarkResult(local2, uri2, title2);
 
         // Delete the second entry, check that only the first is still there.
-        Dispatch($"bookmark delete {path2}");
-        CheckBookmarkResult(path1, uri1, title1);
+        Dispatch($"bookmark delete {local2}");
+        CheckBookmarkResult(local1, uri1, title1);
 
-        FailBookmarkResult(path2);
+        FailBookmarkResult(local2);
         // Update the first entry, check that it is correctly updated.
-        Dispatch($"bookmark add {path3} {uri3} {title3}");
-        CheckBookmarkResult(path3, uri3, title3);
+        Dispatch($"bookmark add {uri3} {title3} /id={local3}");
+        CheckBookmarkResult(local3, uri3, title3);
 
         // Re-add the second entry, check that it is correctly registered.
-        Dispatch($"bookmark add {path2} {uri2} {title2}");
-        CheckBookmarkResult(path2, uri2, title2);
-        CheckBookmarkResult(path3, uri3, title3);
+        Dispatch($"bookmark add {uri2} {title2} /id={local2}");
+        CheckBookmarkResult(local2, uri2, title2);
+        CheckBookmarkResult(local3, uri3, title3);
 
         EndTest();
         }

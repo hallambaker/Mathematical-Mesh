@@ -47,7 +47,7 @@ public static partial class Extensions {
             builder.AppendLine(nullText);
             }
         else {
-            meshItem.ToBuilder(builder, indent);
+            meshItem.ItemToBuilder(builder, indent);
             }
         }
 

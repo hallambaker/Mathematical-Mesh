@@ -133,6 +133,7 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// <param name="Key">The entry being deleted.</param>
     public virtual void DeleteEntry(string key) {
         var entry = (PersistenceStore.Get(key) as StoreEntry)?.JsonObject as T;
+        //PersistenceStore.Delete(entry._PrimaryKey);
         if (entry?.LocalName != null) {
             DictionaryByLocalName.Remove(entry.LocalName);
             }

@@ -244,10 +244,10 @@ public partial class CreateExamples {
 
     public void BookmarkCatalog() {
         // Bookmark catalog
-        string uri1 = "http://www.example.com", title1 = "site1", path1 = "Sites.1";
+        string uri1 = "http://www.example.com", title1 = "site1", local1 = "Sites-1";
         var bookmark = Alice1.Example(
-            $"bookmark add {path1} {uri1} {title1}",
-            $"bookmark get {path1}"
+            $"bookmark add {uri1} {title1} /id={local1}",
+            $"bookmark get {local1}"
             );
         var resultBookmark = bookmark.GetResultEntry(1);
         Apps.BookmarkCatalogEntry = resultBookmark.CatalogEntry;

@@ -299,7 +299,7 @@
             <param name="containerName">The store to return parameters for.</param>
             <returns>Cryptographic parameters for the store.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.ActivationAccount.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The key collection 
@@ -527,7 +527,7 @@
             </summary>
             <param name="deviceKeySeed">Generator for the private key contributions.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.ActivationDevice.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The key collection 
@@ -2815,6 +2815,12 @@
         <member name="P:Goedel.Mesh.CatalogedBookmark._PrimaryKey">
             <summary>The primary key is protocol:site </summary>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedBookmark.Describe(System.Text.StringBuilder,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedBookmark.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedBookmark.Uri">
             <summary>
             </summary>
@@ -2823,9 +2829,10 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedBookmark.Path">
-            <summary>
-            </summary>
+        <member name="P:Goedel.Mesh.CatalogedBookmark.Comments">
+             <summary>
+            User comments on bookmark entry
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedBookmark._Tag">
             <summary>
@@ -3759,7 +3766,7 @@
             </summary>
             <returns>The string describing the cataloged device.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogedDevice.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -3960,6 +3967,12 @@
             <param name="builder">The output stream.</param>
             <param name="detail">If true, provide a detailed description.</param>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedEntry.ToString">
+            <summary>
+            Converts the value of this instance to a <see langword="String"/>.
+            </summary>
+            <returns>The current string.</returns>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedEntry.WriteToStream(System.IO.Stream,Goedel.Mesh.CatalogedEntryFormat)">
             <summary>
             Add the catalog entry to the stream <paramref name="stream"/> in the
@@ -3977,6 +3990,11 @@
         <member name="P:Goedel.Mesh.CatalogedEntry.LocalName">
              <summary>
             User specified identifier.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedEntry.Uid">
+             <summary>
+            Globaly unique identifier
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedEntry._Tag">
@@ -4207,12 +4225,6 @@
             <param name="protocol">The protocol name.</param>
             <param name="service">The service name</param>
             <returns>The computed primary key.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedNetwork.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
         </member>
         <member name="P:Goedel.Mesh.CatalogedNetwork.Protocol">
             <summary>
@@ -4744,7 +4756,7 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionService.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.ConnectionService.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -8587,7 +8599,7 @@
             <remarks>This is one of the few convenience decoders that cannot be replaced because
             ProfileDevice is frequently passed as a Publication.</remarks>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.ProfileDevice.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -9002,7 +9014,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileUser.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.ProfileUser.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units.The cryptographic context from
@@ -12892,7 +12904,7 @@
             <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
             <returns>The decoded data item</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshItem.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.MeshItem.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from

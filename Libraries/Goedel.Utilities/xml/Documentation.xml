@@ -170,6 +170,15 @@
             <param name="text">String to be escaped</param>
             <returns>The escaped string</returns>
         </member>
+        <member name="M:Goedel.Utilities.Extension.AppendLineNotNull(System.Text.StringBuilder,System.String,System.String)">
+            <summary>
+            Append the string <paramref name="text"/> to the StringBuilder <paramref name="builder"/> 
+            if and only if <paramref name="value"/> is not null.
+            </summary>
+            <param name="builder">The builder to append to.</param>
+            <param name="value">The text value to append to <paramref name="builder"/>.</param>
+            <param name="text">The test to be added iff <paramref name="value"/> is not null.</param>
+        </member>
         <member name="M:Goedel.Utilities.Extension.AppendNotNull(System.Text.StringBuilder,System.String,System.String)">
             <summary>
             Append the string <paramref name="text"/> to the StringBuilder <paramref name="builder"/> 

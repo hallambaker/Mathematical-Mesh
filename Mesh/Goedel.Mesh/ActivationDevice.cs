@@ -180,7 +180,7 @@ public partial class ActivationDevice {
     /// <param name="builder">The string builder to write to.</param>
     /// <param name="indent">The number of units to indent the presentation.</param>
     /// <param name="keyCollection">The Key collection.</param>
-    public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
+    public override void ItemToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
         builder.AppendIndent(indent, $"Activation Account");
         indent++;

@@ -692,6 +692,9 @@
 		String LocalName
 			Description
 				|User specified identifier.
+		String Uid
+			Description
+				|Globaly unique identifier
 
 	Structure CatalogedDevice
 		Inherits CatalogedEntry
@@ -918,8 +921,10 @@
 		Inherits CatalogedEntry
 		String Uri
 		String Title
-		String Path
-
+		String Comments
+			Multiple
+			Description
+				|User comments on bookmark entry
 
 	Structure CatalogedTask
 		Inherits CatalogedEntry

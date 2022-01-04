@@ -175,8 +175,9 @@ public partial class ShellTests : Disposable {
         DefaultDevice.CheckPasswordResult(site, username, password);
     public bool CheckContactResult(string key, string email) =>
         DefaultDevice.CheckContactResult(key, email);
-    public bool CheckBookmarkResult(string uri, string title, string path) =>
-        DefaultDevice.CheckBookmarkResult(uri, title, path);
+
+    public bool CheckBookmarkResult(string uri, string title, string local) =>
+        DefaultDevice.CheckBookmarkResult(uri, title, local);
 
     public bool CheckTaskResult(string key, string title) =>
         DefaultDevice.CheckTaskResult(key, title);

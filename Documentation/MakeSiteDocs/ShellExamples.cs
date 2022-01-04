@@ -30,13 +30,19 @@ public partial class CreateExamples {
         //ShellAccount = new ShellAccount(this);
         CreateCarolAccount();
 
+
+        ShellNetwork = new ShellNetwork(this);
+
+
         ShellBookmark = new ShellBookmark(this);
         ShellPassword = new ShellPassword(this);
-        ShellNetwork = new ShellNetwork(this);
+
         ShellCalendar = new ShellCalendar(this);
-        ShellMessage = new ShellMessage(this);
         ShellContact = new ShellContact(this);
         ShellGroup = new ShellGroup(this);
+
+        ShellMessage = new ShellMessage(this);
+
 
         ShellSSH = new ShellSSH(this);
         ShellMail = new ShellMail(this);

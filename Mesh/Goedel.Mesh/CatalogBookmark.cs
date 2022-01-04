@@ -91,6 +91,24 @@ public class CatalogBookmark : Catalog<CatalogedBookmark> {
 public partial class CatalogedBookmark {
     #region // Properties
     ///<summary>The primary key is protocol:site </summary>
-    public override string _PrimaryKey => Path;
+    public override string _PrimaryKey => Uid;
+
+
+
+    ///<inheritdoc/>
+    public override void Describe(StringBuilder builder, bool detail = false) => ItemToBuilder(builder);
+
+    ///<inheritdoc/>
+    public override void ItemToBuilder(StringBuilder stringBuilder, int indent = 0, IKeyCollection keyCollection = null) {
+
+
+        stringBuilder.Append($"[{_PrimaryKey}");
+        stringBuilder.AppendNotNull(LocalName, $"/{LocalName}");
+        stringBuilder.Append($"] {Uri}\n");
+        stringBuilder.AppendNotNull(Title, Title);
+
+        }
+
+
     #endregion
     }

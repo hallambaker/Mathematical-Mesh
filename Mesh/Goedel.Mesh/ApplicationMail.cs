@@ -158,13 +158,13 @@ public partial class CatalogedApplicationMail {
 
     ///<inheritdoc/>
     public override void ToBuilder(StringBuilder output) {
-        output.AppendNotNull(AccountAddress, $"Account:         {AccountAddress}");
-        output.AppendNotNull(InboundConnect, $"Inbound Server:  {InboundConnect}");
-        output.AppendNotNull(OutboundConnect, $"Outbound Server: {OutboundConnect}");
-        output.AppendNotNull(SmimeSign?.Udf, $"S/Mime Sign:     {SmimeSign?.Udf}");
-        output.AppendNotNull(SmimeEncrypt?.Udf, $"S/Mime Encrypt:  {SmimeEncrypt?.Udf}");
-        output.AppendNotNull(OpenpgpSign?.Udf, $"OpenPGP Sign:    {OpenpgpSign?.Udf}");
-        output.AppendNotNull(OpenpgpEncrypt?.Udf, $"OpenPGP Encrypt: {OpenpgpEncrypt?.Udf}");
+        output.AppendLineNotNull(AccountAddress, $"Account:         {AccountAddress}");
+        output.AppendLineNotNull(InboundConnect, $"Inbound Server:  {InboundConnect}");
+        output.AppendLineNotNull(OutboundConnect, $"Outbound Server: {OutboundConnect}");
+        output.AppendLineNotNull(SmimeSign?.Udf, $"S/Mime Sign:     {SmimeSign?.Udf}");
+        output.AppendLineNotNull(SmimeEncrypt?.Udf, $"S/Mime Encrypt:  {SmimeEncrypt?.Udf}");
+        output.AppendLineNotNull(OpenpgpSign?.Udf, $"OpenPGP Sign:    {OpenpgpSign?.Udf}");
+        output.AppendLineNotNull(OpenpgpEncrypt?.Udf, $"OpenPGP Encrypt: {OpenpgpEncrypt?.Udf}");
         }
 
 

@@ -64,6 +64,14 @@ public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : Catalo
         foreach (var envelope in Envelopes) {
             var action = envelope.Header.ContentMeta.Event;
 
+
+            // update in memory structure
+            switch (action) {
+                case PersistenceStore.EventDelete: {
+                        Catalog.DeleteEntry(envelope.Header.ContentMeta.UniqueId);
+                        break;
+                        }
+                }
             // persist update
             Catalog.Apply(envelope);
 
@@ -75,10 +83,6 @@ public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : Catalo
                         }
                 case PersistenceStore.EventUpdate: {
                         Catalog.UpdateEntry(envelope.JsonObject as TEntry);
-                        break;
-                        }
-                case PersistenceStore.EventDelete: {
-                        Catalog.DeleteEntry(envelope.Header.ContentMeta.UniqueId);
                         break;
                         }
                 }

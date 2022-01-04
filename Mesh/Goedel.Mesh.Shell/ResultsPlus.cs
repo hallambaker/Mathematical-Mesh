@@ -392,8 +392,8 @@ public partial class ResultCreateAccount {
     ///<inheritdoc/>
     public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
 
-        builder.AppendNotNull(ProfileAccount?.AccountAddress, $"Account={ProfileAccount?.AccountAddress}");
-        builder.AppendNotNull(ProfileAccount?.ProfileSignature?.Udf, $"UDF={ProfileAccount?.ProfileSignature?.Udf}");
+        builder.AppendLineNotNull(ProfileAccount?.AccountAddress, $"Account={ProfileAccount?.AccountAddress}");
+        builder.AppendLineNotNull(ProfileAccount?.ProfileSignature?.Udf, $"UDF={ProfileAccount?.ProfileSignature?.Udf}");
 
         }
     }
@@ -402,8 +402,8 @@ public partial class ResultRegisterService {
 
     ///<inheritdoc/>
     public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
-        builder.AppendNotNull(Account, $"Account={Account}");
-        builder.AppendNotNull(AccountAddress, $"AccountAddress={AccountAddress}");
+        builder.AppendLineNotNull(Account, $"Account={Account}");
+        builder.AppendLineNotNull(AccountAddress, $"AccountAddress={AccountAddress}");
 
         }
     }
@@ -419,7 +419,7 @@ public partial class ResultCreatePersonal {
 
         builder.Append($"Device Profile UDF={DeviceUDF}\n");
         builder.Append($"Personal Profile UDF={MeshUDF}\n");
-        builder.AppendNotNull(Account, $"Account={Account}\n");
+        builder.AppendLineNotNull(Account, $"Account={Account}\n");
 
         }
     }

@@ -644,7 +644,7 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.NetworkDump(Goedel.Mesh.Shell.NetworkDump)">
+        <member name="M:Goedel.Mesh.Shell.Shell.NetworkList(Goedel.Mesh.Shell.NetworkList)">
             <summary>
             Dispatch method
             </summary>
@@ -2819,14 +2819,17 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkImport.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Path">
-            <summary>Field accessor for parameter []</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Uri">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Title">
             <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Unique">
+            <summary>Field accessor for option [uid]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Identifier">
+            <summary>Field accessor for option [id]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Abstract">
             <summary>Field accessor for option [abstract]</summary>
@@ -3200,28 +3203,28 @@
         <member name="P:Goedel.Mesh.Shell._NetworkDelete.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDump.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._NetworkList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDump.LocalName">
+        <member name="P:Goedel.Mesh.Shell._NetworkList.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDump.AutoSync">
+        <member name="P:Goedel.Mesh.Shell._NetworkList.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDump.AutoApprove">
+        <member name="P:Goedel.Mesh.Shell._NetworkList.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDump.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell._NetworkList.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDump.Verbose">
+        <member name="P:Goedel.Mesh.Shell._NetworkList.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDump.Report">
+        <member name="P:Goedel.Mesh.Shell._NetworkList.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDump.Json">
+        <member name="P:Goedel.Mesh.Shell._NetworkList.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._KeyNonce.EnumReporting">

@@ -21,6 +21,8 @@
 #endregion
 
 
+using System.Text;
+
 namespace Goedel.Mesh;
 
 #region // The data classes CatalogNetwork, CatalogedNetwork
@@ -123,20 +125,17 @@ public partial class CatalogedNetwork {
 
     #endregion
     #region // Override methods
-    /// <summary>
-    /// Converts the value of this instance to a <see langword="String"/>.
-    /// </summary>
-    /// <returns>The current string.</returns>
-    public override string ToString() {
-        var stringBuilder = new StringBuilder();
-        if (Protocol != null) {
-            stringBuilder.Append("{Protocol}:");
-            }
-        stringBuilder.Append("{Username}@{Service} = [{Password}]");
+    public override void Describe(StringBuilder builder, bool detail = false) => ItemToBuilder(builder);
 
-        return stringBuilder.ToString();
 
+    public override void ItemToBuilder(StringBuilder stringBuilder, int indent = 0, IKeyCollection keyCollection = null) {
+        stringBuilder.Append($"[{_PrimaryKey}");
+        stringBuilder.AppendNotNull(LocalName, $"/{LocalName}");
+        stringBuilder.Append($"] {Protocol} {Service} ");
+        stringBuilder.AppendNotNull(Password, Password);
         }
+
+
     #endregion
     }
 #endregion

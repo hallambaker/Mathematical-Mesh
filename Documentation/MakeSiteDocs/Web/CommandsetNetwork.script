@@ -96,7 +96,7 @@ from a file
 
 #% ConsoleReference (ShellNetwork.NetworkImport);
 
-#% Describe(CommandSet, _NetworkDump._DescribeCommand);
+#% Describe(CommandSet, _NetworkList._DescribeCommand);
 
 The 'network list' command lists all data in the network catalog.
 

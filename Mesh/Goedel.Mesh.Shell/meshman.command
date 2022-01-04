@@ -617,18 +617,21 @@
 
 		Command BookmarkAdd "add"
 			Brief "Add bookmark entry from specified parameters"
-			Parameter Path "path" String
-				Brief "Keywords under which the bookmark is to be indexed"
 			Parameter Uri "uri" String
 				Brief "The recorded link"
 			Parameter Title "title" String
 				Brief "Title of the recorded item"
+			Option Unique "uid" String
+				Brief "Unique identifier"
+			Option Identifier "id" String
+				Brief "Local identifier"
 			Option Abstract "abstract" String
 				Brief "Abstract of the recorded item"
 			Option Comment "comment" String
 				Brief "Comment on reason for adding"
 			Option React "react" String
 				Brief "Reactions to the recorded item"
+
 			Include AccountOptions
 			Include Reporting
 
@@ -672,7 +675,7 @@
 			Parameter Title "title" String
 				Brief "The entry title."
 			Option Identifier "id" String
-				Brief "Unique entry identifier"
+				Brief "Local identifier"
 			Include AccountOptions
 			Include Reporting
 
@@ -714,14 +717,14 @@
 			Parameter Password "password" ExistingFile
 				Brief "Password value"
 			Option Identifier "id" String
-				Brief "Unique entry identifier"
+				Brief "Local identifier"
 			Include AccountOptions
 			Include Reporting
 
 		Command NetworkGet "get"
 			Brief "Lookup calendar entry"
 			Parameter Identifier "id" String
-				Brief "Unique entry identifier"
+				Brief "Local identifier"
 			Include AccountOptions
 			Include Reporting
 

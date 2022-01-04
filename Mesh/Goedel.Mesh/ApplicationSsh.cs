@@ -116,7 +116,7 @@ public partial class CatalogedApplicationSsh {
 
     ///<inheritdoc/>
     public override void ToBuilder(StringBuilder output) {
-        output.AppendNotNull(ClientKey?.Udf, $"UDF: {ClientKey?.Udf}");
+        output.AppendLineNotNull(ClientKey?.Udf, $"UDF: {ClientKey?.Udf}");
 
         }
 

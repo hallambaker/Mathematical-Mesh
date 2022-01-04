@@ -120,7 +120,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			 ConsoleReference (ShellNetwork.NetworkImport);
 			_Output.Write ("\n{0}", _Indent);
-			 Describe(CommandSet, _NetworkDump._DescribeCommand);
+			 Describe(CommandSet, _NetworkList._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The 'network list' command lists all data in the network catalog.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
