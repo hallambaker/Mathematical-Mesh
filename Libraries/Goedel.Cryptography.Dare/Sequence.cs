@@ -781,6 +781,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
             Signatures = trailerIn?.Signatures ?? headerIn.Signatures,
             SignedData = trailerIn?.SignedData ?? headerIn.SignedData,
             PayloadDigest = trailerIn?.PayloadDigest ?? headerIn.PayloadDigest,
+            TreeDigest = trailerIn?.TreeDigest ?? headerIn.TreeDigest,
+            //ChainDigest = trailerIn?.ChainDigest ?? headerIn.ChainDigest,
 
             DigestAlgorithm = headerIn.DigestAlgorithm
             };

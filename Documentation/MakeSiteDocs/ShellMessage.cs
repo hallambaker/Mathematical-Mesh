@@ -30,20 +30,20 @@ namespace ExampleGenerator;
 
 public class ShellMessage : ExampleSet {
 
-    public List<ExampleResult> ContactRequest;
-    public List<ExampleResult> ContactPending;
-    public List<ExampleResult> ContactAccept;
-    public List<ExampleResult> ContactCatalogList;
-    public List<ExampleResult> ContactGetResponse;
-    public List<ExampleResult> ContactReject;
-    public List<ExampleResult> ContactBlock;
+    //public List<ExampleResult> ContactRequest;
+    //public List<ExampleResult> ContactPending;
+    //public List<ExampleResult> ContactAccept;
+    //public List<ExampleResult> ContactCatalogList;
+    //public List<ExampleResult> ContactGetResponse;
+    //public List<ExampleResult> ContactReject;
+    //public List<ExampleResult> ContactBlock;
 
 
 
 
     public const string BobPurchase = "Purchase equipment for $6,000?";
 
-    public List<ExampleResult> ConfirmRequest;
+    public List<ExampleResult> ConfirmRequest, ConfirmRequestMallet;
     public List<ExampleResult> ConfirmPending;
     public List<ExampleResult> ConfirmAccept;
     public List<ExampleResult> ConfirmGetAccept;
@@ -58,32 +58,34 @@ public class ShellMessage : ExampleSet {
             base(createExamples) {
 
 
-        ContactRequest = Bob1.Example($"message contact {AliceAccount}");
-        ContactPending = Alice1.Example($"message pending");
-        var resultPending = (ContactPending[0].Result as ResultPending);
-        var id1 = "tbs";// resultPending.Messages[0].MessageID;
-        var id2 = "tbs";// resultPending.Messages[1].MessageID;
+        //ContactRequest = Bob1.Example($"message contact {AliceAccount}");
+        //ContactPending = Alice1.Example($"message pending");
+        //var resultPending = (ContactPending[0].Result as ResultPending);
+        //var id1 = resultPending.Messages[0].MessageId;
+        //var id2 = resultPending.Messages[1].MessageId;
 
-        ContactAccept = Alice1.Example($"~message accept {id1}");
+        //ContactAccept = Alice1.Example($"message accept {id1}");
 
-        ContactCatalogList = Alice1.Example($"~contact list");
-        ContactGetResponse = Bob1.Example($"~message status {id1}");
-        ContactReject = Alice1.Example($"~message reject {id2}");
-        ContactBlock = Alice1.Example($"~message block {MalletAccount}");
+        //ContactCatalogList = Alice1.Example($"contact list");
+        //ContactGetResponse = Bob1.Example($"message status {id1}");
+        //ContactReject = Alice1.Example($"message reject {id2}");
+        //ContactBlock = Alice1.Example($"message block {MalletAccount}");
 
-        ConfirmRequest = Bob1.Example($"~message confirm {AliceAccount} \"{ShellMessage.BobPurchase}\"");
-        ConfirmPending = Alice1.Example($"~message pending");
+        ConfirmRequest = Bob1.Example($"message confirm {AliceAccount} \"{ShellMessage.BobPurchase}\"");
+
+        ConfirmRequestMallet = Mallet1.Example($"message confirm {AliceAccount} \"{ShellMessage.BobPurchase}\"");
+        ConfirmPending = Alice1.Example($"message pending");
         var confirmPending = (ConfirmPending[0].Result as ResultPending);
-        confirmPending.Keep();
-        id1 = "tbs";//confirmPending.Messages[0].MessageID;
-        id2 = "tbs";//confirmPending.Messages[1].MessageID;
 
-        ConfirmAccept = Alice1.Example($"~message accept {id1}");
-        ConfirmGetAccept = Bob1.Example($"~message status {id1}");
-        ConfirmReject = Alice1.Example($"~message reject {id2}");
-        ConfirmGetReject = Bob1.Example($"~message status {id2}");
+        var id1 = confirmPending.Messages[0].MessageId;
+        var id2 = confirmPending.Messages[1].MessageId;
 
-        ConfirmMallet = Mallet1.Example($"~message confirm {AliceAccount} \"{BobPurchase}\"");
+        ConfirmAccept = Alice1.Example($"message accept {id1}");
+        ConfirmGetAccept = Bob1.Example($"message status {id1}");
+        ConfirmReject = Alice1.Example($"message reject {id2}");
+        ConfirmGetReject = Mallet1.Example($"message status {id2}");
+
+        //ConfirmMallet = Mallet1.Example($"!message confirm {AliceAccount} \"{BobPurchase}\"");
         }
 
     }

@@ -686,34 +686,6 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SSHAddHost(Goedel.Mesh.Shell.SSHAddHost)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SSHImport(Goedel.Mesh.Shell.SSHImport)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SSHMergeHosts(Goedel.Mesh.Shell.SSHMergeHosts)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SSHMergeClients(Goedel.Mesh.Shell.SSHMergeClients)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.SSHGet(Goedel.Mesh.Shell.SSHGet)">
             <summary>
             Dispatch method
@@ -721,35 +693,35 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SSHDelete(Goedel.Mesh.Shell.SSHDelete)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SSHPrivate(Goedel.Mesh.Shell.SSHPrivate)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SSHPublic(Goedel.Mesh.Shell.SSHPublic)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SSHAddClient(Goedel.Mesh.Shell.SSHAddClient)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.SSHList(Goedel.Mesh.Shell.SSHList)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SSHClient(Goedel.Mesh.Shell.SSHClient)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SSHHost(Goedel.Mesh.Shell.SSHHost)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SSHKnown(Goedel.Mesh.Shell.SSHKnown)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SSHDelete(Goedel.Mesh.Shell.SSHDelete)">
             <summary>
             Dispatch method
             </summary>
@@ -2576,6 +2548,21 @@
         <member name="P:Goedel.Mesh.Shell._PasswordDump.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._ContactAdd.Address">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactAdd.Name">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactAdd.Unique">
+            <summary>Field accessor for option [uid]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactAdd.Identifier">
+            <summary>Field accessor for option [id]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactAdd.Self">
+            <summary>Field accessor for option [self]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._ContactStatic.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -2680,6 +2667,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactImport.File">
             <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactImport.Self">
+            <summary>Field accessor for option [self]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -4067,7 +4057,7 @@
         <member name="P:Goedel.Mesh.Shell._MailAdd.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MailGet.Identifier">
+        <member name="P:Goedel.Mesh.Shell._MailGet.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailGet.AccountAddress">
@@ -4117,6 +4107,12 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MailList.Json">
             <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MailImport.File">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MailImport.Identifier">
+            <summary>Field accessor for option [id]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -4349,9 +4345,6 @@
         <member name="P:Goedel.Mesh.Shell._SSHCreate.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHCreate.Application">
-            <summary>Field accessor for option [application]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
@@ -4418,14 +4411,35 @@
         <member name="P:Goedel.Mesh.Shell._SSHGet.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHGet.Format">
+            <summary>Field accessor for option [format]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHGet.File">
+            <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHGet.Password">
+            <summary>Field accessor for option [password]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHGet.Private">
+            <summary>Field accessor for option [private]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHList.Hosts">
-            <summary>Field accessor for option [known]</summary>
+            <summary>Field accessor for option [host]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHList.Client">
-            <summary>Field accessor for option [auth]</summary>
+            <summary>Field accessor for option [client]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHList.Application">
-            <summary>Field accessor for option [application]</summary>
+        <member name="P:Goedel.Mesh.Shell._SSHList.Format">
+            <summary>Field accessor for option [format]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.File">
+            <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.Password">
+            <summary>Field accessor for option [password]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHList.Private">
+            <summary>Field accessor for option [private]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -4451,29 +4465,134 @@
         <member name="P:Goedel.Mesh.Shell._SSHList.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHImport.AccountAddress">
+        <member name="P:Goedel.Mesh.Shell._SSHClient.FileIn">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHClient.Identifier">
+            <summary>Field accessor for option [id]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHClient.Merge">
+            <summary>Field accessor for option [merge]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHClient.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHImport.LocalName">
+        <member name="P:Goedel.Mesh.Shell._SSHClient.LocalName">
             <summary>Field accessor for option [local]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHImport.AutoSync">
+        <member name="P:Goedel.Mesh.Shell._SSHClient.AutoSync">
             <summary>Field accessor for option [sync]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHImport.AutoApprove">
+        <member name="P:Goedel.Mesh.Shell._SSHClient.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHImport.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell._SSHClient.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHImport.Verbose">
+        <member name="P:Goedel.Mesh.Shell._SSHClient.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHImport.Report">
+        <member name="P:Goedel.Mesh.Shell._SSHClient.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHImport.Json">
+        <member name="P:Goedel.Mesh.Shell._SSHClient.Json">
             <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHClient.Format">
+            <summary>Field accessor for option [format]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHClient.File">
+            <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHClient.Password">
+            <summary>Field accessor for option [password]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHClient.Private">
+            <summary>Field accessor for option [private]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.FileIn">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.Identifier">
+            <summary>Field accessor for option [id]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.Merge">
+            <summary>Field accessor for option [merge]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.Format">
+            <summary>Field accessor for option [format]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.File">
+            <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.Password">
+            <summary>Field accessor for option [password]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHHost.Private">
+            <summary>Field accessor for option [private]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.Format">
+            <summary>Field accessor for option [format]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.File">
+            <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.Password">
+            <summary>Field accessor for option [password]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.Private">
+            <summary>Field accessor for option [private]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -4499,226 +4618,7 @@
         <member name="P:Goedel.Mesh.Shell._SSHDelete.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHDelete.Address">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.Format">
-            <summary>Field accessor for option [format]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.File">
-            <summary>Field accessor for option [file]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.Password">
-            <summary>Field accessor for option [password]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.Private">
-            <summary>Field accessor for option [private]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.ID">
-            <summary>Field accessor for option [id]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.Format">
-            <summary>Field accessor for option [format]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.File">
-            <summary>Field accessor for option [file]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.Password">
-            <summary>Field accessor for option [password]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.Private">
-            <summary>Field accessor for option [private]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.ID">
-            <summary>Field accessor for option [id]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.Application">
-            <summary>Field accessor for option [application]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.File">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.ID">
-            <summary>Field accessor for option [id]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.Hosts">
-            <summary>Field accessor for option [read]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeHosts.Client">
-            <summary>Field accessor for option [write]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.Application">
-            <summary>Field accessor for option [application]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.File">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.ID">
-            <summary>Field accessor for option [id]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.Hosts">
-            <summary>Field accessor for option [read]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeClients.Client">
-            <summary>Field accessor for option [write]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddHost.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddHost.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddHost.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddHost.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddHost.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddHost.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddHost.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddHost.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddHost.Application">
-            <summary>Field accessor for option [application]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddHost.ID">
-            <summary>Field accessor for option [id]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.Application">
-            <summary>Field accessor for option [application]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.File">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.ID">
+        <member name="P:Goedel.Mesh.Shell._SSHDelete.Identifier">
             <summary>Field accessor for option [id]</summary>
         </member>
         <member name="T:Goedel.Mesh.Shell.MimeMapping">

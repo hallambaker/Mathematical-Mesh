@@ -70,20 +70,46 @@ Adding an SSH profile causes a public keypair to be created for use with SSH. To
 of this keypair for device authentication with legacy applications typically requires the
 public and/or private keys to be extracted in a format supported by the application.
 
-The #{ToCommand("ssh private")} command extracts the private key required top configure
-an SSH client:
-
-#%  ConsoleExample (Apps.SSHPrivate);
-
 The #{ToCommand("ssh public")} command extracts the public key required top configure
 an SSH client:
 
 #%  ConsoleExample (Apps.SSHPublic);
 
+The #{ToCommand("ssh private")} command extracts the private key required top configure
+an SSH client:
+
+#%  ConsoleExample (Apps.SSHPrivate);
+
 If a script is being used to automate this process, the best practice is for the
 script to first generate a random nonce and request that the private key file
 be extracted encrypted under the nonce which can be discarded after the key is
 successfully installed. [Not currently supported.]
+
+The #{ToCommand("ssh list")} command with the '/client' option lists the authorized 
+clients keys in the profile. This may be used to generate the `authorized_keys` file 
+by specifying the SSH file format used by the particular SSH application in use.
+
+Individual client entries may be added using the #{ToCommand("ssh client")} command
+which imports a client entry from a file in the specified format.
+
+[Not yet implemented, assume file format from extension/well known names.]
+
+#%  ConsoleExample (Apps.SSHImport);
+
+This command may be used to add SSH client public keys to the profile without adding
+the private key. This provides a means of adding a legacy key that is not under Mesh control
+to a Mesh profile. Attempts to access the public key work as normal:
+
+#%  ConsoleExample (Apps.SSHGet);
+
+Attempts to access the private key fail:
+
+#%  ConsoleExample (Apps.SSHGetPrivate);
+
+
+Client configurations may be deleted using the #{ToCommand("ssh delete")} command
+
+#%  ConsoleExample (Apps.SSHDeleteList);
 
 
 #### Host Configuration
@@ -91,95 +117,25 @@ successfully installed. [Not currently supported.]
 Host configuration is not currently supported but is an obvious feature to add once
 support is introduced for SSH certificates.
 
-#### Configuring authentication entries on hosts and clients
 
-The #{ToCommand("ssh merge client")}  command is run on a host to update mesh key entries 
-in the `authorized_keys` file using information from the specified mesh portal.
+#### Managing Host Credentials
 
-For example, if the `authorized_keys` file has an entry for Alice's Mesh profile
-(`alice@example.com.mm--ssss`), the corresponding profile is fetched and the 
-corresponding SSH device public keys added:
-
-#%  ConsoleExample (Apps.SSHMergeClients);
-
-The #{ToCommand("ssh merge host")}  command reads the `known_hosts` file on a client machine and adds
-the listed hosts to the user's ssh catalog.
-
-#%  ConsoleExample (Apps.SSHMergeHosts);
-
-#### Client Key management
-
-SSH keys belonging to the user that are not part of the Mesh profile may be added using the 
-#{ToCommand("ssh add client")} and #{ToCommand("ssh import client")}  commands.
-
-The #{ToCommand("ssh add client")} adds key parameters specified on the command line.
-
-#%  ConsoleExample (Apps.SSHAddClient);
-
-The #{ToCommand("ssh import client")} adds key parameters specified in a separate file. A 
-variety of SSH key formats is supported by means of options:
-
-
-#%  ConsoleExample (Apps.SSHImport);
-
-SSH client keys mayt be fetched using the #{ToCommand("ssh get")} command:
-
-#%  ConsoleExample (Apps.SSHGet);
-
-
-
-The list of authorized clients may be returned in various formats using the #{ToCommand("ssh list")}  command
-with the /client option.
-
-#%  ConsoleExample (Apps.SSHList);
-
-
-A client key may be deleted using the  #{ToCommand("ssh delete")}  command:
-
-#%  ConsoleExample (Apps.SSHDelete);
-
-Finally, the #{ToCommand("ssh merge client")} command performs a two way merge of keys from
-a authorized clients file and the ssh catalog entries:
-
-#%  ConsoleExample (Apps.SSHMergeClients);
-
-
-
-
-#### Host Key Management
-
-The #{ToCommand("ssh add host")}  command adds specific host entries to the user's SSH profile.
+The #{ToCommand("ssh host")} command is used to add known hosts to the Mesh credential 
+catalog.
 
 #%  ConsoleExample (Apps.SSHAddHost);
 
-The list of known hosts may be returned in various formats using the #{ToCommand("ssh list")}  command
-with the /host option.
+
+The #{ToCommand("ssh list")}  command with the '/host' option lists the known host keys 
+in the profile. This information is stored in the credential catalog and may also be 
+retrieved through the password commands.
 
 #%  ConsoleExample (Apps.SSHListHosts);
 
+The #{ToCommand("ssh known")}  command returns the SSH parameters for a particular known host:
 
-Finally, the #{ToCommand("ssh merge host")} command performs a two way merge of keys from
-a known hosts file and the ssh catalog entries:
+#%  ConsoleExample (Apps.SSHKnown);
 
-#%  ConsoleExample (Apps.SSHMergeHosts);
-
-
-#### Additional Devices
-
-Whenever an SSH profile is created, a separate keypair is created for every device
-connected to the profile. This mitigates the consequences of a device being lost
-or stolen. The device key for the compromised device can be removed from the 
-profile without affecting any other device. Investigation of possibly unauthorized logins
-can be focused on those from the compromised device alone.
-
-The #{ToCommand("device auth /ssh")}  command is used *from an administration device* to 
-enable use of ssh on the machine:
-
-#%  ConsoleExample (Connect.ConnectSSHAuth );
-
-Once the device has been authorized, the client machine can start using SSH immediately:
-
-#%  ConsoleExample (Apps.SSHAuthProof);
 
 #end zfile
 
@@ -190,25 +146,19 @@ Once the device has been authorized, the client machine can start using SSH imme
 #% Describe(CommandSet);
 
 
+#! ------------------ ssh client
+#% Describe(CommandSet, _SSHClient._DescribeCommand);
 
-#! ------------------ ssh add client
-#% Describe(CommandSet, _SSHAddClient._DescribeCommand);
+The ssh client command adds a client entry to the application catalog from a file.
 
-The add client command adds a client entry to the catalog from a file.
+#%  ConsoleReference (Apps.SSHImport);
 
-#%  ConsoleReference (Apps.SSHAddClient);
 
-#! ------------------ ssh add host
-#% Describe(CommandSet, _SSHAddHost._DescribeCommand);
-
-The add client command adds a client entry to the catalog from a file.
-
-#%  ConsoleReference (Apps.SSHAddHost);
 
 #! ------------------ ssh create
 #% Describe(CommandSet, _SSHCreate._DescribeCommand);
 
-The SSH create command creates an SSH application store.
+The ssh create command creates a new SSH client entry.
 
 #%  ConsoleReference (Apps.SSHCreate);
 
@@ -216,25 +166,36 @@ The SSH create command creates an SSH application store.
 #! ------------------ ssh delete
 #% Describe(CommandSet, _SSHDelete._DescribeCommand);
 
-The SSH delete command deletes a client or host.
+The ssh delete command deletes a client or host.
 
 #%  ConsoleReference (Apps.SSHDelete);
 
-#! ------------------ ssh import
-#% Describe(CommandSet, _SSHImport._DescribeCommand);
-
-
-The SSH import command imports data from a file.
-
-#%  ConsoleReference (Apps.SSHImport);
 
 #! ------------------ ssh get
 #% Describe(CommandSet, _SSHGet._DescribeCommand);
 
 
-The SSH get command describes a client or host entry.
+The ssh get command describes a client or host entry.
 
 #%  ConsoleReference (Apps.SSHGet);
+
+
+#! ------------------ ssh host
+#% Describe(CommandSet, _SSHHost._DescribeCommand);
+
+
+The ssh host command adds a host entry to the credential catalog from a file.
+
+#%  ConsoleReference (Apps.SSHAddHost);
+
+
+#! ------------------ ssh known
+#% Describe(CommandSet, _SSHKnown._DescribeCommand);
+
+
+The SSH known command returns the SSH authentication data for the specified host
+
+#%  ConsoleReference (Apps.SSHKnown);
 
 
 #! ------------------ ssh list
@@ -245,64 +206,7 @@ The SSH get command lists the client and/or host entries.
 If the /client option is specified, only client entries are shown. If the /host option is
 specified, only host entries are shown. In all other cases, both types of entry are shown.
 
-
 #%  ConsoleReference (Apps.SSHList);
-
-
-
-#! ------------------ ssh merge client
-#% Describe(CommandSet, _SSHMergeClients._DescribeCommand);
-
-The merge client command performs a two-way merge of data in the specified authorized 
-clients file with the SSH catalog.
-
-#%  ConsoleReference (Apps.SSHMergeClients);
-
-
-#! ------------------ ssh merge host
-#% Describe(CommandSet, _SSHMergeHosts._DescribeCommand);
-
-The merge client command performs a two-way merge of data in the specified known 
-hosts file with the SSH catalog.
-
-#%  ConsoleReference (Apps.SSHMergeHosts);
-
-
-#! ------------------ ssh private
-#% Describe(CommandSet, _SSHPrivate._DescribeCommand);
-
-The ssh private command exports the private key data of the device on which it is 
-executed in a range of formats.
-
-#%  ConsoleReference (Apps.SSHPrivate);
-
-#! ------------------ ssh public 
-#% Describe(CommandSet, _SSHPublic._DescribeCommand);
-
-The ssh private command exports the public key data of the device on which it is 
-executed in a range of formats.
-
-#%  ConsoleReference (Apps.SSHPublic);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #end zfile

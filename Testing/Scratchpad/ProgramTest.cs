@@ -48,9 +48,13 @@ partial class Program {
         //ShellTests.Test().TestAccountDelete();
 
         //ShellTestsAdmin.Test().TestHello();
-        Goedel.XUnit.MakeSiteDocs.Test().QRAuth();
-        //QRAuth
-        //FullTest
+        Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+        //Goedel.XUnit.MakeSiteDocs.Test().QRAuth();
+
+
+
+        //ShellTests.Test().TestProfileBookmark();
+        //ShellTests.Test().TestProfileNetwork();
 
         //TestService.Test().MeshDeviceThresholdKey();
         //ShellTestsAdmin.Test().TestSequence(count:100);

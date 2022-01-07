@@ -72,7 +72,7 @@ public partial class CatalogedApplicationMail {
     /// <summary>
     /// The primary key used to catalog the entry.
     /// </summary>
-    public override string _PrimaryKey => Key;
+    public override string _PrimaryKey => GetKey(AccountAddress);
 
     ///<summary>The S/MIME signature key.</summary> 
     public KeyPair SmimeSignKeyPair { get; init; }

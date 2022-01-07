@@ -35,24 +35,24 @@ perform access control on inbound messages.
 Having created a Mesh profile, Bob asks Alice to add him to her contacts catalog
 using the #{ToCommand("message contact")} command:
 
-#% ConsoleExample (ShellMessage.ContactRequest);
+#% ConsoleExample (Contact.ContactBobRequest);
 
 Alice reviews her pending messages using the #{ToCommand("message pending")} command:
 
-#% ConsoleExample (ShellMessage.ContactPending);
+#% ConsoleExample (Contact.ContactAliceResponse);
 
 Alice sees the request from Bob and accepts it with the #{ToCommand("message accept")} command:
 
-#% ConsoleExample (ShellMessage.ContactAccept);
+#% ConsoleExample (Contact.ContactAliceAccept);
 
 Bob's contact information has been added to Alice's address book:
 
-#% ConsoleExample (ShellMessage.ContactCatalogList);
+#% ConsoleExample (Contact.ContactAliceList);
 
 Bob can find out if Alice has accepted his contact request using the 
 #{ToCommand("message status")} command:
 
-#% ConsoleExample (ShellMessage.ContactGetResponse);
+#% ConsoleExample (Contact.ContactBobStatus);
 
 Alice has accepted Bob's request and added him to her contacts list. She has also sent
 Bob a contact request which for the sake of convenience, is accepted automatically.
@@ -60,11 +60,11 @@ Bob a contact request which for the sake of convenience, is accepted automatical
 Alice isn't required to accept contact requests. She rejects the request from Mallet 
 using the #{ToCommand("message reject")} command:
 
-#% ConsoleExample (ShellMessage.ContactReject);
+#% ConsoleExample (Contact.ContactAliceReject);
 
 For good measure, she decides to block further requests:
 
-#% ConsoleExample (ShellMessage.ContactBlock);
+#% ConsoleExample (Contact.ContactAliceBlock);
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
 question. If the user chooses to respond, the sender receives back a non-repudiable 
@@ -153,7 +153,7 @@ The confirmation request to be accepted is specified by its message identifier.
 The required parameter is the message identifier of the request to be accepted.
 
 
-#%  ConsoleReference (ShellMessage.ContactAccept);
+#%  ConsoleReference (Contact.ContactAliceAccept);
 
 #! ------------------ message block
 #% Describe(CommandSet, _MessageBlock._DescribeCommand);
@@ -163,7 +163,7 @@ The `message block` command adds a party to the user's blocklist.
 The required parameter is the identifier of the party to be blocked. This may
 be a local name defined in the contacts book or an address.
 
-#%  ConsoleReference (ShellMessage.ContactBlock);
+#%  ConsoleReference (Contact.ContactAliceBlock);
 
 #! ------------------ message confirm
 #% Describe(CommandSet, _MessageConfirm._DescribeCommand);
@@ -188,7 +188,7 @@ confirmation request to the named party.
 
 The first parameter is required and specifies the intended recipient.
 
-#%  ConsoleReference (ShellMessage.ContactRequest);
+#%  ConsoleReference (Contact.ContactBobRequest);
 
 #! ------------------ message pending
 #% Describe(CommandSet, _MessagePending._DescribeCommand);
@@ -202,7 +202,7 @@ The 'read' and 'unread' flags may be used to filter responses to return messages
 that have been read or are unread. By default, only unread messages are returned.
 
 
-#%  ConsoleReference (ShellMessage.ContactPending);
+#%  ConsoleReference (Contact.ContactAlicePending);
 
 #! ------------------ message reject
 #% Describe(CommandSet, _MessageReject._DescribeCommand);
@@ -216,7 +216,7 @@ The confirmation request to be rejected is specified by its message identifier.
 The required parameter is the message identifier of the request to be rejected.
 
 
-#%  ConsoleReference (ShellMessage.ContactReject);
+#%  ConsoleReference (Contact.ContactAliceReject);
 
 #! ------------------ message status
 #% Describe(CommandSet, _MessageStatus._DescribeCommand);
@@ -227,7 +227,7 @@ request.
 The confirmation request to be queried is specified by its message identifier.
 
 
-#%  ConsoleReference (ShellMessage.ConfirmGetAccept);
+#%  ConsoleReference (Contact.ContactBobStatus);
 
 
 

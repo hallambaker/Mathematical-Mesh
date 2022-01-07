@@ -250,22 +250,40 @@ public partial class LayerApps : ExampleSet {
     public string MailSmimeFileEncrypt = "alice1_smime_encrypt.pem";
     public string MailOpenpgpFileEncrypt = "alice1_opgp_encrypt.pem";
 
+
+    public string MailAccountConfigFile = "mail_config.json";
+    public string SSHAccountConfigFile = "ssh_config.json";
+    public string SSHHost1File = "ssh_host1.json";
+    public string SSHHost2File = "ssh_host2.json";
+
+    public string SSHHostName1 = "ssh1.example.com";
+    public string SSHHostName2 = "ssh2.example.com";
+
+
     public List<ExampleResult> SSHCreate;
-
-    public List<ExampleResult> SSHAddClient;
-    public List<ExampleResult> SSHAddHost;
-
-    public List<ExampleResult> SSHDelete;
-    public List<ExampleResult> SSHImport;
-    public List<ExampleResult> SSHGet;
-    public List<ExampleResult> SSHMergeClients;
-    public List<ExampleResult> SSHMergeHosts;
     public List<ExampleResult> SSHPublic;
     public List<ExampleResult> SSHPrivate;
     public List<ExampleResult> SSHConnect;
-    public List<ExampleResult> SSHAuthProof;
+
+
     public List<ExampleResult> SSHList;
+    public List<ExampleResult> SSHImport;
+    public List<ExampleResult> SSHGet;
+    public List<ExampleResult> SSHGetPrivate;
+    public List<ExampleResult> SSHDelete;
+    public List<ExampleResult> SSHList2;
+    public List<ExampleResult> SSHDeleteList;
+
+    public List<ExampleResult> SSHAddHost;
     public List<ExampleResult> SSHListHosts;
+
+
+    public List<ExampleResult> SSHKnown;
+
+
+    public List<ExampleResult> SSHAddHost2;
+    public List<ExampleResult> SSHListHosts2;
+
 
     public List<ExampleResult> Mail;
     public List<ExampleResult> MailGet;
@@ -283,7 +301,7 @@ public partial class LayerApps : ExampleSet {
     public List<ExampleResult> MailOpenpgpEncrypt;
 
     public List<ExampleResult> MailConnect;
-
+    public List<ExampleResult> MailAuthProof;
 
     public CatalogedEntry BookmarkCatalogEntry;
     public CatalogedEntry ContactCatalogEntry;
@@ -306,8 +324,19 @@ public partial class LayerApps : ExampleSet {
 public partial class LayerContact : ExampleSet {
 
     public List<ExampleResult> ContactBobRequest;
+    public List<ExampleResult> ContactMalletRequest;
+
+    public List<ExampleResult> ContactAlicePending;
+    public List<ExampleResult> ContactAliceAccept;
+    public List<ExampleResult> ContactAliceList;
+
     public List<ExampleResult> ContactAliceResponse;
+    public List<ExampleResult> ContactBobStatus;
     public List<ExampleResult> ContactBobFinal;
+
+    public List<ExampleResult> ContactAliceReject;
+    public List<ExampleResult> ContactAliceBlock;
+
 
     public MessagePin MessagePin;
 

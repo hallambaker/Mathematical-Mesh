@@ -175,7 +175,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The device Alice5 was connected to her account without the contact catalog right.\n{0}", _Indent);
 			_Output.Write ("Requests to access the contacts catalog fail:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellContact.ContactList1);
+			  ConsoleExample (Contact.ContactList1);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The ability to selectively grant access to devices allows realization of the 'least \n{0}", _Indent);
 			_Output.Write ("privilege' principal in which each user and device is granted the bare minimum\n{0}", _Indent);
@@ -189,7 +189,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The newly authorized device can now access the contacts catalog:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleExample (ShellContact.ContactList2);
+			  ConsoleExample (Contact.ContactList2);
 			_Output.Write ("\n{0}", _Indent);
 				}
 	

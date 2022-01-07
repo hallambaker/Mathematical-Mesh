@@ -44,13 +44,18 @@ public class ShellCalendar : ExampleSet {
 
     public ShellCalendar(CreateExamples createExamples) :
     base(createExamples) {
-        CalendarAdd = Alice1.Example($"calendar add {CalendarFile1} {CalendarID1}",
-            $"calendar add {CalendarFile2} {CalendarID2}");
-        CalendarGet = Alice1.Example($"~calendar get {CalendarID1}");
-        CalendarList = Alice1.Example($"~calendar list");
+        CalendarAdd = Alice1.Example($"calendar add {CalendarFile1} /id={CalendarID1}",
+            $"calendar add {CalendarFile2} /id={CalendarID2}");
 
-        CalendarDelete = Alice1.Example($"~calendar delete {CalendarID1}",
-            $"~calendar list");
+        CalendarGet = Alice1.Example($"calendar get {CalendarID1}");
+        Alice1.Example($"calendar get {CalendarID2}");
+
+        CalendarList = Alice1.Example($"calendar list");
+
+        CalendarDelete = Alice1.Example($"calendar delete {CalendarID1}",
+            $"calendar list",
+            $"!calendar get {CalendarID1}",
+            $"calendar get {CalendarID2}");
 
         }
 

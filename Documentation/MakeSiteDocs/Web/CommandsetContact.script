@@ -160,7 +160,7 @@ Contact entries may be deleted using the  #{ToCommand("contact delete")} command
 The device Alice5 was connected to her account without the contact catalog right.
 Requests to access the contacts catalog fail:
 
-#%  ConsoleExample (ShellContact.ContactList1);
+#%  ConsoleExample (Contact.ContactList1);
 
 The ability to selectively grant access to devices allows realization of the 'least 
 privilege' principal in which each user and device is granted the bare minimum
@@ -174,7 +174,7 @@ Devices are given authorization to access the contacts catalog using the
 
 The newly authorized device can now access the contacts catalog:
 
-#%  ConsoleExample (ShellContact.ContactList2);
+#%  ConsoleExample (Contact.ContactList2);
 
 #end zfile
 

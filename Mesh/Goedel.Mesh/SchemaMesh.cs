@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-Jan-22 4:02:46 PM
+//  This file was automatically generated at 07-Jan-22 5:09:40 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -127,6 +127,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CatalogedDevice", CatalogedDevice._Factory},
 	    {"CatalogedPublication", CatalogedPublication._Factory},
 	    {"CatalogedCredential", CatalogedCredential._Factory},
+	    {"CatalogedApplicationSsh", CatalogedApplicationSsh._Factory},
 	    {"CatalogedNetwork", CatalogedNetwork._Factory},
 	    {"CatalogedContact", CatalogedContact._Factory},
 	    {"CatalogedAccess", CatalogedAccess._Factory},
@@ -146,7 +147,6 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CatalogedApplication", CatalogedApplication._Factory},
 	    {"CatalogedMember", CatalogedMember._Factory},
 	    {"CatalogedGroup", CatalogedGroup._Factory},
-	    {"CatalogedApplicationSsh", CatalogedApplicationSsh._Factory},
 	    {"CatalogedApplicationMail", CatalogedApplicationMail._Factory},
 	    {"CatalogedApplicationNetwork", CatalogedApplicationNetwork._Factory},
 	    {"DevicePreconfigurationPublic", DevicePreconfigurationPublic._Factory},
@@ -7659,6 +7659,16 @@ public partial class CatalogedCredential : CatalogedEntry {
         /// </summary>
 
 	public virtual string						Password  {get; set;}
+        /// <summary>
+        ///Specifies the client identification key
+        /// </summary>
+
+	public virtual List<KeyData>				ClientAuthentication  {get; set;}
+        /// <summary>
+        ///Means of authenticating the host key
+        /// </summary>
+
+	public virtual List<KeyData>				HostAuthentication  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -7723,6 +7733,40 @@ public partial class CatalogedCredential : CatalogedEntry {
 			_writer.WriteToken ("Password", 1);
 				_writer.WriteString (Password);
 			}
+		if (ClientAuthentication != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("ClientAuthentication", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in ClientAuthentication) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				// This is an untagged structure. Cannot inherit.
+                //_writer.WriteObjectStart();
+                //_writer.WriteToken(_index._Tag, 1);
+				bool firstinner = true;
+				_index.Serialize (_writer, true, ref firstinner);
+                //_writer.WriteObjectEnd();
+				}
+			_writer.WriteArrayEnd ();
+			}
+
+		if (HostAuthentication != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("HostAuthentication", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in HostAuthentication) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				// This is an untagged structure. Cannot inherit.
+                //_writer.WriteObjectStart();
+                //_writer.WriteToken(_index._Tag, 1);
+				bool firstinner = true;
+				_index.Serialize (_writer, true, ref firstinner);
+                //_writer.WriteObjectEnd();
+				}
+			_writer.WriteArrayEnd ();
+			}
+
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
 			}
@@ -7770,6 +7814,142 @@ public partial class CatalogedCredential : CatalogedEntry {
 				}
 			case "Password" : {
 				Password = jsonReader.ReadString ();
+				break;
+				}
+			case "ClientAuthentication" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				ClientAuthentication = new List <KeyData> ();
+				while (_Going) {
+					// an untagged structure.
+					var _Item = new  KeyData ();
+					_Item.Deserialize (jsonReader);
+					// var _Item = new KeyData (jsonReader);
+					ClientAuthentication.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "HostAuthentication" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				HostAuthentication = new List <KeyData> ();
+				while (_Going) {
+					// an untagged structure.
+					var _Item = new  KeyData ();
+					_Item.Deserialize (jsonReader);
+					// var _Item = new KeyData (jsonReader);
+					HostAuthentication.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class CatalogedApplicationSsh : CatalogedApplication {
+        /// <summary>
+        ///The S/Mime encryption key
+        /// </summary>
+
+	public virtual KeyData						ClientKey  {get; set;}
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedApplicationSsh";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedApplicationSsh();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((CatalogedApplication)this).SerializeX(_writer, false, ref _first);
+		if (ClientKey != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("ClientKey", 1);
+				ClientKey.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedApplicationSsh FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedApplicationSsh;
+			}
+		var Result = new CatalogedApplicationSsh ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "ClientKey" : {
+				// An untagged structure
+				ClientKey = new KeyData ();
+				ClientKey.Deserialize (jsonReader);
+ 
 				break;
 				}
 			default : {
@@ -9734,6 +9914,15 @@ public partial class CatalogedTask : CatalogedEntry {
 	/// <summary>
 	/// </summary>
 abstract public partial class CatalogedApplication : CatalogedEntry {
+	bool								__Default = false;
+	private int						_Default;
+        /// <summary>
+        /// </summary>
+
+	public virtual int						Default {
+		get => _Default;
+		set {_Default = value; __Default = true; }
+		}
         /// <summary>
         /// </summary>
 
@@ -9800,6 +9989,11 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 			_writer.WriteObjectStart ();
 			}
 		((CatalogedEntry)this).SerializeX(_writer, false, ref _first);
+		if (__Default){
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Default", 1);
+				_writer.WriteInteger32 (Default);
+			}
 		if (Key != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Key", 1);
@@ -9893,6 +10087,10 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 	public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 		switch (tag) {
+			case "Default" : {
+				Default = jsonReader.ReadInteger32 ();
+				break;
+				}
 			case "Key" : {
 				Key = jsonReader.ReadString ();
 				break;
@@ -10216,114 +10414,6 @@ public partial class CatalogedGroup : CatalogedApplication {
 				// An untagged structure
 				EnvelopedActivationAccount = new Enveloped<ActivationAccount> ();
 				EnvelopedActivationAccount.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
-
-	}
-
-	/// <summary>
-	/// </summary>
-public partial class CatalogedApplicationSsh : CatalogedApplication {
-        /// <summary>
-        ///The S/Mime encryption key
-        /// </summary>
-
-	public virtual KeyData						ClientKey  {get; set;}
-		
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "CatalogedApplicationSsh";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new CatalogedApplicationSsh();
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((CatalogedApplication)this).SerializeX(_writer, false, ref _first);
-		if (ClientKey != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("ClientKey", 1);
-				ClientKey.Serialize (_writer, false);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CatalogedApplicationSsh FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedApplicationSsh;
-			}
-		var Result = new CatalogedApplicationSsh ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "ClientKey" : {
-				// An untagged structure
-				ClientKey = new KeyData ();
-				ClientKey.Deserialize (jsonReader);
  
 				break;
 				}

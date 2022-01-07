@@ -144,7 +144,10 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
 
 
     public virtual void UpdateLocal(CatalogedEntry catalogedEntry) {
-        DictionaryByLocalName.AddSafe(catalogedEntry.LocalName, catalogedEntry);
+        if (catalogedEntry.LocalName != null) {
+            DictionaryByLocalName.Remove(catalogedEntry.LocalName);
+            DictionaryByLocalName.Add(catalogedEntry.LocalName, catalogedEntry);
+            }
         }
 
 

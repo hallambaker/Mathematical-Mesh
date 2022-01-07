@@ -176,13 +176,14 @@ public partial class ShellTests : Disposable {
     public bool CheckContactResult(string key, string email) =>
         DefaultDevice.CheckContactResult(key, email);
 
+
     public bool CheckBookmarkResult(string uri, string title, string local) =>
         DefaultDevice.CheckBookmarkResult(uri, title, local);
 
     public bool CheckTaskResult(string key, string title) =>
         DefaultDevice.CheckTaskResult(key, title);
-    public bool CheckNetworkResult(string key, string password) =>
-        DefaultDevice.CheckNetworkResult(key, password);
+    public bool CheckNetworkResult(string service, string key, string password) =>
+        DefaultDevice.CheckNetworkResult(service, key, password);
 
     public bool FailPasswordResult(string site) =>
         DefaultDevice.FailPasswordResult(site);

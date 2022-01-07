@@ -155,26 +155,26 @@ public partial class ShellTests {
 
         // Add a single entry and check that it is correctly registered.
         Dispatch($"bookmark add  {uri1} {title1} /id={local1}");
-        CheckBookmarkResult(local1, uri1, title1);
+        CheckBookmarkResult(uri1, title1, local1);
 
         // Add a second entry, check that the first and second are correctly registered,
         Dispatch($"bookmark add {uri2} {title2} /id={local2}");
-        CheckBookmarkResult(local1, uri1, title1);
-        CheckBookmarkResult(local2, uri2, title2);
+        CheckBookmarkResult(uri1, title1, local1);
+        CheckBookmarkResult(uri2, title2, local2);
 
         // Delete the second entry, check that only the first is still there.
         Dispatch($"bookmark delete {local2}");
-        CheckBookmarkResult(local1, uri1, title1);
+        CheckBookmarkResult(uri1, title1, local1);
 
         FailBookmarkResult(local2);
         // Update the first entry, check that it is correctly updated.
         Dispatch($"bookmark add {uri3} {title3} /id={local3}");
-        CheckBookmarkResult(local3, uri3, title3);
+        CheckBookmarkResult(uri3, title3, local3);
 
         // Re-add the second entry, check that it is correctly registered.
         Dispatch($"bookmark add {uri2} {title2} /id={local2}");
-        CheckBookmarkResult(local2, uri2, title2);
-        CheckBookmarkResult(local3, uri3, title3);
+        CheckBookmarkResult(uri2, title2, local2);
+        CheckBookmarkResult(uri3, title3, local3);
 
         EndTest();
         }
@@ -233,37 +233,37 @@ public partial class ShellTests {
     [Fact]
     public void TestProfileNetwork() {
 
-        string ssid1 = "ssid1", password1 = "password1", password1a = "password1a";
-        string ssid2 = "ssid2", password2 = "password2";
+        string ssid1 = "ssid1", ssid1Id = "ssid1-id", password1 = "password1", password1a = "password1a";
+        string ssid2 = "ssid2", ssid2Id = "ssid2-id", password2 = "password2";
 
         CreateAccount(AliceAccount);
 
         // Check that looking for a non existent entry fails
         // This makes sure that we don't end up picking up stale results from prior tests etc.
-        FailNetworkResult(ssid1);
+        FailNetworkResult(ssid1Id);
 
         // Add a single entry and check that it is correctly registered.
-        Dispatch($"network add {ssid1} {password1}");
-        CheckNetworkResult(ssid1, password1);
+        Dispatch($"network add {ssid1} {password1} /id={ssid1Id}");
+        CheckNetworkResult(ssid1, ssid1Id, password1);
 
         // Add a second entry, check that the first and second are correctly registered,
-        Dispatch($"network add {ssid2} {password2}");
-        CheckNetworkResult(ssid1, password1);
-        CheckNetworkResult(ssid2, password2);
+        Dispatch($"network add {ssid2} {password2} /id={ssid2Id}");
+        CheckNetworkResult(ssid1, ssid1Id, password1);
+        CheckNetworkResult(ssid2, ssid2Id, password2);
 
         // Delete the second entry, check that only the first is still there.
-        Dispatch($"network delete {ssid2}");
-        CheckNetworkResult(ssid1, password1);
+        Dispatch($"network delete {ssid2Id}");
+        CheckNetworkResult(ssid1, ssid1Id, password1);
 
-        FailNetworkResult(ssid2);
+        FailNetworkResult(ssid2Id);
         // Update the first entry, check that it is correctly updated.
-        Dispatch($"network add {ssid1} {password1a}");
-        CheckNetworkResult(ssid1, password1a);
+        Dispatch($"network add {ssid1} {password1a} /id={ssid1Id}");
+        CheckNetworkResult(ssid1, ssid1Id, password1a);
 
         // Re-add the second entry, check that it is correctly registered.
-        Dispatch($"network add {ssid2} {password2}");
-        CheckNetworkResult(ssid2, password2);
-        CheckNetworkResult(ssid1, password1a);
+        Dispatch($"network add {ssid2} {password2} /id={ssid2Id}");
+        CheckNetworkResult(ssid2, ssid2Id, password2);
+        CheckNetworkResult(ssid1, ssid1Id, password1a);
 
 
         EndTest();

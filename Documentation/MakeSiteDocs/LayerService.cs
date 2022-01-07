@@ -53,17 +53,20 @@ public partial class CreateExamples {
 
 
     public ShellMessage ShellMessage;
-    public ShellContact ShellContact;
+    //public ShellContact ShellContact;
 
-    public ShellGroup ShellGroup;
+    //public ShellGroup ShellGroup;
     //public ShellAccount ShellAccount;
 
-    public ShellCalendar ShellCalendar;
-    public ShellNetwork ShellNetwork;
+
     public ShellMail ShellMail;
     public ShellSSH ShellSSH;
+    
     public ShellPassword ShellPassword;
     public ShellBookmark ShellBookmark;
+    public ShellCalendar ShellCalendar;
+    public ShellNetwork ShellNetwork;
+
 
     public ShellKey ShellKey;
     public ShellHash ShellHash;

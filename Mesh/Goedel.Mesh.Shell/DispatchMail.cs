@@ -65,13 +65,21 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult MailGet(MailGet options) {
-        //var address = options.Address.Value.AssertNotNull(NYI.Throw);
-        //using var contextDevice = GetContextUser(options);
-        //using var transaction = contextDevice.TransactBegin();
+        var contextUser = GetContextUser(options);
+        
+        var identifier = options.Address.Value;
+        //var catalog = contextUser.GetStore(CatalogApplication.Label) as CatalogApplication;
 
-        return new ResultFail() {
-            Success = false,
-            Reason = "TBS"
+
+
+
+        //var key = CatalogedNetwork.PrimaryKey(null, identifier);
+
+        var result = contextUser.GetApplicationMail(identifier);
+
+        return new ResultEntry() {
+            Success = result != null,
+            CatalogEntry = result
             };
         }
 
@@ -81,13 +89,21 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult MailDelete(MailDelete options) {
-        //var address = options.Address.Value.AssertNotNull(NYI.Throw);
-        //using var contextDevice = GetContextUser(options);
-        //using var transaction = contextDevice.TransactBegin();
+        var contextUser = GetContextUser(options);
+        var identifier = options.Address.Value;
 
-        return new ResultFail() {
-            Success = false,
-            Reason = "TBS"
+
+        var transaction = contextUser.TransactBegin();
+        var catalog = transaction.GetCatalogApplication();
+        var result = catalog.Get(CatalogedApplicationMail.GetKey(identifier));
+
+        result.AssertNotNull(EntryNotFound.Throw, identifier);
+        transaction.CatalogDelete(catalog, result);
+        transaction.Transact();
+
+        return new ResultEntry() {
+            Success = true,
+            CatalogEntry = result
             };
         }
 
@@ -97,46 +113,17 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult MailImport(MailImport options) {
-        //var address = options.Address.Value.AssertNotNull(NYI.Throw);
-        //using var contextDevice = GetContextUser(options);
-        //using var transaction = contextDevice.TransactBegin();
+        var contextUser = GetContextUser(options);
+        var file = options.File.Value;
+        var id = options.Identifier.Value;
 
-        return new ResultFail() {
-            Success = false,
-            Reason = "TBS"
+        var entry = contextUser.AddApplicationFromFile(file, localName: id);
+
+        return new ResultEntry() {
+            Success = true,
+            CatalogEntry = entry
             };
         }
-
-
-
-
-    ///// <summary>
-    ///// Dispatch method
-    ///// </summary>
-    ///// <param name="options">The command line options.</param>
-    ///// <returns>Mesh result instance</returns>
-    //public override ShellResult MailUpdate(MailUpdate options) {
-    //    var address = options.Address.Value.AssertNotNull(NYI.Throw);
-    //    using var contextDevice = GetContextUser(options);
-    //    using var transaction = contextDevice.TransactBegin();
-
-    //    var applicationMail = new CatalogedApplicationMail() {
-    //        Key = address
-    //        };
-
-    //    transaction.ApplicationUpdate(applicationMail);
-
-    //    var resultTransact = transaction.Transact();
-    //    return resultTransact.Success() ?
-    //        new ResultApplication() {
-    //            Success = true,
-    //            Application = applicationMail
-    //            } :
-    //            new ResultFail() {
-    //                Success = false,
-    //                Reason = "TBS"
-    //                };
-    //    }
 
     /// <summary>
     /// Dispatch method
@@ -151,15 +138,11 @@ public partial class Shell {
         var catalogApplication = transaction.GetCatalogApplication();
         var known = catalogApplication.GetMail();
 
-
         return new ResultApplicationList() {
             Success = true,
             Applications = known
             };
-
         }
-
-
 
     ShellResult KeyToFile(KeyPair keyPair,
                 string fileName,
@@ -167,8 +150,6 @@ public partial class Shell {
                 string password,
                 bool privateKey,
                 KeyFileFormat keyFileFormatDefault) {
-
-
 
         var length = (int)keyPair.ToKeyFile(fileName, keyFileFormatDefault);
 

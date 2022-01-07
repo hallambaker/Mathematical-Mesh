@@ -60,20 +60,26 @@ public class MakeSiteDocs : CreateExamples {
 
         ServiceConnect();
         CreateAliceAccount();
+
         EncodeDecodeFile(index);
+        ConnectDeviceCompare(index);
+
+        MailApp();
+        SSHApp();
+
+        //
+
 
         PasswordCatalog();
         BookmarkCatalog();
         ContactCatalog();
         NetworkCatalog();
         TaskCatalog();
-        ConnectDeviceCompare(index);
+        //
 
 
 
 
-        SSHApp();
-        MailApp();
         CreateBobAccount();
         ContactExchange();
 

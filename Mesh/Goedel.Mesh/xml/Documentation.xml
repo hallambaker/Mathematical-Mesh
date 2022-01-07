@@ -2610,6 +2610,10 @@
             </summary>
             <param name="output">Destination to which the description is written.</param>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedApplication.Default">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedApplication.Key">
             <summary>
             </summary>
@@ -3606,6 +3610,16 @@
         <member name="P:Goedel.Mesh.CatalogedCredential.Password">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedCredential.ClientAuthentication">
+             <summary>
+            Specifies the client identification key
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedCredential.HostAuthentication">
+             <summary>
+            Means of authenticating the host key
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedCredential._Tag">
             <summary>

@@ -57,6 +57,7 @@ public class ShellPassword : ExampleSet {
         PasswordUpdate = Alice1.Example($"password add {PasswordSite} {PasswordAccount1} {PasswordValue1a}");
         PasswordGet = Alice1.Example($"password get {PasswordSite}");
         PasswordDelete = Alice1.Example($"password delete {PasswordSite2}");
-
+        Alice1.Example($"password get {PasswordSite}");
+        Alice1.Example($"!password get {PasswordSite2}");
         }
     }

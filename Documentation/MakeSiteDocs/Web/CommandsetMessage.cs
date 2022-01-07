@@ -49,24 +49,24 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("Having created a Mesh profile, Bob asks Alice to add him to her contacts catalog\n{0}", _Indent);
 			_Output.Write ("using the {1} command:\n{0}", _Indent, ToCommand("message contact"));
 			_Output.Write ("\n{0}", _Indent);
-			 ConsoleExample (ShellMessage.ContactRequest);
+			 ConsoleExample (Contact.ContactBobRequest);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Alice reviews her pending messages using the {1} command:\n{0}", _Indent, ToCommand("message pending"));
 			_Output.Write ("\n{0}", _Indent);
-			 ConsoleExample (ShellMessage.ContactPending);
+			 ConsoleExample (Contact.ContactAliceResponse);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Alice sees the request from Bob and accepts it with the {1} command:\n{0}", _Indent, ToCommand("message accept"));
 			_Output.Write ("\n{0}", _Indent);
-			 ConsoleExample (ShellMessage.ContactAccept);
+			 ConsoleExample (Contact.ContactAliceAccept);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Bob's contact information has been added to Alice's address book:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			 ConsoleExample (ShellMessage.ContactCatalogList);
+			 ConsoleExample (Contact.ContactAliceList);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Bob can find out if Alice has accepted his contact request using the \n{0}", _Indent);
 			_Output.Write ("{1} command:\n{0}", _Indent, ToCommand("message status"));
 			_Output.Write ("\n{0}", _Indent);
-			 ConsoleExample (ShellMessage.ContactGetResponse);
+			 ConsoleExample (Contact.ContactBobStatus);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Alice has accepted Bob's request and added him to her contacts list. She has also sent\n{0}", _Indent);
 			_Output.Write ("Bob a contact request which for the sake of convenience, is accepted automatically.\n{0}", _Indent);
@@ -74,11 +74,11 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("Alice isn't required to accept contact requests. She rejects the request from Mallet \n{0}", _Indent);
 			_Output.Write ("using the {1} command:\n{0}", _Indent, ToCommand("message reject"));
 			_Output.Write ("\n{0}", _Indent);
-			 ConsoleExample (ShellMessage.ContactReject);
+			 ConsoleExample (Contact.ContactAliceReject);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("For good measure, she decides to block further requests:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			 ConsoleExample (ShellMessage.ContactBlock);
+			 ConsoleExample (Contact.ContactAliceBlock);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The Mesh Confirmation protocol allows a message sender to ask the recipient a short\n{0}", _Indent);
 			_Output.Write ("question. If the user chooses to respond, the sender receives back a non-repudiable \n{0}", _Indent);
@@ -177,7 +177,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The required parameter is the message identifier of the request to be accepted.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleReference (ShellMessage.ContactAccept);
+			  ConsoleReference (Contact.ContactAliceAccept);
 			_Output.Write ("\n{0}", _Indent);
 			// ------------------ message block
 			 Describe(CommandSet, _MessageBlock._DescribeCommand);
@@ -187,7 +187,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The required parameter is the identifier of the party to be blocked. This may\n{0}", _Indent);
 			_Output.Write ("be a local name defined in the contacts book or an address.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleReference (ShellMessage.ContactBlock);
+			  ConsoleReference (Contact.ContactAliceBlock);
 			_Output.Write ("\n{0}", _Indent);
 			// ------------------ message confirm
 			 Describe(CommandSet, _MessageConfirm._DescribeCommand);
@@ -212,7 +212,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The first parameter is required and specifies the intended recipient.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleReference (ShellMessage.ContactRequest);
+			  ConsoleReference (Contact.ContactBobRequest);
 			_Output.Write ("\n{0}", _Indent);
 			// ------------------ message pending
 			 Describe(CommandSet, _MessagePending._DescribeCommand);
@@ -226,7 +226,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("that have been read or are unread. By default, only unread messages are returned.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleReference (ShellMessage.ContactPending);
+			  ConsoleReference (Contact.ContactAlicePending);
 			_Output.Write ("\n{0}", _Indent);
 			// ------------------ message reject
 			 Describe(CommandSet, _MessageReject._DescribeCommand);
@@ -240,7 +240,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The required parameter is the message identifier of the request to be rejected.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleReference (ShellMessage.ContactReject);
+			  ConsoleReference (Contact.ContactAliceReject);
 			_Output.Write ("\n{0}", _Indent);
 			// ------------------ message status
 			 Describe(CommandSet, _MessageStatus._DescribeCommand);
@@ -251,7 +251,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("The confirmation request to be queried is specified by its message identifier.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			  ConsoleReference (ShellMessage.ConfirmGetAccept);
+			  ConsoleReference (Contact.ContactBobStatus);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

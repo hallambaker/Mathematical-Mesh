@@ -38,12 +38,12 @@ public partial class CreateExamples {
         ShellPassword = new ShellPassword(this);
 
         ShellCalendar = new ShellCalendar(this);
-        ShellContact = new ShellContact(this);
-        ShellGroup = new ShellGroup(this);
+
+
+        //ShellContact = new ShellContact(this);
+        //ShellGroup = new ShellGroup(this);
 
         ShellMessage = new ShellMessage(this);
-
-
         ShellSSH = new ShellSSH(this);
         ShellMail = new ShellMail(this);
 

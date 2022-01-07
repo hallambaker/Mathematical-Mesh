@@ -501,11 +501,6 @@
 				Brief "Recryption group name in user@example.com format"
 
 
-	OptionSet SSHOptions
-		Option Application "application" String
-			Brief "The application format"
-
-
 
 
 
@@ -547,6 +542,21 @@
 	CommandSet Contact "contact"
 		Brief "Manage contact catalogs connected to an account"
 
+		Command ContactAdd "add"
+			Brief "Add contact entry from specified parameters"
+			Parameter Address "address" String
+				Brief "The user address"
+			Parameter Name "name" String
+				Brief "The user name"
+			Option Unique "uid" String
+				Brief "Unique identifier"
+			Option Identifier "id" String
+				Brief "Local identifier"
+			Option Self "self" Flag
+				Brief "Contact is for self"
+
+
+
 		Command ContactStatic "static"
 			Brief "Create static contact retrieval URI"
 			Include AccountOptions
@@ -576,6 +586,8 @@
 			Brief "Import contact entry from file"
 			Parameter File "file" ExistingFile
 				Brief "File containing the contact entry to add"
+			Option Self "self" Flag
+				Brief "Contact is for self"
 			Include AccountOptions
 			Include Reporting
 
@@ -1038,7 +1050,7 @@
 
 		Command MailGet "get"
 			Brief "Lookup mail entry"
-			Parameter Identifier "id" String
+			Parameter Address "address" String
 				Brief "The mail account address"
 			Include AccountOptions
 			Include Reporting
@@ -1050,6 +1062,10 @@
 
 		Command MailImport "import"
 			Brief "Import account information"
+			Parameter File "file" ExistingFile
+				Brief "File containing the contact entry to add"
+			Option Identifier "id" String
+				Brief "Unique entry identifier"
 			Include AccountOptions
 			Include Reporting
 
@@ -1111,111 +1127,66 @@
 			Brief "Generate a new SSH public keypair for the current machine and add to the personal profile"
 			Include AccountOptions
 			Include Reporting
-			Include SSHOptions
 			Include CryptoOptions
 			Include DeviceAuthOptions
 			Option ID "id" String
 				Brief "Key identifier"
 
 		Command SSHGet "get"
-			Brief "Lookup mail entry"
+			Brief "Get SSH account data"
 			Parameter Identifier "id" String
 				Brief "The mail account address"
 			Include AccountOptions
 			Include Reporting
+			Include KeyFileOptions
 
 		Command SSHList "list"
-			Brief "List mail account information"
-			Option Hosts "known" Flag
+			Brief "List SSH account information"
+			Option Hosts "host" Flag
 				Brief "List known host entries"
 				Default "true"
-			Option Client "auth" Flag
+			Option Client "client" Flag
 				Brief "List authorized client entries"
 				Default "true"
-			Include SSHOptions
+			Include KeyFileOptions
 			Include AccountOptions
 			Include Reporting
 
-		Command SSHImport "import"
+		Command SSHClient "client"
+			Brief "Import SSH client information"
+			Parameter FileIn "file" ExistingFile
+				Brief "File containing the contact entry to add"
+			Option Identifier "id" String
+				Brief "Unique entry identifier"
+			Option Merge "merge" Flag
+				Brief "Merge input file with Mesh profile"
+			Include AccountOptions
+			Include Reporting
+			Include KeyFileOptions
+
+		Command SSHHost "host"
 			Brief "Import account information"
+			Parameter FileIn "file" ExistingFile
+				Brief "File containing the contact entry to add"
+			Option Identifier "id" String
+				Brief "Unique entry identifier"
+			Option Merge "merge" Flag
+				Brief "Merge input file with Mesh profile"
 			Include AccountOptions
 			Include Reporting
+			Include KeyFileOptions
 
+		Command SSHKnown "known"
+			Brief "Get SSH data for known host"
+			Parameter Identifier "id" String
+				Brief "The mail account address"
+			Include AccountOptions
+			Include Reporting
+			Include KeyFileOptions
 
 		Command SSHDelete "delete"
-			Brief "Delete mail account information"
+			Brief "Delete SSH profile information"
 			Include AccountOptions
 			Include Reporting
-			Parameter Address "address" String
-				Brief "Mail account identifier"
-
-
-
-		Command SSHPrivate "private"
-			Brief "Extract the private key for this device"
-			Include AccountOptions
-			Include Reporting
-			Include KeyFileOptions
-			Option ID "id" String
-				Brief "Key identifier"
-
-		Command SSHPublic "public"
-			Brief "Extract the public key for this device"
-			Include AccountOptions
-			Include Reporting
-			Include KeyFileOptions
-			Option ID "id" String
-				Brief "Key identifier"
-		
-		CommandSet SSHMerge "merge"		
-			Brief "Merge the catalog with the specified local file"
-			Command SSHMergeHosts "hosts"
-				Brief "Merge the SSH known hosts catalog with the specified file"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-				Parameter File "file" ExistingFile
-				Option ID "id" String
-					Brief "Specify the SSH instance"
-				Option Hosts "read" Flag
-					Brief "Read the specified file and update the catalog."
-					Default "true"
-				Option Client "write" Flag
-					Brief "Read the catalog and write unknown hosts to it."
-					Default "true"
-
-			Command SSHMergeClients "client"
-				Brief "Merge the SSH authorized keys catalog with the specified file"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-				Parameter File "file" ExistingFile
-				Option ID "id" String
-					Brief "Specify the SSH instance"
-				Option Hosts "read" Flag
-					Brief "Read the specified file and update the catalog."
-					Default "true"
-				Option Client "write" Flag
-					Brief "Read the catalog and write unknown hosts to it."
-					Default "true"
-
-		CommandSet SSHAdd "add"	
-			Brief "Add a public key to the host or client configuration"
-			Command SSHAddHost "host"
-				Brief "Add host to the known_hosts catalog"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-				Option ID "id" String
-					Brief "Key identifier"
-
-
-			Command SSHAddClient "client"
-				Brief "Add key to the authorized_keys file"
-				Include AccountOptions
-				Include Reporting
-				Include SSHOptions
-				Parameter File "file" ExistingFile			
-				Option ID "id" String
-					Brief "Key identifier"
-
+			Option Identifier "id" String
+				Brief "Unique entry identifier"

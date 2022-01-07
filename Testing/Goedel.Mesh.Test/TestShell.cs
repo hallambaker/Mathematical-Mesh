@@ -322,7 +322,7 @@ public partial class TestCLI : CommandLineInterpreter {
         return true;
         }
 
-    public bool CheckBookmarkResult(string local, string title, string uri) {
+    public bool CheckBookmarkResult(string uri, string title, string local) {
         var result = Dispatch($"bookmark get {local}") as ResultEntry;
         var entry = result.CatalogEntry as CatalogedBookmark;
 
@@ -354,11 +354,11 @@ public partial class TestCLI : CommandLineInterpreter {
         return true;
         }
 
-    public bool CheckNetworkResult(string key, string password) {
+    public bool CheckNetworkResult(string service, string key, string password) {
         var result = Dispatch($"network get {key}") as ResultEntry;
         var entry = result.CatalogEntry as CatalogedNetwork;
 
-        (key == entry.Service).TestTrue();
+        (service == entry.Service).TestTrue();
         (password == entry.Password).TestTrue();
         return true;
         }

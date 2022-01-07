@@ -31,6 +31,9 @@ using Goedel.Test;
 using Goedel.Utilities;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
+using System.Data;
 
 namespace ExampleGenerator;
 
@@ -443,51 +446,94 @@ public partial class CreateExamples {
 
         // Dump out the private key in SSH format
         Apps.SSHPrivate = Alice1.Example(
-            $"ssh private /file={Apps.SshPrivateKey}");
+            $"~ssh get /private /file={Apps.SshPrivateKey}");
 
         // Dump out the public key in SSH format
         Apps.SSHPublic = Alice1.Example(
-            $"ssh public /file={Apps.SshPublicKey}");
+            $"~ssh get /file={Apps.SshPublicKey}");
 
         Apps.SSHConnect = Alice2.Example(
                 "account sync",
-                $"ssh private /file={Apps.SshPrivateKey2}");
+                $"~ssh private /file={Apps.SshPrivateKey2}");
 
         Apps.SSHList = Alice2.Example(
-                "ssh list");
+                "~ssh list /client");
         var appsResult = Apps.SSHList[0].Result as ResultApplicationList;
         Apps.SSHCatalogEntry = appsResult.Applications[0];
 
+        var localname2 = "work";
+        var clientKey = KeyPair.Factory(CryptoAlgorithmId.Ed25519,
+                KeySecurity.Exportable);
+        var mail2 = new CatalogedApplicationSsh() {
+            ClientKeyPrivate = clientKey,
+            ClientKey = new KeyData(clientKey)
+            };
+        mail2.ToFile(Apps.SSHAccountConfigFile, tagged: true);
+
+
+        var hostKey1 = KeyPair.Factory(CryptoAlgorithmId.Ed25519,
+                KeySecurity.Exportable);
+        var host1 = new CatalogedCredential() {
+            Protocol = "ssh",
+            Service = Apps.SSHHostName1,
+            Username = "alice42",
+            HostAuthentication = new() { new KeyData(hostKey1) }
+            };
+        host1.ToFile(Apps.SSHHost1File, tagged: true);
+
+        var hostKey2 = KeyPair.Factory(CryptoAlgorithmId.Ed25519,
+                KeySecurity.Exportable);
+        var host2 = new CatalogedCredential() {
+            Protocol = "ssh",
+            Service = Apps.SSHHostName2,
+            Username = "alice69",
+            HostAuthentication = new() {
+                new KeyData(hostKey1)
+                }
+            };
+        host2.ToFile(Apps.SSHHost2File, tagged: true);
+
+
         /////
         Apps.SSHImport = Alice1.Example(
-                "~ssh import");
+                $"~ssh client {Apps.SSHAccountConfigFile} /id={localname2}");
 
-        Apps.SSHAddClient = Alice1.Example(
-                "~ssh add client");
 
         Apps.SSHGet = Alice1.Example(
-                "~ssh get");
+                $"~ssh get {localname2}");
 
-        Apps.SSHDelete = Alice1.Example(
-                "~ssh delete");
+        Apps.SSHGetPrivate = Alice1.Example(
+                $"!ssh get {localname2} /private");
+
 
         Apps.SSHList = Alice1.Example(
-                "~ssh list /client");
+                $"~ssh list /client");
 
-        Apps.SSHMergeClients = Alice2.Example(
-                "~ssh merge client");
+
+        Apps.SSHDelete = Alice1.Example(
+                $"~ssh delete {localname2}");
+
+        Apps.SSHList2 = Alice1.Example(
+                $"~ssh list /client");
+
+        Apps.SSHDeleteList = Concat(Apps.SSHDelete, Apps.SSHList2);
+
+
+        Apps.SSHAddHost = Alice2.Example(
+                $"~ssh host {Apps.SSHHost1File}");
 
         Apps.SSHListHosts = Alice1.Example(
-                "~ssh list /hosts");
+                $"~ssh list /hosts");
 
-        Apps.SSHAddHost = Alice1.Example(
-                "~ssh add host");
+        Apps.SSHKnown = Alice1.Example(
+                $"~ssh known {Apps.SSHHostName1}");
 
-        Apps.SSHListHosts = Alice1.Example(
-                "~ssh list /hosts");
+        Apps.SSHAddHost2 = Alice2.Example(
+                $"~ssh host {Apps.SSHHost2File}");
 
-        Apps.SSHMergeHosts = Alice2.Example(
-                "~ssh merge hosts");
+        Apps.SSHListHosts2 = Alice1.Example(
+                $"~ssh list /hosts");
+
 
 
         }
@@ -496,12 +542,21 @@ public partial class CreateExamples {
         // Add an SSH application profile 'SSH'
         Apps.Mail = Alice1.Example(
             $"mail add {Apps.Mailaddress} /inbound {Apps.Mailinbound1} /outbound {Apps.Mailoutbound}");
+
+        var mail2 = new CatalogedApplicationMail() {
+            AccountAddress = "alice@example.net",
+            InboundConnect = "pop3.example.net",
+            OutboundConnect = "submit.example.net"
+            };
+        mail2.ToFile(Apps.MailAccountConfigFile, tagged: true);
+
+
         Apps.MailImport = Alice1.Example(
-            $"~mail import ");
+            $"mail import {Apps.MailAccountConfigFile}");
         Apps.MailUpdate = Alice1.Example(
-            $"~mail add /inbound {Apps.Mailinbound2} /outbound {Apps.Mailoutbound} ");
+            $"mail add {Apps.Mailaddress} /inbound {Apps.Mailinbound2} /outbound {Apps.Mailoutbound} ");
         Apps.MailGet = Alice1.Example(
-            $"~mail get {Apps.Mailaddress}");
+            $"mail get {Apps.Mailaddress}");
 
         Apps.MailList = Alice1.Example(
             $"mail list");
@@ -541,15 +596,16 @@ public partial class CreateExamples {
         Account.CreateBob = Bob1.Example(
             $"account create {BobAccount}"
             );
-        }
-    public void CreateCarolAccount() {
-
-
-        // Interactions with Bob... create an account
+        // Create mallet with bob,
         Mallet1 = GetTestCLI("Mallet");
         Account.CreateMallet = Mallet1.Example(
             $"account create {MalletAccount}"
             );
+        }
+    public void CreateCarolAccount() {
+
+
+
         Carol1 = GetTestCLI("Carol");
         Account.CreateCarol = Carol1.Example(
             $"account create {CarolAccount}"
@@ -573,20 +629,36 @@ public partial class CreateExamples {
             $"message contact {AliceAccount}"
              );
 
-        Contact.ContactAliceResponse = Alice1.Example(
+        Contact.ContactMalletRequest = Mallet1.Example(
+            $"message contact {AliceAccount}"
+             );
+
+
+        Contact.ContactAlicePending = Alice1.Example(
             $"account sync",
             $"message pending"
              );
-        resultPending = Contact.ContactAliceResponse.GetResultPending(1);
-        var contactMessage = resultPending.Messages[0] as Goedel.Mesh.MessageContact;
+        resultPending = Contact.ContactAlicePending.GetResultPending(1);
+        var contactMessage = resultPending.Messages[1] as Goedel.Mesh.MessageContact;
+        var contactMessageMallet = resultPending.Messages[0] as Goedel.Mesh.MessageContact;
         Contact.BobRequest = contactMessage;
 
-        var contactAccept = Alice1.Example(
-            $"message accept {contactMessage.MessageId}",
+        Contact.ContactAliceAccept = Alice1.Example(
+            $"message accept {contactMessage.MessageId}"
+            );
+
+        Contact.ContactAliceList = Alice1.Example(
             $"contact list"
             );
-        Contact.ContactAliceResponse.Add(contactAccept[0]);
-        Contact.ContactAliceResponse.Add(contactAccept[1]);
+
+        Contact.ContactAliceResponse = new();
+        Contact.ContactAliceResponse.AddRange(Contact.ContactAlicePending);
+        Contact.ContactAliceResponse.AddRange(Contact.ContactAliceAccept);
+        Contact.ContactAliceResponse.AddRange(Contact.ContactAliceList);
+
+        Contact.ContactBobStatus = Bob1.Example(
+            $"message status"
+             );
 
         Contact.ContactBobFinal = Bob1.Example(
                 $"account sync /auto",
@@ -594,13 +666,13 @@ public partial class CreateExamples {
                  );
 
 
-
+        Contact.ContactAliceReject = Alice1.Example(
+            $"message reject {contactMessageMallet.MessageId}"
+            );
         // Interactions with Bob... create an account
-
-        Contact.ContactBobRequest.GetResult().Success.TestTrue();
-        Contact.ContactAliceResponse.GetResult().Success.TestTrue();
-        Contact.ContactAliceResponse.GetResult(1).Success.TestTrue();
-        contactAccept.GetResult().Success.TestTrue();
+        Contact.ContactAliceBlock = Alice1.Example(
+            $"message block {MalletAccount}"
+            );
 
         return resultPending;
         }
@@ -996,9 +1068,10 @@ public partial class CreateExamples {
 
         // failing catalog requests here
 
+
+        Contact.ContactList1 = Alice5.Example($"!contact list");
         ShellBookmark.BookmarkList1 = Alice5.Example($"!bookmark list");
         ShellCalendar.CalendarList1 = Alice5.Example($"!calendar list");
-        ShellContact.ContactList1 = Alice5.Example($"!contact list");
         ShellNetwork.NetworkList1 = Alice5.Example($"!network list");
         ShellPassword.PasswordList1 = Alice5.Example($"!credential list");
 
@@ -1006,9 +1079,9 @@ public partial class CreateExamples {
         Connect.ConnectJoinAuth = Alice1.Example(
                 $"~device auth Alice5 /all");
 
+        Contact.ContactList2 = Alice5.Example($"~contact list");
         ShellBookmark.BookmarkList2 = Alice5.Example($"~bookmark list");
         ShellCalendar.CalendarList2 = Alice5.Example($"~calendar list");
-        ShellContact.ContactList2 = Alice5.Example($"~contact list");
         ShellNetwork.NetworkList2 = Alice5.Example($"~network list");
         ShellPassword.PasswordList2 = Alice5.Example($"~credential list");
 
@@ -1020,7 +1093,7 @@ public partial class CreateExamples {
         Connect.ConnectMailAuth = Alice1.Example(
                 $"~device auth Alice5 /mail");
 
-        Apps.SSHAuthProof = Alice5.Example($"~openpgp sign {Apps.Mailaddress} /file={Apps.MailOpenpgpFile}");
+        Apps.MailAuthProof = Alice5.Example($"~openpgp sign {Apps.Mailaddress} /file={Apps.MailOpenpgpFile}");
         }
 
 

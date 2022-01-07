@@ -46,16 +46,6 @@
 			Description
 				|The private key parameters as defined in the JOSE specification.
 
-		//String ServiceId
-		//	Description
-		//		|The identifier used to claim the capability from the service.[Only present for
-		//		|a partial key.]
-		//String ServiceAddress
-		//	Description
-		//		|The service account that supports a serviced capability. [Only present for
-		//		|a partial key.]	
-	
-
 
 	Structure KeyShare
 		Inherits Key
@@ -766,7 +756,23 @@
 		String Service
 		String Username
 		String Password
-	
+		Struct KeyData ClientAuthentication
+			Multiple
+			Description
+				|Specifies the client identification key
+		Struct KeyData HostAuthentication
+			Multiple
+			Description
+				|Means of authenticating the host key
+
+	Structure CatalogedApplicationSsh
+		Inherits CatalogedApplication
+
+		Struct KeyData ClientKey
+			Description
+				|The S/Mime encryption key
+
+
 	Structure CatalogedNetwork
 		Inherits CatalogedEntry
 		String Protocol
@@ -943,6 +949,7 @@
 		// The application profile
 		Abstract
 		Inherits CatalogedEntry
+		Integer Default
 		String Key
 		String Grant
 			Multiple
@@ -980,11 +987,7 @@
 				|The activation of the device within the Mesh account
 
 
-	Structure CatalogedApplicationSsh
-		Inherits CatalogedApplication
-		Struct KeyData ClientKey
-			Description
-				|The S/Mime encryption key
+
 
 
 

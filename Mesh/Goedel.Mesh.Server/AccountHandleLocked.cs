@@ -251,10 +251,19 @@ public class AccountHandleLocked : Disposable {
     public void StoreAppend(string label, List<DareEnvelope> envelopes) {
         "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
 
+
+
         envelopes.AssertNotNull(Internal.Throw);
         if (envelopes.Count == 0) {
             return;
             }
+
+
+        //foreach (var envelope in envelopes) {
+        //    envelope.Header.PayloadDigest.AssertNotNull(NYI.Throw);
+        //    envelope.Header.TreeDigest.AssertNotNull(NYI.Throw);
+        //    }
+
 
         if (envelopes[0].Header.SequenceInfo.Index == 0) {
             MakeNewSequence(label, envelopes);
