@@ -707,6 +707,13 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SSHDelete(Goedel.Mesh.Shell.SSHDelete)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.SSHHost(Goedel.Mesh.Shell.SSHHost)">
             <summary>
             Dispatch method
@@ -715,13 +722,6 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.SSHKnown(Goedel.Mesh.Shell.SSHKnown)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SSHDelete(Goedel.Mesh.Shell.SSHDelete)">
             <summary>
             Dispatch method
             </summary>
@@ -4423,12 +4423,6 @@
         <member name="P:Goedel.Mesh.Shell._SSHGet.Private">
             <summary>Field accessor for option [private]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHList.Hosts">
-            <summary>Field accessor for option [host]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHList.Client">
-            <summary>Field accessor for option [client]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SSHList.Format">
             <summary>Field accessor for option [format]</summary>
         </member>
@@ -4594,6 +4588,9 @@
         <member name="P:Goedel.Mesh.Shell._SSHKnown.Private">
             <summary>Field accessor for option [private]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._SSHDelete.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._SSHDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -4617,9 +4614,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHDelete.Json">
             <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHDelete.Identifier">
-            <summary>Field accessor for option [id]</summary>
         </member>
         <member name="T:Goedel.Mesh.Shell.MimeMapping">
             <summary>

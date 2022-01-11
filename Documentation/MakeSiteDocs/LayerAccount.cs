@@ -236,8 +236,11 @@ public partial class LayerService : ExampleSet {
 public partial class LayerApps : ExampleSet {
 
     public string SshPublicKey = "alice1_ssh_pub.pem";
+    public string SshPublicKey2 = "alice1_ssh_pub2.pem";
+
     public string SshPrivateKey = "alice1_ssh_prv.pem";
     public string SshPrivateKey2 = "alice2_ssh_prv.pem";
+    public string SshPrivateKey3 = "alice1_ssh_prv_3.pem";
 
 
     public string Mailaddress = "alice@example.net";
@@ -271,6 +274,7 @@ public partial class LayerApps : ExampleSet {
     public List<ExampleResult> SSHGet;
     public List<ExampleResult> SSHGetPrivate;
     public List<ExampleResult> SSHDelete;
+    public List<ExampleResult> SSHList1;
     public List<ExampleResult> SSHList2;
     public List<ExampleResult> SSHDeleteList;
 

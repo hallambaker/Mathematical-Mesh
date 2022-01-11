@@ -85,7 +85,7 @@ script to first generate a random nonce and request that the private key file
 be extracted encrypted under the nonce which can be discarded after the key is
 successfully installed. [Not currently supported.]
 
-The #{ToCommand("ssh list")} command with the '/client' option lists the authorized 
+The #{ToCommand("ssh list")} command lists the authorized 
 clients keys in the profile. This may be used to generate the `authorized_keys` file 
 by specifying the SSH file format used by the particular SSH application in use.
 
@@ -126,13 +126,14 @@ catalog.
 #%  ConsoleExample (Apps.SSHAddHost);
 
 
-The #{ToCommand("ssh list")}  command with the '/host' option lists the known host keys 
+The #{ToCommand("ssh konwn")}  command lists the known host keys 
 in the profile. This information is stored in the credential catalog and may also be 
 retrieved through the password commands.
 
 #%  ConsoleExample (Apps.SSHListHosts);
 
-The #{ToCommand("ssh known")}  command returns the SSH parameters for a particular known host:
+The #{ToCommand("ssh known")}  command with a specified host returns the SSH parameters 
+for a particular known host:
 
 #%  ConsoleExample (Apps.SSHKnown);
 
@@ -192,8 +193,9 @@ The ssh host command adds a host entry to the credential catalog from a file.
 #! ------------------ ssh known
 #% Describe(CommandSet, _SSHKnown._DescribeCommand);
 
+The SSH known command returns the SSH authention data for all hosts in the credentials 
+catalog or for a specific host.
 
-The SSH known command returns the SSH authentication data for the specified host
 
 #%  ConsoleReference (Apps.SSHKnown);
 

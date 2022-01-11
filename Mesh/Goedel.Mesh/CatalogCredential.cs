@@ -124,10 +124,13 @@ public partial class CatalogedCredential {
     #region // Properties
 
     ///<summary>The primary key is protocol:site </summary>
-    public override string _PrimaryKey => $"{Protocol ?? ""}:{Service ?? ""}";
+    public override string _PrimaryKey => GetKey(Protocol, Service);
 
     #endregion
     #region // Override methods
+
+
+    public static string GetKey(string protocol, string service) => $"{protocol ?? ""}:{service ?? ""}";
 
     /// <summary>
     /// Converts the value of this instance to a <see langword="String"/>.

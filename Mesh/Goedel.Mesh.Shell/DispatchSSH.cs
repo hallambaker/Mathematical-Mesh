@@ -20,7 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.KeyFile;
+using Goedel.Registry;
 
 namespace Goedel.Mesh.Shell;
 
@@ -37,17 +39,13 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult SSHCreate(SSHCreate options) {
         var rights = GetRights(options);
-        var id = options.ID.Value ?? "ssh";
+        var id = options.ID.Value;
         var contextUser = GetContextUser(options);
         using var transaction = contextUser.TransactBegin();
 
         var applicationSSH = CatalogedApplicationSsh.Create(id, rights);
-
-
         transaction.ApplicationCreate(applicationSSH);
-        //transaction.ApplicationDeviceAdd(applicationSSH);
         var resultTransact = transaction.Transact();
-
 
         return resultTransact.Success() ?
             new ResultApplication() {
@@ -67,22 +65,52 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult SSHGet(SSHGet options) {
-        //var id = options.ID.Value ?? "ssh";
-        //var contextUser = GetContextUser(options);
-        //using var transaction = contextUser.TransactBegin();
+        var id = options.Identifier.Value;
+        var format = options.Format.Value;
+        var fileName = options.File.Value;
+        var password = options.Password.Value;
+        var contextUser = GetContextUser(options);
 
-        //var catalogApplication = transaction.GetCatalogApplication();
+        // We need the application entry for this specific device, not a generic one.
 
 
-        //var applicationSSH = new CatalogedApplicationSshHost() {
-        //    Key = id
-        //    };
-        //catalogApplication.New(applicationSSH);
+        var applicationSsh = contextUser.GetApplicationSsh(id);
 
-        return new ResultFail() {
-            Success = false,
-            Reason = "TBS"
-            };
+        KeyFileFormat keyFileFormat;
+
+        if (!options.Private.Value) {
+            keyFileFormat = KeyFileFormat.PEMPublic;
+
+
+            return KeyToFile(
+            applicationSsh.ClientKey.GetKeyPair(KeySecurity.Public),
+            fileName,
+            format,
+            password,
+            true,
+            keyFileFormat
+            );
+            }
+
+
+        var applicationEntrySsh = contextUser.GetApplicationEntrySsh(applicationSsh.Key);
+        applicationEntrySsh.AssertNotNull(NYI.Throw);
+
+        var keyData = applicationEntrySsh.Activation.ClientKey;
+
+
+
+        var keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
+        keyFileFormat = KeyFileFormat.PEMPrivate;
+
+        return KeyToFile(
+                keyPair,
+                fileName,
+                format,
+                password,
+                true,
+                keyFileFormat
+                );
         }
 
     /// <summary>
@@ -91,13 +119,11 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult SSHList(SSHList options) {
-
         var contextUser = GetContextUser(options);
         using var transaction = contextUser.TransactBegin();
 
         var catalogApplication = transaction.GetCatalogApplication();
         var known = catalogApplication.GetSsh();
-
 
         return new ResultApplicationList() {
             Success = true,
@@ -116,53 +142,7 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult SSHClient(SSHClient options) {
         var contextUser = GetContextUser(options);
-        var file = options.File.Value;
-        var id = options.Identifier.Value;
-
-        var entry = contextUser.AddApplicationFromFile(file, localName: id);
-
-        return new ResultEntry() {
-            Success = true,
-            CatalogEntry = entry
-            };
-        }
-
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult SSHHost(SSHHost options) {
-        //throw new NYI();
-
-        //var id = options.ID.Value ?? "ssh";
-        //var contextUser = GetContextUser(options);
-        //using var transaction = contextUser.TransactBegin();
-
-        //var catalogApplication = transaction.GetCatalogApplication();
-
-
-        //var applicationSSH = new CatalogedApplicationSshHost() {
-        //    Key = id
-        //    };
-        //catalogApplication.New(applicationSSH);
-
-        return new ResultFail() {
-            Success = false,
-            Reason = "TBS"
-            };
-        }
-
-
-
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult SSHKnown(SSHKnown options) {
-        var contextUser = GetContextUser(options);
-        var file = options.File.Value;
+        var file = options.FileIn.Value;
         var id = options.Identifier.Value;
 
         var entry = contextUser.AddApplicationFromFile(file, localName: id);
@@ -179,172 +159,89 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult SSHDelete(SSHDelete options) {
-        //var id = options.ID.Value ?? "ssh";
-        //var contextUser = GetContextUser(options);
-        //using var transaction = contextUser.TransactBegin();
+        var contextUser = GetContextUser(options);
+        var identifier = options.Identifier.Value;
 
-        //var catalogApplication = transaction.GetCatalogApplication();
+        var applicationSsh = contextUser.GetApplicationSsh(identifier);
 
 
-        //var applicationSSH = new CatalogedApplicationSshHost() {
-        //    Key = id
-        //    };
-        //catalogApplication.New(applicationSSH);
+        var transaction = contextUser.TransactBegin();
+        var catalog = transaction.GetCatalogApplication();
+        var result = catalog.GetSsh(applicationSsh.Key);
 
-        return new ResultFail() {
-            Success = false,
-            Reason = "TBS"
+        result.AssertNotNull(EntryNotFound.Throw, identifier);
+        transaction.CatalogDelete<CatalogedApplication>(catalog, result);
+        transaction.Transact();
+
+        return new ResultEntry() {
+            Success = true,
+            CatalogEntry = result
             };
         }
 
 
 
 
-    ///// <summary>
-    ///// Dispatch method
-    ///// </summary>
-    ///// <param name="options">The command line options.</param>
-    ///// <returns>Mesh result instance</returns>
-    //public override ShellResult SSHMergeHosts(SSHMergeHosts options) {
-    //    //var id = options.ID.Value ?? "ssh";
-    //    //var contextUser = GetContextUser(options);
-    //    //using var transaction = contextUser.TransactBegin();
-
-    //    //var catalogApplication = transaction.GetCatalogApplication();
-
-
-    //    //var applicationSSH = new CatalogedApplicationSshHost() {
-    //    //    Key = id
-    //    //    };
-    //    //catalogApplication.New(applicationSSH);
-
-    //    return new ResultFail() {
-    //        Success = false,
-    //        Reason = "TBS"
-    //        };
-    //    }
-
-    ///// <summary>
-    ///// Dispatch method
-    ///// </summary>
-    ///// <param name="options">The command line options.</param>
-    ///// <returns>Mesh result instance</returns>
-    //public override ShellResult SSHMergeClients(SSHMergeClients options) {
-    //    //var id = options.ID.Value ?? "ssh";
-    //    //var contextUser = GetContextUser(options);
-    //    //using var transaction = contextUser.TransactBegin();
-
-    //    //var catalogApplication = transaction.GetCatalogApplication();
-
-
-    //    //var applicationSSH = new CatalogedApplicationSshHost() {
-    //    //    Key = id
-    //    //    };
-    //    //catalogApplication.New(applicationSSH);
-
-    //    return new ResultFail() {
-    //        Success = false,
-    //        Reason = "TBS"
-    //        };
-    //    }
 
 
 
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult SSHHost(SSHHost options) {
+        var contextUser = GetContextUser(options);
+        var file = options.FileIn.Value;
+        var id = options.Identifier.Value;
+
+        var entry = contextUser.AddCredentialFromFile(file, localName: id);
+
+        return new ResultEntry() {
+            Success = true,
+            CatalogEntry = entry
+            };
+        }
+
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult SSHKnown(SSHKnown options) {
+        var contextUser = GetContextUser(options);
+        var id = options.Identifier.Value;
+
+        var result = new ResultDump() {
+            Success = true,
+            CatalogedEntries = new List<CatalogedEntry>()
+            };
+
+
+        var catalog = contextUser.GetStore(CatalogCredential.Label) as CatalogCredential;
 
 
 
-    /////// <summary>
-    /////// Dispatch method
-    /////// </summary>
-    /////// <param name="options">The command line options.</param>
-    /////// <returns>Mesh result instance</returns>
-    ////public override ShellResult SSHKnown(SSHKnown options) {
-    ////    var id = options.ID.Value ?? "ssh";
-    ////    var contextUser = GetContextUser(options);
-    ////    using var transaction = contextUser.TransactBegin();
+        if (id == null) {
+            foreach (var entry in catalog.AsCatalogedType) {
 
-    ////    var catalogApplication = transaction.GetCatalogApplication();
-    ////    //var known = catalogApplication.GetSshHosts(id);
+                if (entry.HostAuthentication != null) {
+                    result.CatalogedEntries.Add(entry);
+                    }
+                }
+            }
+        else {
+            var key = CatalogedCredential.GetKey ("ssh", id);
 
-
-
-
-    ////    throw new NYI();
-    ////    }
-
-    /////// <summary>
-    /////// Dispatch method
-    /////// </summary>
-    /////// <param name="options">The command line options.</param>
-    /////// <returns>Mesh result instance</returns>
-    ////public override ShellResult SSHAuth(SSHAuth options) {
-    ////    var id = options.ID.Value ?? "ssh";
-    ////    var contextUser = GetContextUser(options);
-    ////    using var transaction = contextUser.TransactBegin();
-
-    ////    var catalogApplication = transaction.GetCatalogApplication();
-    ////    //var known = catalogApplication.GetSshClients(id);
-    ////    throw new NYI();
-    ////    }
-
-    ///// <summary>
-    ///// Dispatch method
-    ///// </summary>
-    ///// <param name="options">The command line options.</param>
-    ///// <returns>Mesh result instance</returns>
-    //public override ShellResult SSHPrivate(SSHPrivate options) {
-    //    var id = options.ID.Value ?? "ssh";
-    //    var format = options.Format.Value;
-    //    var fileName = options.File.Value;
-    //    var password = options.Password.Value;
-    //    var contextUser = GetContextUser(options);
-
-    //    var applicationEntrySsh = contextUser.GetApplicationEntrySsh(id);
-    //    var keyData = applicationEntrySsh.Activation.ClientKey;
-    //    var keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
-    //    var keyFileFormat = KeyFileFormat.PEMPrivate;
-
-    //    var applicationSsh = contextUser.GetApplicationSsh(id);
-
-    //    return KeyToFile(
-    //            keyPair,
-    //            fileName,
-    //            format,
-    //            password,
-    //            true,
-    //            keyFileFormat
-    //            );
-    //    }
-
-    ///// <summary>
-    ///// Dispatch method
-    ///// </summary>
-    ///// <param name="options">The command line options.</param>
-    ///// <returns>Mesh result instance</returns>
-    //public override ShellResult SSHPublic(SSHPublic options) {
-    //    var id = options.ID.Value ?? "ssh";
-    //    var format = options.Format.Value;
-    //    var fileName = options.File.Value;
-    //    var password = options.Password.Value;
-    //    var contextUser = GetContextUser(options);
-
-    //    var applicationSsh = contextUser.GetApplicationSsh(id);
-    //    var keyPair = applicationSsh.ClientKey.GetKeyPair();
-    //    var keyFileFormat = KeyFileFormat.PEMPublic;
-
-    //    return KeyToFile(
-    //            keyPair,
-    //            fileName,
-    //            format,
-    //            password,
-    //            false,
-    //            keyFileFormat
-    //            );
-    //    }
+            var entry = contextUser.GetCredential(key);
+            entry.AssertNotNull(NYI.Throw);
+            result.CatalogedEntries.Add(entry);
+            }
 
 
-
-
+        return result;
+        }
 
 
     }

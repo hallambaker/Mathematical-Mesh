@@ -99,7 +99,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("be extracted encrypted under the nonce which can be discarded after the key is\n{0}", _Indent);
 			_Output.Write ("successfully installed. [Not currently supported.]\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The {1} command with the '/client' option lists the authorized \n{0}", _Indent, ToCommand("ssh list"));
+			_Output.Write ("The {1} command lists the authorized \n{0}", _Indent, ToCommand("ssh list"));
 			_Output.Write ("clients keys in the profile. This may be used to generate the `authorized_keys` file \n{0}", _Indent);
 			_Output.Write ("by specifying the SSH file format used by the particular SSH application in use.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
@@ -140,13 +140,14 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			  ConsoleExample (Apps.SSHAddHost);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The {1}  command with the '/host' option lists the known host keys \n{0}", _Indent, ToCommand("ssh list"));
+			_Output.Write ("The {1}  command lists the known host keys \n{0}", _Indent, ToCommand("ssh konwn"));
 			_Output.Write ("in the profile. This information is stored in the credential catalog and may also be \n{0}", _Indent);
 			_Output.Write ("retrieved through the password commands.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleExample (Apps.SSHListHosts);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The {1}  command returns the SSH parameters for a particular known host:\n{0}", _Indent, ToCommand("ssh known"));
+			_Output.Write ("The {1}  command with a specified host returns the SSH parameters \n{0}", _Indent, ToCommand("ssh known"));
+			_Output.Write ("for a particular known host:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleExample (Apps.SSHKnown);
 			_Output.Write ("\n{0}", _Indent);
@@ -216,8 +217,9 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			// ------------------ ssh known
 			 Describe(CommandSet, _SSHKnown._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The SSH known command returns the SSH authention data for all hosts in the credentials \n{0}", _Indent);
+			_Output.Write ("catalog or for a specific host.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The SSH known command returns the SSH authentication data for the specified host\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			  ConsoleReference (Apps.SSHKnown);
 			_Output.Write ("\n{0}", _Indent);

@@ -1142,12 +1142,6 @@
 
 		Command SSHList "list"
 			Brief "List SSH account information"
-			Option Hosts "host" Flag
-				Brief "List known host entries"
-				Default "true"
-			Option Client "client" Flag
-				Brief "List authorized client entries"
-				Default "true"
 			Include KeyFileOptions
 			Include AccountOptions
 			Include Reporting
@@ -1186,7 +1180,8 @@
 
 		Command SSHDelete "delete"
 			Brief "Delete SSH profile information"
+			Parameter Identifier "id" String
+				Brief "Unique entry identifier"
 			Include AccountOptions
 			Include Reporting
-			Option Identifier "id" String
-				Brief "Unique entry identifier"
+

@@ -254,6 +254,12 @@ public partial class CreateExamples {
             );
         var resultBookmark = bookmark.GetResultEntry(1);
         Apps.BookmarkCatalogEntry = resultBookmark.CatalogEntry;
+
+
+        var t2 = Alice2.Example(
+            "account sync",
+            $"bookmark get {local1}"
+            );
         }
 
 
@@ -442,22 +448,22 @@ public partial class CreateExamples {
 
         // Add an SSH application profile 'SSH'
         Apps.SSHCreate = Alice1.Example(
-            "ssh create /web");
+            "ssh create /web /id=ssh");
 
         // Dump out the private key in SSH format
         Apps.SSHPrivate = Alice1.Example(
-            $"~ssh get /private /file={Apps.SshPrivateKey}");
+            $"ssh get ssh /private /file={Apps.SshPrivateKey}");
 
         // Dump out the public key in SSH format
         Apps.SSHPublic = Alice1.Example(
-            $"~ssh get /file={Apps.SshPublicKey}");
+            $"ssh get ssh /file={Apps.SshPublicKey}");
 
         Apps.SSHConnect = Alice2.Example(
                 "account sync",
-                $"~ssh private /file={Apps.SshPrivateKey2}");
+                $"ssh get ssh /private /file={Apps.SshPrivateKey2}");
 
         Apps.SSHList = Alice2.Example(
-                "~ssh list /client");
+                "ssh list");
         var appsResult = Apps.SSHList[0].Result as ResultApplicationList;
         Apps.SSHCatalogEntry = appsResult.Applications[0];
 
@@ -496,43 +502,43 @@ public partial class CreateExamples {
 
         /////
         Apps.SSHImport = Alice1.Example(
-                $"~ssh client {Apps.SSHAccountConfigFile} /id={localname2}");
+                $"ssh client {Apps.SSHAccountConfigFile} /id={localname2}");
 
 
         Apps.SSHGet = Alice1.Example(
-                $"~ssh get {localname2}");
+                $"ssh get {localname2} /file={Apps.SshPublicKey2}");
 
         Apps.SSHGetPrivate = Alice1.Example(
-                $"!ssh get {localname2} /private");
+                $"!ssh get {localname2} /private /file={Apps.SshPrivateKey3}");
 
 
-        Apps.SSHList = Alice1.Example(
-                $"~ssh list /client");
+        Apps.SSHList1 = Alice1.Example(
+                $"ssh list");
 
 
         Apps.SSHDelete = Alice1.Example(
-                $"~ssh delete {localname2}");
+                $"ssh delete {localname2}");
 
         Apps.SSHList2 = Alice1.Example(
-                $"~ssh list /client");
+                $"ssh list");
 
         Apps.SSHDeleteList = Concat(Apps.SSHDelete, Apps.SSHList2);
 
 
-        Apps.SSHAddHost = Alice2.Example(
-                $"~ssh host {Apps.SSHHost1File}");
+        Apps.SSHAddHost = Alice1.Example(
+                $"ssh host {Apps.SSHHost1File}");
 
         Apps.SSHListHosts = Alice1.Example(
-                $"~ssh list /hosts");
+                $"ssh known");
 
         Apps.SSHKnown = Alice1.Example(
-                $"~ssh known {Apps.SSHHostName1}");
+                $"ssh known {Apps.SSHHostName1}");
 
-        Apps.SSHAddHost2 = Alice2.Example(
-                $"~ssh host {Apps.SSHHost2File}");
+        Apps.SSHAddHost2 = Alice1.Example(
+                $"ssh host {Apps.SSHHost2File}");
 
         Apps.SSHListHosts2 = Alice1.Example(
-                $"~ssh list /hosts");
+                $"ssh known");
 
 
 

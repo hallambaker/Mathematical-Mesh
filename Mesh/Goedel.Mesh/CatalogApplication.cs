@@ -150,6 +150,22 @@ public class CatalogApplication : Catalog<CatalogedApplication> {
 
 
 
+    /// <summary>
+    /// Return the contact with identifier <paramref name="key"/>.
+    /// </summary>
+    /// <param name="key">specifies the identifier to return.</param>
+    /// <returns>The contact, if found. Otherwise null.</returns>
+    public CatalogedApplicationSsh GetSsh(string key) => Get(key) as CatalogedApplicationSsh;
+
+
+    /// <summary>
+    /// Return the contact with identifier <paramref name="key"/>.
+    /// </summary>
+    /// <param name="key">specifies the identifier to return.</param>
+    /// <returns>The contact, if found. Otherwise null.</returns>
+    public CatalogedApplicationMail GetMail(string key) => Get(key) as CatalogedApplicationMail;
+
+
     #endregion
     }
 
@@ -174,6 +190,9 @@ public partial class CatalogedApplication {
     /// </summary>
     /// <returns>The activation record.</returns>
     public abstract KeyData[] GetEscrow();
+
+
+
 
 
     /// <summary>

@@ -107,8 +107,12 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
 
         // This is not viable because the envelope that is applied has to be the container
         // envelope;
-        Apply(envelope);
-
+        var storeEntry = Apply(envelope);
+        if (storeEntry.JsonObject != null) {
+            UpdateLocal(storeEntry.JsonObject as T);
+            }
+        else {
+            }
         }
 
 
@@ -157,7 +161,7 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// Apply the update in <paramref name="dareMessage"/> to the persistence store.
     /// </summary>
     /// <param name="dareMessage">The update to apply.</param>
-    public void Apply(DareEnvelope dareMessage) => PersistenceStore.Apply(dareMessage);
+    public StoreEntry Apply(DareEnvelope dareMessage) => PersistenceStore.Apply(dareMessage);
 
 
 

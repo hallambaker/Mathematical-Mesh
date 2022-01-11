@@ -64,20 +64,14 @@ public class MakeSiteDocs : CreateExamples {
         EncodeDecodeFile(index);
         ConnectDeviceCompare(index);
 
-        MailApp();
-        SSHApp();
-
-        //
-
-
         PasswordCatalog();
         BookmarkCatalog();
         ContactCatalog();
         NetworkCatalog();
         TaskCatalog();
-        //
 
-
+        MailApp();
+        SSHApp();
 
 
         CreateBobAccount();

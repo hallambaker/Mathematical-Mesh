@@ -66,23 +66,33 @@ public partial class CatalogedApplicationSsh {
 
     ///<summary>The privatge client key</summary> 
     public KeyPair ClientKeyPrivate { get; init; }
+
+
+    ///// <summary>
+    ///// Return a catalog key for the SMTP mail account <paramref name="name"/>.
+    ///// </summary>
+    ///// <param name="name">The input, an RFC822 address.</param>
+    ///// <returns>The catalog key.</returns>
+    //public static string GetKey(string name) => $"ssh:{name}";
+
     #endregion
     #region // Constructors and factories
 
     /// <summary>
     /// Create a new catalog entry for a set of client authentication keys.
     /// </summary>
-    /// <param name="key">The application key.</param>
+    /// <param name="localName">The local name.</param>
     /// <param name="roles">The roles to which the key is to be granted.</param>
     /// <returns></returns>
-    public static CatalogedApplicationSsh Create(string key, List<string> roles) {
+    public static CatalogedApplicationSsh Create(string localName, List<string> roles) {
         // generate an RSA client key here.
         var clientKey = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
                 KeySecurity.Exportable, keySize: 2048);
 
         // don't need to add it to the application record though because every device will have a copy.
         var applicationSSH = new CatalogedApplicationSsh() {
-            Key = key,
+            Key = clientKey.KeyIdentifier,
+            LocalName = localName,
             Grant = roles,
             ClientKeyPrivate = clientKey,
             ClientKey = new KeyData(clientKey)

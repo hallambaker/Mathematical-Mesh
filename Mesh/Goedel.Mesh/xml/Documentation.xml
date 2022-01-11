@@ -1340,7 +1340,7 @@
             <summary>
             Create a new catalog entry for a set of client authentication keys.
             </summary>
-            <param name="key">The application key.</param>
+            <param name="localName">The local name.</param>
             <param name="roles">The roles to which the key is to be granted.</param>
             <returns></returns>
         </member>
@@ -2573,6 +2573,20 @@
             Return a sequence of Mail applications in the catalog.
             </summary>
             <returns>Sequence of Mail application instances.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogApplication.GetSsh(System.String)">
+            <summary>
+            Return the contact with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The contact, if found. Otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogApplication.GetMail(System.String)">
+            <summary>
+            Return the contact with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The contact, if found. Otherwise null.</returns>
         </member>
         <member name="T:Goedel.Mesh.CatalogedApplication">
             <summary>

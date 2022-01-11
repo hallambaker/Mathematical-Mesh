@@ -220,10 +220,10 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// Apply the specified message to the container.
     /// </summary>
     /// <param name="dareMessage"></param>
-    public virtual void Apply(DareEnvelope dareMessage) {
+    public virtual StoreEntry Apply(DareEnvelope dareMessage) {
         var frameIndex = Container.Append(dareMessage);
 
-        CommitTransaction(frameIndex, dareMessage.JsonObject);
+        return CommitTransaction(frameIndex, dareMessage.JsonObject);
         }
 
     #region Commit transaction to memory
@@ -233,9 +233,9 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// </summary>
     /// <param name="frameIndex">The container position</param>
     /// <param name="jSONObject">The object being committed in deserialized form.</param>
-    public virtual void CommitTransaction(SequenceFrameIndex frameIndex, JsonObject jSONObject) {
+    public virtual StoreEntry CommitTransaction(SequenceFrameIndex frameIndex, JsonObject jSONObject) {
         if (frameIndex.Header.Index == 0) {
-            return; // we do not commit fram zero transactions to memory.
+            return null; // we do not commit fram zero transactions to memory.
             }
 
         var contentMeta = frameIndex.Header.ContentMeta;
@@ -245,7 +245,8 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
         switch (contentMeta.Event) {
             case EventNew: {
-                    MemoryCommitNew(ContainerStoreEntry);
+                    //MemoryCommitNew(ContainerStoreEntry);
+                    MemoryCommitUpdate(ContainerStoreEntry);
                     break;
                     }
             case EventUpdate: {
@@ -260,6 +261,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
                     throw new UndefinedStoreAction(contentMeta.Event);
                     }
             }
+        return ContainerStoreEntry;
         }
 
     /// <summary>

@@ -57,6 +57,37 @@ public partial class ContextUser {
 
         }
 
+    /// <summary>
+    /// Add the contact data specified in the file <paramref name="fileName"/>. If
+    /// <paramref name="merge"/> is true, merge this contact information.
+    /// </summary>
+    /// <param name="fileName">The file to fetch the contact data from.</param>
+    /// <param name="localName">Short name for the contact to distinguish it from
+    /// others.</param>
+    /// <param name="merge">Add this data to the existing contact.</param>
+    /// <param name="format">The format the input is written in.</param>
+    /// <returns></returns>
+    public CatalogedCredential AddCredentialFromFile(
+                string fileName,
+                CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
+                bool merge = true,
+                string localName = null) {
+        merge.Future();
+        localName.Future();
+
+        using var transaction = TransactBegin();
+        var catalog = transaction.GetCatalogCredential();
+        using var stream = fileName.OpenFileReadShared();
+        var entry = catalog.ReadFromStream(stream, format);
+
+        transaction.CatalogUpdate(catalog, entry);
+        transaction.Transact();
+
+        return entry;
+
+        }
+
+
 
 
     /// <summary>
@@ -182,7 +213,9 @@ public partial class ContextUser {
 
 
         entry.LocalName = localName;
-
+        if (entry is CatalogedApplicationSsh applicationSsh) {
+            entry.Key ??= applicationSsh.ClientKey.CryptoKey.KeyIdentifier;
+            }
         transaction.CatalogUpdate(catalog, entry);
         transaction.Transact();
 
