@@ -1,0 +1,16 @@
+﻿File LogEventTypes
+	Enum EventTypes "LogEventTypes"
+		Code Error "Any exception"
+		Code Event "Any event"
+
+		Code Service "Service exception"
+		Code Host "Host exception"
+
+		Code Connect "Client connection"
+		Code Start "Start event"
+		Code Complete "Any transaction completion"
+		Code Create "Account created"
+		Code Sync "Device synchronization"
+		Code Inbound "Inbound message received"
+		Code Outbound "Outbound message sent"
+		Code Spooled "Outbound message spooled"

@@ -47,8 +47,8 @@ partial class Program {
 
         //ShellTests.Test().TestAccountDelete();
 
-        //ShellTestsAdmin.Test().TestHello();
-        Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+        ShellTestsAdmin.Test().TestHello();
+        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
         //Goedel.XUnit.MakeSiteDocs.Test().QRAuth();
 
 
@@ -79,7 +79,7 @@ partial class Program {
 
         //ShellTestsAdmin.Test().TestProfileSSHPrivate();
 
-        ////ShellTestsAdmin.Test().TestProfileMail();
+        //ShellTestsAdmin.Test().TestProfileMail();
 
         ////ShellTestsAdmin.Test().TestMessageContactRemote();
         ////ShellTestsAdmin.Test().TestFilePlain();

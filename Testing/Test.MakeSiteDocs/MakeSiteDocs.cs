@@ -83,11 +83,11 @@ public class MakeSiteDocs : CreateExamples {
         GroupOperations();
         ConnectPINDynamicQR();
         ConnectStaticQR();
-        LayerAccount();
+        LayerAccount(); // Auth device unfinished
         TestConnectDisconnect(index);
 
 
-        EscrowAndRecover();
+        EscrowAndRecover(); // Recover untested
 
 
 

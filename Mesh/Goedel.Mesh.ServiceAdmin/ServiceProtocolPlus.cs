@@ -62,5 +62,22 @@ public partial class HostConfiguration : IHostConfiguration {
 
 
 
+    public void LogInitialize() {
+        throw new NotImplementedException();
+        }
 
+
+    public void Fail(LogTransaction logTransaction) {
+        throw new NotImplementedException();
+        }
+
+
+
+    public void Start(LogTransaction logTransaction) {
+        throw new NotImplementedException();
+        }
+
+    public void Success(LogTransaction logTransaction) {
+        throw new NotImplementedException();
+        }
     }

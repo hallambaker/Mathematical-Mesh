@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+//using Microsoft.Extensions.Logging;
+
 
 namespace Goedel.Protocol;
 
@@ -30,28 +32,36 @@ public interface IReport {
     /// The reporting mode, may be turned into flags.
     /// </summary>
 
-    void Report(StringBuilder output, ReportMode reportMode);
+    void Report(StringBuilder output, LogLevelSeverity reportMode);
 
     }
 
 /// <summary>
-/// Enumerated reporting modes. These may be replaced by flags at a later date
-/// to permit greater control.
+/// Enumerated Log severity levels. This mirrors the .NET enumerated type
+/// Microsoft.Extensions.Logging.LogLevel. Duplicated so as to avoid the 
+/// need to import extension packages into every project.
 /// </summary>
-public enum ReportMode {
-
-    ///<summary>No report</summary> 
-    None,
-
-    ///<summary>Brief description on transaction exit.</summary> 
-    Brief,
-
-    ///<summary>Brief description on transaction start and exit.</summary> 
-    Event,
+public enum LogLevelSeverity {
 
     ///<summary>Detailed description of transaction including full request and response.</summary> 
-    Full,
+    Trace=0,
+
+    ///<summary>Brief description on transaction exit.</summary> 
+    Debug=1,
+
+    ///<summary>Brief description on transaction exit.</summary> 
+    Information=2,
+
+    ///<summary>Brief description on transaction start and exit.</summary> 
+    Warning=3,
 
     ///<summary>Record of changes written to service state.</summary> 
-    State
+    Error=4,
+
+    ///<summary>Record of changes written to service state.</summary> 
+    Critical=5,
+
+
+    ///<summary>No report</summary> 
+    None = 6
     }

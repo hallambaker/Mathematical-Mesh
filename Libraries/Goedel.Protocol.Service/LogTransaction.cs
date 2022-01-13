@@ -32,11 +32,16 @@ public class LogService {
 
     long transactionIdentifier = 0;
 
+
+
+
     ///<summary>Reporting mode for console output</summary>  
-    public ReportMode ConsoleOutput { get; set; } = ReportMode.None;
+    public LogLevelSeverity ConsoleOutput { get; set; } = LogLevelSeverity.None;
 
     ///<summary>The host monitor tracking start and end of host requests.</summary> 
     public HostMonitor HostMonitor { get; }
+
+    IHostConfiguration HostConfiguration { get; }
 
     /// <summary>
     /// Default constructor.
@@ -50,12 +55,13 @@ public class LogService {
             IServiceConfiguration serviceConfiguration,
             IHostConfiguration hostConfiguration,
             HostMonitor hostMonitor, long first = 0) {
+        HostConfiguration = hostConfiguration;
         HostMonitor = hostMonitor;
         transactionIdentifier = first - 1;
 
         ConsoleOutput = hostConfiguration.ConsoleOutput;
 
-        if (ConsoleOutput != ReportMode.None) {
+        if (ConsoleOutput != LogLevelSeverity.None) {
             var output = new StringBuilder();
             output.Append(DateTime.Now.ToRFC3339());
             output.AppendLine(
@@ -77,6 +83,9 @@ public class LogService {
                 }
             WriteToConsole(output);
             }
+        hostConfiguration.LogInitialize();
+
+
         }
 
     /// <summary>
@@ -88,14 +97,18 @@ public class LogService {
     public LogTransaction Start(string token, IReport request) {
 
         var id = Interlocked.Increment(ref transactionIdentifier);
-        var transaction = new LogTransaction(this) {
+        var logTransaction = new LogTransaction(this) {
             TransactionIdentifier = id,
             Token = token,
             Request = request
             };
 
+        if (ReportStart(ConsoleOutput)) {
+            Start(logTransaction);
+            }
+        HostConfiguration.Start(logTransaction);
 
-        return transaction;
+        return logTransaction;
         }
 
 
@@ -129,9 +142,6 @@ public class LogService {
     /// </summary>
     /// <param name="logTransaction">Transaction to log.</param>
     internal void Start(LogTransaction logTransaction) {
-        if (!ReportStart(ConsoleOutput)) {
-            return;
-            }
 
         var output = new StringBuilder();
         output.Append(logTransaction.Start.ToRFC3339());
@@ -164,7 +174,7 @@ public class LogService {
         logTransaction.Response?.Report(output, ConsoleOutput);
 
         WriteToConsole(output);
-
+        HostConfiguration.Success(logTransaction);
         }
 
     /// <summary>
@@ -191,10 +201,12 @@ public class LogService {
             }
 
         WriteToConsole(output);
+
+        HostConfiguration.Fail(logTransaction);
         }
 
-    static bool ReportStart(ReportMode reportMode) =>
-        reportMode == ReportMode.Full | reportMode == ReportMode.Event;
+    static bool ReportStart(LogLevelSeverity reportMode) =>
+        reportMode == LogLevelSeverity.Trace | reportMode == LogLevelSeverity.Warning;
 
     }
 
@@ -237,7 +249,6 @@ public record LogTransaction {
     public LogTransaction(LogService logService) {
         Start = DateTime.Now;
         LogService = logService;
-        LogService.Start(this);
         }
 
     /// <summary>

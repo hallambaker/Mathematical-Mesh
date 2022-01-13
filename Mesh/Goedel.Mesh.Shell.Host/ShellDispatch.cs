@@ -146,7 +146,7 @@ public partial class Shell : _Shell {
         hostConfiguration.Instance = Instance;
 
         hostConfiguration.ConsoleOutput = 
-            Options.Console.Value ? ReportMode.Brief: ReportMode.None;
+            Options.Console.Value ? LogLevelSeverity.Information: LogLevelSeverity.None;
 
         //ServiceConfiguration.Instance ??= Instance;
         RudService = StartService(hostConfiguration, serviceConfiguration);

@@ -200,7 +200,7 @@ public partial class HostConfiguration {
     public List<ServiceConfiguration> ServiceConfigs { get; set; }
 
     ///<summary>The reporting mode for console output.</summary> 
-    public ReportMode ConsoleOutput { get; set; }
+    public LogLevelSeverity ConsoleOutput { get; set; }
 
 
     #endregion

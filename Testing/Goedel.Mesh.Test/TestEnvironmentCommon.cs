@@ -205,7 +205,7 @@ public class TestEnvironmentCommon : Disposable {
 
 
     public HostConfiguration HostConfiguration { get; } = new() {
-        ConsoleOutput = ReportMode.Brief
+        ConsoleOutput = LogLevelSeverity.Information
         };
 
     public ServiceConfiguration ServiceConfiguration { get; } = new() {

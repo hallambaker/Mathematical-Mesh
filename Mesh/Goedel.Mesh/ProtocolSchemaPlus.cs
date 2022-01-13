@@ -151,9 +151,9 @@ public partial class MeshRequest {
 public partial class MeshHelloResponse : IReport {
     
     ///<inheritdoc/>
-    public void Report(StringBuilder output, ReportMode reportMode) {
+    public void Report(StringBuilder output, LogLevelSeverity reportMode) {
 
-        if (reportMode == ReportMode.None) {
+        if (reportMode == LogLevelSeverity.None) {
             return;
             }
         output.Append($" Version {Version}");
@@ -166,9 +166,9 @@ public partial class MeshHelloResponse : IReport {
 public partial class BindRequest : IReport {
 
     ///<inheritdoc/>
-    public void Report(StringBuilder output, ReportMode reportMode) {
+    public void Report(StringBuilder output, LogLevelSeverity reportMode) {
 
-        if (reportMode == ReportMode.None) {
+        if (reportMode == LogLevelSeverity.None) {
             return;
             }
         output.Append($" Account {AccountAddress}");
@@ -189,9 +189,9 @@ public partial class BindResponse : IReport {
         }
 
     ///<inheritdoc/>
-    public void Report(StringBuilder output, ReportMode reportMode) {
+    public void Report(StringBuilder output, LogLevelSeverity reportMode) {
 
-        if (reportMode == ReportMode.None) {
+        if (reportMode == LogLevelSeverity.None) {
             return;
             }
         output.Append($" Created");

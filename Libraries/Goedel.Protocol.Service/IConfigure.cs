@@ -24,7 +24,7 @@ public interface IServiceConfiguration {
 public interface IHostConfiguration {
 
     ///<summary>The console output mode</summary> 
-    ReportMode ConsoleOutput { get; }
+    LogLevelSeverity ConsoleOutput { get; }
 
     ///<summary>Path to the host data store.</summary> 
     string Path { get; }
@@ -43,4 +43,14 @@ public interface IHostConfiguration {
 
     ///<summary>The port number.</summary> 
     int Port { get; }
+
+    void LogInitialize();
+
+    void Start(LogTransaction logTransaction);
+
+    void Success(LogTransaction logTransaction);
+
+    void Fail(LogTransaction logTransaction);
+
+
     }
