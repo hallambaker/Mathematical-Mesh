@@ -310,7 +310,22 @@
       "ProjectGuid": "2b4d8bac-91b7-4018-8efc-a7df970e01be",
       "DisplayName": "InstallWindows",
       "ColorIndex": 12
+    },
+    "23a5f8c6-f847-4e88-b8cc-29ef110b0c46": {
+      "ProjectGuid": "23a5f8c6-f847-4e88-b8cc-29ef110b0c46",
+      "DisplayName": "GenericHost",
+      "ColorIndex": 13
+    },
+    "53f128ea-bae8-4211-a6f1-bae7efe25f04": {
+      "ProjectGuid": "53f128ea-bae8-4211-a6f1-bae7efe25f04",
+      "DisplayName": "Goedel.Logger",
+      "ColorIndex": 14
+    },
+    "87b9a1db-3379-4316-b73d-d97106bcb91e": {
+      "ProjectGuid": "87b9a1db-3379-4316-b73d-d97106bcb91e",
+      "DisplayName": "Goedel.Protocol.GenericHost",
+      "ColorIndex": 15
     }
   },
-  "NextColorIndex": 13
+  "NextColorIndex": 0
 }

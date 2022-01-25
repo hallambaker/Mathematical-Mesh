@@ -1173,31 +1173,38 @@
             Reporting instance, report on the result.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.IReport.Report(System.Text.StringBuilder,Goedel.Protocol.ReportMode)">
+        <member name="M:Goedel.Protocol.IReport.Report(System.Text.StringBuilder,Goedel.Protocol.LogLevelSeverity)">
             <summary>
             The reporting mode, may be turned into flags.
             </summary>
         </member>
-        <member name="T:Goedel.Protocol.ReportMode">
+        <member name="T:Goedel.Protocol.LogLevelSeverity">
             <summary>
-            Enumerated reporting modes. These may be replaced by flags at a later date
-            to permit greater control.
+            Enumerated Log severity levels. This mirrors the .NET enumerated type
+            Microsoft.Extensions.Logging.LogLevel. Duplicated so as to avoid the 
+            need to import extension packages into every project.
             </summary>
         </member>
-        <member name="F:Goedel.Protocol.ReportMode.None">
-            <summary>No report</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.ReportMode.Brief">
-            <summary>Brief description on transaction exit.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.ReportMode.Event">
-            <summary>Brief description on transaction start and exit.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.ReportMode.Full">
+        <member name="F:Goedel.Protocol.LogLevelSeverity.Trace">
             <summary>Detailed description of transaction including full request and response.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.ReportMode.State">
+        <member name="F:Goedel.Protocol.LogLevelSeverity.Debug">
+            <summary>Brief description on transaction exit.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.LogLevelSeverity.Information">
+            <summary>Brief description on transaction exit.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.LogLevelSeverity.Warning">
+            <summary>Brief description on transaction start and exit.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.LogLevelSeverity.Error">
             <summary>Record of changes written to service state.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.LogLevelSeverity.Critical">
+            <summary>Record of changes written to service state.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.LogLevelSeverity.None">
+            <summary>No report</summary> 
         </member>
         <member name="T:Goedel.Protocol.JpcInterface">
             <summary>

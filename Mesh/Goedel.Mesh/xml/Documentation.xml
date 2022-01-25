@@ -10256,7 +10256,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.MeshHelloResponse.Report(System.Text.StringBuilder,Goedel.Protocol.ReportMode)">
+        <member name="M:Goedel.Mesh.MeshHelloResponse.Report(System.Text.StringBuilder,Goedel.Protocol.LogLevelSeverity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.BindRequest">
@@ -10326,7 +10326,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.BindRequest.Report(System.Text.StringBuilder,Goedel.Protocol.ReportMode)">
+        <member name="M:Goedel.Mesh.BindRequest.Report(System.Text.StringBuilder,Goedel.Protocol.LogLevelSeverity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.BindResponse">
@@ -10409,7 +10409,7 @@
             </summary>
             <param name="exception">Optional exception specifier.</param>
         </member>
-        <member name="M:Goedel.Mesh.BindResponse.Report(System.Text.StringBuilder,Goedel.Protocol.ReportMode)">
+        <member name="M:Goedel.Mesh.BindResponse.Report(System.Text.StringBuilder,Goedel.Protocol.LogLevelSeverity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.UnbindRequest">
@@ -14136,80 +14136,80 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.Task">
+        <member name="T:Goedel.Mesh.Engagement">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.Key">
+        <member name="P:Goedel.Mesh.Engagement.Key">
              <summary>
             Unique key.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.Start">
+        <member name="P:Goedel.Mesh.Engagement.Start">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.Finish">
+        <member name="P:Goedel.Mesh.Engagement.Finish">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.StartTravel">
+        <member name="P:Goedel.Mesh.Engagement.StartTravel">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.FinishTravel">
+        <member name="P:Goedel.Mesh.Engagement.FinishTravel">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.TimeZone">
+        <member name="P:Goedel.Mesh.Engagement.TimeZone">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.Title">
+        <member name="P:Goedel.Mesh.Engagement.Title">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.Description">
+        <member name="P:Goedel.Mesh.Engagement.Description">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.Location">
+        <member name="P:Goedel.Mesh.Engagement.Location">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.Trigger">
+        <member name="P:Goedel.Mesh.Engagement.Trigger">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.Conference">
+        <member name="P:Goedel.Mesh.Engagement.Conference">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.Repeat">
+        <member name="P:Goedel.Mesh.Engagement.Repeat">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task.Busy">
+        <member name="P:Goedel.Mesh.Engagement.Busy">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Task._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Task.__Tag">
+        <member name="P:Goedel.Mesh.Engagement._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Task._Factory">
+        <member name="F:Goedel.Mesh.Engagement.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Engagement._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.Task.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.Engagement.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -14218,7 +14218,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Task.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.Engagement.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -14229,7 +14229,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Task.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Engagement.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -14237,7 +14237,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Task.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Mesh.Engagement.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

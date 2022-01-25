@@ -25,80 +25,27 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Goedel.Mesh.ServiceAdmin;
+using Goedel.Protocol.GenericHost;
+using Goedel.Mesh.Server;
+using Goedel.Utilities;
 
 internal sealed class Program {
     private static async Task Main(string[] args) {
         await Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) => {
-                services.AddHostedService<ConsoleHostedService>();
-                services.AddSingleton<IWeatherService, WeatherService>();
+
+#if USE_PLATFORM_WINDOWS
+                _ = services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
+#elif USE_PLATFORM_LINUX
+#endif
+
             })
+            .AddConsoleHosted()
+            .AddMeshService()
+            .ConfigureLogging(logging =>
+                logging.AddConsoleLogger())
             .RunConsoleAsync();
         }
     }
 
-internal sealed class ConsoleHostedService : IHostedService {
-    private readonly ILogger _logger;
-    private readonly IHostApplicationLifetime _appLifetime;
-    private readonly IWeatherService _weatherService;
-
-    public ConsoleHostedService(
-            ILogger<ConsoleHostedService> logger,
-            IHostApplicationLifetime appLifetime,
-            IWeatherService weatherService) {
-        _logger = logger;
-        _appLifetime = appLifetime;
-        }
-
-    public Task StartAsync(CancellationToken cancellationToken) {
-        _logger.LogDebug($"Starting with arguments: {string.Join(" ", Environment.GetCommandLineArgs())}");
-
-        _appLifetime.ApplicationStarted.Register(() => {
-            Task.Run(async () => {
-                try {
-                    _logger.LogInformation("Hello World!");
-
-                    // Simulate real work is being done
-                    await Task.Delay(1000);
-                    }
-                catch (Exception ex) {
-                    _logger.LogError(ex, "Unhandled exception!");
-                    }
-                finally {
-                    // Stop the application once the work is done
-                    _appLifetime.StopApplication();
-                    }
-            });
-        });
-
-        return Task.CompletedTask;
-        }
-
-    public Task StopAsync(CancellationToken cancellationToken) {
-        return Task.CompletedTask;
-        }
-    }
-
-
-internal sealed class WeatherSettings {
-    public string Unit { get; set; }
-    }
-
-internal sealed class WeatherService : IWeatherService {
-    private readonly IOptions<WeatherSettings> _weatherSettings;
-
-    public WeatherService(IOptions<WeatherSettings> weatherSettings) {
-        _weatherSettings = weatherSettings;
-        }
-
-    public Task<IReadOnlyList<int>> GetFiveDayTemperaturesAsync() {
-        int[] temperatures = new[] { 76, 76, 77, 79, 78 };
-        if (_weatherSettings.Value.Unit.Equals("C", StringComparison.OrdinalIgnoreCase)) {
-            for (int i = 0; i < temperatures.Length; i++) {
-                temperatures[i] = (int)Math.Round((temperatures[i] - 32) / 1.8);
-                }
-            }
-
-        return Task.FromResult<IReadOnlyList<int>>(temperatures);
-        }
-    }

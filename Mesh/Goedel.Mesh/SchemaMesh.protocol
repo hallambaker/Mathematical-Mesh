@@ -650,7 +650,7 @@
 
 
 
-	Structure Task
+	Structure Engagement
 		String Key
 			Description
 				|Unique key.
@@ -934,7 +934,7 @@
 
 	Structure CatalogedTask
 		Inherits CatalogedEntry
-		Struct Enveloped<Task> EnvelopedTask
+		Struct Enveloped<Engagement> EnvelopedTask
 		// Calendar entry
 		// Geolocation entry
 		String Title

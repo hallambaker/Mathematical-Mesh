@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 11-Jan-22 5:45:10 PM
+//  This file was automatically generated at 25-Jan-22 1:30:22 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -122,7 +122,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"Location", Location._Factory},
 	    {"Bookmark", Bookmark._Factory},
 	    {"Reference", Reference._Factory},
-	    {"Task", Task._Factory},
+	    {"Engagement", Engagement._Factory},
 	    {"CatalogedEntry", CatalogedEntry._Factory},
 	    {"CatalogedDevice", CatalogedDevice._Factory},
 	    {"CatalogedPublication", CatalogedPublication._Factory},
@@ -6751,7 +6751,7 @@ public partial class Reference : MeshItem {
 
 	/// <summary>
 	/// </summary>
-public partial class Task : MeshItem {
+public partial class Engagement : MeshItem {
         /// <summary>
         ///Unique key.
         /// </summary>
@@ -6819,13 +6819,13 @@ public partial class Task : MeshItem {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Task";
+	public new const string __Tag = "Engagement";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Task();
+	public static new JsonObject _Factory () => new Engagement();
 
 
     /// <summary>
@@ -6943,15 +6943,15 @@ public partial class Task : MeshItem {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new Task FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new Engagement FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Task;
+			return Out as Engagement;
 			}
-		var Result = new Task ();
+		var Result = new Engagement ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -9783,7 +9783,7 @@ public partial class CatalogedTask : CatalogedEntry {
         /// <summary>
         /// </summary>
 
-	public virtual Enveloped<Task>						EnvelopedTask  {get; set;}
+	public virtual Enveloped<Engagement>						EnvelopedTask  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -9887,7 +9887,7 @@ public partial class CatalogedTask : CatalogedEntry {
 		switch (tag) {
 			case "EnvelopedTask" : {
 				// An untagged structure
-				EnvelopedTask = new Enveloped<Task> ();
+				EnvelopedTask = new Enveloped<Engagement> ();
 				EnvelopedTask.Deserialize (jsonReader);
  
 				break;

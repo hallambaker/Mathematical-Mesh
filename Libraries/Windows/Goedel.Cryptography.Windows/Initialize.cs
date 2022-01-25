@@ -34,3 +34,19 @@ public static class Initialization {
     internal static void Initialize() {
         }
     }
+
+
+public class ComponentCryptographyWindows : IComponent {
+    public void Initialize() {
+
+        // Force Goedel.Cryptography to initialize first.
+        Goedel.Cryptography.Initialization.Initialized.AssertTrue(NYI.Throw);
+
+        // Overwrite the RSA provider (NYI)
+
+
+        // Overwrite the key store provider (NYI)
+
+
+        }
+    }
