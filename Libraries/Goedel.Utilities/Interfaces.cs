@@ -5,15 +5,7 @@ namespace Goedel.Utilities;
 
 
 
-public interface IConfiguredService {
 
-    string Name { get; }
-
-
-    Task StartServiceAsync();
-
-
-    }
 
 
 
@@ -27,7 +19,3 @@ public interface IComponent {
 
     }
 
-//public interface IConfiguration {
-
-
-//    }

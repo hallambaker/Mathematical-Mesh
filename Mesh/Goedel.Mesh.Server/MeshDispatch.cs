@@ -122,11 +122,12 @@ public class PublicMeshService : MeshService {
     public PublicMeshService(
             IMeshMachine meshMachine,
             ServiceConfiguration serviceConfiguration,
-            HostConfiguration hostConfiguration) {
+            HostConfiguration hostConfiguration,
+            LogService logService=null) {
 
         // Bugs? Seems like this is in initializing the service and host, not starting it.
 
-        LogService = new LogService(serviceConfiguration,
+        LogService = logService ?? new LogService(serviceConfiguration,
             hostConfiguration, null) ;
 
         MeshMachine = meshMachine;

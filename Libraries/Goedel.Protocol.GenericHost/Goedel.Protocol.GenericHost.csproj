@@ -13,6 +13,8 @@
 
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+	  <ProjectReference Include="..\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
 	  <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
 	</ItemGroup>
 

@@ -388,6 +388,35 @@
             <param name="stream">Stream to write to.</param>
             <param name="buffer">the data to be written.</param>
         </member>
+        <member name="M:Goedel.Utilities.Extension.GetAwaiter(System.Threading.CancellationToken)">
+            <summary>
+            Allows a cancellation token to be awaited.
+            </summary>
+            <param name="ct">The cancellation token.</param>
+        </member>
+        <member name="T:Goedel.Utilities.Extension.CancellationTokenAwaiter">
+            <summary>
+            The awaiter for cancellation tokens.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.CancellationTokenAwaiter.#ctor(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.CancellationTokenAwaiter.GetResult">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Utilities.Extension.CancellationTokenAwaiter.IsCompleted">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.CancellationTokenAwaiter.OnCompleted(System.Action)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.Extension.CancellationTokenAwaiter.UnsafeOnCompleted(System.Action)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Utilities.ArrayUtilities">
             <summary>
             Static class containing extension methods for array manipulation.

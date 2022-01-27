@@ -22,7 +22,67 @@
 
 //  
 
+using System.Threading;
+using System.Threading.Tasks;
 namespace Goedel.Protocol;
+
+
+
+
+/// <summary>
+/// Service configuration
+/// </summary>
+public class GenericHostConfiguration {
+
+    public string Description { get; set; } = null!;
+
+    public string HostUdf { get; set; } = string.Empty;
+
+    public string DeviceUdf { get; set; } = string.Empty;
+
+
+
+    ///<summary>Host DNS address</summary> 
+    public string HostDns { get; set; } = string.Empty;
+
+    ///<summary>The IP address and port numbers</summary> 
+    public string[] IP { get; set; } = Array.Empty<string>();
+    }
+
+
+
+public interface IProviderHost {
+
+
+    Task StartAsync(
+        CancellationToken cancellationToken,
+        IEnumerable<IProvider> providers
+        );
+
+
+    }
+
+
+/// <summary>
+/// Service provider interface.
+/// </summary>
+public interface IProvider {
+
+    ///<summary>The provider interface.</summary> 
+    JpcInterface JpcInterface { get; }
+
+
+    // The HTTP and UDP endpoints should be eliminated as a RUD service simply ignores the
+    // source of received data.
+
+    ///<summary>The HTTP endpoints.</summary> 
+    List<HttpEndpoint> HTTPEndpoints { get; } 
+
+    ///<summary>The UDP endpoints</summary> 
+    List<UdpEndpoint> UdpEndpoints { get; } 
+
+
+    }
 
 
 

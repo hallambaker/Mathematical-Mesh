@@ -41,7 +41,7 @@ public class RudListener : Listener {
     /// </summary>
     /// <param name="credential">The credential used by the listener.</param>
     /// <param name="providers">The service providers to be dispatched to.</param>
-    public RudListener(ICredentialPrivate credential, List<RudProvider> providers) :
+    public RudListener(ICredentialPrivate credential, IEnumerable<IProvider> providers) :
             base(credential, providers) {
         }
 

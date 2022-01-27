@@ -10,6 +10,7 @@ using Goedel.Mesh.ServiceAdmin;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Goedel.Protocol.Service;
 
 namespace Goedel.Mesh.Server;
 
@@ -24,29 +25,51 @@ public static class ConsoleLoggerExtensions {
 
 
         host.ConfigureServices((hostContext, services) => {
-            services.AddSingleton<IConfiguredService, MeshConfiguredService>();
+            services.AddSingleton<IMeshMachine, MeshMachineCore>();
+            services.AddSingleton<IProvider, MeshConfiguredService>();
             var configurationService = services.Configure <MeshHostConfiguration> (
                 hostContext.Configuration.GetSection("MeshService"));
+            var configurationHost = services.Configure<GenericHostConfiguration>(
+                hostContext.Configuration.GetSection("Host"));
         });
 
         return host;
         }
     }
-public class MeshConfiguredService : IConfiguredService {
+public class MeshConfiguredService : IProvider {
 
-    public string Name => "MeshService";
+
 
     MeshHostConfiguration MeshHostConfiguration { get; }
 
-    IOptionsMonitor<MeshHostConfiguration> MeshHostConfigurationMonitor;
+    GenericHostConfiguration GenericHostConfiguration { get; }
 
+    IOptionsMonitor<MeshHostConfiguration> MeshHostConfigurationMonitor;
+    IMeshMachine MeshMachine { get; }
+    ILogger<RudHostedService> Logger { get; }
+
+    PublicMeshService PublicMeshService { get; set; }
+
+    ///<inheritdoc/>
+    public JpcInterface JpcInterface => PublicMeshService;
+
+    ///<inheritdoc/>
+    public List<HttpEndpoint> HTTPEndpoints => throw new NotImplementedException();
+
+    ///<inheritdoc/>
+    public List<UdpEndpoint> UdpEndpoints => throw new NotImplementedException();
 
     public MeshConfiguredService(
-            ILogger<ConsoleHostedService> logger,
-            IOptionsMonitor<MeshHostConfiguration> meshHostConfiguration
-            ) {
+                ILogger<RudHostedService> logger,
+                IMeshMachine meshMachine,
+                IOptionsMonitor<MeshHostConfiguration> meshHostConfiguration,
+                IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration
+                ) {
 
         //IConfigurationRoot configurationRoot = configuration.Build();
+
+        MeshMachine = meshMachine;
+        Logger = logger;
 
         MeshHostConfigurationMonitor = meshHostConfiguration;
         MeshHostConfigurationMonitor.OnChange(
@@ -54,13 +77,30 @@ public class MeshConfiguredService : IConfiguredService {
 
 
         MeshHostConfiguration = meshHostConfiguration.CurrentValue;
+        GenericHostConfiguration = genericHostConfiguration.CurrentValue;
 
 
-        //var configurationHost = configuration.GetSection("Host");
-        //configurationHost.Bind (meshHostConfiguration);
+        var serviceConfiguration = new ServiceConfiguration() {
+            Id = null!,
+            ProfileUdf = MeshHostConfiguration.ServiceUdf,
+            //Description = MeshHostConfiguration.Description ?? "Mesh Service",
+            Path = MeshHostConfiguration.ServicePath,
+            DNS = MeshHostConfiguration.ServiceDNS.ToList()
+            // ignore the logs for now
+            };
+        var hostConfiguration = new HostConfiguration() {
+            Id = null!,
+            ProfileUdf = GenericHostConfiguration.HostUdf,
+            DeviceUdf = GenericHostConfiguration.DeviceUdf,
+            Path = MeshHostConfiguration.HostPath,
+            DNS = new List<string>() { GenericHostConfiguration.HostDns },
+            IP = GenericHostConfiguration.IP.ToList()
+            };
 
-        //var configurationService = configuration.GetSection("MeshService");
-        //configurationService.Bind(meshHostConfiguration);
+        // To do - build the HTTP endpoints
+
+
+        PublicMeshService = new PublicMeshService(MeshMachine, serviceConfiguration, hostConfiguration);
 
         }
 
@@ -72,17 +112,13 @@ public class MeshConfiguredService : IConfiguredService {
         }
 
 
-    public async Task StartServiceAsync() {
-
-        await Task.Delay(50000);
-
-        //throw new NotImplementedException();
-        }
     }
 
 
 public class MeshHostConfiguration : GenericServiceConfiguration {
 
     public string[] Administrators { get; set; } = Array.Empty<string>();
+
+    public string HostPath { get; set; } = string.Empty;
 
     }

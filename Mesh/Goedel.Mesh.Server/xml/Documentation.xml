@@ -378,6 +378,15 @@
             <param name="messageId">Message to return.</param>
             <returns>The message (if found).</returns>
         </member>
+        <member name="P:Goedel.Mesh.Server.MeshConfiguredService.JpcInterface">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshConfiguredService.HTTPEndpoints">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshConfiguredService.UdpEndpoints">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Mesh.Server.MeshServerException">
             <summary>
             Generic Mesh Service Error
@@ -1024,7 +1033,7 @@
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Factory(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
             <inheritdoc cref="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate"/>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration,Goedel.Protocol.Service.LogService)">
              <summary>
              Create a Mesh Service provider instance on the machine <paramref name="hostConfiguration"/>
              according to the parameters specified in <paramref name="serviceConfiguration"/> and

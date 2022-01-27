@@ -24,7 +24,7 @@ public class DareLoggerConfiguration {
     public string[] Recipients { get; set; } = Array.Empty<string>();
 
     ///<summary>Log rotation period</summary> 
-    public string Rotate { get; set; } = "";
+    public string Rotate { get; set; } = string.Empty;
 
     ///<summary>Directory to which log files are to be written</summary> 
     public string Path { get; set; } = "";
@@ -34,11 +34,11 @@ public class DareLoggerConfiguration {
 
 
 
-public class GenericServiceConfiguration : GenericHostConfiguration {
+public class GenericServiceConfiguration  {
 
-    public string ServiceUdf { get; set; } = "";
+    public string ServiceUdf { get; set; } = string.Empty;
 
-    public string ServicePath { get; set; } = "";
+    public string ServicePath { get; set; } = string.Empty;
 
     ///<summary>Service DNS addresses</summary> 
     public string[] ServiceDNS { get; set; } = Array.Empty<string>();
@@ -48,22 +48,4 @@ public class GenericServiceConfiguration : GenericHostConfiguration {
 
 
 
-
-/// <summary>
-/// Service configuration
-/// </summary>
-public class GenericHostConfiguration {
-
-    public string HostUdf { get; set; } = "";
-
-    public string DeviceUdf { get; set; } = "";
-
-    public string HostPath { get; set; } = "";
-
-    ///<summary>Host DNS address</summary> 
-    public string HostDns { get; set; } = null!;
-
-    ///<summary>The IP address and port numbers</summary> 
-    public string[] IP { get; set; } = Array.Empty<string>();
-    }
 

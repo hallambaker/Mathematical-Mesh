@@ -24,7 +24,6 @@
 
 namespace Goedel.Protocol.Service;
 
-
 /// <summary>
 /// Service level logging class.
 /// </summary>
@@ -83,7 +82,7 @@ public class LogService {
                 }
             WriteToConsole(output);
             }
-        hostConfiguration.LogInitialize();
+        //hostConfiguration.LogInitialize();
 
 
         }

@@ -134,6 +134,18 @@
         <member name="P:Goedel.Protocol.Service.IHostConfiguration.Port">
             <summary>The port number.</summary> 
         </member>
+        <member name="M:Goedel.Protocol.Service.IConfiguredService.StartServiceAsync">
+            <summary>
+            Start the service
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.IConfiguredService.StopServiceAsync">
+            <summary>
+            Stop the service
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Goedel.Protocol.Service.LogService">
             <summary>
             Service level logging class.
@@ -404,7 +416,18 @@
             Disposal routine, perform clean termination of all active threads.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Service.RudService.#ctor(System.Collections.Generic.List{Goedel.Protocol.Presentation.RudProvider},Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.Listener,System.Int32)">
+        <member name="M:Goedel.Protocol.Service.RudService.#ctor(System.Collections.Generic.IEnumerable{Goedel.Protocol.IProvider},Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.Listener,System.Int32)">
+            <summary>
+            Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
+            </summary>
+            <param name="providers">The services to be served.</param>
+            <param name="rdpListener">Specify the listener layer (default is <see cref="T:Goedel.Protocol.Presentation.RudListener"/>.</param>
+            <param name="maxCores">Maximum number of dispatch threads.</param>
+            <param name="credential">Credential for the listener to use.</param>
+            <remarks>Constructor returns after the service has been started and listener threads 
+            initialized.</remarks>
+        </member>
+        <member name="M:Goedel.Protocol.Service.RudService.#ctor(System.Threading.CancellationToken,System.Collections.Generic.IEnumerable{Goedel.Protocol.IProvider},Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.Listener,System.Int32)">
             <summary>
             Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
             </summary>

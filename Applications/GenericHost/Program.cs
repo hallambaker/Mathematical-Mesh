@@ -29,14 +29,16 @@ using Goedel.Mesh.ServiceAdmin;
 using Goedel.Protocol.GenericHost;
 using Goedel.Mesh.Server;
 using Goedel.Utilities;
+using Goedel.Protocol;
 
 internal sealed class Program {
     private static async Task Main(string[] args) {
         await Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) => {
+                services.AddSingleton<IProviderHost, MeshRudHost>();
 
 #if USE_PLATFORM_WINDOWS
-                _ = services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
+                services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
 #elif USE_PLATFORM_LINUX
 #endif
 

@@ -29,7 +29,7 @@ namespace Goedel.Protocol.Presentation;
 /// <summary>
 /// Service provider class.
 /// </summary>
-public class RudProvider : Disposable {
+public class RudProvider : Disposable, IProvider {
     #region // Properties
     ///<summary>The provider interface.</summary> 
     public JpcInterface JpcInterface { get; }

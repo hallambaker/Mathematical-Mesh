@@ -2,9 +2,9 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Goedel.Protocol.Service;
 using System.Text;
-using System.Threading.Tasks;
+using Goedel.Mesh;
 using Goedel.Utilities;
 using Microsoft.Extensions.Options;
 
@@ -12,24 +12,29 @@ namespace Goedel.Protocol.GenericHost;
 
 
 
-public class ConsoleHostedService : IHostedService {
+public class RudHostedService : IHostedService {
     private ILogger Logger { get; }
     private IHostApplicationLifetime AppLifetime { get; }
     //private List<ConfiguredService> ConfiguredServices { get; } = new List<ConfiguredService>();
 
-    IEnumerable<IConfiguredService> ConfigurableServices{ get; }
+    IEnumerable<IProvider> ConfigurableServices{ get; }
 
-
+    RudService RudService { get; set; }
     //NewHostConfiguration HostConfiguration { get; }
+    IMeshMachine MeshMachine { get; }
 
-    public ConsoleHostedService(
-            ILogger<ConsoleHostedService> logger,
+    IProviderHost ProviderHost { get; }
+    public RudHostedService(
+            ILogger<RudHostedService> logger,
+            IMeshMachine meshMachine,
             IHostApplicationLifetime appLifetime,
-            IEnumerable<IConfiguredService> configurableServices) {
+            IEnumerable<IProvider> configurableServices,
+            IProviderHost providerHost) {
         Logger = logger;
         AppLifetime = appLifetime;
         ConfigurableServices = configurableServices;
-
+        MeshMachine = meshMachine;
+        ProviderHost = providerHost;
         }
 
     //IConfigurableService GetConfigurableService(string name) {
@@ -68,12 +73,19 @@ public class ConsoleHostedService : IHostedService {
                 try {
                     Logger.LogInformation(Event.HelloWorld.EventId, "Hello World!");
 
-                    var services = new Task [ConfigurableServices.Count()];
-                    var i = 0;
-                    foreach (var service in ConfigurableServices) {
-                        services [i++] = service.StartServiceAsync();
-                        }
-                    await Task.WhenAll (services);
+                    //var credential = hostConfiguration.GetCredential(MeshMachine);
+
+
+                    await ProviderHost.StartAsync(cancellationToken, ConfigurableServices);
+
+
+
+                    //var services = new Task [ConfigurableServices.Count()];
+                    //var i = 0;
+                    //foreach (var service in ConfigurableServices) {
+                    //    services [i++] = service.StartServiceAsync();
+                    //    }
+                    //await Task.WhenAll (services);
                     }
                 catch (Exception ex) {
                     Logger.LogError(Event.UnhandledException.EventId, ex, "Unhandled exception!");

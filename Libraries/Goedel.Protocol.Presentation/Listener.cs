@@ -74,7 +74,7 @@ public abstract partial class Listener : Disposable {
     #region // Properties
 
     ///<summary>The list of RUD providers.</summary> 
-    public List<RudProvider> Providers { get; }
+    public IEnumerable<IProvider> Providers { get; }
 
     ///<summary>Private credential of self.</summary> 
     public virtual ICredentialPrivate CredentialSelf { get; }
@@ -94,7 +94,7 @@ public abstract partial class Listener : Disposable {
     /// <param name="credentialSelf">The credential used by the listener.</param>
     /// <param name="providers">The listener service providers.</param>
     public Listener(ICredentialPrivate credentialSelf,
-        List<RudProvider> providers) {
+        IEnumerable<IProvider> providers) {
         CredentialSelf = credentialSelf;
         Providers = providers;
         }

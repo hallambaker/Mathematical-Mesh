@@ -58,7 +58,7 @@ public class RudService : Disposable {
 
 
     private readonly CancellationTokenSource cancellationTokenSource;
-    private readonly CancellationToken cancellationToken;
+    private CancellationToken CancellationToken { get; }
     private readonly int udpListenerCount;
     private readonly int httpListenerCount = 1;
     private int ListenerCount => udpListenerCount + httpListenerCount;
@@ -69,7 +69,7 @@ public class RudService : Disposable {
 
     ///<summary>Service instrumentation.</summary> 
     public HostMonitor Monitor;
-    readonly Dictionary<string, RudProvider> providerMap = new();
+    readonly Dictionary<string, IProvider> providerMap = new();
 
     #endregion
     #region // Destructor
@@ -108,7 +108,7 @@ public class RudService : Disposable {
     /// <param name="credential">Credential for the listener to use.</param>
     /// <remarks>Constructor returns after the service has been started and listener threads 
     /// initialized.</remarks>
-    public RudService(List<RudProvider> providers,
+    public RudService(IEnumerable<IProvider> providers,
             ICredentialPrivate credential = null,
             Listener rdpListener = null,
             int maxCores = 0) {
@@ -116,7 +116,7 @@ public class RudService : Disposable {
         Listener = rdpListener ?? new RudListener(credential, providers);
 
         cancellationTokenSource = new CancellationTokenSource();
-        cancellationToken = cancellationTokenSource.Token;
+        CancellationToken = cancellationTokenSource.Token;
 
         // set the number of dispatch tasks
         MaxDispatch = maxCores > 0 ? maxCores : Environment.ProcessorCount;
@@ -179,10 +179,12 @@ public class RudService : Disposable {
         //    }
 
 
+        var t = WaitServiceAsync();
+        //t.Wait();
 
         //start the asynchronous services before returning.
-        serviceThread = new Thread(WaitService);
-        serviceThread.Start();
+        //serviceThread = new Thread(WaitService);
+        //serviceThread.Start();
 
 
 
@@ -200,9 +202,107 @@ public class RudService : Disposable {
         }
 
 
+
+
+    /// <summary>
+    /// Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
+    /// </summary>
+    /// <param name="providers">The services to be served.</param>
+    /// <param name="rdpListener">Specify the listener layer (default is <see cref="RudListener"/>.</param>
+    /// <param name="maxCores">Maximum number of dispatch threads.</param>
+    /// <param name="credential">Credential for the listener to use.</param>
+    /// <remarks>Constructor returns after the service has been started and listener threads 
+    /// initialized.</remarks>
+    public RudService(
+        CancellationToken cancellationToken,
+        IEnumerable<IProvider> providers,
+            ICredentialPrivate credential = null,
+            Listener rdpListener = null,
+            int maxCores = 0) {
+
+        Listener = rdpListener ?? new RudListener(credential, providers);
+        CancellationToken = cancellationToken;
+
+        // set the number of dispatch tasks
+        MaxDispatch = maxCores > 0 ? maxCores : Environment.ProcessorCount;
+
+        // Set up the dispatchers
+        //nullTask = Task.Run(NullTask);
+        dispatchTasks = new Task[MaxDispatch];
+        dispatchTaskResource = new string[MaxDispatch];
+        dispatchTaskActive = new bool[MaxDispatch];
+        for (var i = 0; i < MaxDispatch; i++) {
+            dispatchTasks[i] = Task.Run(NullTask);
+            dispatchTaskActive[i] = false;
+            dispatchTaskResource[i] = null;
+            }
+
+        // Set up the listeners
+
+        udpListenerCount = 0;
+
+        // The HTTP listener handles multiplexing internally and so we only require one.
+        HttpListener.IsSupported.AssertTrue(ServerNotSupported.Throw);
+        httpListener = new HttpListener();
+        foreach (var provider in providers) {
+            foreach (var endpoint in provider.HTTPEndpoints) {
+                var uri = endpoint.GetUriPrefix();
+                //uri = "http://+:15099/.well-known/";
+                //Screen.WriteLine($"Connect to URI {uri}");
+
+                httpListener.Prefixes.Add(uri);
+                providerMap.Add(uri, provider);
+                }
+            udpListenerCount += provider.UdpEndpoints.Count;
+            }
+        udpListenerCount = 0; // Hack - disable UDP for now, is throwing errors.
+
+        // Start the monitoring service and bind values to every provider returning the JPC interface.
+        Monitor = new HostMonitor(ListenerCount, MaxDispatch);
+
+        foreach (var provider in providers) {
+            if (provider.JpcInterface is IMonitorProvider monitorProvider) {
+                monitorProvider.Monitor = Monitor;
+                }
+            }
+
+        serviceTasks = new Task<ServiceRequest>[ListenerCount+1];
+        serviceTasks[ListenerCount] = WaitCancellationToken();
+
+        httpListener.Start();
+        WaitHttpRequest();
+
+        //set up the UDP clients...
+        //udpListeners = new UdpClient[udpListenerCount];
+        //var listener = 1;
+        //foreach (var provider in providers) {
+        //    foreach (var endpoint in provider.UdpEndpoints) {
+        //        udpListeners[listener] = endpoint.GetClient();
+        //        WaitUdpListener(listener);
+        //        listener++;
+        //        }
+        //    }
+
+
+
+        //start the asynchronous services before returning.
+        serviceThread = new Thread(WaitService);
+        serviceThread.Start();
+
+        var t = WaitServiceAsync();
+        }
+
+
+
+
     #endregion
     #region // Methods 
 
+
+
+    //public async Task WaitService() {
+    //    await serviceThread.Join();
+    //    }
 
     // The choreography here is flawed but leave as is for now. Need to have a three stage 
     // scheme in which we first construct the complete request, then dispatch it on
@@ -215,7 +315,7 @@ public class RudService : Disposable {
     /// <param name="port">Port to which the provider is bound.</param>
     /// <param name="resource">Protocol serviced.</param>
     /// <returns>The provider.</returns>
-    public RudProvider GetProvider(string domain, int port, string resource) {
+    public IProvider GetProvider(string domain, int port, string resource) {
 
         var test = $"http://+:{port}{resource}";
         if (providerMap.TryGetValue(test, out var provider)) {
@@ -229,11 +329,17 @@ public class RudService : Disposable {
         return null;
         }
 
-    void WaitService() {
+     void WaitService() {
+        var t =  WaitServiceAsync();
+        t.Wait();
+        }
+
+
+    async Task WaitServiceAsync() {
 
         while (active) {
             try {
-                Task.WaitAny(serviceTasks, cancellationToken);
+                await Task.WhenAny(serviceTasks);
 
                 //Dispatch a processing unit to the next available slot.
                 for (var listener = 0; listener < udpListenerCount + 1; listener++) {
@@ -379,6 +485,15 @@ public class RudService : Disposable {
             serviceTasks[listener + 1] = Process(udpListeners[listener]);
             }
         }
+
+    async Task<ServiceRequest> WaitCancellationToken() {
+        await CancellationToken;
+        active = false;
+
+        return (ServiceRequest)null;
+
+        }
+
 
 
     async Task<ServiceRequest> Process(HttpListener httpListener) {
