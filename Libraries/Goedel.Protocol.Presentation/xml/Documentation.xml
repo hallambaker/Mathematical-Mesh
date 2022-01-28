@@ -791,7 +791,7 @@
         <member name="F:Goedel.Protocol.Presentation.Listener.DictionaryStreamsInbound">
             <summary>Dictionary mapping inbound source Ids to sessions.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Presentation.Listener.#ctor(Goedel.Protocol.Presentation.ICredentialPrivate,System.Collections.Generic.IEnumerable{Goedel.Protocol.IProvider})">
+        <member name="M:Goedel.Protocol.Presentation.Listener.#ctor(Goedel.Protocol.Presentation.ICredentialPrivate,System.Collections.Generic.IEnumerable{Goedel.Protocol.IConfguredService})">
             <summary>
             Base constructor, populate the common properties.
             </summary>
@@ -1675,7 +1675,7 @@
             the specified service.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Presentation.RudListener.#ctor(Goedel.Protocol.Presentation.ICredentialPrivate,System.Collections.Generic.IEnumerable{Goedel.Protocol.IProvider})">
+        <member name="M:Goedel.Protocol.Presentation.RudListener.#ctor(Goedel.Protocol.Presentation.ICredentialPrivate,System.Collections.Generic.IEnumerable{Goedel.Protocol.IConfguredService})">
             <summary>
             Base constructor, populate the common properties.
             </summary>
@@ -1705,29 +1705,12 @@
         <member name="P:Goedel.Protocol.Presentation.RudProvider.JpcInterface">
             <summary>The provider interface.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Presentation.RudProvider.HTTPEndpoints">
-            <summary>The HTTP endpoints.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Presentation.RudProvider.UdpEndpoints">
-            <summary>The UDP endpoints</summary> 
-        </member>
         <member name="M:Goedel.Protocol.Presentation.RudProvider.#ctor(System.Collections.Generic.List{Goedel.Protocol.Endpoint},Goedel.Protocol.JpcInterface)">
             <summary>
             Constructor, returns an instance servicing the endpoints <paramref name="endpoints"/>
             </summary>
             <param name="endpoints">The endpoints to be serviced.</param>
             <param name="jpcProvider">The service provider.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.RudProvider.#ctor(Goedel.Protocol.JpcInterface,Goedel.Protocol.TransportType,System.String,System.String)">
-            <summary>
-            Constructor, returns a provider of the service <paramref name="instance"/> offering
-            the transports specified by <paramref name="presentationTypes"/> at the domain 
-            <paramref name="domain"/>.
-            </summary>
-            <param name="jpcProvider">The provider instance.</param>
-            <param name="presentationTypes">The presentations supported.</param>
-            <param name="domain">The DNS domain.</param>
-            <param name="instance">The instance specifier</param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.DataGram">
             <summary>

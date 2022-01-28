@@ -146,8 +146,13 @@ public class MeshHost : Disposable {
     #region // Methods
 
 
+    public JsonObject GetStoreEntry(string key) {
+        if (ContainerHost.ObjectIndex.TryGetValue (key, out var storeEntry) ){
+            return storeEntry.JsonObject;
 
-
+            }
+        return null;
+        }
     void Register(ContextAccount contextMesh) {
         var machine = contextMesh.CatalogedMachine;
         DictionaryUDFContextMesh.Remove(machine.Id);

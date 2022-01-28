@@ -168,7 +168,12 @@
             The public fatory delegate
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.MeshRudHost.StartAsync(System.Threading.CancellationToken,System.Collections.Generic.IEnumerable{Goedel.Protocol.IProvider})">
+        <member name="T:Goedel.Mesh.ServiceAdmin.MeshRudListener">
+            <summary>
+            Dependency injection wrapper that 
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.MeshRudListener.StartAsync(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.NamespaceDoc">

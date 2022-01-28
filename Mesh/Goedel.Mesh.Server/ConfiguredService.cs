@@ -25,8 +25,8 @@ public static class ConsoleLoggerExtensions {
 
 
         host.ConfigureServices((hostContext, services) => {
-            services.AddSingleton<IMeshMachine, MeshMachineCore>();
-            services.AddSingleton<IProvider, MeshConfiguredService>();
+
+            services.AddSingleton<IConfguredService, MeshConfiguredService>();
             var configurationService = services.Configure <MeshHostConfiguration> (
                 hostContext.Configuration.GetSection("MeshService"));
             var configurationHost = services.Configure<GenericHostConfiguration>(
@@ -36,7 +36,12 @@ public static class ConsoleLoggerExtensions {
         return host;
         }
     }
-public class MeshConfiguredService : IProvider {
+
+
+
+
+
+public class MeshConfiguredService : IConfguredService {
 
 
 
@@ -46,7 +51,7 @@ public class MeshConfiguredService : IProvider {
 
     IOptionsMonitor<MeshHostConfiguration> MeshHostConfigurationMonitor;
     IMeshMachine MeshMachine { get; }
-    ILogger<RudHostedService> Logger { get; }
+    ILogger<ManagedListener> Logger { get; }
 
     PublicMeshService PublicMeshService { get; set; }
 
@@ -54,13 +59,12 @@ public class MeshConfiguredService : IProvider {
     public JpcInterface JpcInterface => PublicMeshService;
 
     ///<inheritdoc/>
-    public List<HttpEndpoint> HTTPEndpoints => throw new NotImplementedException();
+    public List<Endpoint> Endpoints { get; }
 
-    ///<inheritdoc/>
-    public List<UdpEndpoint> UdpEndpoints => throw new NotImplementedException();
+
 
     public MeshConfiguredService(
-                ILogger<RudHostedService> logger,
+                ILogger<ManagedListener> logger,
                 IMeshMachine meshMachine,
                 IOptionsMonitor<MeshHostConfiguration> meshHostConfiguration,
                 IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration
@@ -83,7 +87,6 @@ public class MeshConfiguredService : IProvider {
         var serviceConfiguration = new ServiceConfiguration() {
             Id = null!,
             ProfileUdf = MeshHostConfiguration.ServiceUdf,
-            //Description = MeshHostConfiguration.Description ?? "Mesh Service",
             Path = MeshHostConfiguration.ServicePath,
             DNS = MeshHostConfiguration.ServiceDNS.ToList()
             // ignore the logs for now
@@ -97,10 +100,25 @@ public class MeshConfiguredService : IProvider {
             IP = GenericHostConfiguration.IP.ToList()
             };
 
-        // To do - build the HTTP endpoints
+        // Build the HTTP endpoints for the service
+        // The service [protocol] at [example.com] with hosts
+        // [host1.example.net, host2.example.net] will be bound to the following URIs:
+        //
+        // https://example.com/.well-known/protocol/
+        // https://protocol.example.com/.well-known/protocol/
+        // https://host1.example.net:15099/.well-known/protocol/
+        // https://host2.example.net:15099/.well-known/protocol/
 
 
-        PublicMeshService = new PublicMeshService(MeshMachine, serviceConfiguration, hostConfiguration);
+        var transactionLogger = new LogServiceGeneric
+            (serviceConfiguration, hostConfiguration, null, logger);
+
+
+        PublicMeshService = new PublicMeshService(MeshMachine, 
+            GenericHostConfiguration, MeshHostConfiguration, transactionLogger);
+        Endpoints = PublicMeshService.Endpoints;
+
+        //PublicMeshService = new PublicMeshService(MeshMachine, serviceConfiguration, hostConfiguration);
 
         }
 
@@ -119,6 +137,6 @@ public class MeshHostConfiguration : GenericServiceConfiguration {
 
     public string[] Administrators { get; set; } = Array.Empty<string>();
 
-    public string HostPath { get; set; } = string.Empty;
+    public string? HostPath { get; set; } = null;
 
     }

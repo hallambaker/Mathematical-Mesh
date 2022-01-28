@@ -7,7 +7,7 @@ using Goedel.Protocol.Service;
 
 namespace Goedel.Protocol.GenericHost;
 using Microsoft.Extensions.Logging;
-internal class LogServiceGeneric : LogService {
+public class LogServiceGeneric : LogService {
 
 
     public LogServiceGeneric(

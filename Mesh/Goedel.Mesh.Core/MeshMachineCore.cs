@@ -21,6 +21,7 @@
 #endregion
 
 using Goedel.Cryptography.Core;
+using System.IO;
 
 namespace Goedel.Mesh;
 
@@ -51,8 +52,8 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     /// Default constructor
     /// </summary>
     /// <param name="directory">Directory to store the server information.</param>
-    public MeshMachineCoreServer(string directory) {
-        KeyCollection = GetKeyCollection();
+    public MeshMachineCoreServer(string directory, bool direct = false) {
+        KeyCollection = GetKeyCollection(direct ? directory : null);
 
         if (directory != null) {
             DirectoryMaster = directory;
@@ -71,17 +72,18 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
 
 
 
-    #region // Disposing (Currently null)
-    //protected override void Disposing() {
-    //    //CatalogHost.Dispose();
-    //    }
-    #endregion
 
-    /// <summary>
-    /// Return a new key collection.
-    /// </summary>
-    /// <returns>The key collection created.</returns>
-    public virtual IKeyCollection GetKeyCollection() => new KeyCollectionCore();
+#region // Disposing (Currently null)
+//protected override void Disposing() {
+//    //CatalogHost.Dispose();
+//    }
+#endregion
+/// <summary>
+/// Return a new key collection.
+/// </summary>
+/// <returns>The key collection created.</returns>
+    public virtual IKeyCollection GetKeyCollection(string directory=null) 
+            => new KeyCollectionCore(directory);
 
 
     #region // Implementation
@@ -162,7 +164,7 @@ public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
     /// to store persistent data.
     /// </summary>
     /// <param name="directory">Directory to store persistence data.</param>
-    public MeshMachineCore(string directory = null) : base(directory) {
+    public MeshMachineCore(string directory = null, bool direct = false) : base(directory, direct) {
         // Read the container to get the directories.
         var containerHost = new PersistHost(FileNameHost, FileTypeHost,
             fileStatus: FileStatus.ConcurrentLocked,

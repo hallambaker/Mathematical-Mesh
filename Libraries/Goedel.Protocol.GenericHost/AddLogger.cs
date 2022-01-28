@@ -29,7 +29,7 @@ public static class ConsoleLoggerExtensions {
 
 
         host.ConfigureServices((hostContext, services) => {
-            services.AddSingleton<IHostedService, RudHostedService>();
+            services.AddSingleton<IHostedService, ManagedListener>();
         });
 
         return host;

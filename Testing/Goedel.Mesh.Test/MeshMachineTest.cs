@@ -149,7 +149,8 @@ public class MeshMachineTest : MeshMachineCore {
 
 
 
-    public override IKeyCollection GetKeyCollection() => new KeyCollectionTest(this);
+    public override IKeyCollection GetKeyCollection(
+            string directory = null) => new KeyCollectionTest(this);
 
 
     public MeshMachineTest(TestEnvironmentCommon testEnvironmentPerTest, string name = "Test") :

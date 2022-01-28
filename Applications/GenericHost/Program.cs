@@ -30,13 +30,15 @@ using Goedel.Protocol.GenericHost;
 using Goedel.Mesh.Server;
 using Goedel.Utilities;
 using Goedel.Protocol;
+using Goedel.Mesh;
 
 internal sealed class Program {
     private static async Task Main(string[] args) {
         await Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) => {
-                services.AddSingleton<IProviderHost, MeshRudHost>();
-
+                services.AddSingleton<IServiceListener, MeshRudListener>();
+                services.AddSingleton<IMeshMachine, MeshMachineCore>(
+                        s => new MeshMachineCore ("host1", true));
 #if USE_PLATFORM_WINDOWS
                 services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
 #elif USE_PLATFORM_LINUX
@@ -45,8 +47,7 @@ internal sealed class Program {
             })
             .AddConsoleHosted()
             .AddMeshService()
-            .ConfigureLogging(logging =>
-                logging.AddConsoleLogger())
+            .ConfigureLogging(logging => logging.AddConsoleLogger())
             .RunConsoleAsync();
         }
     }

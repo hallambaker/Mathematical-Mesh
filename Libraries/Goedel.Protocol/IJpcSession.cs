@@ -47,16 +47,28 @@ public class GenericHostConfiguration {
 
     ///<summary>The IP address and port numbers</summary> 
     public string[] IP { get; set; } = Array.Empty<string>();
+
+    ///<summary>The maximum number of cores, if zero, all cores on the machine
+    ///are used.</summary> 
+    public int MaxCores { get; set; } = 0;
+
+
+    public string Instance { get; set; } = null!;
+
+    public int Port = 15099;
+
+
+
+
     }
 
 
 
-public interface IProviderHost {
+public interface IServiceListener {
 
 
     Task StartAsync(
-        CancellationToken cancellationToken,
-        IEnumerable<IProvider> providers
+        CancellationToken cancellationToken
         );
 
 
@@ -66,20 +78,14 @@ public interface IProviderHost {
 /// <summary>
 /// Service provider interface.
 /// </summary>
-public interface IProvider {
+public interface IConfguredService {
 
     ///<summary>The provider interface.</summary> 
     JpcInterface JpcInterface { get; }
 
+    ///<summary>The Service endpoints.</summary> 
+    public List<Endpoint> Endpoints { get; }
 
-    // The HTTP and UDP endpoints should be eliminated as a RUD service simply ignores the
-    // source of received data.
-
-    ///<summary>The HTTP endpoints.</summary> 
-    List<HttpEndpoint> HTTPEndpoints { get; } 
-
-    ///<summary>The UDP endpoints</summary> 
-    List<UdpEndpoint> UdpEndpoints { get; } 
 
 
     }

@@ -325,7 +325,12 @@
       "ProjectGuid": "87b9a1db-3379-4316-b73d-d97106bcb91e",
       "DisplayName": "Goedel.Protocol.GenericHost",
       "ColorIndex": 15
+    },
+    "1d184fdb-2b58-465f-8aeb-191b27c0a58e": {
+      "ProjectGuid": "1d184fdb-2b58-465f-8aeb-191b27c0a58e",
+      "DisplayName": "ContentProject",
+      "ColorIndex": 0
     }
   },
-  "NextColorIndex": 0
+  "NextColorIndex": 1
 }

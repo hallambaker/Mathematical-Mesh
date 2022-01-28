@@ -83,6 +83,15 @@ public class PublicMeshService : MeshService {
     ///<summary>The logging service.</summary> 
     public LogService LogService { get; }
 
+
+    ///<summary>The service endpoints</summary> 
+    public List<Endpoint> Endpoints { get; } = new();
+
+
+    GenericHostConfiguration GenericHostConfiguration { get; }
+
+    MeshHostConfiguration MeshHostConfiguration { get; }
+
     #endregion
     #region // Disposing
     ///<inheritdoc/>
@@ -109,6 +118,53 @@ public class PublicMeshService : MeshService {
         var provider = new PublicMeshService(meshMachine, serviceConfiguration, hostConfiguration);
 
         return new RudProvider(endpoints, provider);
+        }
+
+
+
+    public PublicMeshService(
+            IMeshMachine meshMachine,
+            GenericHostConfiguration genericHostConfiguration,
+            MeshHostConfiguration meshHostConfiguration,
+            LogService logService) {
+
+        LogService = logService;
+        MeshMachine = meshMachine;
+        GenericHostConfiguration = genericHostConfiguration;
+        MeshHostConfiguration = meshHostConfiguration;
+        KeyCollection = MeshMachine.KeyCollection;
+
+        // Load the Mesh persistence base
+        var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
+        MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
+
+
+
+        //foreach (var service in meshHostConfiguration.ServiceDNS) {
+        //    Endpoints.Add(
+        //        new HttpEndpoint(service, GetWellKnown, 
+        //                genericHostConfiguration.Instance, genericHostConfiguration.Port, this));
+        //    var explicitService = GetWellKnown + service;
+        //    Endpoints.Add(
+        //        new HttpEndpoint(explicitService, GetWellKnown,
+        //                genericHostConfiguration.Instance, genericHostConfiguration.Port, this));
+        //    }
+        Endpoints.Add(
+            new HttpEndpoint(genericHostConfiguration.HostDns, GetWellKnown, 
+                    genericHostConfiguration.Instance, genericHostConfiguration.Port, this));
+
+        // Here we need to populate ProfileService, ProfileHost
+
+        var meshHost = MeshHost.GetCatalogHost(MeshMachine);
+        var hostServiceDescription = meshHost.GetStoreEntry(genericHostConfiguration.HostUdf) as CatalogedService;
+
+
+        ProfileService = hostServiceDescription.EnvelopedProfileService.EnvelopedObject;
+        ProfileHost = hostServiceDescription.EnvelopedProfileHost.EnvelopedObject;
+        ActivationDevice = hostServiceDescription.EnvelopedActivationHost.EnvelopedObject;
+        ConnectionDevice = hostServiceDescription.EnvelopedConnectionService.EnvelopedObject;
+
+
         }
 
 
@@ -140,18 +196,10 @@ public class PublicMeshService : MeshService {
 
         // Dummy profiles for the service and host at this point
         ProfileService = ProfileService.Generate(KeyCollection);
-
-
         ProfileHost = ProfileHost.CreateHost(MeshMachine);
 
         // create an activation record and a connection record.
-
         ActivationDevice = new ActivationHost(ProfileHost);
-
-
-        //Screen.WriteLine($"$$$$ Seed {ActivationDevice.ActivationSeed}");
-        //Screen.WriteLine($"$$$$ Suth {ActivationDevice.ConnectionUser.Authentication.Udf}");
-        // activate
         ActivationDevice.Activate(ProfileHost.SecretSeed);
 
         //Screen.WriteLine($"$$$$ Suth {ActivationDevice.DeviceAuthentication}");

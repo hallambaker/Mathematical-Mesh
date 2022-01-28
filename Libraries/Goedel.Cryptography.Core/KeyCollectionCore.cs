@@ -46,6 +46,7 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
 
 
     static KeyCollectionCore() {
+
         var platform = Environment.OSVersion.Platform;
 
         switch (platform) {
@@ -75,6 +76,18 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
             }
 
 
+        }
+
+    public KeyCollectionCore(string directory = null) {
+        if (directory != null) {
+            SetPlatformDirect(directory);
+            }
+        }
+
+
+    static void SetPlatformDirect(string directory) {
+        _DirectoryKeys = Path.Combine(directory, "Keys");
+        _DirectoryMesh = Path.Combine(directory, "Profiles");
         }
 
 

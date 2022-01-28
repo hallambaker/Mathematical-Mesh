@@ -525,7 +525,7 @@
             <param name="Instance">Optional instance tag to allow multiple instances to be run 
             for testing etc.</param>
         </member>
-        <member name="M:Goedel.Protocol.Endpoint.#ctor(System.String,System.String)">
+        <member name="M:Goedel.Protocol.Endpoint.#ctor(System.String,System.String,Goedel.Protocol.JpcInterface)">
             <summary>
             Record describing a listener endpoint.
             </summary>
@@ -542,7 +542,7 @@
             <param name="Instance">The protocol instance.</param>
             <param name="Port">The port number.</param>
         </member>
-        <member name="M:Goedel.Protocol.HttpEndpoint.#ctor(System.String,System.String,System.String,System.Int32)">
+        <member name="M:Goedel.Protocol.HttpEndpoint.#ctor(System.String,System.String,System.String,System.Int32,Goedel.Protocol.JpcInterface)">
             <summary>
             A HTTP Endpoint
             </summary>
@@ -599,7 +599,7 @@
             <param name="Port">The port number.</param>
             <param name="AddressFamily">The address family.</param>
         </member>
-        <member name="M:Goedel.Protocol.UdpEndpoint.#ctor(System.String,System.String,System.Int32,System.Net.Sockets.AddressFamily)">
+        <member name="M:Goedel.Protocol.UdpEndpoint.#ctor(System.String,System.String,System.Int32,System.Net.Sockets.AddressFamily,Goedel.Protocol.JpcInterface)">
             <summary>
             A UDP endpoint.
             </summary>
@@ -1264,19 +1264,20 @@
         <member name="P:Goedel.Protocol.GenericHostConfiguration.IP">
             <summary>The IP address and port numbers</summary> 
         </member>
-        <member name="T:Goedel.Protocol.IProvider">
+        <member name="P:Goedel.Protocol.GenericHostConfiguration.MaxCores">
+            <summary>The maximum number of cores, if zero, all cores on the machine
+            are used.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.IConfguredService">
             <summary>
             Service provider interface.
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.IProvider.JpcInterface">
+        <member name="P:Goedel.Protocol.IConfguredService.JpcInterface">
             <summary>The provider interface.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.IProvider.HTTPEndpoints">
-            <summary>The HTTP endpoints.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.IProvider.UdpEndpoints">
-            <summary>The UDP endpoints</summary> 
+        <member name="P:Goedel.Protocol.IConfguredService.Endpoints">
+            <summary>The Service endpoints.</summary> 
         </member>
         <member name="T:Goedel.Protocol.IJpcSession">
             <summary>

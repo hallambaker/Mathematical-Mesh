@@ -37,13 +37,13 @@
         <member name="F:Goedel.Mesh.MeshMachineCoreServer.FileTypeHost">
             <summary>The IANA media type for the host file data.</summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCoreServer.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.#ctor(System.String,System.Boolean)">
             <summary>
             Default constructor
             </summary>
             <param name="directory">Directory to store the server information.</param>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetKeyCollection">
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetKeyCollection(System.String)">
             <summary>
             Return a new key collection.
             </summary>
@@ -88,7 +88,7 @@
             Disposing routine. Feee internal resources  and shut down the Mesh Host.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCore.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.MeshMachineCore.#ctor(System.String,System.Boolean)">
             <summary>
             Constructor, creating a service instance using <paramref name="directory"/>
             to store persistent data.

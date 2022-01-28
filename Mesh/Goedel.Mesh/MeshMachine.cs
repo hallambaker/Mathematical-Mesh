@@ -30,22 +30,23 @@ namespace Goedel.Mesh;
 public delegate IMeshMachine GetMachineDelegate();
 
 
-/// <summary>
-/// Support class for MeshMachine containing static methods and delegate dispatch.
-/// </summary>
-public static class MeshMachine {
+///// <summary>
+///// Support class for MeshMachine containing static methods and delegate dispatch.
+///// </summary>
+//public static class MeshMachine {
 
-    ///<summary>The default number of bits in a master key.</summary>
-    public static int DefaultMasterKeyBits = 256;
+//    ///<summary>The default number of bits in a master key.</summary>
+//    public static int DefaultMasterKeyBits = 256;
 
-    /////<summary>Factory returning an IMeshMachine instance</summary>
-    //public static GetMachineDelegate IMeshMachineFactory;
+//    /////<summary>Factory returning an IMeshMachine instance</summary>
+//    //public static GetMachineDelegate IMeshMachineFactory;
 
-    ///<summary>Path to directory where the profiles are stored.</summary>
-    public static string DirectoryProfiles;
+//    ///<summary>Path to directory where the profiles are stored.</summary>
+//    public static string DirectoryProfiles;
 
 
-    }
+//    }
+
 
 /// <summary>
 /// Interface exposed by all Mesh Machine classes.

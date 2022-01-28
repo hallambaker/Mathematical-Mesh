@@ -59,7 +59,8 @@ public enum TransportType {
 /// for testing etc.</param>
 public record Endpoint(
          string Protocol,
-         string Instance = null) {
+         string Instance = null,
+         JpcInterface JpcInterface =null) {
 
 
 
@@ -77,7 +78,8 @@ public record HttpEndpoint(
          string Domain,
          string Protocol,
          string Instance = null,
-         int Port = 15099) : Endpoint(Protocol, Instance) {
+         int Port = 15099,
+         JpcInterface JpcInterface = null) : Endpoint(Protocol, Instance, JpcInterface) {
     #region // Properties
     #endregion
     #region // Methods 
@@ -144,7 +146,8 @@ public record UdpEndpoint(
          string Protocol,
          string Instance = null,
          int Port = 0,
-         AddressFamily AddressFamily = AddressFamily.InterNetwork) : Endpoint(Protocol, Instance) {
+         AddressFamily AddressFamily = AddressFamily.InterNetwork,
+         JpcInterface JpcInterface = null) : Endpoint(Protocol, Instance, JpcInterface) {
     #region // Methods 
 
     /// <summary>

@@ -43,6 +43,14 @@ public class GenericServiceConfiguration  {
     ///<summary>Service DNS addresses</summary> 
     public string[] ServiceDNS { get; set; } = Array.Empty<string>();
 
+
+
+    public List<Endpoint> GetEndpoints(GenericHostConfiguration genericHostConfiguration) {
+
+
+        throw new NotImplementedException();
+        }
+
     }
 
 

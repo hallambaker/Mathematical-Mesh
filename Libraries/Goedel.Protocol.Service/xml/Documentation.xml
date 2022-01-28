@@ -416,7 +416,7 @@
             Disposal routine, perform clean termination of all active threads.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Service.RudService.#ctor(System.Collections.Generic.IEnumerable{Goedel.Protocol.IProvider},Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.Listener,System.Int32)">
+        <member name="M:Goedel.Protocol.Service.RudService.#ctor(System.Collections.Generic.IEnumerable{Goedel.Protocol.IConfguredService},Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.Listener,System.Int32)">
             <summary>
             Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
             </summary>
@@ -427,7 +427,7 @@
             <remarks>Constructor returns after the service has been started and listener threads 
             initialized.</remarks>
         </member>
-        <member name="M:Goedel.Protocol.Service.RudService.#ctor(System.Threading.CancellationToken,System.Collections.Generic.IEnumerable{Goedel.Protocol.IProvider},Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.Listener,System.Int32)">
+        <member name="M:Goedel.Protocol.Service.RudService.#ctor(System.Threading.CancellationToken,System.Collections.Generic.IEnumerable{Goedel.Protocol.IConfguredService},Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.Listener,System.Int32)">
             <summary>
             Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
             </summary>

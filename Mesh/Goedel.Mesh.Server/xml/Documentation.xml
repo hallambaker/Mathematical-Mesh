@@ -381,10 +381,7 @@
         <member name="P:Goedel.Mesh.Server.MeshConfiguredService.JpcInterface">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshConfiguredService.HTTPEndpoints">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Server.MeshConfiguredService.UdpEndpoints">
+        <member name="P:Goedel.Mesh.Server.MeshConfiguredService.Endpoints">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Server.MeshServerException">
@@ -1026,6 +1023,9 @@
         </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.LogService">
             <summary>The logging service.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.Endpoints">
+            <summary>The service endpoints</summary> 
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
             <inheritdoc/>

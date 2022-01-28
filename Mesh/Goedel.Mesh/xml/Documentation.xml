@@ -6696,17 +6696,6 @@
             </summary>
             <returns>The created instance.</returns>
         </member>
-        <member name="T:Goedel.Mesh.MeshMachine">
-            <summary>
-            Support class for MeshMachine containing static methods and delegate dispatch.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshMachine.DefaultMasterKeyBits">
-            <summary>The default number of bits in a master key.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MeshMachine.DirectoryProfiles">
-            <summary>Path to directory where the profiles are stored.</summary>
-        </member>
         <member name="T:Goedel.Mesh.IMeshMachine">
             <summary>
             Interface exposed by all Mesh Machine classes.
