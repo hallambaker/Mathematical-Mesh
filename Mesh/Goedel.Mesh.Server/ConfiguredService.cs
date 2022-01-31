@@ -84,21 +84,21 @@ public class MeshConfiguredService : IConfguredService {
         GenericHostConfiguration = genericHostConfiguration.CurrentValue;
 
 
-        var serviceConfiguration = new ServiceConfiguration() {
-            Id = null!,
-            ProfileUdf = MeshHostConfiguration.ServiceUdf,
-            Path = MeshHostConfiguration.ServicePath,
-            DNS = MeshHostConfiguration.ServiceDNS.ToList()
-            // ignore the logs for now
-            };
-        var hostConfiguration = new HostConfiguration() {
-            Id = null!,
-            ProfileUdf = GenericHostConfiguration.HostUdf,
-            DeviceUdf = GenericHostConfiguration.DeviceUdf,
-            Path = MeshHostConfiguration.HostPath,
-            DNS = new List<string>() { GenericHostConfiguration.HostDns },
-            IP = GenericHostConfiguration.IP.ToList()
-            };
+        //var serviceConfiguration = new ServiceConfiguration() {
+        //    Id = null!,
+        //    ProfileUdf = MeshHostConfiguration.ServiceUdf,
+        //    Path = MeshHostConfiguration.ServicePath,
+        //    DNS = MeshHostConfiguration.ServiceDNS.ToList()
+        //    // ignore the logs for now
+        //    };
+        //var hostConfiguration = new HostConfiguration() {
+        //    Id = null!,
+        //    ProfileUdf = GenericHostConfiguration.HostUdf,
+        //    DeviceUdf = GenericHostConfiguration.DeviceUdf,
+        //    Path = MeshHostConfiguration.HostPath,
+        //    DNS = new List<string>() { GenericHostConfiguration.HostDns },
+        //    IP = GenericHostConfiguration.IP.ToList()
+        //    };
 
         // Build the HTTP endpoints for the service
         // The service [protocol] at [example.com] with hosts
@@ -111,7 +111,7 @@ public class MeshConfiguredService : IConfguredService {
 
 
         var transactionLogger = new LogServiceGeneric
-            (serviceConfiguration, hostConfiguration, null, logger);
+            (GenericHostConfiguration, MeshHostConfiguration, null, logger);
 
 
         PublicMeshService = new PublicMeshService(MeshMachine, 
@@ -133,10 +133,3 @@ public class MeshConfiguredService : IConfguredService {
     }
 
 
-public class MeshHostConfiguration : GenericServiceConfiguration {
-
-    public string[] Administrators { get; set; } = Array.Empty<string>();
-
-    public string? HostPath { get; set; } = null;
-
-    }

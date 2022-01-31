@@ -382,6 +382,27 @@
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.MultiConfig">
             <summary>Field accessor for option [config]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.DnsConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.HostConfig">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.MultiConfig">
+            <summary>Field accessor for option [config]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Start.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>

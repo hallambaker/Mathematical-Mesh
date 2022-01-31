@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 28-Jan-22 6:15:11 PM
+//  This file was automatically generated at 31-Jan-22 5:35:55 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -578,14 +578,6 @@ public partial class ServiceConfigRequest : WsmpRequest {
 	/// <summary>
 	/// </summary>
 public partial class ServiceConfigResponse : WsmpResponse {
-        /// <summary>
-        /// </summary>
-
-	public virtual HostConfiguration						HostConfiguration  {get; set;}
-        /// <summary>
-        /// </summary>
-
-	public virtual ServiceConfiguration						ServiceConfiguration  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -630,16 +622,6 @@ public partial class ServiceConfigResponse : WsmpResponse {
 			_writer.WriteObjectStart ();
 			}
 		((WsmpResponse)this).SerializeX(_writer, false, ref _first);
-		if (HostConfiguration != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("HostConfiguration", 1);
-				HostConfiguration.Serialize (_writer, false);
-			}
-		if (ServiceConfiguration != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("ServiceConfiguration", 1);
-				ServiceConfiguration.Serialize (_writer, false);
-			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
 			}
@@ -673,20 +655,6 @@ public partial class ServiceConfigResponse : WsmpResponse {
 	public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 		switch (tag) {
-			case "HostConfiguration" : {
-				// An untagged structure
-				HostConfiguration = new HostConfiguration ();
-				HostConfiguration.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "ServiceConfiguration" : {
-				// An untagged structure
-				ServiceConfiguration = new ServiceConfiguration ();
-				ServiceConfiguration.Deserialize (jsonReader);
- 
-				break;
-				}
 			default : {
 				base.DeserializeToken(jsonReader, tag);
 				break;

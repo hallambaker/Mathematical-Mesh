@@ -45,25 +45,25 @@ public partial class Shell : _Shell {
     public ShellResult ShellResult { get; set; }
 
 
-    ///<summary>Dictionary of service descriptions.</summary> 
-    public Dictionary<string, ServiceDescription>
-        ServiceDescriptionDictionary { get; } = new();
+    /////<summary>Dictionary of service descriptions.</summary> 
+    //public Dictionary<string, ServiceDescription>
+    //    ServiceDescriptionDictionary { get; } = new();
 
 
 
 
-    /// <summary>
-    /// Constructor creating a shell prepopulated with the service descriptions
-    /// <paramref name="serviceDescriptions"/>.
-    /// </summary>
-    /// <param name="serviceDescriptions">Descriptions of services to dispatch on.</param>
-    public Shell(params ServiceDescription[] serviceDescriptions) {
+    ///// <summary>
+    ///// Constructor creating a shell prepopulated with the service descriptions
+    ///// <paramref name="serviceDescriptions"/>.
+    ///// </summary>
+    ///// <param name="serviceDescriptions">Descriptions of services to dispatch on.</param>
+    //public Shell(params ServiceDescription[] serviceDescriptions) {
 
-        foreach (var serviceDescription in serviceDescriptions) {
-            AddService(serviceDescription);
-            }
+    //    foreach (var serviceDescription in serviceDescriptions) {
+    //        AddService(serviceDescription);
+    //        }
 
-        }
+    //    }
 
     /// <summary>
     /// Dispatch command line instruction with arguments <paramref name="args"/> and
@@ -75,37 +75,37 @@ public partial class Shell : _Shell {
         var commandLineInterpreter = new CommandLineInterpreter();
 
 
-        if (NoCatch) {
-            commandLineInterpreter.MainMethod(this, args);
-            }
-        else {
+        //if (NoCatch) {
+        //    commandLineInterpreter.MainMethod(this, args);
+        //    }
+        //else {
 
 
-            try {
-                commandLineInterpreter.MainMethod(this, args);
-                }
-            catch (Goedel.Command.ParserException) {
-                CommandLineInterpreter.Brief(
-                    CommandLineInterpreter.Description,
-                    CommandLineInterpreter.DefaultCommand,
-                    CommandLineInterpreter.Entries);
-                }
-            catch (System.Exception Exception) {
-                console.WriteLine("Application: {0}", Exception.Message);
-                if (Exception.InnerException != null) {
-                    console.WriteLine(Exception.InnerException.Message);
-                    }
-                }
-            }
+        //    try {
+        //        commandLineInterpreter.MainMethod(this, args);
+        //        }
+        //    catch (Goedel.Command.ParserException) {
+        //        CommandLineInterpreter.Brief(
+        //            CommandLineInterpreter.Description,
+        //            CommandLineInterpreter.DefaultCommand,
+        //            CommandLineInterpreter.Entries);
+        //        }
+        //    catch (System.Exception Exception) {
+        //        console.WriteLine("Application: {0}", Exception.Message);
+        //        if (Exception.InnerException != null) {
+        //            console.WriteLine(Exception.InnerException.Message);
+        //            }
+        //        }
+        //    }
         }
 
 
-    /// <summary>
-    /// Add a service provider to the hosting options.
-    /// </summary>
-    /// <param name="serviceDescription">The service description.</param>
-    public void AddService(ServiceDescription serviceDescription) =>
-        ServiceDescriptionDictionary.Add(serviceDescription.WellKnown, serviceDescription);
+    ///// <summary>
+    ///// Add a service provider to the hosting options.
+    ///// </summary>
+    ///// <param name="serviceDescription">The service description.</param>
+    //public void AddService(ServiceDescription serviceDescription) =>
+    //    ServiceDescriptionDictionary.Add(serviceDescription.WellKnown, serviceDescription);
 
 
     /// <summary>
@@ -138,18 +138,18 @@ public partial class Shell : _Shell {
 
         // Start the service.
 
-        var configuration = Configuration.ReadFile(multiConfig);
-        var hostConfiguration = configuration.GetHostConfiguration(hostConfig);
-        var serviceConfiguration = configuration.GetServiceConfiguration(hostConfiguration);
+        //var configuration = Configuration.ReadFile(multiConfig);
+        //var hostConfiguration = configuration.GetHostConfiguration(hostConfig);
+        //var serviceConfiguration = configuration.GetServiceConfiguration(hostConfiguration);
 
-        serviceConfiguration.Instance = Instance;
-        hostConfiguration.Instance = Instance;
+        //serviceConfiguration.Instance = Instance;
+        //hostConfiguration.Instance = Instance;
 
-        hostConfiguration.ConsoleOutput = 
-            Options.Console.Value ? LogLevelSeverity.Information: LogLevelSeverity.None;
+        //hostConfiguration.ConsoleOutput = 
+        //    Options.Console.Value ? LogLevelSeverity.Information: LogLevelSeverity.None;
 
-        //ServiceConfiguration.Instance ??= Instance;
-        RudService = StartService(hostConfiguration, serviceConfiguration);
+        ////ServiceConfiguration.Instance ??= Instance;
+        //RudService = StartService(hostConfiguration, serviceConfiguration);
 
 
         return new ResultStartService() {
@@ -200,7 +200,7 @@ public partial class Shell : _Shell {
             }
 
 
-        Configuration = JsonReader.ReadFile<Configuration>(hasConfig, false);
+        //Configuration = JsonReader.ReadFile<Configuration>(hasConfig, false);
 
         //HostConfiguration = Configuration.GetHostConfiguration(MachineName);
         //ServiceConfiguration = Configuration.GetServiceConfiguration(HostConfiguration);
@@ -210,67 +210,67 @@ public partial class Shell : _Shell {
 
         }
 
-    /// <summary>
-    /// Start the service
-    /// </summary>
-    /// <param name="hostConfiguration">The host configuration.</param>
-    /// <param name="serviceConfiguration">The service configuration</param>
-    /// <returns>The RUD service</returns>
-    public RudService StartService(
-            HostConfiguration hostConfiguration,
-            ServiceConfiguration serviceConfiguration) {
+    ///// <summary>
+    ///// Start the service
+    ///// </summary>
+    ///// <param name="hostConfiguration">The host configuration.</param>
+    ///// <param name="serviceConfiguration">The service configuration</param>
+    ///// <returns>The RUD service</returns>
+    //public RudService StartService(
+    //        HostConfiguration hostConfiguration,
+    //        ServiceConfiguration serviceConfiguration) {
 
 
-        // This is a mess, need to 
-        // 1) Check the credential is being configuired correctly
-        // 2) Support multiple service configurations (mmm, presence, etc.)
+    //    // This is a mess, need to 
+    //    // 1) Check the credential is being configuired correctly
+    //    // 2) Support multiple service configurations (mmm, presence, etc.)
 
 
 
-        var providers = new List<RudProvider>();
+    //    var providers = new List<RudProvider>();
 
-        if (ServiceDescriptionDictionary.TryGetValue(serviceConfiguration.WellKnown, out var provider)) {
-            providers.Add(provider.Factory(MeshMachine, serviceConfiguration, hostConfiguration));
-            }
+    //    if (ServiceDescriptionDictionary.TryGetValue(serviceConfiguration.WellKnown, out var provider)) {
+    //        providers.Add(provider.Factory(MeshMachine, serviceConfiguration, hostConfiguration));
+    //        }
 
-        // add in the management service 
-        if (!ServiceDescriptionDictionary.TryGetValue(
-            ServiceManagementProvider.WellKnown, out var managementProviderDescription)) {
-            managementProviderDescription = ServiceManagementProvider.ServiceDescriptionHost;
-            }
-        providers.Add(managementProviderDescription.Factory(
-            MeshMachine, serviceConfiguration, hostConfiguration));
+    //    // add in the management service 
+    //    if (!ServiceDescriptionDictionary.TryGetValue(
+    //        ServiceManagementProvider.WellKnown, out var managementProviderDescription)) {
+    //        managementProviderDescription = ServiceManagementProvider.ServiceDescriptionHost;
+    //        }
+    //    providers.Add(managementProviderDescription.Factory(
+    //        MeshMachine, serviceConfiguration, hostConfiguration));
 
-        // retrieve the credential
-        var credential = hostConfiguration.GetCredential(MeshMachine);
+    //    // retrieve the credential
+    //    var credential = hostConfiguration.GetCredential(MeshMachine);
 
-        // start the service
-        var service = new RudService(providers, credential);
+    //    // start the service
+    //    var service = new RudService(providers, credential);
 
-        var sigintReceived = false;
-        // Catch SIGINT
-        System.Console.CancelKeyPress += (_, ea) => {
-            // Tell .NET to not terminate the process
-            ea.Cancel = true;
+    //    var sigintReceived = false;
+    //    // Catch SIGINT
+    //    System.Console.CancelKeyPress += (_, ea) => {
+    //        // Tell .NET to not terminate the process
+    //        ea.Cancel = true;
 
-            Screen.WriteInfo(Resources.ReceivedSIGINT);
-            service.Dispose();
-            sigintReceived = true;
-        };
+    //        Screen.WriteInfo(Resources.ReceivedSIGINT);
+    //        service.Dispose();
+    //        sigintReceived = true;
+    //    };
 
-        // Catch SIGTERM
-        AppDomain.CurrentDomain.ProcessExit += (_, _) => {
-            if (!sigintReceived) {
-                Screen.WriteInfo(Resources.ReceivedSIGTERM);
-                service.Dispose();
-                }
-            else {
-                Screen.WriteInfo(Resources.IgnoreSIGTERM);
-                }
-        };
+    //    // Catch SIGTERM
+    //    AppDomain.CurrentDomain.ProcessExit += (_, _) => {
+    //        if (!sigintReceived) {
+    //            Screen.WriteInfo(Resources.ReceivedSIGTERM);
+    //            service.Dispose();
+    //            }
+    //        else {
+    //            Screen.WriteInfo(Resources.IgnoreSIGTERM);
+    //            }
+    //    };
 
-        return service;
-        }
+    //    return service;
+    //    }
 
 
     }

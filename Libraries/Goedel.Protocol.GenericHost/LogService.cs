@@ -11,12 +11,12 @@ public class LogServiceGeneric : LogService {
 
 
     public LogServiceGeneric(
-                    IServiceConfiguration serviceConfiguration,
-            IHostConfiguration hostConfiguration,
+            GenericHostConfiguration genericHostConfiguration,
+            GenericServiceConfiguration meshHostConfiguration,
             HostMonitor hostMonitor,
             ILogger logger,
             long first = 0) : base(
-                serviceConfiguration, hostConfiguration, hostMonitor, first) {
+                genericHostConfiguration, meshHostConfiguration, hostMonitor, first) {
 
 
 

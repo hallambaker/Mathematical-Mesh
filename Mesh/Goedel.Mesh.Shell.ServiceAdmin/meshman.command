@@ -68,6 +68,22 @@
 			Default "HostsAndServices"
 
 
+
+
+	Command Netsh "netsh"
+		Include Reporting
+		Brief "Compute the netsh configuration from the service config."
+		Parameter DnsConfig "dnsconfig" NewFile
+			Brief "The file to write the netsh configuration to"
+
+		Parameter HostConfig "hostconfig" String
+			Brief "The host configuration name"
+
+		Option MultiConfig "config" ExistingFile
+			Brief "The configuration file, is created if necessary"
+			Default "HostsAndServices"
+
+
 	Command Start "start"
 		Include Reporting
 		Brief "Start the host service"

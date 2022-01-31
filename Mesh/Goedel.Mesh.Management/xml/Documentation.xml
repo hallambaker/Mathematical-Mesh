@@ -17,33 +17,6 @@
             Service management interface provides host and service telemetry.
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Management.ServiceManagementProvider">
-            <summary>
-            The Service Management Provider.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.Factory(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
-            <inheritdoc cref="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate"/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceManagementProvider.ServiceDescriptionHost">
-            <summary>The service description for a service reporting a single host.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceManagementProvider.ServiceDescriptionMeta">
-            <summary>The service description for a service reporting a set of hosts.</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.#ctor(Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
-            <summary>
-            Return a new <see cref="T:Goedel.Mesh.Management.ServiceManagementProvider"/> instance.
-            </summary>
-            <param name="serviceConfiguration"></param>
-            <param name="hostConfiguration"></param>
-        </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.ServiceStatus(Goedel.Mesh.Management.ServiceStatusRequest,Goedel.Protocol.IJpcSession)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementProvider.ServiceConfig(Goedel.Mesh.Management.ServiceConfigRequest,Goedel.Protocol.IJpcSession)">
-            <inheritdoc/>
-        </member>
         <member name="T:Goedel.Mesh.Management.ServiceManagement">
              <summary>
             
@@ -371,14 +344,6 @@
             <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Management.ServiceConfigResponse">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse.HostConfiguration">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse.ServiceConfiguration">
             <summary>
             </summary>
         </member>

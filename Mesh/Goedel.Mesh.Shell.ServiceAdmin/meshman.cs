@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 28-Jan-22 6:02:52 PM
+//  This file was automatically generated at 31-Jan-22 5:35:59 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -129,6 +129,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Entries = new   () {
 			{"create", _Create._DescribeCommand },
 			{"dns", _DNS._DescribeCommand },
+			{"netsh", _Netsh._DescribeCommand },
 			{"start", _Start._DescribeCommand },
 			{"stop", _Stop._DescribeCommand },
 			{"pause", _Pause._DescribeCommand },
@@ -184,6 +185,16 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
 		var result = Dispatch.DNS (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_Netsh (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		Netsh		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.Netsh (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -613,6 +624,150 @@ public class _DNS : Goedel.Command.Dispatch ,
 
 public partial class DNS : _DNS {
     } // class DNS
+
+public class _Netsh : Goedel.Command.Dispatch ,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new NewFile (),
+		new String (),
+		new ExistingFile ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for parameter [report]</summary>
+	public virtual Enumeration<EnumReporting> EnumReporting {
+		get => _Data[0] as Enumeration<EnumReporting>;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _EnumReporting {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[1] as Flag;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[2] as Flag;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual NewFile DnsConfig {
+		get => _Data[4] as NewFile;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _DnsConfig {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String HostConfig {
+		get => _Data[5] as String;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _HostConfig {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for option [config]</summary>
+	public virtual ExistingFile MultiConfig {
+		get => _Data[6] as ExistingFile;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _MultiConfig {
+		set => _Data[6].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "netsh",
+		Brief =  "Compute the netsh configuration from the service config.",
+		HandleDelegate =  CommandLineInterpreter.Handle_Netsh,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryEnumerate () {
+				Identifier = "EnumReporting", 
+				Default = null, // null if null
+				Brief = "Reporting level",
+				Index = 0,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 1,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 2,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 3,
+				Key = "json"
+				},
+			new DescribeEntryParameter () {
+				Identifier = "DnsConfig", 
+				Default = null, // null if null
+				Brief = "The file to write the netsh configuration to",
+				Index = 4,
+				Key = ""
+				},
+			new DescribeEntryParameter () {
+				Identifier = "HostConfig", 
+				Default = null, // null if null
+				Brief = "The host configuration name",
+				Index = 5,
+				Key = ""
+				},
+			new DescribeEntryOption () {
+				Identifier = "MultiConfig", 
+				Default = "HostsAndServices", // null if null
+				Brief = "The configuration file, is created if necessary",
+				Index = 6,
+				Key = "config"
+				}
+			}
+		};
+
+	}
+
+public partial class Netsh : _Netsh {
+    } // class Netsh
 
 public class _Start : Goedel.Command.Dispatch ,
 						IReporting{
@@ -1531,6 +1686,11 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		}
 
 	public virtual ShellResult DNS ( DNS Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult Netsh ( Netsh Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}

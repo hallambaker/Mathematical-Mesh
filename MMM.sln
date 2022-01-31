@@ -106,6 +106,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		BaseSettings.xml = BaseSettings.xml
 		bogus.runsettings = bogus.runsettings
 		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
+		GUI.md = GUI.md
 		LICENSE.txt = LICENSE.txt
 		readme.md = readme.md
 		ServerConfig.md = ServerConfig.md

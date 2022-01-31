@@ -1004,19 +1004,10 @@
         <member name="P:Goedel.Mesh.Server.PublicMeshService.ConnectionDevice">
             <summary>The host connection record.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Server.PublicMeshService.ServiceConfiguration">
-            <summary>The service configuration</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Server.PublicMeshService.HostConfiguration">
-            <summary>The Host Configuration</summary> 
-        </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.MeshPersist">
             <summary>
             The mesh persistence provider.
             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.PublicMeshService.ServiceDescription">
-            <summary>The service description.</summary> 
         </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.KeyCollection">
             <summary>Key collection giving access to host and service keys.</summary> 
@@ -1029,17 +1020,6 @@
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
             <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Factory(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
-            <inheritdoc cref="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate"/>
-        </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration,Goedel.Protocol.Service.LogService)">
-             <summary>
-             Create a Mesh Service provider instance on the machine <paramref name="hostConfiguration"/>
-             according to the parameters specified in <paramref name="serviceConfiguration"/> and
-             <paramref name="hostConfiguration"/>/
-             </summary>
-            <inheritdoc cref="T:Goedel.Mesh.ServiceAdmin.ServiceFactoryDelegate"/>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.GetService(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
             <summary>
@@ -1079,7 +1059,7 @@
             <param name="admin">The administrative account to create.</param>
             <returns>The created service</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration,System.String)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Protocol.Service.MeshHostConfiguration,Goedel.Protocol.GenericHostConfiguration,System.String)">
             <summary>
             Create new service and host configurations and attach the service to the host.
             </summary>
@@ -1088,15 +1068,6 @@
             <param name="hostConfiguration">The host configuration</param>
             <param name="deviceAddress">The address of the initial host.</param>
             <returns>The mesh service interface.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Load(Goedel.Mesh.IMeshMachine,Goedel.Mesh.ServiceAdmin.ServiceConfiguration,Goedel.Mesh.ServiceAdmin.HostConfiguration)">
-            <summary>
-            
-            </summary>
-            <param name="meshMachine"></param>
-            <param name="serviceConfiguration"></param>
-            <param name="hostConfiguration"></param>
-            <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.VerifyDevice(Goedel.Mesh.ProfileAccount,Goedel.Protocol.IJpcSession)">
             <summary>

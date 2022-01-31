@@ -21,7 +21,7 @@ public class ConsoleLoggerConfiguration {
 public class DareLoggerConfiguration {
 
     ///<summary>List of recipients for which decryption blocks are to be created in the log.</summary> 
-    public string[] Recipients { get; set; } = Array.Empty<string>();
+    public List<string> Recipients { get; set; } = new List<string>();
 
     ///<summary>Log rotation period</summary> 
     public string Rotate { get; set; } = string.Empty;
@@ -31,27 +31,6 @@ public class DareLoggerConfiguration {
 
     }
 
-
-
-
-public class GenericServiceConfiguration  {
-
-    public string ServiceUdf { get; set; } = string.Empty;
-
-    public string ServicePath { get; set; } = string.Empty;
-
-    ///<summary>Service DNS addresses</summary> 
-    public string[] ServiceDNS { get; set; } = Array.Empty<string>();
-
-
-
-    public List<Endpoint> GetEndpoints(GenericHostConfiguration genericHostConfiguration) {
-
-
-        throw new NotImplementedException();
-        }
-
-    }
 
 
 

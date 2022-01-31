@@ -1,8 +1,23 @@
 {
   "profiles": {
-    "serviceadmin": {
+    "create": {
       "commandName": "Project",
       "commandLineArgs": "create example.com /host=host1.example.com /ip=108.20.156.67 /admin=admin@example.com",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "dns": {
+      "commandName": "Project",
+      "commandLineArgs": "dns appsettings.json",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "netsh": {
+      "commandName": "Project",
+      "commandLineArgs": "netsh appsettings.json",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "verify": {
+      "commandName": "Project",
+      "commandLineArgs": "verify appsettings.json",
       "workingDirectory": "..\\..\\TestResults\\Service"
     }
   }

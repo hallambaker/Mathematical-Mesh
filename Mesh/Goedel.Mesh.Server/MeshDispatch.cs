@@ -60,11 +60,11 @@ public class PublicMeshService : MeshService {
     ///<summary>The host connection record.</summary> 
     public ConnectionService ConnectionDevice { get; init; }
 
-    ///<summary>The service configuration</summary> 
-    public ServiceConfiguration ServiceConfiguration { get; init; }
+    /////<summary>The service configuration</summary> 
+    //public ServiceConfiguration ServiceConfiguration { get; init; }
 
-    ///<summary>The Host Configuration</summary> 
-    public HostConfiguration HostConfiguration { get; init; }
+    /////<summary>The Host Configuration</summary> 
+    //public HostConfiguration HostConfiguration { get; init; }
 
 
 
@@ -74,8 +74,8 @@ public class PublicMeshService : MeshService {
     /// </summary>
     public MeshPersist MeshPersist { get; init; }
 
-    ///<summary>The service description.</summary> 
-    public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
+    /////<summary>The service description.</summary> 
+    //public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
 
     ///<summary>Key collection giving access to host and service keys.</summary> 
     public IKeyCollection KeyCollection { get; }
@@ -102,23 +102,23 @@ public class PublicMeshService : MeshService {
     #endregion
     #region // Constructors and factories
 
-    ///<inheritdoc cref="ServiceFactoryDelegate"/>
-    public static RudProvider Factory(
-            IMeshMachine meshMachine,
-            ServiceConfiguration serviceConfiguration,
-            HostConfiguration hostConfiguration) {
+    /////<inheritdoc cref="ServiceFactoryDelegate"/>
+    //public static RudProvider Factory(
+    //        IMeshMachine meshMachine,
+    //        ServiceConfiguration serviceConfiguration,
+    //        HostConfiguration hostConfiguration) {
 
-        hostConfiguration.AssertNotNull(NYI.Throw); // Force fixin of direct unit tests.
+    //    hostConfiguration.AssertNotNull(NYI.Throw); // Force fixin of direct unit tests.
 
-        // Since it is the host that responds, the service binds to the host endpoints
-        // in addition to the service.
+    //    // Since it is the host that responds, the service binds to the host endpoints
+    //    // in addition to the service.
 
-        var endpoints = hostConfiguration.GetEndpoints();
-        //endpoints.AddRange(hostConfiguration.GetEndpoints());
-        var provider = new PublicMeshService(meshMachine, serviceConfiguration, hostConfiguration);
+    //    var endpoints = hostConfiguration.GetEndpoints();
+    //    //endpoints.AddRange(hostConfiguration.GetEndpoints());
+    //    var provider = new PublicMeshService(meshMachine, serviceConfiguration, hostConfiguration);
 
-        return new RudProvider(endpoints, provider);
-        }
+    //    return new RudProvider(endpoints, provider);
+    //    }
 
 
 
@@ -158,75 +158,75 @@ public class PublicMeshService : MeshService {
         var meshHost = MeshHost.GetCatalogHost(MeshMachine);
         var hostServiceDescription = meshHost.GetStoreEntry(genericHostConfiguration.HostUdf) as CatalogedService;
 
-
-        ProfileService = hostServiceDescription.EnvelopedProfileService.EnvelopedObject;
-        ProfileHost = hostServiceDescription.EnvelopedProfileHost.EnvelopedObject;
-        ActivationDevice = hostServiceDescription.EnvelopedActivationHost.EnvelopedObject;
-        ConnectionDevice = hostServiceDescription.EnvelopedConnectionService.EnvelopedObject;
-
+        if (hostServiceDescription != null) {
+            ProfileService = hostServiceDescription.EnvelopedProfileService.EnvelopedObject;
+            ProfileHost = hostServiceDescription.EnvelopedProfileHost.EnvelopedObject;
+            ActivationDevice = hostServiceDescription.EnvelopedActivationHost.EnvelopedObject;
+            ConnectionDevice = hostServiceDescription.EnvelopedConnectionService.EnvelopedObject;
+            }
 
         }
 
 
 
-    /// <summary>
-    /// Create a Mesh Service provider instance on the machine <paramref name="hostConfiguration"/>
-    /// according to the parameters specified in <paramref name="serviceConfiguration"/> and
-    /// <paramref name="hostConfiguration"/>/
-    /// </summary>
-    ///<inheritdoc cref="ServiceFactoryDelegate"/>
-    public PublicMeshService(
-            IMeshMachine meshMachine,
-            ServiceConfiguration serviceConfiguration,
-            HostConfiguration hostConfiguration,
-            LogService logService=null) {
+    ///// <summary>
+    ///// Create a Mesh Service provider instance on the machine <paramref name="hostConfiguration"/>
+    ///// according to the parameters specified in <paramref name="serviceConfiguration"/> and
+    ///// <paramref name="hostConfiguration"/>/
+    ///// </summary>
+    /////<inheritdoc cref="ServiceFactoryDelegate"/>
+    //public PublicMeshService(
+    //        IMeshMachine meshMachine,
+    //        ServiceConfiguration serviceConfiguration,
+    //        HostConfiguration hostConfiguration,
+    //        LogService logService=null) {
 
-        // Bugs? Seems like this is in initializing the service and host, not starting it.
+    //    // Bugs? Seems like this is in initializing the service and host, not starting it.
 
-        LogService = logService ?? new LogService(serviceConfiguration,
-            hostConfiguration, null) ;
+    //    LogService = logService ?? new LogService(serviceConfiguration,
+    //        hostConfiguration, null) ;
 
-        MeshMachine = meshMachine;
-        ServiceConfiguration = serviceConfiguration;
-        HostConfiguration = hostConfiguration;
-        KeyCollection = MeshMachine.KeyCollection;
+    //    MeshMachine = meshMachine;
+    //    ServiceConfiguration = serviceConfiguration;
+    //    HostConfiguration = hostConfiguration;
+    //    KeyCollection = MeshMachine.KeyCollection;
 
-        var path = hostConfiguration?.Path ?? meshMachine.DirectoryMesh;
-
-
-        // Dummy profiles for the service and host at this point
-        ProfileService = ProfileService.Generate(KeyCollection);
-        ProfileHost = ProfileHost.CreateHost(MeshMachine);
-
-        // create an activation record and a connection record.
-        ActivationDevice = new ActivationHost(ProfileHost);
-        ActivationDevice.Activate(ProfileHost.SecretSeed);
-
-        //Screen.WriteLine($"$$$$ Suth {ActivationDevice.DeviceAuthentication}");
+    //    var path = hostConfiguration?.Path ?? meshMachine.DirectoryMesh;
 
 
+    //    // Dummy profiles for the service and host at this point
+    //    ProfileService = ProfileService.Generate(KeyCollection);
+    //    ProfileHost = ProfileHost.CreateHost(MeshMachine);
 
-        var connectionDevice = ActivationDevice.Connection;
+    //    // create an activation record and a connection record.
+    //    ActivationDevice = new ActivationHost(ProfileHost);
+    //    ActivationDevice.Activate(ProfileHost.SecretSeed);
 
-        // Sign the connection and connection slim
-
-        this.ConnectionDevice = new ConnectionService() {
-            Account = "@example",
-            Subject = connectionDevice.Subject,
-            Authority = connectionDevice.Authority,
-            Authentication = connectionDevice.Authentication
-            };
-
-        this.ConnectionDevice.Strip();
-
-        ProfileService.Sign(this.ConnectionDevice, ObjectEncoding.JSON_B);
-        //KeyCollection.Add(ProfileHost.KeyEncryption);
-        KeyCollection.Add(ProfileService.KeyEncryption);
-        MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
+    //    //Screen.WriteLine($"$$$$ Suth {ActivationDevice.DeviceAuthentication}");
 
 
-        this.ConnectionDevice.DareEnvelope.Strip();
-        }
+
+    //    var connectionDevice = ActivationDevice.Connection;
+
+    //    // Sign the connection and connection slim
+
+    //    this.ConnectionDevice = new ConnectionService() {
+    //        Account = "@example",
+    //        Subject = connectionDevice.Subject,
+    //        Authority = connectionDevice.Authority,
+    //        Authentication = connectionDevice.Authentication
+    //        };
+
+    //    this.ConnectionDevice.Strip();
+
+    //    ProfileService.Sign(this.ConnectionDevice, ObjectEncoding.JSON_B);
+    //    //KeyCollection.Add(ProfileHost.KeyEncryption);
+    //    KeyCollection.Add(ProfileService.KeyEncryption);
+    //    MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
+
+
+    //    this.ConnectionDevice.DareEnvelope.Strip();
+    //    }
 
 
 
@@ -314,47 +314,76 @@ public class PublicMeshService : MeshService {
         var pathLog = Path.Combine(pathHost, "Logs");
         // Create the initial service application
 
-        var ServiceConfiguration = new ServiceConfiguration() {
-            Id = serviceName,
-            DNS = new List<string> { serviceDns },
-            Path = meshMachine.DirectoryMesh,
-            WellKnown = "mmm",
-            Addresses = new List<string> { serviceDns }
+
+        var configuration = new Configuration();
+
+
+        var meshHostConfiguration = new MeshHostConfiguration {
+            // ServiceUdf later
+            ServiceDNS = new List<string> { serviceDns },
+            ServicePath = meshMachine.DirectoryMesh,
+            HostPath = pathHost
             };
 
-        // populate with user supplied data
-
-
-
-
-        var hostConfiguration = new HostConfiguration() {
-            Id = System.Environment.MachineName.ToLower(),
+        var genericHostConfiguration = new GenericHostConfiguration {
+            Description = $"New service configuration created on {DateTime.Now.ToRFC3339()}",
+            HostDns =  hostDns,
             IP = new List<string> { hostIp },
-            DNS = new List<string> { hostDns },
             Port = 15099,
-            Services = new List<string> { serviceName },
-            Path = pathHost,
-
             };
 
-        // create the service.
-        using var service = Create(meshMachine, ServiceConfiguration, hostConfiguration, hostDns);
+        configuration.Dictionary.Add("MeshService", meshHostConfiguration);
+        configuration.Dictionary.Add("Host", genericHostConfiguration);
 
-        var configuration = new Configuration() {
-            Name = "Mesh",
-            Address = serviceDns,
-            Entries = new List<ConfigurationEntry> { ServiceConfiguration, hostConfiguration }
-            };
 
-        var localLog = new LocalLog() {
-            Path = pathLog,
-            Roll = "1d",
-            Events = new List<string> {
-                "error", "event"
-                }
-            };
+        configuration.ToFile(serviceConfig);
+        var reconfig = Configuration.FromFile(serviceConfig);
+
+        //var ServiceConfiguration = new ServiceConfiguration() {
+        //    Id = serviceName,
+        //    DNS = new List<string> { serviceDns },
+        //    Path = meshMachine.DirectoryMesh,
+        //    WellKnown = "mmm",
+        //    Addresses = new List<string> { serviceDns }
+        //    };
+
+        //// populate with user supplied data
+
+
+
+
+        //var hostConfiguration = new HostConfiguration() {
+        //    Id = System.Environment.MachineName.ToLower(),
+        //    IP = new List<string> { hostIp },
+        //    DNS = new List<string> { hostDns },
+        //    Port = 15099,
+        //    Services = new List<string> { serviceName },
+        //    Path = pathHost,
+
+        //    };
+
+        // create the service. This will populate the UDF fields.
+        using var service = Create(meshMachine, meshHostConfiguration, genericHostConfiguration);
+
+
+        //// To be deleted!
+        //var configuration = new Configuration() {
+        //    Name = "Mesh",
+        //    Address = serviceDns,
+        //    Entries = new List<ConfigurationEntry> { ServiceConfiguration, hostConfiguration }
+        //    };
+        //// To be deleted!
+        //var localLog = new LocalLog() {
+        //    Path = pathLog,
+        //    Roll = "1d",
+        //    Events = new List<string> {
+        //        "error", "event"
+        //        }
+        //    };
 
         if (admin != null) {
+
+            meshHostConfiguration.Administrators.Add(admin);
 
             // bind to the service instance directly
             var directMachine = new MeshMachineDirect(meshMachine, service);
@@ -366,20 +395,27 @@ public class PublicMeshService : MeshService {
 
             // Set the log files to encrypt to the newly created admin account.
             var adminSin = $"{admin}.mm-{udf}";
-            localLog.Readers = new List<string> { adminSin };
+            //localLog.Readers = new List<string> { adminSin };
             }
 
-        hostConfiguration.Logs = new List<LogEntry> { localLog };
+        // To be deleted!
+        //hostConfiguration.Logs = new List<LogEntry> { localLog };
 
         // write the configuration out.
         //configuration.ToFile(newFile ?? serviceConfig);
 
+
+        // To be deleted!
         serviceConfig.MakePath();
 
         configuration.ToFile(serviceConfig);
 
+
+
+
         return service;
         }
+
 
 
     /// <summary>
@@ -392,8 +428,8 @@ public class PublicMeshService : MeshService {
     /// <returns>The mesh service interface.</returns>
     public static PublicMeshService Create(
             IMeshMachineClient meshMachine,
-            ServiceConfiguration serviceConfiguration,
-            HostConfiguration hostConfiguration,
+            MeshHostConfiguration serviceConfiguration,
+            GenericHostConfiguration hostConfiguration,
             string deviceAddress = "@example"
             ) {
 
@@ -439,16 +475,16 @@ public class PublicMeshService : MeshService {
         //hostConfiguration.EnvelopedProfileHost = profileHost.EnvelopedProfileHost;
         //hostConfiguration.EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice;
 
-        serviceConfiguration.ProfileUdf = profileService.Udf;
-        hostConfiguration.ProfileUdf = connectionDevice.Subject;
+        serviceConfiguration.ServiceUdf = profileService.Udf;
+        hostConfiguration.HostUdf = connectionDevice.Subject;
         hostConfiguration.DeviceUdf = profileHost.Udf;
 
-
+        var logService = new LogService(hostConfiguration, serviceConfiguration, null);
         // Initialize the persistence store.
         //var meshPersist = new MeshPersist(hostConfiguration.Path, FileStatus.OpenOrCreate);
 
         return new PublicMeshService(
-                    meshMachine, serviceConfiguration, hostConfiguration) {
+                    meshMachine, hostConfiguration, serviceConfiguration, logService) {
             //MeshPersist = meshPersist,
             ProfileService = profileService,
             ProfileHost = profileHost,
@@ -458,28 +494,84 @@ public class PublicMeshService : MeshService {
 
         }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="meshMachine"></param>
-    /// <param name="serviceConfiguration"></param>
-    /// <param name="hostConfiguration"></param>
-    /// <returns></returns>
-    public static PublicMeshService Load(
-            IMeshMachine meshMachine,
-            ServiceConfiguration serviceConfiguration,
-            HostConfiguration hostConfiguration
-            ) {
-
-        // Need to read the host config back from the master catalog here
-        //ActivationDevice activationDevice = null;
-
-        return new PublicMeshService(meshMachine, serviceConfiguration, hostConfiguration);
 
 
-        throw new NYI();
-        }
 
+    ///// <summary>
+    ///// Create new service and host configurations and attach the service to the host.
+    ///// </summary>
+    ///// <param name="meshMachine">The mesh machine</param>
+    ///// <param name="serviceConfiguration">The service configuration</param>
+    ///// <param name="hostConfiguration">The host configuration</param>
+    ///// <param name="deviceAddress">The address of the initial host.</param>
+    ///// <returns>The mesh service interface.</returns>
+    //public static PublicMeshService Create(
+    //        IMeshMachineClient meshMachine,
+    //        ServiceConfiguration serviceConfiguration,
+    //        HostConfiguration hostConfiguration,
+    //        string deviceAddress = "@example"
+    //        ) {
+
+    //    // Create the service profile
+    //    var profileService = ProfileService.Generate(meshMachine.KeyCollection);
+
+    //    // Create a host profile and add create a connection to the host.
+    //    var profileHost = ProfileHost.CreateHost(meshMachine);
+    //    var activationDevice = new ActivationHost(profileHost);
+    //    activationDevice.Envelope(encryptionKey: profileHost.KeyEncrypt);
+    //    // Persist the profile keys
+    //    profileService.PersistSeed(meshMachine.KeyCollection);
+    //    profileHost.PersistSeed(meshMachine.KeyCollection);
+
+    //    // Need to envelope the activation device under device key.
+
+    //    activationDevice.Activate(profileHost.SecretSeed);
+    //    var connectionDevice1 = activationDevice.Connection;
+    //    var connectionDevice = new ConnectionService() {
+    //        Account = deviceAddress,
+    //        Subject = connectionDevice1.Authentication.CryptoKey.KeyIdentifier,
+    //        Authority = profileService.Udf,
+
+    //        Authentication = connectionDevice1.Authentication
+    //        };
+
+    //    // Strip and sign the device connection.
+    //    connectionDevice.Strip();
+    //    profileService.Sign(connectionDevice, ObjectEncoding.JSON_B);
+
+    //    var catalogedService = new CatalogedService() {
+    //        Id = connectionDevice.Subject,
+    //        EnvelopedProfileService = profileService.GetEnvelopedProfileService(),
+    //        EnvelopedProfileHost = profileHost.GetEnvelopedProfileHost(),
+    //        EnvelopedActivationHost = activationDevice.GetEnvelopedActivationHost(),
+    //        EnvelopedConnectionService = connectionDevice.GetEnvelopedConnectionService()
+    //        };
+    //    meshMachine.MeshHost.Register(catalogedService, null);
+
+    //    // Update the service configuration to add the service profile
+    //    //serviceConfiguration.EnvelopedProfileService = profileService.EnvelopedProfileService;
+
+    //    //hostConfiguration.EnvelopedProfileHost = profileHost.EnvelopedProfileHost;
+    //    //hostConfiguration.EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice;
+
+    //    serviceConfiguration.ProfileUdf = profileService.Udf;
+    //    hostConfiguration.ProfileUdf = connectionDevice.Subject;
+    //    hostConfiguration.DeviceUdf = profileHost.Udf;
+
+
+    //    // Initialize the persistence store.
+    //    //var meshPersist = new MeshPersist(hostConfiguration.Path, FileStatus.OpenOrCreate);
+
+    //    return new PublicMeshService(
+    //                meshMachine, serviceConfiguration, hostConfiguration) {
+    //        //MeshPersist = meshPersist,
+    //        ProfileService = profileService,
+    //        ProfileHost = profileHost,
+    //        ActivationDevice = activationDevice,
+    //        ConnectionDevice = connectionDevice
+    //        };
+
+    //    }
 
 
     /// <summary>

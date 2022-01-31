@@ -38,8 +38,8 @@
 
 	Message ServiceConfigResponse
 		Inherits WsmpResponse
-		Struct HostConfiguration HostConfiguration
-		Struct ServiceConfiguration ServiceConfiguration
+		//Struct HostConfiguration HostConfiguration
+		//Struct ServiceConfiguration ServiceConfiguration
 
     Transaction Public ServiceStatus ServiceStatusRequest ServiceStatusResponse
 

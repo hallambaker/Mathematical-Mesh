@@ -43,14 +43,14 @@ public class Program {
     static void Main(string[] args) {
 
 
-        Shell shell = new(
-                    PublicMeshService.ServiceDescription,
-                    ServiceManagementProvider.ServiceDescriptionHost
-                    ) {
-            NoCatch = true,
-            MeshMachine = new MeshMachineCore()
-            };
-        shell.Dispatch(args, Console.Out);
+        //Shell shell = new(
+        //            PublicMeshService.ServiceDescription,
+        //            ServiceManagementProvider.ServiceDescriptionHost
+        //            ) {
+        //    NoCatch = true,
+        //    MeshMachine = new MeshMachineCore()
+        //    };
+        //shell.Dispatch(args, Console.Out);
 
 
         }

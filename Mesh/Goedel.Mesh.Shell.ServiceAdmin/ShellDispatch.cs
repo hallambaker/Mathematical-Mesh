@@ -90,9 +90,9 @@ public partial class Shell : _Shell {
         var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
         var dnsConfig = Options.DnsConfig.Value;
 
-        var configuration = Configuration.ReadFile(multiConfig);
+        //var configuration = Configuration.ReadFile(multiConfig);
 
-        DnsConfiguration.BindConfig(configuration, dnsConfig, hostConfig);
+        //DnsConfiguration.BindConfig(configuration, dnsConfig, hostConfig);
 
         return null;
         }

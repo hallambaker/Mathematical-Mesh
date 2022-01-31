@@ -26,58 +26,58 @@ using Goedel.Protocol.Service;
 
 namespace Goedel.Mesh.ServiceAdmin;
 
-public partial class Configuration {
+//public partial class Configuration {
 
 
 
-    }
+//    }
 
 
-/// <summary>
-/// Service administration request
-/// </summary>
-public partial class ServiceConfiguration : IServiceConfiguration {
+///// <summary>
+///// Service administration request
+///// </summary>
+//public partial class ServiceConfiguration : IServiceConfiguration {
 
-    #region // Properties
-
-
-
+//    #region // Properties
 
 
 
-    #endregion
-    #region // Destructor
-    #endregion
-    #region // Constructors
-    #endregion
-
-    #region // Implement Interface: Ixxx
-    #endregion
-
-    #region // Methods 
-    #endregion
-    }
-
-public partial class HostConfiguration : IHostConfiguration {
 
 
 
-    public void LogInitialize() {
-        throw new NotImplementedException();
-        }
+//    #endregion
+//    #region // Destructor
+//    #endregion
+//    #region // Constructors
+//    #endregion
+
+//    #region // Implement Interface: Ixxx
+//    #endregion
+
+//    #region // Methods 
+//    #endregion
+//    }
+
+//public partial class HostConfiguration : IHostConfiguration {
 
 
-    public void Fail(LogTransaction logTransaction) {
-        throw new NotImplementedException();
-        }
+
+//    public void LogInitialize() {
+//        throw new NotImplementedException();
+//        }
+
+
+//    public void Fail(LogTransaction logTransaction) {
+//        throw new NotImplementedException();
+//        }
 
 
 
-    public void Start(LogTransaction logTransaction) {
-        throw new NotImplementedException();
-        }
+//    public void Start(LogTransaction logTransaction) {
+//        throw new NotImplementedException();
+//        }
 
-    public void Success(LogTransaction logTransaction) {
-        throw new NotImplementedException();
-        }
-    }
+//    public void Success(LogTransaction logTransaction) {
+//        throw new NotImplementedException();
+//        }
+//    }

@@ -24,6 +24,40 @@
 
 namespace Goedel.Protocol.Service;
 
+
+
+
+
+public class GenericServiceConfiguration {
+
+    public string ServiceUdf { get; set; } = string.Empty;
+
+    public string ServicePath { get; set; } = string.Empty;
+
+    ///<summary>Service DNS addresses</summary> 
+    public List<string> ServiceDNS { get; set; } = new List<string>();
+
+
+
+    public List<Endpoint> GetEndpoints(GenericHostConfiguration genericHostConfiguration) {
+
+
+        throw new NotImplementedException();
+        }
+
+    }
+
+
+public class MeshHostConfiguration : GenericServiceConfiguration {
+
+    public List<string> Administrators { get; set; } = new List<string>();
+
+    public string? HostPath { get; set; } = null;
+
+    }
+
+
+
 /// <summary>
 /// Service level logging class.
 /// </summary>
@@ -40,52 +74,93 @@ public class LogService {
     ///<summary>The host monitor tracking start and end of host requests.</summary> 
     public HostMonitor HostMonitor { get; }
 
-    IHostConfiguration HostConfiguration { get; }
+    //IHostConfiguration HostConfiguration { get; }
 
-    /// <summary>
-    /// Default constructor.
-    /// </summary>
-    /// <param name="hostMonitor">The host montior describing the lower level connection
-    /// status.</param>
-    /// <param name="first">The first transaction number to be issued.</param>
-    /// <param name="hostConfiguration">The host configuration description.</param>
-    /// <param name="serviceConfiguration">The service configuration description.</param>
+    GenericHostConfiguration GenericHostConfiguration { get; }
+    GenericServiceConfiguration GenericServiceConfiguration { get; }
+
     public LogService(
-            IServiceConfiguration serviceConfiguration,
-            IHostConfiguration hostConfiguration,
+            GenericHostConfiguration genericHostConfiguration,
+            GenericServiceConfiguration meshHostConfiguration,
             HostMonitor hostMonitor, long first = 0) {
-        HostConfiguration = hostConfiguration;
+        GenericHostConfiguration = genericHostConfiguration;
+        GenericServiceConfiguration = meshHostConfiguration;
+
         HostMonitor = hostMonitor;
         transactionIdentifier = first - 1;
 
-        ConsoleOutput = hostConfiguration.ConsoleOutput;
 
-        if (ConsoleOutput != LogLevelSeverity.None) {
-            var output = new StringBuilder();
-            output.Append(DateTime.Now.ToRFC3339());
-            output.AppendLine(
-                $" {Resources.StartService}: {serviceConfiguration.WellKnown}" +
-                $" {Resources.Host} {hostConfiguration.Id}" +
-                $" {Resources.Port} {hostConfiguration.Port}");
-            output.AppendLine($"    { Resources.ServiceProfile}: { hostConfiguration.ProfileUdf}");
-            output.AppendLine($"    { Resources.DeviceProfile}: { hostConfiguration.DeviceUdf}");
-            output.AppendLine($"    { Resources.Path}: {hostConfiguration.Path}");
-            if (serviceConfiguration.Addresses != null) {
-                foreach (var address in serviceConfiguration.Addresses) {
-                    output.AppendLine($"    { Resources.ServiceAddress}: {address}");
-                    }
-                }
-            if (serviceConfiguration.Addresses != null) {
-                foreach (var dns in hostConfiguration.DNS) {
-                    output.AppendLine($"    { Resources.HostAddress}: {dns}");
-                    }
-                }
-            WriteToConsole(output);
-            }
-        //hostConfiguration.LogInitialize();
+            //var output = new StringBuilder();
+            //output.Append(DateTime.Now.ToRFC3339());
+            //output.AppendLine(
+            //    $" {Resources.StartService}: {serviceConfiguration.WellKnown}" +
+            //    $" {Resources.Host} {hostConfiguration.Id}" +
+            //    $" {Resources.Port} {hostConfiguration.Port}");
+            //output.AppendLine($"    { Resources.ServiceProfile}: { hostConfiguration.ProfileUdf}");
+            //output.AppendLine($"    { Resources.DeviceProfile}: { hostConfiguration.DeviceUdf}");
+            //output.AppendLine($"    { Resources.Path}: {hostConfiguration.Path}");
+            //if (serviceConfiguration.Addresses != null) {
+            //    foreach (var address in serviceConfiguration.Addresses) {
+            //        output.AppendLine($"    { Resources.ServiceAddress}: {address}");
+            //        }
+            //    }
+            //if (serviceConfiguration.Addresses != null) {
+            //    foreach (var dns in hostConfiguration.DNS) {
+            //        output.AppendLine($"    { Resources.HostAddress}: {dns}");
+            //        }
+            //    }
+            //WriteToConsole(output);
+
 
 
         }
+
+
+
+    ///// <summary>
+    ///// Default constructor.
+    ///// </summary>
+    ///// <param name="hostMonitor">The host montior describing the lower level connection
+    ///// status.</param>
+    ///// <param name="first">The first transaction number to be issued.</param>
+    ///// <param name="hostConfiguration">The host configuration description.</param>
+    ///// <param name="serviceConfiguration">The service configuration description.</param>
+    //public LogService(
+    //        IServiceConfiguration serviceConfiguration,
+    //        IHostConfiguration hostConfiguration,
+    //        HostMonitor hostMonitor, long first = 0) {
+    //    HostConfiguration = hostConfiguration;
+    //    HostMonitor = hostMonitor;
+    //    transactionIdentifier = first - 1;
+
+    //    ConsoleOutput = hostConfiguration.ConsoleOutput;
+
+    //    if (ConsoleOutput != LogLevelSeverity.None) {
+    //        var output = new StringBuilder();
+    //        output.Append(DateTime.Now.ToRFC3339());
+    //        output.AppendLine(
+    //            $" {Resources.StartService}: {serviceConfiguration.WellKnown}" +
+    //            $" {Resources.Host} {hostConfiguration.Id}" +
+    //            $" {Resources.Port} {hostConfiguration.Port}");
+    //        output.AppendLine($"    { Resources.ServiceProfile}: { hostConfiguration.ProfileUdf}");
+    //        output.AppendLine($"    { Resources.DeviceProfile}: { hostConfiguration.DeviceUdf}");
+    //        output.AppendLine($"    { Resources.Path}: {hostConfiguration.Path}");
+    //        if (serviceConfiguration.Addresses != null) {
+    //            foreach (var address in serviceConfiguration.Addresses) {
+    //                output.AppendLine($"    { Resources.ServiceAddress}: {address}");
+    //                }
+    //            }
+    //        if (serviceConfiguration.Addresses != null) {
+    //            foreach (var dns in hostConfiguration.DNS) {
+    //                output.AppendLine($"    { Resources.HostAddress}: {dns}");
+    //                }
+    //            }
+    //        WriteToConsole(output);
+    //        }
+    //    //hostConfiguration.LogInitialize();
+
+
+    //    }
 
     /// <summary>
     /// Begin a new transaction.
@@ -105,7 +180,7 @@ public class LogService {
         if (ReportStart(ConsoleOutput)) {
             Start(logTransaction);
             }
-        HostConfiguration.Start(logTransaction);
+        //HostConfiguration.Start(logTransaction);
 
         return logTransaction;
         }
@@ -173,7 +248,7 @@ public class LogService {
         logTransaction.Response?.Report(output, ConsoleOutput);
 
         WriteToConsole(output);
-        HostConfiguration.Success(logTransaction);
+        //HostConfiguration.Success(logTransaction);
         }
 
     /// <summary>
@@ -201,7 +276,7 @@ public class LogService {
 
         WriteToConsole(output);
 
-        HostConfiguration.Fail(logTransaction);
+        //HostConfiguration.Fail(logTransaction);
         }
 
     static bool ReportStart(LogLevelSeverity reportMode) =>

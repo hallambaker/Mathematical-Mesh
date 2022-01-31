@@ -46,7 +46,7 @@ public class GenericHostConfiguration {
     public string HostDns { get; set; } = string.Empty;
 
     ///<summary>The IP address and port numbers</summary> 
-    public string[] IP { get; set; } = Array.Empty<string>();
+    public List<string> IP { get; set; } = new() ;
 
     ///<summary>The maximum number of cores, if zero, all cores on the machine
     ///are used.</summary> 

@@ -78,13 +78,13 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
         ServiceAdmin($"dns {dnsConfig}");
 
 
-        // Start the host
-        HostShell = new Shell.Host.Shell(
-            PublicMeshService.ServiceDescription,
-            ServiceManagementProvider.ServiceDescriptionHost) {
-            Instance = Test,
-            MeshMachine = HostMachine
-            };
+        //// Start the host
+        //HostShell = new Shell.Host.Shell(
+        //    PublicMeshService.ServiceDescription,
+        //    ServiceManagementProvider.ServiceDescriptionHost) {
+        //    Instance = Test,
+        //    MeshMachine = HostMachine
+        //    };
         HostAdminCLI = new();
 
         // this is not going to return now is it???
@@ -204,12 +204,12 @@ public class TestEnvironmentCommon : Disposable {
     public JpcConnection JpcConnection = JpcConnection.Serialized;
 
 
-    public HostConfiguration HostConfiguration { get; } = new() {
-        ConsoleOutput = LogLevelSeverity.Information
-        };
+    //public HostConfiguration HostConfiguration { get; } = new() {
+    //    ConsoleOutput = LogLevelSeverity.Information
+    //    };
 
-    public ServiceConfiguration ServiceConfiguration { get; } = new() {
-        };
+    //public ServiceConfiguration ServiceConfiguration { get; } = new() {
+    //    };
 
     public List<TestCLI> testCLIs = new();
 
@@ -222,9 +222,10 @@ public class TestEnvironmentCommon : Disposable {
         base.Disposing();
         }
 
-    public virtual PublicMeshService MeshService => meshService ??
-        new PublicMeshService(new MeshMachineCoreServer(ServiceDirectory), 
-            ServiceConfiguration, HostConfiguration).CacheValue(out meshService);
+    public virtual PublicMeshService MeshService => meshService;
+    //??
+    //    new PublicMeshService(new MeshMachineCoreServer(ServiceDirectory), 
+    //        ServiceConfiguration, HostConfiguration).CacheValue(out meshService);
     PublicMeshService meshService;
 
 
