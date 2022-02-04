@@ -58,7 +58,7 @@ public class RudService : Disposable {
 
 
     private readonly CancellationTokenSource cancellationTokenSource;
-    private CancellationToken CancellationToken { get; }
+    private CancellationToken CancellationToken { get; set; }
     private readonly int udpListenerCount;
     private readonly int httpListenerCount = 1;
     private int ListenerCount => udpListenerCount + httpListenerCount;
@@ -209,100 +209,100 @@ public class RudService : Disposable {
 
 
 
-    /// <summary>
-    /// Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
-    /// </summary>
-    /// <param name="providers">The services to be served.</param>
-    /// <param name="rdpListener">Specify the listener layer (default is <see cref="RudListener"/>.</param>
-    /// <param name="maxCores">Maximum number of dispatch threads.</param>
-    /// <param name="credential">Credential for the listener to use.</param>
-    /// <remarks>Constructor returns after the service has been started and listener threads 
-    /// initialized.</remarks>
-    public RudService(
-        CancellationToken cancellationToken,
-        IEnumerable<IConfguredService> providers,
-            ICredentialPrivate credential = null,
-            Listener rdpListener = null,
-            int maxCores = 0) {
+    ///// <summary>
+    ///// Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
+    ///// </summary>
+    ///// <param name="providers">The services to be served.</param>
+    ///// <param name="rdpListener">Specify the listener layer (default is <see cref="RudListener"/>.</param>
+    ///// <param name="maxCores">Maximum number of dispatch threads.</param>
+    ///// <param name="credential">Credential for the listener to use.</param>
+    ///// <remarks>Constructor returns after the service has been started and listener threads 
+    ///// initialized.</remarks>
+    //public RudService(
+    //    CancellationToken cancellationToken,
+    //    IEnumerable<IConfguredService> providers,
+    //        ICredentialPrivate credential = null,
+    //        Listener rdpListener = null,
+    //        int maxCores = 0) {
 
-        Listener = rdpListener ?? new RudListener(credential, providers);
-        CancellationToken = cancellationToken;
+    //    Listener = rdpListener ?? new RudListener(credential, providers);
+    //    CancellationToken = cancellationToken;
 
-        // set the number of dispatch tasks
-        MaxDispatch = maxCores > 0 ? maxCores : Environment.ProcessorCount;
+    //    // set the number of dispatch tasks
+    //    MaxDispatch = maxCores > 0 ? maxCores : Environment.ProcessorCount;
 
-        // Set up the dispatchers
-        //nullTask = Task.Run(NullTask);
-        dispatchTasks = new Task[MaxDispatch];
-        dispatchTaskResource = new string[MaxDispatch];
-        dispatchTaskActive = new bool[MaxDispatch];
-        for (var i = 0; i < MaxDispatch; i++) {
-            dispatchTasks[i] = Task.Run(NullTask);
-            dispatchTaskActive[i] = false;
-            dispatchTaskResource[i] = null;
-            }
+    //    // Set up the dispatchers
+    //    //nullTask = Task.Run(NullTask);
+    //    dispatchTasks = new Task[MaxDispatch];
+    //    dispatchTaskResource = new string[MaxDispatch];
+    //    dispatchTaskActive = new bool[MaxDispatch];
+    //    for (var i = 0; i < MaxDispatch; i++) {
+    //        dispatchTasks[i] = Task.Run(NullTask);
+    //        dispatchTaskActive[i] = false;
+    //        dispatchTaskResource[i] = null;
+    //        }
 
-        // Set up the listeners
+    //    // Set up the listeners
 
-        udpListenerCount = 0;
+    //    udpListenerCount = 0;
 
-        // The HTTP listener handles multiplexing internally and so we only require one.
-        HttpListener.IsSupported.AssertTrue(ServerNotSupported.Throw);
-        httpListener = new HttpListener();
-
-
-        foreach (var provider in providers) {
-            foreach (var endpoint in provider.Endpoints) {
-                if (endpoint is HttpEndpoint httpEndpoint) {
+    //    // The HTTP listener handles multiplexing internally and so we only require one.
+    //    HttpListener.IsSupported.AssertTrue(ServerNotSupported.Throw);
+    //    httpListener = new HttpListener();
 
 
-                    var uri = httpEndpoint.GetUriPrefix();
-                    //uri = "http://+:15099/.well-known/";
-                    //Screen.WriteLine($"Connect to URI {uri}");
-
-                    httpListener.Prefixes.Add(uri);
-                    providerMap.Add(uri, provider);
-                    }
-                }
-            //udpListenerCount += provider.UdpEndpoints.Count;
-            }
-        //udpListenerCount = 0; // Hack - disable UDP for now, is throwing errors.
-        udpListenerCount = 0; // Hack - disable UDP for now, is throwing errors.
-
-        // Start the monitoring service and bind values to every provider returning the JPC interface.
-        Monitor = new HostMonitor(ListenerCount, MaxDispatch);
-
-        foreach (var provider in providers) {
-            if (provider.JpcInterface is IMonitorProvider monitorProvider) {
-                monitorProvider.Monitor = Monitor;
-                }
-            }
-
-        serviceTasks = new Task<ServiceRequest>[ListenerCount+1];
-        serviceTasks[ListenerCount] = WaitCancellationToken();
-
-        httpListener.Start();
-        WaitHttpRequest();
-
-        //set up the UDP clients...
-        //udpListeners = new UdpClient[udpListenerCount];
-        //var listener = 1;
-        //foreach (var provider in providers) {
-        //    foreach (var endpoint in provider.UdpEndpoints) {
-        //        udpListeners[listener] = endpoint.GetClient();
-        //        WaitUdpListener(listener);
-        //        listener++;
-        //        }
-        //    }
+    //    foreach (var provider in providers) {
+    //        foreach (var endpoint in provider.Endpoints) {
+    //            if (endpoint is HttpEndpoint httpEndpoint) {
 
 
+    //                var uri = httpEndpoint.GetUriPrefix();
+    //                //uri = "http://+:15099/.well-known/";
+    //                //Screen.WriteLine($"Connect to URI {uri}");
 
-        //start the asynchronous services before returning.
-        //serviceThread = new Thread(WaitService);
-        //serviceThread.Start();
+    //                httpListener.Prefixes.Add(uri);
+    //                providerMap.Add(uri, provider);
+    //                }
+    //            }
+    //        //udpListenerCount += provider.UdpEndpoints.Count;
+    //        }
+    //    //udpListenerCount = 0; // Hack - disable UDP for now, is throwing errors.
+    //    udpListenerCount = 0; // Hack - disable UDP for now, is throwing errors.
 
-        //var t = WaitServiceAsync();
-        }
+    //    // Start the monitoring service and bind values to every provider returning the JPC interface.
+    //    Monitor = new HostMonitor(ListenerCount, MaxDispatch);
+
+    //    foreach (var provider in providers) {
+    //        if (provider.JpcInterface is IMonitorProvider monitorProvider) {
+    //            monitorProvider.Monitor = Monitor;
+    //            }
+    //        }
+
+    //    serviceTasks = new Task<ServiceRequest>[ListenerCount+1];
+    //    serviceTasks[ListenerCount] = WaitCancellationToken();
+
+    //    httpListener.Start();
+    //    WaitHttpRequest();
+
+    //    //set up the UDP clients...
+    //    //udpListeners = new UdpClient[udpListenerCount];
+    //    //var listener = 1;
+    //    //foreach (var provider in providers) {
+    //    //    foreach (var endpoint in provider.UdpEndpoints) {
+    //    //        udpListeners[listener] = endpoint.GetClient();
+    //    //        WaitUdpListener(listener);
+    //    //        listener++;
+    //    //        }
+    //    //    }
+
+
+
+    //    //start the asynchronous services before returning.
+    //    //serviceThread = new Thread(WaitService);
+    //    //serviceThread.Start();
+
+    //    //var t = WaitServiceAsync();
+    //    }
 
 
 
@@ -341,11 +341,15 @@ public class RudService : Disposable {
         return null;
         }
 
-     void WaitService() {
-        var t =  WaitServiceAsync();
-        t.Wait();
-        }
+    // void WaitService() {
+    //    var t =  WaitServiceAsync();
+    //    t.Wait();
+    //    }
 
+    //public async Task WaitServiceAsync(CancellationToken cancellationToken) {
+    //    CancellationToken = cancellationToken;
+    //    await WaitServiceAsync();
+    //    }
 
     public async Task WaitServiceAsync() {
 

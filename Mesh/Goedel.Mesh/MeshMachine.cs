@@ -61,7 +61,7 @@ public interface IMeshMachine {
     /// <returns>The translated file path.</returns>
     string GetFilePath(string filepath);
 
-
+    string? Instance { get; }
 
     ///<summary>The directory the Mesh data is stored in.</summary>
     string DirectoryMesh { get; }

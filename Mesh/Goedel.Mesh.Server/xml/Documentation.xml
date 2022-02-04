@@ -1046,7 +1046,7 @@
             <param name="hostname">The host name.</param>
             <returns>The file path.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Create a new Mesh Service
             </summary>
@@ -1192,6 +1192,9 @@
             <param name="meshMachineClient">A client instance provisioned with the
             necessary credential.</param>
             <param name="publicMeshService">The service instance.</param>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshMachineDirect.Instance">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Server.MeshMachineDirect.MeshHost">
             <inheritdoc/>

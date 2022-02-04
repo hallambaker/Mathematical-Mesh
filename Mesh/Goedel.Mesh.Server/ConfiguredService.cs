@@ -23,6 +23,7 @@ public static class ConsoleLoggerExtensions {
         //host.ConfigureAppConfiguration((hostingContext, configuration) => {
         //});
 
+        Screen.WriteLine($"Add Mesh Service");
 
         host.ConfigureServices((hostContext, services) => {
 
@@ -72,6 +73,8 @@ public class MeshConfiguredService : IConfguredService {
 
         //IConfigurationRoot configurationRoot = configuration.Build();
 
+        Screen.WriteLine($"START SERVICE *******************");
+
         MeshMachine = meshMachine;
         Logger = logger;
 
@@ -83,36 +86,8 @@ public class MeshConfiguredService : IConfguredService {
         MeshHostConfiguration = meshHostConfiguration.CurrentValue;
         GenericHostConfiguration = genericHostConfiguration.CurrentValue;
 
-
-        //var serviceConfiguration = new ServiceConfiguration() {
-        //    Id = null!,
-        //    ProfileUdf = MeshHostConfiguration.ServiceUdf,
-        //    Path = MeshHostConfiguration.ServicePath,
-        //    DNS = MeshHostConfiguration.ServiceDNS.ToList()
-        //    // ignore the logs for now
-        //    };
-        //var hostConfiguration = new HostConfiguration() {
-        //    Id = null!,
-        //    ProfileUdf = GenericHostConfiguration.HostUdf,
-        //    DeviceUdf = GenericHostConfiguration.DeviceUdf,
-        //    Path = MeshHostConfiguration.HostPath,
-        //    DNS = new List<string>() { GenericHostConfiguration.HostDns },
-        //    IP = GenericHostConfiguration.IP.ToList()
-        //    };
-
-        // Build the HTTP endpoints for the service
-        // The service [protocol] at [example.com] with hosts
-        // [host1.example.net, host2.example.net] will be bound to the following URIs:
-        //
-        // https://example.com/.well-known/protocol/
-        // https://protocol.example.com/.well-known/protocol/
-        // https://host1.example.net:15099/.well-known/protocol/
-        // https://host2.example.net:15099/.well-known/protocol/
-
-
         var transactionLogger = new LogServiceGeneric
             (GenericHostConfiguration, MeshHostConfiguration, null, logger);
-
 
         PublicMeshService = new PublicMeshService(MeshMachine, 
             GenericHostConfiguration, MeshHostConfiguration, transactionLogger);

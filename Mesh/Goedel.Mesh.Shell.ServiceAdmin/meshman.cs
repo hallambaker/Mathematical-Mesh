@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 03-Feb-22 6:49:26 PM
+//  This file was automatically generated at 04-Feb-22 6:19:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -222,7 +222,8 @@ public class _Create : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
-		new ExistingFile ()		} ;
+		new ExistingFile (),
+		new String ()		} ;
 
 
 
@@ -318,6 +319,15 @@ public class _Create : Goedel.Command.Dispatch ,
 	public virtual string _MultiConfig {
 		set => _Data[9].Parameter (value);
 		}
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String Account {
+		get => _Data[10] as String;
+		set => _Data[10]  = value;
+		}
+
+	public virtual string _Account {
+		set => _Data[10].Parameter (value);
+		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
@@ -395,6 +405,13 @@ public class _Create : Goedel.Command.Dispatch ,
 				Brief = "The configuration file, is created if necessary",
 				Index = 9,
 				Key = "config"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Account", 
+				Default = null, // null if null
+				Brief = "The account under which the service is to run (defaults to account executing command).",
+				Index = 10,
+				Key = "account"
 				}
 			}
 		};

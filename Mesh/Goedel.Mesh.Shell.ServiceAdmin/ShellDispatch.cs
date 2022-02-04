@@ -77,8 +77,10 @@ public partial class Shell : _Shell {
         var hostDns = Options.HostDns.Value ?? serviceDns;
         var admin = Options.Admin.Value;
         var hostConfig = Options.HostConfig.Value ?? "mmmsettings.json";
+        var runAs = Options.Account.Value;
 
-        var configuration = PublicMeshService.Create(MeshMachine, multiConfig, serviceDns, hostConfig, hostIp, hostDns, admin);
+        var configuration = PublicMeshService.Create(
+                MeshMachine, multiConfig, serviceDns, hostConfig, hostIp, hostDns, admin, runAs);
 
         // here populate a status response from configuration
 

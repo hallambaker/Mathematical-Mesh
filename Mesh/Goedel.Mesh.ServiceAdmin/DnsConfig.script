@@ -20,13 +20,13 @@
 
 
 #foreach (var serviceDns in serviceConfig.ServiceDNS)
-#{discovery}.#{serviceDns}. TXT "udf=#{serviceConfig.ServiceUdf}"
-#{discovery}.#{serviceDns}. SRV 1 1 #{hostConfig.Port} #{hostConfig.HostDns}.
+#{discovery}.#{serviceDns}. IN TXT "udf=#{serviceConfig.ServiceUdf}"
+#{discovery}.#{serviceDns}. IN SRV 1 1 #{hostConfig.Port} #{hostConfig.HostDns}.
 #end foreach
 
 #foreach (var ip in hostConfig.IP) 
 #{hostConfig.HostDns}. IN #{GetAQuadA(ip)}
-#{discovery}.#{hostConfig.HostDns}. TXT "udf=#{hostConfig.HostUdf}"
+#{discovery}.#{hostConfig.HostDns}. IN TXT "udf=#{hostConfig.HostUdf}"
 #end foreach
 
 #end method
@@ -42,9 +42,9 @@
 #% var configEntry = serviceConfig.GetConfigurationEntry();
 #% var discovery = configEntry.Discovery;
 #% var wellknown = configEntry.WellKnown;
+#% var account = hostConfig.RunAs;
 
-
-netsh http add urlacl url=http://+:#{hostConfig.Port}/.well=known/#{wellknown} user=DOMAIN\user
+netsh http add urlacl url=http://+:#{hostConfig.Port}/.well=known/#{wellknown} #{account}
 
 
 #end method

@@ -22,6 +22,9 @@
             The  Mesh server.
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshMachineCoreServer.Instance">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.MeshMachineCoreServer.DirectoryMaster">
             <summary>The directory used to store the master data.</summary>
         </member>
@@ -82,6 +85,9 @@
         </member>
         <member name="P:Goedel.Mesh.MeshMachineCore.FileNameHost">
             <summary>The file name of the host catalog.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshMachineCore.Instance">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.MeshMachineCore.Disposing">
             <summary>

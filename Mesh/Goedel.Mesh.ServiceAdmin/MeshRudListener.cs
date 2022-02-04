@@ -17,9 +17,9 @@ namespace Goedel.Mesh.ServiceAdmin;
 /// </summary>
 public class MeshRudListener : IServiceListener {
 
-    GenericHostConfiguration GenericHostConfiguration { get; }
+    public GenericHostConfiguration GenericHostConfiguration { get; }
 
-    RudService RudService { get; set; }
+    public RudService RudService { get; set; }
 
     ICredentialPrivate Credential { get; set; }
 
@@ -39,6 +39,16 @@ public class MeshRudListener : IServiceListener {
         GenericHostConfiguration = genericHostConfiguration.CurrentValue;
         MeshMachine = meshMachine;
         ConfiguredServices = configuredServices;
+
+        Screen.WriteLine($"Configure Listener");
+
+        Credential = MeshMachine.GetCredential(
+                GenericHostConfiguration.DeviceUdf,
+                GenericHostConfiguration.HostUdf);
+
+        RudService = new RudService(
+                ConfiguredServices, Credential,
+                maxCores: GenericHostConfiguration.MaxCores);
         }
 
 
@@ -54,13 +64,14 @@ public class MeshRudListener : IServiceListener {
         // create http endpoints here...
 
 
+        Screen.WriteLine($"Start Listener");
 
 
-        RudService = new RudService (cancellationToken, 
-            ConfiguredServices, Credential, 
-            maxCores: GenericHostConfiguration.MaxCores);
 
         await RudService.WaitServiceAsync();
+
+
+        Screen.WriteLine($"Stop Listener");
         }
 
     }

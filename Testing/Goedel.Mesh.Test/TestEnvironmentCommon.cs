@@ -42,6 +42,7 @@ using Goedel.Protocol.Service;
 using Goedel.Test.Core;
 using Goedel.Utilities;
 using Microsoft.Extensions.Configuration;
+using System.Threading;
 
 namespace Goedel.Mesh.Test;
 
@@ -76,8 +77,9 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
         }
 
 
+    CancellationToken CancellationToken;
 
-    public async Task DependencyInjectionHostAsync() {
+    public MeshRudListener DependencyInjectionHostAsync() {
 
 
         
@@ -112,9 +114,12 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
 
 
         var services = host.Services;
-        var collector = services.GetRequiredService<Collector>();
+        var listener = services.GetRequiredService<IServiceListener>() as MeshRudListener;
+        //listener.StartAsync(CancellationToken);
 
-        await host.RunAsync();
+        //await host.RunAsync();
+
+        return listener;
         }
 
 
@@ -123,6 +128,9 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
         var dnsConfig = "db.meshService";
         var netshConfig = "Service.netsh";
 
+        CancellationToken = new();
+
+
         HostMachine = new MeshMachineTest(this, "host1");
 
         // initialize the service and host configuration
@@ -130,12 +138,16 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
             MeshMachine = HostMachine
             };
         ServiceAdminCLI = new();
-        ServiceAdmin($"create example.com /host=host1.example.com /admin=alice.example.com");
+        ServiceAdmin($"create example.com /host=host1.example.com /admin=alice.example.com /account=Domain\\user");
 
         ServiceAdmin($"dns {dnsConfig}");
         ServiceAdmin($"netsh {netshConfig}");
-        var host = DependencyInjectionHostAsync();
-        host.Wait();
+        var listener = DependencyInjectionHostAsync();
+
+
+        return listener.RudService;
+
+
         // Neew to swap in the new host startup here !!!!!
 
 
@@ -151,8 +163,6 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
         //// this is not going to return now is it???
         //// need to save the service and return it.
         //var resultService = OldHost($"start {serviceConfig}") as ResultStartService;
-
-        throw new NYI();
 
         //return resultService.RudService;
         }

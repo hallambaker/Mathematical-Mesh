@@ -47,6 +47,9 @@ public class MeshMachineDirect : IMeshMachineClient {
         }
 
     ///<inheritdoc/>
+    public virtual string? Instance => null;
+
+    ///<inheritdoc/>
     public MeshHost MeshHost => MeshMachineClient.MeshHost;
 
     ///<inheritdoc/>

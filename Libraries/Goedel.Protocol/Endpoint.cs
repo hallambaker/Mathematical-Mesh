@@ -58,8 +58,8 @@ public enum TransportType {
 /// <param name="Instance">Optional instance tag to allow multiple instances to be run 
 /// for testing etc.</param>
 public record Endpoint(
-         string Protocol,
-         string Instance = null,
+         string? Protocol,
+         string? Instance = null,
          JpcInterface JpcInterface =null) {
 
 
@@ -75,9 +75,9 @@ public record Endpoint(
 /// <param name="Instance">The protocol instance.</param>
 /// <param name="Port">The port number.</param>
 public record HttpEndpoint(
-         string Domain,
+         string? Domain,
          string Protocol,
-         string Instance = null,
+         string? Instance = null,
          int Port = 15099,
          JpcInterface JpcInterface = null) : Endpoint(Protocol, Instance, JpcInterface) {
     #region // Properties
@@ -143,8 +143,8 @@ public record HttpEndpoint(
 /// <param name="Port">The port number.</param>
 /// <param name="AddressFamily">The address family.</param>
 public record UdpEndpoint(
-         string Protocol,
-         string Instance = null,
+         string? Protocol,
+         string? Instance = null,
          int Port = 0,
          AddressFamily AddressFamily = AddressFamily.InterNetwork,
          JpcInterface JpcInterface = null) : Endpoint(Protocol, Instance, JpcInterface) {

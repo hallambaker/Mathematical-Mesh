@@ -3,6 +3,8 @@
 	<PropertyGroup>
 		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
 		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
     <!--
     <RuntimeIdentifiers>win-x64;win-x86;win-arm;win-arm64;osx-x64;linux-x64;linux-arm;linux-arm64</RuntimeIdentifiers>	
 		-->

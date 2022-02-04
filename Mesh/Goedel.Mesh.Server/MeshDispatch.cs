@@ -21,6 +21,7 @@
 #endregion
 
 using System.Net;
+using System.Text;
 
 
 namespace Goedel.Mesh.Server;
@@ -118,9 +119,11 @@ public class PublicMeshService : MeshService {
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
         MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
 
+        var instance = genericHostConfiguration.Instance ?? meshMachine.Instance;
+
         Endpoints.Add(
-            new HttpEndpoint(genericHostConfiguration.HostDns, GetWellKnown, 
-                    genericHostConfiguration.Instance, genericHostConfiguration.Port, this));
+            new HttpEndpoint(genericHostConfiguration.HostDns, GetWellKnown,
+                    instance, genericHostConfiguration.Port, this));
 
         // Here we need to populate ProfileService, ProfileHost
 
@@ -137,69 +140,6 @@ public class PublicMeshService : MeshService {
         }
 
     #endregion
-
-    ///// <summary>
-    ///// Create a Mesh Service provider instance on the machine <paramref name="hostConfiguration"/>
-    ///// according to the parameters specified in <paramref name="serviceConfiguration"/> and
-    ///// <paramref name="hostConfiguration"/>/
-    ///// </summary>
-    /////<inheritdoc cref="ServiceFactoryDelegate"/>
-    //public PublicMeshService(
-    //        IMeshMachine meshMachine,
-    //        ServiceConfiguration serviceConfiguration,
-    //        HostConfiguration hostConfiguration,
-    //        LogService logService=null) {
-
-    //    // Bugs? Seems like this is in initializing the service and host, not starting it.
-
-    //    LogService = logService ?? new LogService(serviceConfiguration,
-    //        hostConfiguration, null) ;
-
-    //    MeshMachine = meshMachine;
-    //    ServiceConfiguration = serviceConfiguration;
-    //    HostConfiguration = hostConfiguration;
-    //    KeyCollection = MeshMachine.KeyCollection;
-
-    //    var path = hostConfiguration?.Path ?? meshMachine.DirectoryMesh;
-
-
-    //    // Dummy profiles for the service and host at this point
-    //    ProfileService = ProfileService.Generate(KeyCollection);
-    //    ProfileHost = ProfileHost.CreateHost(MeshMachine);
-
-    //    // create an activation record and a connection record.
-    //    ActivationDevice = new ActivationHost(ProfileHost);
-    //    ActivationDevice.Activate(ProfileHost.SecretSeed);
-
-    //    //Screen.WriteLine($"$$$$ Suth {ActivationDevice.DeviceAuthentication}");
-
-
-
-    //    var connectionDevice = ActivationDevice.Connection;
-
-    //    // Sign the connection and connection slim
-
-    //    this.ConnectionDevice = new ConnectionService() {
-    //        Account = "@example",
-    //        Subject = connectionDevice.Subject,
-    //        Authority = connectionDevice.Authority,
-    //        Authentication = connectionDevice.Authentication
-    //        };
-
-    //    this.ConnectionDevice.Strip();
-
-    //    ProfileService.Sign(this.ConnectionDevice, ObjectEncoding.JSON_B);
-    //    //KeyCollection.Add(ProfileHost.KeyEncryption);
-    //    KeyCollection.Add(ProfileService.KeyEncryption);
-    //    MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
-
-
-    //    this.ConnectionDevice.DareEnvelope.Strip();
-    //    }
-
-
-
-
 
     static string GetFilePath(
             IMeshMachineClient meshMachine,
@@ -264,11 +204,13 @@ public class PublicMeshService : MeshService {
         string serviceDns,
         string hostConfig,
         string hostIp, string hostDns,
-        string admin) {
+        string admin,
+        string? hostAccount = null) {
 
         hostDns ??= Dns.GetHostName();
         hostIp ??= "127.0.0.1:666";
         hostDns ??= serviceDns;
+        hostConfig ??= "mmmsettings.json";
 
         var pathHost = GetHost(meshMachine, hostConfig);
 
@@ -278,30 +220,34 @@ public class PublicMeshService : MeshService {
         var configuration = new Configuration();
 
 
-        var meshHostConfiguration = new MeshServiceConfiguration {
+        var serviceConfiguration = new MeshServiceConfiguration {
             // ServiceUdf later
+            // Administrators later
             ServiceDNS = new List<string> { serviceDns },
             ServicePath = meshMachine.DirectoryMesh,
             HostPath = pathHost
             };
 
-        var genericHostConfiguration = new GenericHostConfiguration {
+        var hostConfiguration = new GenericHostConfiguration {
+            // HostUdf later
+            // DeviceUdf later
             Description = $"New service configuration created on {DateTime.Now.ToRFC3339()}",
             HostDns = hostDns,
             IP = new List<string> { hostIp },
             Port = 15099,
+            RunAs = hostAccount
             };
 
-        configuration.Add(MeshServiceConfiguration.ConfigurationEntry, meshHostConfiguration);
-        configuration.Add(GenericHostConfiguration.ConfigurationEntry, genericHostConfiguration);
+        configuration.Add(MeshServiceConfiguration.ConfigurationEntry, serviceConfiguration);
+        configuration.Add(GenericHostConfiguration.ConfigurationEntry, hostConfiguration);
 
 
         // create the service. This will populate the UDF fields.
-        var service = Create(meshMachine, meshHostConfiguration, genericHostConfiguration);
+        using var service = Create(meshMachine, serviceConfiguration, hostConfiguration);
 
         if (admin != null) {
 
-            meshHostConfiguration.Administrators.Add(admin);
+            serviceConfiguration.Administrators.Add(admin);
 
             // bind to the service instance directly
             var directMachine = new MeshMachineDirect(meshMachine, service);

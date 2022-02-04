@@ -32,6 +32,9 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
 
     #region // Properties
 
+    ///<inheritdoc/>
+    public virtual string? Instance => null;
+
     ///<summary>The directory used to store the master data.</summary>
     public virtual string DirectoryMaster { get; }
 
@@ -149,6 +152,10 @@ public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
 
     ///<summary>The file name of the host catalog.</summary>
     public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
+
+    ///<inheritdoc/>
+    public virtual string Instance => null;
+
 
     #endregion
     #region // Disposing

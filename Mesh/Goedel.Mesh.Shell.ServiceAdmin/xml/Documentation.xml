@@ -361,6 +361,9 @@
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.MultiConfig">
             <summary>Field accessor for option [config]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Account">
+            <summary>Field accessor for option [account]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>

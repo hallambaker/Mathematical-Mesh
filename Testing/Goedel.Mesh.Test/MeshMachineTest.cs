@@ -71,7 +71,7 @@ public class MeshMachineTest : MeshMachineCore {
     public string Name;
     public string Path => System.IO.Path.Combine(testEnvironmentCommon.Path, Name);
 
-
+    public override string Instance => testEnvironmentCommon.Test;
 
 
     ///<inheritdoc/>
