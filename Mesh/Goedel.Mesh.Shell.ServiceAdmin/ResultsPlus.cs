@@ -73,3 +73,9 @@ public partial class Result {
 
 
     }
+
+
+public partial class ResultServiceConfiguration {
+    public Configuration Configuration { get; init; }
+
+    }

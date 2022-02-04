@@ -51,13 +51,25 @@ public partial class DnsConfiguration {
     /// <param name="output"></param>
     /// <param name="hostname">The host name.</param>
     public static void BindConfig(Configuration Configuration,
-                string output, string hostname) {
+                string output) {
         using var outputWriter = output.OpenTextWriterNew();
         var dnsConfiguration = new DnsConfiguration() {
             _Output = outputWriter
             };
         dnsConfiguration.BindConfig(Configuration);
         }
+
+
+    public static void NetshConfig(Configuration Configuration,
+                string output) {
+        using var outputWriter = output.OpenTextWriterNew();
+        var dnsConfiguration = new DnsConfiguration() {
+            _Output = outputWriter
+            };
+        dnsConfiguration.NetshConfig(Configuration);
+        }
+
+
 
     /// <summary>
     /// Returns the port component of the IP address <paramref name="address"/>

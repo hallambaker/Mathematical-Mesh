@@ -11,7 +11,8 @@
 		String			Reason
 
 
-
+	Structure ResultServiceConfiguration
+		Inherits Result
 
 
 

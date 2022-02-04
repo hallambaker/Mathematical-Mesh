@@ -27,7 +27,7 @@ public static class ConsoleLoggerExtensions {
         host.ConfigureServices((hostContext, services) => {
 
             services.AddSingleton<IConfguredService, MeshConfiguredService>();
-            var configurationService = services.Configure <MeshHostConfiguration> (
+            var configurationService = services.Configure <MeshServiceConfiguration> (
                 hostContext.Configuration.GetSection("MeshService"));
             var configurationHost = services.Configure<GenericHostConfiguration>(
                 hostContext.Configuration.GetSection("Host"));
@@ -45,11 +45,11 @@ public class MeshConfiguredService : IConfguredService {
 
 
 
-    MeshHostConfiguration MeshHostConfiguration { get; }
+    MeshServiceConfiguration MeshHostConfiguration { get; }
 
     GenericHostConfiguration GenericHostConfiguration { get; }
 
-    IOptionsMonitor<MeshHostConfiguration> MeshHostConfigurationMonitor;
+    IOptionsMonitor<MeshServiceConfiguration> MeshHostConfigurationMonitor;
     IMeshMachine MeshMachine { get; }
     ILogger<ManagedListener> Logger { get; }
 
@@ -66,7 +66,7 @@ public class MeshConfiguredService : IConfguredService {
     public MeshConfiguredService(
                 ILogger<ManagedListener> logger,
                 IMeshMachine meshMachine,
-                IOptionsMonitor<MeshHostConfiguration> meshHostConfiguration,
+                IOptionsMonitor<MeshServiceConfiguration> meshHostConfiguration,
                 IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration
                 ) {
 
@@ -122,7 +122,7 @@ public class MeshConfiguredService : IConfguredService {
 
         }
 
-    void Register(MeshHostConfiguration meshHostConfiguration) {
+    void Register(MeshServiceConfiguration meshHostConfiguration) {
 
         // the only thing we are going to be able to change with the service
         // running is the administrator list

@@ -39,10 +39,10 @@ public class PublicMeshService : MeshService {
 
 
     ///<summary>Name for the default hosts and Services configuration file.</summary> 
-    public const string DefaultConfiguration = "HostsAndServices";
+    public const string DefaultConfiguration = "MeshService";
 
     ///<summary>Extension for hosts and services configuration files.</summary> 
-    public const string ConfigurationFileExtension = ".hasconf";
+    public const string ConfigurationFileExtension = ".json";
 
 
     ///<summary>The Mesh Machine base</summary> 
@@ -90,7 +90,7 @@ public class PublicMeshService : MeshService {
 
     GenericHostConfiguration GenericHostConfiguration { get; }
 
-    MeshHostConfiguration MeshHostConfiguration { get; }
+    MeshServiceConfiguration MeshHostConfiguration { get; }
 
     #endregion
     #region // Disposing
@@ -102,30 +102,10 @@ public class PublicMeshService : MeshService {
     #endregion
     #region // Constructors and factories
 
-    /////<inheritdoc cref="ServiceFactoryDelegate"/>
-    //public static RudProvider Factory(
-    //        IMeshMachine meshMachine,
-    //        ServiceConfiguration serviceConfiguration,
-    //        HostConfiguration hostConfiguration) {
-
-    //    hostConfiguration.AssertNotNull(NYI.Throw); // Force fixin of direct unit tests.
-
-    //    // Since it is the host that responds, the service binds to the host endpoints
-    //    // in addition to the service.
-
-    //    var endpoints = hostConfiguration.GetEndpoints();
-    //    //endpoints.AddRange(hostConfiguration.GetEndpoints());
-    //    var provider = new PublicMeshService(meshMachine, serviceConfiguration, hostConfiguration);
-
-    //    return new RudProvider(endpoints, provider);
-    //    }
-
-
-
     public PublicMeshService(
             IMeshMachine meshMachine,
             GenericHostConfiguration genericHostConfiguration,
-            MeshHostConfiguration meshHostConfiguration,
+            MeshServiceConfiguration meshHostConfiguration,
             LogService logService) {
 
         LogService = logService;
@@ -138,17 +118,6 @@ public class PublicMeshService : MeshService {
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
         MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
 
-
-
-        //foreach (var service in meshHostConfiguration.ServiceDNS) {
-        //    Endpoints.Add(
-        //        new HttpEndpoint(service, GetWellKnown, 
-        //                genericHostConfiguration.Instance, genericHostConfiguration.Port, this));
-        //    var explicitService = GetWellKnown + service;
-        //    Endpoints.Add(
-        //        new HttpEndpoint(explicitService, GetWellKnown,
-        //                genericHostConfiguration.Instance, genericHostConfiguration.Port, this));
-        //    }
         Endpoints.Add(
             new HttpEndpoint(genericHostConfiguration.HostDns, GetWellKnown, 
                     genericHostConfiguration.Instance, genericHostConfiguration.Port, this));
@@ -167,7 +136,7 @@ public class PublicMeshService : MeshService {
 
         }
 
-
+    #endregion
 
     ///// <summary>
     ///// Create a Mesh Service provider instance on the machine <paramref name="hostConfiguration"/>
@@ -259,7 +228,7 @@ public class PublicMeshService : MeshService {
     /// <param name="fileSpec">The service description specifier.</param>
     /// <returns>The file path.</returns>
     public static string GetService(
-        IMeshMachineClient meshMachine, string fileSpec) => GetFilePath(
+        IMeshMachineClient meshMachine, string fileSpec=null) => GetFilePath(
             meshMachine, fileSpec ?? DefaultConfiguration, "Service");
 
     /// <summary>
@@ -276,9 +245,7 @@ public class PublicMeshService : MeshService {
         Path.Combine(meshMachine.DirectoryMesh, "Hosts", hostname);
 
 
-    //GetFilePath(
-    //    meshMachine, fileSpec, "Hosts", hostname);
-
+    #region // Create service
 
     /// <summary>
     /// Create a new Mesh Service
@@ -291,7 +258,7 @@ public class PublicMeshService : MeshService {
     /// <param name="hostDns">The host DNS name</param>
     /// <param name="admin">The administrative account to create.</param>
     /// <returns>The created service</returns>
-    public static PublicMeshService Create(
+    public static Configuration Create(
         IMeshMachineClient meshMachine,
         string serviceConfig,
         string serviceDns,
@@ -299,26 +266,19 @@ public class PublicMeshService : MeshService {
         string hostIp, string hostDns,
         string admin) {
 
-        var serviceName = "MeshService";
-
         hostDns ??= Dns.GetHostName();
         hostIp ??= "127.0.0.1:666";
-        //var hostIpv6 = "[::1]:15099";
-
-
         hostDns ??= serviceDns;
-
 
         var pathHost = GetHost(meshMachine, hostConfig);
 
         var pathLog = Path.Combine(pathHost, "Logs");
+
         // Create the initial service application
-
-
         var configuration = new Configuration();
 
 
-        var meshHostConfiguration = new MeshHostConfiguration {
+        var meshHostConfiguration = new MeshServiceConfiguration {
             // ServiceUdf later
             ServiceDNS = new List<string> { serviceDns },
             ServicePath = meshMachine.DirectoryMesh,
@@ -327,59 +287,17 @@ public class PublicMeshService : MeshService {
 
         var genericHostConfiguration = new GenericHostConfiguration {
             Description = $"New service configuration created on {DateTime.Now.ToRFC3339()}",
-            HostDns =  hostDns,
+            HostDns = hostDns,
             IP = new List<string> { hostIp },
             Port = 15099,
             };
 
-        configuration.Dictionary.Add("MeshService", meshHostConfiguration);
-        configuration.Dictionary.Add("Host", genericHostConfiguration);
+        configuration.Add(MeshServiceConfiguration.ConfigurationEntry, meshHostConfiguration);
+        configuration.Add(GenericHostConfiguration.ConfigurationEntry, genericHostConfiguration);
 
-
-        configuration.ToFile(serviceConfig);
-        var reconfig = Configuration.FromFile(serviceConfig);
-
-        //var ServiceConfiguration = new ServiceConfiguration() {
-        //    Id = serviceName,
-        //    DNS = new List<string> { serviceDns },
-        //    Path = meshMachine.DirectoryMesh,
-        //    WellKnown = "mmm",
-        //    Addresses = new List<string> { serviceDns }
-        //    };
-
-        //// populate with user supplied data
-
-
-
-
-        //var hostConfiguration = new HostConfiguration() {
-        //    Id = System.Environment.MachineName.ToLower(),
-        //    IP = new List<string> { hostIp },
-        //    DNS = new List<string> { hostDns },
-        //    Port = 15099,
-        //    Services = new List<string> { serviceName },
-        //    Path = pathHost,
-
-        //    };
 
         // create the service. This will populate the UDF fields.
-        using var service = Create(meshMachine, meshHostConfiguration, genericHostConfiguration);
-
-
-        //// To be deleted!
-        //var configuration = new Configuration() {
-        //    Name = "Mesh",
-        //    Address = serviceDns,
-        //    Entries = new List<ConfigurationEntry> { ServiceConfiguration, hostConfiguration }
-        //    };
-        //// To be deleted!
-        //var localLog = new LocalLog() {
-        //    Path = pathLog,
-        //    Roll = "1d",
-        //    Events = new List<string> {
-        //        "error", "event"
-        //        }
-        //    };
+        var service = Create(meshMachine, meshHostConfiguration, genericHostConfiguration);
 
         if (admin != null) {
 
@@ -398,22 +316,11 @@ public class PublicMeshService : MeshService {
             //localLog.Readers = new List<string> { adminSin };
             }
 
-        // To be deleted!
-        //hostConfiguration.Logs = new List<LogEntry> { localLog };
-
-        // write the configuration out.
-        //configuration.ToFile(newFile ?? serviceConfig);
-
-
-        // To be deleted!
+        // Write the configuration out to the file
         serviceConfig.MakePath();
-
         configuration.ToFile(serviceConfig);
 
-
-
-
-        return service;
+        return configuration;
         }
 
 
@@ -428,7 +335,7 @@ public class PublicMeshService : MeshService {
     /// <returns>The mesh service interface.</returns>
     public static PublicMeshService Create(
             IMeshMachineClient meshMachine,
-            MeshHostConfiguration serviceConfiguration,
+            MeshServiceConfiguration serviceConfiguration,
             GenericHostConfiguration hostConfiguration,
             string deviceAddress = "@example"
             ) {
@@ -495,7 +402,9 @@ public class PublicMeshService : MeshService {
         }
 
 
+    #endregion
 
+    #region // obsolete
 
     ///// <summary>
     ///// Create new service and host configurations and attach the service to the host.
@@ -571,7 +480,8 @@ public class PublicMeshService : MeshService {
     //        ConnectionDevice = connectionDevice
     //        };
 
-    //    }
+    //    } 
+    #endregion
 
 
     /// <summary>
@@ -614,6 +524,7 @@ public class PublicMeshService : MeshService {
             return result;
             }
         }
+    #region // Transaction dispatch methods
 
 
     /// <summary>
@@ -912,6 +823,7 @@ public class PublicMeshService : MeshService {
         }
 
 
-
     #endregion
+
+
     }

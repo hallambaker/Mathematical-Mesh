@@ -34,8 +34,6 @@
 			Default "false"
 			Brief "Report output in JSON format"
 
-
-
 	Command Create "create"
 		Include Reporting
 		Brief "Initialize a new Mesh service and administration account"
@@ -43,7 +41,7 @@
 		Parameter ServiceDns "dns" String
 			Brief "The DNS address of the service"	
 		Option HostConfig "hostconfig" String
-			Brief "The host configuration name (defaults to name of this host)"
+			Brief "The host configuration name (defaults to mmmsettings.json)"
 		Option HostIp "ip" String
 			Brief "The external IP address of the host."
 		Option HostDns "host" String
@@ -53,6 +51,8 @@
 		Option MultiConfig "config" ExistingFile
 			Brief "The configuration file, is created if necessary"
 			Default "HostsAndServices"
+		Option Account "account" String
+			Brief "The account under which the service is to run (defaults to account executing command)."
 
 	Command DNS "dns"
 		Include Reporting
@@ -67,9 +67,6 @@
 			Brief "The configuration file, is created if necessary"
 			Default "HostsAndServices"
 
-
-
-
 	Command Netsh "netsh"
 		Include Reporting
 		Brief "Compute the netsh configuration from the service config."
@@ -82,62 +79,3 @@
 		Option MultiConfig "config" ExistingFile
 			Brief "The configuration file, is created if necessary"
 			Default "HostsAndServices"
-
-
-	Command Start "start"
-		Include Reporting
-		Brief "Start the host service"
-		Parameter HostDns "dns" String
-			Brief "The DNS address of the service"	
-		Option All "all" Flag
-			Brief "Start all hosts in the service"
-
-	Command Stop "stop"
-		Include Reporting
-		Brief "Stop the host service."
-		Parameter HostDns "dns" String
-			Brief "The DNS address of the service"	
-		Option All "all" Flag
-			Brief "Stop all hosts in the service"
-
-	Command Pause "pause"
-		Include Reporting
-		Brief "Start the host service in paused mode or pause the service if already started."
-		Parameter HostDns "dns" String
-			Brief "The DNS address of the service"	
-		Option All "all" Flag
-			Brief "Pause all hosts in the service"
-
-
-	Command Fetch "fetch"
-		Include Reporting
-		Brief "Fetch the host configuration file from the specified service."
-		Parameter HostConfig "hostconfig" NewFile
-			Brief "The host configuration file"
-		Parameter HostDns "dns" String
-			Brief "The DNS address of the service"			
-
-	Command Update "update"
-		Include Reporting
-		Brief "Initialize this machine as a host"
-		Parameter HostConfig "hostconfig" ExistingFile
-			Brief "The host configuration file"
-		Parameter HostDns "dns" String
-			Brief "The DNS address of the service"			
-
-	Command Verify "verify"
-		Include Reporting
-		Brief "Verify that the host configuration file is correct."
-		Parameter HostConfig "hostconfig" ExistingFile
-			Brief "The host configuration file"
-
-
-
-	Command Credential "credential"
-		Include Reporting
-		Brief "Issue a credential to the specified host"
-		Parameter HostConfig "hostconfig" ExistingFile
-			Brief "The host configuration file, is created if necessary"
-		Parameter HostName "Host id" ExistingFile
-			Brief "The host to add."
-

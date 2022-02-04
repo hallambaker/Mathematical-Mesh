@@ -58,10 +58,16 @@ public partial class ShellTestsAdmin : ShellTests {
     public static new ShellTestsAdmin Test() => new();
 
 
-    //public override TestCLI GetTestCLI(string MachineName = null) {
-    //    var testShell = new TestShell(TestEnvironment, MachineName);
-    //    return new TestCLI(testShell);
-    //    }
+    [Fact]
+    public void TestDns() {
+
+        var testCLI = GetTestCLI();
+
+        var result = testCLI.Dispatch("account hello");
+
+        EndTest();
+
+        }
 
 
     }
@@ -123,7 +129,7 @@ public partial class ShellTests : Disposable {
 
 
 
-    void EndTest() {
+    protected virtual void EndTest() {
         testEnvironment?.Dispose();
         testEnvironment = null;
         }

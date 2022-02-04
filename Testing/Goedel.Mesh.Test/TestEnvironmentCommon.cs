@@ -21,9 +21,13 @@
 #endregion
 
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
@@ -37,8 +41,13 @@ using Goedel.Protocol.Presentation;
 using Goedel.Protocol.Service;
 using Goedel.Test.Core;
 using Goedel.Utilities;
+using Microsoft.Extensions.Configuration;
 
 namespace Goedel.Mesh.Test;
+
+
+
+
 
 public class TestEnvironmentRdpShell : TestEnvironmentRdp {
     MeshMachineTest HostMachine { get; set; }
@@ -56,15 +65,63 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
     RudService RudService { get; set; }
 
 
+    public string ServiceHost => "ServiceHost1";
+
+    Scoreboard Scoreboard = new Scoreboard();
+
     protected override void Disposing() {
         //RudService?.Dispose();
         base.Disposing();
         ServiceAdminShell?.MeshMachine?.MeshHost?.Dispose();
         }
 
+
+
+    public async Task DependencyInjectionHostAsync() {
+
+
+        
+        var settings = PublicMeshService.GetService(HostMachine);
+
+
+        // These all need to be directed to the versions already created.
+        using var host = Host.CreateDefaultBuilder()
+                // read in the options file here.
+                .ConfigureAppConfiguration((hostingContext, configuration) => {
+                    configuration.Sources.Clear();
+
+                    IHostEnvironment env = hostingContext.HostingEnvironment;
+
+                    configuration
+                        .AddJsonFile(settings, true, true);
+
+                })
+
+                .ConfigureServices((hostContext, services) => {
+                    services.AddSingleton<Scoreboard, Scoreboard>(
+                        s => Scoreboard);
+                    services.AddSingleton<Collector, Collector>();
+                    services.AddSingleton<IServiceListener, MeshRudListener>();
+                    services.AddSingleton<IMeshMachine, MeshMachineCore>(
+                            s => HostMachine);
+                    //services.AddSingleton<IConfguredService, MeshConfiguredService>();
+                })
+            .AddMeshService()
+        .Build();
+
+
+
+        var services = host.Services;
+        var collector = services.GetRequiredService<Collector>();
+
+        await host.RunAsync();
+        }
+
+
     public override RudService StartService() {
         var serviceConfig = "/Console";
-        var dnsConfig = "ServiceDNS.bind";
+        var dnsConfig = "db.meshService";
+        var netshConfig = "Service.netsh";
 
         HostMachine = new MeshMachineTest(this, "host1");
 
@@ -73,25 +130,31 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
             MeshMachine = HostMachine
             };
         ServiceAdminCLI = new();
-        ServiceAdmin($"create {ServiceDns}");
+        ServiceAdmin($"create example.com /host=host1.example.com /admin=alice.example.com");
 
         ServiceAdmin($"dns {dnsConfig}");
+        ServiceAdmin($"netsh {netshConfig}");
+        var host = DependencyInjectionHostAsync();
+        host.Wait();
+        // Neew to swap in the new host startup here !!!!!
 
 
-        //// Start the host
-        //HostShell = new Shell.Host.Shell(
-        //    PublicMeshService.ServiceDescription,
-        //    ServiceManagementProvider.ServiceDescriptionHost) {
-        //    Instance = Test,
-        //    MeshMachine = HostMachine
-        //    };
-        HostAdminCLI = new();
+        ////// Start the host
+        ////HostShell = new Shell.Host.Shell(
+        ////    PublicMeshService.ServiceDescription,
+        ////    ServiceManagementProvider.ServiceDescriptionHost) {
+        ////    Instance = Test,
+        ////    MeshMachine = HostMachine
+        ////    };
+        //HostAdminCLI = new();
 
-        // this is not going to return now is it???
-        // need to save the service and return it.
-        var resultService = Host($"start {serviceConfig}") as ResultStartService;
+        //// this is not going to return now is it???
+        //// need to save the service and return it.
+        //var resultService = OldHost($"start {serviceConfig}") as ResultStartService;
 
-        return resultService.RudService;
+        throw new NYI();
+
+        //return resultService.RudService;
         }
 
 
@@ -117,12 +180,12 @@ public class TestEnvironmentRdpShell : TestEnvironmentRdp {
         ServiceAdminCLI.MainMethod(ServiceAdminShell, args);
         }
 
-    public Goedel.Mesh.Shell.Host.ShellResult Host(string command) {
+    //public Goedel.Mesh.Shell.Host.ShellResult OldHost(string command) {
 
-        var args = command.Split(" ");
-        HostAdminCLI.MainMethod(HostShell, args);
-        return HostShell.ShellResult as Goedel.Mesh.Shell.Host.ResultStartService;
-        }
+    //    var args = command.Split(" ");
+    //    HostAdminCLI.MainMethod(HostShell, args);
+    //    return HostShell.ShellResult as Goedel.Mesh.Shell.Host.ResultStartService;
+    //    }
 
 
     }

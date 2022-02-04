@@ -1,6 +1,6 @@
 ﻿#region // Copyright - MIT License
-//  Copyright © 2015 by Comodo Group Inc.
-//  Copyright © 2019-2021 by Phill Hallam-Baker
+//  © 2021 by Phill Hallam-Baker
+//  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -20,35 +20,46 @@
 //  THE SOFTWARE.
 #endregion
 
+using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Goedel.Mesh.ServiceAdmin;
-using Goedel.Protocol.GenericHost;
+
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.IO;
+using Goedel.Mesh.Management;
 using Goedel.Mesh.Server;
-using Goedel.Utilities;
+using Goedel.Mesh.ServiceAdmin;
+using Goedel.Mesh.Shell.Host;
 using Goedel.Protocol;
-using Goedel.Mesh;
+using Goedel.Protocol.Presentation;
+using Goedel.Protocol.Service;
+using Goedel.Test.Core;
+using Goedel.Utilities;
+using Microsoft.Extensions.Configuration;
 
-internal sealed class Program {
-    private static async Task Main(string[] args) {
-        await Host.CreateDefaultBuilder(args)
-            .ConfigureServices((hostContext, services) => {
-                services.AddSingleton<IServiceListener, MeshRudListener>();
-                services.AddSingleton<IMeshMachine, MeshMachineCore>(
-                        s => new MeshMachineCore ("host1", true));
-#if USE_PLATFORM_WINDOWS
-                services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
-#elif USE_PLATFORM_LINUX
-#endif
+namespace Goedel.Mesh.Test;
 
-            })
-            .AddConsoleHosted()
-            .AddMeshService()
-            //.ConfigureLogging(logging => logging.AddConsoleLogger())
-            .RunConsoleAsync();
-        }
+
+public class Scoreboard {
+
+    public IServiceListener ServiceListener { get; set; }
+
+    public IMeshMachine MeshMachineCore { get; set; }
     }
 
+public class Collector {
+
+    public Collector(
+            Scoreboard scoreboard,
+            IServiceListener serviceListener,
+            IMeshMachine meshMachineCore) {
+        scoreboard.ServiceListener = serviceListener;
+        scoreboard.MeshMachineCore = meshMachineCore;
+        }
+    }

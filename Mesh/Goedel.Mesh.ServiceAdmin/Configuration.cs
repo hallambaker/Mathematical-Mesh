@@ -10,40 +10,83 @@ using Goedel.Protocol.Service;
 
 namespace Goedel.Mesh.ServiceAdmin;
 
-public class Configuration {
+
+public class MeshServiceConfiguration : GenericServiceConfiguration {
+
+    public static readonly ConfigurationEntry ConfigurationEntry =
+        new("MeshService", typeof(MeshServiceConfiguration),
+            MeshService.Discovery, MeshService.WellKnown);
+
+    public override ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
+
+
+    public List<string> Administrators { get; set; } = new List<string>();
+
+    public string? HostPath { get; set; } = null;
+
+    }
+
+
+public class Configuration : Disposable {
 
     public Dictionary<string, object> Dictionary = new();
+
+
+    public MeshServiceConfiguration MeshServiceConfiguration { get; set; }
+
+    public GenericHostConfiguration GenericHostConfiguration { get; set; }
+
+    JsonDocument JsonDocument { get;  init; }
+
+
+
+
+
+
+    public Configuration() {
+        }
+
+    protected override void Dispose(bool disposing) {
+        JsonDocument?.Dispose();
+        }
 
     public static Configuration FromFile(string path) {
         using var stream = path.OpenFileReadShared();
 
 
         var config = new Configuration();
-        using var dom = JsonDocument.Parse(stream);
+        var dom = JsonDocument.Parse(stream);
 
-        //var element = dom.RootElement.
+        var result = new Configuration() {
+            JsonDocument = dom
+            };
 
-        foreach (var entry in dom.RootElement.EnumerateObject()) {
+        result.MeshServiceConfiguration = result.Get<MeshServiceConfiguration>(MeshServiceConfiguration.ConfigurationEntry);
+        result.GenericHostConfiguration = result.Get<GenericHostConfiguration>(GenericHostConfiguration.ConfigurationEntry);
 
-            switch (entry.Name) {
 
-                case "MeshService": {
-                        var meshHostConfiguration = JsonSerializer.Deserialize(entry.Value, typeof(MeshHostConfiguration));
-                        break;
-                        }
-                case "Host": {
-                        var genericHostConfiguration = JsonSerializer.Deserialize(entry.Value, typeof(GenericHostConfiguration));
-                        break;
-                        }
+
+  
+
+        return result;
+        }
+
+
+    public T Get<T>(ConfigurationEntry configurationEntry) where T : class {
+        foreach (var entry in JsonDocument.RootElement.EnumerateObject()) {
+            if (entry.Name == configurationEntry.Name) {
+                var x = JsonSerializer.Deserialize(entry.Value, configurationEntry.Type);
+
+
+                return x as T;
                 }
-
-
             }
+        return null;
+        }
 
 
-        //var meshHostConfiguration = JsonSerializer.Deserialize(dom, typeof(GenericHostConfiguration));
-
-        throw new NotImplementedException();
+    public void Add(ConfigurationEntry configurationEntry, object entry) {
+        Dictionary.Add(configurationEntry.Name, entry);
         }
 
 

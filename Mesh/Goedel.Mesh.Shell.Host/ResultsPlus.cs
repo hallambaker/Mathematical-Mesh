@@ -71,6 +71,9 @@ public partial class Result {
         }
     }
 
+
+
+
 public partial class ResultStartService {
 
     ///<summary>The RUD service that was started.</summary> 

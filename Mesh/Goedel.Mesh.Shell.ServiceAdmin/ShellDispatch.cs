@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
-
+using System.Net;
 namespace Goedel.Mesh.Shell.ServiceAdmin;
 
 /// <summary>
@@ -72,15 +72,20 @@ public partial class Shell : _Shell {
     ///<inheritdoc/>
     public override ShellResult Create(Create Options) {
         var multiConfig = GetMultiConfig(Options.MultiConfig);
-        var serviceDns = Options.ServiceDns.Value;
-        var hostIp = Options.HostIp.Value;
-        var hostDns = Options.HostDns.Value;
+        var serviceDns = Options.ServiceDns.Value ?? Dns.GetHostName();
+        var hostIp = Options.HostIp.Value ?? "127.0.0.1:15099";
+        var hostDns = Options.HostDns.Value ?? serviceDns;
         var admin = Options.Admin.Value;
-        var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
+        var hostConfig = Options.HostConfig.Value ?? "mmmsettings.json";
 
-        using var _ = PublicMeshService.Create(MeshMachine, multiConfig, serviceDns, hostConfig, hostIp, hostDns, admin);
+        var configuration = PublicMeshService.Create(MeshMachine, multiConfig, serviceDns, hostConfig, hostIp, hostDns, admin);
 
-        return null;
+        // here populate a status response from configuration
+
+        return new ResultServiceConfiguration() {
+            Configuration = configuration
+            };
+
         }
 
 
@@ -90,55 +95,26 @@ public partial class Shell : _Shell {
         var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
         var dnsConfig = Options.DnsConfig.Value;
 
-        //var configuration = Configuration.ReadFile(multiConfig);
+        var configuration = Configuration.FromFile(multiConfig);
 
-        //DnsConfiguration.BindConfig(configuration, dnsConfig, hostConfig);
-
-        return null;
-        }
-
-
-    ///<inheritdoc/>
-    public override ShellResult Start(Start Options) {
-        CommandLineInterpreter.DescribeValues(Options);
-        return null;
+        DnsConfiguration.BindConfig(configuration, dnsConfig);
+        return new ResultServiceConfiguration() {
+            Configuration = configuration
+            };
         }
 
     ///<inheritdoc/>
-    public override ShellResult Stop(Stop Options) {
-        CommandLineInterpreter.DescribeValues(Options);
-        return null;
-        }
+    public override ShellResult Netsh(Netsh Options) {
+        var multiConfig = GetMultiConfig(Options.MultiConfig);
+        var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
+        var dnsConfig = Options.DnsConfig.Value;
 
-    ///<inheritdoc/>
-    public override ShellResult Pause(Pause Options) {
-        CommandLineInterpreter.DescribeValues(Options);
-        return null;
-        }
+        var configuration = Configuration.FromFile(multiConfig);
 
-    ///<inheritdoc/>
-    public override ShellResult Fetch(Fetch Options) {
-        CommandLineInterpreter.DescribeValues(Options);
-        return null;
-        }
-
-    ///<inheritdoc/>
-    public override ShellResult Update(Update Options) {
-        CommandLineInterpreter.DescribeValues(Options);
-        return null;
-        }
-
-    ///<inheritdoc/>
-    public override ShellResult Verify(Verify Options) {
-        CommandLineInterpreter.DescribeValues(Options);
-        return null;
-        }
-
-
-    ///<inheritdoc/>
-    public override ShellResult Credential(Credential Options) {
-        CommandLineInterpreter.DescribeValues(Options);
-        return null;
+        DnsConfiguration.NetshConfig(configuration, dnsConfig);
+        return new ResultServiceConfiguration() {
+            Configuration = configuration
+            };
         }
 
 

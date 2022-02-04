@@ -1059,7 +1059,7 @@
             <param name="admin">The administrative account to create.</param>
             <returns>The created service</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Protocol.Service.MeshHostConfiguration,Goedel.Protocol.GenericHostConfiguration,System.String)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration,Goedel.Protocol.GenericHostConfiguration,System.String)">
             <summary>
             Create new service and host configurations and attach the service to the host.
             </summary>

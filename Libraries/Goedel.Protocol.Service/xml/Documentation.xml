@@ -160,6 +160,21 @@
         <member name="P:Goedel.Protocol.Service.LogService.HostMonitor">
             <summary>The host monitor tracking start and end of host requests.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Service.LogService.GenericHostConfiguration">
+            <summary>The host configuration</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogService.GenericServiceConfiguration">
+            <summary>The service configuration</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogService.#ctor(Goedel.Protocol.GenericHostConfiguration,Goedel.Protocol.Service.GenericServiceConfiguration,Goedel.Protocol.Service.HostMonitor,System.Int64)">
+            <summary>
+            Create a transaction logging service instance.
+            </summary>
+            <param name="genericHostConfiguration">The host configuration</param>
+            <param name="meshHostConfiguration">The service configuration</param>
+            <param name="hostMonitor">The host monitor service</param>
+            <param name="first">Index of the first log entry</param>
+        </member>
         <member name="M:Goedel.Protocol.Service.LogService.Start(System.String,Goedel.Protocol.IReport)">
             <summary>
             Begin a new transaction.

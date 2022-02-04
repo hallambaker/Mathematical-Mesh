@@ -28,9 +28,16 @@ namespace Goedel.Protocol.Service;
 
 
 
-public class GenericServiceConfiguration {
+public abstract class GenericServiceConfiguration {
+
+
+    public abstract ConfigurationEntry GetConfigurationEntry();
+
+    public GenericHostConfiguration DefaultHostConfiguration { get; set; }
+
 
     public string ServiceUdf { get; set; } = string.Empty;
+
 
     public string ServicePath { get; set; } = string.Empty;
 
@@ -48,13 +55,7 @@ public class GenericServiceConfiguration {
     }
 
 
-public class MeshHostConfiguration : GenericServiceConfiguration {
 
-    public List<string> Administrators { get; set; } = new List<string>();
-
-    public string? HostPath { get; set; } = null;
-
-    }
 
 
 
@@ -74,11 +75,20 @@ public class LogService {
     ///<summary>The host monitor tracking start and end of host requests.</summary> 
     public HostMonitor HostMonitor { get; }
 
-    //IHostConfiguration HostConfiguration { get; }
 
+    ///<summary>The host configuration</summary> 
     GenericHostConfiguration GenericHostConfiguration { get; }
+
+    ///<summary>The service configuration</summary> 
     GenericServiceConfiguration GenericServiceConfiguration { get; }
 
+    /// <summary>
+    /// Create a transaction logging service instance.
+    /// </summary>
+    /// <param name="genericHostConfiguration">The host configuration</param>
+    /// <param name="meshHostConfiguration">The service configuration</param>
+    /// <param name="hostMonitor">The host monitor service</param>
+    /// <param name="first">Index of the first log entry</param>
     public LogService(
             GenericHostConfiguration genericHostConfiguration,
             GenericServiceConfiguration meshHostConfiguration,

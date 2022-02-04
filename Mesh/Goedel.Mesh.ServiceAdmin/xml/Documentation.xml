@@ -9,7 +9,7 @@
             DNS configuration generator class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.BindConfig(Goedel.Mesh.ServiceAdmin.Configuration,System.String,System.String)">
+        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.BindConfig(Goedel.Mesh.ServiceAdmin.Configuration,System.String)">
             <summary>
             Generate a BIND configuration file for the service config.
             </summary>

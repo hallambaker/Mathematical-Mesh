@@ -29,24 +29,48 @@ namespace Goedel.Protocol;
 
 
 
+
+public record struct ConfigurationEntry (
+            string Name, 
+            Type Type,
+            string? Discovery = null,
+            string? WellKnown = null
+            ) {
+
+
+
+    }
+
+
+
 /// <summary>
 /// Service configuration
 /// </summary>
 public class GenericHostConfiguration {
 
-    public string Description { get; set; } = null!;
 
-    public string HostUdf { get; set; } = string.Empty;
+    public readonly static ConfigurationEntry ConfigurationEntry = 
+            new ConfigurationEntry ("Host", typeof (GenericHostConfiguration));
 
-    public string DeviceUdf { get; set; } = string.Empty;
+    public string? RunAs { get; set; } = null;
+
+    public string? Description { get; set; } = null;
+
+    public string? HostUdf { get; set; } = null;
+
+    public string? DeviceUdf { get; set; } = null;
 
 
 
     ///<summary>Host DNS address</summary> 
-    public string HostDns { get; set; } = string.Empty;
+    public string? HostDns { get; set; } = null;
 
     ///<summary>The IP address and port numbers</summary> 
     public List<string> IP { get; set; } = new() ;
+
+
+
+
 
     ///<summary>The maximum number of cores, if zero, all cores on the machine
     ///are used.</summary> 
