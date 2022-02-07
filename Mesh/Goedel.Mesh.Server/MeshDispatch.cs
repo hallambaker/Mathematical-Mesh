@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text;
 
@@ -97,6 +98,9 @@ public class PublicMeshService : MeshService {
     #region // Disposing
     ///<inheritdoc/>
     protected override void Disposing() {
+
+        LogService.Log(Event.EndService, PublicMeshService.WellKnown);
+
         MeshPersist.Dispose();
         base.Disposing();
         }
@@ -115,6 +119,10 @@ public class PublicMeshService : MeshService {
         MeshHostConfiguration = meshHostConfiguration;
         KeyCollection = MeshMachine.KeyCollection;
 
+
+        LogService.Log(Event.StartService, PublicMeshService.WellKnown);
+
+
         // Load the Mesh persistence base
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
         MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
@@ -127,14 +135,21 @@ public class PublicMeshService : MeshService {
 
         // Here we need to populate ProfileService, ProfileHost
 
+        // Failing here because the host is never registered???
+
         var meshHost = MeshHost.GetCatalogHost(MeshMachine);
         var hostServiceDescription = meshHost.GetStoreEntry(genericHostConfiguration.HostUdf) as CatalogedService;
 
         if (hostServiceDescription != null) {
-            ProfileService = hostServiceDescription.EnvelopedProfileService.EnvelopedObject;
-            ProfileHost = hostServiceDescription.EnvelopedProfileHost.EnvelopedObject;
-            ActivationDevice = hostServiceDescription.EnvelopedActivationHost.EnvelopedObject;
-            ConnectionDevice = hostServiceDescription.EnvelopedConnectionService.EnvelopedObject;
+            ProfileService = hostServiceDescription.EnvelopedProfileService.Decode();
+            ProfileHost = hostServiceDescription.EnvelopedProfileHost.Decode();
+
+            // have to load the device keys here!!!
+            ProfileHost.Activate(KeyCollection);
+            KeyCollection.Add(ProfileHost.KeyEncrypt);
+
+            ActivationDevice = hostServiceDescription.EnvelopedActivationHost.Decode(KeyCollection);
+            ConnectionDevice = hostServiceDescription.EnvelopedConnectionService.Decode(KeyCollection);
             }
 
         }

@@ -142,7 +142,7 @@
     <value>Service Profile</value>
   </data>
   <data name="StartService" xml:space="preserve">
-    <value>Start service</value>
+    <value>Listener Starting</value>
   </data>
   <data name="TransactionFail" xml:space="preserve">
     <value>Fail</value>
@@ -155,5 +155,23 @@
   </data>
   <data name="UnknownCommand" xml:space="preserve">
     <value>Unknown-Command</value>
+  </data>
+  <data name="EndListener" xml:space="preserve">
+    <value>Listener Stopped</value>
+  </data>
+  <data name="EndService" xml:space="preserve">
+    <value>Service Stopped</value>
+  </data>
+  <data name="EndTransaction" xml:space="preserve">
+    <value>Transaction End</value>
+  </data>
+  <data name="StartListener" xml:space="preserve">
+    <value>Host Starting</value>
+  </data>
+  <data name="StartTransaction" xml:space="preserve">
+    <value>Transaction Start</value>
+  </data>
+  <data name="UnhandledException" xml:space="preserve">
+    <value>Unhandled Exception</value>
   </data>
 </root>

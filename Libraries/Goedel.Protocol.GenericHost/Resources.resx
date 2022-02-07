@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EndHost" xml:space="preserve">
-    <value>Host Stopped</value>
+  <data name="EndListener" xml:space="preserve">
+    <value>Listener Stopped</value>
   </data>
   <data name="EndService" xml:space="preserve">
     <value>Service Stopped</value>
@@ -126,17 +126,11 @@
   <data name="EndTransaction" xml:space="preserve">
     <value>Transaction End</value>
   </data>
-  <data name="HelloWorld" xml:space="preserve">
-    <value>Hello World</value>
-  </data>
-  <data name="SkipService" xml:space="preserve">
-    <value>Skip Service</value>
-  </data>
-  <data name="StartHost" xml:space="preserve">
+  <data name="StartListener" xml:space="preserve">
     <value>Host Starting</value>
   </data>
   <data name="StartService" xml:space="preserve">
-    <value>Service Starting</value>
+    <value>Listener Starting</value>
   </data>
   <data name="StartTransaction" xml:space="preserve">
     <value>Transaction Start</value>

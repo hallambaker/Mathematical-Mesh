@@ -82,7 +82,7 @@ public class MeshHost : Disposable {
     /// <param name="containerHost">The host catalog.</param>
     public MeshHost(PersistHost containerHost, IMeshMachineClient meshMachine) {
         this.MeshMachine = meshMachine;
-        ContainerHost = containerHost;
+        this.ContainerHost = containerHost;
 
         foreach (var entry in containerHost.ObjectIndex) {
             var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;

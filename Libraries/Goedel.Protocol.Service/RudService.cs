@@ -110,10 +110,12 @@ public class RudService : Disposable {
     /// initialized.</remarks>
     public RudService(
             IEnumerable<IConfguredService> providers,
+            HostMonitor hostMonitor,
             ICredentialPrivate credential = null,
             Listener rdpListener = null,
-            int maxCores = 0) {
 
+            int maxCores = 0) {
+        Monitor = hostMonitor;
         Listener = rdpListener ?? new RudListener(credential, providers);
 
         cancellationTokenSource = new CancellationTokenSource();
@@ -158,7 +160,7 @@ public class RudService : Disposable {
         //udpListenerCount = 0; // Hack - disable UDP for now, is throwing errors.
 
         // Start the monitoring service and bind values to every provider returning the JPC interface.
-        Monitor = new HostMonitor(ListenerCount, MaxDispatch);
+        hostMonitor.StartMonitor(ListenerCount, MaxDispatch);
 
         foreach (var provider in providers) {
             if (provider.JpcInterface is IMonitorProvider monitorProvider) {

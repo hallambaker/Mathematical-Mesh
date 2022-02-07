@@ -91,7 +91,7 @@ public abstract class _Flag : Goedel.Command.Type {
     /// Construct flag with specified value
     /// </summary>
     /// <param name="value">The flag value to set</param>
-    public _Flag(string value = null) {
+    public _Flag(string? value = null) {
         if (value != null) {
             Default(value);
             }
@@ -159,7 +159,7 @@ public abstract class _File : Goedel.Command.Type {
     /// Constructor with specified default value.
     /// </summary>
     /// <param name="value">The default value text for this entry</param>
-    public _File(string value = null) {
+    public _File(string? value = null) {
         if (value != null) {
             Default(value);
             }
@@ -196,7 +196,7 @@ public abstract class _File : Goedel.Command.Type {
     /// <param name="extension">The extension.</param>
 
     /// <returns>File name.</returns>
-    public string DefaultFile(string source, string extension = null) {
+    public string DefaultFile(string source, string? extension = null) {
         //if (path != null) {
         //    if (!(Path.IsPathRooted(source) | source [0] == '.')) {
         //        source = Path.Combine(path, source);
@@ -225,7 +225,7 @@ public abstract class _NewFile : _File {
     /// Construct flag with specified value
     /// </summary>
     /// <param name="value">The flag value to set</param>
-    public _NewFile(string value = null) {
+    public _NewFile(string? value = null) {
         if (value != null) {
             Default(value);
             }
@@ -297,7 +297,7 @@ public abstract class _ExistingFile : _File {
     /// Construct flag with specified value
     /// </summary>
     /// <param name="Value">The flag value to set</param>
-    public _ExistingFile(string Value = null) {
+    public _ExistingFile(string? Value = null) {
         if (Value != null) {
             Default(Value);
             }
@@ -315,7 +315,7 @@ public abstract class _Integer : Type {
     /// Construct flag with specified value
     /// </summary>
     /// <param name="Value">The flag value to set</param>
-    public _Integer(string Value = null) {
+    public _Integer(string? Value = null) {
         if (Value != null) {
             Default(Value);
             }
@@ -365,7 +365,7 @@ public abstract class _String : Type {
     /// Construct flag with specified value
     /// </summary>
     /// <param name="Value">The flag value to set</param>
-    public _String(string Value = null) {
+    public _String(string? Value = null) {
         if (Value != null) {
             Default(Value);
             }
@@ -388,7 +388,7 @@ public abstract class _Enumeration<T> : Type {
     public T Value;
 
     ///<summary>Base constructor</summary>
-    public _Enumeration(DescribeEntryEnumerate description, string value = null) {
+    public _Enumeration(DescribeEntryEnumerate description, string? value = null) {
         value.Future();
         Description = description;
         }

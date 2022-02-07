@@ -70,6 +70,33 @@ namespace Goedel.Protocol.Service {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Listener Stopped.
+        /// </summary>
+        internal static string EndListener {
+            get {
+                return ResourceManager.GetString("EndListener", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Stopped.
+        /// </summary>
+        internal static string EndService {
+            get {
+                return ResourceManager.GetString("EndService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction End.
+        /// </summary>
+        internal static string EndTransaction {
+            get {
+                return ResourceManager.GetString("EndTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Error {
@@ -133,11 +160,29 @@ namespace Goedel.Protocol.Service {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start service.
+        ///   Looks up a localized string similar to Host Starting.
+        /// </summary>
+        internal static string StartListener {
+            get {
+                return ResourceManager.GetString("StartListener", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listener Starting.
         /// </summary>
         internal static string StartService {
             get {
                 return ResourceManager.GetString("StartService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Start.
+        /// </summary>
+        internal static string StartTransaction {
+            get {
+                return ResourceManager.GetString("StartTransaction", resourceCulture);
             }
         }
         
@@ -165,6 +210,15 @@ namespace Goedel.Protocol.Service {
         internal static string TransactionSuccess {
             get {
                 return ResourceManager.GetString("TransactionSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unhandled Exception.
+        /// </summary>
+        internal static string UnhandledException {
+            get {
+                return ResourceManager.GetString("UnhandledException", resourceCulture);
             }
         }
         

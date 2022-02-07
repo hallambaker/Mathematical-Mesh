@@ -55,9 +55,15 @@
         <member name="P:Goedel.Protocol.Service.HostMonitor.Recent">
             <summary>Total results in the most recent sample interval.</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Service.HostMonitor.#ctor(System.Int32,System.Int32)">
+        <member name="M:Goedel.Protocol.Service.HostMonitor.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.Service.HostMonitor},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration})">
             <summary>
-            Constructor returning a monitor instance for <paramref name="listeners"/>
+            Constructor returning a monitor instance using the logger <paramref name="logger"/>.
+            </summary>
+            <param name="logger">The system logger output.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.HostMonitor.StartMonitor(System.Int32,System.Int32)">
+            <summary>
+            Start the monitor with <paramref name="listeners"/>
             listeners and <paramref name="dispatchers"/> dispatchers.
             </summary>
             <param name="listeners">The number of listener threads.</param>
@@ -342,6 +348,21 @@
               Looks up a localized string similar to Device Profile.
             </summary>
         </member>
+        <member name="P:Goedel.Protocol.Service.Resources.EndListener">
+            <summary>
+              Looks up a localized string similar to Listener Stopped.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.EndService">
+            <summary>
+              Looks up a localized string similar to Service Stopped.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.EndTransaction">
+            <summary>
+              Looks up a localized string similar to Transaction End.
+            </summary>
+        </member>
         <member name="P:Goedel.Protocol.Service.Resources.Error">
             <summary>
               Looks up a localized string similar to Error.
@@ -377,9 +398,19 @@
               Looks up a localized string similar to Service Profile.
             </summary>
         </member>
+        <member name="P:Goedel.Protocol.Service.Resources.StartListener">
+            <summary>
+              Looks up a localized string similar to Host Starting.
+            </summary>
+        </member>
         <member name="P:Goedel.Protocol.Service.Resources.StartService">
             <summary>
-              Looks up a localized string similar to Start service.
+              Looks up a localized string similar to Listener Starting.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.StartTransaction">
+            <summary>
+              Looks up a localized string similar to Transaction Start.
             </summary>
         </member>
         <member name="P:Goedel.Protocol.Service.Resources.TransactionFail">
@@ -395,6 +426,11 @@
         <member name="P:Goedel.Protocol.Service.Resources.TransactionSuccess">
             <summary>
               Looks up a localized string similar to Success.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.UnhandledException">
+            <summary>
+              Looks up a localized string similar to Unhandled Exception.
             </summary>
         </member>
         <member name="P:Goedel.Protocol.Service.Resources.UnknownCommand">
@@ -424,7 +460,7 @@
             Disposal routine, perform clean termination of all active threads.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Service.RudService.#ctor(System.Collections.Generic.IEnumerable{Goedel.Protocol.IConfguredService},Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.Listener,System.Int32)">
+        <member name="M:Goedel.Protocol.Service.RudService.#ctor(System.Collections.Generic.IEnumerable{Goedel.Protocol.IConfguredService},Goedel.Protocol.Service.HostMonitor,Goedel.Protocol.Presentation.ICredentialPrivate,Goedel.Protocol.Presentation.Listener,System.Int32)">
             <summary>
             Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
             </summary>

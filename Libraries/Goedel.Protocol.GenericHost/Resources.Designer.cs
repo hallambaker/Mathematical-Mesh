@@ -61,11 +61,11 @@ namespace Goedel.Protocol.GenericHost {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Host Stopped.
+        ///   Looks up a localized string similar to Listener Stopped.
         /// </summary>
-        internal static string EndHost {
+        internal static string EndListener {
             get {
-                return ResourceManager.GetString("EndHost", resourceCulture);
+                return ResourceManager.GetString("EndListener", resourceCulture);
             }
         }
         
@@ -88,34 +88,16 @@ namespace Goedel.Protocol.GenericHost {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hello World.
-        /// </summary>
-        internal static string HelloWorld {
-            get {
-                return ResourceManager.GetString("HelloWorld", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Skip Service.
-        /// </summary>
-        internal static string SkipService {
-            get {
-                return ResourceManager.GetString("SkipService", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Host Starting.
         /// </summary>
-        internal static string StartHost {
+        internal static string StartListener {
             get {
-                return ResourceManager.GetString("StartHost", resourceCulture);
+                return ResourceManager.GetString("StartListener", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Service Starting.
+        ///   Looks up a localized string similar to Listener Starting.
         /// </summary>
         internal static string StartService {
             get {

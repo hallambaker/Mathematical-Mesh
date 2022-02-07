@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using Microsoft.Extensions.Options;
+
 namespace Goedel.Protocol.Service;
 
 
@@ -46,21 +48,40 @@ public class HostMonitor {
     ///<summary>Total results in the most recent sample interval.</summary> 
     public MonitorResult Recent { get; private set; }
 
-    private readonly MonitorResult current;
-    readonly DateTime[] dispatcherStart;
+    private MonitorResult current;
+    private DateTime[] dispatcherStart;
     DateTime busyStart;
+    
+    public ILogger Logger { get; }
 
     #endregion
     #region // Constructors
 
 
     /// <summary>
-    /// Constructor returning a monitor instance for <paramref name="listeners"/>
+    /// Constructor returning a monitor instance using the logger <paramref name="logger"/>.
+    /// </summary>
+    /// <param name="logger">The system logger output.</param>
+    public HostMonitor(ILogger<HostMonitor> logger,
+                IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration) {
+        
+        // here configure the transaction logging service.
+        
+        Logger = logger;
+        }
+
+    #endregion
+    #region // Methods 
+    public void Log(FatEvent logEvent, params object[] args) =>
+            Logger.Log(logEvent, args);
+
+    /// <summary>
+    /// Start the monitor with <paramref name="listeners"/>
     /// listeners and <paramref name="dispatchers"/> dispatchers.
     /// </summary>
     /// <param name="listeners">The number of listener threads.</param>
     /// <param name="dispatchers">The number of dispatcher threads.</param>
-    public HostMonitor(int listeners, int dispatchers) {
+    public void StartMonitor(int listeners, int dispatchers) {
 
         // initialize the result buffers to null:
         current = new MonitorResult(listeners, dispatchers);
@@ -70,8 +91,7 @@ public class HostMonitor {
         dispatcherStart = new DateTime[dispatchers];
         }
 
-    #endregion
-    #region // Methods 
+
     /// <summary>
     /// Mark the start of period when the service is blocked because no dispatcher threads are available.
     /// </summary>

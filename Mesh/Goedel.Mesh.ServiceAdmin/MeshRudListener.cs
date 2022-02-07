@@ -24,12 +24,12 @@ public class MeshRudListener : IServiceListener {
     ICredentialPrivate Credential { get; set; }
 
     IMeshMachine MeshMachine { get; }
-
     private IEnumerable<IConfguredService> ConfiguredServices { get; }
 
     public MeshRudListener(
                 IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration,
                 IEnumerable<IConfguredService> configuredServices,
+                HostMonitor hostMonitor,
                 IMeshMachine meshMachine) {
         //var credential = MeshMachine.GetCredential();
 
@@ -40,14 +40,13 @@ public class MeshRudListener : IServiceListener {
         MeshMachine = meshMachine;
         ConfiguredServices = configuredServices;
 
-        Screen.WriteLine($"Configure Listener");
 
         Credential = MeshMachine.GetCredential(
                 GenericHostConfiguration.DeviceUdf,
                 GenericHostConfiguration.HostUdf);
 
         RudService = new RudService(
-                ConfiguredServices, Credential,
+                ConfiguredServices, hostMonitor, Credential,
                 maxCores: GenericHostConfiguration.MaxCores);
         }
 
@@ -61,17 +60,7 @@ public class MeshRudListener : IServiceListener {
                 GenericHostConfiguration.DeviceUdf,
                 GenericHostConfiguration.HostUdf);
 
-        // create http endpoints here...
-
-
-        Screen.WriteLine($"Start Listener");
-
-
-
         await RudService.WaitServiceAsync();
-
-
-        Screen.WriteLine($"Stop Listener");
         }
 
     }

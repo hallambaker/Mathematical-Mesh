@@ -31,7 +31,6 @@ public class ManagedListener : IHostedService {
     public ManagedListener(
             ILogger<ManagedListener> logger,
             IHostApplicationLifetime appLifetime,
-
             IServiceListener serviceDispatch) {
         Logger = logger;
         AppLifetime = appLifetime;
@@ -41,11 +40,13 @@ public class ManagedListener : IHostedService {
 
     public Task StartAsync(CancellationToken cancellationToken) {
 
-        Logger.Log(Event.Starting, string.Join(" ", Environment.GetCommandLineArgs()));
+        //Logger.Log(Event.Starting, string.Join(" ", Environment.GetCommandLineArgs()));
+
+        Logger.Log(Event.StartListener);
         AppLifetime.ApplicationStarted.Register(() => {
             Task.Run(async () => {
                 try {
-                    Logger.Log(Event.HelloWorld);
+                    //Logger.Log(Event.HelloWorld);
                     await ServiceDispatch.StartAsync(cancellationToken);
                     }
                 catch (Exception ex) {
@@ -56,7 +57,7 @@ public class ManagedListener : IHostedService {
                     }
             });
         });
-
+        Logger.Log(Event.EndListener);
         return Task.CompletedTask;
         }
 

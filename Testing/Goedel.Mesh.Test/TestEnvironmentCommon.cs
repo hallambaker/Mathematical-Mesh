@@ -24,233 +24,74 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Mesh.Management;
 using Goedel.Mesh.Server;
-using Goedel.Mesh.ServiceAdmin;
 using Goedel.Mesh.Shell.Host;
 using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using Goedel.Protocol.Service;
 using Goedel.Test.Core;
 using Goedel.Utilities;
-using Microsoft.Extensions.Configuration;
-using System.Threading;
 
 namespace Goedel.Mesh.Test;
 
+//public class TestEnvironmentRdp : TestEnvironmentCommon {
 
+//    public string Protocol => MeshService.GetWellKnown;
 
 
+//    protected override void Disposing() {
+//        RudService?.Dispose();
+//        base.Disposing();
 
-public class TestEnvironmentRdpShell : TestEnvironmentRdp {
-    MeshMachineTest HostMachine { get; set; }
-    Goedel.Mesh.Shell.ServiceAdmin.Shell ServiceAdminShell { get; set; }
-    Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter ServiceAdminCLI { get; set; }
+//        }
 
+//    RudService RudService { get; set; }
 
-    Goedel.Mesh.Shell.Host.Shell HostShell { get; set; }
-    Goedel.Mesh.Shell.Host.CommandLineInterpreter HostAdminCLI { get; set; }
+//    ///<inheritdoc/>
+//    public override MeshServiceClient GetMeshClient(
+//            MeshMachineTest meshMachineTest,
+//            ICredentialPrivate credential,
+//            string service,
+//            string accountAddress) {
+//        RudService ??= StartService();
 
-    public override string ServiceDns { get; }
+//        // if we wanted to create traces on the RUD binding, we could put the data here.
 
-    public TestEnvironmentRdpShell() => ServiceDns = Dns.GetHostName();
+//        var meshServiceBinding = new ConnectionInitiator(
+//                    credential, ServiceDns, Test, TransportType.Http, MeshServiceClient.WellKnown);
+//        var client = meshServiceBinding.GetClient<MeshServiceClient>();
 
-    RudService RudService { get; set; }
 
+//        return client;
+//        }
 
-    public string ServiceHost => "ServiceHost1";
+//    //public virtual RudService StartService() {
 
-    Scoreboard Scoreboard = new Scoreboard();
+//    //    var httpEndpoint = new HttpEndpoint(ServiceDns, MeshService.GetWellKnown, Test);
+//    //    var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, Test);
+//    //    var endpoints = new List<Endpoint> { httpEndpoint, udpEndpoint };
 
-    protected override void Disposing() {
-        //RudService?.Dispose();
-        base.Disposing();
-        ServiceAdminShell?.MeshMachine?.MeshHost?.Dispose();
-        }
+//    //    using var provider = new RudProvider(endpoints, MeshService);
 
+//    //    var providers = new List<RudProvider> { provider };
 
-    CancellationToken CancellationToken;
+//    //    // create the service and host credentials here.
+//    //    //var credential = new MeshCredential(MeshService.ConnectionAccount, MeshService.ActivationDevice.DeviceAuthentication);
+//    //    var credential = new MeshCredentialPrivate(
+//    //        MeshService.ProfileHost, MeshService.ConnectionDevice, null, MeshService.ActivationDevice.DeviceAuthentication);
 
-    public MeshRudListener DependencyInjectionHostAsync() {
+ 
+//    //    var hostMonitor = new HostMonitor();
+//    //    return new RudService(providers, hostMonitor, credential);
 
+//    //    }
 
-        
-        var settings = PublicMeshService.GetService(HostMachine);
-
-
-        // These all need to be directed to the versions already created.
-        using var host = Host.CreateDefaultBuilder()
-                // read in the options file here.
-                .ConfigureAppConfiguration((hostingContext, configuration) => {
-                    configuration.Sources.Clear();
-
-                    IHostEnvironment env = hostingContext.HostingEnvironment;
-
-                    configuration
-                        .AddJsonFile(settings, true, true);
-
-                })
-
-                .ConfigureServices((hostContext, services) => {
-                    services.AddSingleton<Scoreboard, Scoreboard>(
-                        s => Scoreboard);
-                    services.AddSingleton<Collector, Collector>();
-                    services.AddSingleton<IServiceListener, MeshRudListener>();
-                    services.AddSingleton<IMeshMachine, MeshMachineCore>(
-                            s => HostMachine);
-                    //services.AddSingleton<IConfguredService, MeshConfiguredService>();
-                })
-            .AddMeshService()
-        .Build();
-
-
-
-        var services = host.Services;
-        var listener = services.GetRequiredService<IServiceListener>() as MeshRudListener;
-        //listener.StartAsync(CancellationToken);
-
-        //await host.RunAsync();
-
-        return listener;
-        }
-
-
-    public override RudService StartService() {
-        var serviceConfig = "/Console";
-        var dnsConfig = "db.meshService";
-        var netshConfig = "Service.netsh";
-
-        CancellationToken = new();
-
-
-        HostMachine = new MeshMachineTest(this, "host1");
-
-        // initialize the service and host configuration
-        ServiceAdminShell = new Shell.ServiceAdmin.Shell() {
-            MeshMachine = HostMachine
-            };
-        ServiceAdminCLI = new();
-        ServiceAdmin($"create example.com /host=host1.example.com /admin=alice.example.com /account=Domain\\user");
-
-        ServiceAdmin($"dns {dnsConfig}");
-        ServiceAdmin($"netsh {netshConfig}");
-        var listener = DependencyInjectionHostAsync();
-
-
-        return listener.RudService;
-
-
-        // Neew to swap in the new host startup here !!!!!
-
-
-        ////// Start the host
-        ////HostShell = new Shell.Host.Shell(
-        ////    PublicMeshService.ServiceDescription,
-        ////    ServiceManagementProvider.ServiceDescriptionHost) {
-        ////    Instance = Test,
-        ////    MeshMachine = HostMachine
-        ////    };
-        //HostAdminCLI = new();
-
-        //// this is not going to return now is it???
-        //// need to save the service and return it.
-        //var resultService = OldHost($"start {serviceConfig}") as ResultStartService;
-
-        //return resultService.RudService;
-        }
-
-
-    public override MeshServiceClient GetMeshClient(
-            MeshMachineTest meshMachineTest,
-            ICredentialPrivate credential,
-            string service,
-            string accountAddress) {
-
-        RudService ??= StartService();
-
-        var meshServiceBinding = new ConnectionInitiator(
-                credential, ServiceDns, Test, TransportType.Http, MeshServiceClient.WellKnown);
-        var client = meshServiceBinding.GetClient<MeshServiceClient>();
-
-
-        return client;
-        }
-
-    public void ServiceAdmin(string command) {
-
-        var args = command.Split(" ");
-        ServiceAdminCLI.MainMethod(ServiceAdminShell, args);
-        }
-
-    //public Goedel.Mesh.Shell.Host.ShellResult OldHost(string command) {
-
-    //    var args = command.Split(" ");
-    //    HostAdminCLI.MainMethod(HostShell, args);
-    //    return HostShell.ShellResult as Goedel.Mesh.Shell.Host.ResultStartService;
-    //    }
-
-
-    }
-
-public class TestEnvironmentRdp : TestEnvironmentCommon {
-
-    public string Protocol => MeshService.GetWellKnown;
-
-
-    protected override void Disposing() {
-        RudService?.Dispose();
-        base.Disposing();
-
-        }
-
-    RudService RudService { get; set; }
-
-    ///<inheritdoc/>
-    public override MeshServiceClient GetMeshClient(
-            MeshMachineTest meshMachineTest,
-            ICredentialPrivate credential,
-            string service,
-            string accountAddress) {
-        RudService ??= StartService();
-
-        // if we wanted to create traces on the RUD binding, we could put the data here.
-
-        var meshServiceBinding = new ConnectionInitiator(
-                    credential, ServiceDns, Test, TransportType.Http, MeshServiceClient.WellKnown);
-        var client = meshServiceBinding.GetClient<MeshServiceClient>();
-
-
-        return client;
-        }
-
-    public virtual RudService StartService() {
-
-        var httpEndpoint = new HttpEndpoint(ServiceDns, MeshService.GetWellKnown, Test);
-        var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, Test);
-        var endpoints = new List<Endpoint> { httpEndpoint, udpEndpoint };
-
-        using var provider = new RudProvider(endpoints, MeshService);
-
-        var providers = new List<RudProvider> { provider };
-
-        // create the service and host credentials here.
-        //var credential = new MeshCredential(MeshService.ConnectionAccount, MeshService.ActivationDevice.DeviceAuthentication);
-        var credential = new MeshCredentialPrivate(
-            MeshService.ProfileHost, MeshService.ConnectionDevice, null, MeshService.ActivationDevice.DeviceAuthentication);
-
-        return new RudService(providers, credential);
-
-        }
-
-    }
+//    }
 
 
 

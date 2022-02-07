@@ -138,6 +138,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ///<summary>True iff the device has administrator privilege.</summary> 
     protected bool IsAdministrator => KeyAdministratorSign != null;
 
+    ///<summary>The set of assigned privileges.</summary> 
     protected HashSet<string> Privileges { get; } = new();
 
 
@@ -177,7 +178,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// Disposal method called on exit.
     /// </summary>
     protected override void Disposing() {
-        Screen.WriteLine($"*** Dispose ContextAccount {AccountAddress} {countStores}");
+        //Screen.WriteLine($"*** Dispose ContextAccount {AccountAddress} {countStores}");
         countStores--;
         foreach (var status in DictionaryStores) {
             var store = status.Value.Store;
@@ -198,7 +199,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             MeshHost meshHost,
             CatalogedMachine catalogedMachine) {
         countStores++;
-        Screen.WriteLine($"*** Create ContextAccount {AccountAddress} {countStores}");
+        //Screen.WriteLine($"*** Create ContextAccount {AccountAddress} {countStores}");
 
 
         MeshHost = meshHost;

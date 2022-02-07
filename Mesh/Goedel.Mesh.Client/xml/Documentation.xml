@@ -475,6 +475,9 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.IsAdministrator">
             <summary>True iff the device has administrator privilege.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.Privileges">
+            <summary>The set of assigned privileges.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
         </member>

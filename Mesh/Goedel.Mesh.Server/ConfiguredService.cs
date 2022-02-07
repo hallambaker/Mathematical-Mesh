@@ -10,7 +10,7 @@ using Goedel.Mesh.ServiceAdmin;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Goedel.Protocol.Service;
+using Goedel.Protocol.GenericHost;
 
 namespace Goedel.Mesh.Server;
 
@@ -64,16 +64,15 @@ public class MeshConfiguredService : IConfguredService {
 
 
 
+
+
     public MeshConfiguredService(
                 ILogger<ManagedListener> logger,
                 IMeshMachine meshMachine,
+                HostMonitor hostMonitor,
                 IOptionsMonitor<MeshServiceConfiguration> meshHostConfiguration,
                 IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration
                 ) {
-
-        //IConfigurationRoot configurationRoot = configuration.Build();
-
-        Screen.WriteLine($"START SERVICE *******************");
 
         MeshMachine = meshMachine;
         Logger = logger;
@@ -87,13 +86,11 @@ public class MeshConfiguredService : IConfguredService {
         GenericHostConfiguration = genericHostConfiguration.CurrentValue;
 
         var transactionLogger = new LogServiceGeneric
-            (GenericHostConfiguration, MeshHostConfiguration, null, logger);
+            (GenericHostConfiguration, MeshHostConfiguration, hostMonitor, logger);
 
         PublicMeshService = new PublicMeshService(MeshMachine, 
             GenericHostConfiguration, MeshHostConfiguration, transactionLogger);
         Endpoints = PublicMeshService.Endpoints;
-
-        //PublicMeshService = new PublicMeshService(MeshMachine, serviceConfiguration, hostConfiguration);
 
         }
 

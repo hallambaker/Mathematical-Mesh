@@ -172,6 +172,15 @@ public class LogService {
 
     //    }
 
+
+
+    public void Log(FatEvent logEvent, params object[] args) =>
+        HostMonitor?.Logger.Log(logEvent, args);
+
+
+
+
+
     /// <summary>
     /// Begin a new transaction.
     /// </summary>
