@@ -139,14 +139,14 @@ public abstract class CurveMontgomery : Curve {
     /// </summary>
     /// <param name="obj">Other point</param>
     /// <returns>True if the two points are equal (the P and U values are the same), otherwise false.</returns>
-    public override bool Equals(object obj) => Equal((CurveMontgomery)obj);
+    public override bool Equals(object? obj) => Equal((CurveMontgomery?)obj);
 
     /// <summary>
     /// Check points for equality
     /// </summary>
     /// <param name="obj">Other point</param>
     /// <returns>True if the two points are equal (the P and U values are the same), otherwise false.</returns>
-    public bool Equal(CurveMontgomery obj) => this == obj;
+    public bool Equal(CurveMontgomery? obj) => this == obj;
 
     /// <summary>
     /// Check points for equality
@@ -154,7 +154,7 @@ public abstract class CurveMontgomery : Curve {
     /// <param name="a">First point</param>
     /// <param name="b">Second point</param>
     /// <returns>True if the two points are equal (the P and U values are the same), otherwise false.</returns>
-    public static bool operator ==(CurveMontgomery a, CurveMontgomery b) =>
+    public static bool operator ==(CurveMontgomery? a, CurveMontgomery? b) =>
         (a as object) == null ?             // Do NOT remove 'as object' 
             (b as object) == null :         // Do NOT remove 'as object' 
             (a.Prime == b.Prime) & (a.U == b.U); // Ignoring above warning causes an infinite loop
@@ -165,7 +165,7 @@ public abstract class CurveMontgomery : Curve {
     /// <param name="a">First point</param>
     /// <param name="b">Second point</param>
     /// <returns>True if the two points are not equal (the P and/or U values are different), otherwise false.</returns>
-    public static bool operator !=(CurveMontgomery a, CurveMontgomery b) => !(a == b);
+    public static bool operator !=(CurveMontgomery? a, CurveMontgomery? b) => !(a == b);
     #endregion
 
     /// <summary>
@@ -541,7 +541,7 @@ public abstract class CurveEdwards : Curve {
     /// </summary>
     /// <param name="P2">Second point</param>
     /// <returns>The result of the addition.</returns>
-    public abstract CurveEdwards Add(CurveEdwards P2);
+    public abstract CurveEdwards Add(CurveEdwards? P2);
 
     /// <summary>
     /// Add the point <paramref name="point"/> to this point on the curve
@@ -555,7 +555,7 @@ public abstract class CurveEdwards : Curve {
     /// <summary>Test to see if two points on a curve are equal</summary>
     /// <param name="other">The point to test for equality.</param>
     /// <returns>True if the points are equal, otherwise false.</returns>
-    public bool Equal(CurveEdwards other) {
+    public bool Equal(CurveEdwards? other) {
         if (other?.Prime != Prime) {
             return false;
             }
@@ -572,7 +572,7 @@ public abstract class CurveEdwards : Curve {
     /// <summary>Test to see if the domain parameters are equal.</summary>
     /// <param name="other">The parameters to test against</param>
     /// <returns>True if the parameters are equal, otherwise false.</returns>
-    public override bool Equals(object other) {
+    public override bool Equals(object? other) {
         if (other is not CurveEdwards) {
             return false;
             }
@@ -584,7 +584,7 @@ public abstract class CurveEdwards : Curve {
     /// <param name="p1">First value to test</param>
     /// <param name="p2">Second value to test</param> 
     /// <returns>True if the parameters are equal, otherwise false.</returns>
-    public static bool operator ==(CurveEdwards p1, CurveEdwards p2) =>
+    public static bool operator ==(CurveEdwards? p1, CurveEdwards? p2) =>
         (p1 as object) == null ?        // Do NOT remove 'as object' 
             (p2 as object) == null :    // Do NOT remove 'as object' 
             p1.Equal(p2);               // Ignoring above warning causes an infinite loop
@@ -596,7 +596,7 @@ public abstract class CurveEdwards : Curve {
     /// <param name="p1">First value to test</param>
     /// <param name="p2">Second value to test</param> 
     /// <returns>False if the parameters are equal, otherwise true.</returns>
-    public static bool operator !=(CurveEdwards p1, CurveEdwards p2) => !(p1 == p2);
+    public static bool operator !=(CurveEdwards? p1, CurveEdwards? p2) => !(p1 == p2);
 
     /// <summary>
     /// Return a hash code. 
@@ -931,7 +931,7 @@ public struct DomainParameters : IEquatable<DomainParameters> {
     /// <summary>Test to see if the domain parameters are equal.</summary>
     /// <param name="other">The parameters to test against</param>
     /// <returns>True if the parameters are equal, otherwise false.</returns>
-    public override bool Equals(object other) {
+    public override bool Equals(object? other) {
         if (other is not DomainParameters) {
             return false;
             }

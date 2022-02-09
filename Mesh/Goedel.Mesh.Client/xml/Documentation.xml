@@ -599,6 +599,7 @@
             </summary>
             <param name="name">The store to open.</param>
             <param name="blind">If true, only the sequence header values are read</param>
+            <param name="decrypt">If true, decrypt the store contents on access.</param>
             <returns>The <see cref="T:Goedel.Mesh.Store"/> instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.MakeStore(System.String,Goedel.Cryptography.Dare.DarePolicy,System.Boolean)">
@@ -608,6 +609,7 @@
             <param name="name">The name of the store to bind.</param>
             <param name="darePolicy">Policy to be applied to the store.</param>
             <returns>The store instance.</returns>
+            <param name="decrypt">If true, attempt decryption of payload contents.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.LoadStores">
             <summary>
@@ -1591,7 +1593,6 @@
             <paramref name="merge"/> is true, merge this contact information.
             </summary>
             <param name="fileName">The file to fetch the contact data from.</param>
-            <param name="self">If true, contact data corresponds to this user.</param>
             <param name="localName">Short name for the contact to distinguish it from
             others.</param>
             <param name="merge">Add this data to the existing contact.</param>
@@ -2683,6 +2684,14 @@
             Get the host catalog from the specified mesh machine.
             </summary>
             <param name="meshMachine"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.GetStoreEntry(System.String)">
+            <summary>
+            Get the store entry corresponding to key <paramref name="key"/> as the corresponding 
+            <see cref="T:Goedel.Protocol.JsonObject"/>.
+            </summary>
+            <param name="key">The primary key of the object selected.</param>
+            <returns>The object selected, if found, otherwise null.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.Deregister(Goedel.Mesh.Client.ContextAccount)">
             <summary>

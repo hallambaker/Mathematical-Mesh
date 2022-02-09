@@ -2,9 +2,20 @@
 using Microsoft.Extensions.Logging;
 
 namespace Goedel.Protocol.GenericHost;
+
+/// <summary>
+/// The console logger configuration.
+/// </summary>
 public class ConsoleLoggerConfiguration {
+
+    ///<summary>Return configuration entry description.</summary> 
+    public readonly static ConfigurationEntry ConfigurationEntry =
+        new ("Console", typeof(ConsoleLoggerConfiguration));
+
+    ///<summary>The event to which this configuration applies.</summary> 
     public int EventId { get; set; }
 
+    ///<summary>Dictionary specifying mapping of log levels to colors.</summary> 
     public Dictionary<LogLevel, ConsoleColor> LogLevels { get; set; } = new() {
         [LogLevel.Trace] = ConsoleColor.DarkBlue,
         [LogLevel.Debug] = ConsoleColor.Blue,
@@ -17,8 +28,15 @@ public class ConsoleLoggerConfiguration {
 
     }
 
-
+/// <summary>
+/// The DARE file logger configuration.
+/// </summary>
 public class DareLoggerConfiguration {
+
+    ///<summary>Return configuration entry description.</summary> 
+    public readonly static ConfigurationEntry ConfigurationEntry =
+        new ("Dare", typeof(DareLoggerConfiguration));
+
 
     ///<summary>List of recipients for which decryption blocks are to be created in the log.</summary> 
     public List<string> Recipients { get; set; } = new List<string>();

@@ -1,13 +1,13 @@
 ﻿
-//  This file was automatically generated at 06-Feb-22 10:40:03 PM
+//  This file was automatically generated at 08-Feb-22 6:25:58 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.766
+//  Generator:  exceptional version 3.0.0.795
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
-//      Copyright : © 2015-2021
+//      Copyright : © 2015-2022
 //  
 //  Build Platform: Win32NT 10.0.19042.0
 //  
@@ -21,8 +21,6 @@
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Protocol.Service ;
-
-
 
 
 /// <summary>
@@ -75,6 +73,207 @@ public partial class ServerNotSupported : global::Goedel.Utilities.GoedelExcepti
 
 
     }
+
+
+/// <summary>
+/// Extensions class defining logging events and convenience methods.
+/// </summary>
+public  static partial class EventExtensions {
+
+    /// <summary>
+    /// Static initializer, is called once when the module loads.
+    /// </summary>
+    static EventExtensions() {
+        _ListenerStart = LoggerMessage.Define(
+            LogLevel.Information, new EventId(1, nameof(_ListenerStart)),
+            "Starting Listener");
+        _ListenerEnd = LoggerMessage.Define(
+            LogLevel.Information, new EventId(2, nameof(_ListenerEnd)),
+            "Ending listener");
+        _ServiceStart = LoggerMessage.Define<string>(
+            LogLevel.Information, new EventId(3, nameof(_ServiceStart)),
+            "Starting service {ServiceName}");
+        _ServiceEnd = LoggerMessage.Define(
+            LogLevel.Information, new EventId(4, nameof(_ServiceEnd)),
+            "Ending listener");
+        _TransactionStart = LoggerMessage.Define<int,string>(
+            LogLevel.Debug, new EventId(5, nameof(_TransactionStart)),
+            "Starting transation {TransactionId} {TransactionMethod}");
+        _TransactionCompleted = LoggerMessage.Define<int,string>(
+            LogLevel.Information, new EventId(6, nameof(_TransactionCompleted)),
+            "Transaction completed {TransactionId} {TransactionMethod}");
+        _TransactionFailed = LoggerMessage.Define<int,string>(
+            LogLevel.Warning, new EventId(1000, nameof(_TransactionFailed)),
+            "Transaction failed {TransactionId} {TransactionMethod}");
+        _TransactionUnauthorized = LoggerMessage.Define<int,string>(
+            LogLevel.Warning, new EventId(1001, nameof(_TransactionUnauthorized)),
+            "Transaction not authorized {TransactionId} {TransactionMethod}");
+        _TransactionNotSupported = LoggerMessage.Define<string>(
+            LogLevel.Warning, new EventId(1002, nameof(_TransactionNotSupported)),
+            "Transaction not supported {TransactionMethod}");
+        _TransactionUnknown = LoggerMessage.Define<string>(
+            LogLevel.Warning, new EventId(1003, nameof(_TransactionUnknown)),
+            "Transaction not known {TransactionMethod}");
+        _UnhandledException = LoggerMessage.Define(
+            LogLevel.Error, new EventId(2000, nameof(_UnhandledException)),
+            "Unhandled exception");
+        }
+
+
+    private static readonly Action<ILogger, Exception> _ListenerStart;
+
+	/// <summary>
+    /// Write an event of type ListenerStart to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+    public static void ListenerStart(
+			this ILogger logger) {
+        _ListenerStart(logger, null);
+        }
+
+
+    private static readonly Action<ILogger, Exception> _ListenerEnd;
+
+	/// <summary>
+    /// Write an event of type ListenerEnd to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+    public static void ListenerEnd(
+			this ILogger logger) {
+        _ListenerEnd(logger, null);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _ServiceStart;
+
+	/// <summary>
+    /// Write an event of type ServiceStart to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="serviceName">The service name</param>
+    public static void ServiceStart(
+			this ILogger logger,
+			string serviceName) {
+        _ServiceStart(logger, serviceName, null);
+        }
+
+
+    private static readonly Action<ILogger, Exception> _ServiceEnd;
+
+	/// <summary>
+    /// Write an event of type ServiceEnd to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+    public static void ServiceEnd(
+			this ILogger logger) {
+        _ServiceEnd(logger, null);
+        }
+
+
+    private static readonly Action<ILogger, int, string, Exception> _TransactionStart;
+
+	/// <summary>
+    /// Write an event of type TransactionStart to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="transactionId">Transaction identifier</param>
+	/// <param name="method">The transaction method</param>
+    public static void TransactionStart(
+			this ILogger logger,
+			int transactionId,
+			string method) {
+        _TransactionStart(logger, transactionId, method, null);
+        }
+
+
+    private static readonly Action<ILogger, int, string, Exception> _TransactionCompleted;
+
+	/// <summary>
+    /// Write an event of type TransactionCompleted to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="transactionId">Transaction identifier</param>
+	/// <param name="method">The transaction method</param>
+    public static void TransactionCompleted(
+			this ILogger logger,
+			int transactionId,
+			string method) {
+        _TransactionCompleted(logger, transactionId, method, null);
+        }
+
+
+    private static readonly Action<ILogger, int, string, Exception> _TransactionFailed;
+
+	/// <summary>
+    /// Write an event of type TransactionFailed to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="transactionId">Transaction identifier</param>
+	/// <param name="method">The transaction method</param>
+    public static void TransactionFailed(
+			this ILogger logger,
+			int transactionId,
+			string method) {
+        _TransactionFailed(logger, transactionId, method, null);
+        }
+
+
+    private static readonly Action<ILogger, int, string, Exception> _TransactionUnauthorized;
+
+	/// <summary>
+    /// Write an event of type TransactionUnauthorized to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="transactionId">Transaction identifier</param>
+	/// <param name="method">The transaction method</param>
+    public static void TransactionUnauthorized(
+			this ILogger logger,
+			int transactionId,
+			string method) {
+        _TransactionUnauthorized(logger, transactionId, method, null);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _TransactionNotSupported;
+
+	/// <summary>
+    /// Write an event of type TransactionNotSupported to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="method">The transaction method</param>
+    public static void TransactionNotSupported(
+			this ILogger logger,
+			string method) {
+        _TransactionNotSupported(logger, method, null);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _TransactionUnknown;
+
+	/// <summary>
+    /// Write an event of type TransactionUnknown to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="method">The transaction method</param>
+    public static void TransactionUnknown(
+			this ILogger logger,
+			string method) {
+        _TransactionUnknown(logger, method, null);
+        }
+
+
+    private static readonly Action<ILogger, Exception> _UnhandledException;
+
+	/// <summary>
+    /// Write an event of type UnhandledException to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+    public static void UnhandledException(
+			this ILogger logger) {
+        _UnhandledException(logger, null);
+        }
+
+	}
 
 
 

@@ -34,51 +34,39 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
     const string LinuxMeshKeys = @".Mesh/Keys";
     const string LinuxMeshProfiles = @".Mesh/Profiles";
 
-    static string _DirectoryKeys;
-    static string _DirectoryMesh;
+    static string directoryKeys;
+    static string directoryMesh;
 
     ///<summary>Directory in which to store keys</summary> 
-    public virtual string DirectoryKeys => _DirectoryKeys;
+    public virtual string DirectoryKeys => directoryKeys;
 
     ///<summary>Directory in which to store Mesh application data.</summary> 
-    public virtual string DirectoryMesh => _DirectoryMesh;
-    //</summary>    @"~\.Mesh\Keys\";
-
+    public virtual string DirectoryMesh => directoryMesh;
 
     static KeyCollectionCore() {
-
         var platform = Environment.OSVersion.Platform;
-
         switch (platform) {
-            case PlatformID.Unix: {
-                    SetPlatformUnix();
-                    break;
-                    }
             case PlatformID.Win32NT: {
-                    SetPlatformWindows();
+                    var appsRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                    directoryKeys = Path.Combine(appsRoot, WindowsMeshKeys);
+                    directoryMesh = Path.Combine(appsRoot, WindowsMeshProfiles);
                     break;
                     }
-            case PlatformID.MacOSX: {
-                    SetPlatformUnix();
-                    break;
-                    }
-
-            case PlatformID.Win32S:
-                break;
-            case PlatformID.Win32Windows:
-                break;
-            case PlatformID.WinCE:
-                break;
-            case PlatformID.Xbox:
-                break;
             default:
+                var userRoot = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                directoryKeys = Path.Combine(userRoot, LinuxMeshKeys);
+                directoryMesh = Path.Combine(userRoot, LinuxMeshProfiles);
                 break;
             }
-
-
         }
 
-    public KeyCollectionCore(string directory = null) {
+    /// <summary>
+    /// Constructor returning an instance. If not-null, <paramref name="directory"/>
+    /// overrides the location of the key stores. This may be used in testing or to enable 
+    /// a key store belonging to a different user to be mounted.
+    /// </summary>
+    /// <param name="directory">If not, null, specifies directory in which the </param>
+    public KeyCollectionCore(string? directory = null) {
         if (directory != null) {
             SetPlatformDirect(directory);
             }
@@ -86,22 +74,12 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
 
 
     static void SetPlatformDirect(string directory) {
-        _DirectoryKeys = Path.Combine(directory, "Keys");
-        _DirectoryMesh = Path.Combine(directory, "Profiles");
+        directoryKeys = Path.Combine(directory, "Keys");
+        directoryMesh = Path.Combine(directory, "Profiles");
         }
 
 
-    static void SetPlatformWindows() {
-        var appsRoot = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        _DirectoryKeys = Path.Combine(appsRoot, WindowsMeshKeys);
-        _DirectoryMesh = Path.Combine(appsRoot, WindowsMeshProfiles);
-        }
 
-    static void SetPlatformUnix() {
-        var userRoot = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        _DirectoryKeys = Path.Combine(userRoot, LinuxMeshKeys);
-        _DirectoryMesh = Path.Combine(userRoot, LinuxMeshProfiles);
-        }
 
     ///<inheritdoc/>
     public override void Persist(string udf, IPKIXPrivateKey privateKey, bool exportable) {
@@ -185,7 +163,7 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
     /// <param name="dareSignature">The signature to evaluate.</param>
     /// <param name="anchor">The trust anchor to evaluate relative to.</param>
     /// <returns>The trust result.</returns>
-    public TrustResult ValidateTrustPath(DareSignature dareSignature, string anchor = null) => throw new NotImplementedException();
+    public TrustResult ValidateTrustPath(DareSignature dareSignature, string? anchor = null) => throw new NotImplementedException();
 
     ///<inheritdoc/>
     public override KeyAgreementResult RemoteAgreement(string serviceAddress, KeyPairAdvanced ephemeral, string shareId) => throw new NotImplementedException();

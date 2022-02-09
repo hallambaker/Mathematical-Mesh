@@ -47,9 +47,8 @@ public partial class DnsConfiguration {
     /// <summary>
     /// Generate a BIND configuration file for the service config.
     /// </summary>
-    /// <param name="Configuration"></param>
-    /// <param name="output"></param>
-    /// <param name="hostname">The host name.</param>
+    /// <param name="Configuration">The host/service configuration.</param>
+    /// <param name="output">File to write the output to</param>
     public static void BindConfig(Configuration Configuration,
                 string output) {
         using var outputWriter = output.OpenTextWriterNew();
@@ -59,7 +58,11 @@ public partial class DnsConfiguration {
         dnsConfiguration.BindConfig(Configuration);
         }
 
-
+    /// <summary>
+    /// Generate a Windows configuration file for the service config.
+    /// </summary>
+    /// <param name="Configuration">The host/service configuration.</param>
+    /// <param name="output">File to write the output to</param>
     public static void NetshConfig(Configuration Configuration,
                 string output) {
         using var outputWriter = output.OpenTextWriterNew();

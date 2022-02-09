@@ -33,6 +33,11 @@ global using Goedel.Protocol;
 global using Goedel.Protocol.Presentation;
 global using Goedel.Protocol.Service;
 global using Goedel.Utilities;
+global using Goedel.Protocol.GenericHost;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Options;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

@@ -24,17 +24,3 @@
 
 namespace Goedel.Protocol.Service;
 
-public interface IConfiguredService {
-
-    /// <summary>
-    /// Start the service
-    /// </summary>
-    /// <returns></returns>
-    Task StartServiceAsync();
-
-    /// <summary>
-    /// Stop the service
-    /// </summary>
-    /// <returns></returns>
-    Task StopServiceAsync();
-    }

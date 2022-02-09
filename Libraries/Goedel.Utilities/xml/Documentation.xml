@@ -1678,6 +1678,17 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Utilities.IComponent">
+            <summary>
+            Injection interface to allow declaration of component modules.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.IComponent.Initialize">
+            <summary>
+            Initialization method, is called by the dependency builder method during host
+            configuration.
+            </summary>
+        </member>
         <member name="T:Goedel.Utilities.Linewrap">
             <summary>
             Wrap xml output to fit within a line.

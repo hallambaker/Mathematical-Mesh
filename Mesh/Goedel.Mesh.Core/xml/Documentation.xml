@@ -45,6 +45,7 @@
             Default constructor
             </summary>
             <param name="directory">Directory to store the server information.</param>
+            <param name="direct">If true, force use of the platform key stores.</param>
         </member>
         <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetKeyCollection(System.String)">
             <summary>
@@ -86,9 +87,6 @@
         <member name="P:Goedel.Mesh.MeshMachineCore.FileNameHost">
             <summary>The file name of the host catalog.</summary>
         </member>
-        <member name="P:Goedel.Mesh.MeshMachineCore.Instance">
-            <inheritdoc/>
-        </member>
         <member name="M:Goedel.Mesh.MeshMachineCore.Disposing">
             <summary>
             Disposing routine. Feee internal resources  and shut down the Mesh Host.
@@ -99,7 +97,8 @@
             Constructor, creating a service instance using <paramref name="directory"/>
             to store persistent data.
             </summary>
-            <param name="directory">Directory to store persistence data.</param>
+            <param name="directory">Directory to store the server information.</param>
+            <param name="direct">If true, force use of the platform key stores.</param>
         </member>
         <member name="M:Goedel.Mesh.MeshMachineCore.GetCredential(System.String,System.String)">
             <inheritdoc/>

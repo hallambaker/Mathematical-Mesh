@@ -7,9 +7,17 @@ using Microsoft.Extensions.Configuration;
 
 namespace Goedel.Protocol.GenericHost;
 
+/// <summary>
+/// Extensions class.
+/// </summary>
 public static class ConsoleLoggerExtensions {
 
-    public static IHostBuilder AddConsoleHosted(this IHostBuilder host) {
+    /// <summary>
+    /// Add a hosted console logger.
+    /// </summary>
+    /// <param name="builder">The host builder</param>
+    /// <returns>The value of <paramref name="builder"/> for chaining.</returns>
+    public static IHostBuilder AddConsoleHosted(this IHostBuilder builder) {
 
         //host.ConfigureAppConfiguration((hostingContext, configuration) => {
         //    //configuration.Sources.Clear();
@@ -28,15 +36,19 @@ public static class ConsoleLoggerExtensions {
         //});
 
 
-        host.ConfigureServices((hostContext, services) => {
+        builder.ConfigureServices((hostContext, services) => {
             services.AddSingleton<IHostedService, ManagedListener>();
         });
 
-        return host;
+        return builder;
         }
 
 
-
+    /// <summary>
+    /// Add a console logger to <paramref name="builder"/>
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns>The value of <paramref name="builder"/> for chaining.</returns>
     public static ILoggingBuilder AddConsoleLogger(
         this ILoggingBuilder builder) {
         builder.AddConfiguration();
@@ -50,6 +62,12 @@ public static class ConsoleLoggerExtensions {
         return builder;
         }
 
+    /// <summary>
+    /// Add a console logger to <paramref name="builder"/>
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="configure">The configure actions.</param>
+    /// <returns>The value of <paramref name="builder"/> for chaining.</returns>
     public static ILoggingBuilder AddConsoleLogger(
         this ILoggingBuilder builder,
         Action<ConsoleLoggerConfiguration> configure) {

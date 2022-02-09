@@ -10,30 +10,44 @@ using Goedel.Protocol.Service;
 
 namespace Goedel.Mesh.ServiceAdmin;
 
+/// <summary>
+/// The Mesh service configuration.
+/// </summary>
+public class MeshServiceConfiguration : ServiceConfiguration {
 
-public class MeshServiceConfiguration : GenericServiceConfiguration {
-
+    ///<summary>The configuration entry.</summary> 
     public static readonly ConfigurationEntry ConfigurationEntry =
         new("MeshService", typeof(MeshServiceConfiguration),
             MeshService.Discovery, MeshService.WellKnown);
 
+    ///<inheritdoc/>
     public override ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
 
+    /////<inheritdoc/>
+    //public override List<Endpoint> GetEndpoints(GenericHostConfiguration genericHostConfiguration) {
+    //    throw new NotImplementedException();
+    //    }
 
+    ///<summary>The set of administrators.</summary> 
     public List<string> Administrators { get; set; } = new List<string>();
 
+    ///<summary>Path to the host data.</summary> 
     public string? HostPath { get; set; } = null;
 
     }
 
-
+/// <summary>
+/// Service/Host configuration.
+/// </summary>
 public class Configuration : Disposable {
 
+    ///<summary>Maps configuration entry to configuration.</summary> 
     public Dictionary<string, object> Dictionary = new();
 
-
+    ///<summary>The Mesh service configuration.</summary> 
     public MeshServiceConfiguration MeshServiceConfiguration { get; set; }
 
+    ///<summary>The host configuration.</summary> 
     public GenericHostConfiguration GenericHostConfiguration { get; set; }
 
     JsonDocument JsonDocument { get;  init; }
@@ -42,17 +56,24 @@ public class Configuration : Disposable {
 
 
 
-
+    /// <summary>
+    /// Default constructor.
+    /// </summary>
     public Configuration() {
         }
 
-    protected override void Dispose(bool disposing) {
+    ///<inheritdoc/>
+    protected override void Disposing() {
         JsonDocument?.Dispose();
         }
 
+    /// <summary>
+    /// Read configuration from a file.
+    /// </summary>
+    /// <param name="path">The file name.</param>
+    /// <returns>The parsed configuration.</returns>
     public static Configuration FromFile(string path) {
         using var stream = path.OpenFileReadShared();
-
 
         var config = new Configuration();
         var dom = JsonDocument.Parse(stream);
@@ -64,32 +85,38 @@ public class Configuration : Disposable {
         result.MeshServiceConfiguration = result.Get<MeshServiceConfiguration>(MeshServiceConfiguration.ConfigurationEntry);
         result.GenericHostConfiguration = result.Get<GenericHostConfiguration>(GenericHostConfiguration.ConfigurationEntry);
 
-
-
-  
-
         return result;
         }
 
-
+    /// <summary>
+    /// Get configuration entry described by <paramref name="configurationEntry"/>.
+    /// </summary>
+    /// <typeparam name="T">The returned type.</typeparam>
+    /// <param name="configurationEntry">The configuration description.</param>
+    /// <returns>The parsed configuration.</returns>
     public T Get<T>(ConfigurationEntry configurationEntry) where T : class {
         foreach (var entry in JsonDocument.RootElement.EnumerateObject()) {
             if (entry.Name == configurationEntry.Name) {
                 var x = JsonSerializer.Deserialize(entry.Value, configurationEntry.Type);
-
-
                 return x as T;
                 }
             }
         return null;
         }
 
-
+    /// <summary>
+    /// Add a configuration entry to the configuration.
+    /// </summary>
+    /// <param name="configurationEntry">Configuration entry description.</param>
+    /// <param name="entry">The entry.</param>
     public void Add(ConfigurationEntry configurationEntry, object entry) {
         Dictionary.Add(configurationEntry.Name, entry);
         }
 
-
+    /// <summary>
+    /// Write configuration to file.
+    /// </summary>
+    /// <param name="path">The output filename.</param>
     public void ToFile(string path) {
         using var stream = path.OpenFileNew();
 

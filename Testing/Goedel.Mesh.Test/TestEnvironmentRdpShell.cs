@@ -61,7 +61,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentCommon {
         }
 
 
-    CancellationToken CancellationToken;
+    //CancellationToken CancellationToken;
 
     public MeshRudListener DependencyInjectionHostAsync() {
 
@@ -94,11 +94,10 @@ public class TestEnvironmentRdpShell : TestEnvironmentCommon {
 
 
     public virtual RudService StartService() {
-        var serviceConfig = "/Console";
         var dnsConfig = "db.meshService";
         var netshConfig = "Service.netsh";
 
-        CancellationToken = new();
+        //CancellationToken = new();
 
 
         HostMachine = new MeshMachineTest(this, "host1");
@@ -116,25 +115,6 @@ public class TestEnvironmentRdpShell : TestEnvironmentCommon {
 
 
         return listener.RudService;
-
-
-        // Neew to swap in the new host startup here !!!!!
-
-
-        ////// Start the host
-        ////HostShell = new Shell.Host.Shell(
-        ////    PublicMeshService.ServiceDescription,
-        ////    ServiceManagementProvider.ServiceDescriptionHost) {
-        ////    Instance = Test,
-        ////    MeshMachine = HostMachine
-        ////    };
-        //HostAdminCLI = new();
-
-        //// this is not going to return now is it???
-        //// need to save the service and return it.
-        //var resultService = OldHost($"start {serviceConfig}") as ResultStartService;
-
-        //return resultService.RudService;
         }
 
 

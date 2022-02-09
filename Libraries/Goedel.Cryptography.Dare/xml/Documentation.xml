@@ -24,6 +24,7 @@
             <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
             in a read access mode and should have exclusive read access. All existing
             content in the file will be overwritten.</param>
+            <param name="decrypt">If true, decrypt the container payload contents.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.ContainerChain.FillDictionary(Goedel.Cryptography.Dare.SequenceInfo,System.Int64,System.Int64)">
             <summary>
@@ -82,6 +83,7 @@
             in a read access mode and should have exclusive read access. All existing
             content in the file will be overwritten.</param>
             <returns>The newly constructed container.</returns>
+            <param name="decrypt">If true, decrypt the container payload contents.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.ContainerDigest.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
             <summary>
@@ -830,6 +832,7 @@
             in a read access mode and should have exclusive read access. All existing
             content in the file will be overwritten.</param>
             <returns>The newly constructed container.</returns>
+            <param name="decrypt">If true, decrypt the container payload contents.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.ContainerList.FillDictionary(Goedel.Cryptography.Dare.SequenceInfo,System.Int64,System.Int64)">
             <summary>
@@ -1147,6 +1150,7 @@
             in a read access mode and should have exclusive read access. All existing
             content in the file will be overwritten.</param>
             <returns>The newly constructed container.</returns>
+            <param name="decrypt">If true, decrypt the container payload contents.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.PrepareFrame(Goedel.Cryptography.Dare.SequenceInfo)">
             <summary>
@@ -1454,6 +1458,7 @@
             in a read access mode and should have exclusive read access. All existing
             content in the file will be overwritten.</param>
             <returns>The newly constructed container.</returns>
+            <param name="decrypt">If true, decrypt the container payload contents.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.ContainerTree.PrepareFrame(Goedel.Cryptography.Dare.SequenceWriter)">
             <summary>
@@ -5939,6 +5944,7 @@
             <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
             <param name="dataSequences">Data sequences to be converted to an EDS and presented 
                 as an EDSS header entry.</param>
+            <param name="decrypt">If true, decrypt the container payload contents.</param>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileModeException">The file mode specified was not valid.</exception>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.NewContainer(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean)">
@@ -5960,6 +5966,7 @@
             <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
             <param name="dataSequences">Data sequences to be converted to an EDS and presented 
                 as an EDSS header entry.</param>
+            <param name="decrypt">If true, decrypt the container payload contents.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(Goedel.Cryptography.Dare.JbcdStream,System.Boolean,Goedel.Cryptography.Dare.SequenceType)">
             <summary>
@@ -5972,6 +5979,7 @@
             <param name="sequenceType">The sequence type. This determines whether
             a tree index is to be created or not and if so, whether </param>
             <returns>The newly constructed sequence.</returns>
+            <param name="decrypt">If true, decrypt the container payload contents.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},Goedel.IO.FileStatus)">
             <summary>

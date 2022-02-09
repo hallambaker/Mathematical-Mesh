@@ -4,6 +4,86 @@
         <name>Goedel.Protocol.Service</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Protocol.Service.FatEvent">
+            <summary>
+            Structure describing a complete event.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.FatEvent.LogLevel">
+            <summary>The log level for the event.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.FatEvent.EventId">
+            <summary>The event identifier (should be unique for a given application)</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.FatEvent.Message">
+            <summary>The event message.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.FatEvent.#ctor(Microsoft.Extensions.Logging.LogLevel,System.Int32,System.String,System.String)">
+            <summary>
+            Constructor returning an instance.
+            </summary>
+            <param name="logLevel">The log level for the event.</param>
+            <param name="id">The event identifier (should be unique for a given application)</param>
+            <param name="name">The event name (written to the log)</param>
+            <param name="message">The event message.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Service.Extensions">
+            <summary>
+            Extension class to make loggin an event straightforward.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Extensions.Log(Microsoft.Extensions.Logging.ILogger,Goedel.Protocol.Service.FatEvent,System.Object[])">
+            <summary>
+            Log an event.
+            </summary>
+            <param name="logger">The event logger.</param>
+            <param name="logEvent">The event to log.</param>
+            <param name="args">The event arguments.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.Extensions.Log(Microsoft.Extensions.Logging.ILogger,System.Exception,Goedel.Protocol.Service.FatEvent,System.Object[])">
+            <summary>
+            Log an event.
+            </summary>
+            <param name="logger">The event logger.</param>
+            <param name="logEvent">The event to log.</param>
+            <param name="args">The event arguments.</param>
+            <param name="exception">Exception returned.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Service.Event">
+            <summary>
+            Logging events for the Goedel Host.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.Event.StartListener">
+            <summary>Starting listener</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.Event.EndListener">
+            <summary>Ending listener</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.Event.StartService">
+            <summary>Starting service</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.Event.EndService">
+            <summary>Ending service</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.Event.StartTransaction">
+            <summary>Starting transation</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.Event.EndTransaction">
+            <summary>Completed transation</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.Event.FailTransaction">
+            <summary>Completed transation</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.Event.UnhandledException">
+            <summary>Unhandled Exception</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.Event.CommandNotSupported">
+            <summary>Unhandled Exception</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.Event.UnknownCommand">
+            <summary>Unhandled Exception</summary> 
+        </member>
         <member name="T:Goedel.Protocol.Service.ServerNotSupported">
             <summary>
             This platform does not support HTTP service
@@ -55,11 +135,22 @@
         <member name="P:Goedel.Protocol.Service.HostMonitor.Recent">
             <summary>Total results in the most recent sample interval.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Service.HostMonitor.Logger">
+            <summary>The system logger.</summary> 
+        </member>
         <member name="M:Goedel.Protocol.Service.HostMonitor.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.Service.HostMonitor},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration})">
             <summary>
             Constructor returning a monitor instance using the logger <paramref name="logger"/>.
             </summary>
             <param name="logger">The system logger output.</param>
+            <param name="hostConfiguration">The host configuration</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.HostMonitor.Log(Goedel.Protocol.Service.FatEvent,System.Object[])">
+            <summary>
+            Write an event to the event logger.
+            </summary>
+            <param name="logEvent">The event to log.</param>
+            <param name="args">Event arguments.</param>
         </member>
         <member name="M:Goedel.Protocol.Service.HostMonitor.StartMonitor(System.Int32,System.Int32)">
             <summary>
@@ -114,45 +205,24 @@
         <member name="P:Goedel.Protocol.Service.IServiceConfiguration.Addresses">
             <summary>List of service addresses.</summary> 
         </member>
-        <member name="T:Goedel.Protocol.Service.IHostConfiguration">
+        <member name="T:Goedel.Protocol.Service.ServiceConfiguration">
             <summary>
-            Host configuration
+            Base class for service configurations.
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.Service.IHostConfiguration.ConsoleOutput">
-            <summary>The console output mode</summary> 
+        <member name="M:Goedel.Protocol.Service.ServiceConfiguration.GetConfigurationEntry">
+            <summary>Returns the configuration entry.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Service.IHostConfiguration.Path">
-            <summary>Path to the host data store.</summary> 
+        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.DefaultHostConfiguration">
+            <summary>The default</summary>
         </member>
-        <member name="P:Goedel.Protocol.Service.IHostConfiguration.ProfileUdf">
-            <summary>The UDF of the sevice profile.</summary> 
+        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.ServiceUdf">
+            <summary>The service profile fingerprint.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Service.IHostConfiguration.DeviceUdf">
-            <summary>The UDF of the device profile.</summary> 
+        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.ServicePath">
+            <summary>Path to the service data</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Service.IHostConfiguration.Id">
-            <summary>The Host name.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Service.IHostConfiguration.DNS">
-            <summary>List of DNS addresses of the host.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Service.IHostConfiguration.Port">
-            <summary>The port number.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Service.IConfiguredService.StartServiceAsync">
-            <summary>
-            Start the service
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Protocol.Service.IConfiguredService.StopServiceAsync">
-            <summary>
-            Stop the service
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Goedel.Protocol.Service.GenericServiceConfiguration.ServiceDNS">
+        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.ServiceDNS">
             <summary>Service DNS addresses</summary> 
         </member>
         <member name="T:Goedel.Protocol.Service.LogService">
@@ -172,7 +242,7 @@
         <member name="P:Goedel.Protocol.Service.LogService.GenericServiceConfiguration">
             <summary>The service configuration</summary> 
         </member>
-        <member name="M:Goedel.Protocol.Service.LogService.#ctor(Goedel.Protocol.GenericHostConfiguration,Goedel.Protocol.Service.GenericServiceConfiguration,Goedel.Protocol.Service.HostMonitor,System.Int64)">
+        <member name="M:Goedel.Protocol.Service.LogService.#ctor(Goedel.Protocol.GenericHostConfiguration,Goedel.Protocol.Service.ServiceConfiguration,Goedel.Protocol.Service.HostMonitor,System.Int64)">
             <summary>
             Create a transaction logging service instance.
             </summary>
@@ -180,6 +250,13 @@
             <param name="meshHostConfiguration">The service configuration</param>
             <param name="hostMonitor">The host monitor service</param>
             <param name="first">Index of the first log entry</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.LogService.Log(Goedel.Protocol.Service.FatEvent,System.Object[])">
+            <summary>
+            Write the event <paramref name="logEvent"/> to the event log.
+            </summary>
+            <param name="logEvent">The event to log.</param>
+            <param name="args">The event parameters.</param>
         </member>
         <member name="M:Goedel.Protocol.Service.LogService.Start(System.String,Goedel.Protocol.IReport)">
             <summary>
@@ -189,11 +266,11 @@
             <param name="request">The request identifier.</param>
             <returns>The transaction record.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Service.LogService.UnknownCommand(System.Exception)">
+        <member name="M:Goedel.Protocol.Service.LogService.UnknownCommand(System.String)">
             <summary>
-            Report an error before transaction was begun.
+            Report unknown command.
             </summary>
-            <param name="exception">The exception thrown.</param>
+            <param name="command">The unknown command.</param>
         </member>
         <member name="M:Goedel.Protocol.Service.LogService.WriteToConsole(System.Text.StringBuilder)">
             <summary>
@@ -343,6 +420,11 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Goedel.Protocol.Service.Resources.CommandNotSupported">
+            <summary>
+              Looks up a localized string similar to Command not supported.
+            </summary>
+        </member>
         <member name="P:Goedel.Protocol.Service.Resources.DeviceProfile">
             <summary>
               Looks up a localized string similar to Device Profile.
@@ -366,6 +448,11 @@
         <member name="P:Goedel.Protocol.Service.Resources.Error">
             <summary>
               Looks up a localized string similar to Error.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.Resources.FailTransaction">
+            <summary>
+              Looks up a localized string similar to Transaction failed.
             </summary>
         </member>
         <member name="P:Goedel.Protocol.Service.Resources.Host">
@@ -435,7 +522,7 @@
         </member>
         <member name="P:Goedel.Protocol.Service.Resources.UnknownCommand">
             <summary>
-              Looks up a localized string similar to Unknown-Command.
+              Looks up a localized string similar to Unknown Command.
             </summary>
         </member>
         <member name="T:Goedel.Protocol.Service.RudService">
@@ -470,6 +557,7 @@
             <param name="credential">Credential for the listener to use.</param>
             <remarks>Constructor returns after the service has been started and listener threads 
             initialized.</remarks>
+            <param name="hostMonitor">The host monitor service.</param>
         </member>
         <member name="M:Goedel.Protocol.Service.RudService.GetProvider(System.String,System.Int32,System.String)">
             <summary>
@@ -479,6 +567,12 @@
             <param name="port">Port to which the provider is bound.</param>
             <param name="resource">Protocol serviced.</param>
             <returns>The provider.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.RudService.WaitServiceAsync">
+            <summary>
+            Begin servicing tasks.
+            </summary>
+            <returns>The listener task.</returns>
         </member>
         <member name="M:Goedel.Protocol.Service.RudService.NullTask">
             <summary>

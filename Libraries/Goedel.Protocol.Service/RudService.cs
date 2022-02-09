@@ -108,6 +108,7 @@ public class RudService : Disposable {
     /// <param name="credential">Credential for the listener to use.</param>
     /// <remarks>Constructor returns after the service has been started and listener threads 
     /// initialized.</remarks>
+    /// <param name="hostMonitor">The host monitor service.</param>
     public RudService(
             IEnumerable<IConfguredService> providers,
             HostMonitor hostMonitor,
@@ -343,16 +344,11 @@ public class RudService : Disposable {
         return null;
         }
 
-    // void WaitService() {
-    //    var t =  WaitServiceAsync();
-    //    t.Wait();
-    //    }
 
-    //public async Task WaitServiceAsync(CancellationToken cancellationToken) {
-    //    CancellationToken = cancellationToken;
-    //    await WaitServiceAsync();
-    //    }
-
+    /// <summary>
+    /// Begin servicing tasks.
+    /// </summary>
+    /// <returns>The listener task.</returns>
     public async Task WaitServiceAsync() {
 
         while (active) {

@@ -46,7 +46,7 @@ public class ContainerList : Sequence {
     /// in a read access mode and should have exclusive read access. All existing
     /// content in the file will be overwritten.</param>
     /// <returns>The newly constructed container.</returns>
-
+    /// <param name="decrypt">If true, decrypt the container payload contents.</param>
     public static Sequence MakeNewContainer(
                     JbcdStream JBCDStream,
                     bool decrypt) {

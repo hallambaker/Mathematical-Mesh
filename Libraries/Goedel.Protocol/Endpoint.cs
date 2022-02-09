@@ -57,6 +57,7 @@ public enum TransportType {
 /// <param name="Protocol">Directory to store persistence data.</param>
 /// <param name="Instance">Optional instance tag to allow multiple instances to be run 
 /// for testing etc.</param>
+/// <param name="JpcInterface">The service provider.</param>
 public record Endpoint(
          string? Protocol,
          string? Instance = null,
@@ -74,6 +75,7 @@ public record Endpoint(
 /// <param name="Protocol">The protocol serviced.</param>
 /// <param name="Instance">The protocol instance.</param>
 /// <param name="Port">The port number.</param>
+/// <param name="JpcInterface">The service provider.</param>
 public record HttpEndpoint(
          string? Domain,
          string Protocol,
@@ -142,6 +144,7 @@ public record HttpEndpoint(
 /// <param name="Instance">The protocol instance.</param>
 /// <param name="Port">The port number.</param>
 /// <param name="AddressFamily">The address family.</param>
+/// <param name="JpcInterface">The service provider.</param>
 public record UdpEndpoint(
          string? Protocol,
          string? Instance = null,

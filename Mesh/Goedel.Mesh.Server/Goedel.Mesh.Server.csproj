@@ -7,7 +7,6 @@
     <Description>Mesh Server implementation.</Description>
     <Copyright>© 2021 Threshold Secrets LLC</Copyright>
     <Title>Goedel.Mesh.Server</Title>
-	<Nullable>enable</Nullable>
   </PropertyGroup>
   
   <ItemGroup>

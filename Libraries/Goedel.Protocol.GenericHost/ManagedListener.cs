@@ -26,7 +26,6 @@ public class ManagedListener : IHostedService {
     /// </summary>
     /// <param name="logger">Logger instance.</param>
     /// <param name="appLifetime">Manage the application lifetime (kill events).</param>
-    /// <param name="configuredServices">Configured service providers.</param>
     /// <param name="serviceDispatch">Network dispatch shell.</param>
     public ManagedListener(
             ILogger<ManagedListener> logger,
@@ -37,16 +36,12 @@ public class ManagedListener : IHostedService {
         ServiceDispatch = serviceDispatch;
         }
 
-
+    ///<inheritdoc/>
     public Task StartAsync(CancellationToken cancellationToken) {
-
-        //Logger.Log(Event.Starting, string.Join(" ", Environment.GetCommandLineArgs()));
-
         Logger.Log(Event.StartListener);
         AppLifetime.ApplicationStarted.Register(() => {
             Task.Run(async () => {
                 try {
-                    //Logger.Log(Event.HelloWorld);
                     await ServiceDispatch.StartAsync(cancellationToken);
                     }
                 catch (Exception ex) {
@@ -61,6 +56,7 @@ public class ManagedListener : IHostedService {
         return Task.CompletedTask;
         }
 
+    ///<inheritdoc/>
     public Task StopAsync(CancellationToken cancellationToken) {
         return Task.CompletedTask;
         }

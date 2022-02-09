@@ -52,6 +52,7 @@ public class HostMonitor {
     private DateTime[] dispatcherStart;
     DateTime busyStart;
     
+    ///<summary>The system logger.</summary> 
     public ILogger Logger { get; }
 
     #endregion
@@ -62,16 +63,21 @@ public class HostMonitor {
     /// Constructor returning a monitor instance using the logger <paramref name="logger"/>.
     /// </summary>
     /// <param name="logger">The system logger output.</param>
+    /// <param name="hostConfiguration">The host configuration</param>
     public HostMonitor(ILogger<HostMonitor> logger,
-                IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration) {
-        
-        // here configure the transaction logging service.
+                IOptionsMonitor<GenericHostConfiguration> hostConfiguration) {
         
         Logger = logger;
         }
 
     #endregion
     #region // Methods 
+
+    /// <summary>
+    /// Write an event to the event logger.
+    /// </summary>
+    /// <param name="logEvent">The event to log.</param>
+    /// <param name="args">Event arguments.</param>
     public void Log(FatEvent logEvent, params object[] args) =>
             Logger.Log(logEvent, args);
 

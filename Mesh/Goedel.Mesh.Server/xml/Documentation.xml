@@ -378,11 +378,39 @@
             <param name="messageId">Message to return.</param>
             <returns>The message (if found).</returns>
         </member>
+        <member name="T:Goedel.Mesh.Server.ConsoleLoggerExtensions">
+            <summary>
+            Extensions class for adding a Mesh Service Provider to a host.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.ConsoleLoggerExtensions.AddMeshService(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Inject Mesh service and options to the builder <paramref name="host"/>
+            </summary>
+            <param name="host">The service to inject.</param>
+            <returns>The value of <paramref name="host"/> for chaining.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshConfiguredService">
+            <summary>
+            A Mesh service provider in a form suited for dependency injection.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Server.MeshConfiguredService.JpcInterface">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Server.MeshConfiguredService.Endpoints">
             <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshConfiguredService.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener},Goedel.Mesh.IMeshMachine,Goedel.Protocol.Service.HostMonitor,Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration})">
+            <summary>
+            Mesh service provider instance configured with options specifie in 
+            <paramref name="meshHostConfiguration"/> and <paramref name="genericHostConfiguration"/>.
+            </summary>
+            <param name="logger">The system logger service.</param>
+            <param name="meshMachine">The Mesh machine instance.</param>
+            <param name="hostMonitor">The host monitor for tracking host load and performance.</param>
+            <param name="meshHostConfiguration">The Mesh service configuration.</param>
+            <param name="genericHostConfiguration">The host configuration.</param>
         </member>
         <member name="T:Goedel.Mesh.Server.MeshServerException">
             <summary>
@@ -1021,6 +1049,15 @@
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Protocol.GenericHostConfiguration,Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration,Goedel.Protocol.Service.LogService)">
+            <summary>
+            A Mesh service provider.
+            </summary>
+            <param name="meshMachine">The Mesh Machine</param>
+            <param name="genericHostConfiguration">Host configuration.</param>
+            <param name="meshHostConfiguration">Service configuration.</param>
+            <param name="logService">The transaction logging service.</param>
+        </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.GetService(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
             <summary>
             Return the file path for the service description <paramref name="fileSpec"/>.
@@ -1057,6 +1094,7 @@
             <param name="hostConfig">The host configuration identifier.</param>
             <param name="hostDns">The host DNS name</param>
             <param name="admin">The administrative account to create.</param>
+            <param name="hostAccount">The platform account under which the host process is to run.</param>
             <returns>The created service</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration,Goedel.Protocol.GenericHostConfiguration,System.String)">

@@ -55,7 +55,8 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     /// Default constructor
     /// </summary>
     /// <param name="directory">Directory to store the server information.</param>
-    public MeshMachineCoreServer(string directory, bool direct = false) {
+    /// <param name="direct">If true, force use of the platform key stores.</param>
+    public MeshMachineCoreServer(string? directory, bool direct = false) {
         KeyCollection = GetKeyCollection(direct ? directory : null);
 
         if (directory != null) {
@@ -85,7 +86,7 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
 /// Return a new key collection.
 /// </summary>
 /// <returns>The key collection created.</returns>
-    public virtual IKeyCollection GetKeyCollection(string directory=null) 
+    public virtual IKeyCollection GetKeyCollection(string? directory=null) 
             => new KeyCollectionCore(directory);
 
 
@@ -153,10 +154,6 @@ public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
     ///<summary>The file name of the host catalog.</summary>
     public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
 
-    ///<inheritdoc/>
-    public virtual string Instance => null;
-
-
     #endregion
     #region // Disposing
 
@@ -170,8 +167,9 @@ public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
     /// Constructor, creating a service instance using <paramref name="directory"/>
     /// to store persistent data.
     /// </summary>
-    /// <param name="directory">Directory to store persistence data.</param>
-    public MeshMachineCore(string directory = null, bool direct = false) : base(directory, direct) {
+    /// <param name="directory">Directory to store the server information.</param>
+    /// <param name="direct">If true, force use of the platform key stores.</param>
+    public MeshMachineCore(string? directory = null, bool direct = false) : base(directory, direct) {
         // Read the container to get the directories.
         var containerHost = new PersistHost(FileNameHost, FileTypeHost,
             fileStatus: FileStatus.ConcurrentLocked,

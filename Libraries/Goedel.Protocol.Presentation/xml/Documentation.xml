@@ -1705,6 +1705,9 @@
         <member name="P:Goedel.Protocol.Presentation.RudProvider.JpcInterface">
             <summary>The provider interface.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Presentation.RudProvider.Endpoints">
+            <summary>The service endpoints.</summary> 
+        </member>
         <member name="M:Goedel.Protocol.Presentation.RudProvider.#ctor(System.Collections.Generic.List{Goedel.Protocol.Endpoint},Goedel.Protocol.JpcInterface)">
             <summary>
             Constructor, returns an instance servicing the endpoints <paramref name="endpoints"/>

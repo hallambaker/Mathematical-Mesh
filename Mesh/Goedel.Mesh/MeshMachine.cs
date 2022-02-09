@@ -61,6 +61,8 @@ public interface IMeshMachine {
     /// <returns>The translated file path.</returns>
     string GetFilePath(string filepath);
 
+    ///<summary>The machine instance. May be used to run multiple machine instances on the 
+    ///same host for testing, etc.</summary> 
     string? Instance { get; }
 
     ///<summary>The directory the Mesh data is stored in.</summary>

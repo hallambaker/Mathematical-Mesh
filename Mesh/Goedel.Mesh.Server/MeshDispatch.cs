@@ -107,12 +107,18 @@ public class PublicMeshService : MeshService {
     #endregion
     #region // Constructors and factories
 
+    /// <summary>
+    /// A Mesh service provider.
+    /// </summary>
+    /// <param name="meshMachine">The Mesh Machine</param>
+    /// <param name="genericHostConfiguration">Host configuration.</param>
+    /// <param name="meshHostConfiguration">Service configuration.</param>
+    /// <param name="logService">The transaction logging service.</param>
     public PublicMeshService(
             IMeshMachine meshMachine,
             GenericHostConfiguration genericHostConfiguration,
             MeshServiceConfiguration meshHostConfiguration,
             LogService logService) {
-
         LogService = logService;
         MeshMachine = meshMachine;
         GenericHostConfiguration = genericHostConfiguration;
@@ -133,21 +139,17 @@ public class PublicMeshService : MeshService {
             new HttpEndpoint(genericHostConfiguration.HostDns, GetWellKnown,
                     instance, genericHostConfiguration.Port, this));
 
-        // Here we need to populate ProfileService, ProfileHost
-
-        // Failing here because the host is never registered???
-
         var meshHost = MeshHost.GetCatalogHost(MeshMachine);
-        var hostServiceDescription = meshHost.GetStoreEntry(genericHostConfiguration.HostUdf) as CatalogedService;
-
-        if (hostServiceDescription != null) {
+        if (meshHost.GetStoreEntry(genericHostConfiguration.HostUdf) is CatalogedService hostServiceDescription) {
+            // Decode the service and host profiles.
             ProfileService = hostServiceDescription.EnvelopedProfileService.Decode();
             ProfileHost = hostServiceDescription.EnvelopedProfileHost.Decode();
 
-            // have to load the device keys here!!!
+            // Activate the host and load the decryption key.
             ProfileHost.Activate(KeyCollection);
             KeyCollection.Add(ProfileHost.KeyEncrypt);
 
+            // Decrypt the service activation.
             ActivationDevice = hostServiceDescription.EnvelopedActivationHost.Decode(KeyCollection);
             ConnectionDevice = hostServiceDescription.EnvelopedConnectionService.Decode(KeyCollection);
             }
@@ -212,6 +214,7 @@ public class PublicMeshService : MeshService {
     /// <param name="hostConfig">The host configuration identifier.</param>
     /// <param name="hostDns">The host DNS name</param>
     /// <param name="admin">The administrative account to create.</param>
+    /// <param name="hostAccount">The platform account under which the host process is to run.</param>
     /// <returns>The created service</returns>
     public static Configuration Create(
         IMeshMachineClient meshMachine,
@@ -249,7 +252,6 @@ public class PublicMeshService : MeshService {
             Description = $"New service configuration created on {DateTime.Now.ToRFC3339()}",
             HostDns = hostDns,
             IP = new List<string> { hostIp },
-            Port = 15099,
             RunAs = hostAccount
             };
 
@@ -457,9 +459,9 @@ public class PublicMeshService : MeshService {
 
 
     ///<inheritdoc/>
-    public override Goedel.Protocol.JsonObject Dispatch(IJpcSession session,
-                            Goedel.Protocol.JsonReader jsonReader) {
-        string token;
+    public override JsonObject Dispatch(IJpcSession session,
+                            JsonReader jsonReader) {
+        string token="???";
         JsonObject request;
 
         try {
@@ -467,7 +469,7 @@ public class PublicMeshService : MeshService {
             }
         catch (Exception exception) {
             var result = new StatusResponse(exception);
-            LogService.UnknownCommand(exception);
+            LogService.UnknownCommand(token);
             return result;
             }
 

@@ -138,15 +138,20 @@ public class MeshHost : Disposable {
     /// <param name="meshMachine"></param>
     public static MeshHost GetCatalogHost(IMeshMachine meshMachine) {
         var meshMachineClient = meshMachine as IMeshMachineClient;
-        return meshMachineClient.MeshHost;
+        return meshMachineClient?.MeshHost;
 
         }
 
     #endregion
     #region // Methods
 
-
-    public JsonObject GetStoreEntry(string key) {
+    /// <summary>
+    /// Get the store entry corresponding to key <paramref name="key"/> as the corresponding 
+    /// <see cref="JsonObject"/>.
+    /// </summary>
+    /// <param name="key">The primary key of the object selected.</param>
+    /// <returns>The object selected, if found, otherwise null.</returns>
+    public JsonObject? GetStoreEntry(string key) {
         if (ContainerHost.ObjectIndex.TryGetValue (key, out var storeEntry) ){
             return storeEntry.JsonObject;
 

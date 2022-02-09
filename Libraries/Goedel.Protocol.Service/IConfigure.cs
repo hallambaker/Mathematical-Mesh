@@ -18,39 +18,3 @@ public interface IServiceConfiguration {
     List<string> Addresses { get; }
     }
 
-/// <summary>
-/// Host configuration
-/// </summary>
-public interface IHostConfiguration {
-
-    ///<summary>The console output mode</summary> 
-    LogLevelSeverity ConsoleOutput { get; }
-
-    ///<summary>Path to the host data store.</summary> 
-    string Path { get; }
-
-    ///<summary>The UDF of the sevice profile.</summary> 
-    string ProfileUdf { get; }
-
-    ///<summary>The UDF of the device profile.</summary> 
-    string DeviceUdf { get; }
-
-    ///<summary>The Host name.</summary> 
-    string Id { get; }
-
-    ///<summary>List of DNS addresses of the host.</summary> 
-    List<string> DNS { get; }
-
-    ///<summary>The port number.</summary> 
-    int Port { get; }
-
-    void LogInitialize();
-
-    void Start(LogTransaction logTransaction);
-
-    void Success(LogTransaction logTransaction);
-
-    void Fail(LogTransaction logTransaction);
-
-
-    }

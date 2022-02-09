@@ -269,7 +269,7 @@ public class SharedSecret : Shared {
     /// </summary>
     /// <param name="obj">The secret to test against</param>
     /// <returns>true if the parameter has the same key value, false otherwise.</returns>
-    public override bool Equals(System.Object obj) {
+    public override bool Equals(object? obj) {
         if (obj == null) {
             return false;
             }
@@ -288,26 +288,6 @@ public class SharedSecret : Shared {
         return true;
         }
 
-    ///<summary>The set of prime offset values to be added to 32^(n) to give the
-    ///discrete modulus for secrets of up to 32n bits.</summary>
-    readonly static int[] PrimeValues = new int[] {
-            15,
-            13,
-            61,
-            51,
-            7,
-            133,
-            735,
-            297,
-            127,
-            27,
-            55,
-            231,
-            235,
-            211,
-            165,
-            75,
-            };
 
     ///<summary>The set of prime offset values to be added to 8^(n) to give the
     ///discrete modulus for secrets of up to 8n bits.</summary>
@@ -415,7 +395,7 @@ public class SharedSecret : Shared {
             Split(keyShares, k, out polynomial)) {
             search = false;
             for (int i = 0; i < n; i++) {
-                search = search ? keyShares[i].Value < SecretMax : false;
+                search = search && keyShares[i].Value < SecretMax;
                 }
             }
 

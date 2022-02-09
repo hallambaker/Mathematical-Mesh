@@ -4,31 +4,6 @@
         <name>Goedel.Debug</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Debug.Debug">
-            <summary>
-            Class containing static helper methods. This should inherit from the Trace class
-            but that is sealed.
-            </summary>
-        </member>
-        <member name="M:Goedel.Debug.Debug.Initialization(System.Boolean)">
-            <summary>
-            Perform standard initialization
-            </summary>
-        </member>
-        <member name="M:Goedel.Debug.Debug.WriteLine(System.String,System.Object[])">
-            <summary>
-            Convenience method to do formatted write to the trace output
-            </summary>
-            <param name="Format">A composite format string </param>
-            <param name="Arg">An array of objects to write using format</param>
-        </member>
-        <member name="M:Goedel.Debug.Debug.Write(System.String,System.Object[])">
-            <summary>
-            Convenience method to do formatted write to the trace output
-            </summary>
-            <param name="Format">A composite format string </param>
-            <param name="Arg">An array of objects to write using format</param>
-        </member>
         <member name="T:Goedel.Debug.GoedelTraceListener">
             <summary>
             

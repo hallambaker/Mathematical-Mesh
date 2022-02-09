@@ -56,14 +56,6 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
     #endregion
     #region // Factory methods and constructors
 
-    static int countStores = 0;
-
-    //protected override void Disposing() {
-    //    base.Disposing();
-    //    //Screen.WriteLine($"*** Dispose Access {--countStores}");
-
-    //    }
-
 
     /// <summary>
     /// Factory delegate
@@ -80,9 +72,9 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
             string directory,
                 string storeId,
                 IMeshClient meshClient,
-                DarePolicy policy = null,
-                CryptoParameters cryptoParameters = null,
-                IKeyCollection keyCollection = null,
+                DarePolicy? policy = null,
+                CryptoParameters? cryptoParameters = null,
+                IKeyCollection? keyCollection = null,
                 bool decrypt = true,
                 bool create = true) =>
         new CatalogAccess(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt: decrypt, create: create);
@@ -103,11 +95,11 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
     public CatalogAccess(
                 string directory,
-                string storeName = null,
-                DarePolicy policy = null,
-                CryptoParameters cryptoParameters = null,
-                IKeyCollection keyCollection = null,
-                IMeshClient meshClient = null,
+                string? storeName = null,
+                DarePolicy? policy = null,
+                CryptoParameters? cryptoParameters = null,
+                IKeyCollection? keyCollection = null,
+                IMeshClient? meshClient = null,
                 bool decrypt = true,
                 bool create = true) :
                 base(directory, storeName ?? Label,
@@ -180,13 +172,10 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
     public override void NewEntry(CatalogedAccess catalogedEntry) => UpdateLocal(catalogedEntry);
 
 
-    /// <summary>
-    /// Callback called before updating an entry in the catalog. Overriden to update the values
-    /// in the dictionaries serving key discovery.
-    /// </summary>
-    /// <param name="catalogedEntry">The entry being updated.</param>
+    ///<inheritdoc/>
     public override void UpdateEntry(CatalogedAccess catalogedEntry) => UpdateLocal(catalogedEntry);
 
+    ///<inheritdoc/>
     public override void UpdateLocal(CatalogedEntry catalogedEntry) {
 
         base.UpdateLocal(catalogedEntry);

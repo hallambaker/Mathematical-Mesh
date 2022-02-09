@@ -4,7 +4,7 @@
 		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<!--<Nullable>enable</Nullable>-->
     <!--
     <RuntimeIdentifiers>win-x64;win-x86;win-arm;win-arm64;osx-x64;linux-x64;linux-arm;linux-arm64</RuntimeIdentifiers>	
 		-->
@@ -25,5 +25,10 @@
 
 	<PropertyGroup Condition="'$(Configuration)'=='Github'">
 		<DefineConstants>TRACE;_Github_</DefineConstants>
+	</PropertyGroup>
+
+
+	<PropertyGroup>
+		<NoWarn>1701;1702;cs8632</NoWarn>
 	</PropertyGroup>
 </Project>

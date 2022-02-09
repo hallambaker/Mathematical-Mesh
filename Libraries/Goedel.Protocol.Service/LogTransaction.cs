@@ -27,30 +27,34 @@ namespace Goedel.Protocol.Service;
 
 
 
+/// <summary>
+/// Base class for service configurations.
+/// </summary>
+public abstract class ServiceConfiguration {
 
-public abstract class GenericServiceConfiguration {
-
-
+     
+    ///<summary>Returns the configuration entry.</summary> 
     public abstract ConfigurationEntry GetConfigurationEntry();
 
+    ///<summary>The default</summary>
     public GenericHostConfiguration DefaultHostConfiguration { get; set; }
 
-
+    ///<summary>The service profile fingerprint.</summary> 
     public string ServiceUdf { get; set; } = string.Empty;
 
-
+    ///<summary>Path to the service data</summary> 
     public string ServicePath { get; set; } = string.Empty;
 
     ///<summary>Service DNS addresses</summary> 
     public List<string> ServiceDNS { get; set; } = new List<string>();
 
 
-
-    public List<Endpoint> GetEndpoints(GenericHostConfiguration genericHostConfiguration) {
-
-
-        throw new NotImplementedException();
-        }
+    ///// <summary>
+    ///// Return the service endpoints for the host configuration <paramref name="genericHostConfiguration"/>.
+    ///// </summary>
+    ///// <param name="genericHostConfiguration">The host to return the endpoints for.</param>
+    ///// <returns>The list of endpoints.</returns>
+    //public abstract List<Endpoint> GetEndpoints(GenericHostConfiguration genericHostConfiguration);
 
     }
 
@@ -80,7 +84,7 @@ public class LogService {
     GenericHostConfiguration GenericHostConfiguration { get; }
 
     ///<summary>The service configuration</summary> 
-    GenericServiceConfiguration GenericServiceConfiguration { get; }
+    ServiceConfiguration GenericServiceConfiguration { get; }
 
     /// <summary>
     /// Create a transaction logging service instance.
@@ -91,7 +95,7 @@ public class LogService {
     /// <param name="first">Index of the first log entry</param>
     public LogService(
             GenericHostConfiguration genericHostConfiguration,
-            GenericServiceConfiguration meshHostConfiguration,
+            ServiceConfiguration meshHostConfiguration,
             HostMonitor hostMonitor, long first = 0) {
         GenericHostConfiguration = genericHostConfiguration;
         GenericServiceConfiguration = meshHostConfiguration;
@@ -126,59 +130,13 @@ public class LogService {
         }
 
 
-
-    ///// <summary>
-    ///// Default constructor.
-    ///// </summary>
-    ///// <param name="hostMonitor">The host montior describing the lower level connection
-    ///// status.</param>
-    ///// <param name="first">The first transaction number to be issued.</param>
-    ///// <param name="hostConfiguration">The host configuration description.</param>
-    ///// <param name="serviceConfiguration">The service configuration description.</param>
-    //public LogService(
-    //        IServiceConfiguration serviceConfiguration,
-    //        IHostConfiguration hostConfiguration,
-    //        HostMonitor hostMonitor, long first = 0) {
-    //    HostConfiguration = hostConfiguration;
-    //    HostMonitor = hostMonitor;
-    //    transactionIdentifier = first - 1;
-
-    //    ConsoleOutput = hostConfiguration.ConsoleOutput;
-
-    //    if (ConsoleOutput != LogLevelSeverity.None) {
-    //        var output = new StringBuilder();
-    //        output.Append(DateTime.Now.ToRFC3339());
-    //        output.AppendLine(
-    //            $" {Resources.StartService}: {serviceConfiguration.WellKnown}" +
-    //            $" {Resources.Host} {hostConfiguration.Id}" +
-    //            $" {Resources.Port} {hostConfiguration.Port}");
-    //        output.AppendLine($"    { Resources.ServiceProfile}: { hostConfiguration.ProfileUdf}");
-    //        output.AppendLine($"    { Resources.DeviceProfile}: { hostConfiguration.DeviceUdf}");
-    //        output.AppendLine($"    { Resources.Path}: {hostConfiguration.Path}");
-    //        if (serviceConfiguration.Addresses != null) {
-    //            foreach (var address in serviceConfiguration.Addresses) {
-    //                output.AppendLine($"    { Resources.ServiceAddress}: {address}");
-    //                }
-    //            }
-    //        if (serviceConfiguration.Addresses != null) {
-    //            foreach (var dns in hostConfiguration.DNS) {
-    //                output.AppendLine($"    { Resources.HostAddress}: {dns}");
-    //                }
-    //            }
-    //        WriteToConsole(output);
-    //        }
-    //    //hostConfiguration.LogInitialize();
-
-
-    //    }
-
-
-
+    /// <summary>
+    /// Write the event <paramref name="logEvent"/> to the event log.
+    /// </summary>
+    /// <param name="logEvent">The event to log.</param>
+    /// <param name="args">The event parameters.</param>
     public void Log(FatEvent logEvent, params object[] args) =>
         HostMonitor?.Logger.Log(logEvent, args);
-
-
-
 
 
     /// <summary>
@@ -207,16 +165,11 @@ public class LogService {
 
 
     /// <summary>
-    /// Report an error before transaction was begun.
+    /// Report unknown command.
     /// </summary>
-    /// <param name="exception">The exception thrown.</param>
-    public void UnknownCommand(Exception exception) {
-        var output = new StringBuilder();
-
-        output.Append(DateTime.Now.ToRFC3339());
-        output.Append($" { Resources.Error} { Resources.UnknownCommand} {exception}");
-
-        WriteToConsole(output);
+    /// <param name="command">The unknown command.</param>
+    public void UnknownCommand(string command) {
+        Log (Event.UnknownCommand, command);
         }
 
     /// <summary>
@@ -235,16 +188,8 @@ public class LogService {
     /// </summary>
     /// <param name="logTransaction">Transaction to log.</param>
     internal void Start(LogTransaction logTransaction) {
-
-        var output = new StringBuilder();
-        output.Append(logTransaction.Start.ToRFC3339());
-        output.Append($" { Resources.TransactionStart} ");
-        output.Append(logTransaction.TransactionIdentifier);
-        output.Append(' ');
-        output.Append(logTransaction.Token);
-        logTransaction.Request?.Report(output, ConsoleOutput);
-
-        WriteToConsole(output);
+        Log(Event.StartTransaction, logTransaction.TransactionIdentifier,
+            logTransaction.Token);
         }
 
     /// <summary>
@@ -252,22 +197,8 @@ public class LogService {
     /// </summary>
     /// <param name="logTransaction">Transaction to log.</param>
     internal void Success(LogTransaction logTransaction) {
-        var output = new StringBuilder();
-
-        output.Append(logTransaction.Start.ToRFC3339());
-        output.Append($" { Resources.TransactionSuccess} ");
-
-        if (!ReportStart(ConsoleOutput)) {
-            output.Append(logTransaction.Token);
-            logTransaction.Request?.Report(output, ConsoleOutput);
-            }
-        else {
-            output.Append(logTransaction.TransactionIdentifier);
-            }
-        logTransaction.Response?.Report(output, ConsoleOutput);
-
-        WriteToConsole(output);
-        //HostConfiguration.Success(logTransaction);
+        Log(Event.EndTransaction, logTransaction.TransactionIdentifier,
+            logTransaction.Token);
         }
 
     /// <summary>
@@ -275,27 +206,8 @@ public class LogService {
     /// </summary>
     /// <param name="logTransaction">Transaction to log.</param>
     internal void Fail(LogTransaction logTransaction) {
-        var output = new StringBuilder();
-
-        output.Append(logTransaction.Start.ToRFC3339());
-        output.Append($" { Resources.TransactionFail} ");
-
-        if (!ReportStart(ConsoleOutput)) {
-            output.Append(logTransaction.Token);
-            logTransaction.Request?.Report(output, ConsoleOutput);
-            }
-        else {
-            output.Append(logTransaction.TransactionIdentifier);
-            }
-        output.Append(logTransaction.Exception);
-
-        if (logTransaction.Response != null) {
-            logTransaction.Response?.Report(output, ConsoleOutput);
-            }
-
-        WriteToConsole(output);
-
-        //HostConfiguration.Fail(logTransaction);
+        Log(Event.FailTransaction, logTransaction.TransactionIdentifier,
+            logTransaction.Token);
         }
 
     static bool ReportStart(LogLevelSeverity reportMode) =>

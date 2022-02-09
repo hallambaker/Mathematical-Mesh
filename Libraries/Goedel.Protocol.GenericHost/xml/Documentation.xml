@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Protocol.GenericHost</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Protocol.GenericHost.ConsoleLoggerExtensions">
+            <summary>
+            Extensions class.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerExtensions.AddConsoleHosted(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Add a hosted console logger.
+            </summary>
+            <param name="builder">The host builder</param>
+            <returns>The value of <paramref name="builder"/> for chaining.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerExtensions.AddConsoleLogger(Microsoft.Extensions.Logging.ILoggingBuilder)">
+            <summary>
+            Add a console logger to <paramref name="builder"/>
+            </summary>
+            <param name="builder"></param>
+            <returns>The value of <paramref name="builder"/> for chaining.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerExtensions.AddConsoleLogger(Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration})">
+            <summary>
+            Add a console logger to <paramref name="builder"/>
+            </summary>
+            <param name="builder"></param>
+            <param name="configure">The configure actions.</param>
+            <returns>The value of <paramref name="builder"/> for chaining.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration">
+            <summary>
+            The console logger configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration.ConfigurationEntry">
+            <summary>Return configuration entry description.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration.EventId">
+            <summary>The event to which this configuration applies.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration.LogLevels">
+            <summary>Dictionary specifying mapping of log levels to colors.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.GenericHost.DareLoggerConfiguration">
+            <summary>
+            The DARE file logger configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.GenericHost.DareLoggerConfiguration.ConfigurationEntry">
+            <summary>Return configuration entry description.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.Recipients">
+            <summary>List of recipients for which decryption blocks are to be created in the log.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.Rotate">
+            <summary>Log rotation period</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.Path">
+            <summary>Directory to which log files are to be written</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.GenericHost.ConsoleLogger">
+            <summary>
+            The console logger.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLogger.#ctor(System.String,System.Func{Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration})">
+            <summary>
+            Dependency injector constructor.
+            </summary>
+            <param name="name">The name of the logger.</param>
+            <param name="getCurrentConfig">Return the current configuration.</param>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLogger.BeginScope``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <inheritdoc/> 
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>Return configuration entry description.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.GenericHost.ManagedListener">
+            <summary>
+            Dependency injection wrapper that applies application lifetime management 
+            to a listener dispatching to a set of configured services.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ManagedListener.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener},Microsoft.Extensions.Hosting.IHostApplicationLifetime,Goedel.Protocol.IServiceListener)">
+            <summary>
+            Constructor for configuration via dependency injection.
+            </summary>
+            <param name="logger">Logger instance.</param>
+            <param name="appLifetime">Manage the application lifetime (kill events).</param>
+            <param name="serviceDispatch">Network dispatch shell.</param>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ManagedListener.StartAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ManagedListener.StopAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.GenericHost.NamespaceDoc">
+            <summary>
+            Host shell. Runs an actual host instance with minimal command line options.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.GenericHost.ConsoleLoggerProvider">
+            <summary>
+            Console logger provider.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration})">
+            <summary>
+            Constructor returns instance via dependency injection.
+            </summary>
+            <param name="config">The console logger configuration.</param>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.CreateLogger(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.GenericHost.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.Resources.EndListener">
+            <summary>
+              Looks up a localized string similar to Listener Stopped.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.Resources.EndService">
+            <summary>
+              Looks up a localized string similar to Service Stopped.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.Resources.EndTransaction">
+            <summary>
+              Looks up a localized string similar to Transaction End.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.Resources.StartListener">
+            <summary>
+              Looks up a localized string similar to Host Starting.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.Resources.StartService">
+            <summary>
+              Looks up a localized string similar to Listener Starting.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.Resources.StartTransaction">
+            <summary>
+              Looks up a localized string similar to Transaction Start.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.Resources.UnhandledException">
+            <summary>
+              Looks up a localized string similar to Unhandled Exception.
+            </summary>
+        </member>
+    </members>
+</doc>

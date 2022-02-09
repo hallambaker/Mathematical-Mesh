@@ -47,7 +47,7 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     public AsCatalogedType<T> AsCatalogedType =>
             new(PersistenceStore);
 
-
+    ///<summary>Dictionary mapping local names to the corresponding catalog entries.</summary> 
     public Dictionary<string, CatalogedEntry> DictionaryByLocalName { get; } = 
             new Dictionary<string,CatalogedEntry>();
 
@@ -73,10 +73,10 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
     /// <param name="create">If true, create a container if it does not already exist.</param>
     public Catalog(string directory, string containerName,
-                 DarePolicy policy = null,
-                CryptoParameters cryptoParameters = null,
-                IKeyCollection keyCollection = null,
-                IMeshClient meshClient = null,
+                 DarePolicy? policy = null,
+                CryptoParameters? cryptoParameters = null,
+                IKeyCollection? keyCollection = null,
+                IMeshClient? meshClient = null,
                 bool readContainer = true,
                 bool decrypt = true,
                 bool create = true) :
@@ -134,7 +134,7 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// Callback called before deleting an entry from the catalog. May be overriden in 
     /// derrived classes to update local indexes.
     /// </summary>
-    /// <param name="Key">The entry being deleted.</param>
+    /// <param name="key">The entry being deleted.</param>
     public virtual void DeleteEntry(string key) {
         var entry = (PersistenceStore.Get(key) as StoreEntry)?.JsonObject as T;
         //PersistenceStore.Delete(entry._PrimaryKey);
@@ -146,7 +146,11 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
         }
 
 
-
+    /// <summary>
+    /// Update the value of <paramref name="catalogedEntry"/> in local storage.
+    /// (i.e. append it to the log file).
+    /// </summary>
+    /// <param name="catalogedEntry">The value to update.</param>
     public virtual void UpdateLocal(CatalogedEntry catalogedEntry) {
         if (catalogedEntry.LocalName != null) {
             DictionaryByLocalName.Remove(catalogedEntry.LocalName);

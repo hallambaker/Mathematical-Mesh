@@ -76,6 +76,8 @@ public partial class Result {
 
 
 public partial class ResultServiceConfiguration {
+
+    ///<summary>The service/host configuration.</summary> 
     public Configuration Configuration { get; init; }
 
     }

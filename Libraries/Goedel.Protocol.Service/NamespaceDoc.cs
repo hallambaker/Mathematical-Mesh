@@ -31,6 +31,11 @@ global using Goedel.Utilities;
 global using Goedel.Protocol;
 global using Microsoft.Extensions.Logging;
 
+using System.Diagnostics.CodeAnalysis;
+
+[assembly:SuppressMessage("Usage", "CA2254:Template should be a static expression", 
+    Justification = "Stupid error")]
+
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif

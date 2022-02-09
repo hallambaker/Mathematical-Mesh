@@ -4,6 +4,73 @@
         <name>Goedel.Mesh.ServiceAdmin</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration.Administrators">
+            <summary>The set of administrators.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration.HostPath">
+            <summary>Path to the host data.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.Configuration">
+            <summary>
+            Service/Host configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.Configuration.Dictionary">
+            <summary>Maps configuration entry to configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.MeshServiceConfiguration">
+            <summary>The Mesh service configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.GenericHostConfiguration">
+            <summary>The host configuration.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.Disposing">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.FromFile(System.String)">
+            <summary>
+            Read configuration from a file.
+            </summary>
+            <param name="path">The file name.</param>
+            <returns>The parsed configuration.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.Get``1(Goedel.Protocol.ConfigurationEntry)">
+            <summary>
+            Get configuration entry described by <paramref name="configurationEntry"/>.
+            </summary>
+            <typeparam name="T">The returned type.</typeparam>
+            <param name="configurationEntry">The configuration description.</param>
+            <returns>The parsed configuration.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.Add(Goedel.Protocol.ConfigurationEntry,System.Object)">
+            <summary>
+            Add a configuration entry to the configuration.
+            </summary>
+            <param name="configurationEntry">Configuration entry description.</param>
+            <param name="entry">The entry.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.ToFile(System.String)">
+            <summary>
+            Write configuration to file.
+            </summary>
+            <param name="path">The output filename.</param>
+        </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.DnsConfiguration">
             <summary>
             DNS configuration generator class
@@ -13,9 +80,15 @@
             <summary>
             Generate a BIND configuration file for the service config.
             </summary>
-            <param name="Configuration"></param>
-            <param name="output"></param>
-            <param name="hostname">The host name.</param>
+            <param name="Configuration">The host/service configuration.</param>
+            <param name="output">File to write the output to</param>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.NetshConfig(Goedel.Mesh.ServiceAdmin.Configuration,System.String)">
+            <summary>
+            Generate a Windows configuration file for the service config.
+            </summary>
+            <param name="Configuration">The host/service configuration.</param>
+            <param name="output">File to write the output to</param>
         </member>
         <member name="M:Goedel.Mesh.ServiceAdmin.DnsConfiguration.GetPort(System.String)">
             <summary>
@@ -170,8 +243,26 @@
         </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.MeshRudListener">
             <summary>
-            Dependency injection wrapper that 
+            Dependency injection wrapper for the RUD listener. 
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.MeshRudListener.GenericHostConfiguration">
+            <summary>The host configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.MeshRudListener.RudService">
+            <summary>The RUD service.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.MeshRudListener.Credential">
+            <summary>The host credential.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.MeshRudListener.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration},System.Collections.Generic.IEnumerable{Goedel.Protocol.IConfguredService},Goedel.Protocol.Service.HostMonitor,Goedel.Mesh.IMeshMachine)">
+            <summary>
+            A RUD listener presenting Mesh credentials.
+            </summary>
+            <param name="genericHostConfiguration">The host configuration.</param>
+            <param name="configuredServices">The services to be served.</param>
+            <param name="hostMonitor">The host monitor tracking load and performance.</param>
+            <param name="meshMachine">The Mesh machine.</param>
         </member>
         <member name="M:Goedel.Mesh.ServiceAdmin.MeshRudListener.StartAsync(System.Threading.CancellationToken)">
             <inheritdoc/>

@@ -1,45 +1,39 @@
-﻿using Goedel.Protocol.GenericHost;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Goedel.Protocol.Presentation;
-using Goedel.Mesh;
-using Goedel.Protocol.Service;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
+﻿
 
 namespace Goedel.Mesh.ServiceAdmin;
 
 /// <summary>
-/// Dependency injection wrapper that 
+/// Dependency injection wrapper for the RUD listener. 
 /// </summary>
 public class MeshRudListener : IServiceListener {
 
+    ///<summary>The host configuration.</summary> 
     public GenericHostConfiguration GenericHostConfiguration { get; }
 
+    ///<summary>The RUD service.</summary> 
     public RudService RudService { get; set; }
 
+    ///<summary>The host credential.</summary> 
     ICredentialPrivate Credential { get; set; }
 
-    IMeshMachine MeshMachine { get; }
+    private IMeshMachine MeshMachine { get; }
     private IEnumerable<IConfguredService> ConfiguredServices { get; }
 
+    /// <summary>
+    /// A RUD listener presenting Mesh credentials.
+    /// </summary>
+    /// <param name="genericHostConfiguration">The host configuration.</param>
+    /// <param name="configuredServices">The services to be served.</param>
+    /// <param name="hostMonitor">The host monitor tracking load and performance.</param>
+    /// <param name="meshMachine">The Mesh machine.</param>
     public MeshRudListener(
                 IOptionsMonitor<GenericHostConfiguration> genericHostConfiguration,
                 IEnumerable<IConfguredService> configuredServices,
                 HostMonitor hostMonitor,
                 IMeshMachine meshMachine) {
-        //var credential = MeshMachine.GetCredential();
-
-
-        //RudService = new RudService(cancellationToken, ConfigurableServices,
-        //    null, null);
         GenericHostConfiguration = genericHostConfiguration.CurrentValue;
         MeshMachine = meshMachine;
         ConfiguredServices = configuredServices;
-
 
         Credential = MeshMachine.GetCredential(
                 GenericHostConfiguration.DeviceUdf,
@@ -49,8 +43,6 @@ public class MeshRudListener : IServiceListener {
                 ConfiguredServices, hostMonitor, Credential,
                 maxCores: GenericHostConfiguration.MaxCores);
         }
-
-
 
     ///<inheritdoc/>
     public async Task StartAsync(

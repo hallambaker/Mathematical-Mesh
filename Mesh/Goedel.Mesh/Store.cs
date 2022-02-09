@@ -66,7 +66,7 @@ public class Store : Disposable {
     //protected CryptoParameters CryptoParameters { get; set; }
 
     ///<summary>The key collection used for decryption</summary>
-    public IKeyCollection KeyCollection { get; set; }
+    public IKeyCollection? KeyCollection { get; set; }
 
     ///<summary>The container identifier. Must be unique within a given account.</summary>
     public string ContainerName { get; set; }
@@ -90,9 +90,9 @@ public class Store : Disposable {
                 string directory,
                 string storeId,
                 IMeshClient meshClient,
-                DarePolicy policy = null,
-                CryptoParameters cryptoParameters = null,
-                IKeyCollection keyCollection = null,
+                DarePolicy? policy = null,
+                CryptoParameters? cryptoParameters = null,
+                IKeyCollection? keyCollection = null,
                 bool decrypt = true,
                 bool create = true) =>
         new(directory, storeId, policy, cryptoParameters, keyCollection, meshClient);
@@ -110,11 +110,11 @@ public class Store : Disposable {
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
     public Store(string directory,
-                string storeId = null,
-                DarePolicy policy = null,
-                CryptoParameters cryptoParameters = null,
-                IKeyCollection keyCollection = null,
-                IMeshClient meshClient = null,
+                string? storeId = null,
+                DarePolicy? policy = null,
+                CryptoParameters? cryptoParameters = null,
+                IKeyCollection? keyCollection = null,
+                IMeshClient? meshClient = null,
                 bool decrypt = true,
                 bool create = true) {
 

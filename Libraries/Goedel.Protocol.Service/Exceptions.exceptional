@@ -6,3 +6,39 @@ Namespace Goedel.Protocol.Service
 		Description
 			|This platform does not support HTTP service
 
+
+
+	Information 1 ListenerStart "Starting Listener"
+
+	Information 2 ListenerEnd "Ending listener"
+
+	Information 3 ServiceStart "Starting service {ServiceName}"
+		serviceName string "The service name"
+
+	Information 4 ServiceEnd "Ending listener"
+
+
+	Debug 5 TransactionStart  "Starting transation {TransactionId} {TransactionMethod}"
+		transactionId int "Transaction identifier"
+		method string "The transaction method"
+
+	Information 6 TransactionCompleted "Transaction completed {TransactionId} {TransactionMethod}"
+		transactionId int "Transaction identifier"
+		method string "The transaction method"
+
+	Warning 1000 TransactionFailed "Transaction failed {TransactionId} {TransactionMethod}"
+		transactionId int "Transaction identifier"
+		method string "The transaction method"
+
+	Warning 1001 TransactionUnauthorized "Transaction not authorized {TransactionId} {TransactionMethod}"	
+		transactionId int "Transaction identifier"
+		method string "The transaction method"
+
+	Warning 1002 TransactionNotSupported "Transaction not supported {TransactionMethod}"	
+		method string "The transaction method"
+
+	Warning 1003 TransactionUnknown "Transaction not known {TransactionMethod}"
+		method string "The transaction method"
+
+
+	Error 2000 UnhandledException "Unhandled exception"

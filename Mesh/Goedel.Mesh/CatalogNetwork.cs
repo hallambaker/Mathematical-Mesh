@@ -120,14 +120,17 @@ public partial class CatalogedNetwork {
     /// <param name="protocol">The protocol name.</param>
     /// <param name="service">The service name</param>
     /// <returns>The computed primary key.</returns>
-    public static string PrimaryKey(string protocol, string service) =>
+    public static string PrimaryKey(string? protocol, string? service) =>
         $"{protocol ?? ""}:{service ?? ""}";
 
     #endregion
     #region // Override methods
+
+    ///<inheritdoc/>
+
     public override void Describe(StringBuilder builder, bool detail = false) => ItemToBuilder(builder);
 
-
+    ///<inheritdoc/>
     public override void ItemToBuilder(StringBuilder stringBuilder, int indent = 0, IKeyCollection keyCollection = null) {
         stringBuilder.Append($"[{_PrimaryKey}");
         stringBuilder.AppendNotNull(LocalName, $"/{LocalName}");

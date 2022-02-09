@@ -524,6 +524,7 @@
             <param name="Protocol">Directory to store persistence data.</param>
             <param name="Instance">Optional instance tag to allow multiple instances to be run 
             for testing etc.</param>
+            <param name="JpcInterface">The service provider.</param>
         </member>
         <member name="M:Goedel.Protocol.Endpoint.#ctor(System.String,System.String,Goedel.Protocol.JpcInterface)">
             <summary>
@@ -532,6 +533,7 @@
             <param name="Protocol">Directory to store persistence data.</param>
             <param name="Instance">Optional instance tag to allow multiple instances to be run 
             for testing etc.</param>
+            <param name="JpcInterface">The service provider.</param>
         </member>
         <member name="T:Goedel.Protocol.HttpEndpoint">
             <summary>
@@ -541,6 +543,7 @@
             <param name="Protocol">The protocol serviced.</param>
             <param name="Instance">The protocol instance.</param>
             <param name="Port">The port number.</param>
+            <param name="JpcInterface">The service provider.</param>
         </member>
         <member name="M:Goedel.Protocol.HttpEndpoint.#ctor(System.String,System.String,System.String,System.Int32,Goedel.Protocol.JpcInterface)">
             <summary>
@@ -550,6 +553,7 @@
             <param name="Protocol">The protocol serviced.</param>
             <param name="Instance">The protocol instance.</param>
             <param name="Port">The port number.</param>
+            <param name="JpcInterface">The service provider.</param>
         </member>
         <member name="M:Goedel.Protocol.HttpEndpoint.Specializer(System.String)">
             <summary>
@@ -598,6 +602,7 @@
             <param name="Instance">The protocol instance.</param>
             <param name="Port">The port number.</param>
             <param name="AddressFamily">The address family.</param>
+            <param name="JpcInterface">The service provider.</param>
         </member>
         <member name="M:Goedel.Protocol.UdpEndpoint.#ctor(System.String,System.String,System.Int32,System.Net.Sockets.AddressFamily,Goedel.Protocol.JpcInterface)">
             <summary>
@@ -607,6 +612,7 @@
             <param name="Instance">The protocol instance.</param>
             <param name="Port">The port number.</param>
             <param name="AddressFamily">The address family.</param>
+            <param name="JpcInterface">The service provider.</param>
         </member>
         <member name="M:Goedel.Protocol.UdpEndpoint.GetClient">
             <summary>
@@ -1253,10 +1259,43 @@
             An ICharacterBufferedStream is an ICharacterStream that is also an IBufferedStream
             </summary>
         </member>
+        <member name="T:Goedel.Protocol.ConfigurationEntry">
+            <summary>
+            A configuration entry for a service.
+            </summary>
+            <param name="Name">The name used to describe the configuration in the options file.</param>
+            <param name="Type">The type to which the configuration data is bound.</param>
+            <param name="Discovery">For a network service, specifies the DNS discovery prefix.</param>
+            <param name="WellKnown">For a network service, specifies the HTTP .well-known prefix</param>
+        </member>
+        <member name="M:Goedel.Protocol.ConfigurationEntry.#ctor(System.String,System.Type,System.String,System.String)">
+            <summary>
+            A configuration entry for a service.
+            </summary>
+            <param name="Name">The name used to describe the configuration in the options file.</param>
+            <param name="Type">The type to which the configuration data is bound.</param>
+            <param name="Discovery">For a network service, specifies the DNS discovery prefix.</param>
+            <param name="WellKnown">For a network service, specifies the HTTP .well-known prefix</param>
+        </member>
         <member name="T:Goedel.Protocol.GenericHostConfiguration">
             <summary>
             Service configuration
             </summary>
+        </member>
+        <member name="F:Goedel.Protocol.GenericHostConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHostConfiguration.RunAs">
+            <summary>The platform account under which the host process is to run.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHostConfiguration.Description">
+            <summary>Service description (for logging)</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHostConfiguration.HostUdf">
+            <summary>The Host profile fingerprint.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHostConfiguration.DeviceUdf">
+            <summary>The Device profile fingerprint</summary> 
         </member>
         <member name="P:Goedel.Protocol.GenericHostConfiguration.HostDns">
             <summary>Host DNS address</summary> 
@@ -1267,6 +1306,25 @@
         <member name="P:Goedel.Protocol.GenericHostConfiguration.MaxCores">
             <summary>The maximum number of cores, if zero, all cores on the machine
             are used.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHostConfiguration.Instance">
+            <summary>Service instance specifier, used to run multiple hosts on one machine 
+            for testing, etc.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHostConfiguration.Port">
+            <summary>The port number.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.IServiceListener">
+            <summary>
+            Service listener interface for dependency injection selection.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.IServiceListener.StartAsync(System.Threading.CancellationToken)">
+            <summary>
+            Start the listener.
+            </summary>
+            <param name="cancellationToken">Cancellation, listener will abort when triggered.</param>
+            <returns>The listener task.</returns>
         </member>
         <member name="T:Goedel.Protocol.IConfguredService">
             <summary>

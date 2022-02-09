@@ -231,11 +231,11 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     public static Sequence Open(
                     string fileName,
                     FileStatus fileStatus = FileStatus.Read,
-                    IKeyLocate keyLocate = null,
+                    IKeyLocate? keyLocate = null,
                     //CryptoParameters cryptoParameters = null,
                     SequenceType sequenceType = SequenceType.Unknown,
-                    DarePolicy policy = null,
-                    string contentType = null,
+                    DarePolicy? policy = null,
+                    string? contentType = null,
                     bool decrypt = true,
                     bool create = true) {
 
@@ -328,7 +328,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// <returns></returns>
     public static Sequence OpenExisting(
                     JbcdStream jbcdStream,
-                    IKeyLocate keyCollection = null, bool decrypt = true) {
+                    IKeyLocate? keyCollection = null, 
+                    bool decrypt = true) {
 
         decrypt.Future();
 
@@ -459,17 +460,18 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
     /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
     ///     as an EDSS header entry.</param>
+    /// <param name="decrypt">If true, decrypt the container payload contents.</param>
     /// <exception cref="InvalidFileModeException">The file mode specified was not valid.</exception>
     public static Sequence NewContainer(
                     string filename,
                     FileStatus fileStatus,
                     SequenceType sequenceType = SequenceType.Chain,
-                    DarePolicy policy = null,
-                    byte[] payload = null,
-                    string contentType = null,
+                    DarePolicy? policy = null,
+                    byte[]? payload = null,
+                    string? contentType = null,
                     DataEncoding dataEncoding = DataEncoding.JSON,
-                    byte[] cloaked = null,
-                    List<byte[]> dataSequences = null,
+                    byte[]? cloaked = null,
+                    List<byte[]>? dataSequences = null,
                     bool decrypt=true
                     ) {
 
@@ -506,16 +508,17 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
     /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
     ///     as an EDSS header entry.</param>
+    /// <param name="decrypt">If true, decrypt the container payload contents.</param>
     public static Sequence NewContainer(
                     JbcdStream jbcdStream,
-                    IKeyLocate keyLocate = null,
+                    IKeyLocate? keyLocate = null,
                     SequenceType sequenceType = SequenceType.Chain,
-                    DarePolicy policy = null,
-                    byte[] payload = null,
-                    string contentType = null,
+                    DarePolicy? policy = null,
+                    byte[]? payload = null,
+                    string? contentType = null,
                     DataEncoding dataEncoding = DataEncoding.JSON,
-                    byte[] cloaked = null,
-                    List<byte[]> dataSequences = null,
+                    byte[]? cloaked = null,
+                    List<byte[]>? dataSequences = null,
                     bool decrypt=true) {
         var sequence = MakeNewSequence(jbcdStream, decrypt, sequenceType: sequenceType);
         var sequenceHeaderFirst = sequence.HeaderFirst;
@@ -574,6 +577,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// <param name="sequenceType">The sequence type. This determines whether
     /// a tree index is to be created or not and if so, whether </param>
     /// <returns>The newly constructed sequence.</returns>
+    /// <param name="decrypt">If true, decrypt the container payload contents.</param>
     public static Sequence MakeNewSequence(
                     JbcdStream jbcdStream,
                     bool decrypt,

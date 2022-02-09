@@ -570,6 +570,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <param name="name">The store to open.</param>
     /// <param name="blind">If true, only the sequence header values are read</param>
+    /// <param name="decrypt">If true, decrypt the store contents on access.</param>
     /// <returns>The <see cref="Store"/> instance.</returns>
     public Store GetStore(string name, 
                 bool blind = false, 
@@ -601,8 +602,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="name">The name of the store to bind.</param>
     /// <param name="darePolicy">Policy to be applied to the store.</param>
     /// <returns>The store instance.</returns>
+    /// <param name="decrypt">If true, attempt decryption of payload contents.</param>
     protected Store MakeStore(string name, 
-                DarePolicy darePolicy = null,
+                DarePolicy? darePolicy = null,
                 bool decrypt=true) {
 
         //// special case this for now

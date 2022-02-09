@@ -28,6 +28,14 @@
         <member name="P:Goedel.Cryptography.Core.KeyCollectionCore.DirectoryMesh">
             <summary>Directory in which to store Mesh application data.</summary> 
         </member>
+        <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.#ctor(System.String)">
+            <summary>
+            Constructor returning an instance. If not-null, <paramref name="directory"/>
+            overrides the location of the key stores. This may be used in testing or to enable 
+            a key store belonging to a different user to be mounted.
+            </summary>
+            <param name="directory">If not, null, specifies directory in which the </param>
+        </member>
         <member name="M:Goedel.Cryptography.Core.KeyCollectionCore.Persist(System.String,Goedel.Cryptography.PKIX.IPKIXPrivateKey,System.Boolean)">
             <inheritdoc/>
         </member>

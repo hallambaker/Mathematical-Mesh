@@ -2142,6 +2142,9 @@
         <member name="P:Goedel.Mesh.Catalog`1.AsCatalogedType">
             <summary>Enumerate the catalog as the cataloged type.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Catalog`1.DictionaryByLocalName">
+            <summary>Dictionary mapping local names to the corresponding catalog entries.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Catalog`1.Disposing">
             <summary>
             Disposal method, disposes the underlying persistence store if defined.
@@ -2186,7 +2189,14 @@
             Callback called before deleting an entry from the catalog. May be overriden in 
             derrived classes to update local indexes.
             </summary>
-            <param name="Key">The entry being deleted.</param>
+            <param name="key">The entry being deleted.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog`1.UpdateLocal(Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Update the value of <paramref name="catalogedEntry"/> in local storage.
+            (i.e. append it to the log file).
+            </summary>
+            <param name="catalogedEntry">The value to update.</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.Apply(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
@@ -2396,11 +2406,10 @@
             <param name="catalogedEntry">The entry being added.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogAccess.UpdateEntry(Goedel.Mesh.CatalogedAccess)">
-            <summary>
-            Callback called before updating an entry in the catalog. Overriden to update the values
-            in the dictionaries serving key discovery.
-            </summary>
-            <param name="catalogedEntry">The entry being updated.</param>
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogAccess.UpdateLocal(Goedel.Mesh.CatalogedEntry)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogAccess.MakeActivation(Goedel.Mesh.Right,Goedel.Cryptography.KeyPairAdvanced,System.String,Goedel.Mesh.ITransactContextAccount)">
             <summary>
@@ -2915,7 +2924,7 @@
             <summary>Dictionary mapping email addresses to contacts.</summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogContact.ContainerDefault">
-            <summary>The catalog label</summary>
+            <inheritdoc/>
         </member>
         <member name="F:Goedel.Mesh.CatalogContact.DictionaryDecryptByKeyId">
             <summary>Dictionary for locating capabilities for use.</summary>
@@ -2948,18 +2957,13 @@
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.NewEntry(Goedel.Mesh.CatalogedContact)">
-            <summary>
-            Callback called before adding a new entry to the catalog. Overriden to update the values
-            in <see cref="P:Goedel.Mesh.CatalogContact.DictionaryByNetworkAddress"/>.
-            </summary>
-            <param name="catalogedEntry">The entry being added.</param>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.UpdateEntry(Goedel.Mesh.CatalogedContact)">
-            <summary>
-            Callback called before updating an entry in the catalog. Overriden to update the values
-            in <see cref="P:Goedel.Mesh.CatalogContact.DictionaryByNetworkAddress"/>.
-            </summary>
-            <param name="catalogedEntry">The entry being added.</param>
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogContact.UpdateLocal(Goedel.Mesh.CatalogedEntry)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.Update(Goedel.Mesh.CatalogedContact)">
             <summary>
@@ -3602,6 +3606,15 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogedCredential._PrimaryKey">
             <summary>The primary key is protocol:site </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedCredential.GetKey(System.String,System.String)">
+            <summary>
+            Return a key for the credential to be used to connect to <paramref name="service"/>
+            via <paramref name="protocol"/>.
+            </summary>
+            <param name="protocol">The protocol to use to make the connection.</param>
+            <param name="service">The service to connect to.</param>
+            <returns>The credential key.</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedCredential.ToString">
             <summary>
@@ -4253,6 +4266,12 @@
             <param name="protocol">The protocol name.</param>
             <param name="service">The service name</param>
             <returns>The computed primary key.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedNetwork.Describe(System.Text.StringBuilder,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedNetwork.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CatalogedNetwork.Protocol">
             <summary>
@@ -6708,6 +6727,10 @@
             </summary>
             <param name="filepath">The file path to translate.</param>
             <returns>The translated file path.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.IMeshMachine.Instance">
+            <summary>The machine instance. May be used to run multiple machine instances on the 
+            same host for testing, etc.</summary> 
         </member>
         <member name="P:Goedel.Mesh.IMeshMachine.DirectoryMesh">
             <summary>The directory the Mesh data is stored in.</summary>

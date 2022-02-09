@@ -22,14 +22,20 @@
 
 //  
 
-using System.Threading;
+using System.Net;
 using System.Threading.Tasks;
 namespace Goedel.Protocol;
 
 
 
 
-
+/// <summary>
+/// A configuration entry for a service.
+/// </summary>
+/// <param name="Name">The name used to describe the configuration in the options file.</param>
+/// <param name="Type">The type to which the configuration data is bound.</param>
+/// <param name="Discovery">For a network service, specifies the DNS discovery prefix.</param>
+/// <param name="WellKnown">For a network service, specifies the HTTP .well-known prefix</param>
 public record struct ConfigurationEntry (
             string Name, 
             Type Type,
@@ -48,49 +54,65 @@ public record struct ConfigurationEntry (
 /// </summary>
 public class GenericHostConfiguration {
 
+    static int defaultPort = 15099;
 
-    public readonly static ConfigurationEntry ConfigurationEntry = 
-            new ConfigurationEntry ("Host", typeof (GenericHostConfiguration));
+    ///<summary>The configuration entry.</summary> 
+    public readonly static ConfigurationEntry ConfigurationEntry =
+            new ("Host", typeof(GenericHostConfiguration));
 
+    ///<summary>The platform account under which the host process is to run.</summary> 
     public string? RunAs { get; set; } = null;
 
+    ///<summary>Service description (for logging)</summary> 
     public string? Description { get; set; } = null;
 
+    ///<summary>The Host profile fingerprint.</summary> 
     public string? HostUdf { get; set; } = null;
 
+    ///<summary>The Device profile fingerprint</summary> 
     public string? DeviceUdf { get; set; } = null;
-
-
 
     ///<summary>Host DNS address</summary> 
     public string? HostDns { get; set; } = null;
 
     ///<summary>The IP address and port numbers</summary> 
-    public List<string> IP { get; set; } = new() ;
-
-
-
+    public List<string> IP { get; set; } = new();
 
 
     ///<summary>The maximum number of cores, if zero, all cores on the machine
     ///are used.</summary> 
     public int MaxCores { get; set; } = 0;
 
-
+    ///<summary>Service instance specifier, used to run multiple hosts on one machine 
+    ///for testing, etc.</summary> 
     public string Instance { get; set; } = null!;
 
-    public int Port = 15099;
+    ///<summary>The port number.</summary> 
+    public int Port => GetPort();
 
-
-
+    int GetPort() {
+        if (IP == null || IP.Count == 0) {
+            return defaultPort;
+            }
+        if (IPEndPoint.TryParse(IP[0], out var endpoint)) {
+            return endpoint.Port == 0 ? defaultPort : endpoint.Port;
+            }
+        return defaultPort;
+        }
 
     }
 
 
-
+/// <summary>
+/// Service listener interface for dependency injection selection.
+/// </summary>
 public interface IServiceListener {
 
-
+    /// <summary>
+    /// Start the listener.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation, listener will abort when triggered.</param>
+    /// <returns>The listener task.</returns>
     Task StartAsync(
         CancellationToken cancellationToken
         );

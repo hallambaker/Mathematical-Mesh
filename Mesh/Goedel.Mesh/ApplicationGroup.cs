@@ -76,9 +76,9 @@ public partial class CatalogedGroup {
 
     ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileGroup"/>
     ///to return the <see cref="ProfileUser"/> value.</summary>
-    public ProfileGroup ProfileGroup => profileGroup ??
+    public ProfileGroup? ProfileGroup => profileGroup ??
                 (EnvelopedProfileGroup.Decode(KeyCollection) as ProfileGroup).CacheValue(out profileGroup);
-    ProfileGroup profileGroup;
+    ProfileGroup? profileGroup;
 
     ActivationAccount ActivationAccount { get; set; }
 

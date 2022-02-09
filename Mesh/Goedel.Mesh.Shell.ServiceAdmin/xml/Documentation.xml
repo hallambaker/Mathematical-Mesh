@@ -607,5 +607,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.Configuration">
+            <summary>The service/host configuration.</summary> 
+        </member>
     </members>
 </doc>

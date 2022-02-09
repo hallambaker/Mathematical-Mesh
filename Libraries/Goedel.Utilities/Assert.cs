@@ -225,7 +225,7 @@ public static class Assert {
     /// is not null and is strictly less than the current time in which case the value 
     /// <code>null</code> is returned. 
     ///</returns>
-    public static T Expired<T>(this DateTime? expiry, T value) {
+    public static T? Expired<T>(this DateTime? expiry, T value) {
         if (expiry == null) {
             return value;
             }
@@ -245,7 +245,7 @@ public static class Assert {
     /// <param name="Value">The value to be stored.</param>
     /// <param name="Store">The store that the value is to be written to.</param>
     /// <returns>The stored value.</returns>
-    public static T CacheValue<T>(this T Value, out T Store) where T : class {
+    public static T CacheValue<T>(this T Value, out T Store) where T : class? {
         Store = Value;
         return Value;
         }

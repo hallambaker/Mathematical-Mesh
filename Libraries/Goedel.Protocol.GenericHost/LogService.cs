@@ -1,27 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Goedel.Protocol.Service;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using Goedel.Protocol.Service;
 
-namespace Goedel.Protocol.GenericHost;
-using Microsoft.Extensions.Logging;
-public class LogServiceGeneric : LogService {
+//namespace Goedel.Protocol.GenericHost;
+//using Microsoft.Extensions.Logging;
 
-
-    public LogServiceGeneric(
-            GenericHostConfiguration genericHostConfiguration,
-            GenericServiceConfiguration meshHostConfiguration,
-            HostMonitor hostMonitor,
-            ILogger logger,
-            long first = 0) : base(
-                genericHostConfiguration, meshHostConfiguration, hostMonitor, first) {
+///// <summary>
+///// Log 
+///// </summary>
+//public class LogServiceGeneric : LogService {
 
 
+//    public LogServiceGeneric(
+//            GenericHostConfiguration genericHostConfiguration,
+//            ServiceConfiguration meshHostConfiguration,
+//            HostMonitor hostMonitor,
+//            ILogger logger,
+//            long first = 0) : base(
+//                genericHostConfiguration, meshHostConfiguration, hostMonitor, first) {
 
 
-        }
+
+
+//        }
     
     
-    }
+//    }

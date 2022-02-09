@@ -30,7 +30,6 @@ public partial class ContextUser {
     /// <paramref name="merge"/> is true, merge this contact information.
     /// </summary>
     /// <param name="fileName">The file to fetch the contact data from.</param>
-    /// <param name="self">If true, contact data corresponds to this user.</param>
     /// <param name="localName">Short name for the contact to distinguish it from
     /// others.</param>
     /// <param name="merge">Add this data to the existing contact.</param>
@@ -40,9 +39,9 @@ public partial class ContextUser {
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
-                string localName = null) {
+                string? localName = null) {
         merge.Future();
-        localName.Future();
+        localName?.Future();
 
         using var transaction = TransactBegin();
         var catalog = transaction.GetCatalogBookmark();
@@ -71,9 +70,9 @@ public partial class ContextUser {
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
-                string localName = null) {
+                string? localName = null) {
         merge.Future();
-        localName.Future();
+        localName?.Future();
 
         using var transaction = TransactBegin();
         var catalog = transaction.GetCatalogCredential();
@@ -104,9 +103,9 @@ public partial class ContextUser {
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
-                string localName = null) {
+                string? localName = null) {
         merge.Future();
-        localName.Future();
+        localName?.Future();
 
         using var transaction = TransactBegin();
         var catalog = transaction.GetCatalogContact();
@@ -134,9 +133,9 @@ public partial class ContextUser {
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
-                string localName = null) {
+                string? localName = null) {
         merge.Future();
-        localName.Future();
+        localName?.Future();
 
         using var transaction = TransactBegin();
         var catalog = transaction.GetCatalogNetwork();
@@ -169,9 +168,9 @@ public partial class ContextUser {
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
-                string localName = null) {
+                string? localName = null) {
         merge.Future();
-        localName.Future();
+        localName?.Future();
 
         using var transaction = TransactBegin();
         var catalog = transaction.GetCatalogCalendar();
@@ -200,11 +199,11 @@ public partial class ContextUser {
                 string fileName,
                 CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                 bool merge = true,
-                string localName = null) {
+                string? localName = null) {
 
 
         merge.Future();
-        localName.Future();
+        localName?.Future();
 
         using var transaction = TransactBegin();
         var catalog = transaction.GetCatalogApplication();

@@ -8598,10 +8598,6 @@
             <param name="obj">The secret to test against</param>
             <returns>true if the parameter has the same key value, false otherwise.</returns>
         </member>
-        <member name="F:Goedel.Cryptography.SharedSecret.PrimeValues">
-            <summary>The set of prime offset values to be added to 32^(n) to give the
-            discrete modulus for secrets of up to 32n bits.</summary>
-        </member>
         <member name="F:Goedel.Cryptography.SharedSecret.PrimeOffsetNext">
             <summary>The set of prime offset values to be added to 8^(n) to give the
             discrete modulus for secrets of up to 8n bits.</summary>

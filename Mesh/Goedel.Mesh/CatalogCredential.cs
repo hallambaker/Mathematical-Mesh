@@ -55,14 +55,14 @@ public class CatalogCredential : Catalog<CatalogedCredential> {
     /// <param name="meshClient">Means of obtaining a Mesh Client.</param>
     public static new Store Factory(
             string directory,
-                string storeId,
-                IMeshClient meshClient = null,
-                DarePolicy policy = null,
-                CryptoParameters cryptoParameters = null,
-                IKeyCollection keyCollection = null,
+                string? storeId,
+                IMeshClient? meshClient = null,
+                DarePolicy? policy = null,
+                CryptoParameters? cryptoParameters = null,
+                IKeyCollection? keyCollection = null,
                 bool decrypt = true,
                 bool create = true) {
-        meshClient.Future();
+        meshClient?.Future();
         return new CatalogCredential(directory, storeId, policy, cryptoParameters, keyCollection, decrypt, create);
         }
 
@@ -80,10 +80,10 @@ public class CatalogCredential : Catalog<CatalogedCredential> {
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
     public CatalogCredential(
                 string directory,
-                string storeName = null,
-                DarePolicy policy = null,
-                CryptoParameters cryptoParameters = null,
-                IKeyCollection keyCollection = null,
+                string? storeName = null,
+                DarePolicy? policy = null,
+                CryptoParameters? cryptoParameters = null,
+                IKeyCollection? keyCollection = null,
                 bool decrypt = true,
                 bool create = true) :
         base(directory, storeName ?? Label,
@@ -103,7 +103,7 @@ public class CatalogCredential : Catalog<CatalogedCredential> {
     /// </summary>
     /// <param name="key">The service to be matched.</param>
     /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
-    public CatalogedCredential GetCredentialByService(string key) {
+    public CatalogedCredential? GetCredentialByService(string key) {
         foreach (var credential in AsCatalogedType) {
             if (credential.Service == key) {
                 return credential;
@@ -129,8 +129,14 @@ public partial class CatalogedCredential {
     #endregion
     #region // Override methods
 
-
-    public static string GetKey(string protocol, string service) => $"{protocol ?? ""}:{service ?? ""}";
+    /// <summary>
+    /// Return a key for the credential to be used to connect to <paramref name="service"/>
+    /// via <paramref name="protocol"/>.
+    /// </summary>
+    /// <param name="protocol">The protocol to use to make the connection.</param>
+    /// <param name="service">The service to connect to.</param>
+    /// <returns>The credential key.</returns>
+    public static string GetKey(string? protocol, string? service) => $"{protocol ?? ""}:{service ?? ""}";
 
     /// <summary>
     /// Converts the value of this instance to a <see langword="String"/>.

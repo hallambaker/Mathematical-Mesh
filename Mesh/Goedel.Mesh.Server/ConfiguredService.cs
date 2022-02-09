@@ -1,22 +1,18 @@
-﻿using Goedel.Protocol.GenericHost;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Goedel.Mesh.ServiceAdmin;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Goedel.Protocol.GenericHost;
+﻿
 
 namespace Goedel.Mesh.Server;
 
 
-
+/// <summary>
+/// Extensions class for adding a Mesh Service Provider to a host.
+/// </summary>
 public static class ConsoleLoggerExtensions {
+
+    /// <summary>
+    /// Inject Mesh service and options to the builder <paramref name="host"/>
+    /// </summary>
+    /// <param name="host">The service to inject.</param>
+    /// <returns>The value of <paramref name="host"/> for chaining.</returns>
 
     public static IHostBuilder AddMeshService(this IHostBuilder host) {
 
@@ -41,7 +37,9 @@ public static class ConsoleLoggerExtensions {
 
 
 
-
+/// <summary>
+/// A Mesh service provider in a form suited for dependency injection.
+/// </summary>
 public class MeshConfiguredService : IConfguredService {
 
 
@@ -65,7 +63,15 @@ public class MeshConfiguredService : IConfguredService {
 
 
 
-
+    /// <summary>
+    /// Mesh service provider instance configured with options specifie in 
+    /// <paramref name="meshHostConfiguration"/> and <paramref name="genericHostConfiguration"/>.
+    /// </summary>
+    /// <param name="logger">The system logger service.</param>
+    /// <param name="meshMachine">The Mesh machine instance.</param>
+    /// <param name="hostMonitor">The host monitor for tracking host load and performance.</param>
+    /// <param name="meshHostConfiguration">The Mesh service configuration.</param>
+    /// <param name="genericHostConfiguration">The host configuration.</param>
     public MeshConfiguredService(
                 ILogger<ManagedListener> logger,
                 IMeshMachine meshMachine,
@@ -85,8 +91,8 @@ public class MeshConfiguredService : IConfguredService {
         MeshHostConfiguration = meshHostConfiguration.CurrentValue;
         GenericHostConfiguration = genericHostConfiguration.CurrentValue;
 
-        var transactionLogger = new LogServiceGeneric
-            (GenericHostConfiguration, MeshHostConfiguration, hostMonitor, logger);
+        var transactionLogger = new LogService
+            (GenericHostConfiguration, MeshHostConfiguration, hostMonitor);
 
         PublicMeshService = new PublicMeshService(MeshMachine, 
             GenericHostConfiguration, MeshHostConfiguration, transactionLogger);

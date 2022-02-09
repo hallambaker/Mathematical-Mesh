@@ -35,21 +35,16 @@ public class CatalogContact : Catalog<CatalogedContact> {
     ///<summary>The canonical label for the catalog</summary>
     public const string Label = MeshConstants.MMM_Contact;
 
-    //public CatalogedContact Self { get; set; }
-
     ///<summary>Dictionary mapping email addresses to contacts.</summary>
     public Dictionary<string, NetworkProtocolEntry> DictionaryByNetworkAddress { get; set; } =
                 new Dictionary<string, NetworkProtocolEntry>();
 
-
-    ///<summary>The catalog label</summary>
+    ///<inheritdoc/>
     public override string ContainerDefault => Label;
-
 
     ///<summary>Dictionary for locating capabilities for use.</summary>
     public Dictionary<string, CapabilityDecrypt> DictionaryDecryptByKeyId =
             new();
-
 
     #endregion
     #region // Factory methods and constructors
@@ -100,24 +95,16 @@ public class CatalogContact : Catalog<CatalogedContact> {
         }
     #endregion
     #region // Override methods
-    /// <summary>
-    /// Callback called before adding a new entry to the catalog. Overriden to update the values
-    /// in <see cref="DictionaryByNetworkAddress"/>.
-    /// </summary>
-    /// <param name="catalogedEntry">The entry being added.</param>
+    ///<inheritdoc/>
     public override void NewEntry(CatalogedContact catalogedEntry) => UpdateLocal(catalogedEntry);
 
-    /// <summary>
-    /// Callback called before updating an entry in the catalog. Overriden to update the values
-    /// in <see cref="DictionaryByNetworkAddress"/>.
-    /// </summary>
-    /// <param name="catalogedEntry">The entry being added.</param>
+    ///<inheritdoc/>
     public override void UpdateEntry(CatalogedContact catalogedEntry) => UpdateLocal(catalogedEntry);
 
     #endregion
     #region // Class methods
 
-
+    ///<inheritdoc/>
     public override void UpdateLocal(CatalogedEntry catalogedEntry) {
 
         base.UpdateLocal(catalogedEntry);
