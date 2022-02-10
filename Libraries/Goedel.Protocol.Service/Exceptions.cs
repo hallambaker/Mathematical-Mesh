@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 08-Feb-22 6:25:58 PM
+//  This file was automatically generated at 10-Feb-22 4:59:57 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.795
+//  Generator:  exceptional version 3.0.0.835
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -93,19 +93,19 @@ public  static partial class EventExtensions {
         _ServiceStart = LoggerMessage.Define<string>(
             LogLevel.Information, new EventId(3, nameof(_ServiceStart)),
             "Starting service {ServiceName}");
-        _ServiceEnd = LoggerMessage.Define(
+        _ServiceEnd = LoggerMessage.Define<string>(
             LogLevel.Information, new EventId(4, nameof(_ServiceEnd)),
-            "Ending listener");
-        _TransactionStart = LoggerMessage.Define<int,string>(
+            "Ending listener {ServiceName}");
+        _TransactionStart = LoggerMessage.Define<long,string>(
             LogLevel.Debug, new EventId(5, nameof(_TransactionStart)),
             "Starting transation {TransactionId} {TransactionMethod}");
-        _TransactionCompleted = LoggerMessage.Define<int,string>(
+        _TransactionCompleted = LoggerMessage.Define<long,string>(
             LogLevel.Information, new EventId(6, nameof(_TransactionCompleted)),
             "Transaction completed {TransactionId} {TransactionMethod}");
-        _TransactionFailed = LoggerMessage.Define<int,string>(
+        _TransactionFailed = LoggerMessage.Define<long,string>(
             LogLevel.Warning, new EventId(1000, nameof(_TransactionFailed)),
             "Transaction failed {TransactionId} {TransactionMethod}");
-        _TransactionUnauthorized = LoggerMessage.Define<int,string>(
+        _TransactionUnauthorized = LoggerMessage.Define<long,string>(
             LogLevel.Warning, new EventId(1001, nameof(_TransactionUnauthorized)),
             "Transaction not authorized {TransactionId} {TransactionMethod}");
         _TransactionNotSupported = LoggerMessage.Define<string>(
@@ -126,9 +126,11 @@ public  static partial class EventExtensions {
     /// Write an event of type ListenerStart to <paramref name="logger"/> 
     /// </summary>
     /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void ListenerStart(
-			this ILogger logger) {
-        _ListenerStart(logger, null);
+			this ILogger logger,
+			Exception _exception=null) {
+        _ListenerStart(logger, _exception);
         }
 
 
@@ -138,9 +140,11 @@ public  static partial class EventExtensions {
     /// Write an event of type ListenerEnd to <paramref name="logger"/> 
     /// </summary>
     /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void ListenerEnd(
-			this ILogger logger) {
-        _ListenerEnd(logger, null);
+			this ILogger logger,
+			Exception _exception=null) {
+        _ListenerEnd(logger, _exception);
         }
 
 
@@ -151,26 +155,32 @@ public  static partial class EventExtensions {
     /// </summary>
     /// <param name="logger">The logger to write the output to.</param>
 	/// <param name="serviceName">The service name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void ServiceStart(
 			this ILogger logger,
-			string serviceName) {
-        _ServiceStart(logger, serviceName, null);
+			string serviceName,
+			Exception _exception=null) {
+        _ServiceStart(logger, serviceName, _exception);
         }
 
 
-    private static readonly Action<ILogger, Exception> _ServiceEnd;
+    private static readonly Action<ILogger, string, Exception> _ServiceEnd;
 
 	/// <summary>
     /// Write an event of type ServiceEnd to <paramref name="logger"/> 
     /// </summary>
     /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="serviceName">The service name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void ServiceEnd(
-			this ILogger logger) {
-        _ServiceEnd(logger, null);
+			this ILogger logger,
+			string serviceName,
+			Exception _exception=null) {
+        _ServiceEnd(logger, serviceName, _exception);
         }
 
 
-    private static readonly Action<ILogger, int, string, Exception> _TransactionStart;
+    private static readonly Action<ILogger, long, string, Exception> _TransactionStart;
 
 	/// <summary>
     /// Write an event of type TransactionStart to <paramref name="logger"/> 
@@ -178,15 +188,17 @@ public  static partial class EventExtensions {
     /// <param name="logger">The logger to write the output to.</param>
 	/// <param name="transactionId">Transaction identifier</param>
 	/// <param name="method">The transaction method</param>
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void TransactionStart(
 			this ILogger logger,
-			int transactionId,
-			string method) {
-        _TransactionStart(logger, transactionId, method, null);
+			long transactionId,
+			string method,
+			Exception _exception=null) {
+        _TransactionStart(logger, transactionId, method, _exception);
         }
 
 
-    private static readonly Action<ILogger, int, string, Exception> _TransactionCompleted;
+    private static readonly Action<ILogger, long, string, Exception> _TransactionCompleted;
 
 	/// <summary>
     /// Write an event of type TransactionCompleted to <paramref name="logger"/> 
@@ -194,15 +206,17 @@ public  static partial class EventExtensions {
     /// <param name="logger">The logger to write the output to.</param>
 	/// <param name="transactionId">Transaction identifier</param>
 	/// <param name="method">The transaction method</param>
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void TransactionCompleted(
 			this ILogger logger,
-			int transactionId,
-			string method) {
-        _TransactionCompleted(logger, transactionId, method, null);
+			long transactionId,
+			string method,
+			Exception _exception=null) {
+        _TransactionCompleted(logger, transactionId, method, _exception);
         }
 
 
-    private static readonly Action<ILogger, int, string, Exception> _TransactionFailed;
+    private static readonly Action<ILogger, long, string, Exception> _TransactionFailed;
 
 	/// <summary>
     /// Write an event of type TransactionFailed to <paramref name="logger"/> 
@@ -210,15 +224,17 @@ public  static partial class EventExtensions {
     /// <param name="logger">The logger to write the output to.</param>
 	/// <param name="transactionId">Transaction identifier</param>
 	/// <param name="method">The transaction method</param>
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void TransactionFailed(
 			this ILogger logger,
-			int transactionId,
-			string method) {
-        _TransactionFailed(logger, transactionId, method, null);
+			long transactionId,
+			string method,
+			Exception _exception=null) {
+        _TransactionFailed(logger, transactionId, method, _exception);
         }
 
 
-    private static readonly Action<ILogger, int, string, Exception> _TransactionUnauthorized;
+    private static readonly Action<ILogger, long, string, Exception> _TransactionUnauthorized;
 
 	/// <summary>
     /// Write an event of type TransactionUnauthorized to <paramref name="logger"/> 
@@ -226,11 +242,13 @@ public  static partial class EventExtensions {
     /// <param name="logger">The logger to write the output to.</param>
 	/// <param name="transactionId">Transaction identifier</param>
 	/// <param name="method">The transaction method</param>
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void TransactionUnauthorized(
 			this ILogger logger,
-			int transactionId,
-			string method) {
-        _TransactionUnauthorized(logger, transactionId, method, null);
+			long transactionId,
+			string method,
+			Exception _exception=null) {
+        _TransactionUnauthorized(logger, transactionId, method, _exception);
         }
 
 
@@ -241,10 +259,12 @@ public  static partial class EventExtensions {
     /// </summary>
     /// <param name="logger">The logger to write the output to.</param>
 	/// <param name="method">The transaction method</param>
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void TransactionNotSupported(
 			this ILogger logger,
-			string method) {
-        _TransactionNotSupported(logger, method, null);
+			string method,
+			Exception _exception=null) {
+        _TransactionNotSupported(logger, method, _exception);
         }
 
 
@@ -255,10 +275,12 @@ public  static partial class EventExtensions {
     /// </summary>
     /// <param name="logger">The logger to write the output to.</param>
 	/// <param name="method">The transaction method</param>
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void TransactionUnknown(
 			this ILogger logger,
-			string method) {
-        _TransactionUnknown(logger, method, null);
+			string method,
+			Exception _exception=null) {
+        _TransactionUnknown(logger, method, _exception);
         }
 
 
@@ -268,9 +290,11 @@ public  static partial class EventExtensions {
     /// Write an event of type UnhandledException to <paramref name="logger"/> 
     /// </summary>
     /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="_exception">Exception (if thrown)</param>
     public static void UnhandledException(
-			this ILogger logger) {
-        _UnhandledException(logger, null);
+			this ILogger logger,
+			Exception _exception=null) {
+        _UnhandledException(logger, _exception);
         }
 
 	}

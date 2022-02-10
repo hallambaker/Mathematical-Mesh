@@ -741,6 +741,16 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Command.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Command.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
         <member name="T:Goedel.Command.FileTools">
             <summary>
             Utility class for managing files.

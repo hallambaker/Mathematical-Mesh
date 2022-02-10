@@ -890,6 +890,16 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.ASN.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.ASN.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
         <member name="T:Goedel.ASN.NamespaceDoc">
             <summary>
             Support library for ASN.1 encoding and decoding using the ASN tool.

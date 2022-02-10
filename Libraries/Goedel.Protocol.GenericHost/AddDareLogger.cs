@@ -13,34 +13,19 @@ namespace Goedel.Protocol.GenericHost;
 public static partial class ConsoleLoggerExtensions {
 
     /// <summary>
-    /// Add a hosted console logger.
-    /// </summary>
-    /// <param name="builder">The host builder</param>
-    /// <returns>The value of <paramref name="builder"/> for chaining.</returns>
-    public static IHostBuilder AddListenerHosted(this IHostBuilder builder) {
-
-        builder.ConfigureServices((hostContext, services) => {
-            services.AddSingleton<IHostedService, ManagedListener>();
-        });
-
-        return builder;
-        }
-
-
-    /// <summary>
     /// Add a console logger to <paramref name="builder"/>
     /// </summary>
     /// <param name="builder"></param>
     /// <returns>The value of <paramref name="builder"/> for chaining.</returns>
-    public static ILoggingBuilder AddConsoleLogger(
+    public static ILoggingBuilder AddDareLogger(
         this ILoggingBuilder builder) {
         builder.AddConfiguration();
 
         builder.Services.TryAddEnumerable(
-            ServiceDescriptor.Singleton<ILoggerProvider, ConsoleLoggerProvider>());
+            ServiceDescriptor.Singleton<ILoggerProvider, DareLoggerProvider>());
 
         LoggerProviderOptions.RegisterProviderOptions
-            <ConsoleLoggerConfiguration, ConsoleLoggerProvider>(builder.Services);
+            <DareLoggerConfiguration, DareLoggerProvider>(builder.Services);
 
         return builder;
         }
@@ -51,10 +36,9 @@ public static partial class ConsoleLoggerExtensions {
     /// <param name="builder"></param>
     /// <param name="configure">The configure actions.</param>
     /// <returns>The value of <paramref name="builder"/> for chaining.</returns>
-    public static ILoggingBuilder AddConsoleLogger(
+    public static ILoggingBuilder AddDareLogger(
         this ILoggingBuilder builder,
-        Action<ConsoleLoggerConfiguration> configure) {
-
+        Action<DareLoggerConfiguration> configure) {
         builder.AddConsoleLogger();
         builder.Services.Configure(configure);
 

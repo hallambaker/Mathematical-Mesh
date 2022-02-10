@@ -38,21 +38,25 @@ public class ManagedListener : IHostedService {
 
     ///<inheritdoc/>
     public Task StartAsync(CancellationToken cancellationToken) {
-        Logger.Log(Event.StartListener);
+        //Logger.Log(Event.StartListener);
+        Logger.ListenerStart();
         AppLifetime.ApplicationStarted.Register(() => {
             Task.Run(async () => {
                 try {
                     await ServiceDispatch.StartAsync(cancellationToken);
                     }
                 catch (Exception ex) {
-                    Logger.Log(Event.UnhandledException, ex);
+                    Logger.UnhandledException(ex);
+
+                    //Logger.Log(Event.UnhandledException, ex);
                     }
                 finally {
                     AppLifetime.StopApplication();
                     }
             });
         });
-        Logger.Log(Event.EndListener);
+        Logger.ListenerEnd();
+        //Logger.Log(Event.EndListener);
         return Task.CompletedTask;
         }
 

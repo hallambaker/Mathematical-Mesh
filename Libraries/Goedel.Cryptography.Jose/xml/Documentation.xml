@@ -502,6 +502,16 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Cryptography.Jose.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
         <member name="T:Goedel.Cryptography.Jose.Extensions">
             <summary>Static class containing convenience functions</summary>
         </member>

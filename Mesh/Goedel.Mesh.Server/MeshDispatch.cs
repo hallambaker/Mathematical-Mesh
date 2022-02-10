@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Protocol.Service;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text;
@@ -86,6 +87,8 @@ public class PublicMeshService : MeshService {
     public LogService LogService { get; }
 
 
+    ILogger Logger => LogService.Logger;
+
     ///<summary>The service endpoints</summary> 
     public List<Endpoint> Endpoints { get; } = new();
 
@@ -99,7 +102,7 @@ public class PublicMeshService : MeshService {
     ///<inheritdoc/>
     protected override void Disposing() {
 
-        LogService.Log(Event.EndService, PublicMeshService.WellKnown);
+        Logger.ServiceEnd(PublicMeshService.WellKnown);
 
         MeshPersist.Dispose();
         base.Disposing();
@@ -125,9 +128,7 @@ public class PublicMeshService : MeshService {
         MeshHostConfiguration = meshHostConfiguration;
         KeyCollection = MeshMachine.KeyCollection;
 
-
-        LogService.Log(Event.StartService, PublicMeshService.WellKnown);
-
+        Logger.ServiceStart(PublicMeshService.WellKnown);
 
         // Load the Mesh persistence base
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
@@ -350,6 +351,9 @@ public class PublicMeshService : MeshService {
         hostConfiguration.DeviceUdf = profileHost.Udf;
 
         var logService = new LogService(hostConfiguration, serviceConfiguration, null);
+        logService.Logger ??= DareLogger.Factory("MeshHost");
+
+
         // Initialize the persistence store.
         //var meshPersist = new MeshPersist(hostConfiguration.Path, FileStatus.OpenOrCreate);
 

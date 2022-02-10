@@ -15,23 +15,23 @@ Namespace Goedel.Protocol.Service
 	Information 3 ServiceStart "Starting service {ServiceName}"
 		serviceName string "The service name"
 
-	Information 4 ServiceEnd "Ending listener"
-
+	Information 4 ServiceEnd "Ending listener {ServiceName}"
+		serviceName string "The service name"
 
 	Debug 5 TransactionStart  "Starting transation {TransactionId} {TransactionMethod}"
-		transactionId int "Transaction identifier"
+		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
 	Information 6 TransactionCompleted "Transaction completed {TransactionId} {TransactionMethod}"
-		transactionId int "Transaction identifier"
+		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
 	Warning 1000 TransactionFailed "Transaction failed {TransactionId} {TransactionMethod}"
-		transactionId int "Transaction identifier"
+		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
 	Warning 1001 TransactionUnauthorized "Transaction not authorized {TransactionId} {TransactionMethod}"	
-		transactionId int "Transaction identifier"
+		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
 	Warning 1002 TransactionNotSupported "Transaction not supported {TransactionMethod}"	

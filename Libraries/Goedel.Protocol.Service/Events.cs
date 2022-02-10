@@ -128,25 +128,23 @@ public static class Event {
 
 
 
-    private static readonly Action<ILogger, Exception> indexPageRequested;
+    //private static readonly Action<ILogger, Exception> indexPageRequested;
 
-    static Event() {
+    //static Event() {
 
-        indexPageRequested = LoggerMessage.Define(
-            LogLevel.Information,
-            new EventId(1, nameof(IndexPageRequested)),
-            "GET request for Index page");
-            }
+    //    indexPageRequested = LoggerMessage.Define(
+    //        LogLevel.Information,
+    //        new EventId(1, nameof(IndexPageRequested)),
+    //        "GET request for Index page");
+    //        }
 
-    /// <summary>
-    /// Write an event of type #{event.Name} to the <paramref name="logger"/>
-    /// </summary>
-    /// <param name="logger"></param>
-    public static void IndexPageRequested(this ILogger logger) {
-        indexPageRequested(logger, null);
-        }
-
-
+    ///// <summary>
+    ///// Write an event of type #{event.Name} to the <paramref name="logger"/>
+    ///// </summary>
+    ///// <param name="logger"></param>
+    //public static void IndexPageRequested(this ILogger logger) {
+    //    indexPageRequested(logger, null);
+    //    }
 
 
 
@@ -157,50 +155,52 @@ public static class Event {
 
 
 
-    ///<summary>Starting listener</summary> 
-    public static readonly FatEvent StartListener = 
-        new(LogLevel.Information, 1, Resources.StartListener, "Starting listener");
-
-    ///<summary>Ending listener</summary> 
-    public static readonly FatEvent EndListener =
-        new(LogLevel.Information, 2, Resources.EndListener, "Ending listener");
-
-    ///<summary>Starting service</summary> 
-    public static readonly FatEvent StartService =
-        new(LogLevel.Information, 3, Resources.StartService, "Starting service {ServiceName}");
-
-    ///<summary>Ending service</summary> 
-    public static readonly FatEvent EndService =
-        new(LogLevel.Information, 4, Resources.EndService, "Ending service {ServiceName}");
-
-    ///<summary>Starting transation</summary> 
-    public static readonly FatEvent StartTransaction =
-        new(LogLevel.Trace, 5, Resources.StartTransaction, "Starting transation {TransactionId} {TransactionMethod}");
-
-    ///<summary>Completed transation</summary> 
-    public static readonly FatEvent EndTransaction =
-        new(LogLevel.Information, 6, Resources.EndTransaction, "Completed transation {TransactionId} {TransactionMethod}");
-
-    ///<summary>Completed transation</summary> 
-    public static readonly FatEvent FailTransaction =
-        new(LogLevel.Information, 7, Resources.FailTransaction, "Failed transation {TransactionId} {TransactionMethod}");
-
-    /////<summary>Hello World</summary> 
-    //public static readonly FatEvent HelloWorld = new(LogLevel.Information, 2,
-    //    Resources.StartTransaction, "Hello World!");
-
-    ///<summary>Unhandled Exception</summary> 
-    public static readonly FatEvent UnhandledException = new(LogLevel.Error, 1000,
-        Resources.UnhandledException, "Unhandled Exception");
 
 
-    ///<summary>Unhandled Exception</summary> 
-    public static readonly FatEvent CommandNotSupported = new(LogLevel.Error, 1001,
-        Resources.CommandNotSupported, "Command not supported");
+    /////<summary>Starting listener</summary> 
+    //public static readonly FatEvent StartListener = 
+    //    new(LogLevel.Information, 1, Resources.StartListener, "Starting listener");
 
-    ///<summary>Unhandled Exception</summary> 
-    public static readonly FatEvent UnknownCommand = new(LogLevel.Error, 1002,
-        Resources.UnknownCommand, "Command unknown");
+    /////<summary>Ending listener</summary> 
+    //public static readonly FatEvent EndListener =
+    //    new(LogLevel.Information, 2, Resources.EndListener, "Ending listener");
+
+    /////<summary>Starting service</summary> 
+    //public static readonly FatEvent StartService =
+    //    new(LogLevel.Information, 3, Resources.StartService, "Starting service {ServiceName}");
+
+    /////<summary>Ending service</summary> 
+    //public static readonly FatEvent EndService =
+    //    new(LogLevel.Information, 4, Resources.EndService, "Ending service {ServiceName}");
+
+    /////<summary>Starting transation</summary> 
+    //public static readonly FatEvent StartTransaction =
+    //    new(LogLevel.Trace, 5, Resources.StartTransaction, "Starting transation {TransactionId} {TransactionMethod}");
+
+    /////<summary>Completed transation</summary> 
+    //public static readonly FatEvent EndTransaction =
+    //    new(LogLevel.Information, 6, Resources.EndTransaction, "Completed transation {TransactionId} {TransactionMethod}");
+
+    /////<summary>Completed transation</summary> 
+    //public static readonly FatEvent FailTransaction =
+    //    new(LogLevel.Information, 7, Resources.FailTransaction, "Failed transation {TransactionId} {TransactionMethod}");
+
+    ///////<summary>Hello World</summary> 
+    ////public static readonly FatEvent HelloWorld = new(LogLevel.Information, 2,
+    ////    Resources.StartTransaction, "Hello World!");
+
+    /////<summary>Unhandled Exception</summary> 
+    //public static readonly FatEvent UnhandledException = new(LogLevel.Error, 1000,
+    //    Resources.UnhandledException, "Unhandled Exception");
+
+
+    /////<summary>Unhandled Exception</summary> 
+    //public static readonly FatEvent CommandNotSupported = new(LogLevel.Error, 1001,
+    //    Resources.CommandNotSupported, "Command not supported");
+
+    /////<summary>Unhandled Exception</summary> 
+    //public static readonly FatEvent UnknownCommand = new(LogLevel.Error, 1002,
+    //    Resources.UnknownCommand, "Command unknown");
 
 
 

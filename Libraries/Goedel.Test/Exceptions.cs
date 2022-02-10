@@ -1,13 +1,13 @@
 ﻿
-//  This file was automatically generated at 07-Feb-22 7:00:07 PM
+//  This file was automatically generated at 10-Feb-22 4:59:59 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.766
+//  Generator:  exceptional version 3.0.0.835
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
-//      Copyright : © 2015-2021
+//      Copyright : © 2015-2022
 //  
 //  Build Platform: Win32NT 10.0.19042.0
 //  
@@ -21,8 +21,6 @@
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Test ;
-
-
 
 
 /// <summary>
@@ -594,6 +592,20 @@ public partial class Compare : global::Goedel.Utilities.GoedelException {
 
 
     }
+
+
+/// <summary>
+/// Extensions class defining logging events and convenience methods.
+/// </summary>
+public  static partial class EventExtensions {
+
+    /// <summary>
+    /// Static initializer, is called once when the module loads.
+    /// </summary>
+    static EventExtensions() {
+        }
+
+	}
 
 
 

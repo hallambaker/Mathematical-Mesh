@@ -8,8 +8,26 @@
             <summary>
             Extensions class.
             </summary>
+            <summary>
+            Extensions class.
+            </summary>
         </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerExtensions.AddConsoleHosted(Microsoft.Extensions.Hosting.IHostBuilder)">
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerExtensions.AddDareLogger(Microsoft.Extensions.Logging.ILoggingBuilder)">
+            <summary>
+            Add a console logger to <paramref name="builder"/>
+            </summary>
+            <param name="builder"></param>
+            <returns>The value of <paramref name="builder"/> for chaining.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerExtensions.AddDareLogger(Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{Goedel.Protocol.GenericHost.DareLoggerConfiguration})">
+            <summary>
+            Add a console logger to <paramref name="builder"/>
+            </summary>
+            <param name="builder"></param>
+            <param name="configure">The configure actions.</param>
+            <returns>The value of <paramref name="builder"/> for chaining.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerExtensions.AddListenerHosted(Microsoft.Extensions.Hosting.IHostBuilder)">
             <summary>
             Add a hosted console logger.
             </summary>
@@ -31,6 +49,23 @@
             <param name="configure">The configure actions.</param>
             <returns>The value of <paramref name="builder"/> for chaining.</returns>
         </member>
+        <member name="T:Goedel.Protocol.GenericHost.ConsoleLoggerProvider">
+            <summary>
+            Console logger provider.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration})">
+            <summary>
+            Constructor returns instance via dependency injection.
+            </summary>
+            <param name="config">The console logger configuration.</param>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.CreateLogger(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration">
             <summary>
             The console logger configuration.
@@ -44,23 +79,6 @@
         </member>
         <member name="P:Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration.LogLevels">
             <summary>Dictionary specifying mapping of log levels to colors.</summary> 
-        </member>
-        <member name="T:Goedel.Protocol.GenericHost.DareLoggerConfiguration">
-            <summary>
-            The DARE file logger configuration.
-            </summary>
-        </member>
-        <member name="F:Goedel.Protocol.GenericHost.DareLoggerConfiguration.ConfigurationEntry">
-            <summary>Return configuration entry description.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.Recipients">
-            <summary>List of recipients for which decryption blocks are to be created in the log.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.Rotate">
-            <summary>Log rotation period</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.Path">
-            <summary>Directory to which log files are to be written</summary> 
         </member>
         <member name="T:Goedel.Protocol.GenericHost.ConsoleLogger">
             <summary>
@@ -81,6 +99,61 @@
             <inheritdoc/> 
         </member>
         <member name="M:Goedel.Protocol.GenericHost.ConsoleLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>Return configuration entry description.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.GenericHost.DareLoggerProvider">
+            <summary>
+            Console logger provider.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.DareLoggerProvider.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHost.DareLoggerConfiguration})">
+            <summary>
+            Constructor returns instance via dependency injection.
+            </summary>
+            <param name="config">The console logger configuration.</param>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.DareLoggerProvider.CreateLogger(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.DareLoggerProvider.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.GenericHost.DareLoggerConfiguration">
+            <summary>
+            The DARE file logger configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.GenericHost.DareLoggerConfiguration.ConfigurationEntry">
+            <summary>Return configuration entry description.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.Recipients">
+            <summary>List of recipients for which decryption blocks are to be created in the log.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.Rotate">
+            <summary>Log rotation period</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.Path">
+            <summary>Directory to which log files are to be written</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.GenericHost.DareLogger">
+            <summary>
+            The console logger.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.DareLogger.#ctor(System.String,System.Func{Goedel.Protocol.GenericHost.DareLoggerConfiguration})">
+            <summary>
+            Dependency injector constructor.
+            </summary>
+            <param name="name">The name of the logger.</param>
+            <param name="getCurrentConfig">Return the current configuration.</param>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.DareLogger.BeginScope``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.DareLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <inheritdoc/> 
+        </member>
+        <member name="M:Goedel.Protocol.GenericHost.DareLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
             <summary>Return configuration entry description.</summary> 
         </member>
         <member name="T:Goedel.Protocol.GenericHost.ManagedListener">
@@ -107,23 +180,6 @@
             <summary>
             Host shell. Runs an actual host instance with minimal command line options.
             </summary>
-        </member>
-        <member name="T:Goedel.Protocol.GenericHost.ConsoleLoggerProvider">
-            <summary>
-            Console logger provider.
-            </summary>
-        </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration})">
-            <summary>
-            Constructor returns instance via dependency injection.
-            </summary>
-            <param name="config">The console logger configuration.</param>
-        </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.CreateLogger(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.Dispose">
-            <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.GenericHost.Resources">
             <summary>

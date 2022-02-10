@@ -560,5 +560,15 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Protocol.Management.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Management.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
     </members>
 </doc>

@@ -22,6 +22,8 @@
 
 
 
+using Microsoft.Extensions.Logging;
+
 namespace Goedel.Protocol.Service;
 
 
@@ -79,6 +81,9 @@ public class LogService {
     ///<summary>The host monitor tracking start and end of host requests.</summary> 
     public HostMonitor HostMonitor { get; }
 
+    public ILogger Logger { get; set; }
+
+
 
     ///<summary>The host configuration</summary> 
     GenericHostConfiguration GenericHostConfiguration { get; }
@@ -102,41 +107,17 @@ public class LogService {
 
         HostMonitor = hostMonitor;
         transactionIdentifier = first - 1;
-
-
-            //var output = new StringBuilder();
-            //output.Append(DateTime.Now.ToRFC3339());
-            //output.AppendLine(
-            //    $" {Resources.StartService}: {serviceConfiguration.WellKnown}" +
-            //    $" {Resources.Host} {hostConfiguration.Id}" +
-            //    $" {Resources.Port} {hostConfiguration.Port}");
-            //output.AppendLine($"    { Resources.ServiceProfile}: { hostConfiguration.ProfileUdf}");
-            //output.AppendLine($"    { Resources.DeviceProfile}: { hostConfiguration.DeviceUdf}");
-            //output.AppendLine($"    { Resources.Path}: {hostConfiguration.Path}");
-            //if (serviceConfiguration.Addresses != null) {
-            //    foreach (var address in serviceConfiguration.Addresses) {
-            //        output.AppendLine($"    { Resources.ServiceAddress}: {address}");
-            //        }
-            //    }
-            //if (serviceConfiguration.Addresses != null) {
-            //    foreach (var dns in hostConfiguration.DNS) {
-            //        output.AppendLine($"    { Resources.HostAddress}: {dns}");
-            //        }
-            //    }
-            //WriteToConsole(output);
-
-
-
+        Logger = HostMonitor?.Logger;
         }
 
 
-    /// <summary>
-    /// Write the event <paramref name="logEvent"/> to the event log.
-    /// </summary>
-    /// <param name="logEvent">The event to log.</param>
-    /// <param name="args">The event parameters.</param>
-    public void Log(FatEvent logEvent, params object[] args) =>
-        HostMonitor?.Logger.Log(logEvent, args);
+    ///// <summary>
+    ///// Write the event <paramref name="logEvent"/> to the event log.
+    ///// </summary>
+    ///// <param name="logEvent">The event to log.</param>
+    ///// <param name="args">The event parameters.</param>
+    //public void Log(FatEvent logEvent, params object[] args) =>
+    //    HostMonitor?.Logger.Log(logEvent, args);
 
 
     /// <summary>
@@ -169,7 +150,10 @@ public class LogService {
     /// </summary>
     /// <param name="command">The unknown command.</param>
     public void UnknownCommand(string command) {
-        Log (Event.UnknownCommand, command);
+
+        Logger.TransactionUnknown(command);
+
+        //Log (Event.UnknownCommand, command);
         }
 
     /// <summary>
@@ -188,8 +172,10 @@ public class LogService {
     /// </summary>
     /// <param name="logTransaction">Transaction to log.</param>
     internal void Start(LogTransaction logTransaction) {
-        Log(Event.StartTransaction, logTransaction.TransactionIdentifier,
-            logTransaction.Token);
+        Logger.TransactionStart(logTransaction.TransactionIdentifier, logTransaction.Token);
+
+        //Log(Event.StartTransaction, logTransaction.TransactionIdentifier,
+        //    logTransaction.Token);
         }
 
     /// <summary>
@@ -197,8 +183,10 @@ public class LogService {
     /// </summary>
     /// <param name="logTransaction">Transaction to log.</param>
     internal void Success(LogTransaction logTransaction) {
-        Log(Event.EndTransaction, logTransaction.TransactionIdentifier,
-            logTransaction.Token);
+        Logger.TransactionCompleted(logTransaction.TransactionIdentifier, logTransaction.Token);
+
+        //Log(Event.EndTransaction, logTransaction.TransactionIdentifier,
+        //    logTransaction.Token);
         }
 
     /// <summary>
@@ -206,8 +194,10 @@ public class LogService {
     /// </summary>
     /// <param name="logTransaction">Transaction to log.</param>
     internal void Fail(LogTransaction logTransaction) {
-        Log(Event.FailTransaction, logTransaction.TransactionIdentifier,
-            logTransaction.Token);
+        Logger.TransactionFailed(logTransaction.TransactionIdentifier, logTransaction.Token);
+
+        //Log(Event.FailTransaction, logTransaction.TransactionIdentifier,
+        //    logTransaction.Token);
         }
 
     static bool ReportStart(LogLevelSeverity reportMode) =>

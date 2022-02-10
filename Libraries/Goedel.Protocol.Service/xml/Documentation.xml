@@ -54,36 +54,6 @@
             Logging events for the Goedel Host.
             </summary>
         </member>
-        <member name="F:Goedel.Protocol.Service.Event.StartListener">
-            <summary>Starting listener</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.Event.EndListener">
-            <summary>Ending listener</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.Event.StartService">
-            <summary>Starting service</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.Event.EndService">
-            <summary>Ending service</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.Event.StartTransaction">
-            <summary>Starting transation</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.Event.EndTransaction">
-            <summary>Completed transation</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.Event.FailTransaction">
-            <summary>Completed transation</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.Event.UnhandledException">
-            <summary>Unhandled Exception</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.Event.CommandNotSupported">
-            <summary>Unhandled Exception</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.Event.UnknownCommand">
-            <summary>Unhandled Exception</summary> 
-        </member>
         <member name="T:Goedel.Protocol.Service.ServerNotSupported">
             <summary>
             This platform does not support HTTP service
@@ -115,6 +85,105 @@
             <summary>
             The public fatory delegate
             </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.ListenerStart(Microsoft.Extensions.Logging.ILogger,System.Exception)">
+            <summary>
+            Write an event of type ListenerStart to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.ListenerEnd(Microsoft.Extensions.Logging.ILogger,System.Exception)">
+            <summary>
+            Write an event of type ListenerEnd to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.ServiceStart(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type ServiceStart to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="serviceName">The service name</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.ServiceEnd(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type ServiceEnd to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="serviceName">The service name</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.TransactionStart(Microsoft.Extensions.Logging.ILogger,System.Int64,System.String,System.Exception)">
+            <summary>
+            Write an event of type TransactionStart to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="transactionId">Transaction identifier</param>
+            <param name="method">The transaction method</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.TransactionCompleted(Microsoft.Extensions.Logging.ILogger,System.Int64,System.String,System.Exception)">
+            <summary>
+            Write an event of type TransactionCompleted to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="transactionId">Transaction identifier</param>
+            <param name="method">The transaction method</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.TransactionFailed(Microsoft.Extensions.Logging.ILogger,System.Int64,System.String,System.Exception)">
+            <summary>
+            Write an event of type TransactionFailed to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="transactionId">Transaction identifier</param>
+            <param name="method">The transaction method</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.TransactionUnauthorized(Microsoft.Extensions.Logging.ILogger,System.Int64,System.String,System.Exception)">
+            <summary>
+            Write an event of type TransactionUnauthorized to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="transactionId">Transaction identifier</param>
+            <param name="method">The transaction method</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.TransactionNotSupported(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type TransactionNotSupported to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="method">The transaction method</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.TransactionUnknown(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type TransactionUnknown to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="method">The transaction method</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.UnhandledException(Microsoft.Extensions.Logging.ILogger,System.Exception)">
+            <summary>
+            Write an event of type UnhandledException to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="_exception">Exception (if thrown)</param>
         </member>
         <member name="T:Goedel.Protocol.Service.IMonitorProvider">
             <summary>
@@ -250,13 +319,6 @@
             <param name="meshHostConfiguration">The service configuration</param>
             <param name="hostMonitor">The host monitor service</param>
             <param name="first">Index of the first log entry</param>
-        </member>
-        <member name="M:Goedel.Protocol.Service.LogService.Log(Goedel.Protocol.Service.FatEvent,System.Object[])">
-            <summary>
-            Write the event <paramref name="logEvent"/> to the event log.
-            </summary>
-            <param name="logEvent">The event to log.</param>
-            <param name="args">The event parameters.</param>
         </member>
         <member name="M:Goedel.Protocol.Service.LogService.Start(System.String,Goedel.Protocol.IReport)">
             <summary>
@@ -402,6 +464,127 @@
         <member name="T:Goedel.Protocol.Service.NamespaceDoc">
             <summary>
             Service monitoring classes.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.resource2">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.CommandNotSupported">
+            <summary>
+              Looks up a localized string similar to Command not supported.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.DeviceProfile">
+            <summary>
+              Looks up a localized string similar to Device Profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.EndListener">
+            <summary>
+              Looks up a localized string similar to Listener Stopped.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.EndService">
+            <summary>
+              Looks up a localized string similar to Service Stopped.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.EndTransaction">
+            <summary>
+              Looks up a localized string similar to Transaction End.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.Error">
+            <summary>
+              Looks up a localized string similar to Error.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.FailTransaction">
+            <summary>
+              Looks up a localized string similar to Transaction failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.Host">
+            <summary>
+              Looks up a localized string similar to Host.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.HostAddress">
+            <summary>
+              Looks up a localized string similar to Host Address.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.Path">
+            <summary>
+              Looks up a localized string similar to Path.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.Port">
+            <summary>
+              Looks up a localized string similar to Port.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.ServiceAddress">
+            <summary>
+              Looks up a localized string similar to Service Address.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.ServiceProfile">
+            <summary>
+              Looks up a localized string similar to Service Profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.StartListener">
+            <summary>
+              Looks up a localized string similar to Host Starting.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.StartService">
+            <summary>
+              Looks up a localized string similar to Listener Starting.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.StartTransaction">
+            <summary>
+              Looks up a localized string similar to Transaction Start.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.TransactionFail">
+            <summary>
+              Looks up a localized string similar to Fail.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.TransactionStart">
+            <summary>
+              Looks up a localized string similar to Start.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.TransactionSuccess">
+            <summary>
+              Looks up a localized string similar to Success.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.UnhandledException">
+            <summary>
+              Looks up a localized string similar to Unhandled Exception.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.resource2.UnknownCommand">
+            <summary>
+              Looks up a localized string similar to Unknown Command.
             </summary>
         </member>
         <member name="T:Goedel.Protocol.Service.Resources">

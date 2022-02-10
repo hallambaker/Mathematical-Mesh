@@ -24,6 +24,7 @@ using System.Net;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Goedel.Mesh.Server;
 using Goedel.Mesh.ServiceAdmin;
 using Goedel.Protocol;
@@ -31,6 +32,7 @@ using Goedel.Protocol.Presentation;
 using Goedel.Protocol.Service;
 using Microsoft.Extensions.Configuration;
 using System.Threading;
+using Goedel.Protocol.GenericHost;
 
 namespace Goedel.Mesh.Test;
 
@@ -68,6 +70,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentCommon {
         var settings = PublicMeshService.GetService(HostMachine);
 
         using var host = Host.CreateDefaultBuilder()
+
                 // read in the options file here.
                 .ConfigureAppConfiguration((hostingContext, configuration) => {
                     configuration.Sources.Clear();
@@ -75,7 +78,11 @@ public class TestEnvironmentRdpShell : TestEnvironmentCommon {
                     configuration
                         .AddJsonFile(settings, true, true);
                 })
-
+                .ConfigureLogging(logging => {
+                    logging.ClearProviders();
+                    logging.AddDareLogger();
+                    logging.AddConsoleLogger();
+                })
                 .ConfigureServices((hostContext, services) => {
                     services.AddSingleton<HostMonitor, HostMonitor>();
                     services.AddSingleton<IServiceListener, MeshRudListener>();

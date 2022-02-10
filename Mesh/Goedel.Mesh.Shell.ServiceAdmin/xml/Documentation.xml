@@ -289,6 +289,16 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
         <member name="F:Goedel.Mesh.Shell.ServiceAdmin.EnumReporting.eJson">
             <summary>Case "json": Report output in JSON format</summary>
         </member>

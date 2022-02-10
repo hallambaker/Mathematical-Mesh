@@ -35,6 +35,11 @@ using Goedel.Mesh;
 internal sealed class Program {
     private static async Task Main(string[] args) {
         await Host.CreateDefaultBuilder(args)
+            .ConfigureLogging(logging => {
+                logging.ClearProviders();
+                logging.AddDareLogger();
+                logging.AddConsoleLogger();
+            })
             .ConfigureServices((hostContext, services) => {
                 services.AddSingleton<IServiceListener, MeshRudListener>();
                 services.AddSingleton<IMeshMachine, MeshMachineCore>(
@@ -45,9 +50,10 @@ internal sealed class Program {
 #endif
 
             })
-            .AddConsoleHosted()
+
+            .AddListenerHosted()
             .AddMeshService()
-            //.ConfigureLogging(logging => logging.AddConsoleLogger())
+
             .RunConsoleAsync();
         }
     }

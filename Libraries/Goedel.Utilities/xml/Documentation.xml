@@ -1678,6 +1678,16 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Utilities.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
         <member name="T:Goedel.Utilities.IComponent">
             <summary>
             Injection interface to allow declaration of component modules.
