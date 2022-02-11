@@ -1,5 +1,4 @@
 ﻿#region // Copyright - MIT License
-//  Copyright © 2015 by Comodo Group Inc.
 //  Copyright © 2019-2021 by Phill Hallam-Baker
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +21,7 @@
 
 using Goedel.Protocol.Service;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
@@ -141,7 +141,7 @@ public class PublicMeshService : MeshService {
                     instance, genericHostConfiguration.Port, this));
 
         var meshHost = MeshHost.GetCatalogHost(MeshMachine);
-        if (meshHost.GetStoreEntry(genericHostConfiguration.HostUdf) is CatalogedService hostServiceDescription) {
+        if (meshHost?.GetStoreEntry(genericHostConfiguration.HostUdf) is CatalogedService hostServiceDescription) {
             // Decode the service and host profiles.
             ProfileService = hostServiceDescription.EnvelopedProfileService.Decode();
             ProfileHost = hostServiceDescription.EnvelopedProfileHost.Decode();
@@ -222,8 +222,9 @@ public class PublicMeshService : MeshService {
         string serviceConfig,
         string serviceDns,
         string hostConfig,
-        string hostIp, string hostDns,
-        string admin,
+        string hostIp=null, 
+        string hostDns = null,
+        string admin = null,
         string? hostAccount = null) {
 
         hostDns ??= Dns.GetHostName();
@@ -233,7 +234,7 @@ public class PublicMeshService : MeshService {
 
         var pathHost = GetHost(meshMachine, hostConfig);
 
-        var pathLog = Path.Combine(pathHost, "Logs");
+        var pathLog = GetHost(meshMachine, "Logs");
 
         // Create the initial service application
         var configuration = new Configuration();
@@ -256,9 +257,21 @@ public class PublicMeshService : MeshService {
             RunAs = hostAccount
             };
 
+        var dareLogger = new DareLoggerConfiguration {
+            Path = pathLog,
+            };
+        var consoleLogger = new ConsoleLoggerConfiguration {
+            };
+
+        var logging = new Dictionary<string, object> {
+                { "Dare", dareLogger },
+                { "Console", consoleLogger },
+            };
+
+
         configuration.Add(MeshServiceConfiguration.ConfigurationEntry, serviceConfiguration);
         configuration.Add(GenericHostConfiguration.ConfigurationEntry, hostConfiguration);
-
+        configuration.Dictionary.Add("Logging", logging);
 
         // create the service. This will populate the UDF fields.
         using var service = Create(meshMachine, serviceConfiguration, hostConfiguration);
@@ -266,7 +279,7 @@ public class PublicMeshService : MeshService {
         if (admin != null) {
 
             serviceConfiguration.Administrators.Add(admin);
-
+            dareLogger.Recipients.Add(admin);
             // bind to the service instance directly
             var directMachine = new MeshMachineDirect(meshMachine, service);
             var meshHost = new MeshHost(meshMachine.MeshHost, directMachine);
@@ -351,7 +364,7 @@ public class PublicMeshService : MeshService {
         hostConfiguration.DeviceUdf = profileHost.Udf;
 
         var logService = new LogService(hostConfiguration, serviceConfiguration, null);
-        logService.Logger ??= DareLogger.Factory("MeshHost");
+        logService.Logger ??= ConsoleLogger.Factory("MeshHost");
 
 
         // Initialize the persistence store.

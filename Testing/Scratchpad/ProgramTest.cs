@@ -46,8 +46,8 @@ partial class Program {
         Screen.WriteInfo($"Start test  {DateTime.Now}");
 
         //ShellTests.Test().TestAccountDelete();
-
-        ShellTestsAdmin.Test().TestHello();
+        TestService.Test().ProtocolHello();
+        //ShellTestsAdmin.Test().TestHello();
         //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
         //Goedel.XUnit.MakeSiteDocs.Test().QRAuth();
 

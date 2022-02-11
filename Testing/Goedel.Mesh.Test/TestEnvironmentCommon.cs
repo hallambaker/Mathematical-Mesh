@@ -36,6 +36,10 @@ using Goedel.Protocol.Presentation;
 using Goedel.Protocol.Service;
 using Goedel.Test.Core;
 using Goedel.Utilities;
+using Goedel.Mesh.ServiceAdmin;
+using Microsoft.Extensions.Hosting;
+using System.Text;
+using Goedel.Mesh.Client;
 
 namespace Goedel.Mesh.Test;
 
@@ -85,7 +89,7 @@ namespace Goedel.Mesh.Test;
 //    //    var credential = new MeshCredentialPrivate(
 //    //        MeshService.ProfileHost, MeshService.ConnectionDevice, null, MeshService.ActivationDevice.DeviceAuthentication);
 
- 
+
 //    //    var hostMonitor = new HostMonitor();
 //    //    return new RudService(providers, hostMonitor, credential);
 
@@ -94,73 +98,51 @@ namespace Goedel.Mesh.Test;
 //    }
 
 
-
-/// <summary>
-/// Test environment for one test with one service with one or more devices.
-/// </summary>
-public class TestEnvironmentCommon : Disposable {
-
-
-    public virtual string ServiceDns => "example.com";
-
-    static readonly string TestPath = "TestPath";
-    public static string TestRoot { get; set; }
-
-    public static string CommonData => System.IO.Path.Combine(TestRoot, "CommonData");
-    public static string WorkingDirectory => System.IO.Path.Combine(TestRoot, "WorkingDirectory");
-    public static string Variable => System.IO.Path.Combine(TestRoot, "Variable");
-
-    public string Path => System.IO.Path.Combine(Variable, Test);
-    public virtual string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
-
-    public string Test;
-
-    public JpcConnection JpcConnection = JpcConnection.Serialized;
-
-
-    //public HostConfiguration HostConfiguration { get; } = new() {
-    //    ConsoleOutput = LogLevelSeverity.Information
-    //    };
-
-    //public ServiceConfiguration ServiceConfiguration { get; } = new() {
-    //    };
-
-    public List<TestCLI> testCLIs = new();
-
+public class TestEnvironmentCommon : TestEnvironmentBase {
+    LogService Logger { get; set; }
+    Configuration Configuration { get; set; }
 
     protected override void Disposing() {
-        foreach (var test in testCLIs) {
-            test.Shell.MeshHost.Dispose();
-            //test.Dispose();
-            }
         base.Disposing();
+        MeshService.Dispose();
         }
 
-    public virtual PublicMeshService MeshService => meshService;
-    //??
-    //    new PublicMeshService(new MeshMachineCoreServer(ServiceDirectory), 
-    //        ServiceConfiguration, HostConfiguration).CacheValue(out meshService);
+    public virtual PublicMeshService MeshService => meshService ?? GetPublicMeshService().CacheValue(out meshService);
     PublicMeshService meshService;
-
-
+    
     public virtual TestServiceRud TestServiceRud => testServiceRud ??
-        new TestServiceRud(MeshService, null).CacheValue(out testServiceRud);
+    new TestServiceRud(MeshService, null).CacheValue(out testServiceRud);
     TestServiceRud testServiceRud;
+    IMeshMachineClient MeshMachineHost;
 
-    public TestCLI GetTestCLI(string machineName = null) {
-        var testShell = new TestShell(this, machineName);
-        var result = new TestCLI(testShell);
-        testCLIs.Add(result);
-        return result;
+
+    string HostFile = "whatev";
+    public TestEnvironmentCommon() {
 
         }
 
+    PublicMeshService GetPublicMeshService() {
+        // create the Mesh service
 
-    public virtual MeshServiceClient GetMeshClient(
-            MeshMachineTest meshMachineTest,
-            ICredentialPrivate credential,
-            string serviceId,
-            string accountAddress) {
+        //ServiceAdmin($"create example.com /host=host1.example.com /admin=alice.example.com /account=Domain\\user");
+        // PublicMeshService.Create(MeshMachine, multiConfig, serviceDns, hostConfig, hostIp, hostDns, admin, runAs);
+
+
+        MeshMachineHost = new MeshMachineTest(this, "host1");
+        Configuration = PublicMeshService.Create(MeshMachineHost, HostFile, ServiceDns, "remove");
+
+        Logger = new LogService(Configuration.GenericHostConfiguration, Configuration.MeshServiceConfiguration, null);
+
+
+        return new PublicMeshService(new MeshMachineCoreServer(ServiceDirectory),
+            Configuration.GenericHostConfiguration, Configuration.MeshServiceConfiguration, Logger);
+        }
+
+    public override MeshServiceClient GetMeshClient(
+        MeshMachineTest meshMachineTest,
+        ICredentialPrivate credential,
+        string serviceId,
+        string accountAddress) {
 
         JpcSession session = JpcConnection switch {
             JpcConnection.Direct => new JpcSessionDirect(MeshService, credential) {
@@ -181,6 +163,59 @@ public class TestEnvironmentCommon : Disposable {
 
         return session.GetWebClient<MeshServiceClient>();
         }
+    }
+/// <summary>
+/// Test environment for one test with one service with one or more devices.
+/// </summary>
+public abstract class TestEnvironmentBase : Disposable {
+
+
+    public virtual string ServiceDns => "example.com";
+
+    static readonly string TestPath = "TestPath";
+    public static string TestRoot { get; set; }
+
+    public static string CommonData => System.IO.Path.Combine(TestRoot, "CommonData");
+    public static string WorkingDirectory => System.IO.Path.Combine(TestRoot, "WorkingDirectory");
+    public static string Variable => System.IO.Path.Combine(TestRoot, "Variable");
+
+    public string Path => System.IO.Path.Combine(Variable, Test);
+    public virtual string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
+
+    public string Test;
+
+    public JpcConnection JpcConnection = JpcConnection.Serialized;
+
+    public List<TestCLI> testCLIs = new();
+
+
+    protected override void Disposing() {
+        foreach (var test in testCLIs) {
+            test.Shell.MeshHost.Dispose();
+            //test.Dispose();
+            }
+        base.Disposing();
+        }
+
+
+
+
+
+
+    public TestCLI GetTestCLI(string machineName = null) {
+        var testShell = new TestShell(this, machineName);
+        var result = new TestCLI(testShell);
+        testCLIs.Add(result);
+        return result;
+
+        }
+
+    public abstract MeshServiceClient GetMeshClient(
+        MeshMachineTest meshMachineTest,
+        ICredentialPrivate credential,
+        string serviceId,
+        string accountAddress);
+
 
 
 
@@ -191,7 +226,7 @@ public class TestEnvironmentCommon : Disposable {
     /// <param name="testMode">If true, the application will be initialized in
     /// test/debug mode.</param>
 
-    static TestEnvironmentCommon() {
+    static TestEnvironmentBase() {
         TestRoot = Environment.GetEnvironmentVariable(TestPath);
         TestRoot.AssertNotNull(EnvironmentVariableRequired.Throw, TestPath);
 
@@ -199,7 +234,7 @@ public class TestEnvironmentCommon : Disposable {
         Directory.SetCurrentDirectory(WorkingDirectory);
         }
 
-    public TestEnvironmentCommon() {
+    public TestEnvironmentBase() {
         Test = Unique.Next();
         Path.DirectoryDelete();
         Directory.CreateDirectory(Path);

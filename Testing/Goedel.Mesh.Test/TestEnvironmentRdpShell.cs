@@ -36,7 +36,7 @@ using Goedel.Protocol.GenericHost;
 
 namespace Goedel.Mesh.Test;
 
-public class TestEnvironmentRdpShell : TestEnvironmentCommon {
+public class TestEnvironmentRdpShell : TestEnvironmentBase {
     MeshMachineTest HostMachine { get; set; }
     Goedel.Mesh.Shell.ServiceAdmin.Shell ServiceAdminShell { get; set; }
     Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter ServiceAdminCLI { get; set; }
@@ -81,7 +81,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentCommon {
                 .ConfigureLogging(logging => {
                     logging.ClearProviders();
                     logging.AddDareLogger();
-                    logging.AddConsoleLogger();
+                    //logging.AddConsoleLogger();
                 })
                 .ConfigureServices((hostContext, services) => {
                     services.AddSingleton<HostMonitor, HostMonitor>();

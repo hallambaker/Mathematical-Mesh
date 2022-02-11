@@ -135,12 +135,15 @@
         <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.Path">
             <summary>Directory to which log files are to be written</summary> 
         </member>
+        <member name="P:Goedel.Protocol.GenericHost.DareLoggerConfiguration.LogLevel">
+            <summary>Logging level, only events of this level or less will be recorded.</summary> 
+        </member>
         <member name="T:Goedel.Protocol.GenericHost.DareLogger">
             <summary>
             The console logger.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.GenericHost.DareLogger.#ctor(System.String,System.Func{Goedel.Protocol.GenericHost.DareLoggerConfiguration})">
+        <member name="M:Goedel.Protocol.GenericHost.DareLogger.#ctor(System.String,System.Func{Goedel.Protocol.GenericHost.DareLoggerConfiguration},Goedel.Cryptography.Dare.Sequence)">
             <summary>
             Dependency injector constructor.
             </summary>

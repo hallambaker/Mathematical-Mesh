@@ -1,5 +1,7 @@
-﻿using Goedel.Utilities;
+﻿using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using System.Collections.Concurrent;
 using System.Runtime.Versioning;
@@ -18,6 +20,10 @@ public sealed class DareLoggerProvider : ILoggerProvider {
     private DareLoggerConfiguration _currentConfig;
     private readonly ConcurrentDictionary<string, DareLogger> _loggers =
         new(StringComparer.OrdinalIgnoreCase);
+    
+
+    Sequence? LogSequence { get; } = null;
+
 
     /// <summary>
     /// Constructor returns instance via dependency injection.
@@ -27,11 +33,26 @@ public sealed class DareLoggerProvider : ILoggerProvider {
         IOptionsMonitor<DareLoggerConfiguration> config) {
         _currentConfig = config.CurrentValue;
         _onChangeToken = config.OnChange(updatedConfig => _currentConfig = updatedConfig);
+
+        if (_currentConfig.Path != null && _currentConfig.Path != "") {
+            Directory.CreateDirectory(_currentConfig.Path);
+            var filename = Path.Join(_currentConfig.Path, "Log.dlog");
+
+            // set the policy here...
+
+            LogSequence = Sequence.Open(filename, IO.FileStatus.OpenOrCreate,
+                sequenceType: SequenceType.Merkle, decrypt: false);
+
+            }
         }
 
     ///<inheritdoc/>
-    public ILogger CreateLogger(string categoryName) =>
-        _loggers.GetOrAdd(categoryName, name => new DareLogger(name, GetCurrentConfig));
+    public ILogger CreateLogger(string categoryName) {
+        if (LogSequence is not null) {
+            return _loggers.GetOrAdd(categoryName, name => new DareLogger(name, GetCurrentConfig, LogSequence));
+            }
+        return NullLogger.Instance;
+        }
 
     private DareLoggerConfiguration GetCurrentConfig() => _currentConfig;
 
@@ -55,14 +76,15 @@ public class DareLoggerConfiguration {
         new("Dare", typeof(DareLoggerConfiguration));
 
     ///<summary>List of recipients for which decryption blocks are to be created in the log.</summary> 
-    public List<string> Recipients { get; set; } = new List<string>();
+    public List<string> Recipients { get; set; } = new ();
 
     ///<summary>Log rotation period</summary> 
-    public string Rotate { get; set; } = string.Empty;
+    public string? Rotate { get; set; } = null;
 
     ///<summary>Directory to which log files are to be written</summary> 
-    public string Path { get; set; } = "";
+    public string? Path { get; set; } = null;
 
+    ///<summary>Logging level, only events of this level or less will be recorded.</summary> 
     public LogLevel LogLevel { get; set; } = LogLevel.Information;
     }
 
@@ -77,6 +99,11 @@ public sealed class DareLogger : ILogger {
     private readonly Func<DareLoggerConfiguration> _getCurrentConfig;
     DareLoggerConfiguration config;
 
+    Sequence LogSequence { get; }
+
+
+
+
     /// <summary>
     /// Dependency injector constructor.
     /// </summary>
@@ -84,17 +111,24 @@ public sealed class DareLogger : ILogger {
     /// <param name="getCurrentConfig">Return the current configuration.</param>
     public DareLogger(
         string name,
-        Func<DareLoggerConfiguration> getCurrentConfig) {
+        Func<DareLoggerConfiguration> getCurrentConfig,
+        Sequence logSequence) {
         (_name, _getCurrentConfig) = (name, getCurrentConfig);
         config = _getCurrentConfig();
-        }
-    public static DareLogger Factory(string name, DareLoggerConfiguration? config = null) {
-        config ??= new();
-        return new DareLogger(name, function);
+        LogSequence = logSequence;
+        // open the sequence here.
 
-        DareLoggerConfiguration function() => config;
 
-        }
+       }
+    //public static DareLogger Factory(
+    //        string name, 
+    //        DareLoggerConfiguration? config = null) {
+    //    config ??= new();
+    //    return new DareLogger(name, function);
+
+    //    DareLoggerConfiguration function() => config;
+
+    //    }
 
 
     ///<inheritdoc/>
@@ -136,6 +170,10 @@ public sealed class DareLogger : ILogger {
         builder.AppendLine("  }");
 
         Console.Write(builder.ToString());
+
+        var bytes = builder.ToString().ToUTF8();
+        LogSequence.Append(bytes);
+
         }
     }
 #endregion

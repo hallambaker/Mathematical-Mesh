@@ -39,12 +39,12 @@ public partial class TestShell : Goedel.Mesh.Shell.Shell {
     public string MachineName = "Test";
 
 
-    public TestEnvironmentCommon TestEnvironmentCommon;
+    public TestEnvironmentBase TestEnvironmentBase;
 
     public override IMeshMachineClient MeshMachine => MeshMachineTest;
 
     public MeshMachineTest MeshMachineTest => meshMachineTest ??
-            new MeshMachineTest(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest);
+            new MeshMachineTest(TestEnvironmentBase, MachineName).CacheValue(out meshMachineTest);
 
     MeshMachineTest meshMachineTest;
 
@@ -52,9 +52,9 @@ public partial class TestShell : Goedel.Mesh.Shell.Shell {
     /// Create a new test shell
     /// </summary>
     /// <param name="meshPortalDirect"></param>
-    public TestShell(TestEnvironmentCommon testEnvironment, string machineName = null) {
+    public TestShell(TestEnvironmentBase testEnvironment, string machineName = null) {
         MachineName = machineName ?? MachineName;
-        TestEnvironmentCommon = testEnvironment;
+        TestEnvironmentBase = testEnvironment;
         //Direct = direct;
         }
 

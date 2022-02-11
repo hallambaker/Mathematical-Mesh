@@ -66,7 +66,7 @@ public class MeshMachineTest : MeshMachineCore {
     //List<Trace> meshProtocolMessages;
 
 
-    readonly TestEnvironmentCommon testEnvironmentCommon;
+    readonly TestEnvironmentBase testEnvironmentCommon;
 
     public string Name;
     public string Path => System.IO.Path.Combine(testEnvironmentCommon.Path, Name);
@@ -153,7 +153,7 @@ public class MeshMachineTest : MeshMachineCore {
             string directory = null) => new KeyCollectionTest(this);
 
 
-    public MeshMachineTest(TestEnvironmentCommon testEnvironmentPerTest, string name = "Test") :
+    public MeshMachineTest(TestEnvironmentBase testEnvironmentPerTest, string name = "Test") :
                 base(testEnvironmentPerTest.MachinePath(name)) {
         Name = name;
         testEnvironmentCommon = testEnvironmentPerTest;

@@ -167,7 +167,10 @@ public partial class CreateExamples {
         var hello = Service.Hello.GetResultHello();
         Service.ProfileService = hello.Response.EnvelopedProfileService.Decode();
         //Service.ProfileHost = hello.Response.EnvelopedProfileHost.Decode();
-        Service.ConnectionHost = Alice1.Shell.TestEnvironmentCommon.MeshService.ConnectionDevice;
+
+        var TestEnvironmentCommon = Alice1.Shell.TestEnvironmentBase as TestEnvironmentCommon;
+
+        Service.ConnectionHost = TestEnvironmentCommon.MeshService.ConnectionDevice;
         }
 
     public void CreateAliceAccount() {

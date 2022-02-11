@@ -32,7 +32,7 @@ namespace Goedel.XUnit;
 
 [Collection("Sequential")]
 public partial class ShellTestsAdmin : ShellTests {
-    TestEnvironmentCommon testEnvironmentCommon;
+    TestEnvironmentBase testEnvironmentCommon;
 
 
     protected override void Disposing() {
@@ -42,7 +42,7 @@ public partial class ShellTestsAdmin : ShellTests {
 
 
     // Use the new test environment (when defined.)
-    public override TestEnvironmentCommon GetTestEnvironment() {
+    public override TestEnvironmentBase GetTestEnvironment() {
 
         //var shell = new Goedel.Mesh.Shell.ServiceAdmin.Shell() {
         //    };
@@ -141,7 +141,7 @@ public partial class ShellTests : Disposable {
 
 
     #region // The test environment specific calls
-    public virtual TestEnvironmentCommon GetTestEnvironment() => new();
+    public virtual TestEnvironmentBase GetTestEnvironment() => new TestEnvironmentCommon();
 
     public virtual TestCLI GetTestCLI(string machineName = null) => TestEnvironment.GetTestCLI(machineName);
 
@@ -154,9 +154,9 @@ public partial class ShellTests : Disposable {
 
 
     ///<summary>The test environment, base for all </summary>
-    public TestEnvironmentCommon TestEnvironment => testEnvironment ??
+    public TestEnvironmentBase TestEnvironment => testEnvironment ??
         GetTestEnvironment().CacheValue(out testEnvironment);
-    TestEnvironmentCommon testEnvironment;
+    TestEnvironmentBase testEnvironment;
 
     public ShellTests() { }
 
