@@ -111,6 +111,18 @@ public class Configuration : Disposable {
     /// <param name="entry">The entry.</param>
     public void Add(ConfigurationEntry configurationEntry, object entry) {
         Dictionary.Add(configurationEntry.Name, entry);
+
+
+        if (configurationEntry.Name == MeshServiceConfiguration.ConfigurationEntry.Name) {
+            MeshServiceConfiguration = entry as MeshServiceConfiguration;
+
+            }
+        if (configurationEntry.Name == GenericHostConfiguration.ConfigurationEntry.Name) {
+            GenericHostConfiguration = entry as GenericHostConfiguration;
+
+            }
+
+
         }
 
     /// <summary>

@@ -40,7 +40,7 @@ using Goedel.Mesh.ServiceAdmin;
 using Microsoft.Extensions.Hosting;
 using System.Text;
 using Goedel.Mesh.Client;
-
+using System.IO;
 namespace Goedel.Mesh.Test;
 
 //public class TestEnvironmentRdp : TestEnvironmentCommon {
@@ -129,12 +129,14 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 
 
         MeshMachineHost = new MeshMachineTest(this, "host1");
+
+        HostFile = System.IO.Path.Combine(MeshMachineHost.DirectoryMesh, "mmmconfiguration.json");
         Configuration = PublicMeshService.Create(MeshMachineHost, HostFile, ServiceDns, "remove");
 
         Logger = new LogService(Configuration.GenericHostConfiguration, Configuration.MeshServiceConfiguration, null);
 
 
-        return new PublicMeshService(new MeshMachineCoreServer(ServiceDirectory),
+        return new PublicMeshService(MeshMachineHost,
             Configuration.GenericHostConfiguration, Configuration.MeshServiceConfiguration, Logger);
         }
 
