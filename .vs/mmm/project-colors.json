@@ -330,7 +330,12 @@
       "ProjectGuid": "1d184fdb-2b58-465f-8aeb-191b27c0a58e",
       "DisplayName": "ContentProject",
       "ColorIndex": 0
+    },
+    "3d90ac6a-ea0e-4f46-9869-97d10826ae7e": {
+      "ProjectGuid": "3d90ac6a-ea0e-4f46-9869-97d10826ae7e",
+      "DisplayName": "Documentation",
+      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 2
 }
