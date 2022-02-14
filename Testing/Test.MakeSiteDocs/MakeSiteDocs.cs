@@ -94,35 +94,6 @@ public class MakeSiteDocs : CreateExamples {
         }
 
     [Fact]
-
-    public void QRAuth() {
-        var index = "QRAuth";
-
-        ServiceConnect();
-        CreateAliceAccount();
-        EncodeDecodeFile(index);
-
-        PasswordCatalog();
-        BookmarkCatalog();
-        ContactCatalog();
-        NetworkCatalog();
-        TaskCatalog();
-        ConnectDeviceCompare(index);
-
-
-        //SSHApp();
-        //MailApp();
-
-        CreateBobAccount();
-        ContactExchange();
-
-        LayerAccount();
-        }
-
-
-
-
-    [Fact]
     public void CiphertextVerify() {
         var index = "CiphertextVerify";
 

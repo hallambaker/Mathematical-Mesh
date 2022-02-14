@@ -56,11 +56,6 @@ partial class Program {
         //TestService.Test().MeshCatalogGroup();
 
 
-
-        Goedel.XUnit.MakeSiteDocs.Test().QRAuth();
-
-
-
         //ShellTests.Test().TestAccountDelete();
 
         //ShellTestsAdmin.Test().TestHello();
