@@ -148,11 +148,11 @@ public partial class TestService {
         contextOnboarded.Sync();
 
         var applicationSsh1 = contextAccountAlice.GetApplicationSsh(id);
-        var applicationEntrySsh1 = contextAccountAlice.GetApplicationEntrySsh(id);
+        var applicationEntrySsh1 = contextAccountAlice.GetApplicationEntrySsh(applicationSsh1.Key);
         var applicationSsh2 = contextOnboarded.GetApplicationSsh(id);
-        var applicationEntrySsh2 = contextOnboarded.GetApplicationEntrySsh(id);
+        var applicationEntrySsh2 = contextOnboarded.GetApplicationEntrySsh(applicationSsh2.Key);
         var applicationSsh3 = contextOnboarded2.GetApplicationSsh(id);
-        var applicationEntrySsh3 = contextOnboarded2.GetApplicationEntrySsh(id);
+        var applicationEntrySsh3 = contextOnboarded2.GetApplicationEntrySsh(applicationSsh3.Key);
         // check applicationSsh1 == applicationSsh2
         // check we have a private key for each device.
 

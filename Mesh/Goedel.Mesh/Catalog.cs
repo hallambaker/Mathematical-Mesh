@@ -208,6 +208,22 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// <returns>The <see cref="CatalogedDevice"/> entry.</returns>
     public virtual T Get(string key) => Locate(key) as T;
 
+
+
+    public virtual TT GetDefault<TT>() where TT : class{
+
+        foreach (var entry in PersistenceStore) {
+            if (entry.JsonObject is TT) {
+
+                var result = entry.JsonObject as TT;
+                return result;
+                }
+            }
+
+        return default;
+        }
+
+
     /// <summary>
     /// Add the catalog entry data speficied in the stream <paramref name="stream"/>. If 
     /// <paramref name="merge"/> is true, merge this contact information.

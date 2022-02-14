@@ -45,8 +45,24 @@ partial class Program {
     static void Main() {
         Screen.WriteInfo($"Start test  {DateTime.Now}");
 
+        //ShellTests.Test().TestProfileSSHPrivate();
+
+
+
+        ////TestService.Test().MeshDeviceSsh();
+        //TestService.Test().MeshDeviceThresholdKey();
+
+
+        //TestService.Test().MeshCatalogGroup();
+
+
+
+        Goedel.XUnit.MakeSiteDocs.Test().QRAuth();
+
+
+
         //ShellTests.Test().TestAccountDelete();
-        TestService.Test().ProtocolHello();
+
         //ShellTestsAdmin.Test().TestHello();
         //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
         //Goedel.XUnit.MakeSiteDocs.Test().QRAuth();

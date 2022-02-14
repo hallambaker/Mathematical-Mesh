@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography.Jose;
+
 namespace Goedel.Mesh.Client;
 
 /// <summary>
@@ -1722,6 +1724,24 @@ public partial class ContextUser : ContextAccount {
     public CatalogedApplication GetApplication(string key) =>
         (GetStore(CatalogApplication.Label) as CatalogApplication).Get(key);
 
+
+
+    /// <summary>
+    /// Return the application with identifier <paramref name="key"/>.
+    /// </summary>
+    /// <param name="key">specifies the identifier to return.</param>
+    /// <returns>The contact, if found. Otherwise null.</returns>
+    public T GetApplication<T>(string? key)
+                where T : CatalogedApplication {
+        if (key == null) {
+            var result = (GetStore(CatalogApplication.Label) as CatalogApplication).GetDefault<T>();
+            return result;
+
+
+            }
+        return (GetStore(CatalogApplication.Label) as CatalogApplication).Get(key) as T;
+        }
+
     /// <summary>
     /// Return the device with identifier <paramref name="key"/>.
     /// </summary>
@@ -1814,7 +1834,8 @@ public partial class ContextUser : ContextAccount {
     /// <param name="applicationId">The name of the specific SSH application.</param>
     /// <returns>The application iff found, otherwise null.</returns>
     public CatalogedApplicationSsh GetApplicationSsh(
-            string applicationId) => GetApplication(applicationId) as CatalogedApplicationSsh;
+            string applicationId) => 
+        GetApplication<CatalogedApplicationSsh>(applicationId) as CatalogedApplicationSsh;
 
     /// <summary>
     /// Get the Mail application <paramref name="address"/>.

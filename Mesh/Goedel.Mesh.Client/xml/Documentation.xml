@@ -1482,6 +1482,13 @@
             <param name="key">specifies the identifier to return.</param>
             <returns>The contact, if found. Otherwise null.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetApplication``1(System.String)">
+            <summary>
+            Return the application with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The contact, if found. Otherwise null.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetDevice(System.String)">
             <summary>
             Return the device with identifier <paramref name="key"/>.

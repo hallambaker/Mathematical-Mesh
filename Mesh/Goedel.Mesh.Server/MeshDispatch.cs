@@ -560,7 +560,7 @@ public class PublicMeshService : MeshService {
 
             var accountHostAssignment = new AccountHostAssignment() {
                 AccountAddess = account,
-                AccessEncrypt = ProfileService.ServiceEncryption,
+                AccessEncrypt = ProfileHost.Encryption,
                 };
             accountHostAssignment.Envelope();
 
