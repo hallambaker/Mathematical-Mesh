@@ -29,7 +29,7 @@ using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
 using Goedel.XUnit;
-
+using Microsoft.Extensions.Logging;
 namespace Scratchpad;
 
 
@@ -42,8 +42,19 @@ namespace Scratchpad;
 // ToDo: RUD Documentation - Describe account binding
 
 partial class Program {
+
+    static public Logger Logger { get; } = new Logger();
+
+
     static void Main() {
-        Screen.WriteInfo($"Start test  {DateTime.Now}");
+        //Screen.WriteInfo($"Start test  {DateTime.Now}");
+
+
+        Logger.LogInformation ("Start test {time}", DateTime.Now);
+
+
+        ShellTestsAdmin.Test().TestHello();
+
 
         //ShellTests.Test().TestProfileSSHPrivate();
 
@@ -58,7 +69,7 @@ partial class Program {
 
         //ShellTests.Test().TestAccountDelete();
 
-        //ShellTestsAdmin.Test().TestHello();
+
         //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
         //Goedel.XUnit.MakeSiteDocs.Test().QRAuth();
 
@@ -199,8 +210,8 @@ partial class Program {
         //TestPresentationMesh.Test().TestImpersonationConfirm();
 
         //TestPresentationMesh.Test().TestImpersonationGroup();
-
-        Screen.WriteLine($"Total Soft fail {TestCLI.CountSoftFail}");
+        Logger.LogInformation("End test {time}, Fail={Softfail}", DateTime.Now, TestCLI.CountSoftFail);
+        //Screen.WriteLine($"Total Soft fail {TestCLI.CountSoftFail}");
         }
 
     public static void Debug() {

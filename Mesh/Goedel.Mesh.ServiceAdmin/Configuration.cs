@@ -137,14 +137,8 @@ public class Configuration : Disposable {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
 
-        Console.WriteLine(JsonSerializer.Serialize<Dictionary<string, object>>(Dictionary, jsonOptions));
-
-
+        ////Console.WriteLine(JsonSerializer.Serialize<Dictionary<string, object>>(Dictionary, jsonOptions));
         JsonSerializer.Serialize (stream, Dictionary, jsonOptions);
-
-
-
-
         }
 
 

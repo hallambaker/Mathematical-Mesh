@@ -27,6 +27,9 @@ global using System.Globalization;
 global using System.IO;
 global using System.Text;
 global using System.Threading;
+
+global using Microsoft.Extensions.Logging;
+
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif

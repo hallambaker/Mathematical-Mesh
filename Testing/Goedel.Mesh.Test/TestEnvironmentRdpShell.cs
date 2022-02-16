@@ -33,6 +33,7 @@ using Goedel.Protocol.Service;
 using Microsoft.Extensions.Configuration;
 using System.Threading;
 using Goedel.Protocol.GenericHost;
+using System.Collections.Generic;
 
 namespace Goedel.Mesh.Test;
 
@@ -55,11 +56,18 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
     public string ServiceHost => "ServiceHost1";
 
     Scoreboard Scoreboard = new Scoreboard();
-
+    IEnumerable<IConfguredService> Providers;
     protected override void Disposing() {
-        //RudService?.Dispose();
-        base.Disposing();
+        RudService?.Dispose();
+        HostMachine?.Dispose();
         ServiceAdminShell?.MeshMachine?.MeshHost?.Dispose();
+
+
+        foreach (var provider in Providers) {
+            provider.Dispose(); 
+            }
+
+        base.Disposing();
         }
 
 
@@ -80,8 +88,8 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
                 })
                 .ConfigureLogging(logging => {
                     logging.ClearProviders();
-                    logging.AddDareLogger();
-                    //logging.AddConsoleLogger();
+                    //logging.AddDareLogger();
+                    logging.AddConsoleLogger();
                 })
                 .ConfigureServices((hostContext, services) => {
                     services.AddSingleton<HostMonitor, HostMonitor>();
@@ -95,7 +103,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
         var services = host.Services;
         var listener = services.GetRequiredService<IServiceListener>() as MeshRudListener;
-
+        Providers = services.GetServices<IConfguredService>() ;
         return listener;
         }
 

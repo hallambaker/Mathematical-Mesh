@@ -401,6 +401,9 @@
         <member name="P:Goedel.Mesh.Server.MeshConfiguredService.Endpoints">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Mesh.Server.MeshConfiguredService.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.Server.MeshConfiguredService.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener},Goedel.Mesh.IMeshMachine,Goedel.Protocol.Service.HostMonitor,Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration})">
             <summary>
             Mesh service provider instance configured with options specifie in 

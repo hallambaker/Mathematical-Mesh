@@ -71,26 +71,35 @@ public class RudService : Disposable {
     public HostMonitor Monitor;
     readonly Dictionary<string, IConfguredService> providerMap = new();
 
+    Task ListenerTask { get; }
+
+    ILogger Logger { get; }
+
     #endregion
     #region // Destructor
     /// <summary>
     /// Disposal routine, perform clean termination of all active threads.
     /// </summary>
-    protected override void Disposing() {
+    protected override async void Disposing() {
+
+        Logger.LogInformation("Closing RUD Listener");
 
         // Set the state to inactive
         active = false;
         cancellationTokenSource.Cancel();
 
-        // shut down the HTTP and UDP listeners.
-        httpListener?.Close();
+        //// shut down the HTTP and UDP listeners.
+        //httpListener?.Close();
 
 
-        if (udpListeners != null) {
-            foreach (var listener in udpListeners) {
-                listener?.Close();
-                }
-            }
+        //if (udpListeners != null) {
+        //    foreach (var listener in udpListeners) {
+        //        listener?.Close();
+        //        }
+        //    }
+
+
+        ListenerTask.Wait(); // TBS timeout on shutdown.
         }
 
 
@@ -117,6 +126,10 @@ public class RudService : Disposable {
 
             int maxCores = 0) {
         Monitor = hostMonitor;
+        Logger = Monitor.Logger ?? new Logger();
+        
+        Logger.LogInformation("Starting RUD Listener");
+        Logger.LogTrace("T Starting RUD Listener");
         Listener = rdpListener ?? new RudListener(credential, providers);
 
         cancellationTokenSource = new CancellationTokenSource();
@@ -154,6 +167,8 @@ public class RudService : Disposable {
 
                     httpListener.Prefixes.Add(uri);
                     providerMap.Add(uri, provider);
+
+                    Logger.LogInformation("Listen on URI {uri}", uri);
                     }
                 }
             //udpListenerCount += provider.UdpEndpoints.Count;
@@ -169,145 +184,16 @@ public class RudService : Disposable {
                 }
             }
 
-        serviceTasks = new Task<ServiceRequest>[ListenerCount];
-
+        serviceTasks = new Task<ServiceRequest>[ListenerCount+1];
+        serviceTasks[ListenerCount] = WaitCancellationToken();
 
         httpListener.Start();
         WaitHttpRequest();
 
-        //set up the UDP clients...
-        //udpListeners = new UdpClient[udpListenerCount];
-        //var listener = 1;
-        //foreach (var provider in providers) {
-        //    foreach (var endpoint in provider.UdpEndpoints) {
-        //        udpListeners[listener] = endpoint.GetClient();
-        //        WaitUdpListener(listener);
-        //        listener++;
-        //        }
-        //    }
 
-
-        var t = WaitServiceAsync();
-        //t.Wait();
-
-        //start the asynchronous services before returning.
-        //serviceThread = new Thread(WaitService);
-        //serviceThread.Start();
-
-
-
-        //var connection = MiniProcess(httpListener);
-
-
-        //var service = "http://voodoo:15099/.well-known/mmm/";
-        //var webClient = new WebClient();
-        //var data = new byte[12000];
-
-        //var post = webClient.UploadData(service, data);
-
-
+        ListenerTask = WaitServiceAsync();
 
         }
-
-
-
-
-    ///// <summary>
-    ///// Constructor returning an instance servicing the interfaces <paramref name="providers"/>.
-    ///// </summary>
-    ///// <param name="providers">The services to be served.</param>
-    ///// <param name="rdpListener">Specify the listener layer (default is <see cref="RudListener"/>.</param>
-    ///// <param name="maxCores">Maximum number of dispatch threads.</param>
-    ///// <param name="credential">Credential for the listener to use.</param>
-    ///// <remarks>Constructor returns after the service has been started and listener threads 
-    ///// initialized.</remarks>
-    //public RudService(
-    //    CancellationToken cancellationToken,
-    //    IEnumerable<IConfguredService> providers,
-    //        ICredentialPrivate credential = null,
-    //        Listener rdpListener = null,
-    //        int maxCores = 0) {
-
-    //    Listener = rdpListener ?? new RudListener(credential, providers);
-    //    CancellationToken = cancellationToken;
-
-    //    // set the number of dispatch tasks
-    //    MaxDispatch = maxCores > 0 ? maxCores : Environment.ProcessorCount;
-
-    //    // Set up the dispatchers
-    //    //nullTask = Task.Run(NullTask);
-    //    dispatchTasks = new Task[MaxDispatch];
-    //    dispatchTaskResource = new string[MaxDispatch];
-    //    dispatchTaskActive = new bool[MaxDispatch];
-    //    for (var i = 0; i < MaxDispatch; i++) {
-    //        dispatchTasks[i] = Task.Run(NullTask);
-    //        dispatchTaskActive[i] = false;
-    //        dispatchTaskResource[i] = null;
-    //        }
-
-    //    // Set up the listeners
-
-    //    udpListenerCount = 0;
-
-    //    // The HTTP listener handles multiplexing internally and so we only require one.
-    //    HttpListener.IsSupported.AssertTrue(ServerNotSupported.Throw);
-    //    httpListener = new HttpListener();
-
-
-    //    foreach (var provider in providers) {
-    //        foreach (var endpoint in provider.Endpoints) {
-    //            if (endpoint is HttpEndpoint httpEndpoint) {
-
-
-    //                var uri = httpEndpoint.GetUriPrefix();
-    //                //uri = "http://+:15099/.well-known/";
-    //                //Screen.WriteLine($"Connect to URI {uri}");
-
-    //                httpListener.Prefixes.Add(uri);
-    //                providerMap.Add(uri, provider);
-    //                }
-    //            }
-    //        //udpListenerCount += provider.UdpEndpoints.Count;
-    //        }
-    //    //udpListenerCount = 0; // Hack - disable UDP for now, is throwing errors.
-    //    udpListenerCount = 0; // Hack - disable UDP for now, is throwing errors.
-
-    //    // Start the monitoring service and bind values to every provider returning the JPC interface.
-    //    Monitor = new HostMonitor(ListenerCount, MaxDispatch);
-
-    //    foreach (var provider in providers) {
-    //        if (provider.JpcInterface is IMonitorProvider monitorProvider) {
-    //            monitorProvider.Monitor = Monitor;
-    //            }
-    //        }
-
-    //    serviceTasks = new Task<ServiceRequest>[ListenerCount+1];
-    //    serviceTasks[ListenerCount] = WaitCancellationToken();
-
-    //    httpListener.Start();
-    //    WaitHttpRequest();
-
-    //    //set up the UDP clients...
-    //    //udpListeners = new UdpClient[udpListenerCount];
-    //    //var listener = 1;
-    //    //foreach (var provider in providers) {
-    //    //    foreach (var endpoint in provider.UdpEndpoints) {
-    //    //        udpListeners[listener] = endpoint.GetClient();
-    //    //        WaitUdpListener(listener);
-    //    //        listener++;
-    //    //        }
-    //    //    }
-
-
-
-    //    //start the asynchronous services before returning.
-    //    //serviceThread = new Thread(WaitService);
-    //    //serviceThread.Start();
-
-    //    //var t = WaitServiceAsync();
-    //    }
-
-
 
 
     #endregion
@@ -351,37 +237,41 @@ public class RudService : Disposable {
     /// <returns>The listener task.</returns>
     public async Task WaitServiceAsync() {
 
-        while (active) {
-            try {
-                await Task.WhenAny(serviceTasks);
 
-                //Dispatch a processing unit to the next available slot.
-                for (var listener = 0; listener < udpListenerCount + 1; listener++) {
-                    if (serviceTasks[listener].IsCompleted) {
-                        Dispatch(serviceTasks[listener].Result);
+        try {
+            while (active) {
+                try {
+                    await Task.WhenAny(serviceTasks);
+                    if (!active) {
                         }
-                    }
-
-                if (active) {
-                    if (serviceTasks[0].IsCompleted) {
-                        WaitHttpRequest();
-                        }
-                    for (var listener = 0; listener < udpListenerCount; listener++) {
-                        if (serviceTasks[listener + 1].IsCompleted) {
-                            WaitUdpListener(listener);
+                    //Dispatch a processing unit to the next available slot.
+                    for (var listener = 0; listener < udpListenerCount + 1; listener++) {
+                        if (serviceTasks[listener].IsCompleted) {
+                            Dispatch(serviceTasks[listener].Result);
                             }
                         }
+
+                    if (active) {
+                        if (serviceTasks[0].IsCompleted) {
+                            WaitHttpRequest();
+                            }
+                        for (var listener = 0; listener < udpListenerCount; listener++) {
+                            if (serviceTasks[listener + 1].IsCompleted) {
+                                WaitUdpListener(listener);
+                                }
+                            }
+                        }
+
+                    Reclaim(); // dispose of all resources held by unused tasks
                     }
-
-                Reclaim(); // dispose of all resources held by unused tasks
+                catch (OperationCanceledException) {
+                    }
                 }
-
-            catch (OperationCanceledException) {
-                Canceled();
-                }
-
             }
-        }
+        finally {
+            Canceled();
+            }
+        } 
 
     /// <summary>
     /// Null task, simply runs to completion. This is used to allow gracefull shutdown of the
@@ -395,8 +285,10 @@ public class RudService : Disposable {
 
         // Wait for the outstanding tasks to be completed
 
+        Logger.LogInformation("Waiting for listener tasks to complete");
         Task.WaitAll(dispatchTasks);
 
+        Logger.LogInformation("Closing listeners");
         foreach (var task in dispatchTasks) {
             task.Dispose(); // force cleanup of the dispatch tasks
             }
@@ -408,6 +300,8 @@ public class RudService : Disposable {
             udpListeners[i].Close(); // Gracefull termination of the UDP Listeners
             udpListeners[i] = null;
             }
+
+        Logger.LogInformation("Closed all listeners");
         }
 
 

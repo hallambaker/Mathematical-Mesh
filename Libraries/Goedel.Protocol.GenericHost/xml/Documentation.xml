@@ -41,65 +41,13 @@
             <param name="builder"></param>
             <returns>The value of <paramref name="builder"/> for chaining.</returns>
         </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerExtensions.AddConsoleLogger(Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration})">
+        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerExtensions.AddConsoleLogger(Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{Goedel.Utilities.ConsoleLoggerConfiguration})">
             <summary>
             Add a console logger to <paramref name="builder"/>
             </summary>
             <param name="builder"></param>
             <param name="configure">The configure actions.</param>
             <returns>The value of <paramref name="builder"/> for chaining.</returns>
-        </member>
-        <member name="T:Goedel.Protocol.GenericHost.ConsoleLoggerProvider">
-            <summary>
-            Console logger provider.
-            </summary>
-        </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration})">
-            <summary>
-            Constructor returns instance via dependency injection.
-            </summary>
-            <param name="config">The console logger configuration.</param>
-        </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.CreateLogger(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLoggerProvider.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="T:Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration">
-            <summary>
-            The console logger configuration.
-            </summary>
-        </member>
-        <member name="F:Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration.ConfigurationEntry">
-            <summary>Return configuration entry description.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration.EventId">
-            <summary>The event to which this configuration applies.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration.LogLevels">
-            <summary>Dictionary specifying mapping of log levels to colors.</summary> 
-        </member>
-        <member name="T:Goedel.Protocol.GenericHost.ConsoleLogger">
-            <summary>
-            The console logger.
-            </summary>
-        </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLogger.#ctor(System.String,System.Func{Goedel.Protocol.GenericHost.ConsoleLoggerConfiguration})">
-            <summary>
-            Dependency injector constructor.
-            </summary>
-            <param name="name">The name of the logger.</param>
-            <param name="getCurrentConfig">Return the current configuration.</param>
-        </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLogger.BeginScope``1(``0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
-            <inheritdoc/> 
-        </member>
-        <member name="M:Goedel.Protocol.GenericHost.ConsoleLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
-            <summary>Return configuration entry description.</summary> 
         </member>
         <member name="T:Goedel.Protocol.GenericHost.DareLoggerProvider">
             <summary>

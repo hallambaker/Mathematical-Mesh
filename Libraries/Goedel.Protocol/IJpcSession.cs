@@ -29,23 +29,7 @@ namespace Goedel.Protocol;
 
 
 
-/// <summary>
-/// A configuration entry for a service.
-/// </summary>
-/// <param name="Name">The name used to describe the configuration in the options file.</param>
-/// <param name="Type">The type to which the configuration data is bound.</param>
-/// <param name="Discovery">For a network service, specifies the DNS discovery prefix.</param>
-/// <param name="WellKnown">For a network service, specifies the HTTP .well-known prefix</param>
-public record struct ConfigurationEntry (
-            string Name, 
-            Type Type,
-            string? Discovery = null,
-            string? WellKnown = null
-            ) {
 
-
-
-    }
 
 
 
@@ -132,7 +116,10 @@ public interface IConfguredService {
     ///<summary>The Service endpoints.</summary> 
     public List<Endpoint> Endpoints { get; }
 
-
+    /// <summary>
+    /// Service dispose routine.
+    /// </summary>
+    public void Dispose();
 
     }
 

@@ -1269,24 +1269,6 @@
             An ICharacterBufferedStream is an ICharacterStream that is also an IBufferedStream
             </summary>
         </member>
-        <member name="T:Goedel.Protocol.ConfigurationEntry">
-            <summary>
-            A configuration entry for a service.
-            </summary>
-            <param name="Name">The name used to describe the configuration in the options file.</param>
-            <param name="Type">The type to which the configuration data is bound.</param>
-            <param name="Discovery">For a network service, specifies the DNS discovery prefix.</param>
-            <param name="WellKnown">For a network service, specifies the HTTP .well-known prefix</param>
-        </member>
-        <member name="M:Goedel.Protocol.ConfigurationEntry.#ctor(System.String,System.Type,System.String,System.String)">
-            <summary>
-            A configuration entry for a service.
-            </summary>
-            <param name="Name">The name used to describe the configuration in the options file.</param>
-            <param name="Type">The type to which the configuration data is bound.</param>
-            <param name="Discovery">For a network service, specifies the DNS discovery prefix.</param>
-            <param name="WellKnown">For a network service, specifies the HTTP .well-known prefix</param>
-        </member>
         <member name="T:Goedel.Protocol.GenericHostConfiguration">
             <summary>
             Service configuration
@@ -1346,6 +1328,11 @@
         </member>
         <member name="P:Goedel.Protocol.IConfguredService.Endpoints">
             <summary>The Service endpoints.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.IConfguredService.Dispose">
+            <summary>
+            Service dispose routine.
+            </summary>
         </member>
         <member name="T:Goedel.Protocol.IJpcSession">
             <summary>

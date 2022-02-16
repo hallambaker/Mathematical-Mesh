@@ -19,7 +19,7 @@ public static class ConsoleLoggerExtensions {
         //host.ConfigureAppConfiguration((hostingContext, configuration) => {
         //});
 
-        Screen.WriteLine($"Add Mesh Service");
+        //Screen.WriteLine($"Add Mesh Service");
 
         host.ConfigureServices((hostContext, services) => {
 
@@ -60,8 +60,8 @@ public class MeshConfiguredService : IConfguredService {
     ///<inheritdoc/>
     public List<Endpoint> Endpoints { get; }
 
-
-
+    ///<inheritdoc/>
+    public void Dispose () => PublicMeshService?.Dispose ();
 
     /// <summary>
     /// Mesh service provider instance configured with options specifie in 

@@ -21,6 +21,7 @@
 
 using Goedel.Protocol.Service;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
@@ -261,9 +262,11 @@ public class PublicMeshService : MeshService {
             Path = pathLog,
             };
         var consoleLogger = new ConsoleLoggerConfiguration {
+            Default = "Trace"
             };
 
         var logging = new Dictionary<string, object> {
+                { "Default", "Trace" },
                 { "Dare", dareLogger },
                 { "Console", consoleLogger },
             };

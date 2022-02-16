@@ -69,6 +69,9 @@ namespace ExampleGenerator;
 
 public partial class CreateExamples {
 
+    public Logger Logger { get; } = new Logger();
+
+
     public bool GitHub = true;
     public string Preformat => GitHub ? "````" : "~~~~";
 

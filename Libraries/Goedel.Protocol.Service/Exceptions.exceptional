@@ -18,7 +18,7 @@ Namespace Goedel.Protocol.Service
 	Information 4 ServiceEnd "Ending listener {ServiceName}"
 		serviceName string "The service name"
 
-	Debug 5 TransactionStart  "Starting transation {TransactionId} {TransactionMethod}"
+	Information 5 TransactionStart  "Starting transation {TransactionId} {TransactionMethod}"
 		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
@@ -26,19 +26,19 @@ Namespace Goedel.Protocol.Service
 		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
-	Warning 1000 TransactionFailed "Transaction failed {TransactionId} {TransactionMethod}"
+	Information 1000 TransactionFailed "Transaction failed {TransactionId} {TransactionMethod}"
 		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
-	Warning 1001 TransactionUnauthorized "Transaction not authorized {TransactionId} {TransactionMethod}"	
+	Information 1001 TransactionUnauthorized "Transaction not authorized {TransactionId} {TransactionMethod}"	
 		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
-	Warning 1002 TransactionNotSupported "Transaction not supported {TransactionMethod}"	
+	Information 1002 TransactionNotSupported "Transaction not supported {TransactionMethod}"	
 		method string "The transaction method"
 
-	Warning 1003 TransactionUnknown "Transaction not known {TransactionMethod}"
+	Information 1003 TransactionUnknown "Transaction not known {TransactionMethod}"
 		method string "The transaction method"
 
 
-	Error 2000 UnhandledException "Unhandled exception"
+	Information 2000 UnhandledException "Unhandled exception"

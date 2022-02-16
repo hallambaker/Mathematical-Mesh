@@ -169,7 +169,7 @@ public sealed class DareLogger : ILogger {
         builder.AppendLine($"    \"EventId\" = \"{eventId.Id}\"");
         builder.AppendLine("  }");
 
-        Console.Write(builder.ToString());
+        //Console.Write(builder.ToString());
 
         var bytes = builder.ToString().ToUTF8();
         LogSequence.Append(bytes);

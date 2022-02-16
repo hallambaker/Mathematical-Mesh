@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 14-Feb-22 3:08:54 PM
+//  This file was automatically generated at 16-Feb-22 3:07:25 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -97,25 +97,25 @@ public  static partial class EventExtensions {
             LogLevel.Information, new EventId(4, nameof(_ServiceEnd)),
             "Ending listener {ServiceName}");
         _TransactionStart = LoggerMessage.Define<long,string>(
-            LogLevel.Debug, new EventId(5, nameof(_TransactionStart)),
+            LogLevel.Information, new EventId(5, nameof(_TransactionStart)),
             "Starting transation {TransactionId} {TransactionMethod}");
         _TransactionCompleted = LoggerMessage.Define<long,string>(
             LogLevel.Information, new EventId(6, nameof(_TransactionCompleted)),
             "Transaction completed {TransactionId} {TransactionMethod}");
         _TransactionFailed = LoggerMessage.Define<long,string>(
-            LogLevel.Warning, new EventId(1000, nameof(_TransactionFailed)),
+            LogLevel.Information, new EventId(1000, nameof(_TransactionFailed)),
             "Transaction failed {TransactionId} {TransactionMethod}");
         _TransactionUnauthorized = LoggerMessage.Define<long,string>(
-            LogLevel.Warning, new EventId(1001, nameof(_TransactionUnauthorized)),
+            LogLevel.Information, new EventId(1001, nameof(_TransactionUnauthorized)),
             "Transaction not authorized {TransactionId} {TransactionMethod}");
         _TransactionNotSupported = LoggerMessage.Define<string>(
-            LogLevel.Warning, new EventId(1002, nameof(_TransactionNotSupported)),
+            LogLevel.Information, new EventId(1002, nameof(_TransactionNotSupported)),
             "Transaction not supported {TransactionMethod}");
         _TransactionUnknown = LoggerMessage.Define<string>(
-            LogLevel.Warning, new EventId(1003, nameof(_TransactionUnknown)),
+            LogLevel.Information, new EventId(1003, nameof(_TransactionUnknown)),
             "Transaction not known {TransactionMethod}");
         _UnhandledException = LoggerMessage.Define(
-            LogLevel.Error, new EventId(2000, nameof(_UnhandledException)),
+            LogLevel.Information, new EventId(2000, nameof(_UnhandledException)),
             "Unhandled exception");
         }
 

@@ -1423,6 +1423,90 @@
             Complete input and reset converter for next session.
             </summary>
         </member>
+        <member name="T:Goedel.Utilities.ConfigurationEntry">
+            <summary>
+            A configuration entry for a service.
+            </summary>
+            <param name="Name">The name used to describe the configuration in the options file.</param>
+            <param name="Type">The type to which the configuration data is bound.</param>
+            <param name="Discovery">For a network service, specifies the DNS discovery prefix.</param>
+            <param name="WellKnown">For a network service, specifies the HTTP .well-known prefix</param>
+        </member>
+        <member name="M:Goedel.Utilities.ConfigurationEntry.#ctor(System.String,System.Type,System.String,System.String)">
+            <summary>
+            A configuration entry for a service.
+            </summary>
+            <param name="Name">The name used to describe the configuration in the options file.</param>
+            <param name="Type">The type to which the configuration data is bound.</param>
+            <param name="Discovery">For a network service, specifies the DNS discovery prefix.</param>
+            <param name="WellKnown">For a network service, specifies the HTTP .well-known prefix</param>
+        </member>
+        <member name="T:Goedel.Utilities.ConsoleLoggerProvider">
+            <summary>
+            Console logger provider.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.ConsoleLoggerProvider.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Utilities.ConsoleLoggerConfiguration})">
+            <summary>
+            Constructor returns instance via dependency injection.
+            </summary>
+            <param name="config">The console logger configuration.</param>
+        </member>
+        <member name="M:Goedel.Utilities.ConsoleLoggerProvider.CreateLogger(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.ConsoleLoggerProvider.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Utilities.ConsoleLoggerConfiguration">
+            <summary>
+            The console logger configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Utilities.ConsoleLoggerConfiguration.ConfigurationEntry">
+            <summary>Return configuration entry description.</summary> 
+        </member>
+        <member name="P:Goedel.Utilities.ConsoleLoggerConfiguration.EventId">
+            <summary>The event to which this configuration applies.</summary> 
+        </member>
+        <member name="P:Goedel.Utilities.ConsoleLoggerConfiguration.Default">
+            <summary>The default log level.</summary> 
+        </member>
+        <member name="P:Goedel.Utilities.ConsoleLoggerConfiguration.LogLevel">
+            <summary>Specify log levels for specific log categories.</summary> 
+        </member>
+        <member name="P:Goedel.Utilities.ConsoleLoggerConfiguration.LogLevels">
+            <summary>Dictionary specifying mapping of log levels to colors.</summary> 
+        </member>
+        <member name="T:Goedel.Utilities.ConsoleLogger">
+            <summary>
+            The console logger.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.ConsoleLogger.#ctor(System.String,System.Func{Goedel.Utilities.ConsoleLoggerConfiguration})">
+            <summary>
+            Dependency injector constructor.
+            </summary>
+            <param name="name">The name of the logger.</param>
+            <param name="getCurrentConfig">Return the current configuration.</param>
+        </member>
+        <member name="M:Goedel.Utilities.ConsoleLogger.Factory(System.String,Goedel.Utilities.ConsoleLoggerConfiguration)">
+            <summary>
+            Factory method, return a new logger instance.
+            </summary>
+            <param name="name"></param>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Utilities.ConsoleLogger.BeginScope``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.ConsoleLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <inheritdoc/> 
+        </member>
+        <member name="M:Goedel.Utilities.ConsoleLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>Return configuration entry description.</summary> 
+        </member>
         <member name="T:Goedel.Utilities.Screen">
             <summary>
             Debug trace class
@@ -1753,6 +1837,33 @@
             <summary>
             Exit the lock.
             </summary>
+        </member>
+        <member name="T:Goedel.Utilities.Logger">
+            <summary>
+            Caching logger class. C
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.Logger.CategoryName">
+            <summary>Category name used for filtering logs</summary> 
+        </member>
+        <member name="P:Goedel.Utilities.Logger.CachedLogger">
+            <summary>Get or set the cached logger delegate.</summary> 
+        </member>
+        <member name="M:Goedel.Utilities.Logger.#ctor(System.String)">
+            <summary>
+            Constructor returning a new logger instance. Note that the loger
+            itself is not created unless needed.
+            </summary>
+            <param name="categoryName">Category name used for filtering logs</param>
+        </member>
+        <member name="M:Goedel.Utilities.Logger.BeginScope``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.Logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.Logger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Utilities.NamespaceDoc">
             <summary>

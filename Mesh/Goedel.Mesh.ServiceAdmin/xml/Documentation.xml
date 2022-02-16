@@ -50,7 +50,7 @@
             <param name="path">The file name.</param>
             <returns>The parsed configuration.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.Get``1(Goedel.Protocol.ConfigurationEntry)">
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.Get``1(Goedel.Utilities.ConfigurationEntry)">
             <summary>
             Get configuration entry described by <paramref name="configurationEntry"/>.
             </summary>
@@ -58,7 +58,7 @@
             <param name="configurationEntry">The configuration description.</param>
             <returns>The parsed configuration.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.Add(Goedel.Protocol.ConfigurationEntry,System.Object)">
+        <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.Add(Goedel.Utilities.ConfigurationEntry,System.Object)">
             <summary>
             Add a configuration entry to the configuration.
             </summary>

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.Extensions.Configuration;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol.GenericHost;
 
