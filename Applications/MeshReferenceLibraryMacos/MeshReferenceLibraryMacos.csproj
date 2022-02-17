@@ -7,10 +7,15 @@
     <PackageId>MeshReferenceLibraryMacos</PackageId>
     <Description>Mesh Reference Library Mesh macOS Platform Profile.</Description>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+  </ItemGroup>
 
   <ItemGroup>
 
-    <ProjectReference Include="..\..\Libraries\macos\Goedel.Cryptography.macos\Goedel.Cryptography.macos.csproj" >
+    <ProjectReference Include="..\..\Libraries\macos\Goedel.Cryptography.macos\Goedel.Cryptography.macos.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Cryptography.macos.dll</IncludeAssets>     
     </ProjectReference>

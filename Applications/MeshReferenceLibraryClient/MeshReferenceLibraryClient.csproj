@@ -7,47 +7,52 @@
     <PackageId>MeshReferenceLibraryClient</PackageId>
     <Description>Mathematical Mesh client library. For server capabilities use MeshReferenceLibraryServer</Description>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+  </ItemGroup>
 
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" >
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Cryptography.Core.dll</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" >
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Cryptography.Dare.dll</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" >
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Cryptography.Jose.dll</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj" >
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Cryptography.KeyFile.dll</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" >
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Cryptography.dll</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj" >
+    <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.IO.dll</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj" >
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Protocol.Presentation.dll</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" >
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Protocol.dll</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" >
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Utilities.dll</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" >
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Mesh.dll</IncludeAssets>
     </ProjectReference>

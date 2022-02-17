@@ -7,6 +7,11 @@
     <PackageId>MeshReferenceLibraryService</PackageId>
     <Description>Mathematical Mesh service library. Requires MeshReferenceLibraryClient.</Description>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj">
@@ -21,7 +26,7 @@
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Mesh.Client.dll</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" >
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Goedel.Protocol.Service.dll</IncludeAssets>
     </ProjectReference>
