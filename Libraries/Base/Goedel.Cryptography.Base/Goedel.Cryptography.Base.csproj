@@ -10,7 +10,6 @@
   <PropertyGroup Condition="'$(Configuration)'=='Github'">
     <DefineConstants>TRACE;_Github_</DefineConstants>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />

@@ -53,6 +53,7 @@ public partial class ShellTests {
         CreateAccount(AliceAccount);
 
         TestFile("Hello world", encrypt: AliceAccount);
+        EndTest();
         }
 
     [Fact]
@@ -63,7 +64,10 @@ public partial class ShellTests {
         TestFile("Hello world", sign: AliceAccount);
 
         "Need to test file gest signed".TaskTest();
-        "Need to test signature is actually valid".TaskTest();
+        "Need to test signature is actually valid".TaskTest(); 
+        
+        EndTest();
+
         }
 
     [Fact]
@@ -72,6 +76,8 @@ public partial class ShellTests {
         CreateAccount(AliceAccount);
 
         TestFile("Hello world", encrypt: AliceAccount, sign: AliceAccount);
+
+        EndTest();
         }
 
     public bool TestFile(string content, string contentType = null,

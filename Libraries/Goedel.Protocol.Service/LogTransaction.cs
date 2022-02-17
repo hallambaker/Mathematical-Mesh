@@ -81,15 +81,8 @@ public class LogService {
     ///<summary>The host monitor tracking start and end of host requests.</summary> 
     public HostMonitor HostMonitor { get; }
 
+    ///<summary>The output logger</summary> 
     public ILogger Logger { get; set; } 
-
-
-
-    ///<summary>The host configuration</summary> 
-    GenericHostConfiguration GenericHostConfiguration { get; }
-
-    ///<summary>The service configuration</summary> 
-    ServiceConfiguration GenericServiceConfiguration { get; }
 
     /// <summary>
     /// Create a transaction logging service instance.
@@ -102,23 +95,10 @@ public class LogService {
             GenericHostConfiguration genericHostConfiguration,
             ServiceConfiguration meshHostConfiguration,
             HostMonitor? hostMonitor, long first = 0) {
-        GenericHostConfiguration = genericHostConfiguration;
-        GenericServiceConfiguration = meshHostConfiguration;
-
         HostMonitor = hostMonitor;
         transactionIdentifier = first - 1;
         Logger = HostMonitor?.Logger ?? NullLogger.Instance;
         }
-
-
-    ///// <summary>
-    ///// Write the event <paramref name="logEvent"/> to the event log.
-    ///// </summary>
-    ///// <param name="logEvent">The event to log.</param>
-    ///// <param name="args">The event parameters.</param>
-    //public void Log(FatEvent logEvent, params object[] args) =>
-    //    HostMonitor?.Logger.Log(logEvent, args);
-
 
     /// <summary>
     /// Begin a new transaction.
@@ -135,11 +115,6 @@ public class LogService {
             Request = request
             };
 
-        if (ReportStart(ConsoleOutput)) {
-            Start(logTransaction);
-            }
-        //HostConfiguration.Start(logTransaction);
-
         return logTransaction;
         }
 
@@ -152,8 +127,6 @@ public class LogService {
     public void UnknownCommand(string command) {
 
         Logger.TransactionUnknown(command);
-
-        //Log (Event.UnknownCommand, command);
         }
 
     /// <summary>
@@ -173,9 +146,6 @@ public class LogService {
     /// <param name="logTransaction">Transaction to log.</param>
     internal void Start(LogTransaction logTransaction) {
         Logger.TransactionStart(logTransaction.TransactionIdentifier, logTransaction.Token);
-
-        //Log(Event.StartTransaction, logTransaction.TransactionIdentifier,
-        //    logTransaction.Token);
         }
 
     /// <summary>
@@ -184,9 +154,6 @@ public class LogService {
     /// <param name="logTransaction">Transaction to log.</param>
     internal void Success(LogTransaction logTransaction) {
         Logger.TransactionCompleted(logTransaction.TransactionIdentifier, logTransaction.Token);
-
-        //Log(Event.EndTransaction, logTransaction.TransactionIdentifier,
-        //    logTransaction.Token);
         }
 
     /// <summary>
@@ -195,14 +162,7 @@ public class LogService {
     /// <param name="logTransaction">Transaction to log.</param>
     internal void Fail(LogTransaction logTransaction) {
         Logger.TransactionFailed(logTransaction.TransactionIdentifier, logTransaction.Token);
-
-        //Log(Event.FailTransaction, logTransaction.TransactionIdentifier,
-        //    logTransaction.Token);
         }
-
-    static bool ReportStart(LogLevelSeverity reportMode) =>
-        reportMode == LogLevelSeverity.Trace | reportMode == LogLevelSeverity.Warning;
-
     }
 
 

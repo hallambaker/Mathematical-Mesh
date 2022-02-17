@@ -82,7 +82,7 @@ public class RudService : Disposable {
     /// </summary>
     protected override async void Disposing() {
 
-        Logger.LogInformation("Closing RUD Listener");
+        Logger.ListenerEnd();
 
         // Set the state to inactive
         active = false;
@@ -128,8 +128,7 @@ public class RudService : Disposable {
         Monitor = hostMonitor;
         Logger = Monitor.Logger ?? new Logger();
         
-        Logger.LogInformation("Starting RUD Listener");
-        Logger.LogTrace("T Starting RUD Listener");
+        Logger.ListenerStart();
         Listener = rdpListener ?? new RudListener(credential, providers);
 
         cancellationTokenSource = new CancellationTokenSource();
@@ -168,7 +167,7 @@ public class RudService : Disposable {
                     httpListener.Prefixes.Add(uri);
                     providerMap.Add(uri, provider);
 
-                    Logger.LogInformation("Listen on URI {uri}", uri);
+                    Logger.BindHttpUri(uri);
                     }
                 }
             //udpListenerCount += provider.UdpEndpoints.Count;
@@ -285,10 +284,10 @@ public class RudService : Disposable {
 
         // Wait for the outstanding tasks to be completed
 
-        Logger.LogInformation("Waiting for listener tasks to complete");
+        Logger.ListenerWaitTaskCompletion();
         Task.WaitAll(dispatchTasks);
 
-        Logger.LogInformation("Closing listeners");
+        Logger.ListenerCloseListeners();
         foreach (var task in dispatchTasks) {
             task.Dispose(); // force cleanup of the dispatch tasks
             }
@@ -301,7 +300,7 @@ public class RudService : Disposable {
             udpListeners[i] = null;
             }
 
-        Logger.LogInformation("Closed all listeners");
+        Logger.ListenerClosedListeners();
         }
 
 

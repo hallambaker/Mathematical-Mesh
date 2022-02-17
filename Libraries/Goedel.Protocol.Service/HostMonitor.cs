@@ -74,14 +74,6 @@ public class HostMonitor {
     #region // Methods 
 
     /// <summary>
-    /// Write an event to the event logger.
-    /// </summary>
-    /// <param name="logEvent">The event to log.</param>
-    /// <param name="args">Event arguments.</param>
-    public void Log(FatEvent logEvent, params object[] args) =>
-            Logger.Log(logEvent, args);
-
-    /// <summary>
     /// Start the monitor with <paramref name="listeners"/>
     /// listeners and <paramref name="dispatchers"/> dispatchers.
     /// </summary>

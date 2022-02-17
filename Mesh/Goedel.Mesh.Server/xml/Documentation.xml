@@ -1288,10 +1288,13 @@
         <member name="P:Goedel.Mesh.Server.MeshPersist.KeyCollection">
             <summary>The key collection.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.MeshPersist.Logger">
+            <summary>The logger</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(Goedel.Cryptography.Dare.IKeyCollection,System.String,Goedel.IO.FileStatus)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(Goedel.Cryptography.Dare.IKeyCollection,System.String,Goedel.IO.FileStatus,Microsoft.Extensions.Logging.ILogger)">
             <summary>
             Open or create the accounts persistence container.
             </summary>

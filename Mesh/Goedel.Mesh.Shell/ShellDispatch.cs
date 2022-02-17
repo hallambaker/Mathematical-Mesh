@@ -46,15 +46,15 @@ public partial class Shell : _Shell {
         MeshHost.GetCatalogHost(MeshMachine).CacheValue(out catalogHost);
     MeshHost catalogHost;
 
-    /// <summary>
-    /// The static main entry point for the shell.
-    /// </summary>
-    /// <param name="Args">The command line arguments.</param>
-    public static void Main(string[] Args) {
-        var CLI = new CommandLineInterpreter();
-        var Dispatch = new Shell();
-        CLI.MainMethod(Dispatch, Args);
-        }
+    ///// <summary>
+    ///// The static main entry point for the shell.
+    ///// </summary>
+    ///// <param name="Args">The command line arguments.</param>
+    //public static void Main(string[] Args) {
+    //    var CLI = new CommandLineInterpreter();
+    //    var Dispatch = new Shell();
+    //    CLI.MainMethod(Dispatch, Args);
+    //    }
 
     ///<summary>Report flag, if <see langword="true"/> results of operations
     ///are reported to the console. Otherwise, no output is returned.</summary>
