@@ -50,7 +50,7 @@ public class Configuration : Disposable {
     ///<summary>The host configuration.</summary> 
     public GenericHostConfiguration GenericHostConfiguration { get; set; }
 
-    JsonDocument JsonDocument { get;  init; }
+    JsonDocument JsonDocument { get; init; }
 
 
 
@@ -134,13 +134,15 @@ public class Configuration : Disposable {
 
         var jsonOptions = new JsonSerializerOptions() {
             WriteIndented = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Converters ={
+                new JsonStringEnumConverter()
+                }
             };
 
         ////Console.WriteLine(JsonSerializer.Serialize<Dictionary<string, object>>(Dictionary, jsonOptions));
-        JsonSerializer.Serialize (stream, Dictionary, jsonOptions);
+        JsonSerializer.Serialize(stream, Dictionary, jsonOptions);
         }
-
 
 
     }
