@@ -18,7 +18,7 @@ Namespace Goedel.Protocol.Service
 	Information 4 ServiceEnd "Ending listener {ServiceName}"
 		serviceName string "The service name"
 
-	Trace 5 TransactionStart  "Starting transation {TransactionId} {TransactionMethod}"
+	Information 5 TransactionStart  "Starting transation {TransactionId} {TransactionMethod}"
 		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
@@ -26,42 +26,19 @@ Namespace Goedel.Protocol.Service
 		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
-	Debug 7 BindHttpUri "Listen on {uri}"
-		uri string  "Web service endpoint"
-
-	Trace 8 ListenerWaitTaskCompletion "Listener waiting for tasks to complete"
-	
-	Trace 9 ListenerCloseListeners "Listener closing listeners"
-	
-	Trace 10 ListenerClosedListeners "Listener closed all listeners"
-
-	Trace 11 MeshPersistenceStoreLoad "Load persistence store {File}"
-		File string "File of the Mesh persistence store"
-
-
-
-	Debug 100 BoundAccount "Bind {Udf} to account {Account}"
-		Udf string "Account fingerprint"
-		Account string "Account name"
-
-	Debug 101 UnbindAccount "Unbind {Udf} to account {Account}"
-		Udf string "Account fingerprint"
-		Account string "Account name"
-
-
-	Warning 1000 TransactionFailed "Transaction failed {TransactionId} {TransactionMethod}"
+	Information 1000 TransactionFailed "Transaction failed {TransactionId} {TransactionMethod}"
 		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
-	Warning 1001 TransactionUnauthorized "Transaction not authorized {TransactionId} {TransactionMethod}"	
+	Information 1001 TransactionUnauthorized "Transaction not authorized {TransactionId} {TransactionMethod}"	
 		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
-	Warning 1002 TransactionNotSupported "Transaction not supported {TransactionMethod}"	
+	Information 1002 TransactionNotSupported "Transaction not supported {TransactionMethod}"	
 		method string "The transaction method"
 
-	Warning 1003 TransactionUnknown "Transaction not known {TransactionMethod}"
+	Information 1003 TransactionUnknown "Transaction not known {TransactionMethod}"
 		method string "The transaction method"
 
 
-	Error 2000 UnhandledException "Unhandled exception"
+	Information 2000 UnhandledException "Unhandled exception"

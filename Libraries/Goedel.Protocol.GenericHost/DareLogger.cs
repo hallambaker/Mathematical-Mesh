@@ -85,10 +85,7 @@ public class DareLoggerConfiguration {
     public string? Path { get; set; } = null;
 
     ///<summary>Logging level, only events of this level or less will be recorded.</summary> 
-    public Dictionary<string, LogLevel> LogLevel { get; set; } =
-        new Dictionary<string, LogLevel> {
-                { "Default",  Microsoft.Extensions.Logging.LogLevel.Trace }
-            };
+    public LogLevel LogLevel { get; set; } = LogLevel.Information;
     }
 
 #endregion
@@ -103,7 +100,7 @@ public sealed class DareLogger : ILogger {
     DareLoggerConfiguration config;
 
     Sequence LogSequence { get; }
-    LogLevel LogLevel { get; }
+
 
 
 
@@ -121,16 +118,8 @@ public sealed class DareLogger : ILogger {
         LogSequence = logSequence;
         // open the sequence here.
 
-        if (config.LogLevel.TryGetValue(name, out var level)) {
-            LogLevel = level;
-            }
-        else if (config.LogLevel.TryGetValue("Default", out level)) {
-            LogLevel = level;
-            }
-        else {
-            LogLevel = LogLevel.Trace;
-            }
-        }
+
+       }
     //public static DareLogger Factory(
     //        string name, 
     //        DareLoggerConfiguration? config = null) {
@@ -146,7 +135,7 @@ public sealed class DareLogger : ILogger {
     public IDisposable BeginScope<TState>(TState state) => default!;
 
     ///<inheritdoc/> 
-    public bool IsEnabled(LogLevel logLevel) => logLevel <= LogLevel;
+    public bool IsEnabled(LogLevel logLevel) => logLevel <= config.LogLevel;
 
     ///<summary>Return configuration entry description.</summary> 
     public void Log<TState>(

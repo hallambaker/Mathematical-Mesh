@@ -45,7 +45,7 @@ public class Program {
 
     static void Main(string[] args) {
 
-        Shell shell = new(
+        Shell shell = new (
             ) {
             NoCatch = true,
             MeshMachine = new MeshMachineCore()

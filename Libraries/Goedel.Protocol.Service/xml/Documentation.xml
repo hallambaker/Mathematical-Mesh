@@ -144,61 +144,6 @@
             <param name="method">The transaction method</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
-        <member name="M:Goedel.Protocol.Service.EventExtensions.BindHttpUri(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
-            <summary>
-            Write an event of type BindHttpUri to <paramref name="logger"/> 
-            </summary>
-            <param name="logger">The logger to write the output to.</param>
-            <param name="uri">Web service endpoint</param>
-            <param name="_exception">Exception (if thrown)</param>
-        </member>
-        <member name="M:Goedel.Protocol.Service.EventExtensions.ListenerWaitTaskCompletion(Microsoft.Extensions.Logging.ILogger,System.Exception)">
-            <summary>
-            Write an event of type ListenerWaitTaskCompletion to <paramref name="logger"/> 
-            </summary>
-            <param name="logger">The logger to write the output to.</param>
-            <param name="_exception">Exception (if thrown)</param>
-        </member>
-        <member name="M:Goedel.Protocol.Service.EventExtensions.ListenerCloseListeners(Microsoft.Extensions.Logging.ILogger,System.Exception)">
-            <summary>
-            Write an event of type ListenerCloseListeners to <paramref name="logger"/> 
-            </summary>
-            <param name="logger">The logger to write the output to.</param>
-            <param name="_exception">Exception (if thrown)</param>
-        </member>
-        <member name="M:Goedel.Protocol.Service.EventExtensions.ListenerClosedListeners(Microsoft.Extensions.Logging.ILogger,System.Exception)">
-            <summary>
-            Write an event of type ListenerClosedListeners to <paramref name="logger"/> 
-            </summary>
-            <param name="logger">The logger to write the output to.</param>
-            <param name="_exception">Exception (if thrown)</param>
-        </member>
-        <member name="M:Goedel.Protocol.Service.EventExtensions.MeshPersistenceStoreLoad(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
-            <summary>
-            Write an event of type MeshPersistenceStoreLoad to <paramref name="logger"/> 
-            </summary>
-            <param name="logger">The logger to write the output to.</param>
-            <param name="File">File of the Mesh persistence store</param>
-            <param name="_exception">Exception (if thrown)</param>
-        </member>
-        <member name="M:Goedel.Protocol.Service.EventExtensions.BoundAccount(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
-            <summary>
-            Write an event of type BoundAccount to <paramref name="logger"/> 
-            </summary>
-            <param name="logger">The logger to write the output to.</param>
-            <param name="Udf">Account fingerprint</param>
-            <param name="Account">Account name</param>
-            <param name="_exception">Exception (if thrown)</param>
-        </member>
-        <member name="M:Goedel.Protocol.Service.EventExtensions.UnbindAccount(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
-            <summary>
-            Write an event of type UnbindAccount to <paramref name="logger"/> 
-            </summary>
-            <param name="logger">The logger to write the output to.</param>
-            <param name="Udf">Account fingerprint</param>
-            <param name="Account">Account name</param>
-            <param name="_exception">Exception (if thrown)</param>
-        </member>
         <member name="M:Goedel.Protocol.Service.EventExtensions.TransactionFailed(Microsoft.Extensions.Logging.ILogger,System.Int64,System.String,System.Exception)">
             <summary>
             Write an event of type TransactionFailed to <paramref name="logger"/> 
@@ -268,6 +213,13 @@
             </summary>
             <param name="logger">The system logger output.</param>
             <param name="hostConfiguration">The host configuration</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.HostMonitor.Log(Goedel.Protocol.Service.FatEvent,System.Object[])">
+            <summary>
+            Write an event to the event logger.
+            </summary>
+            <param name="logEvent">The event to log.</param>
+            <param name="args">Event arguments.</param>
         </member>
         <member name="M:Goedel.Protocol.Service.HostMonitor.StartMonitor(System.Int32,System.Int32)">
             <summary>
@@ -353,8 +305,11 @@
         <member name="P:Goedel.Protocol.Service.LogService.HostMonitor">
             <summary>The host monitor tracking start and end of host requests.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Service.LogService.Logger">
-            <summary>The output logger</summary> 
+        <member name="P:Goedel.Protocol.Service.LogService.GenericHostConfiguration">
+            <summary>The host configuration</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.LogService.GenericServiceConfiguration">
+            <summary>The service configuration</summary> 
         </member>
         <member name="M:Goedel.Protocol.Service.LogService.#ctor(Goedel.Protocol.GenericHostConfiguration,Goedel.Protocol.Service.ServiceConfiguration,Goedel.Protocol.Service.HostMonitor,System.Int64)">
             <summary>

@@ -28,7 +28,6 @@ public class Logger : ILogger {
     /// </summary>
     /// <param name="categoryName">Category name used for filtering logs</param>
     public Logger(string? categoryName=null) {
-        //var assembly = Assembly.GetCallingAssembly();
         CategoryName = categoryName ?? Assembly.GetCallingAssembly().FullName;
         }
 

@@ -6,7 +6,6 @@ using System.Collections.Concurrent;
 
 using System.Collections.Generic;
 using System.Runtime.Versioning;
-using System.Text.Json.Serialization;
 
 namespace Goedel.Utilities;
 
@@ -80,17 +79,17 @@ public class ConsoleLoggerConfiguration {
     ///<summary>The event to which this configuration applies.</summary> 
     public int EventId { get; set; }
 
+    ///<summary>The default log level.</summary> 
+    public string Default {get; set; }
 
-    public Dictionary<string, LogLevel> LogLevel { get; set; } =
-        new() {
-            ["Default"] = Microsoft.Extensions.Logging.LogLevel.Trace
-            };
+    ///<summary>Specify log levels for specific log categories.</summary> 
+    public Dictionary<string,string> LogLevel { get; set; }
 
 
     ///<summary>Dictionary specifying mapping of log levels to colors.</summary> 
     public Dictionary<LogLevel, ConsoleColor> LogLevels { get; set; } = new() {
-        [Microsoft.Extensions.Logging.LogLevel.Trace] = ConsoleColor.Gray,
-        [Microsoft.Extensions.Logging.LogLevel.Debug] = ConsoleColor.Cyan,
+        [Microsoft.Extensions.Logging.LogLevel.Trace] = ConsoleColor.DarkBlue,
+        [Microsoft.Extensions.Logging.LogLevel.Debug] = ConsoleColor.Blue,
         [Microsoft.Extensions.Logging.LogLevel.Information] = ConsoleColor.Green,
         [Microsoft.Extensions.Logging.LogLevel.Warning] = ConsoleColor.Yellow,
         [Microsoft.Extensions.Logging.LogLevel.Error] = ConsoleColor.Red,
@@ -99,19 +98,6 @@ public class ConsoleLoggerConfiguration {
         };
 
     }
-
-
-
-public class LogLevelConfiguration {
-
-    ///<summary>Specify log levels for specific log categories.</summary> 
-    public Dictionary<string, Microsoft.Extensions.Logging.LogLevel> LogLevel { get; set; } =
-        new Dictionary<string, LogLevel> {
-                { "Default",  Microsoft.Extensions.Logging.LogLevel.Trace }
-            };
-    }
-
-
 #endregion
 
 
@@ -155,12 +141,6 @@ public sealed class ConsoleLogger : ILogger {
     public bool IsEnabled(LogLevel logLevel) =>
         _getCurrentConfig().LogLevels.ContainsKey(logLevel);
 
-
-
-    public readonly static string[] LogLevelTag = {
-        "T", "D", "I", "W", "E", "C", "N"};
-
-
     ///<summary>Return configuration entry description.</summary> 
     public void Log<TState>(
         LogLevel logLevel,
@@ -181,15 +161,15 @@ public sealed class ConsoleLogger : ILogger {
             ConsoleColor originalColor = Console.ForegroundColor;
 
             Console.ForegroundColor = config.LogLevels[logLevel];
-            Console.Write($"[{LogLevelTag[(int)logLevel]}:{eventId.Id,2}] ");
+            Console.WriteLine($"[{eventId.Id,2}: {logLevel,-12}]");
 
             Console.ForegroundColor = originalColor;
-            Console.Write($"{_name} - ");
+            Console.Write($"     {_name} - ");
 
-            //Console.ForegroundColor = config.LogLevels[logLevel];
+            Console.ForegroundColor = config.LogLevels[logLevel];
             Console.Write($"{formatter(state, exception)}");
 
-            //Console.ForegroundColor = originalColor;
+            Console.ForegroundColor = originalColor;
             Console.WriteLine();
             }
         }

@@ -1469,11 +1469,14 @@
         <member name="P:Goedel.Utilities.ConsoleLoggerConfiguration.EventId">
             <summary>The event to which this configuration applies.</summary> 
         </member>
+        <member name="P:Goedel.Utilities.ConsoleLoggerConfiguration.Default">
+            <summary>The default log level.</summary> 
+        </member>
+        <member name="P:Goedel.Utilities.ConsoleLoggerConfiguration.LogLevel">
+            <summary>Specify log levels for specific log categories.</summary> 
+        </member>
         <member name="P:Goedel.Utilities.ConsoleLoggerConfiguration.LogLevels">
             <summary>Dictionary specifying mapping of log levels to colors.</summary> 
-        </member>
-        <member name="P:Goedel.Utilities.LogLevelConfiguration.LogLevel">
-            <summary>Specify log levels for specific log categories.</summary> 
         </member>
         <member name="T:Goedel.Utilities.ConsoleLogger">
             <summary>

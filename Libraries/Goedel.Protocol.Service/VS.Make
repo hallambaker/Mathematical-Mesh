@@ -23,14 +23,10 @@ LinkFiles = \
     Goedel.Protocol.Presentation.dll\
     Goedel.Protocol.dll
 
-ToolTargets = 
-
-
-#\
-#	Exceptions.cs
-#Exceptions.cs : Exceptions.exceptional 
-#	exceptional Exceptions.exceptional  /cs  Exceptions.cs
-
+ToolTargets = \
+	Exceptions.cs
+Exceptions.cs : Exceptions.exceptional 
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
 
 

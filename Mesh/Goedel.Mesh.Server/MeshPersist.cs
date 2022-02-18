@@ -21,8 +21,6 @@
 #endregion
 
 
-using System.Security.Principal;
-
 namespace Goedel.Mesh.Server;
 
 /// <summary>
@@ -47,8 +45,6 @@ public class MeshPersist : Disposable {
     ///<summary>The key collection.</summary> 
     public IKeyCollection KeyCollection { get; }
 
-    ///<summary>The logger</summary> 
-    ILogger Logger { get; }
     #endregion
 
 
@@ -71,19 +67,12 @@ public class MeshPersist : Disposable {
     /// <param name="keyCollection">The key collection to be used for decrypting data.</param>
     /// <param name="directory">The directory in which all the service data is stored.</param>
     /// <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
-    public MeshPersist(
-            IKeyCollection keyCollection, 
-            string directory, 
-            FileStatus fileStatus,
-            ILogger logger) {
+    public MeshPersist(IKeyCollection keyCollection, string directory, FileStatus fileStatus) {
         KeyCollection = keyCollection;
         // Load/create the accounts catalog
         DirectoryRoot = directory;
-        Logger = logger;
         Directory.CreateDirectory(directory);
         var fileName = Path.Combine(directory, "Master.cat");
-
-        logger.MeshPersistenceStoreLoad(fileName);
         Container = new PersistenceStore(fileName, "application/mmm-catalog",
             fileStatus: fileStatus,
             containerType: SequenceType.Merkle
@@ -118,7 +107,7 @@ public class MeshPersist : Disposable {
             containerEntry = Container.New(accountEntry) as StoreEntry;
             }
 
-        //// Lock the container entry so that we can initialize it.
+        // Lock the container entry so that we can initialize it.
         lock (containerEntry) {
             Directory.CreateDirectory(directory);
             //if (storeEntries != null) {
@@ -129,9 +118,6 @@ public class MeshPersist : Disposable {
             new Spool(directory, SpoolInbound.Label).Dispose();
             new Spool(directory, SpoolOutbound.Label).Dispose();
             new Spool(directory, SpoolLocal.Label).Dispose();
-            }
-        if (accountEntry is AccountUser entryUser) {
-            Logger.BoundAccount(entryUser.ProfileUser.Udf, accountEntry.AccountAddress);
             }
         }
 

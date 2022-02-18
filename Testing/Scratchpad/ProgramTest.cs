@@ -53,9 +53,9 @@ partial class Program {
         Logger.LogInformation ("Start test {time}", DateTime.Now);
 
 
-        ShellTestsAdmin.Test().TestFileEncrypt();
-
         ShellTestsAdmin.Test().TestHello();
+
+
         //ShellTests.Test().TestProfileSSHPrivate();
 
 

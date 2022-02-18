@@ -9,7 +9,6 @@
     <Title>Goedel.Cryptography.Macos</Title>
   </PropertyGroup>
 
-
   <ItemGroup>
     <ProjectReference Include="..\..\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />

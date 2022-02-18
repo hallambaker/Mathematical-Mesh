@@ -133,7 +133,7 @@ public class PublicMeshService : MeshService {
 
         // Load the Mesh persistence base
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
-        MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger);
+        MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
 
         var instance = genericHostConfiguration.Instance ?? meshMachine.Instance;
 
@@ -262,10 +262,11 @@ public class PublicMeshService : MeshService {
             Path = pathLog,
             };
         var consoleLogger = new ConsoleLoggerConfiguration {
+            Default = "Trace"
             };
-        var loglevel = new LogLevelConfiguration();
+
         var logging = new Dictionary<string, object> {
-                { "LogLevel", loglevel.LogLevel},
+                { "Default", "Trace" },
                 { "Dare", dareLogger },
                 { "Console", consoleLogger },
             };
@@ -573,8 +574,6 @@ public class PublicMeshService : MeshService {
 
             // Perform the transaction.
             MeshPersist.AccountBind(accountEntry);
-
-
 
             // ToDo: Allow the BindResponse to specify a different host
             // ToDo: Allow the BindResponse to specify a unique service encryption key for the acount                

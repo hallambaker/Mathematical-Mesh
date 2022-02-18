@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 17-Feb-22 1:03:09 PM
+//  This file was automatically generated at 16-Feb-22 3:07:25 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.848
+//  Generator:  exceptional version 3.0.0.835
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -97,46 +97,25 @@ public  static partial class EventExtensions {
             LogLevel.Information, new EventId(4, nameof(_ServiceEnd)),
             "Ending listener {ServiceName}");
         _TransactionStart = LoggerMessage.Define<long,string>(
-            LogLevel.Trace, new EventId(5, nameof(_TransactionStart)),
+            LogLevel.Information, new EventId(5, nameof(_TransactionStart)),
             "Starting transation {TransactionId} {TransactionMethod}");
         _TransactionCompleted = LoggerMessage.Define<long,string>(
             LogLevel.Information, new EventId(6, nameof(_TransactionCompleted)),
             "Transaction completed {TransactionId} {TransactionMethod}");
-        _BindHttpUri = LoggerMessage.Define<string>(
-            LogLevel.Debug, new EventId(7, nameof(_BindHttpUri)),
-            "Listen on {uri}");
-        _ListenerWaitTaskCompletion = LoggerMessage.Define(
-            LogLevel.Trace, new EventId(8, nameof(_ListenerWaitTaskCompletion)),
-            "Listener waiting for tasks to complete");
-        _ListenerCloseListeners = LoggerMessage.Define(
-            LogLevel.Trace, new EventId(9, nameof(_ListenerCloseListeners)),
-            "Listener closing listeners");
-        _ListenerClosedListeners = LoggerMessage.Define(
-            LogLevel.Trace, new EventId(10, nameof(_ListenerClosedListeners)),
-            "Listener closed all listeners");
-        _MeshPersistenceStoreLoad = LoggerMessage.Define<string>(
-            LogLevel.Trace, new EventId(11, nameof(_MeshPersistenceStoreLoad)),
-            "Load persistence store {File}");
-        _BoundAccount = LoggerMessage.Define<string,string>(
-            LogLevel.Debug, new EventId(100, nameof(_BoundAccount)),
-            "Bind {Udf} to account {Account}");
-        _UnbindAccount = LoggerMessage.Define<string,string>(
-            LogLevel.Debug, new EventId(101, nameof(_UnbindAccount)),
-            "Unbind {Udf} to account {Account}");
         _TransactionFailed = LoggerMessage.Define<long,string>(
-            LogLevel.Warning, new EventId(1000, nameof(_TransactionFailed)),
+            LogLevel.Information, new EventId(1000, nameof(_TransactionFailed)),
             "Transaction failed {TransactionId} {TransactionMethod}");
         _TransactionUnauthorized = LoggerMessage.Define<long,string>(
-            LogLevel.Warning, new EventId(1001, nameof(_TransactionUnauthorized)),
+            LogLevel.Information, new EventId(1001, nameof(_TransactionUnauthorized)),
             "Transaction not authorized {TransactionId} {TransactionMethod}");
         _TransactionNotSupported = LoggerMessage.Define<string>(
-            LogLevel.Warning, new EventId(1002, nameof(_TransactionNotSupported)),
+            LogLevel.Information, new EventId(1002, nameof(_TransactionNotSupported)),
             "Transaction not supported {TransactionMethod}");
         _TransactionUnknown = LoggerMessage.Define<string>(
-            LogLevel.Warning, new EventId(1003, nameof(_TransactionUnknown)),
+            LogLevel.Information, new EventId(1003, nameof(_TransactionUnknown)),
             "Transaction not known {TransactionMethod}");
         _UnhandledException = LoggerMessage.Define(
-            LogLevel.Error, new EventId(2000, nameof(_UnhandledException)),
+            LogLevel.Information, new EventId(2000, nameof(_UnhandledException)),
             "Unhandled exception");
         }
 
@@ -234,116 +213,6 @@ public  static partial class EventExtensions {
 			string method,
 			Exception _exception=null) {
         _TransactionCompleted(logger, transactionId, method, _exception);
-        }
-
-
-    private static readonly Action<ILogger, string, Exception> _BindHttpUri;
-
-	/// <summary>
-    /// Write an event of type BindHttpUri to <paramref name="logger"/> 
-    /// </summary>
-    /// <param name="logger">The logger to write the output to.</param>
-	/// <param name="uri">Web service endpoint</param>
-	/// <param name="_exception">Exception (if thrown)</param>
-    public static void BindHttpUri(
-			this ILogger logger,
-			string uri,
-			Exception _exception=null) {
-        _BindHttpUri(logger, uri, _exception);
-        }
-
-
-    private static readonly Action<ILogger, Exception> _ListenerWaitTaskCompletion;
-
-	/// <summary>
-    /// Write an event of type ListenerWaitTaskCompletion to <paramref name="logger"/> 
-    /// </summary>
-    /// <param name="logger">The logger to write the output to.</param>
-	/// <param name="_exception">Exception (if thrown)</param>
-    public static void ListenerWaitTaskCompletion(
-			this ILogger logger,
-			Exception _exception=null) {
-        _ListenerWaitTaskCompletion(logger, _exception);
-        }
-
-
-    private static readonly Action<ILogger, Exception> _ListenerCloseListeners;
-
-	/// <summary>
-    /// Write an event of type ListenerCloseListeners to <paramref name="logger"/> 
-    /// </summary>
-    /// <param name="logger">The logger to write the output to.</param>
-	/// <param name="_exception">Exception (if thrown)</param>
-    public static void ListenerCloseListeners(
-			this ILogger logger,
-			Exception _exception=null) {
-        _ListenerCloseListeners(logger, _exception);
-        }
-
-
-    private static readonly Action<ILogger, Exception> _ListenerClosedListeners;
-
-	/// <summary>
-    /// Write an event of type ListenerClosedListeners to <paramref name="logger"/> 
-    /// </summary>
-    /// <param name="logger">The logger to write the output to.</param>
-	/// <param name="_exception">Exception (if thrown)</param>
-    public static void ListenerClosedListeners(
-			this ILogger logger,
-			Exception _exception=null) {
-        _ListenerClosedListeners(logger, _exception);
-        }
-
-
-    private static readonly Action<ILogger, string, Exception> _MeshPersistenceStoreLoad;
-
-	/// <summary>
-    /// Write an event of type MeshPersistenceStoreLoad to <paramref name="logger"/> 
-    /// </summary>
-    /// <param name="logger">The logger to write the output to.</param>
-	/// <param name="File">File of the Mesh persistence store</param>
-	/// <param name="_exception">Exception (if thrown)</param>
-    public static void MeshPersistenceStoreLoad(
-			this ILogger logger,
-			string File,
-			Exception _exception=null) {
-        _MeshPersistenceStoreLoad(logger, File, _exception);
-        }
-
-
-    private static readonly Action<ILogger, string, string, Exception> _BoundAccount;
-
-	/// <summary>
-    /// Write an event of type BoundAccount to <paramref name="logger"/> 
-    /// </summary>
-    /// <param name="logger">The logger to write the output to.</param>
-	/// <param name="Udf">Account fingerprint</param>
-	/// <param name="Account">Account name</param>
-	/// <param name="_exception">Exception (if thrown)</param>
-    public static void BoundAccount(
-			this ILogger logger,
-			string Udf,
-			string Account,
-			Exception _exception=null) {
-        _BoundAccount(logger, Udf, Account, _exception);
-        }
-
-
-    private static readonly Action<ILogger, string, string, Exception> _UnbindAccount;
-
-	/// <summary>
-    /// Write an event of type UnbindAccount to <paramref name="logger"/> 
-    /// </summary>
-    /// <param name="logger">The logger to write the output to.</param>
-	/// <param name="Udf">Account fingerprint</param>
-	/// <param name="Account">Account name</param>
-	/// <param name="_exception">Exception (if thrown)</param>
-    public static void UnbindAccount(
-			this ILogger logger,
-			string Udf,
-			string Account,
-			Exception _exception=null) {
-        _UnbindAccount(logger, Udf, Account, _exception);
         }
 
 
