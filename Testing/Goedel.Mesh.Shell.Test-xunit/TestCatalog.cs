@@ -22,6 +22,7 @@
 
 using Goedel.Mesh;
 using Goedel.Mesh.Shell;
+using Goedel.Command.Json;
 
 using Xunit;
 

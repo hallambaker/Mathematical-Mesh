@@ -2,6 +2,7 @@
   <Import Project="$(SolutionDir)CommonSettingsTest.xml" />
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Command.Json\Goedel.Command.Json.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />

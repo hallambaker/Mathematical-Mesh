@@ -1,14 +1,18 @@
-﻿Protocol Goedel.Mesh.Shell.ServiceAdmin ShellResult ShellResult
+﻿Protocol Goedel.Mesh.Shell.ServiceAdmin ServiceAdminShellResult ServiceAdminShellResult
 	Using Goedel.Mesh
 	Using Goedel.Mesh.Client
 	Using Goedel.Cryptography.Dare
-
+	Extern ShellResult
+	
+	
 	Description
 		|Classes to be used to test serialization an deserialization.
 
+
 	Structure Result
-		Boolean			Success
-		String			Reason
+		Inherits		ShellResult
+		Description
+			|Placeholder class to allow insertion of application specific properties.
 
 
 	Structure ResultServiceConfiguration

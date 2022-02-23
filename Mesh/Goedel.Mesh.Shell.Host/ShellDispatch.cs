@@ -22,6 +22,7 @@
 
 
 using Goedel.Registry;
+using Microsoft.Extensions.Configuration;
 
 namespace Goedel.Mesh.Shell.Host;
 
@@ -73,20 +74,6 @@ public partial class Shell : _Shell {
             };
         }
 
-
-    ///// <summary>
-    ///// Constructor creating a shell prepopulated with the service descriptions
-    ///// <paramref name="serviceDescriptions"/>.
-    ///// </summary>
-    ///// <param name="serviceDescriptions">Descriptions of services to dispatch on.</param>
-    //public Shell(params ServiceDescription[] serviceDescriptions) {
-
-    //    foreach (var serviceDescription in serviceDescriptions) {
-    //        AddService(serviceDescription);
-    //        }
-
-    //    }
-
     /// <summary>
     /// Dispatch command line instruction with arguments <paramref name="args"/> and
     /// error output <paramref name="console"/>.
@@ -95,48 +82,74 @@ public partial class Shell : _Shell {
     /// <param name="console">Error output stream.</param>
     public void Dispatch(string[] args, TextWriter console) {
         var commandLineInterpreter = new CommandLineInterpreter();
+        Output = console;
 
-
-        //if (NoCatch) {
-        //    commandLineInterpreter.MainMethod(this, args);
-        //    }
-        //else {
-
-
-        //    try {
-        //        commandLineInterpreter.MainMethod(this, args);
-        //        }
-        //    catch (Goedel.Command.ParserException) {
-        //        CommandLineInterpreter.Brief(
-        //            CommandLineInterpreter.Description,
-        //            CommandLineInterpreter.DefaultCommand,
-        //            CommandLineInterpreter.Entries);
-        //        }
-        //    catch (System.Exception Exception) {
-        //        console.WriteLine("Application: {0}", Exception.Message);
-        //        if (Exception.InnerException != null) {
-        //            console.WriteLine(Exception.InnerException.Message);
-        //            }
-        //        }
-        //    }
+        if (NoCatch) {
+            commandLineInterpreter.MainMethod(this, args);
+            }
+        else {
+            try {
+                commandLineInterpreter.MainMethod(this, args);
+                }
+            catch (Command.ParserException) {
+                Command.CommandLineInterpreterBase.Brief(
+                    CommandLineInterpreter.Description,
+                    CommandLineInterpreter.DefaultCommand,
+                    CommandLineInterpreter.Entries);
+                }
+            catch (System.Exception Exception) {
+                console.WriteLine("Application: {0}", Exception.Message);
+                if (Exception.InnerException != null) {
+                    console.WriteLine(Exception.InnerException.Message);
+                    }
+                }
+            }
         }
 
-
-    ///// <summary>
-    ///// Add a service provider to the hosting options.
-    ///// </summary>
-    ///// <param name="serviceDescription">The service description.</param>
-    //public void AddService(ServiceDescription serviceDescription) =>
-    //    ServiceDescriptionDictionary.Add(serviceDescription.WellKnown, serviceDescription);
+    ///<inheritdoc/>
+    public override void _PreProcess(Command.Dispatch dispatch) {
+        base._PreProcess(dispatch);
+        Verbosity = Verbosity.Standard;
+        if (dispatch is IReporting reporting) {
+            if (reporting.Json.Value) {
+                Verbosity = Verbosity.Json;
+                }
+            else if (!reporting.Report.Value) {
+                Verbosity = Verbosity.None;
+                }
+            else if (!reporting.Verbose.Value) {
+                Verbosity = Verbosity.Full;
+                }
+            }
+        }
 
 
     /// <summary>
     /// Post processing action
     /// </summary>
     /// <param name="result"></param>
-    public void _PostProcess(ShellResult result) {
-        ShellResult = result;
+#pragma warning disable IDE1006 // Naming Styles
+    /// <summary>
+    /// Perform post processing of the result of the shell operation.
+    /// </summary>
+    /// <param name="shellResult">The result returned by the operation.</param>
+    public virtual void _PostProcess(ShellResult shellResult) {
+
+        switch (Verbosity) {
+            case Command.Verbosity.Json: {
+                    Output.Write(shellResult.GetJson(false));
+                    break;
+                    }
+            default: {
+                    var builder = new StringBuilder();
+                    shellResult.ToBuilder(builder, Verbosity);
+
+                    Output.Write(builder.ToString());
+                    break;
+                    }
+            }
         }
+
     ///<summary>The Machine name</summary> 
     public string MachineName { get; set; }
     ///<summary>The service configuration.</summary> 
@@ -151,28 +164,46 @@ public partial class Shell : _Shell {
 
     ///<inheritdoc/>
     public override ShellResult HostStart(HostStart Options) {
-        var multiConfig = GetMultiConfig(Options.MultiConfig);
-        var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
+        //var multiConfig = GetMultiConfig(Options.MultiConfig);
+        //var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
 
 
-        var result = VerifyConfig(multiConfig, hostConfig);
-        result.AssertTrue(InvalidConfiguration.Throw, Options.HostConfig.Value ?? "<none>");
+        //var result = VerifyConfig(multiConfig, hostConfig);
+        //result.AssertTrue(InvalidConfiguration.Throw, Options.HostConfig.Value ?? "<none>");
 
-        // Start the service.
 
-        //var configuration = Configuration.ReadFile(multiConfig);
-        //var hostConfiguration = configuration.GetHostConfiguration(hostConfig);
-        //var serviceConfiguration = configuration.GetServiceConfiguration(hostConfiguration);
+        // ToDo: deal with 'args'
 
-        //serviceConfiguration.Instance = Instance;
-        //hostConfiguration.Instance = Instance;
+        var settings = PublicMeshService.GetService(MeshMachine);
+        var task = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
+                // read in the options file here.
+                .ConfigureAppConfiguration((hostingContext, configuration) => {
+                    configuration.Sources.Clear();
+                    IHostEnvironment env = hostingContext.HostingEnvironment;
+                    configuration
+                        .AddJsonFile(settings, true, true);
+                })
+            .ConfigureLogging(logging => {
+                logging.ClearProviders();
+                logging.AddDareLogger();
+                logging.AddConsoleLogger();
+            })
+            .ConfigureServices((hostContext, services) => {
+                services.AddSingleton<HostMonitor, HostMonitor>();
+                services.AddSingleton<IServiceListener, MeshRudListener>();
+                services.AddSingleton<IMeshMachine, MeshMachineCore>();
+#if USE_PLATFORM_WINDOWS
+                services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
+#elif USE_PLATFORM_LINUX
+#endif
 
-        //hostConfiguration.ConsoleOutput = 
-        //    Options.Console.Value ? LogLevelSeverity.Information: LogLevelSeverity.None;
+            })
 
-        ////ServiceConfiguration.Instance ??= Instance;
-        //RudService = StartService(hostConfiguration, serviceConfiguration);
+            .AddListenerHosted()
+            .AddMeshService()
 
+            .RunConsoleAsync();
+        task.Wait();
 
         return new ResultStartService() {
             Success = true,

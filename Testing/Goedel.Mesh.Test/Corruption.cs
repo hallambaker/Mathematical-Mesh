@@ -20,13 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.IO;
-
-using Goedel.Cryptography.Dare;
-using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Test;
-using Goedel.Utilities;
 
 namespace Goedel.Mesh.Test;
 
@@ -48,7 +41,7 @@ public static class Extension {
 
         switch (jsonReader.TokenType) {
             case JsonReader.Token.Binary: {
-                    CorruptBinaryJSON(inputStream);
+                    CorruptBinaryJSON(inputStream); 
                     return;
                     }
 

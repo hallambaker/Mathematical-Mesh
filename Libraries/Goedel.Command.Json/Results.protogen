@@ -1,0 +1,9 @@
+﻿Protocol Goedel.Command.Json JsonShellResult JsonShellResult
+
+	Description
+		|Classes to be used to test serialization an deserialization.
+
+	Structure ShellResult
+		Boolean			Success
+		String			Reason
+

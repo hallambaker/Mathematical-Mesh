@@ -30,11 +30,11 @@ global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Logging;
 global using Goedel.Utilities;
 
-#if NET6_0_WINDOWS_OR_GREATER
-global using Goedel.Cryptography.Windows;
-#elif NET6_0_MACOS_OR_GREATER
-#else
-#endif
+//#if NET6_0_WINDOWS_OR_GREATER
+//global using Goedel.Cryptography.Windows;
+//#elif NET6_0_MACOS_OR_GREATER
+//#else
+//#endif
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

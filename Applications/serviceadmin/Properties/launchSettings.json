@@ -2,7 +2,7 @@
   "profiles": {
     "About": {
       "commandName": "Project",
-      "commandLineArgs": "about",
+      "commandLineArgs": "about /verbose",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "create": {

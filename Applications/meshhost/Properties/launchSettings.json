@@ -2,12 +2,13 @@
   "profiles": {
     "About": {
       "commandName": "Project",
-      "commandLineArgs": "about",
+      "commandLineArgs": "about /verbose",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "GenericHost": {
       "commandName": "Project",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Applications\\GenericHost"
+      "commandLineArgs": "start",
+      "workingDirectory": "..\\..\\TestResults\\Service"
     }
   }
 }

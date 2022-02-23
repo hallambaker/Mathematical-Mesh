@@ -42,27 +42,11 @@ public class Program {
 #elif USE_PLATFORM_LINUX
 #endif
     static void Main(string[] args) {
-        var commandLineInterpreter = new CommandLineInterpreter();
-
         Shell shell = new() {
             MeshMachine = new MeshMachineCore()
             };
 
 
         shell.Dispatch(args, Console.Out);
-
-        //try {
-        //    commandLineInterpreter.MainMethod(Dispatch, args);
-        //    }
-        //catch (Goedel.Command.ParserException) {
-        //    CommandLineInterpreter.Brief(
-        //        CommandLineInterpreter.Description,
-        //        CommandLineInterpreter.DefaultCommand,
-        //        CommandLineInterpreter.Entries);
-        //    }
-        //catch (System.Exception Exception) {
-        //    Console.WriteLine("Application: {0}", Exception.Message);
-        //    }
-
         }
     }

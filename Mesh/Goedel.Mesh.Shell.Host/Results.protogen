@@ -1,15 +1,20 @@
-﻿Protocol Goedel.Mesh.Shell.Host ShellResult ShellResult
+﻿Protocol Goedel.Mesh.Shell.Host MeshhostShellResult MeshhostShellResult
 	Using Goedel.Mesh
 	Using Goedel.Mesh.Client
 	Using Goedel.Cryptography.Dare
 	Using Goedel.Protocol.Service
-
+	Extern ShellResult
+	
 	Description
 		|Classes to be used to test serialization an deserialization.
 
+
 	Structure Result
-		Boolean			Success
-		String			Reason
+		Inherits		ShellResult
+		Description
+			|Placeholder class to allow insertion of application specific properties.
+
+
 	Structure ResultAbout
 		Inherits		Result
 		String			DirectoryKeys

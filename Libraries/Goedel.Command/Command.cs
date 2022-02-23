@@ -23,6 +23,7 @@ using System.IO;
 
 namespace Goedel.Command;
 
+
 /// <summary>
 /// Delegate calling a dispatch routine.
 /// </summary>
@@ -443,14 +444,3 @@ public class DescribeCase : DescribeEntry {
     public int Value;
     }
 
-/// <summary>
-/// Describe a shell.
-/// </summary>
-public abstract class DispatchShell : Dispatch {
-
-    /// <summary>
-    /// Method called before acommand is dispatched.
-    /// </summary>
-    /// <param name="dispatch">The options for the command dispatched.</param>
-    public virtual void _PreProcess(Dispatch dispatch) { }
-    }

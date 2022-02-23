@@ -20,13 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
-using Goedel.Utilities;
 
 namespace Goedel.Mesh.Test;
 

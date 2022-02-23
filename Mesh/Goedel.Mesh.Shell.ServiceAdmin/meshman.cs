@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 23-Feb-22 1:40:44 AM
+//  This file was automatically generated at 23-Feb-22 4:42:06 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -23,18 +23,6 @@ using Goedel.Utilities;
 #pragma warning disable CS1591
 
 namespace Goedel.Mesh.Shell.ServiceAdmin;
-
-// Enumeration type
-public enum EnumReporting {
-    /// <summary>Case "json": Report output in JSON format</summary>
-    eJson,
-    /// <summary>Case "verbose": Verbose reports</summary>
-    eVerbose,
-    /// <summary>Case "report": Report output (default)</summary>
-    eReport,
-    /// <summary>Case "silent": Suppress output</summary>
-    eSilent
-	}
 
 
 
@@ -68,32 +56,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         Entries = new () { }
         };
 
-	public readonly static DescribeEntryEnumerate DescribeEnumReporting = new  () {
-        Identifier = "report",
-        Brief = "Reporting level",
-        Entries = new () { 
-			new DescribeCase () {
-				Identifier = "json",
-				Brief = "Report output in JSON format",
-				Value = (int) EnumReporting.eJson
-				},
-			new DescribeCase () {
-				Identifier = "verbose",
-				Brief = "Verbose reports",
-				Value = (int) EnumReporting.eVerbose
-				},
-			new DescribeCase () {
-				Identifier = "report",
-				Brief = "Report output (default)",
-				Value = (int) EnumReporting.eReport
-				},
-			new DescribeCase () {
-				Identifier = "silent",
-				Brief = "Suppress output",
-				Value = (int) EnumReporting.eSilent
-				}
-			}
-		};
 
 
 
@@ -204,23 +166,44 @@ public interface IReporting {
 	}
 
 
-public class _About : Goedel.Command.Dispatch {
+public class _About : Goedel.Command.Dispatch ,
+						IReporting{
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new Flag (),
+		new Flag (),
 		new Flag ()		} ;
 
 
 
 
 
-	/// <summary>Field accessor for option [where]</summary>
-	public virtual Flag Where {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[0] as Flag;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _Where {
+	public virtual string _Verbose {
 		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[1] as Flag;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[2] as Flag;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[2].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -231,11 +214,25 @@ public class _About : Goedel.Command.Dispatch {
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
-				Identifier = "Where", 
-				Default = null, // null if null
-				Brief = "Report location of configuration files.",
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
 				Index = 0,
-				Key = "where"
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 1,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 2,
+				Key = "json"
 				}
 			}
 		};
@@ -249,7 +246,6 @@ public class _Create : Goedel.Command.Dispatch ,
 						IReporting{
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 		new Flag (),
 		new Flag (),
 		new Flag (),
@@ -265,104 +261,95 @@ public class _Create : Goedel.Command.Dispatch ,
 
 
 
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[0] as Enumeration<EnumReporting>;
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[0] as Flag;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _EnumReporting {
+	public virtual string _Verbose {
 		set => _Data[0].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[1] as Flag;
 		set => _Data[1]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _Report {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
 		get => _Data[2] as Flag;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _Report {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[3] as Flag;
-		set => _Data[3]  = value;
-		}
-
 	public virtual string _Json {
-		set => _Data[3].Parameter (value);
+		set => _Data[2].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
 	public virtual String ServiceDns {
+		get => _Data[3] as String;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _ServiceDns {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [hostconfig]</summary>
+	public virtual String HostConfig {
 		get => _Data[4] as String;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _ServiceDns {
+	public virtual string _HostConfig {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [hostconfig]</summary>
-	public virtual String HostConfig {
+	/// <summary>Field accessor for option [ip]</summary>
+	public virtual String HostIp {
 		get => _Data[5] as String;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _HostConfig {
+	public virtual string _HostIp {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [ip]</summary>
-	public virtual String HostIp {
+	/// <summary>Field accessor for option [host]</summary>
+	public virtual String HostDns {
 		get => _Data[6] as String;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _HostIp {
+	public virtual string _HostDns {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for option [host]</summary>
-	public virtual String HostDns {
+	/// <summary>Field accessor for option [admin]</summary>
+	public virtual String Admin {
 		get => _Data[7] as String;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _HostDns {
-		set => _Data[7].Parameter (value);
-		}
-	/// <summary>Field accessor for option [admin]</summary>
-	public virtual String Admin {
-		get => _Data[8] as String;
-		set => _Data[8]  = value;
-		}
-
 	public virtual string _Admin {
-		set => _Data[8].Parameter (value);
+		set => _Data[7].Parameter (value);
 		}
 	/// <summary>Field accessor for option [config]</summary>
 	public virtual ExistingFile MultiConfig {
-		get => _Data[9] as ExistingFile;
-		set => _Data[9]  = value;
+		get => _Data[8] as ExistingFile;
+		set => _Data[8]  = value;
 		}
 
 	public virtual string _MultiConfig {
-		set => _Data[9].Parameter (value);
+		set => _Data[8].Parameter (value);
 		}
 	/// <summary>Field accessor for option [account]</summary>
 	public virtual String Account {
-		get => _Data[10] as String;
-		set => _Data[10]  = value;
+		get => _Data[9] as String;
+		set => _Data[9]  = value;
 		}
 
 	public virtual string _Account {
-		set => _Data[10].Parameter (value);
+		set => _Data[9].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -372,81 +359,74 @@ public class _Create : Goedel.Command.Dispatch ,
 		HandleDelegate =  CommandLineInterpreter.Handle_Create,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
-			new DescribeEntryEnumerate () {
-				Identifier = "EnumReporting", 
-				Default = null, // null if null
-				Brief = "Reporting level",
-				Index = 0,
-				Key = "report"
-				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "true", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 1,
+				Index = 0,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 2,
+				Index = 1,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 3,
+				Index = 2,
 				Key = "json"
 				},
 			new DescribeEntryParameter () {
 				Identifier = "ServiceDns", 
 				Default = null, // null if null
 				Brief = "The DNS address of the service",
-				Index = 4,
+				Index = 3,
 				Key = ""
 				},
 			new DescribeEntryOption () {
 				Identifier = "HostConfig", 
 				Default = null, // null if null
 				Brief = "The host configuration name (defaults to mmmsettings.json)",
-				Index = 5,
+				Index = 4,
 				Key = "hostconfig"
 				},
 			new DescribeEntryOption () {
 				Identifier = "HostIp", 
 				Default = null, // null if null
 				Brief = "The external IP address of the host.",
-				Index = 6,
+				Index = 5,
 				Key = "ip"
 				},
 			new DescribeEntryOption () {
 				Identifier = "HostDns", 
 				Default = null, // null if null
 				Brief = "The DNS address of the host for service configuration",
-				Index = 7,
+				Index = 6,
 				Key = "host"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Admin", 
 				Default = null, // null if null
 				Brief = "The administrator account address, also default for the host domain.",
-				Index = 8,
+				Index = 7,
 				Key = "admin"
 				},
 			new DescribeEntryOption () {
 				Identifier = "MultiConfig", 
 				Default = "HostsAndServices", // null if null
 				Brief = "The configuration file, is created if necessary",
-				Index = 9,
+				Index = 8,
 				Key = "config"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Account", 
 				Default = null, // null if null
 				Brief = "The account under which the service is to run (defaults to account executing command).",
-				Index = 10,
+				Index = 9,
 				Key = "account"
 				}
 			}
@@ -461,7 +441,6 @@ public class _DNS : Goedel.Command.Dispatch ,
 						IReporting{
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 		new Flag (),
 		new Flag (),
 		new Flag (),
@@ -473,68 +452,59 @@ public class _DNS : Goedel.Command.Dispatch ,
 
 
 
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[0] as Enumeration<EnumReporting>;
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[0] as Flag;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _EnumReporting {
+	public virtual string _Verbose {
 		set => _Data[0].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[1] as Flag;
 		set => _Data[1]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _Report {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
 		get => _Data[2] as Flag;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _Report {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[3] as Flag;
-		set => _Data[3]  = value;
-		}
-
 	public virtual string _Json {
-		set => _Data[3].Parameter (value);
+		set => _Data[2].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
 	public virtual NewFile DnsConfig {
-		get => _Data[4] as NewFile;
-		set => _Data[4]  = value;
+		get => _Data[3] as NewFile;
+		set => _Data[3]  = value;
 		}
 
 	public virtual string _DnsConfig {
-		set => _Data[4].Parameter (value);
+		set => _Data[3].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
 	public virtual String HostConfig {
-		get => _Data[5] as String;
-		set => _Data[5]  = value;
+		get => _Data[4] as String;
+		set => _Data[4]  = value;
 		}
 
 	public virtual string _HostConfig {
-		set => _Data[5].Parameter (value);
+		set => _Data[4].Parameter (value);
 		}
 	/// <summary>Field accessor for option [config]</summary>
 	public virtual ExistingFile MultiConfig {
-		get => _Data[6] as ExistingFile;
-		set => _Data[6]  = value;
+		get => _Data[5] as ExistingFile;
+		set => _Data[5]  = value;
 		}
 
 	public virtual string _MultiConfig {
-		set => _Data[6].Parameter (value);
+		set => _Data[5].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -544,53 +514,46 @@ public class _DNS : Goedel.Command.Dispatch ,
 		HandleDelegate =  CommandLineInterpreter.Handle_DNS,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
-			new DescribeEntryEnumerate () {
-				Identifier = "EnumReporting", 
-				Default = null, // null if null
-				Brief = "Reporting level",
-				Index = 0,
-				Key = "report"
-				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "true", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 1,
+				Index = 0,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 2,
+				Index = 1,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 3,
+				Index = 2,
 				Key = "json"
 				},
 			new DescribeEntryParameter () {
 				Identifier = "DnsConfig", 
 				Default = null, // null if null
 				Brief = "The file to write the DNS configuration to",
-				Index = 4,
+				Index = 3,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "HostConfig", 
 				Default = null, // null if null
 				Brief = "The host configuration name",
-				Index = 5,
+				Index = 4,
 				Key = ""
 				},
 			new DescribeEntryOption () {
 				Identifier = "MultiConfig", 
 				Default = "HostsAndServices", // null if null
 				Brief = "The configuration file, is created if necessary",
-				Index = 6,
+				Index = 5,
 				Key = "config"
 				}
 			}
@@ -605,7 +568,6 @@ public class _Netsh : Goedel.Command.Dispatch ,
 						IReporting{
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 		new Flag (),
 		new Flag (),
 		new Flag (),
@@ -617,68 +579,59 @@ public class _Netsh : Goedel.Command.Dispatch ,
 
 
 
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[0] as Enumeration<EnumReporting>;
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[0] as Flag;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _EnumReporting {
+	public virtual string _Verbose {
 		set => _Data[0].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[1] as Flag;
 		set => _Data[1]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _Report {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
 		get => _Data[2] as Flag;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _Report {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[3] as Flag;
-		set => _Data[3]  = value;
-		}
-
 	public virtual string _Json {
-		set => _Data[3].Parameter (value);
+		set => _Data[2].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
 	public virtual NewFile DnsConfig {
-		get => _Data[4] as NewFile;
-		set => _Data[4]  = value;
+		get => _Data[3] as NewFile;
+		set => _Data[3]  = value;
 		}
 
 	public virtual string _DnsConfig {
-		set => _Data[4].Parameter (value);
+		set => _Data[3].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
 	public virtual String HostConfig {
-		get => _Data[5] as String;
-		set => _Data[5]  = value;
+		get => _Data[4] as String;
+		set => _Data[4]  = value;
 		}
 
 	public virtual string _HostConfig {
-		set => _Data[5].Parameter (value);
+		set => _Data[4].Parameter (value);
 		}
 	/// <summary>Field accessor for option [config]</summary>
 	public virtual ExistingFile MultiConfig {
-		get => _Data[6] as ExistingFile;
-		set => _Data[6]  = value;
+		get => _Data[5] as ExistingFile;
+		set => _Data[5]  = value;
 		}
 
 	public virtual string _MultiConfig {
-		set => _Data[6].Parameter (value);
+		set => _Data[5].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -688,53 +641,46 @@ public class _Netsh : Goedel.Command.Dispatch ,
 		HandleDelegate =  CommandLineInterpreter.Handle_Netsh,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
-			new DescribeEntryEnumerate () {
-				Identifier = "EnumReporting", 
-				Default = null, // null if null
-				Brief = "Reporting level",
-				Index = 0,
-				Key = "report"
-				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "true", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 1,
+				Index = 0,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 2,
+				Index = 1,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 3,
+				Index = 2,
 				Key = "json"
 				},
 			new DescribeEntryParameter () {
 				Identifier = "DnsConfig", 
 				Default = null, // null if null
 				Brief = "The file to write the netsh configuration to",
-				Index = 4,
+				Index = 3,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "HostConfig", 
 				Default = null, // null if null
 				Brief = "The host configuration name",
-				Index = 5,
+				Index = 4,
 				Key = ""
 				},
 			new DescribeEntryOption () {
 				Identifier = "MultiConfig", 
 				Default = "HostsAndServices", // null if null
 				Brief = "The configuration file, is created if necessary",
-				Index = 6,
+				Index = 5,
 				Key = "config"
 				}
 			}

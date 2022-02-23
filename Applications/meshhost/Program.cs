@@ -19,31 +19,44 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-
+using Goedel.Mesh.Shell.Host;
 
 internal sealed class Program {
-    private static async Task Main(string[] args) {
-        await Host.CreateDefaultBuilder(args)
-            .ConfigureLogging(logging => {
-                logging.ClearProviders();
-                logging.AddDareLogger();
-                logging.AddConsoleLogger();
-            })
-            .ConfigureServices((hostContext, services) => {
-                services.AddSingleton<IServiceListener, MeshRudListener>();
-                services.AddSingleton<IMeshMachine, MeshMachineCore>(
-                        s => new MeshMachineCore ("host1", true));
-#if USE_PLATFORM_WINDOWS
-                services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
-#elif USE_PLATFORM_LINUX
-#endif
+    static void Main(string[] args) {
+        Shell shell = new() {
+            MeshMachine = new MeshMachineCore()
+            };
 
-            })
 
-            .AddListenerHosted()
-            .AddMeshService()
-
-            .RunConsoleAsync();
+        shell.Dispatch(args, Console.Out);
         }
+
+
+
+
+
+    //    private static async Task Main(string[] args) {
+    //        await Host.CreateDefaultBuilder(args)
+    //            .ConfigureLogging(logging => {
+    //                logging.ClearProviders();
+    //                logging.AddDareLogger();
+    //                logging.AddConsoleLogger();
+    //            })
+    //            .ConfigureServices((hostContext, services) => {
+    //                services.AddSingleton<IServiceListener, MeshRudListener>();
+    //                services.AddSingleton<IMeshMachine, MeshMachineCore>(
+    //                        s => new MeshMachineCore ("host1", true));
+    //#if USE_PLATFORM_WINDOWS
+    //                services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
+    //#elif USE_PLATFORM_LINUX
+    //#endif
+
+    //            })
+
+    //            .AddListenerHosted()
+    //            .AddMeshService()
+
+    //            .RunConsoleAsync();
+    //        }
     }
 

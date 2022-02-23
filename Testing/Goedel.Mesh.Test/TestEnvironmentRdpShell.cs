@@ -22,19 +22,6 @@
 
 using System.Net;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Goedel.Mesh.Server;
-using Goedel.Mesh.ServiceAdmin;
-using Goedel.Protocol;
-using Goedel.Protocol.Presentation;
-using Goedel.Protocol.Service;
-using Microsoft.Extensions.Configuration;
-using System.Threading;
-using Goedel.Protocol.GenericHost;
-using System.Collections.Generic;
-
 namespace Goedel.Mesh.Test;
 
 public class TestEnvironmentRdpShell : TestEnvironmentBase {

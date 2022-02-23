@@ -22,45 +22,17 @@
 
 using Goedel.Cryptography;
 using Goedel.Protocol;
+using Goedel.Command;
 using Goedel.Registry;
 using System.Net;
 namespace Goedel.Mesh.Shell.ServiceAdmin;
-
-/// <summary>
-/// Service administration CLI
-/// </summary>
-public partial class CommandLineInterpreter {
-
-
-
-    }
-
-
-
 
 
 /// <summary>
 /// The command shell.
 /// </summary>
 public partial class Shell : _Shell {
-    ///<summary>Report flag, if <see langword="true"/> results of operations
-    ///are reported to the console. Otherwise, no output is returned.</summary>
-    public bool Report { get; set; }
 
-    ///<summary>Verbose flag, if <see langword="true"/> verbose results of operations
-    ///are reported to the console. Takes priority over <see cref="Report"/></summary>
-    public bool Verbose { get; set; }
-
-    ///<summary>JSON result flag, if <see langword="true"/> results of operations
-    ///are reported to the console in JSON encoding. Takes priority over
-    ///<see cref="Verbose"/> and <see cref="Report"/>.</summary>
-    public bool Json { get; set; }
-
-    TextWriter Output { get; set; }
-
-
-    ///<summary>If false, catch exceptions and interpret as an error.</summary> 
-    public bool NoCatch { get; init; }
 
     /// <summary>
     /// Dispatch command line instruction with arguments <paramref name="args"/> and
@@ -80,7 +52,7 @@ public partial class Shell : _Shell {
                 commandLineInterpreter.MainMethod(this, args);
                 }
             catch (Goedel.Command.ParserException) {
-                CommandLineInterpreter.Brief(
+                    CommandLineInterpreterBase.Brief(
                     CommandLineInterpreter.Description,
                     CommandLineInterpreter.DefaultCommand,
                     CommandLineInterpreter.Entries);
@@ -93,7 +65,49 @@ public partial class Shell : _Shell {
                 }
             }
         }
+    ///<inheritdoc/>
+    public override void _PreProcess(Command.Dispatch dispatch) {
+        base._PreProcess(dispatch);
+        Verbosity = Verbosity.Standard;
+        if (dispatch is IReporting reporting) {
+            if (reporting.Json.Value) {
+                Verbosity = Verbosity.Json;
+                }
+            else if (!reporting.Report.Value) {
+                Verbosity = Verbosity.None;
+                }
+            else if (reporting.Verbose.Value) {
+                Verbosity = Verbosity.Full;
+                }
+            }
+        }
 
+
+    /// <summary>
+    /// Post processing action
+    /// </summary>
+    /// <param name="result"></param>
+#pragma warning disable IDE1006 // Naming Styles
+    /// <summary>
+    /// Perform post processing of the result of the shell operation.
+    /// </summary>
+    /// <param name="shellResult">The result returned by the operation.</param>
+    public virtual void _PostProcess(ShellResult shellResult) {
+
+        switch (Verbosity) {
+            case Command.Verbosity.Json: {
+                    Output.Write(shellResult.GetJson(false));
+                    break;
+                    }
+            default: {
+                    var builder = new StringBuilder();
+                    shellResult.ToBuilder(builder, Verbosity);
+                    Output.Write(builder.ToString());
+                    break;
+                    }
+            }
+
+        }
     /// <summary>
     /// Dispatch method
     /// </summary>
@@ -121,36 +135,12 @@ public partial class Shell : _Shell {
         PublicMeshService.GetService(MeshMachine, file.Value);
 
 
-    string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Value);
+    //string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Value);
 
     ///<summary>The Mesh Machine (Must support client catalog)</summary> 
     public IMeshMachineClient MeshMachine { get; init; }
 
-    /////<summary>The Mesh Service Provider.</summary> 
-    //public PublicMeshService PublicMeshService { get; set; }
 
-    /// <summary>
-    /// Post processing action
-    /// </summary>
-    /// <param name="result"></param>
-#pragma warning disable IDE1006 // Naming Styles
-    /// <summary>
-    /// Perform post processing of the result of the shell operation.
-    /// </summary>
-    /// <param name="shellResult">The result returned by the operation.</param>
-    public virtual void _PostProcess(ShellResult shellResult) {
-        if (Json) {
-            // Only report the results in JSON format and without
-            // additional text.
-            Output.Write(shellResult.GetJson(false));
-            }
-        else if (Verbose) {
-            Output.Write(shellResult.Verbose());
-            }
-        else {
-            Output.Write(shellResult.ToString());
-            }
-        }
 
 
 

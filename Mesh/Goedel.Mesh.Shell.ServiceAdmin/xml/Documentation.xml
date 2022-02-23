@@ -299,23 +299,6 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.EnumReporting.eJson">
-            <summary>Case "json": Report output in JSON format</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.EnumReporting.eVerbose">
-            <summary>Case "verbose": Verbose reports</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.EnumReporting.eReport">
-            <summary>Case "report": Report output (default)</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.EnumReporting.eSilent">
-            <summary>Case "silent": Suppress output</summary>
-        </member>
-        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter">
-            <summary>
-            Service administration CLI
-            </summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter.Entries">
             <summary>The command entries</summary>
         </member>
@@ -333,11 +316,14 @@
             <param name="args">The set of arguments.</param>
             <param name="index">The first unparsed argument.</param>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._About.Where">
-            <summary>Field accessor for option [where]</summary>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._About.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._About.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._About.Json">
+            <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -369,9 +355,6 @@
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Account">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -389,9 +372,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._DNS.MultiConfig">
             <summary>Field accessor for option [config]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Netsh.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -416,22 +396,6 @@
             The command shell.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.Report">
-            <summary>Report flag, if <see langword="true"/> results of operations
-            are reported to the console. Otherwise, no output is returned.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.Verbose">
-            <summary>Verbose flag, if <see langword="true"/> verbose results of operations
-            are reported to the console. Takes priority over <see cref="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.Report"/></summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.Json">
-            <summary>JSON result flag, if <see langword="true"/> results of operations
-            are reported to the console in JSON encoding. Takes priority over
-            <see cref="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.Verbose"/> and <see cref="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.Report"/>.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.NoCatch">
-            <summary>If false, catch exceptions and interpret as an error.</summary> 
-        </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Dispatch(System.String[],System.IO.TextWriter)">
             <summary>
             Dispatch command line instruction with arguments <paramref name="args"/> and
@@ -439,6 +403,15 @@
             </summary>
             <param name="args">The command line arguments.</param>
             <param name="console">Error output stream.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell._PreProcess(Goedel.Command.Dispatch)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell._PostProcess(Goedel.Command.Json.ShellResult)">
+            <summary>
+            Perform post processing of the result of the shell operation.
+            </summary>
+            <param name="shellResult">The result returned by the operation.</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.About(Goedel.Mesh.Shell.ServiceAdmin.About)">
             <summary>
@@ -449,12 +422,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Shell.MeshMachine">
             <summary>The Mesh Machine (Must support client catalog)</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell._PostProcess(Goedel.Mesh.Shell.ServiceAdmin.ShellResult)">
-            <summary>
-            Perform post processing of the result of the shell operation.
-            </summary>
-            <param name="shellResult">The result returned by the operation.</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Shell.Create(Goedel.Mesh.Shell.ServiceAdmin.Create)">
             <inheritdoc/>
@@ -472,52 +439,39 @@
             multiple hosts.
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.ShellResult">
+        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.ServiceAdminShellResult">
              <summary>
             
              Classes to be used to test serialization an deserialization.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ShellResult._Tag">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ServiceAdminShellResult._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.ShellResult.__Tag">
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.ServiceAdminShellResult.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ShellResult._TagDictionary">
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ServiceAdminShellResult._TagDictionary">
             <summary>
             Dictionary mapping tags to factory methods
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ShellResult.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ServiceAdminShellResult.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
             Construct an instance from the specified tagged JsonReader stream.
             </summary>
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ShellResult.Verbose">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/> with 
-            additional details.
-            </summary>
-            <returns>The string value.</returns>
-        </member>
         <member name="T:Goedel.Mesh.Shell.ServiceAdmin.Result">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result.Success">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result.Reason">
-            <summary>
-            </summary>
+             <summary>
+            
+             Placeholder class to allow insertion of application specific properties.
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._Tag">
             <summary>
@@ -569,28 +523,6 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.#ctor">
-            <summary>
-            Default constructor, initialize the value <see cref="P:Goedel.Mesh.Shell.ServiceAdmin.Result.Success"/> to <see langword="true"/>.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.StringBuilder">
-            <summary>
-            Returns a <see cref="M:Goedel.Mesh.Shell.ServiceAdmin.Result.StringBuilder"/> instance initialized with the success value and
-            the expanded error message reason (if relevant).
-            </summary>
-            <returns>The <see cref="M:Goedel.Mesh.Shell.ServiceAdmin.Result.StringBuilder"/> instance.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.ServiceAdmin.Verbosity)">
-            <summary>
-            Append the description of the report to <paramref name="builder"/>.
-            </summary>
-            <param name="builder">The builder to return the report to.</param>
-            <param name="verbosity">The level of detail to return.</param>
         </member>
         <member name="T:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration">
             <summary>
@@ -737,22 +669,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.ServiceAdmin.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
-        </member>
-        <member name="T:Goedel.Mesh.Shell.ServiceAdmin.Verbosity">
-            <summary>
-            Information level to be returned in a result.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.Verbosity.Terse">
-            <summary>Minimal information, no additional text.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.Verbosity.Standard">
-            <summary>Standard descriptive result.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.Verbosity.Full">
-            <summary>Verbose report with maximum information.</summary> 
         </member>
     </members>
 </doc>

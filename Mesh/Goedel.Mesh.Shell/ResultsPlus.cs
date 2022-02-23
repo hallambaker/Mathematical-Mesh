@@ -25,70 +25,7 @@ using System.Reflection.Metadata;
 
 namespace Goedel.Mesh.Shell;
 
-/// <summary>
-/// Information level to be returned in a result.
-/// </summary>
-public enum Verbosity {
-    ///<summary>Minimal information, no additional text.</summary> 
-    Terse,
-    ///<summary>Standard descriptive result.</summary> 
-    Standard,
-    ///<summary>Verbose report with maximum information.</summary> 
-    Full
-    }
 
-public partial class ShellResult {
-
-    /// <summary>
-    /// Converts the value of this instance to a <see langword="String"/> with 
-    /// additional details.
-    /// </summary>
-    /// <returns>The string value.</returns>
-    public virtual string Verbose() => ToString();
-    }
-
-public partial class Result {
-
-    /// <summary>
-    /// Default constructor, initialize the value <see cref="Success"/> to <see langword="true"/>.
-    /// </summary>
-    public Result() => Success = true;
-
-    /// <summary>
-    /// Returns a <see cref="StringBuilder"/> instance initialized with the success value and
-    /// the expanded error message reason (if relevant).
-    /// </summary>
-    /// <returns>The <see cref="StringBuilder"/> instance.</returns>
-    public virtual StringBuilder StringBuilder() {
-        var builder = new StringBuilder();
-
-        if (!Success) {
-            builder.Append("ERROR");
-            if (Reason != null) {
-                builder.Append(" - ");
-                builder.Append(Reason);
-                }
-            builder.Append('\n');
-            }
-        return builder;
-
-        }
-
-    ///<inheritdoc/>
-    public override string ToString() {
-        var builder = StringBuilder();
-        ToBuilder(builder);
-        return builder.ToString();
-        }
-
-    /// <summary>
-    /// Append the description of the report to <paramref name="builder"/>.
-    /// </summary>
-    /// <param name="builder">The builder to return the report to.</param>
-    /// <param name="verbosity">The level of detail to return.</param>
-    public virtual void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
-        }
-    }
 public partial class ResultAbout {
 
     ///<inheritdoc/>
@@ -98,10 +35,11 @@ public partial class ResultAbout {
         builder.AppendLine($"    {AssemblyDescription}");
         builder.AppendLine($"    Copyright         : {AssemblyCopyright} {AssemblyCompany}");
         builder.AppendLine($"    Version           : {AssemblyVersion}");
-        builder.AppendLine($"    Directory Profile : {DirectoryMesh}");
-        builder.AppendLine($"    Directory Keys    : {DirectoryKeys}");
 
-
+        if (verbosity == Verbosity.Full) {
+            builder.AppendLine($"    Directory Profile : {DirectoryMesh}");
+            builder.AppendLine($"    Directory Keys    : {DirectoryKeys}");
+            }
         }
     }
 
@@ -173,11 +111,7 @@ public partial class ResultHello {
 
     ///<inheritdoc/>
     public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
-
-
         if (Response != null) {
-
-
             if (Response.Version != null) {
                 builder.AppendLine($"MeshService {Response.Version.Major}.{Response.Version.Minor}");
                 }
@@ -185,13 +119,7 @@ public partial class ResultHello {
                 var profileService = Response.EnvelopedProfileService.Decode();
                 builder.AppendLine($"   Service UDF = {profileService.Udf}");
                 }
-            //if (Response.EnvelopedProfileHost != null) {
-            //    var profileHost = Response.EnvelopedProfileHost.Decode();
-            //    builder.AppendLine($"   Host UDF = {profileHost.Udf}");
-            //    }
             }
-
-
         }
     }
 

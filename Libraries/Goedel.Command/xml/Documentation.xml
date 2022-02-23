@@ -180,17 +180,6 @@
         <member name="F:Goedel.Command.DescribeCase.Value">
             <summary>The index value</summary>
         </member>
-        <member name="T:Goedel.Command.DispatchShell">
-            <summary>
-            Describe a shell.
-            </summary>
-        </member>
-        <member name="M:Goedel.Command.DispatchShell._PreProcess(Goedel.Command.Dispatch)">
-            <summary>
-            Method called before acommand is dispatched.
-            </summary>
-            <param name="dispatch">The options for the command dispatched.</param>
-        </member>
         <member name="T:Goedel.Command.CommandLex">
             <summary>
             Lexical analyzer for command line parsing.
@@ -534,6 +523,26 @@
             </summary>
             <param name="c">The character read</param>
         </member>
+        <member name="T:Goedel.Command.Verbosity">
+            <summary>
+            Information level to be returned in a result.
+            </summary>
+        </member>
+        <member name="F:Goedel.Command.Verbosity.Terse">
+            <summary>Minimal information, no additional text.</summary> 
+        </member>
+        <member name="F:Goedel.Command.Verbosity.Standard">
+            <summary>Standard descriptive result.</summary> 
+        </member>
+        <member name="F:Goedel.Command.Verbosity.Full">
+            <summary>Verbose report with maximum information.</summary> 
+        </member>
+        <member name="F:Goedel.Command.Verbosity.Json">
+            <summary>Return output in JSON</summary> 
+        </member>
+        <member name="F:Goedel.Command.Verbosity.None">
+            <summary>No output</summary> 
+        </member>
         <member name="T:Goedel.Command.Dispatch">
             <summary>Track start and end time of parse.</summary>
         </member>
@@ -548,6 +557,34 @@
         </member>
         <member name="P:Goedel.Command.Dispatch.DescribeCommand">
             <summary>Command description</summary>
+        </member>
+        <member name="M:Goedel.Command.Dispatch._PreProcess(Goedel.Command.Dispatch)">
+            <summary>
+            Method called before acommand is dispatched.
+            </summary>
+            <param name="dispatch">The options for the command dispatched.</param>
+        </member>
+        <member name="T:Goedel.Command.DispatchShell">
+            <summary>
+            Describe a shell.
+            </summary>
+        </member>
+        <member name="M:Goedel.Command.DispatchShell._PreProcess(Goedel.Command.Dispatch)">
+            <summary>
+            Method called before acommand is dispatched.
+            </summary>
+            <param name="dispatch">The options for the command dispatched.</param>
+        </member>
+        <member name="P:Goedel.Command.DispatchShell.Report">
+            <summary>Report flag, if <see langword="true"/> results of operations
+            are reported to the console. Otherwise, no output is returned.</summary>
+        </member>
+        <member name="P:Goedel.Command.DispatchShell.Verbosity">
+            <summary>Verbose flag, if <see langword="true"/> verbose results of operations
+            are reported to the console. Takes priority over <see cref="P:Goedel.Command.DispatchShell.Report"/></summary>
+        </member>
+        <member name="P:Goedel.Command.DispatchShell.NoCatch">
+            <summary>If false, catch exceptions and interpret as an error.</summary> 
         </member>
         <member name="T:Goedel.Command.ParserException">
             <summary>

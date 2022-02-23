@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Command.Json</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Command.Json.NamespaceDoc">
+            <summary>
+            Additional support library for command line parsers generated with Goedel Command tool.
+            </summary>
+        </member>
+        <member name="T:Goedel.Command.Json.JsonShellResult">
+             <summary>
+            
+             Classes to be used to test serialization an deserialization.
+             </summary>
+        </member>
+        <member name="P:Goedel.Command.Json.JsonShellResult._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Command.Json.JsonShellResult.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Command.Json.JsonShellResult._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Command.Json.JsonShellResult.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="T:Goedel.Command.Json.ShellResult">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Command.Json.ShellResult.Success">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Command.Json.ShellResult.Reason">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Command.Json.ShellResult._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Command.Json.ShellResult.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Command.Json.ShellResult._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Command.Json.ShellResult.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Command.Json.ShellResult.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Command.Json.ShellResult.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Command.Json.ShellResult.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Command.Json.ShellResult.#ctor">
+            <summary>
+            Default constructor, initialize the value <see cref="P:Goedel.Command.Json.ShellResult.Success"/> to <see langword="true"/>.
+            </summary>
+        </member>
+        <member name="M:Goedel.Command.Json.ShellResult.StringBuilder">
+            <summary>
+            Returns a <see cref="M:Goedel.Command.Json.ShellResult.StringBuilder"/> instance initialized with the success value and
+            the expanded error message reason (if relevant).
+            </summary>
+            <returns>The <see cref="M:Goedel.Command.Json.ShellResult.StringBuilder"/> instance.</returns>
+        </member>
+        <member name="M:Goedel.Command.Json.ShellResult.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Command.Json.ShellResult.Verbose">
+            <summary>
+            Converts the value of this instance to a <see langword="String"/> with 
+            additional details.
+            </summary>
+            <returns>The string value.</returns>
+        </member>
+        <member name="M:Goedel.Command.Json.ShellResult.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
+            <summary>
+            Append the description of the report to <paramref name="builder"/>.
+            </summary>
+            <param name="builder">The builder to return the report to.</param>
+            <param name="verbosity">The level of detail to return.</param>
+        </member>
+    </members>
+</doc>

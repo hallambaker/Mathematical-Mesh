@@ -11,16 +11,6 @@
 
 	OptionSet Reporting
 
-		Enumerate EnumReporting "report"
-			Brief "Reporting level"
-			Case eJson "json"
-				Brief "Report output in JSON format"
-			Case eVerbose "verbose"
-				Brief "Verbose reports"
-			Case eReport "report"
-				Brief "Report output (default)"
-			Case eSilent "silent"
-				Brief "Suppress output"
 
 		Option Verbose "verbose" Flag
 			Default "true"
@@ -34,8 +24,7 @@
 
 	Command About "about"		
 		Brief		"Report version and compilation date."
-		Option Where "where" Flag
-			Brief		"Report location of configuration files."
+		Include Reporting
 
 	Command Create "create"
 		Include Reporting

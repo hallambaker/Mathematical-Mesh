@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)CommonSettings.xml" />
+	<PropertyGroup>
+		<Product>Goedel.Command.Json</Product>
+		<Description>Additional support library for command line parsers generated with Goedel Command tool.</Description>
+		<Copyright>© 2022</Copyright>
+		<Title>Goedel.Command.Json</Title>
+
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
+		<ProjectReference Include="..\Goedel.Command\Goedel.Command.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Results.cs">
+	    <DependentUpon>Results.protogen</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="Results.protogen">
+	    <LastGenOutput>Results.cs</LastGenOutput>
+	    <Generator>ProtoGen</Generator>
+	  </None>
+	</ItemGroup>
+</Project>

@@ -735,9 +735,6 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="P:Goedel.Mesh.Shell.Shell.NoCatch">
-            <summary>If false, catch exceptions and interpret as an error.</summary> 
-        </member>
         <member name="P:Goedel.Mesh.Shell.Shell.MeshMachine">
             <summary>The MeshMachine</summary>
         </member>
@@ -752,19 +749,6 @@
             The static main entry point for the shell.
             </summary>
             <param name="Args">The command line arguments.</param>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Shell.Report">
-            <summary>Report flag, if <see langword="true"/> results of operations
-            are reported to the console. Otherwise, no output is returned.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Shell.Verbose">
-            <summary>Verbose flag, if <see langword="true"/> verbose results of operations
-            are reported to the console. Takes priority over <see cref="P:Goedel.Mesh.Shell.Shell.Report"/></summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Shell.Json">
-            <summary>JSON result flag, if <see langword="true"/> results of operations
-            are reported to the console in JSON encoding. Takes priority over
-            <see cref="P:Goedel.Mesh.Shell.Shell.Verbose"/> and <see cref="P:Goedel.Mesh.Shell.Shell.Report"/>.</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.Shell.MeshID">
             <summary>The current Mesh UDF.</summary>
@@ -803,22 +787,19 @@
             <param name="console">Error output stream.</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell._PreProcess(Goedel.Command.Dispatch)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell._PostProcess(Goedel.Command.Json.ShellResult)">
             <summary>
-            Preprocess the common command options <paramref name="options"/>.
+            Perform post processing of the result of the shell operation.
             </summary>
-            <param name="options">The options to process.</param>
+            <param name="shellResult">The result returned by the operation.</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.SetAlgorithms(Goedel.Mesh.Shell.ICryptoOptions)">
             <summary>
             Set choices of cryptographic options.
             </summary>
             <param name="CryptoOptions">The cryptographic options.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell._PostProcess(Goedel.Mesh.Shell.ShellResult)">
-            <summary>
-            Perform post processing of the result of the shell operation.
-            </summary>
-            <param name="shellResult">The result returned by the operation.</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.GetMeshClient(Goedel.Mesh.Shell.IAccountOptions)">
             <summary>
@@ -1166,18 +1147,6 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.EnumReporting.eJson">
-            <summary>Case "json": Report output in JSON format</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.EnumReporting.eVerbose">
-            <summary>Case "verbose": Verbose reports</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.EnumReporting.eReport">
-            <summary>Case "report": Report output (default)</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.EnumReporting.eSilent">
-            <summary>Case "silent": Suppress output</summary>
-        </member>
         <member name="F:Goedel.Mesh.Shell.EnumAuthentication.ePlain">
             <summary>Case "plain": No authentication</summary>
         </member>
@@ -1255,9 +1224,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountCreate.DeviceDescription">
             <summary>Field accessor for option [dd]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountCreate.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountCreate.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -1272,9 +1238,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountDelete.ProfileUdf">
             <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountDelete.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountDelete.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -1297,9 +1260,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountStatus.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountStatus.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountStatus.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -1320,9 +1280,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountSync.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountSync.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountSync.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -1353,9 +1310,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -1414,9 +1368,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountConnect.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountConnect.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -1474,9 +1425,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountEscrow.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountEscrow.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountEscrow.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -1504,9 +1452,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountPurge.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountPurge.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountPurge.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -1527,9 +1472,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountRecover.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountRecover.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountRecover.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -1570,9 +1512,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountRecover.Verify">
             <summary>Field accessor for option [verify]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountList.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountList.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -1606,9 +1545,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountGet.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountGet.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountGet.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -1632,9 +1568,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountExport.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountExport.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountExport.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -1660,9 +1593,6 @@
         <member name="P:Goedel.Mesh.Shell._AccountImport.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountImport.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountImport.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -1677,9 +1607,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.PIN">
             <summary>Field accessor for option [pin]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -1747,9 +1674,6 @@
         <member name="P:Goedel.Mesh.Shell._DevicePending.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePending.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DevicePending.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -1770,9 +1694,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceComplete.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceComplete.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceComplete.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -1834,9 +1755,6 @@
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceAccept.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -1860,9 +1778,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceReject.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceReject.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceReject.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -1888,9 +1803,6 @@
         <member name="P:Goedel.Mesh.Shell._DeviceDelete.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceDelete.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceDelete.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -1911,9 +1823,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceList.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceList.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceList.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -1975,9 +1884,6 @@
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2001,9 +1907,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceJoin.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceJoin.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceJoin.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2029,9 +1932,6 @@
         <member name="P:Goedel.Mesh.Shell._DeviceInstall.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceInstall.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceInstall.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2052,9 +1952,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2083,9 +1980,6 @@
         <member name="P:Goedel.Mesh.Shell._MessageContact.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageContact.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MessageContact.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2113,9 +2007,6 @@
         <member name="P:Goedel.Mesh.Shell._MessageConfirm.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageConfirm.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MessageConfirm.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2136,9 +2027,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MessagePending.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessagePending.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessagePending.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2173,9 +2061,6 @@
         <member name="P:Goedel.Mesh.Shell._MessageStatus.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageStatus.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MessageStatus.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2199,9 +2084,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageAccept.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageAccept.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageAccept.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2227,9 +2109,6 @@
         <member name="P:Goedel.Mesh.Shell._MessageReject.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageReject.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MessageReject.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2254,9 +2133,6 @@
         <member name="P:Goedel.Mesh.Shell._MessageBlock.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageBlock.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MessageBlock.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2277,9 +2153,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupCreate.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._GroupCreate.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupCreate.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2341,9 +2214,6 @@
         <member name="P:Goedel.Mesh.Shell._GroupAdd.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._GroupAdd.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._GroupAdd.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2370,9 +2240,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupGet.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._GroupGet.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupGet.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2401,9 +2268,6 @@
         <member name="P:Goedel.Mesh.Shell._GroupDelete.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._GroupDelete.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._GroupDelete.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2430,9 +2294,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupList.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._GroupList.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupList.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2467,9 +2328,6 @@
         <member name="P:Goedel.Mesh.Shell._PasswordAdd.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordAdd.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._PasswordAdd.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2493,9 +2351,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordGet.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordGet.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordGet.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2521,9 +2376,6 @@
         <member name="P:Goedel.Mesh.Shell._PasswordDelete.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordDelete.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._PasswordDelete.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2547,9 +2399,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordDump.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordDump.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordDump.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2587,9 +2436,6 @@
         <member name="P:Goedel.Mesh.Shell._ContactStatic.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactStatic.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ContactStatic.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2610,9 +2456,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDynamic.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactDynamic.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDynamic.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2638,9 +2481,6 @@
         <member name="P:Goedel.Mesh.Shell._ContactFetch.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactFetch.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ContactFetch.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2664,9 +2504,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactExchange.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactExchange.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactExchange.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2695,9 +2532,6 @@
         <member name="P:Goedel.Mesh.Shell._ContactImport.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactImport.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ContactImport.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2721,9 +2555,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDelete.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactDelete.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDelete.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2749,9 +2580,6 @@
         <member name="P:Goedel.Mesh.Shell._ContactGet.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactGet.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ContactGet.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2775,9 +2603,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDump.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactDump.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDump.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2808,9 +2633,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkImport.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkImport.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkImport.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2854,9 +2676,6 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2884,9 +2703,6 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkDelete.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkDelete.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkDelete.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2911,9 +2727,6 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkGet.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkGet.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkGet.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2934,9 +2747,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkDump.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkDump.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkDump.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -2968,9 +2778,6 @@
         <member name="P:Goedel.Mesh.Shell._CalendarImport.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarImport.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._CalendarImport.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -2998,9 +2805,6 @@
         <member name="P:Goedel.Mesh.Shell._CalendarAdd.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarAdd.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._CalendarAdd.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3024,9 +2828,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarGet.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarGet.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarGet.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3052,9 +2853,6 @@
         <member name="P:Goedel.Mesh.Shell._CalendarDelete.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarDelete.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._CalendarDelete.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3075,9 +2873,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarDump.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarDump.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarDump.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3105,9 +2900,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkImport.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkImport.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkImport.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3139,9 +2931,6 @@
         <member name="P:Goedel.Mesh.Shell._NetworkAdd.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkAdd.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._NetworkAdd.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3165,9 +2954,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkGet.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkGet.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkGet.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3193,9 +2979,6 @@
         <member name="P:Goedel.Mesh.Shell._NetworkDelete.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDelete.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._NetworkDelete.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3217,9 +3000,6 @@
         <member name="P:Goedel.Mesh.Shell._NetworkList.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkList.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._NetworkList.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3228,9 +3008,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkList.Json">
             <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._KeyNonce.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._KeyNonce.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3244,9 +3021,6 @@
         <member name="P:Goedel.Mesh.Shell._KeyNonce.Bits">
             <summary>Field accessor for option [bits]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._KeySecret.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._KeySecret.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3258,9 +3032,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._KeySecret.Bits">
             <summary>Field accessor for option [bits]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._KeyEarl.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._KeyEarl.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3276,9 +3047,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._KeyEarl.Bits">
             <summary>Field accessor for option [bits]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._KeyShare.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._KeyShare.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3303,9 +3071,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._KeyShare.Shares">
             <summary>Field accessor for option [shares]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._KeyRecover.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._KeyRecover.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3340,9 +3105,6 @@
         <member name="P:Goedel.Mesh.Shell._KeyRecover.Share8">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._HashUDF.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._HashUDF.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3367,9 +3129,6 @@
         <member name="P:Goedel.Mesh.Shell._HashUDF.Input">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._HashDigest.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._HashDigest.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3384,9 +3143,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._HashDigest.Input">
             <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._HashMac.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._HashMac.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3448,9 +3204,6 @@
         <member name="P:Goedel.Mesh.Shell._DareEncode.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareEncode.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DareEncode.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3477,9 +3230,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareDecode.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DareDecode.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareDecode.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3510,9 +3260,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareVerify.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DareVerify.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareVerify.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3562,9 +3309,6 @@
         <member name="P:Goedel.Mesh.Shell._DareEARL.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareEARL.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DareEARL.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3610,9 +3354,6 @@
         <member name="P:Goedel.Mesh.Shell._DareCreate.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareCreate.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DareCreate.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3651,9 +3392,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareArchive.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DareArchive.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareArchive.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3709,9 +3447,6 @@
         <member name="P:Goedel.Mesh.Shell._DareLog.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareLog.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DareLog.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3754,9 +3489,6 @@
         <member name="P:Goedel.Mesh.Shell._DareAppend.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareAppend.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DareAppend.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3787,9 +3519,6 @@
         <member name="P:Goedel.Mesh.Shell._DareDelete.Key">
             <summary>Field accessor for option [key]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareDir.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DareDir.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3813,9 +3542,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareDir.Sequence">
             <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DareList.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareList.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3871,9 +3597,6 @@
         <member name="P:Goedel.Mesh.Shell._DareIndex.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareIndex.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DareIndex.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -3912,9 +3635,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareExtract.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DareExtract.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareExtract.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -3966,9 +3686,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareCopy.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DareCopy.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareCopy.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -4036,9 +3753,6 @@
         <member name="P:Goedel.Mesh.Shell._MailAdd.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MailAdd.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MailAdd.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -4084,9 +3798,6 @@
         <member name="P:Goedel.Mesh.Shell._MailGet.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MailGet.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MailGet.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -4107,9 +3818,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MailList.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MailList.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailList.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -4138,9 +3846,6 @@
         <member name="P:Goedel.Mesh.Shell._MailImport.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MailImport.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MailImport.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -4161,9 +3866,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._MailDelete.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MailDelete.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailDelete.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -4188,9 +3890,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SmimeSign.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SmimeSign.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SmimeSign.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -4228,9 +3927,6 @@
         <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SmimeEncrypt.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -4266,9 +3962,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._OpenpgpSign.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._OpenpgpSign.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._OpenpgpSign.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -4306,9 +3999,6 @@
         <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._OpenpgpEncrypt.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -4344,9 +4034,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHCreate.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -4411,9 +4098,6 @@
         <member name="P:Goedel.Mesh.Shell._SSHGet.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHGet.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SSHGet.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -4459,9 +4143,6 @@
         <member name="P:Goedel.Mesh.Shell._SSHList.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHList.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SSHList.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -4491,9 +4172,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHClient.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHClient.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHClient.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -4537,9 +4215,6 @@
         <member name="P:Goedel.Mesh.Shell._SSHHost.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHHost.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SSHHost.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -4576,9 +4251,6 @@
         <member name="P:Goedel.Mesh.Shell._SSHKnown.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHKnown.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._SSHKnown.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
@@ -4614,9 +4286,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHDelete.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SSHDelete.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHDelete.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -4848,52 +4517,39 @@
               Looks up a localized string similar to Witness.
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Shell.ShellResult">
+        <member name="T:Goedel.Mesh.Shell.MeshmanShellResult">
              <summary>
             
              Classes to be used to test serialization an deserialization.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ShellResult._Tag">
+        <member name="P:Goedel.Mesh.Shell.MeshmanShellResult._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.ShellResult.__Tag">
+        <member name="F:Goedel.Mesh.Shell.MeshmanShellResult.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ShellResult._TagDictionary">
+        <member name="P:Goedel.Mesh.Shell.MeshmanShellResult._TagDictionary">
             <summary>
             Dictionary mapping tags to factory methods
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ShellResult.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+        <member name="M:Goedel.Mesh.Shell.MeshmanShellResult.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
             Construct an instance from the specified tagged JsonReader stream.
             </summary>
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ShellResult.Verbose">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/> with 
-            additional details.
-            </summary>
-            <returns>The string value.</returns>
-        </member>
         <member name="T:Goedel.Mesh.Shell.Result">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Result.Success">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Result.Reason">
-            <summary>
-            </summary>
+             <summary>
+            
+             Placeholder class to allow insertion of application specific properties.
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.Result._Tag">
             <summary>
@@ -4945,28 +4601,6 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Result.#ctor">
-            <summary>
-            Default constructor, initialize the value <see cref="P:Goedel.Mesh.Shell.Result.Success"/> to <see langword="true"/>.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Result.StringBuilder">
-            <summary>
-            Returns a <see cref="M:Goedel.Mesh.Shell.Result.StringBuilder"/> instance initialized with the success value and
-            the expanded error message reason (if relevant).
-            </summary>
-            <returns>The <see cref="M:Goedel.Mesh.Shell.Result.StringBuilder"/> instance.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Result.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Result.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
-            <summary>
-            Append the description of the report to <paramref name="builder"/>.
-            </summary>
-            <param name="builder">The builder to return the report to.</param>
-            <param name="verbosity">The level of detail to return.</param>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultAbout">
             <summary>
@@ -5055,7 +4689,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultAbout.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultAbout.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultFail">
@@ -5180,7 +4814,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultKey.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultKey.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultDigest">
@@ -5250,7 +4884,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDigest.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultDigest.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultFile">
@@ -5643,7 +5277,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultFileDare.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultFileDare.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultFileEARL">
@@ -5772,7 +5406,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDump.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultDump.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultList">
@@ -6027,7 +5661,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPublishDevice.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultPublishDevice.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultCreateDevice">
@@ -6097,7 +5731,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreateDevice.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultCreateDevice.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultCreatePersonal">
@@ -6162,7 +5796,7 @@
         <member name="F:Goedel.Mesh.Shell.ResultCreatePersonal.ConnectionUser">
             <summary>The <see cref="T:Goedel.Mesh.ConnectionService"/> instance.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreatePersonal.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultCreatePersonal.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultCreateAccount">
@@ -6231,7 +5865,7 @@
         <member name="P:Goedel.Mesh.Shell.ResultCreateAccount.Account">
             <summary>The account UDF.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultCreateAccount.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultCreateAccount.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultDeleteAccount">
@@ -6352,7 +5986,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultRegisterService.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultRegisterService.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultRecover">
@@ -6469,7 +6103,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultStatus.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultStatus.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultSync">
@@ -6602,7 +6236,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultEscrow.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultEscrow.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultMachine">
@@ -6727,7 +6361,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPIN.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultPIN.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultHello">
@@ -6789,7 +6423,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultHello.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultHello.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultSequence">
@@ -7287,7 +6921,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultSent.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultSent.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultPending">
@@ -7349,7 +6983,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultPending.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultPending.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultAuthorize">
@@ -7470,7 +7104,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultProcess.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultProcess.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultConnect">
@@ -7556,7 +7190,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultConnect.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultConnect.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultTransactionRequest">
@@ -7681,7 +7315,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultReceived.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultReceived.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultApplication">
@@ -7743,7 +7377,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultApplication.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultApplication.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultApplicationList">
@@ -7805,22 +7439,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultApplicationList.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.ResultApplicationList.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
-        </member>
-        <member name="T:Goedel.Mesh.Shell.Verbosity">
-            <summary>
-            Information level to be returned in a result.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Verbosity.Terse">
-            <summary>Minimal information, no additional text.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Verbosity.Standard">
-            <summary>Standard descriptive result.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Verbosity.Full">
-            <summary>Verbose report with maximum information.</summary> 
         </member>
         <member name="T:Goedel.Mesh.NamespaceDoc">
             <summary>

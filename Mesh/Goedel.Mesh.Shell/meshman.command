@@ -12,18 +12,6 @@
 	//	Brief		"Report version and compilation date."
 
 	OptionSet Reporting
-
-		Enumerate EnumReporting "report"
-			Brief "Reporting level"
-			Case eJson "json"
-				Brief "Report output in JSON format"
-			Case eVerbose "verbose"
-				Brief "Verbose reports"
-			Case eReport "report"
-				Brief "Report output (default)"
-			Case eSilent "silent"
-				Brief "Suppress output"
-
 		Option Verbose "verbose" Flag
 			Default "true"
 			Brief "Verbose reports (default)"

@@ -20,7 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.IO;
 
 namespace Goedel.Mesh.Test;
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 23-Feb-22 1:40:38 AM
+//  This file was automatically generated at 23-Feb-22 4:41:59 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -57,7 +57,7 @@ namespace Goedel.Mesh.Shell;
 	///
 	/// Classes to be used to test serialization an deserialization.
 	/// </summary>
-public abstract partial class ShellResult : global::Goedel.Protocol.JsonObject {
+public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonObject {
 
 	/// <summary>
     /// Tag identifying this class
@@ -67,7 +67,7 @@ public abstract partial class ShellResult : global::Goedel.Protocol.JsonObject {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "ShellResult";
+	public new const string __Tag = "MeshmanShellResult";
 
 	/// <summary>
     /// Dictionary mapping tags to factory methods
@@ -146,21 +146,10 @@ public abstract partial class ShellResult : global::Goedel.Protocol.JsonObject {
 
 	// Transaction Classes
 	/// <summary>
+	///
+	/// Placeholder class to allow insertion of application specific properties.
 	/// </summary>
 public partial class Result : ShellResult {
-	bool								__Success = false;
-	private bool						_Success;
-        /// <summary>
-        /// </summary>
-
-	public virtual bool						Success {
-		get => _Success;
-		set {_Success = value; __Success = true; }
-		}
-        /// <summary>
-        /// </summary>
-
-	public virtual string						Reason  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -204,16 +193,7 @@ public partial class Result : ShellResult {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__Success){
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Success", 1);
-				_writer.WriteBoolean (Success);
-			}
-		if (Reason != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Reason", 1);
-				_writer.WriteString (Reason);
-			}
+		((ShellResult)this).SerializeX(_writer, false, ref _first);
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
 			}
@@ -247,15 +227,8 @@ public partial class Result : ShellResult {
 	public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 		switch (tag) {
-			case "Success" : {
-				Success = jsonReader.ReadBoolean ();
-				break;
-				}
-			case "Reason" : {
-				Reason = jsonReader.ReadString ();
-				break;
-				}
 			default : {
+				base.DeserializeToken(jsonReader, tag);
 				break;
 				}
 			}
@@ -3927,7 +3900,7 @@ public partial class ResultSequence : Result {
 
 	/// <summary>
 	/// </summary>
-public partial class LogEntry : ShellResult {
+public partial class LogEntry : MeshmanShellResult {
         /// <summary>
         /// </summary>
 

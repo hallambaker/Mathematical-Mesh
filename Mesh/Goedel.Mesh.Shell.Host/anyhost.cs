@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 23-Feb-22 1:40:45 AM
+//  This file was automatically generated at 23-Feb-22 5:08:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -23,18 +23,6 @@ using Goedel.Utilities;
 #pragma warning disable CS1591
 
 namespace Goedel.Mesh.Shell.Host;
-
-// Enumeration type
-public enum EnumReporting {
-    /// <summary>Case "json": Report output in JSON format</summary>
-    eJson,
-    /// <summary>Case "verbose": Verbose reports</summary>
-    eVerbose,
-    /// <summary>Case "report": Report output (default)</summary>
-    eReport,
-    /// <summary>Case "silent": Suppress output</summary>
-    eSilent
-	}
 
 
 
@@ -68,32 +56,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         Entries = new () { }
         };
 
-	public readonly static DescribeEntryEnumerate DescribeEnumReporting = new  () {
-        Identifier = "report",
-        Brief = "Reporting level",
-        Entries = new () { 
-			new DescribeCase () {
-				Identifier = "json",
-				Brief = "Report output in JSON format",
-				Value = (int) EnumReporting.eJson
-				},
-			new DescribeCase () {
-				Identifier = "verbose",
-				Brief = "Verbose reports",
-				Value = (int) EnumReporting.eVerbose
-				},
-			new DescribeCase () {
-				Identifier = "report",
-				Brief = "Report output (default)",
-				Value = (int) EnumReporting.eReport
-				},
-			new DescribeCase () {
-				Identifier = "silent",
-				Brief = "Suppress output",
-				Value = (int) EnumReporting.eSilent
-				}
-			}
-		};
 
 
 
@@ -242,7 +204,6 @@ public class _HostStart : Goedel.Command.Dispatch ,
 		new ExistingFile (),
 		new Flag (),
 		new String (),
-		new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 		new Flag (),
 		new Flag (),
 		new Flag ()		} ;
@@ -287,41 +248,32 @@ public class _HostStart : Goedel.Command.Dispatch ,
 	public virtual string _MachineName {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter [report]</summary>
-	public virtual Enumeration<EnumReporting> EnumReporting {
-		get => _Data[4] as Enumeration<EnumReporting>;
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[4] as Flag;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _EnumReporting {
+	public virtual string _Verbose {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[5] as Flag;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _Report {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
 		get => _Data[6] as Flag;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _Report {
-		set => _Data[6].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[7] as Flag;
-		set => _Data[7]  = value;
-		}
-
 	public virtual string _Json {
-		set => _Data[7].Parameter (value);
+		set => _Data[6].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -359,32 +311,25 @@ public class _HostStart : Goedel.Command.Dispatch ,
 				Index = 3,
 				Key = "host"
 				},
-			new DescribeEntryEnumerate () {
-				Identifier = "EnumReporting", 
-				Default = null, // null if null
-				Brief = "Reporting level",
-				Index = 4,
-				Key = "report"
-				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "true", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 5,
+				Index = 4,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 6,
+				Index = 5,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 7,
+				Index = 6,
 				Key = "json"
 				}
 			}

@@ -20,10 +20,31 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Registry;
+
 namespace Goedel.Command;
 
+/// <summary>
+/// Information level to be returned in a result.
+/// </summary>
+public enum Verbosity {
+    ///<summary>Minimal information, no additional text.</summary> 
+    Terse,
+    ///<summary>Standard descriptive result.</summary> 
+    Standard,
+    ///<summary>Verbose report with maximum information.</summary> 
+    Full,
+    ///<summary>Return output in JSON</summary> 
+    Json,
+    ///<summary>No output</summary> 
+    None
+    }
+
+
+
+
 /// <summary>Track start and end time of parse.</summary>
-public abstract class Dispatch {
+public abstract class Dispatch{
     /// <summary>Record start time.</summary>
     public DateTime Started = DateTime.Now;
 
@@ -35,4 +56,43 @@ public abstract class Dispatch {
 
     /// <summary>Command description</summary>
     public virtual DescribeCommandEntry DescribeCommand { get; set; }
+
+    /// <summary>
+    /// Method called before acommand is dispatched.
+    /// </summary>
+    /// <param name="dispatch">The options for the command dispatched.</param>
+    public virtual void _PreProcess(Dispatch dispatch) { }
+
+    }
+
+/// <summary>
+/// Describe a shell.
+/// </summary>
+public abstract class DispatchShell : Dispatch {
+#pragma warning disable IDE1006 // Naming Styles
+    /// <summary>
+    /// Method called before acommand is dispatched.
+    /// </summary>
+    /// <param name="dispatch">The options for the command dispatched.</param>
+    public virtual void _PreProcess(Dispatch dispatch) { }
+
+
+    ///<summary>Report flag, if <see langword="true"/> results of operations
+    ///are reported to the console. Otherwise, no output is returned.</summary>
+    public bool Report { get; set; }
+
+    ///<summary>Verbose flag, if <see langword="true"/> verbose results of operations
+    ///are reported to the console. Takes priority over <see cref="Report"/></summary>
+    public Verbosity Verbosity { get; set; }
+
+
+    public TextWriter Output { get; set; }
+
+
+    ///<summary>If false, catch exceptions and interpret as an error.</summary> 
+    public bool NoCatch { get; init; }
+
+
+
+
     }

@@ -3,6 +3,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Command.Json\Goedel.Command.Json.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />

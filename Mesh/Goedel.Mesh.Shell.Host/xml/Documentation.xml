@@ -4,18 +4,6 @@
         <name>Goedel.Mesh.Shell.Host</name>
     </assembly>
     <members>
-        <member name="F:Goedel.Mesh.Shell.Host.EnumReporting.eJson">
-            <summary>Case "json": Report output in JSON format</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.EnumReporting.eVerbose">
-            <summary>Case "verbose": Verbose reports</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.EnumReporting.eReport">
-            <summary>Case "report": Report output (default)</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.EnumReporting.eSilent">
-            <summary>Case "silent": Suppress output</summary>
-        </member>
         <member name="T:Goedel.Mesh.Shell.Host.CommandLineInterpreter">
             <summary>
             Host Shell Command Line Interpreter.
@@ -52,9 +40,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell.Host._HostStart.MachineName">
             <summary>Field accessor for option [host]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host._HostStart.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.Host._HostStart.Verbose">
             <summary>Field accessor for option [verbose]</summary>
@@ -109,11 +94,14 @@
             <param name="args">The command line arguments.</param>
             <param name="console">Error output stream.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Host.Shell._PostProcess(Goedel.Mesh.Shell.Host.ShellResult)">
+        <member name="M:Goedel.Mesh.Shell.Host.Shell._PreProcess(Goedel.Command.Dispatch)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell._PostProcess(Goedel.Command.Json.ShellResult)">
             <summary>
-            Post processing action
+            Perform post processing of the result of the shell operation.
             </summary>
-            <param name="result"></param>
+            <param name="shellResult">The result returned by the operation.</param>
         </member>
         <member name="P:Goedel.Mesh.Shell.Host.Shell.MachineName">
             <summary>The Machine name</summary> 
@@ -167,52 +155,39 @@
               Looks up a localized string similar to Received SIGTERM.
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Shell.Host.ShellResult">
+        <member name="T:Goedel.Mesh.Shell.Host.MeshhostShellResult">
              <summary>
             
              Classes to be used to test serialization an deserialization.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.Host.ShellResult._Tag">
+        <member name="P:Goedel.Mesh.Shell.Host.MeshhostShellResult._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.Host.ShellResult.__Tag">
+        <member name="F:Goedel.Mesh.Shell.Host.MeshhostShellResult.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.Host.ShellResult._TagDictionary">
+        <member name="P:Goedel.Mesh.Shell.Host.MeshhostShellResult._TagDictionary">
             <summary>
             Dictionary mapping tags to factory methods
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Host.ShellResult.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+        <member name="M:Goedel.Mesh.Shell.Host.MeshhostShellResult.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
             Construct an instance from the specified tagged JsonReader stream.
             </summary>
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Host.ShellResult.Verbose">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/> with 
-            additional details.
-            </summary>
-            <returns>The string value.</returns>
-        </member>
         <member name="T:Goedel.Mesh.Shell.Host.Result">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host.Result.Success">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host.Result.Reason">
-            <summary>
-            </summary>
+             <summary>
+            
+             Placeholder class to allow insertion of application specific properties.
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.Host.Result._Tag">
             <summary>
@@ -264,28 +239,6 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Host.Result.#ctor">
-            <summary>
-            Default constructor, initialize the value <see cref="P:Goedel.Mesh.Shell.Host.Result.Success"/> to <see langword="true"/>.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Host.Result.StringBuilder">
-            <summary>
-            Returns a <see cref="M:Goedel.Mesh.Shell.Host.Result.StringBuilder"/> instance initialized with the success value and
-            the expanded error message reason (if relevant).
-            </summary>
-            <returns>The <see cref="M:Goedel.Mesh.Shell.Host.Result.StringBuilder"/> instance.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Host.Result.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Host.Result.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Host.Verbosity)">
-            <summary>
-            Append the description of the report to <paramref name="builder"/>.
-            </summary>
-            <param name="builder">The builder to return the report to.</param>
-            <param name="verbosity">The level of detail to return.</param>
         </member>
         <member name="T:Goedel.Mesh.Shell.Host.ResultAbout">
             <summary>
@@ -374,7 +327,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Host.ResultAbout.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Host.Verbosity)">
+        <member name="M:Goedel.Mesh.Shell.Host.ResultAbout.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.Host.ResultStartService">
@@ -434,20 +387,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell.Host.ResultStartService.RudService">
             <summary>The RUD service that was started.</summary> 
-        </member>
-        <member name="T:Goedel.Mesh.Shell.Host.Verbosity">
-            <summary>
-            Information level to be returned in a result.
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.Verbosity.Terse">
-            <summary>Minimal information, no additional text.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.Verbosity.Standard">
-            <summary>Standard descriptive result.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.Verbosity.Full">
-            <summary>Verbose report with maximum information.</summary> 
         </member>
         <member name="T:Goedel.Mesh.Shell.MeshShellException">
             <summary>
