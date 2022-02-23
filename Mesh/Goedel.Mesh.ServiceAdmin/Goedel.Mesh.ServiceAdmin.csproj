@@ -59,10 +59,6 @@
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
     </None>
-    <None Update="ServiceProtocol.Protocol1">
-      <LastGenOutput>ServiceProtocol.cs</LastGenOutput>
-      <Generator>Protogen</Generator>
-    </None>
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">

@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <!-- Import Project="$(SolutionDir)CommonSettingsApplication.xml" / -->
-  <Import Project="$(SolutionDir)CommonSettingsWindows.xml" />
+	<Import Project="$(SolutionDir)CommonSettingsFrameworks.xml" />
   <PropertyGroup>
     <AssemblyName>serviceadmin</AssemblyName>
     <Product>serviceadmin</Product>

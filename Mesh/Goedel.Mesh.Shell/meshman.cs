@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 16-Feb-22 3:07:29 PM
+//  This file was automatically generated at 23-Feb-22 12:16:55 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -91,21 +91,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
     public readonly static DescribeCommandEntry DescribeHelp = new () {
         Identifier = "help",
         HandleDelegate = Help,
-        Entries = new () { }
-        };
-    /// <summary>
-    /// Describe the application invoked by the command.
-    /// </summary>
-    /// <param name="Dispatch">The command description.</param>
-    /// <param name="args">The set of arguments.</param>
-    /// <param name="index">The first unparsed argument.</param>
-    public static void About (DispatchShell Dispatch, string[] args, int index) =>
-        FileTools.About();
-
-
-    public readonly static DescribeCommandEntry DescribeAbout = new () {
-        Identifier = "about",
-        HandleDelegate = About,
         Entries = new () { }
         };
 
@@ -427,6 +412,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			Description = "Mathematical Mesh command tool";
 
 		Entries = new   () {
+			{"about", _About._DescribeCommand },
 			{"account", DescribeCommandSet_Account},
 			{"device", DescribeCommandSet_Connect},
 			{"message", DescribeCommandSet_Message},
@@ -441,7 +427,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			{"dare", DescribeCommandSet_Dare},
 			{"mail", DescribeCommandSet_Mail},
 			{"ssh", DescribeCommandSet_SSH},
-			{"about", DescribeAbout },
 			{"help", DescribeHelp }
 			}; // End Entries
 
@@ -471,6 +456,16 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 
 
 
+
+	public static void Handle_About (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		About		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.About (Options);
+		Dispatch._PostProcess (result);
+		}
 
 	public static void Handle_AccountHello (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
@@ -1591,6 +1586,47 @@ public interface ISequenceOptions {
 	String			Type{get; set;}
 	}
 
+
+public class _About : Goedel.Command.Dispatch {
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new Flag ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [where]</summary>
+	public virtual Flag Where {
+		get => _Data[0] as Flag;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _Where {
+		set => _Data[0].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "about",
+		Brief =  "Report version and compilation date.",
+		HandleDelegate =  CommandLineInterpreter.Handle_About,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "Where", 
+				Default = null, // null if null
+				Brief = "Report location of configuration files.",
+				Index = 0,
+				Key = "where"
+				}
+			}
+		};
+
+	}
+
+public partial class About : _About {
+    } // class About
 
 public class _AccountHello : Goedel.Command.Dispatch ,
 						IAccountOptions{
@@ -23625,6 +23661,11 @@ public partial class  Enumeration<T> : _Enumeration<T> {
 // Eventually there will be a compiler option to suppress the debugging
 // to eliminate the redundant code
 public class _Shell : global::Goedel.Command.DispatchShell {
+
+	public virtual ShellResult About ( About Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
 
 	public virtual ShellResult AccountHello ( AccountHello Options) {
 		CommandLineInterpreter.DescribeValues (Options);

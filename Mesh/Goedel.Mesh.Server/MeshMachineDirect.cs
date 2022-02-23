@@ -56,6 +56,9 @@ public class MeshMachineDirect : IMeshMachineClient {
     public string DirectoryMesh => MeshMachineClient.DirectoryMesh;
 
     ///<inheritdoc/>
+    public string DirectoryKeys => MeshMachineClient.DirectoryKeys;
+
+    ///<inheritdoc/>
     public IKeyCollection KeyCollection => MeshMachineClient.KeyCollection;
 
     ///<inheritdoc/>

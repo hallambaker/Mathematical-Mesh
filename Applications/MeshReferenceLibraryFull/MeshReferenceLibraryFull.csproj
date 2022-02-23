@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(SolutionDir)Settings\CommonSettingsPlatform.xml" />
+	<PropertyGroup>
+		<Copyright>© 2020-2022</Copyright>
+		<Product>MeshReferenceLibraryFull</Product>
+		<PackageId>MeshReferenceLibraryFull</PackageId>
+		<Description>Mathematical Mesh service library. Requires MeshReferenceLibraryClient.</Description>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.GenericHost\Goedel.Protocol.GenericHost.csproj">
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+			<IncludeAssets>Goedel.Protocol.GenericHost.dll</IncludeAssets>
+		</ProjectReference>
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj">
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+			<IncludeAssets>Goedel.Mesh.Core.dll</IncludeAssets>
+		</ProjectReference>
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj">
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+			<IncludeAssets>Goedel.Mesh.Server.dll</IncludeAssets>
+		</ProjectReference>
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj">
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+			<IncludeAssets>Goedel.Mesh.Client.dll</IncludeAssets>
+		</ProjectReference>
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj">
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+			<IncludeAssets>Goedel.Protocol.Service.dll</IncludeAssets>
+		</ProjectReference>
+	</ItemGroup>
+
+	<Target DependsOnTargets="ResolveReferences" Name="CopyProjectReferencesToPackage">
+		<ItemGroup>
+			<BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
+		</ItemGroup>
+	</Target>
+</Project>

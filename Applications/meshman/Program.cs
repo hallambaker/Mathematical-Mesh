@@ -40,8 +40,11 @@ namespace meshman;
 public class Program {
 
 
+#if USE_PLATFORM_WINDOWS
     static Program() => Goedel.Cryptography.Windows.Initialization.Initialized.AssertTrue(
         Goedel.Mesh.Internal.Throw);
+#elif USE_PLATFORM_LINUX
+#endif
 
     static void Main(string[] args) {
 

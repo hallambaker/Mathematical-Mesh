@@ -14,6 +14,15 @@
 	Structure ResultServiceConfiguration
 		Inherits Result
 
-
+	Structure ResultAbout
+		Inherits		Result
+		String			DirectoryKeys
+		String			DirectoryMesh
+		String			AssemblyTitle
+		String			AssemblyDescription
+		String			AssemblyCopyright
+		String			AssemblyCompany
+		String			AssemblyVersion
+		String			Build
 
 		

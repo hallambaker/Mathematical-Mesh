@@ -96,7 +96,6 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
                     services.AddSingleton<IServiceListener, MeshRudListener>();
                     services.AddSingleton<IMeshMachine, MeshMachineCore>(
                             s => HostMachine);
-                    //services.AddSingleton<IConfguredService, MeshConfiguredService>();
                 })
             .AddMeshService()
         .Build();

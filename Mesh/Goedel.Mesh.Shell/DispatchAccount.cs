@@ -21,10 +21,33 @@
 #endregion
 
 
+using Goedel.Command;
+using Goedel.Registry;
+
 namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult About(About options) {
 
+        var compilationDate = Script.AssemblyBuildTime;
+
+        return new ResultAbout() {
+            Success = true,
+            DirectoryKeys = MeshMachine.DirectoryKeys,
+            DirectoryMesh = MeshMachine.DirectoryMesh,
+            AssemblyTitle= Script.AssemblyTitle,
+            AssemblyDescription = Script.AssemblyDescription,
+            AssemblyCopyright = Script.AssemblyCopyright,
+            AssemblyCompany = Script.AssemblyCompany,
+            AssemblyVersion = Script.AssemblyVersion,
+            Build = Script.LocalizeTime(compilationDate, false)
+            };
+        }
 
     /// <summary>
     /// Dispatch method

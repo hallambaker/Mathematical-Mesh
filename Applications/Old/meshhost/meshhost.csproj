@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<!--<Import Project="$(SolutionDir)CommonSettingsWindows.xml" />-->
+	<PropertyGroup>
+		<TargetFrameworks>net6.0-windows;net6.0</TargetFrameworks>
+		<AssemblyName>meshhost</AssemblyName>
+		<Product>meshhost</Product>
+		<Description>Mesh service host.</Description>
+		<Copyright>© 2021</Copyright>
+		<Title>meshhost</Title>
+		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+	</PropertyGroup>
+
+	<!-- The platform specific items -->
+	<Choose>
+		<When Condition="$(TargetFramework.Contains('-windows'))">
+			<PropertyGroup>
+				<OutputType>Exe</OutputType>
+				<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+				<DefineConstants>$(DefineConstants);USE_PLATFORM_WINDOWS</DefineConstants>
+				<DefineConstants>$(DefineConstants);USE_CIPHER_ROT13</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+				<ProjectReference Include="..\..\Libraries\Windows\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+			</ItemGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<OutputType>Exe</OutputType>
+				<RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+				<DefineConstants>$(DefineConstants);USE_PLATFORM_LINUX</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+			</ItemGroup>
+		</Otherwise>
+	</Choose>
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell.Host\Goedel.Mesh.Shell.Host.csproj" />
+	</ItemGroup>
+
+</Project>

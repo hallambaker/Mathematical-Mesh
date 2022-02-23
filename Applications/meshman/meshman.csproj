@@ -1,23 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <!-- Import Project="$(SolutionDir)CommonSettingsApplication.xml" / -->
-  <Import Project="$(SolutionDir)CommonSettingsWindows.xml" />
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>    
-        <AssemblyName>meshman</AssemblyName>
-    <Product>Meshman</Product>
-    <Description>Mesh command line tool.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Meshman</Title>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-  </PropertyGroup>
+	<Import Project="$(SolutionDir)CommonSettingsFrameworks.xml" />
+	<PropertyGroup>
+		<AssemblyName>meshman</AssemblyName>
+		<Product>Meshman</Product>
+		<Description>Mesh command line tool.</Description>
+		<Copyright>© 2020-2022</Copyright>
+		<Title>Meshman</Title>
+	</PropertyGroup>
+	<ItemGroup>
+	  <None Include="..\..\readme.md" Link="readme.md">
+	    <PackagePath>\</PackagePath>
+	    <Pack>True</Pack>
+	  </None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell\Goedel.Mesh.Shell.csproj" />
+	</ItemGroup>
 
 
-  
+
 </Project>

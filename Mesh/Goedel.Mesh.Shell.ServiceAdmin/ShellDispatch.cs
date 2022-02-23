@@ -20,6 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography;
+using Goedel.Protocol;
+using Goedel.Registry;
 using System.Net;
 namespace Goedel.Mesh.Shell.ServiceAdmin;
 
@@ -40,9 +43,78 @@ public partial class CommandLineInterpreter {
 /// The command shell.
 /// </summary>
 public partial class Shell : _Shell {
+    ///<summary>Report flag, if <see langword="true"/> results of operations
+    ///are reported to the console. Otherwise, no output is returned.</summary>
+    public bool Report { get; set; }
+
+    ///<summary>Verbose flag, if <see langword="true"/> verbose results of operations
+    ///are reported to the console. Takes priority over <see cref="Report"/></summary>
+    public bool Verbose { get; set; }
+
+    ///<summary>JSON result flag, if <see langword="true"/> results of operations
+    ///are reported to the console in JSON encoding. Takes priority over
+    ///<see cref="Verbose"/> and <see cref="Report"/>.</summary>
+    public bool Json { get; set; }
+
+    TextWriter Output { get; set; }
 
 
+    ///<summary>If false, catch exceptions and interpret as an error.</summary> 
+    public bool NoCatch { get; init; }
 
+    /// <summary>
+    /// Dispatch command line instruction with arguments <paramref name="args"/> and
+    /// error output <paramref name="console"/>.
+    /// </summary>
+    /// <param name="args">The command line arguments.</param>
+    /// <param name="console">Error output stream.</param>
+    public void Dispatch(string[] args, TextWriter console) {
+        var commandLineInterpreter = new CommandLineInterpreter();
+        Output=console;
+
+        if (NoCatch) {
+            commandLineInterpreter.MainMethod(this, args);
+            }
+        else {
+            try {
+                commandLineInterpreter.MainMethod(this, args);
+                }
+            catch (Goedel.Command.ParserException) {
+                CommandLineInterpreter.Brief(
+                    CommandLineInterpreter.Description,
+                    CommandLineInterpreter.DefaultCommand,
+                    CommandLineInterpreter.Entries);
+                }
+            catch (System.Exception Exception) {
+                console.WriteLine("Application: {0}", Exception.Message);
+                if (Exception.InnerException != null) {
+                    console.WriteLine(Exception.InnerException.Message);
+                    }
+                }
+            }
+        }
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult About(About options) {
+
+        var compilationDate = Script.AssemblyBuildTime;
+
+        return new ResultAbout() {
+            Success = true,
+            DirectoryKeys = MeshMachine.DirectoryKeys,
+            DirectoryMesh = MeshMachine.DirectoryMesh,
+            AssemblyTitle = Script.AssemblyTitle,
+            AssemblyDescription = Script.AssemblyDescription,
+            AssemblyCopyright = Script.AssemblyCopyright,
+            AssemblyCompany = Script.AssemblyCompany,
+            AssemblyVersion = Script.AssemblyVersion,
+            Build = Script.LocalizeTime(compilationDate, false)
+            };
+        }
 
 
     string GetMultiConfig(Command._File file) =>
@@ -62,9 +134,22 @@ public partial class Shell : _Shell {
     /// </summary>
     /// <param name="result"></param>
 #pragma warning disable IDE1006 // Naming Styles
-    public void _PostProcess(ShellResult result) {
-#pragma warning restore IDE1006 // Naming Styles
-        this.Future();
+    /// <summary>
+    /// Perform post processing of the result of the shell operation.
+    /// </summary>
+    /// <param name="shellResult">The result returned by the operation.</param>
+    public virtual void _PostProcess(ShellResult shellResult) {
+        if (Json) {
+            // Only report the results in JSON format and without
+            // additional text.
+            Output.Write(shellResult.GetJson(false));
+            }
+        else if (Verbose) {
+            Output.Write(shellResult.Verbose());
+            }
+        else {
+            Output.Write(shellResult.ToString());
+            }
         }
 
 

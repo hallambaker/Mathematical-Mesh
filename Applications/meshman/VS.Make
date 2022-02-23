@@ -18,6 +18,7 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Mesh.Core.dll\
     Goedel.Mesh.Shell.dll
 
 ToolTargets = 

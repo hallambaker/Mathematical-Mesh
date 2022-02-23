@@ -20,82 +20,21 @@
 //  THE SOFTWARE.
 #endregion
 
-using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.IO;
-
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
-using Goedel.Mesh.Management;
+using Goedel.Mesh.Client;
 using Goedel.Mesh.Server;
-using Goedel.Mesh.Shell.Host;
+using Goedel.Mesh.ServiceAdmin;
 using Goedel.Protocol;
 using Goedel.Protocol.Presentation;
 using Goedel.Protocol.Service;
 using Goedel.Test.Core;
 using Goedel.Utilities;
-using Goedel.Mesh.ServiceAdmin;
-using Microsoft.Extensions.Hosting;
-using System.Text;
-using Goedel.Mesh.Client;
+using System;
+using System.Collections.Generic;
 using System.IO;
 namespace Goedel.Mesh.Test;
-
-//public class TestEnvironmentRdp : TestEnvironmentCommon {
-
-//    public string Protocol => MeshService.GetWellKnown;
-
-
-//    protected override void Disposing() {
-//        RudService?.Dispose();
-//        base.Disposing();
-
-//        }
-
-//    RudService RudService { get; set; }
-
-//    ///<inheritdoc/>
-//    public override MeshServiceClient GetMeshClient(
-//            MeshMachineTest meshMachineTest,
-//            ICredentialPrivate credential,
-//            string service,
-//            string accountAddress) {
-//        RudService ??= StartService();
-
-//        // if we wanted to create traces on the RUD binding, we could put the data here.
-
-//        var meshServiceBinding = new ConnectionInitiator(
-//                    credential, ServiceDns, Test, TransportType.Http, MeshServiceClient.WellKnown);
-//        var client = meshServiceBinding.GetClient<MeshServiceClient>();
-
-
-//        return client;
-//        }
-
-//    //public virtual RudService StartService() {
-
-//    //    var httpEndpoint = new HttpEndpoint(ServiceDns, MeshService.GetWellKnown, Test);
-//    //    var udpEndpoint = new UdpEndpoint(MeshService.GetWellKnown, Test);
-//    //    var endpoints = new List<Endpoint> { httpEndpoint, udpEndpoint };
-
-//    //    using var provider = new RudProvider(endpoints, MeshService);
-
-//    //    var providers = new List<RudProvider> { provider };
-
-//    //    // create the service and host credentials here.
-//    //    //var credential = new MeshCredential(MeshService.ConnectionAccount, MeshService.ActivationDevice.DeviceAuthentication);
-//    //    var credential = new MeshCredentialPrivate(
-//    //        MeshService.ProfileHost, MeshService.ConnectionDevice, null, MeshService.ActivationDevice.DeviceAuthentication);
-
-
-//    //    var hostMonitor = new HostMonitor();
-//    //    return new RudService(providers, hostMonitor, credential);
-
-//    //    }
-
-//    }
 
 
 public class TestEnvironmentCommon : TestEnvironmentBase {

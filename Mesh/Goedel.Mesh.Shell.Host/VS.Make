@@ -25,6 +25,7 @@ LinkFiles = \
     Goedel.Protocol.dll\
     Goedel.Mesh.Client.dll\
     Goedel.Mesh.Management.dll\
+    Goedel.Mesh.Server.dll\
     Goedel.Mesh.ServiceAdmin.dll\
     Goedel.Utilities.dll
 

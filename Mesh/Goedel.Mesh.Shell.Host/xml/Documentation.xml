@@ -38,13 +38,8 @@
             <param name="args">The set of arguments.</param>
             <param name="index">The first unparsed argument.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Host.CommandLineInterpreter.About(Goedel.Command.DispatchShell,System.String[],System.Int32)">
-            <summary>
-            Describe the application invoked by the command.
-            </summary>
-            <param name="Dispatch">The command description.</param>
-            <param name="args">The set of arguments.</param>
-            <param name="index">The first unparsed argument.</param>
+        <member name="P:Goedel.Mesh.Shell.Host._About.Where">
+            <summary>Field accessor for option [where]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.Host._HostStart.HostConfig">
             <summary>Field accessor for parameter []</summary>
@@ -98,6 +93,13 @@
         </member>
         <member name="P:Goedel.Mesh.Shell.Host.Shell.ShellResult">
             <summary>Result returned by last shell command.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Shell.About(Goedel.Mesh.Shell.Host.About)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Host.Shell.Dispatch(System.String[],System.IO.TextWriter)">
             <summary>
@@ -276,10 +278,104 @@
             <returns>The <see cref="M:Goedel.Mesh.Shell.Host.Result.StringBuilder"/> instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Host.Result.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.Result.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Host.Verbosity)">
             <summary>
-            Converts the value of this instance to a <see langword="String"/>.
+            Append the description of the report to <paramref name="builder"/>.
             </summary>
-            <returns>The current string.</returns>
+            <param name="builder">The builder to return the report to.</param>
+            <param name="verbosity">The level of detail to return.</param>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.Host.ResultAbout">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout.DirectoryKeys">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout.DirectoryMesh">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout.AssemblyTitle">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout.AssemblyDescription">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout.AssemblyCopyright">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout.AssemblyCompany">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout.AssemblyVersion">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout.Build">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.ResultAbout.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ResultAbout._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ResultAbout.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ResultAbout.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ResultAbout.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ResultAbout.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Host.ResultAbout.ToBuilder(System.Text.StringBuilder,Goedel.Mesh.Shell.Host.Verbosity)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Shell.Host.ResultStartService">
             <summary>
@@ -338,6 +434,20 @@
         </member>
         <member name="P:Goedel.Mesh.Shell.Host.ResultStartService.RudService">
             <summary>The RUD service that was started.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.Shell.Host.Verbosity">
+            <summary>
+            Information level to be returned in a result.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.Verbosity.Terse">
+            <summary>Minimal information, no additional text.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.Verbosity.Standard">
+            <summary>Standard descriptive result.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.Verbosity.Full">
+            <summary>Verbose report with maximum information.</summary> 
         </member>
         <member name="T:Goedel.Mesh.Shell.MeshShellException">
             <summary>

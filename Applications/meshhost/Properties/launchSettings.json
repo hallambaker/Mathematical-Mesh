@@ -1,9 +1,13 @@
 {
   "profiles": {
-    "meshhost": {
+    "About": {
       "commandName": "Project",
-      "commandLineArgs": "start /console ",
+      "commandLineArgs": "about",
       "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "GenericHost": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Applications\\GenericHost"
     }
   }
 }

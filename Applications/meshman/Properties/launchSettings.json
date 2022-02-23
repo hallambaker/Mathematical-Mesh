@@ -1,5 +1,10 @@
 {
   "profiles": {
+    "About": {
+      "commandName": "Project",
+      "commandLineArgs": "about",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
     "Nonce": {
       "commandName": "Project",
       "commandLineArgs": "key nonce",

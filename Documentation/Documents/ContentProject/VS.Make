@@ -50,7 +50,6 @@ LinkFiles = \
     System.Runtime.InteropServices.RuntimeInformation.dll\
     System.Security.Cryptography.Algorithms.dll\
     System.Security.Cryptography.Primitives.dll\
-    System.Text.Encodings.Web.dll\
     System.Text.Json.dll\
     System.Threading.Tasks.Extensions.dll\
     System.ValueTuple.dll

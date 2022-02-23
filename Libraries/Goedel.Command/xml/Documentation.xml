@@ -761,7 +761,7 @@
             Get the time at which the specified file was created
             Return DateTime.MinValue if the file does not exist
             </summary>
-            <param name="FileName">The file to test</param>
+            <param name="fileName">The file to test</param>
             <returns>The time the file was created.</returns>
         </member>
         <member name="M:Goedel.Command.FileTools.About">
@@ -773,25 +773,25 @@
             <summary>
             Cehck to see if a Destination file is more recent than a source file.
             </summary>
-            <param name="Source">The source file.</param>
-            <param name="Destination">The destination file.</param>
+            <param name="source">The source file.</param>
+            <param name="destination">The destination file.</param>
             <returns>True if the source was created before the destination.</returns>
         </member>
         <member name="M:Goedel.Command.FileTools.DefaultFile(System.String,System.String)">
             <summary>
             Determine output file name using command line entry and default data.
             </summary>
-            <param name="Extension">The default extension.</param>
-            <param name="Default">The base file name.</param>
+            <param name="extension">The default extension.</param>
+            <param name="default">The base file name.</param>
             <returns>The defaulted output file.</returns>
         </member>
         <member name="M:Goedel.Command.FileTools.DefaultFile(System.String,System.String,System.String)">
             <summary>
             Determine output file name using command line entry and default data.
             </summary>
-            <param name="Specified">The specified file name. This will be returned as is
+            <param name="specified">The specified file name. This will be returned as is
             unless it is null in which case the default filename will be used.</param>
-            <param name="Extension">The default extension.</param>
+            <param name="extension">The default extension.</param>
             <param name="Default">The base file name.</param>
             <returns>The defaulted output file.</returns>
         </member>
@@ -807,9 +807,9 @@
             <summary>
             Calculate output file name.
             </summary>
-            <param name="SourcePath">The source file path</param>
-            <param name="DestinationPath">The destination file path.</param>
-            <param name="Extension">The default extension.</param>
+            <param name="sourcePath">The source file path</param>
+            <param name="destinatIonPath">The destination file path.</param>
+            <param name="extension">The default extension.</param>
             <returns>The defaulted file name.</returns>
         </member>
         <member name="T:Goedel.Command.NamespaceDoc">

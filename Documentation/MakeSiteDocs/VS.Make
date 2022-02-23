@@ -46,7 +46,7 @@ ToolTargets = \
 	IDs\MakeExamples-6-Presentation.cs\
 	IDs\MakeExamples-5-Protocol.cs\
 	IDs\MakeExamples-8-Cryptography.cs\
-	Web\CommandsetAccount.cs\
+	Web\CommandsetKey.cs\
 	Web\ToDo.cs\
 	Web\UserGuide.cs\
 	Web\CommandsetAccount.cs\
@@ -88,8 +88,8 @@ IDs\MakeExamples-5-Protocol.cs : IDs\MakeExamples-5-Protocol.script
 IDs\MakeExamples-8-Cryptography.cs : IDs\MakeExamples-8-Cryptography.script 
 	gscript IDs\MakeExamples-8-Cryptography.script  IDs\MakeExamples-8-Cryptography.cs
 
-Web\CommandsetAccount.cs : Web\CommandsetAccount.script 
-	gscript Web\CommandsetAccount.script  Web\CommandsetAccount.cs
+Web\CommandsetKey.cs : Web\CommandsetKey.script 
+	gscript Web\CommandsetKey.script  Web\CommandsetKey.cs
 
 Web\ToDo.cs : Web\ToDo.script 
 	gscript Web\ToDo.script  Web\ToDo.cs

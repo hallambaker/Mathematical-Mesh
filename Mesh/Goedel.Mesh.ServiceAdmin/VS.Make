@@ -20,7 +20,9 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.dll\
+    Goedel.Protocol.GenericHost.dll\
     Goedel.Protocol.Presentation.dll\
+    Goedel.Protocol.Service.dll\
     Goedel.Protocol.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll\
@@ -29,16 +31,11 @@ LinkFiles = \
 ToolTargets = \
 	DnsConfig.cs\
 	Exceptions.cs
-
-
 DnsConfig.cs : DnsConfig.script 
 	gscript DnsConfig.script  DnsConfig.cs
 
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
-
-#ServiceProtocol.cs : ServiceProtocol.Protocol 
-#	protogen ServiceProtocol.Protocol  /cs  ServiceProtocol.cs
 
 
 

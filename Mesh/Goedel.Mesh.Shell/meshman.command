@@ -8,8 +8,8 @@
 	Brief		"Mathematical Mesh command tool"
 	Help "help"
 		Brief		"Command guide."
-	About "about"
-		Brief		"Report version and compilation date."
+	//About "about"
+	//	Brief		"Report version and compilation date."
 
 	OptionSet Reporting
 
@@ -174,10 +174,14 @@
 				Brief "Message spool"
 			Case eCatalog "catalog"
 				Brief "Object catalog"
+	Command About "about"		
+		Brief		"Report version and compilation date."
+		Option Where "where" Flag
+			Brief		"Report location of configuration files."
 
 	CommandSet Account "account"
 		Brief "Account creation and management commands."
-	
+
 		Command AccountHello "hello"		
 			Brief "Connect to the service(s) a profile is connected to and report status."
 			Include AccountOptions

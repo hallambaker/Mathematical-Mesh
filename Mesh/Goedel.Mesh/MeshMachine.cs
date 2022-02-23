@@ -68,6 +68,9 @@ public interface IMeshMachine {
     ///<summary>The directory the Mesh data is stored in.</summary>
     string DirectoryMesh { get; }
 
+    ///<summary>The directory the Mesh data is stored in.</summary>
+    string DirectoryKeys { get; }
+
     ///<summary>The key collection to use.</summary>
     IKeyCollection KeyCollection { get; }
 

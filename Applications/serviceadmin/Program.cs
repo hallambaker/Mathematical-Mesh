@@ -36,19 +36,20 @@ namespace serviceadmin;
 
 ///<summary>Main calling program.</summary> 
 public class Program {
-
+#if USE_PLATFORM_WINDOWS
     static Program() => Goedel.Cryptography.Windows.Initialization.Initialized.AssertTrue(
         Goedel.Mesh.Internal.Throw);
-
+#elif USE_PLATFORM_LINUX
+#endif
     static void Main(string[] args) {
         var commandLineInterpreter = new CommandLineInterpreter();
 
-        Shell Dispatch = new() {
+        Shell shell = new() {
             MeshMachine = new MeshMachineCore()
             };
 
-        commandLineInterpreter.MainMethod(Dispatch, args);
 
+        shell.Dispatch(args, Console.Out);
 
         //try {
         //    commandLineInterpreter.MainMethod(Dispatch, args);

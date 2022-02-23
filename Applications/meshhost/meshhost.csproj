@@ -1,19 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)CommonSettingsWindows.xml" />
-  <PropertyGroup>
-    <AssemblyName>meshhost</AssemblyName>    
-    <Product>meshhost</Product>
-    <Description>Mesh service host.</Description>
-    <Copyright>© 2021</Copyright>
-    <Title>meshhost</Title>
-
-  </PropertyGroup>
-
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell.Host\Goedel.Mesh.Shell.Host.csproj" />
-  </ItemGroup>
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)CommonSettingsFrameworks.xml" />
+	<PropertyGroup>
+		<AssemblyName>meshhost</AssemblyName>
+		<Product>Mesh Host</Product>
+		<Description>Mesh Service Host.</Description>
+		<Copyright>© 2020-2022</Copyright>
+		<Title>MeshHost</Title>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.GenericHost\Goedel.Protocol.GenericHost.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Content Include="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 </Project>

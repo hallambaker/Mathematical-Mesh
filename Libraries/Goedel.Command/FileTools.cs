@@ -36,22 +36,22 @@ public class FileTools {
     /// Get the time at which the specified file was created
     /// Return DateTime.MinValue if the file does not exist
     /// </summary>
-    /// <param name="FileName">The file to test</param>
+    /// <param name="fileName">The file to test</param>
     /// <returns>The time the file was created.</returns>
-    public static DateTime GetFileDateTime(string FileName) {
-        if (!File.Exists(FileName)) {
+    public static DateTime GetFileDateTime(string fileName) {
+        if (!File.Exists(fileName)) {
             return DateTime.MinValue;
             }
-        return File.GetLastWriteTimeUtc(FileName);
+        return File.GetLastWriteTimeUtc(fileName);
         }
 
     /// <summary>
     /// Write short form description of the current program to the console.
     /// </summary>
     public static void About() {
-        var CompilationDate = Script.AssemblyBuildTime;
+        var compilationDate = Script.AssemblyBuildTime;
 
-        string Build = Script.LocalizeTime(CompilationDate, false);
+        string Build = Script.LocalizeTime(compilationDate, false);
 
         Console.WriteLine(Script.AssemblyTitle);
         Console.WriteLine("  {0}", Script.AssemblyDescription);
@@ -63,12 +63,12 @@ public class FileTools {
     /// <summary>
     /// Cehck to see if a Destination file is more recent than a source file.
     /// </summary>
-    /// <param name="Source">The source file.</param>
-    /// <param name="Destination">The destination file.</param>
+    /// <param name="source">The source file.</param>
+    /// <param name="destination">The destination file.</param>
     /// <returns>True if the source was created before the destination.</returns>
-    public static bool UpToDate(string Source, string Destination) {
+    public static bool UpToDate(string source, string destination) {
 
-        DateTime OutputDateTime = FileTools.GetFileDateTime(Destination);
+        DateTime OutputDateTime = GetFileDateTime(destination);
         if (OutputDateTime == DateTime.MinValue) {
             return false;
             }
@@ -76,32 +76,32 @@ public class FileTools {
         if (OutputDateTime < ToolDateTime) {
             return false;
             }
-        DateTime SourceDateTime = FileTools.GetFileDateTime(Source);
+        DateTime SourceDateTime = GetFileDateTime(source);
         return (OutputDateTime > SourceDateTime);
         }
 
     /// <summary>
     /// Determine output file name using command line entry and default data.
     /// </summary>
-    /// <param name="Extension">The default extension.</param>
-    /// <param name="Default">The base file name.</param>
+    /// <param name="extension">The default extension.</param>
+    /// <param name="default">The base file name.</param>
     /// <returns>The defaulted output file.</returns>
-    public static string DefaultFile(string Extension, string Default) =>
-        Path.GetFileNameWithoutExtension(Default) + "." + Extension;
+    public static string DefaultFile(string extension, string @default) =>
+        Path.GetFileNameWithoutExtension(@default) + "." + extension;
 
     /// <summary>
     /// Determine output file name using command line entry and default data.
     /// </summary>
-    /// <param name="Specified">The specified file name. This will be returned as is
+    /// <param name="specified">The specified file name. This will be returned as is
     /// unless it is null in which case the default filename will be used.</param>
-    /// <param name="Extension">The default extension.</param>
+    /// <param name="extension">The default extension.</param>
     /// <param name="Default">The base file name.</param>
     /// <returns>The defaulted output file.</returns>
-    public static string DefaultFile(string Specified, string Default, string Extension) {
-        if (Specified != null) {
-            return Specified;
+    public static string DefaultFile(string specified, string Default, string extension) {
+        if (specified != null) {
+            return specified;
             }
-        return DefaultFile(Extension, Default);
+        return DefaultFile(extension, Default);
         }
 
 
@@ -117,26 +117,26 @@ public class FileTools {
     /// <param name="FileName">The base file name.</param>
     /// <param name="Extension">Default extension.</param>
     /// <returns>The defaulted file.</returns>
-    public static string DefaultExtension(string FileName, string Extension) {
-        if (File.Exists(FileName)) {
-            return FileName;
+    public static string DefaultExtension(string fileName, string extension) {
+        if (File.Exists(fileName)) {
+            return fileName;
             }
 
-        return FileName + "." + Extension;
+        return fileName + "." + extension;
         }
 
     /// <summary>
     /// Calculate output file name.
     /// </summary>
-    /// <param name="SourcePath">The source file path</param>
-    /// <param name="DestinationPath">The destination file path.</param>
-    /// <param name="Extension">The default extension.</param>
+    /// <param name="sourcePath">The source file path</param>
+    /// <param name="destinatIonPath">The destination file path.</param>
+    /// <param name="extension">The default extension.</param>
     /// <returns>The defaulted file name.</returns>
-    public static string DefaultOutput(string SourcePath, string DestinationPath,
-                    string Extension) {
-        if (DestinationPath != null) {
-            return DestinationPath;
+    public static string DefaultOutput(string sourcePath, string destinatIonPath,
+                    string extension) {
+        if (destinatIonPath != null) {
+            return destinatIonPath;
             }
-        return Path.GetFileNameWithoutExtension(SourcePath) + "." + Extension;
+        return Path.GetFileNameWithoutExtension(sourcePath) + "." + extension;
         }
     }

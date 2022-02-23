@@ -1,6 +1,6 @@
 ﻿#region // Copyright - MIT License
-//  © 2021 by Phill Hallam-Baker
-//  
+//  Copyright © 2015 by Comodo Group Inc.
+//  Copyright © 2019-2021 by Phill Hallam-Baker
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -21,41 +21,29 @@
 #endregion
 
 
-
-#if NET6_0_WINDOWS_OR_GREATER
-using Goedel.Cryptography.Windows;
-#elif NET6_0_MACOS_OR_GREATER
-using Goedel.Cryptography.Core;
-#else
+internal sealed class Program {
+    private static async Task Main(string[] args) {
+        await Host.CreateDefaultBuilder(args)
+            .ConfigureLogging(logging => {
+                logging.ClearProviders();
+                logging.AddDareLogger();
+                logging.AddConsoleLogger();
+            })
+            .ConfigureServices((hostContext, services) => {
+                services.AddSingleton<IServiceListener, MeshRudListener>();
+                services.AddSingleton<IMeshMachine, MeshMachineCore>(
+                        s => new MeshMachineCore ("host1", true));
+#if USE_PLATFORM_WINDOWS
+                services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
+#elif USE_PLATFORM_LINUX
 #endif
 
+            })
 
+            .AddListenerHosted()
+            .AddMeshService()
 
-
-namespace meshhost;
-
-///<summary>Main calling program.</summary> 
-public class Program {
-
-    static Program() => Goedel.Cryptography.Windows.Initialization.Initialized.AssertTrue(
-        Goedel.Mesh.Internal.Throw);
-
-    static void Main(string[] args) {
-
-
-        //Shell shell = new(
-        //            PublicMeshService.ServiceDescription,
-        //            ServiceManagementProvider.ServiceDescriptionHost
-        //            ) {
-        //    NoCatch = true,
-        //    MeshMachine = new MeshMachineCore()
-        //    };
-        //shell.Dispatch(args, Console.Out);
-
-
+            .RunConsoleAsync();
         }
-
-
-
-
     }
+

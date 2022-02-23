@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 16-Feb-22 3:07:29 PM
+//  This file was automatically generated at 23-Feb-22 12:16:55 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -77,6 +77,7 @@ public abstract partial class ShellResult : global::Goedel.Protocol.JsonObject {
 			new () {
 
 	    {"Result", Result._Factory},
+	    {"ResultAbout", ResultAbout._Factory},
 	    {"ResultFail", ResultFail._Factory},
 	    {"ResultKey", ResultKey._Factory},
 	    {"ResultDigest", ResultDigest._Factory},
@@ -255,6 +256,201 @@ public partial class Result : ShellResult {
 				break;
 				}
 			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ResultAbout : Result {
+        /// <summary>
+        /// </summary>
+
+	public virtual string						DirectoryKeys  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						DirectoryMesh  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						AssemblyTitle  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						AssemblyDescription  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						AssemblyCopyright  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						AssemblyCompany  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						AssemblyVersion  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						Build  {get; set;}
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ResultAbout";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ResultAbout();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((Result)this).SerializeX(_writer, false, ref _first);
+		if (DirectoryKeys != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("DirectoryKeys", 1);
+				_writer.WriteString (DirectoryKeys);
+			}
+		if (DirectoryMesh != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("DirectoryMesh", 1);
+				_writer.WriteString (DirectoryMesh);
+			}
+		if (AssemblyTitle != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("AssemblyTitle", 1);
+				_writer.WriteString (AssemblyTitle);
+			}
+		if (AssemblyDescription != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("AssemblyDescription", 1);
+				_writer.WriteString (AssemblyDescription);
+			}
+		if (AssemblyCopyright != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("AssemblyCopyright", 1);
+				_writer.WriteString (AssemblyCopyright);
+			}
+		if (AssemblyCompany != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("AssemblyCompany", 1);
+				_writer.WriteString (AssemblyCompany);
+			}
+		if (AssemblyVersion != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("AssemblyVersion", 1);
+				_writer.WriteString (AssemblyVersion);
+			}
+		if (Build != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Build", 1);
+				_writer.WriteString (Build);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ResultAbout FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ResultAbout;
+			}
+		var Result = new ResultAbout ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "DirectoryKeys" : {
+				DirectoryKeys = jsonReader.ReadString ();
+				break;
+				}
+			case "DirectoryMesh" : {
+				DirectoryMesh = jsonReader.ReadString ();
+				break;
+				}
+			case "AssemblyTitle" : {
+				AssemblyTitle = jsonReader.ReadString ();
+				break;
+				}
+			case "AssemblyDescription" : {
+				AssemblyDescription = jsonReader.ReadString ();
+				break;
+				}
+			case "AssemblyCopyright" : {
+				AssemblyCopyright = jsonReader.ReadString ();
+				break;
+				}
+			case "AssemblyCompany" : {
+				AssemblyCompany = jsonReader.ReadString ();
+				break;
+				}
+			case "AssemblyVersion" : {
+				AssemblyVersion = jsonReader.ReadString ();
+				break;
+				}
+			case "Build" : {
+				Build = jsonReader.ReadString ();
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
 				break;
 				}
 			}

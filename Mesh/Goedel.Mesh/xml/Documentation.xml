@@ -6745,6 +6745,9 @@
         <member name="P:Goedel.Mesh.IMeshMachine.DirectoryMesh">
             <summary>The directory the Mesh data is stored in.</summary>
         </member>
+        <member name="P:Goedel.Mesh.IMeshMachine.DirectoryKeys">
+            <summary>The directory the Mesh data is stored in.</summary>
+        </member>
         <member name="P:Goedel.Mesh.IMeshMachine.KeyCollection">
             <summary>The key collection to use.</summary>
         </member>

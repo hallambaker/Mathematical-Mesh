@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Registry;
+
 namespace Goedel.Mesh.Shell.Host;
 
 /// <summary>
@@ -49,7 +51,27 @@ public partial class Shell : _Shell {
     //public Dictionary<string, ServiceDescription>
     //    ServiceDescriptionDictionary { get; } = new();
 
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult About(About options) {
 
+        var compilationDate = Script.AssemblyBuildTime;
+
+        return new ResultAbout() {
+            Success = true,
+            DirectoryKeys = MeshMachine.DirectoryKeys,
+            DirectoryMesh = MeshMachine.DirectoryMesh,
+            AssemblyTitle = Script.AssemblyTitle,
+            AssemblyDescription = Script.AssemblyDescription,
+            AssemblyCopyright = Script.AssemblyCopyright,
+            AssemblyCompany = Script.AssemblyCompany,
+            AssemblyVersion = Script.AssemblyVersion,
+            Build = Script.LocalizeTime(compilationDate, false)
+            };
+        }
 
 
     ///// <summary>

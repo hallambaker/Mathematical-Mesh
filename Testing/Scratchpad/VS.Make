@@ -35,8 +35,6 @@ LinkFiles = \
     Goedel.Mesh.Protocol.Test-xunit.dll\
     Goedel.Mesh.Shell.Test-xunit.dll\
     Goedel.Mesh.Store.Test-xunit.dll\
-    Goedel.Mesh.Test-xunit.dll\
-    Goedel.Protocol.Service.Test-xunit.dll\
     Goedel.Protocol.Test-xunit.dll\
     Goedel.Utilities.Test-xunit.dll\
     Test.Common.dll\

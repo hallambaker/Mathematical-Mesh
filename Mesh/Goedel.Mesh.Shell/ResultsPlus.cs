@@ -21,6 +21,8 @@
 #endregion
 
 
+using System.Reflection.Metadata;
+
 namespace Goedel.Mesh.Shell;
 
 /// <summary>
@@ -87,7 +89,21 @@ public partial class Result {
     public virtual void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
         }
     }
+public partial class ResultAbout {
 
+    ///<inheritdoc/>
+    public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
+        builder.AppendLine($"{AssemblyTitle}");
+        builder.AppendLine($"    {AssemblyDescription}");
+        builder.AppendLine($"    Copyright         : {AssemblyCopyright} {AssemblyCompany}");
+        builder.AppendLine($"    Version           : {AssemblyVersion}");
+        builder.AppendLine($"    Directory Profile : {DirectoryMesh}");
+        builder.AppendLine($"    Directory Keys    : {DirectoryKeys}");
+
+
+        }
+    }
 
 public partial class ResultKey {
 

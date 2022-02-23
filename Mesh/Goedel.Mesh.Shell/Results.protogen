@@ -10,6 +10,16 @@
 		Boolean			Success
 		String			Reason
 
+	Structure ResultAbout
+		Inherits		Result
+		String			DirectoryKeys
+		String			DirectoryMesh
+		String			AssemblyTitle
+		String			AssemblyDescription
+		String			AssemblyCopyright
+		String			AssemblyCompany
+		String			AssemblyVersion
+		String			Build
 
 	Structure ResultFail
 		Inherits		Result

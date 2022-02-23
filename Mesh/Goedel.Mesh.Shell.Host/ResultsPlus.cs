@@ -21,8 +21,21 @@
 #endregion
 
 
+using System.Reflection.Metadata;
+
 namespace Goedel.Mesh.Shell.Host;
 
+/// <summary>
+/// Information level to be returned in a result.
+/// </summary>
+public enum Verbosity {
+    ///<summary>Minimal information, no additional text.</summary> 
+    Terse,
+    ///<summary>Standard descriptive result.</summary> 
+    Standard,
+    ///<summary>Verbose report with maximum information.</summary> 
+    Full
+    }
 public partial class ShellResult {
 
     /// <summary>
@@ -60,19 +73,38 @@ public partial class Result {
 
         }
 
-    /// <summary>
-    /// Converts the value of this instance to a <see langword="String"/>.
-    /// </summary>
-    /// <returns>The current string.</returns>
+    ///<inheritdoc/>
     public override string ToString() {
-        var Builder = StringBuilder();
+        var builder = StringBuilder();
+        ToBuilder(builder);
+        return builder.ToString();
+        }
 
-        return Builder.ToString();
+    /// <summary>
+    /// Append the description of the report to <paramref name="builder"/>.
+    /// </summary>
+    /// <param name="builder">The builder to return the report to.</param>
+    /// <param name="verbosity">The level of detail to return.</param>
+    public virtual void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
         }
     }
 
 
+public partial class ResultAbout {
 
+    ///<inheritdoc/>
+    public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+
+        builder.AppendLine($"{AssemblyTitle}");
+        builder.AppendLine($"    {AssemblyDescription}");
+        builder.AppendLine($"    Copyright         : {AssemblyCopyright} {AssemblyCompany}");
+        builder.AppendLine($"    Version           : {AssemblyVersion}");
+        builder.AppendLine($"    Directory Profile : {DirectoryMesh}");
+        builder.AppendLine($"    Directory Keys    : {DirectoryKeys}");
+
+
+        }
+    }
 
 public partial class ResultStartService {
 

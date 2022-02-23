@@ -1253,6 +1253,9 @@
         <member name="P:Goedel.Mesh.Server.MeshMachineDirect.DirectoryMesh">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Mesh.Server.MeshMachineDirect.DirectoryKeys">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Server.MeshMachineDirect.KeyCollection">
             <inheritdoc/>
         </member>

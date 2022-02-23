@@ -8,8 +8,6 @@
 	Brief		"Mathematical Mesh command tool"
 	Help "help"
 		Brief		"Command guide."
-	About "about"
-		Brief		"Report version and compilation date."
 
 	OptionSet Reporting
 
@@ -33,6 +31,11 @@
 		Option Json "json" Flag
 			Default "false"
 			Brief "Report output in JSON format"
+
+	Command About "about"		
+		Brief		"Report version and compilation date."
+		Option Where "where" Flag
+			Brief		"Report location of configuration files."
 
 	Command HostStart "start"
 		Brief "Start the host service"

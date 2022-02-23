@@ -5,11 +5,9 @@
 	Type NewFile			"file"
 	Type ExistingFile		"file"
 
-	Brief		"Mathematical Mesh command tool"
+	Brief		"Mathematical Mesh Service Administration tool"
 	Help "help"
 		Brief		"Command guide."
-	About "about"
-		Brief		"Report version and compilation date."
 
 	OptionSet Reporting
 
@@ -33,6 +31,11 @@
 		Option Json "json" Flag
 			Default "false"
 			Brief "Report output in JSON format"
+
+	Command About "about"		
+		Brief		"Report version and compilation date."
+		Option Where "where" Flag
+			Brief		"Report location of configuration files."
 
 	Command Create "create"
 		Include Reporting
