@@ -39,12 +39,12 @@
 		</Otherwise>
 	</Choose>
 
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
+	<!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
 		<Exec Command="VSPreBuild" />
 	</Target>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
 		<Exec Command="VSPostBuild" />
-	</Target>
+	</Target>-->
 
 	<PropertyGroup Condition="'$(Configuration)'=='Github'">
 		<DefineConstants>TRACE;_Github_</DefineConstants>
