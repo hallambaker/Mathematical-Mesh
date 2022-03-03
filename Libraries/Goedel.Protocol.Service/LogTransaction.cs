@@ -80,7 +80,8 @@ public class LogService {
 
     ///<summary>The host monitor tracking start and end of host requests.</summary> 
     public HostMonitor HostMonitor { get; }
-
+    
+    ///<summary>The logger instance</summary> 
     public ILogger Logger { get; set; } 
 
 
@@ -111,15 +112,6 @@ public class LogService {
         }
 
 
-    ///// <summary>
-    ///// Write the event <paramref name="logEvent"/> to the event log.
-    ///// </summary>
-    ///// <param name="logEvent">The event to log.</param>
-    ///// <param name="args">The event parameters.</param>
-    //public void Log(FatEvent logEvent, params object[] args) =>
-    //    HostMonitor?.Logger.Log(logEvent, args);
-
-
     /// <summary>
     /// Begin a new transaction.
     /// </summary>
@@ -134,11 +126,7 @@ public class LogService {
             Token = token,
             Request = request
             };
-
-        if (ReportStart(ConsoleOutput)) {
-            Start(logTransaction);
-            }
-        //HostConfiguration.Start(logTransaction);
+        Logger.TransactionStart(id, token);
 
         return logTransaction;
         }
@@ -166,18 +154,6 @@ public class LogService {
             }
         }
 
-
-    /// <summary>
-    /// Record the start of the transaction <paramref name="logTransaction"/>.
-    /// </summary>
-    /// <param name="logTransaction">Transaction to log.</param>
-    internal void Start(LogTransaction logTransaction) {
-        Logger.TransactionStart(logTransaction.TransactionIdentifier, logTransaction.Token);
-
-        //Log(Event.StartTransaction, logTransaction.TransactionIdentifier,
-        //    logTransaction.Token);
-        }
-
     /// <summary>
     /// Record successful completion of the transaction <paramref name="logTransaction"/>.
     /// </summary>
@@ -200,8 +176,8 @@ public class LogService {
         //    logTransaction.Token);
         }
 
-    static bool ReportStart(LogLevelSeverity reportMode) =>
-        reportMode == LogLevelSeverity.Trace | reportMode == LogLevelSeverity.Warning;
+    //static bool ReportStart(LogLevelSeverity reportMode) =>
+    //    reportMode == LogLevelSeverity.Trace | reportMode == LogLevelSeverity.Warning;
 
     }
 

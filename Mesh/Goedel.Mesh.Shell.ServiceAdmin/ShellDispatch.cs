@@ -82,11 +82,6 @@ public partial class Shell : _Shell {
             }
         }
 
-
-    /// <summary>
-    /// Post processing action
-    /// </summary>
-    /// <param name="result"></param>
 #pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// Perform post processing of the result of the shell operation.

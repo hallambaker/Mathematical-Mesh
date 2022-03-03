@@ -109,6 +109,7 @@ public sealed class DareLogger : ILogger {
     /// </summary>
     /// <param name="name">The name of the logger.</param>
     /// <param name="getCurrentConfig">Return the current configuration.</param>
+    /// <param name="logSequence">The sequence to write the output to.</param>
     public DareLogger(
         string name,
         Func<DareLoggerConfiguration> getCurrentConfig,
@@ -144,7 +145,7 @@ public sealed class DareLogger : ILogger {
         TState state,
         Exception? exception,
         Func<TState, Exception?, string> formatter) {
-        
+
         if (!IsEnabled(logLevel)) {
             return;
             }
@@ -172,7 +173,7 @@ public sealed class DareLogger : ILogger {
         //Console.Write(builder.ToString());
 
         var bytes = builder.ToString().ToUTF8();
-        LogSequence.Append(bytes);
+        //LogSequence.Append(bytes);
 
         }
     }

@@ -52,8 +52,9 @@ partial class Program {
 
         Logger.LogInformation ("Start test {time}", DateTime.Now);
 
-
-        ShellTestsAdmin.Test().TestHello();
+        //ShellTests.Test().TestDigest();
+        //ShellTests.Test().TestUDF();
+        ShellTestsAdmin.Test().TestDigest();
 
 
         //ShellTests.Test().TestProfileSSHPrivate();

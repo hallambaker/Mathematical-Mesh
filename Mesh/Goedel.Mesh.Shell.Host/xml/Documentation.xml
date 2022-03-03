@@ -73,9 +73,6 @@
         <member name="P:Goedel.Mesh.Shell.Host.Shell.Instance">
             <summary>The service instance</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Shell.Host.Shell.NoCatch">
-            <summary>If false, catch exceptions and interpret as an error.</summary> 
-        </member>
         <member name="P:Goedel.Mesh.Shell.Host.Shell.ShellResult">
             <summary>Result returned by last shell command.</summary> 
         </member>
@@ -108,6 +105,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell.Host.Shell.Configuration">
             <summary>The service configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Shell.AddPlatformServices">
+            <summary>Delegate to set platform services</summary> 
         </member>
         <member name="M:Goedel.Mesh.Shell.Host.Shell.HostStart(Goedel.Mesh.Shell.Host.HostStart)">
             <inheritdoc/>

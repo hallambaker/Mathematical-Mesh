@@ -24,39 +24,22 @@ using Goedel.Mesh.Shell.Host;
 internal sealed class Program {
     static void Main(string[] args) {
         Shell shell = new() {
-            MeshMachine = new MeshMachineCore()
+            MeshMachine = new MeshMachineCore(),
+            AddPlatformServices = AddPlatformServices
             };
-
 
         shell.Dispatch(args, Console.Out);
         }
+    
+    public static HostBuilderContext AddPlatformServices(
+            HostBuilderContext host, 
+            IServiceCollection services) {
 
-
-
-
-
-    //    private static async Task Main(string[] args) {
-    //        await Host.CreateDefaultBuilder(args)
-    //            .ConfigureLogging(logging => {
-    //                logging.ClearProviders();
-    //                logging.AddDareLogger();
-    //                logging.AddConsoleLogger();
-    //            })
-    //            .ConfigureServices((hostContext, services) => {
-    //                services.AddSingleton<IServiceListener, MeshRudListener>();
-    //                services.AddSingleton<IMeshMachine, MeshMachineCore>(
-    //                        s => new MeshMachineCore ("host1", true));
-    //#if USE_PLATFORM_WINDOWS
-    //                services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
-    //#elif USE_PLATFORM_LINUX
-    //#endif
-
-    //            })
-
-    //            .AddListenerHosted()
-    //            .AddMeshService()
-
-    //            .RunConsoleAsync();
-    //        }
+#if USE_PLATFORM_WINDOWS
+        services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
+#elif USE_PLATFORM_LINUX
+#endif
+        return host;
+        }
     }
 

@@ -114,8 +114,8 @@ public class FileTools {
     /// <summary>
     /// Search for a file using specified extension if required.
     /// </summary>
-    /// <param name="FileName">The base file name.</param>
-    /// <param name="Extension">Default extension.</param>
+    /// <param name="fileName">The base file name.</param>
+    /// <param name="extension">Default extension.</param>
     /// <returns>The defaulted file.</returns>
     public static string DefaultExtension(string fileName, string extension) {
         if (File.Exists(fileName)) {

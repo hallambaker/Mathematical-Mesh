@@ -23,6 +23,7 @@
 
 using Goedel.Registry;
 using Microsoft.Extensions.Configuration;
+using System.Threading;
 
 namespace Goedel.Mesh.Shell.Host;
 
@@ -37,11 +38,6 @@ public partial class Shell : _Shell {
 
     ///<summary>The service instance</summary> 
     public string Instance { get; init; }
-
-
-    ///<summary>If false, catch exceptions and interpret as an error.</summary> 
-    public bool NoCatch { get; init; }
-
 
 
     ///<summary>Result returned by last shell command.</summary> 
@@ -124,10 +120,6 @@ public partial class Shell : _Shell {
         }
 
 
-    /// <summary>
-    /// Post processing action
-    /// </summary>
-    /// <param name="result"></param>
 #pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// Perform post processing of the result of the shell operation.
@@ -161,7 +153,19 @@ public partial class Shell : _Shell {
     string GetMultiConfig(Command._File file) =>
         PublicMeshService.GetService(MeshMachine, file.Value);
 
+    ///<summary>Delegate to set platform services</summary> 
+    public Func<HostBuilderContext, IServiceCollection, HostBuilderContext> 
+        AddPlatformServices { get; set; } = DefaultPlatformServices;
 
+    static HostBuilderContext DefaultPlatformServices(
+            HostBuilderContext host,
+            IServiceCollection services) {
+
+        return host;
+        }
+
+    //IEnumerable<IConfguredService> Providers;
+    
     ///<inheritdoc/>
     public override ShellResult HostStart(HostStart Options) {
         //var multiConfig = GetMultiConfig(Options.MultiConfig);
@@ -171,18 +175,17 @@ public partial class Shell : _Shell {
         //var result = VerifyConfig(multiConfig, hostConfig);
         //result.AssertTrue(InvalidConfiguration.Throw, Options.HostConfig.Value ?? "<none>");
 
-
         // ToDo: deal with 'args'
 
         var settings = PublicMeshService.GetService(MeshMachine);
-        var task = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
-                // read in the options file here.
-                .ConfigureAppConfiguration((hostingContext, configuration) => {
-                    configuration.Sources.Clear();
-                    IHostEnvironment env = hostingContext.HostingEnvironment;
-                    configuration
-                        .AddJsonFile(settings, true, true);
-                })
+        using var host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
+            // read in the options file here.
+            .ConfigureAppConfiguration((hostingContext, configuration) => {
+                configuration.Sources.Clear();
+                IHostEnvironment env = hostingContext.HostingEnvironment;
+                configuration
+                    .AddJsonFile(settings, true, true);
+            })
             .ConfigureLogging(logging => {
                 logging.ClearProviders();
                 logging.AddDareLogger();
@@ -191,25 +194,42 @@ public partial class Shell : _Shell {
             .ConfigureServices((hostContext, services) => {
                 services.AddSingleton<HostMonitor, HostMonitor>();
                 services.AddSingleton<IServiceListener, MeshRudListener>();
+                //services.AddSingleton<IHostedService, ManagedListener>();
                 services.AddSingleton<IMeshMachine, MeshMachineCore>();
-#if USE_PLATFORM_WINDOWS
-                services.AddSingleton<IComponent, Goedel.Cryptography.Windows.ComponentCryptographyWindows>();
-#elif USE_PLATFORM_LINUX
-#endif
-
+                AddPlatformServices(hostContext, services);
             })
 
             .AddListenerHosted()
             .AddMeshService()
 
-            .RunConsoleAsync();
-        task.Wait();
+            .Build();
+        //var services = host.Services;
+        //var listener = services.GetRequiredService<IHostedService>() as IHostedService;
+        //Providers = services.GetServices<IConfguredService>();
+
+        //var cancellationTokenSource = new CancellationTokenSource();
+        //var cancellationToken = cancellationTokenSource.Token;
+        ////listener.StartAsync(cancellationToken).Wait();
+        ////listener.
+        //host.StartAsync(cancellationToken);
+        //host.WaitForShutdown();
+
+        //Wait(cancellationToken).Wait();
+
+        host.Run();
+
 
         return new ResultStartService() {
             Success = true,
             RudService = RudService
-            };
-        }
+};
+}
+
+    //async Task Wait(CancellationToken cancellationToken) {
+    //    await cancellationToken;
+    //    }
+
+
 
     ///<inheritdoc/>
     public override ShellResult HostVerify(HostVerify Options) {

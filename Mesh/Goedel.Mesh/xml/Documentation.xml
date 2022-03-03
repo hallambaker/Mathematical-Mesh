@@ -2230,6 +2230,13 @@
             <param name="key">Unique identifier of the device to return.</param>
             <returns>The <see cref="T:Goedel.Mesh.CatalogedDevice"/> entry.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Catalog`1.GetDefault``1">
+            <summary>
+            Get default instance of type <typeparamref name="TT"/>
+            </summary>
+            <typeparam name="TT">The parameter type to return.</typeparam>
+            <returns>The instance if found, otherwise null.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Catalog`1.AddFromStream(System.IO.Stream,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
             <summary>
             Add the catalog entry data speficied in the stream <paramref name="stream"/>. If 

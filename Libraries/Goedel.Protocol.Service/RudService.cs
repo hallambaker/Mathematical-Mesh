@@ -42,7 +42,7 @@ public class RudService : Disposable {
 
     bool active = true;
 
-    private readonly Thread serviceThread;
+    //private readonly Thread serviceThread;
 
 
 
@@ -80,7 +80,7 @@ public class RudService : Disposable {
     /// <summary>
     /// Disposal routine, perform clean termination of all active threads.
     /// </summary>
-    protected override async void Disposing() {
+    protected override  void Disposing() {
 
         Logger.LogInformation("Closing RUD Listener");
 

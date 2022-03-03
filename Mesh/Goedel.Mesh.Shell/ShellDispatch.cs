@@ -129,12 +129,11 @@ public partial class Shell : _Shell {
                 Verbosity = Verbosity.Full;
                 }
             }
+        if (dispatch is ICryptoOptions options) {
+            SetAlgorithms(options);
+            }
         }
 
-    /// <summary>
-    /// Post processing action
-    /// </summary>
-    /// <param name="result"></param>
 #pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// Perform post processing of the result of the shell operation.

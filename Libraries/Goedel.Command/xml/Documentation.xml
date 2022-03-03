@@ -558,12 +558,6 @@
         <member name="P:Goedel.Command.Dispatch.DescribeCommand">
             <summary>Command description</summary>
         </member>
-        <member name="M:Goedel.Command.Dispatch._PreProcess(Goedel.Command.Dispatch)">
-            <summary>
-            Method called before acommand is dispatched.
-            </summary>
-            <param name="dispatch">The options for the command dispatched.</param>
-        </member>
         <member name="T:Goedel.Command.DispatchShell">
             <summary>
             Describe a shell.
@@ -582,6 +576,9 @@
         <member name="P:Goedel.Command.DispatchShell.Verbosity">
             <summary>Verbose flag, if <see langword="true"/> verbose results of operations
             are reported to the console. Takes priority over <see cref="P:Goedel.Command.DispatchShell.Report"/></summary>
+        </member>
+        <member name="P:Goedel.Command.DispatchShell.Output">
+            <summary>Stream to write the output to.</summary> 
         </member>
         <member name="P:Goedel.Command.DispatchShell.NoCatch">
             <summary>If false, catch exceptions and interpret as an error.</summary> 
@@ -836,8 +833,8 @@
             <summary>
             Search for a file using specified extension if required.
             </summary>
-            <param name="FileName">The base file name.</param>
-            <param name="Extension">Default extension.</param>
+            <param name="fileName">The base file name.</param>
+            <param name="extension">Default extension.</param>
             <returns>The defaulted file.</returns>
         </member>
         <member name="M:Goedel.Command.FileTools.DefaultOutput(System.String,System.String,System.String)">

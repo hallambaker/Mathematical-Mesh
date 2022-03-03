@@ -21,6 +21,9 @@ public class ManagedListener : IHostedService {
 
     private IServiceListener ServiceDispatch { get; }
 
+
+    //Task ListenerTask;
+
     /// <summary>
     /// Constructor for configuration via dependency injection.
     /// </summary>
@@ -38,24 +41,26 @@ public class ManagedListener : IHostedService {
 
     ///<inheritdoc/>
     public Task StartAsync(CancellationToken cancellationToken) {
-        //Logger.Log(Event.StartListener);
-        Logger.ListenerStart();
+
         AppLifetime.ApplicationStarted.Register(() => {
             Task.Run(async () => {
                 try {
+                    Logger.ListenerStart();
                     await ServiceDispatch.StartAsync(cancellationToken);
                     }
                 catch (Exception ex) {
                     Logger.UnhandledException(ex);
-
-                    //Logger.Log(Event.UnhandledException, ex);
                     }
                 finally {
                     AppLifetime.StopApplication();
                     }
+                });
             });
+
+        AppLifetime.ApplicationStopped.Register(() => {
+            Logger.ListenerEnd();
         });
-        Logger.ListenerEnd();
+
         //Logger.Log(Event.EndListener);
         return Task.CompletedTask;
         }

@@ -209,7 +209,11 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     public virtual T Get(string key) => Locate(key) as T;
 
 
-
+    /// <summary>
+    /// Get default instance of type <typeparamref name="TT"/>
+    /// </summary>
+    /// <typeparam name="TT">The parameter type to return.</typeparam>
+    /// <returns>The instance if found, otherwise null.</returns>
     public virtual TT GetDefault<TT>() where TT : class{
 
         foreach (var entry in PersistenceStore) {

@@ -49,9 +49,10 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
         HostMachine?.Dispose();
         ServiceAdminShell?.MeshMachine?.MeshHost?.Dispose();
 
-
-        foreach (var provider in Providers) {
-            provider.Dispose(); 
+        if (Providers != null) {
+            foreach (var provider in Providers) {
+                provider.Dispose();
+                }
             }
 
         base.Disposing();

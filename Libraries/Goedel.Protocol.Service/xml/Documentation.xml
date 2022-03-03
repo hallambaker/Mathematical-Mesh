@@ -305,6 +305,9 @@
         <member name="P:Goedel.Protocol.Service.LogService.HostMonitor">
             <summary>The host monitor tracking start and end of host requests.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Service.LogService.Logger">
+            <summary>The logger instance</summary> 
+        </member>
         <member name="P:Goedel.Protocol.Service.LogService.GenericHostConfiguration">
             <summary>The host configuration</summary> 
         </member>
@@ -339,12 +342,6 @@
             Atomic write to console.
             </summary>
             <param name="output">The text to write.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Service.LogService.Start(Goedel.Protocol.Service.LogTransaction)">
-            <summary>
-            Record the start of the transaction <paramref name="logTransaction"/>.
-            </summary>
-            <param name="logTransaction">Transaction to log.</param>
         </member>
         <member name="M:Goedel.Protocol.Service.LogService.Success(Goedel.Protocol.Service.LogTransaction)">
             <summary>

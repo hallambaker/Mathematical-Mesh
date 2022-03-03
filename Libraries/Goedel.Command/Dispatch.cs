@@ -57,12 +57,6 @@ public abstract class Dispatch{
     /// <summary>Command description</summary>
     public virtual DescribeCommandEntry DescribeCommand { get; set; }
 
-    /// <summary>
-    /// Method called before acommand is dispatched.
-    /// </summary>
-    /// <param name="dispatch">The options for the command dispatched.</param>
-    public virtual void _PreProcess(Dispatch dispatch) { }
-
     }
 
 /// <summary>
@@ -85,8 +79,8 @@ public abstract class DispatchShell : Dispatch {
     ///are reported to the console. Takes priority over <see cref="Report"/></summary>
     public Verbosity Verbosity { get; set; }
 
-
-    public TextWriter Output { get; set; }
+    ///<summary>Stream to write the output to.</summary> 
+    public TextWriter Output { get; set; } = System.Console.Out;
 
 
     ///<summary>If false, catch exceptions and interpret as an error.</summary> 

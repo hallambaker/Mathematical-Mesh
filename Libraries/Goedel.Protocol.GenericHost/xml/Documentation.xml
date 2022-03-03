@@ -97,6 +97,7 @@
             </summary>
             <param name="name">The name of the logger.</param>
             <param name="getCurrentConfig">Return the current configuration.</param>
+            <param name="logSequence">The sequence to write the output to.</param>
         </member>
         <member name="M:Goedel.Protocol.GenericHost.DareLogger.BeginScope``1(``0)">
             <inheritdoc/>
