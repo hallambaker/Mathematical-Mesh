@@ -56,7 +56,9 @@ public partial class Shell : _Shell {
     public override ShellResult About(About options) {
 
         var compilationDate = Script.AssemblyBuildTime;
-
+        if (options.Where.Value) {
+            Verbosity = Verbosity.Full;
+            }
         return new ResultAbout() {
             Success = true,
             DirectoryKeys = MeshMachine.DirectoryKeys,
@@ -113,7 +115,7 @@ public partial class Shell : _Shell {
             else if (!reporting.Report.Value) {
                 Verbosity = Verbosity.None;
                 }
-            else if (!reporting.Verbose.Value) {
+            else if (reporting.Verbose.Value) {
                 Verbosity = Verbosity.Full;
                 }
             }

@@ -110,8 +110,12 @@ public partial class Shell : _Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult About(About options) {
 
-        var compilationDate = Script.AssemblyBuildTime;
+        if (options.Where.Value) {
+            Verbosity = Verbosity.Full;
+            }
 
+        var compilationDate = Script.AssemblyBuildTime;
+        
         return new ResultAbout() {
             Success = true,
             DirectoryKeys = MeshMachine.DirectoryKeys,

@@ -325,6 +325,9 @@
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._About.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin._About.Where">
+            <summary>Field accessor for option [where]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin._Create.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>

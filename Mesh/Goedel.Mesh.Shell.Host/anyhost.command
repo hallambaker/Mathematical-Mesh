@@ -22,6 +22,7 @@
 
 	Command About "about"		
 		Brief		"Report version and compilation date."
+		Include Reporting
 		Option Where "where" Flag
 			Brief		"Report location of configuration files."
 

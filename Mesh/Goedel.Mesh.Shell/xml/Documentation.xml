@@ -1191,6 +1191,15 @@
             <param name="args">The set of arguments.</param>
             <param name="index">The first unparsed argument.</param>
         </member>
+        <member name="P:Goedel.Mesh.Shell._About.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._About.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._About.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._About.Where">
             <summary>Field accessor for option [where]</summary>
         </member>

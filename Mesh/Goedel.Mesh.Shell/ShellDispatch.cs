@@ -125,7 +125,7 @@ public partial class Shell : _Shell {
             else if (!reporting.Report.Value) {
                 Verbosity = Verbosity.None;
                 }
-            else if (!reporting.Verbose.Value) {
+            else if (reporting.Verbose.Value) {
                 Verbosity = Verbosity.Full;
                 }
             }

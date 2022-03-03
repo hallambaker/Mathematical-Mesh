@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 03-Mar-22 12:25:58 AM
+//  This file was automatically generated at 03-Mar-22 2:09:42 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1549,23 +1549,54 @@ public interface ISequenceOptions {
 	}
 
 
-public class _About : Goedel.Command.Dispatch {
+public class _About : Goedel.Command.Dispatch ,
+						IReporting{
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new Flag (),
+		new Flag (),
+		new Flag (),
 		new Flag ()		} ;
 
 
 
 
 
-	/// <summary>Field accessor for option [where]</summary>
-	public virtual Flag Where {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[0] as Flag;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _Where {
+	public virtual string _Verbose {
 		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[1] as Flag;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[2] as Flag;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [where]</summary>
+	public virtual Flag Where {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Where {
+		set => _Data[3].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -1576,10 +1607,31 @@ public class _About : Goedel.Command.Dispatch {
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "true", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 0,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 1,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 2,
+				Key = "json"
+				},
+			new DescribeEntryOption () {
 				Identifier = "Where", 
 				Default = null, // null if null
 				Brief = "Report location of configuration files.",
-				Index = 0,
+				Index = 3,
 				Key = "where"
 				}
 			}

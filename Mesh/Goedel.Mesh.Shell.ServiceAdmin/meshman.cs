@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 03-Mar-22 12:39:48 AM
+//  This file was automatically generated at 03-Mar-22 2:19:33 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -172,6 +172,7 @@ public class _About : Goedel.Command.Dispatch ,
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
 		new Flag (),
 		new Flag (),
+		new Flag (),
 		new Flag ()		} ;
 
 
@@ -205,6 +206,15 @@ public class _About : Goedel.Command.Dispatch ,
 	public virtual string _Json {
 		set => _Data[2].Parameter (value);
 		}
+	/// <summary>Field accessor for option [where]</summary>
+	public virtual Flag Where {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Where {
+		set => _Data[3].Parameter (value);
+		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
@@ -233,6 +243,13 @@ public class _About : Goedel.Command.Dispatch ,
 				Brief = "Report output in JSON format",
 				Index = 2,
 				Key = "json"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Where", 
+				Default = null, // null if null
+				Brief = "Report location of configuration files.",
+				Index = 3,
+				Key = "where"
 				}
 			}
 		};
