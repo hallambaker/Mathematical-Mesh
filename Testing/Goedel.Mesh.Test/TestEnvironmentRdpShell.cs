@@ -33,9 +33,10 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
     Goedel.Mesh.Shell.Host.Shell HostShell { get; set; }
     Goedel.Mesh.Shell.Host.CommandLineInterpreter HostAdminCLI { get; set; }
 
-    public override string ServiceDns { get; }
+    //public override string ServiceDns { get; }
 
-    public TestEnvironmentRdpShell() => ServiceDns = Dns.GetHostName();
+    public TestEnvironmentRdpShell() { }
+    //=> ServiceDns = "localhost";
 
     RudService RudService { get; set; }
 
@@ -123,8 +124,9 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
     public override MeshServiceClient GetMeshClient(
             MeshMachineTest meshMachineTest,
             ICredentialPrivate credential,
-            string service,
-            string accountAddress) {
+             string accountAddress,
+            string service
+           ) {
 
         RudService ??= StartService();
 

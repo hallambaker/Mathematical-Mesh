@@ -54,8 +54,8 @@ partial class Program {
 
         //ServiceDiscovery.Test().TestDNS();
         //ShellTests.Test().TestHelloFail();
-        //ShellTests.Test().TestHello();
-        ShellTests.Test().TestConnectRequest();
+        ShellTestsAdmin.Test().TestHello();
+        //ShellTests.Test().TestConnectRequest();
 
 
 

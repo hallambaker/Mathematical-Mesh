@@ -3924,6 +3924,12 @@
             <param name="fallback">The fallback mode.</param>
             <returns>The constructed string</returns>
         </member>
+        <member name="M:Goedel.Discovery.ServiceDescription.GetUri">
+            <summary>
+            Return the URI corresponding to the service.
+            </summary>
+            <returns>The URI value.</returns>
+        </member>
         <member name="T:Goedel.Discovery.ServiceEntry">
             <summary>
             Represents an Internet destination, this may be a single IPv4 or IPv6 

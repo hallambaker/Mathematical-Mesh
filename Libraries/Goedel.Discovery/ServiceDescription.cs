@@ -182,6 +182,10 @@ public class ServiceDescription {
             };
         }
 
+    /// <summary>
+    /// Return the URI corresponding to the service.
+    /// </summary>
+    /// <returns>The URI value.</returns>
     public string GetUri() =>
         Entries.Count > 0 ? Entries[0].HTTPEndpoint : Default.HTTPEndpoint;
 
