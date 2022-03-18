@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 03-Mar-22 1:56:17 AM
+//  This file was automatically generated at 18-Mar-22 3:45:49 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.835
+//  Generator:  exceptional version 3.0.0.867
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -500,6 +500,124 @@ public  static partial class EventExtensions {
     /// Static initializer, is called once when the module loads.
     /// </summary>
     static EventExtensions() {
+        _Resolution = LoggerMessage.Define<string,string>(
+            LogLevel.Trace, new EventId(1000, nameof(_Resolution)),
+            "Starting resolution {domain} {service}");
+        _FoundSrv = LoggerMessage.Define<string,string,int>(
+            LogLevel.Trace, new EventId(1001, nameof(_FoundSrv)),
+            "Found SRV {Service} {Host} {Port}");
+        _FoundTxt = LoggerMessage.Define<string,string>(
+            LogLevel.Trace, new EventId(1002, nameof(_FoundTxt)),
+            "Found Txt {Service} {Text}");
+        _Timeout = LoggerMessage.Define<int>(
+            LogLevel.Debug, new EventId(2000, nameof(_Timeout)),
+            "Timeout after {Seconds} seconds");
+        _Unexpected = LoggerMessage.Define(
+            LogLevel.Debug, new EventId(2001, nameof(_Unexpected)),
+            "Received unexpected reply");
+        _Invalid = LoggerMessage.Define(
+            LogLevel.Debug, new EventId(2001, nameof(_Invalid)),
+            "Received invalid reply");
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _Resolution;
+
+	/// <summary>
+    /// Write an event of type Resolution to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="domain">The service domain</param>
+	/// <param name="service">The service protocol</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void Resolution(
+			this ILogger logger,
+			string domain,
+			string service,
+			Exception _exception=null) {
+        _Resolution(logger, domain, service, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, int, Exception> _FoundSrv;
+
+	/// <summary>
+    /// Write an event of type FoundSrv to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="query">The query domain</param>
+	/// <param name="host">The host entry</param>
+	/// <param name="port">The port</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void FoundSrv(
+			this ILogger logger,
+			string query,
+			string host,
+			int port,
+			Exception _exception=null) {
+        _FoundSrv(logger, query, host, port, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _FoundTxt;
+
+	/// <summary>
+    /// Write an event of type FoundTxt to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="query">The query domain</param>
+	/// <param name="text">The text entry</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void FoundTxt(
+			this ILogger logger,
+			string query,
+			string text,
+			Exception _exception=null) {
+        _FoundTxt(logger, query, text, _exception);
+        }
+
+
+    private static readonly Action<ILogger, int, Exception> _Timeout;
+
+	/// <summary>
+    /// Write an event of type Timeout to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="timeout">Timeout in seconds</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void Timeout(
+			this ILogger logger,
+			int timeout,
+			Exception _exception=null) {
+        _Timeout(logger, timeout, _exception);
+        }
+
+
+    private static readonly Action<ILogger, Exception> _Unexpected;
+
+	/// <summary>
+    /// Write an event of type Unexpected to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void Unexpected(
+			this ILogger logger,
+			Exception _exception=null) {
+        _Unexpected(logger, _exception);
+        }
+
+
+    private static readonly Action<ILogger, Exception> _Invalid;
+
+	/// <summary>
+    /// Write an event of type Invalid to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void Invalid(
+			this ILogger logger,
+			Exception _exception=null) {
+        _Invalid(logger, _exception);
         }
 
 	}

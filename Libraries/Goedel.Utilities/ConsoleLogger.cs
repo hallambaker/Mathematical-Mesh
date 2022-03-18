@@ -80,7 +80,7 @@ public class ConsoleLoggerConfiguration {
     public int EventId { get; set; }
 
     ///<summary>The default log level.</summary> 
-    public string Default {get; set; }
+    public LogLevel Default {get; set; }
 
     ///<summary>Specify log levels for specific log categories.</summary> 
     public Dictionary<string,string> LogLevel { get; set; }
@@ -109,6 +109,9 @@ public sealed class ConsoleLogger : ILogger {
     private readonly string _name;
     private readonly Func<ConsoleLoggerConfiguration> _getCurrentConfig;
 
+
+
+
     /// <summary>
     /// Dependency injector constructor.
     /// </summary>
@@ -122,11 +125,16 @@ public sealed class ConsoleLogger : ILogger {
     /// <summary>
     /// Factory method, return a new logger instance.
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="config"></param>
+    /// <param name="name">The name of the instance (for configuration)</param>
+    /// <param name="config">The configureation</param>
+    /// <param name="logLevel">The minimum logging level to display.</param>
     /// <returns></returns>
-    public static ConsoleLogger Factory(string name, ConsoleLoggerConfiguration? config = null) {
-        config ??= new ();
+    public static ConsoleLogger Factory(string name, 
+            ConsoleLoggerConfiguration? config = null, LogLevel logLevel = LogLevel.Trace) {
+
+        config ??= new() {
+            Default = logLevel
+            };
         return new ConsoleLogger(name, function);
 
         ConsoleLoggerConfiguration function() => config;
@@ -138,7 +146,7 @@ public sealed class ConsoleLogger : ILogger {
     public IDisposable BeginScope<TState>(TState state) => default!;
 
     ///<inheritdoc/> 
-    public bool IsEnabled(LogLevel logLevel) =>
+    public bool IsEnabled(LogLevel logLevel) => logLevel >= _getCurrentConfig().Default &
         _getCurrentConfig().LogLevels.ContainsKey(logLevel);
 
     ///<summary>Return configuration entry description.</summary> 

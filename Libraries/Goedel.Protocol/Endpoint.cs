@@ -79,8 +79,8 @@ public record Endpoint(
 public record HttpEndpoint(
          string? Domain,
          string Protocol,
+         int Port,
          string? Instance = null,
-         int Port = 15099,
          JpcInterface JpcInterface = null) : Endpoint(Protocol, Instance, JpcInterface) {
     #region // Properties
     #endregion

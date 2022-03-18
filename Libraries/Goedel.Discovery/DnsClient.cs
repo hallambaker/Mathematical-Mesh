@@ -86,21 +86,22 @@ public abstract class DnsClient {
     /// <returns>The DNS Client Context</returns>
     public abstract DNSContext GetContext();
 
+    ILogger Logger => Component.Logger;
 
     /// <summary>
     /// Resolve a DNS name to an address and service characteristics.
     /// </summary>
-    /// <param name="Address">The address to use</param>
-    /// <param name="Service">The DNS service prefix</param>
-    /// <param name="Port">The default DNS port number</param>
-    /// <param name="Fallback">The fallback mode to use if SRV lookup fails</param>
+    /// <param name="address">The address to use</param>
+    /// <param name="service">The DNS service prefix</param>
+    /// <param name="port">The default DNS port number</param>
+    /// <param name="fallback">The fallback mode to use if SRV lookup fails</param>
     /// <returns>IP Destination describing the resolution results</returns>
-    public static ServiceDescription ResolveService(string Address, string Service = null,
-                int? Port = null, DNSFallback Fallback = DNSFallback.Prefix) {
+    public static ServiceDescription ResolveService(string address, string service = null,
+                int? port = null, DNSFallback fallback = DNSFallback.Prefix) {
 
-        using var TaskService = ResolveServiceAsync(Address, Service, Port, Fallback);
-        TaskService.Wait();
-        return TaskService.Result;
+        using var taskService = ResolveServiceAsync(address, service, port, fallback);
+        taskService.Wait();
+        return taskService.Result;
 
         }
 
@@ -108,17 +109,17 @@ public abstract class DnsClient {
     /// Perform Asynchronous query for Service discovery and description records
     /// using the platform default DNSClient.
     /// </summary>
-    /// <param name="Address">The address to query</param>
-    /// <param name="Service">The IANA service name</param>
-    /// <param name="Port">The default DNS port number</param>
-    /// <param name="Fallback">The fallback mode to use if SRV lookup fails</param> 
+    /// <param name="address">The address to query</param>
+    /// <param name="service">The IANA service name</param>
+    /// <param name="port">The default DNS port number</param>
+    /// <param name="fallback">The fallback mode to use if SRV lookup fails</param> 
     /// <returns>Description of the discovered services.</returns>
-    public static async Task<ServiceDescription> ResolveServiceAsync(string Address,
-                    string Service = null,
-                    int? Port = null, DNSFallback Fallback = DNSFallback.Prefix) {
+    public static async Task<ServiceDescription> ResolveServiceAsync(string address,
+                    string service = null,
+                    int? port = null, DNSFallback fallback = DNSFallback.Prefix) {
 
-        using var Context = Default.GetContext();
-        var task = await Context.QueryServiceAsync(Address, Service, Port, Fallback);
+        using var context = Default.GetContext();
+        var task = await context.QueryServiceAsync(address, service, port, fallback);
         return task;
         }
 
@@ -139,6 +140,9 @@ public abstract class DNSContext : Disposable {
     /// <summary>The timeout value</summary>
     readonly int timeout;
     readonly int retry;
+
+
+    static ILogger Logger => Component.Logger;
 
     CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
 
@@ -239,9 +243,11 @@ public abstract class DNSContext : Disposable {
                 }
 
             else {
-                Debug.WriteLine("Problem");
+
+                //Debug.WriteLine("Problem");
                 }
             if (taskTimeout.IsCompleted) { // query has expired
+                Logger.Timeout(timeout);
                 Active = false;
                 return null;
                 }
@@ -257,57 +263,59 @@ public abstract class DNSContext : Disposable {
     /// <summary>
     /// Make a DNS request to the default client without waiting for a response
     /// </summary>
-    /// <param name="Request">DNS request set</param>
+    /// <param name="request">DNS request set</param>
     /// <returns>Task instance.</returns>
-    public void QueueRequest(DNSRequest Request) {
-        pendingRequests.Add(Request); // always add to the queue first
-        SendRequest(Request);
+    public void QueueRequest(DNSRequest request) {
+        pendingRequests.Add(request); // always add to the queue first
+        SendRequest(request);
         }
 
     /// <summary>
     /// Make a DNS request to the default client without waiting for a response
     /// </summary>
-    /// <param name="Address">The DNS address to query</param>
-    /// <param name="DNSTypeCode">The DNS Type code to query</param>
+    /// <param name="address">The DNS address to query</param>
+    /// <param name="dnsTypeCode">The DNS Type code to query</param>
     /// <returns>Task instance.</returns>
-    public void QueueRequest(string Address, DNSTypeCode DNSTypeCode) {
-        var Request = new DNSRequest(Address, DNSTypeCode) {
+    public void QueueRequest(string address, DNSTypeCode dnsTypeCode) {
+        var request = new DNSRequest(address, dnsTypeCode) {
             Flags = DNSFlags.RD | DNSFlags.OPCODE_QUERY,
             ID = NextID
             };
-        QueueRequest(Request);
+        QueueRequest(request);
         }
 
 
     /// <summary>
     /// Perform Asynchronous query for Service discovery and description records.
     /// </summary>
-    /// <param name="Address">The address to query</param>
-    /// <param name="Service">The IANA service name</param>
-    /// <param name="Port">The default port number to use if no SRV record is found</param>
-    /// <param name="Fallback">Fallback mode for if no SRV record is found</param>
+    /// <param name="address">The address to query</param>
+    /// <param name="service">The IANA service name</param>
+    /// <param name="port">The default port number to use if no SRV record is found</param>
+    /// <param name="fallback">Fallback mode for if no SRV record is found</param>
     /// <returns>Description of the discovered services.</returns>
-    public async Task<ServiceDescription> QueryServiceAsync(string Address,
-                    string Service = null, int? Port = null,
-                    DNSFallback Fallback = DNSFallback.Prefix) {
+    public async Task<ServiceDescription> QueryServiceAsync(string address,
+                    string service = null, int? port = null,
+                    DNSFallback fallback = DNSFallback.Prefix) {
 
-        var ServiceDescription = new ServiceDescription(Address, Service, Port, Fallback);
+        Logger.Resolution(address, service);
 
-        if (Service == null) {
-            return ServiceDescription;
+        var serviceDescription = new ServiceDescription(address, service, port, fallback);
+
+        if (service == null) {
+            return serviceDescription;
             }
 
-        QueueRequest(ServiceDescription.ServiceAddress, DNSTypeCode.SRV);
-        QueueRequest(ServiceDescription.ServiceAddress, DNSTypeCode.TXT);
+        QueueRequest(serviceDescription.ServiceAddress, DNSTypeCode.SRV);
+        QueueRequest(serviceDescription.ServiceAddress, DNSTypeCode.TXT);
 
         while (Pending) {
-            var Result = await NextAsync();
-            if (Result != null) {
-                foreach (var Record in Result.Answers) {
-                    Add(ServiceDescription, Record);
+            var result = await NextAsync();
+            if (result != null) {
+                foreach (var Record in result.Answers) {
+                    Add(serviceDescription, Record);
                     }
-                foreach (var Record in Result.Additional) {
-                    Add(ServiceDescription, Record);
+                foreach (var Record in result.Additional) {
+                    Add(serviceDescription, Record);
                     }
                 }
             else {
@@ -315,71 +323,76 @@ public abstract class DNSContext : Disposable {
                 }
             }
 
-        if (ServiceDescription.Entries.Count == 0) {
-            ServiceDescription.Fallback(Port, Fallback);
+        if (serviceDescription.Entries.Count == 0) {
+            serviceDescription.Fallback(port, fallback);
             }
 
-        return ServiceDescription;
+        return serviceDescription;
         }
 
 
     /// <summary>
     /// Add information from the received record iff it is within the baliwick.
     /// </summary>
-    /// <param name="ServiceDescription">The service description to add to</param>
-    /// <param name="Record">DNS record to add data from</param>
-    void Add(ServiceDescription ServiceDescription, DNSRecord Record) {
-        var Domain = Record.Domain.Name.ToLower();
+    /// <param name="serviceDescription">The service description to add to</param>
+    /// <param name="record">DNS record to add data from</param>
+    void Add(ServiceDescription serviceDescription, DNSRecord record) {
+        var domain = record.Domain.Name.ToLower();
 
-        if (Record.Code == DNSTypeCode.SRV) {
-            var RecordSRV = Record as DNSRecord_SRV;
+        if (record.Code == DNSTypeCode.SRV) {
+            var recordSRV = record as DNSRecord_SRV;
 
-            Debug.WriteLine(String.Format("SRV {0} -> {1}",
-                    Domain, RecordSRV.Target.Name));
+            Logger.FoundSrv(domain, recordSRV.Target.Name, recordSRV.Port);
 
-            if (Domain == ServiceDescription.ServiceAddress) {
-                var Entry = new ServiceEntry() {
-                    Address = RecordSRV.Target.Name,
-                    Port = RecordSRV.Port,
-                    Priority = RecordSRV.Priority,
-                    Weight = RecordSRV.Weight
+            //Console.WriteLine(String.Format("SRV {0} -> {1}",
+            //        Domain, RecordSRV.Target.Name));
+
+            if (domain == serviceDescription.ServiceAddress) {
+                var entry = new ServiceEntry() {
+                    Address = recordSRV.Target.Name,
+                    Port = recordSRV.Port,
+                    Priority = recordSRV.Priority,
+                    Weight = recordSRV.Weight
                     };
-                ServiceDescription.Add(Entry);
-                QueueRequest(Entry.HostAddress, DNSTypeCode.TXT);
+                serviceDescription.Add(entry);
+                QueueRequest(entry.HostAddress, DNSTypeCode.TXT);
                 }
             }
-        else if (Record.Code == DNSTypeCode.TXT) {
+        else if (record.Code == DNSTypeCode.TXT) {
 
-            var RecordTXT = Record as DNSRecord_TXT;
+            var RecordTXT = record as DNSRecord_TXT;
 
 
             foreach (var Text in RecordTXT.Text) {
-                Debug.WriteLine(String.Format("TXT {0} -> {1}",
-                        Domain, Text));
+                //Logger.FoundTxt (RecordTXT.Domain, RecordTXT.Text)
+
+                //Debug.WriteLine(String.Format("TXT {0} -> {1}",
+                //        domain, Text));
                 }
 
 
-            if (Domain == ServiceDescription.ServiceAddress) {
-                foreach (var TXT in RecordTXT.Text) {
-                    ServiceDescription.TXT.Add(TXT);
+            if (domain == serviceDescription.ServiceAddress) {
+                foreach (var txt in RecordTXT.Text) {
+                    Logger.FoundTxt(domain, txt);
+                    serviceDescription.TXT.Add(txt);
                     }
                 }
 
             else {
-                foreach (var Entry in ServiceDescription.Entries) {
-                    if (Domain == Entry.HostAddress) {
+                foreach (var entry in serviceDescription.Entries) {
+                    if (domain == entry.HostAddress) {
                         foreach (var TXT in RecordTXT.Text) {
-                            Entry.TXT.Add(TXT);
+                            entry.TXT.Add(TXT);
                             }
                         }
                     }
                 }
             }
-        else if (Record.Code == DNSTypeCode.A) {
+        else if (record.Code == DNSTypeCode.A) {
 
 
             }
-        else if (Record.Code == DNSTypeCode.AAAA) {
+        else if (record.Code == DNSTypeCode.AAAA) {
 
 
             }

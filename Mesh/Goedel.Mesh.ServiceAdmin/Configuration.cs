@@ -134,7 +134,10 @@ public class Configuration : Disposable {
 
         var jsonOptions = new JsonSerializerOptions() {
             WriteIndented = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Converters = {
+                new JsonStringEnumConverter (JsonNamingPolicy.CamelCase, true)
+                }
             };
 
         ////Console.WriteLine(JsonSerializer.Serialize<Dictionary<string, object>>(Dictionary, jsonOptions));

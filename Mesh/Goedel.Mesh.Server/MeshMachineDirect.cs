@@ -74,7 +74,7 @@ public class MeshMachineDirect : IMeshMachineClient {
         MeshMachineClient.GetFilePath(filepath);
 
     ///<inheritdoc/>
-    public MeshServiceClient GetMeshClient(ICredentialPrivate credential, string service, string accountAddress) {
+    public MeshServiceClient GetMeshClient(ICredentialPrivate credential, string accountAddress, string service=null) {
         var jpcSessionSerialized = new JpcSessionSerialized(PublicMeshService, credential) {
             TargetAccount = accountAddress
             };

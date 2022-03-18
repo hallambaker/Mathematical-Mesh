@@ -22,7 +22,8 @@ LinkFiles = \
     Goedel.Protocol.GenericHost.dll\
     Goedel.Mesh.Management.dll\
     Goedel.Mesh.Server.dll\
-    Goedel.Mesh.ServiceAdmin.dll
+    Goedel.Mesh.ServiceAdmin.dll\
+    Goedel.Mesh.Shell.Host.dll
 
 ToolTargets = 
 
@@ -34,7 +35,6 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse

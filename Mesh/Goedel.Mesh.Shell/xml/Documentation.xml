@@ -801,7 +801,7 @@
             </summary>
             <param name="CryptoOptions">The cryptographic options.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.GetMeshClient(Goedel.Mesh.Shell.IAccountOptions)">
+        <member name="M:Goedel.Mesh.Shell.Shell.GetMeshClient(Goedel.Mesh.Shell.IAccountOptions,System.String)">
             <summary>
             Get a Mesh Client for the options <paramref name="options"/>.
             </summary>
@@ -1137,6 +1137,37 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceNotSpecified">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceNotSpecified.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceNotSpecified.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceNotSpecified.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceNotSpecified._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceNotSpecified.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Shell.EventExtensions">
             <summary>
             Extensions class defining logging events and convenience methods.
@@ -1214,6 +1245,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountHello.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountHello.Account">
+            <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountCreate.NewAccountID">
             <summary>Field accessor for parameter []</summary>

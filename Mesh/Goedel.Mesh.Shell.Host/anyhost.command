@@ -11,7 +11,7 @@
 
 	OptionSet Reporting
 		Option Verbose "verbose" Flag
-			Default "true"
+			Default "false"
 			Brief "Verbose reports (default)"
 		Option Report "report" Flag
 			Default "true"
@@ -25,6 +25,7 @@
 		Include Reporting
 		Option Where "where" Flag
 			Brief		"Report location of configuration files."
+			Default "false"
 
 	Command HostStart "start"
 		Brief "Start the host service"

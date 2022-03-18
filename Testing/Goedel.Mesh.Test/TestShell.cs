@@ -80,7 +80,7 @@ public partial class ExampleResult {
     public string Command;
     public TestCLI TestCLI;
 
-
+    public string Application { get; set; } = "meshman";
 
     public string ResultText => Result.ToString();
     //{ get {

@@ -310,7 +310,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <returns>The Mesh service client</returns>
     public MeshServiceClient GetMeshClient(ICredentialPrivate credentialPrivate) =>
-                MeshMachine.GetMeshClient(credentialPrivate, null, AccountAddress);
+                MeshMachine.GetMeshClient(credentialPrivate, AccountAddress);
 
 
     /// <summary>

@@ -241,7 +241,8 @@ public partial class ContextUser : ContextAccount {
         var credentialPrivate = new MeshKeyCredentialPrivate(
                     KeyAccountAuthentication as KeyPairAdvanced, accountAddress);
 
-        MeshClient = MeshMachine.GetMeshClient(credentialPrivate, null, AccountAddress);
+
+        MeshClient = MeshMachine.GetMeshClient(credentialPrivate, accountAddress);
 
         // Query the service capabilities
         var helloRequest = new HelloRequest();
@@ -772,7 +773,7 @@ public partial class ContextUser : ContextAccount {
         var credentialPrivate = new MeshKeyCredentialPrivate(
                     activationGroup.AccountAuthenticationKey as KeyPairAdvanced, groupName);
 
-        var groupClient = MeshMachine.GetMeshClient(credentialPrivate, null, groupName);
+        var groupClient = MeshMachine.GetMeshClient(credentialPrivate, groupName);
 
 
         var createResponse = groupClient.BindAccount(createRequest);
@@ -1116,7 +1117,7 @@ public partial class ContextUser : ContextAccount {
 
 
         var claimClient = MeshMachine.GetMeshClient(
-                        GetMeshCredentialPrivate(), null, targetAccountAddress);
+                        GetMeshCredentialPrivate(), targetAccountAddress);
 
         // make claim request to service managing the device
         var claimRequest = new ClaimRequest {

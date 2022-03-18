@@ -36,15 +36,15 @@
 
 
 #method NetshConfig Configuration configuration
-
 #% var hostConfig = configuration.GenericHostConfiguration;
 #% var serviceConfig = configuration.MeshServiceConfiguration;
 #% var configEntry = serviceConfig.GetConfigurationEntry();
 #% var discovery = configEntry.Discovery;
 #% var wellknown = configEntry.WellKnown;
 #% var account = hostConfig.RunAs;
-
-netsh http add urlacl url=http://+:#{hostConfig.Port}/.well=known/#{wellknown} #{account}
+#% var userdomain = Environment.UserDomainName;
+#% var username = Environment.UserName;
+netsh http add urlacl url=http://+:#{hostConfig.Port}/.well-known/#{wellknown} user=#{userdomain}\#{username}
 
 
 #end method

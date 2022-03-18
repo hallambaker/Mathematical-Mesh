@@ -349,34 +349,38 @@ public class ServiceRequestHttp : ServiceRequest {
     /// Process the connection, dispatch the request and return the result.
     /// </summary>
     public override void Complete() {
-        Service.Monitor.StartDispatch(Slot);
+        try {
+            Service.Monitor.StartDispatch(Slot);
 
-        var request = ListenerContext.Request;
+            var request = ListenerContext.Request;
 
-        // get the provider here - if null - abort
-        var provider = Service.GetProvider(
-                request.ServiceName, request.LocalEndPoint.Port, request.RawUrl);
+            // get the provider here - if null - abort
+            var provider = Service.GetProvider(
+                    request.ServiceName, request.LocalEndPoint.Port, request.RawUrl);
 
-        provider.AssertNotNull(NYI.Throw);
+            provider.AssertNotNull(NYI.Throw);
 
-        request.InputStream.AssertNotNull(NYI.Throw);
+            request.InputStream.AssertNotNull(NYI.Throw);
 
-        // Read the input stream until either it is closed or 64KB have been read
+            // Read the input stream until either it is closed or 64KB have been read
 
-        var read = 1;
+            var read = 1;
 
-        while (Count < MaxRequest & read > 0) {
-            read = request.InputStream.Read(Buffer, Count, MaxRequest - Count);
-            Count += read;
-            }
+            while (Count < MaxRequest & read > 0) {
+                read = request.InputStream.Read(Buffer, Count, MaxRequest - Count);
+                Count += read;
+                }
 
 
-        if (Count == MaxRequest) {
-            }
+            if (Count == MaxRequest) {
+                }
 
         (Count < MaxRequest).AssertTrue(NYI.Throw);
-        ProcessBuffer();
-
+            ProcessBuffer();
+            }
+        catch (Exception ex) {
+            Service?.Monitor?.Logger.UnhandledException(ex);
+            }
 
 
         }

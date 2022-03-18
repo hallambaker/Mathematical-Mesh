@@ -2,7 +2,12 @@
   "profiles": {
     "About": {
       "commandName": "Project",
-      "commandLineArgs": "about /verbose",
+      "commandLineArgs": "about ",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "Where": {
+      "commandName": "Project",
+      "commandLineArgs": "about /where",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "GenericHost": {

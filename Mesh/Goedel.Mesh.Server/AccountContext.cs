@@ -49,7 +49,8 @@ public class AccountContext : Disposable {
     ///<summary>The access catalog entry.</summary> 
     public CatalogedAccess CatalogedAccess { get; set; }
 
-
+    ///<summary>The key collection for decrypting associated data.</summary> 
+    public IKeyCollection KeyCollection { get; init; }
     #endregion
     #region // Dispose
 
@@ -78,7 +79,7 @@ public class AccountContext : Disposable {
     /// </summary>
     /// <returns></returns>
     public CatalogAccess GetCatalogCapability() => catalogAccess ??
-        new CatalogAccess(Directory).CacheValue(out catalogAccess);
+        new CatalogAccess(Directory, keyCollection: KeyCollection).CacheValue(out catalogAccess);
     //public CatalogAccess CatalogAccess { get => catalogAccess; set => value = catalogAccess; }
     CatalogAccess catalogAccess;
 

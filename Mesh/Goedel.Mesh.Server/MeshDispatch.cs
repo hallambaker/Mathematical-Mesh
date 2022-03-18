@@ -116,20 +116,21 @@ public class PublicMeshService : MeshService {
     /// </summary>
     /// <param name="meshMachine">The Mesh Machine</param>
     /// <param name="genericHostConfiguration">Host configuration.</param>
-    /// <param name="meshHostConfiguration">Service configuration.</param>
+    /// <param name="meshServicetConfiguration">Service configuration.</param>
     /// <param name="logService">The transaction logging service.</param>
     public PublicMeshService(
             IMeshMachine meshMachine,
             GenericHostConfiguration genericHostConfiguration,
-            MeshServiceConfiguration meshHostConfiguration,
+            MeshServiceConfiguration meshServicetConfiguration,
             LogService logService) {
         LogService = logService;
         MeshMachine = meshMachine;
         GenericHostConfiguration = genericHostConfiguration;
-        MeshHostConfiguration = meshHostConfiguration;
+        MeshHostConfiguration = meshServicetConfiguration;
         KeyCollection = MeshMachine.KeyCollection;
 
-        Logger.ServiceStart(PublicMeshService.WellKnown);
+        Logger.ServiceStart(PublicMeshService.WellKnown, 
+            meshServicetConfiguration.ServiceUdf, genericHostConfiguration.HostUdf);
 
         // Load the Mesh persistence base
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
@@ -139,7 +140,7 @@ public class PublicMeshService : MeshService {
 
         Endpoints.Add(
             new HttpEndpoint(genericHostConfiguration.HostDns, GetWellKnown,
-                    instance, genericHostConfiguration.Port, this));
+                    genericHostConfiguration.Port, instance, this));
 
         var meshHost = MeshHost.GetCatalogHost(MeshMachine);
         if (meshHost?.GetStoreEntry(genericHostConfiguration.HostUdf) is CatalogedService hostServiceDescription) {
@@ -233,8 +234,7 @@ public class PublicMeshService : MeshService {
         hostDns ??= serviceDns;
         hostConfig ??= "mmmsettings.json";
 
-        var pathHost = GetHost(meshMachine, hostConfig);
-
+        var pathHost = GetHost(meshMachine, hostDns);
         var pathLog = GetHost(meshMachine, "Logs");
 
         // Create the initial service application
@@ -262,7 +262,7 @@ public class PublicMeshService : MeshService {
             Path = pathLog,
             };
         var consoleLogger = new ConsoleLoggerConfiguration {
-            Default = "Trace"
+            Default = LogLevel.Trace
             };
 
         var logging = new Dictionary<string, object> {

@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 03-Mar-22 2:09:42 AM
+//  This file was automatically generated at 18-Mar-22 3:49:32 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  commandparse version 3.0.0.849
+//  Generator:  commandparse version 3.0.0.879
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -1608,7 +1608,7 @@ public class _About : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -1629,7 +1629,7 @@ public class _About : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Where", 
-				Default = null, // null if null
+				Default = "false", // null if null
 				Brief = "Report location of configuration files.",
 				Index = 3,
 				Key = "where"
@@ -1649,7 +1649,8 @@ public class _AccountHello : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new Flag (),
-		new Flag ()		} ;
+		new Flag (),
+		new String ()		} ;
 
 
 
@@ -1691,6 +1692,15 @@ public class _AccountHello : Goedel.Command.Dispatch ,
 	public virtual string _AutoApprove {
 		set => _Data[3].Parameter (value);
 		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Account {
+		get => _Data[4] as String;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Account {
+		set => _Data[4].Parameter (value);
+		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
@@ -1726,6 +1736,13 @@ public class _AccountHello : Goedel.Command.Dispatch ,
 				Brief = "If true, automatically approve pending requests with prior authorization.",
 				Index = 3,
 				Key = "auto"
+				},
+			new DescribeEntryParameter () {
+				Identifier = "Account", 
+				Default = null, // null if null
+				Brief = "Account",
+				Index = 4,
+				Key = ""
 				}
 			}
 		};
@@ -1898,7 +1915,7 @@ public class _AccountCreate : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 6,
 				Key = "verbose"
@@ -1998,7 +2015,7 @@ public class _AccountDelete : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 1,
 				Key = "verbose"
@@ -2143,7 +2160,7 @@ public class _AccountStatus : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -2288,7 +2305,7 @@ public class _AccountSync : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -2595,7 +2612,7 @@ public class _AccountGetPIN : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 7,
 				Key = "verbose"
@@ -2945,7 +2962,7 @@ public class _AccountConnect : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -3205,7 +3222,7 @@ public class _AccountEscrow : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -3364,7 +3381,7 @@ public class _AccountPurge : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -3609,7 +3626,7 @@ public class _AccountRecover : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -3796,7 +3813,7 @@ public class _AccountList : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -3969,7 +3986,7 @@ public class _AccountGet : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -4131,7 +4148,7 @@ public class _AccountExport : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -4293,7 +4310,7 @@ public class _AccountImport : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -4555,7 +4572,7 @@ public class _DeviceRequestConnect : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 2,
 				Key = "verbose"
@@ -4805,7 +4822,7 @@ public class _DevicePending : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -4950,7 +4967,7 @@ public class _DeviceComplete : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -5317,7 +5334,7 @@ public class _DeviceAccept : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 17,
 				Key = "verbose"
@@ -5479,7 +5496,7 @@ public class _DeviceReject : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -5641,7 +5658,7 @@ public class _DeviceDelete : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -5796,7 +5813,7 @@ public class _DeviceList : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -6153,7 +6170,7 @@ public class _DeviceAuthorize : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 16,
 				Key = "verbose"
@@ -6315,7 +6332,7 @@ public class _DeviceJoin : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -6477,7 +6494,7 @@ public class _DeviceInstall : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -6632,7 +6649,7 @@ public class _DevicePreconfigure : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -6801,7 +6818,7 @@ public class _MessageContact : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -6980,7 +6997,7 @@ public class _MessageConfirm : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 6,
 				Key = "verbose"
@@ -7155,7 +7172,7 @@ public class _MessagePending : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -7338,7 +7355,7 @@ public class _MessageStatus : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -7500,7 +7517,7 @@ public class _MessageAccept : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -7662,7 +7679,7 @@ public class _MessageReject : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -7824,7 +7841,7 @@ public class _MessageBlock : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -8101,7 +8118,7 @@ public class _GroupCreate : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -8357,7 +8374,7 @@ public class _GroupAdd : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -8536,7 +8553,7 @@ public class _GroupGet : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -8715,7 +8732,7 @@ public class _GroupDelete : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -8884,7 +8901,7 @@ public class _GroupList : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -9087,7 +9104,7 @@ public class _PasswordAdd : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 7,
 				Key = "verbose"
@@ -9249,7 +9266,7 @@ public class _PasswordGet : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -9411,7 +9428,7 @@ public class _PasswordDelete : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -9573,7 +9590,7 @@ public class _PasswordDump : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -9827,7 +9844,7 @@ public class _ContactStatic : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -9972,7 +9989,7 @@ public class _ContactDynamic : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -10134,7 +10151,7 @@ public class _ContactFetch : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -10296,7 +10313,7 @@ public class _ContactExchange : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -10475,7 +10492,7 @@ public class _ContactImport : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 6,
 				Key = "verbose"
@@ -10637,7 +10654,7 @@ public class _ContactDelete : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -10809,7 +10826,7 @@ public class _ContactGet : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -10961,7 +10978,7 @@ public class _ContactDump : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -11157,7 +11174,7 @@ public class _BookmarkImport : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 7,
 				Key = "verbose"
@@ -11421,7 +11438,7 @@ public class _BookmarkAdd : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 11,
 				Key = "verbose"
@@ -11600,7 +11617,7 @@ public class _BookmarkDelete : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 6,
 				Key = "verbose"
@@ -11762,7 +11779,7 @@ public class _BookmarkGet : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -11907,7 +11924,7 @@ public class _BookmarkDump : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -12103,7 +12120,7 @@ public class _CalendarImport : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 7,
 				Key = "verbose"
@@ -12282,7 +12299,7 @@ public class _CalendarAdd : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 6,
 				Key = "verbose"
@@ -12444,7 +12461,7 @@ public class _CalendarGet : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -12606,7 +12623,7 @@ public class _CalendarDelete : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -12751,7 +12768,7 @@ public class _CalendarDump : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -12930,7 +12947,7 @@ public class _NetworkImport : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 6,
 				Key = "verbose"
@@ -13126,7 +13143,7 @@ public class _NetworkAdd : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 7,
 				Key = "verbose"
@@ -13288,7 +13305,7 @@ public class _NetworkGet : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -13450,7 +13467,7 @@ public class _NetworkDelete : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -13595,7 +13612,7 @@ public class _NetworkList : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -13682,7 +13699,7 @@ public class _KeyNonce : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -13776,7 +13793,7 @@ public class _KeySecret : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -13881,7 +13898,7 @@ public class _KeyEarl : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -14023,7 +14040,7 @@ public class _KeyShare : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -14214,7 +14231,7 @@ public class _KeyRecover : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -14398,7 +14415,7 @@ public class _HashUDF : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -14530,7 +14547,7 @@ public class _HashDigest : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -14682,7 +14699,7 @@ public class _HashMac : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -15010,7 +15027,7 @@ public class _DareEncode : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 11,
 				Key = "verbose"
@@ -15199,7 +15216,7 @@ public class _DareDecode : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -15385,7 +15402,7 @@ public class _DareVerify : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -15665,7 +15682,7 @@ public class _DareEARL : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 11,
 				Key = "verbose"
@@ -15959,7 +15976,7 @@ public class _DareCreate : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 12,
 				Key = "verbose"
@@ -16259,7 +16276,7 @@ public class _DareArchive : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 9,
 				Key = "verbose"
@@ -16553,7 +16570,7 @@ public class _DareLog : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 9,
 				Key = "verbose"
@@ -16839,7 +16856,7 @@ public class _DareAppend : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 9,
 				Key = "verbose"
@@ -17069,7 +17086,7 @@ public class _DareDir : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -17241,7 +17258,7 @@ public class _DareList : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -17525,7 +17542,7 @@ public class _DareIndex : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 9,
 				Key = "verbose"
@@ -17762,7 +17779,7 @@ public class _DareExtract : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 9,
 				Key = "verbose"
@@ -18110,7 +18127,7 @@ public class _DareCopy : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 14,
 				Key = "verbose"
@@ -18553,7 +18570,7 @@ public class _MailAdd : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 16,
 				Key = "verbose"
@@ -18764,7 +18781,7 @@ public class _MailGet : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -18909,7 +18926,7 @@ public class _MailList : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -19088,7 +19105,7 @@ public class _MailImport : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 6,
 				Key = "verbose"
@@ -19243,7 +19260,7 @@ public class _MailDelete : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -19446,7 +19463,7 @@ public class _SmimeSign : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -19677,7 +19694,7 @@ public class _SmimeEncrypt : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -19908,7 +19925,7 @@ public class _OpenpgpSign : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -20139,7 +20156,7 @@ public class _OpenpgpEncrypt : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -20451,7 +20468,7 @@ public class _SSHCreate : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"
@@ -20745,7 +20762,7 @@ public class _SSHGet : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -20987,7 +21004,7 @@ public class _SSHList : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 8,
 				Key = "verbose"
@@ -21224,7 +21241,7 @@ public class _SSHClient : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 7,
 				Key = "verbose"
@@ -21489,7 +21506,7 @@ public class _SSHHost : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 7,
 				Key = "verbose"
@@ -21720,7 +21737,7 @@ public class _SSHKnown : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"
@@ -21910,7 +21927,7 @@ public class _SSHDelete : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 5,
 				Key = "verbose"

@@ -33,11 +33,14 @@ public partial class ServiceDiscovery {
 
     [Fact]
     public void TestDNS() {
-        var Service1 = DnsClient.ResolveService("prismproof.org");
 
-        var Service2 = DnsClient.ResolveService("prismproof.org", "mmm");
+        var service = "example.com"; //"prismproof.org")
 
-        var Service3 = DnsClient.ResolveService("prismproof.org", "www", 80);
+        var Service1 = DnsClient.ResolveService(service);
+
+        var Service2 = DnsClient.ResolveService(service, "mmm");
+
+        var Service3 = DnsClient.ResolveService(service, "www", 80);
 
 
         }

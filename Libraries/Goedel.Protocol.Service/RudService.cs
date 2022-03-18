@@ -126,7 +126,7 @@ public class RudService : Disposable {
 
             int maxCores = 0) {
         Monitor = hostMonitor;
-        Logger = Monitor.Logger ?? new Logger();
+        Logger = Monitor.Logger ?? new AssemblyLogger();
         
         Logger.LogInformation("Starting RUD Listener");
         Logger.LogTrace("T Starting RUD Listener");

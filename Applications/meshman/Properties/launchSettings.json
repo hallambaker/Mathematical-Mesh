@@ -12,22 +12,32 @@
     },
     "Hello": {
       "commandName": "Project",
-      "commandLineArgs": "account hello /account=alice@example.com ",
+      "commandLineArgs": "account hello /account=test@example.com ",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "Create": {
       "commandName": "Project",
-      "commandLineArgs": "account create alice@example.com ",
+      "commandLineArgs": "account create test@example.com ",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "Encode": {
       "commandName": "Project",
-      "commandLineArgs": "dare encode foo.html foo.dare /encrypt alice@example.com",
+      "commandLineArgs": "dare encode foo.html foo.dare /encrypt test@example.com",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "Decode": {
       "commandName": "Project",
       "commandLineArgs": "dare decode foo.dare foo2.html",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "Request Connect": {
+      "commandName": "Project",
+      "commandLineArgs": "device request test@example.com ",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "Pending": {
+      "commandName": "Project",
+      "commandLineArgs": "device pending ",
       "workingDirectory": "..\\..\\TestResults\\Service"
     }
   }

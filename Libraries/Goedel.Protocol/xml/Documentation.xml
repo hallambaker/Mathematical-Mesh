@@ -545,7 +545,7 @@
             <param name="Port">The port number.</param>
             <param name="JpcInterface">The service provider.</param>
         </member>
-        <member name="M:Goedel.Protocol.HttpEndpoint.#ctor(System.String,System.String,System.String,System.Int32,Goedel.Protocol.JpcInterface)">
+        <member name="M:Goedel.Protocol.HttpEndpoint.#ctor(System.String,System.String,System.Int32,System.String,Goedel.Protocol.JpcInterface)">
             <summary>
             A HTTP Endpoint
             </summary>

@@ -68,8 +68,9 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
     public override MeshServiceClient GetMeshClient(
         MeshMachineTest meshMachineTest,
         ICredentialPrivate credential,
-        string serviceId,
-        string accountAddress) {
+        string accountAddress,
+        string serviceId
+        ) {
 
         JpcSession session = JpcConnection switch {
             JpcConnection.Direct => new JpcSessionDirect(MeshService, credential) {

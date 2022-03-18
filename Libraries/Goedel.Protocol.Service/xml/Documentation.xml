@@ -110,12 +110,14 @@
             <param name="logger">The logger to write the output to.</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
-        <member name="M:Goedel.Protocol.Service.EventExtensions.ServiceStart(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+        <member name="M:Goedel.Protocol.Service.EventExtensions.ServiceStart(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.String,System.Exception)">
             <summary>
             Write an event of type ServiceStart to <paramref name="logger"/> 
             </summary>
             <param name="logger">The logger to write the output to.</param>
             <param name="serviceName">The service name</param>
+            <param name="serviceUdf">Service key identifier</param>
+            <param name="hostUdf">Host key identifier</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
         <member name="M:Goedel.Protocol.Service.EventExtensions.ServiceEnd(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
@@ -142,6 +144,56 @@
             <param name="logger">The logger to write the output to.</param>
             <param name="transactionId">Transaction identifier</param>
             <param name="method">The transaction method</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.LoadContextUser(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type LoadContextUser to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="accountAddress">The account address</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.DisposeContextUser(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type DisposeContextUser to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="accountAddress">The account address</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.OpenFile(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type OpenFile to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="filename">The file name</param>
+            <param name="mode">The access mode</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.CloseFile(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type CloseFile to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="filename">The file name</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.OpenContainer(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type OpenContainer to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="filename">The file name</param>
+            <param name="mode">The access mode</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.EventExtensions.CloseContainer(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type CloseContainer to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="filename">The file name</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
         <member name="M:Goedel.Protocol.Service.EventExtensions.TransactionFailed(Microsoft.Extensions.Logging.ILogger,System.Int64,System.String,System.Exception)">

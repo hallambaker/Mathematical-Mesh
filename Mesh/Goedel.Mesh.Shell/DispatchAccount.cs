@@ -61,7 +61,7 @@ public partial class Shell {
         // This dispatch uses a unique approach because it can be issued before the account
         // or service is created.
 
-        var meshClient = GetMeshClient(options);
+        var meshClient = GetMeshClient(options, options.Account.Value);
 
         var helloRequest = new HelloRequest();
         var response = meshClient.Hello(helloRequest);

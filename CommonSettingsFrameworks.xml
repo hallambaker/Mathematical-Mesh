@@ -1,12 +1,12 @@
 <Project DefaultTargets="Build">
-
+	<Import Project="$(SolutionDir)Settings/Version.xml" />
 	<PropertyGroup>
 		<TargetFrameworks>net6.0-windows;net6.0</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
 		<Company>Threshold Secrets LLC.</Company>
-		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<!--<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>-->
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
 		<DocumentationFile>xml\Documentation.xml</DocumentationFile>
 		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>

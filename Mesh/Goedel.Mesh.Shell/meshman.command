@@ -13,7 +13,7 @@
 
 	OptionSet Reporting
 		Option Verbose "verbose" Flag
-			Default "true"
+			Default "false"
 			Brief "Verbose reports (default)"
 		Option Report "report" Flag
 			Default "true"
@@ -167,6 +167,7 @@
 		Include Reporting
 		Option Where "where" Flag
 			Brief		"Report location of configuration files."
+			Default "false"
 
 	CommandSet Account "account"
 		Brief "Account creation and management commands."
@@ -174,7 +175,8 @@
 		Command AccountHello "hello"		
 			Brief "Connect to the service(s) a profile is connected to and report status."
 			Include AccountOptions
-
+			Parameter Account "account" String
+				Brief "Account"	
 		Command AccountCreate "create"
 			Brief "Create new account profile"
 			Parameter NewAccountID "account" String

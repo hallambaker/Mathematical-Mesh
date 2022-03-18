@@ -69,7 +69,7 @@ namespace ExampleGenerator;
 
 public partial class CreateExamples {
 
-    public Logger Logger { get; } = new Logger();
+    public AssemblyLogger Logger { get; } = new AssemblyLogger();
 
 
     public bool GitHub = true;

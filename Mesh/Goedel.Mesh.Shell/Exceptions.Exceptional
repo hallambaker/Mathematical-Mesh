@@ -40,3 +40,6 @@
 
 		Exception OptionNotImplemented
 			Console "The option [{1}] on command [{0}] is not yet implemented"
+		
+		Exception ServiceNotSpecified
+			Console "No service specified"

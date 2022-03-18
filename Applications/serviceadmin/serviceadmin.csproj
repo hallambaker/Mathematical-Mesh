@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="$(SolutionDir)CommonSettingsFrameworks.xml" />
-  <PropertyGroup>
-    <AssemblyName>serviceadmin</AssemblyName>
-    <Product>serviceadmin</Product>
-    <Description>Mesh service host.</Description>
-    <Copyright>© 2021</Copyright>
-    <Title>serviceadmin</Title>
-  </PropertyGroup>
+	<PropertyGroup>
+		<AssemblyName>serviceadmin</AssemblyName>
+		<Product>serviceadmin</Product>
+		<Description>Mesh service host.</Description>
+		<Copyright>© 2021</Copyright>
+		<Title>serviceadmin</Title>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell.ServiceAdmin\Goedel.Mesh.Shell.ServiceAdmin.csproj" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Shell.ServiceAdmin\Goedel.Mesh.Shell.ServiceAdmin.csproj" />
 
-  </ItemGroup>
+	</ItemGroup>
 
 </Project>

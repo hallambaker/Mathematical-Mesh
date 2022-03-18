@@ -397,5 +397,25 @@
             requested if that many bytes are not currently available, or zero (0) if the end of the stream 
             has been reached.</returns>
         </member>
+        <member name="T:Goedel.IO.UriClient">
+            <summary>
+            Contains objects to be shared across the whole application.
+            </summary>
+        </member>
+        <member name="P:Goedel.IO.UriClient.HttpClient">
+            <summary>Http Client for whole application</summary> 
+        </member>
+        <member name="M:Goedel.IO.UriClient.UploadDataTaskAsync(System.String,System.Byte[])">
+            <summary>
+            Uploads a data buffer that contains a Byte array to the URI specified 
+            as an asynchronous operation using a task object. Uses the application 
+            default <see cref="P:Goedel.IO.UriClient.HttpClient"/>.
+            </summary>
+            <param name="address">The URI of the resource to receive the data.</param>
+            <param name="data">The data buffer to send to the resource.</param>
+            <returns>The task object representing the asynchronous operation. The Result 
+            property on the task object returns a Byte array containing the body of the 
+            response received from the resource when the data buffer was uploaded.</returns>
+        </member>
     </members>
 </doc>

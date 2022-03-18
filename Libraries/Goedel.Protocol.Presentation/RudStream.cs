@@ -163,7 +163,10 @@ public class RudStream {
 
         // only set the URI if we are creating an initiator stream.
         if (RudConnection is ConnectionInitiator initiator) {
-            Uri = HttpEndpoint.GetUri(initiator.Domain, 15099, protocol, initiator.Instance);
+
+            var serviceDescription = DnsClient.ResolveService(initiator.Domain, protocol);
+            Uri = serviceDescription.GetUri();
+            //Uri = HttpEndpoint.GetUri(initiator.Domain, 15099, protocol, initiator.Instance);
 
             //Screen.WriteLine($"Client URI = {Uri}");
             }
@@ -350,9 +353,9 @@ public class RudStream {
             plaintextExtensionsIn: extensions);
 
         //Screen.WriteLine($"URI: {Uri}");
+        //Uri = "http://voodoo:15099/.well-known/mmm/";
 
-
-        var responsepacketData = await ConnectionInitiator.HttpClient.UploadDataTaskAsync(Uri, encoded);
+        var responsepacketData = await Uri.UploadDataTaskAsync(encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
         //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
@@ -383,7 +386,7 @@ public class RudStream {
 
 
         //Screen.WriteLine($"Complete");
-        var responsepacketData = await ConnectionInitiator.HttpClient.UploadDataTaskAsync(Uri, encoded);
+        var responsepacketData = await Uri.UploadDataTaskAsync(encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
         //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
@@ -406,7 +409,7 @@ public class RudStream {
 
         //Screen.WriteLine($"Child");
 
-        var responsepacketData = await ConnectionInitiator.HttpClient.UploadDataTaskAsync(Uri, encoded);
+        var responsepacketData = await Uri.UploadDataTaskAsync(encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
         //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 
@@ -421,7 +424,7 @@ public class RudStream {
             ciphertextExtensions: extensions);
 
         //Screen.WriteLine($"Data");
-        var responsepacketData = await ConnectionInitiator.HttpClient.UploadDataTaskAsync(Uri, encoded);
+        var responsepacketData = await Uri.UploadDataTaskAsync(encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
         //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
 

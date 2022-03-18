@@ -66,15 +66,15 @@ public partial class DnsConfiguration : global::Goedel.Registry.Script {
 	// NetshConfig
 	//
 	public void NetshConfig (Configuration configuration) {
-		_Output.Write ("\n{0}", _Indent);
 		 var hostConfig = configuration.GenericHostConfiguration;
 		 var serviceConfig = configuration.MeshServiceConfiguration;
 		 var configEntry = serviceConfig.GetConfigurationEntry();
 		 var discovery = configEntry.Discovery;
 		 var wellknown = configEntry.WellKnown;
 		 var account = hostConfig.RunAs;
-		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("netsh http add urlacl url=http://+:{1}/.well=known/{2} {3}\n{0}", _Indent, hostConfig.Port, wellknown, account);
+		 var userdomain = Environment.UserDomainName;
+		 var username = Environment.UserName;
+		_Output.Write ("netsh http add urlacl url=http://+:{1}/.well-known/{2} user={3}\\{4}\n{0}", _Indent, hostConfig.Port, wellknown, userdomain, username);
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
 		}

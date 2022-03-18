@@ -28,6 +28,9 @@
         <member name="P:Goedel.Mesh.Server.AccountContext.CatalogedAccess">
             <summary>The access catalog entry.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.KeyCollection">
+            <summary>The key collection for decrypting associated data.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Server.AccountContext.Disposing">
             <inheritdoc/>
         </member>
@@ -1068,7 +1071,7 @@
             </summary>
             <param name="meshMachine">The Mesh Machine</param>
             <param name="genericHostConfiguration">Host configuration.</param>
-            <param name="meshHostConfiguration">Service configuration.</param>
+            <param name="meshServicetConfiguration">Service configuration.</param>
             <param name="logService">The transaction logging service.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.GetService(Goedel.Mesh.Client.IMeshMachineClient,System.String)">

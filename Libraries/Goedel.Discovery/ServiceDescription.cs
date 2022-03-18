@@ -182,7 +182,8 @@ public class ServiceDescription {
             };
         }
 
-
+    public string GetUri() =>
+        Entries.Count > 0 ? Entries[0].HTTPEndpoint : Default.HTTPEndpoint;
 
 
     }

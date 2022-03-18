@@ -46,9 +46,6 @@
         <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.AddResponse(System.Collections.Generic.List{Goedel.Protocol.Presentation.PacketExtension})">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Protocol.Presentation.ConnectionInitiator.HttpClient">
-            <summary>The Web Client</summary> 
-        </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.#ctor(Goedel.Protocol.Presentation.ICredentialPrivate,System.String,System.String,Goedel.Protocol.TransportType,System.String)">
             <summary>
             Return an instance of a client connecting to host <paramref name="domain"/> using
@@ -60,9 +57,6 @@
             <param name="instance"></param>
             <param name="transportTypes">The transport types.</param>
             <param name="protocol">The service protocol to return a client stream for.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.Disposing">
-            <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.Presentation.ConnectionInitiator.GetClient``1(Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
             <summary>
@@ -869,11 +863,6 @@
             <param name="count">Maximum number of bytes to be read from <paramref name="packet"/>.
             If less than 0, <paramref name="packet"/> is read to the end.</param>
             <returns>The parsed packet.</returns>
-        </member>
-        <member name="T:Goedel.Protocol.Presentation.NamespaceDoc">
-            <summary>
-            Support library for FRED presentation layer.
-            </summary>
         </member>
         <member name="T:Goedel.Protocol.Presentation.PacketExtension">
             <summary>

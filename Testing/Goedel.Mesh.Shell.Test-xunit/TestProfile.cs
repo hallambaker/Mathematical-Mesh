@@ -59,14 +59,23 @@ public partial class ShellTests {
 
         var testCLI = GetTestCLI();
 
-        var result = testCLI.Dispatch("account hello");
+        var result = testCLI.Dispatch($"account hello {AliceAccount}");
 
         EndTest();
 
         }
 
 
+    [Fact]
+    public void TestHelloFail() {
 
+        var testCLI = GetTestCLI();
+
+        var result = testCLI.Dispatch("account hello", fail:true);
+
+        EndTest();
+
+        }
     [Fact]
     public void TestProfileConnect() {
 

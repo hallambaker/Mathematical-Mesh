@@ -410,10 +410,10 @@
             <summary>
             Resolve a DNS name to an address and service characteristics.
             </summary>
-            <param name="Address">The address to use</param>
-            <param name="Service">The DNS service prefix</param>
-            <param name="Port">The default DNS port number</param>
-            <param name="Fallback">The fallback mode to use if SRV lookup fails</param>
+            <param name="address">The address to use</param>
+            <param name="service">The DNS service prefix</param>
+            <param name="port">The default DNS port number</param>
+            <param name="fallback">The fallback mode to use if SRV lookup fails</param>
             <returns>IP Destination describing the resolution results</returns>
         </member>
         <member name="M:Goedel.Discovery.DnsClient.ResolveServiceAsync(System.String,System.String,System.Nullable{System.Int32},Goedel.Discovery.DNSFallback)">
@@ -421,10 +421,10 @@
             Perform Asynchronous query for Service discovery and description records
             using the platform default DNSClient.
             </summary>
-            <param name="Address">The address to query</param>
-            <param name="Service">The IANA service name</param>
-            <param name="Port">The default DNS port number</param>
-            <param name="Fallback">The fallback mode to use if SRV lookup fails</param> 
+            <param name="address">The address to query</param>
+            <param name="service">The IANA service name</param>
+            <param name="port">The default DNS port number</param>
+            <param name="fallback">The fallback mode to use if SRV lookup fails</param> 
             <returns>Description of the discovered services.</returns>
         </member>
         <member name="T:Goedel.Discovery.DNSContext">
@@ -499,33 +499,33 @@
             <summary>
             Make a DNS request to the default client without waiting for a response
             </summary>
-            <param name="Request">DNS request set</param>
+            <param name="request">DNS request set</param>
             <returns>Task instance.</returns>
         </member>
         <member name="M:Goedel.Discovery.DNSContext.QueueRequest(System.String,Goedel.Discovery.DNSTypeCode)">
             <summary>
             Make a DNS request to the default client without waiting for a response
             </summary>
-            <param name="Address">The DNS address to query</param>
-            <param name="DNSTypeCode">The DNS Type code to query</param>
+            <param name="address">The DNS address to query</param>
+            <param name="dnsTypeCode">The DNS Type code to query</param>
             <returns>Task instance.</returns>
         </member>
         <member name="M:Goedel.Discovery.DNSContext.QueryServiceAsync(System.String,System.String,System.Nullable{System.Int32},Goedel.Discovery.DNSFallback)">
             <summary>
             Perform Asynchronous query for Service discovery and description records.
             </summary>
-            <param name="Address">The address to query</param>
-            <param name="Service">The IANA service name</param>
-            <param name="Port">The default port number to use if no SRV record is found</param>
-            <param name="Fallback">Fallback mode for if no SRV record is found</param>
+            <param name="address">The address to query</param>
+            <param name="service">The IANA service name</param>
+            <param name="port">The default port number to use if no SRV record is found</param>
+            <param name="fallback">Fallback mode for if no SRV record is found</param>
             <returns>Description of the discovered services.</returns>
         </member>
         <member name="M:Goedel.Discovery.DNSContext.Add(Goedel.Discovery.ServiceDescription,Goedel.Discovery.DNSRecord)">
             <summary>
             Add information from the received record iff it is within the baliwick.
             </summary>
-            <param name="ServiceDescription">The service description to add to</param>
-            <param name="Record">DNS record to add data from</param>
+            <param name="serviceDescription">The service description to add to</param>
+            <param name="record">DNS record to add data from</param>
         </member>
         <member name="T:Goedel.Discovery.DnsClientUDP">
             <summary>
@@ -3565,10 +3565,69 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="M:Goedel.Discovery.EventExtensions.Resolution(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type Resolution to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="domain">The service domain</param>
+            <param name="service">The service protocol</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Discovery.EventExtensions.FoundSrv(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Int32,System.Exception)">
+            <summary>
+            Write an event of type FoundSrv to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="query">The query domain</param>
+            <param name="host">The host entry</param>
+            <param name="port">The port</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Discovery.EventExtensions.FoundTxt(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type FoundTxt to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="query">The query domain</param>
+            <param name="text">The text entry</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Discovery.EventExtensions.Timeout(Microsoft.Extensions.Logging.ILogger,System.Int32,System.Exception)">
+            <summary>
+            Write an event of type Timeout to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="timeout">Timeout in seconds</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Discovery.EventExtensions.Unexpected(Microsoft.Extensions.Logging.ILogger,System.Exception)">
+            <summary>
+            Write an event of type Unexpected to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Discovery.EventExtensions.Invalid(Microsoft.Extensions.Logging.ILogger,System.Exception)">
+            <summary>
+            Write an event of type Invalid to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
         <member name="T:Goedel.Discovery.NamespaceDoc">
             <summary>
             Provides a hook 
             </summary>
+        </member>
+        <member name="F:Goedel.Discovery.Component.Logger">
+            <summary> default logger for the assembly</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.Component.Initialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Discovery.Component.Terminate">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Discovery.TokenType">
             <summary>DNS Token types</summary>
@@ -3782,13 +3841,6 @@
         <member name="M:Goedel.Discovery.Parse.Hex16">
             <summary>Get Hex data with 8 bit length value</summary>
             <returns>The value returned</returns>
-        </member>
-        <member name="T:Goedel.Discovery.Platform">
-            <summary>
-            Contains static links to delegates to perform platform specific
-            operations not supported in the portable libraries. Delegates must 
-            be bound before use.
-            </summary>
         </member>
         <member name="T:Goedel.Discovery.ServiceDescription">
             <summary>

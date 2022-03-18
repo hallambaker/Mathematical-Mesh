@@ -43,7 +43,7 @@ namespace Scratchpad;
 
 partial class Program {
 
-    static public Logger Logger { get; } = new Logger();
+    static public AssemblyLogger Logger { get; } = new AssemblyLogger();
 
 
     static void Main() {
@@ -52,9 +52,15 @@ partial class Program {
 
         Logger.LogInformation ("Start test {time}", DateTime.Now);
 
-        //ShellTests.Test().TestDigest();
-        //ShellTests.Test().TestUDF();
-        ShellTestsAdmin.Test().TestDigest();
+        //ServiceDiscovery.Test().TestDNS();
+        //ShellTests.Test().TestHelloFail();
+        //ShellTests.Test().TestHello();
+        ShellTests.Test().TestConnectRequest();
+
+
+
+
+        //ShellTestsAdmin.Test().TestDigest();
 
 
         //ShellTests.Test().TestProfileSSHPrivate();

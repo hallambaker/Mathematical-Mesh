@@ -658,7 +658,8 @@ public class MeshPersist : Disposable {
 
         // Performance: Cache the account context to permit reuse.
         var accountContext = new AccountContext() {
-            AccountEntry = accountEntry
+            AccountEntry = accountEntry,
+            KeyCollection = KeyCollection
             };
         accountContext.Authenticate(
             session, accountPrivilege).AssertTrue(NotAuthenticated.Throw);

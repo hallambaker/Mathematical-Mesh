@@ -48,9 +48,21 @@ public class Program {
 
     static void Main(string[] args) {
 
+        var components = new List<IComponent> {
+#if USE_PLATFORM_WINDOWS
+            new Goedel.Cryptography.Windows.ComponentCryptographyWindows()
+#elif USE_PLATFORM_LINUX
+#endif
+            };
+
+        using var lifecycle = new LifeCycle(components);
+
+
         Shell shell = new (
             ) {
+#if DEBUG
             NoCatch = true,
+#endif
             MeshMachine = new MeshMachineCore()
             };
         shell.Dispatch(args, Console.Out);

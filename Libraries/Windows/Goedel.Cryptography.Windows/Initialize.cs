@@ -49,4 +49,8 @@ public class ComponentCryptographyWindows : IComponent {
 
 
         }
+
+    public void Terminate() {
+        // do nothing
+        }
     }

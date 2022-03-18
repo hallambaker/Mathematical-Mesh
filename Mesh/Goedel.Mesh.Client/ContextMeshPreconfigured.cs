@@ -61,9 +61,11 @@ public class ContextMeshPreconfigured : ContextAccount {
         profileDevice.Activate(KeyCollection);
 
         var meshCredentialPrivate = new MeshKeyCredentialPrivate(
-                profileDevice.KeyAuthentication as KeyPairAdvanced, AccountAddress);
+                profileDevice.KeyAuthentication as KeyPairAdvanced, AccountAddress); 
+        
+
         MeshClient = MeshHost.MeshMachine.GetMeshClient(
-                meshCredentialPrivate, null, AccountAddress);
+                meshCredentialPrivate, AccountAddress);
         }
 
 

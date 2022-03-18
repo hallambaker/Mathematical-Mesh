@@ -34,6 +34,7 @@ public partial class ResultAbout {
         builder.AppendLine($"    {AssemblyDescription}");
         builder.AppendLine($"    Copyright         : {AssemblyCopyright} {AssemblyCompany}");
         builder.AppendLine($"    Version           : {AssemblyVersion}");
+        builder.AppendLine($"    Compiled          : {Build}");
         if (verbosity == Verbosity.Full) {
             builder.AppendLine($"    Directory Profile : {DirectoryMesh}");
             builder.AppendLine($"    Directory Keys    : {DirectoryKeys}");
@@ -45,5 +46,16 @@ public partial class ResultServiceConfiguration {
 
     ///<summary>The service/host configuration.</summary> 
     public Configuration Configuration { get; init; }
+
+    ///<inheritdoc/>
+    public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
+        var service = Configuration.MeshServiceConfiguration;
+        var host = Configuration.GenericHostConfiguration;
+
+        builder.AppendLine($"Created Service {service.ServiceDNS}");
+        builder.AppendLine($"  Service { service.ServiceUdf}");
+        builder.AppendLine($"  Host { host.HostUdf}");
+        }
+
 
     }

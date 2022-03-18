@@ -107,9 +107,9 @@ public partial class Shell : _Shell {
                 }
             catch (System.Exception Exception) {
                 console.WriteLine("Application: {0}", Exception.Message);
-                if (Exception.InnerException != null) {
-                    console.WriteLine(Exception.InnerException.Message);
-                    }
+                //if (Exception.InnerException != null) {
+                //    console.WriteLine(Exception.InnerException.Message);
+                //    }
                 }
             }
         }
@@ -218,16 +218,23 @@ public partial class Shell : _Shell {
     /// </summary>
     /// <param name="options">Options specifying the Mesh account id to bind to.</param>
     /// <returns>The Mesh Client.</returns>
-    public virtual MeshServiceClient GetMeshClient(IAccountOptions options) {
+    public virtual MeshServiceClient GetMeshClient(IAccountOptions options, string address=null) {
         var context = MeshHost.GetContextMesh(options.AccountAddress.Value);
         if (context != null) {
             return context.MeshClient;
             }
 
+        address ??= options.AccountAddress.Value;
+        address.AssertNotNull(ServiceNotSpecified.Throw);
+
+        var service = address.GetService(); 
+
         var profileDevice = ProfileDevice.Generate();
         var credential = new MeshCredentialPrivate(profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
 
-        return MeshMachine.GetMeshClient(credential, null, "@anonymous");
+
+
+        return MeshMachine.GetMeshClient(credential, "@anonymous", service);
 
         }
 

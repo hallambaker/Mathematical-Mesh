@@ -72,9 +72,6 @@ public partial class ConnectionInitiator : RudConnection {
                 });
 
 
-    ///<summary>The Web Client</summary> 
-    //public HttpClient HttpClient { get; set; }
-    public WebClient HttpClient { get; set; }
 
     #endregion
     #region // Constructors
@@ -99,17 +96,6 @@ public partial class ConnectionInitiator : RudConnection {
         Domain = domain;
         Instance = instance;
         CredentialSelf = initiatorCredential;
-
-        if (transportTypes.HasFlag(TransportType.Http)) {
-            //HttpClient = new HttpClient();
-            HttpClient = new WebClient();
-            }
-
-        //// Create the initial stream NB Do NOT re-present the credential used to
-        //// initialize the connection.
-        //RudStreamInitial = new RudStreamClient(null, protocol, null, this) {
-        //    StreamState = StreamState.Initial
-        //    };
         }
 
 
@@ -120,8 +106,7 @@ public partial class ConnectionInitiator : RudConnection {
     #endregion
     #region // Destructor
 
-    ///<inheritdoc/>
-    protected override void Disposing() => HttpClient?.Dispose();
+
 
     #endregion
     #region // Methods

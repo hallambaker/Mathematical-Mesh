@@ -164,8 +164,10 @@ public class ContextMeshPending : ContextAccount {
 
 
         // Acquire ephemeral client. This will only be used for the Connect and Complete methods.
+
+
         var meshClient = meshHost.MeshMachine.GetMeshClient(
-                    meshCredentialPrivate, null, accountAddress);
+                    meshCredentialPrivate, accountAddress);
 
         var connectRequest = new ConnectRequest() {
             EnvelopedRequestConnection = requestConnection.EnvelopedRequestConnection,
@@ -217,7 +219,7 @@ public class ContextMeshPending : ContextAccount {
         var meshCredentialPrivate = new MeshKeyCredentialPrivate(
                 profileDevice.KeyAuthentication as KeyPairAdvanced, AccountAddress);
         var meshClient = MeshHost.MeshMachine.GetMeshClient(
-                meshCredentialPrivate, null, AccountAddress);
+                meshCredentialPrivate, AccountAddress);
 
         var completeResponse = meshClient.Complete(completeRequest);
         completeResponse.Success().AssertTrue(ConnectionAccountUnknown.Throw);

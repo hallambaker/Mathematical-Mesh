@@ -585,6 +585,9 @@
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.Configuration">
             <summary>The service/host configuration.</summary> 
         </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout">
             <summary>
             </summary>

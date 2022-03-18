@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 03-Mar-22 1:56:26 AM
+//  This file was automatically generated at 18-Mar-22 3:46:02 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  exceptional version 3.0.0.835
+//  Generator:  exceptional version 3.0.0.867
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -90,18 +90,36 @@ public  static partial class EventExtensions {
         _ListenerEnd = LoggerMessage.Define(
             LogLevel.Information, new EventId(2, nameof(_ListenerEnd)),
             "Ending listener");
-        _ServiceStart = LoggerMessage.Define<string>(
+        _ServiceStart = LoggerMessage.Define<string,string,string>(
             LogLevel.Information, new EventId(3, nameof(_ServiceStart)),
-            "Starting service {ServiceName}");
+            "Starting service {ServiceName} key {serviceUdf} Host {hostUdf}");
         _ServiceEnd = LoggerMessage.Define<string>(
             LogLevel.Information, new EventId(4, nameof(_ServiceEnd)),
             "Ending listener {ServiceName}");
         _TransactionStart = LoggerMessage.Define<long,string>(
-            LogLevel.Information, new EventId(5, nameof(_TransactionStart)),
+            LogLevel.Debug, new EventId(5, nameof(_TransactionStart)),
             "Starting transation {TransactionId} {TransactionMethod}");
         _TransactionCompleted = LoggerMessage.Define<long,string>(
             LogLevel.Information, new EventId(6, nameof(_TransactionCompleted)),
             "Transaction completed {TransactionId} {TransactionMethod}");
+        _LoadContextUser = LoggerMessage.Define<string>(
+            LogLevel.Trace, new EventId(100, nameof(_LoadContextUser)),
+            "Load context for user {accountAddress}");
+        _DisposeContextUser = LoggerMessage.Define<string>(
+            LogLevel.Trace, new EventId(101, nameof(_DisposeContextUser)),
+            "Dispose context for user {accountAddress}");
+        _OpenFile = LoggerMessage.Define<string,string>(
+            LogLevel.Trace, new EventId(101, nameof(_OpenFile)),
+            "Open file {FileName} with access {aCCESS}");
+        _CloseFile = LoggerMessage.Define<string>(
+            LogLevel.Trace, new EventId(102, nameof(_CloseFile)),
+            "Close file {FileName}");
+        _OpenContainer = LoggerMessage.Define<string,string>(
+            LogLevel.Trace, new EventId(103, nameof(_OpenContainer)),
+            "Open file {FileName} with access {aCCESS}");
+        _CloseContainer = LoggerMessage.Define<string>(
+            LogLevel.Trace, new EventId(104, nameof(_CloseContainer)),
+            "Close file {FileName}");
         _TransactionFailed = LoggerMessage.Define<long,string>(
             LogLevel.Information, new EventId(1000, nameof(_TransactionFailed)),
             "Transaction failed {TransactionId} {TransactionMethod}");
@@ -148,19 +166,23 @@ public  static partial class EventExtensions {
         }
 
 
-    private static readonly Action<ILogger, string, Exception> _ServiceStart;
+    private static readonly Action<ILogger, string, string, string, Exception> _ServiceStart;
 
 	/// <summary>
     /// Write an event of type ServiceStart to <paramref name="logger"/> 
     /// </summary>
     /// <param name="logger">The logger to write the output to.</param>
 	/// <param name="serviceName">The service name</param>
+	/// <param name="serviceUdf">Service key identifier</param>
+	/// <param name="hostUdf">Host key identifier</param>
 	/// <param name="_exception">Exception (if thrown)</param>
     public static void ServiceStart(
 			this ILogger logger,
 			string serviceName,
+			string serviceUdf,
+			string hostUdf,
 			Exception _exception=null) {
-        _ServiceStart(logger, serviceName, _exception);
+        _ServiceStart(logger, serviceName, serviceUdf, hostUdf, _exception);
         }
 
 
@@ -213,6 +235,106 @@ public  static partial class EventExtensions {
 			string method,
 			Exception _exception=null) {
         _TransactionCompleted(logger, transactionId, method, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _LoadContextUser;
+
+	/// <summary>
+    /// Write an event of type LoadContextUser to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="accountAddress">The account address</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void LoadContextUser(
+			this ILogger logger,
+			string accountAddress,
+			Exception _exception=null) {
+        _LoadContextUser(logger, accountAddress, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _DisposeContextUser;
+
+	/// <summary>
+    /// Write an event of type DisposeContextUser to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="accountAddress">The account address</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void DisposeContextUser(
+			this ILogger logger,
+			string accountAddress,
+			Exception _exception=null) {
+        _DisposeContextUser(logger, accountAddress, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _OpenFile;
+
+	/// <summary>
+    /// Write an event of type OpenFile to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="filename">The file name</param>
+	/// <param name="mode">The access mode</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void OpenFile(
+			this ILogger logger,
+			string filename,
+			string mode,
+			Exception _exception=null) {
+        _OpenFile(logger, filename, mode, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _CloseFile;
+
+	/// <summary>
+    /// Write an event of type CloseFile to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="filename">The file name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void CloseFile(
+			this ILogger logger,
+			string filename,
+			Exception _exception=null) {
+        _CloseFile(logger, filename, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _OpenContainer;
+
+	/// <summary>
+    /// Write an event of type OpenContainer to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="filename">The file name</param>
+	/// <param name="mode">The access mode</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void OpenContainer(
+			this ILogger logger,
+			string filename,
+			string mode,
+			Exception _exception=null) {
+        _OpenContainer(logger, filename, mode, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _CloseContainer;
+
+	/// <summary>
+    /// Write an event of type CloseContainer to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="filename">The file name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void CloseContainer(
+			this ILogger logger,
+			string filename,
+			Exception _exception=null) {
+        _CloseContainer(logger, filename, _exception);
         }
 
 

@@ -49,3 +49,25 @@ Namespace Goedel.Discovery
 			Console "A message contained an invalid IPv6 address"
 			Description
 				|A message contained an invalid IPv6 address
+
+
+	Trace 1000 Resolution  "Starting resolution {domain} {service}"
+		domain string "The service domain"
+		service string "The service protocol"
+
+
+	Trace 1001 FoundSrv  "Found SRV {Service} {Host} {Port}"
+		query string "The query domain"
+		host string "The host entry"
+		port int "The port"
+
+	Trace 1002 FoundTxt  "Found Txt {Service} {Text}"
+		query string "The query domain"
+		text string "The text entry"
+
+	Debug 2000 Timeout "Timeout after {Seconds} seconds"
+		timeout int "Timeout in seconds"
+
+	Debug 2001 Unexpected "Received unexpected reply"
+
+	Debug 2001 Invalid "Received invalid reply"

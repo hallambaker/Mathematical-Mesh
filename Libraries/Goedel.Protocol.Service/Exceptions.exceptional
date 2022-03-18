@@ -12,19 +12,44 @@ Namespace Goedel.Protocol.Service
 
 	Information 2 ListenerEnd "Ending listener"
 
-	Information 3 ServiceStart "Starting service {ServiceName}"
+	Information 3 ServiceStart "Starting service {ServiceName} key {serviceUdf} Host {hostUdf}"
 		serviceName string "The service name"
+		serviceUdf string "Service key identifier"
+		hostUdf string "Host key identifier"
 
 	Information 4 ServiceEnd "Ending listener {ServiceName}"
 		serviceName string "The service name"
 
-	Information 5 TransactionStart  "Starting transation {TransactionId} {TransactionMethod}"
+	Debug 5 TransactionStart  "Starting transation {TransactionId} {TransactionMethod}"
 		transactionId long "Transaction identifier"
 		method string "The transaction method"
 
 	Information 6 TransactionCompleted "Transaction completed {TransactionId} {TransactionMethod}"
 		transactionId long "Transaction identifier"
 		method string "The transaction method"
+
+	Trace 100 LoadContextUser "Load context for user {accountAddress}"
+		accountAddress string "The account address"
+
+	Trace 101 DisposeContextUser "Dispose context for user {accountAddress}"
+		accountAddress string "The account address"
+
+
+	Trace 101 OpenFile "Open file {FileName} with access {aCCESS}"
+		filename string "The file name"
+		mode string "The access mode"
+
+	Trace 102 CloseFile "Close file {FileName}"
+		filename string "The file name"
+
+	Trace 103 OpenContainer "Open file {FileName} with access {aCCESS}"
+		filename string "The file name"
+		mode string "The access mode"
+
+	Trace 104 CloseContainer "Close file {FileName}"
+		filename string "The file name"
+
+
 
 	Information 1000 TransactionFailed "Transaction failed {TransactionId} {TransactionMethod}"
 		transactionId long "Transaction identifier"

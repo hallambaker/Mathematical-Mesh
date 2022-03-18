@@ -69,17 +69,6 @@ public class RudStreamClient : RudStream, IJpcSession {
     /// <returns></returns>
     public JsonObject Post(string tag, JsonObject request) {
 
-        //var service = "http://voodoo:15099/.well-known/mmm/";
-        //var webClient = new WebClient();
-        //var data = new byte[12000];
-
-
-        //(service == Uri).AssertTrue(NYI.Throw);
-
-        //var post = webClient.UploadData(Uri, data);
-
-
-
 
         var task = PostAsync(tag, request);
         task.Wait();

@@ -22,6 +22,7 @@
 
 namespace Goedel.IO;
 
+
 /// <summary>
 /// Base class for various stream reader classes to avoid the need to override the
 /// unused methods every time.

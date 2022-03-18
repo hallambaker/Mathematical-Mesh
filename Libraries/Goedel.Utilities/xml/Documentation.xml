@@ -546,6 +546,36 @@
             <param name="first">The list to add to.</param>
             <param name="second">The list of items to be added if not null.</param>
         </member>
+        <member name="T:Goedel.Utilities.AssemblyLogger">
+            <summary>
+            Caching logger class. C
+            </summary>
+        </member>
+        <member name="P:Goedel.Utilities.AssemblyLogger.CategoryName">
+            <summary>Category name used for filtering logs</summary> 
+        </member>
+        <member name="P:Goedel.Utilities.AssemblyLogger.LogLevel">
+            <summary>The default log level</summary> 
+        </member>
+        <member name="P:Goedel.Utilities.AssemblyLogger.CachedLogger">
+            <summary>Get or set the cached logger delegate.</summary> 
+        </member>
+        <member name="M:Goedel.Utilities.AssemblyLogger.#ctor(System.String)">
+            <summary>
+            Constructor returning a new logger instance. Note that the loger
+            itself is not created unless needed.
+            </summary>
+            <param name="categoryName">Category name used for filtering logs</param>
+        </member>
+        <member name="M:Goedel.Utilities.AssemblyLogger.BeginScope``1(``0)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.AssemblyLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.AssemblyLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Utilities.AssemblyStack">
             <summary>
             Utility functions using reflection to extract information from the stack.
@@ -1490,12 +1520,13 @@
             <param name="name">The name of the logger.</param>
             <param name="getCurrentConfig">Return the current configuration.</param>
         </member>
-        <member name="M:Goedel.Utilities.ConsoleLogger.Factory(System.String,Goedel.Utilities.ConsoleLoggerConfiguration)">
+        <member name="M:Goedel.Utilities.ConsoleLogger.Factory(System.String,Goedel.Utilities.ConsoleLoggerConfiguration,Microsoft.Extensions.Logging.LogLevel)">
             <summary>
             Factory method, return a new logger instance.
             </summary>
-            <param name="name"></param>
-            <param name="config"></param>
+            <param name="name">The name of the instance (for configuration)</param>
+            <param name="config">The configureation</param>
+            <param name="logLevel">The minimum logging level to display.</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Utilities.ConsoleLogger.BeginScope``1(``0)">
@@ -1779,9 +1810,34 @@
         </member>
         <member name="M:Goedel.Utilities.IComponent.Initialize">
             <summary>
-            Initialization method, is called by the dependency builder method during host
-            configuration.
+            Initialization method, is called when the application is started.
             </summary>
+        </member>
+        <member name="M:Goedel.Utilities.IComponent.Terminate">
+            <summary>
+            Termination method, is called when the application is shut down.
+            </summary>
+        </member>
+        <member name="T:Goedel.Utilities.LifeCycle">
+            <summary>
+            Application lifecycle management class. Automates initialization and graceful 
+            termination.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.LifeCycle.Disposing">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.LifeCycle.#ctor(System.Collections.Generic.IEnumerable{Goedel.Utilities.IComponent})">
+            <summary>
+            Default constructor. May be called directly or through dependency injection.
+            </summary>
+            <param name="components">The components to be managed.</param>
+        </member>
+        <member name="M:Goedel.Utilities.LifeCycle.Add(Goedel.Utilities.IComponent)">
+            <summary>
+            Add the component <paramref name="component"/> to be managed under the lifecycle.
+            </summary>
+            <param name="component">The component to add. </param>
         </member>
         <member name="T:Goedel.Utilities.Linewrap">
             <summary>
@@ -1837,33 +1893,6 @@
             <summary>
             Exit the lock.
             </summary>
-        </member>
-        <member name="T:Goedel.Utilities.Logger">
-            <summary>
-            Caching logger class. C
-            </summary>
-        </member>
-        <member name="P:Goedel.Utilities.Logger.CategoryName">
-            <summary>Category name used for filtering logs</summary> 
-        </member>
-        <member name="P:Goedel.Utilities.Logger.CachedLogger">
-            <summary>Get or set the cached logger delegate.</summary> 
-        </member>
-        <member name="M:Goedel.Utilities.Logger.#ctor(System.String)">
-            <summary>
-            Constructor returning a new logger instance. Note that the loger
-            itself is not created unless needed.
-            </summary>
-            <param name="categoryName">Category name used for filtering logs</param>
-        </member>
-        <member name="M:Goedel.Utilities.Logger.BeginScope``1(``0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Utilities.Logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Utilities.Logger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
-            <inheritdoc/>
         </member>
         <member name="T:Goedel.Utilities.NamespaceDoc">
             <summary>

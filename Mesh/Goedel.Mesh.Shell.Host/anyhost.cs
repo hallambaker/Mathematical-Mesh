@@ -1,9 +1,9 @@
 ﻿
-//  This file was automatically generated at 03-Mar-22 1:56:33 AM
+//  This file was automatically generated at 18-Mar-22 3:46:14 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  commandparse version 3.0.0.849
+//  Generator:  commandparse version 3.0.0.879
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -214,7 +214,7 @@ public class _About : Goedel.Command.Dispatch ,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 0,
 				Key = "verbose"
@@ -235,7 +235,7 @@ public class _About : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Where", 
-				Default = null, // null if null
+				Default = "false", // null if null
 				Brief = "Report location of configuration files.",
 				Index = 3,
 				Key = "where"
@@ -365,7 +365,7 @@ public class _HostStart : Goedel.Command.Dispatch ,
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
-				Default = "true", // null if null
+				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
 				Index = 4,
 				Key = "verbose"

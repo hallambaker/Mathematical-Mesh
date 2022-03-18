@@ -35,6 +35,7 @@ public partial class ResultAbout {
         builder.AppendLine($"    {AssemblyDescription}");
         builder.AppendLine($"    Copyright         : {AssemblyCopyright} {AssemblyCompany}");
         builder.AppendLine($"    Version           : {AssemblyVersion}");
+        builder.AppendLine($"    Compiled          : {Build}");
 
         if (verbosity == Verbosity.Full) {
             builder.AppendLine($"    Directory Profile : {DirectoryMesh}");

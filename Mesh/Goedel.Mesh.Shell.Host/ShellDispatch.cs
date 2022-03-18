@@ -183,20 +183,18 @@ public partial class Shell : _Shell {
         using var host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
             // read in the options file here.
             .ConfigureAppConfiguration((hostingContext, configuration) => {
+                //IHostEnvironment env = hostingContext.HostingEnvironment;
                 configuration.Sources.Clear();
-                IHostEnvironment env = hostingContext.HostingEnvironment;
-                configuration
-                    .AddJsonFile(settings, true, true);
+                configuration.AddJsonFile(settings, true, true);
             })
             .ConfigureLogging(logging => {
                 logging.ClearProviders();
-                logging.AddDareLogger();
+                //logging.AddDareLogger();
                 logging.AddConsoleLogger();
             })
             .ConfigureServices((hostContext, services) => {
                 services.AddSingleton<HostMonitor, HostMonitor>();
                 services.AddSingleton<IServiceListener, MeshRudListener>();
-                //services.AddSingleton<IHostedService, ManagedListener>();
                 services.AddSingleton<IMeshMachine, MeshMachineCore>();
                 AddPlatformServices(hostContext, services);
             })
