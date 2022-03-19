@@ -51,6 +51,12 @@ public class ServiceDescription {
     /// <summary>The service address being discovered</summary>
     public string ServiceAddress => (Prefix + Address).ToLower();
 
+    /////<summary>The service instance, used to allow use of multiple instances of the same service 
+    /////for testing.</summary> 
+    //public string Instance { get; set; } = "";
+
+
+
     /// <summary>The default path for the Web Service Endpoint</summary>
     string DefaultPath => "/.well-known/" + Service + "/";
 
@@ -185,9 +191,10 @@ public class ServiceDescription {
     /// <summary>
     /// Return the URI corresponding to the service.
     /// </summary>
+    /// <param name="instance">Optional instance specifier.</param>
     /// <returns>The URI value.</returns>
-    public string GetUri() =>
-        Entries.Count > 0 ? Entries[0].HTTPEndpoint : Default.HTTPEndpoint;
+    public string GetUri(string instance = "") =>
+        (Entries.Count > 0 ? Entries[0].HTTPEndpoint : Default.HTTPEndpoint) + (instance ?? "") ;
 
 
     }

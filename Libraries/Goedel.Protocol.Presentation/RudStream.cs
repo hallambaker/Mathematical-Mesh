@@ -165,7 +165,7 @@ public class RudStream {
         if (RudConnection is ConnectionInitiator initiator) {
 
             var serviceDescription = DnsClient.ResolveService(initiator.Domain, protocol);
-            Uri = serviceDescription.GetUri();
+            Uri = serviceDescription.GetUri(initiator.Instance);
             //Uri = HttpEndpoint.GetUri(initiator.Domain, 15099, protocol, initiator.Instance);
 
             //Screen.WriteLine($"Client URI = {Uri}");

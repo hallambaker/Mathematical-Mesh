@@ -3924,10 +3924,11 @@
             <param name="fallback">The fallback mode.</param>
             <returns>The constructed string</returns>
         </member>
-        <member name="M:Goedel.Discovery.ServiceDescription.GetUri">
+        <member name="M:Goedel.Discovery.ServiceDescription.GetUri(System.String)">
             <summary>
             Return the URI corresponding to the service.
             </summary>
+            <param name="instance">Optional instance specifier.</param>
             <returns>The URI value.</returns>
         </member>
         <member name="T:Goedel.Discovery.ServiceEntry">

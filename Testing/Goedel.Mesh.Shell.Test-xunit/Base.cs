@@ -63,7 +63,7 @@ public partial class ShellTestsAdmin : ShellTests {
 
         var testCLI = GetTestCLI();
 
-        var result = testCLI.Dispatch("account hello");
+        var result = testCLI.Dispatch("account hello alice@example.com");
 
         EndTest();
 

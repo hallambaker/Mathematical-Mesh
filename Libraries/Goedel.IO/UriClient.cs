@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Utilities;
 namespace Goedel.IO;
 
 /// <summary>
@@ -48,7 +49,7 @@ public static class UriClient {
         var response = await HttpClient.PostAsync(address, request);
         var content = response.Content;
         var bytes = await content.ReadAsByteArrayAsync();
-
+        var discard = bytes.ToUTF8();
         return bytes;
         }
     }

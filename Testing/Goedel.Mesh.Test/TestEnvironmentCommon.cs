@@ -131,7 +131,8 @@ public abstract class TestEnvironmentBase : Disposable {
 
 
     public TestCLI GetTestCLI(string machineName = null) {
-        var testShell = new TestShell(this, machineName);
+        var testShell = new TestShell(this, machineName) { 
+            NoCatch=true};
         var result = new TestCLI(testShell);
         testCLIs.Add(result);
         return result;

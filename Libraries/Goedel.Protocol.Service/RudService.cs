@@ -222,7 +222,10 @@ public class RudService : Disposable {
         if (providerMap.TryGetValue(test, out var provider)) {
             return provider;
             }
-
+        test = $"http://+:{port}{resource}/";
+        if (providerMap.TryGetValue(test, out provider)) {
+            return provider;
+            }
         test = $"http://{domain}:{port}{resource}";
         if (providerMap.TryGetValue(test, out provider)) {
             return provider;
