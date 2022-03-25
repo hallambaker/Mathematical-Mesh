@@ -164,15 +164,15 @@ public partial class CatalogedDevice {
     //public AccessCapability AccessCapability { get; set; }
 
 
-    ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationDevice"/>
-    ///to return the <see cref="ActivationDevice"/> value.</summary>
-    public ActivationDevice GetActivationDevice(IKeyCollection keyCollection) =>
-                EnvelopedActivationDevice.Decode(keyCollection);
-
-    ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationAccount"/>
-    ///to return the <see cref="ActivationAccount"/> value.</summary>
+    ///<summary>Cached convenience accessor that unpacks the value of <see cref="ActivationAccount"/>
+    ///to return the <see cref="Mesh.ActivationAccount"/> value.</summary>
     public ActivationAccount GetActivationAccount(IKeyCollection keyCollection) =>
                 EnvelopedActivationAccount.Decode(keyCollection);
+
+    ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationCommon"/>
+    ///to return the <see cref="ActivationCommon"/> value.</summary>
+    public ActivationCommon GetActivationCommon(IKeyCollection keyCollection) =>
+                EnvelopedActivationCommon.Decode(keyCollection);
 
 
 
@@ -243,7 +243,7 @@ public partial class CatalogedDevice {
 
         // Verify that the connection and activation entries are signed under the master profile
         ProfileUser.Verify(EnvelopedConnectionService);
-        ProfileUser.Verify(EnvelopedActivationDevice);
+        ProfileUser.Verify(EnvelopedActivationAccount);
 
         return true; // this will probably turn into exception return.
         }

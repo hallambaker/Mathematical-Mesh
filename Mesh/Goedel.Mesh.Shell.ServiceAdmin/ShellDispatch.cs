@@ -150,11 +150,10 @@ public partial class Shell : _Shell {
         var hostIp = Options.HostIp.Value ?? "127.0.0.1:15099";
         var hostDns = Options.HostDns.Value ?? serviceDns;
         var admin = Options.Admin.Value;
-        var hostConfig = Options.HostConfig.Value ?? "mmmsettings.json";
         var runAs = Options.Account.Value;
 
         var configuration = PublicMeshService.Create(
-                MeshMachine, multiConfig, serviceDns, hostConfig, hostIp, hostDns, admin, runAs);
+                MeshMachine, multiConfig, serviceDns, hostIp, hostDns, admin, runAs);
 
         // here populate a status response from configuration
 
@@ -168,7 +167,6 @@ public partial class Shell : _Shell {
     ///<inheritdoc/>
     public override ShellResult DNS(DNS Options) {
         var multiConfig = GetMultiConfig(Options.MultiConfig);
-        var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
         var dnsConfig = Options.DnsConfig.Value;
 
         var configuration = Configuration.FromFile(multiConfig);
@@ -182,7 +180,6 @@ public partial class Shell : _Shell {
     ///<inheritdoc/>
     public override ShellResult Netsh(Netsh Options) {
         var multiConfig = GetMultiConfig(Options.MultiConfig);
-        var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
         var dnsConfig = Options.DnsConfig.Value;
 
         var configuration = Configuration.FromFile(multiConfig);

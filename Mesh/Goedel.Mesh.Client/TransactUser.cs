@@ -101,6 +101,9 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
             };
 
 
+        Component.Logger.AddAccessCapability(accessCapability._PrimaryKey);
+        //Screen.WriteLine($"Add access capability on key {catalogedDevice.ConnectionService.AuthenticationPublic.KeyIdentifier}");
+        //Screen.WriteLine($"    Primary key {accessCapability._PrimaryKey}");
         //Screen.WriteLine($"Catalog update: {accessCapability.CatalogedDeviceDigest} Entries: {catalogedDevice.ApplicationEntries?.Count}");
 
 

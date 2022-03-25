@@ -48,10 +48,10 @@ public partial class ProfileUser {
     /// <param name="accountAddress">The account address</param>
     /// <param name="activationAccount">The activation used to create the account data.</param>        
     public ProfileUser(string accountAddress,
-                ActivationAccount activationAccount) : base(accountAddress, activationAccount) {
+                ActivationCommon activationAccount) : base(accountAddress, activationAccount) {
 
 
-        AccountSignature = new KeyData(activationAccount.AccountSignatureKey);
+        CommonSignature = new KeyData(activationAccount.CommonSignatureKey);
         // Sign the profile
         Envelope(activationAccount.ProfileSignatureKey);
         }
@@ -85,7 +85,7 @@ public partial class ProfileUser {
         indent++;
         builder.AppendIndent(indent, $"KeyOfflineSignature: {ProfileSignature.Udf} ");
         builder.AppendIndent(indent, $"AccountAddress : {AccountAddress} ");
-        builder.AppendIndent(indent, $"KeyEncryption:       {AccountEncryption.Udf} ");
+        builder.AppendIndent(indent, $"KeyEncryption:       {CommonEncryption.Udf} ");
 
         }
     }

@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 19-Mar-22 2:58:10 PM
+//  This file was automatically generated at 25-Mar-22 6:13:16 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -516,7 +516,7 @@ public  static partial class EventExtensions {
             LogLevel.Debug, new EventId(2001, nameof(_Unexpected)),
             "Received unexpected reply");
         _Invalid = LoggerMessage.Define(
-            LogLevel.Debug, new EventId(2001, nameof(_Invalid)),
+            LogLevel.Debug, new EventId(2002, nameof(_Invalid)),
             "Received invalid reply");
         }
 

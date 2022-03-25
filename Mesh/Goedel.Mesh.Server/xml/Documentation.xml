@@ -1070,8 +1070,8 @@
             A Mesh service provider.
             </summary>
             <param name="meshMachine">The Mesh Machine</param>
-            <param name="genericHostConfiguration">Host configuration.</param>
-            <param name="meshServicetConfiguration">Service configuration.</param>
+            <param name="hostConfiguration">Host configuration.</param>
+            <param name="meshServiceConfiguration">Service configuration.</param>
             <param name="logService">The transaction logging service.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.GetService(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
@@ -1099,7 +1099,7 @@
             <param name="hostname">The host name.</param>
             <returns>The file path.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Create a new Mesh Service
             </summary>
@@ -1107,7 +1107,6 @@
             <param name="serviceConfig">The service configuration file.</param>
             <param name="serviceDns">The canonical DNS name of the service</param>
             <param name="hostIp">The host IP address</param>
-            <param name="hostConfig">The host configuration identifier.</param>
             <param name="hostDns">The host DNS name</param>
             <param name="admin">The administrative account to create.</param>
             <param name="hostAccount">The platform account under which the host process is to run.</param>

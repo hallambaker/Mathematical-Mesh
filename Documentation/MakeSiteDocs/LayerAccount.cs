@@ -98,14 +98,14 @@ public partial class LayerConnect : ExampleSet {
     public List<ExampleResult> DisconnectThreshDecrypt;
 
     public ProfileDevice AliceProfileDevice2;
-    public ActivationDevice AliceActivationDevice2;
-    public ActivationAccount AliceActivationAccount2;
+    public ActivationAccount AliceActivationDevice2;
+    public ActivationCommon AliceActivationAccount2;
     public ConnectionService AliceConnectionDevice2;
     public ConnectionService AliceConnectionService2;
 
     public ProfileDevice AliceProfileDevice3;
-    public ActivationDevice AliceActivationDevice3;
-    public ActivationAccount AliceActivationAccount3;
+    public ActivationAccount AliceActivationDevice3;
+    public ActivationCommon AliceActivationAccount3;
     public ConnectionService AliceConnectionDevice3;
     public ConnectionService AliceConnectionService3;
 
@@ -114,7 +114,7 @@ public partial class LayerConnect : ExampleSet {
 
 
 
-    public ActivationDevice AliceActivationDeviceWatch;
+    public ActivationAccount AliceActivationDeviceWatch;
     public ProfileDevice AliceProfileDeviceWatch;
 
     public List<ExampleResult> ConnectMakerCreate;
@@ -137,7 +137,7 @@ public partial class LayerConnect : ExampleSet {
     public Trace ConnectPINRequestConnection;
     //public AcknowledgeConnection WitnessAcknowledgeConnection;
     public Trace ConnectPINResponseConnection;
-    public ActivationDevice ConnectPINActivationDevice;
+    public ActivationAccount ConnectPINActivationDevice;
     public CatalogedDevice ConnectPINCatalogedDevice;
     public Trace ConnectPINRequestComplete;
     public Trace ConnectPINRespondComplete;

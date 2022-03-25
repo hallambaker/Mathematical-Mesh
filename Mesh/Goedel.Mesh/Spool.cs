@@ -29,6 +29,7 @@ namespace Goedel.Mesh;
 ///<summary>Message entry in spool catalog</summary>
 public class SpoolEntry {
 
+
     ///<summary>The spool the message is enrolled in.</summary>
     public Spool Spool { get; }
 
@@ -342,9 +343,6 @@ public class Spool : Store {
             return null;
             }
 
-
-
-
         if (SpoolEntryById.TryGetValue(envelope.EnvelopeId, out var spoolEntry)) {
             spoolEntry.AddEnvelope(envelope, next);
 
@@ -362,6 +360,8 @@ public class Spool : Store {
                 }
             }
 
+        Component.Logger.InternMessage(spoolEntry.EnvelopeID, spoolEntry.Message?.MessageId,
+            spoolEntry.MessageStatus);
         Screen.WriteLine($"Intern EnvelopeID {spoolEntry.EnvelopeID}, " +
             $"Message {spoolEntry.Message?.MessageId} " +
             $"Status {spoolEntry.MessageStatus}");
@@ -508,6 +508,10 @@ public class SpoolEnumeratorRaw : IEnumerator<SpoolEntry> {
                 DateTime? notOnOrAfter = null,
                 SpoolEntry last = null,
                 long maxResults = -1) {
+        notBefore.Future();
+        notOnOrAfter.Future();
+
+
         this.spool = spool;
         this.select = select;
         this.last = last;
@@ -523,8 +527,7 @@ public class SpoolEnumeratorRaw : IEnumerator<SpoolEntry> {
     /// <summary>
     /// Disposal method.
     /// </summary>
-    public void Dispose() {
-        }
+    public void Dispose() => GC.SuppressFinalize(this);
 
     /// <summary>
     /// Move to the next value in the enumeration.
@@ -642,6 +645,9 @@ public class SpoolLocal : Spool {
     public SpoolEntry CheckPIN(string pinId,
                 long maxTicks = -1,
                 long maxSearch = -1) {
+        maxTicks.Future();
+        maxTicks.Future();
+        maxSearch.Future();
 
         // The pinId is the same as the MessageID of the MessagePIN.
         // MessageID = RequestConnection.GetPinUDF(pin, accountUDF);

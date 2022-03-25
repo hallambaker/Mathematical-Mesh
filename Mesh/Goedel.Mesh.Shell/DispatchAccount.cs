@@ -86,7 +86,7 @@ public partial class Shell {
         return new ResultCreateAccount() {
             Success = true,
             ProfileAccount = contextUser.ProfileUser,
-            ActivationDevice = contextUser.ActivationDevice
+            ActivationAccount = contextUser.ActivationAccount
             };
         }
 
@@ -283,7 +283,7 @@ public partial class Shell {
         return new ResultCreateAccount() {
             Success = true,
             ProfileAccount = contextUser.ProfileUser,
-            ActivationDevice = contextUser.ActivationDevice
+            ActivationAccount = contextUser.ActivationAccount
             };
         }
 

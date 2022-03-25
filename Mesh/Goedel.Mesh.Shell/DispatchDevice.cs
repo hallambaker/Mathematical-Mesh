@@ -100,9 +100,9 @@ public partial class Shell {
             CatalogedMachine = contextUser.CatalogedMachine,
             Profile = contextUser.Profile,
 
-            ActivationDevice = contextUser.ActivationDevice,
-            RequestConnection = contextUser.RequestConnection,
             ActivationAccount = contextUser.ActivationAccount,
+            RequestConnection = contextUser.RequestConnection,
+            ActivationCommon = contextUser.ActivationCommon,
             RespondConnection = contextUser.RespondConnection
             };
 

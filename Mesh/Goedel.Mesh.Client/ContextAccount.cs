@@ -115,25 +115,25 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     #endregion
     #region // Activated account keys
     ///<summary>The account activation</summary>
-    public ActivationAccount ActivationAccount { get; set; }
+    public ActivationCommon ActivationCommon { get; set; }
 
     ///<summary>The device identifier within the account.</summary> 
-    public string AccountDeviceId => ActivationAccount.AccountDeviceId;
+    public string AccountDeviceId => ActivationCommon.AccountDeviceId;
 
 
     ///<summary>The account profile key</summary>
-    protected KeyPair KeyProfile => ActivationAccount.ProfileSignatureKey;
+    protected KeyPair KeyProfile => ActivationCommon?.ProfileSignatureKey;
     ///<summary>The administration signature key</summary>
-    protected KeyPair KeyAdministratorSign => ActivationAccount.AdministratorSignatureKey;
+    protected KeyPair KeyAdministratorSign => ActivationCommon?.AdministratorSignatureKey;
     ///<summary>The administration signature key</summary>
-    protected KeyPair KeyAdministratorEncrypt => ActivationAccount.AdministratorEncryptionKey;
+    protected KeyPair KeyAdministratorEncrypt => ActivationCommon?.AdministratorEncryptionKey;
 
     ///<summary>The account encryption key </summary>
-    protected KeyPair KeyAccountSignature => ActivationAccount.AccountSignatureKey;
+    protected KeyPair KeyCommonSignature => ActivationCommon?.CommonSignatureKey;
     ///<summary>The account encryption key </summary>
-    protected KeyPair KeyAccountEncryption => ActivationAccount.AccountEncryptionKey;
+    protected KeyPair KeyCommonEncryption => ActivationCommon?.CommonEncryptionKey;
     ///<summary>The authentication key used to authenticate as the account.</summary>
-    protected KeyPair KeyAccountAuthentication => ActivationAccount?.AccountAuthenticationKey;
+    protected KeyPair KeyCommonAuthentication => ActivationCommon?.CommonAuthenticationKey;
 
     ///<summary>True iff the device has administrator privilege.</summary> 
     protected bool IsAdministrator => KeyAdministratorSign != null;
@@ -246,7 +246,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             Roles = roles
             };
 
-        encryptKey ??= KeyAccountEncryption;
+        encryptKey ??= KeyCommonEncryption;
 
         if (register) {
             var transactRequest = TransactBegin();
@@ -614,7 +614,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         //    }
 
         if (DictionaryCatalogDelegates.TryGetValue(name, out var factory)) {
-            darePolicy ??= ActivationAccount.GetDarePolicy(name);
+            darePolicy ??= ActivationCommon.GetDarePolicy(name);
             return factory(StoresDirectory, name, this, darePolicy, null, this, decrypt: decrypt);
             }
         if (DictionarySpoolDelegates.TryGetValue(name, out factory)) {
@@ -761,7 +761,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 List<string> recipients = null,
                 bool sign = false) {
 
-        KeyPair signingKey = sign ? KeyAccountSignature : null;
+        KeyPair signingKey = sign ? KeyCommonSignature : null;
         List<CryptoKey> encryptionKeys;
 
         // probably going to fail here unless we have a way to pull keys out of the contacts catalog 

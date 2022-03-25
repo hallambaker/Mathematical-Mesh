@@ -61,6 +61,8 @@ public interface IActivate {
 
 public partial class PrivateKeyUDF : IActivate {
 
+    ///<summary>Opaque key identifier</summary> 
+    public string KeyId => UDF.ContentDigestOfDataString(PrivateValue.ToUTF8(), "PrivateKey");
 
     ///<summary>The encryption algorithm identifier</summary>
     public CryptoAlgorithmId AlgorithmEncryptID =>
@@ -118,24 +120,6 @@ public partial class PrivateKeyUDF : IActivate {
         }
 
 
-    ///// <summary>
-    ///// Constructor generating a new instance with a private key derrived from the
-    ///// value  <paramref name="udf"/> if not null or a random value otherwise.
-    ///// </summary>
-    ///// <param name="udf">The UDF encoding of the secret value.</param>
-    ///// <param name="algorithmEncrypt">The encryption algorithm.</param>
-    ///// <param name="algorithmSign">The signature algorithm</param>
-    ///// <param name="algorithmAuthenticate">The signature algorithm</param>
-    //public PrivateKeyUDF(
-    //        string udf,
-    //        CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-    //        CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-    //        CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default
-    //        ) : this (algorithmEncrypt: algorithmEncrypt,
-    //            algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate,
-    //                udf: udf) {
-    //    }
-
     /// <summary>
     /// Generate a composite private key by generating private keys by means
     /// of the activation seed <paramref name="activationSeed"/> and the
@@ -168,6 +152,11 @@ public partial class PrivateKeyUDF : IActivate {
 
         return combinedKey;
         }
+
+
+    ///<inheritdoc/>
+    public override string ToString() => KeyId;
+
 
 
     }

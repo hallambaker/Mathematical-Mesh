@@ -34,13 +34,13 @@ public partial class ProfileAccount {
 
     ///<summary>The account encryption key</summary> 
     public KeyPair AccountAuthenticationKey => accountAuthenticationKey ??
-        AccountAuthentication.GetKeyPair().CacheValue(out accountAuthenticationKey);
+        CommonAuthentication.GetKeyPair().CacheValue(out accountAuthenticationKey);
     KeyPair accountAuthenticationKey;
 
 
     ///<summary>The account encryption key</summary> 
     public KeyPair AccountEncryptionKey => accountEncryptionKey ??
-        AccountEncryption.GetKeyPair().CacheValue(out accountEncryptionKey);
+        CommonEncryption.GetKeyPair().CacheValue(out accountEncryptionKey);
     KeyPair accountEncryptionKey;
 
     ///<summary>The account administrator signature key</summary> 
@@ -69,15 +69,16 @@ public partial class ProfileAccount {
     /// <param name="activationAccount">The activation used to create the account data.</param>
     public ProfileAccount(
                 string accountAddress,
-                ActivationAccount activationAccount) {
+                ActivationCommon activationAccount) {
         AccountAddress = accountAddress;
 
         //Set the public key parameters
-        AccountAuthentication = new KeyData(activationAccount.AccountAuthenticationKey);
+
         EscrowEncryption = new KeyData(activationAccount.EscrowEncryptionKey);
         ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
         AdministratorSignature = new KeyData(activationAccount.AdministratorSignatureKey);
-        AccountEncryption = new KeyData(activationAccount.AccountEncryptionKey);
+        CommonEncryption = new KeyData(activationAccount.CommonEncryptionKey);
+        CommonAuthentication = new KeyData(activationAccount.CommonAuthenticationKey);
         }
 
 

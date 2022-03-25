@@ -88,8 +88,8 @@ public class ConsoleLoggerConfiguration {
 
     ///<summary>Dictionary specifying mapping of log levels to colors.</summary> 
     public Dictionary<LogLevel, ConsoleColor> LogLevels { get; set; } = new() {
-        [Microsoft.Extensions.Logging.LogLevel.Trace] = ConsoleColor.DarkBlue,
-        [Microsoft.Extensions.Logging.LogLevel.Debug] = ConsoleColor.Blue,
+        [Microsoft.Extensions.Logging.LogLevel.Trace] = ConsoleColor.Blue,
+        [Microsoft.Extensions.Logging.LogLevel.Debug] = ConsoleColor.Cyan,
         [Microsoft.Extensions.Logging.LogLevel.Information] = ConsoleColor.Green,
         [Microsoft.Extensions.Logging.LogLevel.Warning] = ConsoleColor.Yellow,
         [Microsoft.Extensions.Logging.LogLevel.Error] = ConsoleColor.Red,

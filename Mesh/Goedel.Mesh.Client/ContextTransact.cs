@@ -285,7 +285,7 @@ public abstract class Transaction<TAccount> : Disposable
     public ProfileService ProfileService => ContextAccount.ProfileService;
 
     ///<summary>The full device connection.</summary> 
-    public ConnectionDevice ConnectionDevice => (ContextAccount as ContextUser)?.ConnectionDevice;
+    public ConnectionDevice ConnectionDevice => (ContextAccount as ContextUser)?.ConnectionAccount;
 
 
     bool TryFindKeyEncryption(string recipient, out CryptoKey cryptoKey) =>

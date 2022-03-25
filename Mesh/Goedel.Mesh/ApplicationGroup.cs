@@ -55,7 +55,7 @@ public partial class ApplicationEntryGroup {
     /// Construct an activation record for the group.
     /// </summary>
     /// <returns></returns>
-    public ActivationAccount GetActivationAccount() => new(Activation);
+    public ActivationCommon GetActivationAccount() => new(Activation);
 
 
     #endregion
@@ -80,7 +80,7 @@ public partial class CatalogedGroup {
                 (EnvelopedProfileGroup.Decode(KeyCollection) as ProfileGroup).CacheValue(out profileGroup);
     ProfileGroup? profileGroup;
 
-    ActivationAccount ActivationAccount { get; set; }
+    ActivationCommon ActivationAccount { get; set; }
 
     /// <summary>
     /// Return the escrowed keys.
@@ -112,7 +112,7 @@ public partial class CatalogedGroup {
     /// <returns>The created group.</returns>
     public CatalogedGroup(
                     ProfileGroup profileGroup,
-                    ActivationAccount activationAccount,
+                    ActivationCommon activationAccount,
                     CryptoKey encryptionKey,
                     ConnectionAddress connectionAddress
                     ) {
@@ -131,9 +131,9 @@ public partial class CatalogedGroup {
     ///<inheritdoc/>
     public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
         var activation = new ActivationApplicationGroup() {
-            AccountEncryption = new KeyData(ActivationAccount.AccountEncryptionKey, true),
+            AccountEncryption = new KeyData(ActivationAccount.CommonEncryptionKey, true),
             AdministratorSignature = new KeyData(ActivationAccount.AdministratorSignatureKey, true),
-            AccountAuthentication = new KeyData(ActivationAccount.AccountAuthenticationKey, true),
+            AccountAuthentication = new KeyData(ActivationAccount.CommonAuthenticationKey, true),
             };
 
         activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());

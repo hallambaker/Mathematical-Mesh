@@ -42,6 +42,34 @@ public partial class ShellTests {
     //public string AliceService1 = "alice@example.com";
     //public string AliceService2 = "alice@example.net";
 
+
+
+    [Fact]
+    public void TestAccountRefreshed() {
+
+        var testCLIAlice1 = GetTestCLI(AliceDevice1);
+
+        var meshMachine = testCLIAlice1.Shell.MeshMachine as MeshMachineTest;
+        
+        // force the service to start first
+        TestEnvironment.StartService();
+
+
+
+        var result1 = testCLIAlice1.Example($"account create {AliceAccount}");
+
+        meshMachine.ResetHost();
+        var result2 = testCLIAlice1.Example($"account sync");
+
+
+
+
+        TestEnvironment.Dispose();
+        EndTest();
+        }
+
+
+
     [Fact]
     public void TestAccount() {
         var site1 = "example.com"; var username1 = "alice1"; var password1 = "password1";

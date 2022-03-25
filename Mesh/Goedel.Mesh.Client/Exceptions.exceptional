@@ -108,3 +108,36 @@ Namespace Goedel.Mesh.Client
 
 		Exception InvalidRecoverySecret
 			Console "The specified recovery secret was not valid."
+
+
+	Debug 100 CreateDevice "Create Device Profile: {ProfileUdf} Authenticate: {AuthenticateUdf}"
+		profileUdf string "Profile fingerprint"
+		authenticateUdf string "Authentication key fingerprint"
+
+
+	Debug 101 CreateAccount "Create Account Profile: {ProfileUdf} Authenticate: {AuthenticateUdf}"
+		profileUdf string "Profile fingerprint"
+		authenticateUdf string "Authentication key fingerprint"
+
+	Debug 102 CreateConnection "Create Connection: {AccountAddress} Authenticate: {AuthenticateUdf}"
+		accountAddress string "Account Address"
+		authenticateUdf string "Authentication key fingerprint"
+
+	Debug 103 CreateAccess "Create Access: {AccountAddress} Authenticate: {AuthenticateUdf}"
+		accountAddress string "Account Address"
+		authenticateUdf string "Authentication key fingerprint"
+
+	Debug 110 DeviceSeed "Device Seed {DeviceSeed}"
+		seed string "Seed value identifier"
+
+	Debug 111 CommonSeed "Account Seed {AccountSeed}"
+		seed string "Seed value identifier"
+
+	Debug 112 AccountSeed "Device Seed {DeviceSeed}"
+		seed string "Seed value identifier"
+
+
+
+	Debug 104 ActivateConnection "ActivateConnection: {Use} {KeyUdf}"
+		use string "key use"
+		udf string "key fingerprint"

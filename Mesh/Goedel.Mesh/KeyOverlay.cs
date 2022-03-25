@@ -21,11 +21,14 @@
 #endregion
 
 
+using Microsoft.Extensions.Logging;
+using System.ComponentModel;
+
 namespace Goedel.Mesh;
 
 
 public static partial class Extensions {
-
+    static ILogger Logger => Component.Logger;
     /// <summary>
     /// Return the mesh key group from <paramref name="udfAlgorithmIdentifier"/>.
     /// </summary>
@@ -162,8 +165,6 @@ public static partial class Extensions {
             IKeyCollection keyCollection = null,
             KeySecurity keySecurity = KeySecurity.Ephemeral,
             string info = null) {
-        //Screen.WriteLine($"{type}=={actor}-{operation}::{secretSeed.KeyType}");
-
 
         var keyName = type.ToLabel() + actor.ToLabel() + operation.ToLabel() + (info ?? "");
         var keyUses = GetMeshKeyType(operation);
@@ -172,7 +173,6 @@ public static partial class Extensions {
         var result = UDF.DeriveKey(secretSeed.PrivateValue, keyCollection,
                 keySecurity, keyUses: keyUses, cryptoAlgorithmID, keyName) as KeyPairAdvanced;
 
-        //Screen.WriteLine($"{type}=={actor}-{operation}::{secretSeed.KeyType} -> {result.KeyIdentifier}");
         return result;
         }
 
@@ -194,8 +194,15 @@ public static partial class Extensions {
         var activationKey = activationSeed.GenerateContributionKeyPair(
                     MeshKeyType.Activation, actor, operation) as KeyPairAdvanced;
         var combinedKey = activationKey.CombinePublic(baseKey as KeyPairAdvanced, keyUses: baseKey.KeyUses);
+
+        Logger.ActivatePublic(activationSeed.KeyId.TrimKey(), baseKey.KeyIdentifier.TrimKey(),
+            actor, operation, combinedKey.KeyIdentifier.TrimKey());
+
         return combinedKey;
         }
+
+
+    static string TrimKey(this string text) => text[..5];
 
     /// <summary>
     /// Derrive the private key from the activation seed <paramref name="activationSeed"/>
@@ -239,6 +246,10 @@ public static partial class Extensions {
         var activationKey = activationSeed.GenerateContributionKeyPair(
                     MeshKeyType.Activation, actor, operation) as KeyPairAdvanced;
         var combinedKey = activationKey.Combine(baseKey as KeyPairAdvanced, keyUses: baseKey.KeyUses);
+
+        Logger.ActivatePrivate(activationSeed.KeyId.TrimKey(), baseKey.KeyIdentifier.TrimKey(),
+            actor, operation, combinedKey.KeyIdentifier.TrimKey());
+
         return combinedKey;
         }
 

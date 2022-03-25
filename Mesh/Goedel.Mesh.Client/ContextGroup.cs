@@ -68,7 +68,7 @@ public partial class ContextGroup : ContextAccount {
 
     ///<inheritdoc/>
     public MeshKeyCredentialPrivate GetKeyCredentialPrivate() =>
-       new(KeyAccountAuthentication as KeyPairAdvanced, AccountAddress);
+       new(KeyCommonAuthentication as KeyPairAdvanced, AccountAddress);
     // have to get the credential from the client...
 
 
@@ -143,9 +143,9 @@ public partial class ContextGroup : ContextAccount {
     /// <param name="activationAccount">The account activation.</param>
     public ContextGroup(ContextUser contextAccount,
                 CatalogedGroup catalogedGroup,
-                ActivationAccount activationAccount) :
+                ActivationCommon activationAccount) :
                 base(contextAccount.MeshHost, null) {
-        ActivationAccount = activationAccount;
+        ActivationCommon = activationAccount;
         CatalogedGroup = catalogedGroup;
         ContextUser = contextAccount;
         }
@@ -161,7 +161,7 @@ public partial class ContextGroup : ContextAccount {
     public static ContextGroup CreateGroup(
                 ContextUser contextAccount,
                 CatalogedGroup catalogedGroup,
-                ActivationAccount activationAccount,
+                ActivationCommon activationAccount,
                 MeshServiceClient client) {
         var result = new ContextGroup(contextAccount, catalogedGroup, activationAccount) {
             MeshClient = client
@@ -197,13 +197,13 @@ public partial class ContextGroup : ContextAccount {
         var serviceEncryptionKey = ContextUser.HostEncryptAccount;
 
 
-        var keyGenerate = ActivationAccount.AccountEncryptionKey as KeyPairAdvanced;
+        var keyGenerate = ActivationCommon.CommonEncryptionKey as KeyPairAdvanced;
         var (keyData, capabilityService) = CatalogAccess.MakeShare(
                     keyGenerate, AccountAddress, serviceEncryptionKey, memberAddress);
 
         keyData.Envelope(encryptionKey: userEncryptionKey);
         var capabilityMember = new CapabilityDecryptPartial() {
-            Id = ProfileGroup.AccountEncryption.Udf,
+            Id = ProfileGroup.CommonEncryption.Udf,
             EnvelopedKeyShare = keyData.GetEnvelopedKeyData()
             };
 

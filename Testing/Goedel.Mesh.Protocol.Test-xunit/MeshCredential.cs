@@ -134,7 +134,7 @@ public partial class TestService {
         if (dataValidity == DataValidity.CorruptSigner) {
             var mallet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
             DeviceMallet, AccountMallet, "main");
-            alternative = mallet.ConnectionDevice.DareEnvelope;
+            alternative = mallet.ConnectionAccount.DareEnvelope;
             }
 
         credentialTemp.ConnectionDevice.DareEnvelope.Corrupt(dataValidity, alternative);
@@ -164,7 +164,7 @@ public partial class TestService {
         if (dataValidity == DataValidity.CorruptSigner) {
             var mallet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceMallet, AccountMallet, "main");
-            alternative = mallet.ConnectionDevice.DareEnvelope;
+            alternative = mallet.ConnectionAccount.DareEnvelope;
             }
 
         // This should pass

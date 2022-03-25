@@ -122,7 +122,7 @@ public partial class Shell : _Shell {
         }
 
 
-#pragma warning disable IDE1006 // Naming Styles
+
     /// <summary>
     /// Perform post processing of the result of the shell operation.
     /// </summary>
@@ -167,16 +167,9 @@ public partial class Shell : _Shell {
         }
 
     //IEnumerable<IConfguredService> Providers;
-    
+
     ///<inheritdoc/>
     public override ShellResult HostStart(HostStart Options) {
-        //var multiConfig = GetMultiConfig(Options.MultiConfig);
-        //var hostConfig = Options.HostConfig.Value ?? System.Environment.MachineName;
-
-
-        //var result = VerifyConfig(multiConfig, hostConfig);
-        //result.AssertTrue(InvalidConfiguration.Throw, Options.HostConfig.Value ?? "<none>");
-
         // ToDo: deal with 'args'
 
         var settings = PublicMeshService.GetService(MeshMachine);
@@ -198,32 +191,17 @@ public partial class Shell : _Shell {
                 services.AddSingleton<IMeshMachine, MeshMachineCore>();
                 AddPlatformServices(hostContext, services);
             })
-
             .AddListenerHosted()
             .AddMeshService()
-
             .Build();
-        //var services = host.Services;
-        //var listener = services.GetRequiredService<IHostedService>() as IHostedService;
-        //Providers = services.GetServices<IConfguredService>();
-
-        //var cancellationTokenSource = new CancellationTokenSource();
-        //var cancellationToken = cancellationTokenSource.Token;
-        ////listener.StartAsync(cancellationToken).Wait();
-        ////listener.
-        //host.StartAsync(cancellationToken);
-        //host.WaitForShutdown();
-
-        //Wait(cancellationToken).Wait();
 
         host.Run();
-
 
         return new ResultStartService() {
             Success = true,
             RudService = RudService
-};
-}
+            };
+        }
 
     //async Task Wait(CancellationToken cancellationToken) {
     //    await cancellationToken;
@@ -259,6 +237,9 @@ public partial class Shell : _Shell {
         string machineName
             ) {
 
+        hasConfig.Future();
+
+
         // Fetch the canonical machine name from the system registry or equivalent and convert
         // to lower case.
         if (machineName == null) {
@@ -272,79 +253,9 @@ public partial class Shell : _Shell {
             //System.Console.WriteLine($"HostName: {MachineName}");
             }
 
-
-        //Configuration = JsonReader.ReadFile<Configuration>(hasConfig, false);
-
-        //HostConfiguration = Configuration.GetHostConfiguration(MachineName);
-        //ServiceConfiguration = Configuration.GetServiceConfiguration(HostConfiguration);
-
-
         return true;
 
         }
-
-    ///// <summary>
-    ///// Start the service
-    ///// </summary>
-    ///// <param name="hostConfiguration">The host configuration.</param>
-    ///// <param name="serviceConfiguration">The service configuration</param>
-    ///// <returns>The RUD service</returns>
-    //public RudService StartService(
-    //        HostConfiguration hostConfiguration,
-    //        ServiceConfiguration serviceConfiguration) {
-
-
-    //    // This is a mess, need to 
-    //    // 1) Check the credential is being configuired correctly
-    //    // 2) Support multiple service configurations (mmm, presence, etc.)
-
-
-
-    //    var providers = new List<RudProvider>();
-
-    //    if (ServiceDescriptionDictionary.TryGetValue(serviceConfiguration.WellKnown, out var provider)) {
-    //        providers.Add(provider.Factory(MeshMachine, serviceConfiguration, hostConfiguration));
-    //        }
-
-    //    // add in the management service 
-    //    if (!ServiceDescriptionDictionary.TryGetValue(
-    //        ServiceManagementProvider.WellKnown, out var managementProviderDescription)) {
-    //        managementProviderDescription = ServiceManagementProvider.ServiceDescriptionHost;
-    //        }
-    //    providers.Add(managementProviderDescription.Factory(
-    //        MeshMachine, serviceConfiguration, hostConfiguration));
-
-    //    // retrieve the credential
-    //    var credential = hostConfiguration.GetCredential(MeshMachine);
-
-    //    // start the service
-    //    var service = new RudService(providers, credential);
-
-    //    var sigintReceived = false;
-    //    // Catch SIGINT
-    //    System.Console.CancelKeyPress += (_, ea) => {
-    //        // Tell .NET to not terminate the process
-    //        ea.Cancel = true;
-
-    //        Screen.WriteInfo(Resources.ReceivedSIGINT);
-    //        service.Dispose();
-    //        sigintReceived = true;
-    //    };
-
-    //    // Catch SIGTERM
-    //    AppDomain.CurrentDomain.ProcessExit += (_, _) => {
-    //        if (!sigintReceived) {
-    //            Screen.WriteInfo(Resources.ReceivedSIGTERM);
-    //            service.Dispose();
-    //            }
-    //        else {
-    //            Screen.WriteInfo(Resources.IgnoreSIGTERM);
-    //            }
-    //    };
-
-    //    return service;
-    //    }
-
 
     }
 

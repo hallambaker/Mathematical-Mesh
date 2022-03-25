@@ -54,13 +54,13 @@ partial class Program {
 
         //ServiceDiscovery.Test().TestDNS();
         //ShellTests.Test().TestHelloFail();
-        ShellTestsAdmin.Test().TestDns();
+        ShellTestsAdmin.Test().TestAccountRefreshed();
         //ShellTests.Test().TestConnectRequest();
 
 
 
 
-        //ShellTestsAdmin.Test().TestDigest();
+        //ShellTestsAdmin.Test().TestAccount();
 
 
         //ShellTests.Test().TestProfileSSHPrivate();

@@ -43,13 +43,13 @@ public partial class ContextUser : ContextAccount {
     public override Profile Profile => ProfileUser;
 
     ///<summary>Convenience accessor for the connection.</summary>
-    public override Connection Connection => ConnectionDevice;
+    public override Connection Connection => ConnectionAccount;
 
     ///<summary>Convenience accessor to the account address.</summary>
     public override string AccountAddress => ProfileUser?.AccountAddress;
 
 
-
+    static ILogger Logger => Component.Logger;
 
     ///<summary>The profile</summary>
     public ProfileUser ProfileUser { get; set; }
@@ -60,9 +60,9 @@ public partial class ContextUser : ContextAccount {
     public ConnectionService ConnectionService => CatalogedDevice?.ConnectionService;
 
     ///<summary>The connection device</summary>
-    public ConnectionDevice ConnectionDevice => CatalogedDevice?.ConnectionDevice;
+    public ConnectionDevice ConnectionAccount => CatalogedDevice?.ConnectionDevice;
 
-    ///<summary>The connection device</summary>
+    ///<summary>The connection of the profile to the account address</summary>
     public ConnectionAddress ConnectionAddress => CatalogedDevice?.ConnectionAccount;
 
     ///<summary>The connection device</summary>
@@ -70,7 +70,7 @@ public partial class ContextUser : ContextAccount {
 
 
     ///<summary>The device activation</summary>
-    public ActivationDevice ActivationDevice { get; set; }
+    public ActivationAccount ActivationAccount { get; set; }
 
 
     ///<summary>The device key generation seed</summary>
@@ -93,14 +93,15 @@ public partial class ContextUser : ContextAccount {
     public KeyPairAdvanced BaseAuthenticate { get; }
 
 
+
     ///<summary>Device signature key in account context.</summary>
-    public KeyPairAdvanced DeviceSignature => ActivationDevice?.DeviceSignature;
+    public KeyPairAdvanced AccountSignature => ActivationAccount?.AccountSignature;
 
     ///<summary>Device decryption key in account context.</summary>
-    public KeyPairAdvanced DeviceEncryption => ActivationDevice?.DeviceEncryption;
+    public KeyPairAdvanced AccountEncryption => ActivationAccount?.AccountEncryption;
 
     ///<summary>Device authentication key in account context.</summary>
-    public KeyPairAdvanced DeviceAuthentication => ActivationDevice?.DeviceAuthentication;
+    public KeyPairAdvanced AccountAuthentication => ActivationAccount?.AccountAuthentication;
 
 
 
@@ -110,9 +111,9 @@ public partial class ContextUser : ContextAccount {
     /// Create a new ICredential.
     /// </summary>
     /// <returns>The credential</returns>
-    public override MeshCredentialPrivate GetMeshCredentialPrivate() => new(
-            ProfileDevice, ConnectionService, ConnectionAddress,
-            DeviceAuthentication ?? BaseAuthenticate);
+    public override MeshCredentialPrivate GetMeshCredentialPrivate() => 
+        new(ProfileDevice, ConnectionService, ConnectionAddress,
+            AccountAuthentication ?? BaseAuthenticate);
 
     #endregion
     #region // Constructors
@@ -142,48 +143,83 @@ public partial class ContextUser : ContextAccount {
         KeyCollection.Add(BaseDecrypt);
 
         // Activate the device within the account.
-        ActivationDevice = CatalogedDevice?.GetActivationDevice(KeyCollection);
-        ActivationDevice.Activate(deviceKeySeed);
+        ActivationAccount = CatalogedDevice?.GetActivationAccount(KeyCollection);
+        ActivationAccount.Activate(deviceKeySeed);
 
-        KeyCollection.Add(ActivationDevice.DeviceEncryption);
+        KeyCollection.Add(ActivationAccount.AccountEncryption);
 
         // Activate the device to communicate as the account (via threshold)
-        ActivationAccount = CatalogedDevice?.GetActivationAccount(KeyCollection);
-        ActivationAccount.Activate(this);
+        ActivationCommon = CatalogedDevice?.GetActivationCommon(KeyCollection);
+        ActivationCommon.Activate(this);
 
-        if (ActivationAccount.Entries != null) {
-            foreach (var entry in ActivationAccount.Entries) {
+        if (ActivationCommon.Entries != null) {
+            foreach (var entry in ActivationCommon.Entries) {
                 Privileges.Add(entry.Resource);
                 }
             }
 
-        if (KeyAccountEncryption != null) {
-            KeyCollection.Add(KeyAccountEncryption);
+        if (KeyCommonEncryption != null) {
+            KeyCollection.Add(KeyCommonEncryption);
             }
 
         if (catalogedMachine?.CatalogedDevice?.EnvelopedConnectionService != null) {
             // Some validation checks
-            (DeviceAuthentication.KeyIdentifier).AssertEqual(
+            (AccountAuthentication.KeyIdentifier).AssertEqual(
                     ConnectionService.Authentication.CryptoKey.KeyIdentifier,
                     KeyActivationFailed.Throw);
             }
 
 
         if (catalogedMachine?.CatalogedDevice?.EnvelopedConnectionDevice != null) {
+            //Logger.ActivateConnection("Signature", ConnectionDevice.Signature.CryptoKey.KeyIdentifier);
+            //Logger.ActivateConnection("Encryption", ConnectionDevice.Encryption.CryptoKey.KeyIdentifier);
+            Logger.ActivateConnection("Authentication", ConnectionAccount.Authentication.CryptoKey.KeyIdentifier);
+
             // Some validation checks
-            (DeviceSignature.KeyIdentifier).AssertEqual(ConnectionDevice.Signature.CryptoKey.KeyIdentifier,
+            (AccountSignature.KeyIdentifier).AssertEqual(ConnectionAccount.Signature.CryptoKey.KeyIdentifier,
                     KeyActivationFailed.Throw);
-            (DeviceEncryption.KeyIdentifier).AssertEqual(ConnectionDevice.Encryption.CryptoKey.KeyIdentifier,
+            (AccountEncryption.KeyIdentifier).AssertEqual(ConnectionAccount.Encryption.CryptoKey.KeyIdentifier,
                     KeyActivationFailed.Throw);
-            (DeviceAuthentication.KeyIdentifier).AssertEqual(ConnectionDevice.Authentication.CryptoKey.KeyIdentifier,
+            (AccountAuthentication.KeyIdentifier).AssertEqual(ConnectionAccount.Authentication.CryptoKey.KeyIdentifier,
                     KeyActivationFailed.Throw);
             }
 
-
+        //DumpContext(deviceKeySeed.KeyId);
         }
 
+
+    //void DumpContext(string deviceSeed, string accountSeed=null) {
+
+
+    //    Screen.WriteLine($"Profile {Profile.Udf}");
+    //    Screen.WriteLine($"    Account Common {ProfileUser.AccountAddress}");
+    //    Screen.WriteLine($"        Signature {ProfileUser.CommonSignature.Udf}");
+    //    Screen.WriteLine($"        Authentication {ProfileUser.CommonAuthentication.Udf}");
+    //    Screen.WriteLine($"        Encryption {ProfileUser.CommonEncryption.Udf}");
+    //    Screen.WriteLine($"    Account Device {accountSeed}");
+    //    Screen.WriteLine($"        Signature {ConnectionAccount?.Signature?.Udf} " +
+    //        $"Loaded = {ActivationAccount.AccountSignature != null}");
+    //    Screen.WriteLine($"        Authentication {ConnectionAccount?.Authentication?.Udf}" +
+    //        $"Loaded = {ActivationAccount.AccountAuthentication != null}");
+    //    Screen.WriteLine($"        Encryption {ConnectionAccount?.Encryption?.Udf}" +
+    //        $"Loaded = {ActivationAccount.AccountEncryption != null}");
+    //    Screen.WriteLine($"    Device {ProfileDevice.Udf} {deviceSeed}");
+    //    Screen.WriteLine($"        Signature {ProfileDevice.Signature.CryptoKey.KeyIdentifier} " +
+    //        $"Loaded {ActivationAccount.AccountSignature != null}");
+    //    Screen.WriteLine($"        Authentication {ProfileDevice.Authentication.CryptoKey.KeyIdentifier} " +
+    //        $"Loaded {ActivationAccount.AccountAuthentication != null}");
+    //    Screen.WriteLine($"        Encryption {ProfileDevice.Encryption.CryptoKey.KeyIdentifier} " +
+    //        $"Loaded {ActivationAccount.AccountEncryption != null}");
+
+    //    Screen.WriteLine($"Connection Device to Account {ConnectionAccount?.AuthenticationPublic.KeyIdentifier}");
+
+
+    //    }
+
+
+
     #endregion
-    #region // Operations requiring the Mesh Secret - Escrow, Erase.
+        #region // Operations requiring the Mesh Secret - Escrow, Erase.
 
     /// <summary>
     /// Get the MeshSecret.
@@ -239,7 +275,7 @@ public partial class ContextUser : ContextAccount {
 
         // Since the service does not know this account (yet)
         var credentialPrivate = new MeshKeyCredentialPrivate(
-                    KeyAccountAuthentication as KeyPairAdvanced, accountAddress);
+                    KeyCommonAuthentication as KeyPairAdvanced, accountAddress);
 
 
         MeshClient = MeshMachine.GetMeshClient(credentialPrivate, accountAddress);
@@ -254,7 +290,7 @@ public partial class ContextUser : ContextAccount {
         ProfileUser.AccountAddress = accountAddress;
         ProfileUser.Envelope(KeyProfile);
 
-        ActivationAccount.BindService(ProfileService);
+        ActivationCommon.BindService(ProfileService);
 
         // Generate a contact and self-sign
         var contact = CreateContact();
@@ -286,7 +322,7 @@ public partial class ContextUser : ContextAccount {
         CatalogedMachine.EnvelopedAccountHostAssignment = response.EnvelopedAccountHostAssignment;
         var accessEncrypt = AccountHostAssignment.AccessEncrypt;
 
-        ActivationAccount.DictionaryStoreEncryptionKey.TryGetValue(CatalogAccess.Label, out var accessSelf);
+        ActivationCommon.DictionaryStoreEncryptionKey.TryGetValue(CatalogAccess.Label, out var accessSelf);
 
         var recipients = new List<Key> {
                     accessEncrypt.PublicParameters,
@@ -308,8 +344,8 @@ public partial class ContextUser : ContextAccount {
     public void MakeAdministrator(List<string> rights) {
         var transact = TransactBegin();
 
-        CatalogedMachine.CatalogedDevice = ActivationAccount.MakeCatalogedDevice(
-                ProfileDevice, ProfileUser, rights, transact, ActivationDevice);
+        CatalogedMachine.CatalogedDevice = ActivationCommon.MakeCatalogedDevice(
+                ProfileDevice, ProfileUser, rights, transact, ActivationAccount);
 
         // When creating a device for the first time, the update is always encrypted
         // under the device key.
@@ -348,7 +384,7 @@ public partial class ContextUser : ContextAccount {
     public static string CreateDirectory(
                 MeshHost meshHost,
                 ProfileUser profileUser,
-                ActivationAccount activationAccount,
+                ActivationCommon activationAccount,
                 IKeyCollection keyLocate) {
         var storesDirectory = ContextUser.GetStoresDirectory(meshHost, profileUser);
         Directory.CreateDirectory(storesDirectory);
@@ -379,35 +415,6 @@ public partial class ContextUser : ContextAccount {
         return storesDirectory;
         }
 
-    /////<inheritdoc/>
-    //public override int UpdateStore(ContainerUpdate containerUpdate) {
-    //    var count = base.UpdateStore(containerUpdate);
-
-
-
-
-
-    //    CatalogedDevice catalogedDevice = null;
-    //    if (containerUpdate.Container == CatalogDevice.Label &
-    //            containerUpdate.Envelopes != null) {
-    //        foreach (var entry in containerUpdate.Envelopes) {
-    //            if (CatalogedDevice.DeviceUdf == entry.Header.ContentMeta.UniqueId) {
-    //                catalogedDevice = entry.DecodeJsonObject(KeyCollection) as CatalogedDevice;
-    //                }
-
-    //            }
-
-
-    //        }
-
-    //    if (catalogedDevice != null) {
-    //        UpdateCatalogedMachine(catalogedDevice);
-    //        }
-    //    return count;
-
-    //    }
-
-
     #endregion
     #region // Contact management
 
@@ -418,8 +425,8 @@ public partial class ContextUser : ContextAccount {
     /// <param name="contact">The contact parameters.</param>
     /// <param name="localname">Short name to apply to the signed contact info</param>
     public CatalogedContact SetContactSelf(Contact contact, string localname = null) {
-        KeyAccountSignature.AssertNotNull(NotAdministrator.Throw);
-        contact.Envelope(KeyAccountSignature);
+        KeyCommonSignature.AssertNotNull(NotAdministrator.Throw);
+        contact.Envelope(KeyCommonSignature);
 
         contact.Sources ??= new List<TaggedSource>() { };
         var tagged = new TaggedSource() {
@@ -473,41 +480,6 @@ public partial class ContextUser : ContextAccount {
 
     #endregion
 
-    #region // Operations on capabilities 
-
-
-    ///// <summary>
-    ///// Return the first cryptographic capability granted to this particular device
-    ///// for the application <paramref name="catalogedApplication"/>.
-    ///// </summary>
-    ///// <param name="catalogedApplication">The application to return the capability from.</param>
-    ///// <returns>The first cryptographic capability this device has been granted if found,
-    ///// otherwise null.</returns>
-    //public CryptographicCapability GetCapability(CatalogedApplication catalogedApplication) {
-
-    //    foreach (var envelope in catalogedApplication.EnvelopedCapabilities) {
-    //        var capability = GetCapability(envelope);
-    //        if (capability != null) {
-    //            return capability;
-    //            }
-    //        }
-    //    return null;
-    //    }
-
-    ///// <summary>
-    ///// Attempt to decrypt <paramref name="envelopedCapability"/>. If successful, the content 
-    ///// data is decoded and the enclosed capability returned. Otherwise, null is returned.
-    ///// </summary>
-    ///// <param name="envelopedCapability">The envelope to attempt to decrypt.</param>
-    ///// <returns>The first cryptographic capability this device has been granted if found,
-    ///// otherwise null.</returns>
-    //public static CryptographicCapability GetCapability(DareEnvelope envelopedCapability) {
-    //    envelopedCapability.Future();
-
-    //    throw new NYI();
-
-    //    }
-    #endregion
 
     #region // Store management and convenience accessors
 
@@ -560,7 +532,7 @@ public partial class ContextUser : ContextAccount {
     /// <returns>The identifier.</returns>
     public override bool TryFindKeySignature(string keyId, out CryptoKey cryptoKey) {
         if (keyId == AccountAddress) {
-            cryptoKey = KeyAccountSignature;
+            cryptoKey = KeyCommonSignature;
             return true;
             }
         if (TryFindKeySignature(keyId, out cryptoKey)) {
@@ -582,7 +554,7 @@ public partial class ContextUser : ContextAccount {
         if (KeyCollection.TryFindKeyDecryption(keyId, out cryptoKey)) {
             return true;
             }
-        if (ActivationAccount?.AccountEncryptionKey?.TryFindKeyDecryption(keyId, out cryptoKey) == true) {
+        if (ActivationCommon?.CommonEncryptionKey?.TryFindKeyDecryption(keyId, out cryptoKey) == true) {
             return true;
             }
 
@@ -727,7 +699,7 @@ public partial class ContextUser : ContextAccount {
         var keyCollectionGroup = new KeyCollectionEphemeral();
 
         // Phase3: Work out a better way to manage the activation seed for groups
-        var activationGroup = new ActivationAccount(keyCollectionGroup, accountSeed) {
+        var activationGroup = new ActivationCommon(keyCollectionGroup, accountSeed) {
             ActivationKey = accountSeed.PrivateValue
             };
         var profileGroup = new ProfileGroup(groupName, activationGroup);
@@ -752,7 +724,7 @@ public partial class ContextUser : ContextAccount {
         // account escrow key.
 
         var catalogedGroup = new CatalogedGroup(profileGroup,
-            activationGroup, KeyAccountEncryption, connectionGroup) {
+            activationGroup, KeyCommonEncryption, connectionGroup) {
             Grant = roles
             };
 
@@ -771,7 +743,7 @@ public partial class ContextUser : ContextAccount {
 
         // Since the service does not know this account (yet)
         var credentialPrivate = new MeshKeyCredentialPrivate(
-                    activationGroup.AccountAuthenticationKey as KeyPairAdvanced, groupName);
+                    activationGroup.CommonAuthenticationKey as KeyPairAdvanced, groupName);
 
         var groupClient = MeshMachine.GetMeshClient(credentialPrivate, groupName);
 
@@ -1017,7 +989,7 @@ public partial class ContextUser : ContextAccount {
         // Approve the request
         // Have to add in the Mesh profile here and Account Assertion
         var transact = TransactBegin();
-        var cataloguedDevice = ActivationAccount.MakeCatalogedDevice(profileDevice,
+        var cataloguedDevice = ActivationCommon.MakeCatalogedDevice(profileDevice,
                 ProfileUser, transactContextAccount: transact, roles: rights);
 
 
@@ -1113,7 +1085,7 @@ public partial class ContextUser : ContextAccount {
         var key = new CryptoKeySymmetricSigner(pin);
         var messageClaim = new MessageClaim(targetAccountAddress, AccountAddress, pin);
 
-        messageClaim.Envelope(KeyAccountSignature);
+        messageClaim.Envelope(KeyCommonSignature);
 
 
         var claimClient = MeshMachine.GetMeshClient(
@@ -1163,9 +1135,11 @@ public partial class ContextUser : ContextAccount {
             // Must enforce this from now on. 
             //spoolEntry.Open.AssertTrue(Internal.Throw);
 
-            Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageId}: Status {spoolEntry.MessageStatus}");
+            //Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageId}: Status {spoolEntry.MessageStatus}");
 
             // Add in check to see if the user has the appropriate catalog rights...
+
+            Logger.GotMessage(meshMessage.GetType().ToString(), meshMessage.MessageId, spoolEntry.MessageStatus);
 
 
             if (!spoolEntry.Closed) {
@@ -1317,7 +1291,7 @@ public partial class ContextUser : ContextAccount {
 
     private void AddDevice(AcknowledgeConnection request, List<string> rights, TransactUser transact, RespondConnection respondConnection) {
 
-        var device = ActivationAccount.MakeCatalogedDevice(
+        var device = ActivationCommon.MakeCatalogedDevice(
                 request.MessageConnectionRequest.ProfileDevice, ProfileUser, roles: rights, transactContextAccount: transact);
 
         device.ApplicationEntries = MakeApplicationEntries(rights, transact, device);
@@ -1568,7 +1542,7 @@ public partial class ContextUser : ContextAccount {
             pin, automatic, expire, AccountAddress, MeshConstants.MessagePINActionContact);
 
         using (var transactRequest = TransactBegin()) {
-            transactRequest.LocalMessage(messageConnectionPIN, KeyAccountEncryption);
+            transactRequest.LocalMessage(messageConnectionPIN, KeyCommonEncryption);
             var catalogPublication = transactRequest.GetCatalogPublication();
             transactRequest.CatalogUpdate(catalogPublication, catalogedPublication);
             Transact(transactRequest);
@@ -1610,7 +1584,7 @@ public partial class ContextUser : ContextAccount {
                 var messagePin = GetPIN(MeshConstants.MessagePINActionContact, true,
                     128, register: false);
                 message.PIN = messagePin.Pin;
-                transact.LocalMessage(messagePin, KeyAccountEncryption);
+                transact.LocalMessage(messagePin, KeyCommonEncryption);
                 }
 
             // If a PIN value was specified in the request, use it to authenticate the response.

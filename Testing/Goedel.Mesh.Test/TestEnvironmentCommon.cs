@@ -56,7 +56,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
         MeshMachineHost = new MeshMachineTest(this, "host1");
 
         HostFile = System.IO.Path.Combine(MeshMachineHost.DirectoryMesh, "mmmconfiguration.json");
-        Configuration = PublicMeshService.Create(MeshMachineHost, HostFile, ServiceDns, "remove");
+        Configuration = PublicMeshService.Create(MeshMachineHost, HostFile, ServiceDns);
 
         Logger = new LogService(Configuration.GenericHostConfiguration, Configuration.MeshServiceConfiguration, null);
 
@@ -126,7 +126,8 @@ public abstract class TestEnvironmentBase : Disposable {
         }
 
 
-
+    public virtual void StartService() {
+        }
 
 
 

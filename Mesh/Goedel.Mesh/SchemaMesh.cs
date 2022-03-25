@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 19-Mar-22 2:58:20 PM
+//  This file was automatically generated at 25-Mar-22 6:13:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -97,9 +97,9 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"ConnectionGroup", ConnectionGroup._Factory},
 	    {"AccountHostAssignment", AccountHostAssignment._Factory},
 	    {"ConnectionHost", ConnectionHost._Factory},
-	    {"ActivationDevice", ActivationDevice._Factory},
-	    {"ActivationHost", ActivationHost._Factory},
 	    {"ActivationAccount", ActivationAccount._Factory},
+	    {"ActivationHost", ActivationHost._Factory},
+	    {"ActivationCommon", ActivationCommon._Factory},
 	    {"ActivationApplication", ActivationApplication._Factory},
 	    {"ActivationApplicationSsh", ActivationApplicationSsh._Factory},
 	    {"ActivationApplicationMail", ActivationApplicationMail._Factory},
@@ -1589,22 +1589,22 @@ public partial class ProfileAccount : Profile {
 
 	public virtual KeyData						EscrowEncryption  {get; set;}
         /// <summary>
-        ///Key currently used to encrypt data under this profile
-        /// </summary>
-
-	public virtual KeyData						AccountEncryption  {get; set;}
-        /// <summary>
         ///Key used to sign connection assertions to the account.
         /// </summary>
 
 	public virtual KeyData						AdministratorSignature  {get; set;}
+        /// <summary>
+        ///Key currently used to encrypt data under this profile
+        /// </summary>
+
+	public virtual KeyData						CommonEncryption  {get; set;}
         /// <summary>
         ///Key used to authenticate requests made under this user account.
         ///This key SHOULD NOT be provisioned to any device except for the
         ///purpose of enabling account recovery.
         /// </summary>
 
-	public virtual KeyData						AccountAuthentication  {get; set;}
+	public virtual KeyData						CommonAuthentication  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1664,20 +1664,20 @@ public partial class ProfileAccount : Profile {
 			_writer.WriteToken ("EscrowEncryption", 1);
 				EscrowEncryption.Serialize (_writer, false);
 			}
-		if (AccountEncryption != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AccountEncryption", 1);
-				AccountEncryption.Serialize (_writer, false);
-			}
 		if (AdministratorSignature != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("AdministratorSignature", 1);
 				AdministratorSignature.Serialize (_writer, false);
 			}
-		if (AccountAuthentication != null) {
+		if (CommonEncryption != null) {
 			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AccountAuthentication", 1);
-				AccountAuthentication.Serialize (_writer, false);
+			_writer.WriteToken ("CommonEncryption", 1);
+				CommonEncryption.Serialize (_writer, false);
+			}
+		if (CommonAuthentication != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("CommonAuthentication", 1);
+				CommonAuthentication.Serialize (_writer, false);
 			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
@@ -1727,13 +1727,6 @@ public partial class ProfileAccount : Profile {
  
 				break;
 				}
-			case "AccountEncryption" : {
-				// An untagged structure
-				AccountEncryption = new KeyData ();
-				AccountEncryption.Deserialize (jsonReader);
- 
-				break;
-				}
 			case "AdministratorSignature" : {
 				// An untagged structure
 				AdministratorSignature = new KeyData ();
@@ -1741,10 +1734,17 @@ public partial class ProfileAccount : Profile {
  
 				break;
 				}
-			case "AccountAuthentication" : {
+			case "CommonEncryption" : {
 				// An untagged structure
-				AccountAuthentication = new KeyData ();
-				AccountAuthentication.Deserialize (jsonReader);
+				CommonEncryption = new KeyData ();
+				CommonEncryption.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "CommonAuthentication" : {
+				// An untagged structure
+				CommonAuthentication = new KeyData ();
+				CommonAuthentication.Deserialize (jsonReader);
  
 				break;
 				}
@@ -1768,7 +1768,7 @@ public partial class ProfileUser : ProfileAccount {
         ///Key used to sign data under the account.
         /// </summary>
 
-	public virtual KeyData						AccountSignature  {get; set;}
+	public virtual KeyData						CommonSignature  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1813,10 +1813,10 @@ public partial class ProfileUser : ProfileAccount {
 			_writer.WriteObjectStart ();
 			}
 		((ProfileAccount)this).SerializeX(_writer, false, ref _first);
-		if (AccountSignature != null) {
+		if (CommonSignature != null) {
 			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AccountSignature", 1);
-				AccountSignature.Serialize (_writer, false);
+			_writer.WriteToken ("CommonSignature", 1);
+				CommonSignature.Serialize (_writer, false);
 			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
@@ -1851,10 +1851,10 @@ public partial class ProfileUser : ProfileAccount {
 	public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 		switch (tag) {
-			case "AccountSignature" : {
+			case "CommonSignature" : {
 				// An untagged structure
-				AccountSignature = new KeyData ();
-				AccountSignature.Deserialize (jsonReader);
+				CommonSignature = new KeyData ();
+				CommonSignature.Deserialize (jsonReader);
  
 				break;
 				}
@@ -3138,7 +3138,7 @@ public partial class ConnectionHost : Connection {
 	/// Contains activation data for device specific keys used in the context of a 
 	/// Mesh account.
 	/// </summary>
-public partial class ActivationDevice : Activation {
+public partial class ActivationAccount : Activation {
         /// <summary>
         ///The UDF of the account
         /// </summary>
@@ -3153,13 +3153,13 @@ public partial class ActivationDevice : Activation {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "ActivationDevice";
+	public new const string __Tag = "ActivationAccount";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ActivationDevice();
+	public static new JsonObject _Factory () => new ActivationAccount();
 
 
     /// <summary>
@@ -3204,15 +3204,15 @@ public partial class ActivationDevice : Activation {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new ActivationDevice FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new ActivationAccount FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ActivationDevice;
+			return Out as ActivationAccount;
 			}
-		var Result = new ActivationDevice ();
+		var Result = new ActivationAccount ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -3246,7 +3246,7 @@ public partial class ActivationDevice : Activation {
 	/// Contains activation data for device specific keys used in the context of a 
 	/// Mesh host
 	/// </summary>
-public partial class ActivationHost : ActivationDevice {
+public partial class ActivationHost : ActivationAccount {
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3290,7 +3290,7 @@ public partial class ActivationHost : ActivationDevice {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		((ActivationDevice)this).SerializeX(_writer, false, ref _first);
+		((ActivationAccount)this).SerializeX(_writer, false, ref _first);
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
 			}
@@ -3337,7 +3337,7 @@ public partial class ActivationHost : ActivationDevice {
 
 	/// <summary>
 	/// </summary>
-public partial class ActivationAccount : Activation {
+public partial class ActivationCommon : Activation {
         /// <summary>
         ///Grant access to profile online signing key used to sign updates
         ///to the profile.
@@ -3354,17 +3354,17 @@ public partial class ActivationAccount : Activation {
         ///Grant access to ProfileUser account encryption key
         /// </summary>
 
-	public virtual KeyData						AccountEncryption  {get; set;}
+	public virtual KeyData						Encryption  {get; set;}
         /// <summary>
         ///Grant access to ProfileUser account authentication key
         /// </summary>
 
-	public virtual KeyData						AccountAuthentication  {get; set;}
+	public virtual KeyData						Authentication  {get; set;}
         /// <summary>
         ///Grant access to ProfileUser account signature key
         /// </summary>
 
-	public virtual KeyData						AccountSignature  {get; set;}
+	public virtual KeyData						Signature  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3374,13 +3374,13 @@ public partial class ActivationAccount : Activation {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "ActivationAccount";
+	public new const string __Tag = "ActivationCommon";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ActivationAccount();
+	public static new JsonObject _Factory () => new ActivationCommon();
 
 
     /// <summary>
@@ -3419,20 +3419,20 @@ public partial class ActivationAccount : Activation {
 			_writer.WriteToken ("AdministratorSignature", 1);
 				AdministratorSignature.Serialize (_writer, false);
 			}
-		if (AccountEncryption != null) {
+		if (Encryption != null) {
 			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AccountEncryption", 1);
-				AccountEncryption.Serialize (_writer, false);
+			_writer.WriteToken ("Encryption", 1);
+				Encryption.Serialize (_writer, false);
 			}
-		if (AccountAuthentication != null) {
+		if (Authentication != null) {
 			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AccountAuthentication", 1);
-				AccountAuthentication.Serialize (_writer, false);
+			_writer.WriteToken ("Authentication", 1);
+				Authentication.Serialize (_writer, false);
 			}
-		if (AccountSignature != null) {
+		if (Signature != null) {
 			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AccountSignature", 1);
-				AccountSignature.Serialize (_writer, false);
+			_writer.WriteToken ("Signature", 1);
+				Signature.Serialize (_writer, false);
 			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
@@ -3445,15 +3445,15 @@ public partial class ActivationAccount : Activation {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new ActivationAccount FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new ActivationCommon FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ActivationAccount;
+			return Out as ActivationCommon;
 			}
-		var Result = new ActivationAccount ();
+		var Result = new ActivationCommon ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -3481,24 +3481,24 @@ public partial class ActivationAccount : Activation {
  
 				break;
 				}
-			case "AccountEncryption" : {
+			case "Encryption" : {
 				// An untagged structure
-				AccountEncryption = new KeyData ();
-				AccountEncryption.Deserialize (jsonReader);
+				Encryption = new KeyData ();
+				Encryption.Deserialize (jsonReader);
  
 				break;
 				}
-			case "AccountAuthentication" : {
+			case "Authentication" : {
 				// An untagged structure
-				AccountAuthentication = new KeyData ();
-				AccountAuthentication.Deserialize (jsonReader);
+				Authentication = new KeyData ();
+				Authentication.Deserialize (jsonReader);
  
 				break;
 				}
-			case "AccountSignature" : {
+			case "Signature" : {
 				// An untagged structure
-				AccountSignature = new KeyData ();
-				AccountSignature.Deserialize (jsonReader);
+				Signature = new KeyData ();
+				Signature.Deserialize (jsonReader);
  
 				break;
 				}
@@ -7241,12 +7241,12 @@ public partial class CatalogedDevice : CatalogedEntry {
         ///The activation of the device within the Mesh account
         /// </summary>
 
-	public virtual Enveloped<ActivationDevice>						EnvelopedActivationDevice  {get; set;}
+	public virtual Enveloped<ActivationAccount>						EnvelopedActivationAccount  {get; set;}
         /// <summary>
         ///The activation of the device within the Mesh account
         /// </summary>
 
-	public virtual Enveloped<ActivationAccount>						EnvelopedActivationAccount  {get; set;}
+	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
         /// <summary>
         ///Application activations granted to the device.
         /// </summary>
@@ -7341,15 +7341,15 @@ public partial class CatalogedDevice : CatalogedEntry {
 			_writer.WriteToken ("EnvelopedConnectionDevice", 1);
 				EnvelopedConnectionDevice.Serialize (_writer, false);
 			}
-		if (EnvelopedActivationDevice != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedActivationDevice", 1);
-				EnvelopedActivationDevice.Serialize (_writer, false);
-			}
 		if (EnvelopedActivationAccount != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("EnvelopedActivationAccount", 1);
 				EnvelopedActivationAccount.Serialize (_writer, false);
+			}
+		if (EnvelopedActivationCommon != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedActivationCommon", 1);
+				EnvelopedActivationCommon.Serialize (_writer, false);
 			}
 		if (ApplicationEntries != null) {
 			_writer.WriteObjectSeparator (ref _first);
@@ -7451,17 +7451,17 @@ public partial class CatalogedDevice : CatalogedEntry {
  
 				break;
 				}
-			case "EnvelopedActivationDevice" : {
-				// An untagged structure
-				EnvelopedActivationDevice = new Enveloped<ActivationDevice> ();
-				EnvelopedActivationDevice.Deserialize (jsonReader);
- 
-				break;
-				}
 			case "EnvelopedActivationAccount" : {
 				// An untagged structure
 				EnvelopedActivationAccount = new Enveloped<ActivationAccount> ();
 				EnvelopedActivationAccount.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedActivationCommon" : {
+				// An untagged structure
+				EnvelopedActivationCommon = new Enveloped<ActivationCommon> ();
+				EnvelopedActivationCommon.Deserialize (jsonReader);
  
 				break;
 				}
@@ -10303,7 +10303,7 @@ public partial class CatalogedGroup : CatalogedApplication {
         ///The activation of the device within the Mesh account
         /// </summary>
 
-	public virtual Enveloped<ActivationAccount>						EnvelopedActivationAccount  {get; set;}
+	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -10358,10 +10358,10 @@ public partial class CatalogedGroup : CatalogedApplication {
 			_writer.WriteToken ("EnvelopedProfileGroup", 1);
 				EnvelopedProfileGroup.Serialize (_writer, false);
 			}
-		if (EnvelopedActivationAccount != null) {
+		if (EnvelopedActivationCommon != null) {
 			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedActivationAccount", 1);
-				EnvelopedActivationAccount.Serialize (_writer, false);
+			_writer.WriteToken ("EnvelopedActivationCommon", 1);
+				EnvelopedActivationCommon.Serialize (_writer, false);
 			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
@@ -10410,10 +10410,10 @@ public partial class CatalogedGroup : CatalogedApplication {
  
 				break;
 				}
-			case "EnvelopedActivationAccount" : {
+			case "EnvelopedActivationCommon" : {
 				// An untagged structure
-				EnvelopedActivationAccount = new Enveloped<ActivationAccount> ();
-				EnvelopedActivationAccount.Deserialize (jsonReader);
+				EnvelopedActivationCommon = new Enveloped<ActivationCommon> ();
+				EnvelopedActivationCommon.Deserialize (jsonReader);
  
 				break;
 				}

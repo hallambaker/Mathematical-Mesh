@@ -407,8 +407,8 @@ public partial class CreateExamples {
 
 
         Connect.AliceProfileDevice2 = dev2Machine.ProfileDevice;
-        Connect.AliceActivationDevice2 = connectStaticPollSuccess.ActivationDevice;
-        Connect.AliceActivationAccount2 = connectStaticPollSuccess.ActivationAccount;
+        Connect.AliceActivationDevice2 = connectStaticPollSuccess.ActivationAccount;
+        Connect.AliceActivationAccount2 = connectStaticPollSuccess.ActivationCommon;
         Connect.AliceConnectionDevice2 = dev2Device.ConnectionDevice;
         Connect.AliceConnectionService2 = dev2Device.ConnectionService;
         }
@@ -987,8 +987,8 @@ public partial class CreateExamples {
         var dev3Device = dev3Machine?.CatalogedDevice;
 
         Connect.AliceProfileDevice3 = dev3Machine.ProfileDevice;
-        Connect.AliceActivationDevice3 = connectStaticPollSuccess.ActivationDevice;
-        Connect.AliceActivationAccount3 = connectStaticPollSuccess.ActivationAccount;
+        Connect.AliceActivationDevice3 = connectStaticPollSuccess.ActivationAccount;
+        Connect.AliceActivationAccount3 = connectStaticPollSuccess.ActivationCommon;
         Connect.AliceConnectionDevice3 = dev3Device.ConnectionDevice;
         Connect.AliceConnectionService3 = dev3Device.ConnectionService;
 

@@ -76,3 +76,32 @@ Namespace Goedel.Mesh
 	
 	Exception InvalidFormat
 		Console "The format {0} is not supported for the specified output."
+
+
+	Trace 100 ActivatePublic "Activate Seed {Seed} + Key {Base} for {Actor}-{Operation} = {Result}"
+		seed string "Seed value identifier"
+		baseKey string "Base key"
+		actor MeshActor "Actor"
+		operation MeshKeyOperation "Operation"
+		result string "Result key"
+
+	Trace 101 ActivatePrivate "Activate Seed {Seed} + Key {Base} for {Actor}-{Operation} = {Result}"
+		seed string "Seed value identifier"
+		baseKey string "Base key"
+		actor MeshActor "Actor"
+		operation MeshKeyOperation "Operation"
+		result string "Result key"
+
+	Trace 102 InternMessage "Intern EnvelopeID {EnvelopeID} Message {Message} Status {Status}"
+		envelopeId string "Envelope identifier"
+		messageId string "Message identifier"
+		status MessageStatus "Message status"
+
+	Trace 103 GotMessage "Got Message type {MessageType} Message {Message} Status {Status}"
+		messageType string "MessageType"
+		messageId string "Message identifier"
+		status MessageStatus "Message status"
+
+
+	Trace 104 AddAccessCapability "Add accessCapability {Key}"
+		key string "Authentication key"

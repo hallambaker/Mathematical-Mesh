@@ -542,7 +542,7 @@ public class NetworkProtocolEntry {
     CryptoKey SetKeys(ref CryptoKey keyPair) {
         if (NetworkAddress.EnvelopedProfileAccount != null) {
             var profileAccount = NetworkAddress.EnvelopedProfileAccount.Decode();
-            meshKeyEncryption = profileAccount.AccountEncryption.CryptoKey;
+            meshKeyEncryption = profileAccount.CommonEncryption.CryptoKey;
             meshKeyAdministrator = profileAccount.ProfileSignature.CryptoKey;
             }
         return keyPair;

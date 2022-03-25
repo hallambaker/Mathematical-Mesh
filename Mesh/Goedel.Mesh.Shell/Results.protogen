@@ -124,7 +124,7 @@
 	Structure ResultCreateAccount
 		Inherits							ResultCreateDevice
 		Struct ProfileAccount				ProfileAccount
-		Struct ActivationDevice				ActivationDevice
+		Struct ActivationAccount				ActivationAccount
 	
 
 	Structure ResultDeleteAccount
@@ -234,8 +234,8 @@
 		Inherits					Result
 		TStruct Profile			Profile
 		Struct CatalogedMachine		CatalogedMachine
-		Struct ActivationDevice		ActivationDevice
 		Struct ActivationAccount	ActivationAccount
+		Struct ActivationCommon	ActivationCommon
 		Struct RequestConnection	RequestConnection
         Struct AcknowledgeConnection AcknowledgeConnection
 		Struct RespondConnection	RespondConnection

@@ -448,7 +448,7 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
             <summary>The Account Address</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.ActivationAccount">
+        <member name="P:Goedel.Mesh.Client.ContextAccount.ActivationCommon">
             <summary>The account activation</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountDeviceId">
@@ -463,13 +463,13 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAdministratorEncrypt">
             <summary>The administration signature key</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAccountSignature">
+        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyCommonSignature">
             <summary>The account encryption key </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAccountEncryption">
+        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyCommonEncryption">
             <summary>The account encryption key </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAccountAuthentication">
+        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyCommonAuthentication">
             <summary>The authentication key used to authenticate as the account.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.IsAdministrator">
@@ -803,7 +803,7 @@
         <member name="P:Goedel.Mesh.Client.ContextGroup.DictionaryCatalogDelegates">
             <summary>Dictionarry used to create stores</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup,Goedel.Mesh.ActivationAccount)">
+        <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup,Goedel.Mesh.ActivationCommon)">
             <summary>
             Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
             </summary>
@@ -812,7 +812,7 @@
             context for.</param>
             <param name="activationAccount">The account activation.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateGroup(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup,Goedel.Mesh.ActivationAccount,Goedel.Mesh.MeshServiceClient)">
+        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateGroup(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup,Goedel.Mesh.ActivationCommon,Goedel.Mesh.MeshServiceClient)">
             <summary>
             Create a new group.
             </summary>
@@ -1062,16 +1062,16 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionService">
             <summary>The connection device</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionDevice">
+        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionAccount">
             <summary>The connection device</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionAddress">
-            <summary>The connection device</summary>
+            <summary>The connection of the profile to the account address</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ApplicationEntries">
             <summary>The connection device</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.ActivationDevice">
+        <member name="P:Goedel.Mesh.Client.ContextUser.ActivationAccount">
             <summary>The device activation</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextUser.MeshSecretSeed">
@@ -1093,13 +1093,13 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.BaseAuthenticate">
             <summary>Device decryption key in account context.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.DeviceSignature">
+        <member name="P:Goedel.Mesh.Client.ContextUser.AccountSignature">
             <summary>Device signature key in account context.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.DeviceEncryption">
+        <member name="P:Goedel.Mesh.Client.ContextUser.AccountEncryption">
             <summary>Device decryption key in account context.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.DeviceAuthentication">
+        <member name="P:Goedel.Mesh.Client.ContextUser.AccountAuthentication">
             <summary>Device authentication key in account context.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetMeshCredentialPrivate">
@@ -1165,7 +1165,7 @@
             <param name="profileUser">The profile.</param>
             <returns>Path to the directory containing the profile stores.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser,Goedel.Mesh.ActivationAccount,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Create the stores directory and initialize catalogs.
             </summary>
@@ -2560,6 +2560,75 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.CreateDevice(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type CreateDevice to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="profileUdf">Profile fingerprint</param>
+            <param name="authenticateUdf">Authentication key fingerprint</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.CreateAccount(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type CreateAccount to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="profileUdf">Profile fingerprint</param>
+            <param name="authenticateUdf">Authentication key fingerprint</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.CreateConnection(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type CreateConnection to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="accountAddress">Account Address</param>
+            <param name="authenticateUdf">Authentication key fingerprint</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.CreateAccess(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type CreateAccess to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="accountAddress">Account Address</param>
+            <param name="authenticateUdf">Authentication key fingerprint</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.DeviceSeed(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type DeviceSeed to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="seed">Seed value identifier</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.CommonSeed(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type CommonSeed to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="seed">Seed value identifier</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.AccountSeed(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type AccountSeed to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="seed">Seed value identifier</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.ActivateConnection(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type ActivateConnection to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="use">key use</param>
+            <param name="udf">key fingerprint</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
         <member name="T:Goedel.Mesh.Client.CatalogedService">
              <summary>
             
@@ -2800,6 +2869,15 @@
             <summary>
             Mesh client implementation.
             </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Component.Logger">
+            <summary> default logger for the assembly</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Client.Component.Initialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Component.Terminate">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Client.PersistHost">
             <summary>

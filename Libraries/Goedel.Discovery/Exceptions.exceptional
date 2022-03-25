@@ -70,4 +70,4 @@ Namespace Goedel.Discovery
 
 	Debug 2001 Unexpected "Received unexpected reply"
 
-	Debug 2001 Invalid "Received invalid reply"
+	Debug 2002 Invalid "Received invalid reply"

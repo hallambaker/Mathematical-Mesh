@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 19-Mar-22 2:58:22 PM
+//  This file was automatically generated at 25-Mar-22 6:13:29 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1215,6 +1215,168 @@ public  static partial class EventExtensions {
     /// Static initializer, is called once when the module loads.
     /// </summary>
     static EventExtensions() {
+        _CreateDevice = LoggerMessage.Define<string,string>(
+            LogLevel.Debug, new EventId(100, nameof(_CreateDevice)),
+            "Create Device Profile: {ProfileUdf} Authenticate: {AuthenticateUdf}");
+        _CreateAccount = LoggerMessage.Define<string,string>(
+            LogLevel.Debug, new EventId(101, nameof(_CreateAccount)),
+            "Create Account Profile: {ProfileUdf} Authenticate: {AuthenticateUdf}");
+        _CreateConnection = LoggerMessage.Define<string,string>(
+            LogLevel.Debug, new EventId(102, nameof(_CreateConnection)),
+            "Create Connection: {AccountAddress} Authenticate: {AuthenticateUdf}");
+        _CreateAccess = LoggerMessage.Define<string,string>(
+            LogLevel.Debug, new EventId(103, nameof(_CreateAccess)),
+            "Create Access: {AccountAddress} Authenticate: {AuthenticateUdf}");
+        _DeviceSeed = LoggerMessage.Define<string>(
+            LogLevel.Debug, new EventId(110, nameof(_DeviceSeed)),
+            "Device Seed {DeviceSeed}");
+        _CommonSeed = LoggerMessage.Define<string>(
+            LogLevel.Debug, new EventId(111, nameof(_CommonSeed)),
+            "Account Seed {AccountSeed}");
+        _AccountSeed = LoggerMessage.Define<string>(
+            LogLevel.Debug, new EventId(112, nameof(_AccountSeed)),
+            "Device Seed {DeviceSeed}");
+        _ActivateConnection = LoggerMessage.Define<string,string>(
+            LogLevel.Debug, new EventId(104, nameof(_ActivateConnection)),
+            "ActivateConnection: {Use} {KeyUdf}");
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _CreateDevice;
+
+	/// <summary>
+    /// Write an event of type CreateDevice to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="profileUdf">Profile fingerprint</param>
+	/// <param name="authenticateUdf">Authentication key fingerprint</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void CreateDevice(
+			this ILogger logger,
+			string profileUdf,
+			string authenticateUdf,
+			Exception _exception=null) {
+        _CreateDevice(logger, profileUdf, authenticateUdf, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _CreateAccount;
+
+	/// <summary>
+    /// Write an event of type CreateAccount to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="profileUdf">Profile fingerprint</param>
+	/// <param name="authenticateUdf">Authentication key fingerprint</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void CreateAccount(
+			this ILogger logger,
+			string profileUdf,
+			string authenticateUdf,
+			Exception _exception=null) {
+        _CreateAccount(logger, profileUdf, authenticateUdf, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _CreateConnection;
+
+	/// <summary>
+    /// Write an event of type CreateConnection to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="accountAddress">Account Address</param>
+	/// <param name="authenticateUdf">Authentication key fingerprint</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void CreateConnection(
+			this ILogger logger,
+			string accountAddress,
+			string authenticateUdf,
+			Exception _exception=null) {
+        _CreateConnection(logger, accountAddress, authenticateUdf, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _CreateAccess;
+
+	/// <summary>
+    /// Write an event of type CreateAccess to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="accountAddress">Account Address</param>
+	/// <param name="authenticateUdf">Authentication key fingerprint</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void CreateAccess(
+			this ILogger logger,
+			string accountAddress,
+			string authenticateUdf,
+			Exception _exception=null) {
+        _CreateAccess(logger, accountAddress, authenticateUdf, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _DeviceSeed;
+
+	/// <summary>
+    /// Write an event of type DeviceSeed to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="seed">Seed value identifier</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void DeviceSeed(
+			this ILogger logger,
+			string seed,
+			Exception _exception=null) {
+        _DeviceSeed(logger, seed, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _CommonSeed;
+
+	/// <summary>
+    /// Write an event of type CommonSeed to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="seed">Seed value identifier</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void CommonSeed(
+			this ILogger logger,
+			string seed,
+			Exception _exception=null) {
+        _CommonSeed(logger, seed, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _AccountSeed;
+
+	/// <summary>
+    /// Write an event of type AccountSeed to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="seed">Seed value identifier</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void AccountSeed(
+			this ILogger logger,
+			string seed,
+			Exception _exception=null) {
+        _AccountSeed(logger, seed, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _ActivateConnection;
+
+	/// <summary>
+    /// Write an event of type ActivateConnection to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="use">key use</param>
+	/// <param name="udf">key fingerprint</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void ActivateConnection(
+			this ILogger logger,
+			string use,
+			string udf,
+			Exception _exception=null) {
+        _ActivateConnection(logger, use, udf, _exception);
         }
 
 	}

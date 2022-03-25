@@ -93,6 +93,8 @@ public class MeshMachineTest : MeshMachineCore {
         }
 
     public ContextUser GetContextAccount(string localName = null, string accountName = null) {
+        accountName.Future();
+
         var machine = new MeshMachineTest(testEnvironmentCommon, DirectoryMaster);
         return machine.MeshHost.GetContextMesh(localName) as ContextUser;
         }
@@ -130,6 +132,7 @@ public class MeshMachineTest : MeshMachineCore {
         string PIN = null,
         string connectUri = null) {
 
+        connectUri.Future();
         var machine = new MeshMachineTest(testEnvironmentCommon, machineName);
         return machine.MeshHost.Connect(accountId, localName, pin: PIN);
         }
@@ -178,7 +181,14 @@ public class MeshMachineTest : MeshMachineCore {
         return;
         }
 
+    public void ResetHost() {
+        PersistHost.Dispose();
+        PersistHost = new PersistHost(FileNameHost, FileTypeHost,
+            fileStatus: FileStatus.ConcurrentLocked,
+            containerType: SequenceType.Merkle);
 
+        MeshHost = new MeshHost(PersistHost, this);
+        }
 
     }
 

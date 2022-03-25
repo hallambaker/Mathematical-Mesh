@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 19-Mar-22 2:58:19 PM
+//  This file was automatically generated at 25-Mar-22 6:13:26 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1059,6 +1059,125 @@ public  static partial class EventExtensions {
     /// Static initializer, is called once when the module loads.
     /// </summary>
     static EventExtensions() {
+        _ActivatePublic = LoggerMessage.Define<string,string,MeshActor,MeshKeyOperation,string>(
+            LogLevel.Trace, new EventId(100, nameof(_ActivatePublic)),
+            "Activate Seed {Seed} + Key {Base} for {Actor}-{Operation} = {Result}");
+        _ActivatePrivate = LoggerMessage.Define<string,string,MeshActor,MeshKeyOperation,string>(
+            LogLevel.Trace, new EventId(101, nameof(_ActivatePrivate)),
+            "Activate Seed {Seed} + Key {Base} for {Actor}-{Operation} = {Result}");
+        _InternMessage = LoggerMessage.Define<string,string,MessageStatus>(
+            LogLevel.Trace, new EventId(102, nameof(_InternMessage)),
+            "Intern EnvelopeID {EnvelopeID} Message {Message} Status {Status}");
+        _GotMessage = LoggerMessage.Define<string,string,MessageStatus>(
+            LogLevel.Trace, new EventId(103, nameof(_GotMessage)),
+            "Got Message type {MessageType} Message {Message} Status {Status}");
+        _AddAccessCapability = LoggerMessage.Define<string>(
+            LogLevel.Trace, new EventId(104, nameof(_AddAccessCapability)),
+            "Add accessCapability {Key}");
+        }
+
+
+    private static readonly Action<ILogger, string, string, MeshActor, MeshKeyOperation, string, Exception> _ActivatePublic;
+
+	/// <summary>
+    /// Write an event of type ActivatePublic to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="seed">Seed value identifier</param>
+	/// <param name="baseKey">Base key</param>
+	/// <param name="actor">Actor</param>
+	/// <param name="operation">Operation</param>
+	/// <param name="result">Result key</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void ActivatePublic(
+			this ILogger logger,
+			string seed,
+			string baseKey,
+			MeshActor actor,
+			MeshKeyOperation operation,
+			string result,
+			Exception _exception=null) {
+        _ActivatePublic(logger, seed, baseKey, actor, operation, result, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, MeshActor, MeshKeyOperation, string, Exception> _ActivatePrivate;
+
+	/// <summary>
+    /// Write an event of type ActivatePrivate to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="seed">Seed value identifier</param>
+	/// <param name="baseKey">Base key</param>
+	/// <param name="actor">Actor</param>
+	/// <param name="operation">Operation</param>
+	/// <param name="result">Result key</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void ActivatePrivate(
+			this ILogger logger,
+			string seed,
+			string baseKey,
+			MeshActor actor,
+			MeshKeyOperation operation,
+			string result,
+			Exception _exception=null) {
+        _ActivatePrivate(logger, seed, baseKey, actor, operation, result, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, MessageStatus, Exception> _InternMessage;
+
+	/// <summary>
+    /// Write an event of type InternMessage to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="envelopeId">Envelope identifier</param>
+	/// <param name="messageId">Message identifier</param>
+	/// <param name="status">Message status</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void InternMessage(
+			this ILogger logger,
+			string envelopeId,
+			string messageId,
+			MessageStatus status,
+			Exception _exception=null) {
+        _InternMessage(logger, envelopeId, messageId, status, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, MessageStatus, Exception> _GotMessage;
+
+	/// <summary>
+    /// Write an event of type GotMessage to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="messageType">MessageType</param>
+	/// <param name="messageId">Message identifier</param>
+	/// <param name="status">Message status</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void GotMessage(
+			this ILogger logger,
+			string messageType,
+			string messageId,
+			MessageStatus status,
+			Exception _exception=null) {
+        _GotMessage(logger, messageType, messageId, status, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _AddAccessCapability;
+
+	/// <summary>
+    /// Write an event of type AddAccessCapability to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="key">Authentication key</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void AddAccessCapability(
+			this ILogger logger,
+			string key,
+			Exception _exception=null) {
+        _AddAccessCapability(logger, key, _exception);
         }
 
 	}

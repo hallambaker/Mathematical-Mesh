@@ -1538,36 +1538,6 @@
         <member name="M:Goedel.Utilities.ConsoleLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
             <summary>Return configuration entry description.</summary> 
         </member>
-        <member name="T:Goedel.Utilities.Screen">
-            <summary>
-            Debug trace class
-            </summary>
-        </member>
-        <member name="M:Goedel.Utilities.Screen.WriteLine(System.String,System.Object[])">
-            <summary>
-            Write debug output to current trace listener.
-            </summary>
-            <param name="format">The format string</param>
-            <param name="arg">Arguments to apply to the format string.</param>
-        </member>
-        <member name="M:Goedel.Utilities.Screen.WriteInfo(System.String,System.Object[])">
-            <summary>
-            Write debug output to current trace listener.
-            </summary>
-            <param name="format">The format string</param>
-            <param name="arg">Arguments to apply to the format string.</param>
-        </member>
-        <member name="M:Goedel.Utilities.Screen.WriteLine">
-            <summary>
-            Write a blank line to the output
-            </summary>
-        </member>
-        <member name="M:Goedel.Utilities.Screen.Write(System.String)">
-            <summary>
-            Write text to the console;
-            </summary>
-            <param name="text">The text to write.</param>
-        </member>
         <member name="T:Goedel.Utilities.AssertionFail">
             <summary>
             An internal assertion check failed.
@@ -2216,6 +2186,36 @@
             </summary>
             <param name="Text">The date to parse</param>
             <returns>The date value</returns>
+        </member>
+        <member name="T:Goedel.Utilities.Screen">
+            <summary>
+            Debug trace class
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Screen.WriteLine(System.String,System.Object[])">
+            <summary>
+            Write debug output to current trace listener.
+            </summary>
+            <param name="format">The format string</param>
+            <param name="arg">Arguments to apply to the format string.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Screen.WriteInfo(System.String,System.Object[])">
+            <summary>
+            Write debug output to current trace listener.
+            </summary>
+            <param name="format">The format string</param>
+            <param name="arg">Arguments to apply to the format string.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Screen.WriteLine">
+            <summary>
+            Write a blank line to the output
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Screen.Write(System.String)">
+            <summary>
+            Write text to the console;
+            </summary>
+            <param name="text">The text to write.</param>
         </member>
         <member name="T:Goedel.Utilities.Unique">
             <summary>

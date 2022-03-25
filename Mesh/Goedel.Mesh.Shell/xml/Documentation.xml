@@ -5850,7 +5850,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCreateAccount.ActivationDevice">
+        <member name="P:Goedel.Mesh.Shell.ResultCreateAccount.ActivationAccount">
             <summary>
             </summary>
         </member>
@@ -7162,11 +7162,11 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultConnect.ActivationDevice">
+        <member name="P:Goedel.Mesh.Shell.ResultConnect.ActivationAccount">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultConnect.ActivationAccount">
+        <member name="P:Goedel.Mesh.Shell.ResultConnect.ActivationCommon">
             <summary>
             </summary>
         </member>

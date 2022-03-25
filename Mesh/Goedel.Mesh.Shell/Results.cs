@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 20-Mar-22 1:18:12 PM
+//  This file was automatically generated at 25-Mar-22 6:18:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2630,7 +2630,7 @@ public partial class ResultCreateAccount : ResultCreateDevice {
         /// <summary>
         /// </summary>
 
-	public virtual ActivationDevice						ActivationDevice  {get; set;}
+	public virtual ActivationAccount						ActivationAccount  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2680,10 +2680,10 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 			_writer.WriteToken ("ProfileAccount", 1);
 				ProfileAccount.Serialize (_writer, false);
 			}
-		if (ActivationDevice != null) {
+		if (ActivationAccount != null) {
 			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("ActivationDevice", 1);
-				ActivationDevice.Serialize (_writer, false);
+			_writer.WriteToken ("ActivationAccount", 1);
+				ActivationAccount.Serialize (_writer, false);
 			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
@@ -2725,10 +2725,10 @@ public partial class ResultCreateAccount : ResultCreateDevice {
  
 				break;
 				}
-			case "ActivationDevice" : {
+			case "ActivationAccount" : {
 				// An untagged structure
-				ActivationDevice = new ActivationDevice ();
-				ActivationDevice.Deserialize (jsonReader);
+				ActivationAccount = new ActivationAccount ();
+				ActivationAccount.Deserialize (jsonReader);
  
 				break;
 				}
@@ -5100,11 +5100,11 @@ public partial class ResultConnect : Result {
         /// <summary>
         /// </summary>
 
-	public virtual ActivationDevice						ActivationDevice  {get; set;}
+	public virtual ActivationAccount						ActivationAccount  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual ActivationAccount						ActivationAccount  {get; set;}
+	public virtual ActivationCommon						ActivationCommon  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -5179,15 +5179,15 @@ public partial class ResultConnect : Result {
 			_writer.WriteToken ("CatalogedMachine", 1);
 				CatalogedMachine.Serialize (_writer, false);
 			}
-		if (ActivationDevice != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("ActivationDevice", 1);
-				ActivationDevice.Serialize (_writer, false);
-			}
 		if (ActivationAccount != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("ActivationAccount", 1);
 				ActivationAccount.Serialize (_writer, false);
+			}
+		if (ActivationCommon != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("ActivationCommon", 1);
+				ActivationCommon.Serialize (_writer, false);
 			}
 		if (RequestConnection != null) {
 			_writer.WriteObjectSeparator (ref _first);
@@ -5248,17 +5248,17 @@ public partial class ResultConnect : Result {
  
 				break;
 				}
-			case "ActivationDevice" : {
-				// An untagged structure
-				ActivationDevice = new ActivationDevice ();
-				ActivationDevice.Deserialize (jsonReader);
- 
-				break;
-				}
 			case "ActivationAccount" : {
 				// An untagged structure
 				ActivationAccount = new ActivationAccount ();
 				ActivationAccount.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "ActivationCommon" : {
+				// An untagged structure
+				ActivationCommon = new ActivationCommon ();
+				ActivationCommon.Deserialize (jsonReader);
  
 				break;
 				}

@@ -2082,6 +2082,9 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF.KeyId">
+            <summary>Opaque key identifier</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF.AlgorithmEncryptID">
             <summary>The encryption algorithm identifier</summary>
         </member>
@@ -2122,6 +2125,9 @@
             <param name="saltSuffix">The salt suffix for use in key derrivation.</param>
             <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
             <returns>The generated ephemeral key.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyUDF.ToString">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.Jose.KeyAgreement">
              <summary>

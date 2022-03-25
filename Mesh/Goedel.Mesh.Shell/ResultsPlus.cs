@@ -332,7 +332,7 @@ public partial class ResultCreateDevice {
 public partial class ResultCreateAccount {
 
     ///<summary>The account UDF.</summary>
-    public string Account => ActivationDevice?.AccountUdf;
+    public string Account => ActivationAccount?.AccountUdf;
 
     ///<inheritdoc/>
     public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {

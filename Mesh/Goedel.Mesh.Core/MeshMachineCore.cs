@@ -149,7 +149,11 @@ public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
 
     #region // Properties
     ///<summary>The Mesh host catalog</summary>
-    public MeshHost MeshHost { get; }
+    public virtual MeshHost MeshHost { get; protected set; }
+
+
+    protected virtual PersistHost PersistHost { get; set; }
+
 
     ///<summary>The file name of the host catalog.</summary>
     public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
@@ -171,11 +175,11 @@ public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
     /// <param name="direct">If true, force use of the platform key stores.</param>
     public MeshMachineCore(string? directory = null, bool direct = false) : base(directory, direct) {
         // Read the container to get the directories.
-        var containerHost = new PersistHost(FileNameHost, FileTypeHost,
+        PersistHost = new PersistHost(FileNameHost, FileTypeHost,
             fileStatus: FileStatus.ConcurrentLocked,
             containerType: SequenceType.Merkle);
 
-        MeshHost = new MeshHost(containerHost, this);
+        MeshHost = new MeshHost(PersistHost, this);
         }
 
     #region // Convenience accessors
@@ -215,7 +219,7 @@ public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
             profileHost,
             connectionDevice,
             null,
-            activationDevice.DeviceAuthentication);
+            activationDevice.AccountAuthentication);
 
         }
 

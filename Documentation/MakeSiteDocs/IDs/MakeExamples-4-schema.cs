@@ -691,7 +691,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 
 			 var resultCreateAccount = ProfileCreateAlice?[0].Result as ResultCreateAccount;
 			 var profileUser = resultCreateAccount?.ProfileAccount;
-			 var activationUser = resultCreateAccount?.ActivationDevice;
+			 var activationUser = resultCreateAccount?.ActivationAccount;
 			 var catalogedDevice = AliceProfiles?.CatalogedDevice;
 			 var connectionDevice = catalogedDevice?.ConnectionDevice;
 			 var connectionService = catalogedDevice?.ConnectionService;

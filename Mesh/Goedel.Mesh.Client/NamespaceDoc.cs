@@ -30,6 +30,7 @@ global using Goedel.IO;
 global using Goedel.Protocol;
 global using Goedel.Protocol.Presentation;
 global using Goedel.Utilities;
+global using Microsoft.Extensions.Logging;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
@@ -47,3 +48,20 @@ namespace Goedel.Mesh.Client;
 class NamespaceDoc {
     }
 
+
+
+internal class Component : IComponent {
+
+    ///<summary> default logger for the assembly</summary> 
+    public static ILogger Logger = new AssemblyLogger("Goedel.Mesh.Client") {
+        LogLevel = LogLevel.Debug
+        };
+
+    ///<inheritdoc/>
+    public void Initialize() {
+        }
+
+    ///<inheritdoc/>
+    public void Terminate() {
+        }
+    }

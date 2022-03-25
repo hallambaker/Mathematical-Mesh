@@ -690,20 +690,20 @@ public partial class TestService {
     static bool Verify(ContextUser first, ContextUser second) {
         //(first.ProfileDevice.UDF == second.ProfileDevice.UDF).AssertTrue();
 
-        Verify(first.ActivationDevice, second.ActivationDevice);
+        Verify(first.ActivationAccount, second.ActivationAccount);
         Verify(first.ProfileUser, second.ProfileUser);
         (first.StoresDirectory == second.StoresDirectory).TestTrue();
         return true;
         }
 
-    static bool Verify(ActivationDevice first, ActivationDevice second) {
+    static bool Verify(ActivationAccount first, ActivationAccount second) {
         //Verify(first.ConnectionAccount, second.ConnectionAccount);
         (first.AccountUdf == second.AccountUdf).TestTrue();
         return true;
         }
 
     static bool Verify(ProfileUser first, ProfileUser second) {
-        (first.AccountEncryption.Udf == second.AccountEncryption.Udf).TestTrue();
+        (first.CommonEncryption.Udf == second.CommonEncryption.Udf).TestTrue();
         (first.Udf == second.Udf).TestTrue();
         return true;
         }

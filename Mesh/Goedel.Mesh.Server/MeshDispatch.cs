@@ -59,7 +59,7 @@ public class PublicMeshService : MeshService {
     public ProfileHost ProfileHost { get; init; }
 
     ///<summary>The host activation record.</summary> 
-    public ActivationDevice ActivationDevice { get; init; }
+    public ActivationAccount ActivationDevice { get; init; }
 
     ///<summary>The host connection record.</summary> 
     public ConnectionService ConnectionDevice { get; init; }
@@ -115,35 +115,35 @@ public class PublicMeshService : MeshService {
     /// A Mesh service provider.
     /// </summary>
     /// <param name="meshMachine">The Mesh Machine</param>
-    /// <param name="genericHostConfiguration">Host configuration.</param>
-    /// <param name="meshServicetConfiguration">Service configuration.</param>
+    /// <param name="hostConfiguration">Host configuration.</param>
+    /// <param name="meshServiceConfiguration">Service configuration.</param>
     /// <param name="logService">The transaction logging service.</param>
     public PublicMeshService(
             IMeshMachine meshMachine,
-            GenericHostConfiguration genericHostConfiguration,
-            MeshServiceConfiguration meshServicetConfiguration,
+            GenericHostConfiguration hostConfiguration,
+            MeshServiceConfiguration meshServiceConfiguration,
             LogService logService) {
         LogService = logService;
         MeshMachine = meshMachine;
-        GenericHostConfiguration = genericHostConfiguration;
-        MeshHostConfiguration = meshServicetConfiguration;
+        GenericHostConfiguration = hostConfiguration;
+        MeshHostConfiguration = meshServiceConfiguration;
         KeyCollection = MeshMachine.KeyCollection;
 
         Logger.ServiceStart(PublicMeshService.WellKnown, 
-            meshServicetConfiguration.ServiceUdf, genericHostConfiguration.HostUdf);
+            meshServiceConfiguration.ServiceUdf, GenericHostConfiguration.HostUdf);
 
         // Load the Mesh persistence base
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
         MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
 
-        var instance = genericHostConfiguration.Instance ?? meshMachine.Instance;
+        var instance = GenericHostConfiguration.Instance ?? meshMachine.Instance;
 
         Endpoints.Add(
-            new HttpEndpoint(genericHostConfiguration.HostDns, GetWellKnown,
-                    genericHostConfiguration.Port, instance, this));
+            new HttpEndpoint(GenericHostConfiguration.HostDns, GetWellKnown,
+                    GenericHostConfiguration.Port, instance, this));
 
         var meshHost = MeshHost.GetCatalogHost(MeshMachine);
-        if (meshHost?.GetStoreEntry(genericHostConfiguration.HostUdf) is CatalogedService hostServiceDescription) {
+        if (meshHost?.GetStoreEntry(GenericHostConfiguration.HostUdf) is CatalogedService hostServiceDescription) {
             // Decode the service and host profiles.
             ProfileService = hostServiceDescription.EnvelopedProfileService.Decode();
             ProfileHost = hostServiceDescription.EnvelopedProfileHost.Decode();
@@ -214,7 +214,6 @@ public class PublicMeshService : MeshService {
     /// <param name="serviceConfig">The service configuration file.</param>
     /// <param name="serviceDns">The canonical DNS name of the service</param>
     /// <param name="hostIp">The host IP address</param>
-    /// <param name="hostConfig">The host configuration identifier.</param>
     /// <param name="hostDns">The host DNS name</param>
     /// <param name="admin">The administrative account to create.</param>
     /// <param name="hostAccount">The platform account under which the host process is to run.</param>
@@ -223,8 +222,7 @@ public class PublicMeshService : MeshService {
         IMeshMachineClient meshMachine,
         string serviceConfig,
         string serviceDns,
-        string hostConfig,
-        string hostIp=null, 
+        string hostIp=null,
         string hostDns = null,
         string admin = null,
         string? hostAccount = null) {
@@ -232,7 +230,6 @@ public class PublicMeshService : MeshService {
         hostDns ??= Dns.GetHostName();
         hostIp ??= "127.0.0.1:666";
         hostDns ??= serviceDns;
-        hostConfig ??= "mmmsettings.json";
 
         var pathHost = GetHost(meshMachine, hostDns);
         var pathLog = GetHost(meshMachine, "Logs");

@@ -204,13 +204,14 @@
 		Struct KeyData EscrowEncryption
 			Description
 				|Escrow key associated with the account.
-		Struct KeyData AccountEncryption
-			Description
-				|Key currently used to encrypt data under this profile
+
 		Struct KeyData AdministratorSignature
 			Description
 				|Key used to sign connection assertions to the account.
-		Struct KeyData AccountAuthentication
+		Struct KeyData CommonEncryption
+			Description
+				|Key currently used to encrypt data under this profile
+		Struct KeyData CommonAuthentication
 			Description
 				|Key used to authenticate requests made under this user account.
 				|This key SHOULD NOT be provisioned to any device except for the
@@ -221,7 +222,7 @@
 		Description 
 			|Account assertion. This is signed by the service hosting the account.
 
-		Struct KeyData AccountSignature
+		Struct KeyData CommonSignature
 			Description
 				|Key used to sign data under the account.
 
@@ -339,7 +340,7 @@
 	Section 3 "Activation Assertions"
 		Description
 			|
-	Structure ActivationDevice
+	Structure ActivationAccount
 		Description
 			|Contains activation data for device specific keys used in the context of a 
 			|Mesh account.
@@ -353,10 +354,10 @@
 		Description
 			|Contains activation data for device specific keys used in the context of a 
 			|Mesh host
-		Inherits ActivationDevice
+		Inherits ActivationAccount
 
 
-	Structure ActivationAccount
+	Structure ActivationCommon
 		Inherits Activation
 		Struct KeyData ProfileSignature
 			Description
@@ -366,13 +367,13 @@
 			Description
 				|Grant access to Profile administration key used to make changes to
 				|administrator catalogs.
-		Struct KeyData AccountEncryption
+		Struct KeyData Encryption
 			Description
 				|Grant access to ProfileUser account encryption key
-		Struct KeyData AccountAuthentication
+		Struct KeyData Authentication
 			Description
 				|Grant access to ProfileUser account authentication key
-		Struct KeyData AccountSignature
+		Struct KeyData Signature
 			Description
 				|Grant access to ProfileUser account signature key
 
@@ -720,10 +721,10 @@
 		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
-		Struct Enveloped<ActivationDevice> EnvelopedActivationDevice
+		Struct Enveloped<ActivationAccount> EnvelopedActivationAccount
 			Description
 				|The activation of the device within the Mesh account
-		Struct Enveloped<ActivationAccount> EnvelopedActivationAccount
+		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
 			Description
 				|The activation of the device within the Mesh account
 		TStruct ApplicationEntry ApplicationEntries
@@ -982,7 +983,7 @@
 		Struct Enveloped<ProfileAccount> EnvelopedProfileGroup
 			Description
 				|The Mesh profile
-		Struct Enveloped<ActivationAccount> EnvelopedActivationAccount
+		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
 			Description
 				|The activation of the device within the Mesh account
 

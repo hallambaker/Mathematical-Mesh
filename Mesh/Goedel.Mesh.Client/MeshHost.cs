@@ -21,6 +21,8 @@
 #endregion
 
 
+using Microsoft.Extensions.Logging;
+
 namespace Goedel.Mesh.Client;
 
 // This is the operation point to address merging the mesh and account profiles.
@@ -54,6 +56,7 @@ public class MeshHost : Disposable {
     ///<summary>Dictionary mapping mesh local name to Context.</summary>
     protected Dictionary<string, ContextAccount> DictionaryLocalContextMesh = new();
 
+    static ILogger Logger => Component.Logger;
 
     bool SuppressDispose { get; }  = false;
 
@@ -307,40 +310,45 @@ public class MeshHost : Disposable {
     private ContextUser InitializeAdminContext(
                 string accountAddress,
                 string localName,
-                ref PrivateKeyUDF accountSeed,
+                ref PrivateKeyUDF commonSeed,
                 ref ProfileDevice profileDevice,
                 ref List<string> rights,
 
-                out ActivationAccount activationRoot) {
+                out ActivationCommon activationCommon) {
         // Generate the initial seed for the account if not already specified.
-        accountSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
+        commonSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
 
         // Generate a device profile if needed
         var persistDevice = profileDevice == null;
         profileDevice ??= ProfileDevice.Generate(
-            algorithmSign: accountSeed.AlgorithmSignID,
-            algorithmEncrypt: accountSeed.AlgorithmEncryptID,
-            algorithmAuthenticate: accountSeed.AlgorithmAuthenticateID);
+            algorithmSign: commonSeed.AlgorithmSignID,
+            algorithmEncrypt: commonSeed.AlgorithmEncryptID,
+            algorithmAuthenticate: commonSeed.AlgorithmAuthenticateID);
+
+        Logger.CreateDevice(profileDevice.Udf, profileDevice.KeyAuthentication?.KeyIdentifier);
+        Logger.DeviceSeed(profileDevice.SecretSeed.KeyId);
 
         // Check that the profile is valid before using it.
         profileDevice.Validate();
 
         // Create the set of cryptographic keys to initialize the account.
         // create the root activation.
-        activationRoot = new ActivationAccount(KeyCollection, accountSeed) {
+        activationCommon = new ActivationCommon(KeyCollection, commonSeed) {
             DefaultActive = true
 
             };
 
         // create the initial profile
-        var profileUser = new ProfileUser(accountAddress, activationRoot);
+        var profileUser = new ProfileUser(accountAddress, activationCommon);
+        Logger.CreateAccount(profileUser.Udf, profileUser.AccountAuthenticationKey?.KeyIdentifier);
+        Logger.CommonSeed(commonSeed.KeyId);
 
 
         // Check that the profile is valid before using it.
         profileUser.Validate();
 
         // Create the account directory.
-        ContextUser.CreateDirectory(this, profileUser, activationRoot, KeyCollection);
+        ContextUser.CreateDirectory(this, profileUser, activationCommon, KeyCollection);
 
 
         rights ??= new List<string> {
@@ -350,12 +358,15 @@ public class MeshHost : Disposable {
                 };
 
 
-        var activationDevice = new ActivationDevice(profileDevice);
+        var activationAccount = new ActivationAccount(profileDevice);
 
         // create a Cataloged activationRoot.Device entry for the admin device
-        var catalogedDevice = activationRoot.CreateCataloguedDevice(
-                profileUser, profileDevice, activationDevice, activationRoot,
-                activationRoot.AdministratorSignatureKey);
+        var catalogedDevice = activationCommon.CreateCataloguedDevice(
+                profileUser, profileDevice, activationAccount, activationCommon,
+                activationCommon.AdministratorSignatureKey);
+
+
+
 
         // Create the host catalog entry and apply to the context user.
         var catalogedMachine = new CatalogedStandard() {
@@ -369,14 +380,14 @@ public class MeshHost : Disposable {
         if (persistDevice) {
             profileDevice.PersistSeed(KeyCollection);
             }
-        KeyCollection.Persist(profileUser.Udf, accountSeed, false);
+        KeyCollection.Persist(profileUser.Udf, commonSeed, false);
 
 
         // Return a user context. It is necessary to ovewrite the activation records
         // because the cataloged device entry in catalogedMachine is not yet final. 
         return new ContextUser(this, catalogedMachine) {
-            ActivationAccount = activationRoot,
-            ActivationDevice = activationDevice
+            ActivationCommon = activationCommon,
+            ActivationAccount = activationAccount
             };
         }
 

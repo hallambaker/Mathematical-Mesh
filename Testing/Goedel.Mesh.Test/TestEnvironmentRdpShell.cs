@@ -30,9 +30,6 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
     Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter ServiceAdminCLI { get; set; }
 
 
-    Goedel.Mesh.Shell.Host.Shell HostShell { get; set; }
-    Goedel.Mesh.Shell.Host.CommandLineInterpreter HostAdminCLI { get; set; }
-
     //public override string ServiceDns { get; }
 
     public TestEnvironmentRdpShell() { }
@@ -40,10 +37,6 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
     RudService RudService { get; set; }
 
-
-    public string ServiceHost => "ServiceHost1";
-
-    Scoreboard Scoreboard = new Scoreboard();
     IEnumerable<IConfguredService> Providers;
     protected override void Disposing() {
         RudService?.Dispose();
@@ -96,7 +89,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
         }
 
 
-    public virtual RudService StartService() {
+    public override void StartService() {
         var dnsConfig = "db.meshService";
         var netshConfig = "Service.netsh";
 
@@ -110,14 +103,16 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
             MeshMachine = HostMachine
             };
         ServiceAdminCLI = new();
-        ServiceAdmin($"create example.com /host=host1.example.com /admin=alice.example.com /account=Domain\\user");
+        ServiceAdmin($"create example.com /host=host1.example.com /admin=admin@example.com /account=Domain\\user");
 
         ServiceAdmin($"dns {dnsConfig}");
         ServiceAdmin($"netsh {netshConfig}");
         var listener = DependencyInjectionHostAsync();
 
 
-        return listener.RudService;
+        RudService = listener.RudService;
+
+
         }
 
 
@@ -128,7 +123,9 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
             string service
            ) {
 
-        RudService ??= StartService();
+        if (RudService == null) {
+            StartService();
+            }
 
         var meshServiceBinding = new ConnectionInitiator(
                 credential, ServiceDns, Test, TransportType.Http, MeshServiceClient.WellKnown);
