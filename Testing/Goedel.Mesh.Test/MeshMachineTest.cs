@@ -182,12 +182,15 @@ public class MeshMachineTest : MeshMachineCore {
         }
 
     public void ResetHost() {
-        PersistHost.Dispose();
-        PersistHost = new PersistHost(FileNameHost, FileTypeHost,
-            fileStatus: FileStatus.ConcurrentLocked,
-            containerType: SequenceType.Merkle);
+        MeshHost.ReloadContexts();
 
-        MeshHost = new MeshHost(PersistHost, this);
+
+        //PersistHost.Dispose();
+        //PersistHost = new PersistHost(FileNameHost, FileTypeHost,
+        //    fileStatus: FileStatus.ConcurrentLocked,
+        //    containerType: SequenceType.Merkle);
+
+        //MeshHost = new MeshHost(PersistHost, this);
         }
 
     }

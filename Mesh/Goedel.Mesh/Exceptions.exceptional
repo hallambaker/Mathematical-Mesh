@@ -105,3 +105,21 @@ Namespace Goedel.Mesh
 
 	Trace 104 AddAccessCapability "Add accessCapability {Key}"
 		key string "Authentication key"
+
+
+
+
+	Debug 120 GrantStore "Grant store {Store} access {Access} degree {Degree} key {KeyId}"
+		store string "Store name"
+		access Access "Access type"
+		degree Degree "Degree (direct/threshold)"
+		keyId string "Key identifier"
+
+	Debug 121 GrantAccount "Grant account decrypt {Decrypt} authenticate {Authenticate} sign {Sign}"
+		decrypt bool "Decrypt"
+		authenticate bool "Authenticate"
+		sign bool "Sign"
+
+	Debug 121 GrantRoot "Grant root"
+
+	Debug 121 GrantAdmin "Grant administrator access"

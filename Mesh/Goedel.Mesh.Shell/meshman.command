@@ -177,6 +177,7 @@
 			Include AccountOptions
 			Parameter Account "account" String
 				Brief "Account"	
+
 		Command AccountCreate "create"
 			Brief "Create new account profile"
 			Parameter NewAccountID "account" String
@@ -204,6 +205,11 @@
 			Include Reporting
 
 
+		Command AccountInfo "Info"
+			Brief "Report the public keys of the specified account"
+			Include AccountOptions
+			Include Reporting
+		
 		Command AccountGetPIN "pin"
 			Brief "Get a pin value to pre-authorize a connection"
 			Option Length "length" Integer

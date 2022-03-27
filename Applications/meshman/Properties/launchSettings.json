@@ -12,17 +12,17 @@
     },
     "Hello": {
       "commandName": "Project",
-      "commandLineArgs": "account hello /account=test@example.com ",
+      "commandLineArgs": "account hello /account=alice@example.com ",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "Create": {
       "commandName": "Project",
-      "commandLineArgs": "account create test@example.com ",
+      "commandLineArgs": "account create alice@example.com ",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "Encode": {
       "commandName": "Project",
-      "commandLineArgs": "dare encode foo.html foo.dare /encrypt test@example.com",
+      "commandLineArgs": "dare encode foo.html foo.dare /encrypt alice@example.com",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "Decode": {
@@ -32,12 +32,17 @@
     },
     "Request Connect": {
       "commandName": "Project",
-      "commandLineArgs": "device request test@example.com ",
+      "commandLineArgs": "device request alice@example.com ",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "Pending": {
       "commandName": "Project",
       "commandLineArgs": "device pending ",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "Accept": {
+      "commandName": "Project",
+      "commandLineArgs": "device accept  B4PK-H3DX-OVFR-ZPMP-56YI-ONXB-NR5E",
       "workingDirectory": "..\\..\\TestResults\\Service"
     }
   }

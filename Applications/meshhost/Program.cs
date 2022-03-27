@@ -19,12 +19,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using Goedel.IO;
 using Goedel.Mesh.Shell.Host;
 
 internal sealed class Program {
     static void Main(string[] args) {
         Shell shell = new() {
-            MeshMachine = new MeshMachineCore(),
+            MeshMachine = new MeshMachineCore(fileStatus: FileStatus.Read),
             AddPlatformServices = AddPlatformServices
             };
 

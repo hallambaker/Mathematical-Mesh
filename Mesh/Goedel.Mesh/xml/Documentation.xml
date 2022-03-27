@@ -6211,6 +6211,41 @@
             <param name="key">Authentication key</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
+        <member name="M:Goedel.Mesh.EventExtensions.GrantStore(Microsoft.Extensions.Logging.ILogger,System.String,Goedel.Mesh.Access,Goedel.Mesh.Degree,System.String,System.Exception)">
+            <summary>
+            Write an event of type GrantStore to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="store">Store name</param>
+            <param name="access">Access type</param>
+            <param name="degree">Degree (direct/threshold)</param>
+            <param name="keyId">Key identifier</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.EventExtensions.GrantAccount(Microsoft.Extensions.Logging.ILogger,System.Boolean,System.Boolean,System.Boolean,System.Exception)">
+            <summary>
+            Write an event of type GrantAccount to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="decrypt">Decrypt</param>
+            <param name="authenticate">Authenticate</param>
+            <param name="sign">Sign</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.EventExtensions.GrantRoot(Microsoft.Extensions.Logging.ILogger,System.Exception)">
+            <summary>
+            Write an event of type GrantRoot to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.EventExtensions.GrantAdmin(Microsoft.Extensions.Logging.ILogger,System.Exception)">
+            <summary>
+            Write an event of type GrantAdmin to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
         <member name="T:Goedel.Mesh.Extensions">
             <summary>
             Static extensions class.

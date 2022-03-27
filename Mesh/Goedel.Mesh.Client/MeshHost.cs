@@ -21,7 +21,11 @@
 #endregion
 
 
+using Goedel.Cryptography.Dare;
+using Goedel.IO;
 using Microsoft.Extensions.Logging;
+using System.Reflection.PortableExecutable;
+using System.Security.Cryptography;
 
 namespace Goedel.Mesh.Client;
 
@@ -43,12 +47,15 @@ public class MeshHost : Disposable {
     ///<summary>The Mesh machine client.</summary>
     public IMeshMachineClient MeshMachine;
 
-    ///<summary>The host persistence container.</summary> 
-    public PersistHost ContainerHost { get; }
+    /////<summary>The host persistence container.</summary> 
+    PersistHost PersistHost { get; }
 
     ///<summary>The Key Collection of the Mesh Machine.</summary>
     public IKeyCollection KeyCollection => MeshMachine.KeyCollection;
 
+
+
+    protected Dictionary<string, StoreEntry> ObjectIndex = new();
 
     ///<summary>Dictionary mapping mesh UDF to Context.</summary>
     protected Dictionary<string, ContextAccount> DictionaryUDFContextMesh = new();
@@ -56,20 +63,27 @@ public class MeshHost : Disposable {
     ///<summary>Dictionary mapping mesh local name to Context.</summary>
     protected Dictionary<string, ContextAccount> DictionaryLocalContextMesh = new();
 
+    public CatalogedMachine DefaultEntry { get; private set; }
+    
     static ILogger Logger => Component.Logger;
 
     bool SuppressDispose { get; }  = false;
 
+
+    string Filename { get; }
+
+
     //keyCollection ??
     //        new KeyCollectionClient(this, MeshMachine.KeyCollection).CacheValue(out keyCollection);
     //KeyCollection keyCollection;
-
+    ///<summary>The IANA media type for the host file data.</summary>
+    public const string FileTypeHost = "application/mmm-host";
 
     #endregion
     #region // Boilerplate for disposal etc.
     ///<summary>Disposal routine.</summary>
     protected override void Disposing() {
-        ContainerHost.Dispose();
+        //PersistHost.Dispose();
         foreach (var item in DictionaryLocalContextMesh) {
             item.Value.Dispose();
             }
@@ -78,22 +92,73 @@ public class MeshHost : Disposable {
     #endregion
     #region // Constructors and factories
 
-    /// <summary>
-    /// Get the host catalog from the specified mesh machine.
-    /// </summary>
-    /// <param name="meshMachine">The Mesh Machine.</param>
-    /// <param name="containerHost">The host catalog.</param>
-    public MeshHost(PersistHost containerHost, IMeshMachineClient meshMachine) {
-        this.MeshMachine = meshMachine;
-        this.ContainerHost = containerHost;
 
-        foreach (var entry in containerHost.ObjectIndex) {
+    public MeshHost(string fileName, IMeshMachineClient meshMachine) {
+        MeshMachine = meshMachine;
+        Filename = fileName;
+        ReadHost();
+        }
+
+    public void ReadHost() {
+        using var persistHost = new PersistHost(Filename, FileTypeHost,
+            fileStatus: FileStatus.Read,
+            containerType: SequenceType.Merkle);
+        var old = DictionaryUDFContextMesh;
+
+
+        DictionaryUDFContextMesh = new();
+        DictionaryLocalContextMesh = new();
+        ObjectIndex = new();
+        DefaultEntry = persistHost.DefaultEntry;
+
+        foreach (var entry in persistHost.ObjectIndex) {
+            ObjectIndex.Add(entry.Key, entry.Value);
+
             var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
-            GetContext(catalogedMachine);
-            //Console.WriteLine($"Container  {entry.Key}  of {entry.Value.GetType()}");
+
+            if (old.TryGetValue(catalogedMachine.Id, out var contextMesh)) {
+                // Context was already loaded - reuse
+                DictionaryUDFContextMesh.Add(catalogedMachine.Id, contextMesh);
+                if (catalogedMachine.Local != null) {
+                    DictionaryLocalContextMesh.AddSafe(catalogedMachine.Local, contextMesh);
+                    }
+                old.Remove(catalogedMachine.Id);
+                }
+            else {
+                // add the new context
+                GetContext(catalogedMachine);
+                }
             }
 
+        // Delete any deleted contexts
+        foreach (var entry in old.Values) {
+            entry.Dispose();
+            }
         }
+    public void ReloadContexts() {
+
+        foreach (var entry in DictionaryUDFContextMesh.Values) {
+            entry.Dispose();
+            }
+        ReadHost();
+
+        }
+
+    ///// <summary>
+    ///// Get the host catalog from the specified mesh machine.
+    ///// </summary>
+    ///// <param name="meshMachine">The Mesh Machine.</param>
+    ///// <param name="containerHost">The host catalog.</param>
+    //public MeshHost(PersistHost containerHost, IMeshMachineClient meshMachine) {
+    //    this.MeshMachine = meshMachine;
+    //    this.PersistHost = containerHost;
+
+    //    foreach (var entry in containerHost.ObjectIndex) {
+    //        var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
+    //        GetContext(catalogedMachine);
+    //        }
+
+    //    }
 
     /// <summary>
     /// Return a new MeshHost instance with the fields and properties of <paramref name="parent"/>
@@ -104,7 +169,7 @@ public class MeshHost : Disposable {
     /// <param name="meshMachine">The substitute MeshMachine.</param>
     public MeshHost(MeshHost parent, IMeshMachineClient meshMachine) {
         this.MeshMachine = meshMachine;
-        ContainerHost = parent.ContainerHost;
+        //PersistHost = parent.PersistHost;
         DictionaryUDFContextMesh = parent.DictionaryUDFContextMesh;
         DictionaryLocalContextMesh = parent.DictionaryLocalContextMesh;
         SuppressDispose = true;
@@ -155,7 +220,7 @@ public class MeshHost : Disposable {
     /// <param name="key">The primary key of the object selected.</param>
     /// <returns>The object selected, if found, otherwise null.</returns>
     public JsonObject? GetStoreEntry(string key) {
-        if (ContainerHost.ObjectIndex.TryGetValue (key, out var storeEntry) ){
+        if (ObjectIndex.TryGetValue (key, out var storeEntry) ){
             return storeEntry.JsonObject;
 
             }
@@ -231,18 +296,13 @@ public class MeshHost : Disposable {
     /// already exist.</param>
     /// <param name="context">The dynamic context that interfaces to the catalog item.</param>
     public void Register(HostCatalogItem catalogItem, ContextAccount context = null, bool create = true) {
-
+        using var persistHost = new PersistHost(Filename, FileTypeHost,
+                fileStatus: FileStatus.ConcurrentLocked, containerType: SequenceType.Merkle);
         // persist the permanent record.
-        ContainerHost.Update(catalogItem, create);
+        persistHost.Update(catalogItem, create);
         if (context != null) {
             Register(context);
             }
-        //if (machine.JsonObject is CatalogedMachine catalogedMachine) {
-        //    Register(catalogedMachine);
-        //    }
-
-        //// register the dynamic context
-
 
         }
 
@@ -251,8 +311,11 @@ public class MeshHost : Disposable {
     /// Delete <paramref name="key"/> from the host catalog.
     /// </summary>
     /// <param name="key">The profile to delete</param>
-    public virtual void Delete(string key) =>
-            ContainerHost.Delete(key);
+    public virtual void Delete(string key) {
+        using var persistHost = new PersistHost(Filename, FileTypeHost,
+                fileStatus: FileStatus.ConcurrentLocked, containerType: SequenceType.Merkle);
+        persistHost.Delete(key);
+        }
     #endregion
 
 
@@ -407,7 +470,7 @@ public class MeshHost : Disposable {
 
         admin.Future();
 
-        var key = localName ?? ContainerHost?.DefaultEntry?.Id;
+        var key = localName ?? DefaultEntry?.Id;
         return key == null ? null : LocateMesh(key);
         }
 
@@ -420,7 +483,7 @@ public class MeshHost : Disposable {
     public ContextUser Complete(
             string localName = null) {
 
-        var machine = ContainerHost.GetForCompletion(localName);
+        var machine = GetForCompletion(localName);
 
         switch (machine) {
             case CatalogedPending catalogedPending: {
@@ -435,7 +498,44 @@ public class MeshHost : Disposable {
         return null;
         }
 
+    /// <summary>
+    /// Gets the machine waiting for completion that mactches <paramref name="localName"/> if
+    /// specified, or the default pending machine otherwise or the default preconfigured
+    /// machine if not found.
+    /// </summary>
+    /// <param name="localName">The machine to fetch.</param>
+    /// <returns>The machine if found, otherwise null.</returns>
+    public CatalogedMachine GetForCompletion(string localName = null) {
+        if (localName != null) {
+            foreach (var containerStoreEntry in ObjectIndex.Values) {
+                var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
 
+                if (localName != null & catalogItem.Local == localName) {
+                    return catalogItem;
+                    }
+                }
+            return null;
+            }
+
+        CatalogedMachine preconfiguredMachine = null;
+        foreach (var containerStoreEntry in ObjectIndex.Values) {
+            var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
+
+            switch (catalogItem) {
+                case CatalogedPending _: {
+                        return catalogItem;
+
+                        // Hack: Should have a mechanism to time out connection attempts.
+                        }
+                case CatalogedPreconfigured _: {
+                        preconfiguredMachine = catalogItem;
+                        break;
+                        }
+                }
+
+            }
+        return preconfiguredMachine;
+        }
 
 
     /// <summary>

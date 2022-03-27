@@ -173,13 +173,15 @@ public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
     /// </summary>
     /// <param name="directory">Directory to store the server information.</param>
     /// <param name="direct">If true, force use of the platform key stores.</param>
-    public MeshMachineCore(string? directory = null, bool direct = false) : base(directory, direct) {
-        // Read the container to get the directories.
-        PersistHost = new PersistHost(FileNameHost, FileTypeHost,
-            fileStatus: FileStatus.ConcurrentLocked,
-            containerType: SequenceType.Merkle);
+    public MeshMachineCore(
+            string? directory = null, 
+            bool direct = false) : base(directory, direct) {
+        //// Read the container to get the directories.
+        //PersistHost = new PersistHost(FileNameHost, FileTypeHost,
+        //    fileStatus: fileStatus,
+        //    containerType: SequenceType.Merkle);
 
-        MeshHost = new MeshHost(PersistHost, this);
+        MeshHost = new MeshHost(FileNameHost, this);
         }
 
     #region // Convenience accessors
@@ -194,11 +196,11 @@ public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
 
     ///<inheritdoc/>
     public override ICredentialPrivate GetCredential(string deviceUdf, string connectionUdf) {
-
-        if (!MeshHost.ContainerHost.ObjectIndex.TryGetValue(connectionUdf, out var Service)) {
+        var service = MeshHost.GetStoreEntry(connectionUdf);
+        if (service == null) {
             return null;
             }
-        var catalogedMachine = Service.JsonObject as CatalogedService;
+        var catalogedMachine = service as CatalogedService;
         var deviceKeySeed = KeyCollection.LocatePrivateKey(deviceUdf) as PrivateKeyUDF;
 
 

@@ -446,13 +446,14 @@ public partial class ActivationCommon {
 
         switch (right.Resource) {
             case Resource.ProfileRoot: {
-
+                    Component.Logger.GrantRoot();
                     newActivation.ProfileSignature = catalog.MakeKeyData(right,
                         ProfileSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
 
                     break;
                     }
             case Resource.ProfileAdmin: {
+                    Component.Logger.GrantAdmin();
                     newActivation.AdministratorSignature = catalog.MakeKeyData(right,
                         AdministratorSignatureKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
                     newActivation.DefaultActive = true;
@@ -463,6 +464,7 @@ public partial class ActivationCommon {
                     break;
                     }
             case Resource.Account: {
+                    Component.Logger.GrantAccount(right.Decrypt, right.Authenticate, right.Sign);
                     if (right.Decrypt) {
                         newActivation.Encryption = catalog.MakeKeyData(right,
                                 CommonEncryptionKey as KeyPairAdvanced, keyIdentifier, transactContextAccount);
@@ -502,6 +504,11 @@ public partial class ActivationCommon {
         else {
             return;
             }
+
+        Component.Logger.GrantStore(right.Name, right.Access, right.Degree, keyPair.KeyIdentifier[0..8]);
+
+
+
         var catalogAccess = transactContextAccount.GetCatalogAccess();
         var activationEntry = catalogAccess.MakeActivation(
             right, keyPair as KeyPairAdvanced, keyIdentifier, transactContextAccount);

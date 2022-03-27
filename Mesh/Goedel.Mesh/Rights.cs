@@ -284,6 +284,7 @@ public static partial class Rights {
                     new Right(Resource.ProfileRoot, Access.Sign),
                     new Right(Resource.ProfileAdmin, Access.Sign | Access.GrantSign),
                     new Right(Resource.Store, Access.ReadWrite, CatalogDevice.Label),
+                    new Right(Resource.Store, Access.GrantReadWrite, CatalogAccess.Label)
                     };
 
     ///<summary>Device admninistrator rights</summary> 
@@ -291,7 +292,8 @@ public static partial class Rights {
                 new List<Right>() {
                         // Needed to create and publish device connection
                         new Right (Resource.ProfileAdmin, Access.Sign),
-                        new Right (Resource.Store, Access.Sign, SpoolLocal.Label)
+                        new Right (Resource.Store, Access.Sign, SpoolLocal.Label),
+                        new Right (Resource.Store, Access.GrantReadWrite, CatalogAccess.Label)
                     }.Concat(RightsGrantUser);
 
 

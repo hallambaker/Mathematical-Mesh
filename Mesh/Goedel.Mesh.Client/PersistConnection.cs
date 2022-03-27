@@ -83,76 +83,76 @@ public class PersistHost : PersistenceStore {
         }
 
 
-    /// <summary>
-    /// Get Mesh machine with the localname <paramref name="localName"/>
-    /// </summary>
-    /// <param name="localName">Name of the machine to fetch.</param>
-    /// <returns>The machine if found, otherwise null.</returns>
-    public CatalogedMachine GetByName(string localName) {
-        foreach (var containerStoreEntry in this) {
-            var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
+    ///// <summary>
+    ///// Get Mesh machine with the localname <paramref name="localName"/>
+    ///// </summary>
+    ///// <param name="localName">Name of the machine to fetch.</param>
+    ///// <returns>The machine if found, otherwise null.</returns>
+    //public CatalogedMachine GetByName(string localName) {
+    //    foreach (var containerStoreEntry in this) {
+    //        var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
 
-            if (localName != null & catalogItem.Local == localName) {
-                return catalogItem;
-                }
-            }
-        return null;
-        }
+    //        if (localName != null & catalogItem.Local == localName) {
+    //            return catalogItem;
+    //            }
+    //        }
+    //    return null;
+    //    }
 
-    /// <summary>
-    /// Get Mesh machine that matches <paramref name="localName"/> if specified, otherwise
-    /// the default machine.
-    /// </summary>
-    /// <param name="localName">The machine to fetch.</param>
-    /// <returns>The machine if found, otherwise null.</returns>
-    public CatalogedMachine GetMachine(string localName = null) {
-        if (localName != null) {
-            return GetByName(localName);
-            }
+    ///// <summary>
+    ///// Get Mesh machine that matches <paramref name="localName"/> if specified, otherwise
+    ///// the default machine.
+    ///// </summary>
+    ///// <param name="localName">The machine to fetch.</param>
+    ///// <returns>The machine if found, otherwise null.</returns>
+    //public CatalogedMachine GetMachine(string localName = null) {
+    //    if (localName != null) {
+    //        return GetByName(localName);
+    //        }
 
-        CatalogedMachine defaultMachine = null;
+    //    CatalogedMachine defaultMachine = null;
 
-        foreach (var containerStoreEntry in this) {
-            var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
+    //    foreach (var containerStoreEntry in this) {
+    //        var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
 
-            if (catalogItem.Default) {
-                defaultMachine = catalogItem;
-                }
-            }
-        return defaultMachine;
-        }
+    //        if (catalogItem.Default) {
+    //            defaultMachine = catalogItem;
+    //            }
+    //        }
+    //    return defaultMachine;
+    //    }
 
-    /// <summary>
-    /// Gets the machine waiting for completion that mactches <paramref name="localName"/> if
-    /// specified, or the default pending machine otherwise or the default preconfigured
-    /// machine if not found.
-    /// </summary>
-    /// <param name="localName">The machine to fetch.</param>
-    /// <returns>The machine if found, otherwise null.</returns>
-    public CatalogedMachine GetForCompletion(string localName = null) {
-        if (localName != null) {
-            return GetByName(localName);
-            }
+    ///// <summary>
+    ///// Gets the machine waiting for completion that mactches <paramref name="localName"/> if
+    ///// specified, or the default pending machine otherwise or the default preconfigured
+    ///// machine if not found.
+    ///// </summary>
+    ///// <param name="localName">The machine to fetch.</param>
+    ///// <returns>The machine if found, otherwise null.</returns>
+    //public CatalogedMachine GetForCompletion(string localName = null) {
+    //    if (localName != null) {
+    //        return GetByName(localName);
+    //        }
 
-        CatalogedMachine preconfiguredMachine = null;
-        foreach (var containerStoreEntry in this) {
-            var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
+    //    CatalogedMachine preconfiguredMachine = null;
+    //    foreach (var containerStoreEntry in this) {
+    //        var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
 
-            switch (catalogItem) {
-                case CatalogedPending _: {
-                        return catalogItem;
+    //        switch (catalogItem) {
+    //            case CatalogedPending _: {
+    //                    return catalogItem;
 
-                        // Hack: Should have a mechanism to time out connection attempts.
-                        }
-                case CatalogedPreconfigured _: {
-                        preconfiguredMachine = catalogItem;
-                        break;
-                        }
-                }
+    //                    // Hack: Should have a mechanism to time out connection attempts.
+    //                    }
+    //            case CatalogedPreconfigured _: {
+    //                    preconfiguredMachine = catalogItem;
+    //                    break;
+    //                    }
+    //            }
 
-            }
-        return preconfiguredMachine;
-        }
+    //        }
+    //    return preconfiguredMachine;
+    //    }
 
 
     /// <summary>

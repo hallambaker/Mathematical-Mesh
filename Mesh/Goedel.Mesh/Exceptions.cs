@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 25-Mar-22 6:13:26 PM
+//  This file was automatically generated at 27-Mar-22 5:41:09 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1074,6 +1074,18 @@ public  static partial class EventExtensions {
         _AddAccessCapability = LoggerMessage.Define<string>(
             LogLevel.Trace, new EventId(104, nameof(_AddAccessCapability)),
             "Add accessCapability {Key}");
+        _GrantStore = LoggerMessage.Define<string,Access,Degree,string>(
+            LogLevel.Debug, new EventId(120, nameof(_GrantStore)),
+            "Grant store {Store} access {Access} degree {Degree} key {KeyId}");
+        _GrantAccount = LoggerMessage.Define<bool,bool,bool>(
+            LogLevel.Debug, new EventId(121, nameof(_GrantAccount)),
+            "Grant account decrypt {Decrypt} authenticate {Authenticate} sign {Sign}");
+        _GrantRoot = LoggerMessage.Define(
+            LogLevel.Debug, new EventId(121, nameof(_GrantRoot)),
+            "Grant root");
+        _GrantAdmin = LoggerMessage.Define(
+            LogLevel.Debug, new EventId(121, nameof(_GrantAdmin)),
+            "Grant administrator access");
         }
 
 
@@ -1178,6 +1190,76 @@ public  static partial class EventExtensions {
 			string key,
 			Exception _exception=null) {
         _AddAccessCapability(logger, key, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Access, Degree, string, Exception> _GrantStore;
+
+	/// <summary>
+    /// Write an event of type GrantStore to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="store">Store name</param>
+	/// <param name="access">Access type</param>
+	/// <param name="degree">Degree (direct/threshold)</param>
+	/// <param name="keyId">Key identifier</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void GrantStore(
+			this ILogger logger,
+			string store,
+			Access access,
+			Degree degree,
+			string keyId,
+			Exception _exception=null) {
+        _GrantStore(logger, store, access, degree, keyId, _exception);
+        }
+
+
+    private static readonly Action<ILogger, bool, bool, bool, Exception> _GrantAccount;
+
+	/// <summary>
+    /// Write an event of type GrantAccount to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="decrypt">Decrypt</param>
+	/// <param name="authenticate">Authenticate</param>
+	/// <param name="sign">Sign</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void GrantAccount(
+			this ILogger logger,
+			bool decrypt,
+			bool authenticate,
+			bool sign,
+			Exception _exception=null) {
+        _GrantAccount(logger, decrypt, authenticate, sign, _exception);
+        }
+
+
+    private static readonly Action<ILogger, Exception> _GrantRoot;
+
+	/// <summary>
+    /// Write an event of type GrantRoot to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void GrantRoot(
+			this ILogger logger,
+			Exception _exception=null) {
+        _GrantRoot(logger, _exception);
+        }
+
+
+    private static readonly Action<ILogger, Exception> _GrantAdmin;
+
+	/// <summary>
+    /// Write an event of type GrantAdmin to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void GrantAdmin(
+			this ILogger logger,
+			Exception _exception=null) {
+        _GrantAdmin(logger, _exception);
         }
 
 	}
