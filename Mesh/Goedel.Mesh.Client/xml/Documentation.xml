@@ -2730,17 +2730,41 @@
         <member name="P:Goedel.Mesh.Client.MeshHost.KeyCollection">
             <summary>The Key Collection of the Mesh Machine.</summary>
         </member>
+        <member name="F:Goedel.Mesh.Client.MeshHost.ObjectIndex">
+            <summary>The object index</summary> 
+        </member>
         <member name="F:Goedel.Mesh.Client.MeshHost.DictionaryUDFContextMesh">
             <summary>Dictionary mapping mesh UDF to Context.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.MeshHost.DictionaryLocalContextMesh">
             <summary>Dictionary mapping mesh local name to Context.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.MeshHost.DefaultEntry">
+            <summary>The default context</summary> 
+        </member>
         <member name="F:Goedel.Mesh.Client.MeshHost.FileTypeHost">
             <summary>The IANA media type for the host file data.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.Disposing">
             <summary>Disposal routine.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.#ctor(System.String,Goedel.Mesh.Client.IMeshMachineClient)">
+            <summary>
+            Constructor returning an instance that will read the hosts file 
+            <paramref name="fileName"/>.
+            </summary>
+            <param name="fileName">The hosts file.</param>
+            <param name="meshMachine">The machine binding.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.ReadHost">
+            <summary>
+            Read or re-read the hosts data.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.ReloadContexts">
+            <summary>
+            Force disposal of all contexts and re-load the hosts file.
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.IMeshMachineClient)">
             <summary>

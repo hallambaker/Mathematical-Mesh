@@ -65,7 +65,7 @@ public class MeshHost : Disposable {
     
     static ILogger Logger => Component.Logger;
 
-    bool SuppressDispose { get; }  = false;
+    //bool SuppressDispose { get; }  = false;
 
 
     string Filename { get; }
@@ -187,7 +187,8 @@ public class MeshHost : Disposable {
         //PersistHost = parent.PersistHost;
         DictionaryUDFContextMesh = parent.DictionaryUDFContextMesh;
         DictionaryLocalContextMesh = parent.DictionaryLocalContextMesh;
-        SuppressDispose = true;
+        //SuppressDispose = true;
+        Filename = parent.Filename;
         }
 
 
