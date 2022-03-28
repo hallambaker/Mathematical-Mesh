@@ -92,7 +92,7 @@
             Disposing routine. Feee internal resources  and shut down the Mesh Host.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCore.#ctor(System.String,System.Boolean,Goedel.IO.FileStatus)">
+        <member name="M:Goedel.Mesh.MeshMachineCore.#ctor(System.String,System.Boolean)">
             <summary>
             Constructor, creating a service instance using <paramref name="directory"/>
             to store persistent data.

@@ -25,7 +25,7 @@ using Goedel.Mesh.Shell.Host;
 internal sealed class Program {
     static void Main(string[] args) {
         Shell shell = new() {
-            MeshMachine = new MeshMachineCore(fileStatus: FileStatus.Read),
+            MeshMachine = new MeshMachineCore(),
             AddPlatformServices = AddPlatformServices
             };
 

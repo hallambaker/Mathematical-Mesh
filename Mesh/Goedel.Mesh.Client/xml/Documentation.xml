@@ -2727,9 +2727,6 @@
         <member name="F:Goedel.Mesh.Client.MeshHost.MeshMachine">
             <summary>The Mesh machine client.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.MeshHost.ContainerHost">
-            <summary>The host persistence container.</summary> 
-        </member>
         <member name="P:Goedel.Mesh.Client.MeshHost.KeyCollection">
             <summary>The Key Collection of the Mesh Machine.</summary>
         </member>
@@ -2739,15 +2736,11 @@
         <member name="F:Goedel.Mesh.Client.MeshHost.DictionaryLocalContextMesh">
             <summary>Dictionary mapping mesh local name to Context.</summary>
         </member>
+        <member name="F:Goedel.Mesh.Client.MeshHost.FileTypeHost">
+            <summary>The IANA media type for the host file data.</summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.Disposing">
             <summary>Disposal routine.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.#ctor(Goedel.Mesh.Client.PersistHost,Goedel.Mesh.Client.IMeshMachineClient)">
-            <summary>
-            Get the host catalog from the specified mesh machine.
-            </summary>
-            <param name="meshMachine">The Mesh Machine.</param>
-            <param name="containerHost">The host catalog.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.IMeshMachineClient)">
             <summary>
@@ -2840,6 +2833,15 @@
             <param name="localName"></param>
             <returns>Context for the newly bound account.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.GetForCompletion(System.String)">
+            <summary>
+            Gets the machine waiting for completion that mactches <paramref name="localName"/> if
+            specified, or the default pending machine otherwise or the default preconfigured
+            machine if not found.
+            </summary>
+            <param name="localName">The machine to fetch.</param>
+            <returns>The machine if found, otherwise null.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.Connect(System.String,System.String,System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Begin connection to a service.
@@ -2901,30 +2903,6 @@
             <param name="fileStatus">The file status in which to open the container.</param>
             <param name="keyCollection">The key collection to use to resolve private keys.</param>
             <param name="readContainer">If true read the container to initialize the persistence store.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.GetByName(System.String)">
-            <summary>
-            Get Mesh machine with the localname <paramref name="localName"/>
-            </summary>
-            <param name="localName">Name of the machine to fetch.</param>
-            <returns>The machine if found, otherwise null.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.GetMachine(System.String)">
-            <summary>
-            Get Mesh machine that matches <paramref name="localName"/> if specified, otherwise
-            the default machine.
-            </summary>
-            <param name="localName">The machine to fetch.</param>
-            <returns>The machine if found, otherwise null.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.GetForCompletion(System.String)">
-            <summary>
-            Gets the machine waiting for completion that mactches <paramref name="localName"/> if
-            specified, or the default pending machine otherwise or the default preconfigured
-            machine if not found.
-            </summary>
-            <param name="localName">The machine to fetch.</param>
-            <returns>The machine if found, otherwise null.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.PersistHost.MemoryCommitNew(Goedel.Cryptography.Dare.StoreEntry)">
             <summary>

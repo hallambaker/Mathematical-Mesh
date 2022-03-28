@@ -100,15 +100,19 @@ public class MeshHost : Disposable {
         }
 
     public void ReadHost() {
-        using var persistHost = new PersistHost(Filename, FileTypeHost,
-            fileStatus: FileStatus.Read,
-            containerType: SequenceType.Merkle);
+
         var old = DictionaryUDFContextMesh;
 
 
         DictionaryUDFContextMesh = new();
         DictionaryLocalContextMesh = new();
         ObjectIndex = new();
+        DefaultEntry = null;
+        using var persistHost = new PersistHost(Filename, FileTypeHost,
+            fileStatus: FileStatus.ConcurrentLocked,
+            containerType: SequenceType.Merkle);
+
+
         DefaultEntry = persistHost.DefaultEntry;
 
         foreach (var entry in persistHost.ObjectIndex) {
@@ -299,7 +303,11 @@ public class MeshHost : Disposable {
         using var persistHost = new PersistHost(Filename, FileTypeHost,
                 fileStatus: FileStatus.ConcurrentLocked, containerType: SequenceType.Merkle);
         // persist the permanent record.
-        persistHost.Update(catalogItem, create);
+        var entry = persistHost.Update(catalogItem, create) as StoreEntry;
+        if (ObjectIndex.ContainsKey(catalogItem._PrimaryKey)) {
+            ObjectIndex.Remove(catalogItem._PrimaryKey);
+            }
+        ObjectIndex.Add(catalogItem._PrimaryKey, entry);
         if (context != null) {
             Register(context);
             }
@@ -315,6 +323,7 @@ public class MeshHost : Disposable {
         using var persistHost = new PersistHost(Filename, FileTypeHost,
                 fileStatus: FileStatus.ConcurrentLocked, containerType: SequenceType.Merkle);
         persistHost.Delete(key);
+        ObjectIndex.Remove(key);
         }
     #endregion
 
