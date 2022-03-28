@@ -152,9 +152,6 @@ public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
     public virtual MeshHost MeshHost { get; protected set; }
 
 
-    protected virtual PersistHost PersistHost { get; set; }
-
-
     ///<summary>The file name of the host catalog.</summary>
     public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
 

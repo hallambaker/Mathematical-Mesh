@@ -216,6 +216,7 @@ public partial class Shell : _Shell {
     /// Get a Mesh Client for the options <paramref name="options"/>.
     /// </summary>
     /// <param name="options">Options specifying the Mesh account id to bind to.</param>
+    /// <param name="address">Specify the account address byh fully qualified or local name.</param>
     /// <returns>The Mesh Client.</returns>
     public virtual MeshServiceClient GetMeshClient(IAccountOptions options, string address=null) {
         var context = MeshHost.GetContextMesh(options.AccountAddress.Value);

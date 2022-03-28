@@ -58,8 +58,6 @@ ToolTargets = \
 	Web\CommandsetCalendar.cs\
 	Web\CommandsetNetwork.cs\
 	Web\CommandsetMessage.cs\
-	Web\CommandsetKey.cs\
-	Web\CommandsetKey.cs\
 	Web\CommandsetGroup.cs\
 	Web\CommandsetDare.cs\
 	Web\CommandsetHash.cs\
@@ -123,12 +121,6 @@ Web\CommandsetNetwork.cs : Web\CommandsetNetwork.script
 
 Web\CommandsetMessage.cs : Web\CommandsetMessage.script 
 	gscript Web\CommandsetMessage.script  Web\CommandsetMessage.cs
-
-Web\CommandsetKey.cs : Web\CommandsetKey.script 
-	gscript Web\CommandsetKey.script  Web\CommandsetKey.cs
-
-Web\CommandsetKey.cs : Web\CommandsetKey.script 
-	gscript Web\CommandsetKey.script  Web\CommandsetKey.cs
 
 Web\CommandsetGroup.cs : Web\CommandsetGroup.script 
 	gscript Web\CommandsetGroup.script  Web\CommandsetGroup.cs

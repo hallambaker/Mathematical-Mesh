@@ -47,14 +47,11 @@ public class MeshHost : Disposable {
     ///<summary>The Mesh machine client.</summary>
     public IMeshMachineClient MeshMachine;
 
-    /////<summary>The host persistence container.</summary> 
-    PersistHost PersistHost { get; }
-
     ///<summary>The Key Collection of the Mesh Machine.</summary>
     public IKeyCollection KeyCollection => MeshMachine.KeyCollection;
 
 
-
+    ///<summary>The object index</summary> 
     protected Dictionary<string, StoreEntry> ObjectIndex = new();
 
     ///<summary>Dictionary mapping mesh UDF to Context.</summary>
@@ -63,6 +60,7 @@ public class MeshHost : Disposable {
     ///<summary>Dictionary mapping mesh local name to Context.</summary>
     protected Dictionary<string, ContextAccount> DictionaryLocalContextMesh = new();
 
+    ///<summary>The default context</summary> 
     public CatalogedMachine DefaultEntry { get; private set; }
     
     static ILogger Logger => Component.Logger;
@@ -92,13 +90,21 @@ public class MeshHost : Disposable {
     #endregion
     #region // Constructors and factories
 
-
+    /// <summary>
+    /// Constructor returning an instance that will read the hosts file 
+    /// <paramref name="fileName"/>.
+    /// </summary>
+    /// <param name="fileName">The hosts file.</param>
+    /// <param name="meshMachine">The machine binding.</param>
     public MeshHost(string fileName, IMeshMachineClient meshMachine) {
         MeshMachine = meshMachine;
         Filename = fileName;
         ReadHost();
         }
 
+    /// <summary>
+    /// Read or re-read the hosts data.
+    /// </summary>
     public void ReadHost() {
 
         var old = DictionaryUDFContextMesh;
@@ -119,6 +125,7 @@ public class MeshHost : Disposable {
             ObjectIndex.Add(entry.Key, entry.Value);
 
             var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
+            DefaultEntry ??= catalogedMachine;
 
             if (old.TryGetValue(catalogedMachine.Id, out var contextMesh)) {
                 // Context was already loaded - reuse
@@ -139,6 +146,10 @@ public class MeshHost : Disposable {
             entry.Dispose();
             }
         }
+
+    /// <summary>
+    /// Force disposal of all contexts and re-load the hosts file.
+    /// </summary>
     public void ReloadContexts() {
 
         foreach (var entry in DictionaryUDFContextMesh.Values) {
@@ -304,6 +315,8 @@ public class MeshHost : Disposable {
                 fileStatus: FileStatus.ConcurrentLocked, containerType: SequenceType.Merkle);
         // persist the permanent record.
         var entry = persistHost.Update(catalogItem, create) as StoreEntry;
+
+        DefaultEntry = persistHost.DefaultEntry;
         if (ObjectIndex.ContainsKey(catalogItem._PrimaryKey)) {
             ObjectIndex.Remove(catalogItem._PrimaryKey);
             }

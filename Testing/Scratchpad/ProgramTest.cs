@@ -52,10 +52,10 @@ partial class Program {
 
         Logger.LogInformation ("Start test {time}", DateTime.Now);
 
-        TestService.Test().MeshCreateAdmin();
+        //TestService.Test().MeshCreateAdmin();
 
         //ServiceDiscovery.Test().TestDNS();
-        //ShellTests.Test().TestHelloFail();
+        ShellTestsAdmin.Test().TestHello();
         //ShellTestsAdmin.Test().TestAccountRefreshed();
         //ShellTests.Test().TestConnectRequest();
 

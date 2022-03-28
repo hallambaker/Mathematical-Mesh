@@ -41,137 +41,137 @@
     <ProjectReference Include="..\..\Testing\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
 
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-    <Compile Update="IDs\MakeExamples-1-architecture.cs">
-      <DependentUpon>MakeExamples-1-architecture.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+		<Compile Update="IDs\MakeExamples-1-architecture.cs">
+			<DependentUpon>MakeExamples-1-architecture.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-    <Compile Update="IDs\MakeExamples-2-UDF.cs">
-      <DependentUpon>MakeExamples-2-UDF.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+		<Compile Update="IDs\MakeExamples-2-UDF.cs">
+			<DependentUpon>MakeExamples-2-UDF.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-    <Compile Update="IDs\MakeExamples-3-Dare.cs">
-      <DependentUpon>MakeExamples-3-Dare.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+		<Compile Update="IDs\MakeExamples-3-Dare.cs">
+			<DependentUpon>MakeExamples-3-Dare.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-    <Compile Update="IDs\MakeExamples-4-schema.cs">
-      <DependentUpon>MakeExamples-4-schema.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+		<Compile Update="IDs\MakeExamples-4-schema.cs">
+			<DependentUpon>MakeExamples-4-schema.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-    <Compile Update="IDs\MakeExamples-6-Presentation.cs">
-      <DependentUpon>MakeExamples-6-Presentation.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+		<Compile Update="IDs\MakeExamples-6-Presentation.cs">
+			<DependentUpon>MakeExamples-6-Presentation.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-    <Compile Update="IDs\MakeExamples-5-protocol.cs">
-      <DependentUpon>MakeExamples-5-protocol.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+		<Compile Update="IDs\MakeExamples-5-protocol.cs">
+			<DependentUpon>MakeExamples-5-protocol.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-    <Compile Update="IDs\MakeExamples-8-Cryptography.cs">
-      <DependentUpon>MakeExamples-8-Cryptography.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+		<Compile Update="IDs\MakeExamples-8-Cryptography.cs">
+			<DependentUpon>MakeExamples-8-Cryptography.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-    <Compile Update="Web\ToDo.cs">
-      <DependentUpon>ToDo.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-      <Compile Update="Web\UserGuide.cs">
-      <DependentUpon>UserGuide.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetAccount.cs">
-      <DependentUpon>CommandsetAccount.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetMail.cs">
-      <DependentUpon>CommandsetMail.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetSSH.cs">
-      <DependentUpon>CommandsetSSH.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetPassword.cs">
-      <DependentUpon>CommandsetPassword.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetContact.cs">
-      <DependentUpon>CommandsetContact.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetBookmark.cs">
-      <DependentUpon>CommandsetBookmark.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetCalendar.cs">
-      <DependentUpon>CommandsetCalendar.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetNetwork.cs">
-      <DependentUpon>CommandsetNetwork.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetMessage.cs">
-      <DependentUpon>CommandsetMessage.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetGroup.cs">
-      <DependentUpon>CommandsetGroup.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetDare.cs">
-      <DependentUpon>CommandsetDare.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Web\CommandsetHash.cs">
-      <DependentUpon>CommandsetHash.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-	  <Compile Update="Web\CommandsetKey.cs">
-		  <DependentUpon>CommandsetKey.script</DependentUpon>
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-	  </Compile>
-      <Compile Update="Web\CommandsetDevice.cs">
-      <DependentUpon>CommandsetDevice.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>  
-  </ItemGroup>
+		<Compile Update="Web\ToDo.cs">
+			<DependentUpon>ToDo.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\UserGuide.cs">
+			<DependentUpon>UserGuide.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetAccount.cs">
+			<DependentUpon>CommandsetAccount.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetMail.cs">
+			<DependentUpon>CommandsetMail.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetSSH.cs">
+			<DependentUpon>CommandsetSSH.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetPassword.cs">
+			<DependentUpon>CommandsetPassword.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetContact.cs">
+			<DependentUpon>CommandsetContact.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetBookmark.cs">
+			<DependentUpon>CommandsetBookmark.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetCalendar.cs">
+			<DependentUpon>CommandsetCalendar.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetNetwork.cs">
+			<DependentUpon>CommandsetNetwork.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetMessage.cs">
+			<DependentUpon>CommandsetMessage.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetGroup.cs">
+			<DependentUpon>CommandsetGroup.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetDare.cs">
+			<DependentUpon>CommandsetDare.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetHash.cs">
+			<DependentUpon>CommandsetHash.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetKey.cs">
+			<DependentUpon>CommandsetKey.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetDevice.cs">
+			<DependentUpon>CommandsetDevice.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
   <ItemGroup>
 
@@ -233,55 +233,48 @@
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetMail.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <LastGenOutput>CommandsetMail.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetSSH.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <LastGenOutput>CommandsetSSH.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetPassword.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <LastGenOutput>CommandsetPassword.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetContact.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <LastGenOutput>CommandsetContact.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetBookmark.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <LastGenOutput>CommandsetBookmark.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetCalendar.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <LastGenOutput>CommandsetCalendar.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetNetwork.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <LastGenOutput>CommandsetNetwork.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetMessage.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <LastGenOutput>CommandsetMessage.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="Web\CommandsetKey.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetKey.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
+
     <None Update="Web\CommandsetGroup.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <LastGenOutput>CommandsetGroup.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetDare.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <LastGenOutput>CommandsetDare.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetHash.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <LastGenOutput>CommandsetHash.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetDevice.script">
@@ -289,6 +282,6 @@
       <Generator>gscript</Generator>
     </None>  
   </ItemGroup>
-
+<!--sadsdaffse-->
 
 </Project>
