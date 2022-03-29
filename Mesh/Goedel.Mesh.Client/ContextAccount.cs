@@ -128,12 +128,14 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ///<summary>The administration signature key</summary>
     protected KeyPair KeyAdministratorEncrypt => ActivationCommon?.AdministratorEncryptionKey;
 
+
     ///<summary>The account encryption key </summary>
     protected KeyPair KeyCommonSignature => ActivationCommon?.CommonSignatureKey;
     ///<summary>The account encryption key </summary>
     protected KeyPair KeyCommonEncryption => ActivationCommon?.CommonEncryptionKey;
     ///<summary>The authentication key used to authenticate as the account.</summary>
     protected KeyPair KeyCommonAuthentication => ActivationCommon?.CommonAuthenticationKey;
+
 
     ///<summary>True iff the device has administrator privilege.</summary> 
     protected bool IsAdministrator => KeyAdministratorSign != null;

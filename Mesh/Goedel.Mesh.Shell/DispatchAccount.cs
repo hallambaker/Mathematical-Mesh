@@ -251,9 +251,10 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult AccountRecover(AccountRecover options) {
-
+        var accountAddress = options.AccountAddress.Value;
+        var localName = options.LocalName.Value;
         // ToDo: this is going to need refactoring so that the localname and account tabs are filled.
-
+        accountAddress.AssertNotNull(AccountNotSpecified.Throw);
 
         var recoverShares = new List<string>();
         AddIfPresent(recoverShares, options.Share1);
@@ -277,7 +278,7 @@ public partial class Shell {
 
 
         var accountSeed = new PrivateKeyUDF(secret.UDFKey);
-        var contextUser = MeshHost.ConfigureMesh("main", accountSeed: accountSeed);
+        var contextUser = MeshHost.ConfigureMesh(accountAddress, localName, accountSeed: accountSeed);
 
 
         return new ResultCreateAccount() {

@@ -27,6 +27,10 @@ namespace Goedel.Utilities;
 /// </summary>
 public partial class Screen {
 
+    ///<summary>Global default log level</summary> 
+    public static LogLevel LogLevel { get; set; } = LogLevel.Information;
+
+
     /// <summary>
     /// Write debug output to current trace listener.
     /// </summary>

@@ -58,7 +58,7 @@ internal class Component : IComponent {
 
     ///<summary> default logger for the assembly</summary> 
     public static ILogger Logger = new AssemblyLogger("Goedel.Mesh.Client") {
-        LogLevel = LogLevel.Debug
+        LogLevel = Screen.LogLevel
         };
 
     ///<inheritdoc/>

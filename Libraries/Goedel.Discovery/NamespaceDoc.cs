@@ -47,7 +47,7 @@ internal class Component: IComponent {
 
     ///<summary> default logger for the assembly</summary> 
     public static ILogger Logger = new AssemblyLogger() {
-        LogLevel = LogLevel.Debug
+        LogLevel = Screen.LogLevel
         };
 
     ///<inheritdoc/>

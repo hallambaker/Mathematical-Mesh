@@ -362,9 +362,9 @@ public class Spool : Store {
 
         Component.Logger.InternMessage(spoolEntry.EnvelopeID, spoolEntry.Message?.MessageId,
             spoolEntry.MessageStatus);
-        Screen.WriteLine($"Intern EnvelopeID {spoolEntry.EnvelopeID}, " +
-            $"Message {spoolEntry.Message?.MessageId} " +
-            $"Status {spoolEntry.MessageStatus}");
+        //Screen.WriteLine($"Intern EnvelopeID {spoolEntry.EnvelopeID}, " +
+        //    $"Message {spoolEntry.Message?.MessageId} " +
+        //    $"Status {spoolEntry.MessageStatus}");
 
 
         if (KeyCollection == null) {
@@ -374,7 +374,7 @@ public class Spool : Store {
             var message = spoolEntry.Message as MessageComplete;
             message.AssertNotNull(InvalidMessage.Throw);  // Hack - need to collect up the errors 
             foreach (var reference in message.References) {
-                Screen.WriteLine($"    Reference {reference.EnvelopeId}/{reference.MessageId}/{reference.MessageStatus}");
+                //Screen.WriteLine($"    Reference {reference.EnvelopeId}/{reference.MessageId}/{reference.MessageStatus}");
 
 
                 // Do we already have an entry?

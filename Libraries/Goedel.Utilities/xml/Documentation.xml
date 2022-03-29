@@ -1877,6 +1877,15 @@
             </list>
             </summary>
         </member>
+        <member name="F:Goedel.Utilities.Component.Logger">
+            <summary> default logger for the assembly</summary> 
+        </member>
+        <member name="M:Goedel.Utilities.Component.Initialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.Component.Terminate">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Utilities.NumberSplit">
             <summary>
             Utilities to split an integer value to byte chunks
@@ -2191,6 +2200,9 @@
             <summary>
             Debug trace class
             </summary>
+        </member>
+        <member name="P:Goedel.Utilities.Screen.LogLevel">
+            <summary>Global default log level</summary> 
         </member>
         <member name="M:Goedel.Utilities.Screen.WriteLine(System.String,System.Object[])">
             <summary>

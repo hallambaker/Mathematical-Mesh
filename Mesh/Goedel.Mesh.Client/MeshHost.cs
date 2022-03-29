@@ -61,8 +61,17 @@ public class MeshHost : Disposable {
     protected Dictionary<string, ContextAccount> DictionaryLocalContextMesh = new();
 
     ///<summary>The default context</summary> 
-    public CatalogedMachine DefaultEntry { get; private set; }
-    
+    public CatalogedStandard DefaultAccount=> defaultAccount;
+    CatalogedStandard defaultAccount;
+    ///<summary>The default context</summary> 
+    public CatalogedService DefaultService => defaultService;
+    CatalogedService defaultService;
+    ///<summary>The default context</summary> 
+    public CatalogedPending DefaultPending => defaultPending; 
+    CatalogedPending defaultPending;
+    ///<summary>The default context</summary> 
+    public CatalogedPreconfigured DefaultPreconfigured => defaultPreconfigured;
+    CatalogedPreconfigured defaultPreconfigured;
     static ILogger Logger => Component.Logger;
 
     //bool SuppressDispose { get; }  = false;
@@ -102,6 +111,18 @@ public class MeshHost : Disposable {
         ReadHost();
         }
 
+
+    void SetDefault<T>(ref T current, T update) where T: CatalogedMachine {
+        if (update.Default) {
+            current = update;
+            }
+        else {
+            current ??= update;
+            }
+        
+        }
+
+
     /// <summary>
     /// Read or re-read the hosts data.
     /// </summary>
@@ -113,19 +134,18 @@ public class MeshHost : Disposable {
         DictionaryUDFContextMesh = new();
         DictionaryLocalContextMesh = new();
         ObjectIndex = new();
-        DefaultEntry = null;
+
         using var persistHost = new PersistHost(Filename, FileTypeHost,
             fileStatus: FileStatus.ConcurrentLocked,
             containerType: SequenceType.Merkle);
 
-
-        DefaultEntry = persistHost.DefaultEntry;
+        Logger.ReloadHost();
 
         foreach (var entry in persistHost.ObjectIndex) {
             ObjectIndex.Add(entry.Key, entry.Value);
 
             var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
-            DefaultEntry ??= catalogedMachine;
+            SetDefaults(catalogedMachine);
 
             if (old.TryGetValue(catalogedMachine.Id, out var contextMesh)) {
                 // Context was already loaded - reuse
@@ -203,11 +223,13 @@ public class MeshHost : Disposable {
             // consider adding a machine catalog entry for a group...
             case CatalogedStandard standardEntry: {
                     var context = new ContextUser(this, standardEntry);
+                    Logger.HostCreateContext(context.Profile.Udf, context.AccountAddress);
                     Register(context);
                     return context;
                     }
             case CatalogedPending pendingEntry: {
                     var context = new ContextMeshPending(this, pendingEntry);
+                    Logger.HostCreatePending(context.AccountAddress);
                     Register(context);
                     return context;
                     }
@@ -303,6 +325,35 @@ public class MeshHost : Disposable {
         return null;
         }
 
+    void SetDefaults(CatalogedMachine catalogedMachine) {
+        switch (catalogedMachine) {
+            case CatalogedPending catalogedPending: {
+                    Logger.HostCatalogedPending(catalogedMachine.Id[0..8],
+                        catalogedPending.AccountAddress, catalogedMachine.Default);
+                    SetDefault(ref defaultPending, catalogedPending);
+                    break;
+                    }
+            case CatalogedPreconfigured catalogedPreconfigured: {
+                    Logger.HostCatalogedPreconfigured(catalogedMachine.Id[0..8],
+                        catalogedPreconfigured.AccountAddress, catalogedMachine.Default);
+                    SetDefault(ref defaultPreconfigured, catalogedPreconfigured);
+                    break;
+                    }
+            case CatalogedStandard catalogedStandard: {
+                    Logger.HostCatalogedAccount(catalogedMachine.Id[0..8],
+                        catalogedStandard.Local, catalogedMachine.Default);
+                    SetDefault(ref defaultAccount, catalogedStandard);
+                    break;
+                    }
+            case CatalogedService catalogedService: {
+                    Logger.HostCatalogedService(catalogedMachine.Id[0..8],
+                        catalogedService.Local, catalogedMachine.Default);
+                    SetDefault(ref defaultService, catalogedService);
+                    break;
+                    }
+            }
+        }
+
 
     /// <summary>
     /// Register <paramref name="catalogItem"/> in the host catalog.
@@ -316,8 +367,9 @@ public class MeshHost : Disposable {
                 fileStatus: FileStatus.ConcurrentLocked, containerType: SequenceType.Merkle);
         // persist the permanent record.
         var entry = persistHost.Update(catalogItem, create) as StoreEntry;
+        var catalogedMachine = entry.JsonObject as CatalogedMachine;
+        SetDefaults(catalogedMachine);
 
-        DefaultEntry = persistHost.DefaultEntry;
         if (ObjectIndex.ContainsKey(catalogItem._PrimaryKey)) {
             ObjectIndex.Remove(catalogItem._PrimaryKey);
             }
@@ -493,7 +545,7 @@ public class MeshHost : Disposable {
 
         admin.Future();
 
-        var key = localName ?? DefaultEntry?.Id;
+        var key = localName ?? DefaultAccount?.Id;
         return key == null ? null : LocateMesh(key);
         }
 

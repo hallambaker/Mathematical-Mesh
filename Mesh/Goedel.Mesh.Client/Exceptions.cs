@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 28-Mar-22 1:04:35 PM
+//  This file was automatically generated at 29-Mar-22 3:35:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -376,6 +376,57 @@ public partial class MeshNotFound : AccountNotFound {
     /// The public fatory delegate
     /// </summary>
     public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// </summary>
+[global::System.Serializable]
+public partial class NoAccountBound : global::Goedel.Utilities.GoedelException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"This device is not bound to any account."
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public NoAccountBound  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new NoAccountBound(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
 
 
     }
@@ -1239,6 +1290,27 @@ public  static partial class EventExtensions {
         _ActivateConnection = LoggerMessage.Define<string,string>(
             LogLevel.Debug, new EventId(104, nameof(_ActivateConnection)),
             "ActivateConnection: {Use} {KeyUdf}");
+        _ReloadHost = LoggerMessage.Define(
+            LogLevel.Debug, new EventId(120, nameof(_ReloadHost)),
+            "ReloadHost");
+        _HostCatalogedService = LoggerMessage.Define<string,string,bool>(
+            LogLevel.Debug, new EventId(121, nameof(_HostCatalogedService)),
+            "Cataloged Service Id {Id} DNS {DNS} Default {Default}");
+        _HostCatalogedAccount = LoggerMessage.Define<string,string,bool>(
+            LogLevel.Debug, new EventId(122, nameof(_HostCatalogedAccount)),
+            "Cataloged Account Id {Id} Context {AccountName} Default {Default}");
+        _HostCatalogedPending = LoggerMessage.Define<string,string,bool>(
+            LogLevel.Debug, new EventId(123, nameof(_HostCatalogedPending)),
+            "Cataloged Pending Id {Id} Context {AccountName} Default {Default}");
+        _HostCatalogedPreconfigured = LoggerMessage.Define<string,string,bool>(
+            LogLevel.Debug, new EventId(124, nameof(_HostCatalogedPreconfigured)),
+            "Cataloged Pending Context Id {Id} {AccountName} Default {Default}");
+        _HostCreateContext = LoggerMessage.Define<string,string>(
+            LogLevel.Debug, new EventId(130, nameof(_HostCreateContext)),
+            "Host Create Context Id {Id} {AccountName} ");
+        _HostCreatePending = LoggerMessage.Define<string>(
+            LogLevel.Debug, new EventId(130, nameof(_HostCreatePending)),
+            "Host Create Pending {AccountName} ");
         }
 
 
@@ -1377,6 +1449,134 @@ public  static partial class EventExtensions {
 			string udf,
 			Exception _exception=null) {
         _ActivateConnection(logger, use, udf, _exception);
+        }
+
+
+    private static readonly Action<ILogger, Exception> _ReloadHost;
+
+	/// <summary>
+    /// Write an event of type ReloadHost to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void ReloadHost(
+			this ILogger logger,
+			Exception _exception=null) {
+        _ReloadHost(logger, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, bool, Exception> _HostCatalogedService;
+
+	/// <summary>
+    /// Write an event of type HostCatalogedService to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="id">Profile identifier</param>
+	/// <param name="dns">Service name</param>
+	/// <param name="isDefault">Is default</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void HostCatalogedService(
+			this ILogger logger,
+			string id,
+			string dns,
+			bool isDefault,
+			Exception _exception=null) {
+        _HostCatalogedService(logger, id, dns, isDefault, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, bool, Exception> _HostCatalogedAccount;
+
+	/// <summary>
+    /// Write an event of type HostCatalogedAccount to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="id">Profile identifier</param>
+	/// <param name="accountAddress">Account name</param>
+	/// <param name="isDefault">Is default</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void HostCatalogedAccount(
+			this ILogger logger,
+			string id,
+			string accountAddress,
+			bool isDefault,
+			Exception _exception=null) {
+        _HostCatalogedAccount(logger, id, accountAddress, isDefault, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, bool, Exception> _HostCatalogedPending;
+
+	/// <summary>
+    /// Write an event of type HostCatalogedPending to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="id">Profile identifier</param>
+	/// <param name="accountAddress">Account name</param>
+	/// <param name="isDefault">Is default</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void HostCatalogedPending(
+			this ILogger logger,
+			string id,
+			string accountAddress,
+			bool isDefault,
+			Exception _exception=null) {
+        _HostCatalogedPending(logger, id, accountAddress, isDefault, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, bool, Exception> _HostCatalogedPreconfigured;
+
+	/// <summary>
+    /// Write an event of type HostCatalogedPreconfigured to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="id">Profile identifier</param>
+	/// <param name="accountAddress">Account name</param>
+	/// <param name="isDefault">Is default</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void HostCatalogedPreconfigured(
+			this ILogger logger,
+			string id,
+			string accountAddress,
+			bool isDefault,
+			Exception _exception=null) {
+        _HostCatalogedPreconfigured(logger, id, accountAddress, isDefault, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _HostCreateContext;
+
+	/// <summary>
+    /// Write an event of type HostCreateContext to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="id">Profile identifier</param>
+	/// <param name="accountAddress">Account name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void HostCreateContext(
+			this ILogger logger,
+			string id,
+			string accountAddress,
+			Exception _exception=null) {
+        _HostCreateContext(logger, id, accountAddress, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _HostCreatePending;
+
+	/// <summary>
+    /// Write an event of type HostCreatePending to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="accountAddress">Account name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void HostCreatePending(
+			this ILogger logger,
+			string accountAddress,
+			Exception _exception=null) {
+        _HostCreatePending(logger, accountAddress, _exception);
         }
 
 	}

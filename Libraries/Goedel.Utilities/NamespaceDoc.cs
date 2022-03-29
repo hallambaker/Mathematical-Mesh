@@ -51,3 +51,21 @@ namespace Goedel.Utilities;
 [System.Runtime.CompilerServices.CompilerGenerated]
 class NamespaceDoc {
     }
+
+
+internal class Component : IComponent {
+
+    ///<summary> default logger for the assembly</summary> 
+    public static ILogger Logger = new AssemblyLogger("Goedel.Mesh.Client") {
+        LogLevel = Screen.LogLevel
+        };
+
+    ///<inheritdoc/>
+    public void Initialize() {
+        }
+
+    ///<inheritdoc/>
+    public void Terminate() {
+        }
+    }
+

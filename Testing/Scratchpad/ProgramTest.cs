@@ -55,7 +55,7 @@ partial class Program {
         //TestService.Test().MeshCreateAdmin();
 
         //ServiceDiscovery.Test().TestDNS();
-        ShellTestsAdmin.Test().TestHello();
+        ShellTestsAdmin.Test().TestProfileConnect();
         //ShellTestsAdmin.Test().TestAccountRefreshed();
         //ShellTests.Test().TestConnectRequest();
 

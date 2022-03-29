@@ -1102,6 +1102,9 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.AccountAuthentication">
             <summary>Device authentication key in account context.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.CatalogContact">
+            <summary>The contact catalog, used for key location of group keys.</summary>  
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetMeshCredentialPrivate">
             <summary>
             Create a new ICredential.
@@ -1115,6 +1118,12 @@
             </summary>
             <param name="catalogedMachine">Description of the device profile.</param>
             <param name="meshHost">The Mesh host to add the admin context to.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.DescribeContext(System.IO.TextWriter)">
+            <summary>
+            Write a description of the context to <paramref name="output"/>.
+            </summary>
+            <param name="output">Textwriter to write the output to.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetMeshSecret">
             <summary>
@@ -2041,6 +2050,37 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Client.NoAccountBound">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.NoAccountBound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.NoAccountBound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.NoAccountBound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.NoAccountBound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Client.NoAccountBound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Client.ConnectionStillPending">
             <summary>
             The action cannot be performed because connection of this device to the account is still pending.
@@ -2629,6 +2669,70 @@
             <param name="udf">key fingerprint</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.ReloadHost(Microsoft.Extensions.Logging.ILogger,System.Exception)">
+            <summary>
+            Write an event of type ReloadHost to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.HostCatalogedService(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Boolean,System.Exception)">
+            <summary>
+            Write an event of type HostCatalogedService to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="id">Profile identifier</param>
+            <param name="dns">Service name</param>
+            <param name="isDefault">Is default</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.HostCatalogedAccount(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Boolean,System.Exception)">
+            <summary>
+            Write an event of type HostCatalogedAccount to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="id">Profile identifier</param>
+            <param name="accountAddress">Account name</param>
+            <param name="isDefault">Is default</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.HostCatalogedPending(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Boolean,System.Exception)">
+            <summary>
+            Write an event of type HostCatalogedPending to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="id">Profile identifier</param>
+            <param name="accountAddress">Account name</param>
+            <param name="isDefault">Is default</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.HostCatalogedPreconfigured(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Boolean,System.Exception)">
+            <summary>
+            Write an event of type HostCatalogedPreconfigured to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="id">Profile identifier</param>
+            <param name="accountAddress">Account name</param>
+            <param name="isDefault">Is default</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.HostCreateContext(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type HostCreateContext to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="id">Profile identifier</param>
+            <param name="accountAddress">Account name</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.EventExtensions.HostCreatePending(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type HostCreatePending to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="accountAddress">Account name</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
         <member name="T:Goedel.Mesh.Client.CatalogedService">
              <summary>
             
@@ -2739,7 +2843,16 @@
         <member name="F:Goedel.Mesh.Client.MeshHost.DictionaryLocalContextMesh">
             <summary>Dictionary mapping mesh local name to Context.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.MeshHost.DefaultEntry">
+        <member name="P:Goedel.Mesh.Client.MeshHost.DefaultAccount">
+            <summary>The default context</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.MeshHost.DefaultService">
+            <summary>The default context</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.MeshHost.DefaultPending">
+            <summary>The default context</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.MeshHost.DefaultPreconfigured">
             <summary>The default context</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.MeshHost.FileTypeHost">

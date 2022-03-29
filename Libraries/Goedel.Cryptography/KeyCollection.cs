@@ -62,13 +62,17 @@ public abstract class KeyCollection : IKeyLocate {
 
         lock (exclusiveAccess) {
             DictionaryKeyPairByUDF.AddSafe(keyPair.KeyIdentifier, keyPair);
+            if (keyPair.KeyUses.HasFlag(KeyUses.Encrypt)) {
+                DictionaryKeyPairBySINEncrypt.AddSafe(keyPair.StrongInternetName, keyPair);
+                }
+            if (keyPair.KeyUses.HasFlag(KeyUses.Sign)) {
+                DictionaryKeyPairBySINSign.AddSafe(keyPair.StrongInternetName, keyPair);
+                }
             if (keyPair.Locator != null) {
                 if (keyPair.KeyUses.HasFlag(KeyUses.Encrypt)) {
-                    DictionaryKeyPairBySINEncrypt.AddSafe(keyPair.StrongInternetName, keyPair);
                     DictionaryKeyPairByAccountEncrypt.AddSafe(keyPair.Locator, keyPair);
                     }
                 if (keyPair.KeyUses.HasFlag(KeyUses.Sign)) {
-                    DictionaryKeyPairBySINSign.AddSafe(keyPair.StrongInternetName, keyPair);
                     DictionaryKeyPairByAccountSign.AddSafe(keyPair.Locator, keyPair);
                     }
                 }

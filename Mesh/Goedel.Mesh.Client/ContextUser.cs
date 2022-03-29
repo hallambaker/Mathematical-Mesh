@@ -103,9 +103,10 @@ public partial class ContextUser : ContextAccount {
     ///<summary>Device authentication key in account context.</summary>
     public KeyPairAdvanced AccountAuthentication => ActivationAccount?.AccountAuthentication;
 
+    ///<summary>The contact catalog, used for key location of group keys.</summary>  
+    protected CatalogContact CatalogContact { get; set; }
 
-
-    
+    string? deviceSeedId, accountSeedId;
 
     /// <summary>
     /// Create a new ICredential.
@@ -136,6 +137,8 @@ public partial class ContextUser : ContextAccount {
 
         // Get the device key so that we can decrypt the activation record.
         var deviceKeySeed = KeyCollection.LocatePrivateKey(ProfileDevice.Udf) as PrivateKeyUDF;
+        deviceSeedId = deviceKeySeed.KeyId;
+
         BaseDecrypt = deviceKeySeed.GenerateContributionKeyPair(MeshKeyType.Base,
             MeshActor.Device, MeshKeyOperation.Encrypt);
         BaseAuthenticate = deviceKeySeed.GenerateContributionKeyPair(MeshKeyType.Base,
@@ -184,42 +187,47 @@ public partial class ContextUser : ContextAccount {
                     KeyActivationFailed.Throw);
             }
 
+        //CatalogContact = GetStore(Mesh.CatalogContact.Label) as CatalogContact;
         //DumpContext(deviceKeySeed.KeyId);
         }
 
 
-    //void DumpContext(string deviceSeed, string accountSeed=null) {
+    /// <summary>
+    /// Write a description of the context to <paramref name="output"/>.
+    /// </summary>
+    /// <param name="output">Textwriter to write the output to.</param>
+    public void DescribeContext(TextWriter output) {
 
 
-    //    Screen.WriteLine($"Profile {Profile.Udf}");
-    //    Screen.WriteLine($"    Account Common {ProfileUser.AccountAddress}");
-    //    Screen.WriteLine($"        Signature {ProfileUser.CommonSignature.Udf}");
-    //    Screen.WriteLine($"        Authentication {ProfileUser.CommonAuthentication.Udf}");
-    //    Screen.WriteLine($"        Encryption {ProfileUser.CommonEncryption.Udf}");
-    //    Screen.WriteLine($"    Account Device {accountSeed}");
-    //    Screen.WriteLine($"        Signature {ConnectionAccount?.Signature?.Udf} " +
-    //        $"Loaded = {ActivationAccount.AccountSignature != null}");
-    //    Screen.WriteLine($"        Authentication {ConnectionAccount?.Authentication?.Udf}" +
-    //        $"Loaded = {ActivationAccount.AccountAuthentication != null}");
-    //    Screen.WriteLine($"        Encryption {ConnectionAccount?.Encryption?.Udf}" +
-    //        $"Loaded = {ActivationAccount.AccountEncryption != null}");
-    //    Screen.WriteLine($"    Device {ProfileDevice.Udf} {deviceSeed}");
-    //    Screen.WriteLine($"        Signature {ProfileDevice.Signature.CryptoKey.KeyIdentifier} " +
-    //        $"Loaded {ActivationAccount.AccountSignature != null}");
-    //    Screen.WriteLine($"        Authentication {ProfileDevice.Authentication.CryptoKey.KeyIdentifier} " +
-    //        $"Loaded {ActivationAccount.AccountAuthentication != null}");
-    //    Screen.WriteLine($"        Encryption {ProfileDevice.Encryption.CryptoKey.KeyIdentifier} " +
-    //        $"Loaded {ActivationAccount.AccountEncryption != null}");
+        output.WriteLine($"Profile {Profile.Udf}");
+        output.WriteLine($"    Account Common {ProfileUser.AccountAddress}");
+        output.WriteLine($"        Signature {ProfileUser.CommonSignature.Udf}");
+        output.WriteLine($"        Authentication {ProfileUser.CommonAuthentication.Udf}");
+        output.WriteLine($"        Encryption {ProfileUser.CommonEncryption.Udf}");
+        output.WriteLine($"    Account Device {accountSeedId}");
+        output.WriteLine($"        Signature {ConnectionAccount?.Signature?.Udf} " +
+            $"Loaded = {ActivationAccount.AccountSignature != null}");
+        output.WriteLine($"        Authentication {ConnectionAccount?.Authentication?.Udf}" +
+            $"Loaded = {ActivationAccount.AccountAuthentication != null}");
+        output.WriteLine($"        Encryption {ConnectionAccount?.Encryption?.Udf}" +
+            $"Loaded = {ActivationAccount.AccountEncryption != null}");
+        output.WriteLine($"    Device {ProfileDevice.Udf} {deviceSeedId}");
+        output.WriteLine($"        Signature {ProfileDevice.Signature.CryptoKey.KeyIdentifier} " +
+            $"Loaded {ActivationAccount.AccountSignature != null}");
+        output.WriteLine($"        Authentication {ProfileDevice.Authentication.CryptoKey.KeyIdentifier} " +
+            $"Loaded {ActivationAccount.AccountAuthentication != null}");
+        output.WriteLine($"        Encryption {ProfileDevice.Encryption.CryptoKey.KeyIdentifier} " +
+            $"Loaded {ActivationAccount.AccountEncryption != null}");
 
-    //    Screen.WriteLine($"Connection Device to Account {ConnectionAccount?.AuthenticationPublic.KeyIdentifier}");
+        output.WriteLine($"Connection Device to Account {ConnectionAccount?.AuthenticationPublic.KeyIdentifier}");
 
 
-    //    }
+        }
 
 
 
     #endregion
-        #region // Operations requiring the Mesh Secret - Escrow, Erase.
+    #region // Operations requiring the Mesh Secret - Escrow, Erase.
 
     /// <summary>
     /// Get the MeshSecret.
@@ -557,13 +565,11 @@ public partial class ContextUser : ContextAccount {
         if (ActivationCommon?.CommonEncryptionKey?.TryFindKeyDecryption(keyId, out cryptoKey) == true) {
             return true;
             }
+        if (CatalogContact != null) {
+            return CatalogContact.TryFindKeyDecryption(keyId, out cryptoKey);
+            }
 
-
-        //Bug? This might cause group decryption to fail.
-        var catalogContact = GetStore(Mesh.CatalogContact.Label) as CatalogContact;
-        return catalogContact.TryFindKeyDecryption(keyId, out cryptoKey);
-
-        //return false;
+        return false;
         }
 
 

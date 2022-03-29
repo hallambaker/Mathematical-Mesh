@@ -265,6 +265,16 @@ public partial class Shell : _Shell {
 
     public virtual ContextUser GetContextUser(IAccountOptions options) {
         var result = TryGetContextUser(options);
+
+        if (result == null) {
+            var address = options.AccountAddress.Value ?? options.LocalName.Value;
+            address.AssertNull(AccountNotFound.Throw, address);
+            MeshHost.DefaultPending.AssertNull(ConnectionStillPending.Throw);
+            throw (new NoAccountBound());
+            }
+
+
+
         result.AssertNotNull(NYI.Throw);
         return result;
         }

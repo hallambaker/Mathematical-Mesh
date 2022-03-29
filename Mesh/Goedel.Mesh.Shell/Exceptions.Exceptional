@@ -43,3 +43,5 @@
 		
 		Exception ServiceNotSpecified
 			Console "No service specified"
+		Exception AccountNotSpecified
+			Console "No account specified"

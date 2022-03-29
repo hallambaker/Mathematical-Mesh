@@ -27,7 +27,9 @@ Namespace Goedel.Mesh.Client
 		Exception MeshNotFound
 			Description
 				|No mesh profile could be found.
-
+	Exception NoAccountBound
+		Console "This device is not bound to any account."
+	
 	Exception ConnectionStillPending
 		Description
 			|The action cannot be performed because connection of this device to the account is still pending.
@@ -143,3 +145,31 @@ Namespace Goedel.Mesh.Client
 		udf string "key fingerprint"
 
 
+	Debug 120 ReloadHost "ReloadHost"
+		
+	Debug 121 HostCatalogedService "Cataloged Service Id {Id} DNS {DNS} Default {Default}"
+		id string "Profile identifier"
+		dns string "Service name"
+		isDefault bool "Is default"
+
+	Debug 122 HostCatalogedAccount "Cataloged Account Id {Id} Context {AccountName} Default {Default}"
+		id string "Profile identifier"
+		accountAddress string "Account name"
+		isDefault bool "Is default"
+
+	Debug 123 HostCatalogedPending "Cataloged Pending Id {Id} Context {AccountName} Default {Default}"
+		id string "Profile identifier"
+		accountAddress string "Account name"
+		isDefault bool "Is default"
+
+	Debug 124 HostCatalogedPreconfigured "Cataloged Pending Context Id {Id} {AccountName} Default {Default}"
+		id string "Profile identifier"
+		accountAddress string "Account name"
+		isDefault bool "Is default"
+
+	Debug 130 HostCreateContext "Host Create Context Id {Id} {AccountName} "
+		id string "Profile identifier"
+		accountAddress string "Account name"
+
+	Debug 130 HostCreatePending "Host Create Pending {AccountName} "
+		accountAddress string "Account name"

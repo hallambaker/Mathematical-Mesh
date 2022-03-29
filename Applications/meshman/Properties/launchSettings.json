@@ -22,13 +22,13 @@
     },
     "Encode": {
       "commandName": "Project",
-      "commandLineArgs": "dare encode foo.html foo.dare /encrypt alice@example.com",
-      "workingDirectory": "..\\..\\TestResults\\Service"
+      "commandLineArgs": "dare encode foo.txt foo.dare /encrypt alice@example.com",
+      "workingDirectory": "C:\\Users\\hallam\\Mesh"
     },
     "Decode": {
       "commandName": "Project",
-      "commandLineArgs": "dare decode foo.dare foo2.html",
-      "workingDirectory": "..\\..\\TestResults\\Service"
+      "commandLineArgs": "dare decode foo.dare foo2.txt",
+      "workingDirectory": "C:\\Users\\hallam\\Mesh"
     },
     "Request Connect": {
       "commandName": "Project",
@@ -44,6 +44,21 @@
       "commandName": "Project",
       "commandLineArgs": "device accept  B4PK-H3DX-OVFR-ZPMP-56YI-ONXB-NR5E",
       "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "environmentVariables": {},
+      "distributionName": ""
+    },
+    "PIN": {
+      "commandName": "Project",
+      "commandLineArgs": "account pin /threshold",
+      "workingDirectory": "C:\\Users\\hallam\\Mesh"
+    },
+    "Recover": {
+      "commandName": "Project",
+      "commandLineArgs": " account recover  SAQP-6FL6-YMSM-6OPD-RCKY-RX4C-MQFB-RB7N-HSM4-LXYK-KHVZ-UXS3-YFOB-3WOG-CYKA  SAQT-MKP2-2T73-BO3R-T5HT-VQ4H-TIE3-ZDCM-CXZZ-TON5-MB2U-HIVO-ZJER-GPPB-ZI2A /account=alice@example.com /verify",
+      "workingDirectory": "C:\\Users\\hallam\\Mesh"
     }
   }
 }
