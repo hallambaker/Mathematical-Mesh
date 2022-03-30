@@ -60,12 +60,12 @@ public abstract class CommandLineInterpreterBase {
         Output.WriteLine("");
 
         if (DefaultCommand != null) {
-            DefaultCommand.Describe(FlagIndicator, Output);
+            DefaultCommand.Describe(FlagIndicator, Output, false, subCommand: false, options: false);
 
             }
         foreach (var Entry in Entries) {
             if (!Entry.Value.IsDefault) {
-                Entry.Value.Describe(FlagIndicator, Output);
+                Entry.Value.Describe(FlagIndicator, Output, false, subCommand: false, options: false);
                 }
             }
         }
@@ -260,10 +260,11 @@ public abstract class DescribeCommand : DescribeEntry {
     /// <param name="FlagIndicator">The flag indicator to use when printing the description.</param>
     /// <param name="Output">The output stream (defaults to Console)</param>
     /// <param name="PrefixCommands">If true, prefix command tags with the flag.</param>
+    /// <param name="subCommand"></param><param name="options"></param>
     public abstract void Describe(
                 char FlagIndicator,
                 TextWriter Output = null,
-                bool PrefixCommands = true);
+                bool PrefixCommands = true, bool subCommand = true, bool options = true);
     }
 
 /// <summary>
@@ -314,45 +315,53 @@ public class DescribeCommandEntry : DescribeCommand {
     /// <param name="FlagIndicator">The flag indicator to use in display.</param>
     /// <param name="Output">The output stream (defaults to Console)</param>
     /// <param name="PrefixCommands">If true, add prefix to command descriptions</param>
+    /// <param name="subCommand"></param><param name="options"></param>
     public override void Describe(
                 char FlagIndicator,
                 TextWriter Output = null,
-                bool PrefixCommands = true) {
+                bool PrefixCommands = true, bool subCommand = true, bool options = true) {
         Output ??= Console.Out;
         var prefixCommand = PrefixCommands ? FlagIndicator.ToString() : "";
 
         Output.WriteLine("{0}{1}   {2}", prefixCommand, Identifier, Brief);
-        foreach (var Entry in Entries) {
-            switch (Entry) {
-                case DescribeCommandEntry SubCommand: {
-                        Output.WriteLine("    {0}{1}  {2}", prefixCommand, Entry.Key, SubCommand.Brief);
-                        break;
-                        }
 
-                default:
-                    break;
+        if (options) {
+
+
+            foreach (var Entry in Entries) {
+                switch (Entry) {
+                    case DescribeCommandEntry SubCommand: {
+                            Output.WriteLine("    {0}{1}  {2}", prefixCommand, Entry.Key, SubCommand.Brief);
+                            break;
+                            }
+
+                    default:
+                        break;
+                    }
+                }
+            foreach (var Entry in Entries) {
+                switch (Entry) {
+                    case DescribeEntryParameter Parameter: {
+                            Output.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
+                            break;
+                            }
+
+                    default:
+                        break;
+                    }
                 }
             }
-        foreach (var Entry in Entries) {
-            switch (Entry) {
-                case DescribeEntryParameter Parameter: {
-                        Output.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
-                        break;
-                        }
+        if (subCommand) {
+            foreach (var Entry in Entries) {
+                switch (Entry) {
+                    case DescribeEntryOption Option: {
+                            Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
+                            break;
+                            }
 
-                default:
-                    break;
-                }
-            }
-        foreach (var Entry in Entries) {
-            switch (Entry) {
-                case DescribeEntryOption Option: {
-                        Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
+                    default:
                         break;
-                        }
-
-                default:
-                    break;
+                    }
                 }
             }
         }
@@ -374,37 +383,40 @@ public class DescribeCommandSet : DescribeCommand {
     /// <param name="FlagIndicator">The flag indicator to use in display.</param>
     /// <param name="Output">The output stream (defaults to Console)</param>
     /// <param name="PrefixCommands">If true, add prefix to command descriptions</param>
+    /// <param name="subCommand"></param><param name="options"></param>
     public override void Describe(
                 char FlagIndicator,
                 TextWriter Output = null,
-                bool PrefixCommands = true) {
+                bool PrefixCommands = true, bool subCommand = true, bool options = true) {
         Output ??= Console.Out;
         var prefixCommand = PrefixCommands ? FlagIndicator.ToString() : "";
 
         Output.WriteLine("{0}    {1}", Identifier, Brief);
-        foreach (var Entry in Entries) {
-            switch (Entry.Value) {
-                case DescribeCommandSet describeCommandSet: {
-                        Output.WriteLine("    {0}{1}", Entry.Key, describeCommandSet.Brief);
+        if (subCommand) {
+            foreach (var Entry in Entries) {
+                switch (Entry.Value) {
+                    case DescribeCommandSet describeCommandSet: {
+                            Output.WriteLine("    {0}{1}", Entry.Key, describeCommandSet.Brief);
+                            break;
+                            }
+
+                    default:
                         break;
-                        }
+                    }
 
-                default:
-                    break;
                 }
+            foreach (var Entry in Entries) {
+                switch (Entry.Value) {
+                    case DescribeCommandEntry describeCommandEntry: {
+                            Output.WriteLine("    {0}{1}   {2}", prefixCommand, Entry.Key, describeCommandEntry.Brief);
+                            break;
+                            }
 
-            }
-        foreach (var Entry in Entries) {
-            switch (Entry.Value) {
-                case DescribeCommandEntry describeCommandEntry: {
-                        Output.WriteLine("    {0}{1}   {2}", prefixCommand, Entry.Key, describeCommandEntry.Brief);
+                    default:
                         break;
-                        }
+                    }
 
-                default:
-                    break;
                 }
-
             }
         }
     }

@@ -100,6 +100,22 @@ public partial class CatalogedMember {
     /// Default constructor for serialization.
     /// </summary>
     public CatalogedMember() { }
+
+
+    ///<inheritdoc/>
+    public override void Describe(StringBuilder builder, bool detail = false) => ItemToBuilder(builder);
+
+
+    ///<inheritdoc/>
+
+    public override void ItemToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
+
+        builder.AppendLine($"{ContactAddress} [{MemberCapabilityId}]");
+        }
+
+
+
+
     #endregion
     }
 #endregion

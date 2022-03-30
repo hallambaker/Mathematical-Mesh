@@ -923,6 +923,9 @@
         <member name="F:Goedel.Utilities.ConversionFormat.None">
             <summary>Apply no additional formatting</summary>
         </member>
+        <member name="F:Goedel.Utilities.ConversionFormat.Terminal">
+            <summary>Add trailing base64 equals characters if required.</summary>
+        </member>
         <member name="F:Goedel.Utilities.ConversionFormat.Draft">
             <summary>Perform linewrapping at 72 charcters and insert 
             leading spaces as per an Internet Draft.</summary>
@@ -936,8 +939,8 @@
         <member name="F:Goedel.Utilities.ConversionFormat.Dash5">
             <summary>Insert a dash every 5 output characters</summary>
         </member>
-        <member name="F:Goedel.Utilities.ConversionFormat.Terminal">
-            <summary>Add trailing base64 equals characters if required.</summary>
+        <member name="F:Goedel.Utilities.ConversionFormat.PEM64">
+            <summary>Format according to PEM rules, i.e. wrap at exactly 64 chars.</summary>
         </member>
         <member name="T:Goedel.Utilities.BaseConvert">
             <summary>
@@ -1327,6 +1330,12 @@
             <param name="c">The character to format.</param>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.ByteStreamFormatter.FormatCharDraft(System.Char)">
+            <summary>
+            Format output character with IETF plaintext draft format.
+            </summary>
+            <param name="c">The character to format.</param>
+        </member>
+        <member name="M:Goedel.Utilities.BaseConvert.ByteStreamFormatter.FormatCharPEM(System.Char)">
             <summary>
             Format output character with IETF plaintext draft format.
             </summary>

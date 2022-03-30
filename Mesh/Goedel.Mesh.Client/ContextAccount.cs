@@ -576,7 +576,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <returns>The <see cref="Store"/> instance.</returns>
     public Store GetStore(string name, 
                 bool blind = false, 
-                bool decrypt = true) {
+                bool decrypt = true,
+                bool create = true) {
         if (DictionaryStores.TryGetValue(name, out var syncStore)) {
             if (!blind & (syncStore.Store is CatalogBlind)) {
                 // if we have a blind store from a sync operation but need a populated one,
@@ -591,7 +592,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
 
         var store = blind ? new CatalogBlind(StoresDirectory, name) : 
-                    MakeStore(name, decrypt: decrypt);
+                    MakeStore(name, decrypt: decrypt, create: create);
         syncStore = new SyncStatus(store);
 
         DictionaryStores.Add(name, syncStore);
@@ -607,7 +608,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="decrypt">If true, attempt decryption of payload contents.</param>
     protected Store MakeStore(string name, 
                 DarePolicy? darePolicy = null,
-                bool decrypt=true) {
+                bool decrypt=true,
+                bool create=true) {
 
         //// special case this for now
         //switch (name) {
@@ -617,10 +619,12 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         if (DictionaryCatalogDelegates.TryGetValue(name, out var factory)) {
             darePolicy ??= ActivationCommon.GetDarePolicy(name);
-            return factory(StoresDirectory, name, this, darePolicy, null, this, decrypt: decrypt);
+            return factory(StoresDirectory, name, this, darePolicy, null, this, 
+                decrypt: decrypt, create: create);
             }
         if (DictionarySpoolDelegates.TryGetValue(name, out factory)) {
-            return factory(StoresDirectory, name, this, null, null, this, decrypt: decrypt);
+            return factory(StoresDirectory, name, this, null, null, this, 
+                decrypt: decrypt, create: create);
             }
 
 

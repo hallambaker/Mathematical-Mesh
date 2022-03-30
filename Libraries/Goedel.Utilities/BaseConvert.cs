@@ -27,6 +27,8 @@ namespace Goedel.Utilities;
 public enum ConversionFormat {
     /// <summary>Apply no additional formatting</summary>
     None = 0,
+    /// <summary>Add trailing base64 equals characters if required.</summary>
+    Terminal = 1,
     /// <summary>Perform linewrapping at 72 charcters and insert 
     /// leading spaces as per an Internet Draft.</summary>
     Draft = 2,
@@ -36,8 +38,8 @@ public enum ConversionFormat {
     Dash4 = 6,
     /// <summary>Insert a dash every 5 output characters</summary>
     Dash5 = 8,
-    /// <summary>Add trailing base64 equals characters if required.</summary>
-    Terminal = 1
+    /// <summary>Format according to PEM rules, i.e. wrap at exactly 64 chars.</summary>
+    PEM64 = 16
     }
 
 
@@ -421,7 +423,8 @@ public static partial class BaseConvert {
                 byte[] data,
                 int first = 0,
                 int length = -1,
-                ConversionFormat format = ConversionFormat.None) => StringBuilderConvertBits.Append(data, BASE64, 6, format, stringBuilder, first, length);
+                ConversionFormat format = ConversionFormat.None) => 
+        StringBuilderConvertBits.Append(data, BASE64, 6, format, stringBuilder, first, length);
 
     #endregion
     #region // Base64Url

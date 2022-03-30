@@ -30,3 +30,13 @@ Namespace Goedel.Cryptography.KeyFile
 			Console "The file {0} could not be read"
 			Description
 				|An unidentifier parse error occurred.
+
+		Exception FileFormatNotImplemented
+			Console "The key file format {0} is not implemented"
+			Description
+				|The key file format is not implemented
+
+		Exception FileFormatAlgorithmNotImplemented
+			Console "The key file format {0} is not implemented for algorithm {1}"
+			Description
+				|The key file format is not implemented for the algorithm

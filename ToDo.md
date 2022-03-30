@@ -2,25 +2,6 @@
 
 Unit tests !!!!
 
-## SSH 
-
-Public key not written out to file as it should be
-
-
-## Passwords
-
-PS C:\Users\alice\Mesh> meshman password add "example.com" "therealalice" "password"
-PS C:\Users\alice\Mesh> meshman password list
-CatalogedCredential
-
-Need to properly describe the password data
-
-## Device list
-
-PS C:\Users\alice\Mesh> meshman device list
-PS C:\Users\alice\Mesh>
-Doesn't
-
 
 ## Delete device
 
@@ -83,10 +64,12 @@ Intern EnvelopeID MAVX-Z2LX-ZUGU-J6OY-O5OB-DN5M-HDHZ, Message MDXT-2GOZ-7WND-LD3
 
 ## Command line help
 
-Do not show flag on sub command
-
-Only dump the top level groups
-
 Give detailed info on groups /commands
 meshman help message
 meshman help message pending
+
+
+## Poor error messages
+
+PS C:\Users\hallam\Work\mmm> meshman account create me@example.com
+Application: One or more errors occurred. (No connection could be made because the target machine actively refused it. (voodoo.example.com:15099))

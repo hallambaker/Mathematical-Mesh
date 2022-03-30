@@ -206,6 +206,12 @@ public static partial class BaseConvert {
                         this.outputCol = outputCol > 0 ? outputCol : 0;
                         break;
                         }
+                case ConversionFormat.PEM64: {
+                        formatChar = FormatCharPEM;
+                        this.outputMax = 64;
+                        this.outputCol = 0;
+                        break;
+                        }
                 case ConversionFormat.Hex: {
                         formatChar = FormatCharHex;
                         break;
@@ -321,7 +327,19 @@ public static partial class BaseConvert {
 
             WriteChar(c);
             }
+        /// <summary>
+        /// Format output character with IETF plaintext draft format.
+        /// </summary>
+        /// <param name="c">The character to format.</param>
+        public void FormatCharPEM(char c) {
+            outputCol++;
+            if (outputCol > outputMax) {
+                WriteChar('\n');
+                outputCol = 1;
+                }
 
+            WriteChar(c);
+            }
         /// <summary>
         /// Format hexadecimal character..
         /// </summary>

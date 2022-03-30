@@ -99,13 +99,13 @@ public partial class CatalogedBookmark {
     public override void Describe(StringBuilder builder, bool detail = false) => ItemToBuilder(builder);
 
     ///<inheritdoc/>
-    public override void ItemToBuilder(StringBuilder stringBuilder, int indent = 0, IKeyCollection keyCollection = null) {
+    public override void ItemToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
 
-        stringBuilder.Append($"[{_PrimaryKey}");
-        stringBuilder.AppendNotNull(LocalName, $"/{LocalName}");
-        stringBuilder.Append($"] {Uri}\n");
-        stringBuilder.AppendNotNull(Title, Title);
+        builder.Append($"[{_PrimaryKey}");
+        builder.AppendNotNull(LocalName, $"/{LocalName}");
+        builder.Append($"] {Uri}\n");
+        builder.AppendNotNull(Title, Title);
 
         }
 

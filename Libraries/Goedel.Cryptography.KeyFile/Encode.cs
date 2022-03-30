@@ -51,180 +51,157 @@ public static class Extension {
     /// <summary>
     /// Convert key pair to specified format
     /// </summary>
-    /// <param name="KeyPair">Keypair to convert</param>
-    /// <param name="KeyFileFormat">Format to convert to</param>
+    /// <param name="keyPair">Keypair to convert</param>
+    /// <param name="keyFileFormat">Format to convert to</param>
     /// <param name="passphrase">Optional passphrase to be used as encryption key.</param>
     /// <returns>The keyfile data</returns>
-    public static string ToKeyFile(this KeyPair KeyPair, KeyFileFormat KeyFileFormat,
+    public static string ToKeyFile(this KeyPair keyPair, KeyFileFormat keyFileFormat,
             string passphrase = null) {
 
 
+        // ToDo: Write Key To File - Add in handling of ECC Key Types 
+        // ToDo: Write Key To File - Handle passphrase encryption for PEM
+        // ToDo: Write Key To File - Create PFX/P12 using .NET built ins
+        // ToDo: Write Key To File - Unit tests for file generation /parse
+        // ToDo: Write Key To File - PUTTY key files
 
 
-        switch (KeyFileFormat) {
+
+        switch (keyFileFormat) {
             case KeyFileFormat.PEMPrivate: {
-                    return ToPEMPrivate(KeyPair, passphrase);
+                    return ToPEMPrivate(keyPair, passphrase);
                     }
             case KeyFileFormat.PEMPublic: {
-                    return ToPEMPublic(KeyPair);
+                    return ToPEMPublic(keyPair);
                     }
             case KeyFileFormat.PuTTY: {
-                    return ToPuTTY(KeyPair);
+                    return ToPuTTY(keyPair);
                     }
             case KeyFileFormat.OpenSSH: {
-                    return ToOpenSSH(KeyPair);
+                    return ToOpenSSH(keyPair);
                     }
 
             case KeyFileFormat.Default:
-                break;
             case KeyFileFormat.X509DER:
-                break;
             case KeyFileFormat.PKCS12:
-                break;
             case KeyFileFormat.PKCS7:
-                break;
             default:
-                break;
+                throw new FileFormatNotImplemented(null, null, keyFileFormat.ToString());
             }
-        return null;
+
         }
 
     /// <summary>
     /// Convert key pair to OpenSSH format
     /// </summary>
-    /// <param name="KeyPair">Key pair to convert</param>
+    /// <param name="keyPair">Key pair to convert</param>
     /// <returns>The keyfile data</returns>
-    public static string ToOpenSSH(this KeyPair KeyPair) {
-        if (KeyPair is KeyPairBaseRSA RSAKeyPair) {
-            return ToOpenSSH(RSAKeyPair);
-            }
-
-        //switch (KeyPair) {
-        //    case RSAKeyPair RSAKeyPair:
-        //        return ToOpenSSH(RSAKeyPair);
-        //    }
-        return null;
+    public static string ToOpenSSH(this KeyPair keyPair) {
+        return keyPair switch {
+            KeyPairBaseRSA rsaKeyPair => ToOpenSSH(rsaKeyPair),
+            _ => throw new FileFormatAlgorithmNotImplemented(null, null, KeyFileFormat.OpenSSH, keyPair.CryptoAlgorithmId)
+            };
         }
 
     /// <summary>
     /// Convert key pair to PEMPrivate format
     /// </summary>
-    /// <param name="KeyPair">Key pair to convert</param>
+    /// <param name="keyPair">Key pair to convert</param>
     /// <param name="passphrase">Optional passphrase to be used as encryption key.</param>
     /// <returns>The keyfile data</returns>
-    public static string ToPEMPrivate(this KeyPair KeyPair, string passphrase = null) {
-
+    public static string ToPEMPrivate(this KeyPair keyPair, string passphrase = null) {
         passphrase.AssertNull(NYI.Throw);
-
-        if (KeyPair is KeyPairBaseRSA RSAKeyPair) {
-            return ToPEMPrivateRSA(RSAKeyPair, passphrase);
-            }
-
-        //switch (KeyPair) {
-        //    case RSAKeyPair RSAKeyPair:
-        //    return ToPEMPrivate(RSAKeyPair);
-        //    }
-        return null;
+        return keyPair switch {
+            KeyPairBaseRSA rsaKeyPair => ToPEMPrivateRSA(rsaKeyPair, passphrase),
+            _ => throw new FileFormatAlgorithmNotImplemented(null, null, KeyFileFormat.PEMPrivate, keyPair.CryptoAlgorithmId)
+            };
         }
 
     /// <summary>
     /// Convert key pair to PEMPublic format
     /// </summary>
-    /// <param name="KeyPair">Key pair to convert</param>
+    /// <param name="keyPair">Key pair to convert</param>
     /// <returns>The keyfile data</returns>
-    public static string ToPEMPublic(this KeyPair KeyPair) {
-        if (KeyPair is KeyPairBaseRSA RSAKeyPair) {
-            return ToPEMPublic(RSAKeyPair);
-            }
-
-        //switch (KeyPair) {
-        //    case RSAKeyPair RSAKeyPair:
-        //    return ToPEMPublic(RSAKeyPair);
-        //    }
-        return null;
+    public static string ToPEMPublic(this KeyPair keyPair) {
+        return keyPair switch {
+            KeyPairBaseRSA rsaKeyPair => ToPEMPublic(rsaKeyPair),
+            _ => throw new FileFormatAlgorithmNotImplemented(null, null, KeyFileFormat.PEMPublic, keyPair.CryptoAlgorithmId)
+            };
         }
 
     /// <summary>
     /// Convert key pair to PuTTY format
     /// </summary>
-    /// <param name="KeyPair">Key pair to convert</param>
+    /// <param name="keyPair">Key pair to convert</param>
     /// <returns>The keyfile data</returns>
-    public static string ToPuTTY(this KeyPair KeyPair) {
-        if (KeyPair is KeyPairBaseRSA RSAKeyPair) {
-            return ToPuTTY(RSAKeyPair);
-            }
-
-        //switch (KeyPair) {
-        //    case RSAKeyPair RSAKeyPair:
-        //    return ToPuTTY(RSAKeyPair);
-        //    }
-        return null;
+    public static string ToPuTTY(this KeyPair keyPair) {
+        return keyPair switch {
+            KeyPairBaseRSA rsaKeyPair => ToPuTTY(rsaKeyPair),
+            _ => throw new FileFormatAlgorithmNotImplemented(null, null, KeyFileFormat.PuTTY, keyPair.CryptoAlgorithmId)
+            };
         }
 
     /// <summary>
     /// Convert key pair to PEM formatted string.
     /// </summary>
-    /// <param name="RSAKeyPair">A  Key pair</param>
+    /// <param name="rsaKeyPair">A  Key pair</param>
     /// <returns>Key Pair in PEM format</returns>
-    public static string ToPuTTY(this KeyPairBaseRSA RSAKeyPair) => null;
+    public static string ToPuTTY(this KeyPairBaseRSA rsaKeyPair) =>
+                throw new FileFormatAlgorithmNotImplemented(null, null, KeyFileFormat.PuTTY, rsaKeyPair.CryptoAlgorithmId);
 
     /// <summary>
     /// Convert key pair to OpenSSH formatted string.
     /// </summary>
-    /// <param name="RSAKeyPair">A  Key pair</param>
+    /// <param name="rsaKeyPair">A  Key pair</param>
     /// <param name="Tag">Tag to label key with</param>
     /// <returns>Key Pair in PEM format</returns>
-    public static string ToOpenSSH(this KeyPairBaseRSA RSAKeyPair, string Tag = null) {
-        var SSH_RSA = new SSH_RSA(RSAKeyPair);
-        var Data = SSH_RSA.Encode();
+    public static string ToOpenSSH(this KeyPairBaseRSA rsaKeyPair, string Tag = null) {
+        var SSH_RSA = new SSH_RSA(rsaKeyPair);
+        var data = SSH_RSA.Encode();
 
-        var Builder = new StringBuilder();
-        Builder.Append("ssh-rsa ");
-        Builder.ToStringBase64(Data, 0, Data.Length);
-        Builder.Append(' ');
-        Builder.Append(Tag ?? "");
-        return Builder.ToString();
+        var builder = new StringBuilder();
+        builder.Append("ssh-rsa ");
+        builder.ToStringBase64(data, 0, data.Length);
+        builder.Append(' ');
+        builder.Append(Tag ?? "");
+        return builder.ToString();
         }
 
     /// <summary>
     /// Convert key pair to PEM formatted string.
     /// </summary>
-    /// <param name="RSAKeyPair">A  Key pair</param>
+    /// <param name="rsaKeyPair">A  Key pair</param>
     /// <returns>Key Pair in PEM format</returns>
-    public static string ToPEMPublic(this KeyPairBaseRSA RSAKeyPair) => null;
+    public static string ToPEMPublic(this KeyPairBaseRSA rsaKeyPair) {
+        var rsaPublicKey = rsaKeyPair.PkixPublicKey;
 
+        var builder = new StringBuilder();
+
+        builder.Append("-----BEGIN RSA PUBLIC KEY-----\n");
+        var keyDER = rsaPublicKey.DER();
+        builder.ToStringBase64(keyDER,format:ConversionFormat.PEM64);
+        builder.Append("\n-----END RSA PUBLIC KEY-----\n");
+
+        return builder.ToString();
+        }
     /// <summary>
     /// Convert key pair to PEM formatted string.
     /// </summary>
-    /// <param name="RSAKeyPair">An RSA Key pair</param>
+    /// <param name="rsaKeyPair">An RSA Key pair</param>
     /// <param name="passphrase">Optional passphrase to be used as encryption key.</param>
     /// <returns>Key Pair in PEM format</returns>
-    public static string ToPEMPrivateRSA(KeyPairBaseRSA RSAKeyPair, string passphrase = null) {
-        //throw new NYI();
-        //RSACryptoServiceProvider Provider = RSAKeyPair.Provider;
-        //Assert.NotNull(Provider, NoProviderSpecified.Throw);
-
-        //var RSAParameters = Provider.ExportParameters(true);
-        //Assert.NotNull(RSAParameters, PrivateKeyNotAvailable.Throw);
-
-        //var NewProvider = new RSACryptoServiceProvider();
-        //NewProvider.ImportParameters(RSAParameters);
-
-
-        ////RSAParameters.Dump();
-
-        //var RSAPrivateKey = RSAParameters.RSAPrivateKey();
+    public static string ToPEMPrivateRSA(KeyPairBaseRSA rsaKeyPair, string passphrase = null) {
         passphrase.AssertNull(NYI.Throw);
-        var RSAPrivateKey = RSAKeyPair.PKIXPrivateKey;
+        var rsaPrivateKey = rsaKeyPair.PKIXPrivateKey;
 
-        var Builder = new StringBuilder();
+        var builder = new StringBuilder();
 
-        Builder.Append("-----BEGIN RSA PRIVATE KEY-----");
-        var KeyDER = RSAPrivateKey.DER();
-        Builder.ToStringBase64(KeyDER);
-        Builder.Append("\n-----END RSA PRIVATE KEY-----\n");
+        builder.Append("-----BEGIN RSA PRIVATE KEY-----\n");
+        var keyDER = rsaPrivateKey.DER();
+        builder.ToStringBase64(keyDER, format: ConversionFormat.PEM64);
+        builder.Append("\n-----END RSA PRIVATE KEY-----\n");
 
-        return Builder.ToString();
+        return builder.ToString();
         }
 
     /// <summary>

@@ -187,8 +187,6 @@ public partial class ContextUser : ContextAccount {
                     KeyActivationFailed.Throw);
             }
 
-        //CatalogContact = GetStore(Mesh.CatalogContact.Label) as CatalogContact;
-        //DumpContext(deviceKeySeed.KeyId);
         }
 
 
@@ -565,6 +563,7 @@ public partial class ContextUser : ContextAccount {
         if (ActivationCommon?.CommonEncryptionKey?.TryFindKeyDecryption(keyId, out cryptoKey) == true) {
             return true;
             }
+        CatalogContact ??= GetStore(Mesh.CatalogContact.Label, create: false) as CatalogContact;
         if (CatalogContact != null) {
             return CatalogContact.TryFindKeyDecryption(keyId, out cryptoKey);
             }

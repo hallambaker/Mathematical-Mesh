@@ -21,6 +21,8 @@
 #endregion
 
 
+using System.Text;
+
 namespace Goedel.Mesh;
 
 
@@ -138,20 +140,23 @@ public partial class CatalogedCredential {
     /// <returns>The credential key.</returns>
     public static string GetKey(string? protocol, string? service) => $"{protocol ?? ""}:{service ?? ""}";
 
-    /// <summary>
-    /// Converts the value of this instance to a <see langword="String"/>.
-    /// </summary>
-    /// <returns>The current string.</returns>
-    public override string ToString() {
-        var stringBuilder = new StringBuilder();
+
+
+    ///<inheritdoc/>
+    public override void Describe(StringBuilder builder, bool detail = false) => ItemToBuilder(builder);
+
+
+    ///<inheritdoc/>
+
+    public override void ItemToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
+
         if (Protocol != null) {
-            stringBuilder.Append($"{Protocol}:");
+            builder.Append($"{Protocol}:");
             }
-        stringBuilder.AppendLine($"{Username}@{Service} = [{Password}]");
-
-        return stringBuilder.ToString();
-
+        builder.AppendLine($"{Username}@{Service} = [{Password}]");
         }
+
+
     #endregion
     }
 #endregion

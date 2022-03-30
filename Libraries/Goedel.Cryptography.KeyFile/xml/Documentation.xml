@@ -91,8 +91,8 @@
             <summary>
             Convert key pair to specified format
             </summary>
-            <param name="KeyPair">Keypair to convert</param>
-            <param name="KeyFileFormat">Format to convert to</param>
+            <param name="keyPair">Keypair to convert</param>
+            <param name="keyFileFormat">Format to convert to</param>
             <param name="passphrase">Optional passphrase to be used as encryption key.</param>
             <returns>The keyfile data</returns>
         </member>
@@ -100,14 +100,14 @@
             <summary>
             Convert key pair to OpenSSH format
             </summary>
-            <param name="KeyPair">Key pair to convert</param>
+            <param name="keyPair">Key pair to convert</param>
             <returns>The keyfile data</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyFile.Extension.ToPEMPrivate(Goedel.Cryptography.KeyPair,System.String)">
             <summary>
             Convert key pair to PEMPrivate format
             </summary>
-            <param name="KeyPair">Key pair to convert</param>
+            <param name="keyPair">Key pair to convert</param>
             <param name="passphrase">Optional passphrase to be used as encryption key.</param>
             <returns>The keyfile data</returns>
         </member>
@@ -115,28 +115,28 @@
             <summary>
             Convert key pair to PEMPublic format
             </summary>
-            <param name="KeyPair">Key pair to convert</param>
+            <param name="keyPair">Key pair to convert</param>
             <returns>The keyfile data</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyFile.Extension.ToPuTTY(Goedel.Cryptography.KeyPair)">
             <summary>
             Convert key pair to PuTTY format
             </summary>
-            <param name="KeyPair">Key pair to convert</param>
+            <param name="keyPair">Key pair to convert</param>
             <returns>The keyfile data</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyFile.Extension.ToPuTTY(Goedel.Cryptography.KeyPairBaseRSA)">
             <summary>
             Convert key pair to PEM formatted string.
             </summary>
-            <param name="RSAKeyPair">A  Key pair</param>
+            <param name="rsaKeyPair">A  Key pair</param>
             <returns>Key Pair in PEM format</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyFile.Extension.ToOpenSSH(Goedel.Cryptography.KeyPairBaseRSA,System.String)">
             <summary>
             Convert key pair to OpenSSH formatted string.
             </summary>
-            <param name="RSAKeyPair">A  Key pair</param>
+            <param name="rsaKeyPair">A  Key pair</param>
             <param name="Tag">Tag to label key with</param>
             <returns>Key Pair in PEM format</returns>
         </member>
@@ -144,14 +144,14 @@
             <summary>
             Convert key pair to PEM formatted string.
             </summary>
-            <param name="RSAKeyPair">A  Key pair</param>
+            <param name="rsaKeyPair">A  Key pair</param>
             <returns>Key Pair in PEM format</returns>
         </member>
         <member name="M:Goedel.Cryptography.KeyFile.Extension.ToPEMPrivateRSA(Goedel.Cryptography.KeyPairBaseRSA,System.String)">
             <summary>
             Convert key pair to PEM formatted string.
             </summary>
-            <param name="RSAKeyPair">An RSA Key pair</param>
+            <param name="rsaKeyPair">An RSA Key pair</param>
             <param name="passphrase">Optional passphrase to be used as encryption key.</param>
             <returns>Key Pair in PEM format</returns>
         </member>
@@ -328,6 +328,70 @@
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="P:Goedel.Cryptography.KeyFile.ParseError.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.KeyFile.FileFormatNotImplemented">
+            <summary>
+            The key file format is not implemented
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyFile.FileFormatNotImplemented.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyFile.FileFormatNotImplemented.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyFile.FileFormatNotImplemented.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyFile.FileFormatNotImplemented._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.KeyFile.FileFormatNotImplemented.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.KeyFile.FileFormatAlgorithmNotImplemented">
+            <summary>
+            The key file format is not implemented for the algorithm
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyFile.FileFormatAlgorithmNotImplemented.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.KeyFile.FileFormatAlgorithmNotImplemented.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyFile.FileFormatAlgorithmNotImplemented.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyFile.FileFormatAlgorithmNotImplemented._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.KeyFile.FileFormatAlgorithmNotImplemented.Throw">
             <summary>
             The public fatory delegate
             </summary>

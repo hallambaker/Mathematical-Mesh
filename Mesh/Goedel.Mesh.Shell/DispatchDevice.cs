@@ -253,9 +253,17 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult DeviceList(DeviceList options) {
         var contextAccount = GetContextUser(options);
-        var result = new Result() {
 
+        var deviceCatalog = contextAccount.GetStore(CatalogDevice.Label) as CatalogDevice;
+        var result = new ResultDump() {
+            Success = true,
+            CatalogedEntries = new List<CatalogedEntry>()
             };
+        foreach (var device in deviceCatalog) {
+            result.CatalogedEntries.Add(device);
+            }
+
+
         "".TaskFunctionality();
         return result;
         }

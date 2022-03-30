@@ -3624,11 +3624,11 @@
             <param name="service">The service to connect to.</param>
             <returns>The credential key.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedCredential.ToString">
-            <summary>
-            Converts the value of this instance to a <see langword="String"/>.
-            </summary>
-            <returns>The current string.</returns>
+        <member name="M:Goedel.Mesh.CatalogedCredential.Describe(System.Text.StringBuilder,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedCredential.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CatalogedCredential.Protocol">
             <summary>
@@ -3814,6 +3814,9 @@
             Convert the cataloged device to a string.
             </summary>
             <returns>The string describing the cataloged device.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedDevice.Describe(System.Text.StringBuilder,System.Boolean)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
@@ -4149,6 +4152,12 @@
             <summary>
             Default constructor for serialization.
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedMember.Describe(System.Text.StringBuilder,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedMember.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CatalogedMember.ContactAddress">
             <summary>

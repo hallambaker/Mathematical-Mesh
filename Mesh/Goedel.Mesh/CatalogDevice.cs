@@ -198,6 +198,9 @@ public partial class CatalogedDevice {
         return builder.ToString();
         }
 
+    ///<inheritdoc/>
+    public override void Describe(StringBuilder builder, bool detail = false) => ItemToBuilder(builder);
+
     /// <summary>
     /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
     /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -209,7 +212,7 @@ public partial class CatalogedDevice {
     public override void ItemToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
 
-        builder.AppendIndent(indent, $"ContextDevice");
+        builder.AppendIndent(indent, $"ContextDevice Local: {LocalName ?? "-"}");
 
         indent++;
         builder.AppendIndent(indent, $"Base UDF {DeviceUdf}");

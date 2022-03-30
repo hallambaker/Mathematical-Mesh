@@ -592,7 +592,7 @@
             <param name="containerUpdate">The update to apply.</param>
             <returns>The number of envelopes successfully added.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetStore(System.String,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetStore(System.String,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Return a <see cref="T:Goedel.Mesh.Store"/> instance for the store named <paramref name="name"/>. If the
             parameter <paramref name="blind"/> is true, only the sequence header values are read.
@@ -602,7 +602,7 @@
             <param name="decrypt">If true, decrypt the store contents on access.</param>
             <returns>The <see cref="T:Goedel.Mesh.Store"/> instance.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.MakeStore(System.String,Goedel.Cryptography.Dare.DarePolicy,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.MakeStore(System.String,Goedel.Cryptography.Dare.DarePolicy,System.Boolean,System.Boolean)">
             <summary>
             Create a new instance bound to the specified core within this account context.
             </summary>
