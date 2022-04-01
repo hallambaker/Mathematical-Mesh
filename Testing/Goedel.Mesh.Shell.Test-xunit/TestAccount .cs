@@ -130,7 +130,7 @@ public partial class ShellTests {
         var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
         var testCLIAlice2 = GetTestCLI(AliceDevice2);
-        var ProfileRecover = testCLIAlice2.Example($"account recover {share1} {share2} /verify");
+        var ProfileRecover = testCLIAlice2.Example($"account recover {share1} {share2} /account={AliceAccount}  /verify");
 
         var recoverSync = testCLIAlice2.Example($"account sync");
 
@@ -152,7 +152,7 @@ public partial class ShellTests {
         var ProfileAliceDelete = testCLIAlice1.Example($"account delete {profileUdf}");
 
         var testCLIAlice2 = GetTestCLI(AliceDevice2);
-        var ProfileRecover = testCLIAlice2.Example($"account recover {share1} {share2} /verify");
+        var ProfileRecover = testCLIAlice2.Example($"account recover {share1} {share2} /account={AliceAccount} /verify");
 
         var recoverSync = testCLIAlice2.Example($"account sync");
 

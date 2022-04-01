@@ -61,7 +61,7 @@ partial class Program {
         //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
 
-        //ShellTestsAdmin.Test().TestProfileConnect();
+        //ShellTestsAdmin.Test().TestProfileConnectPinExpired();
         //ShellTestsAdmin.Test().TestAccountRefreshed();
         //ShellTests.Test().TestConnectRequest();
 

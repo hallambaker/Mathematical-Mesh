@@ -169,6 +169,7 @@ public partial class Shell {
         var rights = GetRights(options);
         var bits = 5 * options.Length.Value;
 
+
         var expire = TimeSpan.Parse(options.Expire.Value);
         // ToDo: Allow other actions besides device.
 
@@ -278,8 +279,9 @@ public partial class Shell {
 
 
         var accountSeed = new PrivateKeyUDF(secret.UDFKey);
-        var contextUser = MeshHost.ConfigureMesh(accountAddress, localName, accountSeed: accountSeed);
 
+        var contextUser = MeshHost.ConfigureMesh(
+                accountAddress, localName, accountSeed: accountSeed, create:false);
 
         return new ResultCreateAccount() {
             Success = true,

@@ -154,7 +154,7 @@ public partial class ShellTests {
 
         device1.Dispatch($"account create {AliceAccount}");
 
-        var result = device1.Dispatch($"account pin /expire  /web") as ResultPIN;
+        var result = device1.Dispatch($"account pin /expire=0 /web") as ResultPIN;
         Thread.Sleep(1000); // make sure that the PIN expires
 
         var pin = result.MessagePIN.Pin;

@@ -423,12 +423,18 @@ public class MeshHost : Disposable {
              out var _);
 
 
-        contextUser.SetService(accountAddress);
+        
 
         if (create) {
+            contextUser.SetService(accountAddress);
             contextUser.BindService(accountAddress);
             }
         else {
+
+            // Here need to set the credential to use the profile auth key.
+
+
+
             contextUser.Sync();
             }
         contextUser.MakeAdministrator(rights);
