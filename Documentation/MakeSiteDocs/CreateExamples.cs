@@ -550,7 +550,7 @@ public partial class CreateExamples {
     public void MailApp() {
         // Add an SSH application profile 'SSH'
         Apps.Mail = Alice1.Example(
-            $"mail add {Apps.Mailaddress} /inbound {Apps.Mailinbound1} /outbound {Apps.Mailoutbound}");
+            $"mail add {Apps.Mailaddress} /inbound {Apps.Mailinbound1} /outbound {Apps.Mailoutbound} /Web");
 
         var mail2 = new CatalogedApplicationMail() {
             AccountAddress = "alice@example.net",
@@ -563,7 +563,7 @@ public partial class CreateExamples {
         Apps.MailImport = Alice1.Example(
             $"mail import {Apps.MailAccountConfigFile}");
         Apps.MailUpdate = Alice1.Example(
-            $"mail add {Apps.Mailaddress} /inbound {Apps.Mailinbound2} /outbound {Apps.Mailoutbound} ");
+            $"mail add {Apps.Mailaddress} /inbound {Apps.Mailinbound2} /outbound {Apps.Mailoutbound} /Web ");
         Apps.MailGet = Alice1.Example(
             $"mail get {Apps.Mailaddress}");
 
@@ -635,11 +635,11 @@ public partial class CreateExamples {
         ResultPending resultPending;
         // Contact requests (Remote)
         Contact.ContactBobRequest = Bob1.Example(
-            $"message contact {AliceAccount}"
+            $"contact request {AliceAccount}"
              );
 
         Contact.ContactMalletRequest = Mallet1.Example(
-            $"message contact {AliceAccount}"
+            $"contact request {AliceAccount}"
              );
 
 
@@ -1055,7 +1055,7 @@ public partial class CreateExamples {
         Alice5 = GetTestCLI(AliceDevice5);
 
         Connect.ConnectJoinPinCreate = Alice1.Example(
-                $"account pin");
+                $"account pin /null");
         var message = ((Connect.ConnectJoinPinCreate[0].Result) as ResultPIN).MessagePIN;
 
         var uri = message.GetURI();

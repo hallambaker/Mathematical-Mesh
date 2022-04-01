@@ -27,6 +27,14 @@ Namespace Goedel.Mesh.Client
 		Exception MeshNotFound
 			Description
 				|No mesh profile could be found.
+
+	Exception GroupNotFound
+		Console "The Group account [{0}] was not found."
+		Description
+			|No mesh account could be found.
+
+
+
 	Exception NoAccountBound
 		Console "This device is not bound to any account."
 	

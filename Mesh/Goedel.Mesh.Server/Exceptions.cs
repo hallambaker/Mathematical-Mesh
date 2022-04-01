@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 30-Mar-22 2:07:46 PM
+//  This file was automatically generated at 01-Apr-22 5:58:20 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -956,6 +956,156 @@ public  static partial class EventExtensions {
     /// Static initializer, is called once when the module loads.
     /// </summary>
     static EventExtensions() {
+        _DispatchBegin = LoggerMessage.Define(
+            LogLevel.Information, new EventId(100, nameof(_DispatchBegin)),
+            "Dispatch begin");
+        _DispatchParse = LoggerMessage.Define(
+            LogLevel.Information, new EventId(101, nameof(_DispatchParse)),
+            "Dispatch parse failed");
+        _DispatchStart = LoggerMessage.Define<string>(
+            LogLevel.Information, new EventId(102, nameof(_DispatchStart)),
+            "Dispatch start transaction {Request}");
+        _DispatchFail = LoggerMessage.Define<string,string>(
+            LogLevel.Information, new EventId(103, nameof(_DispatchFail)),
+            "Dispatch transaction fail {Request} {Reason}");
+        _DispatchComplete = LoggerMessage.Define<string>(
+            LogLevel.Information, new EventId(104, nameof(_DispatchComplete)),
+            "Dispatch transaction fail {Request}");
+        _LockAttempt = LoggerMessage.Define<string>(
+            LogLevel.Information, new EventId(110, nameof(_LockAttempt)),
+            "Lock attempt {Resource}");
+        _LockAcquire = LoggerMessage.Define<string>(
+            LogLevel.Information, new EventId(111, nameof(_LockAcquire)),
+            "Lock acquired {Resource}");
+        _LockRelease = LoggerMessage.Define<string>(
+            LogLevel.Information, new EventId(112, nameof(_LockRelease)),
+            "Lock released {Resource}");
+        }
+
+
+    private static readonly Action<ILogger, Exception> _DispatchBegin;
+
+	/// <summary>
+    /// Write an event of type DispatchBegin to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void DispatchBegin(
+			this ILogger logger,
+			Exception _exception=null) {
+        _DispatchBegin(logger, _exception);
+        }
+
+
+    private static readonly Action<ILogger, Exception> _DispatchParse;
+
+	/// <summary>
+    /// Write an event of type DispatchParse to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void DispatchParse(
+			this ILogger logger,
+			Exception _exception=null) {
+        _DispatchParse(logger, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _DispatchStart;
+
+	/// <summary>
+    /// Write an event of type DispatchStart to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="request">Request name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void DispatchStart(
+			this ILogger logger,
+			string request,
+			Exception _exception=null) {
+        _DispatchStart(logger, request, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _DispatchFail;
+
+	/// <summary>
+    /// Write an event of type DispatchFail to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="request">Request name</param>
+	/// <param name="reason">Reason</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void DispatchFail(
+			this ILogger logger,
+			string request,
+			string reason,
+			Exception _exception=null) {
+        _DispatchFail(logger, request, reason, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _DispatchComplete;
+
+	/// <summary>
+    /// Write an event of type DispatchComplete to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="request">Request name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void DispatchComplete(
+			this ILogger logger,
+			string request,
+			Exception _exception=null) {
+        _DispatchComplete(logger, request, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _LockAttempt;
+
+	/// <summary>
+    /// Write an event of type LockAttempt to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="resource">Resource name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void LockAttempt(
+			this ILogger logger,
+			string resource,
+			Exception _exception=null) {
+        _LockAttempt(logger, resource, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _LockAcquire;
+
+	/// <summary>
+    /// Write an event of type LockAcquire to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="resource">Resource name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void LockAcquire(
+			this ILogger logger,
+			string resource,
+			Exception _exception=null) {
+        _LockAcquire(logger, resource, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _LockRelease;
+
+	/// <summary>
+    /// Write an event of type LockRelease to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="resource">Resource name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void LockRelease(
+			this ILogger logger,
+			string resource,
+			Exception _exception=null) {
+        _LockRelease(logger, resource, _exception);
         }
 
 	}

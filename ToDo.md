@@ -1,32 +1,48 @@
 # Errors
 
-Unit tests !!!!
-
 
 ## Delete device
 
+
+This problem appears to be the result of a lock being acquired and not released when the
+context request fails.
+
+It is probable that any request failure inside the service will cause the same result.
+
+Need to add trace statements around the lock acquisition/release.
+
+
+
+
+
 PS C:\Users\alice\Mesh> meshman device delete  MDY5-5VVH-77LO-LL6H-BZ7C-UBOD-GXWM
 PS C:\Users\alice\Mesh> meshman account pin /threshold
+[hanging]
+
+
+The service is hanging after the deleted device attempts to connect.
+The deleted device gets the clean refusal
+The device attempting authorized action hangs
+
+Restarting the service solves the issue.
+
+Appears that when the device attempts an action that is refused, the service stops processing connections.
+
 
 - No context in Mesh Host at all.
 
 
-# Group add 
-
-PS C:\Users\alice\Mesh> meshman dare encode foo.txt bobfoo.dare /encrypt bob@example.com
-PS C:\Users\alice\Mesh> meshman group create groupw@example.com
-Account=groupw@example.com
-UDF=MCOX-4VYV-EH5Y-623F-FJET-PTOW-QXL7
-PS C:\Users\alice\Mesh> meshman dare encode foo.txt wfoo.dare /encrypt groupw@example.com
-PS C:\Users\alice\Mesh> meshman dare decode wfoo.dare
-Application: No decryption key is available
-PS C:\Users\alice\Mesh> meshman group add groupw@example.com alice@example.com
-Application: Object reference not set to an instance of an object.
-PS C:\Users\alice\Mesh> meshman group add groupw@example.com bob@example.com
-Application: Object reference not set to an instance of an object.
-
-
 # Triaged functionality
+
+## Why are closed messages still appearing???
+
+* device connection requests are removed
+* NOT Confirmation, Cotact or Group
+
+
+## Can't use device pending any more???
+
+ meshman device pending
 
 ## Change device authorization
 
@@ -62,6 +78,11 @@ Intern EnvelopeID MAVX-Z2LX-ZUGU-J6OY-O5OB-DN5M-HDHZ, Message MDXT-2GOZ-7WND-LD3
 
 # Cosmetic
 
+## Enter local device name into cataloged device entry
+
+
+
+
 ## Command line help
 
 Give detailed info on groups /commands
@@ -69,7 +90,19 @@ meshman help message
 meshman help message pending
 
 
+## Command line
+Always allow parameters to be specified as options (cf positional arguments in c#)
+
+
+
 ## Poor error messages
 
 PS C:\Users\hallam\Work\mmm> meshman account create me@example.com
 Application: One or more errors occurred. (No connection could be made because the target machine actively refused it. (voodoo.example.com:15099))
+
+
+## crappy feedback on serviceadmin create...
+PS C:\Users\hallam\Mesh> serviceadmin create example.com /host=host1.example.com /ip=192.168.1.21:15099 /admin=admin@example.com
+Created Service System.Collections.Generic.List`1[System.String]
+  Service MA3B-YM64-7YNG-6KZZ-UECR-KFYL-XEOW
+  Host MDCD-4CIG-TCIT-GBDB-AJ5P-HV3M-QZIJ

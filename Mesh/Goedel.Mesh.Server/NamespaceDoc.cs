@@ -52,3 +52,21 @@ namespace Goedel.Mesh.Server;
 [System.Runtime.CompilerServices.CompilerGenerated]
 class NamespaceDoc {
     }
+
+
+
+internal class Component : IComponent {
+
+    ///<summary> default logger for the assembly</summary> 
+    public static ILogger Logger = new AssemblyLogger("Goedel.Mesh.Server") {
+        LogLevel = Screen.LogLevel
+        };
+
+    ///<inheritdoc/>
+    public void Initialize() {
+        }
+
+    ///<inheritdoc/>
+    public void Terminate() {
+        }
+    }

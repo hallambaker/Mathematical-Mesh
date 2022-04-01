@@ -36,7 +36,7 @@ public partial class Shell {
         var pin = options.PIN.Value;
 
 
-        var rights = GetRights(options);
+        var rights = GetRights(options, false);
 
         var contextMeshPending = MeshHost.Connect(accountAddress, pin: pin, rights: rights);
 

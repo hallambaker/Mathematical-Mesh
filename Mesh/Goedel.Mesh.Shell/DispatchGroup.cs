@@ -33,7 +33,7 @@ public partial class Shell {
     public override ShellResult GroupCreate(GroupCreate options) {
         var rights = GetRights(options);
         var groupID = options.GroupID.Value;
-
+        rights ??= new List<string> {"super", "admin" };
         var contextAccount = GetContextUser(options);
         var contextGroup = contextAccount.CreateGroup(groupID, roles: rights);
 

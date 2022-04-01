@@ -16,8 +16,11 @@
         <member name="P:Goedel.Mesh.Server.AccountContext.Accessed">
             <summary>Timestamp of context last accessed</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountContext.AccountEntry">
+        <member name="P:Goedel.Mesh.Server.AccountContext.LockedAccountEntry">
             <summary>The account entry from the host store.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.AccountEntry">
+            <summary>The account entry</summary> 
         </member>
         <member name="P:Goedel.Mesh.Server.AccountContext.Directory">
             <summary>The directory in which all the account data is stored.</summary> 
@@ -310,7 +313,7 @@
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.#ctor(Goedel.Mesh.Server.AccountContext)">
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.#ctor(Goedel.Mesh.Server.AccountContext,Microsoft.Extensions.Logging.ILogger)">
             <summary>
             Return an account handle for the account context <paramref name="accountContext"/>.
             </summary>
@@ -992,6 +995,69 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Server.EventExtensions.DispatchBegin(Microsoft.Extensions.Logging.ILogger,System.Exception)">
+            <summary>
+            Write an event of type DispatchBegin to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EventExtensions.DispatchParse(Microsoft.Extensions.Logging.ILogger,System.Exception)">
+            <summary>
+            Write an event of type DispatchParse to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EventExtensions.DispatchStart(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type DispatchStart to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="request">Request name</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EventExtensions.DispatchFail(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type DispatchFail to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="request">Request name</param>
+            <param name="reason">Reason</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EventExtensions.DispatchComplete(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type DispatchComplete to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="request">Request name</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EventExtensions.LockAttempt(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type LockAttempt to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="resource">Resource name</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EventExtensions.LockAcquire(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type LockAcquire to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="resource">Resource name</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EventExtensions.LockRelease(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type LockRelease to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="resource">Resource name</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">
              <summary>
             
@@ -1273,6 +1339,25 @@
         <member name="M:Goedel.Mesh.Server.MeshMachineDirect.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String,System.String)">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Mesh.Server.LockedCatalogedEntry`1">
+            <summary>
+            Wrapper providing a locked accessor to a CatalogedEntry of type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">The locked entry</typeparam>
+        </member>
+        <member name="P:Goedel.Mesh.Server.LockedCatalogedEntry`1.CatalogItem">
+            <summary>The locked account entry</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.LockedCatalogedEntry`1.Disposing">
+            <inheritdoc/> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.LockedCatalogedEntry`1.#ctor(`0,Microsoft.Extensions.Logging.ILogger,System.Int32)">
+            <summary>
+            Constructor, attempt to acquire the lock 
+            </summary>
+            <param name="accountEntry">the entry to lock</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait for the lock.</param>
+        </member>
         <member name="T:Goedel.Mesh.Server.MeshPersist">
             <summary>
             The Mathematical Mesh persistence store.
@@ -1296,7 +1381,7 @@
         <member name="M:Goedel.Mesh.Server.MeshPersist.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(Goedel.Cryptography.Dare.IKeyCollection,System.String,Goedel.IO.FileStatus)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(Goedel.Cryptography.Dare.IKeyCollection,System.String,Goedel.IO.FileStatus,Microsoft.Extensions.Logging.ILogger)">
             <summary>
             Open or create the accounts persistence container.
             </summary>
@@ -1411,6 +1496,15 @@
             <summary>
             Mesh Service implementation
             </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.Component.Logger">
+            <summary> default logger for the assembly</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.Component.Initialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Server.Component.Terminate">
+            <inheritdoc/>
         </member>
     </members>
 </doc>

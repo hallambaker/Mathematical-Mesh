@@ -21,7 +21,50 @@
 #endregion
 
 
+using Microsoft.Extensions.Logging;
+using System.Net.Sockets;
+
 namespace Goedel.Mesh.Server;
+
+/// <summary>
+/// Wrapper providing a locked accessor to a CatalogedEntry of type <typeparamref name="T"/>.
+/// </summary>
+/// <typeparam name="T">The locked entry</typeparam>
+public class LockedCatalogedEntry<T> : Disposable where T:CatalogItem{
+
+    private bool locked;
+
+    ///<summary>The locked account entry</summary> 
+    public T CatalogItem { get; }
+    ILogger Logger;
+    ///<inheritdoc/> 
+    protected override void Disposing() {
+        if (locked) {
+            System.Threading.Monitor.Exit(CatalogItem);
+            Logger.LockRelease(CatalogItem._PrimaryKey);
+            }
+        }
+
+    /// <summary>
+    /// Constructor, attempt to acquire the lock 
+    /// </summary>
+    /// <param name="accountEntry">the entry to lock</param>
+    /// <param name="millisecondsTimeout">The number of milliseconds to wait for the lock.</param>
+    public LockedCatalogedEntry(T accountEntry, ILogger logger, int millisecondsTimeout=Timeout.Infinite) {
+
+        Logger = logger ?? Component.Logger;
+        CatalogItem = accountEntry;
+
+        logger.LockAttempt(accountEntry._PrimaryKey);
+
+        System.Threading.Monitor.TryEnter(CatalogItem, millisecondsTimeout, ref locked);
+        locked.AssertTrue(LockRequestTimeout.Throw);
+
+
+        logger.LockAcquire(accountEntry._PrimaryKey);
+        }
+
+    }
 
 /// <summary>
 /// The Mathematical Mesh persistence store.
@@ -45,6 +88,9 @@ public class MeshPersist : Disposable {
     ///<summary>The key collection.</summary> 
     public IKeyCollection KeyCollection { get; }
 
+
+    private ILogger Logger { get; }
+
     #endregion
 
 
@@ -67,7 +113,12 @@ public class MeshPersist : Disposable {
     /// <param name="keyCollection">The key collection to be used for decrypting data.</param>
     /// <param name="directory">The directory in which all the service data is stored.</param>
     /// <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
-    public MeshPersist(IKeyCollection keyCollection, string directory, FileStatus fileStatus) {
+    public MeshPersist(
+                IKeyCollection keyCollection, 
+                string directory, 
+                FileStatus fileStatus,
+                ILogger logger) {
+        Logger = logger;
         KeyCollection = keyCollection;
         // Load/create the accounts catalog
         DirectoryRoot = directory;
@@ -605,31 +656,19 @@ public class MeshPersist : Disposable {
     /// </summary>
     /// <param name="account">The account to get.</param>
     /// <returns>The locked account entry if found, otherwise null.</returns>
-    AccountEntry GetAccountLocked(string account) {
+    LockedCatalogedEntry<AccountEntry> GetAccountLocked(string account) {
         AccountEntry result = null;
-        bool locked = false;
-
-        try {
-            lock (Container) {
-                var containerEntry = Container.Get(account.CannonicalAccountAddress()) as StoreEntry;
-                result = containerEntry?.JsonObject as AccountEntry;
-                result.AssertNotNull(MeshUnknownAccount.Throw);
-
-                //Screen.WriteLine($"LOCK {result.AccountAddress}");
 
 
-                System.Threading.Monitor.Enter(result, ref locked);
-                return result;
-                }
+        lock (Container) {
+            var containerEntry = Container.Get(account.CannonicalAccountAddress()) as StoreEntry;
+            result = containerEntry?.JsonObject as AccountEntry;
+            result.AssertNotNull(MeshUnknownAccount.Throw);
+
+            return new LockedCatalogedEntry<AccountEntry>(result, Logger);
             }
-        catch {
-            if (locked) {
-                //Screen.WriteLine($"UNLOCK {result.AccountAddress}");
-                System.Threading.Monitor.Exit(result);
 
-                }
-            return null;
-            }
+
         }
 
     AccountHandleLocked GetAccountHandleLocked(string Account,
@@ -638,39 +677,49 @@ public class MeshPersist : Disposable {
 
         session.Future();
         accountPrivilege.Future();
-        // Bug/Phase2: Need to have a means of revoking devices performing foreign operations.
 
-        var accountEntry = GetAccountLocked(Account);
-        var accountContext = new AccountContext() {
-            AccountEntry = accountEntry
-            };
+        LockedCatalogedEntry<AccountEntry> accountEntry = null;
 
-        return new AccountHandleLocked(accountContext) {
-            AccountPrivilege = AccountPrivilege.Post
-            };
+        try {
+            accountEntry = GetAccountLocked(Account);
+            var accountContext = new AccountContext() {
+                LockedAccountEntry = accountEntry
+                };
+
+            return new AccountHandleLocked(accountContext, Logger) {
+                AccountPrivilege = AccountPrivilege.Post
+                };
+            }
+        catch (Exception ex) {
+            accountEntry?.Dispose();
+            throw;
+            }
         }
+
 
 
     AccountHandleLocked GetAccountHandleLocked(IJpcSession session,
             AccountPrivilege accountPrivilege) {
-        //try {
-        var accountEntry = GetAccountLocked(session.TargetAccount);
 
-        // Performance: Cache the account context to permit reuse.
-        var accountContext = new AccountContext() {
-            AccountEntry = accountEntry,
-            KeyCollection = KeyCollection
-            };
-        accountContext.Authenticate(
-            session, accountPrivilege).AssertTrue(NotAuthenticated.Throw);
+        LockedCatalogedEntry<AccountEntry> accountEntry = null;
 
-        return new AccountHandleLocked(accountContext) {
-            AccountPrivilege = accountPrivilege
-            };
-        //}
-        //catch (Exception e) {
-        //    throw new NYI();
-        //    }
+        try {
+            accountEntry = GetAccountLocked(session.TargetAccount);
+            var accountContext = new AccountContext() {
+                LockedAccountEntry = accountEntry,
+                KeyCollection = KeyCollection
+                };
+            accountContext.Authenticate(
+                session, accountPrivilege).AssertTrue(NotAuthenticated.Throw);
+
+            return new AccountHandleLocked(accountContext, Logger) {
+                AccountPrivilege = accountPrivilege
+                };
+            }
+        catch (Exception ex) {
+            accountEntry?.Dispose();
+            throw;
+            }
         }
 
 

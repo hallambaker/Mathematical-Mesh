@@ -134,7 +134,7 @@ public class PublicMeshService : MeshService {
 
         // Load the Mesh persistence base
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
-        MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate);
+        MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger);
 
         var instance = GenericHostConfiguration.Instance ?? meshMachine.Instance;
 
@@ -403,28 +403,33 @@ public class PublicMeshService : MeshService {
         string token="???";
         JsonObject request;
 
+        LogService.Logger.DispatchBegin();
         try {
             (token, request) = GetRequest(jsonReader);
             }
         catch (Exception exception) {
+            LogService.Logger.DispatchParse();
             var result = new StatusResponse(exception);
             LogService.UnknownCommand(token);
             return result;
             }
 
+        LogService.Logger.DispatchStart(token);
         var log = LogService.Start(token, request as IReport);
 
         try {
             var result = Dispatch(token, request, session);
             log.Success(result as IReport);
-
+            LogService.Logger.DispatchComplete(token);
             return result;
             }
         catch (Exception exception) {
+            LogService.Logger.DispatchFail(token, exception.Message);
             var result = new StatusResponse(exception);
             log.Fail(exception, result as IReport);
             return result;
             }
+        
         }
     #region // Transaction dispatch methods
 

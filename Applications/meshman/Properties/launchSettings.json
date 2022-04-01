@@ -15,6 +15,11 @@
       "commandLineArgs": "about",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
+    "Group Create": {
+      "commandName": "Project",
+      "commandLineArgs": "group create fred@example.com",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
     "Nonce": {
       "commandName": "Project",
       "commandLineArgs": "key nonce",
@@ -50,9 +55,14 @@
       "commandLineArgs": "device pending ",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
+    "Device Delete": {
+      "commandName": "Project",
+      "commandLineArgs": "device delete MABD-7YG2-ZS2K-RUXG-FN4J-FTWN-EVNR ",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
     "Accept": {
       "commandName": "Project",
-      "commandLineArgs": "device accept  B4PK-H3DX-OVFR-ZPMP-56YI-ONXB-NR5E",
+      "commandLineArgs": "device accept DNKE-V3OK-L4DA-FI57-D5JQ-LWOU-TA5A /web",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "WSL": {
@@ -67,7 +77,7 @@
     },
     "Group Add": {
       "commandName": "Project",
-      "commandLineArgs": "group add groupw@example.com alice@example.com",
+      "commandLineArgs": "group add fred@example.com me@example.com",
       "workingDirectory": "C:\\Users\\hallam\\Mesh"
     },
     "Recover": {

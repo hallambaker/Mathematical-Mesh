@@ -22,6 +22,9 @@
 
 
 
+using Goedel.Utilities;
+using System.Net;
+
 namespace Goedel.Mesh.Shell;
 
 /// <summary>
@@ -305,7 +308,8 @@ public partial class Shell : _Shell {
     /// <param name="deviceAuthOptions">The set of options.</param>
     /// <returns>If any of the rights flag values are present, returns a list of rights
     /// specifiers. Otherwise returns null.</returns>
-    public static List<string> GetRights(IDeviceAuthOptions deviceAuthOptions) {
+    public static List<string> GetRights(IDeviceAuthOptions deviceAuthOptions, 
+                    bool forceNone=true) {
         var result = new List<string>();
 
         if (deviceAuthOptions.Auth.Value != null) {
@@ -330,7 +334,14 @@ public partial class Shell : _Shell {
             result.Add("threshold");
             }
 
-        return result.Count > 0 ? result : null;
+        if (deviceAuthOptions.AuthNone.Value) {
+            (result.Count == 0).AssertTrue(InvalidAuthorizationNone.Throw);
+            return null;
+}
+        ((!forceNone) | result.Count > 0).AssertTrue(NoAuthorization.Throw);
+
+
+        return result;
 
         }
 

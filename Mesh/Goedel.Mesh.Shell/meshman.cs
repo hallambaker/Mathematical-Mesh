@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 30-Mar-22 2:07:45 PM
+//  This file was automatically generated at 01-Apr-22 5:58:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -186,7 +186,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         Identifier = "message",
 		Brief = "Contact and confirmation message options",
 		Entries = new  () {
-			{"contact", _MessageContact._DescribeCommand },
 			{"confirm", _MessageConfirm._DescribeCommand },
 			{"pending", _MessagePending._DescribeCommand },
 			{"status", _MessageStatus._DescribeCommand },
@@ -228,6 +227,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			{"dynamic", _ContactDynamic._DescribeCommand },
 			{"fetch", _ContactFetch._DescribeCommand },
 			{"exchange", _ContactExchange._DescribeCommand },
+			{"request", _MessageContact._DescribeCommand },
 			{"import", _ContactImport._DescribeCommand },
 			{"delete", _ContactDelete._DescribeCommand },
 			{"get", _ContactGet._DescribeCommand },
@@ -690,16 +690,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_MessageContact (
-				DispatchShell  DispatchIn, string[] Args, int Index) {
-		Shell Dispatch =	DispatchIn as Shell;
-		MessageContact		Options = new ();
-		ProcessOptions (Args, Index, Options);
-		Dispatch._PreProcess (Options);
-		var result = Dispatch.MessageContact (Options);
-		Dispatch._PostProcess (result);
-		}
-
 	public static void Handle_MessageConfirm (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
@@ -897,6 +887,16 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
 		var result = Dispatch.ContactExchange (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_MessageContact (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		MessageContact		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.MessageContact (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -1518,6 +1518,7 @@ public interface IDeviceAuthOptions {
 	String			AuthEmail{get; set;}
 	String			AuthGroupMember{get; set;}
 	String			AuthGroupAdmin{get; set;}
+	Flag			AuthNone{get; set;}
 	}
 
 public interface IMailOptions {
@@ -2514,7 +2515,8 @@ public class _AccountGetPIN : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
-		new String ()		} ;
+		new String (),
+		new Flag ()		} ;
 
 
 
@@ -2709,6 +2711,15 @@ public class _AccountGetPIN : Goedel.Command.Dispatch ,
 	public virtual string _AuthGroupAdmin {
 		set => _Data[20].Parameter (value);
 		}
+	/// <summary>Field accessor for option [null]</summary>
+	public virtual Flag AuthNone {
+		get => _Data[21] as Flag;
+		set => _Data[21]  = value;
+		}
+
+	public virtual string _AuthNone {
+		set => _Data[21].Parameter (value);
+		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
@@ -2863,6 +2874,13 @@ public class _AccountGetPIN : Goedel.Command.Dispatch ,
 				Brief = "Authorize group administrator rights for specified Mesh group",
 				Index = 20,
 				Key = "group"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AuthNone", 
+				Default = "false", // null if null
+				Brief = "Do not authorize any device rights at all (cannot be used with any rights grant))",
+				Index = 21,
+				Key = "null"
 				}
 			}
 		};
@@ -2896,7 +2914,8 @@ public class _AccountConnect : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
-		new String ()		} ;
+		new String (),
+		new Flag ()		} ;
 
 
 
@@ -3073,6 +3092,15 @@ public class _AccountConnect : Goedel.Command.Dispatch ,
 	public virtual string _AuthGroupAdmin {
 		set => _Data[18].Parameter (value);
 		}
+	/// <summary>Field accessor for option [null]</summary>
+	public virtual Flag AuthNone {
+		get => _Data[19] as Flag;
+		set => _Data[19]  = value;
+		}
+
+	public virtual string _AuthNone {
+		set => _Data[19].Parameter (value);
+		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
@@ -3213,6 +3241,13 @@ public class _AccountConnect : Goedel.Command.Dispatch ,
 				Brief = "Authorize group administrator rights for specified Mesh group",
 				Index = 18,
 				Key = "group"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AuthNone", 
+				Default = "false", // null if null
+				Brief = "Do not authorize any device rights at all (cannot be used with any rights grant))",
+				Index = 19,
+				Key = "null"
 				}
 			}
 		};
@@ -4518,7 +4553,8 @@ public class _DeviceRequestConnect : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
-		new String ()		} ;
+		new String (),
+		new Flag ()		} ;
 
 
 
@@ -4704,6 +4740,15 @@ public class _DeviceRequestConnect : Goedel.Command.Dispatch ,
 	public virtual string _AuthGroupAdmin {
 		set => _Data[19].Parameter (value);
 		}
+	/// <summary>Field accessor for option [null]</summary>
+	public virtual Flag AuthNone {
+		get => _Data[20] as Flag;
+		set => _Data[20]  = value;
+		}
+
+	public virtual string _AuthNone {
+		set => _Data[20].Parameter (value);
+		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
@@ -4851,6 +4896,13 @@ public class _DeviceRequestConnect : Goedel.Command.Dispatch ,
 				Brief = "Authorize group administrator rights for specified Mesh group",
 				Index = 19,
 				Key = "group"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AuthNone", 
+				Default = "false", // null if null
+				Brief = "Do not authorize any device rights at all (cannot be used with any rights grant))",
+				Index = 20,
+				Key = "null"
 				}
 			}
 		};
@@ -5169,6 +5221,7 @@ public class _DeviceAccept : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new Flag (),
 		new String (),
 		new String (),
 		new Flag (),
@@ -5298,68 +5351,77 @@ public class _DeviceAccept : Goedel.Command.Dispatch ,
 	public virtual string _AuthGroupAdmin {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[13] as String;
+	/// <summary>Field accessor for option [null]</summary>
+	public virtual Flag AuthNone {
+		get => _Data[13] as Flag;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _AuthNone {
 		set => _Data[13].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[14] as String;
 		set => _Data[14]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[14].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[15] as Flag;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[15] as String;
 		set => _Data[15]  = value;
 		}
 
-	public virtual string _AutoSync {
+	public virtual string _LocalName {
 		set => _Data[15].Parameter (value);
 		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
 		get => _Data[16] as Flag;
 		set => _Data[16]  = value;
 		}
 
-	public virtual string _AutoApprove {
+	public virtual string _AutoSync {
 		set => _Data[16].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
 		get => _Data[17] as Flag;
 		set => _Data[17]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _AutoApprove {
 		set => _Data[17].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[18] as Flag;
 		set => _Data[18]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[18].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[19] as Flag;
 		set => _Data[19]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[19].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[20] as Flag;
+		set => _Data[20]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[20].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -5461,52 +5523,59 @@ public class _DeviceAccept : Goedel.Command.Dispatch ,
 				Key = "group"
 				},
 			new DescribeEntryOption () {
+				Identifier = "AuthNone", 
+				Default = "false", // null if null
+				Brief = "Do not authorize any device rights at all (cannot be used with any rights grant))",
+				Index = 13,
+				Key = "null"
+				},
+			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 13,
+				Index = 14,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 14,
+				Index = 15,
 				Key = "local"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoSync", 
 				Default = "true", // null if null
 				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 15,
+				Index = 16,
 				Key = "sync"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoApprove", 
 				Default = "true", // null if null
 				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 16,
+				Index = 17,
 				Key = "auto"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 17,
+				Index = 18,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 18,
+				Index = 19,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 19,
+				Index = 20,
 				Key = "json"
 				}
 			}
@@ -6021,6 +6090,7 @@ public class _DeviceAuthorize : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new Flag (),
 		new String (),
 		new String (),
 		new Flag (),
@@ -6141,68 +6211,77 @@ public class _DeviceAuthorize : Goedel.Command.Dispatch ,
 	public virtual string _AuthGroupAdmin {
 		set => _Data[11].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[12] as String;
+	/// <summary>Field accessor for option [null]</summary>
+	public virtual Flag AuthNone {
+		get => _Data[12] as Flag;
 		set => _Data[12]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _AuthNone {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[13] as String;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[13].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[14] as Flag;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[14] as String;
 		set => _Data[14]  = value;
 		}
 
-	public virtual string _AutoSync {
+	public virtual string _LocalName {
 		set => _Data[14].Parameter (value);
 		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
 		get => _Data[15] as Flag;
 		set => _Data[15]  = value;
 		}
 
-	public virtual string _AutoApprove {
+	public virtual string _AutoSync {
 		set => _Data[15].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
 		get => _Data[16] as Flag;
 		set => _Data[16]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _AutoApprove {
 		set => _Data[16].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[17] as Flag;
 		set => _Data[17]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[17].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[18] as Flag;
 		set => _Data[18]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[18].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[19] as Flag;
+		set => _Data[19]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[19].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -6297,52 +6376,59 @@ public class _DeviceAuthorize : Goedel.Command.Dispatch ,
 				Key = "group"
 				},
 			new DescribeEntryOption () {
+				Identifier = "AuthNone", 
+				Default = "false", // null if null
+				Brief = "Do not authorize any device rights at all (cannot be used with any rights grant))",
+				Index = 12,
+				Key = "null"
+				},
+			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 12,
+				Index = 13,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 13,
+				Index = 14,
 				Key = "local"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoSync", 
 				Default = "true", // null if null
 				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 14,
+				Index = 15,
 				Key = "sync"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoApprove", 
 				Default = "true", // null if null
 				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 15,
+				Index = 16,
 				Key = "auto"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 16,
+				Index = 17,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 17,
+				Index = 18,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 18,
+				Index = 19,
 				Key = "json"
 				}
 			}
@@ -6838,168 +6924,6 @@ public class _DevicePreconfigure : Goedel.Command.Dispatch ,
 
 public partial class DevicePreconfigure : _DevicePreconfigure {
     } // class DevicePreconfigure
-
-public class _MessageContact : Goedel.Command.Dispatch ,
-						IAccountOptions,
-						IReporting{
-
-	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new String (),
-		new String (),
-		new String (),
-		new Flag (),
-		new Flag (),
-		new Flag (),
-		new Flag (),
-		new Flag ()		} ;
-
-
-
-
-
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Recipient {
-		get => _Data[0] as String;
-		set => _Data[0]  = value;
-		}
-
-	public virtual string _Recipient {
-		set => _Data[0].Parameter (value);
-		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[1] as String;
-		set => _Data[1]  = value;
-		}
-
-	public virtual string _AccountAddress {
-		set => _Data[1].Parameter (value);
-		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
-		get => _Data[2] as String;
-		set => _Data[2]  = value;
-		}
-
-	public virtual string _LocalName {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[3] as Flag;
-		set => _Data[3]  = value;
-		}
-
-	public virtual string _AutoSync {
-		set => _Data[3].Parameter (value);
-		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
-		get => _Data[4] as Flag;
-		set => _Data[4]  = value;
-		}
-
-	public virtual string _AutoApprove {
-		set => _Data[4].Parameter (value);
-		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[5] as Flag;
-		set => _Data[5]  = value;
-		}
-
-	public virtual string _Verbose {
-		set => _Data[5].Parameter (value);
-		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
-		get => _Data[6] as Flag;
-		set => _Data[6]  = value;
-		}
-
-	public virtual string _Report {
-		set => _Data[6].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[7] as Flag;
-		set => _Data[7]  = value;
-		}
-
-	public virtual string _Json {
-		set => _Data[7].Parameter (value);
-		}
-	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "contact",
-		Brief =  "Post a conection request to a user",
-		HandleDelegate =  CommandLineInterpreter.Handle_MessageContact,
-		Lazy =  false,
-		Entries = new List<DescribeEntry> () {
-			new DescribeEntryParameter () {
-				Identifier = "Recipient", 
-				Default = null, // null if null
-				Brief = "The recipient to send the conection request to",
-				Index = 0,
-				Key = ""
-				},
-			new DescribeEntryOption () {
-				Identifier = "AccountAddress", 
-				Default = null, // null if null
-				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 1,
-				Key = "account"
-				},
-			new DescribeEntryOption () {
-				Identifier = "LocalName", 
-				Default = null, // null if null
-				Brief = "Local name for account (e.g. personal)",
-				Index = 2,
-				Key = "local"
-				},
-			new DescribeEntryOption () {
-				Identifier = "AutoSync", 
-				Default = "true", // null if null
-				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 3,
-				Key = "sync"
-				},
-			new DescribeEntryOption () {
-				Identifier = "AutoApprove", 
-				Default = "true", // null if null
-				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 4,
-				Key = "auto"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Verbose", 
-				Default = "false", // null if null
-				Brief = "Verbose reports (default)",
-				Index = 5,
-				Key = "verbose"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Report", 
-				Default = "true", // null if null
-				Brief = "Report output (default)",
-				Index = 6,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Json", 
-				Default = "false", // null if null
-				Brief = "Report output in JSON format",
-				Index = 7,
-				Key = "json"
-				}
-			}
-		};
-
-	}
-
-public partial class MessageContact : _MessageContact {
-    } // class MessageContact
 
 public class _MessageConfirm : Goedel.Command.Dispatch ,
 						IAccountOptions,
@@ -8050,6 +7974,7 @@ public class _GroupCreate : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new Flag (),
 		new String ()		} ;
 
 
@@ -8227,14 +8152,23 @@ public class _GroupCreate : Goedel.Command.Dispatch ,
 	public virtual string _AuthGroupAdmin {
 		set => _Data[18].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual String GroupID {
-		get => _Data[19] as String;
+	/// <summary>Field accessor for option [null]</summary>
+	public virtual Flag AuthNone {
+		get => _Data[19] as Flag;
 		set => _Data[19]  = value;
 		}
 
-	public virtual string _GroupID {
+	public virtual string _AuthNone {
 		set => _Data[19].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String GroupID {
+		get => _Data[20] as String;
+		set => _Data[20]  = value;
+		}
+
+	public virtual string _GroupID {
+		set => _Data[20].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -8377,11 +8311,18 @@ public class _GroupCreate : Goedel.Command.Dispatch ,
 				Index = 18,
 				Key = "group"
 				},
+			new DescribeEntryOption () {
+				Identifier = "AuthNone", 
+				Default = "false", // null if null
+				Brief = "Do not authorize any device rights at all (cannot be used with any rights grant))",
+				Index = 19,
+				Key = "null"
+				},
 			new DescribeEntryParameter () {
 				Identifier = "GroupID", 
 				Default = null, // null if null
 				Brief = "Recryption group name in user@example.com format",
-				Index = 19,
+				Index = 20,
 				Key = ""
 				}
 			}
@@ -10495,6 +10436,168 @@ public class _ContactExchange : Goedel.Command.Dispatch ,
 
 public partial class ContactExchange : _ContactExchange {
     } // class ContactExchange
+
+public class _MessageContact : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new String (),
+		new String (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Recipient {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _Recipient {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[1] as String;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[2] as String;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _AutoSync {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _AutoApprove {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[6] as Flag;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[6].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[7] as Flag;
+		set => _Data[7]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[7].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "request",
+		Brief =  "Post a conection request to a user",
+		HandleDelegate =  CommandLineInterpreter.Handle_MessageContact,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryParameter () {
+				Identifier = "Recipient", 
+				Default = null, // null if null
+				Brief = "The recipient to send the conection request to",
+				Index = 0,
+				Key = ""
+				},
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 1,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 2,
+				Key = "local"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoSync", 
+				Default = "true", // null if null
+				Brief = "If true, attempt to synchronize the account to the service before operation",
+				Index = 3,
+				Key = "sync"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoApprove", 
+				Default = "true", // null if null
+				Brief = "If true, automatically approve pending requests with prior authorization.",
+				Index = 4,
+				Key = "auto"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "false", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 5,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 6,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 7,
+				Key = "json"
+				}
+			}
+		};
+
+	}
+
+public partial class MessageContact : _MessageContact {
+    } // class MessageContact
 
 public class _ContactImport : Goedel.Command.Dispatch ,
 						IAccountOptions,
@@ -18351,6 +18454,7 @@ public class _MailAdd : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new Flag (),
 		new String (),
 		new String (),
 		new Flag (),
@@ -18478,131 +18582,140 @@ public class _MailAdd : Goedel.Command.Dispatch ,
 	public virtual string _AuthGroupAdmin {
 		set => _Data[11].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[12] as String;
+	/// <summary>Field accessor for option [null]</summary>
+	public virtual Flag AuthNone {
+		get => _Data[12] as Flag;
 		set => _Data[12]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _AuthNone {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[13] as String;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[13].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[14] as Flag;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[14] as String;
 		set => _Data[14]  = value;
 		}
 
-	public virtual string _AutoSync {
+	public virtual string _LocalName {
 		set => _Data[14].Parameter (value);
 		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
 		get => _Data[15] as Flag;
 		set => _Data[15]  = value;
 		}
 
-	public virtual string _AutoApprove {
+	public virtual string _AutoSync {
 		set => _Data[15].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
 		get => _Data[16] as Flag;
 		set => _Data[16]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _AutoApprove {
 		set => _Data[16].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[17] as Flag;
 		set => _Data[17]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[17].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[18] as Flag;
 		set => _Data[18]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[18].Parameter (value);
 		}
-	/// <summary>Field accessor for option [openpgp]</summary>
-	public virtual Flag OpenPGP {
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
 		get => _Data[19] as Flag;
 		set => _Data[19]  = value;
 		}
 
-	public virtual string _OpenPGP {
+	public virtual string _Json {
 		set => _Data[19].Parameter (value);
 		}
-	/// <summary>Field accessor for option [smime]</summary>
-	public virtual Flag SMIME {
+	/// <summary>Field accessor for option [openpgp]</summary>
+	public virtual Flag OpenPGP {
 		get => _Data[20] as Flag;
 		set => _Data[20]  = value;
 		}
 
-	public virtual string _SMIME {
+	public virtual string _OpenPGP {
 		set => _Data[20].Parameter (value);
 		}
-	/// <summary>Field accessor for option [configuration]</summary>
-	public virtual ExistingFile Configuration {
-		get => _Data[21] as ExistingFile;
+	/// <summary>Field accessor for option [smime]</summary>
+	public virtual Flag SMIME {
+		get => _Data[21] as Flag;
 		set => _Data[21]  = value;
 		}
 
-	public virtual string _Configuration {
+	public virtual string _SMIME {
 		set => _Data[21].Parameter (value);
 		}
-	/// <summary>Field accessor for option [ca]</summary>
-	public virtual String CA {
-		get => _Data[22] as String;
+	/// <summary>Field accessor for option [configuration]</summary>
+	public virtual ExistingFile Configuration {
+		get => _Data[22] as ExistingFile;
 		set => _Data[22]  = value;
 		}
 
-	public virtual string _CA {
+	public virtual string _Configuration {
 		set => _Data[22].Parameter (value);
 		}
-	/// <summary>Field accessor for option [inbound]</summary>
-	public virtual String Inbound {
+	/// <summary>Field accessor for option [ca]</summary>
+	public virtual String CA {
 		get => _Data[23] as String;
 		set => _Data[23]  = value;
 		}
 
-	public virtual string _Inbound {
+	public virtual string _CA {
 		set => _Data[23].Parameter (value);
 		}
-	/// <summary>Field accessor for option [outbound]</summary>
-	public virtual String Outbound {
+	/// <summary>Field accessor for option [inbound]</summary>
+	public virtual String Inbound {
 		get => _Data[24] as String;
 		set => _Data[24]  = value;
 		}
 
-	public virtual string _Outbound {
+	public virtual string _Inbound {
 		set => _Data[24].Parameter (value);
 		}
-	/// <summary>Field accessor for option [alg]</summary>
-	public virtual String Algorithms {
+	/// <summary>Field accessor for option [outbound]</summary>
+	public virtual String Outbound {
 		get => _Data[25] as String;
 		set => _Data[25]  = value;
 		}
 
-	public virtual string _Algorithms {
+	public virtual string _Outbound {
 		set => _Data[25].Parameter (value);
+		}
+	/// <summary>Field accessor for option [alg]</summary>
+	public virtual String Algorithms {
+		get => _Data[26] as String;
+		set => _Data[26]  = value;
+		}
+
+	public virtual string _Algorithms {
+		set => _Data[26].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -18697,101 +18810,108 @@ public class _MailAdd : Goedel.Command.Dispatch ,
 				Key = "group"
 				},
 			new DescribeEntryOption () {
+				Identifier = "AuthNone", 
+				Default = "false", // null if null
+				Brief = "Do not authorize any device rights at all (cannot be used with any rights grant))",
+				Index = 12,
+				Key = "null"
+				},
+			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 12,
+				Index = 13,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 13,
+				Index = 14,
 				Key = "local"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoSync", 
 				Default = "true", // null if null
 				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 14,
+				Index = 15,
 				Key = "sync"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoApprove", 
 				Default = "true", // null if null
 				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 15,
+				Index = 16,
 				Key = "auto"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 16,
+				Index = 17,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 17,
+				Index = 18,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 18,
+				Index = 19,
 				Key = "json"
 				},
 			new DescribeEntryOption () {
 				Identifier = "OpenPGP", 
 				Default = null, // null if null
 				Brief = "Create encryption and signature keys for OpenPGP",
-				Index = 19,
+				Index = 20,
 				Key = "openpgp"
 				},
 			new DescribeEntryOption () {
 				Identifier = "SMIME", 
 				Default = null, // null if null
 				Brief = "Create encryption and signature keys for S/MIME",
-				Index = 20,
+				Index = 21,
 				Key = "smime"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Configuration", 
 				Default = null, // null if null
 				Brief = "Configuration file describing network settings",
-				Index = 21,
+				Index = 22,
 				Key = "configuration"
 				},
 			new DescribeEntryOption () {
 				Identifier = "CA", 
 				Default = null, // null if null
 				Brief = "Certificate Authority to request certificate from",
-				Index = 22,
+				Index = 23,
 				Key = "ca"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Inbound", 
 				Default = null, // null if null
 				Brief = "inbound service configuration",
-				Index = 23,
+				Index = 24,
 				Key = "inbound"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Outbound", 
 				Default = null, // null if null
 				Brief = "outbound service configuration",
-				Index = 24,
+				Index = 25,
 				Key = "outbound"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Algorithms", 
 				Default = null, // null if null
 				Brief = "List of algorithm specifiers",
-				Index = 25,
+				Index = 26,
 				Key = "alg"
 				}
 			}
@@ -20400,6 +20520,7 @@ public class _SSHCreate : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new Flag (),
 		new String ()		} ;
 
 
@@ -20577,14 +20698,23 @@ public class _SSHCreate : Goedel.Command.Dispatch ,
 	public virtual string _AuthGroupAdmin {
 		set => _Data[18].Parameter (value);
 		}
-	/// <summary>Field accessor for option [id]</summary>
-	public virtual String ID {
-		get => _Data[19] as String;
+	/// <summary>Field accessor for option [null]</summary>
+	public virtual Flag AuthNone {
+		get => _Data[19] as Flag;
 		set => _Data[19]  = value;
 		}
 
-	public virtual string _ID {
+	public virtual string _AuthNone {
 		set => _Data[19].Parameter (value);
+		}
+	/// <summary>Field accessor for option [id]</summary>
+	public virtual String ID {
+		get => _Data[20] as String;
+		set => _Data[20]  = value;
+		}
+
+	public virtual string _ID {
+		set => _Data[20].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -20728,10 +20858,17 @@ public class _SSHCreate : Goedel.Command.Dispatch ,
 				Key = "group"
 				},
 			new DescribeEntryOption () {
+				Identifier = "AuthNone", 
+				Default = "false", // null if null
+				Brief = "Do not authorize any device rights at all (cannot be used with any rights grant))",
+				Index = 19,
+				Key = "null"
+				},
+			new DescribeEntryOption () {
 				Identifier = "ID", 
 				Default = null, // null if null
 				Brief = "Key identifier",
-				Index = 19,
+				Index = 20,
 				Key = "id"
 				}
 			}
@@ -22284,11 +22421,6 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		return null;
 		}
 
-	public virtual ShellResult MessageContact ( MessageContact Options) {
-		CommandLineInterpreter.DescribeValues (Options);
-		return null;
-		}
-
 	public virtual ShellResult MessageConfirm ( MessageConfirm Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
@@ -22385,6 +22517,11 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		}
 
 	public virtual ShellResult ContactExchange ( ContactExchange Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult MessageContact ( MessageContact Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}

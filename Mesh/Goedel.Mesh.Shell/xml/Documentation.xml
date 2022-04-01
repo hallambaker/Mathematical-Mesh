@@ -830,7 +830,7 @@
             <param name="options">The command options.</param>
             <returns>The key collection.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.GetRights(Goedel.Mesh.Shell.IDeviceAuthOptions)">
+        <member name="M:Goedel.Mesh.Shell.Shell.GetRights(Goedel.Mesh.Shell.IDeviceAuthOptions,System.Boolean)">
             <summary>
             Return a list of rights being requested by or to be applied to a device.
             </summary>
@@ -1200,6 +1200,68 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Shell.InvalidAuthorizationNone">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.InvalidAuthorizationNone.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.InvalidAuthorizationNone.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.InvalidAuthorizationNone.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.InvalidAuthorizationNone._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.InvalidAuthorizationNone.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.NoAuthorization">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.NoAuthorization.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.NoAuthorization.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.NoAuthorization.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.NoAuthorization._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.NoAuthorization.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Shell.EventExtensions">
             <summary>
             Extensions class defining logging events and convenience methods.
@@ -1449,6 +1511,9 @@
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthGroupAdmin">
             <summary>Field accessor for option [group]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AuthNone">
+            <summary>Field accessor for option [null]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.Uri">
             <summary>Field accessor for parameter []</summary>
         </member>
@@ -1505,6 +1570,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthGroupAdmin">
             <summary>Field accessor for option [group]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AuthNone">
+            <summary>Field accessor for option [null]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountEscrow.Algorithms">
             <summary>Field accessor for option [alg]</summary>
@@ -1758,6 +1826,9 @@
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthGroupAdmin">
             <summary>Field accessor for option [group]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthNone">
+            <summary>Field accessor for option [null]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DevicePending.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -1838,6 +1909,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthGroupAdmin">
             <summary>Field accessor for option [group]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthNone">
+            <summary>Field accessor for option [null]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -1968,6 +2042,9 @@
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthGroupAdmin">
             <summary>Field accessor for option [group]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthNone">
+            <summary>Field accessor for option [null]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -2060,30 +2137,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.Length">
             <summary>Field accessor for option [length]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageContact.Recipient">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageContact.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageContact.LocalName">
-            <summary>Field accessor for option [local]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageContact.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageContact.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageContact.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageContact.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MessageContact.Json">
-            <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageConfirm.Recipient">
             <summary>Field accessor for parameter []</summary>
@@ -2294,6 +2347,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthGroupAdmin">
             <summary>Field accessor for option [group]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AuthNone">
+            <summary>Field accessor for option [null]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupCreate.GroupID">
             <summary>Field accessor for parameter []</summary>
@@ -2608,6 +2664,30 @@
             <summary>Field accessor for option [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactExchange.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageContact.Recipient">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageContact.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageContact.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageContact.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageContact.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageContact.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageContact.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MessageContact.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactImport.File">
@@ -3837,6 +3917,9 @@
         <member name="P:Goedel.Mesh.Shell._MailAdd.AuthGroupAdmin">
             <summary>Field accessor for option [group]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._MailAdd.AuthNone">
+            <summary>Field accessor for option [null]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MailAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -4175,6 +4258,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.AuthGroupAdmin">
             <summary>Field accessor for option [group]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._SSHCreate.AuthNone">
+            <summary>Field accessor for option [null]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.ID">
             <summary>Field accessor for option [id]</summary>

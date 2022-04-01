@@ -163,7 +163,7 @@ public partial class ShellTests {
         var resultb = MakeAccount(deviceB, AccountB);
 
 
-        var result2 = deviceB.Dispatch($"message contact {AliceAccount}");
+        var result2 = deviceB.Dispatch($"contact request {AliceAccount}");
 
         var result3 = deviceA.Dispatch("message pending") as ResultPending;
 

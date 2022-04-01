@@ -68,3 +68,28 @@ Namespace Goedel.Mesh.Server
 			
 			Exception MeshMessageUnsupported
 				Console "The request was refused because the message type is not supported"
+
+
+	Information 100 DispatchBegin "Dispatch begin"
+
+	Information 101 DispatchParse "Dispatch parse failed"
+
+	Information 102 DispatchStart "Dispatch start transaction {Request}"
+		request string "Request name"
+
+	Information 103 DispatchFail "Dispatch transaction fail {Request} {Reason}"
+		request string "Request name"
+		reason string "Reason"
+
+	Information 104 DispatchComplete "Dispatch transaction fail {Request}"
+		request string "Request name"
+
+	Information 110 LockAttempt "Lock attempt {Resource}"
+		resource string "Resource name"
+	
+	Information 111 LockAcquire "Lock acquired {Resource}"
+		resource string "Resource name"
+
+	Information 112 LockRelease "Lock released {Resource}"
+		resource string "Resource name"
+

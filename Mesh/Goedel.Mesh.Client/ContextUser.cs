@@ -828,7 +828,7 @@ public partial class ContextUser : ContextAccount {
 
         // get the Application entry here.
         var applicationEntry = GetApplicationEntryGroup(groupAddress);
-
+        applicationEntry.AssertNotNull(GroupNotFound.Throw, groupAddress);
 
         // Get the activation from the entry
         var activationAccount = applicationEntry.GetActivationAccount();
@@ -1125,28 +1125,11 @@ public partial class ContextUser : ContextAccount {
     public List<ProcessResult> ProcessAutomatics() {
         var results = new List<ProcessResult>();
 
-        //Screen.WriteLine($"ProcessAutomatics");
-
-
-        // This is failing the second time round.
-        // The frame count is 3, the index of the returned record is 1
-        // SpoolEntryLast???
-
-
         var spoolInbound = GetSpoolInbound();
         foreach (var spoolEntry in spoolInbound.GetMessages(MessageStatus.Open)) {
             var meshMessage = spoolEntry.Message;
 
-            // Must enforce this from now on. 
-            //spoolEntry.Open.AssertTrue(Internal.Throw);
-
-            //Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageId}: Status {spoolEntry.MessageStatus}");
-
-            // Add in check to see if the user has the appropriate catalog rights...
-
             Logger.GotMessage(meshMessage.GetType().ToString(), meshMessage.MessageId, spoolEntry.MessageStatus);
-
-
             if (!spoolEntry.Closed) {
                 switch (meshMessage) {
                     case AcknowledgeConnection acknowledgeConnection: {

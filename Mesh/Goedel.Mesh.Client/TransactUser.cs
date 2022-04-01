@@ -83,16 +83,13 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
     /// <param name="catalogedDevice">The device description.</param>
     /// <param name="encryptionKey">Encryption key to encrypt a copy of the device description to.</param>
     public void CatalogUpdate(CatalogedDevice catalogedDevice, KeyPair encryptionKey) {
-        //var accessCapability = catalogedDevice.AccessCapability;
 
-        //catalogedDevice.Envelope();
         catalogedDevice.Envelope(encryptionKey: encryptionKey);
         var digest = catalogedDevice.DareEnvelope.GetUnvalidatedDigest();
         catalogedDevice.DareEnvelope.Header.PayloadDigest = digest;
 
         var digestUDF = UDF.Sha2ToString(digest, 128);
 
-        //accessCapability.EnvelopedCatalogedDevice = catalogedDevice.EnvelopedCatalogedDevice;
         var accessCapability = new AccessCapability() {
             Id = catalogedDevice.ConnectionService.AuthenticationPublic.KeyIdentifier,
             EnvelopedCatalogedDevice = catalogedDevice.GetEnvelopedCatalogedDevice(),

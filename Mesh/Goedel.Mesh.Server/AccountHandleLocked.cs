@@ -21,6 +21,8 @@
 #endregion
 
 
+using Microsoft.Extensions.Logging;
+
 namespace Goedel.Mesh.Server;
 
 /// <summary>
@@ -89,13 +91,14 @@ public class AccountHandleLocked : Disposable {
 
     Dictionary<string, Sequence> DictionarySequences { get; set; }
 
-
+    private ILogger Logger { get; }
     #endregion
     #region // Disposal
 
     ///<inheritdoc/>
     protected override void Disposing() {
         //Screen.Write($"AccountContext close {AccountContext?.AccountEntry?.AccountAddress}");
+
         if (DictionarySequences != null) {
             foreach (var sequenceEntry in DictionarySequences) {
                 //Screen.WriteLine($"Delete Sequence {sequenceEntry.Key}");
@@ -104,8 +107,8 @@ public class AccountHandleLocked : Disposable {
             }
 
 
-
-        System.Threading.Monitor.Exit(AccountContext.AccountEntry);
+        //Logger.LockRelease(AccountContext.AccountEntry.AccountAddress);
+        //System.Threading.Monitor.Exit(AccountContext.AccountEntry);
         AccountContext?.Dispose();
 
         //Screen.WriteLine($"Deleted context");
@@ -119,8 +122,11 @@ public class AccountHandleLocked : Disposable {
     /// </summary>
     /// <param name="accountContext">The account context.</param>
     /// 
-    public AccountHandleLocked(AccountContext accountContext) {
+    public AccountHandleLocked(AccountContext accountContext, ILogger logger) {
         //Screen.WriteLine($"AccountContext open {accountContext?.AccountEntry?.AccountAddress}");
+        Logger = logger;
+
+
         accountContext.AssertNotNull(NYI.Throw);
         AccountContext = accountContext;
 

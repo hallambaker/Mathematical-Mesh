@@ -32,4 +32,7 @@ Lookup protocol
 
 * Implement JSON-C compression/decompression
 
+* Create alias for message request to contact request (or just move???)
+
+* Filtering of the file archive extractions with a regular expression
 

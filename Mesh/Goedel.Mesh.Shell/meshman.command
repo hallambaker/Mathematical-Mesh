@@ -89,6 +89,11 @@
 			Brief "Authorize group administrator rights for specified Mesh group"
 			Default "false"
 
+		Option AuthNone "null" Flag
+			Brief "Do not authorize any device rights at all (cannot be used with any rights grant))"
+			Default "false"
+	
+	
 	OptionSet MailOptions
 		Option OpenPGP "openpgp" Flag
 			Brief "Create encryption and signature keys for OpenPGP"
@@ -397,12 +402,7 @@
 	CommandSet Message "message"
 		Brief "Contact and confirmation message options"
 		
-		Command MessageContact "contact"
-			Brief "Post a conection request to a user"
-			Parameter Recipient "recipient" String
-				Brief "The recipient to send the conection request to"
-			Include AccountOptions
-			Include Reporting
+
 
 		Command MessageConfirm "confirm"
 			Brief "Post a confirmation request to a user"
@@ -581,7 +581,12 @@
 			Include AccountOptions
 			Include Reporting
 
-
+		Command MessageContact "request"
+			Brief "Post a conection request to a user"
+			Parameter Recipient "recipient" String
+				Brief "The recipient to send the conection request to"
+			Include AccountOptions
+			Include Reporting
 
 		Command ContactImport "import"
 			Brief "Import contact entry from file"

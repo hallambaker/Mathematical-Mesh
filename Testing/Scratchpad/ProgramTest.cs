@@ -25,6 +25,7 @@ using System;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Mesh;
+using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
@@ -53,11 +54,11 @@ partial class Program {
         Logger.LogInformation ("Start test {time}", DateTime.Now);
 
         //TestService.Test().MeshCatalogGroup();
-        ServiceDiscovery.Test().TestDNS();
+        //ServiceDiscovery.Test().TestDNS();
 
-        ShellTestsAdmin.Test().TestAccount();
+        ShellTestsAdmin.Test().TestEscrowChangeDevice();
 
-
+        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
 
         //ShellTestsAdmin.Test().TestProfileConnect();

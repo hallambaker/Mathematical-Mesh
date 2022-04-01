@@ -77,6 +77,10 @@ Namespace Goedel.Mesh
 	Exception InvalidFormat
 		Console "The format {0} is not supported for the specified output."
 
+	Exception LockRequestTimeout
+		Console "The operation timed out waiting to acquire a lock."
+
+
 
 	Trace 100 ActivatePublic "Activate Seed {Seed} + Key {Base} for {Actor}-{Operation} = {Result}"
 		seed string "Seed value identifier"

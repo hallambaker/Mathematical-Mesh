@@ -38,7 +38,10 @@ public class AccountContext : Disposable {
     public DateTime Accessed { get; private set; }
 
     ///<summary>The account entry from the host store.</summary> 
-    public AccountEntry AccountEntry { get; init; }
+    public LockedCatalogedEntry<AccountEntry> LockedAccountEntry { get; init; } = null;
+
+    ///<summary>The account entry</summary> 
+    public AccountEntry AccountEntry => LockedAccountEntry.CatalogItem;
 
     ///<summary>The directory in which all the account data is stored.</summary> 
     public string Directory => AccountEntry.Directory;
@@ -56,11 +59,8 @@ public class AccountContext : Disposable {
 
     ///<inheritdoc/>
     protected override void Disposing() {
-        if (catalogAccess != null) {
-            //Screen.WriteLine($"Dispose {catalogAccess}");
-            }
+        LockedAccountEntry ?.Dispose();
         catalogAccess?.Dispose();
-        //Screen.WriteLine($"Dispose Done!");
         }
 
     #endregion

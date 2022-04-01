@@ -45,3 +45,9 @@
 			Console "No service specified"
 		Exception AccountNotSpecified
 			Console "No account specified"
+
+		Exception InvalidAuthorizationNone
+			Console "The authorization none is invalid used with any other authorization"
+
+		Exception NoAuthorization
+			Console "No authorization specified. To specify a null authorization, specify /none"
