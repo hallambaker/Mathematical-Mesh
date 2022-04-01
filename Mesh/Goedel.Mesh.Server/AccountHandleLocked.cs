@@ -121,7 +121,7 @@ public class AccountHandleLocked : Disposable {
     /// Return an account handle for the account context <paramref name="accountContext"/>.
     /// </summary>
     /// <param name="accountContext">The account context.</param>
-    /// 
+    /// <param name="logger">Loger to output context to.</param>
     public AccountHandleLocked(AccountContext accountContext, ILogger logger) {
         //Screen.WriteLine($"AccountContext open {accountContext?.AccountEntry?.AccountAddress}");
         Logger = logger;

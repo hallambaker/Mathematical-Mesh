@@ -95,6 +95,7 @@ public static class Extension {
     /// Convert key pair to OpenSSH format
     /// </summary>
     /// <param name="keyPair">Key pair to convert</param>
+    /// <param name="tag">Descriptive tag to add to the file.</param>
     /// <returns>The keyfile data</returns>
     public static string ToOpenSSH(this KeyPair keyPair, string tag=null) {
         SSHData sshData = keyPair switch {
@@ -114,7 +115,13 @@ public static class Extension {
         return builder.ToString();
         }
 
-
+    /// <summary>
+    /// Write the binary key data <paramref name="data"/> to the string builder 
+    /// <paramref name="builder"/>.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
+    /// <param name="tag">Type of key (algorithm, public/private)</param>
+    /// <param name="data">The key data.</param>
     public static void ToPEM(StringBuilder builder, string tag, byte[] data) {
         builder.Append($"-----BEGIN {tag}-----\n");
         builder.ToStringBase64(data, format: ConversionFormat.PEM64);

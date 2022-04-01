@@ -50,6 +50,7 @@ public class LockedCatalogedEntry<T> : Disposable where T:CatalogItem{
     /// </summary>
     /// <param name="accountEntry">the entry to lock</param>
     /// <param name="millisecondsTimeout">The number of milliseconds to wait for the lock.</param>
+    /// <param name="logger">Loger to output context to.</param>
     public LockedCatalogedEntry(T accountEntry, ILogger logger, int millisecondsTimeout=Timeout.Infinite) {
 
         Logger = logger ?? Component.Logger;
@@ -113,6 +114,7 @@ public class MeshPersist : Disposable {
     /// <param name="keyCollection">The key collection to be used for decrypting data.</param>
     /// <param name="directory">The directory in which all the service data is stored.</param>
     /// <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
+    /// <param name="logger">Output logger.</param>
     public MeshPersist(
                 IKeyCollection keyCollection, 
                 string directory, 
@@ -690,7 +692,7 @@ public class MeshPersist : Disposable {
                 AccountPrivilege = AccountPrivilege.Post
                 };
             }
-        catch (Exception ex) {
+        catch (Exception) {
             accountEntry?.Dispose();
             throw;
             }
@@ -716,7 +718,7 @@ public class MeshPersist : Disposable {
                 AccountPrivilege = accountPrivilege
                 };
             }
-        catch (Exception ex) {
+        catch (Exception) {
             accountEntry?.Dispose();
             throw;
             }

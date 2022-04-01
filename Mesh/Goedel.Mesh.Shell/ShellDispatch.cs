@@ -306,8 +306,11 @@ public partial class Shell : _Shell {
     /// Return a list of rights being requested by or to be applied to a device.
     /// </summary>
     /// <param name="deviceAuthOptions">The set of options.</param>
+    /// <param name="forceNone">If true, the NULL option MUST be specified if there are no
+    /// authorizations specified.</param>
     /// <returns>If any of the rights flag values are present, returns a list of rights
     /// specifiers. Otherwise returns null.</returns>
+    /// 
     public static List<string> GetRights(IDeviceAuthOptions deviceAuthOptions, 
                     bool forceNone=true) {
         var result = new List<string>();
