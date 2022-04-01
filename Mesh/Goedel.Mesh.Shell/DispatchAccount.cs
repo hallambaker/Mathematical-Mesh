@@ -22,6 +22,7 @@
 
 
 using Goedel.Command;
+using Goedel.Mesh.Client;
 using Goedel.Registry;
 
 namespace Goedel.Mesh.Shell;
@@ -280,14 +281,33 @@ public partial class Shell {
 
         var accountSeed = new PrivateKeyUDF(secret.UDFKey);
 
-        var contextUser = MeshHost.ConfigureMesh(
-                accountAddress, localName, accountSeed: accountSeed, create:false);
 
-        return new ResultCreateAccount() {
-            Success = true,
-            ProfileAccount = contextUser.ProfileUser,
-            ActivationAccount = contextUser.ActivationAccount
-            };
+        if (options.Verify.Value) {
+            var contextUser = GetContextUser(options);
+
+
+            "Here verify that the recovered profile matches the original.".TaskFunctionality();
+
+
+            return new ResultCreateAccount() {
+                Success = true,
+                ProfileAccount = contextUser.ProfileUser,
+                ActivationAccount = contextUser.ActivationAccount
+                };
+            }
+        else {
+            var contextUser = MeshHost.ConfigureMesh(
+                    accountAddress, localName, accountSeed: accountSeed, create: false);
+
+
+
+            return new ResultCreateAccount() {
+                Success = true,
+                ProfileAccount = contextUser.ProfileUser,
+                ActivationAccount = contextUser.ActivationAccount
+                };
+            }
+
         }
 
     /// <summary>
