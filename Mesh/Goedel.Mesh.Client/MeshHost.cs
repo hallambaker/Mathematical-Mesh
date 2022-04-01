@@ -422,11 +422,11 @@ public class MeshHost : Disposable {
             ref accountSeed, ref profileDevice, ref rights,
              out var _);
 
+        contextUser.SetService(accountAddress);
 
-        
 
         if (create) {
-            contextUser.SetService(accountAddress);
+
             contextUser.BindService(accountAddress);
             }
         else {
