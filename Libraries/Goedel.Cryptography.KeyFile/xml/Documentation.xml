@@ -101,7 +101,17 @@
             Convert key pair to OpenSSH format
             </summary>
             <param name="keyPair">Key pair to convert</param>
+            <param name="tag">Descriptive tag to add to the file.</param>
             <returns>The keyfile data</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.KeyFile.Extension.ToPEM(System.Text.StringBuilder,System.String,System.Byte[])">
+            <summary>
+            Write the binary key data <paramref name="data"/> to the string builder 
+            <paramref name="builder"/>.
+            </summary>
+            <param name="builder">The builder.</param>
+            <param name="tag">Type of key (algorithm, public/private)</param>
+            <param name="data">The key data.</param>
         </member>
         <member name="M:Goedel.Cryptography.KeyFile.Extension.ToPEMPrivate(Goedel.Cryptography.KeyPair,System.String)">
             <summary>

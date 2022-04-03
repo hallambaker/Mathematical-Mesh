@@ -318,7 +318,7 @@
             Return an account handle for the account context <paramref name="accountContext"/>.
             </summary>
             <param name="accountContext">The account context.</param>
-            
+            <param name="logger">Loger to output context to.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.GetSequence(System.String,System.Boolean)">
             <summary>
@@ -1357,6 +1357,7 @@
             </summary>
             <param name="accountEntry">the entry to lock</param>
             <param name="millisecondsTimeout">The number of milliseconds to wait for the lock.</param>
+            <param name="logger">Loger to output context to.</param>
         </member>
         <member name="T:Goedel.Mesh.Server.MeshPersist">
             <summary>
@@ -1388,6 +1389,7 @@
             <param name="keyCollection">The key collection to be used for decrypting data.</param>
             <param name="directory">The directory in which all the service data is stored.</param>
             <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
+            <param name="logger">Output logger.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountBind(Goedel.Mesh.Server.AccountEntry)">
             <summary>

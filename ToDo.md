@@ -1,36 +1,6 @@
 # Errors
 
 
-## Delete device
-
-
-This problem appears to be the result of a lock being acquired and not released when the
-context request fails.
-
-It is probable that any request failure inside the service will cause the same result.
-
-Need to add trace statements around the lock acquisition/release.
-
-
-
-
-
-PS C:\Users\alice\Mesh> meshman device delete  MDY5-5VVH-77LO-LL6H-BZ7C-UBOD-GXWM
-PS C:\Users\alice\Mesh> meshman account pin /threshold
-[hanging]
-
-
-The service is hanging after the deleted device attempts to connect.
-The deleted device gets the clean refusal
-The device attempting authorized action hangs
-
-Restarting the service solves the issue.
-
-Appears that when the device attempts an action that is refused, the service stops processing connections.
-
-
-- No context in Mesh Host at all.
-
 
 # Triaged functionality
 

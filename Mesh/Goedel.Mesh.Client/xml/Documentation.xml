@@ -600,6 +600,7 @@
             <param name="name">The store to open.</param>
             <param name="blind">If true, only the sequence header values are read</param>
             <param name="decrypt">If true, decrypt the store contents on access.</param>
+            <param name="create">Create store if it does not exist</param>
             <returns>The <see cref="T:Goedel.Mesh.Store"/> instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.MakeStore(System.String,Goedel.Cryptography.Dare.DarePolicy,System.Boolean,System.Boolean)">
@@ -610,6 +611,7 @@
             <param name="darePolicy">Policy to be applied to the store.</param>
             <returns>The store instance.</returns>
             <param name="decrypt">If true, attempt decryption of payload contents.</param>
+            <param name="create">Create store if it does not exist</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.LoadStores">
             <summary>
