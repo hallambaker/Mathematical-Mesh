@@ -364,14 +364,16 @@ public partial class TestCLI : CommandLineInterpreter {
         }
 
 
-    public ResultSync Connect(TestCLI newDevice, string account) {
-        var result = Dispatch($"account pin /web") as ResultPIN;
+    public ResultSync Connect(TestCLI newDevice, string account, bool threshold = false) {
+        var roles = threshold ? "/web" : "/threshold";
+
+    var result = Dispatch($"account pin {roles}") as ResultPIN;
         var pin = result.MessagePIN.Pin;
 
         newDevice.Dispatch($"device request {account} /pin {pin}");
         var resultsync = Dispatch($"account sync /auto") as ResultSync;
 
-        // failing because we are not correctly matching PIN allocation to requests
+
         newDevice.Dispatch($"device complete");
         newDevice.Dispatch($"account sync");
 

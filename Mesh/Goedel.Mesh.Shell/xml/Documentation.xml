@@ -951,9 +951,41 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Shell.AccountExists">
+            <summary>
+            Account already exists
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.AccountExists.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.AccountExists.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.AccountExists.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.AccountExists._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.AccountExists.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Shell.AccountNotFound">
             <summary>
-            Account not valid
+            Account not found
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.AccountNotFound.ExceptionFormatDelegate">
@@ -985,7 +1017,7 @@
         </member>
         <member name="T:Goedel.Mesh.Shell.ProfileNotFound">
             <summary>
-            Account not valid
+            Profile not found
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ProfileNotFound.ExceptionFormatDelegate">
@@ -1011,6 +1043,134 @@
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="P:Goedel.Mesh.Shell.ProfileNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.DeviceNotFound">
+            <summary>
+            Device not found
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DeviceNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DeviceNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.DeviceNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.DeviceNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DeviceNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.GroupNotFound">
+            <summary>
+            Group not found
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.GroupNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.GroupNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.GroupNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.GroupNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.GroupNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.AccountNotGroup">
+            <summary>
+            Not a group account
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.AccountNotGroup.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.AccountNotGroup.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.AccountNotGroup.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.AccountNotGroup._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.AccountNotGroup.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ContactNotFound">
+            <summary>
+            Contact not known
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ContactNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ContactNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ContactNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ContactNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ContactNotFound.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1141,6 +1301,37 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Shell.ServiceNoReply">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceNoReply.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceNoReply.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceNoReply.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ServiceNoReply._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceNoReply.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Shell.ServiceNotSpecified">
             <summary>
             </summary>
@@ -1261,6 +1452,99 @@
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="P:Goedel.Mesh.Shell.NoAuthorization.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.DeviceNotAuthorized">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DeviceNotAuthorized.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DeviceNotAuthorized.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.DeviceNotAuthorized.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.DeviceNotAuthorized._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.DeviceNotAuthorized.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.MessageAlreadyProcessed">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.MessageAlreadyProcessed.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.MessageAlreadyProcessed.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.MessageAlreadyProcessed.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.MessageAlreadyProcessed._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.MessageAlreadyProcessed.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.KeyFormatNotSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.KeyFormatNotSupported.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.KeyFormatNotSupported.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.KeyFormatNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.KeyFormatNotSupported._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Shell.KeyFormatNotSupported.Throw">
             <summary>
             The public fatory delegate
             </summary>

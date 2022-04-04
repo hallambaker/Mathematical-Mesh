@@ -502,7 +502,7 @@ public class MeshPersist : Disposable {
         // Fetch the account 
         //using var accountEntry = GetAccountUnverified(accountAddress);
 
-
+        //Console.WriteLine("Begin operate");
 
         using var accountHandle = GetAccountHandleLocked(accountAddress,
                             jpcSession, AccountPrivilege.Operate);
@@ -514,6 +514,8 @@ public class MeshPersist : Disposable {
 
         // Different stores depending on user or group account
         foreach (var operation in operations) {
+            //Console.WriteLine("Try operation");
+
             results.Add(Operate(catalogCapability, operation,
                         jpcSession.Credential.Account));
             }
@@ -545,19 +547,25 @@ public class MeshPersist : Disposable {
     CryptographicResult Operate(
             CatalogAccess catalogCapability,
             CryptographicOperationKeyAgreement cryptographicOperation, string accountAddress) {
+        //Console.WriteLine("Threahold operation");
 
+        Logger.ThresholdKeyAgreement(accountAddress);
         var keyId = cryptographicOperation.KeyId ?? accountAddress.CannonicalAccountAddress();
         // Phase2: validate the access to this key id
 
+
+        Logger.ThresholdKeyIdentifier(accountAddress, keyId);
         catalogCapability.DictionaryDecryptByKeyId.TryGetValue(
             keyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
+
+        Logger.ThresholdAuthorization(accountAddress, capability.Active);
+        capability.Active.AssertTrue(NotAuthorized.Throw);
 
 
         var publicEphemeral = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
 
-
-        capability.Active.AssertTrue(NotAuthorized.Throw);
         var share = capability.DecryptShare(KeyCollection);
+
 
         var keyAgreement = share.Agreement(publicEphemeral);
 
@@ -565,6 +573,7 @@ public class MeshPersist : Disposable {
             KeyAgreement = KeyAgreement.Factory(keyAgreement)
             };
 
+        //Console.WriteLine("Threahold Complete");
 
         return cryptographicResultKeyAgreement;
 
@@ -685,7 +694,8 @@ public class MeshPersist : Disposable {
         try {
             accountEntry = GetAccountLocked(Account);
             var accountContext = new AccountContext() {
-                LockedAccountEntry = accountEntry
+                LockedAccountEntry = accountEntry,
+                KeyCollection = KeyCollection
                 };
 
             return new AccountHandleLocked(accountContext, Logger) {

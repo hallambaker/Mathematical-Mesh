@@ -127,6 +127,9 @@ public partial class CatalogedGroup {
         }
 
 
+    ///<inheritdoc/>
+    public override void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection) {
+        }
 
     ///<inheritdoc/>
     public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {

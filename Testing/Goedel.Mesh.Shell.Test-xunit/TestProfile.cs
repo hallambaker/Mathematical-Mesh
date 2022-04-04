@@ -135,7 +135,7 @@ public partial class ShellTests {
 
         device1.Dispatch($"account create {AliceAccount}");
 
-        var c1 = device1.Connect(device2, AliceAccount);
+        var c1 = device1.Connect(device2, AliceAccount, true);
         c1.ProcessedResults.TestEqual(1);
         var c2 = device1.Connect(device3, AliceAccount);
         c2.ProcessedResults.TestEqual(1);

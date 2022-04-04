@@ -59,6 +59,7 @@ public partial class Shell {
         }
 
 
+
     /// <summary>
     /// Dispatch method
     /// </summary>
@@ -76,24 +77,25 @@ public partial class Shell {
 
         var applicationSsh = contextUser.GetApplicationSsh(id);
 
-        KeyFileFormat keyFileFormat;
+        
 
         if (!options.Private.Value) {
-            keyFileFormat = KeyFileFormat.PEMPublic;
+            var publicformat = GetKeyFileFormat(options, KeyFileFormat.OpenSSH);
 
 
             return KeyToFile(
             applicationSsh.ClientKey.GetKeyPair(KeySecurity.Public),
             fileName,
-            format,
             password,
             false,
-            keyFileFormat
+            publicformat
             );
             }
 
+        
 
-        var applicationEntrySsh = contextUser.GetApplicationEntrySsh(applicationSsh.Key);
+
+       var applicationEntrySsh = contextUser.GetApplicationEntrySsh(applicationSsh.Key);
         applicationEntrySsh.AssertNotNull(NYI.Throw);
 
         var keyData = applicationEntrySsh.Activation.ClientKey;
@@ -101,15 +103,13 @@ public partial class Shell {
 
 
         var keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
-        keyFileFormat = KeyFileFormat.PEMPrivate;
-
+        var privateformat = GetKeyFileFormat(options, KeyFileFormat.PEMPrivate);
         return KeyToFile(
                 keyPair,
                 fileName,
-                format,
                 password,
                 true,
-                keyFileFormat
+                privateformat
                 );
         }
 

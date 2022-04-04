@@ -141,6 +141,23 @@ public static class ArrayUtilities {
 
 
     /// <summary>
+    /// Wrapper for the Dictionary Add method to force replacement of the previous value if it exists.
+    /// </summary>
+    /// <typeparam name="TKey">The Key type</typeparam>
+    /// <typeparam name="TValue">The Value type, null values are pruned.</typeparam>
+    /// <param name="dictionary">The dictionary to add to</param>
+    /// <param name="key">The key to add</param>
+    /// <param name="value">The value to add</param>
+    /// <returns>True if a new entry was added, otherwise false.</returns>
+    public static void Replace<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
+        if (dictionary.ContainsKey(key)) {
+            dictionary.Remove(key);
+            }
+        dictionary.Add(key, value);
+        }
+
+
+    /// <summary>
     /// Wrapper for the Dictionary Add method to signal success or failure by means of a
     /// boolean return value rather than throwing an error.
     /// </summary>

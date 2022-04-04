@@ -121,7 +121,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
                     capability.KeyCollection = KeyCollection;
                     switch (capability) {
                         case CapabilityDecrypt capabilityDecrypt: {
-                                DictionaryDecryptByKeyId.AddSafe(capability.Id, capabilityDecrypt);
+                                DictionaryDecryptByKeyId.Replace(capability.Id, capabilityDecrypt);
                                 break;
                                 }
                         }

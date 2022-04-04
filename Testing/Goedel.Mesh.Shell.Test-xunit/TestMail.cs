@@ -38,7 +38,7 @@ public partial class ShellTests {
 
         CreateAlice(out var device1, out var device2);
 
-        device1.Dispatch($"mail add {mailaddress} /inbound {mailinbound1} /outbound {mailoutbound} /web");
+        device1.Dispatch($"mail add {mailaddress} /inbound {mailinbound1} /outbound {mailoutbound} /web /threshold");
         device1.Dispatch($"mail list");
         device1.Dispatch($"mail smime sign {mailaddress} /file=d1_smime_prv.p12 /private");
         device1.Dispatch($"mail smime encrypt {mailaddress} /file=d1_smime_prv.pem /private");

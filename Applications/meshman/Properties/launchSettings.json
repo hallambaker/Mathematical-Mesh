@@ -20,6 +20,13 @@
       "commandLineArgs": "group create fred@example.com",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
+    "Account sync": {
+      "commandName": "Project",
+      "commandLineArgs": "account sync",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+
+
     "Nonce": {
       "commandName": "Project",
       "commandLineArgs": "key nonce",
@@ -62,7 +69,7 @@
     },
     "Accept": {
       "commandName": "Project",
-      "commandLineArgs": "device accept DNKE-V3OK-L4DA-FI57-D5JQ-LWOU-TA5A /web",
+      "commandLineArgs": "device accept  UUNQ-PKQL-UV2Q-ST5L-XAVU-AAYK-CX6M /threshold",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "WSL": {
@@ -92,7 +99,7 @@
     },
     "SSH Get": {
       "commandName": "Project",
-      "commandLineArgs": "ssh get /file=d1_ssh_pub.pem",
+      "commandLineArgs": "ssh get /file=d1_ssh_prv.pem /private",
       "workingDirectory": "C:\\Users\\hallam\\Mesh"
     }
   }

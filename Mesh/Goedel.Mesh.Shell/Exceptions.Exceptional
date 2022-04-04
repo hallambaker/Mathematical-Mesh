@@ -13,18 +13,40 @@
 
 		Exception ProfileFingerprintInvalid
 			Console "The identifier is not a valid profile fingerprint"
-
+		Exception AccountExists
+			Console "The account {0} alreadt exists"
+			Description
+				|Account already exists
 		Exception AccountNotFound
 			Console "Profile not found"
 			Description
-				|Account not valid
+				|Account not found
 
 		Exception ProfileNotFound
 			Console "No profile defined."
 			Description
-				|Account not valid
+				|Profile not found
+		
+		Exception DeviceNotFound
+			Console "Device {0} not found"
+			Description
+				|Device not found
+	
+		Exception GroupNotFound
+			Console "Group {0} not found"
+			Description
+				|Group not found
 
-
+		Exception AccountNotGroup
+			Console "The account {0} is not a group account"
+			Description
+				|Not a group account
+		
+		Exception ContactNotFound
+			Console "No contact information available for user {0}"
+			Description
+				|Contact not known
+		
 		Exception DirectoryNotFound
 			Console "The directory could not be found"
 			Description
@@ -40,6 +62,9 @@
 
 		Exception OptionNotImplemented
 			Console "The option [{1}] on command [{0}] is not yet implemented"
+
+		Exception ServiceNoReply
+			Console "Service did not reply"		
 		
 		Exception ServiceNotSpecified
 			Console "No service specified"
@@ -51,3 +76,13 @@
 
 		Exception NoAuthorization
 			Console "No authorization specified. To specify a null authorization, specify /none"
+
+		Exception DeviceNotAuthorized
+			Console "This device is not authorized to perform account decryption"
+
+		Exception MessageAlreadyProcessed
+			Console "The message has already been processed."
+
+		Exception KeyFormatNotSupported 
+			Console "The Key File Format {0} is not supported."
+

@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 01-Apr-22 7:48:53 PM
+//  This file was automatically generated at 04-Apr-22 7:03:56 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -179,7 +179,59 @@ public partial class ProfileFingerprintInvalid : MeshShellException {
 
 
 /// <summary>
-/// Account not valid
+/// Account already exists
+/// </summary>
+[global::System.Serializable]
+public partial class AccountExists : MeshShellException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"The account {0} alreadt exists"
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public AccountExists  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new AccountExists(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// Account not found
 /// </summary>
 [global::System.Serializable]
 public partial class AccountNotFound : MeshShellException {
@@ -231,7 +283,7 @@ public partial class AccountNotFound : MeshShellException {
 
 
 /// <summary>
-/// Account not valid
+/// Profile not found
 /// </summary>
 [global::System.Serializable]
 public partial class ProfileNotFound : MeshShellException {
@@ -272,6 +324,214 @@ public partial class ProfileNotFound : MeshShellException {
     /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
     static System.Exception _Throw(object reasons) => new ProfileNotFound(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// Device not found
+/// </summary>
+[global::System.Serializable]
+public partial class DeviceNotFound : MeshShellException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"Device {0} not found"
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public DeviceNotFound  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new DeviceNotFound(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// Group not found
+/// </summary>
+[global::System.Serializable]
+public partial class GroupNotFound : MeshShellException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"Group {0} not found"
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public GroupNotFound  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new GroupNotFound(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// Not a group account
+/// </summary>
+[global::System.Serializable]
+public partial class AccountNotGroup : MeshShellException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"The account {0} is not a group account"
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public AccountNotGroup  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new AccountNotGroup(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// Contact not known
+/// </summary>
+[global::System.Serializable]
+public partial class ContactNotFound : MeshShellException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"No contact information available for user {0}"
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public ContactNotFound  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new ContactNotFound(args:reasons) ;
 		
 	/// <summary>
     /// The public fatory delegate
@@ -491,6 +751,57 @@ public partial class OptionNotImplemented : MeshShellException {
 /// <summary>
 /// </summary>
 [global::System.Serializable]
+public partial class ServiceNoReply : MeshShellException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"Service did not reply"
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public ServiceNoReply  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new ServiceNoReply(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// </summary>
+[global::System.Serializable]
 public partial class ServiceNotSpecified : MeshShellException {
 
     ///<summary>The exception formatting delegate. May be overriden 
@@ -682,6 +993,159 @@ public partial class NoAuthorization : MeshShellException {
     /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
     static System.Exception _Throw(object reasons) => new NoAuthorization(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// </summary>
+[global::System.Serializable]
+public partial class DeviceNotAuthorized : MeshShellException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"This device is not authorized to perform account decryption"
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public DeviceNotAuthorized  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new DeviceNotAuthorized(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// </summary>
+[global::System.Serializable]
+public partial class MessageAlreadyProcessed : MeshShellException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"The message has already been processed."
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public MessageAlreadyProcessed  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new MessageAlreadyProcessed(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// </summary>
+[global::System.Serializable]
+public partial class KeyFormatNotSupported : MeshShellException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"The Key File Format {0} is not supported."
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public KeyFormatNotSupported  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new KeyFormatNotSupported(args:reasons) ;
 		
 	/// <summary>
     /// The public fatory delegate

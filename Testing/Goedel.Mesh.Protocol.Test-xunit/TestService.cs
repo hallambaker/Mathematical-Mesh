@@ -604,8 +604,17 @@ public partial class TestService {
         Xunit.Assert.Throws<CryptographicOperationRefused>(() =>
           contextAccountBob.DareDecode(envelope, verify: true));
 
-        }
 
+        // Create a member entry fo Bob
+        contextGroup.Add(AccountBob);
+        // this is going to be failing because Bob has to get and process the contact request.
+        contextAccountBob.Sync();
+        contextAccountBob.ProcessAutomatics();
+
+        var decrypt6 = contextAccountBob.DareDecode(envelope, verify: true);
+        decrypt4.IsEqualTo(plaintext).TestTrue();
+        }
+ 
 
     static void CheckPinMessageSignedEncrypted(ContextUser contextUser) {
 

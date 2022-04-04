@@ -21,6 +21,7 @@
 #endregion
 
 using Goedel.Cryptography.KeyFile;
+using Microsoft.Extensions.Options;
 
 namespace Goedel.Mesh.Shell;
 
@@ -144,9 +145,30 @@ public partial class Shell {
             };
         }
 
+    static KeyFileFormat GetKeyFileFormat(IKeyFileOptions options, KeyFileFormat defaultFormat) {
+        if (options.Format.Value == null) {
+            return defaultFormat;
+            }
+
+
+        return options.Format.Value.ToLower() switch {
+            "openssh" => KeyFileFormat.OpenSSH,
+            "pem" => KeyFileFormat.PEMPublic,
+            "pempublic" => KeyFileFormat.PEMPublic,
+            "pemprivate" => KeyFileFormat.PEMPrivate,
+            "private" => KeyFileFormat.PEMPrivate,
+            "p12" => KeyFileFormat.PKCS12,
+            "pfx" => KeyFileFormat.PKCS12,
+            "putty" => KeyFileFormat.PuTTY,
+
+
+            _ => throw new KeyFormatNotSupported(null, null, options.Format.Value)
+            };
+        }
+
+
     ShellResult KeyToFile(KeyPair keyPair,
                 string fileName,
-                string format,
                 string password,
                 bool privateKey,
                 KeyFileFormat keyFileFormatDefault) {
@@ -160,7 +182,7 @@ public partial class Shell {
             Udf = keyPair.KeyIdentifier,
             Private = privateKey,
             Algorithm = keyPair.CryptoAlgorithmId.ToJoseID(),
-            Format = format
+            Format = keyFileFormatDefault.ToString()
             };
         }
 
@@ -195,7 +217,6 @@ public partial class Shell {
         return KeyToFile(
                 keyPair,
                 fileName,
-                format,
                 password,
                 privateKey,
                 keyFileFormat
@@ -221,18 +242,18 @@ public partial class Shell {
             var applicationEntryMail = contextUser.GetApplicationEntryMail(address);
             var keyData = applicationEntryMail.Activation.SmimeEncrypt;
             keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
-            keyFileFormat = KeyFileFormat.PEMPrivate;
+            keyFileFormat = GetKeyFileFormat(options, KeyFileFormat.PEMPrivate); 
             }
         else {
             var applicationMail = contextUser.GetApplicationMail(address);
             keyPair = applicationMail.SmimeEncrypt.GetKeyPair();
-            keyFileFormat = KeyFileFormat.PEMPublic;
+            keyFileFormat = GetKeyFileFormat(options, KeyFileFormat.PEMPublic); 
             }
+
 
         return KeyToFile(
                 keyPair,
                 fileName,
-                format,
                 password,
                 privateKey,
                 keyFileFormat
@@ -259,19 +280,17 @@ public partial class Shell {
             var applicationEntryMail = contextUser.GetApplicationEntryMail(address);
             var keyData = applicationEntryMail.Activation.OpenpgpSign;
             keyPair = keyData.GetKeyPair(KeySecurity.Exportable);
-            keyFileFormat = KeyFileFormat.PEMPrivate;
+            keyFileFormat = GetKeyFileFormat(options, KeyFileFormat.PEMPrivate);
             }
         else {
             var applicationMail = contextUser.GetApplicationMail(address);
             keyPair = applicationMail.OpenpgpSign.GetKeyPair();
-            keyFileFormat = KeyFileFormat.PEMPublic;
-
+            keyFileFormat = GetKeyFileFormat(options, KeyFileFormat.PEMPublic);
             }
 
         return KeyToFile(
                 keyPair,
                 fileName,
-                format,
                 password,
                 privateKey,
                 keyFileFormat
@@ -309,7 +328,6 @@ public partial class Shell {
         return KeyToFile(
                 keyPair,
                 fileName,
-                format,
                 password,
                 privateKey,
                 keyFileFormat

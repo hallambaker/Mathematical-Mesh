@@ -51,14 +51,14 @@ partial class Program {
         //Screen.WriteInfo($"Start test  {DateTime.Now}");
 
 
-        Logger.LogInformation ("Start test {time}", DateTime.Now);
+        //Logger.LogInformation ("Start test {time}", DateTime.Now);
 
         //TestService.Test().MeshCatalogGroup();
         //ServiceDiscovery.Test().TestDNS();
 
-        ShellTestsAdmin.Test().TestEscrowChangeDevice();
+        //ShellTestsAdmin.Test().TestProfileMail();
 
-        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+        Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
 
         //ShellTestsAdmin.Test().TestProfileConnectPinExpired();

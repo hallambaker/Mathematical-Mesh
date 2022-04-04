@@ -200,7 +200,7 @@ public class AccountHandleLocked : Disposable {
     /// </summary>
     /// <returns></returns>
     public CatalogAccess GetCatalogCapability() =>
-        new(Directory);
+        new(Directory, keyCollection: AccountContext.KeyCollection);
 
     /// <summary>
     /// Return the publication catalog. This is a catalog that the service MUST have

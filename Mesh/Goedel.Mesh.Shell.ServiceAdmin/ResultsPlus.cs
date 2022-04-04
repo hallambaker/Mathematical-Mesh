@@ -52,9 +52,17 @@ public partial class ResultServiceConfiguration {
         var service = Configuration.MeshServiceConfiguration;
         var host = Configuration.GenericHostConfiguration;
 
-        builder.AppendLine($"Created Service {service.ServiceDNS}");
+        builder.AppendLine($"Created Service");
         builder.AppendLine($"  Service { service.ServiceUdf}");
         builder.AppendLine($"  Host { host.HostUdf}");
+        if (service.ServiceDNS != null) {
+            foreach (var dns in service.ServiceDNS) {
+                builder.AppendLine($"  DNS { dns}");
+                }
+
+            }
+
+
         }
 
 

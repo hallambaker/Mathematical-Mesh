@@ -90,7 +90,7 @@ public partial class Shell {
                 switch (meshMessage) {
                     case MessageComplete meshMessageComplete: {
                             foreach (var reference in meshMessageComplete.References) {
-                                completed.Add(reference.MessageId, meshMessageComplete);
+                                completed.AddSafe(reference.MessageId, meshMessageComplete);
                                 }
                             break;
                             }

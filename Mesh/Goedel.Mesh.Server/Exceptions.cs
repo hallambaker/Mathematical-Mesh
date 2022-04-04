@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 01-Apr-22 7:48:55 PM
+//  This file was automatically generated at 04-Apr-22 6:46:06 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -957,29 +957,38 @@ public  static partial class EventExtensions {
     /// </summary>
     static EventExtensions() {
         _DispatchBegin = LoggerMessage.Define(
-            LogLevel.Information, new EventId(100, nameof(_DispatchBegin)),
+            LogLevel.Trace, new EventId(100, nameof(_DispatchBegin)),
             "Dispatch begin");
         _DispatchParse = LoggerMessage.Define(
-            LogLevel.Information, new EventId(101, nameof(_DispatchParse)),
+            LogLevel.Trace, new EventId(101, nameof(_DispatchParse)),
             "Dispatch parse failed");
         _DispatchStart = LoggerMessage.Define<string>(
-            LogLevel.Information, new EventId(102, nameof(_DispatchStart)),
+            LogLevel.Trace, new EventId(102, nameof(_DispatchStart)),
             "Dispatch start transaction {Request}");
         _DispatchFail = LoggerMessage.Define<string,string>(
-            LogLevel.Information, new EventId(103, nameof(_DispatchFail)),
+            LogLevel.Trace, new EventId(103, nameof(_DispatchFail)),
             "Dispatch transaction fail {Request} {Reason}");
         _DispatchComplete = LoggerMessage.Define<string>(
-            LogLevel.Information, new EventId(104, nameof(_DispatchComplete)),
+            LogLevel.Trace, new EventId(104, nameof(_DispatchComplete)),
             "Dispatch transaction fail {Request}");
         _LockAttempt = LoggerMessage.Define<string>(
-            LogLevel.Information, new EventId(110, nameof(_LockAttempt)),
+            LogLevel.Trace, new EventId(110, nameof(_LockAttempt)),
             "Lock attempt {Resource}");
         _LockAcquire = LoggerMessage.Define<string>(
-            LogLevel.Information, new EventId(111, nameof(_LockAcquire)),
+            LogLevel.Trace, new EventId(111, nameof(_LockAcquire)),
             "Lock acquired {Resource}");
         _LockRelease = LoggerMessage.Define<string>(
-            LogLevel.Information, new EventId(112, nameof(_LockRelease)),
+            LogLevel.Trace, new EventId(112, nameof(_LockRelease)),
             "Lock released {Resource}");
+        _ThresholdKeyAgreement = LoggerMessage.Define<string>(
+            LogLevel.Information, new EventId(120, nameof(_ThresholdKeyAgreement)),
+            "Threshold Key Agreement {Account}");
+        _ThresholdKeyIdentifier = LoggerMessage.Define<string,string>(
+            LogLevel.Information, new EventId(121, nameof(_ThresholdKeyIdentifier)),
+            "Threshold Key Agreement {Account} / {KeyId}");
+        _ThresholdAuthorization = LoggerMessage.Define<string,bool>(
+            LogLevel.Information, new EventId(122, nameof(_ThresholdAuthorization)),
+            "Threshold Key Agreement {Account} / {KeyId}");
         }
 
 
@@ -1106,6 +1115,58 @@ public  static partial class EventExtensions {
 			string resource,
 			Exception _exception=null) {
         _LockRelease(logger, resource, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, Exception> _ThresholdKeyAgreement;
+
+	/// <summary>
+    /// Write an event of type ThresholdKeyAgreement to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="account">Account name</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void ThresholdKeyAgreement(
+			this ILogger logger,
+			string account,
+			Exception _exception=null) {
+        _ThresholdKeyAgreement(logger, account, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, string, Exception> _ThresholdKeyIdentifier;
+
+	/// <summary>
+    /// Write an event of type ThresholdKeyIdentifier to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="account">Account name</param>
+	/// <param name="keyId">Key Identifier</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void ThresholdKeyIdentifier(
+			this ILogger logger,
+			string account,
+			string keyId,
+			Exception _exception=null) {
+        _ThresholdKeyIdentifier(logger, account, keyId, _exception);
+        }
+
+
+    private static readonly Action<ILogger, string, bool, Exception> _ThresholdAuthorization;
+
+	/// <summary>
+    /// Write an event of type ThresholdAuthorization to <paramref name="logger"/> 
+    /// </summary>
+    /// <param name="logger">The logger to write the output to.</param>
+	/// <param name="account">Account name</param>
+	/// <param name="authorized">Authorized</param>
+	/// <param name="_exception">Exception (if thrown)</param>
+    public static void ThresholdAuthorization(
+			this ILogger logger,
+			string account,
+			bool authorized,
+			Exception _exception=null) {
+        _ThresholdAuthorization(logger, account, authorized, _exception);
         }
 
 	}

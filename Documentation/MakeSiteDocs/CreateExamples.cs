@@ -334,7 +334,6 @@ public partial class CreateExamples {
         var id1 = resultPending.Messages[0].MessageId;
         //var id2 = resultPending.Messages[1].MessageId;
 
-        "Need to specify WHAT rights are being assigned!".TaskFunctionality();
 
         Connect.ConnectAccept = Alice1.Example(
             $"device accept {id1} /message /web"
@@ -451,7 +450,7 @@ public partial class CreateExamples {
 
         // Add an SSH application profile 'SSH'
         Apps.SSHCreate = Alice1.Example(
-            "ssh create /web /id=ssh");
+            "ssh create /web /threshold /id=ssh");
 
         // Dump out the private key in SSH format
         Apps.SSHPrivate = Alice1.Example(
@@ -509,7 +508,7 @@ public partial class CreateExamples {
 
 
         Apps.SSHGet = Alice1.Example(
-                $"ssh get {localname2} /file={Apps.SshPublicKey2}");
+                $"ssh get {localname2} /file={Apps.SshPublicKey2} /format=pem");
 
         Apps.SSHGetPrivate = Alice1.Example(
                 $"!ssh get {localname2} /private /file={Apps.SshPrivateKey3}");

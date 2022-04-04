@@ -32,7 +32,7 @@ public partial class ShellTests {
     public void TestProfileSSHPrivate() {
         CreateAlice(out var device1, out var device2);
 
-        device1.Dispatch($"ssh create /web");
+        device1.Dispatch($"ssh create /web /threshold");
         device1.Dispatch($"ssh get /file=d1_ssh_pub.pem");
         device1.Dispatch($"ssh get /private /file=d1_ssh_prv.pem");
         //device1.Dispatch($"ssh show auth");

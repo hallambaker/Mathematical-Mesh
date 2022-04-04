@@ -851,6 +851,9 @@
             <param name="connectionAddress">Connection binding profile to an address.</param>
             <returns>The created group.</returns>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedGroup.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedGroup.GetActivation(Goedel.Mesh.CatalogedDevice)">
             <inheritdoc/>
         </member>
@@ -1108,6 +1111,9 @@
             <param name="address">The input, an RFC822 address.</param>
             <returns>The catalog key.</returns>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationMail.GetActivation(Goedel.Mesh.CatalogedDevice)">
             <inheritdoc/>
         </member>
@@ -1344,6 +1350,9 @@
             <param name="localName">The local name.</param>
             <param name="roles">The roles to which the key is to be granted.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationSsh.GetActivation(Goedel.Mesh.CatalogedDevice)">
             <inheritdoc/>
@@ -2627,6 +2636,13 @@
             </summary>
             <returns>The activation record.</returns>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedApplication.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>
+            Apply information from the activation entry <paramref name="activationEntry"/>;
+            </summary>
+            <param name="activationEntry"></param>
+            <param name="keyCollection"></param>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedApplication.DeviceAuthorized(Goedel.Mesh.CatalogedDevice)">
             <summary>
             Determine if the device is authorized to use the application.
@@ -2721,6 +2737,9 @@
         <member name="T:Goedel.Mesh.CatalogedApplicationNetwork">
             <summary>
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.GetEscrow">
             <inheritdoc/>

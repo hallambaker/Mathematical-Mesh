@@ -1058,6 +1058,32 @@
             <param name="resource">Resource name</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
+        <member name="M:Goedel.Mesh.Server.EventExtensions.ThresholdKeyAgreement(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Write an event of type ThresholdKeyAgreement to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="account">Account name</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EventExtensions.ThresholdKeyIdentifier(Microsoft.Extensions.Logging.ILogger,System.String,System.String,System.Exception)">
+            <summary>
+            Write an event of type ThresholdKeyIdentifier to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="account">Account name</param>
+            <param name="keyId">Key Identifier</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EventExtensions.ThresholdAuthorization(Microsoft.Extensions.Logging.ILogger,System.String,System.Boolean,System.Exception)">
+            <summary>
+            Write an event of type ThresholdAuthorization to <paramref name="logger"/> 
+            </summary>
+            <param name="logger">The logger to write the output to.</param>
+            <param name="account">Account name</param>
+            <param name="authorized">Authorized</param>
+            <param name="_exception">Exception (if thrown)</param>
+        </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">
              <summary>
             

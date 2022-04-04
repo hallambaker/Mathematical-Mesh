@@ -74,18 +74,41 @@ public partial class ShellTests {
         }
     [Fact]
     public void NYI_HelpfulError() {
+
+        //ServiceNoReply
         "Check error message is useful when can't connect to service".TaskTest();
+
+        //DeviceNotAuthorized
         "Check error message is useful when attempting common decryption on non decryption device".TaskTest();
+
+        //  AccountNotFound ()
         "... when referencing unknown account".TaskTest();
-        "... when referencing unknown local name".TaskTest(); 
+
+        // AccountNotFound ()
+        "... when referencing unknown local name".TaskTest();
+
+        // DeviceNotFound
         "... when referencing unknown device".TaskTest();
-        "... when referencing unknown group".TaskTest(); 
+
+        // GroupNotFound
+        "... when referencing unknown group".TaskTest();
+
+        // ContactNotFound
         "... send message to unknown user".TaskTest();
+
+        // DeviceNotAuthorized
         "... attempt operation not authorized for this device".TaskTest();
 
+        // AccountNotGroup
         "... group operation on not a group".TaskTest();
+
+        // MessageAlreadyProcessed
         "... device accept non existent message".TaskTest();
+
+        // NoAuthorization
         "... attempt to connect a device without assigning a role or specifying /none".TaskTest();
+
+        // AccountExists
         "... try to create an account already bound".TaskTest();
         TestEnvironment.Dispose();
         EndTest();

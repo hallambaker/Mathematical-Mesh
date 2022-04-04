@@ -65,7 +65,7 @@ public partial class CatalogedApplicationSsh {
     public override string _PrimaryKey => Key;
 
     ///<summary>The privatge client key</summary> 
-    public KeyPair ClientKeyPrivate { get; init; }
+    public KeyPair ClientKeyPrivate { get; set; }
 
 
     ///// <summary>
@@ -103,8 +103,38 @@ public partial class CatalogedApplicationSsh {
 
     #endregion
     #region // Methods
+
+
+    ApplicationEntrySsh? GetApplicationEntry(List<ApplicationEntry> applicationEntries) {
+        foreach (var applicationEntry in applicationEntries) {
+            if (Key == applicationEntry.Identifier) {
+                return applicationEntry as ApplicationEntrySsh;
+                }
+            }
+        return null;
+        }
+
+    ///<inheritdoc/>
+    public override void Activate(List<ApplicationEntry> applicationEntries, IKeyCollection keyCollection) {
+
+        var applicationEntrySsh = GetApplicationEntry(applicationEntries) ;
+        applicationEntrySsh.AssertNotNull(NYI.Throw);
+
+        if (applicationEntrySsh.Activation == null) {
+            applicationEntrySsh.Decode(keyCollection);
+            }
+        ClientKeyPrivate = applicationEntrySsh.Activation.ClientKey.GetKeyPair(KeySecurity.Exportable);
+
+        }
+
+
     ///<inheritdoc/>
     public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+        
+        // To: work out proper way to handle this.
+        ClientKeyPrivate.AssertNotNull(NYI.Throw);
+
+
         var activation = new ActivationApplicationSsh() {
             ClientKey = new KeyData(ClientKeyPrivate, true)
             };

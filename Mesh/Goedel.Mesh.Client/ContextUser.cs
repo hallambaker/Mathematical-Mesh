@@ -22,6 +22,7 @@
 
 
 using Goedel.Cryptography.Jose;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh.Client;
 
@@ -1198,7 +1199,7 @@ public partial class ContextUser : ContextAccount {
         //            }
         //        }
         //    }
-
+        transactRequest.InboundComplete(MessageStatus.Closed, request);
         transactRequest.Transact();
 
         return new ResultGroupInvitation(request);
@@ -1212,26 +1213,40 @@ public partial class ContextUser : ContextAccount {
     /// <param name="request">Connection request to be processed.</param>
     /// <returns>The result of requesting the connection.</returns>
     public ProcessResult ProcessAutomatic(AcknowledgeConnection request) {
-        if (!IsAdministrator || !Privileges.Contains (CatalogDevice.Label)) {
-            return new InsufficientAuthorization(request) ; 
+        try {
+            }
+        catch {
+            return new InsufficientAuthorization(request.MessageConnectionRequest);
+
             }
 
-        var messageConnectionRequest = request.MessageConnectionRequest;
 
-        // get the pin value here
-        var messagePin = GetMessagePIN(messageConnectionRequest.PinId);
 
-        var pinStatus = MessagePin.ValidatePin(messagePin,
-                AccountAddress,
-                messageConnectionRequest.AuthenticatedData,
-                messageConnectionRequest.ClientNonce,
-                messageConnectionRequest.PinWitness);
+        if (!IsAdministrator || !Privileges.Contains(CatalogDevice.Label)) {
+                return new InsufficientAuthorization(request);
+                }
 
-        if (pinStatus != ProcessingResult.Success) {
-            return new ProcessResultError(request, pinStatus, messagePin);
-            }
+            var messageConnectionRequest = request.MessageConnectionRequest;
 
-        return Process(request, true, messagePin);
+            // get the pin value here
+            var messagePin = GetMessagePIN(messageConnectionRequest.PinId);
+
+            var pinStatus = MessagePin.ValidatePin(messagePin,
+                    AccountAddress,
+                    messageConnectionRequest.AuthenticatedData,
+                    messageConnectionRequest.ClientNonce,
+                    messageConnectionRequest.PinWitness);
+
+            if (pinStatus != ProcessingResult.Success) {
+                return new ProcessResultError(request, pinStatus, messagePin);
+                }
+
+            return Process(request, true, messagePin);
+        //    }
+        //catch {
+        //    return new InsufficientAuthorization(request.MessageConnectionRequest);
+
+        //    }
         }
 
     /// <summary>
@@ -1311,7 +1326,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="transactRequest">The transaction under which catalog updates are to be added.</param>
     /// <param name="catalogedDevice">The device entry.</param>
     /// <returns>The list of application entries.</returns>
-    public static List<ApplicationEntry> MakeApplicationEntries(
+    public  List<ApplicationEntry> MakeApplicationEntries(
         List<string> roles,
         TransactUser transactRequest,
         CatalogedDevice catalogedDevice
@@ -1322,9 +1337,39 @@ public partial class ContextUser : ContextAccount {
             return null;
             }
         List<ApplicationEntry> result = null;
+
+
+        //foreach (var entry in ApplicationEntries) {
+        //    entry.Ac
+
+
+        //    switch (entry) {
+        //        case ApplicationEntrySsh applicationEntrySsh: {
+        //                if (applicationEntrySsh.Activation == null) {
+        //                    applicationEntrySsh.Decode(this);
+        //                    }
+        //                KeyCollection.Add(applicationEntrySsh.Activation.ClientKey.GetKeyPair());
+        //                break;
+        //                }
+        //        case ApplicationEntryMail applicationEntryMail: {
+        //                break;
+        //                }
+        //        }
+
+
+
+
+        //    }
+
+
         foreach (var application in catalogApplication.AsCatalogedType) {
+
+
             if (!application.Deny.Intersects(roles) &&
                 application.Grant.Intersects(roles)) {
+
+                application.Activate(ApplicationEntries, this);
+
                 result ??= new();
                 result.Add(application.GetActivation(catalogedDevice));
                 }
@@ -1414,6 +1459,10 @@ public partial class ContextUser : ContextAccount {
 
         // Do nothing if the request is rejected.
         if (!accept) {
+            var transact = TransactBegin();
+            transact.InboundComplete(MessageStatus.Closed, requestContact);
+            transact.Transact();
+
             return new ResultMessageContact(requestContact, null);
             }
 
@@ -1424,8 +1473,9 @@ public partial class ContextUser : ContextAccount {
 
             var transact = TransactBegin();
             var catalog = transact.GetCatalogContact();
-
+            
             transact.CatalogUpdate(catalog, cataloged);
+            transact.InboundComplete(MessageStatus.Closed, requestContact);
             transact.Transact();
             }
 

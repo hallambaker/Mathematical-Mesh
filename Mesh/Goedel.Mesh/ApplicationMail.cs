@@ -75,14 +75,14 @@ public partial class CatalogedApplicationMail {
     public override string _PrimaryKey => GetKey(AccountAddress);
 
     ///<summary>The S/MIME signature key.</summary> 
-    public KeyPair SmimeSignKeyPair { get; init; }
+    public KeyPair SmimeSignKeyPair { get; set; }
     ///<summary>The S/MIME encryption key.</summary> 
-    public KeyPair SmimeEncryptKeyPair { get; init; }
+    public KeyPair SmimeEncryptKeyPair { get; set; }
 
     ///<summary>The OpenPGP signature key.</summary> 
-    public KeyPair OpenpgpSignKeyPair { get; init; }
+    public KeyPair OpenpgpSignKeyPair { get; set; }
     ///<summary>The OpenPGP encryption key.</summary> 
-    public KeyPair OpenpgpEncryptKeyPair { get; init; }
+    public KeyPair OpenpgpEncryptKeyPair { get; set; }
 
     /// <summary>
     /// Return an escrow record for the application.
@@ -131,6 +131,9 @@ public partial class CatalogedApplicationMail {
     #endregion
     #region // Methods
 
+
+
+
     /// <summary>
     /// Return a catalog key for the SMTP mail account <paramref name="address"/>.
     /// </summary>
@@ -138,6 +141,29 @@ public partial class CatalogedApplicationMail {
     /// <returns>The catalog key.</returns>
     public static string GetKey(string address) => $"mailto:{address}";
 
+
+    ApplicationEntryMail? GetApplicationEntry(List<ApplicationEntry> applicationEntries) {
+        foreach (var applicationEntry in applicationEntries) {
+            if (Key == applicationEntry.Identifier) {
+                return applicationEntry as ApplicationEntryMail;
+                }
+            }
+        return null;
+        }
+
+    ///<inheritdoc/>
+    public override void Activate(List<ApplicationEntry> applicationEntries, IKeyCollection keyCollection) {
+        var applicationEntryMail = GetApplicationEntry(applicationEntries);
+        applicationEntryMail.AssertNotNull(NYI.Throw);
+
+        if (applicationEntryMail.Activation == null) {
+            applicationEntryMail.Decode(keyCollection);
+            }
+        SmimeSignKeyPair = applicationEntryMail.Activation.SmimeSign.GetKeyPair(KeySecurity.Exportable);
+        SmimeEncryptKeyPair = applicationEntryMail.Activation.SmimeEncrypt.GetKeyPair(KeySecurity.Exportable);
+        OpenpgpSignKeyPair = applicationEntryMail.Activation.OpenpgpSign.GetKeyPair(KeySecurity.Exportable);
+        OpenpgpEncryptKeyPair = applicationEntryMail.Activation.OpenpgpEncrypt.GetKeyPair(KeySecurity.Exportable);
+        }
 
     ///<inheritdoc/>
     public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {

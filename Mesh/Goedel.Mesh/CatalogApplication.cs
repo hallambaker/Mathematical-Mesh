@@ -191,8 +191,12 @@ public partial class CatalogedApplication {
     /// <returns>The activation record.</returns>
     public abstract KeyData[] GetEscrow();
 
-
-
+    /// <summary>
+    /// Apply information from the activation entry <paramref name="activationEntry"/>;
+    /// </summary>
+    /// <param name="activationEntry"></param>
+    /// <param name="keyCollection"></param>
+    public abstract void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection);
 
 
     /// <summary>
@@ -244,6 +248,13 @@ public partial class CatalogedApplication {
 
 
 public partial class CatalogedApplicationNetwork {
+
+
+    ///<inheritdoc/>
+    public override void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection) {
+        }
+
+
 
     ///<inheritdoc/>
     public override KeyData[] GetEscrow() => Array.Empty<KeyData>();

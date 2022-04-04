@@ -311,9 +311,10 @@ public partial class Shell : _Shell {
     /// <returns>If any of the rights flag values are present, returns a list of rights
     /// specifiers. Otherwise returns null.</returns>
     /// 
-    public static List<string> GetRights(IDeviceAuthOptions deviceAuthOptions, 
-                    bool forceNone=true) {
+    public static List<string> GetRights(IDeviceAuthOptions deviceAuthOptions,
+                    bool forceNone = true) {
         var result = new List<string>();
+        //var mode = 0;
 
         if (deviceAuthOptions.Auth.Value != null) {
             result.Add(deviceAuthOptions.Auth.Value);
@@ -335,12 +336,13 @@ public partial class Shell : _Shell {
             }
         if (deviceAuthOptions.AuthThreshold.Value) {
             result.Add("threshold");
+            //mode++;
             }
 
         if (deviceAuthOptions.AuthNone.Value) {
             (result.Count == 0).AssertTrue(InvalidAuthorizationNone.Throw);
             return null;
-}
+            }
         ((!forceNone) | result.Count > 0).AssertTrue(NoAuthorization.Throw);
 
 
