@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 05-Apr-22 6:02:55 PM
+//  This file was automatically generated at 05-Apr-22 7:28:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -8387,10 +8387,15 @@ abstract public partial class Capability : MeshItem {
 		get => _Active;
 		set {_Active = value; __Active = true; }
 		}
+	bool								__Issued = false;
+	private int						_Issued;
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						Issued  {get; set;}
+	public virtual int						Issued {
+		get => _Issued;
+		set {_Issued = value; __Issued = true; }
+		}
         /// <summary>
         ///The authentication mode: Device, Account, PIN
         /// </summary>
@@ -8460,10 +8465,10 @@ abstract public partial class Capability : MeshItem {
 			_writer.WriteToken ("Active", 1);
 				_writer.WriteBoolean (Active);
 			}
-		if (Issued != null) {
+		if (__Issued){
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Issued", 1);
-				_writer.WriteDateTime (Issued);
+				_writer.WriteInteger32 (Issued);
 			}
 		if (Mode != null) {
 			_writer.WriteObjectSeparator (ref _first);
@@ -8519,7 +8524,7 @@ abstract public partial class Capability : MeshItem {
 				break;
 				}
 			case "Issued" : {
-				Issued = jsonReader.ReadDateTime ();
+				Issued = jsonReader.ReadInteger32 ();
 				break;
 				}
 			case "Mode" : {

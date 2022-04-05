@@ -605,6 +605,9 @@ public partial class TestService {
           contextAccountBob.DareDecode(envelope, verify: true));
 
 
+
+        System.Threading.Thread.Sleep(2000);
+
         // Create a member entry fo Bob
         contextGroup.Add(AccountBob);
         // this is going to be failing because Bob has to get and process the contact request.

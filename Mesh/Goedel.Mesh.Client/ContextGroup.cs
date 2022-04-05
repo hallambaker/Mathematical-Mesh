@@ -188,6 +188,7 @@ public partial class ContextGroup : ContextAccount {
 
         var transactInvitation = ContextUser.TransactBegin();
         var transactGroup = TransactBegin();
+        var catalogMember = transactGroup.GetCatalogMember();
 
         // Pull the contact information from the user's contact catalog
         var networkProtocolEntry = ContextUser.GetNetworkEntry(memberAddress);
@@ -205,7 +206,7 @@ public partial class ContextGroup : ContextAccount {
         var capabilityMember = new CapabilityDecryptPartial() {
             Id = ProfileGroup.CommonEncryption.Udf,
             EnvelopedKeyShare = keyData.GetEnvelopedKeyData(),
-            Issued = DateTime.Now
+            Issued = (int) catalogMember.FrameCount
             };
 
         // Create and send the invitation
@@ -235,7 +236,6 @@ public partial class ContextGroup : ContextAccount {
         transactGroup.CatalogUpdate(catalogAccess, catalogedCapability);
 
         // update the members catalog to add the member entry
-        var catalogMember = transactGroup.GetCatalogMember();
         transactGroup.CatalogUpdate(catalogMember, catalogedMember);
 
         //// commit the transactions
