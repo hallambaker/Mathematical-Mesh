@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 04-Apr-22 6:46:06 PM
+//  This file was automatically generated at 04-Apr-22 7:16:29 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -981,13 +981,13 @@ public  static partial class EventExtensions {
             LogLevel.Trace, new EventId(112, nameof(_LockRelease)),
             "Lock released {Resource}");
         _ThresholdKeyAgreement = LoggerMessage.Define<string>(
-            LogLevel.Information, new EventId(120, nameof(_ThresholdKeyAgreement)),
+            LogLevel.Trace, new EventId(120, nameof(_ThresholdKeyAgreement)),
             "Threshold Key Agreement {Account}");
         _ThresholdKeyIdentifier = LoggerMessage.Define<string,string>(
-            LogLevel.Information, new EventId(121, nameof(_ThresholdKeyIdentifier)),
+            LogLevel.Trace, new EventId(121, nameof(_ThresholdKeyIdentifier)),
             "Threshold Key Agreement {Account} / {KeyId}");
         _ThresholdAuthorization = LoggerMessage.Define<string,bool>(
-            LogLevel.Information, new EventId(122, nameof(_ThresholdAuthorization)),
+            LogLevel.Trace, new EventId(122, nameof(_ThresholdAuthorization)),
             "Threshold Key Agreement {Account} / {KeyId}");
         }
 
