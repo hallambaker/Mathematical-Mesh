@@ -14448,6 +14448,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Capability.Issued">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Capability.Mode">
              <summary>
             The authentication mode: Device, Account, PIN

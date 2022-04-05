@@ -204,7 +204,8 @@ public partial class ContextGroup : ContextAccount {
         keyData.Envelope(encryptionKey: userEncryptionKey);
         var capabilityMember = new CapabilityDecryptPartial() {
             Id = ProfileGroup.CommonEncryption.Udf,
-            EnvelopedKeyShare = keyData.GetEnvelopedKeyData()
+            EnvelopedKeyShare = keyData.GetEnvelopedKeyData(),
+            Issued = DateTime.Now
             };
 
         // Create and send the invitation

@@ -422,7 +422,7 @@ public abstract class Transaction<TAccount> : Disposable
             Message completed,
             Message response = null
             ) {
-
+        //Console.WriteLine($"Mark status {completed.MessageId}  {messageStatus}");
         InboundReferences ??= new List<Reference>();
         var reference = new Reference() {
             MessageStatus = messageStatus,

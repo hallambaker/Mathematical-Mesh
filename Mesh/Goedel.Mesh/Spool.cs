@@ -89,6 +89,7 @@ public class SpoolEntry {
     public SpoolEntry(Spool spool, Reference reference) {
         Spool = spool;
         EnvelopeID = reference.MessageId;
+        MessageStatus = reference.MessageStatus;
         }
 
 

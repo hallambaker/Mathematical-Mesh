@@ -44,30 +44,6 @@ public partial class ShellTests {
 
 
 
-    [Fact]
-    public void TestAccountRefreshed() {
-
-        var testCLIAlice1 = GetTestCLI(AliceDevice1);
-
-        var meshMachine = testCLIAlice1.Shell.MeshMachine as MeshMachineTest;
-        
-        // force the service to start first
-        TestEnvironment.StartService();
-
-
-
-        var result1 = testCLIAlice1.Example($"account create {AliceAccount}");
-
-        meshMachine.ResetHost();
-        var result2 = testCLIAlice1.Example($"account sync");
-
-
-
-
-        TestEnvironment.Dispose();
-        EndTest();
-        }
-
 
 
     [Fact]

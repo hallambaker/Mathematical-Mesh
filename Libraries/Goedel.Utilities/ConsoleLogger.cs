@@ -169,10 +169,10 @@ public sealed class ConsoleLogger : ILogger {
             ConsoleColor originalColor = Console.ForegroundColor;
 
             Console.ForegroundColor = config.LogLevels[logLevel];
-            Console.WriteLine($"[{eventId.Id,2}: {logLevel,-12}]");
+            Console.Write($"[{eventId.Id,2}: {logLevel,-12}]");
 
             Console.ForegroundColor = originalColor;
-            Console.Write($"     {_name} - ");
+            //Console.Write($"     {_name} - ");
 
             Console.ForegroundColor = config.LogLevels[logLevel];
             Console.Write($"{formatter(state, exception)}");

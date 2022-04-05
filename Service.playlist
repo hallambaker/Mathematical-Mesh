@@ -1,0 +1,386 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="Goedel.Mesh.Shell.Test-xunit" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Goedel.XUnit" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ShellTestsAdmin" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_CatchUserError" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_CatchUserError" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_ChangeDeviceAuthorization" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_ChangeDeviceAuthorization" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_ConfirmMultipleAccept" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_ConfirmMultipleAccept" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_DareArchive" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_DareArchive" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_HelpfulError" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_HelpfulError" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_KeyData" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_KeyData" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_LocalNameAccount" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_LocalNameAccount" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_LocalNameDevice" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_LocalNameDevice" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_RecoverApps" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.NYI_RecoverApps" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestAccount" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestAccount" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestAccountDelete" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestAccountDelete" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestAccountRefreshed" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestAccountRefreshed" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestArchive" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestArchive" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestCommitment" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestCommitment" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestCommitmentRandom" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestCommitmentRandom" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestConnectRequest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestConnectRequest" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestCreateAdmin" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestCreateAdmin" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestCreateDevice" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestCreateDevice" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestCreateMessage" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestCreateMessage" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestCreateSuper" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestCreateSuper" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestCreateWeb" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestCreateWeb" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestDigest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestDigest" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestDns" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestDns" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestEscrowChangeDevice" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestEscrowChangeDevice" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestEscrowDeleteDevice" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestEscrowDeleteDevice" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestFileEncrypt" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestFileEncrypt" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestFilePlain" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestFilePlain" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestFileSign" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestFileSign" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestFileSignEncrypt" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestFileSignEncrypt" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestHello" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestHello" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestHelloFail" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestHelloFail" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestKey" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestKey(bits: 0)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestKey(bits: 128)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestKey(bits: 192)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestKey(bits: 256)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestKey(bits: 512)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestLog" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestLog" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageConfirmationAccept" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageConfirmationAccept" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageConfirmationReject" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageConfirmationReject" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageContactBusinessCardExchange" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageContactBusinessCardExchange" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageContactBusinessCardFetch" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageContactBusinessCardFetch" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageContactBusinessCardReject" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageContactBusinessCardReject" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageContactInPerson" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageContactInPerson" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageContactRemote" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageContactRemote" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageGroup" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestMessageGroup" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestPendingMessages" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestPendingMessages" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileBookmark" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileBookmark" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileCalendar" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileCalendar" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnect" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnect" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectDynamicQR" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectDynamicQR" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectPin" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectPin" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectPinExpired" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectPinExpired" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectPinInvalid" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectPinInvalid" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectPinReused" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectPinReused" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectStaticQR" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileConnectStaticQR" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileContact" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileContact" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileMail" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileMail" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileNetwork" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileNetwork" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfilePassword" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfilePassword" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileSSHPrivate" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestProfileSSHPrivate" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestRandom" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestRandom(bits: 0)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestRandom(bits: 128)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestRandom(bits: 192)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestRandom(bits: 256)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestRandom(bits: 512)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestSequence" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestSequence(count: 100, encrypt: null, sign: null, purge: False, index: False, initial: &quot;Archive1&quot;)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.ShellTestsAdmin.TestUDF" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.ShellTestsAdmin.TestUDF" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>

@@ -51,6 +51,10 @@ public class MeshHost : Disposable {
     public IKeyCollection KeyCollection => MeshMachine.KeyCollection;
 
 
+
+    ///<summary>Dictionary mapping mesh UDF to Context.</summary>
+    protected Dictionary<string, ContextAccount> DictionaryMachineIdContextMesh = new();
+
     ///<summary>The object index</summary> 
     protected Dictionary<string, StoreEntry> ObjectIndex = new();
 
@@ -128,9 +132,8 @@ public class MeshHost : Disposable {
     /// </summary>
     public void ReadHost() {
 
-        var old = DictionaryUDFContextMesh;
-
-
+        var old =    DictionaryMachineIdContextMesh;
+        DictionaryMachineIdContextMesh = new();
         DictionaryUDFContextMesh = new();
         DictionaryLocalContextMesh = new();
         ObjectIndex = new();
@@ -148,23 +151,23 @@ public class MeshHost : Disposable {
             SetDefaults(catalogedMachine);
 
             if (old.TryGetValue(catalogedMachine.Id, out var contextMesh)) {
-                // Context was already loaded - reuse
-                DictionaryUDFContextMesh.Add(catalogedMachine.Id, contextMesh);
-                if (catalogedMachine.Local != null) {
-                    DictionaryLocalContextMesh.AddSafe(catalogedMachine.Local, contextMesh);
-                    }
-                old.Remove(catalogedMachine.Id);
+                Register(contextMesh);
+
                 }
             else {
                 // add the new context
                 GetContext(catalogedMachine);
                 }
             }
+        
+        // cleanup the old list
+
 
         // Delete any deleted contexts
         foreach (var entry in old.Values) {
             entry.Dispose();
             }
+        old.Clear();
         }
 
     /// <summary>
@@ -172,9 +175,10 @@ public class MeshHost : Disposable {
     /// </summary>
     public void ReloadContexts() {
 
-        foreach (var entry in DictionaryUDFContextMesh.Values) {
+        foreach (var entry in DictionaryMachineIdContextMesh.Values) {
             entry.Dispose();
             }
+        DictionaryMachineIdContextMesh.Clear();
         ReadHost();
 
         }
@@ -266,8 +270,9 @@ public class MeshHost : Disposable {
         }
     void Register(ContextAccount contextMesh) {
         var machine = contextMesh.CatalogedMachine;
-        DictionaryUDFContextMesh.Remove(machine.Id);
-        DictionaryUDFContextMesh.Add(machine.Id, contextMesh);
+
+        DictionaryMachineIdContextMesh.Remove(machine.Id);
+        DictionaryMachineIdContextMesh.Add(machine.Id, contextMesh);
 
         if (contextMesh.AccountAddress != null) {
             DictionaryLocalContextMesh.AddSafe(contextMesh.AccountAddress, contextMesh);
@@ -313,8 +318,10 @@ public class MeshHost : Disposable {
     public ContextAccount LocateMesh(string key, bool useLocal = true) {
         key.AssertNotNull(MeshNotFound.Throw);
 
-
-        if (DictionaryUDFContextMesh.TryGetValue(key, out var context)) {
+        if (DictionaryMachineIdContextMesh.TryGetValue(key, out var context)) {
+            return context;
+            }
+        if (DictionaryUDFContextMesh.TryGetValue(key, out context)) {
             return context;
             }
 

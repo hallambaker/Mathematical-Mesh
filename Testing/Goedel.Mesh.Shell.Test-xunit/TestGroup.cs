@@ -59,6 +59,10 @@ public partial class ShellTests {
 
         // Probably failing because Bob is not actually being deleted from the group
         deviceB.Dispatch($"dare decode {result1.Filename}", fail: true);
+
+        deviceA.Dispatch($"group add {accountGroup} {AccountB}");
+        deviceB.Dispatch($"account sync /auto");
+        deviceB.Dispatch($"dare decode {result1.Filename}");
         }
 
     }

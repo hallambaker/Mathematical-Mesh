@@ -812,7 +812,7 @@
 				|this is an access capability, this is the KeyIdentifier of the authentication
 				|key being authorized for access.
 		Boolean Active
-
+		DateTime Issued
 
 		String Mode
 			Description

@@ -1260,6 +1260,9 @@ public partial class ContextUser : ContextAccount {
     ProcessResult Process(AcknowledgeConnection request, bool accept = true, MessagePin messagePin = null,
            List<string> rights = null) {
 
+
+        //Console.WriteLine($"Process connection request {request.MessageId}");
+
         rights ??= messagePin?.Roles;
         var transactRequest = TransactBegin();
 
@@ -1276,6 +1279,8 @@ public partial class ContextUser : ContextAccount {
             }
 
         var deviceEncrypt = request.MessageConnectionRequest.ProfileDevice.Encryption.GetKeyPair();
+
+
 
         transactRequest.InboundComplete(MessageStatus.Closed, request, respondConnection);
         transactRequest.LocalMessage(respondConnection, deviceEncrypt);

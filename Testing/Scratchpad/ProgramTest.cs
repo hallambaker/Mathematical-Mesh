@@ -48,17 +48,28 @@ partial class Program {
 
 
     static void Main() {
-        //Screen.WriteInfo($"Start test  {DateTime.Now}");
-
-
         //Logger.LogInformation ("Start test {time}", DateTime.Now);
 
-        //TestService.Test().MeshCatalogGroup();
+        for (int i = 0; i < 10; i++) {
+            TestService.Test().MeshCatalogGroup();
+            }
+
+        //ShellTestsAdmin.Test().TestProfileConnectPin();
+        //ShellTestsAdmin.Test().TestMessageGroup();
+
+
+
+
+        //ShellTestsAdmin.Test().TestProfileContact();
+
+
+
+
         //ServiceDiscovery.Test().TestDNS();
 
-        //ShellTestsAdmin.Test().TestProfileMail();
 
-        Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+
+        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
 
         //ShellTestsAdmin.Test().TestProfileConnectPinExpired();

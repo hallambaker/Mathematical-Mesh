@@ -612,7 +612,7 @@ public partial class TestService {
         contextAccountBob.ProcessAutomatics();
 
         var decrypt6 = contextAccountBob.DareDecode(envelope, verify: true);
-        decrypt4.IsEqualTo(plaintext).TestTrue();
+        decrypt6.IsEqualTo(plaintext).TestTrue();
         }
  
 

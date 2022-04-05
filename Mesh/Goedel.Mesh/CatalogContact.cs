@@ -121,7 +121,19 @@ public class CatalogContact : Catalog<CatalogedContact> {
                     capability.KeyCollection = KeyCollection;
                     switch (capability) {
                         case CapabilityDecrypt capabilityDecrypt: {
-                                DictionaryDecryptByKeyId.Replace(capability.Id, capabilityDecrypt);
+                                //Console.WriteLine($"Key {networkAddress.Address} -> {capability.Id}");
+
+                                if (DictionaryDecryptByKeyId.TryGetValue(capability.Id, out var existing) ){
+                                    if (capabilityDecrypt.Issued > existing.Issued) {
+                                        DictionaryDecryptByKeyId.Remove(capability.Id);
+                                        DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
+                                        }
+                                    }
+                                else {
+                                    DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
+                                    }
+
+                                //DictionaryDecryptByKeyId.Replace(capability.Id, capabilityDecrypt);
                                 break;
                                 }
                         }

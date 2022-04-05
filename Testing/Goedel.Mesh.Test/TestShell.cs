@@ -256,6 +256,8 @@ public partial class TestCLI : CommandLineInterpreter {
     public Result Dispatch(string command, bool fail = false) {
         var Args = command.Split(' ');
 
+        Shell.MeshHost.ReloadContexts();
+
         if (!fail) {
             Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
             var result = Shell.ShellResult as Result;
