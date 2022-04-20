@@ -35,6 +35,7 @@ add   Add a mail application profile to a personal profile
     /email   Authorize rights for specified smtp email account
     /member   Authorize member rights for specified Mesh group
     /group   Authorize group administrator rights for specified Mesh group
+    /null   Do not authorize any device rights at all (cannot be used with any rights grant))
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /sync   If true, attempt to synchronize the account to the service before operation
@@ -59,14 +60,14 @@ specified on the command line.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman mail add alice@example.net /inbound pop://alice@pop3.example.net /outbound submit://alice@submit.example.net
+<cmd>Alice> meshman mail add alice@example.net /inbound pop://alice@pop3.example.net /outbound submit://alice@submit.example.net /Web
 <rsp>Account:         alice@example.net
 Inbound Server:  pop://alice@pop3.example.net
 Outbound Server: submit://alice@submit.example.net
-S/Mime Sign:     MCQA-FSDW-MQZV-PFAR-SY5R-Z4I5-QHBR
-S/Mime Encrypt:  MAZG-3JTN-CNUK-5NR6-M5B2-2DP6-CYDB
-OpenPGP Sign:    MAIW-O736-45H2-ZDPR-WEEK-MHK3-ZG3N
-OpenPGP Encrypt: MCK3-TIRB-GYJ7-IERA-3WMI-J2EO-BPUT
+S/Mime Sign:     MDKO-IBSB-RQG3-DMZG-VP64-MOZK-DOXM
+S/Mime Encrypt:  MBGT-TGGN-6UA5-H6GY-EMIH-WM3Q-5VGY
+OpenPGP Sign:    MDB5-RN7P-7UL5-SBOG-D34Y-SJGS-URTB
+OpenPGP Encrypt: MAKC-PZUS-ZCG4-Q57X-57F3-6XIW-RF4B
 </div>
 ~~~~
 
@@ -96,7 +97,8 @@ The mail get command reports the specified mail configuration data.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman mail get alice@example.net
-<rsp>ERROR - TBS
+<rsp>[CatalogedApplicationMail]
+
 </div>
 ~~~~
 
@@ -108,6 +110,8 @@ The mail get command reports the specified mail configuration data.
 <div="helptext">
 <over>
 import   Import account information
+       File containing the contact entry to add
+    /id   Unique entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /sync   If true, attempt to synchronize the account to the service before operation
@@ -125,8 +129,9 @@ specified in a configuration file.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman mail import 
-<rsp>ERROR - TBS
+<cmd>Alice> meshman mail import mail_config.json
+<rsp>[CatalogedApplicationMail]
+
 </div>
 ~~~~
 
@@ -156,12 +161,12 @@ The mail list command lists all the mail configurations in the applications cata
 <div="terminal">
 <cmd>Alice> meshman mail list
 <rsp>Account:         alice@example.net
-Inbound Server:  pop://alice@pop3.example.net
+Inbound Server:  imap://alice@imap.example.net
 Outbound Server: submit://alice@submit.example.net
-S/Mime Sign:     MCQA-FSDW-MQZV-PFAR-SY5R-Z4I5-QHBR
-S/Mime Encrypt:  MAZG-3JTN-CNUK-5NR6-M5B2-2DP6-CYDB
-OpenPGP Sign:    MAIW-O736-45H2-ZDPR-WEEK-MHK3-ZG3N
-OpenPGP Encrypt: MCK3-TIRB-GYJ7-IERA-3WMI-J2EO-BPUT
+S/Mime Sign:     MBFI-KY4H-RDBR-TZAS-ZZUP-GRQD-VGDK
+S/Mime Encrypt:  MA4K-FLCZ-MITB-NDNH-UUVK-IBRT-P3MC
+OpenPGP Sign:    MBWE-RBKQ-2FVU-4YYB-E23N-ZRXC-CEOI
+OpenPGP Encrypt: MDNE-BRJE-2RCO-T3BN-2KTU-NU6J-WSPU
 </div>
 ~~~~
 

@@ -28,7 +28,7 @@ public partial class CreateExamples {
         //DoCommandsCreateAcount();
 
         //ShellAccount = new ShellAccount(this);
-        CreateCarolAccount();
+
 
 
         ShellNetwork = new ShellNetwork(this);

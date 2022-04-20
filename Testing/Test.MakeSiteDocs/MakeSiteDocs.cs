@@ -83,6 +83,8 @@ public class MakeSiteDocs : CreateExamples {
         GroupOperations();
         ConnectPINDynamicQR();
         ConnectStaticQR();
+
+        CreateCarolAccount();
         LayerAccount(); // Auth device unfinished
         TestConnectDisconnect(index);
 

@@ -30,24 +30,20 @@ The `bookmark add` command adds a bookmark entry to a catalog:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman bookmark add Folder1/1 http://example.com/ "Example Dot ^
-    Com"
-<rsp>{
-  "Uri": "http://example.com/",
-  "Title": "\"Example",
-  "Path": "Folder1/1"}
-<cmd>Alice> meshman bookmark add Folder1/2 http://example.net/Bananas ^
-    "Banana Site"
-<rsp>{
-  "Uri": "http://example.net/Bananas",
-  "Title": "\"Banana",
-  "Path": "Folder1/2"}
-<cmd>Alice> meshman bookmark add Folder1/1a http://example.com/Fred "The ^
-    Fred Space"
-<rsp>{
-  "Uri": "http://example.com/Fred",
-  "Title": "\"The",
-  "Path": "Folder1/1a"}
+<cmd>Alice> meshman bookmark add http://example.com/ "Example Dot Com" ^
+    /id=Folder1-1 
+<rsp>[NA3J-QBYB-XWAU-AYQZ-JW3P-DHNK-IOXV/Folder1-1] http://example.com/
+"Example
+<cmd>Alice> meshman bookmark add http://example.net/Bananas "Banana Site" ^
+    /id=Folder1-2 
+<rsp>[NBDZ-HSGU-FAAZ-CEID-NPTA-GBQ6-JCWC/Folder1-2] http://example.net/Ban
+anas
+"Banana
+<cmd>Alice> meshman bookmark add http://example.com/Fred "The Fred Space" ^
+    /id=Folder1-1a
+<rsp>[NC6E-ZDDS-SNPK-UHKA-O2R4-2AEX-4PAK/Folder1-1a] http://example.com/Fr
+ed
+"The
 </div>
 ~~~~
 
@@ -67,11 +63,10 @@ The `bookmark get`  command retreives a bookmark  by its index label:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman bookmark get Folder1/2
-<rsp>{
-  "Uri": "http://example.net/Bananas",
-  "Title": "\"Banana",
-  "Path": "Folder1/2"}
+<cmd>Alice> meshman bookmark get Folder1-2
+<rsp>[NBDZ-HSGU-FAAZ-CEID-NPTA-GBQ6-JCWC/Folder1-2] http://example.net/Ban
+anas
+"Banana
 </div>
 ~~~~
 
@@ -82,8 +77,15 @@ Bookmark entries may be deleted using the  `bookmark delete` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman bookmark delete BookmarkPath2
-<rsp>ERROR - The entry could not be found in the store.
+<cmd>Alice> meshman bookmark delete Folder1-2
+<cmd>Alice> meshman bookmark list
+<rsp>[NDU5-XXSS-6KLM-MO6Q-S3F5-SJ7P-FO73/Sites-1] http://www.example.com
+site1
+[NA3J-QBYB-XWAU-AYQZ-JW3P-DHNK-IOXV/Folder1-1] http://example.com/
+"Example
+[NC6E-ZDDS-SNPK-UHKA-O2R4-2AEX-4PAK/Folder1-1a] http://example.com/Fr
+ed
+"The
 </div>
 ~~~~
 
@@ -95,14 +97,16 @@ A complete list of bookmarks is obtained using the  `bookmark list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman bookmark list
-<rsp>CatalogedBookmark
-
-CatalogedBookmark
-
-CatalogedBookmark
-
-CatalogedBookmark
-
+<rsp>[NDU5-XXSS-6KLM-MO6Q-S3F5-SJ7P-FO73/Sites-1] http://www.example.com
+site1
+[NA3J-QBYB-XWAU-AYQZ-JW3P-DHNK-IOXV/Folder1-1] http://example.com/
+"Example
+[NBDZ-HSGU-FAAZ-CEID-NPTA-GBQ6-JCWC/Folder1-2] http://example.net/Ban
+anas
+"Banana
+[NC6E-ZDDS-SNPK-UHKA-O2R4-2AEX-4PAK/Folder1-1a] http://example.com/Fr
+ed
+"The
 </div>
 ~~~~
 
@@ -114,7 +118,7 @@ CatalogedBookmark
 ~~~~
 <div="terminal">
 <cmd>Alice5> meshman bookmark list
-<rsp>ERROR - The feature has not been implemented
+<rsp>ERROR - Unspecified error
 </div>
 ~~~~
 
@@ -136,6 +140,6 @@ The new device now has access to the Bookmarks catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice5> meshman bookmark list
-<rsp>ERROR - The feature has not been implemented
+<rsp>ERROR - Unspecified error
 </div>
 ~~~~

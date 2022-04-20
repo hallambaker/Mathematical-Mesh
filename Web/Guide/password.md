@@ -32,9 +32,13 @@ The `password list` command lists all the passwords in the catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman password list
-<rsp>CatalogedCredential
+<rsp>alice1@ftp.example.com = [password]
 
-CatalogedCredential
+alice@example.com@www.example.com = [newpassword]
+
+ssh:alice42@ssh1.example.com = []
+
+ssh:alice69@ssh2.example.com = []
 
 </div>
 ~~~~
@@ -114,8 +118,8 @@ Password entries may be deleted using the  `password delete` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice5> meshman bookmark list
-<rsp>ERROR - The feature has not been implemented
+<cmd>Alice5> meshman credential list
+<rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
 
@@ -133,8 +137,8 @@ Devices are given authorization to access the networks catalog using the
 
 ~~~~
 <div="terminal">
-<cmd>Alice5> meshman bookmark list
-<rsp>ERROR - The feature has not been implemented
+<cmd>Alice5> meshman credential list
+<rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
 

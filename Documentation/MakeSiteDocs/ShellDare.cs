@@ -53,28 +53,28 @@ public class ShellDare : ExampleSet {
 
     public ShellDare(CreateExamples createExamples) :
             base(createExamples) {
-        DarePlaintext = Alice1.Example($"dare encode {TestFile1} /out={DigestCiphertext}");
-        DareSymmetric = Alice1.Example($"dare encode {TestFile1} /out={SymmetricCiphertext}" +
+        DarePlaintext = Alice1.Example($"~dare encode {TestFile1} /out={DigestCiphertext}");
+        DareSymmetric = Alice1.Example($"~dare encode {TestFile1} /out={SymmetricCiphertext}" +
                     $"/key={Secret1}");
-        DareSub = Alice1.Example($"dare encode {TestDir1} /encrypt={Secret1}");
+        DareSub = Alice1.Example($"~dare encode {TestDir1} /encrypt={Secret1}");
         DareMesh = Alice1.Example($"dare encode {TestFile1} {SignedCiphertext} " +
                     $"/encrypt={BobAccount} /sign={AliceAccount}");
 
-        DareVerifyDigest = Alice1.Example($"dare verify {DigestCiphertext}");
-        DareVerifySigned = Alice1.Example($"dare verify {SignedCiphertext}");
-        DareVerifySymmetricUnknown = Alice1.Example($"dare verify {SymmetricCiphertext}");
+        DareVerifyDigest = Alice1.Example($"~dare verify {DigestCiphertext}");
+        DareVerifySigned = Alice1.Example($"~dare verify {SignedCiphertext}");
+        DareVerifySymmetricUnknown = Alice1.Example($"~dare verify {SymmetricCiphertext}");
 
 
-        DareVerifySymmetric = Alice1.Example($"dare verify {SymmetricCiphertext} /encrypt={Secret1}");
+        DareVerifySymmetric = Alice1.Example($"~dare verify {SymmetricCiphertext} /encrypt={Secret1}");
 
-        DareDecodePlaintext = Alice1.Example($"dare decode {DigestCiphertext}");
-        DareDecodeSymmetric = Alice1.Example($"dare decode {SymmetricCiphertext} /encrypt={Secret1}");
-        DareDecodePrivate = Alice1.Example($"dare decode {SignedCiphertext}");
+        DareDecodePlaintext = Alice1.Example($"~dare decode {DigestCiphertext}");
+        DareDecodeSymmetric = Alice1.Example($"~dare decode {SymmetricCiphertext} /encrypt={Secret1}");
+        DareDecodePrivate = Alice1.Example($"~dare decode {SignedCiphertext}");
 
-        DareEarl = Alice1.Example($"dare earl {TestFile1} {EARLService}");
-        DareEARLLog = Alice1.Example($"dare log create {DareLogEarl} /encrypt={AliceAccount}",
-                                                $"dare earl {TestFile1} /log={DareLogEarl}");
-        DareEARLLogNew = Alice1.Example($"dare earl {TestFile1} /new={DareLogEarl}");
+        DareEarl = Alice1.Example($"~dare earl {TestFile1} {EARLService}");
+        DareEARLLog = Alice1.Example($"~dare log create {DareLogEarl} /encrypt={AliceAccount}",
+                                                $"~dare earl {TestFile1} /log={DareLogEarl}");
+        DareEARLLogNew = Alice1.Example($"~dare earl {TestFile1} /new={DareLogEarl}");
 
         }
     }

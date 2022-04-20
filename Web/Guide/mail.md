@@ -24,14 +24,14 @@ A mail application profile is added to a Mesh profile using the
 <div="terminal">
 <cmd>Alice> meshman mail add alice@example.net /inbound ^
     pop://alice@pop3.example.net /outbound ^
-    submit://alice@submit.example.net
+    submit://alice@submit.example.net /Web
 <rsp>Account:         alice@example.net
 Inbound Server:  pop://alice@pop3.example.net
 Outbound Server: submit://alice@submit.example.net
-S/Mime Sign:     MCQA-FSDW-MQZV-PFAR-SY5R-Z4I5-QHBR
-S/Mime Encrypt:  MAZG-3JTN-CNUK-5NR6-M5B2-2DP6-CYDB
-OpenPGP Sign:    MAIW-O736-45H2-ZDPR-WEEK-MHK3-ZG3N
-OpenPGP Encrypt: MCK3-TIRB-GYJ7-IERA-3WMI-J2EO-BPUT
+S/Mime Sign:     MDKO-IBSB-RQG3-DMZG-VP64-MOZK-DOXM
+S/Mime Encrypt:  MBGT-TGGN-6UA5-H6GY-EMIH-WM3Q-5VGY
+OpenPGP Sign:    MDB5-RN7P-7UL5-SBOG-D34Y-SJGS-URTB
+OpenPGP Encrypt: MAKC-PZUS-ZCG4-Q57X-57F3-6XIW-RF4B
 </div>
 ~~~~
 
@@ -45,8 +45,9 @@ Alternatively, the configuration may be given explicitly using the form
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman mail import 
-<rsp>ERROR - TBS
+<cmd>Alice> meshman mail import mail_config.json
+<rsp>[CatalogedApplicationMail]
+
 </div>
 ~~~~
 
@@ -60,9 +61,16 @@ Account profiles may be updated to change the network configuration using the
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman mail add /inbound imap://alice@imap.example.net ^
-    /outbound submit://alice@submit.example.net 
-<rsp>ERROR - The feature has not been implemented
+<cmd>Alice> meshman mail add alice@example.net /inbound ^
+    imap://alice@imap.example.net /outbound ^
+    submit://alice@submit.example.net /Web 
+<rsp>Account:         alice@example.net
+Inbound Server:  imap://alice@imap.example.net
+Outbound Server: submit://alice@submit.example.net
+S/Mime Sign:     MBFI-KY4H-RDBR-TZAS-ZZUP-GRQD-VGDK
+S/Mime Encrypt:  MA4K-FLCZ-MITB-NDNH-UUVK-IBRT-P3MC
+OpenPGP Sign:    MBWE-RBKQ-2FVU-4YYB-E23N-ZRXC-CEOI
+OpenPGP Encrypt: MDNE-BRJE-2RCO-T3BN-2KTU-NU6J-WSPU
 </div>
 ~~~~
 

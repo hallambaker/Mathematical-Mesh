@@ -27,7 +27,7 @@ global using System.Globalization;
 global using System.IO;
 global using System.Text;
 global using System.Threading;
-
+global using System.Linq;
 global using Microsoft.Extensions.Logging;
 
 #if !(_Github_)

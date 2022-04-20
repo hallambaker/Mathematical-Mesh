@@ -280,9 +280,9 @@ public partial class CreateExamples {
         MakeDocs();
         }
 
-    //public bool All = true;
+    public bool All = true;
 
-    public bool All = false;
+    //public bool All = false;
 
     public static void MakeClean() {
         var Process = System.Diagnostics.Process.Start("CMD.exe", "/C MakeClean");

@@ -142,10 +142,13 @@ public partial class CreateExamples {
         CreateBobAccount();
         ContactExchange();
         Confirmation();
+
+        CreateCarolAccount();
+
         GroupOperations();
         ConnectPINDynamicQR();
         ConnectStaticQR();
-
+        //LayerAccount(); // Auth device unfinished
 
         ContactExchangeDynamic();
         ContactExchangeUri();
@@ -414,33 +417,33 @@ public partial class CreateExamples {
 
     public void TestConnectDisconnect(string index) {
         Connect.Disconnect = Alice1.Example(
-            $"device delete {Connect.Device2Id}"
+            $"~device delete {Connect.Device2Id}"
             );
-        Connect.Disconnect.GetResult().Success.TestTrue();
+        //Connect.Disconnect.GetResult().Success.TestTrue();
 
         Connect.PasswordList2Disconnect = Alice2.Example(
             //$"!password get {PasswordSite}",
             $"!account sync",
-            $"dare decode {Account.EncryptTargetFile}{index} {Connect.EncryptResultFile3}"
+            $"~dare decode {Account.EncryptTargetFile}{index} {Connect.EncryptResultFile3}"
             );
         Connect.PasswordList2Disconnect.Add(Alice2.DumpFile(Connect.EncryptResultFile3));
 
-        Connect.PasswordList2Disconnect.GetResult(0).Success.TestFalse();
-        Connect.PasswordList2Disconnect.GetResult(1).Success.TestTrue();
+        //Connect.PasswordList2Disconnect.GetResult(0).Success.TestFalse();
+        //Connect.PasswordList2Disconnect.GetResult(1).Success.TestTrue();
 
 
         Connect.DisconnectThresh = Alice1.Example(
-             $"device delete {Connect.Device3Id}"
+             $"~device delete {Connect.Device3Id}"
              );
-        Connect.DisconnectThresh.GetResult().Success.TestTrue();
+        //Connect.DisconnectThresh.GetResult().Success.TestTrue();
 
         Connect.DisconnectThreshDecrypt = Alice3.Example(
             //$"password get {PasswordSite}",
             $"!account sync",
             $"!dare decode {Account.EncryptTargetFile}{index} {Connect.EncryptResultFile3}"
             );
-        Connect.DisconnectThreshDecrypt.GetResult(0).Success.TestFalse();
-        Connect.DisconnectThreshDecrypt.GetResult(1).Success.TestFalse();
+        //Connect.DisconnectThreshDecrypt.GetResult(0).Success.TestFalse();
+        //Connect.DisconnectThreshDecrypt.GetResult(1).Success.TestFalse();
         }
 
 
@@ -692,8 +695,12 @@ public partial class CreateExamples {
         Contact.ContactCarolDynamicPin = Carol1.Example(
             $"contact dynamic {AliceAccount}"
              );
+
+        var result = Contact.ContactCarolDynamicPin[0].Result as ResultPublish;
+        var uri = result.Uri;
+
         Contact.ContactCarolDynamicFetch = Alice1.Example(
-            $"contact exchange {"uri"}"
+            $"contact exchange {uri}"
              );
         Contact.ContactCarolListAlice = Alice1.Example(
             $"contact list"
@@ -736,28 +743,32 @@ public partial class CreateExamples {
         Contact.ContactDougStaticUri = Doug1.Example(
                 $"contact static "
                  );
+
+        var result = Contact.ContactDougStaticUri[0].Result as ResultPublish;
+        var uri = result.Uri;
+
         Contact.ContactDougStaticFetch = Alice1.Example(
-                $"contact fetch {"uri"}"
+                $"contact fetch {uri}"
                 );
         Contact.ContactStaticListAlice = Alice1.Example(
                 $"contact list"
                 );
 
 
-        Contact.ContactDelete = Alice1.Example(
-                $"contact delete {"tbs"}"
-                );
+        //Contact.ContactDelete = Alice1.Example(
+        //        $"contact delete {"tbs"}"
+        //        );
 
-        Contact.ContactAdd = Alice1.Example(
-                $"contact import {"tbs"}"
-                );
+        //Contact.ContactAdd = Alice1.Example(
+        //        $"contact import {"tbs"}"
+        //        );
 
-        Contact.ContactAddSelf = Alice1.Example(
-                $"contact import {"tbs"} /self"
-                );
-        Contact.ContactImport = Alice1.Example(
-                $"contact import {"tbs"}"
-                );
+        //Contact.ContactAddSelf = Alice1.Example(
+        //        $"contact import {"tbs"} /self"
+        //        );
+        //Contact.ContactImport = Alice1.Example(
+        //        $"contact import {"tbs"}"
+        //        );
 
         Contact.ContactGet = Alice1.Example(
          $"contact get {CarolAccount}"

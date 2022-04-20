@@ -43,8 +43,8 @@ of a file.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key earl
-<rsp>EASN-PHWS-DJAI-DWS7-4BVK-MWFF-J4MR-NW
-MBRI-NYZW-2OIT-REUD-VMYC-2LUR-5BIB-VPSB-TX2A-OZ77-JPRT-K7CW-MKQF-PN2S
+<rsp>ECMU-XV2S-GMPK-IKDB-ZYU5-532V-ARPA-4Q
+MAMT-M3E3-AOIF-WJGE-ENOV-L6CG-FSIV-ZFIR-LH4M-AJRM-OQXQ-JYGB-ZDBI-MFZM
 </div>
 ~~~~
 
@@ -77,7 +77,7 @@ protocol.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key nonce
-<rsp>NBZF-KCXZ-FVOO-VVIO-ALFR-5JVE-UO3A
+<rsp>NDQO-CRFB-7Q2T-7PBF-QSDA-4QDM-3OCQ
 </div>
 ~~~~
 
@@ -111,8 +111,8 @@ value as a UDF Encryption key type. It is not necessary to enter the shares in a
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman key recover SAQD-5NHQ-BTGZ-DQEB-GOI4-A4VV-WMPN-A SARO-75B4-2ZVP-KWMH-24Q5-7QJ3-GSSA-A
-<rsp>4YKU-TJ76-37Z7-3YOJ-WDFX-F4S4-NM
+<cmd>Alice> meshman key recover SAQE-B6HK-FZT7-3XFY-YIAV-7HQZ-PYIE-I SARG-XNFB-U2C2-DTG3-AG5X-6ZT6-NB3T-A
+<rsp>FONQ-44SZ-FPSK-PIRE-J646-OCG4-ZY
 </div>
 ~~~~
 
@@ -140,7 +140,7 @@ key type.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key secret
-<rsp>EDUS-AMYO-VAKG-FONE-IK3T-JWP7-JW6Q
+<rsp>ECKK-AQRO-KTCX-5SF3-TYVI-U3FO-OCOA
 </div>
 ~~~~
 
@@ -172,11 +172,11 @@ formatted as a UDF Encryption key type and Share types
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman key share
-<rsp>4YKU-TJ76-37Z7-3YOJ-WDFX-F4S4-NM
-MCCR-4JZO-JBIS-YKP3-7ZWS-DOFL-VTLY-EW2T-2WDJ-GZJY-VFYH-WEUS-M32U
-SAQD-5NHQ-BTGZ-DQEB-GOI4-A4VV-WMPN-A
-SAQZ-OVEW-OGOE-HDIE-QVM5-AGPY-OPQW-Q
-SARO-75B4-2ZVP-KWMH-24Q5-7QJ3-GSSA-A
+<rsp>FONQ-44SZ-FPSK-PIRE-J646-OCG4-ZY
+MB5L-YKYL-FCDD-CB3S-4QU2-JZZN-W4DF-DMDQ-NNXJ-HII4-E2VX-GN6P-J3VC
+SAQE-B6HK-FZT7-3XFY-YIAV-7HQZ-PYIE-I
+SAQV-MVWF-5J3M-7VGJ-4HPG-7ASL-6NB3-U
+SARG-XNFB-U2C2-DTG3-AG5X-6ZT6-NB3T-A
 </div>
 ~~~~
 

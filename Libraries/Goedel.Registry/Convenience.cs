@@ -183,17 +183,17 @@ public class Separator {
     /// <summary>
     /// Value to return the first time ToString() is called
     /// </summary>
-    public string First;
+    public string First { get; set; }
 
     /// <summary>
     /// Value to return after the first time ToString() is called
     /// </summary>
-    public string Next;
+    public string Next { get; set; }
 
     /// <summary>
     /// Is this the first time ToString was called?
     /// </summary>
-    public bool IsFirst = true;
+    public bool IsFirst { get; set; } = true;
 
     /// <summary>
     /// Create a separator class.
@@ -226,5 +226,10 @@ public class Separator {
             }
         return Next;
         }
+
+    /// <summary>
+    /// Reset the separator
+    /// </summary>
+    public void Reset() => IsFirst = true;
 
     }

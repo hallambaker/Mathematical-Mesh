@@ -27,10 +27,10 @@ using the `message contact` command:
 
 ~~~~
 <div="terminal">
-<cmd>Bob> meshman message contact alice@example.com
-<rsp>Envelope ID: MAB6-SCSL-XSMY-KDEV-E6IW-KADQ-YONX
-Message ID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
-Response ID: MBTC-3L6R-CPOP-P3JY-Y34N-3PHS-UDYC
+<cmd>Bob> meshman contact request alice@example.com
+<rsp>Envelope ID: MCB5-SD6X-OUXX-JAQI-6ZBM-G4FS-TYAE
+Message ID: NBBX-LUP5-63JW-AJ6G-5UFG-TYWA-Y6IY
+Response ID: MAPM-XKGB-KZ4A-ZAST-JLFX-N4WD-RMIT
 </div>
 ~~~~
 
@@ -39,26 +39,30 @@ Alice reviews her pending messages using the `message pending` command:
 
 ~~~~
 <div="terminal">
+<cmd>Alice> meshman account sync
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
+<rsp>MessageID: NAUE-PMNN-4RNJ-E3AW-J4KO-QIVG-PRO6
         Contact Request::
-        MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
-        To: alice@example.com From: bob@example.com
-        PIN: ACUN-WB2H-GIIO-ZMDB-WGEI-MFDX-73MA
-MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
-        Group invitation::
-        MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
-        To: alice@example.com From: alice@example.com
-MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
-        Confirmation Request::
-        MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
-        To: alice@example.com From: console@example.com
-        Text: start
-MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
+        MessageID: NAUE-PMNN-4RNJ-E3AW-J4KO-QIVG-PRO6
+        To: alice@example.com From: mallet@example.com
+        PIN: ADCN-FXJI-Q27K-AI5W-O4P7-KU6H-AIGA
+MessageID: NBBX-LUP5-63JW-AJ6G-5UFG-TYWA-Y6IY
         Contact Request::
-        MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
+        MessageID: NBBX-LUP5-63JW-AJ6G-5UFG-TYWA-Y6IY
         To: alice@example.com From: bob@example.com
-        PIN: AARR-TR4W-I3P2-Y5OF-KVMP-7KEJ-RVIQ
+        PIN: ADFZ-RDXJ-IICY-KX57-X6LH-ABQY-IBKQ
+<cmd>Alice> meshman message accept NBBX-LUP5-63JW-AJ6G-5UFG-TYWA-Y6IY
+<cmd>Alice> meshman contact list
+<rsp>Entry<CatalogedContact>: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Person MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Anchor MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Address alice@example.com
+
+Entry<CatalogedContact>: NA2N-NMA3-3OLA-B65Y-JSYR-WDIO-DGBE
+  Person 
+  Anchor MDRS-IKMP-S6SZ-MR5M-GOIJ-SIHS-W5SJ
+  Address bob@example.com
+
 </div>
 ~~~~
 
@@ -67,8 +71,7 @@ Alice sees the request from Bob and accepts it with the `message accept` command
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message accept tbs
-<rsp>ERROR - The specified message could not be found.
+<cmd>Alice> meshman message accept NBBX-LUP5-63JW-AJ6G-5UFG-TYWA-Y6IY
 </div>
 ~~~~
 
@@ -78,35 +81,15 @@ Bob's contact information has been added to Alice's address book:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+<rsp>Entry<CatalogedContact>: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Person MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Anchor MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
   Address alice@example.com
 
-Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
+Entry<CatalogedContact>: NA2N-NMA3-3OLA-B65Y-JSYR-WDIO-DGBE
   Person 
-  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
+  Anchor MDRS-IKMP-S6SZ-MR5M-GOIJ-SIHS-W5SJ
   Address bob@example.com
-
-Entry<CatalogedContact>: NDAW-LPN7-CMK6-JNTR-A573-CIFE-K34V
-  Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
-  Address groupw@example.com
-
-Entry<CatalogedContact>: NB2Y-J5D4-SHIA-WBWE-2EDA-D45R-56AU
-  Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
-  Address groupw@example.com
-
-Entry<CatalogedContact>: NA4V-YEYP-3K74-6ESA-M22I-FFBL-3WWB
-  Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
-  Address groupw@example.com
-
-Entry<CatalogedContact>: NDX2-WVUN-C26G-UUXC-JJAA-2ZLD-23K2
-  Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
-  Address groupw@example.com
 
 </div>
 ~~~~
@@ -117,7 +100,7 @@ Bob can find out if Alice has accepted his contact request using the
 
 ~~~~
 <div="terminal">
-<cmd>Bob> meshman message status tbs
+<cmd>Bob> meshman message status
 <rsp>Pending
 </div>
 ~~~~
@@ -131,8 +114,7 @@ using the `message reject` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message reject tbs
-<rsp>ERROR - The specified message could not be found.
+<cmd>Alice> meshman message reject NAUE-PMNN-4RNJ-E3AW-J4KO-QIVG-PRO6
 </div>
 ~~~~
 
@@ -179,9 +161,9 @@ a confirmation request `Purchase equipment for $6,000?` using the
 <div="terminal">
 <cmd>Bob> meshman message confirm alice@example.com "Purchase equipment for ^
     $6,000?"
-<rsp>Envelope ID: MDXL-CQM2-QN3Q-QNSA-IGHG-AOGC-XIUN
-Message ID: NDVI-DOXS-3TK3-LGKN-XP6N-KRNU-ZPXK
-Response ID: MCNK-NIPX-SKWW-ADMX-45VJ-6P5O-ID7C
+<rsp>Envelope ID: MBZW-OH3K-VUVV-PNTO-46U7-3WQT-U5PZ
+Message ID: NCOI-775L-BMOW-ZEKQ-YPJQ-IFKG-7MKQ
+Response ID: MALI-ZFTF-2THP-PJVA-BWLG-TAEB-2363
 </div>
 ~~~~
 
@@ -191,30 +173,26 @@ Alice reviews her pending messages using the using the `message pending` command
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman message pending
-<rsp>MessageID: NDVI-DOXS-3TK3-LGKN-XP6N-KRNU-ZPXK
+<rsp>MessageID: NCEW-LXRK-IUA3-DHU5-CDU6-VZNB-C2GP
         Confirmation Request::
-        MessageID: NDVI-DOXS-3TK3-LGKN-XP6N-KRNU-ZPXK
+        MessageID: NCEW-LXRK-IUA3-DHU5-CDU6-VZNB-C2GP
+        To: alice@example.com From: mallet@example.com
+        Text: "Purchase
+MessageID: NCOI-775L-BMOW-ZEKQ-YPJQ-IFKG-7MKQ
+        Confirmation Request::
+        MessageID: NCOI-775L-BMOW-ZEKQ-YPJQ-IFKG-7MKQ
         To: alice@example.com From: bob@example.com
         Text: "Purchase
-MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
+MessageID: ND3G-IANC-6HYG-RWHJ-V3QD-33XI-PL5N
         Contact Request::
-        MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
-        To: alice@example.com From: bob@example.com
-        PIN: ACUN-WB2H-GIIO-ZMDB-WGEI-MFDX-73MA
-MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
-        Group invitation::
-        MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
-        To: alice@example.com From: alice@example.com
-MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
+        MessageID: ND3G-IANC-6HYG-RWHJ-V3QD-33XI-PL5N
+        To: alice@example.com From: carol@example.com
+        PIN: 
+MessageID: NDBB-CHFG-OWNI-2WWK-RJI2-KMF7-6AW7
         Confirmation Request::
-        MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
+        MessageID: NDBB-CHFG-OWNI-2WWK-RJI2-KMF7-6AW7
         To: alice@example.com From: console@example.com
         Text: start
-MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
-        Contact Request::
-        MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
-        To: alice@example.com From: bob@example.com
-        PIN: AARR-TR4W-I3P2-Y5OF-KVMP-7KEJ-RVIQ
 </div>
 ~~~~
 
@@ -223,8 +201,7 @@ Alice she accepts Bob's request using the `message pending` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message accept tbs
-<rsp>ERROR - The specified message could not be found.
+<cmd>Alice> meshman message accept NCEW-LXRK-IUA3-DHU5-CDU6-VZNB-C2GP
 </div>
 ~~~~
 
@@ -233,7 +210,7 @@ Bob receives Alice's approval using the `message status` command:
 
 ~~~~
 <div="terminal">
-<cmd>Bob> meshman message status tbs
+<cmd>Bob> meshman message status NCEW-LXRK-IUA3-DHU5-CDU6-VZNB-C2GP
 <rsp>Pending
 </div>
 ~~~~
@@ -246,8 +223,7 @@ Alice can also reject requests using the `message reject` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message reject tbs
-<rsp>ERROR - The specified message could not be found.
+<cmd>Alice> meshman message reject NCOI-775L-BMOW-ZEKQ-YPJQ-IFKG-7MKQ
 </div>
 ~~~~
 
@@ -256,7 +232,7 @@ Bob receives a reply telling him the request was rejected:
 
 ~~~~
 <div="terminal">
-<cmd>Bob> meshman message status tbs
+<cmd>Mallet> meshman message status NCOI-775L-BMOW-ZEKQ-YPJQ-IFKG-7MKQ
 <rsp>Pending
 </div>
 ~~~~
@@ -267,13 +243,7 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 
 ~~~~
-<div="terminal">
-<cmd>Mallet> meshman message confirm alice@example.com "Purchase equipment ^
-    for $6,000?"
-<rsp>Envelope ID: MDWO-Y6YL-FLXM-2ACK-UG2P-P653-FT6Y
-Message ID: NDWD-5CWJ-KV7A-HHB4-3TOO-S4OJ-445C
-Response ID: MAQR-HQZD-ITHD-SWB3-ICTX-UZ5C-WKSI
-</div>
+Missing example 5
 ~~~~
 
 Mallet cannot respond to the request sent by Bob because he can't read Alice's

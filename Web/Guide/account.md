@@ -16,7 +16,7 @@ Connectivity may be tested by specifying an account or just a DNS service name:
 <div="terminal">
 <cmd>Alice> meshman account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MCLV-U6YX-P3TO-X3VD-LIXM-V7ID-ZV7H
+   Service UDF = MDSK-EUHS-QXGD-LKOF-AVC7-V2RH-LV6Z
 </div>
 ~~~~
 
@@ -39,7 +39,7 @@ details to the request to bind the account to a service.
 <div="terminal">
 <cmd>Alice> meshman account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+UDF=MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
 </div>
 ~~~~
 
@@ -81,14 +81,30 @@ synchronization.
 A-UHUS-YBXW-EW5Q-5VME-E4TI-SZVD-AXAG-A6DE-HBTD-JEQN-4OWK-GU4N-3M2J-WJ
 7Y-B4GW-Y5Q
    [MMM_Local] 2  
-   [MMM_Access] 3  
-   [MMM_Credential] 3  
-   [MMM_Device] 3  
-   [MMM_Contact] 2  
-   [MMM_Application] 1  
-   [MMM_Publication] 1  
-   [MMM_Bookmark] 1  
-   [MMM_Task] 1  
+   [MMM_Access] 3  NH7Z-SCK6-HQVW-U2PQ-H47W-XO3W-M2F6-TD2E-MDJ4-3SKV-
+B5CU-VG2S-VMY7-AAYE-QMJP-5EHO-U53V-BEBD-44LQ-PAG7-H25C-Y4KE-Z23D-J7WM
+-BWOB-SIA
+   [MMM_Credential] 3  KPQY-SFFW-D43M-HCHT-MKEP-RC4N-HMJD-DGGD-UP7A-T
+4MV-T5DS-NPSP-XLDC-26P2-6YHL-QKPL-MAW4-ADPL-GUEK-27CQ-ZSDX-6EYR-OO45-
+OEMY-Z37F-L6A
+   [MMM_Device] 3  AHYT-DBWV-XLQT-E342-SW6S-5ODZ-XH7S-GUIR-NMKT-OOWY-
+KYQH-35JX-ED5D-AOOZ-O4OV-4YA5-RRDA-PY7O-OKLJ-ZI53-5DAC-CKSG-HKPD-7F2T
+-GDSD-GFY
+   [MMM_Contact] 2  KUQN-JMY2-CAQI-GLSI-WTKY-DYIO-3ECO-SGYH-TBVH-E7HK
+-ODVX-KQYP-TNAI-GX4J-R5KP-77CR-MAWV-TWN2-DTE2-TPIO-Z6NV-22MA-GUME-RU4
+F-55QK-Q7Q
+   [MMM_Application] 1  AVRH-X7EG-Y7XP-ODRD-4CI7-VANJ-VCC5-2QZ6-OSWP-
+NZQ2-YZXT-UIXV-O2RJ-55SV-SASS-Q6NU-UES4-7VGA-IEKP-IEDO-Y3JE-HGO2-MCVI
+-R77S-DGIA-3XA
+   [MMM_Publication] 1  YQYF-DVGC-2IM3-GHEB-PVTI-ZTET-7FYQ-VAJV-Y3ZD-
+6L7C-SNQT-T4PE-MU5H-7RPZ-W6QE-LL5Z-2SRN-DU56-XWVO-VKL7-4LBL-DRJE-H5YM
+-KZND-PTKO-CAA
+   [MMM_Bookmark] 1  XSTJ-KPPR-NBV6-OP4H-IXZM-ROMN-4RLP-KC2J-UALI-QC5
+D-ZUXW-72VO-4K6T-CFKM-OAEJ-42Q2-UONW-3LCL-YSXR-V373-CJT4-6ESX-YMOF-GU
+2W-S6YF-FXY
+   [MMM_Task] 1  HHP3-XLII-AT54-L7QO-XVUC-ACBE-Q3RK-NZGT-DTZZ-ISB2-OF
+FZ-JGNK-WJGD-FXZD-TCQW-Z2FN-P6NF-F55V-VSR6-NHAQ-UZWA-QQ2S-CHCB-VD7Q-K
+D72-IJI
 </div>
 ~~~~
 
@@ -128,12 +144,12 @@ shares to create and the number of shares required for recovery:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account escrow
-<rsp>Share: SAQM-LBD6-ELSN-MCDY-V3KC-UBE3-FUN6-ZIXA-U2HY-UAQ6-TUO3-TACH-42
-5X-BFL7-PRRQ
-Share: SAQ4-GB72-CU7G-AMJP-XWZ6-CLNO-B3SM-NSWN-IWXO-FDO3-F42F-L4IP-YY
-22-O75A-EKXQ
-Share: SARM-BC3W-A6L6-UWPG-ZSJZ-QVWA-6CW2-B4VZ-4THD-WGMX-YFFP-EYOX-UW
-X5-42OA-ZD5Q
+<rsp>Share: SAQO-MD74-FOOI-VYSU-4IKS-IW6Q-WSPK-HB4C-L5S4-WOVL-KFL6-QQAW-X6
+FF-FIP5-O5FA
+Share: SAQQ-IHXW-BPO5-IYZY-LT4R-F53O-G3KW-IS64-6IKT-XQQD-OYHJ-XCTA-76
+H6-RAQQ-7ZKA
+Share: SARC-ELPP-5QPR-3ZA3-27OQ-DEYL-XEGC-KEBX-QTCK-YSK3-TLCU-5VFL-H6
+KX-4YRE-QWFQ
 </div>
 ~~~~
 
@@ -144,7 +160,7 @@ original administration device is lost or compromized.
 ~~~~
 <div="terminal">
 <cmd>Alice2> meshman account recover /verify
-<rsp>ERROR - The feature has not been implemented
+<rsp>ERROR - No account specified
 </div>
 ~~~~
 
@@ -156,7 +172,7 @@ of course irrevocable.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account purge MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+<cmd>Alice> meshman account purge MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
 <rsp>ERROR - An unknown error occurred
 </div>
 ~~~~
@@ -203,8 +219,8 @@ credentials.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account pin /threshold
-<rsp>PIN=AAGV-IFMG-7JH7-VLYL-3PEB-PU4S-4E
- (Expires=2021-12-23T01:13:18Z)
+<rsp>PIN=ADFR-TEQU-3HJD-IRND-P4TS-CRBD-NI
+ (Expires=2022-04-21T16:17:50Z)
 </div>
 ~~~~
 
@@ -216,7 +232,7 @@ printed on the device itself.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account connect ^
-    mcu://maker@example.com/EBFD-WARU-YCA7-WY6M-GYIP-IXWG-HQ /web
+    mcu://maker@example.com/EBKG-ED3O-HBHK-ZQGS-EX4H-X22S-X4 /web
 </div>
 ~~~~
 

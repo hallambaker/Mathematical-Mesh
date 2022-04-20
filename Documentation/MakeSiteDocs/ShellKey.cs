@@ -62,7 +62,7 @@ public class ShellKey : ExampleSet {
 
         KeyRecover = Alice1.Example($"key recover {share1} {share2}");
         KeyShare2 = Alice1.Example($"key share /quorum=3 /shares=5");
-        KeyShare3 = Alice1.Example($"key share {Secret1}");
+        KeyShare3 = Alice1.Example($"~key share {Secret1}");
 
         }
     }

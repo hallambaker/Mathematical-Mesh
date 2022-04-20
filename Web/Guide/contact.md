@@ -33,11 +33,7 @@ Alice adds Carol's contact information to her contact catalog directly:
 
 
 ~~~~
-<div="terminal">
-<cmd>Alice> meshman contact import tbs
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\tb
-s'.
-</div>
+Missing example 6
 ~~~~
 
 The  `contact self` command is used to inport a contact and mark it as 
@@ -45,10 +41,7 @@ being the user's own contact details:
 
 
 ~~~~
-<div="terminal">
-<cmd>Alice> meshman contact import tbs /self
-<rsp>ERROR - The option System.Object[] is not known.
-</div>
+Missing example 7
 ~~~~
 
 ## Exchanging contacts with other users.
@@ -81,10 +74,10 @@ Mesh account address:
 
 ~~~~
 <div="terminal">
-<cmd>Bob> meshman message contact alice@example.com
-<rsp>Envelope ID: MDIT-XD5L-W7AF-2JWM-6UBG-DLZZ-MBXO
-Message ID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
-Response ID: MDWU-67CX-VMM6-NRVO-EUTV-KL56-AYZE
+<cmd>Bob> meshman contact request alice@example.com
+<rsp>Envelope ID: MCB5-SD6X-OUXX-JAQI-6ZBM-G4FS-TYAE
+Message ID: NBBX-LUP5-63JW-AJ6G-5UFG-TYWA-Y6IY
+Response ID: MAPM-XKGB-KZ4A-ZAST-JLFX-N4WD-RMIT
 </div>
 ~~~~
 
@@ -96,23 +89,27 @@ with the `contact list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account sync
-<rsp>ERROR - The entry already exists in the store.
 <cmd>Alice> meshman message pending
-<rsp>MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
+<rsp>MessageID: NAUE-PMNN-4RNJ-E3AW-J4KO-QIVG-PRO6
         Contact Request::
-        MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
+        MessageID: NAUE-PMNN-4RNJ-E3AW-J4KO-QIVG-PRO6
+        To: alice@example.com From: mallet@example.com
+        PIN: ADCN-FXJI-Q27K-AI5W-O4P7-KU6H-AIGA
+MessageID: NBBX-LUP5-63JW-AJ6G-5UFG-TYWA-Y6IY
+        Contact Request::
+        MessageID: NBBX-LUP5-63JW-AJ6G-5UFG-TYWA-Y6IY
         To: alice@example.com From: bob@example.com
-        PIN: AARR-TR4W-I3P2-Y5OF-KVMP-7KEJ-RVIQ
-<cmd>Alice> meshman message accept ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
+        PIN: ADFZ-RDXJ-IICY-KX57-X6LH-ABQY-IBKQ
+<cmd>Alice> meshman message accept NBBX-LUP5-63JW-AJ6G-5UFG-TYWA-Y6IY
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+<rsp>Entry<CatalogedContact>: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Person MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Anchor MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
   Address alice@example.com
 
-Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
+Entry<CatalogedContact>: NA2N-NMA3-3OLA-B65Y-JSYR-WDIO-DGBE
   Person 
-  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
+  Anchor MDRS-IKMP-S6SZ-MR5M-GOIJ-SIHS-W5SJ
   Address bob@example.com
 
 </div>
@@ -128,14 +125,14 @@ information appears in his catalog.
 <div="terminal">
 <cmd>Bob> meshman account sync /auto
 <cmd>Bob> meshman contact list
-<rsp>Entry<CatalogedContact>: MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
-  Person MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
-  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
+<rsp>Entry<CatalogedContact>: MDRS-IKMP-S6SZ-MR5M-GOIJ-SIHS-W5SJ
+  Person MDRS-IKMP-S6SZ-MR5M-GOIJ-SIHS-W5SJ
+  Anchor MDRS-IKMP-S6SZ-MR5M-GOIJ-SIHS-W5SJ
   Address bob@example.com
 
-Entry<CatalogedContact>: NAOK-BO5X-VXGF-GBQA-ALMQ-ZRYC-INTR
+Entry<CatalogedContact>: NAUR-M73V-JMIE-ZQV4-OIIT-ICJV-ZZSQ
   Person 
-  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+  Anchor MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
   Address alice@example.com
 
 </div>
@@ -172,33 +169,33 @@ adding Carol to her contacts catalog:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact exchange uri
-<rsp>ERROR - The specified connection URI was invalid
+<cmd>Alice> meshman contact exchange ^
+    mcu://carol@example.com/EFQC-XEWO-7LNZ-IZIW-XDKW-3YOS-M2RA
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+<rsp>Entry<CatalogedContact>: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Person MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Anchor MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
   Address alice@example.com
 
-Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
+Entry<CatalogedContact>: NA2N-NMA3-3OLA-B65Y-JSYR-WDIO-DGBE
   Person 
-  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
+  Anchor MDRS-IKMP-S6SZ-MR5M-GOIJ-SIHS-W5SJ
   Address bob@example.com
 
-Entry<CatalogedContact>: NDAW-LPN7-CMK6-JNTR-A573-CIFE-K34V
+Entry<CatalogedContact>: NC77-6TI6-PZTR-SFSV-P2NJ-QP5O-IMTS
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
+  Anchor MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
   Address groupw@example.com
 
-Entry<CatalogedContact>: NB2Y-J5D4-SHIA-WBWE-2EDA-D45R-56AU
+Entry<CatalogedContact>: NB5W-WWHH-FPQD-BX6B-4CJK-ODPR-DVWT
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
+  Anchor MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
   Address groupw@example.com
 
-Entry<CatalogedContact>: NA4V-YEYP-3K74-6ESA-M22I-FFBL-3WWB
+Entry<CatalogedContact>: NDYV-ZB5V-AT2C-NFK3-D5LM-UG2X-Y4IB
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
-  Address groupw@example.com
+  Anchor MBU5-BTJ4-JAXZ-I2WV-WP53-MRJX-DONU
+  Address carol@example.com
 
 </div>
 ~~~~
@@ -210,7 +207,8 @@ Carol can now complete the interaction by synchronizing one of her devices:
 <div="terminal">
 <cmd>Carol> meshman account sync /auto
 <cmd>Carol> meshman contact get alice@example.com
-<rsp>
+<rsp>[CatalogedContact]
+
 </div>
 ~~~~
 
@@ -226,7 +224,7 @@ Doug creates a static contact URI with the `contact static` command:
 ~~~~
 <div="terminal">
 <cmd>Doug> meshman contact static 
-<rsp>ERROR - The feature has not been implemented
+<rsp>Device Profile UDF=
 </div>
 ~~~~
 
@@ -236,33 +234,40 @@ using the `contact fetch` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact fetch uri
-<rsp>ERROR - The specified connection URI was invalid
+<cmd>Alice> meshman contact fetch ^
+    mcu://doug@example.com/EFQL-IXDA-ILY7-LGDX-YO3R-FYFO-VUMQ
+<rsp>[CatalogedContact]
+
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+<rsp>Entry<CatalogedContact>: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Person MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Anchor MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
   Address alice@example.com
 
-Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
+Entry<CatalogedContact>: NA2N-NMA3-3OLA-B65Y-JSYR-WDIO-DGBE
   Person 
-  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
+  Anchor MDRS-IKMP-S6SZ-MR5M-GOIJ-SIHS-W5SJ
   Address bob@example.com
 
-Entry<CatalogedContact>: NDAW-LPN7-CMK6-JNTR-A573-CIFE-K34V
+Entry<CatalogedContact>: NC77-6TI6-PZTR-SFSV-P2NJ-QP5O-IMTS
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
+  Anchor MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
   Address groupw@example.com
 
-Entry<CatalogedContact>: NB2Y-J5D4-SHIA-WBWE-2EDA-D45R-56AU
+Entry<CatalogedContact>: NB5W-WWHH-FPQD-BX6B-4CJK-ODPR-DVWT
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
+  Anchor MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
   Address groupw@example.com
 
-Entry<CatalogedContact>: NA4V-YEYP-3K74-6ESA-M22I-FFBL-3WWB
+Entry<CatalogedContact>: NDYV-ZB5V-AT2C-NFK3-D5LM-UG2X-Y4IB
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
-  Address groupw@example.com
+  Anchor MBU5-BTJ4-JAXZ-I2WV-WP53-MRJX-DONU
+  Address carol@example.com
+
+Entry<CatalogedContact>: ND7X-7W7J-NSOO-V23R-DJRQ-RMNC-2GAE
+  Person 
+  Anchor MCJV-F5W5-44DF-UQ7X-PZV3-J75K-JLPL
+  Address doug@example.com
 
 </div>
 ~~~~
@@ -277,7 +282,8 @@ email address or label:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact get carol@example.com
-<rsp>
+<rsp>[CatalogedContact]
+
 </div>
 ~~~~
 
@@ -289,30 +295,35 @@ A complete list of contacts is obtained using the  `contact list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+<rsp>Entry<CatalogedContact>: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Person MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Anchor MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
   Address alice@example.com
 
-Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
+Entry<CatalogedContact>: NA2N-NMA3-3OLA-B65Y-JSYR-WDIO-DGBE
   Person 
-  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
+  Anchor MDRS-IKMP-S6SZ-MR5M-GOIJ-SIHS-W5SJ
   Address bob@example.com
 
-Entry<CatalogedContact>: NDAW-LPN7-CMK6-JNTR-A573-CIFE-K34V
+Entry<CatalogedContact>: NC77-6TI6-PZTR-SFSV-P2NJ-QP5O-IMTS
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
+  Anchor MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
   Address groupw@example.com
 
-Entry<CatalogedContact>: NB2Y-J5D4-SHIA-WBWE-2EDA-D45R-56AU
+Entry<CatalogedContact>: NB5W-WWHH-FPQD-BX6B-4CJK-ODPR-DVWT
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
+  Anchor MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
   Address groupw@example.com
 
-Entry<CatalogedContact>: NA4V-YEYP-3K74-6ESA-M22I-FFBL-3WWB
+Entry<CatalogedContact>: NDYV-ZB5V-AT2C-NFK3-D5LM-UG2X-Y4IB
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
-  Address groupw@example.com
+  Anchor MBU5-BTJ4-JAXZ-I2WV-WP53-MRJX-DONU
+  Address carol@example.com
+
+Entry<CatalogedContact>: ND7X-7W7J-NSOO-V23R-DJRQ-RMNC-2GAE
+  Person 
+  Anchor MCJV-F5W5-44DF-UQ7X-PZV3-J75K-JLPL
+  Address doug@example.com
 
 </div>
 ~~~~
@@ -323,10 +334,7 @@ Contact entries may be deleted using the  `contact delete` command:
 
 
 ~~~~
-<div="terminal">
-<cmd>Alice> meshman contact delete tbs
-<rsp>ERROR - The entry could not be found in the store.
-</div>
+Missing example 8
 ~~~~
 
 
@@ -339,8 +347,8 @@ Requests to access the contacts catalog fail:
 
 ~~~~
 <div="terminal">
-<cmd>Alice5> meshman bookmark list
-<rsp>ERROR - The feature has not been implemented
+<cmd>Alice5> meshman contact list
+<rsp>ERROR - Unspecified error
 </div>
 ~~~~
 
@@ -365,8 +373,8 @@ The newly authorized device can now access the contacts catalog:
 
 ~~~~
 <div="terminal">
-<cmd>Alice5> meshman bookmark list
-<rsp>ERROR - The feature has not been implemented
+<cmd>Alice5> meshman contact list
+<rsp>ERROR - Unspecified error
 </div>
 ~~~~
 

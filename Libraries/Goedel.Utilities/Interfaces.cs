@@ -27,7 +27,7 @@ public interface IComponent {
 /// </summary>
 public class LifeCycle : Disposable{
 
-    IEnumerable<IComponent> Components;
+    IEnumerable<IComponent> Components { get; }
 
     ///<inheritdoc/>
     protected override void Disposing() {
@@ -54,6 +54,8 @@ public class LifeCycle : Disposable{
     /// Add the component <paramref name="component"/> to be managed under the lifecycle.
     /// </summary>
     /// <param name="component">The component to add. </param>
-    public void Add(IComponent component) => Components.Append(component);
+    public void Add(IComponent component) {
+        _ = Components.Append(component);
+        }
 
     }

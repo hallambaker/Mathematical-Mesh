@@ -51,8 +51,8 @@ The `ssh create` command adds an SSH profile named `ssh` to a Mesh account:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman ssh create /web
-<rsp>UDF: MDV6-UJ6A-2UIT-EZQ7-KDF7-N2I6-TGUI
+<cmd>Alice> meshman ssh create /web /threshold /id=ssh
+<rsp>UDF: MCXP-WQVY-RTKQ-ZU6P-VOM4-7U6K-FHXH
 </div>
 ~~~~
 
@@ -65,23 +65,23 @@ Adding an SSH profile causes a public keypair to be created for use with SSH. To
 of this keypair for device authentication with legacy applications typically requires the
 public and/or private keys to be extracted in a format supported by the application.
 
-The `ssh private` command extracts the private key required top configure
-an SSH client:
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman ssh private /file=alice1_ssh_prv.pem
-</div>
-~~~~
-
 The `ssh public` command extracts the public key required top configure
 an SSH client:
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman ssh public /file=alice1_ssh_pub.pem
+<cmd>Alice> meshman ssh get ssh /file=alice1_ssh_pub.pem
+</div>
+~~~~
+
+The `ssh private` command extracts the private key required top configure
+an SSH client:
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh get ssh /private /file=alice1_ssh_prv.pem
 </div>
 ~~~~
 
@@ -90,177 +90,104 @@ script to first generate a random nonce and request that the private key file
 be extracted encrypted under the nonce which can be discarded after the key is
 successfully installed. [Not currently supported.]
 
+The `ssh list` command lists the authorized 
+clients keys in the profile. This may be used to generate the `authorized_keys` file 
+by specifying the SSH file format used by the particular SSH application in use.
+
+Individual client entries may be added using the `ssh client` command
+which imports a client entry from a file in the specified format.
+
+[Not yet implemented, assume file format from extension/well known names.]
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh client ssh_config.json /id=work
+<rsp>[CatalogedApplicationSsh]
+
+</div>
+~~~~
+
+This command may be used to add SSH client public keys to the profile without adding
+the private key. This provides a means of adding a legacy key that is not under Mesh control
+to a Mesh profile. Attempts to access the public key work as normal:
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh get work /file=alice1_ssh_pub2.pem /format=pem
+</div>
+~~~~
+
+Attempts to access the private key fail:
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh get work /private /file=alice1_ssh_prv_3.pem
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
+
+
+Client configurations may be deleted using the `ssh delete` command
+
+
+~~~~
+<div="terminal">
+<cmd>Alice> meshman ssh delete work
+<rsp>[CatalogedApplicationSsh]
+
+<cmd>Alice> meshman ssh list
+<rsp>UDF: MCXP-WQVY-RTKQ-ZU6P-VOM4-7U6K-FHXH
+</div>
+~~~~
+
 
 ## Host Configuration
 
 Host configuration is not currently supported but is an obvious feature to add once
 support is introduced for SSH certificates.
 
-## Configuring authentication entries on hosts and clients
 
-The `ssh merge client`  command is run on a host to update mesh key entries 
-in the `authorized_keys` file using information from the specified mesh portal.
+## Managing Host Credentials
 
-For example, if the `authorized_keys` file has an entry for Alice's Mesh profile
-(`alice@example.com.mm--ssss`), the corresponding profile is fetched and the 
-corresponding SSH device public keys added:
+The `ssh host` command is used to add known hosts to the Mesh credential 
+catalog.
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice2> meshman ssh merge client
-<rsp>ERROR - TBS
+<cmd>Alice> meshman ssh host ssh_host1.json
+<rsp>ssh:alice42@ssh1.example.com = []
+
 </div>
 ~~~~
 
-The `ssh merge host`  command reads the `known_hosts` file on a client machine and adds
-the listed hosts to the user's ssh catalog.
+
+The `ssh konwn`  command lists the known host keys 
+in the profile. This information is stored in the credential catalog and may also be 
+retrieved through the password commands.
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice2> meshman ssh merge hosts
-<rsp>ERROR - TBS
+<cmd>Alice> meshman ssh known
+<rsp>ssh:alice42@ssh1.example.com = []
+
 </div>
 ~~~~
 
-## Client Key management
-
-SSH keys belonging to the user that are not part of the Mesh profile may be added using the 
-`ssh add client` and `ssh import client`  commands.
-
-The `ssh add client` adds key parameters specified on the command line.
+The `ssh known`  command with a specified host returns the SSH parameters 
+for a particular known host:
 
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman ssh add client
-<rsp>ERROR - An unknown error occurred
+<cmd>Alice> meshman ssh known ssh1.example.com
+<rsp>ssh:alice42@ssh1.example.com = []
+
 </div>
 ~~~~
 
-The `ssh import client` adds key parameters specified in a separate file. A 
-variety of SSH key formats is supported by means of options:
-
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman ssh import
-<rsp>ERROR - TBS
-</div>
-~~~~
-
-SSH client keys mayt be fetched using the `ssh get` command:
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman ssh get
-<rsp>ERROR - TBS
-</div>
-~~~~
-
-
-
-The list of authorized clients may be returned in various formats using the `ssh list`  command
-with the /client option.
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman ssh list /client
-<rsp>ERROR - The option System.Object[] is not known.
-</div>
-~~~~
-
-
-A client key may be deleted using the  `ssh delete`  command:
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman ssh delete
-<rsp>ERROR - TBS
-</div>
-~~~~
-
-Finally, the `ssh merge client` command performs a two way merge of keys from
-a authorized clients file and the ssh catalog entries:
-
-
-~~~~
-<div="terminal">
-<cmd>Alice2> meshman ssh merge client
-<rsp>ERROR - TBS
-</div>
-~~~~
-
-
-
-
-## Host Key Management
-
-The `ssh add host`  command adds specific host entries to the user's SSH profile.
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman ssh add host
-<rsp>ERROR - TBS
-</div>
-~~~~
-
-The list of known hosts may be returned in various formats using the `ssh list`  command
-with the /host option.
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman ssh list /hosts
-<rsp>ERROR - The option System.Object[] is not known.
-</div>
-~~~~
-
-
-Finally, the `ssh merge host` command performs a two way merge of keys from
-a known hosts file and the ssh catalog entries:
-
-
-~~~~
-<div="terminal">
-<cmd>Alice2> meshman ssh merge hosts
-<rsp>ERROR - TBS
-</div>
-~~~~
-
-
-## Additional Devices
-
-Whenever an SSH profile is created, a separate keypair is created for every device
-connected to the profile. This mitigates the consequences of a device being lost
-or stolen. The device key for the compromised device can be removed from the 
-profile without affecting any other device. Investigation of possibly unauthorized logins
-can be focused on those from the compromised device alone.
-
-The `device auth /ssh`  command is used *from an administration device* to 
-enable use of ssh on the machine:
-
-
-~~~~
-<div="terminal">
-<cmd>Alice> meshman device auth Alice5 /ssh
-</div>
-~~~~
-
-Once the device has been authorized, the client machine can start using SSH immediately:
-
-
-~~~~
-<div="terminal">
-<cmd>Alice5> meshman openpgp sign alice@example.net ^
-    /file=alice1_opgp_sign.pem
-<rsp>ERROR - The command System.Object[] is not known.
-</div>
-~~~~
 

@@ -9,7 +9,6 @@ message    Contact and confirmation message options
     accept   Accept a pending request
     block   Reject a pending request and block requests from that source
     confirm   Post a confirmation request to a user
-    contact   Post a conection request to a user
     pending   List pending requests
     reject   Reject a pending request
     status   Request status of pending request
@@ -50,9 +49,8 @@ The required parameter is the message identifier of the request to be accepted.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message accept tbs
-<rsp>ERROR - The specified message could not be found.
-</div>
+<cmd>Alice> meshman message accept NBBX-LUP5-63JW-AJ6G-5UFG-TYWA-Y6IY
+<rsp></div>
 ~~~~
 
 
@@ -122,20 +120,20 @@ supported.
 ~~~~
 <div="terminal">
 <cmd>Bob> meshman message confirm alice@example.com "Purchase equipment for $6,000?"
-<rsp>Envelope ID: MDXL-CQM2-QN3Q-QNSA-IGHG-AOGC-XIUN
-Message ID: NDVI-DOXS-3TK3-LGKN-XP6N-KRNU-ZPXK
-Response ID: MCNK-NIPX-SKWW-ADMX-45VJ-6P5O-ID7C
+<rsp>Envelope ID: MBZW-OH3K-VUVV-PNTO-46U7-3WQT-U5PZ
+Message ID: NCOI-775L-BMOW-ZEKQ-YPJQ-IFKG-7MKQ
+Response ID: MALI-ZFTF-2THP-PJVA-BWLG-TAEB-2363
 </div>
 ~~~~
 
 
 
-# message contact
+# message request
 
 ~~~~
 <div="helptext">
 <over>
-contact   Post a conection request to a user
+request   Post a conection request to a user
        The recipient to send the conection request to
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
@@ -156,10 +154,10 @@ The first parameter is required and specifies the intended recipient.
 
 ~~~~
 <div="terminal">
-<cmd>Bob> meshman message contact alice@example.com
-<rsp>Envelope ID: MAB6-SCSL-XSMY-KDEV-E6IW-KADQ-YONX
-Message ID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
-Response ID: MBTC-3L6R-CPOP-P3JY-Y34N-3PHS-UDYC
+<cmd>Bob> meshman contact request alice@example.com
+<rsp>Envelope ID: MCB5-SD6X-OUXX-JAQI-6ZBM-G4FS-TYAE
+Message ID: NBBX-LUP5-63JW-AJ6G-5UFG-TYWA-Y6IY
+Response ID: MAPM-XKGB-KZ4A-ZAST-JLFX-N4WD-RMIT
 </div>
 ~~~~
 
@@ -197,27 +195,8 @@ that have been read or are unread. By default, only unread messages are returned
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message pending
-<rsp>MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
-        Contact Request::
-        MessageID: NDGG-BP7T-FBI6-C4FJ-N6LN-PX2U-MV5G
-        To: alice@example.com From: bob@example.com
-        PIN: ACUN-WB2H-GIIO-ZMDB-WGEI-MFDX-73MA
-MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
-        Group invitation::
-        MessageID: NBNO-T2AC-LSGA-MRRH-JN3O-V4YQ-RJLQ
-        To: alice@example.com From: alice@example.com
-MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
-        Confirmation Request::
-        MessageID: NCQL-ONQW-YLJE-NZ5P-2ENL-K5YY-3I4K
-        To: alice@example.com From: console@example.com
-        Text: start
-MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
-        Contact Request::
-        MessageID: ND4S-KDPC-PUNU-4X3I-PTRT-LJSO-XGHV
-        To: alice@example.com From: bob@example.com
-        PIN: AARR-TR4W-I3P2-Y5OF-KVMP-7KEJ-RVIQ
-</div>
+<cmd>Alice> meshman account sync
+<rsp></div>
 ~~~~
 
 
@@ -252,9 +231,8 @@ The required parameter is the message identifier of the request to be rejected.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman message reject tbs
-<rsp>ERROR - The specified message could not be found.
-</div>
+<cmd>Alice> meshman message reject NAUE-PMNN-4RNJ-E3AW-J4KO-QIVG-PRO6
+<rsp></div>
 ~~~~
 
 
@@ -286,7 +264,7 @@ The confirmation request to be queried is specified by its message identifier.
 
 ~~~~
 <div="terminal">
-<cmd>Bob> meshman message status tbs
+<cmd>Bob> meshman message status
 <rsp>Pending
 </div>
 ~~~~

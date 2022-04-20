@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 05-Apr-22 7:28:03 PM
+//  This file was automatically generated at 20-Apr-22 1:15:45 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1299,6 +1299,11 @@ public partial class ActivationEntry : MeshItem {
 	/// </summary>
 abstract public partial class Profile : Assertion {
         /// <summary>
+        ///Description of the profile
+        /// </summary>
+
+	public virtual string						Description  {get; set;}
+        /// <summary>
         ///The permanent signature key used to sign the profile itself. The UDF of
         ///the key is used as the permanent object identifier of the profile. Thus,
         ///by definition, the KeySignature value of a Profile does not change under
@@ -1350,6 +1355,11 @@ abstract public partial class Profile : Assertion {
 			_writer.WriteObjectStart ();
 			}
 		((Assertion)this).SerializeX(_writer, false, ref _first);
+		if (Description != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Description", 1);
+				_writer.WriteString (Description);
+			}
 		if (ProfileSignature != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("ProfileSignature", 1);
@@ -1385,6 +1395,10 @@ abstract public partial class Profile : Assertion {
 	public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 		switch (tag) {
+			case "Description" : {
+				Description = jsonReader.ReadString ();
+				break;
+				}
 			case "ProfileSignature" : {
 				// An untagged structure
 				ProfileSignature = new KeyData ();
@@ -1408,11 +1422,6 @@ abstract public partial class Profile : Assertion {
 	/// Describes a mesh device.
 	/// </summary>
 public partial class ProfileDevice : Profile {
-        /// <summary>
-        ///Description of the device
-        /// </summary>
-
-	public virtual string						Description  {get; set;}
         /// <summary>
         ///Base key contribution for encryption keys. 
         ///Also used to decrypt activation data sent to the device
@@ -1476,11 +1485,6 @@ public partial class ProfileDevice : Profile {
 			_writer.WriteObjectStart ();
 			}
 		((Profile)this).SerializeX(_writer, false, ref _first);
-		if (Description != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Description", 1);
-				_writer.WriteString (Description);
-			}
 		if (Encryption != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Encryption", 1);
@@ -1529,10 +1533,6 @@ public partial class ProfileDevice : Profile {
 	public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 		switch (tag) {
-			case "Description" : {
-				Description = jsonReader.ReadString ();
-				break;
-				}
 			case "Encryption" : {
 				// An untagged structure
 				Encryption = new KeyData ();
@@ -4464,6 +4464,11 @@ abstract public partial class Contact : Assertion {
 
 	public virtual string						Id  {get; set;}
         /// <summary>
+        ///The local name.
+        /// </summary>
+
+	public virtual string						Local  {get; set;}
+        /// <summary>
         ///Mesh fingerprints associated with the contact.
         /// </summary>
 
@@ -4541,6 +4546,11 @@ abstract public partial class Contact : Assertion {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Id", 1);
 				_writer.WriteString (Id);
+			}
+		if (Local != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Local", 1);
+				_writer.WriteString (Local);
 			}
 		if (Anchors != null) {
 			_writer.WriteObjectSeparator (ref _first);
@@ -4676,6 +4686,10 @@ abstract public partial class Contact : Assertion {
 		switch (tag) {
 			case "Id" : {
 				Id = jsonReader.ReadString ();
+				break;
+				}
+			case "Local" : {
+				Local = jsonReader.ReadString ();
 				break;
 				}
 			case "Anchors" : {

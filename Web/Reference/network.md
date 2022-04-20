@@ -24,7 +24,7 @@ network    Manage network profile settings
 add   Add network entry 
        WiFi SSID parameter
        Password value
-    /id   Unique entry identifier
+    /id   Local identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /sync   If true, attempt to synchronize the account to the service before operation
@@ -45,7 +45,7 @@ command should be used to add complex network entries.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network add mywifi wifipassword /id=NetID1
-<rsp>{Username}@{Service} = [{Password}]
+<rsp>[:mywifi/NetID1]  mywifi wifipassword
 </div>
 ~~~~
 
@@ -76,7 +76,7 @@ its unique catalog identifier.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network delete NetID2
-<rsp>ERROR - The entry could not be found in the store.
+<rsp>[WPA2:ssid/NetID2] WPA2 ssid Password
 </div>
 ~~~~
 
@@ -88,7 +88,7 @@ its unique catalog identifier.
 <div="helptext">
 <over>
 get   Lookup calendar entry
-       Unique entry identifier
+       Local identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /sync   If true, attempt to synchronize the account to the service before operation
@@ -140,7 +140,7 @@ from a file
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network import NetworkEntry2.json /id=NetID2
-<rsp>ERROR
+<rsp>[WPA2:ssid/NetID2] WPA2 ssid Password
 </div>
 ~~~~
 
@@ -169,10 +169,9 @@ The 'network list' command lists all data in the network catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network list
-<rsp>CatalogedNetwork
-
-CatalogedNetwork
-
+<rsp>[:myWiFi]  myWiFi securePassword
+[:mywifi/NetID1]  mywifi wifipassword
+[WPA2:ssid/NetID2] WPA2 ssid Password
 </div>
 ~~~~
 

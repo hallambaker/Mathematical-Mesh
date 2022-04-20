@@ -45,10 +45,8 @@ specifies the name of the user to be added.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group add groupw@example.com bob@example.com
-<rsp>{
-  "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MDBC-7BJT-T34D-M2GX-YRFN-RA6W-O4NR",
-  "ServiceCapabilityId": "MA77-JIYT-4UAX-CALM-J4UC-K5KZ-EOLU"}
+<rsp>bob@example.com [MA3U-EQIV-5G6I-SK6H-2MSE-HEN3-SDVK]
+
 </div>
 ~~~~
 
@@ -80,6 +78,7 @@ create   Create recryption group
     /email   Authorize rights for specified smtp email account
     /member   Authorize member rights for specified Mesh group
     /group   Authorize group administrator rights for specified Mesh group
+    /null   Do not authorize any device rights at all (cannot be used with any rights grant))
 <over>
 </div>
 ~~~~
@@ -95,7 +94,7 @@ to be used to share a calendar or password catalog etc.
 <div="terminal">
 <cmd>Alice> meshman group create groupw@example.com /web
 <rsp>Account=groupw@example.com
-UDF=MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
+UDF=MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
 </div>
 ~~~~
 
@@ -132,10 +131,8 @@ To delete the group account itself, the 'account delete' command is required.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group delete groupw@example.com bob@example.com
-<rsp>{
-  "ContactAddress": "bob@example.com",
-  "MemberCapabilityId": "MDBC-7BJT-T34D-M2GX-YRFN-RA6W-O4NR",
-  "ServiceCapabilityId": "MA77-JIYT-4UAX-CALM-J4UC-K5KZ-EOLU"}
+<rsp>bob@example.com [MA3U-EQIV-5G6I-SK6H-2MSE-HEN3-SDVK]
+
 </div>
 ~~~~
 
@@ -168,8 +165,9 @@ specifies the name of the user whose information is requested.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman group get groupw@example.com
-<rsp>ERROR - Value cannot be null. (Parameter 'key')
+<cmd>Alice> meshman group get groupw@example.com bob@example.com
+<rsp>bob@example.com [MA3U-EQIV-5G6I-SK6H-2MSE-HEN3-SDVK]
+
 </div>
 ~~~~
 

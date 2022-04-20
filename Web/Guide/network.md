@@ -13,7 +13,7 @@ a WIfi network SSID and password:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network add mywifi wifipassword /id=NetID1
-<rsp>{Username}@{Service} = [{Password}]
+<rsp>[:mywifi/NetID1]  mywifi wifipassword
 </div>
 ~~~~
 
@@ -23,7 +23,7 @@ More complicated network configurations are added using the `network import` com
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network import NetworkEntry2.json /id=NetID2
-<rsp>ERROR
+<rsp>[WPA2:ssid/NetID2] WPA2 ssid Password
 </div>
 ~~~~
 
@@ -48,12 +48,10 @@ Network entries may be deleted using the  `network delete` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network delete NetID2
-<rsp>ERROR - The entry could not be found in the store.
+<rsp>[WPA2:ssid/NetID2] WPA2 ssid Password
 <cmd>Alice> meshman network list
-<rsp>CatalogedNetwork
-
-CatalogedNetwork
-
+<rsp>[:myWiFi]  myWiFi securePassword
+[:mywifi/NetID1]  mywifi wifipassword
 </div>
 ~~~~
 
@@ -65,10 +63,9 @@ A complete list of networks is obtained using the  `network list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman network list
-<rsp>CatalogedNetwork
-
-CatalogedNetwork
-
+<rsp>[:myWiFi]  myWiFi securePassword
+[:mywifi/NetID1]  mywifi wifipassword
+[WPA2:ssid/NetID2] WPA2 ssid Password
 </div>
 ~~~~
 
@@ -77,8 +74,8 @@ CatalogedNetwork
 
 ~~~~
 <div="terminal">
-<cmd>Alice5> meshman bookmark list
-<rsp>ERROR - The feature has not been implemented
+<cmd>Alice5> meshman network list
+<rsp>ERROR - Unspecified error
 </div>
 ~~~~
 
@@ -96,8 +93,8 @@ Devices are given authorization to access the networks catalog using the
 
 ~~~~
 <div="terminal">
-<cmd>Alice5> meshman bookmark list
-<rsp>ERROR - The feature has not been implemented
+<cmd>Alice5> meshman network list
+<rsp>ERROR - Unspecified error
 </div>
 ~~~~
 

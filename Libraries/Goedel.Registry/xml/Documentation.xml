@@ -99,17 +99,17 @@
             and a different value thereafter.
             </summary>
         </member>
-        <member name="F:Goedel.Registry.Separator.First">
+        <member name="P:Goedel.Registry.Separator.First">
             <summary>
             Value to return the first time ToString() is called
             </summary>
         </member>
-        <member name="F:Goedel.Registry.Separator.Next">
+        <member name="P:Goedel.Registry.Separator.Next">
             <summary>
             Value to return after the first time ToString() is called
             </summary>
         </member>
-        <member name="F:Goedel.Registry.Separator.IsFirst">
+        <member name="P:Goedel.Registry.Separator.IsFirst">
             <summary>
             Is this the first time ToString was called?
             </summary>
@@ -134,6 +134,11 @@
             method is called or Next otherwise.
             </summary>
             <returns>The string value</returns>
+        </member>
+        <member name="M:Goedel.Registry.Separator.Reset">
+            <summary>
+            Reset the separator
+            </summary>
         </member>
         <member name="T:Goedel.Registry.ParserException">
             <summary>

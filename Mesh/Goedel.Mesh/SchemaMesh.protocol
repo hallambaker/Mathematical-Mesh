@@ -158,6 +158,9 @@
 		Inherits Assertion
 		Description 
 			|Parent class from which all profile classes are derived
+		String Description
+			Description
+				|Description of the profile
 		Struct KeyData ProfileSignature
 			Description
 				|The permanent signature key used to sign the profile itself. The UDF of
@@ -170,9 +173,7 @@
 		Inherits Profile
 		Description 
 			|Describes a mesh device.
-		String Description
-			Description
-				|Description of the device
+
 		Struct KeyData Encryption
 			Description
 				|Base key contribution for encryption keys. 
@@ -452,6 +453,9 @@
 		String Id
 			Description
 				|The globally unique contact identifier.
+		String Local
+			Description
+				|The local name.
 		Struct Anchor Anchors
 			Multiple
 			Description

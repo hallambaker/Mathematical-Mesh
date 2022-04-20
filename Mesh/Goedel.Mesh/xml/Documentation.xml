@@ -3197,6 +3197,11 @@
             The globally unique contact identifier.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Contact.Local">
+             <summary>
+            The local name.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.Contact.Anchors">
              <summary>
             Mesh fingerprints associated with the contact.
@@ -8560,6 +8565,11 @@
             to be verified.</param>
             <returns>True if there is a valid signature under this profile, otherwise false.</returns>
         </member>
+        <member name="P:Goedel.Mesh.Profile.Description">
+             <summary>
+            Description of the profile
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.Profile.ProfileSignature">
              <summary>
             The permanent signature key used to sign the profile itself. The UDF of
@@ -8824,11 +8834,6 @@
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-        </member>
-        <member name="P:Goedel.Mesh.ProfileDevice.Description">
-             <summary>
-            Description of the device
-             </summary>
         </member>
         <member name="P:Goedel.Mesh.ProfileDevice.Encryption">
              <summary>

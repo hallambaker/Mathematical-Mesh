@@ -49,7 +49,7 @@ public class ShellHash : ExampleSet {
         var expect3 = (HashUDF3[0].Result as ResultDigest).Digest;
         HashUDF200 = Alice1.Example($"hash udf {TestFile1} /bits=200");
         HashUDFExpect = Alice1.Example($"hash udf {TestFile1} /expect={expect2}",
-                                          $"hash udf {TestFile1} /expect={expect3}");
+                                          $"~hash udf {TestFile1} /expect={expect3}");
         HashDigest = Alice1.Example($"hash digest {TestFile1}");
         HashDigests = Alice1.Example($"hash digest {TestFile1} /alg=sha256",
                                           // $"hash digest {TestFile1} /alg=sha128",
@@ -61,6 +61,6 @@ public class ShellHash : ExampleSet {
 
         MAC2 = Alice1.Example($"hash mac {TestFile1} /key={key}");
         MAC3 = Alice1.Example($"hash mac {TestFile1} /key={key} /expect={digest}",
-            $"hash mac {TestFile1} /key={key} /expect={expect2}");
+            $"~hash mac {TestFile1} /key={key} /expect={expect2}");
         }
     }

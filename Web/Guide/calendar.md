@@ -42,14 +42,12 @@ implemented and a placeholder format is implemented instead.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
-<rsp>{
-  "Title": "CalendarEntry1.json",
-  "Key": "NDY7-GKFS-CQ24-OTV7-H3NV-7DXO-N5SD"}
-<cmd>Alice> meshman calendar add CalendarEntry2.json CalID2
-<rsp>{
-  "Title": "CalendarEntry2.json",
-  "Key": "NCCZ-OEXJ-XTJT-I25W-UVTB-ZK6I-MW5J"}
+<cmd>Alice> meshman calendar add CalendarEntry1.json /id=CalID1
+<rsp>[CatalogedTask]
+
+<cmd>Alice> meshman calendar add CalendarEntry2.json /id=CalID2
+<rsp>[CatalogedTask]
+
 </div>
 ~~~~
 
@@ -62,7 +60,8 @@ The `password get`  command retreives a calendar entry by label:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman calendar get CalID1
-<rsp>
+<rsp>[CatalogedTask]
+
 </div>
 ~~~~
 
@@ -78,13 +77,17 @@ Calendar entries may be deleted using the  `calendar delete` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman calendar delete CalID1
-<rsp>ERROR - The entry could not be found in the store.
+<rsp>[CatalogedTask]
+
 <cmd>Alice> meshman calendar list
 <rsp>CatalogedTask
 
 CatalogedTask
 
-CatalogedTask
+<cmd>Alice> meshman calendar get CalID1
+<rsp>
+<cmd>Alice> meshman calendar get CalID2
+<rsp>[CatalogedTask]
 
 </div>
 ~~~~
@@ -111,8 +114,8 @@ CatalogedTask
 
 ~~~~
 <div="terminal">
-<cmd>Alice5> meshman bookmark list
-<rsp>ERROR - The feature has not been implemented
+<cmd>Alice5> meshman calendar list
+<rsp>ERROR - Unspecified error
 </div>
 ~~~~
 
@@ -133,8 +136,8 @@ The new device now has access to the Calendar catalog:
 
 ~~~~
 <div="terminal">
-<cmd>Alice5> meshman bookmark list
-<rsp>ERROR - The feature has not been implemented
+<cmd>Alice5> meshman calendar list
+<rsp>ERROR - Unspecified error
 </div>
 ~~~~
 

@@ -6,6 +6,7 @@
 <div="helptext">
 <over>
 contact    Manage contact catalogs connected to an account
+    add   Add contact entry from specified parameters
     delete   Delete contact entry
     dynamic   Create dynamic contact retrieval URI
     exchange   Request contact from URI presenting own contact
@@ -13,6 +14,7 @@ contact    Manage contact catalogs connected to an account
     get   Lookup contact entry
     import   Import contact entry from file
     list   List contact entries
+    request   Post a conection request to a user
     static   Create static contact retrieval URI
 <over>
 </div>
@@ -41,13 +43,8 @@ its unique catalog identifier.
 
 
 ~~~~
-<div="terminal">
-<cmd>Alice> meshman contact delete tbs
-<rsp>ERROR - The entry could not be found in the store.
-</div>
+Missing example 9
 ~~~~
-
-
 
 # contact dynamic
 
@@ -106,9 +103,8 @@ by means of a dynamic URI.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact exchange uri
-<rsp>ERROR - The specified connection URI was invalid
-</div>
+<cmd>Alice> meshman contact exchange mcu://carol@example.com/EFQC-XEWO-7LNZ-IZIW-XDKW-3YOS-M2RA
+<rsp></div>
 ~~~~
 
 
@@ -138,8 +134,9 @@ presented as a URI or QR code without reciprocating the exchange.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact fetch uri
-<rsp>ERROR - The specified connection URI was invalid
+<cmd>Alice> meshman contact fetch mcu://doug@example.com/EFQL-IXDA-ILY7-LGDX-YO3R-FYFO-VUMQ
+<rsp>[CatalogedContact]
+
 </div>
 ~~~~
 
@@ -171,7 +168,8 @@ unique catalog identifier.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact get carol@example.com
-<rsp>
+<rsp>[CatalogedContact]
+
 </div>
 ~~~~
 
@@ -184,6 +182,7 @@ unique catalog identifier.
 <over>
 import   Import contact entry from file
        File containing the contact entry to add
+    /self   Contact is for self
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /sync   If true, attempt to synchronize the account to the service before operation
@@ -200,13 +199,8 @@ from a file
 
 
 ~~~~
-<div="terminal">
-<cmd>Alice> meshman contact import tbs
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\tbs'.
-</div>
+Missing example 10
 ~~~~
-
-
 
 # contact list
 
@@ -231,30 +225,30 @@ The 'contact list' command lists all data in the contact catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Person MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
-  Anchor MDKS-LLL5-WPDJ-UKE2-4PPM-Y66V-2LIJ
+<rsp>Entry<CatalogedContact>: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Person MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+  Anchor MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
   Address alice@example.com
 
-Entry<CatalogedContact>: NDI6-Y4Q5-3K7C-UFFO-ZIZP-HFCS-R34U
+Entry<CatalogedContact>: NA2N-NMA3-3OLA-B65Y-JSYR-WDIO-DGBE
   Person 
-  Anchor MBNR-RPGE-7V2C-JI4N-F3NF-OD32-MV7R
+  Anchor MDRS-IKMP-S6SZ-MR5M-GOIJ-SIHS-W5SJ
   Address bob@example.com
 
-Entry<CatalogedContact>: NDAW-LPN7-CMK6-JNTR-A573-CIFE-K34V
+Entry<CatalogedContact>: NC77-6TI6-PZTR-SFSV-P2NJ-QP5O-IMTS
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
+  Anchor MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
   Address groupw@example.com
 
-Entry<CatalogedContact>: NB2Y-J5D4-SHIA-WBWE-2EDA-D45R-56AU
+Entry<CatalogedContact>: NB5W-WWHH-FPQD-BX6B-4CJK-ODPR-DVWT
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
+  Anchor MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
   Address groupw@example.com
 
-Entry<CatalogedContact>: NA4V-YEYP-3K74-6ESA-M22I-FFBL-3WWB
+Entry<CatalogedContact>: NDYV-ZB5V-AT2C-NFK3-D5LM-UG2X-Y4IB
   Person 
-  Anchor MDLU-46TL-V47W-BWT7-PSUV-FCKP-BEE6
-  Address groupw@example.com
+  Anchor MBU5-BTJ4-JAXZ-I2WV-WP53-MRJX-DONU
+  Address carol@example.com
 
 </div>
 ~~~~
@@ -286,7 +280,7 @@ readable form.
 ~~~~
 <div="terminal">
 <cmd>Doug> meshman contact static 
-<rsp>ERROR - The feature has not been implemented
+<rsp>Device Profile UDF=
 </div>
 ~~~~
 

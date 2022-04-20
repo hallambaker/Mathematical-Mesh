@@ -134,9 +134,13 @@ The 'password list' command lists all data in the credential catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman password list
-<rsp>CatalogedCredential
+<rsp>alice1@ftp.example.com = [password]
 
-CatalogedCredential
+alice@example.com@www.example.com = [newpassword]
+
+ssh:alice42@ssh1.example.com = []
+
+ssh:alice69@ssh2.example.com = []
 
 </div>
 ~~~~

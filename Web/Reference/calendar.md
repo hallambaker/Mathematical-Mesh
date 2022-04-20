@@ -30,7 +30,7 @@ maintenance of such applications and afford a means of interacting through scrip
 <over>
 add   Add calendar entry
        The entry title.
-    /id   Unique entry identifier
+    /id   Local identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
     /sync   If true, attempt to synchronize the account to the service before operation
@@ -52,10 +52,9 @@ The '/id' option may be used to specify a unique identifier for the entry.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
-<rsp>{
-  "Title": "CalendarEntry1.json",
-  "Key": "NDY7-GKFS-CQ24-OTV7-H3NV-7DXO-N5SD"}
+<cmd>Alice> meshman calendar add CalendarEntry1.json /id=CalID1
+<rsp>[CatalogedTask]
+
 </div>
 ~~~~
 
@@ -86,7 +85,8 @@ its unique catalog identifier.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman calendar delete CalID1
-<rsp>ERROR - The entry could not be found in the store.
+<rsp>[CatalogedTask]
+
 </div>
 ~~~~
 
@@ -117,7 +117,8 @@ unique catalog identifier.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman calendar get CalID1
-<rsp>
+<rsp>[CatalogedTask]
+
 </div>
 ~~~~
 
@@ -154,10 +155,9 @@ The '/id' option may be used to specify a unique identifier for the entry.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman calendar add CalendarEntry1.json CalID1
-<rsp>{
-  "Title": "CalendarEntry1.json",
-  "Key": "NDY7-GKFS-CQ24-OTV7-H3NV-7DXO-N5SD"}
+<cmd>Alice> meshman calendar add CalendarEntry1.json /id=CalID1
+<rsp>[CatalogedTask]
+
 </div>
 ~~~~
 
