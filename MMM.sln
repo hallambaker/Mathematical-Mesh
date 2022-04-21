@@ -112,7 +112,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.md = readme.md
 		ServerConfig.md = ServerConfig.md
 		TemplateClass.cs = TemplateClass.cs
-		TestSettings.xml = TestSettings.xml
 		ToDo.md = ToDo.md
 		VS2022Publish.md = VS2022Publish.md
 	EndProjectSection
@@ -171,14 +170,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "serviceadmin", "Application
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{5ACA2468-A44E-454D-8CAA-74C51CB23F94}"
 	ProjectSection(SolutionItems) = preProject
-		CommonSettings.xml = CommonSettings.xml
-		CommonSettingsApplication.xml = CommonSettingsApplication.xml
-		CommonSettingsFrameworks.xml = CommonSettingsFrameworks.xml
-		CommonSettingsNoDocs.xml = CommonSettingsNoDocs.xml
+		Settings\BaseSettings.xml = Settings\BaseSettings.xml
+		Settings\CommonSettings.xml = Settings\CommonSettings.xml
+		Settings\CommonSettingsApplication.xml = Settings\CommonSettingsApplication.xml
+		Settings\CommonSettingsFrameworks.xml = Settings\CommonSettingsFrameworks.xml
+		Settings\CommonSettingsNoDocs.xml = Settings\CommonSettingsNoDocs.xml
 		Settings\CommonSettingsPlatform.xml = Settings\CommonSettingsPlatform.xml
-		CommonSettingsTest.xml = CommonSettingsTest.xml
-		CommonSettingsWindows.xml = CommonSettingsWindows.xml
+		Settings\CommonSettingsTest.xml = Settings\CommonSettingsTest.xml
+		Settings\CommonSettingsWindows.xml = Settings\CommonSettingsWindows.xml
 		Settings\Nuget.xml = Settings\Nuget.xml
+		Settings\TestSettings.xml = Settings\TestSettings.xml
 		Settings\Version.xml = Settings\Version.xml
 	EndProjectSection
 EndProject

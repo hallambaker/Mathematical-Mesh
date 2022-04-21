@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)CommonSettings.xml" />
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
   <PropertyGroup>
     <Product>Goedel.Discovery</Product>
     <Description>Service discovery.</Description>

@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)CommonSettingsTest.xml" />
+  <Import Project="$(SolutionDir)Settings/CommonSettingsTest.xml" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <StartupObject>Scratchpad.Program</StartupObject>

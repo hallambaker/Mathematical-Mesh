@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)CommonSettings.xml" />
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
 	<PropertyGroup>
 		<Product>Goedel.Utilities</Product>
 		<Description>Coding utilities common to all Goedel libraries.</Description>

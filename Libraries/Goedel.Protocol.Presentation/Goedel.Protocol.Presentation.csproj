@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)CommonSettings.xml" />
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
   <PropertyGroup>
     <Product>Goedel.Utilities</Product>
     <Description>Presentation layer for binding Goedel.Protocol messages to HTTP and UDP transport.</Description>

@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)CommonSettings.xml" />
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
   <PropertyGroup>
     <Product>Goedel.Cryptography.Jose</Product>
     <Description>JOSE signature and encryption support.</Description>

@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<!--<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />-->
+  <PropertyGroup>
+	  <TargetFrameworks>net6.0-windows;net6.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\Goedel.ASN\Goedel.ASN.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Command.Json\Goedel.Command.Json.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Command\Goedel.Command.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Cryptography.Test\Goedel.Cryptography.Test.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Debug\Goedel.Debug.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.FSR\Goedel.FSR.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Protocol.GenericHost\Goedel.Protocol.GenericHost.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Test\Goedel.Test.csproj" />
+    <ProjectReference Include="..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+
+  </ItemGroup>
+	<Choose>
+		<When Condition="$(TargetFramework.Contains('-windows'))">
+			<PropertyGroup>
+				<OutputType>Library</OutputType>
+				<RuntimeIdentifiers>win-x64;win-arm;win-x86;win-arm64</RuntimeIdentifiers>
+				<DefineConstants>$(DefineConstants);USE_PLATFORM_WINDOWS</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+				<ProjectReference Include="..\Libraries\Windows\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+			</ItemGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<OutputType>Exe</OutputType>
+				<RuntimeIdentifiers>linux-x64;linux-arm;linux-arm64</RuntimeIdentifiers>
+				<DefineConstants>$(DefineConstants);USE_PLATFORM_LINUX</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+			</ItemGroup>
+		</Otherwise>
+	</Choose>
+</Project>

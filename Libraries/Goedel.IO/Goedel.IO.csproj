@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)CommonSettings.xml" />
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
   <PropertyGroup>
     <Product>Goedel.IO</Product>
     <Description>Input/Output support classes.</Description>

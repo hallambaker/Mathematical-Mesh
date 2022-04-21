@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)CommonSettings.xml" />
+  <Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
 	<PropertyGroup>
 		<Product>Goedel.Command.Json</Product>
 		<Description>Additional support library for command line parsers generated with Goedel Command tool.</Description>

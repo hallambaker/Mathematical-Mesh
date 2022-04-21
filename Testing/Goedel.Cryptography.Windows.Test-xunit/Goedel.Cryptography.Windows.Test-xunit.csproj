@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)BaseSettings.xml" />
-  <Import Project="$(SolutionDir)TestSettings.xml" />
+  <Import Project="$(SolutionDir)Settings/BaseSettings.xml" />
+  <Import Project="$(SolutionDir)Settings/TestSettings.xml" />
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
   </PropertyGroup>

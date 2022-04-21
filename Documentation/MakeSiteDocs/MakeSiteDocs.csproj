@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)CommonSettingsNoDocs.xml" />
+  <Import Project="$(SolutionDir)Settings/CommonSettingsNoDocs.xml" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <Product>Mesh Documentation</Product>

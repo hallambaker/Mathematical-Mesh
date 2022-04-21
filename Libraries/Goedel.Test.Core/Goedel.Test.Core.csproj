@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)CommonSettingsNoDocs.xml" />
+  <Import Project="$(SolutionDir)Settings/CommonSettingsNoDocs.xml" />
   <PropertyGroup>
     <Product>Goedel.Test.Core</Product>
     <Description>Test support for .NET Core apps.</Description>
