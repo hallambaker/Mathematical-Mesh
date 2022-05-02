@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Apr-22 2:27:18 PM
+//  This file was automatically generated at 02-May-22 6:58:02 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -112,10 +112,10 @@ abstract public partial class AccountEntry : CatalogItem {
 
 	public virtual string						Directory  {get; set;}
         /// <summary>
-        ///The service account to bind to.
+        ///The fingerprint of the profile
         /// </summary>
 
-	public virtual string						AccountAddress  {get; set;}
+	public virtual string						ProfileUdf  {get; set;}
 	bool								__Quota = false;
 	private int						_Quota;
         /// <summary>
@@ -179,10 +179,10 @@ abstract public partial class AccountEntry : CatalogItem {
 			_writer.WriteToken ("Directory", 1);
 				_writer.WriteString (Directory);
 			}
-		if (AccountAddress != null) {
+		if (ProfileUdf != null) {
 			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AccountAddress", 1);
-				_writer.WriteString (AccountAddress);
+			_writer.WriteToken ("ProfileUdf", 1);
+				_writer.WriteString (ProfileUdf);
 			}
 		if (__Quota){
 			_writer.WriteObjectSeparator (ref _first);
@@ -228,8 +228,8 @@ abstract public partial class AccountEntry : CatalogItem {
 				Directory = jsonReader.ReadString ();
 				break;
 				}
-			case "AccountAddress" : {
-				AccountAddress = jsonReader.ReadString ();
+			case "ProfileUdf" : {
+				ProfileUdf = jsonReader.ReadString ();
 				break;
 				}
 			case "Quota" : {
@@ -252,7 +252,7 @@ abstract public partial class AccountEntry : CatalogItem {
 
 	/// <summary>
 	///
-	/// Represents a Mesh Acco
+	/// Represents a Mesh Account
 	/// </summary>
 public partial class AccountUser : AccountEntry {
         /// <summary>

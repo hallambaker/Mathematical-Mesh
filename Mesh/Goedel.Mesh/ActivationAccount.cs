@@ -54,9 +54,10 @@ public partial class ActivationHost : ActivationAccount {
     /// is null.</param>
     public ActivationHost(
                 ProfileDevice profileDevice,
+                string profileUdf,
                 byte[] masterSecret = null,
                 int bits = 256) : base(
-                    profileDevice, masterSecret, bits) {
+                    profileDevice, profileUdf, masterSecret, bits) {
         ProfileDevice = profileDevice;
         AccountUdf = profileDevice.Udf;
         }
@@ -128,6 +129,7 @@ public partial class ActivationAccount {
     /// is null.</param>
     public ActivationAccount(
                 ProfileDevice profileDevice,
+                string profileUdf,
                 byte[] masterSecret = null,
                 int bits = 256) : base(
                     profileDevice, UdfAlgorithmIdentifier.MeshActivationAccount, masterSecret, bits) {
@@ -145,10 +147,12 @@ public partial class ActivationAccount {
 
         // Create the (unsigned) ConnectionUser
         ConnectionService = new ConnectionService() {
+            ProfileUdf = profileUdf,
             Authentication = new KeyData(AccountAuthentication)
             };
 
         ConnectionDevice = new ConnectionDevice() {
+            ProfileUdf = profileUdf,
             Authentication = new KeyData(AccountAuthentication),
             Encryption = new KeyData(AccountEncryption),
             Signature = new KeyData(AccountSignature)

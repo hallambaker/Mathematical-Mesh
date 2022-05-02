@@ -49,10 +49,15 @@ partial class Program {
 
     static void Main() {
         //Logger.LogInformation ("Start test {time}", DateTime.Now);
-
-        for (int i = 0; i < 10; i++) {
-            TestService.Test().MeshCatalogGroup();
-            }
+        
+        TestService.Test().MeshDeviceConnectPIN();
+        
+        
+        
+        
+        //for (int i = 0; i < 10; i++) {
+        //    TestService.Test().MeshCatalogGroup();
+        //    }
 
         //ShellTestsAdmin.Test().TestProfileConnectPin();
         //ShellTestsAdmin.Test().TestMessageGroup();
@@ -90,7 +95,7 @@ partial class Program {
         //TestService.Test().MeshDeviceThresholdKey();
 
 
-        //TestService.Test().MeshCatalogGroup();
+
 
 
         //ShellTests.Test().TestAccountDelete();

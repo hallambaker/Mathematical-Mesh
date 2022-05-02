@@ -35,6 +35,9 @@ File CatalogLabels
 	Code MMM_Task "Task Catalog"
 		Description
 			|Tasks and appointments assigned to the user including calendar entries and to do lists.
+	Code MMM_Callsign "Callsign Catalog"
+		Description
+			|Catalog identifier used on the service.
 
 File SpoolLabels
 	Code MMM_Local "Local Spool"

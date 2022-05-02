@@ -42,7 +42,7 @@ public class MeshCredentialPublic : MeshKeyCredentialPublic {
     public ConnectionService ConnectionDevice { get; }
 
     ///<summary>The address connection.</summary> 
-    public ConnectionAddress ConnectionAccount { get; }
+    public ConnectionStripped ConnectionAccount { get; }
 
 
     #endregion
@@ -59,7 +59,7 @@ public class MeshCredentialPublic : MeshKeyCredentialPublic {
     /// <param name="meshCredentialPrivate">The private credential.</param>
     public MeshCredentialPublic(ProfileDevice profileDevice,
             ConnectionService connectionDevice,
-            ConnectionAddress connectionAccount,
+            ConnectionStripped connectionAccount,
             KeyPairAdvanced authenticationKey,
             MeshCredentialPrivate meshCredentialPrivate = null) : base(authenticationKey) {
         ProfileDevice = profileDevice ?? meshCredentialPrivate?.ProfileDevice;
@@ -69,7 +69,7 @@ public class MeshCredentialPublic : MeshKeyCredentialPublic {
         //AuthenticationPublic = authenticationKey;
 
         //AuthenticationKeyId = authenticationKey.KeyIdentifier;
-        Account = connectionAccount?.Account ?? connectionDevice?.Account;
+        Account = connectionAccount?.Account ?? connectionDevice?.ProfileUdf;
         }
 
 
@@ -141,7 +141,7 @@ public class MeshCredentialPrivate : MeshKeyCredentialPrivate {
     public ConnectionService ConnectionDevice { get; }
 
     ///<summary>The address connection.</summary> 
-    public ConnectionAddress ConnectionAccount { get; }
+    public ConnectionStripped ConnectionAccount { get; }
 
 
 
@@ -159,11 +159,10 @@ public class MeshCredentialPrivate : MeshKeyCredentialPrivate {
     public MeshCredentialPrivate(
             ProfileDevice profileDevice,
             ConnectionService connectionDevice,
-            ConnectionAddress connectionAccount,
+            ConnectionStripped connectionAccount,
             KeyPairAdvanced authenticationKey,
             MeshCredentialPrivate meshCredentialPrivate = null) : base(
-                        null,
-                            connectionAccount?.Account ?? connectionDevice?.Account) {
+                        null, connectionDevice?.ProfileUdf) {
 
         AuthenticationPrivate = authenticationKey ?? meshCredentialPrivate?.AuthenticationPrivate;
         AuthenticationPublic = AuthenticationPrivate;

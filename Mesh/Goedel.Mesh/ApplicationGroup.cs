@@ -113,11 +113,12 @@ public partial class CatalogedGroup {
     public CatalogedGroup(
                     ProfileGroup profileGroup,
                     ActivationCommon activationAccount,
-                    CryptoKey encryptionKey,
-                    ConnectionAddress connectionAddress
+                    CryptoKey encryptionKey
+        //,
+        //            ConnectionStripped connectionAddress
                     ) {
         encryptionKey.Future();
-        connectionAddress.Future();
+        //connectionAddress.Future();
 
         profileGroup?.DareEnvelope.AssertNotNull(Internal.Throw);
 

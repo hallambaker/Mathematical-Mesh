@@ -63,8 +63,8 @@ public partial class ContextUser : ContextAccount {
     ///<summary>The connection device</summary>
     public ConnectionDevice ConnectionAccount => CatalogedDevice?.ConnectionDevice;
 
-    ///<summary>The connection of the profile to the account address</summary>
-    public ConnectionAddress ConnectionAddress => CatalogedDevice?.ConnectionAccount;
+    /////<summary>The connection of the profile to the account address</summary>
+    //public ConnectionStripped ConnectionAddress => CatalogedDevice?.ConnectionAccount;
 
     ///<summary>The connection device</summary>
     public List<ApplicationEntry> ApplicationEntries => CatalogedDevice?.ApplicationEntries;
@@ -114,7 +114,7 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <returns>The credential</returns>
     public override MeshCredentialPrivate GetMeshCredentialPrivate() => 
-        new(ProfileDevice, ConnectionService, ConnectionAddress,
+        new(ProfileDevice, ConnectionService, null,
             AccountAuthentication ?? BaseAuthenticate);
 
     #endregion
@@ -282,10 +282,10 @@ public partial class ContextUser : ContextAccount {
 
         // Since the service does not know this account (yet)
         var credentialPrivate = new MeshKeyCredentialPrivate(
-                    KeyCommonAuthentication as KeyPairAdvanced, accountAddress);
+                    KeyCommonAuthentication as KeyPairAdvanced, ProfileUser.Udf);
 
 
-        MeshClient = MeshMachine.GetMeshClient(credentialPrivate, accountAddress);
+        MeshClient = MeshMachine.GetMeshClient(credentialPrivate, ProfileUser.Udf);
 
         // Query the service capabilities
         var helloRequest = new HelloRequest();
@@ -311,10 +311,26 @@ public partial class ContextUser : ContextAccount {
     /// <param name="accountAddress">The account address to bind.</param>
     public void BindService(string accountAddress) {
 
+        var CallsignBinding = new CallsignBinding() {
+            Canonical = accountAddress.CannonicalAccountAddress(),
+            Display = accountAddress,
+            ProfileUdf = ProfileUser.Udf,
+            Services = new() {
+                new NamedService() {
+                    Prefix = MeshService.WellKnown
+                    }
+                }
+            };
+        var envelopedBinding = CallsignBinding.Envelope(signingKey:KeyAdministratorSign);
+        var envelopedBindings = new List<Enveloped<CallsignBinding>> {
+            new Enveloped<CallsignBinding>( envelopedBinding)
+            };
+
         // Request binding
         var createRequest = new BindRequest() {
             AccountAddress = accountAddress,
-            EnvelopedProfileAccount = ProfileUser.GetEnvelopedProfileAccount()
+            EnvelopedProfileAccount = ProfileUser.GetEnvelopedProfileAccount(),
+            EnvelopedCallsignBinding = envelopedBindings
             //Updates = transactUser.TransactRequest.Updates
             };
 
@@ -714,14 +730,14 @@ public partial class ContextUser : ContextAccount {
         profileGroup.Validate();
 
 
-        // create an administrative connection for this user
-        var connectionGroup = new ConnectionAddress() {
-            Account = groupName,
-            Subject = ProfileUser.Udf,
-            Authority = profileGroup.Udf
-            };
-        var envelopedConnectionGroup = connectionGroup.Envelope(
-                    activationGroup.AdministratorSignatureKey);
+        //// create an administrative connection for this user
+        //var connectionGroup = new ConnectionStripped() {
+        //    ProfileUdf = groupName,
+        //    Subject = ProfileUser.Udf,
+        //    Authority = profileGroup.Udf
+        //    };
+        //var envelopedConnectionGroup = connectionGroup.Envelope(
+        //            activationGroup.AdministratorSignatureKey);
 
 
 
@@ -730,7 +746,7 @@ public partial class ContextUser : ContextAccount {
         // account escrow key.
 
         var catalogedGroup = new CatalogedGroup(profileGroup,
-            activationGroup, KeyCommonEncryption, connectionGroup) {
+            activationGroup, KeyCommonEncryption) {
             Grant = roles
             };
 

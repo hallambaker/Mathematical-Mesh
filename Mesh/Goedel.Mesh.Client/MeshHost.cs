@@ -433,15 +433,9 @@ public class MeshHost : Disposable {
 
 
         if (create) {
-
             contextUser.BindService(accountAddress);
             }
         else {
-
-            // Here need to set the credential to use the profile auth key.
-
-
-
             contextUser.Sync();
             }
         contextUser.MakeAdministrator(rights);
@@ -509,7 +503,7 @@ public class MeshHost : Disposable {
                 };
 
 
-        var activationAccount = new ActivationAccount(profileDevice);
+        var activationAccount = new ActivationAccount(profileDevice, profileUser.Udf);
 
         // create a Cataloged activationRoot.Device entry for the admin device
         var catalogedDevice = activationCommon.CreateCataloguedDevice(

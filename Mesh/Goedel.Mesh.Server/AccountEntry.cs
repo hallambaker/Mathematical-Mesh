@@ -25,8 +25,7 @@ namespace Goedel.Mesh.Server;
 
 public abstract partial class AccountEntry {
 
-    ///<summary>The primary key</summary>
-    public override string _PrimaryKey => AccountAddress;
+
 
 
 
@@ -46,7 +45,8 @@ public abstract partial class AccountEntry {
 
 
 public partial class AccountUser {
-
+    ///<summary>The primary key</summary>
+    public override string _PrimaryKey => ProfileUdf;
 
     ///<summary>Cached convenience accessor for <see cref="profileAccount"/></summary>
     public ProfileAccount GetProfileAccount() =>
@@ -75,9 +75,12 @@ public partial class AccountUser {
     /// </summary>
     /// <param name="request">The account creation request.</param>
     public AccountUser(BindRequest request) {
-        AccountAddress = request.AccountAddress;
+
+        var profileUser = request.EnvelopedProfileAccount.Decode();
+
+        ProfileUdf = profileUser.Udf;
         EnvelopedProfileUser = request.EnvelopedProfileAccount;
-        Directory = AccountAddress;
+        Directory = ProfileUdf;
         }
 
 

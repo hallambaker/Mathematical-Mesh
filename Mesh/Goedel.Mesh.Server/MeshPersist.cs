@@ -23,6 +23,7 @@
 
 using Microsoft.Extensions.Logging;
 using System.Net.Sockets;
+using System.Security.Principal;
 
 namespace Goedel.Mesh.Server;
 
@@ -77,6 +78,9 @@ public class MeshPersist : Disposable {
     ///<summary>The underlying persistence store for the account catalog.</summary>
     public PersistenceStore Container;
 
+    ///<summary>The callsign catalog mapping account names to profiles.</summary> 
+    public CatalogCallsign CatalogCallsign { get; init; }
+
     ///<summary>The root directory in which the files are stored.</summary>
     public string DirectoryRoot;
 
@@ -101,7 +105,7 @@ public class MeshPersist : Disposable {
 
         base.Disposing();
         Container.Dispose();
-
+        CatalogCallsign.Dispose();
         }
 
     #endregion
@@ -130,6 +134,9 @@ public class MeshPersist : Disposable {
             fileStatus: fileStatus,
             containerType: SequenceType.Merkle
             );
+
+        CatalogCallsign = new CatalogCallsign(directory);
+
         }
     #endregion
 
@@ -146,10 +153,11 @@ public class MeshPersist : Disposable {
     /// </summary>
     /// <param name="accountEntry">Account data to add.</param>
     public void AccountBind(
-                    AccountEntry accountEntry) {
+                    AccountEntry accountEntry,
+                    List<CatalogedCallsign> catalogedCallsigns) {
         StoreEntry containerEntry;
 
-        accountEntry.AccountAddress = accountEntry.AccountAddress;
+        accountEntry.ProfileUdf = accountEntry.ProfileUdf;
 
         var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
         accountEntry.Directory = directory;
@@ -157,7 +165,16 @@ public class MeshPersist : Disposable {
         // Lock the container so that we can create the new account entry without 
         // causing contention.
         lock (Container) {
+            foreach (var catalogedCallsign in catalogedCallsigns) {
+                CatalogCallsign.Get(catalogedCallsign.Canonical).AssertNull(NYI.Throw);
+                }
+
+
             containerEntry = Container.New(accountEntry) as StoreEntry;
+
+            foreach (var catalogedCallsign in catalogedCallsigns) {
+                CatalogCallsign.New(catalogedCallsign);
+                }
             }
 
         // Lock the container entry so that we can initialize it.
@@ -672,7 +689,13 @@ public class MeshPersist : Disposable {
 
 
         lock (Container) {
-            var containerEntry = Container.Get(account.CannonicalAccountAddress()) as StoreEntry;
+            var containerEntry = Container.Get(account) as StoreEntry;
+
+            if (containerEntry is null) {
+                var profileUdf = GetProfileUdf(account);
+                containerEntry = Container.Get(profileUdf) as StoreEntry;
+                }
+
             result = containerEntry?.JsonObject as AccountEntry;
             result.AssertNotNull(MeshUnknownAccount.Throw);
 
@@ -682,7 +705,7 @@ public class MeshPersist : Disposable {
 
         }
 
-    AccountHandleLocked GetAccountHandleLocked(string Account,
+    AccountHandleLocked GetAccountHandleLocked(string account,
                 IJpcSession session,
                 AccountPrivilege accountPrivilege) {
 
@@ -692,7 +715,9 @@ public class MeshPersist : Disposable {
         LockedCatalogedEntry<AccountEntry> accountEntry = null;
 
         try {
-            accountEntry = GetAccountLocked(Account);
+            var profileUdf = GetProfileUdf(account);
+
+            accountEntry = GetAccountLocked(profileUdf);
             var accountContext = new AccountContext() {
                 LockedAccountEntry = accountEntry,
                 KeyCollection = KeyCollection
@@ -716,6 +741,9 @@ public class MeshPersist : Disposable {
         LockedCatalogedEntry<AccountEntry> accountEntry = null;
 
         try {
+            //
+
+
             accountEntry = GetAccountLocked(session.TargetAccount);
             var accountContext = new AccountContext() {
                 LockedAccountEntry = accountEntry,
@@ -734,7 +762,10 @@ public class MeshPersist : Disposable {
             }
         }
 
-
+    string GetProfileUdf(string accountIn) {
+        var account = accountIn.CannonicalAccountAddress();
+        return CatalogCallsign.Get(account).ProfileUdf;
+        }
 
     #endregion
 

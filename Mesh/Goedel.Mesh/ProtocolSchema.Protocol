@@ -183,6 +183,13 @@
 			|The PostConstraints field MAY be used to advise senders of a maximum
 			|size of payload that MAY be sent in an initial Post request.
 
+
+	Message MeshHelloRequest
+		External Goedel.Protocol.HelloRequest		
+		Struct CallsignBinding CallsignBinding
+			Description
+				|Contains a proposed callsign binding to the account.
+
 	Message MeshHelloResponse
 		External Goedel.Protocol.HelloResponse	
 		Struct ConstraintsData ConstraintsUpdate
@@ -197,7 +204,10 @@
 		Struct Enveloped<ProfileService> EnvelopedProfileService
 			Description
 				|The enveloped master profile of the service.
-
+		Struct CallsignBinding CallsignBinding
+			Description
+				|If the request specifies a callsign binding, returns a proposed binding for
+				|the requested callsign.
 
 	//Create account
 	Transaction Admin BindAccount BindRequest BindResponse
@@ -218,6 +228,11 @@
 		Struct Enveloped<ProfileAccount> EnvelopedProfileAccount
 			Description
 				|The signed assertion describing the account.
+		Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
+			Multiple
+			Description
+				|Contains one or more bindings of a callsign to the account.
+
 
 	Message BindResponse
 		Inherits MeshResponse

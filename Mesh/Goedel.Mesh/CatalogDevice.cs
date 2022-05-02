@@ -154,11 +154,11 @@ public partial class CatalogedDevice {
 
 
 
-    /// <summary>
-    /// The account connection assertion.
-    /// </summary>
-    public ConnectionAddress ConnectionAccount =>
-                EnvelopedConnectionAddress.Decode(KeyCollection);
+    ///// <summary>
+    ///// The account connection assertion.
+    ///// </summary>
+    //public ConnectionStripped ConnectionAccount =>
+    //            EnvelopedConnectionStripped.Decode(KeyCollection);
 
 
     //public AccessCapability AccessCapability { get; set; }

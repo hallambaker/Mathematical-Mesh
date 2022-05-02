@@ -51,13 +51,13 @@ public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate
     /// Create a new instance with the private key <paramref name="authenticationPrivate"/>
     /// </summary>
     /// <param name="authenticationPrivate">The private key.</param>
-    /// <param name="account">The account to which the request is directed.</param>
-    public MeshKeyCredentialPrivate(KeyPairAdvanced authenticationPrivate, string account) :
+    /// <param name="profileUdf">Fingerprint of the profile claimed in the request.</param>
+    public MeshKeyCredentialPrivate(KeyPairAdvanced authenticationPrivate, string profileUdf) :
 
 
             // we do have to include the account address here!!!
 
-            base(authenticationPrivate, account) {
+            base(authenticationPrivate, profileUdf) {
         //authenticationPrivate.AssertNotNull(NYI.Throw);
         //account.AssertNotNull(NYI.Throw);
 
@@ -81,7 +81,7 @@ public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate
     public override ICredentialPublic GetCredentials(List<PacketExtension> extensions) {
 
         ConnectionService connectionDevice = null;
-        ConnectionAddress connectionAddress = null;
+        ConnectionStripped connectionAddress = null;
         ProfileDevice profileDevice = null;
         KeyPairAdvanced keyAuthentication = null;
         string account = null;
@@ -119,7 +119,7 @@ public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate
                 case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshConnectionAddressTag: {
                         // convert the enveloped ConnectionDevice
                         var envelope = DareEnvelope.FromJSON(extension.Value, false);
-                        connectionAddress = envelope.DecodeJsonObject() as ConnectionAddress;
+                        connectionAddress = envelope.DecodeJsonObject() as ConnectionStripped;
                         break;
                         }
                 }

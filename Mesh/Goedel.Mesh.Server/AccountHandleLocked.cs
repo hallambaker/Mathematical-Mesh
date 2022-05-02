@@ -70,7 +70,7 @@ public class AccountHandleLocked : Disposable {
 
 
     ///<summary>Convenience accessor for the account address</summary> 
-    public string AccountAddress => AccountContext.AccountEntry.AccountAddress;
+    public string AccountAddress => AccountContext.AccountEntry.ProfileUdf;
 
     ///<summary>The account entry in the service catalog.</summary> 
     protected AccountUser AccountUser => AccountContext.AccountEntry as AccountUser;

@@ -275,7 +275,7 @@ public partial class ActivationCommon {
 
 
 
-        activationDevice ??= new ActivationAccount(profileDevice);
+        activationDevice ??= new ActivationAccount(profileDevice, profileUser.Udf);
         var activationAccount = MakeActivationAccount(profileDevice, activationDevice, roles, transactContextAccount);
 
         var catalogedDevice = CreateCataloguedDevice(
@@ -338,17 +338,17 @@ public partial class ActivationCommon {
             connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
             }
 
-        var connectionAccount = new ConnectionAddress() {
-            Account = profileUser?.AccountAddress,
-            Subject = connectionService.Subject,
-            Authority = connectionService.Authority,
-            Authentication = connectionService.Authentication
-            };
+        //var connectionAccount = new ConnectionStripped() {
+        //    ProfileUdf = profileUser?.Udf,
+        //    Subject = connectionService.Subject,
+        //    Authority = connectionService.Authority,
+        //    Authentication = connectionService.Authentication
+        //    };
 
-        connectionAccount.Strip();
-        connectionAccount.Envelope(AdministratorSignatureKey, objectEncoding:
-                    ObjectEncoding.JSON_B);
-        connectionAccount.DareEnvelope.Strip();
+        //connectionAccount.Strip();
+        //connectionAccount.Envelope(AdministratorSignatureKey, objectEncoding:
+        //            ObjectEncoding.JSON_B);
+        //connectionAccount.DareEnvelope.Strip();
 
 
         //var accessCapability = new AccessCapability() {
@@ -364,7 +364,7 @@ public partial class ActivationCommon {
             EnvelopedProfileDevice = profileDevice.GetEnvelopedProfileDevice(),
             EnvelopedConnectionService = connectionService?.GetEnvelopedConnectionService(),
             EnvelopedConnectionDevice = connectionDevice?.GetEnvelopedConnectionDevice(),
-            EnvelopedConnectionAddress = connectionAccount?.GetEnvelopedConnectionAddress(),
+            //EnvelopedConnectionStripped = connectionAccount?.GetEnvelopedConnectionAddress(),
             EnvelopedActivationAccount = activationDevice?.GetEnvelopedActivationDevice(),
             EnvelopedActivationCommon = activationAccount?.GetEnvelopedActivationAccount(),
             ApplicationEntries = applicationEntries,

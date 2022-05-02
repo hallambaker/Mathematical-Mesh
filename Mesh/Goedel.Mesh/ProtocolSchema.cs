@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Apr-22 2:27:08 PM
+//  This file was automatically generated at 02-May-22 6:33:11 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -85,6 +85,7 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 	    {"PolicyAccount", PolicyAccount._Factory},
 	    {"ContainerStatus", ContainerStatus._Factory},
 	    {"ContainerUpdate", ContainerUpdate._Factory},
+	    {"MeshHelloRequest", MeshHelloRequest._Factory},
 	    {"MeshHelloResponse", MeshHelloResponse._Factory},
 	    {"BindRequest", BindRequest._Factory},
 	    {"BindResponse", BindResponse._Factory},
@@ -1927,6 +1928,114 @@ public partial class ContainerUpdate : ContainerStatus {
 
 	/// <summary>
 	/// </summary>
+public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
+        /// <summary>
+        ///Contains a proposed callsign binding to the account.
+        /// </summary>
+
+	public virtual CallsignBinding						CallsignBinding  {get; set;}
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "MeshHelloRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new MeshHelloRequest();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((Goedel.Protocol.HelloRequest)this).SerializeX(_writer, false, ref _first);
+		if (CallsignBinding != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("CallsignBinding", 1);
+				CallsignBinding.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new MeshHelloRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as MeshHelloRequest;
+			}
+		var Result = new MeshHelloRequest ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "CallsignBinding" : {
+				// An untagged structure
+				CallsignBinding = new CallsignBinding ();
+				CallsignBinding.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
 public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
         /// <summary>
         ///Specifies the default data constraints for updates.
@@ -1948,6 +2057,12 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
         /// </summary>
 
 	public virtual Enveloped<ProfileService>						EnvelopedProfileService  {get; set;}
+        /// <summary>
+        ///If the request specifies a callsign binding, returns a proposed binding for
+        ///the requested callsign.
+        /// </summary>
+
+	public virtual CallsignBinding						CallsignBinding  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2012,6 +2127,11 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 			_writer.WriteToken ("EnvelopedProfileService", 1);
 				EnvelopedProfileService.Serialize (_writer, false);
 			}
+		if (CallsignBinding != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("CallsignBinding", 1);
+				CallsignBinding.Serialize (_writer, false);
+			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
 			}
@@ -2073,6 +2193,13 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
  
 				break;
 				}
+			case "CallsignBinding" : {
+				// An untagged structure
+				CallsignBinding = new CallsignBinding ();
+				CallsignBinding.Deserialize (jsonReader);
+ 
+				break;
+				}
 			default : {
 				base.DeserializeToken(jsonReader, tag);
 				break;
@@ -2099,6 +2226,11 @@ public partial class BindRequest : MeshRequest {
         /// </summary>
 
 	public virtual Enveloped<ProfileAccount>						EnvelopedProfileAccount  {get; set;}
+        /// <summary>
+        ///Contains one or more bindings of a callsign to the account.
+        /// </summary>
+
+	public virtual List<Enveloped<CallsignBinding>>				EnvelopedCallsignBinding  {get; set;}
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2153,6 +2285,23 @@ public partial class BindRequest : MeshRequest {
 			_writer.WriteToken ("EnvelopedProfileAccount", 1);
 				EnvelopedProfileAccount.Serialize (_writer, false);
 			}
+		if (EnvelopedCallsignBinding != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedCallsignBinding", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in EnvelopedCallsignBinding) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				// This is an untagged structure. Cannot inherit.
+                //_writer.WriteObjectStart();
+                //_writer.WriteToken(_index._Tag, 1);
+				bool firstinner = true;
+				_index.Serialize (_writer, true, ref firstinner);
+                //_writer.WriteObjectEnd();
+				}
+			_writer.WriteArrayEnd ();
+			}
+
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
 			}
@@ -2195,6 +2344,20 @@ public partial class BindRequest : MeshRequest {
 				EnvelopedProfileAccount = new Enveloped<ProfileAccount> ();
 				EnvelopedProfileAccount.Deserialize (jsonReader);
  
+				break;
+				}
+			case "EnvelopedCallsignBinding" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				EnvelopedCallsignBinding = new List <Enveloped<CallsignBinding>> ();
+				while (_Going) {
+					// an untagged structure.
+					var _Item = new  Enveloped<CallsignBinding> ();
+					_Item.Deserialize (jsonReader);
+					// var _Item = new Enveloped<CallsignBinding> (jsonReader);
+					EnvelopedCallsignBinding.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
 				break;
 				}
 			default : {

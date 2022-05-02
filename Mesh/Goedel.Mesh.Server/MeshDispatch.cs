@@ -78,6 +78,10 @@ public class PublicMeshService : MeshService {
     /// </summary>
     public MeshPersist MeshPersist { get; init; }
 
+
+    ///<summary>The callsign catalog mapping account names to profiles.</summary> 
+    public CatalogCallsign CatalogCallsign => MeshPersist.CatalogCallsign;
+
     /////<summary>The service description.</summary> 
     //public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
 
@@ -135,6 +139,11 @@ public class PublicMeshService : MeshService {
         // Load the Mesh persistence base
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
         MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger);
+
+
+
+
+
 
         var instance = GenericHostConfiguration.Instance ?? meshMachine.Instance;
 
@@ -322,7 +331,7 @@ public class PublicMeshService : MeshService {
 
         // Create a host profile and add create a connection to the host.
         var profileHost = ProfileHost.CreateHost(meshMachine);
-        var activationDevice = new ActivationHost(profileHost);
+        var activationDevice = new ActivationHost(profileHost, profileService.Udf);
         activationDevice.Envelope(encryptionKey: profileHost.KeyEncrypt);
         // Persist the profile keys
         profileService.PersistSeed(meshMachine.KeyCollection);
@@ -333,7 +342,7 @@ public class PublicMeshService : MeshService {
         activationDevice.Activate(profileHost.SecretSeed);
         var connectionDevice1 = activationDevice.Connection;
         var connectionDevice = new ConnectionService() {
-            Account = deviceAddress,
+            ProfileUdf = profileHost.Udf,
             Subject = connectionDevice1.Authentication.CryptoKey.KeyIdentifier,
             Authority = profileService.Udf,
 
@@ -464,6 +473,14 @@ public class PublicMeshService : MeshService {
         return HelloResponse;
         }
 
+
+
+    bool VerifyBinding(ProfileAccount profileAccount, CallsignBinding callsignBinding) {
+        CatalogCallsign.Get(callsignBinding.Canonical).AssertNull(NYI.Throw);
+        return true;
+        }
+    bool ServiceBinding(CallsignBinding callsignBinding) => true;
+
     /// <summary>
     /// Server method implementing the transaction CreateAccount.
     /// </summary>
@@ -475,15 +492,36 @@ public class PublicMeshService : MeshService {
 
 
         try {
-
-            // canonicalize the account address to ensure consistency.
-            request.AccountAddress = request.AccountAddress.CannonicalAccountAddress();
-            var account = request.AccountAddress;
-
             // Authenticate and authorize the request before acting on it.
             var profileAccount = request.EnvelopedProfileAccount.Decode();
             VerifyDevice(profileAccount, jpcSession).AssertTrue(NotAuthenticated.Throw);
 
+            var catalogedCallsigns = new List<CatalogedCallsign>();
+
+            if (request.EnvelopedCallsignBinding != null) {
+
+                foreach (var envelopedBinding in request.EnvelopedCallsignBinding) {
+
+                    var binding = envelopedBinding.Decode();
+                    VerifyBinding(profileAccount, binding).AssertTrue(NYI.Throw);
+
+                    // check to see if the binding is in the name catalog
+                    if (ServiceBinding(binding)) {
+                        // 
+                        catalogedCallsigns.Add(new CatalogedCallsign() {
+                            EnvelopedCallsignBinding = envelopedBinding,
+                            Canonical = binding.Canonical.CannonicalAccountAddress(),
+                            ProfileUdf = binding.ProfileUdf
+                            });
+                        }
+                    }
+                }
+
+
+
+            // canonicalize the account address to ensure consistency.
+                request.AccountAddress = request.AccountAddress.CannonicalAccountAddress();
+            var account = request.AccountAddress;
 
             var accountHostAssignment = new AccountHostAssignment() {
                 AccountAddess = account,
@@ -497,7 +535,7 @@ public class PublicMeshService : MeshService {
                 };
 
             // Perform the transaction.
-            MeshPersist.AccountBind(accountEntry);
+            MeshPersist.AccountBind(accountEntry, catalogedCallsigns);
 
             // ToDo: Allow the BindResponse to specify a different host
             // ToDo: Allow the BindResponse to specify a unique service encryption key for the acount                

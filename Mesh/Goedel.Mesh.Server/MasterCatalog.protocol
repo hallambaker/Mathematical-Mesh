@@ -17,9 +17,9 @@
 		String Directory
 			Description
 				|Subdirectory containing the catalogs and spools for the account.
-		String AccountAddress
+		String ProfileUdf
 			Description
-				|The service account to bind to.
+				|The fingerprint of the profile
 		Integer Quota
 			Description
 				|The quota assigned to this user in KB
@@ -31,7 +31,7 @@
 	Structure AccountUser
 		Inherits AccountEntry
 		Description
-			|Represents a Mesh Acco
+			|Represents a Mesh Account
 		Struct Enveloped<ProfileAccount> EnvelopedProfileUser
 			Description
 				|The signed assertion describing the account.

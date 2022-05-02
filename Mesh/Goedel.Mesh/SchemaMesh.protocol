@@ -273,8 +273,26 @@
 			Description
 				|The authentication key for use of the device under the profile
 
+	Structure CallsignBinding
+		Inherits Assertion
+		String Canonical
+			Description
+				|The canonical form of the callsign.
+		String Display
+			Description
+				|The display form of the callsign. This MAY include characters such as whitespace,
+				|trademark signifiers, etc. that are omitted of trranslated in the canonical form.
+		String ProfileUdf
+			Description
+				|The profile to which the name is bound.
+		Struct NamedService Services
+			Multiple
+			Description
+				|List of named services. If multiple service providers are specified for a given 
+				|service, these are listed in order of priority, most preferred first.
 
-	Structure ConnectionAddress
+
+	Structure ConnectionStripped
 		Description
 			|Asserts that a profile is connected to an account address.
 		Inherits Connection
@@ -282,18 +300,19 @@
 			|Stripped down connection assertion
 		String Account
 			Description
-				|The account address
-
+				|To be removed
 
 
 	Structure ConnectionService
 		Inherits Connection
 		Description
 			|Asserts that a device is connected to an account profile
-		String Account
+		String ProfileUdf
 			Description
 				|The account address
-
+		Struct CatalogedCallsign Callsign
+			Description
+				|The account callsign
 
 	Structure ConnectionDevice
 		Inherits ConnectionService
@@ -419,8 +438,10 @@
 			Description
 				|Sined connection service delegation allowing the device to
 				|access the account.
-				
-	
+
+	Structure ActivationApplicationCallsign				
+		Inherits ActivationApplication
+		
 	Section 2 "Application Data"
 		
 	Structure ApplicationEntry
@@ -440,6 +461,10 @@
 	Structure ApplicationEntryMail
 		Inherits ApplicationEntry
 		Struct Enveloped<ActivationApplicationMail> EnvelopedActivation
+
+	Structure ApplicationEntryCallsign
+		Inherits ApplicationEntry
+		Struct Enveloped<ActivationApplicationCallsign> EnvelopedActivation
 
 	Section 2 "Data Structures"
 		Description
@@ -715,16 +740,19 @@
 			Description
 				|The device profile
 		
-		Struct Enveloped<ConnectionAddress> EnvelopedConnectionAddress
-			Description
-				|The assertion binding the account to an address. This should
-				|be moved out to an account record.
+		//Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
+		//	Description
+		//		|The assertion binding the account to an address. This should
+		//		|be moved out to an account record.
+
+
 		Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
 				|Slim version of ConnectionDevice used by the presentation layer
 		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
+
 		Struct Enveloped<ActivationAccount> EnvelopedActivationAccount
 			Description
 				|The activation of the device within the Mesh account
@@ -926,6 +954,33 @@
 			|protocol.
 
 
+	Structure CatalogedCallsign
+		Inherits CatalogedApplication
+		String Canonical
+			Description
+				|Fast lookup for the canonical form of the callsign.
+		String ProfileUdf
+			Description
+				|Fast lookup for the profile to which the name is bound.		
+		Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
+			Description
+				|The enveloped binnding of the callsign to the profile.		
+
+	Structure NamedService
+		String Prefix
+			Description
+				|The IANA service name (e.g. dns)
+		String Mapping
+			Description
+				|Optional name mapping, (e.g. alice@example.com -> alice.mesh)
+		String Endpoint
+			Multiple
+			Description
+				|The service endpoint. This MAY be specified as a callsign (@alice),
+				|a DNS address (example.com), an IP address (10.0.0.1) or a fully
+				|qualified URI.
+
+
 
 
 	Structure CatalogedBookmark
@@ -980,7 +1035,7 @@
 	Structure CatalogedGroup
 		Inherits CatalogedApplication
 
-		Struct Enveloped<ConnectionAddress> EnvelopedConnectionAddress
+		Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
 			Description
 				|The connection allowing control of the group.
 
@@ -1019,6 +1074,17 @@
 		Inherits CatalogedApplication
 		// The recryption key
 
+
+	// For the future wallet catalog
+
+	Structure MessageInvoice
+		Inherits Message
+
+	Structure CatalogedReceipt
+		Inherits CatalogedEntry
+
+	Structure CatalogedTicket
+		Inherits CatalogedEntry
 
 	Section 2 "Publications"
 

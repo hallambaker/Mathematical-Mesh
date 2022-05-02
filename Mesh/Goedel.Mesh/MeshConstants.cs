@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 21-Apr-22 2:27:09 PM
+//  This file was automatically generated at 02-May-22 6:33:11 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -158,6 +158,9 @@ public static partial class MeshConstants {
 
     ///<summary>Task Catalog</summary>
     public const string MMM_Task = "MMM_Task";
+
+    ///<summary>Callsign Catalog</summary>
+    public const string MMM_Callsign = "MMM_Callsign";
 
     // File: SpoolLabels
 

@@ -23,9 +23,9 @@
 
 namespace Goedel.Mesh;
 
-public partial class ConnectionAddress {
+public partial class ConnectionStripped {
     ///<summary>Typed enveloped data</summary> 
-    public Enveloped<ConnectionAddress> GetEnvelopedConnectionAddress() =>
+    public Enveloped<ConnectionStripped> GetEnvelopedConnectionAddress() =>
         new(DareEnvelope);
 
     /// <summary>

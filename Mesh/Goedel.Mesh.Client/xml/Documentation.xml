@@ -1067,9 +1067,6 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionAccount">
             <summary>The connection device</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionAddress">
-            <summary>The connection of the profile to the account address</summary>
-        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ApplicationEntries">
             <summary>The connection device</summary>
         </member>
