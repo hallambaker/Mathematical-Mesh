@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Callsign.Registrar</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Callsign.Registrar.CallsignRegistrar">
+             <summary>
+            
+             Callsign Registrar protocol supporting query function.
+             Protocol interactions supported by the Mesh Service.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.CallsignRegistrar._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.Registrar.CallsignRegistrar.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.CallsignRegistrar._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.CallsignRegistrar.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="T:Goedel.Callsign.Registrar.MeshService">
+            <summary>
+            The new base class for the client and service side APIs.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Callsign.Registrar.MeshService.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.MeshService.GetWellKnown">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.Registrar.MeshService.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.MeshService.GetDiscovery">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.MeshService.GetTagDictionary">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.MeshService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="token">The method identifier</param>
+            <param name="request">The request data</param>
+            <param name="session">The client context.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.MeshService.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="session">The client context.</param>
+            <param name="jsonReader">Reader for data object.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.MeshService.GetDirect(Goedel.Protocol.IJpcSession)">
+            <summary>
+            Return a client tapping the service API directly without serialization bound to
+            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+            </summary>
+            <param name="jpcSession">Session to which requests are to be bound.</param>
+            <returns>The direct client instance.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.MeshService.Query(Goedel.Callsign.Registrar.QueryRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction Query.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="T:Goedel.Callsign.Registrar.MeshServiceClient">
+            <summary>
+            Client class for MeshService.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Callsign.Registrar.MeshServiceClient.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.MeshServiceClient.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.Registrar.MeshServiceClient.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.MeshServiceClient.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.MeshServiceClient.Query(Goedel.Callsign.Registrar.QueryRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="T:Goedel.Callsign.Registrar.MeshServiceDirect">
+            <summary>
+            Direct API class for MeshService.
+            </summary>		
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.MeshServiceDirect.Service">
+            <summary>
+            Interface object to dispatch requests to.
+            </summary>	
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.MeshServiceDirect.Query(Goedel.Callsign.Registrar.QueryRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="T:Goedel.Callsign.Registrar.QueryRequest">
+             <summary>
+            
+             Request resolution of a profile bound to a callsign or registration identifier. 
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.QueryRequest.CallSign">
+             <summary>
+            The callsign being requested in canonical form.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.QueryRequest.RegistrationId">
+             <summary>
+            The registration identifier of a registration in the log.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.QueryRequest.LogId">
+             <summary>
+            The unique identifier of an append only log whose signed Notarization
+            entry is requested.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.QueryRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.Registrar.QueryRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.QueryRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.QueryRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.QueryRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.QueryRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.QueryRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Callsign.Registrar.QueryResponse">
+             <summary>
+            
+             Return the result of a QueryRequest
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.QueryResponse.Result">
+             <summary>
+            The registration specified in the result (if found).	
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.QueryResponse.Notarization">
+             <summary>
+            The latest notarization entry corresponding to the specified log.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registrar.QueryResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.Registrar.QueryResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.QueryResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.QueryResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.QueryResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.QueryResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Callsign.Registrar.QueryResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.CallSign.Registrar.TBS">
+            <summary>
+            TBS
+            </summary>
+        </member>
+        <member name="P:Goedel.CallSign.Registrar.TBS.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.CallSign.Registrar.TBS.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.CallSign.Registrar.TBS.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.CallSign.Registrar.TBS._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.CallSign.Registrar.TBS.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.CallSign.Registrar.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.CallSign.Registrar.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.CallSign.Registrar.NamespaceDoc">
+            <summary>
+            Desctiption of the 
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,24 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Focus;Windows</Configurations>
-    <Company>ThresholdSecrets.Com</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>CallSignRegistrar</Product>
-    <Description>Callsign Registrar Service Library.</Description>
-    <Copyright>© 2021</Copyright>
-    <Title>CallSignRegistrar</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<Product>Goedel.Presence</Product>
+		<Description>Reference library for the Mathematical Mesh.</Description>
+		<Copyright>© 2022</Copyright>
+		<Title>Goedel.Presence</Title>
+		<OutputType>Library</OutputType>
+
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\..\..\mmm\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
-    <ProjectReference Include="..\..\..\..\mmm\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\..\..\..\mmm\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
   </ItemGroup>
 
   <ItemGroup>

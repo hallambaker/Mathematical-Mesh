@@ -4,8 +4,8 @@
     <OutputType>Library</OutputType>
 
     <Product>Goedel.Mesh</Product>
-    <Description></Description>
-    <Copyright>© 2020</Copyright>
+    <Description>Reference library for the Mathematical Mesh.</Description>
+    <Copyright>© 2020-2022</Copyright>
     <Title>Goedel.Mesh</Title>
   </PropertyGroup>
 

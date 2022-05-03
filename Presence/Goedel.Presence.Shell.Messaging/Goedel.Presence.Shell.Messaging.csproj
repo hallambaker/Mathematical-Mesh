@@ -1,20 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-   <PropertyGroup>
-    <ProjectGuid>{73b63d15-6a7a-4b0a-a73b-cb75b7ef483a}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Goedel.Presence.Shell.Messaging</RootNamespace>
-    <AssemblyName>Goedel.Presence.Shell.Messaging</AssemblyName>
-    <TargetFramework>net5.0</TargetFramework>
-    <FileAlignment>512</FileAlignment>
-    <Copyright>© 2021</Copyright>
-    <Configurations>Debug;Release</Configurations>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<Product>Goedel.Presence.Shell</Product>
+		<Description>Reference library for the Mathematical Mesh.</Description>
+		<Copyright>© 2022</Copyright>
+		<Title>Goedel.Presence.Shell</Title>
+		<ProjectGuid>{73b63d15-6a7a-4b0a-a73b-cb75b7ef483a}</ProjectGuid>
+
   </PropertyGroup>
    <ItemGroup>
-     <ProjectReference Include="..\..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
      <ProjectReference Include="..\Goedel.Presence.Client\Goedel.Presence.Client.csproj" />
      <ProjectReference Include="..\Goedel.Presence.Messaging\Goedel.Presence.Messaging.csproj" />
    </ItemGroup>

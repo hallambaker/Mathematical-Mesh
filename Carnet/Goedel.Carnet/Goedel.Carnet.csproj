@@ -1,25 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Focus;Windows</Configurations>
-    <Company>ThresholdSecrets.Com</Company>
-    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-    <Product>CallsignRegistry</Product>
-    <Description>Callsign Registry Service Library.</Description>
-    <Copyright>© 2021</Copyright>
-    <Title>CallsignRegistry</Title>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <Product>Goedel.Carnet</Product>
+    <Description>Carnet Payment System.</Description>
+    <Copyright>© 2022</Copyright>
+    <Title>Mesh Carnet Payment System</Title>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
-    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\Goedel.Callsign.Log\Goedel.Callsign.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+
   </ItemGroup>
 
   <ItemGroup>
