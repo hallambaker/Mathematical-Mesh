@@ -1,0 +1,8 @@
+﻿
+Namespace Goedel.Callsign.Registry
+
+	Exception TBS
+		Console "Exception TBS"
+		Description
+			|TBS
+

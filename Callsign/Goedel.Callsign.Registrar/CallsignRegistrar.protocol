@@ -1,0 +1,66 @@
+﻿Protocol Goedel.Callsign.Registrar CallsignRegistrar CallsignRegistrar
+
+	Section 2 "Registrar service"
+
+	Description 
+		|Callsign Registrar protocol supporting query function.
+
+    Using Goedel.Cryptography.Jose
+    Using Goedel.Cryptography.Dare
+	Using Goedel.Callsign.Registry
+	Using Goedel.Callsign
+	
+	Extern CallsignRequest
+	Extern CallsignResponse
+
+	Section 3 "Shared Classes"
+
+
+	Description
+		|Protocol interactions supported by the Mesh Service.
+
+    Service MeshService "_tbs1._tcp" "tbs1" CallsignRequest CallsignResponse
+		Description
+
+
+	
+	Section 3 "Transactions"	
+	
+	
+	// Retrieve a callsign.
+	Transaction Service Query QueryRequest QueryResponse
+		Description
+			|Request resolution of a profile bound to a callsign or registration identifier.
+			|Returns an envelope containing the signed registration (if found).
+
+	Message QueryRequest
+		Description
+			|Request resolution of a profile bound to a callsign or registration identifier. 
+		External CallsignRequest
+
+		String CallSign
+			Description
+				|The callsign being requested in canonical form.
+
+		String RegistrationId
+			Description
+				|The registration identifier of a registration in the log.
+	
+		String LogId
+			Description
+				|The unique identifier of an append only log whose signed Notarization
+				|entry is requested.
+
+	Message QueryResponse
+		Description
+			|Return the result of a QueryRequest
+		External CallsignResponse
+
+		Struct Enveloped<Registration> Result
+			Description
+				|The registration specified in the result (if found).	
+
+		Struct Enveloped<Notarization> Notarization
+			Description
+				|The latest notarization entry corresponding to the specified log.
+

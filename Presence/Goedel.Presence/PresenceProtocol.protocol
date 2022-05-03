@@ -1,0 +1,47 @@
+﻿Protocol Goedel.Presence PresenceProtocol PresenceProtocol
+
+	Section 2 "Registrar service"
+
+	Description 
+		|Callsign Registrar protocol supporting query function.
+
+    Using Goedel.Cryptography.Jose
+    Using Goedel.Cryptography.Dare
+
+	
+	Extern PresenceRequest
+	Extern PresenceResponse
+
+	Section 3 "Shared Classes"
+
+
+	Description
+		|Protocol interactions supported by the Mesh Service.
+
+    Service PresenceService "_tbs2._tcp" "tbs2" PresenceRequest PresenceResponse
+		Description
+
+
+	
+	Section 3 "Transactions"	
+	
+	
+	// Make presence request.
+	Transaction Service Query QueryRequest QueryResponse
+		Description
+			|Request resolution of a profile bound to a callsign or registration identifier.
+			|Returns an envelope containing the signed registration (if found).
+
+	Message QueryRequest
+		Description
+			|Register connection request. 
+		External PresenceRequest
+
+
+	Message QueryResponse
+		Description
+			|Return the result of a connection request
+		External PresenceResponse
+
+
+

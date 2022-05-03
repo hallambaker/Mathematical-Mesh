@@ -1,0 +1,8 @@
+﻿
+Namespace Goedel.Presence.Messaging
+
+	Exception TBS
+		Console "Exception TBS"
+		Description
+			|TBS
+

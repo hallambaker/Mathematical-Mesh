@@ -1,0 +1,53 @@
+﻿Namespace Goedel.Callsign CallsignConstants
+	|Constants specified in hallambaker-callsign
+
+
+File ReservedTopLevelDomain
+	String CallsignDomain "mesh"
+		Description
+			|The toplevel pseudo-domain for mesh assigned names.
+
+File CharacterPageCallsigns
+
+	String CharacterPageDigitsId "CharacterPageDigits"
+		Description
+			|Character page specifying digits and spaces
+	String CharacterPageLatinId "CharacterPageLatin"
+		Description
+			|Character page specifying Latin-1 character set
+
+
+
+File ReservedCallsigns
+
+	String CallsignProvider0 "provisional"
+		Description
+			|Provisional provider
+
+	String CallsignProvider1 "provider"
+		Description
+			|Mesh service provider
+
+	String CallsignAlice "alice"
+		Description
+			|Alice original callsign
+
+	String CallsignAlice1 "Alice"
+		Description
+			|Alice updated callsign
+
+	String CallsignBob "bob"
+		Description
+			|Bob original callsign
+
+	String CallsignQuartermaster "quartermaster"
+		Description
+			|The quartermaster's callsign.
+
+File RegistrationReasons
+	Enum RegistrationReason "Registration reasons"
+		Code Initial "Initial registration"
+		Code Update "Update of prior registration"
+		Code Voluntary "Voluntary transfer of registration"
+		Code Administrative "Administrative transfer of registration"
+		Code Revoke "Registration revocation"
