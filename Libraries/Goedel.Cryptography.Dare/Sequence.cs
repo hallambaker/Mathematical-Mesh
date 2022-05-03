@@ -799,7 +799,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
         // Hack: should check that the digest algorithm is the same as the sequence
         // Hack: should verify the digest value and signature.
 
-
+        //Console.WriteLine($"Append Envelope ");
         var dataPosition = AppendEnvelope(envelope.Body, header, trailer);
         var sequenceFrameIndex = new SequenceFrameIndex(this, envelope, dataPosition);
 
@@ -825,6 +825,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
         //Apply(header, envelope.Body, envelope.Trailer);
         var dataHeader = header.GetBytes(false);
         var dataTrailer = trailer.GetBytes(false);
+
+        //Console.WriteLine($"Append Frame ${dataHeader.Length} ${body?.Length} ${dataTrailer?.Length}");
+        //Console.WriteLine($"    {JbcdStream.LockGlobal}");
         return AppendFrame(dataHeader, body, dataTrailer);
         }
 

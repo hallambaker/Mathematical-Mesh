@@ -49,17 +49,17 @@ partial class Program {
 
     static void Main() {
         //Logger.LogInformation ("Start test {time}", DateTime.Now);
-        
-        TestService.Test().MeshDeviceConnectPIN();
-        
-        
-        
-        
+
+        //TestService.Test().MeshCatalogGroup();
+        //ShellTests.Test().TestAccountDelete();
+        for (int i = 0; i < 10; i++) {
+            ShellTestsAdmin.Test().TestMessageContactRemote();
+            }
         //for (int i = 0; i < 10; i++) {
         //    TestService.Test().MeshCatalogGroup();
         //    }
 
-        //ShellTestsAdmin.Test().TestProfileConnectPin();
+        //ShellTestsAdmin.Test().TestProfileConnectStaticQR();
         //ShellTestsAdmin.Test().TestMessageGroup();
 
 

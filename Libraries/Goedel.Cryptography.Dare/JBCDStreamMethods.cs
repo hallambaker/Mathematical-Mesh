@@ -282,15 +282,15 @@ public partial class JbcdStream {
             }
 
         catch (Exception exception) {
+            exception.Future();
+            throw;
+            }
+        finally {
             LockGlobal?.Exit();
             if (lockTaken) {
                 Monitor.Exit(LockGlobal);
                 }
-
-            exception.Future();
-            throw;
             }
-
         }
 
 

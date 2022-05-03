@@ -156,7 +156,7 @@ public class MeshPersist : Disposable {
                     AccountEntry accountEntry,
                     List<CatalogedCallsign> catalogedCallsigns) {
         StoreEntry containerEntry;
-
+        //Console.WriteLine("Start Bind");
         accountEntry.ProfileUdf = accountEntry.ProfileUdf;
 
         var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
@@ -171,10 +171,12 @@ public class MeshPersist : Disposable {
 
 
             containerEntry = Container.New(accountEntry) as StoreEntry;
-
+            //Console.WriteLine("Start write");
             foreach (var catalogedCallsign in catalogedCallsigns) {
+                //Console.WriteLine($"Callsign {catalogedCallsign.Canonical} -> {catalogedCallsign.ProfileUdf}");
                 CatalogCallsign.New(catalogedCallsign);
                 }
+            //Console.WriteLine("End write");
             }
 
         // Lock the container entry so that we can initialize it.
@@ -189,6 +191,8 @@ public class MeshPersist : Disposable {
             new Spool(directory, SpoolOutbound.Label).Dispose();
             new Spool(directory, SpoolLocal.Label).Dispose();
             }
+        //Console.WriteLine("End bind");
+
         }
 
     /// <summary>
@@ -200,10 +204,10 @@ public class MeshPersist : Disposable {
     public bool AccountUnbind(IJpcSession jpcSession, string accountAddress) {
 
         using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Unbind);
-        accountAddress.CannonicalAccountAddress().AssertEqual(accountHandle.AccountAddress, NYI.Throw);
+        //accountAddress.CannonicalAccountAddress().AssertEqual(accountHandle.AccountAddress, NYI.Throw);
 
         lock (Container) {
-            return Container.Delete(accountHandle.AccountAddress);
+            return Container.Delete(jpcSession.TargetAccount);
             }
         }
 
@@ -470,15 +474,15 @@ public class MeshPersist : Disposable {
         var senderService = senderAccount.AccountAddress.GetService();
 
         foreach (var recipient in accounts) {
-            var recipientService = recipient.GetService();
-            if (recipientService == senderService) {
-                // Is the message for delivery to a local user?
-                MessagePostLocal(jpcSession, recipient, dareMessage);
-                }
-            else {
-                // Post to the outbound spool
+            var recipientUdf = CatalogCallsign.Get(recipient);
+
+            if (recipientUdf is null) {
                 MessagePostRemote(recipient, dareMessage);
                 }
+            else {
+                MessagePostLocal(jpcSession, recipient, dareMessage);
+                }
+
             }
         return identifier;
         }
@@ -486,6 +490,10 @@ public class MeshPersist : Disposable {
     bool MessagePostLocal(
         IJpcSession jpcSession,
         string recipient, DareEnvelope dareMessage) {
+
+
+        // ToDo: refactor mapping of callsigns/Udfs to account records and returning a handle.
+
 
         using var recipientAccount = GetAccountHandleLocked(recipient, jpcSession, AccountPrivilege.Local);
         recipientAccount.PostInbound(dareMessage);
@@ -701,9 +709,8 @@ public class MeshPersist : Disposable {
 
             return new LockedCatalogedEntry<AccountEntry>(result, Logger);
             }
-
-
         }
+
 
     AccountHandleLocked GetAccountHandleLocked(string account,
                 IJpcSession session,
@@ -764,7 +771,7 @@ public class MeshPersist : Disposable {
 
     string GetProfileUdf(string accountIn) {
         var account = accountIn.CannonicalAccountAddress();
-        return CatalogCallsign.Get(account).ProfileUdf;
+        return CatalogCallsign.Get(account)?.ProfileUdf;
         }
 
     #endregion

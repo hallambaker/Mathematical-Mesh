@@ -221,8 +221,10 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// </summary>
     /// <param name="dareMessage"></param>
     public virtual StoreEntry Apply(DareEnvelope dareMessage) {
-        var frameIndex = Container.Append(dareMessage);
 
+        //Console.WriteLine($"Append");
+        var frameIndex = Container.Append(dareMessage);
+        //Console.WriteLine($"Commit");
         return CommitTransaction(frameIndex, dareMessage.JsonObject);
         }
 

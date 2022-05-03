@@ -305,26 +305,32 @@ public partial class ContextUser : ContextAccount {
         }
 
 
-    /// <summary>
-    /// Bind to a service under the account address <paramref name="accountAddress"/>.
-    /// </summary>
-    /// <param name="accountAddress">The account address to bind.</param>
-    public void BindService(string accountAddress) {
 
+    List<Enveloped<CallsignBinding>> MakeBindings(
+                Profile profile, string accountAddress) {
         var CallsignBinding = new CallsignBinding() {
             Canonical = accountAddress.CannonicalAccountAddress(),
             Display = accountAddress,
-            ProfileUdf = ProfileUser.Udf,
+            ProfileUdf = profile.Udf,
             Services = new() {
                 new NamedService() {
                     Prefix = MeshService.WellKnown
                     }
                 }
             };
-        var envelopedBinding = CallsignBinding.Envelope(signingKey:KeyAdministratorSign);
-        var envelopedBindings = new List<Enveloped<CallsignBinding>> {
+        var envelopedBinding = CallsignBinding.Envelope(signingKey: KeyAdministratorSign);
+        return new List<Enveloped<CallsignBinding>> {
             new Enveloped<CallsignBinding>( envelopedBinding)
             };
+        }
+
+    /// <summary>
+    /// Bind to a service under the account address <paramref name="accountAddress"/>.
+    /// </summary>
+    /// <param name="accountAddress">The account address to bind.</param>
+    public void BindService(string accountAddress) {
+
+        var envelopedBindings = MakeBindings(ProfileUser, accountAddress);
 
         // Request binding
         var createRequest = new BindRequest() {
@@ -751,11 +757,13 @@ public partial class ContextUser : ContextAccount {
             };
 
 
+        var envelopedBindings = MakeBindings(profileGroup, groupName);
 
         // here we request creation of the group at the service.
         var createRequest = new BindRequest() {
             AccountAddress = groupName,
-            EnvelopedProfileAccount = profileGroup.GetEnvelopedProfileAccount()
+            EnvelopedProfileAccount = profileGroup.GetEnvelopedProfileAccount(),
+            EnvelopedCallsignBinding = envelopedBindings
             };
 
 
@@ -765,9 +773,9 @@ public partial class ContextUser : ContextAccount {
 
         // Since the service does not know this account (yet)
         var credentialPrivate = new MeshKeyCredentialPrivate(
-                    activationGroup.CommonAuthenticationKey as KeyPairAdvanced, groupName);
+                    activationGroup.CommonAuthenticationKey as KeyPairAdvanced, profileGroup.Udf);
 
-        var groupClient = MeshMachine.GetMeshClient(credentialPrivate, groupName);
+        var groupClient = MeshMachine.GetMeshClient(credentialPrivate, profileGroup.Udf);
 
 
         var createResponse = groupClient.BindAccount(createRequest);

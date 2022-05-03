@@ -174,8 +174,11 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// </summary>
     /// <param name="catalogEntry">The entry to add.</param>
     public void New(T catalogEntry) {
+        //Console.WriteLine($"Prepare");
         var envelope = PersistenceStore.PrepareNew(catalogEntry);
+        //Console.WriteLine($"Apply");
         PersistenceStore.Apply(envelope);
+        //Console.WriteLine($"Update");
         NewEntry(catalogEntry);
         }
 
