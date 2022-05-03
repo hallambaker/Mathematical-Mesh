@@ -6,7 +6,7 @@ For example, Alice creates a personal account:
 <div="terminal">
 <cmd>Alice> meshman account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+UDF=MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
 </div>
 ~~~~
 
@@ -16,48 +16,48 @@ The account profile created is:
 {
   "ProfileUser":{
     "ProfileSignature":{
-      "Udf":"MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF",
+      "Udf":"MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"ni85QjaM8wU5vRoKmwnxD0F9c4SK303Mk0Gad5WlJ8hgB
-  iYWw9oNzmi32sw8XAmer6UM0SoTc24A"}}},
+          "Public":"SjBIjXHPFfPW5pVqo-KquT4qCRJOL82yNbDf9xFabi0vu
+  nP3XGffV8-s8WJUe_H3WCX9bLIW5zuA"}}},
     "AccountAddress":"alice@example.com",
-    "ServiceUdf":"MDSK-EUHS-QXGD-LKOF-AVC7-V2RH-LV6Z",
+    "ServiceUdf":"MD3P-ALTL-T6I4-U6ER-O4ZD-5AP5-J6SO",
     "EscrowEncryption":{
-      "Udf":"MBZP-WZAZ-B6KQ-MYYP-H7KD-VVBA-7T6U",
+      "Udf":"MAND-BKQ3-XXGY-AYTS-L7VX-OOHW-HT7P",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"tR85RCqWv8-X5Bk0NU4EVljQFJ585FNE3ZwyWzXSVtJHi
-  x0FZ7jZQ7xg9uurw8KOKl5M0UW7LLOA"}}},
+          "Public":"YBdCsK_SyB5pgAkJoxlKjmsXS9bZtyMS1RVJVETLXR1F7
+  Wp30L85U84DX7LfsGPKS3YV8tH_FdqA"}}},
     "AdministratorSignature":{
-      "Udf":"MBDV-XXNH-2RUB-RBMZ-5NG7-L3CD-3THV",
+      "Udf":"MAJ5-HQAF-XXGK-W6BW-EGH3-ELNH-EQ7I",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"HUwN4RVhGczFlOm2bDcevvVYyd6gjdq33QqV8Uq39dGas
-  RzQn9_PVgCBRI_8MjiverTKdaaEI32A"}}},
+          "Public":"WmDloJ7YAL7FeDYIpjXW5cF5pJ2xwYXD2s7_YBsJrys15
+  KedP4C5y58uN0n3ufc0uOyx6vtRqocA"}}},
     "CommonEncryption":{
-      "Udf":"MDPR-FJVW-GK5Z-2LJA-LMYV-XSCH-HE2C",
+      "Udf":"MASL-5B72-3K3B-PKQR-MGHP-L5QP-MVOA",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"55jUkmqn3gwG0b2HzDVu3Hlf5sO6GgVlj_vaYFwAEksDc
-  My3wyvUwt9ojkeUKT6304Dwfrh-Uw8A"}}},
+          "Public":"yx7_72c7tOCRGRmKQQa9ja2v9HZEnKtFHowFzFehHJrHK
+  zRrwyaVf3WvudZE4xy680tRIoF7u4aA"}}},
     "CommonAuthentication":{
-      "Udf":"MBVI-EWLO-EI7J-OVAK-GGZH-6YHW-ZJSU",
+      "Udf":"MA76-DK4C-DZFG-CAVP-YCTU-X6O5-ZU5M",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"fTU3TeB1-7K8SZpo4tQxZPpJAb-_d3NIdJhlkxWaiZogJ
-  REK9adPf9Kns5mqr11UTToIMhzfdJaA"}}},
+          "Public":"54SUa8ieu3HENQpsiugoJtfALqBUCx_JcPOYJagYGZsCA
+  VE9ju754z8YW2Gzya-sV-hdaUlSXrMA"}}},
     "CommonSignature":{
-      "Udf":"MAMP-BX4G-AKK2-YHPA-IXJV-Z2KV-UXBW",
+      "Udf":"MDWZ-36RF-622V-XT6X-O6KB-3S5J-4JE3",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"Y6-D2DbbKlaVXvG5ZQweLd5_kP1ECACR40bDmpg-Y4Ks9
-  2FNe-uysWUrM_LmQKOIPjjr5L8NOBEA"}}}}}
+          "Public":"xruAnshybRzxDhw-Mk2t0bQ43bkEj13cJF6twKb3x-jWx
+  uOfMoRL-xqqhx5p6ZGS-w8HtNIyJ14A"}}}}}
 ~~~~
 

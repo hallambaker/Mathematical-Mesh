@@ -8,29 +8,30 @@ the account and the list of roles that have been authorized for the device..
 {
   "ConnectionDevice":{
     "Authentication":{
-      "Udf":"MAVT-XX2Y-B6D2-7SJ3-VVTW-MQ6C-S2MU",
+      "Udf":"MD75-RPX5-5NK4-FHKK-2PSE-DWSY-WU6Y",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"yrFrem_3XKqaQAvnlTxaZ2msYD-dBceF8NOssaE7BS5bh
-  BD_ViasKtPXFncsZ-4LdAjpHE2bWKIA"}}},
+          "Public":"W28GpEdJVvrelRzN2hCyOI3lg5yK2nkzsQyyq4YzfuN3U
+  wCPWc73iuehOe5u1XeJKU9Y4MiI5UGA"}}},
+    "ProfileUdf":"MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V",
     "Roles":["message",
       "web"
       ],
     "Signature":{
-      "Udf":"MCJE-YAQI-I4OU-EXTX-CQ5W-IORV-HKH4",
+      "Udf":"MBLJ-ADU3-FC24-MNUN-QVH2-7PRQ-XXQA",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"ayCD-NfNvsgHfxy4lyDEysG8PD36zgLq1AZmh86_R4qY2
-  IpzPiymPiunbLL-pRZy8pPKDiwHPG0A"}}},
+          "Public":"YJF91CS0ZhNQkzdmyfL_Eg5oSRjNXyd1cyKHsKXfGTYwc
+  KfS1FpEolLTL0B67NOkzPAeKo-7aOwA"}}},
     "Encryption":{
-      "Udf":"MDCW-SXW2-ROVU-4R3G-E5R3-2JGI-YBPF",
+      "Udf":"MAST-EV3R-CLXM-LVOO-L3FH-QHJ7-WATP",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"Un-_awwiGjXgaO99A66zrVJwUi1nUaYAuftP4HTmsnZg_
-  fhq3Z0rcja-z-er-BbJ9MHAqf3TxfyA"}}}}}
+          "Public":"BCNPHKNfgzlzwVjqv1u9uHkyshl6qJUZgj_bDwwLki5L1
+  u88TCB6Kr1sIcxqdihoCEUMqGuWsL4A"}}}}}
 ~~~~
 
 The ConnectionService assertion is used to authenticate the device to the 
@@ -44,11 +45,12 @@ The corresponding ConnectionService assertion is:
 {
   "ConnectionService":{
     "Authentication":{
-      "Udf":"MAVT-XX2Y-B6D2-7SJ3-VVTW-MQ6C-S2MU",
+      "Udf":"MD75-RPX5-5NK4-FHKK-2PSE-DWSY-WU6Y",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"yrFrem_3XKqaQAvnlTxaZ2msYD-dBceF8NOssaE7BS5bh
-  BD_ViasKtPXFncsZ-4LdAjpHE2bWKIA"}}}}}
+          "Public":"W28GpEdJVvrelRzN2hCyOI3lg5yK2nkzsQyyq4YzfuN3U
+  wCPWc73iuehOe5u1XeJKU9Y4MiI5UGA"}}},
+    "ProfileUdf":"MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V"}}
 ~~~~
 

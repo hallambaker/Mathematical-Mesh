@@ -1,7 +1,7 @@
 ~~~~
 KeyValue:
-  DE BB 13 26  28 7A 83 5B  58 65 38 B1  48 8C 7C
+  B2 48 11 31  E3 7A 9E 12  E5 4C AC 7F  10 0D 8D
 
 Encryption/Authenticator UDF:
-  UXPL-WEZG-FB5I-GW2Y-MU4L-CSEM-PQ
+  RCZE-QEJR-4N5J-4EXF-JSWH-6EAN-RU
 ~~~~

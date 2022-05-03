@@ -25,11 +25,11 @@ the contents are encrypted under the corresponding encryption key:
 <rsp>File: ciphertext.dare
     Bytes: 16
     Encryption Algorithm: A256CBC
-        Recipient: MDPR-FJVW-GK5Z-2LJA-LMYV-XSCH-HE2C
+        Recipient: MASL-5B72-3K3B-PKQR-MGHP-L5QP-MVOA
     Digest Algorithm: S512
-    Payload Digest: 508336AAD1C39BD104DC6D7BC92DEBA0D2CF71351E28029F6
-298F80EEF2DEFD19F707FC250DC6D89B1D0ADCF39D5DE89583A45DF026895403BBE99
-259AB04B8D
+    Payload Digest: 1875DE2E83F146779047232C1107738D84826F1C5F8FA810F
+2BA22CE3EB2740C797F0D117019A3E5DC638213256CB0221477168AB84F3AF37FA563
+3B97359015
 </div>
 ~~~~
 
@@ -53,7 +53,7 @@ encoded:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare encode TestDir1 ^
-    /encrypt=FONQ-44SZ-FPSK-PIRE-J646-OCG4-ZY
+    /encrypt=IKT5-XING-IF3Y-UC52-GWRI-RDWI-NY
 <rsp>ERROR - No encryption key is available
 </div>
 ~~~~
@@ -95,12 +95,12 @@ The command to verify a signed message is identical:
 <rsp>File: TestFile1.txt.mesh.dare
     Bytes: 16
     Encryption Algorithm: A256CBC
-        Recipient: MDKO-TGII-XQC2-R5LG-TZFK-AIVH-37TT
+        Recipient: MD4C-B4MC-XHLK-YDVY-JZTY-RLYI-OVI7
     Digest Algorithm: S512
-    Payload Digest: 838A16E47163FF824E517D42AA52CE574952E1552B661C59B
-212869180F8C6AB278F89DF41F21A0AC6A3A1994B439216C4362D19127DF267B44973
-BEADA93179
-        Signer: MAMP-BX4G-AKK2-YHPA-IXJV-Z2KV-UXBW
+    Payload Digest: C719607FDEC76E49FA8C95CB818A9EFE59F23CEA083C49902
+2DB3F719FE2D09E1D00319BF73084586FAFB137FB4E4A4173C526668590D1793B7551
+38B968423E
+        Signer: MDWZ-36RF-622V-XT6X-O6KB-3S5J-4JE3
 </div>
 ~~~~
 
@@ -112,7 +112,7 @@ level otherwise.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare ^
-    /encrypt=FONQ-44SZ-FPSK-PIRE-J646-OCG4-ZY
+    /encrypt=IKT5-XING-IF3Y-UC52-GWRI-RDWI-NY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -146,7 +146,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare ^
-    /encrypt=FONQ-44SZ-FPSK-PIRE-J646-OCG4-ZY
+    /encrypt=IKT5-XING-IF3Y-UC52-GWRI-RDWI-NY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~

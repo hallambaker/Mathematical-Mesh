@@ -60,3 +60,9 @@
     Tasks and appointments assigned to the user including calendar entries and to do lists.
 </dd>
 </dl>
+<dl>
+<dt>Callsign Catalog
+<dd>
+    Catalog identifier used on the service.
+</dd>
+</dl>

@@ -6,7 +6,7 @@ her closest friends:
 <div="terminal">
 <cmd>Alice> meshman group create groupw@example.com /web
 <rsp>Account=groupw@example.com
-UDF=MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
+UDF=MDUH-SCDO-UMPO-LCBP-QGOU-AZIG-PJ5D
 </div>
 ~~~~
 
@@ -32,7 +32,7 @@ Alice adds herself to the group, now she can decrypt:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group add groupw@example.com alice@example.com
-<rsp>alice@example.com [MA3U-EQIV-5G6I-SK6H-2MSE-HEN3-SDVK]
+<rsp>alice@example.com [MDBY-XPMU-ABQL-ZN7F-X4E6-JBPX-DHQ4]
 
 <cmd>Alice> meshman account sync /auto
 <cmd>Alice> meshman dare decode groupsecret.dare grouptext_alice.dare
@@ -50,7 +50,7 @@ Instead she adds Bob to the group as a member:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group add groupw@example.com bob@example.com
-<rsp>bob@example.com [MA3U-EQIV-5G6I-SK6H-2MSE-HEN3-SDVK]
+<rsp>bob@example.com [MDBY-XPMU-ABQL-ZN7F-X4E6-JBPX-DHQ4]
 
 </div>
 ~~~~
@@ -74,7 +74,7 @@ Removing Bob from the group immediately withdraws his access.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group delete groupw@example.com bob@example.com
-<rsp>bob@example.com [MA3U-EQIV-5G6I-SK6H-2MSE-HEN3-SDVK]
+<rsp>bob@example.com [MDBY-XPMU-ABQL-ZN7F-X4E6-JBPX-DHQ4]
 
 </div>
 ~~~~

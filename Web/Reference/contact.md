@@ -103,7 +103,7 @@ by means of a dynamic URI.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact exchange mcu://carol@example.com/EFQC-XEWO-7LNZ-IZIW-XDKW-3YOS-M2RA
+<cmd>Alice> meshman contact exchange mcu://carol@example.com/EFQF-DPLD-IIUR-ZIUO-G5PK-4WRD-ZFGA
 <rsp></div>
 ~~~~
 
@@ -134,7 +134,7 @@ presented as a URI or QR code without reciprocating the exchange.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact fetch mcu://doug@example.com/EFQL-IXDA-ILY7-LGDX-YO3R-FYFO-VUMQ
+<cmd>Alice> meshman contact fetch mcu://doug@example.com/EFQJ-TZRT-O3DN-YTJH-TOUC-IMGI-6KAQ
 <rsp>[CatalogedContact]
 
 </div>
@@ -225,29 +225,29 @@ The 'contact list' command lists all data in the contact catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
-  Person MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
-  Anchor MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+<rsp>Entry<CatalogedContact>: MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
+  Person MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
+  Anchor MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
   Address alice@example.com
 
-Entry<CatalogedContact>: NA2N-NMA3-3OLA-B65Y-JSYR-WDIO-DGBE
+Entry<CatalogedContact>: NBE6-3ZYP-G52L-B6HG-EIRK-XZ7H-73HR
   Person 
-  Anchor MDRS-IKMP-S6SZ-MR5M-GOIJ-SIHS-W5SJ
+  Anchor MDDO-B6Z7-4YXY-BJLQ-WFQZ-BOMG-QB6Y
   Address bob@example.com
 
-Entry<CatalogedContact>: NC77-6TI6-PZTR-SFSV-P2NJ-QP5O-IMTS
+Entry<CatalogedContact>: NDGW-DE77-QMTX-65RU-GNV2-LMT3-TFDI
   Person 
-  Anchor MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
+  Anchor MDUH-SCDO-UMPO-LCBP-QGOU-AZIG-PJ5D
   Address groupw@example.com
 
-Entry<CatalogedContact>: NB5W-WWHH-FPQD-BX6B-4CJK-ODPR-DVWT
+Entry<CatalogedContact>: NCX4-Y3QO-5DIZ-23JD-HHLG-EY5C-T3KQ
   Person 
-  Anchor MASC-RP6Y-4AQ5-HYVY-IOMY-HSXT-FJU5
+  Anchor MDUH-SCDO-UMPO-LCBP-QGOU-AZIG-PJ5D
   Address groupw@example.com
 
-Entry<CatalogedContact>: NDYV-ZB5V-AT2C-NFK3-D5LM-UG2X-Y4IB
+Entry<CatalogedContact>: NB3K-UFSL-CNOL-VR4I-BXVW-KEUE-4RFG
   Person 
-  Anchor MBU5-BTJ4-JAXZ-I2WV-WP53-MRJX-DONU
+  Anchor MB3W-TFQZ-FMLI-7V2O-TINP-Z33G-VSLD
   Address carol@example.com
 
 </div>

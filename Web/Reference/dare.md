@@ -221,7 +221,7 @@ with the extension `.undare` otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare /encrypt=FONQ-44SZ-FPSK-PIRE-J646-OCG4-ZY
+<cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare /encrypt=IKT5-XING-IF3Y-UC52-GWRI-RDWI-NY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -368,7 +368,7 @@ file name is the input file name with the additional extension `.dare`.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare/key=FONQ-44SZ-FPSK-PIRE-J646-OCG4-ZY
+<cmd>Alice> meshman dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare/key=IKT5-XING-IF3Y-UC52-GWRI-RDWI-NY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -546,7 +546,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare /encrypt=FONQ-44SZ-FPSK-PIRE-J646-OCG4-ZY
+<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare /encrypt=IKT5-XING-IF3Y-UC52-GWRI-RDWI-NY
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~

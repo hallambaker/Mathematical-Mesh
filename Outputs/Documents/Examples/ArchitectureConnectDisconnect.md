@@ -4,7 +4,7 @@ Alice disconnects the new device:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman device delete MA75-5N5Q-BPQF-5LMP-AN6X-NM4E-U4KS
+<cmd>Alice> meshman device delete MCI6-2IJ3-PFLT-GVUQ-5PN7-B337-VWWQ
 <rsp>ERROR - Cannot access a closed file.
 </div>
 ~~~~

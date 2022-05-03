@@ -68,7 +68,7 @@ being that all authorizations are denied.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman device accept 6WH6-YJIZ-OKA7-I54P-WZPA-VXTV-PHKJ /message /web
+<cmd>Alice> meshman device accept CI4K-GV7W-VRTX-QTNB-ZNBG-652H-GMWJ /message /web
 <rsp></div>
 ~~~~
 
@@ -170,9 +170,9 @@ device profile by polling the manufacturer service.
 ~~~~
 <div="terminal">
 <cmd>Alice4> meshman device complete
-<rsp>   Device UDF = MBOB-5GVY-Q43B-KODG-UJ3E-LY7V-36UV
+<rsp>   Device UDF = MBYN-VC7T-AIEX-KCK2-WQLP-4B52-3GWY
    Account = alice@example.com
-   Account UDF = MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
+   Account UDF = MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
 </div>
 ~~~~
 
@@ -232,7 +232,7 @@ install   Connect by means of a connection URI from an administration device.
 
 ~~~~
 <div="terminal">
-<cmd>Alice4> meshman device install EBKG-ED3O-HBHK-ZQGS-EX4H-X22S-X4.medk
+<cmd>Alice4> meshman device install EDRL-4MZP-3OUD-OZBS-SPZN-7OSO-OM.medk
 <rsp></div>
 ~~~~
 
@@ -262,9 +262,9 @@ by means of a URI supplied by an administration device.
 
 ~~~~
 <div="terminal">
-<cmd>Alice5> meshman device join mcu://alice@example.com/ACT6-REAK-44NL-JPVW-SIFH-XUZR-UU
-<rsp>   Device UDF = MAEB-HMZE-CJPW-4XOT-6P7M-D456-CSQ4
-   Witness value = LUFR-32LY-CHRM-NOF3-ETQY-LQBI-KXHI
+<cmd>Alice5> meshman device join mcu://alice@example.com/AAOW-DIW2-ZTBT-QUJP-BZZA-HF7N-SA
+<rsp>   Device UDF = MDRW-QCTK-RYYW-VMFP-2P5B-LCO5-LRV2
+   Witness value = PDH5-DZIR-VZKZ-YWHY-EFS6-BRZI-L5CZ
 </div>
 ~~~~
 
@@ -295,42 +295,42 @@ The `device list` command lists the device profiles in the device catalog.
 <div="terminal">
 <cmd>Alice> meshman device list
 <rsp>ContextDevice Local: -
-  Base UDF MB4Y-QXYP-J6HA-666R-TRAL-OCGI-WDZH
+  Base UDF MDJY-YAXQ-VATX-F52K-YT6M-YMUK-D3PV
   Mesh UDF 
-Encrypted: MBV5-TS4Z-MTT3-H577-ZB7X-IBP3-XVN5
+Encrypted: MCPU-YLOY-3PGZ-RS2A-JA2G-73P6-DMQ2
   Profile User
-    Signed by: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
-      KeyOfflineSignature: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF 
+    Signed by: MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
+      KeyOfflineSignature: MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V 
       AccountAddress : alice@example.com 
-      KeyEncryption:       MDPR-FJVW-GK5Z-2LJA-LMYV-XSCH-HE2C 
+      KeyEncryption:       MASL-5B72-3K3B-PKQR-MGHP-L5QP-MVOA 
   Profile Device
-    Signed by: MB4Y-QXYP-J6HA-666R-TRAL-OCGI-WDZH
-      ProfileSignature: MB4Y-QXYP-J6HA-666R-TRAL-OCGI-WDZH 
-      KeySignature:        MBU5-LHYH-4XVT-GYUU-7SNT-NQFY-GQOK 
-      KeyEncryption:       MAU7-F5XO-4JHY-DHSG-27FS-CXSE-4R37 
-      KeyAuthentication:   MDHM-LPTT-C6RG-DYSF-3UN4-YMG5-YPDF 
+    Signed by: MDJY-YAXQ-VATX-F52K-YT6M-YMUK-D3PV
+      ProfileSignature: MDJY-YAXQ-VATX-F52K-YT6M-YMUK-D3PV 
+      KeySignature:        MCQU-URCN-F6YN-UXJT-HMTB-IT46-LZI3 
+      KeyEncryption:       MATZ-4HLY-OSDB-2MPT-UG75-AWY4-EAYU 
+      KeyAuthentication:   MC6M-NIE2-IIBE-QOZR-PAWL-VPCY-L7MM 
   Connection Device
-    Signed by: MBDV-XXNH-2RUB-RBMZ-5NG7-L3CD-3THV
-      KeyAuthentication:    
+    Signed by: MAJ5-HQAF-XXGK-W6BW-EGH3-ELNH-EQ7I
+      KeyAuthentication:   MCLZ-7JDK-R6X2-3TL6-ZAMN-3ZDK-5P3C 
 
 ContextDevice Local: -
-  Base UDF MA75-5N5Q-BPQF-5LMP-AN6X-NM4E-U4KS
+  Base UDF MCI6-2IJ3-PFLT-GVUQ-5PN7-B337-VWWQ
   Mesh UDF 
-Encrypted: MDCW-SXW2-ROVU-4R3G-E5R3-2JGI-YBPF
+Encrypted: MAST-EV3R-CLXM-LVOO-L3FH-QHJ7-WATP
   Profile User
-    Signed by: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF
-      KeyOfflineSignature: MAMQ-ETEA-JBL3-6UKE-LRNT-DGC3-OIDF 
+    Signed by: MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
+      KeyOfflineSignature: MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V 
       AccountAddress : alice@example.com 
-      KeyEncryption:       MDPR-FJVW-GK5Z-2LJA-LMYV-XSCH-HE2C 
+      KeyEncryption:       MASL-5B72-3K3B-PKQR-MGHP-L5QP-MVOA 
   Profile Device
-    Signed by: MA75-5N5Q-BPQF-5LMP-AN6X-NM4E-U4KS
-      ProfileSignature: MA75-5N5Q-BPQF-5LMP-AN6X-NM4E-U4KS 
-      KeySignature:        MBQA-M2E2-PZPR-GIM3-JCRJ-QDDC-NJXL 
-      KeyEncryption:       MAAB-KTVM-DBAR-H2MO-BR65-7ADT-MLLA 
-      KeyAuthentication:   MDRS-RHS6-4XIE-34VE-2ZLM-GKWL-VMMN 
+    Signed by: MCI6-2IJ3-PFLT-GVUQ-5PN7-B337-VWWQ
+      ProfileSignature: MCI6-2IJ3-PFLT-GVUQ-5PN7-B337-VWWQ 
+      KeySignature:        MANQ-RGWQ-WVGB-67TK-ZYSG-EHKO-L4VZ 
+      KeyEncryption:       MBS6-AI2M-MGJN-GLC5-23C7-VIOW-A2WU 
+      KeyAuthentication:   MANG-ZBCQ-EKY7-4COM-7WWA-XA43-HQ36 
   Connection Device
-    Signed by: MBDV-XXNH-2RUB-RBMZ-5NG7-L3CD-3THV
-      KeyAuthentication:   MAVT-XX2Y-B6D2-7SJ3-VVTW-MQ6C-S2MU 
+    Signed by: MAJ5-HQAF-XXGK-W6BW-EGH3-ELNH-EQ7I
+      KeyAuthentication:   MD75-RPX5-5NK4-FHKK-2PSE-DWSY-WU6Y 
 
 </div>
 ~~~~
@@ -361,12 +361,12 @@ the inbound message spool.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman device pending
-<rsp>MessageID: 6WH6-YJIZ-OKA7-I54P-WZPA-VXTV-PHKJ
+<rsp>MessageID: CI4K-GV7W-VRTX-QTNB-ZNBG-652H-GMWJ
         Connection Request::
-        MessageID: 6WH6-YJIZ-OKA7-I54P-WZPA-VXTV-PHKJ
+        MessageID: CI4K-GV7W-VRTX-QTNB-ZNBG-652H-GMWJ
         To:  From: 
-        Device:  MA75-5N5Q-BPQF-5LMP-AN6X-NM4E-U4KS
-        Witness: 6WH6-YJIZ-OKA7-I54P-WZPA-VXTV-PHKJ
+        Device:  MCI6-2IJ3-PFLT-GVUQ-5PN7-B337-VWWQ
+        Witness: CI4K-GV7W-VRTX-QTNB-ZNBG-652H-GMWJ
 </div>
 ~~~~
 
@@ -394,8 +394,8 @@ preconfig   Generate new device profile and publish as an EARL
 ~~~~
 <div="terminal">
 <cmd>Maker> meshman device preconfig
-<rsp>Device UDF: MBOB-5GVY-Q43B-KODG-UJ3E-LY7V-36UV
-File: EBKG-ED3O-HBHK-ZQGS-EX4H-X22S-X4.medk
+<rsp>Device UDF: MBYN-VC7T-AIEX-KCK2-WQLP-4B52-3GWY
+File: EDRL-4MZP-3OUD-OZBS-SPZN-7OSO-OM.medk
 </div>
 ~~~~
 
@@ -477,8 +477,8 @@ the `/pin` option.
 ~~~~
 <div="terminal">
 <cmd>Alice2> meshman device request alice@example.com
-<rsp>   Device UDF = MA75-5N5Q-BPQF-5LMP-AN6X-NM4E-U4KS
-   Witness value = 6WH6-YJIZ-OKA7-I54P-WZPA-VXTV-PHKJ
+<rsp>   Device UDF = MCI6-2IJ3-PFLT-GVUQ-5PN7-B337-VWWQ
+   Witness value = CI4K-GV7W-VRTX-QTNB-ZNBG-652H-GMWJ
 </div>
 ~~~~
 

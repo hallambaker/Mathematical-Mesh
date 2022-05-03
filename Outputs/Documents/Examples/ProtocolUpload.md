@@ -8,18 +8,18 @@ The request payload specifies the data to be appended to the stores.
     "Updates":[{
         "Container":"MMM_Bookmark",
         "Envelopes":[[{
-              "PayloadDigest":"nLPqGhIpOzHAKROd7NqK6i2E-_cbliqw9u
-  U5RS7LRV7-u2LtLvXjjl3zA0U4SkoiK7lQJxcywO3gS5189D3wnQ",
-              "TreeDigest":"-SDCQM4HDOThmLenmg1392iskvEeEDdhactIU
-  1D7cc9m25-4LH1eY-qyLo1nijRPL5AtULixbyUOlnpPM9FEZg",
+              "PayloadDigest":"P47V2OClDAPAUG_PcRZFuTGsaYuYtLMSuA
+  bUF6sSjyE9TUDZ_WqoDXNucXMhz_e9RdIKwpbK7PWWAzKPcv0M1g",
+              "TreeDigest":"VQ1o-pAgym3qdDDNaRr6qMPYi3EVx5If9IBgi
+  YzatEkqBGkKLMxeQ5MEnhltC3zOlPbxIih3Qc73HXCZ6Hxvqw",
               "dig":"S512",
-              "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQVZVLVJI
-  RFEtTjdFTC1HUU5CLTdVNzUtQzRUSi0zREtPIiwKICAiRXZlbnQiOiAiTmV3In0",
+              "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQ01QLVdP
+  QzUtRkxQVC1YV0lJLTU2RFctNVhMQi1VQ0tUIiwKICAiRXZlbnQiOiAiTmV3In0",
               "SequenceInfo":{
                 "Index":1,
                 "TreePosition":0}},
             "ewogICJDYXRhbG9nZWRCb29rbWFyayI6IHsKICAgICJVaWQiOiAi
-  TkFWVS1SSERRLU43RUwtR1FOQi03VTc1LUM0VEotM0RLTyIsCiAgICAiVXJpIjogI
+  TkNNUC1XT0M1LUZMUFQtWFdJSS01NkRXLTVYTEItVUNLVCIsCiAgICAiVXJpIjogI
   lNpdGVzLjIiLAogICAgIlRpdGxlIjogImh0dHA6Ly93d3cuZXhhbXBsZS5uZXQifX
   0"
             ]

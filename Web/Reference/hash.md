@@ -86,8 +86,8 @@ used as a key.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman hash mac TestFile1.txt
-<rsp>ABZX-RQMA-ERBB-NSCG-DNNC-O7LA-S4FM
-NCZA-OZQ3-7NCI-55GZ-3S7C-XRQL-IIH3
+<rsp>ADWI-QPQ6-A6O6-6GKA-NUI3-CILB-HPQM
+NAUL-ZACO-WCZG-LNHO-FG4Z-VTDE-G7BA
 </div>
 ~~~~
 

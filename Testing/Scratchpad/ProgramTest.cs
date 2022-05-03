@@ -52,9 +52,9 @@ partial class Program {
 
         //TestService.Test().MeshCatalogGroup();
         //ShellTests.Test().TestAccountDelete();
-        for (int i = 0; i < 10; i++) {
-            ShellTestsAdmin.Test().TestMessageContactRemote();
-            }
+        //for (int i = 0; i < 10; i++) {
+        //    ShellTestsAdmin.Test().TestMessageContactRemote();
+        //    }
         //for (int i = 0; i < 10; i++) {
         //    TestService.Test().MeshCatalogGroup();
         //    }

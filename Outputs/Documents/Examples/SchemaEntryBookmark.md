@@ -2,7 +2,7 @@
 {
   "CatalogedBookmark":{
     "LocalName":"Sites-1",
-    "Uid":"NDU5-XXSS-6KLM-MO6Q-S3F5-SJ7P-FO73",
+    "Uid":"NCWF-76MM-XKST-CE36-NPLP-T3JQ-37YW",
     "Uri":"http://www.example.com",
     "Title":"site1"}}
 ~~~~

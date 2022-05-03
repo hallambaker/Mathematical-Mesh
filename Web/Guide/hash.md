@@ -100,8 +100,8 @@ If no key is specified, a random secret is generated:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman hash mac TestFile1.txt
-<rsp>ABZX-RQMA-ERBB-NSCG-DNNC-O7LA-S4FM
-NCZA-OZQ3-7NCI-55GZ-3S7C-XRQL-IIH3
+<rsp>ADWI-QPQ6-A6O6-6GKA-NUI3-CILB-HPQM
+NAUL-ZACO-WCZG-LNHO-FG4Z-VTDE-G7BA
 </div>
 ~~~~
 
@@ -111,9 +111,9 @@ A key may be specified using the `/key` option:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman hash mac TestFile1.txt ^
-    /key=NCZA-OZQ3-7NCI-55GZ-3S7C-XRQL-IIH3
-<rsp>ABZX-RQMA-ERBB-NSCG-DNNC-O7LA-S4FM
-NCZA-OZQ3-7NCI-55GZ-3S7C-XRQL-IIH3
+    /key=NAUL-ZACO-WCZG-LNHO-FG4Z-VTDE-G7BA
+<rsp>ADWI-QPQ6-A6O6-6GKA-NUI3-CILB-HPQM
+NAUL-ZACO-WCZG-LNHO-FG4Z-VTDE-G7BA
 </div>
 ~~~~
 
@@ -124,11 +124,11 @@ If the expected digest value is specified, this is used to check the calculated 
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman hash mac TestFile1.txt ^
-    /key=NCZA-OZQ3-7NCI-55GZ-3S7C-XRQL-IIH3 ^
-    /expect=ABZX-RQMA-ERBB-NSCG-DNNC-O7LA-S4FM
+    /key=NAUL-ZACO-WCZG-LNHO-FG4Z-VTDE-G7BA ^
+    /expect=ADWI-QPQ6-A6O6-6GKA-NUI3-CILB-HPQM
 <rsp>True
 <cmd>Alice> meshman hash mac TestFile1.txt ^
-    /key=NCZA-OZQ3-7NCI-55GZ-3S7C-XRQL-IIH3 ^
+    /key=NAUL-ZACO-WCZG-LNHO-FG4Z-VTDE-G7BA ^
     /expect=MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
 <rsp>ERROR - The calculated fingerprint did not match the expected value.
 </div>
