@@ -188,7 +188,7 @@ public partial class ShellTests {
             System.IO.File.Delete(purgefile);
             }
 
-        (index ? original.IndexFrame > 0 : original.IndexFrame == 0).TestTrue();
+        (index ? original.IndexFrame > 0 : original.IndexFrame == null).TestTrue();
 
         static string getItem(SortedDictionary<string, string> entries, int index) {
             var count = 0;

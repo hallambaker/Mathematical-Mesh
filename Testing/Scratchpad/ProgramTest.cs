@@ -70,7 +70,7 @@ partial class Program {
 
 
 
-        TestContainers.Test().ContainerIsolatedPolicy();
+        ShellTests.Test().TestAccountDelete();
 
 
 
