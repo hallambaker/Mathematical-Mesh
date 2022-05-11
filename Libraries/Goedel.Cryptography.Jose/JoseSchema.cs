@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:06 PM
+//  This file was automatically generated at 11-May-22 12:07:20 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -138,6 +139,26 @@ public partial class JoseWebSignature : Jose {
         /// </summary>
 
 	public virtual List<Signature>				Signatures  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "unprotected", new MetaDataStruct(
+				delegate (object _a) {  Unprotected = _a as Header; },
+				() => Unprotected,
+				"Header" )} ,
+			{ "payload", new MetaDataBinary(
+				delegate (byte[] _a) {  Payload = _a; },
+				() => Payload) } ,
+			{ "signatures", new MetaDataListStruct(
+				delegate (object _a) {  Signatures = _a as List<Signature>; },
+				() => Signatures,
+				"Signature" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -316,6 +337,37 @@ public partial class JoseWebEncryption : JoseWebSignature {
         /// </summary>
 
 	public virtual byte[]						JTag  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "protected", new MetaDataBinary(
+				delegate (byte[] _a) {  Protected = _a; },
+				() => Protected) } ,
+			{ "iv", new MetaDataBinary(
+				delegate (byte[] _a) {  IV = _a; },
+				() => IV) } ,
+			{ "recipients", new MetaDataListStruct(
+				delegate (object _a) {  Recipients = _a as List<Recipient>; },
+				() => Recipients,
+				"Recipient" )} ,
+			{ "encrypted_key", new MetaDataBinary(
+				delegate (byte[] _a) {  EncryptedKey = _a; },
+				() => EncryptedKey) } ,
+			{ "aad", new MetaDataBinary(
+				delegate (byte[] _a) {  AdditionalAuthenticatedData = _a; },
+				() => AdditionalAuthenticatedData) } ,
+			{ "ciphertext", new MetaDataBinary(
+				delegate (byte[] _a) {  CipherText = _a; },
+				() => CipherText) } ,
+			{ "tag", new MetaDataBinary(
+				delegate (byte[] _a) {  JTag = _a; },
+				() => JTag) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -509,6 +561,24 @@ public partial class Signed : Jose {
         /// </summary>
 
 	public virtual byte[]						Signature  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "protected", new MetaDataBinary(
+				delegate (byte[] _a) {  Protected = _a; },
+				() => Protected) } ,
+			{ "payload", new MetaDataBinary(
+				delegate (byte[] _a) {  Payload = _a; },
+				() => Payload) } ,
+			{ "signature", new MetaDataBinary(
+				delegate (byte[] _a) {  Signature = _a; },
+				() => Signature) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -647,6 +717,28 @@ public partial class Encrypted : Jose {
         /// </summary>
 
 	public virtual byte[]						Signature  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "header", new MetaDataStruct(
+				delegate (object _a) {  Header = _a as Header; },
+				() => Header,
+				"Header" )} ,
+			{ "iv", new MetaDataBinary(
+				delegate (byte[] _a) {  IV = _a; },
+				() => IV) } ,
+			{ "ciphertext", new MetaDataBinary(
+				delegate (byte[] _a) {  CipherText = _a; },
+				() => CipherText) } ,
+			{ "signature", new MetaDataBinary(
+				delegate (byte[] _a) {  Signature = _a; },
+				() => Signature) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -818,6 +910,39 @@ public partial class KeyCore : Jose {
         /// </summary>
 
 	public virtual byte[]						X5tS256  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "enc", new MetaDataString(
+				delegate (string _a) {  Enc = _a; },
+				() => Enc) } ,
+			{ "dig", new MetaDataString(
+				delegate (string _a) {  Dig = _a; },
+				() => Dig) } ,
+			{ "alg", new MetaDataString(
+				delegate (string _a) {  Alg = _a; },
+				() => Alg) } ,
+			{ "kid", new MetaDataString(
+				delegate (string _a) {  Kid = _a; },
+				() => Kid) } ,
+			{ "x5u", new MetaDataString(
+				delegate (string _a) {  X5u = _a; },
+				() => X5u) } ,
+			{ "x5c", new MetaDataBinary(
+				delegate (byte[] _a) {  X5c = _a; },
+				() => X5c) } ,
+			{ "x5t", new MetaDataBinary(
+				delegate (byte[] _a) {  X5t = _a; },
+				() => X5t) } ,
+			{ "x5t#S256", new MetaDataBinary(
+				delegate (byte[] _a) {  X5tS256 = _a; },
+				() => X5tS256) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1017,6 +1142,38 @@ public partial class Header : KeyCore {
         /// </summary>
 
 	public virtual byte[]						Val  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "jku", new MetaDataString(
+				delegate (string _a) {  Jku = _a; },
+				() => Jku) } ,
+			{ "jwk", new MetaDataStruct(
+				delegate (object _a) {  Jwk = _a as Key; },
+				() => Jwk,
+				"Key", true)},
+			{ "epk", new MetaDataStruct(
+				delegate (object _a) {  Epk = _a as Key; },
+				() => Epk,
+				"Key", true)},
+			{ "typ", new MetaDataString(
+				delegate (string _a) {  Typ = _a; },
+				() => Typ) } ,
+			{ "cty", new MetaDataString(
+				delegate (string _a) {  Cty = _a; },
+				() => Cty) } ,
+			{ "crit", new MetaDataListString(
+				delegate (List<string> _a) {  Crit = _a; },
+				() => Crit) } ,
+			{ "val", new MetaDataBinary(
+				delegate (byte[] _a) {  Val = _a; },
+				() => Val) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1218,6 +1375,25 @@ public partial class Signature : Jose {
         /// </summary>
 
 	public virtual byte[]						SignatureValue  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "header", new MetaDataStruct(
+				delegate (object _a) {  Header = _a as Header; },
+				() => Header,
+				"Header" )} ,
+			{ "protected", new MetaDataBinary(
+				delegate (byte[] _a) {  Protected = _a; },
+				() => Protected) } ,
+			{ "signature", new MetaDataBinary(
+				delegate (byte[] _a) {  SignatureValue = _a; },
+				() => SignatureValue) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1339,21 +1515,31 @@ public partial class Signature : Jose {
 	/// A wrapper object for storing key data.
 	/// </summary>
 public partial class KeyContainer : Jose {
-	bool								__Exportable = false;
-	private bool						_Exportable;
         /// <summary>
         ///If false a handler library MUST NOT permit the private key to be exported.
         /// </summary>
 
-	public virtual bool						Exportable {
-		get => _Exportable;
-		set {_Exportable = value; __Exportable = true; }
-		}
+	public virtual bool?						Exportable  {get; set;}
         /// <summary>
         ///The key data.
         /// </summary>
 
 	public virtual byte[]						KeyCore  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Exportable", new MetaDataBoolean(
+				delegate (bool? _a) {  Exportable = _a; },
+				() => Exportable) } ,
+			{ "KeyCore", new MetaDataBinary(
+				delegate (byte[] _a) {  KeyCore = _a; },
+				() => KeyCore) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1397,7 +1583,7 @@ public partial class KeyContainer : Jose {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__Exportable){
+		if (Exportable != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Exportable", 1);
 				_writer.WriteBoolean (Exportable);
@@ -1464,17 +1650,12 @@ public partial class KeyContainer : Jose {
 	/// RFC 7517
 	/// </summary>
 public partial class Key : KeyCore {
-	bool								__Exportable = false;
-	private bool						_Exportable;
         /// <summary>
         ///If true, a stored key may be exported from the machine on 
         ///which it is stored.
         /// </summary>
 
-	public virtual bool						Exportable {
-		get => _Exportable;
-		set {_Exportable = value; __Exportable = true; }
-		}
+	public virtual bool?						Exportable  {get; set;}
         /// <summary>
         ///Key type
         /// </summary>
@@ -1495,6 +1676,30 @@ public partial class Key : KeyCore {
         /// </summary>
 
 	public virtual byte[]						K  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Exportable", new MetaDataBoolean(
+				delegate (bool? _a) {  Exportable = _a; },
+				() => Exportable) } ,
+			{ "kty", new MetaDataString(
+				delegate (string _a) {  Kty = _a; },
+				() => Kty) } ,
+			{ "use", new MetaDataString(
+				delegate (string _a) {  Use = _a; },
+				() => Use) } ,
+			{ "key_ops", new MetaDataString(
+				delegate (string _a) {  Key_ops = _a; },
+				() => Key_ops) } ,
+			{ "k", new MetaDataBinary(
+				delegate (byte[] _a) {  K = _a; },
+				() => K) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1539,7 +1744,7 @@ public partial class Key : KeyCore {
 			_writer.WriteObjectStart ();
 			}
 		((KeyCore)this).SerializeX(_writer, false, ref _first);
-		if (__Exportable){
+		if (Exportable != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Exportable", 1);
 				_writer.WriteBoolean (Exportable);
@@ -1643,6 +1848,22 @@ public partial class Recipient : Jose {
         /// </summary>
 
 	public virtual byte[]						EncryptedKey  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Header", new MetaDataStruct(
+				delegate (object _a) {  Header = _a as Header; },
+				() => Header,
+				"Header" )} ,
+			{ "encrypted_key", new MetaDataBinary(
+				delegate (byte[] _a) {  EncryptedKey = _a; },
+				() => EncryptedKey) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1765,6 +1986,21 @@ public partial class PublicKeyRSA : Key {
         /// </summary>
 
 	public virtual byte[]						E  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "n", new MetaDataBinary(
+				delegate (byte[] _a) {  N = _a; },
+				() => N) } ,
+			{ "e", new MetaDataBinary(
+				delegate (byte[] _a) {  E = _a; },
+				() => E) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1906,6 +2142,33 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
         /// </summary>
 
 	public virtual byte[]						QI  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "d", new MetaDataBinary(
+				delegate (byte[] _a) {  D = _a; },
+				() => D) } ,
+			{ "p", new MetaDataBinary(
+				delegate (byte[] _a) {  P = _a; },
+				() => P) } ,
+			{ "q", new MetaDataBinary(
+				delegate (byte[] _a) {  Q = _a; },
+				() => Q) } ,
+			{ "dp", new MetaDataBinary(
+				delegate (byte[] _a) {  DP = _a; },
+				() => DP) } ,
+			{ "dq", new MetaDataBinary(
+				delegate (byte[] _a) {  DQ = _a; },
+				() => DQ) } ,
+			{ "qi", new MetaDataBinary(
+				delegate (byte[] _a) {  QI = _a; },
+				() => QI) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2063,6 +2326,21 @@ public partial class PublicKeyDH : Key {
         /// </summary>
 
 	public virtual byte[]						Public  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Domain", new MetaDataBinary(
+				delegate (byte[] _a) {  Domain = _a; },
+				() => Domain) } ,
+			{ "Public", new MetaDataBinary(
+				delegate (byte[] _a) {  Public = _a; },
+				() => Public) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2179,6 +2457,18 @@ public partial class PrivateKeyDH : PublicKeyDH {
         /// </summary>
 
 	public virtual byte[]						Private  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Private", new MetaDataBinary(
+				delegate (byte[] _a) {  Private = _a; },
+				() => Private) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2291,6 +2581,21 @@ public partial class PublicKeyECDH : Key {
         /// </summary>
 
 	public virtual byte[]						Public  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "crv", new MetaDataString(
+				delegate (string _a) {  Curve = _a; },
+				() => Curve) } ,
+			{ "Public", new MetaDataBinary(
+				delegate (byte[] _a) {  Public = _a; },
+				() => Public) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2407,6 +2712,18 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
         /// </summary>
 
 	public virtual byte[]						Private  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Private", new MetaDataBinary(
+				delegate (byte[] _a) {  Private = _a; },
+				() => Private) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2534,6 +2851,30 @@ public partial class PrivateKeyUDF : Key {
         /// </summary>
 
 	public virtual string						AlgorithmAuthenticate  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "PrivateValue", new MetaDataString(
+				delegate (string _a) {  PrivateValue = _a; },
+				() => PrivateValue) } ,
+			{ "KeyType", new MetaDataString(
+				delegate (string _a) {  KeyType = _a; },
+				() => KeyType) } ,
+			{ "AlgorithmEncrypt", new MetaDataString(
+				delegate (string _a) {  AlgorithmEncrypt = _a; },
+				() => AlgorithmEncrypt) } ,
+			{ "AlgorithmSign", new MetaDataString(
+				delegate (string _a) {  AlgorithmSign = _a; },
+				() => AlgorithmSign) } ,
+			{ "AlgorithmAuthenticate", new MetaDataString(
+				delegate (string _a) {  AlgorithmAuthenticate = _a; },
+				() => AlgorithmAuthenticate) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2672,6 +3013,15 @@ public partial class PrivateKeyUDF : Key {
 	/// Result of applying a key agreement.
 	/// </summary>
 public partial class KeyAgreement : Jose {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2768,6 +3118,18 @@ public partial class KeyAgreementDH : KeyAgreement {
         /// </summary>
 
 	public virtual byte[]						Result  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Result", new MetaDataBinary(
+				delegate (byte[] _a) {  Result = _a; },
+				() => Result) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2880,6 +3242,21 @@ public partial class KeyAgreementECDH : KeyAgreement {
         /// </summary>
 
 	public virtual byte[]						Result  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Curve", new MetaDataString(
+				delegate (string _a) {  Curve = _a; },
+				() => Curve) } ,
+			{ "Result", new MetaDataBinary(
+				delegate (byte[] _a) {  Result = _a; },
+				() => Result) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class

@@ -23,6 +23,9 @@
 
 namespace Goedel.Protocol;
 
+
+
+
 /// <summary>
 /// Base class for all JPC server classes.
 /// </summary>
@@ -45,16 +48,61 @@ public abstract class JpcInterface : Disposable {
         get;
         }
 
+
+
+
+
+    /// <summary>
+    /// Dispatch object request in specified authentication context.
+    /// </summary>			
+    /// <param name="token">The method identifier</param>
+    /// <param name="request">The request data</param>
+    /// <param name="session">The client context.</param>
+    /// <returns>The response object returned by the corresponding dispatch.</returns>
+    public abstract Goedel.Protocol.JsonObject Dispatch(
+            string token,
+            Goedel.Protocol.JsonObject request,
+            IJpcSession session);
+
+
+    /// <summary>
+    /// Return a failure response for the exception <paramref name="exception"/>.
+    /// </summary>
+    /// <param name="exception">The exception thrown.</param>
+    /// <returns>A JsonObject wrappiong the exception data.</returns>
+    public virtual JsonObject ResponseFail(Exception exception) => null;
+
+
     /// <summary>
     /// Dispatch Class. Reads input from the provided reader and attempts to
     /// dispatch a method in response. Note that the calling routine may throw 
     /// an error. This must be caught and processed by the host dispatch class.
     /// </summary>
-    /// <param name="Session">The service session that is to handle the request.</param>
+    /// <param name="session">The service session that is to handle the request.</param>
     /// <param name="jsonReader">The input stream to be read</param>
     /// <returns>The response to the request.</returns>
-    public abstract Goedel.Protocol.JsonObject Dispatch(IJpcSession Session,
-        JsonReader jsonReader);
+    public virtual JsonObject Dispatch(IJpcSession session,
+                            JsonReader jsonReader) {
+        string token = "???";
+        JsonObject request;
+
+        try {
+            (token, request) = GetRequest(jsonReader);
+            }
+        catch (Exception exception) {
+            return ResponseFail(exception);
+            }
+
+        try {
+            var result = Dispatch(token, request, session);
+
+            return result;
+            }
+        catch (Exception exception) {
+            return ResponseFail(exception);
+            }
+
+        }
 
 
     /// <summary>

@@ -21,6 +21,8 @@
 #endregion
 
 
+using System.Xml.Linq;
+
 namespace Goedel.Protocol;
 
 /// <summary>
@@ -88,13 +90,19 @@ public class JsonBWriter : JsonWriter {
         }
 
     /// <summary>Write integer.</summary>
-    /// <param name="Data">Value to write</param>
-    protected void WriteInteger(long Data) {
-        if (Data >= 0) {
-            WriteTag(JSONBCD.PositiveInteger, Data);
+    /// <param name="data">Value to write</param>
+    protected void WriteInteger(long? data) {
+        if (data is null) {
+            Output.Write((byte)JSONBCD.Null);
             }
         else {
-            WriteTag(JSONBCD.NegativeInteger, -Data);
+            var ddata = (long)data;
+            if (data >= 0) {
+                WriteTag(JSONBCD.PositiveInteger, ddata );
+                }
+            else {
+                WriteTag(JSONBCD.NegativeInteger, -ddata);
+                }
             }
         }
 
@@ -110,11 +118,11 @@ public class JsonBWriter : JsonWriter {
 
     /// <summary>Write 32 bit integer.</summary>
     /// <param name="Data">Value to write</param>
-    public override void WriteInteger32(int Data) => WriteInteger(Data);
+    public override void WriteInteger32(int? Data) => WriteInteger(Data);
 
     /// <summary>Write 64 bit integer.</summary>
     /// <param name="Data">Value to write</param>
-    public override void WriteInteger64(long Data) => WriteInteger(Data);
+    public override void WriteInteger64(long? Data) => WriteInteger(Data);
 
     /// <summary>Write float32</summary>
     /// <param name="Data">Value to write</param>
@@ -126,15 +134,17 @@ public class JsonBWriter : JsonWriter {
 
     /// <summary>Write boolean.</summary>
     /// <param name="Data">Value to write</param>
-    public override void WriteBoolean(bool Data) {
-        if (Data) {
+    public override void WriteBoolean(bool? Data) {
+        if (Data == true) {
             Output.Write(JSONBCD.True);
             }
-        else {
+        else if (Data == false) {
             Output.Write(JSONBCD.False);
             }
+        else {
+            Output.Write(JSONBCD.Null);
+            }
         }
-
     /// <summary>Write string without escaping.</summary>
     /// <param name="Data">Value to write</param>
     public override void WriteString(string Data) {

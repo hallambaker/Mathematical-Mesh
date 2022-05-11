@@ -1509,7 +1509,7 @@ public partial class ContextUser : ContextAccount {
             }
 
         // Get the reply (if required)
-        var reply = requestContact.Reply ?
+        var reply = requestContact.Reply==true ?
             ContactRequest(requestContact.Sender, requestContact.PIN, localname, false) : null;
 
         return new ResultMessageContact(requestContact, reply);
@@ -1545,7 +1545,7 @@ public partial class ContextUser : ContextAccount {
             }
 
         // check that the pin is automatic or request is explicitly authorized.
-        if (!(messagePin.Automatic | authorize)) {
+        if (!(messagePin.Automatic == true | authorize)) {
             return new InsufficientAuthorization(request);
             }
 

@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="CallsignRegistry.cs">
-      <DependentUpon>CallsignRegistry.protocol</DependentUpon>
+    <Compile Update="Carnet.cs">
+      <DependentUpon>Carnet.protocol</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -30,8 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="CallsignRegistry.protocol">
-      <LastGenOutput>CallsignRegistry.cs</LastGenOutput>
+    <None Update="Carnet.protocol">
+      <LastGenOutput>Carnet.cs</LastGenOutput>
       <Generator>Protogen</Generator>
     </None>
     <None Update="Exceptions.exceptional">
@@ -40,11 +40,4 @@
     </None>
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="VSPreBuild" />
-  </Target>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="VSPostBuild" />
-  </Target>
 </Project>

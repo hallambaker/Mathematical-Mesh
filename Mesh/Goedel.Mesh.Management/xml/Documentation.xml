@@ -70,21 +70,7 @@
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagementService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
-            <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="token">The method identifier</param>
-            <param name="request">The request data</param>
-            <param name="session">The client context.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementService.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
-            <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="session">The client context.</param>
-            <param name="jsonReader">Reader for data object.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagementService.GetDirect(Goedel.Protocol.IJpcSession)">
             <summary>
@@ -179,6 +165,12 @@
              Base class for all request messages.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Management.WsmpRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Management.WsmpRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Management.WsmpRequest._Tag">
             <summary>
             Tag identifying this class
@@ -237,6 +229,12 @@
              status code and status description fields.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Management.WsmpResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Management.WsmpResponse._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Management.WsmpResponse._Tag">
             <summary>
             Tag identifying this class
@@ -291,6 +289,12 @@
         <member name="T:Goedel.Mesh.Management.ServiceConfigRequest">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigRequest._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Management.ServiceConfigRequest._Tag">
             <summary>
@@ -347,6 +351,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Management.ServiceConfigResponse._Tag">
             <summary>
             Tag identifying this class
@@ -401,6 +411,12 @@
         <member name="T:Goedel.Mesh.Management.ServiceStatusRequest">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusRequest._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Management.ServiceStatusRequest._Tag">
             <summary>
@@ -476,6 +492,12 @@
         <member name="P:Goedel.Mesh.Management.ServiceStatusResponse.Pending">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Management.ServiceStatusResponse._Tag">
             <summary>

@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:12 PM
+//  This file was automatically generated at 11-May-22 12:07:24 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -76,6 +77,8 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 			new () {
 
+	    {"PresenceRequest", PresenceRequest._Factory},
+	    {"PresenceResponse", PresenceResponse._Factory},
 	    {"QueryRequest", QueryRequest._Factory},
 	    {"QueryResponse", QueryResponse._Factory}
 		};
@@ -108,7 +111,7 @@ public abstract partial class PresenceService : Goedel.Protocol.JpcInterface {
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string WellKnown = "tbs2";
+	public const string WellKnown = "mmm_present";
 
 	///<inheritdoc/>
 	public override string GetWellKnown => WellKnown;
@@ -116,7 +119,7 @@ public abstract partial class PresenceService : Goedel.Protocol.JpcInterface {
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string Discovery = "_tbs2._tcp";
+	public const string Discovery = "_mmm_present._tcp";
 
 	///<inheritdoc/>
 	public override string GetDiscovery => Discovery;
@@ -128,14 +131,8 @@ public abstract partial class PresenceService : Goedel.Protocol.JpcInterface {
 				{"Query", QueryRequest._Factory}
 		};
 
-	/// <summary>
-	/// Dispatch object request in specified authentication context.
-	/// </summary>			
-	/// <param name="token">The method identifier</param>
-	/// <param name="request">The request data</param>
-	/// <param name="session">The client context.</param>
-	/// <returns>The response object returned by the corresponding dispatch.</returns>
-	public Goedel.Protocol.JsonObject Dispatch(
+    ///<inheritdoc/>
+	public override Goedel.Protocol.JsonObject Dispatch(
 			string token,
 			Goedel.Protocol.JsonObject request,
 			IJpcSession session) => token switch {
@@ -144,33 +141,8 @@ public abstract partial class PresenceService : Goedel.Protocol.JpcInterface {
         };
 
 
-	/// <summary>
-	/// Dispatch object request in specified authentication context.
-	/// </summary>			
-    /// <param name="session">The client context.</param>
-    /// <param name="jsonReader">Reader for data object.</param>
-    /// <returns>The response object returned by the corresponding dispatch.</returns>
-	public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  
-							Goedel.Protocol.JsonReader jsonReader) {
 
-		jsonReader.StartObject ();
-		string token = jsonReader.ReadToken ();
-		JsonObject response = null;
 
-		switch (token) {
-			case "Query" : {
-				var request = new QueryRequest();
-				request.Deserialize (jsonReader);
-				response = Query (request, session);
-				break;
-				}
-			default : {
-				throw new Goedel.Protocol.UnknownOperation ();
-				}
-			}
-		jsonReader.EndObject ();
-		return response;
-		}
 
     /// <summary>
     /// Return a client tapping the service API directly without serialization bound to
@@ -204,7 +176,7 @@ public partial class PresenceServiceClient : Goedel.Protocol.JpcClientInterface 
 	/// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string WellKnown = "tbs2";
+	public const string WellKnown = "mmm_present";
 
     /// <summary>
     /// Well Known service identifier.
@@ -214,7 +186,7 @@ public partial class PresenceServiceClient : Goedel.Protocol.JpcClientInterface 
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string Discovery = "_tbs2._tcp";
+	public const string Discovery = "_mmm_present._tcp";
 
     /// <summary>
     /// Well Known service identifier.
@@ -260,9 +232,223 @@ public partial class PresenceServiceDirect: PresenceServiceClient {
 	// Transaction Classes
 	/// <summary>
 	///
+	/// Base class for all requests made to a registrar
+	/// </summary>
+public partial class PresenceRequest : Goedel.Protocol.Request {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PresenceRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PresenceRequest();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((Goedel.Protocol.Request)this).SerializeX(_writer, false, ref _first);
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PresenceRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PresenceRequest;
+			}
+		var Result = new PresenceRequest ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Base class for all response messages. Contains only the
+	/// status code and status description fields.
+	/// </summary>
+public partial class PresenceResponse : Goedel.Protocol.Response {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PresenceResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PresenceResponse();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((Goedel.Protocol.Response)this).SerializeX(_writer, false, ref _first);
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PresenceResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PresenceResponse;
+			}
+		var Result = new PresenceResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	///
 	/// Register connection request. 
 	/// </summary>
 public partial class QueryRequest : PresenceRequest {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -356,6 +542,15 @@ public partial class QueryRequest : PresenceRequest {
 	/// Return the result of a connection request
 	/// </summary>
 public partial class QueryResponse : PresenceResponse {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class

@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:09 PM
+//  This file was automatically generated at 11-May-22 12:07:22 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -120,19 +121,12 @@ public partial class SequenceInfo : SequenceData {
         /// </summary>
 
 	public virtual string						ContainerType  {get; set;}
-	bool								__Index = false;
-	private int						_Index;
         /// <summary>
         ///The record index within the file. This MUST be unique and 
         ///satisfy any additional requirements determined by the ContainerType.
         /// </summary>
 
-	public virtual int						Index {
-		get => _Index;
-		set {_Index = value; __Index = true; }
-		}
-	bool								__IsMeta = false;
-	private bool						_IsMeta;
+	public virtual long?						Index  {get; set;}
         /// <summary>
         ///If true, the current frame is a meta frame and does not contain a payload.
         ///Note: Meta frames MAY be present in any container. Applications MUST
@@ -140,53 +134,63 @@ public partial class SequenceInfo : SequenceData {
         ///Applications MUST NOT interpret a meta frame as a data frame with an enpty payload.
         /// </summary>
 
-	public virtual bool						IsMeta {
-		get => _IsMeta;
-		set {_IsMeta = value; __IsMeta = true; }
-		}
-	bool								__Default = false;
-	private bool						_Default;
+	public virtual bool?						IsMeta  {get; set;}
         /// <summary>
         ///If set true in a persistent container, specifies that this record contains
         ///the default object for the container.
         /// </summary>
 
-	public virtual bool						Default {
-		get => _Default;
-		set {_Default = value; __Default = true; }
-		}
-	bool								__TreePosition = false;
-	private int						_TreePosition;
+	public virtual bool?						Default  {get; set;}
         /// <summary>
         ///Position of the frame containing the apex of the preceding sub-tree.
         /// </summary>
 
-	public virtual int						TreePosition {
-		get => _TreePosition;
-		set {_TreePosition = value; __TreePosition = true; }
-		}
-	bool								__IndexPosition = false;
-	private int						_IndexPosition;
+	public virtual long?						TreePosition  {get; set;}
         /// <summary>
         ///Specifies the position in the file at which the last index entry is
         ///to be found
         /// </summary>
 
-	public virtual int						IndexPosition {
-		get => _IndexPosition;
-		set {_IndexPosition = value; __IndexPosition = true; }
-		}
-	bool								__ExchangePosition = false;
-	private int						_ExchangePosition;
+	public virtual long?						IndexPosition  {get; set;}
         /// <summary>
         ///Specifies the position in the file at which the key exchange data is
         ///to be found
         /// </summary>
 
-	public virtual int						ExchangePosition {
-		get => _ExchangePosition;
-		set {_ExchangePosition = value; __ExchangePosition = true; }
-		}
+	public virtual long?						ExchangePosition  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "DataEncoding", new MetaDataString(
+				delegate (string _a) {  DataEncoding = _a; },
+				() => DataEncoding) } ,
+			{ "ContainerType", new MetaDataString(
+				delegate (string _a) {  ContainerType = _a; },
+				() => ContainerType) } ,
+			{ "Index", new MetaDataInteger64(
+				delegate (long? _a) {  Index = _a; },
+				() => Index) } ,
+			{ "IsMeta", new MetaDataBoolean(
+				delegate (bool? _a) {  IsMeta = _a; },
+				() => IsMeta) } ,
+			{ "Default", new MetaDataBoolean(
+				delegate (bool? _a) {  Default = _a; },
+				() => Default) } ,
+			{ "TreePosition", new MetaDataInteger64(
+				delegate (long? _a) {  TreePosition = _a; },
+				() => TreePosition) } ,
+			{ "IndexPosition", new MetaDataInteger64(
+				delegate (long? _a) {  IndexPosition = _a; },
+				() => IndexPosition) } ,
+			{ "ExchangePosition", new MetaDataInteger64(
+				delegate (long? _a) {  ExchangePosition = _a; },
+				() => ExchangePosition) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -240,35 +244,35 @@ public partial class SequenceInfo : SequenceData {
 			_writer.WriteToken ("ContainerType", 1);
 				_writer.WriteString (ContainerType);
 			}
-		if (__Index){
+		if (Index != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Index", 1);
-				_writer.WriteInteger32 (Index);
+				_writer.WriteInteger64 (Index);
 			}
-		if (__IsMeta){
+		if (IsMeta != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("IsMeta", 1);
 				_writer.WriteBoolean (IsMeta);
 			}
-		if (__Default){
+		if (Default != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Default", 1);
 				_writer.WriteBoolean (Default);
 			}
-		if (__TreePosition){
+		if (TreePosition != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("TreePosition", 1);
-				_writer.WriteInteger32 (TreePosition);
+				_writer.WriteInteger64 (TreePosition);
 			}
-		if (__IndexPosition){
+		if (IndexPosition != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("IndexPosition", 1);
-				_writer.WriteInteger32 (IndexPosition);
+				_writer.WriteInteger64 (IndexPosition);
 			}
-		if (__ExchangePosition){
+		if (ExchangePosition != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("ExchangePosition", 1);
-				_writer.WriteInteger32 (ExchangePosition);
+				_writer.WriteInteger64 (ExchangePosition);
 			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
@@ -312,7 +316,7 @@ public partial class SequenceInfo : SequenceData {
 				break;
 				}
 			case "Index" : {
-				Index = jsonReader.ReadInteger32 ();
+				Index = jsonReader.ReadInteger64 ();
 				break;
 				}
 			case "IsMeta" : {
@@ -324,15 +328,15 @@ public partial class SequenceInfo : SequenceData {
 				break;
 				}
 			case "TreePosition" : {
-				TreePosition = jsonReader.ReadInteger32 ();
+				TreePosition = jsonReader.ReadInteger64 ();
 				break;
 				}
 			case "IndexPosition" : {
-				IndexPosition = jsonReader.ReadInteger32 ();
+				IndexPosition = jsonReader.ReadInteger64 ();
 				break;
 				}
 			case "ExchangePosition" : {
-				ExchangePosition = jsonReader.ReadInteger32 ();
+				ExchangePosition = jsonReader.ReadInteger64 ();
 				break;
 				}
 			default : {
@@ -350,8 +354,6 @@ public partial class SequenceInfo : SequenceData {
 	/// A record providing an index to the sequence.
 	/// </summary>
 public partial class SequenceIndex : SequenceData {
-	bool								__Full = false;
-	private bool						_Full;
         /// <summary>
         ///If true, the index is complete and contains position entries for all the 
         ///frames in the file. If absent or false, the index is incremental and only
@@ -359,15 +361,28 @@ public partial class SequenceIndex : SequenceData {
         ///frame containing a ContainerIndex.
         /// </summary>
 
-	public virtual bool						Full {
-		get => _Full;
-		set {_Full = value; __Full = true; }
-		}
+	public virtual bool?						Full  {get; set;}
         /// <summary>
         ///List of container position entries
         /// </summary>
 
 	public virtual List<IndexPosition>				Positions  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Full", new MetaDataBoolean(
+				delegate (bool? _a) {  Full = _a; },
+				() => Full) } ,
+			{ "Positions", new MetaDataListStruct(
+				delegate (object _a) {  Positions = _a as List<IndexPosition>; },
+				() => Positions,
+				"IndexPosition" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -411,7 +426,7 @@ public partial class SequenceIndex : SequenceData {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__Full){
+		if (Full != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Full", 1);
 				_writer.WriteBoolean (Full);
@@ -499,31 +514,39 @@ public partial class SequenceIndex : SequenceData {
 	/// Specifies the position in a file at which a specified record index is found
 	/// </summary>
 public partial class IndexPosition : SequenceData {
-	bool								__Index = false;
-	private int						_Index;
         /// <summary>
         ///The record index within the file.
         /// </summary>
 
-	public virtual int						Index {
-		get => _Index;
-		set {_Index = value; __Index = true; }
-		}
-	bool								__Position = false;
-	private int						_Position;
+	public virtual long?						Index  {get; set;}
         /// <summary>
         ///The record position within the file relative to the index base.
         /// </summary>
 
-	public virtual int						Position {
-		get => _Position;
-		set {_Position = value; __Position = true; }
-		}
+	public virtual long?						Position  {get; set;}
         /// <summary>
         ///Unique object identifier
         /// </summary>
 
 	public virtual string						UniqueId  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Index", new MetaDataInteger64(
+				delegate (long? _a) {  Index = _a; },
+				() => Index) } ,
+			{ "Position", new MetaDataInteger64(
+				delegate (long? _a) {  Position = _a; },
+				() => Position) } ,
+			{ "UniqueId", new MetaDataString(
+				delegate (string _a) {  UniqueId = _a; },
+				() => UniqueId) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -567,15 +590,15 @@ public partial class IndexPosition : SequenceData {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__Index){
+		if (Index != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Index", 1);
-				_writer.WriteInteger32 (Index);
+				_writer.WriteInteger64 (Index);
 			}
-		if (__Position){
+		if (Position != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Position", 1);
-				_writer.WriteInteger32 (Position);
+				_writer.WriteInteger64 (Position);
 			}
 		if (UniqueId != null) {
 			_writer.WriteObjectSeparator (ref _first);
@@ -616,11 +639,11 @@ public partial class IndexPosition : SequenceData {
 			
 		switch (tag) {
 			case "Index" : {
-				Index = jsonReader.ReadInteger32 ();
+				Index = jsonReader.ReadInteger64 ();
 				break;
 				}
 			case "Position" : {
-				Position = jsonReader.ReadInteger32 ();
+				Position = jsonReader.ReadInteger64 ();
 				break;
 				}
 			case "UniqueId" : {
@@ -652,6 +675,21 @@ public partial class KeyValue : SequenceData {
         /// </summary>
 
 	public virtual string						Value  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Key", new MetaDataString(
+				delegate (string _a) {  Key = _a; },
+				() => Key) } ,
+			{ "Value", new MetaDataString(
+				delegate (string _a) {  Value = _a; },
+				() => Value) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class

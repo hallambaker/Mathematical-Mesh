@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:40 PM
+//  This file was automatically generated at 11-May-22 12:07:31 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -119,16 +120,11 @@ public partial class CatalogedMachine : HostCatalogItem {
         /// </summary>
 
 	public virtual string						Local  {get; set;}
-	bool								__Default = false;
-	private bool						_Default;
         /// <summary>
         ///If true, this is the default for the profile type (master, account)
         /// </summary>
 
-	public virtual bool						Default {
-		get => _Default;
-		set {_Default = value; __Default = true; }
-		}
+	public virtual bool?						Default  {get; set;}
         /// <summary>
         ///The master profile that provides the root of trust for this Mesh
         /// </summary>
@@ -150,6 +146,39 @@ public partial class CatalogedMachine : HostCatalogItem {
         /// </summary>
 
 	public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Id", new MetaDataString(
+				delegate (string _a) {  Id = _a; },
+				() => Id) } ,
+			{ "Local", new MetaDataString(
+				delegate (string _a) {  Local = _a; },
+				() => Local) } ,
+			{ "Default", new MetaDataBoolean(
+				delegate (bool? _a) {  Default = _a; },
+				() => Default) } ,
+			{ "EnvelopedProfileAccount", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileAccount = _a as Enveloped<ProfileAccount>; },
+				() => EnvelopedProfileAccount,
+				"Enveloped<ProfileAccount>" )} ,
+			{ "CatalogedDevice", new MetaDataStruct(
+				delegate (object _a) {  CatalogedDevice = _a as CatalogedDevice; },
+				() => CatalogedDevice,
+				"CatalogedDevice" )} ,
+			{ "CatalogedDeviceDigest", new MetaDataString(
+				delegate (string _a) {  CatalogedDeviceDigest = _a; },
+				() => CatalogedDeviceDigest) } ,
+			{ "EnvelopedAccountHostAssignment", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedAccountHostAssignment = _a as Enveloped<AccountHostAssignment>; },
+				() => EnvelopedAccountHostAssignment,
+				"Enveloped<AccountHostAssignment>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -203,7 +232,7 @@ public partial class CatalogedMachine : HostCatalogItem {
 			_writer.WriteToken ("Local", 1);
 				_writer.WriteString (Local);
 			}
-		if (__Default){
+		if (Default != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Default", 1);
 				_writer.WriteBoolean (Default);
@@ -333,6 +362,31 @@ public partial class CatalogedService : CatalogedMachine {
         /// </summary>
 
 	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedProfileService", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileService = _a as Enveloped<ProfileService>; },
+				() => EnvelopedProfileService,
+				"Enveloped<ProfileService>" )} ,
+			{ "EnvelopedProfileHost", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileHost = _a as Enveloped<ProfileHost>; },
+				() => EnvelopedProfileHost,
+				"Enveloped<ProfileHost>" )} ,
+			{ "EnvelopedActivationHost", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivationHost = _a as Enveloped<ActivationHost>; },
+				() => EnvelopedActivationHost,
+				"Enveloped<ActivationHost>" )} ,
+			{ "EnvelopedConnectionService", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionService = _a as Enveloped<ConnectionService>; },
+				() => EnvelopedConnectionService,
+				"Enveloped<ConnectionService>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -474,6 +528,15 @@ public partial class CatalogedService : CatalogedMachine {
 	/// Describes an ordinary device connected to a Mesh
 	/// </summary>
 public partial class CatalogedStandard : CatalogedMachine {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -588,6 +651,29 @@ public partial class CatalogedPending : CatalogedMachine {
         /// </summary>
 
 	public virtual string						AccountAddress  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "DeviceUDF", new MetaDataString(
+				delegate (string _a) {  DeviceUDF = _a; },
+				() => DeviceUDF) } ,
+			{ "EnvelopedProfileDevice", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileDevice = _a as Enveloped<ProfileDevice>; },
+				() => EnvelopedProfileDevice,
+				"Enveloped<ProfileDevice>" )} ,
+			{ "EnvelopedAcknowledgeConnection", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedAcknowledgeConnection = _a as Enveloped<AcknowledgeConnection>; },
+				() => EnvelopedAcknowledgeConnection,
+				"Enveloped<AcknowledgeConnection>" )} ,
+			{ "AccountAddress", new MetaDataString(
+				delegate (string _a) {  AccountAddress = _a; },
+				() => AccountAddress) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -759,6 +845,39 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
         /// </summary>
 
 	public virtual string						DeviceAuthenticator  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedProfileDevice", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileDevice = _a as Enveloped<ProfileDevice>; },
+				() => EnvelopedProfileDevice,
+				"Enveloped<ProfileDevice>" )} ,
+			{ "EnvelopedConnectionService", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionService = _a as Enveloped<ConnectionService>; },
+				() => EnvelopedConnectionService,
+				"Enveloped<ConnectionService>" )} ,
+			{ "EnvelopedConnectionDevice", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionDevice = _a as Enveloped<ConnectionDevice>; },
+				() => EnvelopedConnectionDevice,
+				"Enveloped<ConnectionDevice>" )} ,
+			{ "AccountAddress", new MetaDataString(
+				delegate (string _a) {  AccountAddress = _a; },
+				() => AccountAddress) } ,
+			{ "PublicationId", new MetaDataString(
+				delegate (string _a) {  PublicationId = _a; },
+				() => PublicationId) } ,
+			{ "ServiceAuthenticator", new MetaDataString(
+				delegate (string _a) {  ServiceAuthenticator = _a; },
+				() => ServiceAuthenticator) } ,
+			{ "DeviceAuthenticator", new MetaDataString(
+				delegate (string _a) {  DeviceAuthenticator = _a; },
+				() => DeviceAuthenticator) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class

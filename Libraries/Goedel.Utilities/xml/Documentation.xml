@@ -808,7 +808,25 @@
             Condition is true</param>
             <param name="args">Reason arguments to be passed to the throw delegate.</param>
         </member>
+        <member name="M:Goedel.Utilities.Assert.AssertFalse(System.Nullable{System.Boolean},Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if <paramref name="condition"/> is true. 
+            (test, NYIException.Throw, "test was false").AssertTrue();
+            </summary>
+            <param name="condition">The condition</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
         <member name="M:Goedel.Utilities.Assert.AssertTrue(System.Boolean,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if <paramref name="condition"/> is false. 
+            (test, NYIException.Throw, "test was false").AssertTrue();
+            </summary>
+            <param name="condition">The condition</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Utilities.Assert.AssertTrue(System.Nullable{System.Boolean},Goedel.Utilities.ThrowDelegate,System.Object[])">
             <summary>Throw an exception if <paramref name="condition"/> is false. 
             (test, NYIException.Throw, "test was false").AssertTrue();
             </summary>

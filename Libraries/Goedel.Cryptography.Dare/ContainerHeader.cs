@@ -23,20 +23,25 @@ namespace Goedel.Cryptography.Dare;
 
 
 public partial class SequenceInfo {
+
+    ///<summary>The index value as a non-nullable long</summary> 
+    public long LIndex => Index ?? 0;
+
+
     ///<summary>If true, the field ExchangePosition is specified</summary>
-    public bool HasExchangePosition() => __ExchangePosition;
+    public bool HasExchangePosition() => ExchangePosition != null;
     }
 
 public partial class DareHeader {
 
 
     ///<summary>The container index value.</summary>
-    public int Index => SequenceInfo.Index;
+    public long Index => SequenceInfo.LIndex;
 
 
-    ///<summary>If true, the field ExchangePosition is specified</summary>
-    public bool HasExchangePosition => SequenceInfo.HasExchangePosition();
-    // Should get rid of these and use nullable types.
+    /////<summary>If true, the field ExchangePosition is specified</summary>
+    //public bool HasExchangePosition => SequenceInfo.HasExchangePosition();
+    //// Should get rid of these and use nullable types.
 
 
 

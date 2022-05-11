@@ -102,8 +102,7 @@ public partial class ShellTests {
             }
 
         var resultVerify = Dispatch($"dare verify {result1.Filename}") as ResultFile;
-        corrupt.TestEqual(!resultVerify.Verified);
-
+        resultVerify.Verified.TestEqual(!corrupt);
         return true;
         }
 
@@ -260,8 +259,8 @@ public partial class ShellTests {
         var output = "output_" + filename;
         var listArchive = Dispatch($"dare list {filename} {output}") as ResultListLog;
 
-        entries.Count.TestEqual(listArchive.Count);
-
+        listArchive.Count.TestEqual(entries.Count);
+        
         using (var reader = output.OpenTextReader()) {
             foreach (var entry in entries) {
                 var line = reader.ReadLine();

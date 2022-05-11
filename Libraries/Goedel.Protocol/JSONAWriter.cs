@@ -59,11 +59,11 @@ public class JSONAWriter : JsonWriter {
 
     /// <summary>Write 32 bit integer.</summary>
     /// <param name="Data">Value to write</param>
-    public override void WriteInteger32(int Data) => Output.Write(Data.ToString());
+    public override void WriteInteger32(int? Data) => Output.Write(Data.ToString());
 
     /// <summary>Write 64 bit integer</summary>
     /// <param name="Data">Value to write</param>
-    public override void WriteInteger64(long Data) => Output.Write(Data.ToString());
+    public override void WriteInteger64(long? Data) => Output.Write(Data.ToString());
 
     /// <summary>Write float32</summary>
     /// <param name="Data">Value to write</param>
@@ -75,12 +75,15 @@ public class JSONAWriter : JsonWriter {
 
     /// <summary>Write boolean.</summary>
     /// <param name="Data">Value to write</param>
-    public override void WriteBoolean(bool Data) {
-        if (Data) {
+    public override void WriteBoolean(bool? Data) {
+        if (Data == true) {
             Output.Write("true");
             }
-        else {
+        if (Data == false) {
             Output.Write("false");
+            }
+        else {
+            Output.Write("null");
             }
         }
 

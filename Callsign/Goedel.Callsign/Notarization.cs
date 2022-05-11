@@ -28,40 +28,38 @@ using System.Threading;
 using System.Threading.Tasks;
 using Goedel.Cryptography.Dare;
 
-namespace Goedel.Callsign {
+namespace Goedel.Callsign; 
+
+public partial class Notarization {
+    #region // Properties
 
 
-    public partial class Notarization {
-        #region // Properties
-
-
-        #endregion
-        #region // Constructors
-
-
-
-        #endregion
-        #region // Implement Inteface $$$
-        #endregion
-        #region // Override Methods
-        #endregion
-        #region // Methods
-
-        public Witness GetWitness(int index = 0) {
-
-            var enveloped = Entries[index];
+    #endregion
+    #region // Constructors
 
 
 
-            return enveloped.Decode();
-            }
+    #endregion
+    #region // Implement Inteface $$$
+    #endregion
+    #region // Override Methods
+    #endregion
+    #region // Methods
+
+    public Witness GetWitness(int index = 0) {
+
+        var enveloped = Entries[index];
 
 
-        #endregion
 
-
+        return enveloped.Decode();
         }
 
 
+    #endregion
+
 
     }
+
+
+

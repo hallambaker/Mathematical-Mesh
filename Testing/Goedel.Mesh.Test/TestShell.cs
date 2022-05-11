@@ -195,10 +195,10 @@ public partial class TestCLI : CommandLineInterpreter {
 
                 if (softFail) {
                     }
-                else if (expectFail & status.Success) {
+                else if (expectFail & status.Success == true) {
                     unexpectedResult = new TestExpectedFail();
                     }
-                else if (!expectFail & !status.Success) {
+                else if (!expectFail & !(status.Success == true)) {
                     unexpectedResult = new TestExpectedSuccess();
                     }
 
@@ -268,7 +268,7 @@ public partial class TestCLI : CommandLineInterpreter {
             try {
                 Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
                 var result = Shell.ShellResult as Result;
-                if (result.Success) {
+                if (result.Success == true) {
                     throw new TestExpectedFalse();
                     }
                 return result;

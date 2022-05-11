@@ -26,30 +26,28 @@ using Goedel.Utilities;
 using Goedel.Mesh.ServiceAdmin;
 
 using System.Collections.Generic;
-namespace Goedel.Presence.Server {
+namespace Goedel.Presence.Server; 
 
 
 
+///// <summary>
+///// The session class implements the Mesh session. The implementations in this class are mostly 
+///// stubbs that martial and validate the parameters presented in the request and pass the
+///// work on to the <see cref="MeshPersist"/> instance <see cref="Mesh"/>
+///// </summary>
+//public class PublicPresenceService : PresenceService {
 
-    /// <summary>
-    /// The session class implements the Mesh session. The implementations in this class are mostly 
-    /// stubbs that martial and validate the parameters presented in the request and pass the
-    /// work on to the <see cref="MeshPersist"/> instance <see cref="Mesh"/>
-    /// </summary>
-    public class PublicPresenceService : PresenceService {
 
+//    /// <summary>
+//    /// Factory method, the signature is pro tem and will be changed later on.
+//    /// </summary>
+//    /// <param name="domain"></param>
+//    /// <param name="serviceDirectory"></param>
+//    /// <returns></returns>
+//    public static Goedel.Protocol.JpcInterface Factory(ServiceConfiguration serviceConfiguration,
+//        HostConfiguration hostConfiguration) => throw new NYI();
+//    public override QueryResponse Query(QueryRequest request, IJpcSession session) => throw new System.NotImplementedException();
 
-        /// <summary>
-        /// Factory method, the signature is pro tem and will be changed later on.
-        /// </summary>
-        /// <param name="domain"></param>
-        /// <param name="serviceDirectory"></param>
-        /// <returns></returns>
-        public static Goedel.Protocol.JpcInterface Factory(ServiceConfiguration serviceConfiguration,
-            HostConfiguration hostConfiguration) => throw new NYI();
-        public override QueryResponse Query(QueryRequest request, IJpcSession session) => throw new System.NotImplementedException();
+//    public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
 
-        public static ServiceDescription ServiceDescription => new(WellKnown, Factory);
-
-        }
-    }
+//    }

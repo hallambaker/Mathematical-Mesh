@@ -105,6 +105,18 @@ public abstract partial class JsonObject {
     /// </summary>
     public virtual JsonObject _Metadata { get; set; }
 
+
+    ///<summary>Link to the parent metadata dictionary.</summary> 
+    public virtual Dictionary<string, MetaData> _MetaDataParent => null;
+
+
+    /// <summary>
+    /// The Metadata dictionary for the serializable data.
+    /// </summary>
+    public virtual Dictionary<string, MetaData> _MetaData => new() { };
+
+
+
     /// <summary>
     /// Tag value used as substitute for reflection internally.
     /// </summary>

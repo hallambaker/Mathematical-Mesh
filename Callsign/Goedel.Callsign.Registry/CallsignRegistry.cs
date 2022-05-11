@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:55 PM
+//  This file was automatically generated at 11-May-22 12:07:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -109,12 +110,12 @@ public abstract partial class CallsignRegistry : global::Goedel.Protocol.JsonObj
 /// <summary>
 /// The new base class for the client and service side APIs.
 /// </summary>		
-public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
+public abstract partial class RegistryService : Goedel.Protocol.JpcInterface {
 		
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string WellKnown = "tbs2";
+	public const string WellKnown = "callsignreg";
 
 	///<inheritdoc/>
 	public override string GetWellKnown => WellKnown;
@@ -122,7 +123,7 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string Discovery = "_tbs2._tcp";
+	public const string Discovery = "_callsignreg._tcp";
 
 	///<inheritdoc/>
 	public override string GetDiscovery => Discovery;
@@ -135,14 +136,8 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 				{"Notarize", NotarizeRequest._Factory}
 		};
 
-	/// <summary>
-	/// Dispatch object request in specified authentication context.
-	/// </summary>			
-	/// <param name="token">The method identifier</param>
-	/// <param name="request">The request data</param>
-	/// <param name="session">The client context.</param>
-	/// <returns>The response object returned by the corresponding dispatch.</returns>
-	public Goedel.Protocol.JsonObject Dispatch(
+    ///<inheritdoc/>
+	public override Goedel.Protocol.JsonObject Dispatch(
 			string token,
 			Goedel.Protocol.JsonObject request,
 			IJpcSession session) => token switch {
@@ -152,39 +147,8 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
         };
 
 
-	/// <summary>
-	/// Dispatch object request in specified authentication context.
-	/// </summary>			
-    /// <param name="session">The client context.</param>
-    /// <param name="jsonReader">Reader for data object.</param>
-    /// <returns>The response object returned by the corresponding dispatch.</returns>
-	public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  
-							Goedel.Protocol.JsonReader jsonReader) {
 
-		jsonReader.StartObject ();
-		string token = jsonReader.ReadToken ();
-		JsonObject response = null;
 
-		switch (token) {
-			case "Register" : {
-				var request = new RegisterRequest();
-				request.Deserialize (jsonReader);
-				response = Register (request, session);
-				break;
-				}
-			case "Notarize" : {
-				var request = new NotarizeRequest();
-				request.Deserialize (jsonReader);
-				response = Notarize (request, session);
-				break;
-				}
-			default : {
-				throw new Goedel.Protocol.UnknownOperation ();
-				}
-			}
-		jsonReader.EndObject ();
-		return response;
-		}
 
     /// <summary>
     /// Return a client tapping the service API directly without serialization bound to
@@ -193,7 +157,7 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
     /// <param name="jpcSession">Session to which requests are to be bound.</param>
     /// <returns>The direct client instance.</returns>
 	public override Goedel.Protocol.JpcClientInterface GetDirect (IJpcSession jpcSession) =>
-			new MeshServiceDirect () {
+			new RegistryServiceDirect () {
 					JpcSession = jpcSession,
 					Service = this
 					};
@@ -220,14 +184,14 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
     }
 
 /// <summary>
-/// Client class for MeshService.
+/// Client class for RegistryService.
 /// </summary>		
-public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
+public partial class RegistryServiceClient : Goedel.Protocol.JpcClientInterface {
 
 	/// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string WellKnown = "tbs2";
+	public const string WellKnown = "callsignreg";
 
     /// <summary>
     /// Well Known service identifier.
@@ -237,7 +201,7 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string Discovery = "_tbs2._tcp";
+	public const string Discovery = "_callsignreg._tcp";
 
     /// <summary>
     /// Well Known service identifier.
@@ -264,14 +228,14 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
 	}
 
 /// <summary>
-/// Direct API class for MeshService.
+/// Direct API class for RegistryService.
 /// </summary>		
-public partial class MeshServiceDirect: MeshServiceClient {
+public partial class RegistryServiceDirect: RegistryServiceClient {
  		
 	/// <summary>
 	/// Interface object to dispatch requests to.
 	/// </summary>	
-	public MeshService Service {get; set;}
+	public RegistryService Service {get; set;}
 
 
     /// <summary>
@@ -303,6 +267,15 @@ public partial class MeshServiceDirect: MeshServiceClient {
 	/// Base class for all requests made to a registrar
 	/// </summary>
 public partial class CallsignRequest : Goedel.Protocol.Request {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -397,6 +370,15 @@ public partial class CallsignRequest : Goedel.Protocol.Request {
 	/// status code and status description fields.
 	/// </summary>
 public partial class CallsignResponse : Goedel.Protocol.Response {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -507,6 +489,25 @@ public partial class RegisterRequest : CallsignRequest {
         /// </summary>
 
 	public virtual Enveloped<Callsign>						EnvelopedCallsign  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "PriorId", new MetaDataString(
+				delegate (string _a) {  PriorId = _a; },
+				() => PriorId) } ,
+			{ "Reason", new MetaDataString(
+				delegate (string _a) {  Reason = _a; },
+				() => Reason) } ,
+			{ "EnvelopedCallsign", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedCallsign = _a as Enveloped<Callsign>; },
+				() => EnvelopedCallsign,
+				"Enveloped<Callsign>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -635,6 +636,19 @@ public partial class RegisterResponse : CallsignResponse {
         /// </summary>
 
 	public virtual Enveloped<Registration>						Result  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Result", new MetaDataStruct(
+				delegate (object _a) {  Result = _a as Enveloped<Registration>; },
+				() => Result,
+				"Enveloped<Registration>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -745,6 +759,19 @@ public partial class NotarizeRequest : CallsignRequest {
         /// </summary>
 
 	public virtual Enveloped<Witness>						Witness  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Witness", new MetaDataStruct(
+				delegate (object _a) {  Witness = _a as Enveloped<Witness>; },
+				() => Witness,
+				"Enveloped<Witness>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -860,6 +887,23 @@ public partial class NotarizeResponse : CallsignResponse {
         /// </summary>
 
 	public virtual Enveloped<Notarization>						Notarization  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Witness", new MetaDataStruct(
+				delegate (object _a) {  Witness = _a as Enveloped<Witness>; },
+				() => Witness,
+				"Enveloped<Witness>" )} ,
+			{ "Notarization", new MetaDataStruct(
+				delegate (object _a) {  Notarization = _a as Enveloped<Notarization>; },
+				() => Notarization,
+				"Enveloped<Notarization>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class

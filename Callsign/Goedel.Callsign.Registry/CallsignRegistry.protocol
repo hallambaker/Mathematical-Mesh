@@ -16,7 +16,7 @@
 	Description
 		|Protocol interactions supported by the Mesh Service.
 
-    Service MeshService "_tbs2._tcp" "tbs2" CallsignRequest CallsignResponse
+    Service RegistryService "_callsignreg._tcp" "callsignreg" CallsignRequest CallsignResponse
 		Description
 
 

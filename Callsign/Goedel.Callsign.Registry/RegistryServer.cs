@@ -29,30 +29,29 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 
 
-namespace Goedel.Callsign.Registry {
-    public class RegistryServer: CallsignServer {
-        #region // Properties
-        #endregion
-        #region // Constructors
+namespace Goedel.Callsign.Registry; 
+public class RegistryServer: CallsignServer {
+    #region // Properties
+    #endregion
+    #region // Constructors
 
-        public RegistryServer(
-                Callsign callsign,
-                Registration registration,
-                KeyPair keyPair,
-                DarePolicy policy = null,
-                CryptoParameters cryptoParameters = null,
-                IKeyCollection keyCollection = null,
-                bool create = false) : base(
-                        callsign, registration, keyPair,
-                        policy, cryptoParameters, keyCollection, create) {
-            }
-
-        #endregion
-        #region // Implement Inteface $$$
-        #endregion
-        #region // Override Methods
-        #endregion
-        #region // Methods
-        #endregion
+    public RegistryServer(
+            Callsign callsign,
+            Registration registration,
+            KeyPair keyPair,
+            DarePolicy policy = null,
+            CryptoParameters cryptoParameters = null,
+            IKeyCollection keyCollection = null,
+            bool create = false) : base(
+                    callsign, registration, keyPair,
+                    policy, cryptoParameters, keyCollection, create) {
         }
+
+    #endregion
+    #region // Implement Inteface $$$
+    #endregion
+    #region // Override Methods
+    #endregion
+    #region // Methods
+    #endregion
     }

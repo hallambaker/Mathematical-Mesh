@@ -29,53 +29,51 @@ using System.Threading.Tasks;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 
-namespace Goedel.Callsign {
+namespace Goedel.Callsign; 
 
-
-    public partial class Registration {
-        #region // Properties
-
-
-
-        #endregion
-        #region // Constructors
-
-
-        public Registration() {
+public partial class Registration {
+    #region // Properties
 
 
 
-            }
+    #endregion
+    #region // Constructors
 
 
-        public Registration(
-                Callsign callsign, 
-                Registration registration=null, 
-                RegistrationReason registrationReason= RegistrationReason.Update) {
-            Id = UDF.Nonce();
-            Entry = callsign.Enveloped as Enveloped<CallsignEntry>;
-            Submitted = DateTime.Now;
+    public Registration() {
 
-            if (registration is null) {
-                Reason = CallsignConstants.RegistrationReasonInitialTag;
-                }
-            else {
-                Reason = registrationReason.ToLabel();
-                PriorId = registration.Id;
-                }
-
-            // not currently dealling with the registrar slot.
-            }
-
-        #endregion
-
-
-        #region // Methods
-
-
-
-        #endregion
 
 
         }
+
+
+    public Registration(
+            Callsign callsign, 
+            Registration registration=null, 
+            RegistrationReason registrationReason= RegistrationReason.Update) {
+        Id = UDF.Nonce();
+        Entry = callsign.Enveloped as Enveloped<CallsignEntry>;
+        Submitted = DateTime.Now;
+
+        if (registration is null) {
+            Reason = CallsignConstants.RegistrationReasonInitialTag;
+            }
+        else {
+            Reason = registrationReason.ToLabel();
+            PriorId = registration.Id;
+            }
+
+        // not currently dealling with the registrar slot.
+        }
+
+    #endregion
+
+
+    #region // Methods
+
+
+
+    #endregion
+
+
     }

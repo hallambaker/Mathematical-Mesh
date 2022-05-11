@@ -28,43 +28,6 @@ namespace Goedel.Protocol.Service;
 
 
 
-
-/// <summary>
-/// Base class for service configurations.
-/// </summary>
-public abstract class ServiceConfiguration {
-
-     
-    ///<summary>Returns the configuration entry.</summary> 
-    public abstract ConfigurationEntry GetConfigurationEntry();
-
-    ///<summary>The default</summary>
-    public GenericHostConfiguration DefaultHostConfiguration { get; set; }
-
-    ///<summary>The service profile fingerprint.</summary> 
-    public string ServiceUdf { get; set; } = string.Empty;
-
-    ///<summary>Path to the service data</summary> 
-    public string ServicePath { get; set; } = string.Empty;
-
-    ///<summary>Service DNS addresses</summary> 
-    public List<string> ServiceDNS { get; set; } = new List<string>();
-
-
-    ///// <summary>
-    ///// Return the service endpoints for the host configuration <paramref name="genericHostConfiguration"/>.
-    ///// </summary>
-    ///// <param name="genericHostConfiguration">The host to return the endpoints for.</param>
-    ///// <returns>The list of endpoints.</returns>
-    //public abstract List<Endpoint> GetEndpoints(GenericHostConfiguration genericHostConfiguration);
-
-    }
-
-
-
-
-
-
 /// <summary>
 /// Service level logging class.
 /// </summary>

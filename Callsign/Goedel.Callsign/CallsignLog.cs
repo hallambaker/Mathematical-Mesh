@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:40 PM
+//  This file was automatically generated at 11-May-22 12:07:33 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -155,6 +156,37 @@ public partial class Callsign : CallsignEntry {
         /// </summary>
 
 	public virtual ProfileAccount						Account  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Id", new MetaDataString(
+				delegate (string _a) {  Id = _a; },
+				() => Id) } ,
+			{ "Presentation", new MetaDataString(
+				delegate (string _a) {  Presentation = _a; },
+				() => Presentation) } ,
+			{ "Holder", new MetaDataString(
+				delegate (string _a) {  Holder = _a; },
+				() => Holder) } ,
+			{ "Alias", new MetaDataString(
+				delegate (string _a) {  Alias = _a; },
+				() => Alias) } ,
+			{ "Service", new MetaDataString(
+				delegate (string _a) {  Service = _a; },
+				() => Service) } ,
+			{ "Dns", new MetaDataListString(
+				delegate (List<string> _a) {  Dns = _a; },
+				() => Dns) } ,
+			{ "Account", new MetaDataStruct(
+				delegate (object _a) {  Account = _a as ProfileAccount; },
+				() => Account,
+				"ProfileAccount" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -357,6 +389,34 @@ public partial class Registration : CallsignEntry {
         /// </summary>
 
 	public virtual string						Reason  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Id", new MetaDataString(
+				delegate (string _a) {  Id = _a; },
+				() => Id) } ,
+			{ "Entry", new MetaDataStruct(
+				delegate (object _a) {  Entry = _a as Enveloped<CallsignEntry>; },
+				() => Entry,
+				"Enveloped<CallsignEntry>" )} ,
+			{ "Submitted", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Submitted = _a; },
+				() => Submitted) } ,
+			{ "Registrar", new MetaDataString(
+				delegate (string _a) {  Registrar = _a; },
+				() => Registrar) } ,
+			{ "PriorId", new MetaDataString(
+				delegate (string _a) {  PriorId = _a; },
+				() => PriorId) } ,
+			{ "Reason", new MetaDataString(
+				delegate (string _a) {  Reason = _a; },
+				() => Reason) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -518,6 +578,25 @@ public partial class Page : CallsignEntry {
         /// </summary>
 
 	public virtual List<CharacterSpan>				CharacterSpans  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Id", new MetaDataString(
+				delegate (string _a) {  Id = _a; },
+				() => Id) } ,
+			{ "Allow", new MetaDataListString(
+				delegate (List<string> _a) {  Allow = _a; },
+				() => Allow) } ,
+			{ "CharacterSpans", new MetaDataListStruct(
+				delegate (object _a) {  CharacterSpans = _a as List<CharacterSpan>; },
+				() => CharacterSpans,
+				"CharacterSpan", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -666,27 +745,32 @@ public partial class Page : CallsignEntry {
 	/// <summary>
 	/// </summary>
 public partial class CharacterSpan : CallsignEntry {
-	bool								__First = false;
-	private int						_First;
         /// <summary>
         ///The first character in the range (inclusive)
         /// </summary>
 
-	public virtual int						First {
-		get => _First;
-		set {_First = value; __First = true; }
-		}
-	bool								__Last = false;
-	private int						_Last;
+	public virtual int?						First  {get; set;}
         /// <summary>
         ///The last character in the range (inclusive), if ommitted or
         ///equal to zero, this is the same as Last.
         /// </summary>
 
-	public virtual int						Last {
-		get => _Last;
-		set {_Last = value; __Last = true; }
-		}
+	public virtual int?						Last  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "First", new MetaDataInteger32(
+				delegate (int? _a) {  First = _a; },
+				() => First) } ,
+			{ "Last", new MetaDataInteger32(
+				delegate (int? _a) {  Last = _a; },
+				() => Last) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -730,12 +814,12 @@ public partial class CharacterSpan : CallsignEntry {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__First){
+		if (First != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("First", 1);
 				_writer.WriteInteger32 (First);
 			}
-		if (__Last){
+		if (Last != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Last", 1);
 				_writer.WriteInteger32 (Last);
@@ -796,6 +880,15 @@ public partial class CharacterSpan : CallsignEntry {
 	/// Canonical character span.
 	/// </summary>
 public partial class Canonical : CharacterSpan {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -890,16 +983,23 @@ public partial class Canonical : CharacterSpan {
 	/// a range of characters Target..Target+n. Where n = Last - First+1
 	/// </summary>
 public partial class MapChar : CharacterSpan {
-	bool								__Target = false;
-	private int						_Target;
         /// <summary>
         ///The character that First is mapped to.
         /// </summary>
 
-	public virtual int						Target {
-		get => _Target;
-		set {_Target = value; __Target = true; }
-		}
+	public virtual int?						Target  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Target", new MetaDataInteger32(
+				delegate (int? _a) {  Target = _a; },
+				() => Target) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -944,7 +1044,7 @@ public partial class MapChar : CharacterSpan {
 			_writer.WriteObjectStart ();
 			}
 		((CharacterSpan)this).SerializeX(_writer, false, ref _first);
-		if (__Target){
+		if (Target != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Target", 1);
 				_writer.WriteInteger32 (Target);
@@ -1009,6 +1109,18 @@ public partial class MapString : CharacterSpan {
         /// </summary>
 
 	public virtual string						Target  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Target", new MetaDataString(
+				delegate (string _a) {  Target = _a; },
+				() => Target) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1120,6 +1232,23 @@ public partial class Notarization : CallsignEntry {
         /// </summary>
 
 	public virtual Proof						Proof  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Entries", new MetaDataListStruct(
+				delegate (object _a) {  Entries = _a as List<Enveloped<Witness>>; },
+				() => Entries,
+				"Enveloped<Witness>" )} ,
+			{ "Proof", new MetaDataStruct(
+				delegate (object _a) {  Proof = _a as Proof; },
+				() => Proof,
+				"Proof" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1259,6 +1388,19 @@ public partial class ProfileDns : Profile {
         /// </summary>
 
 	public virtual List<SecurityPolicy>				SecurityPolicies  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "SecurityPolicies", new MetaDataListStruct(
+				delegate (object _a) {  SecurityPolicies = _a as List<SecurityPolicy>; },
+				() => SecurityPolicies,
+				"SecurityPolicy" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1397,21 +1539,41 @@ public partial class SecurityPolicy : CallsignEntry {
         /// </summary>
 
 	public virtual List<string>				Enhancements  {get; set;}
-	bool								__Require = false;
-	private bool						_Require;
         /// <summary>
         ///If true, clients MUST use one of the supported enhancements.		
         /// </summary>
 
-	public virtual bool						Require {
-		get => _Require;
-		set {_Require = value; __Require = true; }
-		}
+	public virtual bool?						Require  {get; set;}
         /// <summary>
         ///Keys specifying roots of trust for the specified protocol(s).
         /// </summary>
 
 	public virtual List<KeyData>				Roots  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "CName", new MetaDataListString(
+				delegate (List<string> _a) {  CName = _a; },
+				() => CName) } ,
+			{ "Protocol", new MetaDataListString(
+				delegate (List<string> _a) {  Protocol = _a; },
+				() => Protocol) } ,
+			{ "Enhancements", new MetaDataListString(
+				delegate (List<string> _a) {  Enhancements = _a; },
+				() => Enhancements) } ,
+			{ "Require", new MetaDataBoolean(
+				delegate (bool? _a) {  Require = _a; },
+				() => Require) } ,
+			{ "Roots", new MetaDataListStruct(
+				delegate (object _a) {  Roots = _a as List<KeyData>; },
+				() => Roots,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1491,7 +1653,7 @@ public partial class SecurityPolicy : CallsignEntry {
 			_writer.WriteArrayEnd ();
 			}
 
-		if (__Require){
+		if (Require != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Require", 1);
 				_writer.WriteBoolean (Require);
@@ -1648,6 +1810,36 @@ public partial class Accreditation : Assertion {
         /// </summary>
 
 	public virtual string						Practice  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Callsign", new MetaDataString(
+				delegate (string _a) {  Callsign = _a; },
+				() => Callsign) } ,
+			{ "SubjectNames", new MetaDataListString(
+				delegate (List<string> _a) {  SubjectNames = _a; },
+				() => SubjectNames) } ,
+			{ "SubjectLogos", new MetaDataListString(
+				delegate (List<string> _a) {  SubjectLogos = _a; },
+				() => SubjectLogos) } ,
+			{ "Issued", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Issued = _a; },
+				() => Issued) } ,
+			{ "Expires", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Expires = _a; },
+				() => Expires) } ,
+			{ "Policy", new MetaDataString(
+				delegate (string _a) {  Policy = _a; },
+				() => Policy) } ,
+			{ "Practice", new MetaDataString(
+				delegate (string _a) {  Practice = _a; },
+				() => Practice) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1842,6 +2034,21 @@ public partial class Challenge : Assertion {
         /// </summary>
 
 	public virtual List<string>				Basis  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Subjects", new MetaDataListString(
+				delegate (List<string> _a) {  Subjects = _a; },
+				() => Subjects) } ,
+			{ "Basis", new MetaDataListString(
+				delegate (List<string> _a) {  Basis = _a; },
+				() => Basis) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class

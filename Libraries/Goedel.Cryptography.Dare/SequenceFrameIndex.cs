@@ -83,8 +83,8 @@ public partial class SequenceFrameIndex {
         // failing here because we have encryption but no recipients!!!
 
         DareHeader exchange = null;
-        if (Header?.HasExchangePosition == true) {
-            exchange = sequence.GetHeader(Header.SequenceInfo.ExchangePosition);
+        if (Header?.SequenceInfo?.ExchangePosition is not null) {
+            exchange = sequence.GetHeader(Header.SequenceInfo.ExchangePosition ?? 0);
             }
 
         using var input = jbcdStream.FramerGetReader(DataPosition, DataLength);
@@ -186,7 +186,7 @@ public partial class SequenceFrameIndex {
             Body = GetBody(sequence)
             };
 
-        if (!detatched | !Header.HasExchangePosition) {
+        if (!detatched | Header?.SequenceInfo?.ExchangePosition is null) {
             Header.Recipients = GetRecipients(sequence);
             }
 
@@ -196,10 +196,10 @@ public partial class SequenceFrameIndex {
         }
 
     List<DareRecipient> GetRecipients(Sequence sequence) {
-        if (!Header.HasExchangePosition) {
+        if (Header?.SequenceInfo?.ExchangePosition is null) {
             return Header.Recipients;
             }
-        var exchangeHeader = sequence.GetHeader(Header.SequenceInfo.ExchangePosition);
+        var exchangeHeader = sequence.GetHeader(Header.SequenceInfo.ExchangePosition ?? 0);
 
         if (Header.Recipients == null) {
             return exchangeHeader.Recipients;

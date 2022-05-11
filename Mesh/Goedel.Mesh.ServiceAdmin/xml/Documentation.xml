@@ -4,22 +4,57 @@
         <name>Goedel.Mesh.ServiceAdmin</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration">
+        <member name="T:Goedel.Mesh.ServiceAdmin.CallsignRegistryConfiguration">
             <summary>
             The Mesh service configuration.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration.ConfigurationEntry">
+        <member name="F:Goedel.Mesh.ServiceAdmin.CallsignRegistryConfiguration.ConfigurationEntry">
             <summary>The configuration entry.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration.GetConfigurationEntry">
+        <member name="M:Goedel.Mesh.ServiceAdmin.CallsignRegistryConfiguration.GetConfigurationEntry">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration.Administrators">
-            <summary>The set of administrators.</summary> 
+        <member name="P:Goedel.Mesh.ServiceAdmin.CallsignRegistryConfiguration.SignatureSchedule">
+            <summary>The signature schedule</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration.HostPath">
-            <summary>Path to the host data.</summary> 
+        <member name="P:Goedel.Mesh.ServiceAdmin.CallsignRegistryConfiguration.CrossCertifiers">
+            <summary>Cross certifiers.</summary> 
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.ServiceAdmin.CallsignRegistryConfiguration.Publish" -->
+        <member name="T:Goedel.Mesh.ServiceAdmin.CrossCertifier">
+            <summary>
+            Cross certification entry.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Goedel.Mesh.ServiceAdmin.CrossCertifier.Frequency" -->
+        <member name="P:Goedel.Mesh.ServiceAdmin.CrossCertifier.Signer">
+            <summary>Party to which the signature request is directed.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.CallsignResolverConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.CallsignResolverConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.CallsignResolverConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.CallsignResolverConfiguration.Registry">
+            <summary>The sevice address of the registry to resolve.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.CarnetServiceConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.CarnetServiceConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.CarnetServiceConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.Configuration">
             <summary>
@@ -29,11 +64,26 @@
         <member name="F:Goedel.Mesh.ServiceAdmin.Configuration.Dictionary">
             <summary>Maps configuration entry to configuration.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.GenericHostConfiguration">
+            <summary>The host configuration.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.MeshServiceConfiguration">
             <summary>The Mesh service configuration.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.GenericHostConfiguration">
-            <summary>The host configuration.</summary> 
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.CallsignRegistryConfiguration">
+            <summary>The Mesh service configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.CallsignResolverConfiguration">
+            <summary>The Mesh service configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.CarnetServiceConfiguration">
+            <summary>The Mesh service configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.PersistanceServiceConfiguration">
+            <summary>The Mesh service configuration.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.PresenceServiceConfiguration">
+            <summary>The Mesh service configuration.</summary> 
         </member>
         <member name="M:Goedel.Mesh.ServiceAdmin.Configuration.#ctor">
             <summary>
@@ -277,10 +327,43 @@
         <member name="M:Goedel.Mesh.ServiceAdmin.MeshRudListener.StartAsync(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.NamespaceDoc">
             <summary>
             Service administration over multiple hosts.
             </summary>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.PersistanceServiceConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.PersistanceServiceConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.PersistanceServiceConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.PresenceServiceConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAdmin.PresenceServiceConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAdmin.PresenceServiceConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.ServiceAdmin.Resources">
             <summary>

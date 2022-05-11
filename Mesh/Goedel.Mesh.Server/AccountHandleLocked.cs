@@ -271,7 +271,7 @@ public class AccountHandleLocked : Disposable {
         //    }
 
 
-        if (envelopes[0].Header.SequenceInfo.Index == 0) {
+        if (envelopes[0].Header.SequenceInfo.LIndex == 0) {
             MakeNewSequence(label, envelopes);
             }
         else {

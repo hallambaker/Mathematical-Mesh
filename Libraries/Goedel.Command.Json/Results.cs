@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:06 PM
+//  This file was automatically generated at 11-May-22 12:07:20 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -101,19 +102,29 @@ public abstract partial class JsonShellResult : global::Goedel.Protocol.JsonObje
 	/// <summary>
 	/// </summary>
 public partial class ShellResult : JsonShellResult {
-	bool								__Success = false;
-	private bool						_Success;
         /// <summary>
         /// </summary>
 
-	public virtual bool						Success {
-		get => _Success;
-		set {_Success = value; __Success = true; }
-		}
+	public virtual bool?						Success  {get; set;}
         /// <summary>
         /// </summary>
 
 	public virtual string						Reason  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Success", new MetaDataBoolean(
+				delegate (bool? _a) {  Success = _a; },
+				() => Success) } ,
+			{ "Reason", new MetaDataString(
+				delegate (string _a) {  Reason = _a; },
+				() => Reason) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -157,7 +168,7 @@ public partial class ShellResult : JsonShellResult {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__Success){
+		if (Success != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Success", 1);
 				_writer.WriteBoolean (Success);

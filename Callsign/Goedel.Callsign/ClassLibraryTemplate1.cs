@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Goedel.Callsign {
-    public class ClassLibraryTemplate1 {
-        }
+namespace Goedel.Callsign; 
+public class ClassLibraryTemplate1 {
     }

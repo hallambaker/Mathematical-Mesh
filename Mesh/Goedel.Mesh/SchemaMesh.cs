@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:21 PM
+//  This file was automatically generated at 11-May-22 12:07:29 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -246,6 +247,41 @@ public partial class KeyData : MeshItem {
         /// </summary>
 
 	public virtual Key						PrivateParameters  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Udf", new MetaDataString(
+				delegate (string _a) {  Udf = _a; },
+				() => Udf) } ,
+			{ "X509Certificate", new MetaDataBinary(
+				delegate (byte[] _a) {  X509Certificate = _a; },
+				() => X509Certificate) } ,
+			{ "X509Chain", new MetaDataListBinary(
+				delegate (List<byte[]> _a) {  X509Chain = _a; },
+				() => X509Chain) } ,
+			{ "X509CSR", new MetaDataBinary(
+				delegate (byte[] _a) {  X509CSR = _a; },
+				() => X509CSR) } ,
+			{ "NotBefore", new MetaDataDateTime(
+				delegate (DateTime? _a) {  NotBefore = _a; },
+				() => NotBefore) } ,
+			{ "NotOnOrAfter", new MetaDataDateTime(
+				delegate (DateTime? _a) {  NotOnOrAfter = _a; },
+				() => NotOnOrAfter) } ,
+			{ "PublicParameters", new MetaDataStruct(
+				delegate (object _a) {  PublicParameters = _a as Key; },
+				() => PublicParameters,
+				"Key", true)},
+			{ "PrivateParameters", new MetaDataStruct(
+				delegate (object _a) {  PrivateParameters = _a as Key; },
+				() => PrivateParameters,
+				"Key", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -459,6 +495,29 @@ public partial class KeyShare : Key {
         /// </summary>
 
 	public virtual string						ServiceAddress  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "PublicPrimary", new MetaDataStruct(
+				delegate (object _a) {  PublicPrimary = _a as Key; },
+				() => PublicPrimary,
+				"Key", true)},
+			{ "Share", new MetaDataStruct(
+				delegate (object _a) {  Share = _a as Key; },
+				() => Share,
+				"Key", true)},
+			{ "ServiceId", new MetaDataString(
+				delegate (string _a) {  ServiceId = _a; },
+				() => ServiceId) } ,
+			{ "ServiceAddress", new MetaDataString(
+				delegate (string _a) {  ServiceAddress = _a; },
+				() => ServiceAddress) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -617,6 +676,26 @@ public partial class CompositePrivate : Key {
         /// </summary>
 
 	public virtual Key						ServiceShare  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "DeviceKeyUdf", new MetaDataString(
+				delegate (string _a) {  DeviceKeyUdf = _a; },
+				() => DeviceKeyUdf) } ,
+			{ "PrivateSalt", new MetaDataStruct(
+				delegate (object _a) {  PrivateSalt = _a as Key; },
+				() => PrivateSalt,
+				"Key", true)},
+			{ "ServiceShare", new MetaDataStruct(
+				delegate (object _a) {  ServiceShare = _a as Key; },
+				() => ServiceShare,
+				"Key", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -777,6 +856,28 @@ abstract public partial class Assertion : MeshItem {
         /// </summary>
 
 	public virtual Condition						Conditions  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Names", new MetaDataListString(
+				delegate (List<string> _a) {  Names = _a; },
+				() => Names) } ,
+			{ "Updated", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Updated = _a; },
+				() => Updated) } ,
+			{ "NotaryToken", new MetaDataString(
+				delegate (string _a) {  NotaryToken = _a; },
+				() => NotaryToken) } ,
+			{ "Conditions", new MetaDataStruct(
+				delegate (object _a) {  Conditions = _a as Condition; },
+				() => Conditions,
+				"Condition", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -923,6 +1024,15 @@ abstract public partial class Assertion : MeshItem {
 	/// Parent class from which all condition classes are derived.
 	/// </summary>
 abstract public partial class Condition : MeshItem {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1023,6 +1133,22 @@ public partial class Activation : Assertion {
         /// </summary>
 
 	public virtual List<ActivationEntry>				Entries  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "ActivationKey", new MetaDataString(
+				delegate (string _a) {  ActivationKey = _a; },
+				() => ActivationKey) } ,
+			{ "Entries", new MetaDataListStruct(
+				delegate (object _a) {  Entries = _a as List<ActivationEntry>; },
+				() => Entries,
+				"ActivationEntry" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1176,6 +1302,28 @@ public partial class ActivationEntry : MeshItem {
         /// </summary>
 
 	public virtual string						ServiceAddress  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Resource", new MetaDataString(
+				delegate (string _a) {  Resource = _a; },
+				() => Resource) } ,
+			{ "Key", new MetaDataStruct(
+				delegate (object _a) {  Key = _a as KeyData; },
+				() => Key,
+				"KeyData" )} ,
+			{ "ServiceId", new MetaDataString(
+				delegate (string _a) {  ServiceId = _a; },
+				() => ServiceId) } ,
+			{ "ServiceAddress", new MetaDataString(
+				delegate (string _a) {  ServiceAddress = _a; },
+				() => ServiceAddress) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1319,6 +1467,22 @@ abstract public partial class Profile : Assertion {
         /// </summary>
 
 	public virtual KeyData						ProfileSignature  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Description", new MetaDataString(
+				delegate (string _a) {  Description = _a; },
+				() => Description) } ,
+			{ "ProfileSignature", new MetaDataStruct(
+				delegate (object _a) {  ProfileSignature = _a as KeyData; },
+				() => ProfileSignature,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1449,6 +1613,27 @@ public partial class ProfileDevice : Profile {
         /// </summary>
 
 	public virtual KeyData						Authentication  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Encryption", new MetaDataStruct(
+				delegate (object _a) {  Encryption = _a as KeyData; },
+				() => Encryption,
+				"KeyData" )} ,
+			{ "Signature", new MetaDataStruct(
+				delegate (object _a) {  Signature = _a as KeyData; },
+				() => Signature,
+				"KeyData" )} ,
+			{ "Authentication", new MetaDataStruct(
+				delegate (object _a) {  Authentication = _a as KeyData; },
+				() => Authentication,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1613,6 +1798,37 @@ public partial class ProfileAccount : Profile {
         /// </summary>
 
 	public virtual KeyData						CommonAuthentication  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountAddress", new MetaDataString(
+				delegate (string _a) {  AccountAddress = _a; },
+				() => AccountAddress) } ,
+			{ "ServiceUdf", new MetaDataString(
+				delegate (string _a) {  ServiceUdf = _a; },
+				() => ServiceUdf) } ,
+			{ "EscrowEncryption", new MetaDataStruct(
+				delegate (object _a) {  EscrowEncryption = _a as KeyData; },
+				() => EscrowEncryption,
+				"KeyData" )} ,
+			{ "AdministratorSignature", new MetaDataStruct(
+				delegate (object _a) {  AdministratorSignature = _a as KeyData; },
+				() => AdministratorSignature,
+				"KeyData" )} ,
+			{ "CommonEncryption", new MetaDataStruct(
+				delegate (object _a) {  CommonEncryption = _a as KeyData; },
+				() => CommonEncryption,
+				"KeyData" )} ,
+			{ "CommonAuthentication", new MetaDataStruct(
+				delegate (object _a) {  CommonAuthentication = _a as KeyData; },
+				() => CommonAuthentication,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1777,6 +1993,19 @@ public partial class ProfileUser : ProfileAccount {
         /// </summary>
 
 	public virtual KeyData						CommonSignature  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "CommonSignature", new MetaDataStruct(
+				delegate (object _a) {  CommonSignature = _a as KeyData; },
+				() => CommonSignature,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1884,6 +2113,15 @@ public partial class ProfileUser : ProfileAccount {
 	/// administrators over time.
 	/// </summary>
 public partial class ProfileGroup : ProfileAccount {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1992,6 +2230,27 @@ public partial class ProfileService : Profile {
         /// </summary>
 
 	public virtual KeyData						ServiceSignature  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "ServiceAuthentication", new MetaDataStruct(
+				delegate (object _a) {  ServiceAuthentication = _a as KeyData; },
+				() => ServiceAuthentication,
+				"KeyData" )} ,
+			{ "ServiceEncryption", new MetaDataStruct(
+				delegate (object _a) {  ServiceEncryption = _a as KeyData; },
+				() => ServiceEncryption,
+				"KeyData" )} ,
+			{ "ServiceSignature", new MetaDataStruct(
+				delegate (object _a) {  ServiceSignature = _a as KeyData; },
+				() => ServiceSignature,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2121,6 +2380,15 @@ public partial class ProfileService : Profile {
 	/// Profile of a Mesh Host providing one or more Mesh Services.
 	/// </summary>
 public partial class ProfileHost : ProfileDevice {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2227,6 +2495,25 @@ public partial class Connection : Assertion {
         /// </summary>
 
 	public virtual KeyData						Authentication  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Subject", new MetaDataString(
+				delegate (string _a) {  Subject = _a; },
+				() => Subject) } ,
+			{ "Authority", new MetaDataString(
+				delegate (string _a) {  Authority = _a; },
+				() => Authority) } ,
+			{ "Authentication", new MetaDataStruct(
+				delegate (object _a) {  Authentication = _a as KeyData; },
+				() => Authentication,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2370,6 +2657,28 @@ public partial class CallsignBinding : Assertion {
         /// </summary>
 
 	public virtual List<NamedService>				Services  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Canonical", new MetaDataString(
+				delegate (string _a) {  Canonical = _a; },
+				() => Canonical) } ,
+			{ "Display", new MetaDataString(
+				delegate (string _a) {  Display = _a; },
+				() => Display) } ,
+			{ "ProfileUdf", new MetaDataString(
+				delegate (string _a) {  ProfileUdf = _a; },
+				() => ProfileUdf) } ,
+			{ "Services", new MetaDataListStruct(
+				delegate (object _a) {  Services = _a as List<NamedService>; },
+				() => Services,
+				"NamedService" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2527,6 +2836,18 @@ public partial class ConnectionStripped : Connection {
         /// </summary>
 
 	public virtual string						Account  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Account", new MetaDataString(
+				delegate (string _a) {  Account = _a; },
+				() => Account) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2639,6 +2960,22 @@ public partial class ConnectionService : Connection {
         /// </summary>
 
 	public virtual CatalogedCallsign						Callsign  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "ProfileUdf", new MetaDataString(
+				delegate (string _a) {  ProfileUdf = _a; },
+				() => ProfileUdf) } ,
+			{ "Callsign", new MetaDataStruct(
+				delegate (object _a) {  Callsign = _a as CatalogedCallsign; },
+				() => Callsign,
+				"CatalogedCallsign" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2767,6 +3104,26 @@ public partial class ConnectionDevice : ConnectionService {
         /// </summary>
 
 	public virtual KeyData						Encryption  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Roles", new MetaDataListString(
+				delegate (List<string> _a) {  Roles = _a; },
+				() => Roles) } ,
+			{ "Signature", new MetaDataStruct(
+				delegate (object _a) {  Signature = _a as KeyData; },
+				() => Signature,
+				"KeyData" )} ,
+			{ "Encryption", new MetaDataStruct(
+				delegate (object _a) {  Encryption = _a as KeyData; },
+				() => Encryption,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2907,6 +3264,15 @@ public partial class ConnectionDevice : ConnectionService {
 	/// Connection assertion stating that a particular device is 
 	/// </summary>
 public partial class ConnectionApplication : Connection {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3000,6 +3366,15 @@ public partial class ConnectionApplication : Connection {
 	/// Describes the connection of a member to a group.
 	/// </summary>
 public partial class ConnectionGroup : Connection {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3106,6 +3481,25 @@ public partial class AccountHostAssignment : Assertion {
         /// </summary>
 
 	public virtual KeyData						AccessEncrypt  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountAddess", new MetaDataString(
+				delegate (string _a) {  AccountAddess = _a; },
+				() => AccountAddess) } ,
+			{ "HostAddresses", new MetaDataListString(
+				delegate (List<string> _a) {  HostAddresses = _a; },
+				() => HostAddresses) } ,
+			{ "AccessEncrypt", new MetaDataStruct(
+				delegate (object _a) {  AccessEncrypt = _a as KeyData; },
+				() => AccessEncrypt,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3241,6 +3635,15 @@ public partial class AccountHostAssignment : Assertion {
 	/// <summary>
 	/// </summary>
 public partial class ConnectionHost : Connection {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3340,6 +3743,18 @@ public partial class ActivationAccount : Activation {
         /// </summary>
 
 	public virtual string						AccountUdf  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountUdf", new MetaDataString(
+				delegate (string _a) {  AccountUdf = _a; },
+				() => AccountUdf) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3443,6 +3858,15 @@ public partial class ActivationAccount : Activation {
 	/// Mesh host
 	/// </summary>
 public partial class ActivationHost : ActivationAccount {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3561,6 +3985,35 @@ public partial class ActivationCommon : Activation {
         /// </summary>
 
 	public virtual KeyData						Signature  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "ProfileSignature", new MetaDataStruct(
+				delegate (object _a) {  ProfileSignature = _a as KeyData; },
+				() => ProfileSignature,
+				"KeyData" )} ,
+			{ "AdministratorSignature", new MetaDataStruct(
+				delegate (object _a) {  AdministratorSignature = _a as KeyData; },
+				() => AdministratorSignature,
+				"KeyData" )} ,
+			{ "Encryption", new MetaDataStruct(
+				delegate (object _a) {  Encryption = _a as KeyData; },
+				() => Encryption,
+				"KeyData" )} ,
+			{ "Authentication", new MetaDataStruct(
+				delegate (object _a) {  Authentication = _a as KeyData; },
+				() => Authentication,
+				"KeyData" )} ,
+			{ "Signature", new MetaDataStruct(
+				delegate (object _a) {  Signature = _a as KeyData; },
+				() => Signature,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3712,6 +4165,15 @@ public partial class ActivationCommon : Activation {
 	/// <summary>
 	/// </summary>
 public partial class ActivationApplication : Activation {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3808,6 +4270,19 @@ public partial class ActivationApplicationSsh : ActivationApplication {
         /// </summary>
 
 	public virtual KeyData						ClientKey  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "ClientKey", new MetaDataStruct(
+				delegate (object _a) {  ClientKey = _a as KeyData; },
+				() => ClientKey,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3931,6 +4406,31 @@ public partial class ActivationApplicationMail : ActivationApplication {
         /// </summary>
 
 	public virtual KeyData						OpenpgpEncrypt  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "SmimeSign", new MetaDataStruct(
+				delegate (object _a) {  SmimeSign = _a as KeyData; },
+				() => SmimeSign,
+				"KeyData" )} ,
+			{ "SmimeEncrypt", new MetaDataStruct(
+				delegate (object _a) {  SmimeEncrypt = _a as KeyData; },
+				() => SmimeEncrypt,
+				"KeyData" )} ,
+			{ "OpenpgpSign", new MetaDataStruct(
+				delegate (object _a) {  OpenpgpSign = _a as KeyData; },
+				() => OpenpgpSign,
+				"KeyData" )} ,
+			{ "OpenpgpEncrypt", new MetaDataStruct(
+				delegate (object _a) {  OpenpgpEncrypt = _a as KeyData; },
+				() => OpenpgpEncrypt,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4093,6 +4593,31 @@ public partial class ActivationApplicationGroup : ActivationApplication {
         /// </summary>
 
 	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountEncryption", new MetaDataStruct(
+				delegate (object _a) {  AccountEncryption = _a as KeyData; },
+				() => AccountEncryption,
+				"KeyData" )} ,
+			{ "AdministratorSignature", new MetaDataStruct(
+				delegate (object _a) {  AdministratorSignature = _a as KeyData; },
+				() => AdministratorSignature,
+				"KeyData" )} ,
+			{ "AccountAuthentication", new MetaDataStruct(
+				delegate (object _a) {  AccountAuthentication = _a as KeyData; },
+				() => AccountAuthentication,
+				"KeyData" )} ,
+			{ "EnvelopedConnectionService", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionService = _a as Enveloped<ConnectionService>; },
+				() => EnvelopedConnectionService,
+				"Enveloped<ConnectionService>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4232,6 +4757,15 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 	/// <summary>
 	/// </summary>
 public partial class ActivationApplicationCallsign : ActivationApplication {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4327,6 +4861,18 @@ abstract public partial class ApplicationEntry : MeshItem {
         /// </summary>
 
 	public virtual string						Identifier  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Identifier", new MetaDataString(
+				delegate (string _a) {  Identifier = _a; },
+				() => Identifier) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4426,6 +4972,19 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
         /// </summary>
 
 	public virtual Enveloped<ActivationApplicationSsh>						EnvelopedActivation  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedActivation", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivation = _a as Enveloped<ActivationApplicationSsh>; },
+				() => EnvelopedActivation,
+				"Enveloped<ActivationApplicationSsh>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4533,6 +5092,19 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
         /// </summary>
 
 	public virtual Enveloped<ActivationApplicationGroup>						EnvelopedActivation  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedActivation", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivation = _a as Enveloped<ActivationApplicationGroup>; },
+				() => EnvelopedActivation,
+				"Enveloped<ActivationApplicationGroup>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4640,6 +5212,19 @@ public partial class ApplicationEntryMail : ApplicationEntry {
         /// </summary>
 
 	public virtual Enveloped<ActivationApplicationMail>						EnvelopedActivation  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedActivation", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivation = _a as Enveloped<ActivationApplicationMail>; },
+				() => EnvelopedActivation,
+				"Enveloped<ActivationApplicationMail>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4747,6 +5332,19 @@ public partial class ApplicationEntryCallsign : ApplicationEntry {
         /// </summary>
 
 	public virtual Enveloped<ActivationApplicationCallsign>						EnvelopedActivation  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedActivation", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivation = _a as Enveloped<ActivationApplicationCallsign>; },
+				() => EnvelopedActivation,
+				"Enveloped<ActivationApplicationCallsign>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4892,6 +5490,45 @@ abstract public partial class Contact : Assertion {
         /// </summary>
 
 	public virtual List<TaggedSource>				Sources  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Id", new MetaDataString(
+				delegate (string _a) {  Id = _a; },
+				() => Id) } ,
+			{ "Local", new MetaDataString(
+				delegate (string _a) {  Local = _a; },
+				() => Local) } ,
+			{ "Anchors", new MetaDataListStruct(
+				delegate (object _a) {  Anchors = _a as List<Anchor>; },
+				() => Anchors,
+				"Anchor" )} ,
+			{ "NetworkAddresses", new MetaDataListStruct(
+				delegate (object _a) {  NetworkAddresses = _a as List<NetworkAddress>; },
+				() => NetworkAddresses,
+				"NetworkAddress" )} ,
+			{ "Locations", new MetaDataListStruct(
+				delegate (object _a) {  Locations = _a as List<Location>; },
+				() => Locations,
+				"Location" )} ,
+			{ "Roles", new MetaDataListStruct(
+				delegate (object _a) {  Roles = _a as List<Role>; },
+				() => Roles,
+				"Role" )} ,
+			{ "Bookmark", new MetaDataListStruct(
+				delegate (object _a) {  Bookmark = _a as List<Bookmark>; },
+				() => Bookmark,
+				"Bookmark" )} ,
+			{ "Sources", new MetaDataListStruct(
+				delegate (object _a) {  Sources = _a as List<TaggedSource>; },
+				() => Sources,
+				"TaggedSource" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5196,6 +5833,21 @@ public partial class Anchor : MeshItem {
         /// </summary>
 
 	public virtual string						Validation  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Udf", new MetaDataString(
+				delegate (string _a) {  Udf = _a; },
+				() => Udf) } ,
+			{ "Validation", new MetaDataString(
+				delegate (string _a) {  Validation = _a; },
+				() => Validation) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5326,6 +5978,28 @@ public partial class TaggedSource : MeshItem {
         /// </summary>
 
 	public virtual Enveloped<Contact>						EnvelopedSource  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "LocalName", new MetaDataString(
+				delegate (string _a) {  LocalName = _a; },
+				() => LocalName) } ,
+			{ "Validation", new MetaDataString(
+				delegate (string _a) {  Validation = _a; },
+				() => Validation) } ,
+			{ "BinarySource", new MetaDataBinary(
+				delegate (byte[] _a) {  BinarySource = _a; },
+				() => BinarySource) } ,
+			{ "EnvelopedSource", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedSource = _a as Enveloped<Contact>; },
+				() => EnvelopedSource,
+				"Enveloped<Contact>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5456,6 +6130,15 @@ public partial class TaggedSource : MeshItem {
 	/// Contact for a group, including encryption groups.
 	/// </summary>
 public partial class ContactGroup : Contact {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5554,6 +6237,19 @@ public partial class ContactPerson : Contact {
         /// </summary>
 
 	public virtual List<PersonName>				CommonNames  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "CommonNames", new MetaDataListStruct(
+				delegate (object _a) {  CommonNames = _a as List<PersonName>; },
+				() => CommonNames,
+				"PersonName" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5683,6 +6379,19 @@ public partial class ContactOrganization : Contact {
         /// </summary>
 
 	public virtual List<OrganizationName>				CommonNames  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "CommonNames", new MetaDataListStruct(
+				delegate (object _a) {  CommonNames = _a as List<OrganizationName>; },
+				() => CommonNames,
+				"OrganizationName" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5807,16 +6516,11 @@ public partial class ContactOrganization : Contact {
 	/// The name of an organization
 	/// </summary>
 public partial class OrganizationName : MeshItem {
-	bool								__Inactive = false;
-	private bool						_Inactive;
         /// <summary>
         ///If true, the name is not in current use.
         /// </summary>
 
-	public virtual bool						Inactive {
-		get => _Inactive;
-		set {_Inactive = value; __Inactive = true; }
-		}
+	public virtual bool?						Inactive  {get; set;}
         /// <summary>
         ///The registered name.
         /// </summary>
@@ -5828,6 +6532,24 @@ public partial class OrganizationName : MeshItem {
         /// </summary>
 
 	public virtual string						DBA  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Inactive", new MetaDataBoolean(
+				delegate (bool? _a) {  Inactive = _a; },
+				() => Inactive) } ,
+			{ "RegisteredName", new MetaDataString(
+				delegate (string _a) {  RegisteredName = _a; },
+				() => RegisteredName) } ,
+			{ "DBA", new MetaDataString(
+				delegate (string _a) {  DBA = _a; },
+				() => DBA) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5871,7 +6593,7 @@ public partial class OrganizationName : MeshItem {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__Inactive){
+		if (Inactive != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Inactive", 1);
 				_writer.WriteBoolean (Inactive);
@@ -5946,16 +6668,11 @@ public partial class OrganizationName : MeshItem {
 	/// The name of a natural person
 	/// </summary>
 public partial class PersonName : MeshItem {
-	bool								__Inactive = false;
-	private bool						_Inactive;
         /// <summary>
         ///If true, the name is not in current use.
         /// </summary>
 
-	public virtual bool						Inactive {
-		get => _Inactive;
-		set {_Inactive = value; __Inactive = true; }
-		}
+	public virtual bool?						Inactive  {get; set;}
         /// <summary>
         ///The preferred presentation of the full name.
         /// </summary>
@@ -5991,6 +6708,39 @@ public partial class PersonName : MeshItem {
         /// </summary>
 
 	public virtual string						PostNominal  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Inactive", new MetaDataBoolean(
+				delegate (bool? _a) {  Inactive = _a; },
+				() => Inactive) } ,
+			{ "FullName", new MetaDataString(
+				delegate (string _a) {  FullName = _a; },
+				() => FullName) } ,
+			{ "Prefix", new MetaDataString(
+				delegate (string _a) {  Prefix = _a; },
+				() => Prefix) } ,
+			{ "First", new MetaDataString(
+				delegate (string _a) {  First = _a; },
+				() => First) } ,
+			{ "Middle", new MetaDataListString(
+				delegate (List<string> _a) {  Middle = _a; },
+				() => Middle) } ,
+			{ "Last", new MetaDataString(
+				delegate (string _a) {  Last = _a; },
+				() => Last) } ,
+			{ "Suffix", new MetaDataString(
+				delegate (string _a) {  Suffix = _a; },
+				() => Suffix) } ,
+			{ "PostNominal", new MetaDataString(
+				delegate (string _a) {  PostNominal = _a; },
+				() => PostNominal) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -6034,7 +6784,7 @@ public partial class PersonName : MeshItem {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__Inactive){
+		if (Inactive != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Inactive", 1);
 				_writer.WriteBoolean (Inactive);
@@ -6169,16 +6919,11 @@ public partial class PersonName : MeshItem {
 	/// particular network address
 	/// </summary>
 public partial class NetworkAddress : MeshItem {
-	bool								__Inactive = false;
-	private bool						_Inactive;
         /// <summary>
         ///If true, the name is not in current use.
         /// </summary>
 
-	public virtual bool						Inactive {
-		get => _Inactive;
-		set {_Inactive = value; __Inactive = true; }
-		}
+	public virtual bool?						Inactive  {get; set;}
         /// <summary>
         ///The network address, e.g. alice@example.com
         /// </summary>
@@ -6204,6 +6949,36 @@ public partial class NetworkAddress : MeshItem {
         /// </summary>
 
 	public virtual List<CryptographicCapability>				Capabilities  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Inactive", new MetaDataBoolean(
+				delegate (bool? _a) {  Inactive = _a; },
+				() => Inactive) } ,
+			{ "Address", new MetaDataString(
+				delegate (string _a) {  Address = _a; },
+				() => Address) } ,
+			{ "NetworkCapability", new MetaDataListString(
+				delegate (List<string> _a) {  NetworkCapability = _a; },
+				() => NetworkCapability) } ,
+			{ "EnvelopedProfileAccount", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileAccount = _a as Enveloped<ProfileAccount>; },
+				() => EnvelopedProfileAccount,
+				"Enveloped<ProfileAccount>" )} ,
+			{ "Protocols", new MetaDataListStruct(
+				delegate (object _a) {  Protocols = _a as List<NetworkProtocol>; },
+				() => Protocols,
+				"NetworkProtocol" )} ,
+			{ "Capabilities", new MetaDataListStruct(
+				delegate (object _a) {  Capabilities = _a as List<CryptographicCapability>; },
+				() => Capabilities,
+				"CryptographicCapability", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -6247,7 +7022,7 @@ public partial class NetworkAddress : MeshItem {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__Inactive){
+		if (Inactive != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Inactive", 1);
 				_writer.WriteBoolean (Inactive);
@@ -6415,6 +7190,22 @@ public partial class NetworkProtocol : MeshItem {
         /// </summary>
 
 	public virtual List<CryptographicCapability>				Capabilities  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Protocol", new MetaDataString(
+				delegate (string _a) {  Protocol = _a; },
+				() => Protocol) } ,
+			{ "Capabilities", new MetaDataListStruct(
+				delegate (object _a) {  Capabilities = _a as List<CryptographicCapability>; },
+				() => Capabilities,
+				"CryptographicCapability", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -6555,6 +7346,25 @@ public partial class Role : MeshItem {
         /// </summary>
 
 	public virtual List<Location>				Locations  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "OrganizationName", new MetaDataString(
+				delegate (string _a) {  OrganizationName = _a; },
+				() => OrganizationName) } ,
+			{ "Titles", new MetaDataListString(
+				delegate (List<string> _a) {  Titles = _a; },
+				() => Titles) } ,
+			{ "Locations", new MetaDataListStruct(
+				delegate (object _a) {  Locations = _a as List<Location>; },
+				() => Locations,
+				"Location" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -6735,6 +7545,36 @@ public partial class Location : MeshItem {
         /// </summary>
 
 	public virtual string						Country  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Appartment", new MetaDataString(
+				delegate (string _a) {  Appartment = _a; },
+				() => Appartment) } ,
+			{ "Street", new MetaDataString(
+				delegate (string _a) {  Street = _a; },
+				() => Street) } ,
+			{ "District", new MetaDataString(
+				delegate (string _a) {  District = _a; },
+				() => District) } ,
+			{ "Locality", new MetaDataString(
+				delegate (string _a) {  Locality = _a; },
+				() => Locality) } ,
+			{ "County", new MetaDataString(
+				delegate (string _a) {  County = _a; },
+				() => County) } ,
+			{ "Postcode", new MetaDataString(
+				delegate (string _a) {  Postcode = _a; },
+				() => Postcode) } ,
+			{ "Country", new MetaDataString(
+				delegate (string _a) {  Country = _a; },
+				() => Country) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -6899,6 +7739,24 @@ public partial class Bookmark : MeshItem {
         /// </summary>
 
 	public virtual List<string>				Role  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Uri", new MetaDataString(
+				delegate (string _a) {  Uri = _a; },
+				() => Uri) } ,
+			{ "Title", new MetaDataString(
+				delegate (string _a) {  Title = _a; },
+				() => Title) } ,
+			{ "Role", new MetaDataListString(
+				delegate (List<string> _a) {  Role = _a; },
+				() => Role) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -7044,6 +7902,24 @@ public partial class Reference : MeshItem {
         /// </summary>
 
 	public virtual string						Relationship  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "MessageId", new MetaDataString(
+				delegate (string _a) {  MessageId = _a; },
+				() => MessageId) } ,
+			{ "ResponseId", new MetaDataString(
+				delegate (string _a) {  ResponseId = _a; },
+				() => ResponseId) } ,
+			{ "Relationship", new MetaDataString(
+				delegate (string _a) {  Relationship = _a; },
+				() => Relationship) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -7209,15 +8085,58 @@ public partial class Engagement : MeshItem {
         /// </summary>
 
 	public virtual string						Repeat  {get; set;}
-	bool								__Busy = false;
-	private bool						_Busy;
         /// <summary>
         /// </summary>
 
-	public virtual bool						Busy {
-		get => _Busy;
-		set {_Busy = value; __Busy = true; }
-		}
+	public virtual bool?						Busy  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Key", new MetaDataString(
+				delegate (string _a) {  Key = _a; },
+				() => Key) } ,
+			{ "Start", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Start = _a; },
+				() => Start) } ,
+			{ "Finish", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Finish = _a; },
+				() => Finish) } ,
+			{ "StartTravel", new MetaDataString(
+				delegate (string _a) {  StartTravel = _a; },
+				() => StartTravel) } ,
+			{ "FinishTravel", new MetaDataString(
+				delegate (string _a) {  FinishTravel = _a; },
+				() => FinishTravel) } ,
+			{ "TimeZone", new MetaDataString(
+				delegate (string _a) {  TimeZone = _a; },
+				() => TimeZone) } ,
+			{ "Title", new MetaDataString(
+				delegate (string _a) {  Title = _a; },
+				() => Title) } ,
+			{ "Description", new MetaDataString(
+				delegate (string _a) {  Description = _a; },
+				() => Description) } ,
+			{ "Location", new MetaDataString(
+				delegate (string _a) {  Location = _a; },
+				() => Location) } ,
+			{ "Trigger", new MetaDataListString(
+				delegate (List<string> _a) {  Trigger = _a; },
+				() => Trigger) } ,
+			{ "Conference", new MetaDataListString(
+				delegate (List<string> _a) {  Conference = _a; },
+				() => Conference) } ,
+			{ "Repeat", new MetaDataString(
+				delegate (string _a) {  Repeat = _a; },
+				() => Repeat) } ,
+			{ "Busy", new MetaDataBoolean(
+				delegate (bool? _a) {  Busy = _a; },
+				() => Busy) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -7335,7 +8254,7 @@ public partial class Engagement : MeshItem {
 			_writer.WriteToken ("Repeat", 1);
 				_writer.WriteString (Repeat);
 			}
-		if (__Busy){
+		if (Busy != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Busy", 1);
 				_writer.WriteBoolean (Busy);
@@ -7469,6 +8388,24 @@ abstract public partial class CatalogedEntry : MeshItem {
         /// </summary>
 
 	public virtual string						Uid  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Labels", new MetaDataListString(
+				delegate (List<string> _a) {  Labels = _a; },
+				() => Labels) } ,
+			{ "LocalName", new MetaDataString(
+				delegate (string _a) {  LocalName = _a; },
+				() => LocalName) } ,
+			{ "Uid", new MetaDataString(
+				delegate (string _a) {  Uid = _a; },
+				() => Uid) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -7654,6 +8591,55 @@ public partial class CatalogedDevice : CatalogedEntry {
         /// </summary>
 
 	public virtual List<ApplicationEntry>				ApplicationEntries  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Updated", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Updated = _a; },
+				() => Updated) } ,
+			{ "Udf", new MetaDataString(
+				delegate (string _a) {  Udf = _a; },
+				() => Udf) } ,
+			{ "DeviceUdf", new MetaDataString(
+				delegate (string _a) {  DeviceUdf = _a; },
+				() => DeviceUdf) } ,
+			{ "SignatureUdf", new MetaDataString(
+				delegate (string _a) {  SignatureUdf = _a; },
+				() => SignatureUdf) } ,
+			{ "EnvelopedProfileUser", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileUser = _a as Enveloped<ProfileAccount>; },
+				() => EnvelopedProfileUser,
+				"Enveloped<ProfileAccount>" )} ,
+			{ "EnvelopedProfileDevice", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileDevice = _a as Enveloped<ProfileDevice>; },
+				() => EnvelopedProfileDevice,
+				"Enveloped<ProfileDevice>" )} ,
+			{ "EnvelopedConnectionService", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionService = _a as Enveloped<ConnectionService>; },
+				() => EnvelopedConnectionService,
+				"Enveloped<ConnectionService>" )} ,
+			{ "EnvelopedConnectionDevice", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionDevice = _a as Enveloped<ConnectionDevice>; },
+				() => EnvelopedConnectionDevice,
+				"Enveloped<ConnectionDevice>" )} ,
+			{ "EnvelopedActivationAccount", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivationAccount = _a as Enveloped<ActivationAccount>; },
+				() => EnvelopedActivationAccount,
+				"Enveloped<ActivationAccount>" )} ,
+			{ "EnvelopedActivationCommon", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivationCommon = _a as Enveloped<ActivationCommon>; },
+				() => EnvelopedActivationCommon,
+				"Enveloped<ActivationCommon>" )} ,
+			{ "ApplicationEntries", new MetaDataListStruct(
+				delegate (object _a) {  ApplicationEntries = _a as List<ApplicationEntry>; },
+				() => ApplicationEntries,
+				"ApplicationEntry", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -7903,6 +8889,28 @@ public partial class CatalogedPublication : CatalogedEntry {
         /// </summary>
 
 	public virtual DateTime?						NotOnOrAfter  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Id", new MetaDataString(
+				delegate (string _a) {  Id = _a; },
+				() => Id) } ,
+			{ "Authenticator", new MetaDataString(
+				delegate (string _a) {  Authenticator = _a; },
+				() => Authenticator) } ,
+			{ "EnvelopedData", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedData = _a as DareEnvelope; },
+				() => EnvelopedData,
+				"DareEnvelope" )} ,
+			{ "NotOnOrAfter", new MetaDataDateTime(
+				delegate (DateTime? _a) {  NotOnOrAfter = _a; },
+				() => NotOnOrAfter) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -8059,6 +9067,35 @@ public partial class CatalogedCredential : CatalogedEntry {
         /// </summary>
 
 	public virtual List<KeyData>				HostAuthentication  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Protocol", new MetaDataString(
+				delegate (string _a) {  Protocol = _a; },
+				() => Protocol) } ,
+			{ "Service", new MetaDataString(
+				delegate (string _a) {  Service = _a; },
+				() => Service) } ,
+			{ "Username", new MetaDataString(
+				delegate (string _a) {  Username = _a; },
+				() => Username) } ,
+			{ "Password", new MetaDataString(
+				delegate (string _a) {  Password = _a; },
+				() => Password) } ,
+			{ "ClientAuthentication", new MetaDataListStruct(
+				delegate (object _a) {  ClientAuthentication = _a as List<KeyData>; },
+				() => ClientAuthentication,
+				"KeyData" )} ,
+			{ "HostAuthentication", new MetaDataListStruct(
+				delegate (object _a) {  HostAuthentication = _a as List<KeyData>; },
+				() => HostAuthentication,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -8253,6 +9290,19 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
         /// </summary>
 
 	public virtual KeyData						ClientKey  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "ClientKey", new MetaDataStruct(
+				delegate (object _a) {  ClientKey = _a as KeyData; },
+				() => ClientKey,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -8372,6 +9422,27 @@ public partial class CatalogedNetwork : CatalogedEntry {
         /// </summary>
 
 	public virtual string						Password  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Protocol", new MetaDataString(
+				delegate (string _a) {  Protocol = _a; },
+				() => Protocol) } ,
+			{ "Service", new MetaDataString(
+				delegate (string _a) {  Service = _a; },
+				() => Service) } ,
+			{ "Username", new MetaDataString(
+				delegate (string _a) {  Username = _a; },
+				() => Username) } ,
+			{ "Password", new MetaDataString(
+				delegate (string _a) {  Password = _a; },
+				() => Password) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -8504,21 +9575,35 @@ public partial class CatalogedContact : CatalogedEntry {
         /// </summary>
 
 	public virtual string						Key  {get; set;}
-	bool								__Self = false;
-	private bool						_Self;
         /// <summary>
         ///If true, this catalog entry is for the user who created the catalog.
         /// </summary>
 
-	public virtual bool						Self {
-		get => _Self;
-		set {_Self = value; __Self = true; }
-		}
+	public virtual bool?						Self  {get; set;}
         /// <summary>
         ///The contact information as edited by the catalog owner.
         /// </summary>
 
 	public virtual Contact						Contact  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Key", new MetaDataString(
+				delegate (string _a) {  Key = _a; },
+				() => Key) } ,
+			{ "Self", new MetaDataBoolean(
+				delegate (bool? _a) {  Self = _a; },
+				() => Self) } ,
+			{ "Contact", new MetaDataStruct(
+				delegate (object _a) {  Contact = _a as Contact; },
+				() => Contact,
+				"Contact", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -8568,7 +9653,7 @@ public partial class CatalogedContact : CatalogedEntry {
 			_writer.WriteToken ("Key", 1);
 				_writer.WriteString (Key);
 			}
-		if (__Self){
+		if (Self != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Self", 1);
 				_writer.WriteBoolean (Self);
@@ -8652,6 +9737,19 @@ public partial class CatalogedAccess : CatalogedEntry {
         /// </summary>
 
 	public virtual Capability						Capability  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Capability", new MetaDataStruct(
+				delegate (object _a) {  Capability = _a as Capability; },
+				() => Capability,
+				"Capability", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -8768,24 +9866,14 @@ abstract public partial class Capability : MeshItem {
         /// </summary>
 
 	public virtual string						Id  {get; set;}
-	bool								__Active = false;
-	private bool						_Active;
         /// <summary>
         /// </summary>
 
-	public virtual bool						Active {
-		get => _Active;
-		set {_Active = value; __Active = true; }
-		}
-	bool								__Issued = false;
-	private int						_Issued;
+	public virtual bool?						Active  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual int						Issued {
-		get => _Issued;
-		set {_Issued = value; __Issued = true; }
-		}
+	public virtual int?						Issued  {get; set;}
         /// <summary>
         ///The authentication mode: Device, Account, PIN
         /// </summary>
@@ -8802,6 +9890,33 @@ abstract public partial class Capability : MeshItem {
         /// </summary>
 
 	public virtual string						Witness  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Id", new MetaDataString(
+				delegate (string _a) {  Id = _a; },
+				() => Id) } ,
+			{ "Active", new MetaDataBoolean(
+				delegate (bool? _a) {  Active = _a; },
+				() => Active) } ,
+			{ "Issued", new MetaDataInteger32(
+				delegate (int? _a) {  Issued = _a; },
+				() => Issued) } ,
+			{ "Mode", new MetaDataString(
+				delegate (string _a) {  Mode = _a; },
+				() => Mode) } ,
+			{ "Udf", new MetaDataString(
+				delegate (string _a) {  Udf = _a; },
+				() => Udf) } ,
+			{ "Witness", new MetaDataString(
+				delegate (string _a) {  Witness = _a; },
+				() => Witness) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -8850,12 +9965,12 @@ abstract public partial class Capability : MeshItem {
 			_writer.WriteToken ("Id", 1);
 				_writer.WriteString (Id);
 			}
-		if (__Active){
+		if (Active != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Active", 1);
 				_writer.WriteBoolean (Active);
 			}
-		if (__Issued){
+		if (Issued != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Issued", 1);
 				_writer.WriteInteger32 (Issued);
@@ -8942,6 +10057,15 @@ abstract public partial class Capability : MeshItem {
 	/// <summary>
 	/// </summary>
 public partial class NullCapability : Capability {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -9048,6 +10172,25 @@ public partial class AccessCapability : Capability {
         /// </summary>
 
 	public virtual string						CatalogedDeviceDigest  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Rights", new MetaDataListString(
+				delegate (List<string> _a) {  Rights = _a; },
+				() => Rights) } ,
+			{ "EnvelopedCatalogedDevice", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedCatalogedDevice = _a as Enveloped<CatalogedDevice>; },
+				() => EnvelopedCatalogedDevice,
+				"Enveloped<CatalogedDevice>" )} ,
+			{ "CatalogedDeviceDigest", new MetaDataString(
+				delegate (string _a) {  CatalogedDeviceDigest = _a; },
+				() => CatalogedDeviceDigest) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -9202,6 +10345,24 @@ public partial class PublicationCapability : Capability {
         /// </summary>
 
 	public virtual byte[]						Data  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Identifier", new MetaDataString(
+				delegate (string _a) {  Identifier = _a; },
+				() => Identifier) } ,
+			{ "Digest", new MetaDataString(
+				delegate (string _a) {  Digest = _a; },
+				() => Digest) } ,
+			{ "Data", new MetaDataBinary(
+				delegate (byte[] _a) {  Data = _a; },
+				() => Data) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -9338,6 +10499,29 @@ abstract public partial class CryptographicCapability : Capability {
         /// </summary>
 
 	public virtual Enveloped<KeyData>						EnvelopedKeyShare  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "KeyData", new MetaDataStruct(
+				delegate (object _a) {  KeyData = _a as KeyData; },
+				() => KeyData,
+				"KeyData" )} ,
+			{ "GranteeAccount", new MetaDataString(
+				delegate (string _a) {  GranteeAccount = _a; },
+				() => GranteeAccount) } ,
+			{ "GranteeUdf", new MetaDataString(
+				delegate (string _a) {  GranteeUdf = _a; },
+				() => GranteeUdf) } ,
+			{ "EnvelopedKeyShare", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedKeyShare = _a as Enveloped<KeyData>; },
+				() => EnvelopedKeyShare,
+				"Enveloped<KeyData>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -9470,6 +10654,15 @@ abstract public partial class CryptographicCapability : Capability {
 	/// The corresponding key is a decryption key
 	/// </summary>
 public partial class CapabilityDecrypt : CryptographicCapability {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -9563,6 +10756,15 @@ public partial class CapabilityDecrypt : CryptographicCapability {
 	/// The corresponding key is an encryption key
 	/// </summary>
 public partial class CapabilityDecryptPartial : CapabilityDecrypt {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -9662,6 +10864,18 @@ public partial class CapabilityDecryptServiced : CapabilityDecrypt {
         /// </summary>
 
 	public virtual string						AuthenticationId  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AuthenticationId", new MetaDataString(
+				delegate (string _a) {  AuthenticationId = _a; },
+				() => AuthenticationId) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -9764,6 +10978,15 @@ public partial class CapabilityDecryptServiced : CapabilityDecrypt {
 	/// The corresponding key is an administration key
 	/// </summary>
 public partial class CapabilitySign : CryptographicCapability {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -9857,6 +11080,15 @@ public partial class CapabilitySign : CryptographicCapability {
 	/// The corresponding key is a key that may be used to generate key shares.
 	/// </summary>
 public partial class CapabilityKeyGenerate : CryptographicCapability {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -9952,6 +11184,15 @@ public partial class CapabilityKeyGenerate : CryptographicCapability {
 	/// protocol.
 	/// </summary>
 public partial class CapabilityFairExchange : CryptographicCapability {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -10058,6 +11299,25 @@ public partial class CatalogedCallsign : CatalogedApplication {
         /// </summary>
 
 	public virtual Enveloped<CallsignBinding>						EnvelopedCallsignBinding  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Canonical", new MetaDataString(
+				delegate (string _a) {  Canonical = _a; },
+				() => Canonical) } ,
+			{ "ProfileUdf", new MetaDataString(
+				delegate (string _a) {  ProfileUdf = _a; },
+				() => ProfileUdf) } ,
+			{ "EnvelopedCallsignBinding", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedCallsignBinding = _a as Enveloped<CallsignBinding>; },
+				() => EnvelopedCallsignBinding,
+				"Enveloped<CallsignBinding>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -10196,6 +11456,24 @@ public partial class NamedService : MeshItem {
         /// </summary>
 
 	public virtual List<string>				Endpoint  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Prefix", new MetaDataString(
+				delegate (string _a) {  Prefix = _a; },
+				() => Prefix) } ,
+			{ "Mapping", new MetaDataString(
+				delegate (string _a) {  Mapping = _a; },
+				() => Mapping) } ,
+			{ "Endpoint", new MetaDataListString(
+				delegate (List<string> _a) {  Endpoint = _a; },
+				() => Endpoint) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -10339,6 +11617,24 @@ public partial class CatalogedBookmark : CatalogedEntry {
         /// </summary>
 
 	public virtual List<string>				Comments  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Uri", new MetaDataString(
+				delegate (string _a) {  Uri = _a; },
+				() => Uri) } ,
+			{ "Title", new MetaDataString(
+				delegate (string _a) {  Title = _a; },
+				() => Title) } ,
+			{ "Comments", new MetaDataListString(
+				delegate (List<string> _a) {  Comments = _a; },
+				() => Comments) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -10484,6 +11780,25 @@ public partial class CatalogedTask : CatalogedEntry {
         /// </summary>
 
 	public virtual string						Key  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedTask", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedTask = _a as Enveloped<Engagement>; },
+				() => EnvelopedTask,
+				"Enveloped<Engagement>" )} ,
+			{ "Title", new MetaDataString(
+				delegate (string _a) {  Title = _a; },
+				() => Title) } ,
+			{ "Key", new MetaDataString(
+				delegate (string _a) {  Key = _a; },
+				() => Key) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -10605,15 +11920,10 @@ public partial class CatalogedTask : CatalogedEntry {
 	/// <summary>
 	/// </summary>
 abstract public partial class CatalogedApplication : CatalogedEntry {
-	bool								__Default = false;
-	private int						_Default;
         /// <summary>
         /// </summary>
 
-	public virtual int						Default {
-		get => _Default;
-		set {_Default = value; __Default = true; }
-		}
+	public virtual int?						Default  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -10636,6 +11946,35 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
         /// </summary>
 
 	public virtual List<Enveloped<KeyData>>				EnvelopedEscrow  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Default", new MetaDataInteger32(
+				delegate (int? _a) {  Default = _a; },
+				() => Default) } ,
+			{ "Key", new MetaDataString(
+				delegate (string _a) {  Key = _a; },
+				() => Key) } ,
+			{ "Grant", new MetaDataListString(
+				delegate (List<string> _a) {  Grant = _a; },
+				() => Grant) } ,
+			{ "Deny", new MetaDataListString(
+				delegate (List<string> _a) {  Deny = _a; },
+				() => Deny) } ,
+			{ "EnvelopedCapabilities", new MetaDataListStruct(
+				delegate (object _a) {  EnvelopedCapabilities = _a as List<DareEnvelope>; },
+				() => EnvelopedCapabilities,
+				"DareEnvelope" )} ,
+			{ "EnvelopedEscrow", new MetaDataListStruct(
+				delegate (object _a) {  EnvelopedEscrow = _a as List<Enveloped<KeyData>>; },
+				() => EnvelopedEscrow,
+				"Enveloped<KeyData>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -10680,7 +12019,7 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 			_writer.WriteObjectStart ();
 			}
 		((CatalogedEntry)this).SerializeX(_writer, false, ref _first);
-		if (__Default){
+		if (Default != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Default", 1);
 				_writer.WriteInteger32 (Default);
@@ -10862,6 +12201,24 @@ public partial class CatalogedMember : CatalogedEntry {
         /// </summary>
 
 	public virtual string						ServiceCapabilityId  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "ContactAddress", new MetaDataString(
+				delegate (string _a) {  ContactAddress = _a; },
+				() => ContactAddress) } ,
+			{ "MemberCapabilityId", new MetaDataString(
+				delegate (string _a) {  MemberCapabilityId = _a; },
+				() => MemberCapabilityId) } ,
+			{ "ServiceCapabilityId", new MetaDataString(
+				delegate (string _a) {  ServiceCapabilityId = _a; },
+				() => ServiceCapabilityId) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -10995,6 +12352,27 @@ public partial class CatalogedGroup : CatalogedApplication {
         /// </summary>
 
 	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedConnectionAddress", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionAddress = _a as Enveloped<ConnectionStripped>; },
+				() => EnvelopedConnectionAddress,
+				"Enveloped<ConnectionStripped>" )} ,
+			{ "EnvelopedProfileGroup", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileGroup = _a as Enveloped<ProfileAccount>; },
+				() => EnvelopedProfileGroup,
+				"Enveloped<ProfileAccount>" )} ,
+			{ "EnvelopedActivationCommon", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivationCommon = _a as Enveloped<ActivationCommon>; },
+				() => EnvelopedActivationCommon,
+				"Enveloped<ActivationCommon>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -11154,6 +12532,40 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
         /// </summary>
 
 	public virtual KeyData						OpenpgpEncrypt  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountAddress", new MetaDataString(
+				delegate (string _a) {  AccountAddress = _a; },
+				() => AccountAddress) } ,
+			{ "InboundConnect", new MetaDataString(
+				delegate (string _a) {  InboundConnect = _a; },
+				() => InboundConnect) } ,
+			{ "OutboundConnect", new MetaDataString(
+				delegate (string _a) {  OutboundConnect = _a; },
+				() => OutboundConnect) } ,
+			{ "SmimeSign", new MetaDataStruct(
+				delegate (object _a) {  SmimeSign = _a as KeyData; },
+				() => SmimeSign,
+				"KeyData" )} ,
+			{ "SmimeEncrypt", new MetaDataStruct(
+				delegate (object _a) {  SmimeEncrypt = _a as KeyData; },
+				() => SmimeEncrypt,
+				"KeyData" )} ,
+			{ "OpenpgpSign", new MetaDataStruct(
+				delegate (object _a) {  OpenpgpSign = _a as KeyData; },
+				() => OpenpgpSign,
+				"KeyData" )} ,
+			{ "OpenpgpEncrypt", new MetaDataStruct(
+				delegate (object _a) {  OpenpgpEncrypt = _a as KeyData; },
+				() => OpenpgpEncrypt,
+				"KeyData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -11320,6 +12732,15 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
 	/// <summary>
 	/// </summary>
 public partial class CatalogedApplicationNetwork : CatalogedApplication {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -11411,6 +12832,15 @@ public partial class CatalogedApplicationNetwork : CatalogedApplication {
 	/// <summary>
 	/// </summary>
 public partial class MessageInvoice : Message {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -11502,6 +12932,15 @@ public partial class MessageInvoice : Message {
 	/// <summary>
 	/// </summary>
 public partial class CatalogedReceipt : CatalogedEntry {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -11593,6 +13032,15 @@ public partial class CatalogedReceipt : CatalogedEntry {
 	/// <summary>
 	/// </summary>
 public partial class CatalogedTicket : CatalogedEntry {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -11697,6 +13145,22 @@ public partial class DevicePreconfigurationPublic : MeshItem {
         /// </summary>
 
 	public virtual List<string>				Hailing  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedProfileDevice", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileDevice = _a as Enveloped<ProfileDevice>; },
+				() => EnvelopedProfileDevice,
+				"Enveloped<ProfileDevice>" )} ,
+			{ "Hailing", new MetaDataListString(
+				delegate (List<string> _a) {  Hailing = _a; },
+				() => Hailing) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -11844,6 +13308,30 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
         /// </summary>
 
 	public virtual string						ConnectUri  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedConnectionDevice", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionDevice = _a as Enveloped<ConnectionDevice>; },
+				() => EnvelopedConnectionDevice,
+				"Enveloped<ConnectionDevice>" )} ,
+			{ "EnvelopedConnectionService", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionService = _a as Enveloped<ConnectionService>; },
+				() => EnvelopedConnectionService,
+				"Enveloped<ConnectionService>" )} ,
+			{ "PrivateKey", new MetaDataStruct(
+				delegate (object _a) {  PrivateKey = _a as Key; },
+				() => PrivateKey,
+				"Key", true)},
+			{ "ConnectUri", new MetaDataString(
+				delegate (string _a) {  ConnectUri = _a; },
+				() => ConnectUri) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -12000,6 +13488,24 @@ public partial class Message : MeshItem {
         /// </summary>
 
 	public virtual string						Recipient  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "MessageId", new MetaDataString(
+				delegate (string _a) {  MessageId = _a; },
+				() => MessageId) } ,
+			{ "Sender", new MetaDataString(
+				delegate (string _a) {  Sender = _a; },
+				() => Sender) } ,
+			{ "Recipient", new MetaDataString(
+				delegate (string _a) {  Recipient = _a; },
+				() => Recipient) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -12120,6 +13626,18 @@ public partial class MessageError : Message {
         /// </summary>
 
 	public virtual string						ErrorCode  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "ErrorCode", new MetaDataString(
+				delegate (string _a) {  ErrorCode = _a; },
+				() => ErrorCode) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -12224,6 +13742,19 @@ public partial class MessageComplete : Message {
         /// </summary>
 
 	public virtual List<Reference>				References  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "References", new MetaDataListStruct(
+				delegate (object _a) {  References = _a as List<Reference>; },
+				() => References,
+				"Reference" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -12366,6 +13897,28 @@ public partial class MessagePinValidated : Message {
         /// </summary>
 
 	public virtual byte[]						PinWitness  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AuthenticatedData", new MetaDataStruct(
+				delegate (object _a) {  AuthenticatedData = _a as DareEnvelope; },
+				() => AuthenticatedData,
+				"DareEnvelope" )} ,
+			{ "ClientNonce", new MetaDataBinary(
+				delegate (byte[] _a) {  ClientNonce = _a; },
+				() => ClientNonce) } ,
+			{ "PinId", new MetaDataString(
+				delegate (string _a) {  PinId = _a; },
+				() => PinId) } ,
+			{ "PinWitness", new MetaDataBinary(
+				delegate (byte[] _a) {  PinWitness = _a; },
+				() => PinWitness) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -12504,17 +14057,12 @@ public partial class MessagePin : Message {
         /// </summary>
 
 	public virtual DateTime?						Expires  {get; set;}
-	bool								__Automatic = false;
-	private bool						_Automatic;
         /// <summary>
         ///If true, authentication against the PIN code is sufficient to complete
         ///the associated action without further authorization.
         /// </summary>
 
-	public virtual bool						Automatic {
-		get => _Automatic;
-		set {_Automatic = value; __Automatic = true; }
-		}
+	public virtual bool?						Automatic  {get; set;}
         /// <summary>
         ///PIN code bound to the specified action.
         /// </summary>
@@ -12530,6 +14078,33 @@ public partial class MessagePin : Message {
         /// </summary>
 
 	public virtual List<string>				Roles  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Account", new MetaDataString(
+				delegate (string _a) {  Account = _a; },
+				() => Account) } ,
+			{ "Expires", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Expires = _a; },
+				() => Expires) } ,
+			{ "Automatic", new MetaDataBoolean(
+				delegate (bool? _a) {  Automatic = _a; },
+				() => Automatic) } ,
+			{ "SaltedPin", new MetaDataString(
+				delegate (string _a) {  SaltedPin = _a; },
+				() => SaltedPin) } ,
+			{ "Action", new MetaDataString(
+				delegate (string _a) {  Action = _a; },
+				() => Action) } ,
+			{ "Roles", new MetaDataListString(
+				delegate (List<string> _a) {  Roles = _a; },
+				() => Roles) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -12584,7 +14159,7 @@ public partial class MessagePin : Message {
 			_writer.WriteToken ("Expires", 1);
 				_writer.WriteDateTime (Expires);
 			}
-		if (__Automatic){
+		if (Automatic != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Automatic", 1);
 				_writer.WriteBoolean (Automatic);
@@ -12696,6 +14271,18 @@ public partial class RequestConnection : MessagePinValidated {
         /// </summary>
 
 	public virtual string						AccountAddress  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountAddress", new MetaDataString(
+				delegate (string _a) {  AccountAddress = _a; },
+				() => AccountAddress) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -12814,6 +14401,25 @@ public partial class AcknowledgeConnection : Message {
         /// </summary>
 
 	public virtual string						Witness  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedRequestConnection", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedRequestConnection = _a as Enveloped<RequestConnection>; },
+				() => EnvelopedRequestConnection,
+				"Enveloped<RequestConnection>" )} ,
+			{ "ServerNonce", new MetaDataBinary(
+				delegate (byte[] _a) {  ServerNonce = _a; },
+				() => ServerNonce) } ,
+			{ "Witness", new MetaDataString(
+				delegate (string _a) {  Witness = _a; },
+				() => Witness) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -12949,6 +14555,22 @@ public partial class RespondConnection : Message {
         /// </summary>
 
 	public virtual CatalogedDevice						CatalogedDevice  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Result", new MetaDataString(
+				delegate (string _a) {  Result = _a; },
+				() => Result) } ,
+			{ "CatalogedDevice", new MetaDataStruct(
+				delegate (object _a) {  CatalogedDevice = _a as CatalogedDevice; },
+				() => CatalogedDevice,
+				"CatalogedDevice" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -13061,17 +14683,12 @@ public partial class RespondConnection : Message {
 	/// <summary>
 	/// </summary>
 public partial class MessageContact : MessagePinValidated {
-	bool								__Reply = false;
-	private bool						_Reply;
         /// <summary>
         ///If true, requests that the recipient return their own contact information
         ///in reply.
         /// </summary>
 
-	public virtual bool						Reply {
-		get => _Reply;
-		set {_Reply = value; __Reply = true; }
-		}
+	public virtual bool?						Reply  {get; set;}
         /// <summary>
         ///Optional explanation of the reason for the request.
         /// </summary>
@@ -13083,6 +14700,24 @@ public partial class MessageContact : MessagePinValidated {
         /// </summary>
 
 	public virtual string						PIN  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Reply", new MetaDataBoolean(
+				delegate (bool? _a) {  Reply = _a; },
+				() => Reply) } ,
+			{ "Subject", new MetaDataString(
+				delegate (string _a) {  Subject = _a; },
+				() => Subject) } ,
+			{ "PIN", new MetaDataString(
+				delegate (string _a) {  PIN = _a; },
+				() => PIN) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -13127,7 +14762,7 @@ public partial class MessageContact : MessagePinValidated {
 			_writer.WriteObjectStart ();
 			}
 		((MessagePinValidated)this).SerializeX(_writer, false, ref _first);
-		if (__Reply){
+		if (Reply != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Reply", 1);
 				_writer.WriteBoolean (Reply);
@@ -13210,6 +14845,22 @@ public partial class GroupInvitation : Message {
         /// </summary>
 
 	public virtual Contact						Contact  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Text", new MetaDataString(
+				delegate (string _a) {  Text = _a; },
+				() => Text) } ,
+			{ "Contact", new MetaDataStruct(
+				delegate (object _a) {  Contact = _a as Contact; },
+				() => Contact,
+				"Contact", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -13331,6 +14982,18 @@ public partial class RequestConfirmation : Message {
         /// </summary>
 
 	public virtual string						Text  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Text", new MetaDataString(
+				delegate (string _a) {  Text = _a; },
+				() => Text) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -13435,15 +15098,26 @@ public partial class ResponseConfirmation : Message {
         /// </summary>
 
 	public virtual Enveloped<RequestConfirmation>						Request  {get; set;}
-	bool								__Accept = false;
-	private bool						_Accept;
         /// <summary>
         /// </summary>
 
-	public virtual bool						Accept {
-		get => _Accept;
-		set {_Accept = value; __Accept = true; }
-		}
+	public virtual bool?						Accept  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Request", new MetaDataStruct(
+				delegate (object _a) {  Request = _a as Enveloped<RequestConfirmation>; },
+				() => Request,
+				"Enveloped<RequestConfirmation>" )} ,
+			{ "Accept", new MetaDataBoolean(
+				delegate (bool? _a) {  Accept = _a; },
+				() => Accept) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -13493,7 +15167,7 @@ public partial class ResponseConfirmation : Message {
 			_writer.WriteToken ("Request", 1);
 				Request.Serialize (_writer, false);
 			}
-		if (__Accept){
+		if (Accept != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Accept", 1);
 				_writer.WriteBoolean (Accept);
@@ -13556,6 +15230,15 @@ public partial class ResponseConfirmation : Message {
 	/// <summary>
 	/// </summary>
 public partial class RequestTask : Message {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -13663,6 +15346,27 @@ public partial class MessageClaim : Message {
         /// </summary>
 
 	public virtual DateTime?						Expires  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "PublicationId", new MetaDataString(
+				delegate (string _a) {  PublicationId = _a; },
+				() => PublicationId) } ,
+			{ "ServiceAuthenticate", new MetaDataString(
+				delegate (string _a) {  ServiceAuthenticate = _a; },
+				() => ServiceAuthenticate) } ,
+			{ "DeviceAuthenticate", new MetaDataString(
+				delegate (string _a) {  DeviceAuthenticate = _a; },
+				() => DeviceAuthenticate) } ,
+			{ "Expires", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Expires = _a; },
+				() => Expires) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -13792,20 +15496,30 @@ public partial class MessageClaim : Message {
 	/// For future use, allows logging of operations and results	
 	/// </summary>
 public partial class ProcessResult : Message {
-	bool								__Success = false;
-	private bool						_Success;
         /// <summary>
         /// </summary>
 
-	public virtual bool						Success {
-		get => _Success;
-		set {_Success = value; __Success = true; }
-		}
+	public virtual bool?						Success  {get; set;}
         /// <summary>
         ///The error report code.
         /// </summary>
 
 	public virtual string						ErrorReport  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Success", new MetaDataBoolean(
+				delegate (bool? _a) {  Success = _a; },
+				() => Success) } ,
+			{ "ErrorReport", new MetaDataString(
+				delegate (string _a) {  ErrorReport = _a; },
+				() => ErrorReport) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -13850,7 +15564,7 @@ public partial class ProcessResult : Message {
 			_writer.WriteObjectStart ();
 			}
 		((Message)this).SerializeX(_writer, false, ref _first);
-		if (__Success){
+		if (Success != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Success", 1);
 				_writer.WriteBoolean (Success);

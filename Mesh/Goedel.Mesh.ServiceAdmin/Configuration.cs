@@ -11,32 +11,6 @@ using Goedel.Protocol.Service;
 namespace Goedel.Mesh.ServiceAdmin;
 
 /// <summary>
-/// The Mesh service configuration.
-/// </summary>
-public class MeshServiceConfiguration : ServiceConfiguration {
-
-    ///<summary>The configuration entry.</summary> 
-    public static readonly ConfigurationEntry ConfigurationEntry =
-        new("MeshService", typeof(MeshServiceConfiguration),
-            MeshService.Discovery, MeshService.WellKnown);
-
-    ///<inheritdoc/>
-    public override ConfigurationEntry GetConfigurationEntry() => ConfigurationEntry;
-
-    /////<inheritdoc/>
-    //public override List<Endpoint> GetEndpoints(GenericHostConfiguration genericHostConfiguration) {
-    //    throw new NotImplementedException();
-    //    }
-
-    ///<summary>The set of administrators.</summary> 
-    public List<string> Administrators { get; set; } = new List<string>();
-
-    ///<summary>Path to the host data.</summary> 
-    public string? HostPath { get; set; } = null;
-
-    }
-
-/// <summary>
 /// Service/Host configuration.
 /// </summary>
 public class Configuration : Disposable {
@@ -44,17 +18,30 @@ public class Configuration : Disposable {
     ///<summary>Maps configuration entry to configuration.</summary> 
     public Dictionary<string, object> Dictionary = new();
 
-    ///<summary>The Mesh service configuration.</summary> 
-    public MeshServiceConfiguration MeshServiceConfiguration { get; set; }
+
 
     ///<summary>The host configuration.</summary> 
     public GenericHostConfiguration GenericHostConfiguration { get; set; }
 
+    ///<summary>The Mesh service configuration.</summary> 
+    public MeshServiceConfiguration MeshServiceConfiguration { get; set; }
+
+    ///<summary>The Mesh service configuration.</summary> 
+    public CallsignRegistryConfiguration CallsignRegistryConfiguration { get; set; }
+
+    ///<summary>The Mesh service configuration.</summary> 
+    public CallsignResolverConfiguration CallsignResolverConfiguration { get; set; }
+
+    ///<summary>The Mesh service configuration.</summary> 
+    public CarnetServiceConfiguration CarnetServiceConfiguration { get; set; }
+    ///<summary>The Mesh service configuration.</summary> 
+    public PersistanceServiceConfiguration PersistanceServiceConfiguration { get; set; }
+
+    ///<summary>The Mesh service configuration.</summary> 
+    public PresenceServiceConfiguration PresenceServiceConfiguration { get; set; }
+
+
     JsonDocument JsonDocument { get;  init; }
-
-
-
-
 
     /// <summary>
     /// Default constructor.

@@ -148,7 +148,7 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
 
             fileName.OpenReadToEnd(out var data);
             var key = Key.FromJson(data.JsonReader(), true);
-            cryptoKey = key.GetKeyPair(key.Exportable ? KeySecurity.Exportable : KeySecurity.Bound, this);
+            cryptoKey = key.GetKeyPair(key.Exportable == true ? KeySecurity.Exportable : KeySecurity.Bound, this);
             return true;
             }
         catch {

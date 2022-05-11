@@ -326,26 +326,6 @@
         <member name="P:Goedel.Protocol.Service.IServiceConfiguration.Addresses">
             <summary>List of service addresses.</summary> 
         </member>
-        <member name="T:Goedel.Protocol.Service.ServiceConfiguration">
-            <summary>
-            Base class for service configurations.
-            </summary>
-        </member>
-        <member name="M:Goedel.Protocol.Service.ServiceConfiguration.GetConfigurationEntry">
-            <summary>Returns the configuration entry.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.DefaultHostConfiguration">
-            <summary>The default</summary>
-        </member>
-        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.ServiceUdf">
-            <summary>The service profile fingerprint.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.ServicePath">
-            <summary>Path to the service data</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.ServiceDNS">
-            <summary>Service DNS addresses</summary> 
-        </member>
         <member name="T:Goedel.Protocol.Service.LogService">
             <summary>
             Service level logging class.
@@ -811,6 +791,32 @@
             Null task, simply runs to completion. This is used to allow gracefull shutdown of the
             dispatch threads.
             </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.ServiceConfiguration">
+            <summary>
+            Base class for service configurations.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceConfiguration.GetConfigurationEntry">
+            <summary>Returns the configuration entry.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.DefaultHostConfiguration">
+            <summary>The default</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.ServiceUdf">
+            <summary>The service profile fingerprint.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.ServicePath">
+            <summary>Path to the service data</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.ServiceDNS">
+            <summary>Service DNS addresses</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.Administrators">
+            <summary>The set of administrators.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.ServiceConfiguration.HostPath">
+            <summary>Path to the host data.</summary> 
         </member>
         <member name="T:Goedel.Protocol.Service.RequestQuality">
             <summary>

@@ -30,103 +30,102 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
 
-namespace Goedel.Callsign {
-    public class CallsignServer {
-        #region // Properties
+namespace Goedel.Callsign; 
+public class CallsignServer {
+    #region // Properties
 
-        public Callsign Callsign { get; }
-        public Registration Registration { get; }
-        public KeyPair KeySign { get; }
-
-
-        public string Filename { get; }
-
-        public Sequence Container;
-
-        #endregion
-        #region // Constructors
-
-        public CallsignServer(
-                    Callsign callsign, 
-                    Registration registration, 
-                    KeyPair keyPair,
-                    DarePolicy policy = null,
-                    CryptoParameters cryptoParameters = null,
-                    IKeyCollection keyCollection = null,
-                    bool create = false) {
-            Callsign = callsign;
-            Registration = registration;
-            KeySign = keyPair;
-
-            Filename = callsign.Id + ".dares";
-
-            Container = Sequence.Open(
-                Filename,
-                FileStatus.ConcurrentLocked,
-                keyCollection ?? cryptoParameters?.KeyLocate,
-                SequenceType.Merkle,
-                policy,
-                "application/mmm-catalog",
-                create: create
-                );
+    public Callsign Callsign { get; }
+    public Registration Registration { get; }
+    public KeyPair KeySign { get; }
 
 
+    public string Filename { get; }
 
+    public Sequence Container;
 
-            }
+    #endregion
+    #region // Constructors
 
+    public CallsignServer(
+                Callsign callsign, 
+                Registration registration, 
+                KeyPair keyPair,
+                DarePolicy policy = null,
+                CryptoParameters cryptoParameters = null,
+                IKeyCollection keyCollection = null,
+                bool create = false) {
+        Callsign = callsign;
+        Registration = registration;
+        KeySign = keyPair;
 
+        Filename = callsign.Id + ".dares";
 
-        #endregion
-        #region // Methods
-
-        public void Enter(CallsignEntry callsignEntry) {
-
-            var envelope = Enveloped<CallsignEntry>.Envelope(callsignEntry, KeySign);
-            Container.Append(envelope);
-            }
-
-
-        public Notarization CreateNotarization (
-                    Notarization previous) {
-            // Write out the callsign registration to the first item in the sequence.
-
-
-            
-            var witness = new Witness() {
-                Id = Callsign.Id,
-                Issuer = Callsign.Id,
-                Apex = Container.TrailerLast.PayloadDigest
-                };
-            var envelopedWitness = Enveloped<Witness>.Envelope(witness, KeySign);
+        Container = Sequence.Open(
+            Filename,
+            FileStatus.ConcurrentLocked,
+            keyCollection ?? cryptoParameters?.KeyLocate,
+            SequenceType.Merkle,
+            policy,
+            "application/mmm-catalog",
+            create: create
+            );
 
 
 
 
-            var notarization = new Notarization() {
-                Entries = new List<Enveloped<Witness>> { envelopedWitness }
-                };
-
-            if (previous != null) {
-                notarization.Proof = new Proof();
-                }
-
-            return notarization;
-            }
-
-
-        public void EnterNotarization(
-                    Notarization notarization) {
-
-            
-            var envelopedNotarization = Enveloped<Notarization>.Envelope(notarization, KeySign);
-
-            Container.Append(envelopedNotarization);
-
-            //return CreateNotarization();
-            }
-
-
-        #endregion
         }
+
+
+
+    #endregion
+    #region // Methods
+
+    public void Enter(CallsignEntry callsignEntry) {
+
+        var envelope = Enveloped<CallsignEntry>.Envelope(callsignEntry, KeySign);
+        Container.Append(envelope);
+        }
+
+
+    public Notarization CreateNotarization (
+                Notarization previous) {
+        // Write out the callsign registration to the first item in the sequence.
+
+
+        
+        var witness = new Witness() {
+            Id = Callsign.Id,
+            Issuer = Callsign.Id,
+            Apex = Container.TrailerLast.PayloadDigest
+            };
+        var envelopedWitness = Enveloped<Witness>.Envelope(witness, KeySign);
+
+
+
+
+        var notarization = new Notarization() {
+            Entries = new List<Enveloped<Witness>> { envelopedWitness }
+            };
+
+        if (previous != null) {
+            notarization.Proof = new Proof();
+            }
+
+        return notarization;
+        }
+
+
+    public void EnterNotarization(
+                Notarization notarization) {
+
+        
+        var envelopedNotarization = Enveloped<Notarization>.Envelope(notarization, KeySign);
+
+        Container.Append(envelopedNotarization);
+
+        //return CreateNotarization();
+        }
+
+
+    #endregion
     }

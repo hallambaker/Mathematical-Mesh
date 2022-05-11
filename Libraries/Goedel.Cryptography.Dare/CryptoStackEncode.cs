@@ -86,7 +86,7 @@ public partial class CryptoStackEncode : CryptoStack {
             header.KeyIdentifier = GetKeyIdentifier();
 
             if (cryptoParameters is CryptoParametersSequence cryptoParametersContainer) {
-                if (cryptoParametersContainer.ReuseKeyExchange(header.Index, out var keyExchange)) {
+                if (cryptoParametersContainer.ReuseKeyExchange((int)header.Index, out var keyExchange)) {
                     header.SequenceInfo.ExchangePosition = keyExchange;
                     }
                 else {

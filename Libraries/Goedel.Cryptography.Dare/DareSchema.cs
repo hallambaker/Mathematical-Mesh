@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:09 PM
+//  This file was automatically generated at 11-May-22 12:07:22 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -136,6 +137,26 @@ public partial class DareEnvelopeSequence : Dare {
         /// </summary>
 
 	public virtual DareTrailer						Trailer  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Header", new MetaDataStruct(
+				delegate (object _a) {  Header = _a as DareHeader; },
+				() => Header,
+				"DareHeader" )} ,
+			{ "Body", new MetaDataBinary(
+				delegate (byte[] _a) {  Body = _a; },
+				() => Body) } ,
+			{ "Trailer", new MetaDataStruct(
+				delegate (object _a) {  Trailer = _a as DareTrailer; },
+				() => Trailer,
+				"DareTrailer" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -288,6 +309,31 @@ public partial class DareTrailer : Dare {
         /// </summary>
 
 	public virtual byte[]						TreeDigest  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "signatures", new MetaDataListStruct(
+				delegate (object _a) {  Signatures = _a as List<DareSignature>; },
+				() => Signatures,
+				"DareSignature" )} ,
+			{ "SignedData", new MetaDataBinary(
+				delegate (byte[] _a) {  SignedData = _a; },
+				() => SignedData) } ,
+			{ "PayloadDigest", new MetaDataBinary(
+				delegate (byte[] _a) {  PayloadDigest = _a; },
+				() => PayloadDigest) } ,
+			{ "ChainDigest", new MetaDataBinary(
+				delegate (byte[] _a) {  ChainDigest = _a; },
+				() => ChainDigest) } ,
+			{ "TreeDigest", new MetaDataBinary(
+				delegate (byte[] _a) {  TreeDigest = _a; },
+				() => TreeDigest) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -537,6 +583,65 @@ public partial class DareHeader : DareTrailer {
         /// </summary>
 
 	public virtual DateTime?						Received  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopeId", new MetaDataString(
+				delegate (string _a) {  EnvelopeId = _a; },
+				() => EnvelopeId) } ,
+			{ "enc", new MetaDataString(
+				delegate (string _a) {  EncryptionAlgorithm = _a; },
+				() => EncryptionAlgorithm) } ,
+			{ "dig", new MetaDataString(
+				delegate (string _a) {  DigestAlgorithm = _a; },
+				() => DigestAlgorithm) } ,
+			{ "kid", new MetaDataString(
+				delegate (string _a) {  KeyIdentifier = _a; },
+				() => KeyIdentifier) } ,
+			{ "Salt", new MetaDataBinary(
+				delegate (byte[] _a) {  Salt = _a; },
+				() => Salt) } ,
+			{ "Malt", new MetaDataBinary(
+				delegate (byte[] _a) {  Malt = _a; },
+				() => Malt) } ,
+			{ "cloaked", new MetaDataBinary(
+				delegate (byte[] _a) {  Cloaked = _a; },
+				() => Cloaked) } ,
+			{ "annotations", new MetaDataListBinary(
+				delegate (List<byte[]> _a) {  EDSS = _a; },
+				() => EDSS) } ,
+			{ "signatures", new MetaDataListStruct(
+				delegate (object _a) {  Signers = _a as List<DareSignature>; },
+				() => Signers,
+				"DareSignature" )} ,
+			{ "recipients", new MetaDataListStruct(
+				delegate (object _a) {  Recipients = _a as List<DareRecipient>; },
+				() => Recipients,
+				"DareRecipient" )} ,
+			{ "policy", new MetaDataStruct(
+				delegate (object _a) {  Policy = _a as DarePolicy; },
+				() => Policy,
+				"DarePolicy" )} ,
+			{ "ContentMetaData", new MetaDataBinary(
+				delegate (byte[] _a) {  ContentMetaData = _a; },
+				() => ContentMetaData) } ,
+			{ "SequenceInfo", new MetaDataStruct(
+				delegate (object _a) {  SequenceInfo = _a as SequenceInfo; },
+				() => SequenceInfo,
+				"SequenceInfo" )} ,
+			{ "SequenceIndex", new MetaDataStruct(
+				delegate (object _a) {  SequenceIndex = _a as SequenceIndex; },
+				() => SequenceIndex,
+				"SequenceIndex" )} ,
+			{ "Received", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Received = _a; },
+				() => Received) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -885,31 +990,74 @@ public partial class ContentMeta : Dare {
         /// </summary>
 
 	public virtual DateTime?						Expire  {get; set;}
-	bool								__First = false;
-	private int						_First;
         /// <summary>
         ///Frame number of the first object instance value.
         /// </summary>
 
-	public virtual int						First {
-		get => _First;
-		set {_First = value; __First = true; }
-		}
-	bool								__Previous = false;
-	private int						_Previous;
+	public virtual int?						First  {get; set;}
         /// <summary>
         ///Frame number of the immediately prior object instance value	
         /// </summary>
 
-	public virtual int						Previous {
-		get => _Previous;
-		set {_Previous = value; __Previous = true; }
-		}
+	public virtual int?						Previous  {get; set;}
         /// <summary>
         ///Information describing the file entry on disk.
         /// </summary>
 
 	public virtual FileEntry						FileEntry  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "UniqueId", new MetaDataString(
+				delegate (string _a) {  UniqueId = _a; },
+				() => UniqueId) } ,
+			{ "Labels", new MetaDataListString(
+				delegate (List<string> _a) {  Labels = _a; },
+				() => Labels) } ,
+			{ "KeyValues", new MetaDataListStruct(
+				delegate (object _a) {  KeyValues = _a as List<KeyValue>; },
+				() => KeyValues,
+				"KeyValue" )} ,
+			{ "MessageType", new MetaDataString(
+				delegate (string _a) {  MessageType = _a; },
+				() => MessageType) } ,
+			{ "cty", new MetaDataString(
+				delegate (string _a) {  ContentType = _a; },
+				() => ContentType) } ,
+			{ "Paths", new MetaDataListString(
+				delegate (List<string> _a) {  Paths = _a; },
+				() => Paths) } ,
+			{ "Filename", new MetaDataString(
+				delegate (string _a) {  Filename = _a; },
+				() => Filename) } ,
+			{ "Event", new MetaDataString(
+				delegate (string _a) {  Event = _a; },
+				() => Event) } ,
+			{ "Created", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Created = _a; },
+				() => Created) } ,
+			{ "Modified", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Modified = _a; },
+				() => Modified) } ,
+			{ "Expire", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Expire = _a; },
+				() => Expire) } ,
+			{ "First", new MetaDataInteger32(
+				delegate (int? _a) {  First = _a; },
+				() => First) } ,
+			{ "Previous", new MetaDataInteger32(
+				delegate (int? _a) {  Previous = _a; },
+				() => Previous) } ,
+			{ "FileEntry", new MetaDataStruct(
+				delegate (object _a) {  FileEntry = _a as FileEntry; },
+				() => FileEntry,
+				"FileEntry" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1034,12 +1182,12 @@ public partial class ContentMeta : Dare {
 			_writer.WriteToken ("Expire", 1);
 				_writer.WriteDateTime (Expire);
 			}
-		if (__First){
+		if (First != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("First", 1);
 				_writer.WriteInteger32 (First);
 			}
-		if (__Previous){
+		if (Previous != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Previous", 1);
 				_writer.WriteInteger32 (Previous);
@@ -1223,6 +1371,41 @@ public partial class DareSignature : Dare {
         /// </summary>
 
 	public virtual byte[]						WitnessValue  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "dig", new MetaDataString(
+				delegate (string _a) {  Dig = _a; },
+				() => Dig) } ,
+			{ "alg", new MetaDataString(
+				delegate (string _a) {  Alg = _a; },
+				() => Alg) } ,
+			{ "kid", new MetaDataString(
+				delegate (string _a) {  KeyIdentifier = _a; },
+				() => KeyIdentifier) } ,
+			{ "cert", new MetaDataStruct(
+				delegate (object _a) {  Certificate = _a as X509Certificate; },
+				() => Certificate,
+				"X509Certificate" )} ,
+			{ "path", new MetaDataStruct(
+				delegate (object _a) {  Path = _a as X509Certificate; },
+				() => Path,
+				"X509Certificate" )} ,
+			{ "Manifest", new MetaDataBinary(
+				delegate (byte[] _a) {  Manifest = _a; },
+				() => Manifest) } ,
+			{ "signature", new MetaDataBinary(
+				delegate (byte[] _a) {  SignatureValue = _a; },
+				() => SignatureValue) } ,
+			{ "witness", new MetaDataBinary(
+				delegate (byte[] _a) {  WitnessValue = _a; },
+				() => WitnessValue) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1400,6 +1583,21 @@ public partial class X509Certificate : Dare {
         /// </summary>
 
 	public virtual byte[]						X5  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "x5u", new MetaDataString(
+				delegate (string _a) {  X5u = _a; },
+				() => X5u) } ,
+			{ "x5c", new MetaDataBinary(
+				delegate (byte[] _a) {  X5 = _a; },
+				() => X5) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1535,6 +1733,31 @@ public partial class DareRecipient : Dare {
         /// </summary>
 
 	public virtual string						RecipientKeyData  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "kid", new MetaDataString(
+				delegate (string _a) {  KeyIdentifier = _a; },
+				() => KeyIdentifier) } ,
+			{ "kwd", new MetaDataString(
+				delegate (string _a) {  KeyWrapDerivation = _a; },
+				() => KeyWrapDerivation) } ,
+			{ "epk", new MetaDataStruct(
+				delegate (object _a) {  Epk = _a as Key; },
+				() => Epk,
+				"Key", true)},
+			{ "wmk", new MetaDataBinary(
+				delegate (byte[] _a) {  WrappedBaseSeed = _a; },
+				() => WrappedBaseSeed) } ,
+			{ "rkd", new MetaDataString(
+				delegate (string _a) {  RecipientKeyData = _a; },
+				() => RecipientKeyData) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1718,16 +1941,43 @@ public partial class DarePolicy : Dare {
         /// </summary>
 
 	public virtual List<Key>				SignKeys  {get; set;}
-	bool								__Sealed = false;
-	private bool						_Sealed;
         /// <summary>
         ///If true the policy is immutable and cannot be changed by a subsequent policy override.
         /// </summary>
 
-	public virtual bool						Sealed {
-		get => _Sealed;
-		set {_Sealed = value; __Sealed = true; }
-		}
+	public virtual bool?						Sealed  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "enc", new MetaDataString(
+				delegate (string _a) {  EncryptionAlgorithm = _a; },
+				() => EncryptionAlgorithm) } ,
+			{ "dig", new MetaDataString(
+				delegate (string _a) {  DigestAlgorithm = _a; },
+				() => DigestAlgorithm) } ,
+			{ "Encryption", new MetaDataString(
+				delegate (string _a) {  Encryption = _a; },
+				() => Encryption) } ,
+			{ "Signature", new MetaDataString(
+				delegate (string _a) {  Signature = _a; },
+				() => Signature) } ,
+			{ "EncryptKeys", new MetaDataListStruct(
+				delegate (object _a) {  EncryptKeys = _a as List<Key>; },
+				() => EncryptKeys,
+				"Key", true)},
+			{ "SignKeys", new MetaDataListStruct(
+				delegate (object _a) {  SignKeys = _a as List<Key>; },
+				() => SignKeys,
+				"Key", true)},
+			{ "Sealed", new MetaDataBoolean(
+				delegate (bool? _a) {  Sealed = _a; },
+				() => Sealed) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1823,7 +2073,7 @@ public partial class DarePolicy : Dare {
 			_writer.WriteArrayEnd ();
 			}
 
-		if (__Sealed){
+		if (Sealed != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Sealed", 1);
 				_writer.WriteBoolean (Sealed);
@@ -1936,16 +2186,35 @@ public partial class FileEntry : Dare {
         /// </summary>
 
 	public virtual DateTime?						LastWriteTime  {get; set;}
-	bool								__Attributes = false;
-	private int						_Attributes;
         /// <summary>
         ///The file attribues as a bitmapped integer.
         /// </summary>
 
-	public virtual int						Attributes {
-		get => _Attributes;
-		set {_Attributes = value; __Attributes = true; }
-		}
+	public virtual int?						Attributes  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Path", new MetaDataString(
+				delegate (string _a) {  Path = _a; },
+				() => Path) } ,
+			{ "CreationTime", new MetaDataDateTime(
+				delegate (DateTime? _a) {  CreationTime = _a; },
+				() => CreationTime) } ,
+			{ "LastAccessTime", new MetaDataDateTime(
+				delegate (DateTime? _a) {  LastAccessTime = _a; },
+				() => LastAccessTime) } ,
+			{ "LastWriteTime", new MetaDataDateTime(
+				delegate (DateTime? _a) {  LastWriteTime = _a; },
+				() => LastWriteTime) } ,
+			{ "Attributes", new MetaDataInteger32(
+				delegate (int? _a) {  Attributes = _a; },
+				() => Attributes) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2009,7 +2278,7 @@ public partial class FileEntry : Dare {
 			_writer.WriteToken ("LastWriteTime", 1);
 				_writer.WriteDateTime (LastWriteTime);
 			}
-		if (__Attributes){
+		if (Attributes != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Attributes", 1);
 				_writer.WriteInteger32 (Attributes);
@@ -2097,16 +2366,32 @@ public partial class Witness : Dare {
         /// </summary>
 
 	public virtual byte[]						Apex  {get; set;}
-	bool								__Index = false;
-	private int						_Index;
         /// <summary>
         ///Specifies the index number assigned to the entry in the log.
         /// </summary>
 
-	public virtual int						Index {
-		get => _Index;
-		set {_Index = value; __Index = true; }
-		}
+	public virtual int?						Index  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Id", new MetaDataString(
+				delegate (string _a) {  Id = _a; },
+				() => Id) } ,
+			{ "Issuer", new MetaDataString(
+				delegate (string _a) {  Issuer = _a; },
+				() => Issuer) } ,
+			{ "Apex", new MetaDataBinary(
+				delegate (byte[] _a) {  Apex = _a; },
+				() => Apex) } ,
+			{ "Index", new MetaDataInteger32(
+				delegate (int? _a) {  Index = _a; },
+				() => Index) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2165,7 +2450,7 @@ public partial class Witness : Dare {
 			_writer.WriteToken ("Apex", 1);
 				_writer.WriteBinary (Apex);
 			}
-		if (__Index){
+		if (Index != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Index", 1);
 				_writer.WriteInteger32 (Index);
@@ -2245,21 +2530,38 @@ public partial class Proof : Dare {
         /// </summary>
 
 	public virtual byte[]						Hash  {get; set;}
-	bool								__Index = false;
-	private int						_Index;
         /// <summary>
         ///Specifies the index number assigned to the entry in the log.
         /// </summary>
 
-	public virtual int						Index {
-		get => _Index;
-		set {_Index = value; __Index = true; }
-		}
+	public virtual int?						Index  {get; set;}
         /// <summary>
         ///The list of entries from which the proof path is computed.
         /// </summary>
 
 	public virtual List<byte[]>				Path  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "SignedWitness", new MetaDataStruct(
+				delegate (object _a) {  SignedWitness = _a as DareEnvelope; },
+				() => SignedWitness,
+				"DareEnvelope" )} ,
+			{ "Hash", new MetaDataBinary(
+				delegate (byte[] _a) {  Hash = _a; },
+				() => Hash) } ,
+			{ "Index", new MetaDataInteger32(
+				delegate (int? _a) {  Index = _a; },
+				() => Index) } ,
+			{ "Path", new MetaDataListBinary(
+				delegate (List<byte[]> _a) {  Path = _a; },
+				() => Path) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2313,7 +2615,7 @@ public partial class Proof : Dare {
 			_writer.WriteToken ("Hash", 1);
 				_writer.WriteBinary (Hash);
 			}
-		if (__Index){
+		if (Index != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Index", 1);
 				_writer.WriteInteger32 (Index);

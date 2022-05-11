@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:20 PM
+//  This file was automatically generated at 11-May-22 12:07:28 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -179,14 +180,8 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 				{"Operate", OperateRequest._Factory}
 		};
 
-	/// <summary>
-	/// Dispatch object request in specified authentication context.
-	/// </summary>			
-	/// <param name="token">The method identifier</param>
-	/// <param name="request">The request data</param>
-	/// <param name="session">The client context.</param>
-	/// <returns>The response object returned by the corresponding dispatch.</returns>
-	public Goedel.Protocol.JsonObject Dispatch(
+    ///<inheritdoc/>
+	public override Goedel.Protocol.JsonObject Dispatch(
 			string token,
 			Goedel.Protocol.JsonObject request,
 			IJpcSession session) => token switch {
@@ -206,99 +201,8 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
         };
 
 
-	/// <summary>
-	/// Dispatch object request in specified authentication context.
-	/// </summary>			
-    /// <param name="session">The client context.</param>
-    /// <param name="jsonReader">Reader for data object.</param>
-    /// <returns>The response object returned by the corresponding dispatch.</returns>
-	public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  
-							Goedel.Protocol.JsonReader jsonReader) {
 
-		jsonReader.StartObject ();
-		string token = jsonReader.ReadToken ();
-		JsonObject response = null;
 
-		switch (token) {
-			case "Hello" : {
-				var request = new HelloRequest();
-				request.Deserialize (jsonReader);
-				response = Hello (request, session);
-				break;
-				}
-			case "BindAccount" : {
-				var request = new BindRequest();
-				request.Deserialize (jsonReader);
-				response = BindAccount (request, session);
-				break;
-				}
-			case "UnbindAccount" : {
-				var request = new UnbindRequest();
-				request.Deserialize (jsonReader);
-				response = UnbindAccount (request, session);
-				break;
-				}
-			case "Connect" : {
-				var request = new ConnectRequest();
-				request.Deserialize (jsonReader);
-				response = Connect (request, session);
-				break;
-				}
-			case "Complete" : {
-				var request = new CompleteRequest();
-				request.Deserialize (jsonReader);
-				response = Complete (request, session);
-				break;
-				}
-			case "Status" : {
-				var request = new StatusRequest();
-				request.Deserialize (jsonReader);
-				response = Status (request, session);
-				break;
-				}
-			case "Download" : {
-				var request = new DownloadRequest();
-				request.Deserialize (jsonReader);
-				response = Download (request, session);
-				break;
-				}
-			case "Transact" : {
-				var request = new TransactRequest();
-				request.Deserialize (jsonReader);
-				response = Transact (request, session);
-				break;
-				}
-			case "Post" : {
-				var request = new PostRequest();
-				request.Deserialize (jsonReader);
-				response = Post (request, session);
-				break;
-				}
-			case "Claim" : {
-				var request = new ClaimRequest();
-				request.Deserialize (jsonReader);
-				response = Claim (request, session);
-				break;
-				}
-			case "PollClaim" : {
-				var request = new PollClaimRequest();
-				request.Deserialize (jsonReader);
-				response = PollClaim (request, session);
-				break;
-				}
-			case "Operate" : {
-				var request = new OperateRequest();
-				request.Deserialize (jsonReader);
-				response = Operate (request, session);
-				break;
-				}
-			default : {
-				throw new Goedel.Protocol.UnknownOperation ();
-				}
-			}
-		jsonReader.EndObject ();
-		return response;
-		}
 
     /// <summary>
     /// Return a client tapping the service API directly without serialization bound to
@@ -677,6 +581,15 @@ public partial class MeshServiceDirect: MeshServiceClient {
 	/// Base class for all request messages.
 	/// </summary>
 public partial class MeshRequest : Goedel.Protocol.Request {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -786,6 +699,25 @@ public partial class MeshRequestUser : MeshRequest {
         /// </summary>
 
 	public virtual Enveloped<ProfileDevice>						EnvelopedProfileDevice  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Account", new MetaDataString(
+				delegate (string _a) {  Account = _a; },
+				() => Account) } ,
+			{ "Capability", new MetaDataString(
+				delegate (string _a) {  Capability = _a; },
+				() => Capability) } ,
+			{ "EnvelopedProfileDevice", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileDevice = _a as Enveloped<ProfileDevice>; },
+				() => EnvelopedProfileDevice,
+				"Enveloped<ProfileDevice>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -910,6 +842,15 @@ public partial class MeshRequestUser : MeshRequest {
 	/// status code and status description fields.
 	/// </summary>
 public partial class MeshResponse : Goedel.Protocol.Response {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1014,6 +955,21 @@ public partial class KeyValue : MeshProtocol {
         /// </summary>
 
 	public virtual string						Value  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Key", new MetaDataString(
+				delegate (string _a) {  Key = _a; },
+				() => Key) } ,
+			{ "Value", new MetaDataString(
+				delegate (string _a) {  Value = _a; },
+				() => Value) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1130,28 +1086,18 @@ public partial class ConstraintsSelect : MeshProtocol {
         /// </summary>
 
 	public virtual string						Container  {get; set;}
-	bool								__IndexMin = false;
-	private int						_IndexMin;
         /// <summary>
         ///Only return objects with an index value that is equal to or
         ///higher than the value specified.
         /// </summary>
 
-	public virtual int						IndexMin {
-		get => _IndexMin;
-		set {_IndexMin = value; __IndexMin = true; }
-		}
-	bool								__IndexMax = false;
-	private int						_IndexMax;
+	public virtual int?						IndexMin  {get; set;}
         /// <summary>
         ///Only return objects with an index value that is equal to or
         ///lower than the value specified.
         /// </summary>
 
-	public virtual int						IndexMax {
-		get => _IndexMax;
-		set {_IndexMax = value; __IndexMax = true; }
-		}
+	public virtual int?						IndexMax  {get; set;}
         /// <summary>
         ///Only data published on or after the specified time instant 
         ///is requested.
@@ -1173,6 +1119,33 @@ public partial class ConstraintsSelect : MeshProtocol {
         /// </summary>
 
 	public virtual string						PageKey  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Container", new MetaDataString(
+				delegate (string _a) {  Container = _a; },
+				() => Container) } ,
+			{ "IndexMin", new MetaDataInteger32(
+				delegate (int? _a) {  IndexMin = _a; },
+				() => IndexMin) } ,
+			{ "IndexMax", new MetaDataInteger32(
+				delegate (int? _a) {  IndexMax = _a; },
+				() => IndexMax) } ,
+			{ "NotBefore", new MetaDataDateTime(
+				delegate (DateTime? _a) {  NotBefore = _a; },
+				() => NotBefore) } ,
+			{ "Before", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Before = _a; },
+				() => Before) } ,
+			{ "PageKey", new MetaDataString(
+				delegate (string _a) {  PageKey = _a; },
+				() => PageKey) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1221,12 +1194,12 @@ public partial class ConstraintsSelect : MeshProtocol {
 			_writer.WriteToken ("Container", 1);
 				_writer.WriteString (Container);
 			}
-		if (__IndexMin){
+		if (IndexMin != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("IndexMin", 1);
 				_writer.WriteInteger32 (IndexMin);
 			}
-		if (__IndexMax){
+		if (IndexMax != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("IndexMax", 1);
 				_writer.WriteInteger32 (IndexMax);
@@ -1318,67 +1291,64 @@ public partial class ConstraintsSelect : MeshProtocol {
 	/// Specifies constraints on the data to be sent.
 	/// </summary>
 public partial class ConstraintsData : MeshProtocol {
-	bool								__MaxEntries = false;
-	private int						_MaxEntries;
         /// <summary>
         ///Maximum number of entries to send.
         /// </summary>
 
-	public virtual int						MaxEntries {
-		get => _MaxEntries;
-		set {_MaxEntries = value; __MaxEntries = true; }
-		}
-	bool								__BytesOffset = false;
-	private int						_BytesOffset;
+	public virtual int?						MaxEntries  {get; set;}
         /// <summary>
         ///Specifies an offset to be applied to the payload data before it is sent. 
         ///This allows large payloads to be transferred incrementally.
         /// </summary>
 
-	public virtual int						BytesOffset {
-		get => _BytesOffset;
-		set {_BytesOffset = value; __BytesOffset = true; }
-		}
-	bool								__BytesMax = false;
-	private int						_BytesMax;
+	public virtual int?						BytesOffset  {get; set;}
         /// <summary>
         ///Maximum number of payload bytes to send.
         /// </summary>
 
-	public virtual int						BytesMax {
-		get => _BytesMax;
-		set {_BytesMax = value; __BytesMax = true; }
-		}
-	bool								__Header = false;
-	private bool						_Header;
+	public virtual int?						BytesMax  {get; set;}
         /// <summary>
         ///Return the entry header
         /// </summary>
 
-	public virtual bool						Header {
-		get => _Header;
-		set {_Header = value; __Header = true; }
-		}
-	bool								__Payload = false;
-	private bool						_Payload;
+	public virtual bool?						Header  {get; set;}
         /// <summary>
         ///Return the entry payload
         /// </summary>
 
-	public virtual bool						Payload {
-		get => _Payload;
-		set {_Payload = value; __Payload = true; }
-		}
-	bool								__Trailer = false;
-	private bool						_Trailer;
+	public virtual bool?						Payload  {get; set;}
         /// <summary>
         ///Return the entry trailer
         /// </summary>
 
-	public virtual bool						Trailer {
-		get => _Trailer;
-		set {_Trailer = value; __Trailer = true; }
-		}
+	public virtual bool?						Trailer  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "MaxEntries", new MetaDataInteger32(
+				delegate (int? _a) {  MaxEntries = _a; },
+				() => MaxEntries) } ,
+			{ "BytesOffset", new MetaDataInteger32(
+				delegate (int? _a) {  BytesOffset = _a; },
+				() => BytesOffset) } ,
+			{ "BytesMax", new MetaDataInteger32(
+				delegate (int? _a) {  BytesMax = _a; },
+				() => BytesMax) } ,
+			{ "Header", new MetaDataBoolean(
+				delegate (bool? _a) {  Header = _a; },
+				() => Header) } ,
+			{ "Payload", new MetaDataBoolean(
+				delegate (bool? _a) {  Payload = _a; },
+				() => Payload) } ,
+			{ "Trailer", new MetaDataBoolean(
+				delegate (bool? _a) {  Trailer = _a; },
+				() => Trailer) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1422,32 +1392,32 @@ public partial class ConstraintsData : MeshProtocol {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__MaxEntries){
+		if (MaxEntries != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("MaxEntries", 1);
 				_writer.WriteInteger32 (MaxEntries);
 			}
-		if (__BytesOffset){
+		if (BytesOffset != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("BytesOffset", 1);
 				_writer.WriteInteger32 (BytesOffset);
 			}
-		if (__BytesMax){
+		if (BytesMax != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("BytesMax", 1);
 				_writer.WriteInteger32 (BytesMax);
 			}
-		if (__Header){
+		if (Header != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Header", 1);
 				_writer.WriteBoolean (Header);
 			}
-		if (__Payload){
+		if (Payload != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Payload", 1);
 				_writer.WriteBoolean (Payload);
 			}
-		if (__Trailer){
+		if (Trailer != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Trailer", 1);
 				_writer.WriteBoolean (Trailer);
@@ -1525,26 +1495,16 @@ public partial class ConstraintsData : MeshProtocol {
 	/// account names, whether there is an open account creation policy, etc.
 	/// </summary>
 public partial class PolicyAccount : MeshProtocol {
-	bool								__Minimum = false;
-	private int						_Minimum;
         /// <summary>
         ///Specifies the minimum length of an account name.
         /// </summary>
 
-	public virtual int						Minimum {
-		get => _Minimum;
-		set {_Minimum = value; __Minimum = true; }
-		}
-	bool								__Maximum = false;
-	private int						_Maximum;
+	public virtual int?						Minimum  {get; set;}
         /// <summary>
         ///Specifies the maximum length of an account name.
         /// </summary>
 
-	public virtual int						Maximum {
-		get => _Maximum;
-		set {_Maximum = value; __Maximum = true; }
-		}
+	public virtual int?						Maximum  {get; set;}
         /// <summary>
         ///A list of characters that the service 
         ///does not accept in account names. The list of characters 
@@ -1553,6 +1513,24 @@ public partial class PolicyAccount : MeshProtocol {
         /// </summary>
 
 	public virtual string						InvalidCharacters  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Minimum", new MetaDataInteger32(
+				delegate (int? _a) {  Minimum = _a; },
+				() => Minimum) } ,
+			{ "Maximum", new MetaDataInteger32(
+				delegate (int? _a) {  Maximum = _a; },
+				() => Maximum) } ,
+			{ "InvalidCharacters", new MetaDataString(
+				delegate (string _a) {  InvalidCharacters = _a; },
+				() => InvalidCharacters) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1596,12 +1574,12 @@ public partial class PolicyAccount : MeshProtocol {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__Minimum){
+		if (Minimum != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Minimum", 1);
 				_writer.WriteInteger32 (Minimum);
 			}
-		if (__Maximum){
+		if (Maximum != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Maximum", 1);
 				_writer.WriteInteger32 (Maximum);
@@ -1673,19 +1651,32 @@ public partial class ContainerStatus : MeshProtocol {
         /// </summary>
 
 	public virtual string						Container  {get; set;}
-	bool								__Index = false;
-	private int						_Index;
         /// <summary>
         /// </summary>
 
-	public virtual int						Index {
-		get => _Index;
-		set {_Index = value; __Index = true; }
-		}
+	public virtual int?						Index  {get; set;}
         /// <summary>
         /// </summary>
 
 	public virtual byte[]						Digest  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Container", new MetaDataString(
+				delegate (string _a) {  Container = _a; },
+				() => Container) } ,
+			{ "Index", new MetaDataInteger32(
+				delegate (int? _a) {  Index = _a; },
+				() => Index) } ,
+			{ "Digest", new MetaDataBinary(
+				delegate (byte[] _a) {  Digest = _a; },
+				() => Digest) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1734,7 +1725,7 @@ public partial class ContainerStatus : MeshProtocol {
 			_writer.WriteToken ("Container", 1);
 				_writer.WriteString (Container);
 			}
-		if (__Index){
+		if (Index != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Index", 1);
 				_writer.WriteInteger32 (Index);
@@ -1807,6 +1798,19 @@ public partial class ContainerUpdate : ContainerStatus {
         /// </summary>
 
 	public virtual List<DareEnvelope>				Envelopes  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Envelopes", new MetaDataListStruct(
+				delegate (object _a) {  Envelopes = _a as List<DareEnvelope>; },
+				() => Envelopes,
+				"DareEnvelope" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -1934,6 +1938,19 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
         /// </summary>
 
 	public virtual CallsignBinding						CallsignBinding  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "CallsignBinding", new MetaDataStruct(
+				delegate (object _a) {  CallsignBinding = _a as CallsignBinding; },
+				() => CallsignBinding,
+				"CallsignBinding" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2063,6 +2080,35 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
         /// </summary>
 
 	public virtual CallsignBinding						CallsignBinding  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "ConstraintsUpdate", new MetaDataStruct(
+				delegate (object _a) {  ConstraintsUpdate = _a as ConstraintsData; },
+				() => ConstraintsUpdate,
+				"ConstraintsData" )} ,
+			{ "ConstraintsPost", new MetaDataStruct(
+				delegate (object _a) {  ConstraintsPost = _a as ConstraintsData; },
+				() => ConstraintsPost,
+				"ConstraintsData" )} ,
+			{ "PolicyAccount", new MetaDataStruct(
+				delegate (object _a) {  PolicyAccount = _a as PolicyAccount; },
+				() => PolicyAccount,
+				"PolicyAccount" )} ,
+			{ "EnvelopedProfileService", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileService = _a as Enveloped<ProfileService>; },
+				() => EnvelopedProfileService,
+				"Enveloped<ProfileService>" )} ,
+			{ "CallsignBinding", new MetaDataStruct(
+				delegate (object _a) {  CallsignBinding = _a as CallsignBinding; },
+				() => CallsignBinding,
+				"CallsignBinding" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2231,6 +2277,26 @@ public partial class BindRequest : MeshRequest {
         /// </summary>
 
 	public virtual List<Enveloped<CallsignBinding>>				EnvelopedCallsignBinding  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountAddress", new MetaDataString(
+				delegate (string _a) {  AccountAddress = _a; },
+				() => AccountAddress) } ,
+			{ "EnvelopedProfileAccount", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileAccount = _a as Enveloped<ProfileAccount>; },
+				() => EnvelopedProfileAccount,
+				"Enveloped<ProfileAccount>" )} ,
+			{ "EnvelopedCallsignBinding", new MetaDataListStruct(
+				delegate (object _a) {  EnvelopedCallsignBinding = _a as List<Enveloped<CallsignBinding>>; },
+				() => EnvelopedCallsignBinding,
+				"Enveloped<CallsignBinding>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2393,6 +2459,25 @@ public partial class BindResponse : MeshResponse {
         /// </summary>
 
 	public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Reason", new MetaDataString(
+				delegate (string _a) {  Reason = _a; },
+				() => Reason) } ,
+			{ "URL", new MetaDataString(
+				delegate (string _a) {  URL = _a; },
+				() => URL) } ,
+			{ "EnvelopedAccountHostAssignment", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedAccountHostAssignment = _a as Enveloped<AccountHostAssignment>; },
+				() => EnvelopedAccountHostAssignment,
+				"Enveloped<AccountHostAssignment>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2518,6 +2603,15 @@ public partial class BindResponse : MeshResponse {
 	/// with the account.
 	/// </summary>
 public partial class UnbindRequest : MeshRequestUser {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2611,6 +2705,15 @@ public partial class UnbindRequest : MeshRequestUser {
 	/// Reports the success or failure of a Delete transaction.
 	/// </summary>
 public partial class UnbindResponse : MeshResponse {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2712,6 +2815,22 @@ public partial class ConnectRequest : MeshRequest {
         /// </summary>
 
 	public virtual List<string>				Rights  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedRequestConnection", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedRequestConnection = _a as Enveloped<RequestConnection>; },
+				() => EnvelopedRequestConnection,
+				"Enveloped<RequestConnection>" )} ,
+			{ "Rights", new MetaDataListString(
+				delegate (List<string> _a) {  Rights = _a; },
+				() => Rights) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2848,6 +2967,23 @@ public partial class ConnectResponse : MeshResponse {
         /// </summary>
 
 	public virtual Enveloped<ProfileAccount>						EnvelopedProfileAccount  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedAcknowledgeConnection", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedAcknowledgeConnection = _a as Enveloped<AcknowledgeConnection>; },
+				() => EnvelopedAcknowledgeConnection,
+				"Enveloped<AcknowledgeConnection>" )} ,
+			{ "EnvelopedProfileAccount", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileAccount = _a as Enveloped<ProfileAccount>; },
+				() => EnvelopedProfileAccount,
+				"Enveloped<ProfileAccount>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -2971,6 +3107,21 @@ public partial class CompleteRequest : StatusRequest {
         /// </summary>
 
 	public virtual string						ResponseID  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountAddress", new MetaDataString(
+				delegate (string _a) {  AccountAddress = _a; },
+				() => AccountAddress) } ,
+			{ "ResponseID", new MetaDataString(
+				delegate (string _a) {  ResponseID = _a; },
+				() => ResponseID) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3091,6 +3242,23 @@ public partial class CompleteResponse : MeshResponse {
         /// </summary>
 
 	public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedRespondConnection", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedRespondConnection = _a as Enveloped<RespondConnection>; },
+				() => EnvelopedRespondConnection,
+				"Enveloped<RespondConnection>" )} ,
+			{ "EnvelopedAccountHostAssignment", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedAccountHostAssignment = _a as Enveloped<AccountHostAssignment>; },
+				() => EnvelopedAccountHostAssignment,
+				"Enveloped<AccountHostAssignment>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3222,6 +3390,27 @@ public partial class StatusRequest : MeshRequestUser {
         /// </summary>
 
 	public virtual List<string>				Spools  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "DeviceUDF", new MetaDataString(
+				delegate (string _a) {  DeviceUDF = _a; },
+				() => DeviceUDF) } ,
+			{ "CatalogedDeviceDigest", new MetaDataString(
+				delegate (string _a) {  CatalogedDeviceDigest = _a; },
+				() => CatalogedDeviceDigest) } ,
+			{ "Catalogs", new MetaDataListString(
+				delegate (List<string> _a) {  Catalogs = _a; },
+				() => Catalogs) } ,
+			{ "Spools", new MetaDataListString(
+				delegate (List<string> _a) {  Spools = _a; },
+				() => Spools) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3401,6 +3590,34 @@ public partial class StatusResponse : MeshResponse {
         /// </summary>
 
 	public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedProfileAccount", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileAccount = _a as Enveloped<ProfileAccount>; },
+				() => EnvelopedProfileAccount,
+				"Enveloped<ProfileAccount>" )} ,
+			{ "EnvelopedCatalogedDevice", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedCatalogedDevice = _a as Enveloped<CatalogedDevice>; },
+				() => EnvelopedCatalogedDevice,
+				"Enveloped<CatalogedDevice>" )} ,
+			{ "CatalogedDeviceDigest", new MetaDataString(
+				delegate (string _a) {  CatalogedDeviceDigest = _a; },
+				() => CatalogedDeviceDigest) } ,
+			{ "ContainerStatus", new MetaDataListStruct(
+				delegate (object _a) {  ContainerStatus = _a as List<ContainerStatus>; },
+				() => ContainerStatus,
+				"ContainerStatus" )} ,
+			{ "EnvelopedAccountHostAssignment", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedAccountHostAssignment = _a as Enveloped<AccountHostAssignment>; },
+				() => EnvelopedAccountHostAssignment,
+				"Enveloped<AccountHostAssignment>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3585,6 +3802,23 @@ public partial class DownloadRequest : MeshRequestUser {
         /// </summary>
 
 	public virtual ConstraintsData						ConstraintsPost  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Select", new MetaDataListStruct(
+				delegate (object _a) {  Select = _a as List<ConstraintsSelect>; },
+				() => Select,
+				"ConstraintsSelect" )} ,
+			{ "ConstraintsPost", new MetaDataStruct(
+				delegate (object _a) {  ConstraintsPost = _a as ConstraintsData; },
+				() => ConstraintsPost,
+				"ConstraintsData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3730,6 +3964,19 @@ public partial class DownloadResponse : MeshResponse {
         /// </summary>
 
 	public virtual List<ContainerUpdate>				Updates  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Updates", new MetaDataListStruct(
+				delegate (object _a) {  Updates = _a as List<ContainerUpdate>; },
+				() => Updates,
+				"ContainerUpdate" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -3883,6 +4130,34 @@ public partial class TransactRequest : MeshRequestUser {
         /// </summary>
 
 	public virtual List<Enveloped<Message>>				Local  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Updates", new MetaDataListStruct(
+				delegate (object _a) {  Updates = _a as List<ContainerUpdate>; },
+				() => Updates,
+				"ContainerUpdate" )} ,
+			{ "Accounts", new MetaDataListString(
+				delegate (List<string> _a) {  Accounts = _a; },
+				() => Accounts) } ,
+			{ "Outbound", new MetaDataListStruct(
+				delegate (object _a) {  Outbound = _a as List<Enveloped<Message>>; },
+				() => Outbound,
+				"Enveloped<Message>" )} ,
+			{ "Inbound", new MetaDataListStruct(
+				delegate (object _a) {  Inbound = _a as List<Enveloped<Message>>; },
+				() => Inbound,
+				"Enveloped<Message>" )} ,
+			{ "Local", new MetaDataListStruct(
+				delegate (object _a) {  Local = _a as List<Enveloped<Message>>; },
+				() => Local,
+				"Enveloped<Message>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4135,6 +4410,23 @@ public partial class TransactResponse : MeshResponse {
         /// </summary>
 
 	public virtual ConstraintsData						ConstraintsData  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Entries", new MetaDataListStruct(
+				delegate (object _a) {  Entries = _a as List<EntryResponse>; },
+				() => Entries,
+				"EntryResponse" )} ,
+			{ "ConstraintsData", new MetaDataStruct(
+				delegate (object _a) {  ConstraintsData = _a as ConstraintsData; },
+				() => ConstraintsData,
+				"ConstraintsData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4269,26 +4561,16 @@ public partial class TransactResponse : MeshResponse {
 	/// <summary>
 	/// </summary>
 public partial class EntryResponse : MeshProtocol {
-	bool								__IndexRequest = false;
-	private int						_IndexRequest;
         /// <summary>
         ///The index value of the entry in the request.
         /// </summary>
 
-	public virtual int						IndexRequest {
-		get => _IndexRequest;
-		set {_IndexRequest = value; __IndexRequest = true; }
-		}
-	bool								__IndexContainer = false;
-	private int						_IndexContainer;
+	public virtual int?						IndexRequest  {get; set;}
         /// <summary>
         ///The index value assigned to the entry in the container.
         /// </summary>
 
-	public virtual int						IndexContainer {
-		get => _IndexContainer;
-		set {_IndexContainer = value; __IndexContainer = true; }
-		}
+	public virtual int?						IndexContainer  {get; set;}
         /// <summary>
         ///Specifies the result of attempting to add the entry to a catalog
         ///or spool. Valid values for a message are 'Accept', 'Reject'. Valid 
@@ -4303,6 +4585,28 @@ public partial class EntryResponse : MeshProtocol {
         /// </summary>
 
 	public virtual ConstraintsData						ConstraintsData  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "IndexRequest", new MetaDataInteger32(
+				delegate (int? _a) {  IndexRequest = _a; },
+				() => IndexRequest) } ,
+			{ "IndexContainer", new MetaDataInteger32(
+				delegate (int? _a) {  IndexContainer = _a; },
+				() => IndexContainer) } ,
+			{ "Result", new MetaDataString(
+				delegate (string _a) {  Result = _a; },
+				() => Result) } ,
+			{ "ConstraintsData", new MetaDataStruct(
+				delegate (object _a) {  ConstraintsData = _a as ConstraintsData; },
+				() => ConstraintsData,
+				"ConstraintsData" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4346,12 +4650,12 @@ public partial class EntryResponse : MeshProtocol {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__IndexRequest){
+		if (IndexRequest != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("IndexRequest", 1);
 				_writer.WriteInteger32 (IndexRequest);
 			}
-		if (__IndexContainer){
+		if (IndexContainer != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("IndexContainer", 1);
 				_writer.WriteInteger32 (IndexContainer);
@@ -4443,6 +4747,22 @@ public partial class PostRequest : MeshRequest {
         /// </summary>
 
 	public virtual List<Enveloped<Message>>				Messages  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Accounts", new MetaDataListString(
+				delegate (List<string> _a) {  Accounts = _a; },
+				() => Accounts) } ,
+			{ "Messages", new MetaDataListStruct(
+				delegate (object _a) {  Messages = _a as List<Enveloped<Message>>; },
+				() => Messages,
+				"Enveloped<Message>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4590,6 +4910,15 @@ public partial class PostRequest : MeshRequest {
 	/// 
 	/// </summary>
 public partial class PostResponse : TransactResponse {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4686,6 +5015,19 @@ public partial class ClaimRequest : MeshRequest {
         /// </summary>
 
 	public virtual Enveloped<MessageClaim>						EnvelopedMessageClaim  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedMessageClaim", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedMessageClaim = _a as Enveloped<MessageClaim>; },
+				() => EnvelopedMessageClaim,
+				"Enveloped<MessageClaim>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4794,6 +5136,19 @@ public partial class ClaimResponse : MeshResponse {
         /// </summary>
 
 	public virtual CatalogedPublication						CatalogedPublication  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "CatalogedPublication", new MetaDataStruct(
+				delegate (object _a) {  CatalogedPublication = _a as CatalogedPublication; },
+				() => CatalogedPublication,
+				"CatalogedPublication" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -4907,6 +5262,21 @@ public partial class PollClaimRequest : MeshRequest {
         /// </summary>
 
 	public virtual string						TargetAccountAddress  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "PublicationId", new MetaDataString(
+				delegate (string _a) {  PublicationId = _a; },
+				() => PublicationId) } ,
+			{ "TargetAccountAddress", new MetaDataString(
+				delegate (string _a) {  TargetAccountAddress = _a; },
+				() => TargetAccountAddress) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5021,6 +5391,19 @@ public partial class PollClaimResponse : MeshResponse {
         /// </summary>
 
 	public virtual Enveloped<Message>						EnvelopedMessage  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedMessage", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedMessage = _a as Enveloped<Message>; },
+				() => EnvelopedMessage,
+				"Enveloped<Message>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5134,6 +5517,21 @@ abstract public partial class CryptographicOperation : MeshProtocol {
         /// </summary>
 
 	public virtual byte[]						KeyCoefficient  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "KeyId", new MetaDataString(
+				delegate (string _a) {  KeyId = _a; },
+				() => KeyId) } ,
+			{ "KeyCoefficient", new MetaDataBinary(
+				delegate (byte[] _a) {  KeyCoefficient = _a; },
+				() => KeyCoefficient) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5248,6 +5646,21 @@ public partial class CryptographicOperationSign : CryptographicOperation {
         /// </summary>
 
 	public virtual byte[]						PartialR  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Data", new MetaDataBinary(
+				delegate (byte[] _a) {  Data = _a; },
+				() => Data) } ,
+			{ "PartialR", new MetaDataBinary(
+				delegate (byte[] _a) {  PartialR = _a; },
+				() => PartialR) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5362,6 +5775,19 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
         /// </summary>
 
 	public virtual Key						PublicKey  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "PublicKey", new MetaDataStruct(
+				delegate (object _a) {  PublicKey = _a as Key; },
+				() => PublicKey,
+				"Key", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5470,6 +5896,15 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
 	/// <summary>
 	/// </summary>
 public partial class CryptographicOperationGenerate : CryptographicOperation {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5561,24 +5996,29 @@ public partial class CryptographicOperationGenerate : CryptographicOperation {
 	/// <summary>
 	/// </summary>
 public partial class CryptographicOperationShare : CryptographicOperation {
-	bool								__Threshold = false;
-	private int						_Threshold;
         /// <summary>
         /// </summary>
 
-	public virtual int						Threshold {
-		get => _Threshold;
-		set {_Threshold = value; __Threshold = true; }
-		}
-	bool								__Shares = false;
-	private int						_Shares;
+	public virtual int?						Threshold  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual int						Shares {
-		get => _Shares;
-		set {_Shares = value; __Shares = true; }
-		}
+	public virtual int?						Shares  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Threshold", new MetaDataInteger32(
+				delegate (int? _a) {  Threshold = _a; },
+				() => Threshold) } ,
+			{ "Shares", new MetaDataInteger32(
+				delegate (int? _a) {  Shares = _a; },
+				() => Shares) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5623,12 +6063,12 @@ public partial class CryptographicOperationShare : CryptographicOperation {
 			_writer.WriteObjectStart ();
 			}
 		((CryptographicOperation)this).SerializeX(_writer, false, ref _first);
-		if (__Threshold){
+		if (Threshold != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Threshold", 1);
 				_writer.WriteInteger32 (Threshold);
 			}
-		if (__Shares){
+		if (Shares != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Shares", 1);
 				_writer.WriteInteger32 (Shares);
@@ -5692,6 +6132,18 @@ public partial class CryptographicResult : MeshProtocol {
         /// </summary>
 
 	public virtual string						Error  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Error", new MetaDataString(
+				delegate (string _a) {  Error = _a; },
+				() => Error) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5794,6 +6246,19 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
         /// </summary>
 
 	public virtual KeyAgreement						KeyAgreement  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "KeyAgreement", new MetaDataStruct(
+				delegate (object _a) {  KeyAgreement = _a as KeyAgreement; },
+				() => KeyAgreement,
+				"KeyAgreement", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -5902,6 +6367,15 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
 	/// <summary>
 	/// </summary>
 public partial class CryptographicResultShare : CryptographicResult {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -6002,6 +6476,22 @@ public partial class OperateRequest : MeshRequest {
         /// </summary>
 
 	public virtual List<CryptographicOperation>				Operations  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountAddress", new MetaDataString(
+				delegate (string _a) {  AccountAddress = _a; },
+				() => AccountAddress) } ,
+			{ "Operations", new MetaDataListStruct(
+				delegate (object _a) {  Operations = _a as List<CryptographicOperation>; },
+				() => Operations,
+				"CryptographicOperation", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -6133,6 +6623,19 @@ public partial class OperateResponse : MeshResponse {
         /// </summary>
 
 	public virtual List<CryptographicResult>				Results  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Results", new MetaDataListStruct(
+				delegate (object _a) {  Results = _a as List<CryptographicResult>; },
+				() => Results,
+				"CryptographicResult", true)}
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class

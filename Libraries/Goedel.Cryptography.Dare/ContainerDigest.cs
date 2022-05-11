@@ -89,7 +89,7 @@ public class ContainerDigest : ContainerList {
         foreach (var Header in Headers) {
             Assert.AssertNotNull(Header.SequenceInfo, SequenceDataCorrupt.Throw);
 
-            Assert.AssertTrue(Header.SequenceInfo.Index == Index, SequenceDataCorrupt.Throw);
+            Assert.AssertTrue(Header.SequenceInfo.LIndex == Index, SequenceDataCorrupt.Throw);
 
             if (HeaderFirst.SequenceInfo.ContainerType == DareConstants.SequenceTypeListTag) {
                 Assert.AssertNull(Header.PayloadDigest, SequenceDataCorrupt.Throw);

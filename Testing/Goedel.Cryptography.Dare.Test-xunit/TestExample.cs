@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:49:16 PM
+//  This file was automatically generated at 11-May-22 12:07:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -114,6 +115,21 @@ abstract public partial class TestEntry : TestSchema {
         /// </summary>
 
 	public virtual DateTime?						Modified  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Created", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Created = _a; },
+				() => Created) } ,
+			{ "Modified", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Modified = _a; },
+				() => Modified) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -237,6 +253,24 @@ public partial class TestItem : TestEntry {
         /// </summary>
 
 	public virtual string						Status  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountID", new MetaDataString(
+				delegate (string _a) {  AccountID = _a; },
+				() => AccountID) } ,
+			{ "UserProfileUDF", new MetaDataString(
+				delegate (string _a) {  UserProfileUDF = _a; },
+				() => UserProfileUDF) } ,
+			{ "Status", new MetaDataString(
+				delegate (string _a) {  Status = _a; },
+				() => Status) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class

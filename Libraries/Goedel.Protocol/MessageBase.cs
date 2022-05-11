@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:05 PM
+//  This file was automatically generated at 11-May-22 12:07:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -119,6 +120,21 @@ abstract public partial class Request : Message {
         /// </summary>
 
 	public virtual byte[]						ID  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Service", new MetaDataString(
+				delegate (string _a) {  Service = _a; },
+				() => Service) } ,
+			{ "ID", new MetaDataBinary(
+				delegate (byte[] _a) {  ID = _a; },
+				() => ID) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -230,27 +246,17 @@ abstract public partial class Request : Message {
 	/// to any request.
 	/// </summary>
 abstract public partial class Response : Message {
-	bool								__Status = false;
-	private int						_Status;
         /// <summary>
         ///Major status return code. The SMTP/HTTP scheme of 2xx = Success,
         ///3xx = incomplete, 4xx = failure is followed.
         /// </summary>
 
-	public virtual int						Status {
-		get => _Status;
-		set {_Status = value; __Status = true; }
-		}
-	bool								__StatusExtended = false;
-	private int						_StatusExtended;
+	public virtual int?						Status  {get; set;}
         /// <summary>
         ///Application level status report giving additional information.
         /// </summary>
 
-	public virtual int						StatusExtended {
-		get => _StatusExtended;
-		set {_StatusExtended = value; __StatusExtended = true; }
-		}
+	public virtual int?						StatusExtended  {get; set;}
         /// <summary>
         ///Text description of the status return code for debugging 
         ///and log file use.
@@ -262,6 +268,27 @@ abstract public partial class Response : Message {
         /// </summary>
 
 	public virtual byte[]						ID  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Status", new MetaDataInteger32(
+				delegate (int? _a) {  Status = _a; },
+				() => Status) } ,
+			{ "StatusExtended", new MetaDataInteger32(
+				delegate (int? _a) {  StatusExtended = _a; },
+				() => StatusExtended) } ,
+			{ "StatusDescription", new MetaDataString(
+				delegate (string _a) {  StatusDescription = _a; },
+				() => StatusDescription) } ,
+			{ "ID", new MetaDataBinary(
+				delegate (byte[] _a) {  ID = _a; },
+				() => ID) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -305,12 +332,12 @@ abstract public partial class Response : Message {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__Status){
+		if (Status != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Status", 1);
 				_writer.WriteInteger32 (Status);
 			}
-		if (__StatusExtended){
+		if (StatusExtended != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("StatusExtended", 1);
 				_writer.WriteInteger32 (StatusExtended);
@@ -386,26 +413,16 @@ abstract public partial class Response : Message {
 	/// Describes a protocol version.
 	/// </summary>
 public partial class Version : Message {
-	bool								__Major = false;
-	private int						_Major;
         /// <summary>
         ///Major version number of the service protocol. A higher
         /// </summary>
 
-	public virtual int						Major {
-		get => _Major;
-		set {_Major = value; __Major = true; }
-		}
-	bool								__Minor = false;
-	private int						_Minor;
+	public virtual int?						Major  {get; set;}
         /// <summary>
         ///Minor version number of the service protocol.
         /// </summary>
 
-	public virtual int						Minor {
-		get => _Minor;
-		set {_Minor = value; __Minor = true; }
-		}
+	public virtual int?						Minor  {get; set;}
         /// <summary>
         ///Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B)
         ///supported by the service. If no encodings are specified, the
@@ -419,6 +436,28 @@ public partial class Version : Message {
         /// </summary>
 
 	public virtual List<string>				URI  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Major", new MetaDataInteger32(
+				delegate (int? _a) {  Major = _a; },
+				() => Major) } ,
+			{ "Minor", new MetaDataInteger32(
+				delegate (int? _a) {  Minor = _a; },
+				() => Minor) } ,
+			{ "Encodings", new MetaDataListStruct(
+				delegate (object _a) {  Encodings = _a as List<Encoding>; },
+				() => Encodings,
+				"Encoding" )} ,
+			{ "URI", new MetaDataListString(
+				delegate (List<string> _a) {  URI = _a; },
+				() => URI) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -462,12 +501,12 @@ public partial class Version : Message {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (__Major){
+		if (Major != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Major", 1);
 				_writer.WriteInteger32 (Major);
 			}
-		if (__Minor){
+		if (Minor != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Minor", 1);
 				_writer.WriteInteger32 (Minor);
@@ -594,6 +633,21 @@ public partial class Encoding : Message {
         /// </summary>
 
 	public virtual List<string>				Dictionary  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "ID", new MetaDataListString(
+				delegate (List<string> _a) {  ID = _a; },
+				() => ID) } ,
+			{ "Dictionary", new MetaDataListString(
+				delegate (List<string> _a) {  Dictionary = _a; },
+				() => Dictionary) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -731,6 +785,15 @@ public partial class Encoding : Message {
 	/// Request service description.
 	/// </summary>
 public partial class HelloRequest : Request {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -834,6 +897,23 @@ public partial class HelloResponse : Response {
         /// </summary>
 
 	public virtual List<Version>				Alternates  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Version", new MetaDataStruct(
+				delegate (object _a) {  Version = _a as Version; },
+				() => Version,
+				"Version" )} ,
+			{ "Alternates", new MetaDataListStruct(
+				delegate (object _a) {  Alternates = _a as List<Version>; },
+				() => Alternates,
+				"Version" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class

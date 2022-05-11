@@ -27,7 +27,7 @@ namespace Goedel.Cryptography.Dare;
 /// </summary>
 public class SequenceEnumeratorRaw : IEnumerator<DareEnvelope> {
     readonly Sequence container;
-    readonly int lowIndex;
+    readonly long lowIndex;
     readonly bool reverse;
     bool active;
 
@@ -44,7 +44,7 @@ public class SequenceEnumeratorRaw : IEnumerator<DareEnvelope> {
     /// <param name="reverse">If true, enumeratre from the last item to <paramref name="lowIndex"/> (inclusive).
     /// otherwise, enumerate from <paramref name="lowIndex"/> to the first.</param>
     /// <param name="container">The container to enumerate.</param>
-    public SequenceEnumeratorRaw(Sequence container, int lowIndex = 0, bool reverse = false) {
+    public SequenceEnumeratorRaw(Sequence container, long lowIndex = 0, bool reverse = false) {
         this.container = container;
         this.lowIndex = lowIndex;
         this.reverse = reverse;
@@ -86,7 +86,7 @@ public class SequenceEnumeratorRaw : IEnumerator<DareEnvelope> {
             }
 
         var header = Current.Header;
-        return header.SequenceInfo.Index >= lowIndex;
+        return header.SequenceInfo.LIndex >= lowIndex;
         }
 
     /// <summary>

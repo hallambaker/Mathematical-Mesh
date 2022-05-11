@@ -476,6 +476,12 @@
              Placeholder class to allow insertion of application specific properties.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._Tag">
             <summary>
             Tag identifying this class
@@ -530,6 +536,12 @@
         <member name="T:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._Tag">
             <summary>
@@ -623,6 +635,12 @@
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.Build">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._Tag">
             <summary>

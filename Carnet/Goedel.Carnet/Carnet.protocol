@@ -1,0 +1,28 @@
+﻿Protocol Goedel.Carnet CarnetProtocol CarnetProtocol
+
+	Section 2 "Registry service"
+
+	Description 
+		|Callsign Registry Protocol providing registry interactions.
+
+    Using Goedel.Cryptography.Jose
+    Using Goedel.Cryptography.Dare
+	Using Goedel.Callsign
+
+
+	Section 3 "Shared Classes"
+    Service CarnetService "_mmmcarnet._tcp" "mmmcarnet" CarnetRequest CarnetResponse
+		Description
+
+
+	Message CarnetRequest
+		External Goedel.Protocol.Request
+		Description
+			|Base class for all requests made to a registrar
+
+
+	Message CarnetResponse
+		External Goedel.Protocol.Response		
+		Description
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.

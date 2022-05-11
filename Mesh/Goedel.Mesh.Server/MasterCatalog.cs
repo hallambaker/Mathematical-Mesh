@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:58 PM
+//  This file was automatically generated at 11-May-22 12:07:41 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -116,21 +117,37 @@ abstract public partial class AccountEntry : CatalogItem {
         /// </summary>
 
 	public virtual string						ProfileUdf  {get; set;}
-	bool								__Quota = false;
-	private int						_Quota;
         /// <summary>
         ///The quota assigned to this user in KB
         /// </summary>
 
-	public virtual int						Quota {
-		get => _Quota;
-		set {_Quota = value; __Quota = true; }
-		}
+	public virtual int?						Quota  {get; set;}
         /// <summary>
         ///The profile status. Valid values are "Pending", "Connected", "Blocked"
         /// </summary>
 
 	public virtual string						Status  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Directory", new MetaDataString(
+				delegate (string _a) {  Directory = _a; },
+				() => Directory) } ,
+			{ "ProfileUdf", new MetaDataString(
+				delegate (string _a) {  ProfileUdf = _a; },
+				() => ProfileUdf) } ,
+			{ "Quota", new MetaDataInteger32(
+				delegate (int? _a) {  Quota = _a; },
+				() => Quota) } ,
+			{ "Status", new MetaDataString(
+				delegate (string _a) {  Status = _a; },
+				() => Status) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -184,7 +201,7 @@ abstract public partial class AccountEntry : CatalogItem {
 			_writer.WriteToken ("ProfileUdf", 1);
 				_writer.WriteString (ProfileUdf);
 			}
-		if (__Quota){
+		if (Quota != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Quota", 1);
 				_writer.WriteInteger32 (Quota);
@@ -266,6 +283,23 @@ public partial class AccountUser : AccountEntry {
         /// </summary>
 
 	public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedProfileUser", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileUser = _a as Enveloped<ProfileAccount>; },
+				() => EnvelopedProfileUser,
+				"Enveloped<ProfileAccount>" )} ,
+			{ "EnvelopedAccountHostAssignment", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedAccountHostAssignment = _a as Enveloped<AccountHostAssignment>; },
+				() => EnvelopedAccountHostAssignment,
+				"Enveloped<AccountHostAssignment>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class

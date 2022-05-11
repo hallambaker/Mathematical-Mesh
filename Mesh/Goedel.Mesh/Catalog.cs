@@ -362,7 +362,7 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
 
             // give the status
             if (header?.SequenceInfo is var containerInfo) {
-                output.WriteLine($"   Index: {containerInfo.Index} Tree: {containerInfo.TreePosition}");
+                output.WriteLine($"   Index: {containerInfo.LIndex} Tree: {containerInfo.TreePosition}");
                 }
             else {
                 output.WriteLine("    ############ Invalid");

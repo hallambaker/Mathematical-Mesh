@@ -18,15 +18,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+global using Goedel.Mesh;
+global using Goedel.Mesh.Client;
+global using Goedel.Utilities;
+
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 
-namespace Callsign {
-    /// <summary>
-    /// Mesh Callsign registry implementation.
-    /// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
 
+
+
+namespace Callsign; 
+/// <summary>
+/// Mesh Callsign registry implementation.
+/// </summary>
+
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }
+

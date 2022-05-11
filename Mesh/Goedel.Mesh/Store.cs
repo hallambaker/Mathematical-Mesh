@@ -156,7 +156,7 @@ public class Store : Disposable {
 
         var fileName = FileName(directory, containerName);
 
-        if (envelopes[0].Header.SequenceInfo.Index == 0) {
+        if (envelopes[0].Header.SequenceInfo.LIndex == 0) {
             using var container = Sequence.MakeNewSequence(fileName, keyLocate, envelopes);
             }
         else {

@@ -39,5 +39,5 @@ public interface IJson {
     ///If true, a stored key may be exported from the machine on 
     ///which it is stored.
     /// </summary>
-    bool Exportable { get; set; }
+    bool? Exportable { get; set; }
     }

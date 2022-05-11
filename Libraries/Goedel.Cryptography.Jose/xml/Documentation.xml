@@ -119,6 +119,12 @@
             The public key
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._Tag">
             <summary>
             Tag identifying this class
@@ -213,6 +219,12 @@
              <summary>
             The private key.
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._Tag">
             <summary>
@@ -320,6 +332,12 @@
             The public key
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._Tag">
             <summary>
             Tag identifying this class
@@ -418,6 +436,12 @@
              <summary>
             The private key
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._Tag">
             <summary>
@@ -577,6 +601,12 @@
             The digest value
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Header._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Header._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Header._Tag">
             <summary>
             Tag identifying this class
@@ -702,6 +732,12 @@
              <summary>
             The signature value
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._Tag">
             <summary>
@@ -894,6 +930,12 @@
              <summary>
             Authentication tag
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._Tag">
             <summary>
@@ -1148,6 +1190,12 @@
             The signature data
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Signed._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Signed._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Signed._Tag">
             <summary>
             Tag identifying this class
@@ -1224,6 +1272,12 @@
              <summary>
             The signature data
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Encrypted._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Encrypted._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Encrypted._Tag">
             <summary>
@@ -1326,6 +1380,12 @@
             SHA-2-256 fingerprint of X.509 certificate
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyCore._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyCore._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.KeyCore._Tag">
             <summary>
             Tag identifying this class
@@ -1409,6 +1469,12 @@
             The signature value
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Signature._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Signature._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Signature._Tag">
             <summary>
             Tag identifying this class
@@ -1475,6 +1541,12 @@
              <summary>
             The key data.
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyContainer._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyContainer._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyContainer._Tag">
             <summary>
@@ -1578,6 +1650,12 @@
              <summary>
             Symmetric key value.
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Key._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Key._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Key._Tag">
             <summary>
@@ -1699,6 +1777,12 @@
             The decryption data for use by this recipient.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Recipient._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Recipient._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Recipient._Tag">
             <summary>
             Tag identifying this class
@@ -1796,6 +1880,12 @@
              <summary>
             The public exponent
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._Tag">
             <summary>
@@ -1918,6 +2008,12 @@
             The parameter QInverse
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._Tag">
             <summary>
             Tag identifying this class
@@ -2031,6 +2127,12 @@
             The algorithm used to derrive the encryption key
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._Tag">
             <summary>
             Tag identifying this class
@@ -2136,6 +2238,12 @@
              </summary>
             <summary>Base class for JOSE key agreement result.</summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreement._Tag">
             <summary>
             Tag identifying this class
@@ -2212,6 +2320,12 @@
              <summary>
             The result
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._Tag">
             <summary>
@@ -2298,6 +2412,12 @@
              <summary>
             The result
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._Tag">
             <summary>

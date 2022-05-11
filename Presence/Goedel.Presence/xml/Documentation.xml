@@ -105,21 +105,7 @@
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Presence.PresenceService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
-            <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="token">The method identifier</param>
-            <param name="request">The request data</param>
-            <param name="session">The client context.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
-        </member>
-        <member name="M:Goedel.Presence.PresenceService.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
-            <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="session">The client context.</param>
-            <param name="jsonReader">Reader for data object.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Presence.PresenceService.GetDirect(Goedel.Protocol.IJpcSession)">
             <summary>
@@ -186,11 +172,144 @@
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
+        <member name="T:Goedel.Presence.PresenceRequest">
+             <summary>
+            
+             Base class for all requests made to a registrar
+             </summary>
+        </member>
+        <member name="P:Goedel.Presence.PresenceRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.PresenceRequest._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.PresenceRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.PresenceRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.PresenceRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Presence.PresenceRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Presence.PresenceRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Presence.PresenceRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Presence.PresenceRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Presence.PresenceResponse">
+             <summary>
+            
+             Base class for all response messages. Contains only the
+             status code and status description fields.
+             </summary>
+        </member>
+        <member name="P:Goedel.Presence.PresenceResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.PresenceResponse._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.PresenceResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.PresenceResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.PresenceResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Presence.PresenceResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Presence.PresenceResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Presence.PresenceResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Presence.PresenceResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
         <member name="T:Goedel.Presence.QueryRequest">
              <summary>
             
              Register connection request. 
              </summary>
+        </member>
+        <member name="P:Goedel.Presence.QueryRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.QueryRequest._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.QueryRequest._Tag">
             <summary>
@@ -248,6 +367,12 @@
             
              Return the result of a connection request
              </summary>
+        </member>
+        <member name="P:Goedel.Presence.QueryResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.QueryResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.QueryResponse._Tag">
             <summary>

@@ -1,8 +1,10 @@
 ﻿
-Namespace Goedel.CallSign.Log
+Namespace Goedel.Callsign
 
-	Exception TBS
-		Console "Exception TBS"
+	Exception InvalidPresentation
+		Console "The presentation {0} does not have canonical form {1}"
 		Description
-			|TBS
-
+			|An attempt was made to set the presentation property of a callsign
+			|to a value that does not match the canonical form of that callsign.
+	Exception InvalidCharacter
+		Console "The character {0} is not permitted in this callsign page."

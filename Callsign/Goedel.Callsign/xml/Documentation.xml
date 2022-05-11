@@ -4,11 +4,84 @@
         <name>Goedel.Callsign</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Callsign.ContextCallsign">
+            <summary>
+            Context for managing the callsign registry account.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.ContextCallsign.Profile">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ContextCallsign.Connection">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ContextCallsign.AccountAddress">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.ContextCallsign.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
+            <summary>
+            Constructor, creates a <see cref="T:Goedel.Mesh.Client.ContextUser"/> instance for the catalog entry 
+            <paramref name="catalogedMachine"/> on machine <paramref name="meshHost"/>.
+            </summary>
+            <param name="catalogedMachine">Description of the device profile.</param>
+            <param name="meshHost">The Mesh host to add the admin context to.</param>
+        </member>
         <member name="T:Goedel.Callsign.Callsign">
              <summary>
             
              A callsign entry
              </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Callsign.Pages">
+            <summary>List of callsign code pages.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Callsign.VariantList">
+            <summary>List of variant characters specified in the code page.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Callsign.#ctor(System.String)">
+            <summary>
+            Constructor returning a callsign instance. If the parameter <paramref name="presentation"/>
+            is not null, the presentation value of the callsign is set to the specified value.
+            </summary>
+            <param name="presentation">The presentation value to be set.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Callsign.SetPresentation(System.String)">
+            <summary>
+            Set the presentation value of the callsign. 
+            </summary>
+            <param name="presentation">The presentation value to be set.</param>
+            <exception cref="T:Goedel.Callsign.InvalidPresentation">The presentation is invalid</exception>
+        </member>
+        <member name="M:Goedel.Callsign.Callsign.AddPage(Goedel.Callsign.Page)">
+            <summary>
+            Add the code page <paramref name="page"/>
+            </summary>
+            <param name="page">The code page to add.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Callsign.MakeIndex">
+            <summary>
+            Create an index over the code page.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Callsign.Canonicalize(System.String)">
+            <summary>
+            Return the canonical form of the page <paramref name="presentation"/> according
+            to the code page settings.
+            </summary>
+            <param name="presentation">The presentation to canonicalize</param>
+            <returns>The canonical form of <paramref name="presentation"/>.</returns>
+            <exception cref="T:Goedel.Callsign.InvalidCharacter">A character is invalid</exception>
+        </member>
+        <member name="M:Goedel.Callsign.Callsign.IsAllowed(System.Char,Goedel.Callsign.CharacterSpan@)">
+            <summary>
+            Returns true if the character <paramref name="c"/> is permitted
+            in the character span <paramref name="characterSpan"/>. Otherwise,
+            an exception is thrown.
+            </summary>
+            <param name="c"></param>
+            <param name="characterSpan"></param>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
         <member name="P:Goedel.Callsign.Callsign.Id">
              <summary>
@@ -45,6 +118,12 @@
              <summary>
             The Mesh Account profile to which the callsign belongs.
              </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Callsign._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Callsign._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Callsign._Tag">
             <summary>
@@ -267,6 +346,12 @@
             Initial/ Update/ Voluntary/ Administrative/ Revoke
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.Registration._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registration._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Callsign.Registration._Tag">
             <summary>
             Tag identifying this class
@@ -337,6 +422,12 @@
             Characters permitted within this code page.
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.Page._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Page._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Callsign.Page._Tag">
             <summary>
             Tag identifying this class
@@ -403,6 +494,12 @@
             equal to zero, this is the same as Last.
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.CharacterSpan._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CharacterSpan._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Callsign.CharacterSpan._Tag">
             <summary>
             Tag identifying this class
@@ -459,6 +556,12 @@
             
              Canonical character span.
              </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Canonical._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Canonical._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Canonical._Tag">
             <summary>
@@ -523,6 +626,12 @@
             The character that First is mapped to.
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.MapChar._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.MapChar._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Callsign.MapChar._Tag">
             <summary>
             Tag identifying this class
@@ -586,6 +695,12 @@
             Specifies a character string that the Source character(s) are mapped to.
             If count is greater than 1, all the characters map to the same string.
              </summary>
+        </member>
+        <member name="P:Goedel.Callsign.MapString._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.MapString._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.MapString._Tag">
             <summary>
@@ -653,6 +768,12 @@
             log.
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.Notarization._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Notarization._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Callsign.Notarization._Tag">
             <summary>
             Tag identifying this class
@@ -714,6 +835,12 @@
              <summary>
             Specify TLS policies for use in the zone.
              </summary>
+        </member>
+        <member name="P:Goedel.Callsign.ProfileDns._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ProfileDns._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.ProfileDns._Tag">
             <summary>
@@ -795,6 +922,12 @@
              <summary>
             Keys specifying roots of trust for the specified protocol(s).
              </summary>
+        </member>
+        <member name="P:Goedel.Callsign.SecurityPolicy._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.SecurityPolicy._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.SecurityPolicy._Tag">
             <summary>
@@ -889,6 +1022,12 @@
             The issuing practices under which the validation was performed.
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.Accreditation._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Accreditation._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Callsign.Accreditation._Tag">
             <summary>
             Tag identifying this class
@@ -956,6 +1095,12 @@
             The basis for the challenge
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.Challenge._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Challenge._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Callsign.Challenge._Tag">
             <summary>
             Tag identifying this class
@@ -1007,19 +1152,20 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.CallSign.Log.TBS">
+        <member name="T:Goedel.Callsign.InvalidPresentation">
             <summary>
-            TBS
+            An attempt was made to set the presentation property of a callsign
+            to a value that does not match the canonical form of that callsign.
             </summary>
         </member>
-        <member name="P:Goedel.CallSign.Log.TBS.ExceptionFormatDelegate">
+        <member name="P:Goedel.Callsign.InvalidPresentation.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="P:Goedel.CallSign.Log.TBS.Templates">
+        <member name="P:Goedel.Callsign.InvalidPresentation.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.CallSign.Log.TBS.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Callsign.InvalidPresentation.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -1028,23 +1174,54 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.CallSign.Log.TBS._Throw(System.Object)">
+        <member name="M:Goedel.Callsign.InvalidPresentation._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="P:Goedel.CallSign.Log.TBS.Throw">
+        <member name="P:Goedel.Callsign.InvalidPresentation.Throw">
             <summary>
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.CallSign.Log.EventExtensions">
+        <member name="T:Goedel.Callsign.InvalidCharacter">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.InvalidCharacter.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Callsign.InvalidCharacter.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Callsign.InvalidCharacter.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Callsign.InvalidCharacter._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Callsign.InvalidCharacter.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Callsign.EventExtensions">
             <summary>
             Extensions class defining logging events and convenience methods.
             </summary>
         </member>
-        <member name="M:Goedel.CallSign.Log.EventExtensions.#cctor">
+        <member name="M:Goedel.Callsign.EventExtensions.#cctor">
             <summary>
             Static initializer, is called once when the module loads.
             </summary>

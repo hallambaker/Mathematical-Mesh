@@ -76,12 +76,12 @@ public class ContainerMerkleTree : ContainerTree {
     /// </summary>
     /// <param name="containerInfo">The frame to prepare.</param>
     protected override void PrepareFrame(SequenceInfo containerInfo) {
-        if (containerInfo.Index == 0) {
+        if (containerInfo.LIndex == 0) {
             containerInfo.ContainerType = DareConstants.SequenceTypeMerkleTag;
             }
         else {
             containerInfo.TreePosition =
-                (int)PreviousFramePosition(containerInfo.Index);
+                (int)PreviousFramePosition(containerInfo.LIndex);
             }
         }
 
@@ -96,7 +96,7 @@ public class ContainerMerkleTree : ContainerTree {
     /// <param name="containerInfo">Frame header</param>
     /// <param name="position">Position of the frame</param>
     protected override void RegisterFrame(SequenceInfo containerInfo, long position) {
-        var Index = containerInfo.Index;
+        var Index = containerInfo.LIndex;
         FrameIndexToPositionDictionary.Add(Index, position);
         //FrameDigestDictionary.Add(Index, ContainerInfo.TreeDigest);
         }
@@ -194,7 +194,7 @@ public class ContainerMerkleTree : ContainerTree {
             Assert.AssertNotNull(header.SequenceInfo,
                     SequenceDataCorrupt.Throw);
 
-            Assert.AssertTrue(header.SequenceInfo.Index == index, SequenceDataCorrupt.Throw);
+            Assert.AssertTrue(header.SequenceInfo.LIndex == index, SequenceDataCorrupt.Throw);
             Assert.AssertNotNull(header.PayloadDigest,
                     SequenceDataCorrupt.Throw);
 

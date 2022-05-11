@@ -117,7 +117,7 @@ public class MeshHost : Disposable {
 
 
     void SetDefault<T>(ref T current, T update) where T: CatalogedMachine {
-        if (update.Default) {
+        if (update.Default == true) {
             current = update;
             }
         else {
@@ -336,25 +336,25 @@ public class MeshHost : Disposable {
         switch (catalogedMachine) {
             case CatalogedPending catalogedPending: {
                     Logger.HostCatalogedPending(catalogedMachine.Id[0..8],
-                        catalogedPending.AccountAddress, catalogedMachine.Default);
+                        catalogedPending.AccountAddress, catalogedMachine.Default == true);
                     SetDefault(ref defaultPending, catalogedPending);
                     break;
                     }
             case CatalogedPreconfigured catalogedPreconfigured: {
                     Logger.HostCatalogedPreconfigured(catalogedMachine.Id[0..8],
-                        catalogedPreconfigured.AccountAddress, catalogedMachine.Default);
+                        catalogedPreconfigured.AccountAddress, catalogedMachine.Default == true);
                     SetDefault(ref defaultPreconfigured, catalogedPreconfigured);
                     break;
                     }
             case CatalogedStandard catalogedStandard: {
                     Logger.HostCatalogedAccount(catalogedMachine.Id[0..8],
-                        catalogedStandard.Local, catalogedMachine.Default);
+                        catalogedStandard.Local, catalogedMachine.Default == true);
                     SetDefault(ref defaultAccount, catalogedStandard);
                     break;
                     }
             case CatalogedService catalogedService: {
                     Logger.HostCatalogedService(catalogedMachine.Id[0..8],
-                        catalogedService.Local, catalogedMachine.Default);
+                        catalogedService.Local, catalogedMachine.Default == true);
                     SetDefault(ref defaultService, catalogedService);
                     break;
                     }

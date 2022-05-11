@@ -40,7 +40,7 @@ public partial class ShellResult {
     public virtual StringBuilder StringBuilder() {
         var builder = new StringBuilder();
 
-        if (!Success) {
+        if (!Success == true) {
             builder.Append("ERROR");
             if (Reason != null) {
                 builder.Append(" - ");

@@ -280,7 +280,7 @@ public partial class TestContainers {
                         policy: policy)) {
                 for (Record = moveStep; Record < records; Record += moveStep) {
                     var ContainerDataReader = XContainer.GetSequenceFrameIndex(Record);
-                    (ContainerDataReader.Header.SequenceInfo.Index == Record).TestTrue(); ;
+                    (ContainerDataReader.Header.SequenceInfo.LIndex == Record).TestTrue(); ;
                     }
 
                 }
@@ -290,7 +290,7 @@ public partial class TestContainers {
                         policy: policy)) {
                 for (Record = records; Record > 0; Record -= moveStep) {
                     var ContainerDataReader = XContainer.GetSequenceFrameIndex(Record);
-                    (ContainerDataReader.Header.SequenceInfo.Index == Record).TestTrue(); ;
+                    (ContainerDataReader.Header.SequenceInfo.LIndex == Record).TestTrue(); ;
                     }
                 }
             }

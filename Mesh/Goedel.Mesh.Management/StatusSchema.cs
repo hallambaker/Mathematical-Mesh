@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:47:57 PM
+//  This file was automatically generated at 11-May-22 12:07:41 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -134,14 +135,8 @@ public abstract partial class ServiceManagementService : Goedel.Protocol.JpcInte
 				{"ServiceStatus", ServiceStatusRequest._Factory}
 		};
 
-	/// <summary>
-	/// Dispatch object request in specified authentication context.
-	/// </summary>			
-	/// <param name="token">The method identifier</param>
-	/// <param name="request">The request data</param>
-	/// <param name="session">The client context.</param>
-	/// <returns>The response object returned by the corresponding dispatch.</returns>
-	public Goedel.Protocol.JsonObject Dispatch(
+    ///<inheritdoc/>
+	public override Goedel.Protocol.JsonObject Dispatch(
 			string token,
 			Goedel.Protocol.JsonObject request,
 			IJpcSession session) => token switch {
@@ -151,39 +146,8 @@ public abstract partial class ServiceManagementService : Goedel.Protocol.JpcInte
         };
 
 
-	/// <summary>
-	/// Dispatch object request in specified authentication context.
-	/// </summary>			
-    /// <param name="session">The client context.</param>
-    /// <param name="jsonReader">Reader for data object.</param>
-    /// <returns>The response object returned by the corresponding dispatch.</returns>
-	public override Goedel.Protocol.JsonObject Dispatch(IJpcSession  session,  
-							Goedel.Protocol.JsonReader jsonReader) {
 
-		jsonReader.StartObject ();
-		string token = jsonReader.ReadToken ();
-		JsonObject response = null;
 
-		switch (token) {
-			case "ServiceConfig" : {
-				var request = new ServiceConfigRequest();
-				request.Deserialize (jsonReader);
-				response = ServiceConfig (request, session);
-				break;
-				}
-			case "ServiceStatus" : {
-				var request = new ServiceStatusRequest();
-				request.Deserialize (jsonReader);
-				response = ServiceStatus (request, session);
-				break;
-				}
-			default : {
-				throw new Goedel.Protocol.UnknownOperation ();
-				}
-			}
-		jsonReader.EndObject ();
-		return response;
-		}
 
     /// <summary>
     /// Return a client tapping the service API directly without serialization bound to
@@ -302,6 +266,15 @@ public partial class ServiceManagementServiceDirect: ServiceManagementServiceCli
 	/// Base class for all request messages.
 	/// </summary>
 public partial class WsmpRequest : Goedel.Protocol.Request {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -396,6 +369,15 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
 	/// status code and status description fields.
 	/// </summary>
 public partial class WsmpResponse : Goedel.Protocol.Response {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -487,6 +469,15 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
 	/// <summary>
 	/// </summary>
 public partial class ServiceConfigRequest : WsmpRequest {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -578,6 +569,15 @@ public partial class ServiceConfigRequest : WsmpRequest {
 	/// <summary>
 	/// </summary>
 public partial class ServiceConfigResponse : WsmpResponse {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -669,6 +669,15 @@ public partial class ServiceConfigResponse : WsmpResponse {
 	/// <summary>
 	/// </summary>
 public partial class ServiceStatusRequest : WsmpRequest {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -768,33 +777,42 @@ public partial class ServiceStatusResponse : WsmpResponse {
         /// </summary>
 
 	public virtual DateTime?						End  {get; set;}
-	bool								__Started = false;
-	private int						_Started;
         /// <summary>
         /// </summary>
 
-	public virtual int						Started {
-		get => _Started;
-		set {_Started = value; __Started = true; }
-		}
-	bool								__Completed = false;
-	private int						_Completed;
+	public virtual int?						Started  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual int						Completed {
-		get => _Completed;
-		set {_Completed = value; __Completed = true; }
-		}
-	bool								__Pending = false;
-	private int						_Pending;
+	public virtual int?						Completed  {get; set;}
         /// <summary>
         /// </summary>
 
-	public virtual int						Pending {
-		get => _Pending;
-		set {_Pending = value; __Pending = true; }
-		}
+	public virtual int?						Pending  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Start", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Start = _a; },
+				() => Start) } ,
+			{ "End", new MetaDataDateTime(
+				delegate (DateTime? _a) {  End = _a; },
+				() => End) } ,
+			{ "Started", new MetaDataInteger32(
+				delegate (int? _a) {  Started = _a; },
+				() => Started) } ,
+			{ "Completed", new MetaDataInteger32(
+				delegate (int? _a) {  Completed = _a; },
+				() => Completed) } ,
+			{ "Pending", new MetaDataInteger32(
+				delegate (int? _a) {  Pending = _a; },
+				() => Pending) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -849,17 +867,17 @@ public partial class ServiceStatusResponse : WsmpResponse {
 			_writer.WriteToken ("End", 1);
 				_writer.WriteDateTime (End);
 			}
-		if (__Started){
+		if (Started != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Started", 1);
 				_writer.WriteInteger32 (Started);
 			}
-		if (__Completed){
+		if (Completed != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Completed", 1);
 				_writer.WriteInteger32 (Completed);
 			}
-		if (__Pending){
+		if (Pending != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Pending", 1);
 				_writer.WriteInteger32 (Pending);

@@ -18,17 +18,16 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Protocol.dll\
-    Goedel.Callsign.Log.dll
+    Goedel.Utilities.dll
 
 ToolTargets = \
-	CallsignRegistry.cs\
+	Carnet.cs\
 	Exceptions.cs
-CallsignRegistry.cs : CallsignRegistry.protocol 
-	protogen CallsignRegistry.protocol  /cs  CallsignRegistry.cs
+Carnet.cs : Carnet.protocol 
+	protogen Carnet.protocol  /cs  Carnet.cs
 
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
@@ -42,12 +41,11 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Callsign.Registry.dll
+	powershell publishtarget Goedel.Carnet.dll
 

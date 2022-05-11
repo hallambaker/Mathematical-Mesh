@@ -136,7 +136,7 @@ public class ContainerChain : ContainerDigest {
             Assert.AssertNotNull(Header.SequenceInfo, SequenceDataCorrupt.Throw);
 
 
-            Assert.AssertTrue(Header.SequenceInfo.Index == Index, SequenceDataCorrupt.Throw);
+            Assert.AssertTrue(Header.SequenceInfo.LIndex == Index, SequenceDataCorrupt.Throw);
             Assert.AssertNotNull(Header.PayloadDigest, SequenceDataCorrupt.Throw);
             Index++;
             }

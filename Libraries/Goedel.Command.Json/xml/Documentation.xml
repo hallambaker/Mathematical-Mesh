@@ -49,6 +49,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Command.Json.ShellResult._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Command.Json.ShellResult._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Command.Json.ShellResult._Tag">
             <summary>
             Tag identifying this class

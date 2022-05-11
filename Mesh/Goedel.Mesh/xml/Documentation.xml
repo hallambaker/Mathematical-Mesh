@@ -52,6 +52,12 @@
             Application activations which are 
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Activation._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Activation._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Activation._Tag">
             <summary>
             Tag identifying this class
@@ -134,6 +140,12 @@
             a seed value of <paramref name="bits"/> length is generated.</param>
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
             is null.</param>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationHost._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationHost._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ActivationHost._Tag">
             <summary>
@@ -261,6 +273,12 @@
              <summary>
             The UDF of the account
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationAccount._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationAccount._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ActivationAccount._Tag">
             <summary>
@@ -543,6 +561,12 @@
             Grant access to ProfileUser account signature key
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ActivationCommon._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationCommon._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ActivationCommon._Tag">
             <summary>
             Tag identifying this class
@@ -609,6 +633,12 @@
         <member name="P:Goedel.Mesh.ApplicationEntry.Identifier">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntry._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntry._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ApplicationEntry._Tag">
             <summary>
@@ -691,6 +721,12 @@
             access the account.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationGroup._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationGroup._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ActivationApplicationGroup._Tag">
             <summary>
             Tag identifying this class
@@ -761,6 +797,12 @@
         <member name="P:Goedel.Mesh.ApplicationEntryGroup.EnvelopedActivation">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryGroup._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryGroup._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ApplicationEntryGroup._Tag">
             <summary>
@@ -875,6 +917,12 @@
             The activation of the device within the Mesh account
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedGroup._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedGroup._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedGroup._Tag">
             <summary>
             Tag identifying this class
@@ -953,6 +1001,12 @@
             The OpenPGP encryption key
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationMail._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationMail._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ActivationApplicationMail._Tag">
             <summary>
             Tag identifying this class
@@ -1017,6 +1071,12 @@
         <member name="P:Goedel.Mesh.ApplicationEntryMail.EnvelopedActivation">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryMail._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryMail._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ApplicationEntryMail._Tag">
             <summary>
@@ -1152,6 +1212,12 @@
             The OpenPGP encryption key
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationMail._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedApplicationMail._Tag">
             <summary>
             Tag identifying this class
@@ -1214,6 +1280,12 @@
              <summary>
             The SSH client key.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationSsh._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationSsh._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ActivationApplicationSsh._Tag">
             <summary>
@@ -1279,6 +1351,12 @@
         <member name="P:Goedel.Mesh.ApplicationEntrySsh.EnvelopedActivation">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntrySsh._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntrySsh._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ApplicationEntrySsh._Tag">
             <summary>
@@ -1367,6 +1445,12 @@
              <summary>
             The S/Mime encryption key
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationSsh._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationSsh._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CatalogedApplicationSsh._Tag">
             <summary>
@@ -1459,6 +1543,12 @@
             Conditional clause(s) that MAY be verified to evaluate the validity of the
             assertion. At present no condition classes are specified.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Assertion._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Assertion._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Assertion._Tag">
             <summary>
@@ -1562,6 +1652,12 @@
             Digest value used to signal updates to envelope		
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.AccessCapability._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.AccessCapability._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.AccessCapability._Tag">
             <summary>
             Tag identifying this class
@@ -1618,6 +1714,12 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.NullCapability._PrimaryKey">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NullCapability._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NullCapability._MetaData">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.NullCapability._Tag">
@@ -1723,6 +1825,12 @@
             One or more enveloped key shares.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CryptographicCapability._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicCapability._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CryptographicCapability._Tag">
             <summary>
             Tag identifying this class
@@ -1789,6 +1897,12 @@
             <param name="context">Additional data added to the signature scope
             for protocol isolation.</param>
             <returns>The signature data</returns>       
+        </member>
+        <member name="P:Goedel.Mesh.CapabilitySign._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CapabilitySign._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CapabilitySign._Tag">
             <summary>
@@ -1870,6 +1984,12 @@
             <param name="keyPair">The key pair to perform the agreement against.</param>
             <returns>The key agreement result.</returns>
         </member>
+        <member name="P:Goedel.Mesh.CapabilityDecrypt._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CapabilityDecrypt._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CapabilityDecrypt._Tag">
             <summary>
             Tag identifying this class
@@ -1939,6 +2059,12 @@
             must match the salt used to encrypt.</param>        
             <returns>The decoded data instance</returns>
         </member>
+        <member name="P:Goedel.Mesh.CapabilityDecryptPartial._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CapabilityDecryptPartial._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CapabilityDecryptPartial._Tag">
             <summary>
             Tag identifying this class
@@ -2001,6 +2127,12 @@
             UDF of trust root under which request to use a serviced capability must be 
             authorized. [Only present for a serviced capability]
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CapabilityDecryptServiced._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CapabilityDecryptServiced._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CapabilityDecryptServiced._Tag">
             <summary>
@@ -2086,6 +2218,12 @@
             <see cref="T:Goedel.Mesh.KeyData"/> properties of each.
             </summary>
             <param name="capabilities">The capabilities to augment.</param>
+        </member>
+        <member name="P:Goedel.Mesh.CapabilityKeyGenerate._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CapabilityKeyGenerate._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CapabilityKeyGenerate._Tag">
             <summary>
@@ -2490,6 +2628,12 @@
             The cataloged capability.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedAccess._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedAccess._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedAccess._Tag">
             <summary>
             Tag identifying this class
@@ -2683,6 +2827,12 @@
             Escrow entries for the application.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedApplication._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplication._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedApplication._Tag">
             <summary>
             Tag identifying this class
@@ -2748,6 +2898,12 @@
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.ToBuilder(System.Text.StringBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationNetwork._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationNetwork._MetaData">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CatalogedApplicationNetwork._Tag">
@@ -2888,6 +3044,12 @@
             User comments on bookmark entry
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedBookmark._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedBookmark._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedBookmark._Tag">
             <summary>
             Tag identifying this class
@@ -3018,6 +3180,12 @@
             The enveloped binnding of the callsign to the profile.		
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedCallsign._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedCallsign._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedCallsign._Tag">
             <summary>
             Tag identifying this class
@@ -3079,6 +3247,12 @@
         <member name="P:Goedel.Mesh.ApplicationEntryCallsign.EnvelopedActivation">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryCallsign._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryCallsign._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ApplicationEntryCallsign._Tag">
             <summary>
@@ -3307,6 +3481,12 @@
             The contact information as edited by the catalog owner.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedContact._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedContact._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedContact._Tag">
             <summary>
             Tag identifying this class
@@ -3424,6 +3604,12 @@
             Source(s) from which this contact was constructed.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Contact._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Contact._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Contact._Tag">
             <summary>
             Tag identifying this class
@@ -3498,6 +3684,12 @@
              <summary>
             List of person names in order of preference
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ContactPerson._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ContactPerson._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ContactPerson._Tag">
             <summary>
@@ -3599,6 +3791,12 @@
             Cryptographic capabilities that may be claimed from this address
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.NetworkAddress._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkAddress._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.NetworkAddress._Tag">
             <summary>
             Tag identifying this class
@@ -3698,6 +3896,12 @@
              <summary>
             Post nominal letters (if used).
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PersonName._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.PersonName._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.PersonName._Tag">
             <summary>
@@ -3871,6 +4075,12 @@
              <summary>
             Means of authenticating the host key
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedCredential._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedCredential._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CatalogedCredential._Tag">
             <summary>
@@ -4101,6 +4311,12 @@
             Application activations granted to the device.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedDevice._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDevice._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedDevice._Tag">
             <summary>
             Tag identifying this class
@@ -4254,6 +4470,12 @@
             Globaly unique identifier
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedEntry._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedEntry._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedEntry._Tag">
             <summary>
             Tag identifying this class
@@ -4375,6 +4597,12 @@
         <member name="P:Goedel.Mesh.CatalogedMember.ServiceCapabilityId">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedMember._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedMember._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CatalogedMember._Tag">
             <summary>
@@ -4510,6 +4738,12 @@
         <member name="P:Goedel.Mesh.CatalogedNetwork.Password">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedNetwork._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedNetwork._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CatalogedNetwork._Tag">
             <summary>
@@ -4695,6 +4929,12 @@
             Epiration time (inclusive)
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedPublication._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedPublication._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedPublication._Tag">
             <summary>
             Tag identifying this class
@@ -4812,6 +5052,12 @@
             Unique key.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedTask._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedTask._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedTask._Tag">
             <summary>
             Tag identifying this class
@@ -4882,6 +5128,12 @@
              <summary>
             To be removed
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectionStripped._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectionStripped._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ConnectionStripped._Tag">
             <summary>
@@ -4956,6 +5208,12 @@
              <summary>
             The encryption key for use of the device under the profile
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectionDevice._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectionDevice._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ConnectionDevice._Tag">
             <summary>
@@ -5055,6 +5313,12 @@
              <summary>
             The account callsign
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectionService._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectionService._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ConnectionService._Tag">
             <summary>
@@ -5626,6 +5890,12 @@
             The connection URI. This would normally be printed on the device as a 
             QR code.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DevicePreconfigurationPrivate._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.DevicePreconfigurationPrivate._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.DevicePreconfigurationPrivate._Tag">
             <summary>
@@ -6712,6 +6982,12 @@
             a partial key.]	
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.KeyShare._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.KeyShare._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.KeyShare._Tag">
             <summary>
             Tag identifying this class
@@ -7156,6 +7432,12 @@
             The relationship type. This can be Read, Unread, Accept, Reject.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Reference._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Reference._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Reference._Tag">
             <summary>
             Tag identifying this class
@@ -7263,6 +7545,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Message._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Message._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Message._Tag">
             <summary>
             Tag identifying this class
@@ -7324,6 +7612,12 @@
         <member name="P:Goedel.Mesh.MessageError.ErrorCode">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessageError._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MessageError._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.MessageError._Tag">
             <summary>
@@ -7399,6 +7693,12 @@
         <member name="P:Goedel.Mesh.MessageComplete.References">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessageComplete._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MessageComplete._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.MessageComplete._Tag">
             <summary>
@@ -7495,6 +7795,12 @@
              <summary>
             Witness value calculated as KDF (Device.Udf + AccountAddress, ClientNonce)
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePinValidated._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePinValidated._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.MessagePinValidated._Tag">
             <summary>
@@ -7648,6 +7954,12 @@
             The set of rights bound to the PIN grant.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.MessagePin._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePin._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.MessagePin._Tag">
             <summary>
             Tag identifying this class
@@ -7737,6 +8049,12 @@
             
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.RequestConnection._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.RequestConnection._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.RequestConnection._Tag">
             <summary>
             Tag identifying this class
@@ -7815,6 +8133,12 @@
              <summary>
             
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.AcknowledgeConnection._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.AcknowledgeConnection._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.AcknowledgeConnection._Tag">
             <summary>
@@ -7896,6 +8220,12 @@
             "Accept". MUST be absent or null otherwise.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.RespondConnection._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.RespondConnection._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.RespondConnection._Tag">
             <summary>
             Tag identifying this class
@@ -7974,6 +8304,12 @@
             of the response.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.MessageContact._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MessageContact._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.MessageContact._Tag">
             <summary>
             Tag identifying this class
@@ -8041,6 +8377,12 @@
             The contact data.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.GroupInvitation._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.GroupInvitation._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.GroupInvitation._Tag">
             <summary>
             Tag identifying this class
@@ -8102,6 +8444,12 @@
         <member name="P:Goedel.Mesh.RequestConfirmation.Text">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.RequestConfirmation._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.RequestConfirmation._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.RequestConfirmation._Tag">
             <summary>
@@ -8169,6 +8517,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.ResponseConfirmation._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ResponseConfirmation._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ResponseConfirmation._Tag">
             <summary>
             Tag identifying this class
@@ -8226,6 +8580,12 @@
         </member>
         <member name="M:Goedel.Mesh.RequestTask.GetEnvelopedRequestTask">
             <summary>Typed enveloped data</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.RequestTask._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.RequestTask._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.RequestTask._Tag">
             <summary>
@@ -8323,6 +8683,12 @@
              <summary>
             The error report code.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResult._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResult._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ProcessResult._Tag">
             <summary>
@@ -8465,6 +8831,12 @@
         <member name="P:Goedel.Mesh.MessageClaim.Expires">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessageClaim._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MessageClaim._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.MessageClaim._Tag">
             <summary>
@@ -8767,6 +9139,12 @@
             any circumstance.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Profile._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Profile._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Profile._Tag">
             <summary>
             Tag identifying this class
@@ -8897,6 +9275,12 @@
             This key SHOULD NOT be provisioned to any device except for the
             purpose of enabling account recovery.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileAccount._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileAccount._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount._Tag">
             <summary>
@@ -9043,6 +9427,12 @@
             during connection to an account.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ProfileDevice._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileDevice._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ProfileDevice._Tag">
             <summary>
             Tag identifying this class
@@ -9113,6 +9503,12 @@
             </summary>
             <param name="accountAddress">The account address</param>
             <param name="activationAccount">The activation used to create the account data.</param>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileGroup._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileGroup._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ProfileGroup._Tag">
             <summary>
@@ -9207,6 +9603,12 @@
             <param name="meshMachine">The machine.</param>
             <param name="algorithmSign">The signature algorithm.</param>
             <returns>The host profile.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileHost._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileHost._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ProfileHost._Tag">
             <summary>
@@ -9343,6 +9745,12 @@
             Key used to sign data under the account.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ProfileService._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileService._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ProfileService._Tag">
             <summary>
             Tag identifying this class
@@ -9438,6 +9846,12 @@
              <summary>
             Key used to sign data under the account.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileUser._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileUser._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ProfileUser._Tag">
             <summary>
@@ -9543,21 +9957,7 @@
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
-            <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="token">The method identifier</param>
-            <param name="request">The request data</param>
-            <param name="session">The client context.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.MeshService.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
-            <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="session">The client context.</param>
-            <param name="jsonReader">Reader for data object.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.MeshService.GetDirect(Goedel.Protocol.IJpcSession)">
             <summary>
@@ -9872,6 +10272,12 @@
              Base class for all request messages.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MeshRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.MeshRequest._Tag">
             <summary>
             Tag identifying this class
@@ -9957,6 +10363,12 @@
             Device profile of the device making the request.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshRequestUser._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MeshRequestUser._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.MeshRequestUser._Tag">
             <summary>
             Tag identifying this class
@@ -10014,6 +10426,12 @@
              Base class for all response messages. Contains only the
              status code and status description fields.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MeshResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.MeshResponse._Tag">
             <summary>
@@ -10107,6 +10525,12 @@
              <summary>
             The data value to match.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyValue._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.KeyValue._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.KeyValue._Tag">
             <summary>
@@ -10205,6 +10629,12 @@
             returns the next set of data responding to the earlier query.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ConstraintsSelect._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ConstraintsSelect._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ConstraintsSelect._Tag">
             <summary>
             Tag identifying this class
@@ -10293,6 +10723,12 @@
             Return the entry trailer
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ConstraintsData._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ConstraintsData._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ConstraintsData._Tag">
             <summary>
             Tag identifying this class
@@ -10369,6 +10805,12 @@
             in the proposed account name.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.PolicyAccount._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.PolicyAccount._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.PolicyAccount._Tag">
             <summary>
             Tag identifying this class
@@ -10435,6 +10877,12 @@
         <member name="P:Goedel.Mesh.ContainerStatus.Digest">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ContainerStatus._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ContainerStatus._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ContainerStatus._Tag">
             <summary>
@@ -10504,6 +10952,12 @@
             The entries to be uploaded. 
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ContainerUpdate._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ContainerUpdate._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ContainerUpdate._Tag">
             <summary>
             Tag identifying this class
@@ -10571,6 +11025,12 @@
              <summary>
             Contains a proposed callsign binding to the account.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshHelloRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MeshHelloRequest._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.MeshHelloRequest._Tag">
             <summary>
@@ -10653,6 +11113,12 @@
             the requested callsign.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshHelloResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MeshHelloResponse._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.MeshHelloResponse._Tag">
             <summary>
             Tag identifying this class
@@ -10727,6 +11193,12 @@
              <summary>
             Contains one or more bindings of a callsign to the account.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.BindRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.BindRequest._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.BindRequest._Tag">
             <summary>
@@ -10805,6 +11277,12 @@
             discover the host and encrypt data to it.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.BindResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.BindResponse._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.BindResponse._Tag">
             <summary>
             Tag identifying this class
@@ -10873,6 +11351,12 @@
              with the account.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.UnbindRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.UnbindRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.UnbindRequest._Tag">
             <summary>
             Tag identifying this class
@@ -10929,6 +11413,12 @@
             
              Reports the success or failure of a Delete transaction.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.UnbindResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.UnbindResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.UnbindResponse._Tag">
             <summary>
@@ -11001,6 +11491,12 @@
             List of named access rights.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ConnectRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ConnectRequest._Tag">
             <summary>
             Tag identifying this class
@@ -11065,6 +11561,12 @@
              <summary>
             The user profile that provides the root of trust for this Mesh
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ConnectResponse._Tag">
             <summary>
@@ -11135,6 +11637,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CompleteRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CompleteRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CompleteRequest._Tag">
             <summary>
             Tag identifying this class
@@ -11200,6 +11708,12 @@
             The enveloped assignment describing how the client should
             discover the host and encrypt data to it.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CompleteResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CompleteResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CompleteResponse._Tag">
             <summary>
@@ -11277,6 +11791,12 @@
         <member name="P:Goedel.Mesh.StatusRequest.Spools">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.StatusRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.StatusRequest._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.StatusRequest._Tag">
             <summary>
@@ -11356,6 +11876,12 @@
             The enveloped assignment describing how the client should
             discover the host and encrypt data to it.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.StatusResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.StatusResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.StatusResponse._Tag">
             <summary>
@@ -11443,6 +11969,12 @@
             Specifies the data constraints to be applied to the responses.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.DownloadRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.DownloadRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.DownloadRequest._Tag">
             <summary>
             Tag identifying this class
@@ -11508,6 +12040,12 @@
              <summary>
             The updated data
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DownloadResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.DownloadResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.DownloadResponse._Tag">
             <summary>
@@ -11601,6 +12139,12 @@
             devices to collect activation messages before they have connected to the mesh.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.TransactRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.TransactRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.TransactRequest._Tag">
             <summary>
             Tag identifying this class
@@ -11669,6 +12213,12 @@
             that apply to the redacted entries as a group. Thus the total payloads
             of all the messages must not exceed the specified value.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.TransactResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.TransactResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.TransactResponse._Tag">
             <summary>
@@ -11755,6 +12305,12 @@
             of all the messages must not exceed the specified value.	
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.EntryResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.EntryResponse._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.EntryResponse._Tag">
             <summary>
             Tag identifying this class
@@ -11822,6 +12378,12 @@
             The messages to be sent to the addresses specified in Accounts. 
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.PostRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.PostRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.PostRequest._Tag">
             <summary>
             Tag identifying this class
@@ -11878,6 +12440,12 @@
             
              
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PostResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.PostResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.PostResponse._Tag">
             <summary>
@@ -11945,6 +12513,12 @@
             The claim message
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ClaimRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ClaimRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ClaimRequest._Tag">
             <summary>
             Tag identifying this class
@@ -12004,6 +12578,12 @@
              <summary>
             The encrypted device profile
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ClaimResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ClaimResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ClaimResponse._Tag">
             <summary>
@@ -12076,6 +12656,12 @@
             Account to which the claim is directed
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.PollClaimRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.PollClaimRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.PollClaimRequest._Tag">
             <summary>
             Tag identifying this class
@@ -12135,6 +12721,12 @@
              <summary>
             The claim message
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PollClaimResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.PollClaimResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.PollClaimResponse._Tag">
             <summary>
@@ -12207,6 +12799,12 @@
             Lagrange coefficient multiplier to be applied to the private key
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CryptographicOperation._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicOperation._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CryptographicOperation._Tag">
             <summary>
             Tag identifying this class
@@ -12272,6 +12870,12 @@
             Contribution to the R offset.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CryptographicOperationSign._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicOperationSign._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CryptographicOperationSign._Tag">
             <summary>
             Tag identifying this class
@@ -12332,6 +12936,12 @@
             The public key value to perform the agreement on.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CryptographicOperationKeyAgreement._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicOperationKeyAgreement._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CryptographicOperationKeyAgreement._Tag">
             <summary>
             Tag identifying this class
@@ -12386,6 +12996,12 @@
         <member name="T:Goedel.Mesh.CryptographicOperationGenerate">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicOperationGenerate._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicOperationGenerate._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CryptographicOperationGenerate._Tag">
             <summary>
@@ -12450,6 +13066,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CryptographicOperationShare._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicOperationShare._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CryptographicOperationShare._Tag">
             <summary>
             Tag identifying this class
@@ -12508,6 +13130,12 @@
         <member name="P:Goedel.Mesh.CryptographicResult.Error">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicResult._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicResult._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CryptographicResult._Tag">
             <summary>
@@ -12568,6 +13196,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CryptographicResultKeyAgreement._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicResultKeyAgreement._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CryptographicResultKeyAgreement._Tag">
             <summary>
             Tag identifying this class
@@ -12622,6 +13256,12 @@
         <member name="T:Goedel.Mesh.CryptographicResultShare">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicResultShare._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicResultShare._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CryptographicResultShare._Tag">
             <summary>
@@ -12687,6 +13327,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.OperateRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.OperateRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.OperateRequest._Tag">
             <summary>
             Tag identifying this class
@@ -12745,6 +13391,12 @@
         <member name="P:Goedel.Mesh.OperateResponse.Results">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.OperateResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.OperateResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.OperateResponse._Tag">
             <summary>
@@ -12946,6 +13598,12 @@
              <summary>
             The private key parameters as defined in the JOSE specification.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyData._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.KeyData._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.KeyData._Tag">
             <summary>
@@ -13414,6 +14072,12 @@
             Private parameters of serviced share
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CompositePrivate._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CompositePrivate._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CompositePrivate._Tag">
             <summary>
             Tag identifying this class
@@ -13470,6 +14134,12 @@
             
              Parent class from which all condition classes are derived.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Condition._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Condition._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Condition._Tag">
             <summary>
@@ -13548,6 +14218,12 @@
             a partial capability.]
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ActivationEntry._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationEntry._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ActivationEntry._Tag">
             <summary>
             Tag identifying this class
@@ -13617,6 +14293,12 @@
              <summary>
             The authentication key for use of the device under the profile
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Connection._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Connection._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Connection._Tag">
             <summary>
@@ -13695,6 +14377,12 @@
             service, these are listed in order of priority, most preferred first.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CallsignBinding._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CallsignBinding._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CallsignBinding._Tag">
             <summary>
             Tag identifying this class
@@ -13752,6 +14440,12 @@
              Connection assertion stating that a particular device is 
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.ConnectionApplication._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectionApplication._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ConnectionApplication._Tag">
             <summary>
             Tag identifying this class
@@ -13808,6 +14502,12 @@
             
              Describes the connection of a member to a group.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectionGroup._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectionGroup._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ConnectionGroup._Tag">
             <summary>
@@ -13879,6 +14579,12 @@
             Encryption key to be used to encrypt data for the service to use.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.AccountHostAssignment._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.AccountHostAssignment._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.AccountHostAssignment._Tag">
             <summary>
             Tag identifying this class
@@ -13937,6 +14643,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.ConnectionHost._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ConnectionHost._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ConnectionHost._Tag">
             <summary>
             Tag identifying this class
@@ -13992,6 +14704,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.ActivationApplication._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplication._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.ActivationApplication._Tag">
             <summary>
             Tag identifying this class
@@ -14046,6 +14764,12 @@
         <member name="T:Goedel.Mesh.ActivationApplicationCallsign">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationCallsign._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationCallsign._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ActivationApplicationCallsign._Tag">
             <summary>
@@ -14113,6 +14837,12 @@
              <summary>
             The means of validation.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Anchor._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Anchor._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Anchor._Tag">
             <summary>
@@ -14192,6 +14922,12 @@
             is ignored.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.TaggedSource._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.TaggedSource._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.TaggedSource._Tag">
             <summary>
             Tag identifying this class
@@ -14248,6 +14984,12 @@
             
              Contact for a group, including encryption groups.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ContactGroup._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ContactGroup._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ContactGroup._Tag">
             <summary>
@@ -14310,6 +15052,12 @@
              <summary>
             List of person names in order of preference
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ContactOrganization._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ContactOrganization._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ContactOrganization._Tag">
             <summary>
@@ -14384,6 +15132,12 @@
             and doing business as names.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.OrganizationName._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.OrganizationName._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.OrganizationName._Tag">
             <summary>
             Tag identifying this class
@@ -14449,6 +15203,12 @@
              <summary>
             Cryptographic keys representing capabilities.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkProtocol._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkProtocol._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.NetworkProtocol._Tag">
             <summary>
@@ -14519,6 +15279,12 @@
              <summary>
             Postal or physical addresses associated with the role.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Role._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Role._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Role._Tag">
             <summary>
@@ -14603,6 +15369,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Location._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Location._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Location._Tag">
             <summary>
             Tag identifying this class
@@ -14669,6 +15441,12 @@
         <member name="P:Goedel.Mesh.Bookmark.Role">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Bookmark._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Bookmark._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Bookmark._Tag">
             <summary>
@@ -14778,6 +15556,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Engagement._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Engagement._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Engagement._Tag">
             <summary>
             Tag identifying this class
@@ -14865,6 +15649,12 @@
             The verification value used to perform proof of knowledge of the secret.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Capability._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Capability._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Capability._Tag">
             <summary>
             Tag identifying this class
@@ -14939,6 +15729,12 @@
             The published document.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.PublicationCapability._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.PublicationCapability._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.PublicationCapability._Tag">
             <summary>
             Tag identifying this class
@@ -14997,6 +15793,12 @@
              with the Micali Fair Electronic Exchange with Invisible Trusted Parties
              protocol.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CapabilityFairExchange._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CapabilityFairExchange._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CapabilityFairExchange._Tag">
             <summary>
@@ -15070,6 +15872,12 @@
             qualified URI.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.NamedService._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.NamedService._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.NamedService._Tag">
             <summary>
             Tag identifying this class
@@ -15124,6 +15932,12 @@
         <member name="T:Goedel.Mesh.MessageInvoice">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessageInvoice._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.MessageInvoice._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.MessageInvoice._Tag">
             <summary>
@@ -15180,6 +15994,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedReceipt._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedReceipt._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedReceipt._Tag">
             <summary>
             Tag identifying this class
@@ -15234,6 +16054,12 @@
         <member name="T:Goedel.Mesh.CatalogedTicket">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedTicket._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedTicket._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.CatalogedTicket._Tag">
             <summary>
@@ -15302,6 +16128,12 @@
             specify that it can be reached by WiFi transport to a particular 
             private SSID, or by Bluetooth, IR etc. etc.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DevicePreconfigurationPublic._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.DevicePreconfigurationPublic._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.DevicePreconfigurationPublic._Tag">
             <summary>

@@ -102,7 +102,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     public virtual long PositionFinalFrameStart { get; private set; }
 
     ///<summary>The last frame in the sequence</summary>
-    public virtual int FrameIndexLast => HeaderFinal.Index;
+    public virtual long FrameIndexLast => HeaderFinal.Index;
 
     ///<summary>The key location instance.</summary>
     public IKeyLocate KeyLocate { get; protected set; }
@@ -346,7 +346,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
         DareTrailer finalTrailer;
         if (position1 < jbcdStream.Length) {
             finalHeader = jbcdStream.ReadLastFrameHeader();
-            frameCount = finalHeader.SequenceInfo.Index + 1;
+            frameCount = finalHeader.SequenceInfo.LIndex + 1;
             // need to set finalTrailer here!
             finalTrailer = null;
             }
@@ -439,7 +439,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
 
         sequence.SequenceIndex = finalHeader.SequenceIndex;
         if (finalHeader.SequenceInfo != null) {
-            sequence.PositionIndex = finalHeader.SequenceInfo.IndexPosition;
+            sequence.PositionIndex = finalHeader.SequenceInfo.IndexPosition ??0;
             }
         jbcdStream.PositionRead = position1;
 
@@ -651,7 +651,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// <param name="minIndex">The minimum index.</param>
     /// <param name="reverse">If true, read the sequence from the end.</param>
     /// <returns>The enumerator.</returns>
-    public SequenceEnumeratorRaw Select(int minIndex, bool reverse = false) =>
+    public SequenceEnumeratorRaw Select(long minIndex, bool reverse = false) =>
         new(this, minIndex, reverse);
 
 
@@ -667,7 +667,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// <param name="sequenceInfo">Frame header</param>
     /// <param name="position">Position of the frame</param>
     protected virtual void RegisterFrame(SequenceInfo sequenceInfo, long position) {
-        var index = sequenceInfo.Index;
+        var index = sequenceInfo.LIndex;
         FrameIndexToPositionDictionary.AddSafe(index, position);
         }
 
@@ -717,9 +717,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// </summary>
     /// <param name="envelopes">The enveolpes to append</param>
     /// <param name="index">The starting point at which to begin appending.</param>
-    public void Append(List<DareEnvelope> envelopes, int index = 0) {
+    public void Append(List<DareEnvelope> envelopes, long index = 0) {
 
-        for (var i = index; i < envelopes.Count; i++) {
+        for (var i =(int) index; i < envelopes.Count; i++) {
             Append(envelopes[i]);
             }
         }
@@ -730,7 +730,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// </summary>
     /// <returns>The initialized instance.</returns>
     public virtual SequenceInfo MakeSequenceInfo() => new() {
-        Index = (int)FrameCount++
+        Index = FrameCount++
         };
 
     /// <summary>
@@ -971,7 +971,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
                     List<byte[]> dataSequences = null,
                     CryptoParameters cryptoParameters = null) {
 
-        var index = (int)FrameCount++;
+        var index = FrameCount++;
 
 
 
@@ -1101,7 +1101,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// </summary>
     /// <param name="frame">The index of the frame to be returned.</param>
     /// <returns>The requested header.</returns>
-    public DareHeader GetHeader(int frame) {
+    public DareHeader GetHeader(long frame) {
         MoveToIndex(frame).AssertTrue(InvalidFrameIndex.Throw);
 
         return JbcdStream.ReadFrameHeader();
@@ -1141,7 +1141,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// Verify policy on the sequence.
     /// </summary>
     public void VerifyPolicy() {
-        var dictionary = new Dictionary<int, SequenceFrameIndex>();
+        var dictionary = new Dictionary<long, SequenceFrameIndex>();
         var darePolicy = HeaderFirst.Policy;
         SequenceFrameIndex lastFrame = null;
 
@@ -1176,7 +1176,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
         int record,
 
         IKeyLocate keyCollection,
-        Dictionary<int, SequenceFrameIndex> dictionary) {
+        Dictionary<long, SequenceFrameIndex> dictionary) {
 
         keyCollection.Future();
         dictionary.Future();
@@ -1217,7 +1217,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
             }
 
         // check frame data
-        (sequenceInfo.Index == record).AssertTrue(SequenceDataCorrupt.Throw);
+        (sequenceInfo.LIndex == record).AssertTrue(SequenceDataCorrupt.Throw);
 
         //TreePosition
         //ExchangePosition
@@ -1253,7 +1253,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// <list type="bullet"><item>1 = forward</item><item>-1 = forward</item>
     /// <item>0 = forward then backward.</item></list></param>
     /// <returns>True if the validation succeded, otherwise false.</returns>
-    public virtual bool Validate(int direction) => throw new NYI();
+    public virtual bool Validate(long direction) => throw new NYI();
 
     /// <summary>
     /// Move read pointer to Frame 1.
@@ -1364,7 +1364,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
         var envelope = jbcdStream.ReadDareEnvelope();
         while (envelope != null) {
             if (envelope?.Header?.SequenceInfo is var sequenceInfo) {
-                builder.AppendIndent(indent, $"[{sequenceInfo.Index}]  <{positionRead}-{jbcdStream.PositionRead}>");
+                builder.AppendIndent(indent, $"[{sequenceInfo.LIndex}]  <{positionRead}-{jbcdStream.PositionRead}>");
                 builder.AppendIndent(indent + 1, $"Tree Position:{sequenceInfo.TreePosition}");
                 }
             else {

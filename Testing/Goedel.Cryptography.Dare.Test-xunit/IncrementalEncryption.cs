@@ -219,7 +219,7 @@ public partial class TestContainers {
             using (var XContainer = Sequence.Open(filename, FileStatus.Read, keyCollection)) {
                 for (record = moveStep; record < records; record += moveStep) {
                     var ContainerDataReader = XContainer.GetSequenceFrameIndex(record);
-                    (ContainerDataReader.Header.SequenceInfo.Index == record).TestTrue();
+                    (ContainerDataReader.Header.SequenceInfo.LIndex == record).TestTrue();
                     }
 
                 }
@@ -228,7 +228,7 @@ public partial class TestContainers {
             using (var XContainer = Sequence.Open(filename, FileStatus.Read, keyCollection)) {
                 for (record = records; record > 0; record -= moveStep) {
                     var ContainerDataReader = XContainer.GetSequenceFrameIndex(record);
-                    (ContainerDataReader.Header.SequenceInfo.Index == record).TestTrue();
+                    (ContainerDataReader.Header.SequenceInfo.LIndex == record).TestTrue();
                     }
                 }
 

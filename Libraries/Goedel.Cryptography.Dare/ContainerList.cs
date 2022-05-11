@@ -87,7 +87,7 @@ public class ContainerList : Sequence {
 
 
         FrameIndexToPositionDictionary.Add(0, 0);
-        if (containerInfo.Index == 0) {
+        if (containerInfo.LIndex == 0) {
             frameLowUnknown = 0;
             frameHighUnknown = 0;
             return;
@@ -96,12 +96,12 @@ public class ContainerList : Sequence {
         FrameIndexToPositionDictionary.Add(1, firstPosition);
         frameLowUnknown = 1;
 
-        if (containerInfo.Index == 1) {
+        if (containerInfo.LIndex == 1) {
             frameHighUnknown = 1;
             return;
             }
 
-        frameHighUnknown = containerInfo.Index;
+        frameHighUnknown = containerInfo.LIndex;
         RegisterFrame(containerInfo, positionLast);
         }
 
@@ -116,7 +116,7 @@ public class ContainerList : Sequence {
     /// Commit the header data to the container.
     /// </summary>
     public override void CommitHeader(DareHeader containerHeader, SequenceWriter contextWrite) =>
-        FrameIndexToPositionDictionary.Add(containerHeader.SequenceInfo.Index,
+        FrameIndexToPositionDictionary.Add(containerHeader.SequenceInfo.LIndex,
                 contextWrite.FrameStart);
 
 
@@ -206,7 +206,7 @@ public class ContainerList : Sequence {
 
 
         if (FrameHeader != null) {
-            var Index = Header.SequenceInfo.Index;
+            var Index = Header.SequenceInfo.LIndex;
             if (!FrameIndexToPositionDictionary.TryGetValue(Index, out _)) {
                 FrameIndexToPositionDictionary.Add(Index, RecordStart);
                 }
@@ -229,7 +229,7 @@ public class ContainerList : Sequence {
 
         this.HeaderBytes = FrameHeader;
         if (FrameHeader != null) {
-            var Index = Header.SequenceInfo.Index;
+            var Index = Header.SequenceInfo.LIndex;
             if (!FrameIndexToPositionDictionary.TryGetValue(Index, out _)) {
                 FrameIndexToPositionDictionary.Add(Index, frameReadStartPosition);
                 }
@@ -258,13 +258,13 @@ public class ContainerList : Sequence {
                 PositionRead = position;
                 var Last = PositionRead;
                 Next();
-                while (SequenceInfo != null && SequenceInfo.Index < index) {
+                while (SequenceInfo != null && SequenceInfo.LIndex < index) {
                     Last = PositionRead;
                     Next();
                     }
                 PositionRead = Last;
-                frameLowUnknown = SequenceInfo.Index;
-                return SequenceInfo.Index == index;
+                frameLowUnknown = SequenceInfo.LIndex;
+                return SequenceInfo.LIndex == index;
                 }
 
             else {
@@ -274,12 +274,12 @@ public class ContainerList : Sequence {
                 PositionRead = position;
 
                 Previous();
-                while (SequenceInfo != null && (SequenceInfo.Index > index)) {
+                while (SequenceInfo != null && (SequenceInfo.LIndex > index)) {
                     Previous();
                     }
 
-                frameHighUnknown = SequenceInfo.Index;
-                return SequenceInfo.Index == index;
+                frameHighUnknown = SequenceInfo.LIndex;
+                return SequenceInfo.LIndex == index;
                 }
             }
         return true;
@@ -300,7 +300,7 @@ public class ContainerList : Sequence {
             Assert.AssertNotNull(Header.SequenceInfo,
                     SequenceDataCorrupt.Throw);
 
-            Assert.AssertTrue(Header.SequenceInfo.Index == Index,
+            Assert.AssertTrue(Header.SequenceInfo.LIndex == Index,
                     SequenceDataCorrupt.Throw);
 
             if (HeaderFirst.SequenceInfo.ContainerType == DareConstants.SequenceTypeListTag) {

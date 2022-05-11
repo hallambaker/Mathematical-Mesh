@@ -1042,14 +1042,14 @@
             Define extension codes for checking HTTP/SMTP/FTP style status return values
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Extensions.IsSuccess(System.Int32)">
+        <member name="M:Goedel.Protocol.Extensions.IsSuccess(System.Nullable{System.Int32})">
             <summary>
             Report if a protocol status cude indicates success.
             </summary>
             <param name="Code">The code to be reported on.</param>
             <returns>True if the code is in the range 100-299 inclusive, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Extensions.IsError(System.Int32)">
+        <member name="M:Goedel.Protocol.Extensions.IsError(System.Nullable{System.Int32})">
             <summary>
             Report if a protocol status cude indicates failure.
             </summary>
@@ -1416,13 +1416,29 @@
             The WellKnown service name for HTTP and DNS prefix use.
             </summary>
         </member>
+        <member name="M:Goedel.Protocol.JpcInterface.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="token">The method identifier</param>
+            <param name="request">The request data</param>
+            <param name="session">The client context.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JpcInterface.ResponseFail(System.Exception)">
+            <summary>
+            Return a failure response for the exception <paramref name="exception"/>.
+            </summary>
+            <param name="exception">The exception thrown.</param>
+            <returns>A JsonObject wrappiong the exception data.</returns>
+        </member>
         <member name="M:Goedel.Protocol.JpcInterface.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
             <summary>
             Dispatch Class. Reads input from the provided reader and attempts to
             dispatch a method in response. Note that the calling routine may throw 
             an error. This must be caught and processed by the host dispatch class.
             </summary>
-            <param name="Session">The service session that is to handle the request.</param>
+            <param name="session">The service session that is to handle the request.</param>
             <param name="jsonReader">The input stream to be read</param>
             <returns>The response to the request.</returns>
         </member>
@@ -1701,11 +1717,11 @@
             <param name="Tag">Tag text.</param>
             <param name="IndentIn">Current indent level.</param>
         </member>
-        <member name="M:Goedel.Protocol.JSONAWriter.WriteInteger32(System.Int32)">
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteInteger32(System.Nullable{System.Int32})">
             <summary>Write 32 bit integer.</summary>
             <param name="Data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JSONAWriter.WriteInteger64(System.Int64)">
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteInteger64(System.Nullable{System.Int64})">
             <summary>Write 64 bit integer</summary>
             <param name="Data">Value to write</param>
         </member>
@@ -1717,7 +1733,7 @@
             <summary>Write float64</summary>
             <param name="Data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JSONAWriter.WriteBoolean(System.Boolean)">
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteBoolean(System.Nullable{System.Boolean})">
             <summary>Write boolean.</summary>
             <param name="Data">Value to write</param>
         </member>
@@ -1965,9 +1981,9 @@
             <param name="Code">Base code.</param>
             <param name="Length">Length of data to follow.</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger(System.Int64)">
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger(System.Nullable{System.Int64})">
             <summary>Write integer.</summary>
-            <param name="Data">Value to write</param>
+            <param name="data">Value to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteToken(System.String,System.Int32)">
             <summary>
@@ -1976,11 +1992,11 @@
             <param name="Tag">Tag text.</param>
             <param name="IndentIn">Current indent level.</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger32(System.Int32)">
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger32(System.Nullable{System.Int32})">
             <summary>Write 32 bit integer.</summary>
             <param name="Data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger64(System.Int64)">
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger64(System.Nullable{System.Int64})">
             <summary>Write 64 bit integer.</summary>
             <param name="Data">Value to write</param>
         </member>
@@ -1992,7 +2008,7 @@
             <summary>Write float64</summary>
             <param name="Data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonBWriter.WriteBoolean(System.Boolean)">
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteBoolean(System.Nullable{System.Boolean})">
             <summary>Write boolean.</summary>
             <param name="Data">Value to write</param>
         </member>
@@ -2147,6 +2163,12 @@
             duplicates.
              </summary>
         </member>
+        <member name="P:Goedel.Protocol.Request._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Request._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Protocol.Request._Tag">
             <summary>
             Tag identifying this class
@@ -2255,6 +2277,12 @@
              <summary>
             The request to which the response corresponds.
              </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Response._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Response._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.Response._Tag">
             <summary>
@@ -2413,6 +2441,14 @@
         <member name="P:Goedel.Protocol.JsonObject._Metadata">
             <summary>
             Metadata header describing use in persistence store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._MetaDataParent">
+            <summary>Link to the parent metadata dictionary.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._MetaData">
+            <summary>
+            The Metadata dictionary for the serializable data.
             </summary>
         </member>
         <member name="P:Goedel.Protocol.JsonObject._Tag">
@@ -3052,11 +3088,11 @@
             <param name="tag">Tag text.</param>
             <param name="indentIn">Current indent level.</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonWriter.WriteInteger32(System.Int32)">
+        <member name="M:Goedel.Protocol.JsonWriter.WriteInteger32(System.Nullable{System.Int32})">
             <summary>Write 32 bit integer.</summary>
             <param name="data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonWriter.WriteInteger64(System.Int64)">
+        <member name="M:Goedel.Protocol.JsonWriter.WriteInteger64(System.Nullable{System.Int64})">
             <summary>Write 64 bit integer</summary>
             <param name="data">Value to write</param>
         </member>
@@ -3068,7 +3104,7 @@
             <summary>Write float64</summary>
             <param name="data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonWriter.WriteBoolean(System.Boolean)">
+        <member name="M:Goedel.Protocol.JsonWriter.WriteBoolean(System.Nullable{System.Boolean})">
             <summary>Write boolean.</summary>
             <param name="data">Value to write</param>
         </member>
@@ -3266,6 +3302,12 @@
             a redirect in the case that a service moves.
              </summary>
         </member>
+        <member name="P:Goedel.Protocol.Version._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Version._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Protocol.Version._Tag">
             <summary>
             Tag identifying this class
@@ -3335,6 +3377,12 @@
             encoding scheme. 
              </summary>
         </member>
+        <member name="P:Goedel.Protocol.Encoding._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Encoding._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Protocol.Encoding._Tag">
             <summary>
             Tag identifying this class
@@ -3391,6 +3439,12 @@
             
              Request service description.
              </summary>
+        </member>
+        <member name="P:Goedel.Protocol.HelloRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.HelloRequest._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.HelloRequest._Tag">
             <summary>
@@ -3459,6 +3513,12 @@
             Enumerates alternate protocol version(s) supported
              </summary>
         </member>
+        <member name="P:Goedel.Protocol.HelloResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.HelloResponse._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Protocol.HelloResponse._Tag">
             <summary>
             Tag identifying this class
@@ -3509,6 +3569,224 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaData">
+            <summary>
+            Metadata record. While the same data is available using System.Reflection, we wish to 
+            make use of a highly restricted approach that only exposes the JSON data model.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaData.Multiple">
+            <summary>If true, the field is a list field.</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataBoolean">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataBoolean.#ctor(System.Action{System.Nullable{System.Boolean}},System.Func{System.Nullable{System.Boolean}})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataInteger32">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataInteger32.#ctor(System.Action{System.Nullable{System.Int32}},System.Func{System.Nullable{System.Int32}})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataInteger64">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataInteger64.#ctor(System.Action{System.Nullable{System.Int64}},System.Func{System.Nullable{System.Int64}})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataBinary">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataBinary.#ctor(System.Action{System.Byte[]},System.Func{System.Byte[]})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataString">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataString.#ctor(System.Action{System.String},System.Func{System.String})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataDateTime">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataDateTime.#ctor(System.Action{System.Nullable{System.DateTime}},System.Func{System.Nullable{System.DateTime}})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataStruct">
+            <summary>
+            Metadata class describing object field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+            <param name="Type">The type name</param>
+            <param name="Tagged">If true, the structure is a tagged structure</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataStruct.#ctor(System.Action{System.Object},System.Func{System.Object},System.String,System.Boolean)">
+            <summary>
+            Metadata class describing object field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+            <param name="Type">The type name</param>
+            <param name="Tagged">If true, the structure is a tagged structure</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataList">
+            <summary>
+            Metadata record 
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataListBoolean">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataListBoolean.#ctor(System.Action{System.Collections.Generic.List{System.Nullable{System.Boolean}}},System.Func{System.Collections.Generic.List{System.Nullable{System.Boolean}}})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataListInteger32">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataListInteger32.#ctor(System.Action{System.Collections.Generic.List{System.Nullable{System.Int32}}},System.Func{System.Collections.Generic.List{System.Nullable{System.Int32}}})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataListInteger64">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataListInteger64.#ctor(System.Action{System.Collections.Generic.List{System.Nullable{System.Int64}}},System.Func{System.Collections.Generic.List{System.Nullable{System.Int64}}})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataListBinary">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataListBinary.#ctor(System.Action{System.Collections.Generic.List{System.Byte[]}},System.Func{System.Collections.Generic.List{System.Byte[]}})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataListString">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataListString.#ctor(System.Action{System.Collections.Generic.List{System.String}},System.Func{System.Collections.Generic.List{System.String}})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataListDateTime">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataListDateTime.#ctor(System.Action{System.Collections.Generic.List{System.Nullable{System.DateTime}}},System.Func{System.Collections.Generic.List{System.Nullable{System.DateTime}}})">
+            <summary>
+            Metadata class describing boolean field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+        </member>
+        <member name="T:Goedel.Protocol.MetaDataListStruct">
+            <summary>
+            Metadata class describing object field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+            <param name="Type">The type name</param>
+            <param name="Tagged">If true, the structure is a tagged structure</param>
+        </member>
+        <member name="M:Goedel.Protocol.MetaDataListStruct.#ctor(System.Action{System.Object},System.Func{System.Object},System.String,System.Boolean)">
+            <summary>
+            Metadata class describing object field.
+            </summary>
+            <param name="Setter">Set accessor</param>
+            <param name="Getter">Get accessor</param>
+            <param name="Type">The type name</param>
+            <param name="Tagged">If true, the structure is a tagged structure</param>
         </member>
         <member name="T:Goedel.Protocol.NamespaceDoc">
             <summary>
@@ -3599,11 +3877,11 @@
             <param name="Tag">Tag to write</param>
             <param name="Indent">Indent level to write at</param>
         </member>
-        <member name="M:Goedel.Protocol.Writer.WriteInteger32(System.Int32)">
+        <member name="M:Goedel.Protocol.Writer.WriteInteger32(System.Nullable{System.Int32})">
             <summary>Write integer value token</summary>
             <param name="Data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.Writer.WriteInteger64(System.Int64)">
+        <member name="M:Goedel.Protocol.Writer.WriteInteger64(System.Nullable{System.Int64})">
             <summary>Write integer value token</summary>
             <param name="Data">Value to write</param>
         </member>
@@ -3615,7 +3893,7 @@
             <summary>Write integer value token</summary>
             <param name="Data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.Writer.WriteBoolean(System.Boolean)">
+        <member name="M:Goedel.Protocol.Writer.WriteBoolean(System.Nullable{System.Boolean})">
             <summary>Write integer value token</summary>
             <param name="Data">Value to write</param>
         </member>

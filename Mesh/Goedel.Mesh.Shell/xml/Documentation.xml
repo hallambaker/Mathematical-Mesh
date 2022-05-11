@@ -1636,6 +1636,9 @@
         <member name="P:Goedel.Mesh.Shell._AccountCreate.Localname">
             <summary>Field accessor for option [localname]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountCreate.Payment">
+            <summary>Field accessor for option [payment]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountCreate.DeviceNew">
             <summary>Field accessor for option [new]</summary>
         </member>
@@ -4765,6 +4768,399 @@
         <member name="P:Goedel.Mesh.Shell._SSHDelete.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignRegister.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignRegister.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignRegister.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignRegister.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignRegister.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignRegister.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignRegister.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignRegister.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignBind.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignBind.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignBind.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignBind.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignBind.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignBind.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignBind.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignBind.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignResolve.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignResolve.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignResolve.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignResolve.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignResolve.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignResolve.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignResolve.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignResolve.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Recipient">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignList.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignList.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignList.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignList.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignList.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignList.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignList.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Recipient">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Invoice">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Currency">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Amount">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Reason">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletInvoice.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Recipient">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Currency">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Amount">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Reason">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletTransfer.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletTransfer.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletTransfer.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletTransfer.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletTransfer.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletAccept.MessageId">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletAccept.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletAccept.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletAccept.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletAccept.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletAccept.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletAccept.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletAccept.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletReject.MessageId">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletReject.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletReject.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletReject.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletReject.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletReject.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletReject.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletReject.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletRedeem.MessageId">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletRedeem.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletRedeem.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletRedeem.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletRedeem.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletRedeem.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletRedeem.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletRedeem.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletList.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletList.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletList.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletList.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletList.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletList.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletList.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletDelete.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletDelete.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletDelete.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletDelete.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletDelete.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletDelete.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletDelete.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletDelete.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletkGet.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletkGet.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletkGet.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletkGet.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletkGet.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletkGet.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletkGet.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._WalletkGet.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.Amount">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.Recipient">
+            <summary>Field accessor for option [to]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.Currency">
+            <summary>Field accessor for option [currency]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.Tickets">
+            <summary>Field accessor for option [tickets]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.Quantum">
+            <summary>Field accessor for option [quantum]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetMint.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetStatus.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetStatus.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetStatus.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetStatus.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetStatus.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetStatus.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetStatus.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CarnetStatus.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ChatListen.Quantum">
+            <summary>Field accessor for option [quantum]</summary>
+        </member>
         <member name="T:Goedel.Mesh.Shell.MimeMapping">
             <summary>
             Convert between IANA content types and file extensions.
@@ -5020,6 +5416,12 @@
              Placeholder class to allow insertion of application specific properties.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.Result._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Result._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.Result._Tag">
             <summary>
             Tag identifying this class
@@ -5107,6 +5509,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultAbout._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultAbout._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultAbout._Tag">
             <summary>
             Tag identifying this class
@@ -5164,6 +5572,12 @@
         <member name="T:Goedel.Mesh.Shell.ResultFail">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFail._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFail._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultFail._Tag">
             <summary>
@@ -5231,6 +5645,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultKey.Shares">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultKey._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultKey._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultKey._Tag">
             <summary>
@@ -5302,6 +5722,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultDigest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultDigest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultDigest._Tag">
             <summary>
             Tag identifying this class
@@ -5371,6 +5797,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultFile.Verified">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFile._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFile._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultFile._Tag">
             <summary>
@@ -5443,6 +5875,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultKeyFile._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultKeyFile._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultKeyFile._Tag">
             <summary>
             Tag identifying this class
@@ -5506,6 +5944,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultListLog._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultListLog._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultListLog._Tag">
             <summary>
             Tag identifying this class
@@ -5564,6 +6008,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultLog.Count">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultLog._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultLog._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultLog._Tag">
             <summary>
@@ -5636,6 +6086,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultArchive._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultArchive._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultArchive._Tag">
             <summary>
             Tag identifying this class
@@ -5694,6 +6150,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultFileDare.Envelope">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFileDare._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFileDare._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultFileDare._Tag">
             <summary>
@@ -5765,6 +6227,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFileEARL._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFileEARL._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultFileEARL._Tag">
             <summary>
             Tag identifying this class
@@ -5823,6 +6291,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultDump.CatalogedEntries">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultDump._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultDump._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultDump._Tag">
             <summary>
@@ -5890,6 +6364,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultList._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultList._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultList._Tag">
             <summary>
             Tag identifying this class
@@ -5949,6 +6429,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultAccountConnect._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultAccountConnect._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultAccountConnect._Tag">
             <summary>
             Tag identifying this class
@@ -6007,6 +6493,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultPublish.Uri">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPublish._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPublish._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultPublish._Tag">
             <summary>
@@ -6079,6 +6571,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPublishDevice._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPublishDevice._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultPublishDevice._Tag">
             <summary>
             Tag identifying this class
@@ -6149,6 +6647,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCreateDevice._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCreateDevice._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultCreateDevice._Tag">
             <summary>
             Tag identifying this class
@@ -6210,6 +6714,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultCreatePersonal.MeshUDF">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCreatePersonal._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCreatePersonal._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultCreatePersonal._Tag">
             <summary>
@@ -6280,6 +6790,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCreateAccount._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultCreateAccount._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultCreateAccount._Tag">
             <summary>
             Tag identifying this class
@@ -6345,6 +6861,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultDeleteAccount._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultDeleteAccount._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultDeleteAccount._Tag">
             <summary>
             Tag identifying this class
@@ -6404,6 +6926,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultRegisterService._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultRegisterService._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultRegisterService._Tag">
             <summary>
             Tag identifying this class
@@ -6461,6 +6989,12 @@
         <member name="T:Goedel.Mesh.Shell.ResultRecover">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultRecover._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultRecover._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultRecover._Tag">
             <summary>
@@ -6520,6 +7054,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultStatus.StatusResponse">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultStatus._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultStatus._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultStatus._Tag">
             <summary>
@@ -6591,6 +7131,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultSync._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultSync._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultSync._Tag">
             <summary>
             Tag identifying this class
@@ -6654,6 +7200,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultEscrow._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultEscrow._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultEscrow._Tag">
             <summary>
             Tag identifying this class
@@ -6715,6 +7267,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultMachine.CatalogedMachines">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultMachine._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultMachine._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultMachine._Tag">
             <summary>
@@ -6779,6 +7337,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPIN._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPIN._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultPIN._Tag">
             <summary>
             Tag identifying this class
@@ -6841,6 +7405,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultHello._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultHello._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultHello._Tag">
             <summary>
             Tag identifying this class
@@ -6902,6 +7472,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultSequence.Entries">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultSequence._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultSequence._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultSequence._Tag">
             <summary>
@@ -6986,6 +7562,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.LogEntry._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.LogEntry._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.LogEntry._Tag">
             <summary>
             Tag identifying this class
@@ -7044,6 +7626,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultEntry.CatalogEntry">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultEntry._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultEntry._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultEntry._Tag">
             <summary>
@@ -7111,6 +7699,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultEntrySent._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultEntrySent._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultEntrySent._Tag">
             <summary>
             Tag identifying this class
@@ -7165,6 +7759,12 @@
         <member name="T:Goedel.Mesh.Shell.ResultMail">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultMail._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultMail._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultMail._Tag">
             <summary>
@@ -7221,6 +7821,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultSSH._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultSSH._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultSSH._Tag">
             <summary>
             Tag identifying this class
@@ -7275,6 +7881,12 @@
         <member name="T:Goedel.Mesh.Shell.ResultGroupCreate">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultGroupCreate._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultGroupCreate._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultGroupCreate._Tag">
             <summary>
@@ -7339,6 +7951,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultSent._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultSent._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultSent._Tag">
             <summary>
             Tag identifying this class
@@ -7400,6 +8018,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultPending.Messages">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPending._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPending._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultPending._Tag">
             <summary>
@@ -7463,6 +8087,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultAuthorize._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultAuthorize._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultAuthorize._Tag">
             <summary>
             Tag identifying this class
@@ -7521,6 +8151,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultProcess.ProcessResult">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultProcess._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultProcess._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultProcess._Tag">
             <summary>
@@ -7608,6 +8244,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultConnect._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultConnect._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultConnect._Tag">
             <summary>
             Tag identifying this class
@@ -7669,6 +8311,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultTransactionRequest.Identifier">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultTransactionRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultTransactionRequest._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultTransactionRequest._Tag">
             <summary>
@@ -7733,6 +8381,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultReceived._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultReceived._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultReceived._Tag">
             <summary>
             Tag identifying this class
@@ -7795,6 +8449,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultApplication._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultApplication._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultApplication._Tag">
             <summary>
             Tag identifying this class
@@ -7856,6 +8516,12 @@
         <member name="P:Goedel.Mesh.Shell.ResultApplicationList.Applications">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultApplicationList._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultApplicationList._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultApplicationList._Tag">
             <summary>

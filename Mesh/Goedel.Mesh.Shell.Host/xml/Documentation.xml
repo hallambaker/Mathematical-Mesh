@@ -198,6 +198,12 @@
              Placeholder class to allow insertion of application specific properties.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Result._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Result._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.Host.Result._Tag">
             <summary>
             Tag identifying this class
@@ -285,6 +291,12 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Shell.Host.ResultAbout._Tag">
             <summary>
             Tag identifying this class
@@ -342,6 +354,12 @@
         <member name="T:Goedel.Mesh.Shell.Host.ResultStartService">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultStartService._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultStartService._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.Host.ResultStartService._Tag">
             <summary>

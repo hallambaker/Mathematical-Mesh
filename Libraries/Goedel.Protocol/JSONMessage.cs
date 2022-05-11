@@ -40,7 +40,7 @@ public abstract partial class Response {
     /// <summary>
     /// Numeric status return code value
     /// </summary>
-    public virtual int StatusCode {
+    public virtual int? StatusCode {
         get => Status;
         set => Status = value;
         }

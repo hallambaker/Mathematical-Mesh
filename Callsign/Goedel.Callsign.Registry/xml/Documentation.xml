@@ -34,48 +34,34 @@
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
         </member>
-        <member name="T:Goedel.Callsign.Registry.MeshService">
+        <member name="T:Goedel.Callsign.Registry.RegistryService">
             <summary>
             The new base class for the client and service side APIs.
             </summary>		
         </member>
-        <member name="F:Goedel.Callsign.Registry.MeshService.WellKnown">
+        <member name="F:Goedel.Callsign.Registry.RegistryService.WellKnown">
             <summary>
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Callsign.Registry.MeshService.GetWellKnown">
+        <member name="P:Goedel.Callsign.Registry.RegistryService.GetWellKnown">
             <inheritdoc/>
         </member>
-        <member name="F:Goedel.Callsign.Registry.MeshService.Discovery">
+        <member name="F:Goedel.Callsign.Registry.RegistryService.Discovery">
             <summary>
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Callsign.Registry.MeshService.GetDiscovery">
+        <member name="P:Goedel.Callsign.Registry.RegistryService.GetDiscovery">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Callsign.Registry.MeshService.GetTagDictionary">
+        <member name="M:Goedel.Callsign.Registry.RegistryService.GetTagDictionary">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Callsign.Registry.MeshService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
-            <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="token">The method identifier</param>
-            <param name="request">The request data</param>
-            <param name="session">The client context.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
+        <member name="M:Goedel.Callsign.Registry.RegistryService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
         </member>
-        <member name="M:Goedel.Callsign.Registry.MeshService.Dispatch(Goedel.Protocol.IJpcSession,Goedel.Protocol.JsonReader)">
-            <summary>
-            Dispatch object request in specified authentication context.
-            </summary>			
-            <param name="session">The client context.</param>
-            <param name="jsonReader">Reader for data object.</param>
-            <returns>The response object returned by the corresponding dispatch.</returns>
-        </member>
-        <member name="M:Goedel.Callsign.Registry.MeshService.GetDirect(Goedel.Protocol.IJpcSession)">
+        <member name="M:Goedel.Callsign.Registry.RegistryService.GetDirect(Goedel.Protocol.IJpcSession)">
             <summary>
             Return a client tapping the service API directly without serialization bound to
             the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
@@ -83,7 +69,7 @@
             <param name="jpcSession">Session to which requests are to be bound.</param>
             <returns>The direct client instance.</returns>
         </member>
-        <member name="M:Goedel.Callsign.Registry.MeshService.Register(Goedel.Callsign.Registry.RegisterRequest,Goedel.Protocol.IJpcSession)">
+        <member name="M:Goedel.Callsign.Registry.RegistryService.Register(Goedel.Callsign.Registry.RegisterRequest,Goedel.Protocol.IJpcSession)">
             <summary>
             Base method for implementing the transaction Register.
             </summary>
@@ -91,7 +77,7 @@
             <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="M:Goedel.Callsign.Registry.MeshService.Notarize(Goedel.Callsign.Registry.NotarizeRequest,Goedel.Protocol.IJpcSession)">
+        <member name="M:Goedel.Callsign.Registry.RegistryService.Notarize(Goedel.Callsign.Registry.NotarizeRequest,Goedel.Protocol.IJpcSession)">
             <summary>
             Base method for implementing the transaction Notarize.
             </summary>
@@ -99,63 +85,63 @@
             <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="T:Goedel.Callsign.Registry.MeshServiceClient">
+        <member name="T:Goedel.Callsign.Registry.RegistryServiceClient">
             <summary>
-            Client class for MeshService.
+            Client class for RegistryService.
             </summary>		
         </member>
-        <member name="F:Goedel.Callsign.Registry.MeshServiceClient.WellKnown">
+        <member name="F:Goedel.Callsign.Registry.RegistryServiceClient.WellKnown">
             <summary>
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Callsign.Registry.MeshServiceClient.GetWellKnown">
+        <member name="P:Goedel.Callsign.Registry.RegistryServiceClient.GetWellKnown">
             <summary>
             Well Known service identifier.
             </summary>
         </member>
-        <member name="F:Goedel.Callsign.Registry.MeshServiceClient.Discovery">
+        <member name="F:Goedel.Callsign.Registry.RegistryServiceClient.Discovery">
             <summary>
             Well Known service identifier.
             </summary>
         </member>
-        <member name="P:Goedel.Callsign.Registry.MeshServiceClient.GetDiscovery">
+        <member name="P:Goedel.Callsign.Registry.RegistryServiceClient.GetDiscovery">
             <summary>
             Well Known service identifier.
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.Registry.MeshServiceClient.Register(Goedel.Callsign.Registry.RegisterRequest)">
+        <member name="M:Goedel.Callsign.Registry.RegistryServiceClient.Register(Goedel.Callsign.Registry.RegisterRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Callsign.Registry.MeshServiceClient.Notarize(Goedel.Callsign.Registry.NotarizeRequest)">
+        <member name="M:Goedel.Callsign.Registry.RegistryServiceClient.Notarize(Goedel.Callsign.Registry.NotarizeRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="T:Goedel.Callsign.Registry.MeshServiceDirect">
+        <member name="T:Goedel.Callsign.Registry.RegistryServiceDirect">
             <summary>
-            Direct API class for MeshService.
+            Direct API class for RegistryService.
             </summary>		
         </member>
-        <member name="P:Goedel.Callsign.Registry.MeshServiceDirect.Service">
+        <member name="P:Goedel.Callsign.Registry.RegistryServiceDirect.Service">
             <summary>
             Interface object to dispatch requests to.
             </summary>	
         </member>
-        <member name="M:Goedel.Callsign.Registry.MeshServiceDirect.Register(Goedel.Callsign.Registry.RegisterRequest)">
+        <member name="M:Goedel.Callsign.Registry.RegistryServiceDirect.Register(Goedel.Callsign.Registry.RegisterRequest)">
             <summary>
             Implement the transaction
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Callsign.Registry.MeshServiceDirect.Notarize(Goedel.Callsign.Registry.NotarizeRequest)">
+        <member name="M:Goedel.Callsign.Registry.RegistryServiceDirect.Notarize(Goedel.Callsign.Registry.NotarizeRequest)">
             <summary>
             Implement the transaction
             </summary>		
@@ -167,6 +153,12 @@
             
              Base class for all requests made to a registrar
              </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CallsignRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CallsignRequest._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registry.CallsignRequest._Tag">
             <summary>
@@ -225,6 +217,12 @@
              Base class for all response messages. Contains only the
              status code and status description fields.
              </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CallsignResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CallsignResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registry.CallsignResponse._Tag">
             <summary>
@@ -300,6 +298,12 @@
             be granted.
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.Registry.RegisterRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.RegisterRequest._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Callsign.Registry.RegisterRequest._Tag">
             <summary>
             Tag identifying this class
@@ -362,6 +366,12 @@
             The registration (if created).
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.Registry.RegisterResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.RegisterResponse._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Callsign.Registry.RegisterResponse._Tag">
             <summary>
             Tag identifying this class
@@ -423,6 +433,12 @@
              <summary>
             The notary token to be included.
              </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.NotarizeRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.NotarizeRequest._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registry.NotarizeRequest._Tag">
             <summary>
@@ -490,6 +506,12 @@
              <summary>
             A notarization entry that includes the witness value specified in the request.
              </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.NotarizeResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.NotarizeResponse._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registry.NotarizeResponse._Tag">
             <summary>

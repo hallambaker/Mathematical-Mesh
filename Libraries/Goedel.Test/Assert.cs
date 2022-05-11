@@ -74,6 +74,23 @@ public static class AssertTest {
     /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
     /// Condition is true</param>
     /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
+    public static void TestFalse(this bool? condition, ThrowDelegate throwDelegate = null,
+                params object[] args) {
+        if (FlagFailure) {
+            Assert.AssertFalse(condition, throwDelegate ?? TestExpectedFalse.Throw, args);
+            }
+        else {
+            TestsFailed++;
+            }
+        }
+
+    /// <summary>Throw an exception if <paramref name="condition"/> is true. 
+    /// (test, NYIException.Throw, "test was false").AssertTrue();
+    /// </summary>
+    /// <param name="condition">The condition</param>
+    /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+    /// Condition is true</param>
+    /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
     public static void TestFalse(this bool condition, ThrowDelegate throwDelegate = null,
                 params object[] args) {
         if (FlagFailure) {
@@ -84,6 +101,22 @@ public static class AssertTest {
             }
         }
 
+    /// <summary>Throw an exception if <paramref name="condition"/> is false. 
+    /// (test, NYIException.Throw, "test was false").AssertTrue();
+    /// </summary>
+    /// <param name="condition">The condition</param>
+    /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+    /// Condition is true</param>
+    /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
+    public static void TestTrue(this bool? condition, ThrowDelegate throwDelegate = null,
+                params object[] args) {
+        if (FlagFailure) {
+            Assert.AssertTrue(condition, throwDelegate ?? TestExpectedTrue.Throw, args);
+            }
+        else {
+            TestsFailed++;
+            }
+        }
 
     /// <summary>Throw an exception if <paramref name="condition"/> is false. 
     /// (test, NYIException.Throw, "test was false").AssertTrue();
@@ -101,7 +134,6 @@ public static class AssertTest {
             TestsFailed++;
             }
         }
-
 
     /// <summary>Test to see if two arrays are equal.
     /// </summary>

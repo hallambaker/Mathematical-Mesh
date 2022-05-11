@@ -395,6 +395,10 @@ public class PublicMeshService : MeshService {
 
 
 
+    ///<inheritdoc/>
+    public override JsonObject ResponseFail(Exception exception) =>
+                new StatusResponse(exception);
+
     /// <summary>
     /// 
     /// </summary>
@@ -418,9 +422,8 @@ public class PublicMeshService : MeshService {
             }
         catch (Exception exception) {
             LogService.Logger.DispatchParse();
-            var result = new StatusResponse(exception);
             LogService.UnknownCommand(token);
-            return result;
+            return ResponseFail(exception);
             }
 
         LogService.Logger.DispatchStart(token);
@@ -434,7 +437,7 @@ public class PublicMeshService : MeshService {
             }
         catch (Exception exception) {
             LogService.Logger.DispatchFail(token, exception.Message);
-            var result = new StatusResponse(exception);
+            var result = ResponseFail(exception);
             log.Fail(exception, result as IReport);
             return result;
             }

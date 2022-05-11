@@ -18,11 +18,11 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Protocol.dll\
-    Goedel.Callsign.Log.dll
+    Goedel.Utilities.dll\
+    Goedel.Callsign.dll
 
 ToolTargets = \
 	CallsignRegistry.cs\
@@ -42,7 +42,6 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
-	version version.version AssemblyVersion.cs
 	
 
 postbuild : postbuildRecurse

@@ -352,7 +352,7 @@ public class MeshPersist : Disposable {
                 Envelopes = new List<DareEnvelope>()
                 };
 
-            foreach (var message in store.Select(selection.IndexMin)) {
+            foreach (var message in store.Select(selection.IndexMin??0)) {
                 update.Envelopes.Add(message);
                 }
 
@@ -583,7 +583,7 @@ public class MeshPersist : Disposable {
         catalogCapability.DictionaryDecryptByKeyId.TryGetValue(
             keyId, out var capability).AssertTrue(MeshOperationFailed.Throw);
 
-        Logger.ThresholdAuthorization(accountAddress, capability.Active);
+        Logger.ThresholdAuthorization(accountAddress, capability.Active == true);
         capability.Active.AssertTrue(NotAuthorized.Throw);
 
 

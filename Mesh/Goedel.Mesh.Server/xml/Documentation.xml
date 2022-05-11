@@ -101,6 +101,12 @@
             The profile status. Valid values are "Pending", "Connected", "Blocked"
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Server.AccountEntry._Tag">
             <summary>
             Tag identifying this class
@@ -194,6 +200,12 @@
             The enveloped assignment describing how the client should
             discover the host and encrypt data to it.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Server.AccountUser._Tag">
             <summary>
@@ -1216,6 +1228,9 @@
             <param name="hostConfiguration">The host configuration</param>
             <param name="deviceAddress">The address of the initial host.</param>
             <returns>The mesh service interface.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.ResponseFail(System.Exception)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.VerifyDevice(Goedel.Mesh.ProfileAccount,Goedel.Protocol.IJpcSession)">
             <summary>

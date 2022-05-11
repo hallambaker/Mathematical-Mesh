@@ -8,20 +8,26 @@
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare
 
-	
-	Extern PresenceRequest
-	Extern PresenceResponse
-
 	Section 3 "Shared Classes"
 
 
 	Description
 		|Protocol interactions supported by the Mesh Service.
 
-    Service PresenceService "_tbs2._tcp" "tbs2" PresenceRequest PresenceResponse
+    Service PresenceService "_mmm_present._tcp" "mmm_present" PresenceRequest PresenceResponse
 		Description
 
+	Message PresenceRequest
+		External Goedel.Protocol.Request
+		Description
+			|Base class for all requests made to a registrar
 
+
+	Message PresenceResponse
+		External Goedel.Protocol.Response		
+		Description
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.
 	
 	Section 3 "Transactions"	
 	
@@ -35,13 +41,13 @@
 	Message QueryRequest
 		Description
 			|Register connection request. 
-		External PresenceRequest
+		Inherits PresenceRequest
 
 
 	Message QueryResponse
 		Description
 			|Return the result of a connection request
-		External PresenceResponse
+		Inherits PresenceResponse
 
 
 

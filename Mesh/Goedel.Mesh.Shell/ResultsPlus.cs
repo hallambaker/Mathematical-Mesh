@@ -76,7 +76,7 @@ public partial class ResultReceived {
                     break;
                     }
             case ResponseConfirmation responseConfirmation: {
-                    builder.AppendLine(responseConfirmation.Accept ? "Accept" : "Reject");
+                    builder.AppendLine(responseConfirmation.Accept==true ? "Accept" : "Reject");
                     break;
                     }
 
@@ -93,7 +93,7 @@ public partial class ResultDigest {
     public override void ToBuilder(StringBuilder builder, Verbosity verbosity = Verbosity.Standard) {
 
 
-        if (Verified) {
+        if (Verified == true) {
             builder.AppendLine($"{Success}");
             }
         else {

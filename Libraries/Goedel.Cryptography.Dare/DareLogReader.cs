@@ -57,7 +57,7 @@ public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
     public FileCollection FileCollection = new();
 
     ///<summary>The index position of the first file in the dictionary.</summary> 
-    public int DictionaryStart { get; protected set; }
+    public long DictionaryStart { get; protected set; }
 
 
     ///<summary>Base constructor</summary> 

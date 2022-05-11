@@ -47,7 +47,7 @@ public class StoreEntry : IPersistenceEntry {
     public string UniqueID => ContentInfo?.UniqueId;
 
     ///<summary>The container frame</summary>
-    public long FrameCount => ContainerHeader.SequenceInfo.Index;
+    public long FrameCount => ContainerHeader.SequenceInfo.LIndex;
 
     ///<summary>If true the object haws been deleted and cannot be further modified.</summary>
 

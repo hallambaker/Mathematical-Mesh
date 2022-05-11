@@ -70,7 +70,7 @@ partial class Program {
 
 
 
-        //ServiceDiscovery.Test().TestDNS();
+        TestContainers.Test().ContainerIsolatedPolicy();
 
 
 

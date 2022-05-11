@@ -179,13 +179,13 @@ public class PersistHost : PersistenceStore {
             //    break;
             //    }
             case CatalogedStandard adminEntry: {
-                    if (DefaultEntry == null || adminEntry.Default || DefaultEntry.Id == adminEntry.Id) {
+                    if (DefaultEntry == null || adminEntry.Default==true || DefaultEntry.Id == adminEntry.Id) {
                         DefaultEntry = adminEntry;
                         }
                     break;
                     }
             case CatalogedMachine adminEntry: {
-                    if (DefaultEntry == null || adminEntry.Default || DefaultEntry.Id == adminEntry.Id) {
+                    if (DefaultEntry == null || adminEntry.Default == true || DefaultEntry.Id == adminEntry.Id) {
                         DefaultEntry = adminEntry;
                         }
                     break;

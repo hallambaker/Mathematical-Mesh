@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-May-22 7:48:01 PM
+//  This file was automatically generated at 11-May-22 12:07:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.877
+//  Generator:  protogen version 3.0.0.971
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -40,6 +40,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
@@ -108,6 +109,15 @@ public abstract partial class ServiceAdminShellResult : global::Goedel.Protocol.
 	/// Placeholder class to allow insertion of application specific properties.
 	/// </summary>
 public partial class Result : ShellResult {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -199,6 +209,15 @@ public partial class Result : ShellResult {
 	/// <summary>
 	/// </summary>
 public partial class ResultServiceConfiguration : Result {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class
@@ -322,6 +341,39 @@ public partial class ResultAbout : Result {
         /// </summary>
 
 	public virtual string						Build  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "DirectoryKeys", new MetaDataString(
+				delegate (string _a) {  DirectoryKeys = _a; },
+				() => DirectoryKeys) } ,
+			{ "DirectoryMesh", new MetaDataString(
+				delegate (string _a) {  DirectoryMesh = _a; },
+				() => DirectoryMesh) } ,
+			{ "AssemblyTitle", new MetaDataString(
+				delegate (string _a) {  AssemblyTitle = _a; },
+				() => AssemblyTitle) } ,
+			{ "AssemblyDescription", new MetaDataString(
+				delegate (string _a) {  AssemblyDescription = _a; },
+				() => AssemblyDescription) } ,
+			{ "AssemblyCopyright", new MetaDataString(
+				delegate (string _a) {  AssemblyCopyright = _a; },
+				() => AssemblyCopyright) } ,
+			{ "AssemblyCompany", new MetaDataString(
+				delegate (string _a) {  AssemblyCompany = _a; },
+				() => AssemblyCompany) } ,
+			{ "AssemblyVersion", new MetaDataString(
+				delegate (string _a) {  AssemblyVersion = _a; },
+				() => AssemblyVersion) } ,
+			{ "Build", new MetaDataString(
+				delegate (string _a) {  Build = _a; },
+				() => Build) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
 		
 	/// <summary>
     /// Tag identifying this class

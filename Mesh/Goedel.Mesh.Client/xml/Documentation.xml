@@ -80,6 +80,12 @@
             discover the host and encrypt data to it.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedMachine._Tag">
             <summary>
             Tag identifying this class
@@ -139,6 +145,12 @@
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedStandard.ProfileDevice">
             <summary>The device profile (from <see cref="T:Goedel.Mesh.CatalogedDevice"/>)</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedStandard._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedStandard._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedStandard._Tag">
             <summary>
@@ -228,6 +240,12 @@
              <summary>
             The account at which the request is pending.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPending._Tag">
             <summary>
@@ -327,6 +345,12 @@
              <summary>
             Authenticator key used to authenticate claim to the device.	
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._Tag">
             <summary>
@@ -2789,6 +2813,12 @@
              <summary>
             The connection of the host to the service
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedService._Tag">
             <summary>

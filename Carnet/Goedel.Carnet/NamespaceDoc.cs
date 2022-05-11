@@ -17,16 +17,15 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-
+global using Goedel.Utilities;
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 
-namespace CallsignRegistry {
-    /// <summary>
-    /// Desctiption of the 
-    /// </summary>
+namespace CallsignRegistry; 
+/// <summary>
+/// Desctiption of the 
+/// </summary>
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc {
-        }
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }
+

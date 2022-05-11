@@ -27,127 +27,151 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Goedel.Callsign {
+namespace Goedel.Callsign; 
+
+public partial class Callsign {
+    #region // Properties
+
+    ///<summary>List of callsign code pages.</summary> 
+    public static List<Page> Pages { get; } = new();
+
+    ///<summary>List of variant characters specified in the code page.</summary> 
+    static SortedList<int, CharacterSpan> VariantList { get; set; }
 
 
-    public partial class Callsign {
-        #region // Properties
-
-        public static List<Page> Pages = new();
-
-        static SortedList<int, CharacterSpan> VariantList { get; set; }
-
-
-        #endregion
-        #region // Constructors
+    #endregion
+    #region // Constructors
 
 
 
 
-
-        public Callsign(string presentation = null) {
-            if (presentation != null) {
-                SetPresentation(presentation);
-                }
-
-
+    /// <summary>
+    /// Constructor returning a callsign instance. If the parameter <paramref name="presentation"/>
+    /// is not null, the presentation value of the callsign is set to the specified value.
+    /// </summary>
+    /// <param name="presentation">The presentation value to be set.</param>
+    public Callsign(string presentation = null) {
+        if (presentation != null) {
+            SetPresentation(presentation);
             }
-
-        #endregion
-        #region // Implement Inteface $$$
-        #endregion
-        #region // Override Methods
-        #endregion
-        #region // Methods
-
-
-        public void SetPresentation(string presentation) {
-            presentation.AssertNotNull(NYI.Throw);
-
-
-            if (Id == null) {
-
-                Id = Canonicalize(presentation);
-
-                }
-            else {
-                Id.AssertEqual(Canonicalize(presentation), NYI.Throw);
-
-                }
-
-
-            Presentation = presentation;
-
-
-
-
-            }
-
-
-        public static void AddPage(Page page) => Pages.Add(page);
-
-
-        public static void MakeIndex() {
-            var variantList = new SortedList<int, CharacterSpan>();
-
-            foreach (var page in Pages) {
-                foreach (var characterSpan in page.CharacterSpans) {
-                    variantList.Add(characterSpan.First, characterSpan);
-                    }
-                }
-
-            VariantList = variantList;
-            }
-
-
-        public static string Canonicalize(string presentation) {
-            var builder = new StringBuilder();
-
-            foreach (var c in presentation) {
-                IsAllowed(c, out var characterSpan).AssertTrue(NYI.Throw);
-
-                switch (characterSpan) {
-
-                    case MapChar mapChar: {
-                        builder.Append((char) (c + mapChar.Target - mapChar.First));
-
-                        break;
-                        }
-                    case MapString mapString: {
-                        builder.Append(mapString.Target);
-                        break;
-                        }
-                    default: {
-                        builder.Append(c);
-                        break;
-                        }
-                    }
-                }
-
-            //Screen.WriteLine($"{presentation} -> {builder.ToString()}");
-
-            return builder.ToString();
-            }
-
-        public static bool IsAllowed(char c, out CharacterSpan characterSpan) {
-            foreach (var span in VariantList) {
-                (span.Value.First > c).AssertFalse(NYI.Throw);
-
-                var last = span.Value.Last > 0 ? span.Value.Last : span.Value.First;
-
-                if (span.Value.First <= c & last >= c) {
-                    characterSpan = span.Value;
-                    return true;
-                    }
-                }
-            throw new NYI();
-            }
-
-        #endregion
 
 
         }
 
+    #endregion
+    #region // Implement Inteface $$$
+    #endregion
+    #region // Override Methods
+    #endregion
+    #region // Methods
+
+    /// <summary>
+    /// Set the presentation value of the callsign. 
+    /// </summary>
+    /// <param name="presentation">The presentation value to be set.</param>
+    /// <exception cref="InvalidPresentation">The presentation is invalid</exception>
+    public void SetPresentation(string presentation) {
+        presentation.AssertNotNull(InvalidPresentation.Throw, presentation, Id);
+
+        if (Id == null) {
+            Id = Canonicalize(presentation);
+            }
+        else {
+            Id.AssertEqual(Canonicalize(presentation), InvalidPresentation.Throw);
+            }
+
+        Presentation = presentation;
+        }
+
+    /// <summary>
+    /// Add the code page <paramref name="page"/>
+    /// </summary>
+    /// <param name="page">The code page to add.</param>
+    public static void AddPage(Page page) => Pages.Add(page);
+
+
+    /// <summary>
+    /// Create an index over the code page.
+    /// </summary>
+    public static void MakeIndex() {
+        var variantList = new SortedList<int, CharacterSpan>();
+
+        foreach (var page in Pages) {
+            foreach (var characterSpan in page.CharacterSpans) {
+                variantList.Add(characterSpan.First??0, characterSpan);
+                }
+            }
+
+        VariantList = variantList;
+        }
+
+    /// <summary>
+    /// Return the canonical form of the page <paramref name="presentation"/> according
+    /// to the code page settings.
+    /// </summary>
+    /// <param name="presentation">The presentation to canonicalize</param>
+    /// <returns>The canonical form of <paramref name="presentation"/>.</returns>
+    /// <exception cref="InvalidCharacter">A character is invalid</exception>
+    public static string Canonicalize(string presentation) {
+        var builder = new StringBuilder();
+
+        foreach (var c in presentation) {
+            IsAllowed(c, out var characterSpan).AssertTrue(InvalidCharacter.Throw, c);
+
+            switch (characterSpan) {
+
+                case MapChar mapChar: {
+                    builder.Append((char) (c + mapChar.Target - mapChar.First));
+
+                    break;
+                    }
+                case MapString mapString: {
+                    builder.Append(mapString.Target);
+                    break;
+                    }
+                default: {
+                    builder.Append(c);
+                    break;
+                    }
+                }
+            }
+
+        //Screen.WriteLine($"{presentation} -> {builder.ToString()}");
+
+        return builder.ToString();
+        }
+
+
+    /// <summary>
+    /// Returns true if the character <paramref name="c"/> is permitted
+    /// in the character span <paramref name="characterSpan"/>. Otherwise,
+    /// an exception is thrown.
+    /// </summary>
+    /// <param name="c"></param>
+    /// <param name="characterSpan"></param>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
+    public static bool IsAllowed(char c, out CharacterSpan characterSpan) {
+        characterSpan = null;
+        foreach (var span in VariantList) {
+            if (span.Value.First > c) {
+                return false;
+                }
+
+            var last = span.Value.Last > 0 ? span.Value.Last : span.Value.First;
+
+            if (span.Value.First <= c & last >= c) {
+                characterSpan = span.Value;
+                return true;
+                }
+            }
+        return false;
+        }
+
+    #endregion
 
 
     }
+
+
+

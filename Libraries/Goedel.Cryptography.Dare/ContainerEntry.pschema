@@ -31,7 +31,7 @@
 			Description
 				|The record index within the file. This MUST be unique and 
 				|satisfy any additional requirements determined by the ContainerType.
-
+			LengthBits 64
 
 
 		Boolean IsMeta
@@ -52,17 +52,19 @@
 		Integer TreePosition
 			Description
 				|Position of the frame containing the apex of the preceding sub-tree.
-		
+			LengthBits 64
+			
 		Integer IndexPosition
 			Description
 				|Specifies the position in the file at which the last index entry is
 				|to be found
+			LengthBits 64
 
 		Integer ExchangePosition
 			Description
 				|Specifies the position in the file at which the key exchange data is
 				|to be found
-
+			LengthBits 64
 
 	Structure SequenceIndex
 		Description
@@ -84,9 +86,11 @@
 		Integer Index
 			Description
 				|The record index within the file.
+			LengthBits 64
 		Integer Position
 			Description
 				|The record position within the file relative to the index base.
+			LengthBits 64
 		String UniqueId
 			Description 
 				|Unique object identifier

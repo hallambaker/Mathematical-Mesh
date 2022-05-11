@@ -29,6 +29,7 @@ global using Goedel.Mesh.ServiceAdmin;
 global using Goedel.Protocol;
 global using Goedel.Command.Json;
 global using Goedel.Command;
+global using Goedel.Utilities;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

@@ -113,11 +113,11 @@ public abstract class Writer : Disposable {
 
     /// <summary>Write integer value token</summary>
     /// <param name="Data">Value to write</param>
-    abstract public void WriteInteger32(int Data);
+    abstract public void WriteInteger32(int? Data);
 
     /// <summary>Write integer value token</summary>
     /// <param name="Data">Value to write</param>
-    abstract public void WriteInteger64(long Data);
+    abstract public void WriteInteger64(long? Data);
 
     /// <summary>Write integer value token</summary>
     /// <param name="Data">Value to write</param>
@@ -129,7 +129,7 @@ public abstract class Writer : Disposable {
 
     /// <summary>Write integer value token</summary>
     /// <param name="Data">Value to write</param>
-    abstract public void WriteBoolean(bool Data);
+    abstract public void WriteBoolean(bool? Data);
 
     /// <summary>Write integer value token</summary>
     /// <param name="Data">Value to write</param>

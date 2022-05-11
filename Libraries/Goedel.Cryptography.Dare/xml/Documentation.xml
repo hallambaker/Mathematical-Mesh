@@ -175,6 +175,12 @@
             to be found
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceInfo._Tag">
             <summary>
             Tag identifying this class
@@ -226,6 +232,9 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceInfo.LIndex">
+            <summary>The index value as a non-nullable long</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceInfo.HasExchangePosition">
             <summary>If true, the field ExchangePosition is specified</summary>
         </member>
@@ -247,6 +256,12 @@
              <summary>
             List of container position entries
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndex._Tag">
             <summary>
@@ -325,6 +340,12 @@
             Unique object identifier
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.IndexPosition._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.IndexPosition._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.IndexPosition._Tag">
             <summary>
             Tag identifying this class
@@ -392,6 +413,12 @@
             The value corresponding to the key
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.KeyValue._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.KeyValue._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.KeyValue._Tag">
             <summary>
             Tag identifying this class
@@ -453,7 +480,7 @@
             Gets the element in the collection at the current position of the enumerator.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int32,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Boolean)">
             <summary>
             Create an enumerator for <paramref name="container"/>.
             </summary>
@@ -537,9 +564,6 @@
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareHeader.Index">
             <summary>The container index value.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareHeader.HasExchangePosition">
-            <summary>If true, the field ExchangePosition is specified</summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareHeader.OutputLength(System.Int64)">
             <summary>
@@ -759,6 +783,12 @@
              <summary>
             Date on which the envelope was received.
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareHeader._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareHeader._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareHeader._Tag">
             <summary>
@@ -2539,6 +2569,12 @@
             The per-recipient key exchange data.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareRecipient._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareRecipient._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareRecipient._Tag">
             <summary>
             Tag identifying this class
@@ -3130,6 +3166,12 @@
             If present, contains the Binary Merkle Tree digest value.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareTrailer._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareTrailer._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareTrailer._Tag">
             <summary>
             Tag identifying this class
@@ -3267,6 +3309,12 @@
              <summary>
             Information describing the file entry on disk.
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.ContentMeta._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.ContentMeta._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.ContentMeta._Tag">
             <summary>
@@ -3638,6 +3686,12 @@
             If true the policy is immutable and cannot be changed by a subsequent policy override.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DarePolicy._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DarePolicy._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DarePolicy._Tag">
             <summary>
             Tag identifying this class
@@ -3745,6 +3799,12 @@
             The envelope trailer. If present, this contains the signature.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._Tag">
             <summary>
             Tag identifying this class
@@ -3845,6 +3905,12 @@
             key used to encrypt the envelope.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareSignature._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareSignature._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareSignature._Tag">
             <summary>
             Tag identifying this class
@@ -3928,6 +3994,12 @@
             An X.509 public key certificate
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.X509Certificate._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.X509Certificate._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.X509Certificate._Tag">
             <summary>
             Tag identifying this class
@@ -4010,6 +4082,12 @@
              <summary>
             The file attribues as a bitmapped integer.
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileEntry._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileEntry._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.FileEntry._Tag">
             <summary>
@@ -4113,6 +4191,12 @@
             Specifies the index number assigned to the entry in the log.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Witness._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Witness._MetaData">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.Witness._Tag">
             <summary>
             Tag identifying this class
@@ -4190,6 +4274,12 @@
              <summary>
             The list of entries from which the proof path is computed.
              </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Proof._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Proof._MetaData">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Proof._Tag">
             <summary>
@@ -6002,7 +6092,7 @@
             <param name="keyLocate">The key location collection to be used to resolve keys.</param>
             <returns>The created sequence</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Select(System.Int32,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Select(System.Int64,System.Boolean)">
             <summary>
             Return an enumerator with the specified selectors.
             </summary>
@@ -6050,7 +6140,7 @@
             <param name="trailer">The frame trailer value.</param>
             <returns>The number of bytes written.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Int32)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Int64)">
             <summary>
             Append the envelopes <paramref name="envelopes"/> to the sequence starting
             with the <paramref name="index"/>th envelope.
@@ -6200,7 +6290,7 @@
             has been passed using AppendPreprocess.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.GetHeader(System.Int32)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.GetHeader(System.Int64)">
             <summary>
             Return the header of frame with index <paramref name="frame"/>.
             </summary>
@@ -6235,7 +6325,7 @@
             </summary>
             <param name="headers">List of headers to check</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Validate(System.Int32)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Validate(System.Int64)">
             <summary>
             Read the data in the current file 
             </summary>

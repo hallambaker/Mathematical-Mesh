@@ -264,6 +264,19 @@ public static class Assert {
             throw throwDelegate(args);
             }
         }
+    /// <summary>Throw an exception if <paramref name="condition"/> is true. 
+    /// (test, NYIException.Throw, "test was false").AssertTrue();
+    /// </summary>
+    /// <param name="condition">The condition</param>
+    /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+    /// Condition is true</param>
+    /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
+    public static void AssertFalse(this bool? condition, ThrowDelegate throwDelegate,
+                params object[] args) {
+        if (condition!= false) {
+            throw throwDelegate(args);
+            }
+        }
 
     /// <summary>Throw an exception if <paramref name="condition"/> is false. 
     /// (test, NYIException.Throw, "test was false").AssertTrue();
@@ -279,6 +292,19 @@ public static class Assert {
             }
         }
 
+    /// <summary>Throw an exception if <paramref name="condition"/> is false. 
+    /// (test, NYIException.Throw, "test was false").AssertTrue();
+    /// </summary>
+    /// <param name="condition">The condition</param>
+    /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+    /// Condition is true</param>
+    /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
+    public static void AssertTrue(this bool? condition, ThrowDelegate throwDelegate,
+                params object[] args) {
+        if (condition!= true) {
+            throw throwDelegate(args);
+            }
+        }
     /// <summary>Throw an exception if <paramref name="test"/> is not null. 
     /// </summary>
     /// <param name="test">The object to test to see if it is null</param>

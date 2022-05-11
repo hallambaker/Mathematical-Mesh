@@ -89,12 +89,12 @@ public class ContainerTree : ContainerList {
     /// </summary>
     /// <param name="containerInfo">The frame to prepare.</param>
     protected override void PrepareFrame(SequenceInfo containerInfo) {
-        if (containerInfo.Index == 0) {
+        if (containerInfo.LIndex == 0) {
             containerInfo.ContainerType = DareConstants.SequenceTypeTreeTag;
             }
         else {
             containerInfo.TreePosition =
-                (int)PreviousFramePosition(containerInfo.Index);
+                (int)PreviousFramePosition(containerInfo.LIndex);
             }
 
 
@@ -118,40 +118,40 @@ public class ContainerTree : ContainerList {
     /// <param name="positionLast">Position of the last frame</param>
     protected override void FillDictionary(SequenceInfo containerInfo, long firstPosition, long positionLast) {
         FrameIndexToPositionDictionary.Add(0, 0);
-        if (containerInfo.Index == 0) {
+        if (containerInfo.LIndex == 0) {
             return;
             }
 
         FrameIndexToPositionDictionary.Add(1, firstPosition);
-        if (containerInfo.Index == 1) {
+        if (containerInfo.LIndex == 1) {
             return;
             }
 
         var position = positionLast;
-        var index = containerInfo.Index;
+        var index = containerInfo.LIndex;
         var treePosition = containerInfo.TreePosition;
 
         while (!IsApex(index)) {
             RegisterFrame(containerInfo, position);
 
             // Calculate position of previous node in tree.
-            position = treePosition;
+            position = treePosition ??0;
             index = (int)PreviousFrame(index);
 
             // 
-            JbcdStream.PositionRead = treePosition;
+            JbcdStream.PositionRead = treePosition ?? 0;
             containerInfo = JbcdStream.ReadFrameHeader().SequenceInfo;
 
-            if (index != containerInfo.Index) {
+            if (index != containerInfo.LIndex) {
 
                 }
 
 
             // This is failing because the container index is set to 2 when it should be 1.
-            Assert.AssertTrue(index == containerInfo.Index, SequenceDataCorrupt.Throw);
+            Assert.AssertTrue(index == containerInfo.LIndex, SequenceDataCorrupt.Throw);
             treePosition = containerInfo.TreePosition;
             }
-        if (containerInfo.Index != 1) {
+        if (containerInfo.LIndex != 1) {
             RegisterFrame(containerInfo, position);
             }
         }
@@ -230,7 +230,7 @@ public class ContainerTree : ContainerList {
                     nextPosition = JbcdStream.PositionRead;
 
                     frameHeader = JbcdStream.ReadFrameHeader();
-                    Assert.AssertTrue(frameHeader.SequenceInfo.Index == nextRecord, SequenceDataCorrupt.Throw);
+                    Assert.AssertTrue(frameHeader.SequenceInfo.LIndex == nextRecord, SequenceDataCorrupt.Throw);
 
                     found = false;
                     }
@@ -246,7 +246,7 @@ public class ContainerTree : ContainerList {
 
                     PositionRead = position;
                     frameHeader = JbcdStream.ReadFrameHeader();
-                    nextPosition = frameHeader.SequenceInfo.TreePosition;
+                    nextPosition = frameHeader.SequenceInfo.TreePosition ??0;
 
                     if (!found) {
                         RegisterFrame(frameHeader.SequenceInfo, position);
@@ -332,7 +332,7 @@ public class ContainerTree : ContainerList {
     public override void CheckSequence(List<DareHeader> headers) {
         var index = 1;
         foreach (var Header in headers) {
-            Assert.AssertTrue(Header.SequenceInfo.Index == index,
+            Assert.AssertTrue(Header.SequenceInfo.LIndex == index,
                     SequenceDataCorrupt.Throw);
             Assert.AssertNotNull(Header.PayloadDigest,
                     SequenceDataCorrupt.Throw);
@@ -353,7 +353,7 @@ public class ContainerTree : ContainerList {
         // Check the first frame
         JbcdStream.PositionRead = 0;
         var header = JbcdStream.ReadFirstFrameHeader();
-        Assert.AssertTrue(header.SequenceInfo.Index == 0, SequenceDataCorrupt.Throw);
+        Assert.AssertTrue(header.SequenceInfo.LIndex == 0, SequenceDataCorrupt.Throw);
         headerDictionary.Add(0, header);
 
         // Check subsequent frames
@@ -363,12 +363,13 @@ public class ContainerTree : ContainerList {
             header = JbcdStream.ReadFrameHeader();
             headerDictionary.Add(Position, header);
 
-            Assert.AssertTrue(header.SequenceInfo.Index == index, SequenceDataCorrupt.Throw);
+            Assert.AssertTrue(header.SequenceInfo.LIndex == index, SequenceDataCorrupt.Throw);
             if (index > 1) {
                 var Previous = PreviousFrame(index);
-                Assert.AssertTrue(headerDictionary.TryGetValue(header.SequenceInfo.TreePosition, out var PreviousHeader),
+                Assert.AssertTrue(headerDictionary.TryGetValue(
+                            header.SequenceInfo.TreePosition ?? 0, out var PreviousHeader),
                     SequenceDataCorrupt.Throw);
-                Assert.AssertTrue(PreviousHeader.SequenceInfo.Index == Previous,
+                Assert.AssertTrue(PreviousHeader.SequenceInfo.LIndex == Previous,
                     SequenceDataCorrupt.Throw);
                 }
 
