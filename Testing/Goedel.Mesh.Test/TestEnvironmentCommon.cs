@@ -38,7 +38,9 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
     public virtual TestServiceRud TestServiceRud => testServiceRud ??
     new TestServiceRud(MeshService, null).CacheValue(out testServiceRud);
     TestServiceRud testServiceRud;
-    IMeshMachineClient MeshMachineHost;
+
+
+    public IMeshMachineClient MeshMachineHost { get; set; }
 
 
     string HostFile = "whatev";
@@ -56,7 +58,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
         MeshMachineHost = new MeshMachineTest(this, "host1");
 
         HostFile = System.IO.Path.Combine(MeshMachineHost.DirectoryMesh, "mmmconfiguration.json");
-        Configuration = PublicMeshService.Create(MeshMachineHost, HostFile, ServiceDns);
+        Configuration = MeshMachineHost.CreatePublicMeshService( HostFile, ServiceDns);
 
         Logger = new LogService(Configuration.GenericHostConfiguration, Configuration.MeshServiceConfiguration, null);
 

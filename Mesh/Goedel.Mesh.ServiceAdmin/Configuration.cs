@@ -35,7 +35,7 @@ public class Configuration : Disposable {
     ///<summary>The Mesh service configuration.</summary> 
     public CarnetServiceConfiguration CarnetServiceConfiguration { get; set; }
     ///<summary>The Mesh service configuration.</summary> 
-    public PersistanceServiceConfiguration PersistanceServiceConfiguration { get; set; }
+    public RepositoryServiceConfiguration PersistanceServiceConfiguration { get; set; }
 
     ///<summary>The Mesh service configuration.</summary> 
     public PresenceServiceConfiguration PresenceServiceConfiguration { get; set; }

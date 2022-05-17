@@ -1,5 +1,5 @@
 ﻿
-Namespace Goedel.Callsign.Registry
+Namespace Goedel.Carnet
 
 	Exception TBS
 		Console "Exception TBS"

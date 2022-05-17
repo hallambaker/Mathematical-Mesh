@@ -35,10 +35,10 @@ global using Goedel.Callsign.Resolver;
 
 global using Goedel.Callsign.Registry;
 
-global using Goedel.Carnet;
-
-global using Goedel.Presence;
-global using Goedel.Persistence;
+global using Goedel.Carnet.Server;
+global using Goedel.Mesh.Server;
+global using Goedel.Presence.Server;
+global using Goedel.Repository.Server;
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif

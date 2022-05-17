@@ -46,5 +46,21 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="T:Goedel.Presence.Server.NamespaceDoc">
+            <summary>
+            Desctiption of the 
+            </summary>
+        </member>
+        <member name="T:Goedel.Presence.Server.PresenceServiceConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.Server.PresenceServiceConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceServiceConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
+        </member>
     </members>
 </doc>

@@ -14,7 +14,7 @@
 	Description
 		|Protocol interactions supported by the Mesh Service.
 
-    Service PresenceService "_mmm_present._tcp" "mmm_present" PresenceRequest PresenceResponse
+    Service PresenceService "_presence._tcp" "_presence" PresenceRequest PresenceResponse
 		Description
 
 	Message PresenceRequest

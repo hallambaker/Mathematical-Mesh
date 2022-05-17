@@ -7751,23 +7751,23 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.MessagePinValidated">
+        <member name="T:Goedel.Mesh.MessageValidated">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.MessagePinValidated.EnvelopedMessagePinValidated">
+        <member name="P:Goedel.Mesh.MessageValidated.EnvelopedMessagePinValidated">
             <summary>Typed enveloped data</summary> 
         </member>
-        <member name="P:Goedel.Mesh.MessagePinValidated.Action">
+        <member name="P:Goedel.Mesh.MessageValidated.Action">
             <summary>The authorized action.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MessagePinValidated.Authenticate(System.String)">
+        <member name="M:Goedel.Mesh.MessageValidated.Authenticate(System.String)">
             <summary>
             Create authentication data using the pin value <paramref name="pin"/>/
             </summary>
             <param name="pin">The pin value.</param>
         </member>
-        <member name="M:Goedel.Mesh.MessagePinValidated.ValidatePin(Goedel.Mesh.MessagePin,System.String)">
+        <member name="M:Goedel.Mesh.MessageValidated.ValidatePin(Goedel.Mesh.MessagePin,System.String)">
             <summary>
             Verify authentication data using the pin data in <paramref name="messagePin"/>, 
             binding to the account <paramref name="accountAddress"/>.
@@ -7776,49 +7776,49 @@
             <param name="accountAddress">The account address to which the validation data is bound.</param>
             <returns>The result of the verification operation.</returns>
         </member>
-        <member name="P:Goedel.Mesh.MessagePinValidated.AuthenticatedData">
+        <member name="P:Goedel.Mesh.MessageValidated.AuthenticatedData">
              <summary>
             Enveloped data that is authenticated by means of the PIN
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.MessagePinValidated.ClientNonce">
+        <member name="P:Goedel.Mesh.MessageValidated.ClientNonce">
              <summary>
             Nonce provided by the client to validate the PIN
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.MessagePinValidated.PinId">
+        <member name="P:Goedel.Mesh.MessageValidated.PinId">
              <summary>
             Pin identifier value calculated from the PIN code, action and account address.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.MessagePinValidated.PinWitness">
+        <member name="P:Goedel.Mesh.MessageValidated.PinWitness">
              <summary>
             Witness value calculated as KDF (Device.Udf + AccountAddress, ClientNonce)
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.MessagePinValidated._MetaDataParent">
+        <member name="P:Goedel.Mesh.MessageValidated._MetaDataParent">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.MessagePinValidated._MetaData">
+        <member name="P:Goedel.Mesh.MessageValidated._MetaData">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.MessagePinValidated._Tag">
+        <member name="P:Goedel.Mesh.MessageValidated._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.MessagePinValidated.__Tag">
+        <member name="F:Goedel.Mesh.MessageValidated.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MessagePinValidated._Factory">
+        <member name="M:Goedel.Mesh.MessageValidated._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.MessagePinValidated.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.MessageValidated.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -7827,7 +7827,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.MessagePinValidated.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.MessageValidated.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -7838,7 +7838,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.MessagePinValidated.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.MessageValidated.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7846,7 +7846,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.MessagePinValidated.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Mesh.MessageValidated.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

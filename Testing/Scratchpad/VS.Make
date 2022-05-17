@@ -27,6 +27,7 @@ LinkFiles = \
     Goedel.Test.dll\
     Goedel.Mesh.dll\
     Goedel.ASN1.Test-xunit.dll\
+    Goedel.Callsign.Test-xunit.dll\
     Goedel.Cryptography.Dare.Test-xunit.dll\
     Goedel.Cryptography.Jose.Test-xunit.dll\
     Goedel.Cryptography.Keyfile.Test-xunit.dll\

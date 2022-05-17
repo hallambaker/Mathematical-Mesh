@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 11-May-22 2:52:44 PM
+//  This file was automatically generated at 17-May-22 5:10:44 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -163,7 +163,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"Message", Message._Factory},
 	    {"MessageError", MessageError._Factory},
 	    {"MessageComplete", MessageComplete._Factory},
-	    {"MessagePinValidated", MessagePinValidated._Factory},
+	    {"MessageValidated", MessageValidated._Factory},
 	    {"MessagePin", MessagePin._Factory},
 	    {"RequestConnection", RequestConnection._Factory},
 	    {"AcknowledgeConnection", AcknowledgeConnection._Factory},
@@ -13876,7 +13876,7 @@ public partial class MessageComplete : Message {
 
 	/// <summary>
 	/// </summary>
-public partial class MessagePinValidated : Message {
+public partial class MessageValidated : Message {
         /// <summary>
         ///Enveloped data that is authenticated by means of the PIN
         /// </summary>
@@ -13928,13 +13928,13 @@ public partial class MessagePinValidated : Message {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "MessagePinValidated";
+	public new const string __Tag = "MessageValidated";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new MessagePinValidated();
+	public static new JsonObject _Factory () => new MessageValidated();
 
 
     /// <summary>
@@ -13994,15 +13994,15 @@ public partial class MessagePinValidated : Message {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new MessagePinValidated FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new MessageValidated FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as MessagePinValidated;
+			return Out as MessageValidated;
 			}
-		var Result = new MessagePinValidated ();
+		var Result = new MessageValidated ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -14265,7 +14265,7 @@ public partial class MessagePin : Message {
 	///
 	/// Connection request message. This message contains the information
 	/// </summary>
-public partial class RequestConnection : MessagePinValidated {
+public partial class RequestConnection : MessageValidated {
         /// <summary>
         ///
         /// </summary>
@@ -14326,7 +14326,7 @@ public partial class RequestConnection : MessagePinValidated {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		((MessagePinValidated)this).SerializeX(_writer, false, ref _first);
+		((MessageValidated)this).SerializeX(_writer, false, ref _first);
 		if (AccountAddress != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("AccountAddress", 1);
@@ -14682,7 +14682,7 @@ public partial class RespondConnection : Message {
 
 	/// <summary>
 	/// </summary>
-public partial class MessageContact : MessagePinValidated {
+public partial class MessageContact : MessageValidated {
         /// <summary>
         ///If true, requests that the recipient return their own contact information
         ///in reply.
@@ -14761,7 +14761,7 @@ public partial class MessageContact : MessagePinValidated {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		((MessagePinValidated)this).SerializeX(_writer, false, ref _first);
+		((MessageValidated)this).SerializeX(_writer, false, ref _first);
 		if (Reply != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("Reply", 1);

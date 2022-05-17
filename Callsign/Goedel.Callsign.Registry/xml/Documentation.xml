@@ -4,6 +4,28 @@
         <name>Goedel.Callsign.Registry</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Callsign.Registry.ContextCallsign">
+            <summary>
+            Context for managing the callsign registry account.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextCallsign.Profile">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextCallsign.Connection">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextCallsign.AccountAddress">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ContextCallsign.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
+            <summary>
+            Constructor, creates a <see cref="T:Goedel.Mesh.Client.ContextUser"/> instance for the catalog entry 
+            <paramref name="catalogedMachine"/> on machine <paramref name="meshHost"/>.
+            </summary>
+            <param name="catalogedMachine">Description of the device profile.</param>
+            <param name="meshHost">The Mesh host to add the admin context to.</param>
+        </member>
         <member name="T:Goedel.Callsign.Registry.CallsignRegistry">
              <summary>
             
@@ -564,6 +586,39 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Callsign.Registry.CallsignRegistryConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.Registry.CallsignRegistryConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CallsignRegistryConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CallsignRegistryConfiguration.SignatureSchedule">
+            <summary>The signature schedule</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CallsignRegistryConfiguration.CrossCertifiers">
+            <summary>Cross certifiers.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CallsignRegistryConfiguration.Publish">
+            <summary>Service addresses of resolver services to which the callsign data is to be
+            immediately published via a push notification.</summary> 
+        </member>
+        <member name="T:Goedel.Callsign.Registry.CrossCertifier">
+            <summary>
+            Cross certification entry.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CrossCertifier.Frequency">
+            <summary>The cross certification frequency (defaults to value specified in enclosing 
+            <see cref="P:Goedel.Callsign.Registry.CallsignRegistryConfiguration.SignatureSchedule"/></summary>.
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CrossCertifier.Signer">
+            <summary>Party to which the signature request is directed.</summary> 
+        </member>
         <member name="T:Goedel.Callsign.Registry.TBS">
             <summary>
             TBS
@@ -604,6 +659,11 @@
         <member name="M:Goedel.Callsign.Registry.EventExtensions.#cctor">
             <summary>
             Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Callsign.Registry.Extensions">
+            <summary>
+            Extensions class. Provides static convenience extensions.
             </summary>
         </member>
         <member name="T:CallsignRegistry.NamespaceDoc">

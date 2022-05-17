@@ -157,9 +157,9 @@ public partial class MessageComplete {
         }
 
     }
-public partial class MessagePinValidated {
+public partial class MessageValidated {
     ///<summary>Typed enveloped data</summary> 
-    public Enveloped<MessagePinValidated> EnvelopedMessagePinValidated =>
+    public Enveloped<MessageValidated> EnvelopedMessagePinValidated =>
         new(DareEnvelope);
 
     ///<summary>The authorized action.</summary> 

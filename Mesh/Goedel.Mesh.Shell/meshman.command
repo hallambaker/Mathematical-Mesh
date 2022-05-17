@@ -1223,7 +1223,17 @@
 				Brief "The callsign to bind"
 			Include AccountOptions
 			Include Reporting
+		
+		Command CallsignStatus "status"
+			Brief "Report callsign registration status."
+			Include AccountOptions
+			Include Reporting
 
+		Command CallsignGet "get"
+			Brief "Report callsign registration status."
+			Include AccountOptions
+			Include Reporting		
+		
 		Command CallsignList "list"
 			Brief "List callsign registrations."
 			Include AccountOptions

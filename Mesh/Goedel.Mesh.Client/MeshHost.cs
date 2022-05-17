@@ -416,7 +416,7 @@ public class MeshHost : Disposable {
     /// <param name="create">If true, create a new mesh, otherwise attempt recovery from the
     /// service.</param>
     /// <returns>Context for administering the Mesh</returns>
-    public ContextUser ConfigureMesh(
+    public virtual ContextUser ConfigureMesh(
             string accountAddress,
             string localName = null,
             PrivateKeyUDF accountSeed = null,

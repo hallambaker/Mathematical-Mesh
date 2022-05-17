@@ -7,11 +7,9 @@
 
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare
-	Using Goedel.Callsign
-
 
 	Section 3 "Shared Classes"
-    Service CarnetService "_mmmcarnet._tcp" "mmmcarnet" CarnetRequest CarnetResponse
+    Service CarnetService "_carnet._tcp" "carnet" CarnetRequest CarnetResponse
 		Description
 
 

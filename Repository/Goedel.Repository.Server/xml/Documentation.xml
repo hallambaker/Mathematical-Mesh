@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Repository.Server</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Repository.Server.TBS">
+            <summary>
+            TBS
+            </summary>
+        </member>
+        <member name="P:Goedel.Repository.Server.TBS.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Repository.Server.TBS.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Repository.Server.TBS.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Repository.Server.TBS._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Repository.Server.TBS.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Repository.Server.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Repository.Server.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Repository.Server.Extensions">
+            <summary>
+            Extensions class. Provides static convenience extensions.
+            </summary>
+        </member>
+        <member name="T:Goedel.Repository.Server.NamespaceDoc">
+            <summary>
+            Desctiption of the 
+            </summary>
+        </member>
+        <member name="T:Goedel.Repository.Server.RepositoryServiceConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Repository.Server.RepositoryServiceConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Repository.Server.RepositoryServiceConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

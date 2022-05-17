@@ -1,0 +1,8 @@
+﻿
+Namespace Goedel.Repository
+
+	Exception TBS
+		Console "Exception TBS"
+		Description
+			|TBS
+

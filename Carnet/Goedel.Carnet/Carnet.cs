@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 11-May-22 2:52:40 PM
+//  This file was automatically generated at 17-May-22 5:11:04 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -48,7 +48,6 @@ using Goedel.Utilities;
 
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
-using Goedel.Callsign;
 
 
 namespace Goedel.Carnet;
@@ -109,7 +108,7 @@ public abstract partial class CarnetService : Goedel.Protocol.JpcInterface {
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string WellKnown = "mmmcarnet";
+	public const string WellKnown = "carnet";
 
 	///<inheritdoc/>
 	public override string GetWellKnown => WellKnown;
@@ -117,7 +116,7 @@ public abstract partial class CarnetService : Goedel.Protocol.JpcInterface {
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string Discovery = "_mmmcarnet._tcp";
+	public const string Discovery = "_carnet._tcp";
 
 	///<inheritdoc/>
 	public override string GetDiscovery => Discovery;
@@ -163,7 +162,7 @@ public partial class CarnetServiceClient : Goedel.Protocol.JpcClientInterface {
 	/// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string WellKnown = "mmmcarnet";
+	public const string WellKnown = "carnet";
 
     /// <summary>
     /// Well Known service identifier.
@@ -173,7 +172,7 @@ public partial class CarnetServiceClient : Goedel.Protocol.JpcClientInterface {
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string Discovery = "_mmmcarnet._tcp";
+	public const string Discovery = "_carnet._tcp";
 
     /// <summary>
     /// Well Known service identifier.

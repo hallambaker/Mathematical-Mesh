@@ -28,7 +28,7 @@ global using Goedel.Cryptography.Dare;
 global using Goedel.Cryptography.Jose;
 global using Goedel.IO;
 global using Goedel.Mesh.Client;
-global using Goedel.Mesh.ServiceAdmin;
+//global using Goedel.Mesh.ServiceAdmin;
 global using Goedel.Protocol;
 global using Goedel.Protocol.Presentation;
 global using Goedel.Protocol.Service;

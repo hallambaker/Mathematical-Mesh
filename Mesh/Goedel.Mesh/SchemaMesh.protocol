@@ -1139,7 +1139,7 @@
 		Struct Reference References
 			Multiple
 
-	Structure MessagePinValidated
+	Structure MessageValidated
 		Inherits Message
 		Struct DareEnvelope AuthenticatedData
 			Description
@@ -1153,7 +1153,7 @@
 		Binary PinWitness
 			Description
 				|Witness value calculated as KDF (Device.Udf + AccountAddress, ClientNonce)
-
+		
 
 	Structure MessagePin
 		String Account
@@ -1178,7 +1178,7 @@
 	Structure RequestConnection
 		Description
 			|Connection request message. This message contains the information
-		Inherits MessagePinValidated
+		Inherits MessageValidated
 		String AccountAddress
 			Description
 				|
@@ -1214,7 +1214,7 @@
 
 
 	Structure MessageContact
-		Inherits MessagePinValidated
+		Inherits MessageValidated
 		Boolean Reply
 			Description
 				|If true, requests that the recipient return their own contact information
@@ -1270,4 +1270,5 @@
 		String ErrorReport
 			Description
 				|The error report code.
+
 

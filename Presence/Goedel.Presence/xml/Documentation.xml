@@ -46,6 +46,11 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="T:Goedel.Presence.Extensions">
+            <summary>
+            Extensions class. Provides static convenience extensions.
+            </summary>
+        </member>
         <member name="T:Goedel.Presence.NamespaceDoc">
             <summary>
             Desctiption of the 

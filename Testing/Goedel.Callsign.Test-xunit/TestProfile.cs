@@ -24,8 +24,11 @@ using System.Collections.Generic;
 using System.Threading;
 
 using Goedel.Mesh;
+using Goedel.Mesh.Server;
+using Goedel.Mesh.ServiceAdmin;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
+using Goedel.Protocol.Service;
 using Goedel.Test;
 using Goedel.Test.Core;
 
@@ -36,7 +39,7 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
-public partial class ShellTests {
+public partial class RegistrationTests {
     string AliceAccount => $"alice@{ServiceDns}";
     string CarolAccount => $"carol@{ServiceDns}";
     string MalletAccount => $"mallet@{ServiceDns}";
@@ -128,11 +131,36 @@ public partial class ShellTests {
         return deviceB;
         }
 
+    LogService Logger { get; set; }
+    string HostFileCallsign;
+    IMeshMachineClient MeshMachineHost => TestEnvironment.HostMachineMesh;
+    Configuration ConfigurationCallSign { get; set; }
+    PublicMeshService CallSignServiceProvider { get; set; }
+
+
+    const string CallSignDns = "registry.example.net";
+    const string CallSignIP = "127.0.0.1:666";
 
 
 
-    public TestCLI GetCallSignService(
+    public ContextUser GetCallSignService(
                     int charge = 0) {
+
+        TestEnvironment.StartServiceCallSign();
+        //var registryCli = TestEnvironment.GetTestCLI(TestEnvironment.HostMachineRegistry);
+
+        //HostFileCallsign = System.IO.Path.Combine(MeshMachineHost.DirectoryMesh, "mmmconfiguration.json");
+        //ConfigurationCallSign = PublicMeshService.Create(MeshMachineHost, HostFileCallsign,
+        //            CallSignDns, admin:"@registry");
+
+        //Logger = new LogService(ConfigurationCallSign.GenericHostConfiguration, ConfigurationCallSign.MeshServiceConfiguration, null);
+
+
+        //CallSignServiceProvider = new PublicMeshService(MeshMachineHost,
+        //    ConfigurationCallSign.GenericHostConfiguration, ConfigurationCallSign.MeshServiceConfiguration, Logger);
+
+
+
 
 
         throw new NYI();

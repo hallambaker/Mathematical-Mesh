@@ -229,19 +229,41 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Callsign.Registry.TBS">
+        <member name="T:Goedel.Carnet.ContextCarnet">
+            <summary>
+            Context for managing the callsign registry account.
+            </summary>
+        </member>
+        <member name="P:Goedel.Carnet.ContextCarnet.Profile">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.ContextCarnet.Connection">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.ContextCarnet.AccountAddress">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Carnet.ContextCarnet.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
+            <summary>
+            Constructor, creates a <see cref="T:Goedel.Mesh.Client.ContextUser"/> instance for the catalog entry 
+            <paramref name="catalogedMachine"/> on machine <paramref name="meshHost"/>.
+            </summary>
+            <param name="catalogedMachine">Description of the device profile.</param>
+            <param name="meshHost">The Mesh host to add the admin context to.</param>
+        </member>
+        <member name="T:Goedel.Carnet.TBS">
             <summary>
             TBS
             </summary>
         </member>
-        <member name="P:Goedel.Callsign.Registry.TBS.ExceptionFormatDelegate">
+        <member name="P:Goedel.Carnet.TBS.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="P:Goedel.Callsign.Registry.TBS.Templates">
+        <member name="P:Goedel.Carnet.TBS.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.Callsign.Registry.TBS.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Carnet.TBS.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -250,28 +272,33 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Callsign.Registry.TBS._Throw(System.Object)">
+        <member name="M:Goedel.Carnet.TBS._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="P:Goedel.Callsign.Registry.TBS.Throw">
+        <member name="P:Goedel.Carnet.TBS.Throw">
             <summary>
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Callsign.Registry.EventExtensions">
+        <member name="T:Goedel.Carnet.EventExtensions">
             <summary>
             Extensions class defining logging events and convenience methods.
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.Registry.EventExtensions.#cctor">
+        <member name="M:Goedel.Carnet.EventExtensions.#cctor">
             <summary>
             Static initializer, is called once when the module loads.
             </summary>
         </member>
-        <member name="T:CallsignRegistry.NamespaceDoc">
+        <member name="T:Goedel.Carnet.Extensions">
+            <summary>
+            Extensions class. Provides static convenience extensions.
+            </summary>
+        </member>
+        <member name="T:Goedel.Carnet.NamespaceDoc">
             <summary>
             Desctiption of the 
             </summary>

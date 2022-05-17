@@ -37,10 +37,7 @@ namespace Goedel.XUnit;
 
 public partial class ShellTests {
 
-    static ShellTests() {
-        }
 
-    public static ShellTests Test() => new();
     #region // Commitment
     readonly List<TestVectorDigest> commitmentTests = new() {
         new TestVectorDigest("Konrad is the traitor", "ADFI-EPKG-VKPP-NHHM-5DCA-QBRW-AVRJ",

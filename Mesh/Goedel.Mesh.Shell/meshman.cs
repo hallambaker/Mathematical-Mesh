@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 11-May-22 2:52:49 PM
+//  This file was automatically generated at 17-May-22 5:11:23 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -368,6 +368,8 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			{"bind", _CallsignBind._DescribeCommand },
 			{"resolve", _CallsignResolve._DescribeCommand },
 			{"transfer", _CallsignTransfer._DescribeCommand },
+			{"status", _CallsignStatus._DescribeCommand },
+			{"get", _CallsignGet._DescribeCommand },
 			{"list", _CallsignList._DescribeCommand }
 			} // End Entries
 		};
@@ -1557,6 +1559,26 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
 		var result = Dispatch.CallsignTransfer (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_CallsignStatus (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		CallsignStatus		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.CallsignStatus (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_CallsignGet (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		CallsignGet		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.CallsignGet (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -23159,6 +23181,296 @@ public class _CallsignTransfer : Goedel.Command.Dispatch ,
 public partial class CallsignTransfer : _CallsignTransfer {
     } // class CallsignTransfer
 
+public class _CallsignStatus : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new String (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[1] as String;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
+		get => _Data[2] as Flag;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _AutoSync {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _AutoApprove {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[6] as Flag;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[6].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "status",
+		Brief =  "Report callsign registration status.",
+		HandleDelegate =  CommandLineInterpreter.Handle_CallsignStatus,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 1,
+				Key = "local"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoSync", 
+				Default = "true", // null if null
+				Brief = "If true, attempt to synchronize the account to the service before operation",
+				Index = 2,
+				Key = "sync"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoApprove", 
+				Default = "true", // null if null
+				Brief = "If true, automatically approve pending requests with prior authorization.",
+				Index = 3,
+				Key = "auto"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "false", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 4,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 5,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 6,
+				Key = "json"
+				}
+			}
+		};
+
+	}
+
+public partial class CallsignStatus : _CallsignStatus {
+    } // class CallsignStatus
+
+public class _CallsignGet : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new String (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[1] as String;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
+		get => _Data[2] as Flag;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _AutoSync {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _AutoApprove {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[6] as Flag;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[6].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "get",
+		Brief =  "Report callsign registration status.",
+		HandleDelegate =  CommandLineInterpreter.Handle_CallsignGet,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 1,
+				Key = "local"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoSync", 
+				Default = "true", // null if null
+				Brief = "If true, attempt to synchronize the account to the service before operation",
+				Index = 2,
+				Key = "sync"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoApprove", 
+				Default = "true", // null if null
+				Brief = "If true, automatically approve pending requests with prior authorization.",
+				Index = 3,
+				Key = "auto"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "false", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 4,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 5,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 6,
+				Key = "json"
+				}
+			}
+		};
+
+	}
+
+public partial class CallsignGet : _CallsignGet {
+    } // class CallsignGet
+
 public class _CallsignList : Goedel.Command.Dispatch ,
 						IAccountOptions,
 						IReporting{
@@ -25763,6 +26075,16 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		}
 
 	public virtual ShellResult CallsignTransfer ( CallsignTransfer Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult CallsignStatus ( CallsignStatus Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult CallsignGet ( CallsignGet Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}

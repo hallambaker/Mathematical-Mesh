@@ -3245,28 +3245,28 @@
             <summary>Present message as HTTP</summary>
             <returns>The message value.</returns>
         </member>
-        <member name="T:Goedel.Protocol.Message">
+        <member name="T:Goedel.Protocol.BaseMessage">
              <summary>
             
              Base class for all PROTOGEN messages
              </summary>
         </member>
-        <member name="P:Goedel.Protocol.Message._Tag">
+        <member name="P:Goedel.Protocol.BaseMessage._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Protocol.Message.__Tag">
+        <member name="F:Goedel.Protocol.BaseMessage.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.Message._TagDictionary">
+        <member name="P:Goedel.Protocol.BaseMessage._TagDictionary">
             <summary>
             Dictionary mapping tags to factory methods
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.Message.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+        <member name="M:Goedel.Protocol.BaseMessage.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
             Construct an instance from the specified tagged JsonReader stream.
             </summary>

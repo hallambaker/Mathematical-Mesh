@@ -20,13 +20,40 @@
 //  THE SOFTWARE.
 #endregion
 
+using Microsoft.Extensions.Hosting;
 using System.Net;
 
 namespace Goedel.Mesh.Test;
 
 public class TestEnvironmentRdpShell : TestEnvironmentBase {
-    MeshMachineTest HostMachine { get; set; }
+
+    public const string ServiceDnsMesh          = "example.com";
+    public const string ServiceDnsRegistry      = "registry.example.com";
+    public const string ServiceDnsCallsign      = "example.com";
+    public const string ServiceDnsPresence      = "example.com";
+    public const string ServiceDnsRepository    = "example.com";
+
+    public const string ServiceIpMesh           = "127.0.0.1:15099";
+    public const string ServiceIpRegistry       = "127.0.0.1:15098";
+    public const string ServiceIpCallsign       = "127.0.0.1:15097";
+    public const string ServiceIpPresence       = "127.0.0.1:15096";
+    public const string ServiceIpRepository     = "127.0.0.1:15095";
+
+
+    public MeshMachineTest HostMachineMesh { get; set; }
+
+    public MeshMachineTest HostMachineRegistry { get; set; }
+
+
+    public MeshMachineTest HostMachinePresence { get; set; }
+
+
+
     Goedel.Mesh.Shell.ServiceAdmin.Shell ServiceAdminShell { get; set; }
+
+    Goedel.Mesh.Shell.ServiceAdmin.Shell ServiceAdminShellCallSign { get; set; }
+
+
     Goedel.Mesh.Shell.ServiceAdmin.CommandLineInterpreter ServiceAdminCLI { get; set; }
 
 
@@ -36,11 +63,21 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
     //=> ServiceDns = "localhost";
 
     RudService RudService { get; set; }
+    RudService RudServiceCallSign { get; set; }
+
+
 
     IEnumerable<IConfguredService> Providers;
+    IEnumerable<IConfguredService> Providers1;
+
+
     protected override void Disposing() {
         RudService?.Dispose();
-        HostMachine?.Dispose();
+        HostMachineMesh?.Dispose();
+
+        RudServiceCallSign?.Dispose();
+        HostMachineRegistry?.Dispose();
+
         ServiceAdminShell?.MeshMachine?.MeshHost?.Dispose();
 
         if (Providers != null) {
@@ -48,18 +85,22 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
                 provider.Dispose();
                 }
             }
-
+        if (Providers1 != null) {
+            foreach (var provider in Providers1) {
+                provider.Dispose();
+                }
+            }
         base.Disposing();
         }
 
 
     //CancellationToken CancellationToken;
 
-    public MeshRudListener DependencyInjectionHostAsync() {
+    public IHostBuilder DependencyInjectionHostMesh(MeshMachineTest hostMachine) {
 
-        var settings = PublicMeshService.GetService(HostMachine);
+        var settings = PublicMeshService.GetService(hostMachine);
 
-        using var host = Host.CreateDefaultBuilder()
+        return Host.CreateDefaultBuilder()
 
                 // read in the options file here.
                 .ConfigureAppConfiguration((hostingContext, configuration) => {
@@ -70,22 +111,15 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
                 })
                 .ConfigureLogging(logging => {
                     logging.ClearProviders();
-                    //logging.AddDareLogger();
                     logging.AddConsoleLogger();
                 })
                 .ConfigureServices((hostContext, services) => {
                     services.AddSingleton<HostMonitor, HostMonitor>();
                     services.AddSingleton<IServiceListener, MeshRudListener>();
                     services.AddSingleton<IMeshMachine, MeshMachineCore>(
-                            s => HostMachine);
-                })
-            .AddMeshService()
-        .Build();
+                            s => hostMachine);
+                });
 
-        var services = host.Services;
-        var listener = services.GetRequiredService<IServiceListener>() as MeshRudListener;
-        Providers = services.GetServices<IConfguredService>() ;
-        return listener;
         }
 
 
@@ -96,24 +130,63 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
         //CancellationToken = new();
 
 
-        HostMachine = new MeshMachineTest(this, "host1");
+        HostMachineMesh = new MeshMachineTest(this, "hostMesh");
 
         // initialize the service and host configuration
         ServiceAdminShell = new Shell.ServiceAdmin.Shell() {
-            MeshMachine = HostMachine
+            MeshMachine = HostMachineMesh
             };
         ServiceAdminCLI = new();
-        ServiceAdmin($"create example.com /host=host1.example.com /admin=admin@example.com /account=Domain\\user");
+        ServiceAdmin(ServiceAdminShell, 
+            $"create {ServiceDnsMesh} /host=host1.{ServiceDnsMesh} /ip={ServiceIpMesh} /admin=admin@{ServiceDnsMesh} /account=Domain\\user");
 
-        ServiceAdmin($"dns {dnsConfig}");
-        ServiceAdmin($"netsh {netshConfig}");
-        var listener = DependencyInjectionHostAsync();
+        ServiceAdmin(ServiceAdminShell, $"dns {dnsConfig}");
+        ServiceAdmin(ServiceAdminShell, $"netsh {netshConfig}");
+        var hostbuilder = DependencyInjectionHostMesh(HostMachineMesh);
+
+        using var host = hostbuilder.AddMeshService().Build();
+
+        var services = host.Services;
+        var listener = services.GetRequiredService<IServiceListener>() as MeshRudListener;
+        Providers = services.GetServices<IConfguredService>();
 
 
         RudService = listener.RudService;
 
 
         }
+
+
+    public void StartServiceCallSign() {
+
+        //CancellationToken = new();
+
+
+        HostMachineRegistry = new MeshMachineTest(this, "hostCallsign");
+
+        // initialize the service and host configuration
+        ServiceAdminShellCallSign = new Shell.ServiceAdmin.Shell() {
+            MeshMachine = HostMachineRegistry
+            };
+        ServiceAdminCLI = new();
+        ServiceAdmin(ServiceAdminShellCallSign,
+            $"create {ServiceDnsRegistry} /host=host1.{ServiceDnsRegistry} /ip={ServiceIpRegistry} /admin=registry@{ServiceDnsRegistry} /account=Domain\\user");
+
+        var hostbuilder = DependencyInjectionHostMesh(HostMachineRegistry);
+
+        using var host = hostbuilder.AddMeshService().Build();
+
+        var services = host.Services;
+        var listener = services.GetRequiredService<IServiceListener>() as MeshRudListener;
+        Providers1 = services.GetServices<IConfguredService>();
+
+
+        RudServiceCallSign = listener.RudService;
+
+
+        }
+
+
 
 
     public override MeshServiceClient GetMeshClient(
@@ -135,10 +208,10 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
         return client;
         }
 
-    public void ServiceAdmin(string command) {
+    public void ServiceAdmin(Shell.ServiceAdmin.Shell shell, string command) {
 
         var args = command.Split(" ");
-        ServiceAdminCLI.MainMethod(ServiceAdminShell, args);
+        ServiceAdminCLI.MainMethod(shell, args);
         }
 
     //public Goedel.Mesh.Shell.Host.ShellResult OldHost(string command) {

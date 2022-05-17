@@ -30,104 +30,12 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
-[Collection("Sequential")]
-public partial class ShellTestsAdmin : ShellTests {
-    TestEnvironmentBase testEnvironmentCommon;
+public partial class RegistrationTests : Disposable {
 
-
-    protected override void Disposing() {
-        testEnvironmentCommon.Dispose();
-        base.Disposing();
+    static RegistrationTests() {
         }
 
-
-    // Use the new test environment (when defined.)
-    public override TestEnvironmentBase GetTestEnvironment() {
-
-        //var shell = new Goedel.Mesh.Shell.ServiceAdmin.Shell() {
-        //    };
-
-        //throw new NYI();
-
-        testEnvironmentCommon = new TestEnvironmentRdpShell() {
-            JpcConnection = Protocol.JpcConnection.Http
-            };
-        return testEnvironmentCommon;
-        }
-
-    public static new ShellTestsAdmin Test() => new();
-
-
-    [Fact]
-    public void TestDns() {
-
-        var testCLI = GetTestCLI();
-
-        var result = testCLI.Dispatch("account hello alice@example.com");
-
-        EndTest();
-
-        }
-
-
-    }
-
-// Remove in time because these are really not different enough to be worth considering as different.
-
-//[Collection("Sequential")]
-//public partial class ShellTestsHTTP : ShellTests {
-//    TestEnvironmentCommon testEnvironmentCommon;
-
-
-//    protected override void Disposing() {
-//        testEnvironmentCommon.Dispose();
-//        base.Disposing();
-//        }
-
-
-//    // Use the new test environment (when defined.)
-//    public override TestEnvironmentCommon GetTestEnvironment() {
-
-//        testEnvironmentCommon = new TestEnvironmentRdp() {
-//            JpcConnection = Protocol.JpcConnection.Http
-//            };
-//        return testEnvironmentCommon;
-//        }
-
-//    public static new ShellTestsHTTP Test() => new();
-
-
-//    public override TestCLI GetTestCLI(string MachineName = null) {
-//        var testShell = new TestShell(TestEnvironment, MachineName, false);
-//        return new TestCLI(testShell);
-//        }
-
-
-//    }
-
-
-//public partial class ShellTestsRud : ShellTests {
-//    TestEnvironmentCommon testEnvironmentCommon;
-
-
-//    //protected override void Disposing() {
-//    //    testEnvironmentCommon.Dispose();
-//    //    base.Disposing();
-//    //    }
-//    public override TestEnvironmentCommon GetTestEnvironment() => new() {
-//        JpcConnection = Protocol.JpcConnection.Rud
-//        };
-
-
-//    public static new ShellTestsRud Test() => new();
-
-//    }
-
-
-
-public partial class ShellTests : Disposable {
-
-
+    public static RegistrationTests Test() => new();
 
     protected virtual void EndTest() {
         testEnvironment?.Dispose();
@@ -141,8 +49,9 @@ public partial class ShellTests : Disposable {
 
 
     #region // The test environment specific calls
-    public virtual TestEnvironmentBase GetTestEnvironment() => new TestEnvironmentCommon();
-
+    public virtual TestEnvironmentRdpShell GetTestEnvironment() => new TestEnvironmentRdpShell() {
+        JpcConnection = Protocol.JpcConnection.Http
+        };
     public virtual TestCLI GetTestCLI(string machineName = null) => TestEnvironment.GetTestCLI(machineName);
 
         //{
@@ -154,11 +63,11 @@ public partial class ShellTests : Disposable {
 
 
     ///<summary>The test environment, base for all </summary>
-    public TestEnvironmentBase TestEnvironment => testEnvironment ??
+    public TestEnvironmentRdpShell TestEnvironment => testEnvironment ??
         GetTestEnvironment().CacheValue(out testEnvironment);
-    TestEnvironmentBase testEnvironment;
+    TestEnvironmentRdpShell testEnvironment;
 
-    public ShellTests() { }
+    public RegistrationTests() { }
 
 
 

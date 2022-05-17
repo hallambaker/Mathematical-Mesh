@@ -21,7 +21,9 @@ LinkFiles = \
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Protocol.dll\
-    Goedel.Utilities.dll
+    Goedel.Utilities.dll\
+    Goedel.Mesh.Client.dll\
+    Goedel.Mesh.dll
 
 ToolTargets = \
 	Carnet.cs\

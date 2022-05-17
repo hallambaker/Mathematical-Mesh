@@ -185,6 +185,21 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.CallsignRegister(Goedel.Mesh.Shell.CallsignRegister)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.CallsignBind(Goedel.Mesh.Shell.CallsignBind)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.CallsignResolve(Goedel.Mesh.Shell.CallsignResolve)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.CallsignTransfer(Goedel.Mesh.Shell.CallsignTransfer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.CallsignList(Goedel.Mesh.Shell.CallsignList)">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.ContactStatic(Goedel.Mesh.Shell.ContactStatic)">
             <summary>
             Dispatch method
@@ -4865,6 +4880,48 @@
             <summary>Field accessor for option [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CallsignTransfer.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignStatus.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignStatus.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignStatus.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignStatus.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignStatus.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignStatus.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignStatus.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignGet.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignGet.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignGet.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignGet.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignGet.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignGet.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._CallsignGet.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CallsignList.AccountAddress">

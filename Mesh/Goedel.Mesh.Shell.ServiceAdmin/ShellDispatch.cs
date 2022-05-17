@@ -152,8 +152,8 @@ public partial class Shell : _Shell {
         var admin = Options.Admin.Value;
         var runAs = Options.Account.Value;
 
-        var configuration = PublicMeshService.Create(
-                MeshMachine, multiConfig, serviceDns, hostIp, hostDns, admin, runAs);
+        var configuration = MeshMachine.CreatePublicMeshService(
+                multiConfig, serviceDns, hostIp, hostDns, admin, runAs);
 
         // here populate a status response from configuration
 

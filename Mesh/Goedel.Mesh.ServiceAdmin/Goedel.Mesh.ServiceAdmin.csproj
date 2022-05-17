@@ -16,6 +16,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Callsign\Goedel.Callsign.Registry\Goedel.Callsign.Registry.csproj" />
     <ProjectReference Include="..\..\Callsign\Goedel.Callsign.Resolver\Goedel.Callsign.Resolver.csproj" />
+    <ProjectReference Include="..\..\Callsign\Goedel.Callsign\Goedel.Callsign.csproj" />
+    <ProjectReference Include="..\..\Carnet\Goedel.Carnet.Server\Goedel.Carnet.Server.csproj" />
     <ProjectReference Include="..\..\Carnet\Goedel.Carnet\Goedel.Carnet.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
@@ -25,8 +27,11 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\Persistance\Goedel.Persistance\Goedel.Persistance.csproj" />
+    <ProjectReference Include="..\..\Presence\Goedel.Presence.Server\Goedel.Presence.Server.csproj" />
     <ProjectReference Include="..\..\Presence\Goedel.Presence\Goedel.Presence.csproj" />
+    <ProjectReference Include="..\..\Repository\Goedel.Repository.Server\Goedel.Repository.Server.csproj" />
+    <ProjectReference Include="..\..\Repository\Goedel.Repository\Goedel.Repository.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
     <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
   </ItemGroup>
   

@@ -202,7 +202,7 @@ public partial class LayerConnect : ExampleSet {
     public byte[] ProofOfKnowledgeWitnessData;
     public string ProofOfKnowledgeWitnessValue;
 
-    public MessagePinValidated MessagePinValidated;
+    public MessageValidated MessagePinValidated;
 
 
     public List<ExampleResult> AddPasswordToDevice1;

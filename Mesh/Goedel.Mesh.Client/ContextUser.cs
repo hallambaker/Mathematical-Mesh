@@ -306,23 +306,7 @@ public partial class ContextUser : ContextAccount {
 
 
 
-    List<Enveloped<CallsignBinding>> MakeBindings(
-                Profile profile, string accountAddress) {
-        var CallsignBinding = new CallsignBinding() {
-            Canonical = accountAddress.CannonicalAccountAddress(),
-            Display = accountAddress,
-            ProfileUdf = profile.Udf,
-            Services = new() {
-                new NamedService() {
-                    Prefix = MeshService.WellKnown
-                    }
-                }
-            };
-        var envelopedBinding = CallsignBinding.Envelope(signingKey: KeyAdministratorSign);
-        return new List<Enveloped<CallsignBinding>> {
-            new Enveloped<CallsignBinding>( envelopedBinding)
-            };
-        }
+
 
     /// <summary>
     /// Bind to a service under the account address <paramref name="accountAddress"/>.

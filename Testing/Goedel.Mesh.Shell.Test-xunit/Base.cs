@@ -72,62 +72,15 @@ public partial class ShellTestsAdmin : ShellTests {
 
     }
 
-// Remove in time because these are really not different enough to be worth considering as different.
-
-//[Collection("Sequential")]
-//public partial class ShellTestsHTTP : ShellTests {
-//    TestEnvironmentCommon testEnvironmentCommon;
-
-
-//    protected override void Disposing() {
-//        testEnvironmentCommon.Dispose();
-//        base.Disposing();
-//        }
-
-
-//    // Use the new test environment (when defined.)
-//    public override TestEnvironmentCommon GetTestEnvironment() {
-
-//        testEnvironmentCommon = new TestEnvironmentRdp() {
-//            JpcConnection = Protocol.JpcConnection.Http
-//            };
-//        return testEnvironmentCommon;
-//        }
-
-//    public static new ShellTestsHTTP Test() => new();
-
-
-//    public override TestCLI GetTestCLI(string MachineName = null) {
-//        var testShell = new TestShell(TestEnvironment, MachineName, false);
-//        return new TestCLI(testShell);
-//        }
-
-
-//    }
-
-
-//public partial class ShellTestsRud : ShellTests {
-//    TestEnvironmentCommon testEnvironmentCommon;
-
-
-//    //protected override void Disposing() {
-//    //    testEnvironmentCommon.Dispose();
-//    //    base.Disposing();
-//    //    }
-//    public override TestEnvironmentCommon GetTestEnvironment() => new() {
-//        JpcConnection = Protocol.JpcConnection.Rud
-//        };
-
-
-//    public static new ShellTestsRud Test() => new();
-
-//    }
 
 
 
 public partial class ShellTests : Disposable {
 
+    static ShellTests() {
+        }
 
+    public static ShellTests Test() => new();
 
     protected virtual void EndTest() {
         testEnvironment?.Dispose();

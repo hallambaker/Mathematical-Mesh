@@ -21,7 +21,9 @@ LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
-    Goedel.Protocol.dll
+    Goedel.Protocol.dll\
+    Goedel.Mesh.Client.dll\
+    Goedel.Mesh.dll
 
 ToolTargets = \
 	PresenceProtocol.cs\

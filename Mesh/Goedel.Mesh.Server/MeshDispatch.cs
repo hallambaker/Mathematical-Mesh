@@ -200,113 +200,28 @@ public class PublicMeshService : MeshService {
         IMeshMachineClient meshMachine, string fileSpec=null) => GetFilePath(
             meshMachine, fileSpec ?? DefaultConfiguration, "Service");
 
-    /// <summary>
-    /// Return the file path for the service specified <paramref name="hostname"/>. The
-    /// host description is always stored in a location determined by 
-    /// <paramref name="meshMachine"/>.
-    /// </summary>
-    /// <param name="meshMachine">The Mesh machine specification (used to determine
-    /// the location of system configuration files).</param>
-    /// <param name="hostname">The host name.</param>
-    /// <returns>The file path.</returns>
-    public static string GetHost(
-        IMeshMachineClient meshMachine, string hostname) =>
-        Path.Combine(meshMachine.DirectoryMesh, "Hosts", hostname);
 
 
     #region // Create service
 
-    /// <summary>
-    /// Create a new Mesh Service
-    /// </summary>
-    /// <param name="meshMachine">The Mesh Machine</param>
-    /// <param name="serviceConfig">The service configuration file.</param>
-    /// <param name="serviceDns">The canonical DNS name of the service</param>
-    /// <param name="hostIp">The host IP address</param>
-    /// <param name="hostDns">The host DNS name</param>
-    /// <param name="admin">The administrative account to create.</param>
-    /// <param name="hostAccount">The platform account under which the host process is to run.</param>
-    /// <returns>The created service</returns>
-    public static Configuration Create(
-        IMeshMachineClient meshMachine,
-        string serviceConfig,
-        string serviceDns,
-        string hostIp=null,
-        string hostDns = null,
-        string admin = null,
-        string? hostAccount = null) {
 
-        hostDns ??= Dns.GetHostName();
-        hostIp ??= "127.0.0.1:666";
-        hostDns ??= serviceDns;
+    public virtual ContextUser AddAdministrator(
+                IMeshMachineClient meshMachine, 
+                string admin, 
+                MeshServiceConfiguration serviceConfiguration, 
+                DareLoggerConfiguration dareLogger) {
+        serviceConfiguration.Administrators.Add(admin);
+        dareLogger.Recipients.Add(admin);
+        // bind to the service instance directly
+        using var directMachine = new MeshMachineDirect(meshMachine, this);
+        using var meshHost = new MeshHost(meshMachine.MeshHost, directMachine);
+        var contextUser = meshHost.ConfigureMesh(admin, "admin");
+        var udf = contextUser.ProfileUser.Udf;
 
-        var pathHost = GetHost(meshMachine, hostDns);
-        var pathLog = GetHost(meshMachine, "Logs");
-
-        // Create the initial service application
-        var configuration = new Configuration();
-
-
-        var serviceConfiguration = new MeshServiceConfiguration {
-            // ServiceUdf later
-            // Administrators later
-            ServiceDNS = new List<string> { serviceDns },
-            ServicePath = meshMachine.DirectoryMesh,
-            HostPath = pathHost
-            };
-
-        var hostConfiguration = new GenericHostConfiguration {
-            // HostUdf later
-            // DeviceUdf later
-            Description = $"New service configuration created on {DateTime.Now.ToRFC3339()}",
-            HostDns = hostDns,
-            IP = new List<string> { hostIp },
-            RunAs = hostAccount
-            };
-
-        var dareLogger = new DareLoggerConfiguration {
-            Path = pathLog,
-            };
-        var consoleLogger = new ConsoleLoggerConfiguration {
-            Default = LogLevel.Trace
-            };
-
-        var logging = new Dictionary<string, object> {
-                { "Default", "Trace" },
-                { "Dare", dareLogger },
-                { "Console", consoleLogger },
-            };
-
-
-        configuration.Add(MeshServiceConfiguration.ConfigurationEntry, serviceConfiguration);
-        configuration.Add(GenericHostConfiguration.ConfigurationEntry, hostConfiguration);
-        configuration.Dictionary.Add("Logging", logging);
-
-        // create the service. This will populate the UDF fields.
-        using var service = Create(meshMachine, serviceConfiguration, hostConfiguration);
-
-        if (admin != null) {
-
-            serviceConfiguration.Administrators.Add(admin);
-            dareLogger.Recipients.Add(admin);
-            // bind to the service instance directly
-            var directMachine = new MeshMachineDirect(meshMachine, service);
-            var meshHost = new MeshHost(meshMachine.MeshHost, directMachine);
-
-            // create an administrator profile
-            using var contextUser = meshHost.ConfigureMesh(admin, "admin");
-            var udf = contextUser.ProfileUser.Udf;
-
-            // Set the log files to encrypt to the newly created admin account.
-            var adminSin = $"{admin}.mm-{udf}";
-            //localLog.Readers = new List<string> { adminSin };
-            }
-
-        // Write the configuration out to the file
-        serviceConfig.MakePath();
-        configuration.ToFile(serviceConfig);
-
-        return configuration;
+        // Set the log files to encrypt to the newly created admin account.
+        var adminSin = $"{admin}.mm-{udf}";
+        //localLog.Readers = new List<string> { adminSin };
+        return contextUser;
         }
 
 

@@ -25,7 +25,7 @@ namespace Goedel.Mesh.Server;
 /// <summary>
 /// Machine using a client directly bound to the underlying service.
 /// </summary>
-public class MeshMachineDirect : IMeshMachineClient {
+public class MeshMachineDirect : Disposable, IMeshMachineClient {
 
     IMeshMachineClient MeshMachineClient { get; }
     PublicMeshService PublicMeshService { get; }

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 11-May-22 2:52:40 PM
+//  This file was automatically generated at 17-May-22 5:11:04 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -111,7 +111,7 @@ public abstract partial class PresenceService : Goedel.Protocol.JpcInterface {
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string WellKnown = "mmm_present";
+	public const string WellKnown = "_presence";
 
 	///<inheritdoc/>
 	public override string GetWellKnown => WellKnown;
@@ -119,7 +119,7 @@ public abstract partial class PresenceService : Goedel.Protocol.JpcInterface {
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string Discovery = "_mmm_present._tcp";
+	public const string Discovery = "_presence._tcp";
 
 	///<inheritdoc/>
 	public override string GetDiscovery => Discovery;
@@ -176,7 +176,7 @@ public partial class PresenceServiceClient : Goedel.Protocol.JpcClientInterface 
 	/// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string WellKnown = "mmm_present";
+	public const string WellKnown = "_presence";
 
     /// <summary>
     /// Well Known service identifier.
@@ -186,7 +186,7 @@ public partial class PresenceServiceClient : Goedel.Protocol.JpcClientInterface 
     /// <summary>
     /// Well Known service identifier.
     /// </summary>
-	public const string Discovery = "_mmm_present._tcp";
+	public const string Discovery = "_presence._tcp";
 
     /// <summary>
     /// Well Known service identifier.

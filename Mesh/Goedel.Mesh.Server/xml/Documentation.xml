@@ -422,7 +422,7 @@
         <member name="M:Goedel.Mesh.Server.MeshConfiguredService.Dispose">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshConfiguredService.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener},Goedel.Mesh.IMeshMachine,Goedel.Protocol.Service.HostMonitor,Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration})">
+        <member name="M:Goedel.Mesh.Server.MeshConfiguredService.#ctor(Microsoft.Extensions.Logging.ILogger{Goedel.Protocol.GenericHost.ManagedListener},Goedel.Mesh.IMeshMachine,Goedel.Protocol.Service.HostMonitor,Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Mesh.Server.MeshServiceConfiguration},Microsoft.Extensions.Options.IOptionsMonitor{Goedel.Protocol.GenericHostConfiguration})">
             <summary>
             Mesh service provider instance configured with options specifie in 
             <paramref name="meshHostConfiguration"/> and <paramref name="genericHostConfiguration"/>.
@@ -1172,7 +1172,7 @@
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Protocol.GenericHostConfiguration,Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration,Goedel.Protocol.Service.LogService)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Protocol.GenericHostConfiguration,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.Service.LogService)">
             <summary>
             A Mesh service provider.
             </summary>
@@ -1195,31 +1195,7 @@
             <param name="fileSpec">The service description specifier.</param>
             <returns>The file path.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.GetHost(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
-            <summary>
-            Return the file path for the service specified <paramref name="hostname"/>. The
-            host description is always stored in a location determined by 
-            <paramref name="meshMachine"/>.
-            </summary>
-            <param name="meshMachine">The Mesh machine specification (used to determine
-            the location of system configuration files).</param>
-            <param name="hostname">The host name.</param>
-            <returns>The file path.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            Create a new Mesh Service
-            </summary>
-            <param name="meshMachine">The Mesh Machine</param>
-            <param name="serviceConfig">The service configuration file.</param>
-            <param name="serviceDns">The canonical DNS name of the service</param>
-            <param name="hostIp">The host IP address</param>
-            <param name="hostDns">The host DNS name</param>
-            <param name="admin">The administrative account to create.</param>
-            <param name="hostAccount">The platform account under which the host process is to run.</param>
-            <returns>The created service</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.ServiceAdmin.MeshServiceConfiguration,Goedel.Protocol.GenericHostConfiguration,System.String)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.GenericHostConfiguration,System.String)">
             <summary>
             Create new service and host configurations and attach the service to the host.
             </summary>
@@ -1540,6 +1516,17 @@
             </summary>
             <param name="account">The account to get.</param>
             <returns>The locked account entry if found, otherwise null.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshServiceConfiguration">
+            <summary>
+            The Mesh service configuration.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServiceConfiguration.ConfigurationEntry">
+            <summary>The configuration entry.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshServiceConfiguration.GetConfigurationEntry">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Server.NamespaceDoc">
             <summary>

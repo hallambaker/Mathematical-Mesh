@@ -46,5 +46,10 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="T:Goedel.Presence.Messaging.NamespaceDoc">
+            <summary>
+            Desctiption of the 
+            </summary>
+        </member>
     </members>
 </doc>

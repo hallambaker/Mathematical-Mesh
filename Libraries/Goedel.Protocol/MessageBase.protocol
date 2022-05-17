@@ -1,4 +1,4 @@
-﻿Protocol Goedel.Protocol Message Message
+﻿Protocol Goedel.Protocol BaseMessage BaseMessage
 	Description
 		|Base class for all PROTOGEN messages
 

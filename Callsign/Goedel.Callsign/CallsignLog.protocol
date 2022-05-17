@@ -223,4 +223,18 @@
 			Description
 				|The basis for the challenge
 				
+	Section 2 "Message Classes"
 
+	Structure CallsignRegistrationRequest
+		External MessageValidated
+		Description
+			|Connection request message. This message contains the information
+		Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
+			Description
+				|The enveloped binnding of the callsign to the profile.	
+
+	Structure CallsignRegistrationResponse
+		External Message
+		Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
+			Description
+				|The enveloped binnding of the callsign to the profile.	

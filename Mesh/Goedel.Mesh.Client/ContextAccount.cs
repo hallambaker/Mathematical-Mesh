@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography.Jose;
+
 namespace Goedel.Mesh.Client;
 
 ///<summary>Track the synchronization status of an upload or download operation.</summary>
@@ -122,11 +124,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
     ///<summary>The account profile key</summary>
-    protected KeyPair KeyProfile => ActivationCommon?.ProfileSignatureKey;
+    public KeyPair KeyProfile => ActivationCommon?.ProfileSignatureKey;
     ///<summary>The administration signature key</summary>
-    protected KeyPair KeyAdministratorSign => ActivationCommon?.AdministratorSignatureKey;
+    public KeyPair KeyAdministratorSign => ActivationCommon?.AdministratorSignatureKey;
     ///<summary>The administration signature key</summary>
-    protected KeyPair KeyAdministratorEncrypt => ActivationCommon?.AdministratorEncryptionKey;
+    public KeyPair KeyAdministratorEncrypt => ActivationCommon?.AdministratorEncryptionKey;
 
 
     ///<summary>The account encryption key </summary>
@@ -844,6 +846,40 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="joseKey">The private key parameters.</param>
     /// <param name="exportable">If true, the key is exportable.</param>
     public void Persist(string udf, IJson joseKey, bool exportable) => throw new NotImplementedException();
+
+
+    /// <summary>
+    /// Make a resolution request to the Callsign Resolution service provisioned.
+    /// </summary>
+    /// <param name="callsign">The callsign to resolve.</param>
+    public void CallsignResolve(
+                string callsign) {
+
+        }
+
+ 
+
+    public List<Enveloped<CallsignBinding>> MakeBindings(
+            Profile profile, string accountAddress) {
+        var callsignBinding = new CallsignBinding() {
+            Canonical = accountAddress.CannonicalAccountAddress(),
+            Display = accountAddress,
+            ProfileUdf = profile.Udf,
+            Services = new() {
+                new NamedService() {
+                    Prefix = MeshService.WellKnown
+                    }
+                }
+            };
+        var envelopedBinding = callsignBinding.Envelope(signingKey: KeyAdministratorSign);
+        return new List<Enveloped<CallsignBinding>> {
+            new Enveloped<CallsignBinding>( envelopedBinding)
+            };
+        }
+
+
+
+
 
     #endregion
 

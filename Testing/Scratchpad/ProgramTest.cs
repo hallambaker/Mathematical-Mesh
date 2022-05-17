@@ -70,7 +70,7 @@ partial class Program {
 
 
 
-        ShellTests.Test().TestAccountDelete();
+        RegistrationTests.Test().CallsignBind();
 
 
 
@@ -79,7 +79,7 @@ partial class Program {
 
         //ShellTestsAdmin.Test().TestProfileConnectPinExpired();
         //ShellTestsAdmin.Test().TestAccountRefreshed();
-        //ShellTests.Test().TestConnectRequest();
+        ShellTests.Test().TestConnectRequest();
 
 
 

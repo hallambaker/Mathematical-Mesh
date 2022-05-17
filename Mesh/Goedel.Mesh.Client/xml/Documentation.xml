@@ -774,6 +774,12 @@
             <param name="joseKey">The private key parameters.</param>
             <param name="exportable">If true, the key is exportable.</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.CallsignResolve(System.String)">
+            <summary>
+            Make a resolution request to the Callsign Resolution service provisioned.
+            </summary>
+            <param name="callsign">The callsign to resolve.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.TransactBegin">
             <summary>
             Begin a transaction.

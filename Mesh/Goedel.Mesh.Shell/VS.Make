@@ -18,6 +18,9 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Callsign.Registry.dll\
+    Goedel.Callsign.Resolver.dll\
+    Goedel.Callsign.dll\
     Goedel.Command.Json.dll\
     Goedel.Command.dll\
     Goedel.Utilities.dll\

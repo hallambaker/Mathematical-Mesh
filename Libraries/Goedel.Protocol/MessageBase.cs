@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 11-May-22 2:52:34 PM
+//  This file was automatically generated at 17-May-22 5:10:17 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -55,7 +55,7 @@ namespace Goedel.Protocol;
 	///
 	/// Base class for all PROTOGEN messages
 	/// </summary>
-public abstract partial class Message : global::Goedel.Protocol.JsonObject {
+public abstract partial class BaseMessage : global::Goedel.Protocol.JsonObject {
 
 	/// <summary>
     /// Tag identifying this class
@@ -65,7 +65,7 @@ public abstract partial class Message : global::Goedel.Protocol.JsonObject {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Message";
+	public new const string __Tag = "BaseMessage";
 
 	/// <summary>
     /// Dictionary mapping tags to factory methods
@@ -108,7 +108,7 @@ public abstract partial class Message : global::Goedel.Protocol.JsonObject {
 	///
 	/// Base class for all request messages.
 	/// </summary>
-abstract public partial class Request : Message {
+abstract public partial class Request : BaseMessage {
         /// <summary>
         ///Name of the Service to which the request is directed.
         /// </summary>
@@ -245,7 +245,7 @@ abstract public partial class Request : Message {
 	/// Thus the RecryptResponse message MAY be returned in response 
 	/// to any request.
 	/// </summary>
-abstract public partial class Response : Message {
+abstract public partial class Response : BaseMessage {
         /// <summary>
         ///Major status return code. The SMTP/HTTP scheme of 2xx = Success,
         ///3xx = incomplete, 4xx = failure is followed.
@@ -412,7 +412,7 @@ abstract public partial class Response : Message {
 	///
 	/// Describes a protocol version.
 	/// </summary>
-public partial class Version : Message {
+public partial class Version : BaseMessage {
         /// <summary>
         ///Major version number of the service protocol. A higher
         /// </summary>
@@ -620,7 +620,7 @@ public partial class Version : Message {
 	///
 	/// Describes a message content encoding.
 	/// </summary>
-public partial class Encoding : Message {
+public partial class Encoding : BaseMessage {
         /// <summary>
         ///The IANA encoding name
         /// </summary>

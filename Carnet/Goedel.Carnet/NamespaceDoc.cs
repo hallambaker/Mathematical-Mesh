@@ -18,9 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 global using Goedel.Utilities;
+global using Goedel.Mesh;
+global using Goedel.Mesh.Client;
+
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 
-namespace CallsignRegistry; 
+namespace Goedel.Carnet; 
 /// <summary>
 /// Desctiption of the 
 /// </summary>

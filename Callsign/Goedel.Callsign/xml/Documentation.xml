@@ -4,28 +4,6 @@
         <name>Goedel.Callsign</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Callsign.ContextCallsign">
-            <summary>
-            Context for managing the callsign registry account.
-            </summary>
-        </member>
-        <member name="P:Goedel.Callsign.ContextCallsign.Profile">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Callsign.ContextCallsign.Connection">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Callsign.ContextCallsign.AccountAddress">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Callsign.ContextCallsign.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
-            <summary>
-            Constructor, creates a <see cref="T:Goedel.Mesh.Client.ContextUser"/> instance for the catalog entry 
-            <paramref name="catalogedMachine"/> on machine <paramref name="meshHost"/>.
-            </summary>
-            <param name="catalogedMachine">Description of the device profile.</param>
-            <param name="meshHost">The Mesh host to add the admin context to.</param>
-        </member>
         <member name="T:Goedel.Callsign.Callsign">
              <summary>
             
@@ -1152,6 +1130,140 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Callsign.CallsignRegistrationRequest">
+             <summary>
+            
+             Connection request message. This message contains the information
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationRequest.EnvelopedCallsignBinding">
+             <summary>
+            The enveloped binnding of the callsign to the profile.	
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationRequest._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationRequest._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignRegistrationRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignRegistrationRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignRegistrationRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignRegistrationRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignRegistrationRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Callsign.CallsignRegistrationRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Callsign.CallsignRegistrationResponse">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationResponse.EnvelopedCallsignBinding">
+             <summary>
+            The enveloped binnding of the callsign to the profile.	
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationResponse._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationResponse._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignRegistrationResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignRegistrationResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignRegistrationResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignRegistrationResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignRegistrationResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Callsign.CallsignRegistrationResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
         <member name="T:Goedel.Callsign.InvalidPresentation">
             <summary>
             An attempt was made to set the presentation property of a callsign
@@ -1225,6 +1337,19 @@
             <summary>
             Static initializer, is called once when the module loads.
             </summary>
+        </member>
+        <member name="T:Goedel.Callsign.Extensions">
+            <summary>
+            Extensions class. Provides static convenience extensions.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Extensions.CallsignRequest(Goedel.Mesh.Client.ContextAccount,System.String,System.Boolean,System.String)">
+            <summary>
+            Make a callsign registration, binding or transfer request
+            </summary>
+            <param name="callsign"></param>
+            <param name="bind"></param>
+            <param name="transfer"></param>
         </member>
         <member name="T:Callsign.NamespaceDoc">
             <summary>

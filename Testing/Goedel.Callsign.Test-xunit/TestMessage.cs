@@ -34,7 +34,30 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
-public partial class ShellTests {
+public partial class RegistrationTests {
+
+
+    [Fact]
+    public void CallsignBind() {
+        var deviceA = GetTestCLI("MachineAlice");
+
+        var resulta = MakeAccount(deviceA, AliceAccount);
+
+        var serviceCallsign = GetCallSignService();
+
+
+
+        var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
+
+        // Replace this with some command that waits until a completion message is received.
+        var resultSync = deviceA.Dispatch($"callsign sync {AliceCallsign}");
+
+        CheckCallsign(deviceA);
+
+        EndTest();
+        }
+
+
 
     [Fact]
     public void CallsignRegistration() {

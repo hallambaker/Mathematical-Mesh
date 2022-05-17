@@ -1,0 +1,8 @@
+﻿
+Namespace Goedel.Caarnet.Server
+
+	Exception TBS
+		Console "Exception TBS"
+		Description
+			|TBS
+
