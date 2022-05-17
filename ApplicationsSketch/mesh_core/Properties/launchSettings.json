@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "mesh_core": {
-      "commandName": "Project",
-      "commandLineArgs": "hash commit ..\\CommonData\\TestKey_OpenSSH.prv",
-      "workingDirectory": "C:\\Users\\hallam\\Work\\mmm\\Testing\\WorkingDirectory"
-    }
-  }
-}
