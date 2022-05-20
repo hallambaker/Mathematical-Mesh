@@ -77,7 +77,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public virtual ProfileService ProfileService { get; set; }
 
     ///<summary>The Machine context.</summary>
-    protected IMeshMachineClient MeshMachine => MeshHost.MeshMachine;
+    public IMeshMachineClient MeshMachine => MeshHost.MeshMachine;
 
     ///<summary>The key collection for use with the context.</summary>
     public virtual IKeyCollection KeyCollection => MeshMachine.KeyCollection;
@@ -132,11 +132,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
     ///<summary>The account encryption key </summary>
-    protected KeyPair KeyCommonSignature => ActivationCommon?.CommonSignatureKey;
+    public KeyPair KeyCommonSignature => ActivationCommon?.CommonSignatureKey;
     ///<summary>The account encryption key </summary>
-    protected KeyPair KeyCommonEncryption => ActivationCommon?.CommonEncryptionKey;
+    public KeyPair KeyCommonEncryption => ActivationCommon?.CommonEncryptionKey;
     ///<summary>The authentication key used to authenticate as the account.</summary>
-    protected KeyPair KeyCommonAuthentication => ActivationCommon?.CommonAuthenticationKey;
+    public KeyPair KeyCommonAuthentication => ActivationCommon?.CommonAuthenticationKey;
 
 
     ///<summary>True iff the device has administrator privilege.</summary> 
@@ -149,7 +149,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     #endregion
     #region // Store definitions
     ///<summary>The directory containing the catalogs related to the account.</summary>
-    public virtual string StoresDirectory { get; set; }
+    public virtual string StoresDirectory => storesDirectory ??
+        Path.Combine(MeshMachine.DirectoryMesh, Profile.Udf).CacheValue(out storesDirectory);
+    string storesDirectory;
 
     ///<summary>Dictionary locating the stores connected to the context.</summary>
     public Dictionary<string, SyncStatus> DictionaryStores = new();
@@ -172,6 +174,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             { SpoolLocal.Label, SpoolLocal.Factory },
             { SpoolArchive.Label, SpoolArchive.Factory },
         };
+
+    ///<summary>Returns the inbound spool for the account</summary>
+    public SpoolInbound GetSpoolInbound() => GetStore(SpoolInbound.Label) as SpoolInbound;
+
+
     #endregion
     #endregion
 
@@ -336,16 +343,19 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// the service is held at the service, this means only downloading updates at present.
     /// </summary>
     /// <returns>The number of items synchronized</returns>
-    public int Sync() {
+    public virtual int Sync() {
+        var statusRequest = new StatusRequest() {
+            };
+        return Sync(statusRequest);
+        }
+    protected int Sync (StatusRequest statusRequest) {
         int count = 0;
 
-        var statusRequest = new StatusRequest() {
-            CatalogedDeviceDigest = CatalogedMachine.CatalogedDeviceDigest
-            };
         var status = MeshClient.Status(statusRequest);
 
         status.ContainerStatus.AssertNotNull(ServerResponseInvalid.Throw, status);
-        if (status.EnvelopedCatalogedDevice != null) {
+
+        if (statusRequest.CatalogedDeviceDigest != null & status.EnvelopedCatalogedDevice != null) {
             var catalogedDevice = status.EnvelopedCatalogedDevice.Decode(this);
             UpdateCatalogedMachine(catalogedDevice, status.CatalogedDeviceDigest, true);
             }
@@ -499,7 +509,25 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <returns>The default contact.</returns>
     public virtual Contact CreateContact(
-            List<CryptographicCapability> capabilities = null) => throw new NYI();
+            List<CryptographicCapability> capabilities = null) {
+
+        var address = new NetworkAddress(AccountAddress, Profile as ProfileAccount) {
+            Capabilities = capabilities
+            };
+
+        var anchorAccount = new Anchor() {
+            Udf = Profile.Udf,
+            Validation = "Self"
+            };
+        // ContextMesh.ProfileMesh.UDF 
+
+        var contact = new ContactPerson() {
+            Anchors = new List<Anchor>() { anchorAccount },
+            NetworkAddresses = new List<NetworkAddress>() { address }
+            };
+
+        return contact;
+        }
 
     #endregion
     #region // Store management

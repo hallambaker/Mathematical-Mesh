@@ -16,9 +16,9 @@ public partial class TestService {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
 
         var contextAccountRegistry = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountAlice, "main");
-        var contextRegistry = contextAccountRegistry.CreateRegistry();
-        var resolverServer = new ResolverServer();
+                DeviceAliceAdmin, AccountRegistry, "main");
+        var contextRegistry = contextAccountRegistry.CreateRegistry(AccountCallsign);
+        var resolverServer = new ResolverServer(AccountCallsign);
 
 
 
@@ -31,7 +31,8 @@ public partial class TestService {
 
 
 
-        var callsignRequestAlice1 = contextAccountAlice.CallsignRequest(CallsignAlice, true);
+        var callsignRequestAlice1 = contextAccountAlice.CallsignRequest(CallsignAlice, true,
+                registry: AccountCallsign);
         contextRegistry.Process();
         resolverServer.Update();
 
@@ -75,10 +76,9 @@ public partial class TestService {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
 
         var contextAccountRegistry = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountAlice, "main");
-        var contextRegistry = contextAccountRegistry.CreateRegistry();
-        var resolverServer = new ResolverServer();
-
+                DeviceAliceAdmin, AccountRegistry, "main");
+        var contextRegistry = contextAccountRegistry.CreateRegistry(AccountCallsign);
+        var resolverServer = new ResolverServer(AccountCallsign);
 
         // create a payments server
 

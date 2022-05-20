@@ -1,8 +1,8 @@
 ﻿
 Namespace Goedel.Callsign.Registry
 
-	Exception TBS
-		Console "Exception TBS"
+	Exception Internal
+        Console "An internal error occurred"
 		Description
-			|TBS
+			|An internal assertion check failed.
 

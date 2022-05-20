@@ -432,13 +432,6 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationCommon.#ctor(Goedel.Mesh.ActivationApplicationGroup)">
-            <summary>
-            Initializes a new instance of the ActivationAccount from the group application
-            <paramref name="activationApplicationGroup"/>.
-            </summary>
-            <param name="activationApplicationGroup">The base activation of the group.</param>
-        </member>
         <member name="M:Goedel.Mesh.ActivationCommon.#ctor(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF)">
             <summary>
             Constructor returning an activation account for the seed <paramref name="secretSeed"/>.
@@ -717,7 +710,7 @@
         </member>
         <member name="P:Goedel.Mesh.ActivationApplicationGroup.EnvelopedConnectionService">
              <summary>
-            Sined connection service delegation allowing the device to
+            Signed connection service delegation allowing the device to
             access the account.
              </summary>
         </member>
@@ -890,7 +883,6 @@
             <param name="profileGroup">The group profile.</param>
             <param name="activationAccount">The activation data.</param>
             <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
-            <param name="connectionAddress">Connection binding profile to an address.</param>
             <returns>The created group.</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedGroup.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
@@ -1595,6 +1587,91 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Assertion.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.CallsignBinding">
+            <summary>
+            </summary>
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CallsignBinding.Canonical">
+             <summary>
+            The canonical form of the callsign.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CallsignBinding.Display">
+             <summary>
+            The display form of the callsign. This MAY include characters such as whitespace,
+            trademark signifiers, etc. that are omitted of trranslated in the canonical form.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CallsignBinding.ProfileUdf">
+             <summary>
+            The profile to which the name is bound.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CallsignBinding.Services">
+             <summary>
+            List of named services. If multiple service providers are specified for a given 
+            service, these are listed in order of priority, most preferred first.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CallsignBinding._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CallsignBinding._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CallsignBinding._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CallsignBinding.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CallsignBinding._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CallsignBinding.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CallsignBinding.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CallsignBinding.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.CallsignBinding.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -14351,55 +14428,76 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.CallsignBinding">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CallsignBinding.Canonical">
+        <member name="T:Goedel.Mesh.Accreditation">
              <summary>
-            The canonical form of the callsign.
+            
+             Registration of a trusted third party accreditation of a callsign/profile binding.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CallsignBinding.Display">
+        <member name="P:Goedel.Mesh.Accreditation.Callsign">
              <summary>
-            The display form of the callsign. This MAY include characters such as whitespace,
-            trademark signifiers, etc. that are omitted of trranslated in the canonical form.
+            The callsign to which the accreditation applies
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CallsignBinding.ProfileUdf">
+        <member name="P:Goedel.Mesh.Accreditation.ProfileUdf">
              <summary>
-            The profile to which the name is bound.
+            The profile to which the accreditation applies.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CallsignBinding.Services">
+        <member name="P:Goedel.Mesh.Accreditation.SubjectNames">
              <summary>
-            List of named services. If multiple service providers are specified for a given 
-            service, these are listed in order of priority, most preferred first.
+            The validated names of the subject
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CallsignBinding._MetaDataParent">
+        <member name="P:Goedel.Mesh.Accreditation.SubjectLogos">
+             <summary>
+            Mesh strong URIs from which a validated logo belonging to the 
+            subject MAY be retreived and validated.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Accreditation.Issued">
+             <summary>
+            The time the assertion was issued.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Accreditation.Expires">
+             <summary>
+            The time the assertion is due to expire
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Accreditation.Policy">
+             <summary>
+            The issuing policy under which the validation was performed.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Accreditation.Practice">
+             <summary>
+            The issuing practices under which the validation was performed.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Accreditation._MetaDataParent">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.CallsignBinding._MetaData">
+        <member name="P:Goedel.Mesh.Accreditation._MetaData">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.CallsignBinding._Tag">
+        <member name="P:Goedel.Mesh.Accreditation._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.CallsignBinding.__Tag">
+        <member name="F:Goedel.Mesh.Accreditation.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CallsignBinding._Factory">
+        <member name="M:Goedel.Mesh.Accreditation._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.CallsignBinding.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.Accreditation.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -14408,7 +14506,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CallsignBinding.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.Accreditation.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -14419,7 +14517,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CallsignBinding.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Accreditation.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -14427,7 +14525,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CallsignBinding.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Mesh.Accreditation.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

@@ -35,7 +35,7 @@ public class ResolverServer  {
     #endregion
     #region // Constructors
 
-    public ResolverServer  () {
+    public ResolverServer  (string Registry) {
         }
 
 

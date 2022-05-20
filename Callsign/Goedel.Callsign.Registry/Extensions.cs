@@ -12,12 +12,15 @@ namespace Goedel.Callsign.Registry;
 /// </summary>
 public static class Extensions {
 
-    public static ContextCallsign CreateRegistry(this ContextUser contextUser) {
-
-
-        throw new NYI();
-
-        }
-
+    /// <summary>
+    /// Create a registry account under the name <paramref name="accountAddress"/> 
+    /// </summary>
+    /// <param name="contextUser"></param>
+    /// <param name="accountAddress"></param>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
+    public static ContextRegistry CreateRegistry(
+            this ContextUser contextUser, string accountAddress) =>
+        ContextRegistry.CreateRegistry(contextUser, accountAddress);
 
     }

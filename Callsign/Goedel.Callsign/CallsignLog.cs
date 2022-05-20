@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 17-May-22 5:11:04 PM
+//  This file was automatically generated at 20-May-22 5:55:46 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -79,20 +79,19 @@ public abstract partial class CallsignEntry : global::Goedel.Protocol.JsonObject
 	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 			new () {
 
-	    {"Callsign", Callsign._Factory},
+	    {"ProfileRegistry", ProfileRegistry._Factory},
 	    {"Registration", Registration._Factory},
+	    {"CatalogedRegistration", CatalogedRegistration._Factory},
 	    {"Page", Page._Factory},
 	    {"CharacterSpan", CharacterSpan._Factory},
 	    {"Canonical", Canonical._Factory},
 	    {"MapChar", MapChar._Factory},
 	    {"MapString", MapString._Factory},
 	    {"Notarization", Notarization._Factory},
-	    {"ProfileDns", ProfileDns._Factory},
-	    {"SecurityPolicy", SecurityPolicy._Factory},
-	    {"Accreditation", Accreditation._Factory},
 	    {"Challenge", Challenge._Factory},
 	    {"CallsignRegistrationRequest", CallsignRegistrationRequest._Factory},
-	    {"CallsignRegistrationResponse", CallsignRegistrationResponse._Factory}
+	    {"CallsignRegistrationResponse", CallsignRegistrationResponse._Factory},
+	    {"ProcessResultCallsignRegistration", ProcessResultCallsignRegistration._Factory}
 		};
 
     [ModuleInitializer]
@@ -119,45 +118,9 @@ public abstract partial class CallsignEntry : global::Goedel.Protocol.JsonObject
 	// Transaction Classes
 	/// <summary>
 	///
-	/// A callsign entry
+	/// Describes a callsign registry.
 	/// </summary>
-public partial class Callsign : CallsignEntry {
-        /// <summary>
-        ///The callsign identifier in canonical form used for query.
-        /// </summary>
-
-	public virtual string						Id  {get; set;}
-        /// <summary>
-        ///The callsign identifier in the prefered presentation form.
-        /// </summary>
-
-	public virtual string						Presentation  {get; set;}
-        /// <summary>
-        ///The UDF of the holder's root of trust
-        /// </summary>
-
-	public virtual string						Holder  {get; set;}
-        /// <summary>
-        ///This callsign is an alias for another registered callsign.
-        /// </summary>
-
-	public virtual string						Alias  {get; set;}
-        /// <summary>
-        ///The callsign or DNS address of the service provider
-        /// </summary>
-
-	public virtual string						Service  {get; set;}
-        /// <summary>
-        ///Address(es) of a DNS service that resolves the authoritative domain 
-        ///'id.mesh'.
-        /// </summary>
-
-	public virtual List<string>				Dns  {get; set;}
-        /// <summary>
-        ///The Mesh Account profile to which the callsign belongs.
-        /// </summary>
-
-	public virtual ProfileAccount						Account  {get; set;}
+public partial class ProfileRegistry : ProfileAccount {
 
     ///<inheritdoc/>
     public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
@@ -165,28 +128,6 @@ public partial class Callsign : CallsignEntry {
     ///<inheritdoc/>
 	public override Dictionary<string, MetaData> _MetaData => 
 		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Id", new MetaDataString(
-				delegate (string _a) {  Id = _a; },
-				() => Id) } ,
-			{ "Presentation", new MetaDataString(
-				delegate (string _a) {  Presentation = _a; },
-				() => Presentation) } ,
-			{ "Holder", new MetaDataString(
-				delegate (string _a) {  Holder = _a; },
-				() => Holder) } ,
-			{ "Alias", new MetaDataString(
-				delegate (string _a) {  Alias = _a; },
-				() => Alias) } ,
-			{ "Service", new MetaDataString(
-				delegate (string _a) {  Service = _a; },
-				() => Service) } ,
-			{ "Dns", new MetaDataListString(
-				delegate (List<string> _a) {  Dns = _a; },
-				() => Dns) } ,
-			{ "Account", new MetaDataStruct(
-				delegate (object _a) {  Account = _a as ProfileAccount; },
-				() => Account,
-				"ProfileAccount" )} 
 		}.CacheValue(out _metaData);
 	Dictionary<string, MetaData> _metaData;
 		
@@ -198,13 +139,13 @@ public partial class Callsign : CallsignEntry {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Callsign";
+	public new const string __Tag = "ProfileRegistry";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Callsign();
+	public static new JsonObject _Factory () => new ProfileRegistry();
 
 
     /// <summary>
@@ -232,48 +173,7 @@ public partial class Callsign : CallsignEntry {
 		if (_wrap) {
 			_writer.WriteObjectStart ();
 			}
-		if (Id != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Id", 1);
-				_writer.WriteString (Id);
-			}
-		if (Presentation != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Presentation", 1);
-				_writer.WriteString (Presentation);
-			}
-		if (Holder != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Holder", 1);
-				_writer.WriteString (Holder);
-			}
-		if (Alias != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Alias", 1);
-				_writer.WriteString (Alias);
-			}
-		if (Service != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Service", 1);
-				_writer.WriteString (Service);
-			}
-		if (Dns != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Dns", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in Dns) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				_writer.WriteString (_index);
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (Account != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Account", 1);
-				Account.Serialize (_writer, false);
-			}
+		((ProfileAccount)this).SerializeX(_writer, false, ref _first);
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
 			}
@@ -285,15 +185,15 @@ public partial class Callsign : CallsignEntry {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new Callsign FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new ProfileRegistry FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Callsign;
+			return Out as ProfileRegistry;
 			}
-		var Result = new Callsign ();
+		var Result = new ProfileRegistry ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -307,45 +207,8 @@ public partial class Callsign : CallsignEntry {
 	public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 		switch (tag) {
-			case "Id" : {
-				Id = jsonReader.ReadString ();
-				break;
-				}
-			case "Presentation" : {
-				Presentation = jsonReader.ReadString ();
-				break;
-				}
-			case "Holder" : {
-				Holder = jsonReader.ReadString ();
-				break;
-				}
-			case "Alias" : {
-				Alias = jsonReader.ReadString ();
-				break;
-				}
-			case "Service" : {
-				Service = jsonReader.ReadString ();
-				break;
-				}
-			case "Dns" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Dns = new List <string> ();
-				while (_Going) {
-					string _Item = jsonReader.ReadString ();
-					Dns.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "Account" : {
-				// An untagged structure
-				Account = new ProfileAccount ();
-				Account.Deserialize (jsonReader);
- 
-				break;
-				}
 			default : {
+				base.DeserializeToken(jsonReader, tag);
 				break;
 				}
 			}
@@ -366,10 +229,10 @@ public partial class Registration : CallsignEntry {
 
 	public virtual string						Id  {get; set;}
         /// <summary>
-        ///Envelope containing the item that has been registered.
+        ///The signed callsign binding
         /// </summary>
 
-	public virtual Enveloped<CallsignEntry>						Entry  {get; set;}
+	public virtual Enveloped<CallsignBinding>						Entry  {get; set;}
         /// <summary>
         ///The UTC time instant that the claim was submitted.
         /// </summary>
@@ -402,9 +265,9 @@ public partial class Registration : CallsignEntry {
 				delegate (string _a) {  Id = _a; },
 				() => Id) } ,
 			{ "Entry", new MetaDataStruct(
-				delegate (object _a) {  Entry = _a as Enveloped<CallsignEntry>; },
+				delegate (object _a) {  Entry = _a as Enveloped<CallsignBinding>; },
 				() => Entry,
-				"Enveloped<CallsignEntry>" )} ,
+				"Enveloped<CallsignBinding>" )} ,
 			{ "Submitted", new MetaDataDateTime(
 				delegate (DateTime? _a) {  Submitted = _a; },
 				() => Submitted) } ,
@@ -531,7 +394,7 @@ public partial class Registration : CallsignEntry {
 				}
 			case "Entry" : {
 				// An untagged structure
-				Entry = new Enveloped<CallsignEntry> ();
+				Entry = new Enveloped<CallsignBinding> ();
 				Entry.Deserialize (jsonReader);
  
 				break;
@@ -553,6 +416,161 @@ public partial class Registration : CallsignEntry {
 				break;
 				}
 			default : {
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class CatalogedRegistration : CatalogedEntry {
+        /// <summary>
+        ///The canonical form of the callsign.
+        /// </summary>
+
+	public virtual string						Canonical  {get; set;}
+        /// <summary>
+        ///Unique registration identifier
+        /// </summary>
+
+	public virtual string						Id  {get; set;}
+        /// <summary>
+        ///The registration entry for the item.
+        /// </summary>
+
+	public virtual Enveloped<Registration>						EnvelopedRegistration  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Canonical", new MetaDataString(
+				delegate (string _a) {  Canonical = _a; },
+				() => Canonical) } ,
+			{ "Id", new MetaDataString(
+				delegate (string _a) {  Id = _a; },
+				() => Id) } ,
+			{ "EnvelopedRegistration", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedRegistration = _a as Enveloped<Registration>; },
+				() => EnvelopedRegistration,
+				"Enveloped<Registration>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedRegistration";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedRegistration();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((CatalogedEntry)this).SerializeX(_writer, false, ref _first);
+		if (Canonical != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Canonical", 1);
+				_writer.WriteString (Canonical);
+			}
+		if (Id != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Id", 1);
+				_writer.WriteString (Id);
+			}
+		if (EnvelopedRegistration != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedRegistration", 1);
+				EnvelopedRegistration.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedRegistration FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedRegistration;
+			}
+		var Result = new CatalogedRegistration ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "Canonical" : {
+				Canonical = jsonReader.ReadString ();
+				break;
+				}
+			case "Id" : {
+				Id = jsonReader.ReadString ();
+				break;
+				}
+			case "EnvelopedRegistration" : {
+				// An untagged structure
+				EnvelopedRegistration = new Enveloped<Registration> ();
+				EnvelopedRegistration.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
 				break;
 				}
 			}
@@ -1382,647 +1400,6 @@ public partial class Notarization : CallsignEntry {
 
 	/// <summary>
 	///
-	/// 
-	/// </summary>
-public partial class ProfileDns : Profile {
-        /// <summary>
-        ///Specify TLS policies for use in the zone.
-        /// </summary>
-
-	public virtual List<SecurityPolicy>				SecurityPolicies  {get; set;}
-
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
-
-    ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "SecurityPolicies", new MetaDataListStruct(
-				delegate (object _a) {  SecurityPolicies = _a as List<SecurityPolicy>; },
-				() => SecurityPolicies,
-				"SecurityPolicy" )} 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "ProfileDns";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ProfileDns();
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((Profile)this).SerializeX(_writer, false, ref _first);
-		if (SecurityPolicies != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("SecurityPolicies", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in SecurityPolicies) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				// This is an untagged structure. Cannot inherit.
-                //_writer.WriteObjectStart();
-                //_writer.WriteToken(_index._Tag, 1);
-				bool firstinner = true;
-				_index.Serialize (_writer, true, ref firstinner);
-                //_writer.WriteObjectEnd();
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ProfileDns FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ProfileDns;
-			}
-		var Result = new ProfileDns ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "SecurityPolicies" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				SecurityPolicies = new List <SecurityPolicy> ();
-				while (_Going) {
-					// an untagged structure.
-					var _Item = new  SecurityPolicy ();
-					_Item.Deserialize (jsonReader);
-					// var _Item = new SecurityPolicy (jsonReader);
-					SecurityPolicies.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
-
-	}
-
-	/// <summary>
-	/// </summary>
-public partial class SecurityPolicy : CallsignEntry {
-        /// <summary>
-        ///The DNS zone(s) to which this policy applies.
-        /// </summary>
-
-	public virtual List<string>				CName  {get; set;}
-        /// <summary>
-        ///IANA protocol name, e.g. SMTP, SUBMIT, HTTP, HTTPS, etc.		
-        /// </summary>
-
-	public virtual List<string>				Protocol  {get; set;}
-        /// <summary>
-        ///Enhancements that are supported for the specified protocol. 
-        ///Allowed values include none/ tls1.2/ tls1.3/ http3/ dnssec
-        /// </summary>
-
-	public virtual List<string>				Enhancements  {get; set;}
-        /// <summary>
-        ///If true, clients MUST use one of the supported enhancements.		
-        /// </summary>
-
-	public virtual bool?						Require  {get; set;}
-        /// <summary>
-        ///Keys specifying roots of trust for the specified protocol(s).
-        /// </summary>
-
-	public virtual List<KeyData>				Roots  {get; set;}
-
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
-
-    ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "CName", new MetaDataListString(
-				delegate (List<string> _a) {  CName = _a; },
-				() => CName) } ,
-			{ "Protocol", new MetaDataListString(
-				delegate (List<string> _a) {  Protocol = _a; },
-				() => Protocol) } ,
-			{ "Enhancements", new MetaDataListString(
-				delegate (List<string> _a) {  Enhancements = _a; },
-				() => Enhancements) } ,
-			{ "Require", new MetaDataBoolean(
-				delegate (bool? _a) {  Require = _a; },
-				() => Require) } ,
-			{ "Roots", new MetaDataListStruct(
-				delegate (object _a) {  Roots = _a as List<KeyData>; },
-				() => Roots,
-				"KeyData" )} 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "SecurityPolicy";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new SecurityPolicy();
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		if (CName != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("CName", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in CName) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				_writer.WriteString (_index);
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (Protocol != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Protocol", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in Protocol) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				_writer.WriteString (_index);
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (Enhancements != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Enhancements", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in Enhancements) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				_writer.WriteString (_index);
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (Require != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Require", 1);
-				_writer.WriteBoolean (Require);
-			}
-		if (Roots != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Roots", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in Roots) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				// This is an untagged structure. Cannot inherit.
-                //_writer.WriteObjectStart();
-                //_writer.WriteToken(_index._Tag, 1);
-				bool firstinner = true;
-				_index.Serialize (_writer, true, ref firstinner);
-                //_writer.WriteObjectEnd();
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new SecurityPolicy FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as SecurityPolicy;
-			}
-		var Result = new SecurityPolicy ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "CName" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				CName = new List <string> ();
-				while (_Going) {
-					string _Item = jsonReader.ReadString ();
-					CName.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "Protocol" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Protocol = new List <string> ();
-				while (_Going) {
-					string _Item = jsonReader.ReadString ();
-					Protocol.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "Enhancements" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Enhancements = new List <string> ();
-				while (_Going) {
-					string _Item = jsonReader.ReadString ();
-					Enhancements.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "Require" : {
-				Require = jsonReader.ReadBoolean ();
-				break;
-				}
-			case "Roots" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Roots = new List <KeyData> ();
-				while (_Going) {
-					// an untagged structure.
-					var _Item = new  KeyData ();
-					_Item.Deserialize (jsonReader);
-					// var _Item = new KeyData (jsonReader);
-					Roots.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
-
-	}
-
-	/// <summary>
-	///
-	/// Registration of a trusted third party accreditation
-	/// </summary>
-public partial class Accreditation : Assertion {
-        /// <summary>
-        ///The callsigns to which the accreditation applies
-        /// </summary>
-
-	public virtual string						Callsign  {get; set;}
-        /// <summary>
-        ///The validated names of the subject
-        /// </summary>
-
-	public virtual List<string>				SubjectNames  {get; set;}
-        /// <summary>
-        ///Mesh strong URIs from which a validated logo belonging to the 
-        ///subject MAY be retreived and validated.
-        /// </summary>
-
-	public virtual List<string>				SubjectLogos  {get; set;}
-        /// <summary>
-        ///The time the assertion was issued.
-        /// </summary>
-
-	public virtual DateTime?						Issued  {get; set;}
-        /// <summary>
-        ///The time the assertion is due to expire
-        /// </summary>
-
-	public virtual DateTime?						Expires  {get; set;}
-        /// <summary>
-        ///The issuing policy under which the validation was performed.
-        /// </summary>
-
-	public virtual string						Policy  {get; set;}
-        /// <summary>
-        ///The issuing practices under which the validation was performed.
-        /// </summary>
-
-	public virtual string						Practice  {get; set;}
-
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
-
-    ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Callsign", new MetaDataString(
-				delegate (string _a) {  Callsign = _a; },
-				() => Callsign) } ,
-			{ "SubjectNames", new MetaDataListString(
-				delegate (List<string> _a) {  SubjectNames = _a; },
-				() => SubjectNames) } ,
-			{ "SubjectLogos", new MetaDataListString(
-				delegate (List<string> _a) {  SubjectLogos = _a; },
-				() => SubjectLogos) } ,
-			{ "Issued", new MetaDataDateTime(
-				delegate (DateTime? _a) {  Issued = _a; },
-				() => Issued) } ,
-			{ "Expires", new MetaDataDateTime(
-				delegate (DateTime? _a) {  Expires = _a; },
-				() => Expires) } ,
-			{ "Policy", new MetaDataString(
-				delegate (string _a) {  Policy = _a; },
-				() => Policy) } ,
-			{ "Practice", new MetaDataString(
-				delegate (string _a) {  Practice = _a; },
-				() => Practice) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "Accreditation";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Accreditation();
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((Assertion)this).SerializeX(_writer, false, ref _first);
-		if (Callsign != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Callsign", 1);
-				_writer.WriteString (Callsign);
-			}
-		if (SubjectNames != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("SubjectNames", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in SubjectNames) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				_writer.WriteString (_index);
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (SubjectLogos != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("SubjectLogos", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in SubjectLogos) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				_writer.WriteString (_index);
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (Issued != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Issued", 1);
-				_writer.WriteDateTime (Issued);
-			}
-		if (Expires != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Expires", 1);
-				_writer.WriteDateTime (Expires);
-			}
-		if (Policy != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Policy", 1);
-				_writer.WriteString (Policy);
-			}
-		if (Practice != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Practice", 1);
-				_writer.WriteString (Practice);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Accreditation FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Accreditation;
-			}
-		var Result = new Accreditation ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Callsign" : {
-				Callsign = jsonReader.ReadString ();
-				break;
-				}
-			case "SubjectNames" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				SubjectNames = new List <string> ();
-				while (_Going) {
-					string _Item = jsonReader.ReadString ();
-					SubjectNames.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "SubjectLogos" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				SubjectLogos = new List <string> ();
-				while (_Going) {
-					string _Item = jsonReader.ReadString ();
-					SubjectLogos.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "Issued" : {
-				Issued = jsonReader.ReadDateTime ();
-				break;
-				}
-			case "Expires" : {
-				Expires = jsonReader.ReadDateTime ();
-				break;
-				}
-			case "Policy" : {
-				Policy = jsonReader.ReadString ();
-				break;
-				}
-			case "Practice" : {
-				Practice = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
-
-	}
-
-	/// <summary>
-	///
 	/// Registers a challenge to one or more callsigns that have been registered.
 	/// </summary>
 public partial class Challenge : Assertion {
@@ -2312,10 +1689,20 @@ public partial class CallsignRegistrationRequest : MessageValidated {
 	/// </summary>
 public partial class CallsignRegistrationResponse : Message {
         /// <summary>
-        ///The enveloped binnding of the callsign to the profile.	
+        ///True if and only if a new registration was created.
         /// </summary>
 
-	public virtual Enveloped<CallsignBinding>						EnvelopedCallsignBinding  {get; set;}
+	public virtual bool?						Registered  {get; set;}
+        /// <summary>
+        ///The resulting catalog entry if accepted or the prior registration otherwise.
+        /// </summary>
+
+	public virtual CatalogedRegistration						CatalogedRegistration  {get; set;}
+        /// <summary>
+        ///Reason for refusing the registration.
+        /// </summary>
+
+	public virtual string						Reason  {get; set;}
 
     ///<inheritdoc/>
     public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
@@ -2323,10 +1710,16 @@ public partial class CallsignRegistrationResponse : Message {
     ///<inheritdoc/>
 	public override Dictionary<string, MetaData> _MetaData => 
 		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "EnvelopedCallsignBinding", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedCallsignBinding = _a as Enveloped<CallsignBinding>; },
-				() => EnvelopedCallsignBinding,
-				"Enveloped<CallsignBinding>" )} 
+			{ "Registered", new MetaDataBoolean(
+				delegate (bool? _a) {  Registered = _a; },
+				() => Registered) } ,
+			{ "CatalogedRegistration", new MetaDataStruct(
+				delegate (object _a) {  CatalogedRegistration = _a as CatalogedRegistration; },
+				() => CatalogedRegistration,
+				"CatalogedRegistration" )} ,
+			{ "Reason", new MetaDataString(
+				delegate (string _a) {  Reason = _a; },
+				() => Reason) } 
 		}.CacheValue(out _metaData);
 	Dictionary<string, MetaData> _metaData;
 		
@@ -2373,10 +1766,20 @@ public partial class CallsignRegistrationResponse : Message {
 			_writer.WriteObjectStart ();
 			}
 		((Message)this).SerializeX(_writer, false, ref _first);
-		if (EnvelopedCallsignBinding != null) {
+		if (Registered != null) {
 			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedCallsignBinding", 1);
-				EnvelopedCallsignBinding.Serialize (_writer, false);
+			_writer.WriteToken ("Registered", 1);
+				_writer.WriteBoolean (Registered);
+			}
+		if (CatalogedRegistration != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("CatalogedRegistration", 1);
+				CatalogedRegistration.Serialize (_writer, false);
+			}
+		if (Reason != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Reason", 1);
+				_writer.WriteString (Reason);
 			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
@@ -2411,10 +1814,138 @@ public partial class CallsignRegistrationResponse : Message {
 	public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 		switch (tag) {
-			case "EnvelopedCallsignBinding" : {
+			case "Registered" : {
+				Registered = jsonReader.ReadBoolean ();
+				break;
+				}
+			case "CatalogedRegistration" : {
 				// An untagged structure
-				EnvelopedCallsignBinding = new Enveloped<CallsignBinding> ();
-				EnvelopedCallsignBinding.Deserialize (jsonReader);
+				CatalogedRegistration = new CatalogedRegistration ();
+				CatalogedRegistration.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "Reason" : {
+				Reason = jsonReader.ReadString ();
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ProcessResultCallsignRegistration : ProcessResult {
+        /// <summary>
+        /// </summary>
+
+	public virtual CallsignRegistrationResponse						CallsignRegistrationResponse  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "CallsignRegistrationResponse", new MetaDataStruct(
+				delegate (object _a) {  CallsignRegistrationResponse = _a as CallsignRegistrationResponse; },
+				() => CallsignRegistrationResponse,
+				"CallsignRegistrationResponse" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ProcessResultCallsignRegistration";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ProcessResultCallsignRegistration();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((ProcessResult)this).SerializeX(_writer, false, ref _first);
+		if (CallsignRegistrationResponse != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("CallsignRegistrationResponse", 1);
+				CallsignRegistrationResponse.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ProcessResultCallsignRegistration FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ProcessResultCallsignRegistration;
+			}
+		var Result = new ProcessResultCallsignRegistration ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "CallsignRegistrationResponse" : {
+				// An untagged structure
+				CallsignRegistrationResponse = new CallsignRegistrationResponse ();
+				CallsignRegistrationResponse.Deserialize (jsonReader);
  
 				break;
 				}

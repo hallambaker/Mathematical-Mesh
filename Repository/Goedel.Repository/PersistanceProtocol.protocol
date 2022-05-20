@@ -8,8 +8,40 @@
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare
 
+	Structure ProfileRepository
+		External ProfileAccount
+		Description 
+			|Describes a Repository issuer.
 
 
+	Structure CatalogedRepository
+		External CatalogedApplication
+		Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
+			Description
+				|The connection allowing control of the registry.
+		Struct Enveloped<ProfileAccount> EnvelopedProfileRepository
+			Description
+				|The Mesh profile
+		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
+			Description
+				|The activation data for the registry.
+
+	Structure ActivationApplicationRepository
+		External ActivationApplication
+		Struct KeyData AccountEncryption
+			Description
+				|Key used to decrypt registry messages.
+		Struct KeyData AdministratorSignature
+			Description
+				|Key or capability used to sign the registry log
+		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+			Description
+				|Signed connection service delegation allowing the device to
+				|access the account.
+
+	Structure ApplicationEntryRepository
+		External ApplicationEntry
+		Struct Enveloped<ActivationApplicationRepository> EnvelopedActivation
 	Section 3 "Shared Classes"
 
 

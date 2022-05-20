@@ -517,6 +517,9 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.StaticSpoolDelegates">
             <summary>List of spools, these are the same for each type of account.</summary>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolInbound">
+            <summary>Returns the inbound spool for the account</summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Disposing">
             <summary>
             Disposal method called on exit.
@@ -800,7 +803,7 @@
             </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextGroup.ContextUser">
-            <summary>The enclosing mesh context.</summary>
+            <summary>The enclosing user context.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextGroup.CatalogedGroup">
             <summary>The catalogued group description.</summary>
@@ -828,9 +831,6 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.MeshClient">
             <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextGroup.StoresDirectory">
-            <summary>The directory containing the catalogs related to the account.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.DictionaryCatalogDelegates">
             <summary>Dictionarry used to create stores</summary>
@@ -1076,9 +1076,6 @@
             </summary>
             <returns>The transaction handle</returns>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.StoresDirectory">
-            <summary>The directory containing the catalogs related to the account.</summary>
-        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.Profile">
             <summary>The account profile</summary>
         </member>
@@ -1219,18 +1216,8 @@
             <param name="contact">The contact parameters.</param>
             <param name="localname">Short name to apply to the signed contact info</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability})">
-            <summary>
-            Get the default (i.e. minimum contact info). This has a single network 
-            address entry for this mesh and mesh account. 
-            </summary>
-            <returns>The default contact.</returns>
-        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.DictionaryCatalogDelegates">
-            <summary>Dictionarry used to create stores</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetSpoolInbound">
-            <summary>Returns the inbound spool for the account</summary>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptoKey@)">
             <summary>
@@ -1257,6 +1244,9 @@
             <param name="keyId">The key identifier to match.</param>
             <param name="cryptoKey">The found key </param>
             <returns>The key pair if found.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.Sync">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessageConnectionRequest">
             <summary>

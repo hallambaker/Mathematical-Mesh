@@ -32,13 +32,14 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
     public const string ServiceDnsCallsign      = "example.com";
     public const string ServiceDnsPresence      = "example.com";
     public const string ServiceDnsRepository    = "example.com";
+    public const string ServiceDnsCarnet        = "example.com";
 
     public const string ServiceIpMesh           = "127.0.0.1:15099";
     public const string ServiceIpRegistry       = "127.0.0.1:15098";
     public const string ServiceIpCallsign       = "127.0.0.1:15097";
     public const string ServiceIpPresence       = "127.0.0.1:15096";
     public const string ServiceIpRepository     = "127.0.0.1:15095";
-
+    public const string ServiceIpCarnet         = "127.0.0.1:15094";
 
     public MeshMachineTest HostMachineMesh { get; set; }
 

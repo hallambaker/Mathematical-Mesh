@@ -102,7 +102,7 @@ public class AccountHandleLocked : Disposable {
         if (DictionarySequences != null) {
             foreach (var sequenceEntry in DictionarySequences) {
                 //Screen.WriteLine($"Delete Sequence {sequenceEntry.Key}");
-                sequenceEntry.Value.Dispose();
+                sequenceEntry.Value?.Dispose();
                 }
             }
 

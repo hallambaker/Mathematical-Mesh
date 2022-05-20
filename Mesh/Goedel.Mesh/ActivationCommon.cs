@@ -90,23 +90,23 @@ public partial class ActivationCommon {
     public KeyPair ProfileSignatureKey { get; set; }
 
     ///<summary>The account administrator signature key bound to an administrator device.</summary>
-    public KeyPair AdministratorSignatureKey { get; private set; }
+    public KeyPair AdministratorSignatureKey { get;  set; }
 
     ///<summary>The account administrator signature key bound to an administrator device.</summary>
-    public KeyPair AdministratorEncryptionKey { get; private set; }
+    public KeyPair AdministratorEncryptionKey { get; set; }
 
     ///<summary>The account common encryption key under which inbound messages are encrypted.</summary>
-    public KeyPair CommonEncryptionKey { get; private set; }
+    public KeyPair CommonEncryptionKey { get;  set; }
 
     ///<summary>The account common authentication key used to authenticate under the account.</summary>
-    public KeyPair CommonAuthenticationKey { get; private set; }
+    public KeyPair CommonAuthenticationKey { get;  set; }
 
     ///<summary>The account common signature key under which outbound messages are signed.</summary>
-    public KeyPair CommonSignatureKey { get; private set; }
+    public KeyPair CommonSignatureKey { get;  set; }
 
 
     ///<summary>The account escrow key.</summary>
-    public KeyPair EscrowEncryptionKey { get; private set; }
+    public KeyPair EscrowEncryptionKey { get; set; }
 
     ///<summary>The service profile</summary> 
     public ProfileService ProfileService;
@@ -139,18 +139,6 @@ public partial class ActivationCommon {
     /// Constructor for use by deserializers.
     /// </summary>
     public ActivationCommon() {
-        }
-
-
-    /// <summary>
-    /// Initializes a new instance of the ActivationAccount from the group application
-    /// <paramref name="activationApplicationGroup"/>.
-    /// </summary>
-    /// <param name="activationApplicationGroup">The base activation of the group.</param>
-    public ActivationCommon(ActivationApplicationGroup activationApplicationGroup) {
-        CommonAuthenticationKey = activationApplicationGroup.AccountAuthentication.GetKeyPair();
-        CommonEncryptionKey = activationApplicationGroup.AccountEncryption.GetKeyPair();
-        AdministratorSignatureKey = activationApplicationGroup.AdministratorSignature.GetKeyPair();
         }
 
     /// <summary>

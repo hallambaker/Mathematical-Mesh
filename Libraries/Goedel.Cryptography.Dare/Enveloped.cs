@@ -112,26 +112,6 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
         }
 
     /// <summary>
-    /// Convenience accessor creating an envelope around <paramref name="data"/> encoded in
-    /// encoding <paramref name="objectEncoding"/>. If present, the data is signed under 
-    /// <paramref name="signingKey"/>. If present, the data is encrypted under 
-    /// <paramref name="encryptionKey"/>.
-    /// </summary>
-    /// <param name="data">The object to be enveloped.</param>
-    /// <param name="signingKey">The signature key.</param>
-    /// <param name="encryptionKey">The encryption key.</param>
-    /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
-    /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
-    /// <returns></returns>
-    public static Enveloped<T> Envelope(T data,
-                CryptoKey signingKey = null,
-                CryptoKey encryptionKey = null,
-                ContentMeta contentMeta = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON) =>
-        new(data, signingKey, encryptionKey, contentMeta, objectEncoding);
-
-
-    /// <summary>
     /// Decrypt and deserialize the envelope to obtain the typed contents and set the value of 
     /// <see cref="JsonObject.Enveloped"/> to the original envelope data.
     /// </summary>

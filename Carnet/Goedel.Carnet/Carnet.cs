@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 17-May-22 5:11:04 PM
+//  This file was automatically generated at 20-May-22 5:55:47 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -55,7 +55,7 @@ namespace Goedel.Carnet;
 
 	/// <summary>
 	///
-	/// Callsign Registry Protocol providing registry interactions.
+	/// Carnet Ledger Protocol maintaining a record of carnet accounts.
 	/// </summary>
 public abstract partial class CarnetProtocol : global::Goedel.Protocol.JsonObject {
 
@@ -76,6 +76,10 @@ public abstract partial class CarnetProtocol : global::Goedel.Protocol.JsonObjec
 	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 			new () {
 
+	    {"ProfileCarnet", ProfileCarnet._Factory},
+	    {"CatalogedCarnet", CatalogedCarnet._Factory},
+	    {"ActivationApplicationCarnet", ActivationApplicationCarnet._Factory},
+	    {"ApplicationEntryCarnet", ApplicationEntryCarnet._Factory},
 	    {"CarnetRequest", CarnetRequest._Factory},
 	    {"CarnetResponse", CarnetResponse._Factory}
 		};
@@ -199,6 +203,555 @@ public partial class CarnetServiceDirect: CarnetServiceClient {
 
 
 	// Transaction Classes
+	/// <summary>
+	///
+	/// Describes a carnet issuer.
+	/// </summary>
+public partial class ProfileCarnet : ProfileAccount {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ProfileCarnet";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ProfileCarnet();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((ProfileAccount)this).SerializeX(_writer, false, ref _first);
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ProfileCarnet FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ProfileCarnet;
+			}
+		var Result = new ProfileCarnet ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class CatalogedCarnet : CatalogedApplication {
+        /// <summary>
+        ///The connection allowing control of the registry.
+        /// </summary>
+
+	public virtual Enveloped<ConnectionStripped>						EnvelopedConnectionAddress  {get; set;}
+        /// <summary>
+        ///The Mesh profile
+        /// </summary>
+
+	public virtual Enveloped<ProfileAccount>						EnvelopedProfileCarnet  {get; set;}
+        /// <summary>
+        ///The activation data for the registry.
+        /// </summary>
+
+	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedConnectionAddress", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionAddress = _a as Enveloped<ConnectionStripped>; },
+				() => EnvelopedConnectionAddress,
+				"Enveloped<ConnectionStripped>" )} ,
+			{ "EnvelopedProfileCarnet", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileCarnet = _a as Enveloped<ProfileAccount>; },
+				() => EnvelopedProfileCarnet,
+				"Enveloped<ProfileAccount>" )} ,
+			{ "EnvelopedActivationCommon", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivationCommon = _a as Enveloped<ActivationCommon>; },
+				() => EnvelopedActivationCommon,
+				"Enveloped<ActivationCommon>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedCarnet";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedCarnet();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((CatalogedApplication)this).SerializeX(_writer, false, ref _first);
+		if (EnvelopedConnectionAddress != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedConnectionAddress", 1);
+				EnvelopedConnectionAddress.Serialize (_writer, false);
+			}
+		if (EnvelopedProfileCarnet != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedProfileCarnet", 1);
+				EnvelopedProfileCarnet.Serialize (_writer, false);
+			}
+		if (EnvelopedActivationCommon != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedActivationCommon", 1);
+				EnvelopedActivationCommon.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedCarnet FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedCarnet;
+			}
+		var Result = new CatalogedCarnet ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "EnvelopedConnectionAddress" : {
+				// An untagged structure
+				EnvelopedConnectionAddress = new Enveloped<ConnectionStripped> ();
+				EnvelopedConnectionAddress.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedProfileCarnet" : {
+				// An untagged structure
+				EnvelopedProfileCarnet = new Enveloped<ProfileAccount> ();
+				EnvelopedProfileCarnet.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedActivationCommon" : {
+				// An untagged structure
+				EnvelopedActivationCommon = new Enveloped<ActivationCommon> ();
+				EnvelopedActivationCommon.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ActivationApplicationCarnet : ActivationApplication {
+        /// <summary>
+        ///Key used to decrypt registry messages.
+        /// </summary>
+
+	public virtual KeyData						AccountEncryption  {get; set;}
+        /// <summary>
+        ///Key or capability used to sign the registry log
+        /// </summary>
+
+	public virtual KeyData						AdministratorSignature  {get; set;}
+        /// <summary>
+        ///Signed connection service delegation allowing the device to
+        ///access the account.
+        /// </summary>
+
+	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountEncryption", new MetaDataStruct(
+				delegate (object _a) {  AccountEncryption = _a as KeyData; },
+				() => AccountEncryption,
+				"KeyData" )} ,
+			{ "AdministratorSignature", new MetaDataStruct(
+				delegate (object _a) {  AdministratorSignature = _a as KeyData; },
+				() => AdministratorSignature,
+				"KeyData" )} ,
+			{ "EnvelopedConnectionService", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionService = _a as Enveloped<ConnectionService>; },
+				() => EnvelopedConnectionService,
+				"Enveloped<ConnectionService>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ActivationApplicationCarnet";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ActivationApplicationCarnet();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((ActivationApplication)this).SerializeX(_writer, false, ref _first);
+		if (AccountEncryption != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("AccountEncryption", 1);
+				AccountEncryption.Serialize (_writer, false);
+			}
+		if (AdministratorSignature != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("AdministratorSignature", 1);
+				AdministratorSignature.Serialize (_writer, false);
+			}
+		if (EnvelopedConnectionService != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedConnectionService", 1);
+				EnvelopedConnectionService.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ActivationApplicationCarnet FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ActivationApplicationCarnet;
+			}
+		var Result = new ActivationApplicationCarnet ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "AccountEncryption" : {
+				// An untagged structure
+				AccountEncryption = new KeyData ();
+				AccountEncryption.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "AdministratorSignature" : {
+				// An untagged structure
+				AdministratorSignature = new KeyData ();
+				AdministratorSignature.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedConnectionService" : {
+				// An untagged structure
+				EnvelopedConnectionService = new Enveloped<ConnectionService> ();
+				EnvelopedConnectionService.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ApplicationEntryCarnet : ApplicationEntry {
+        /// <summary>
+        /// </summary>
+
+	public virtual Enveloped<ActivationApplicationCarnet>						EnvelopedActivation  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedActivation", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivation = _a as Enveloped<ActivationApplicationCarnet>; },
+				() => EnvelopedActivation,
+				"Enveloped<ActivationApplicationCarnet>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ApplicationEntryCarnet";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ApplicationEntryCarnet();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((ApplicationEntry)this).SerializeX(_writer, false, ref _first);
+		if (EnvelopedActivation != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedActivation", 1);
+				EnvelopedActivation.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ApplicationEntryCarnet FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ApplicationEntryCarnet;
+			}
+		var Result = new ApplicationEntryCarnet ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "EnvelopedActivation" : {
+				// An untagged structure
+				EnvelopedActivation = new Enveloped<ActivationApplicationCarnet> ();
+				EnvelopedActivation.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
 	/// <summary>
 	///
 	/// Base class for all requests made to a registrar

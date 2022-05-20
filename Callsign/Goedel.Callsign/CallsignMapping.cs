@@ -27,10 +27,23 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Goedel.Callsign; 
+namespace Goedel.Callsign;
 
-public partial class Callsign {
+
+public record CallSign {
+
+    public CallsignMapping CallsignMapping { get; init; }
+
+    public string Id { get; set; }
+    public string Presentation { get; set; }
+    }
+
+public partial class CallsignMapping {
     #region // Properties
+
+    public string Id { get; set; }
+    public string Presentation { get; set; }
+
 
     ///<summary>List of callsign code pages.</summary> 
     public static List<Page> Pages { get; } = new();
@@ -50,7 +63,7 @@ public partial class Callsign {
     /// is not null, the presentation value of the callsign is set to the specified value.
     /// </summary>
     /// <param name="presentation">The presentation value to be set.</param>
-    public Callsign(string presentation = null) {
+    public CallsignMapping(string presentation = null) {
         if (presentation != null) {
             SetPresentation(presentation);
             }
@@ -64,6 +77,15 @@ public partial class Callsign {
     #region // Override Methods
     #endregion
     #region // Methods
+
+
+    public bool Validate(CallsignBinding callsignBinding) {
+        "Implement callsign binding validation logic".TaskValidate();
+
+        return true;
+
+        }
+
 
     /// <summary>
     /// Set the presentation value of the callsign. 

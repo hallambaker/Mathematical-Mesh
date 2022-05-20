@@ -63,14 +63,14 @@ partial class Program {
         //ShellTestsAdmin.Test().TestMessageGroup();
 
 
-
+        TestService.Test().MeshCallsign();
 
         //ShellTestsAdmin.Test().TestProfileContact();
 
 
 
 
-        RegistrationTests.Test().CallsignBind();
+        //RegistrationTests.Test().CallsignBind();
 
 
 
@@ -79,7 +79,7 @@ partial class Program {
 
         //ShellTestsAdmin.Test().TestProfileConnectPinExpired();
         //ShellTestsAdmin.Test().TestAccountRefreshed();
-        ShellTests.Test().TestConnectRequest();
+        //ShellTests.Test().TestConnectRequest();
 
 
 

@@ -48,11 +48,11 @@ public partial class Registration {
 
 
     public Registration(
-            Callsign callsign, 
+            CallsignBinding callsign, 
             Registration registration=null, 
             RegistrationReason registrationReason= RegistrationReason.Update) {
         Id = UDF.Nonce();
-        Entry = callsign.Enveloped as Enveloped<CallsignEntry>;
+        Entry = callsign.Enveloped as Enveloped<CallsignBinding>;
         Submitted = DateTime.Now;
 
         if (registration is null) {

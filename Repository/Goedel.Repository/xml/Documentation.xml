@@ -4,19 +4,347 @@
         <name>Goedel.Repository</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Repository.TBS">
+        <member name="T:Goedel.Repository.ActivationApplicationRepository">
             <summary>
-            TBS
             </summary>
         </member>
-        <member name="P:Goedel.Repository.TBS.ExceptionFormatDelegate">
+        <member name="M:Goedel.Repository.ActivationApplicationRepository.GetEnvelopedActivationApplicationGroup">
+            <summary>The enveloped object</summary> 
+        </member>
+        <member name="P:Goedel.Repository.ActivationApplicationRepository.AccountEncryption">
+             <summary>
+            Key used to decrypt registry messages.
+             </summary>
+        </member>
+        <member name="P:Goedel.Repository.ActivationApplicationRepository.AdministratorSignature">
+             <summary>
+            Key or capability used to sign the registry log
+             </summary>
+        </member>
+        <member name="P:Goedel.Repository.ActivationApplicationRepository.EnvelopedConnectionService">
+             <summary>
+            Signed connection service delegation allowing the device to
+            access the account.
+             </summary>
+        </member>
+        <member name="P:Goedel.Repository.ActivationApplicationRepository._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ActivationApplicationRepository._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ActivationApplicationRepository._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Repository.ActivationApplicationRepository.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Repository.ActivationApplicationRepository._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Repository.ActivationApplicationRepository.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Repository.ActivationApplicationRepository.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Repository.ActivationApplicationRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Repository.ActivationApplicationRepository.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Repository.ApplicationEntryRepository">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Repository.ApplicationEntryRepository.Activation">
+            <summary>The decrypted activation.</summary> 
+        </member>
+        <member name="M:Goedel.Repository.ApplicationEntryRepository.Decode(Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Repository.ApplicationEntryRepository.GetActivationAccount">
+            <summary>
+            Construct an activation record for the group.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Goedel.Repository.ApplicationEntryRepository.EnvelopedActivation">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Repository.ApplicationEntryRepository._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ApplicationEntryRepository._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ApplicationEntryRepository._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Repository.ApplicationEntryRepository.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Repository.ApplicationEntryRepository._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Repository.ApplicationEntryRepository.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Repository.ApplicationEntryRepository.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Repository.ApplicationEntryRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Repository.ApplicationEntryRepository.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Repository.CatalogedRepository">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository.GetGroupID(System.String)">
+            <summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
+        </member>
+        <member name="P:Goedel.Repository.CatalogedRepository._PrimaryKey">
+            <summary>
+            The primary key used to catalog the entry.
+            </summary>
+        </member>
+        <member name="P:Goedel.Repository.CatalogedRepository.ProfileGroup">
+            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Repository.CatalogedRepository.EnvelopedProfileRepository"/>
+            to return the <see cref="T:Goedel.Mesh.ProfileUser"/> value.</summary>
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository.GetEscrow">
+            <summary>
+            Return the escrowed keys.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository.#ctor">
+            <summary>
+            Default constructor for serialization.
+            </summary>     
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository.#ctor(Goedel.Repository.ProfileRepository,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create and return a new catalog entry for <paramref name="profileGroup"/> with
+            the activation data <paramref name="activationAccount"/>.
+            </summary>
+            <param name="profileGroup">The group profile.</param>
+            <param name="activationAccount">The activation data.</param>
+            <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
+            <param name="connectionAddress">Connection binding profile to an address.</param>
+            <returns>The created group.</returns>
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository.GetActivation(Goedel.Mesh.CatalogedDevice)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository.ToBuilder(System.Text.StringBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.CatalogedRepository.EnvelopedConnectionAddress">
+             <summary>
+            The connection allowing control of the registry.
+             </summary>
+        </member>
+        <member name="P:Goedel.Repository.CatalogedRepository.EnvelopedProfileRepository">
+             <summary>
+            The Mesh profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Repository.CatalogedRepository.EnvelopedActivationCommon">
+             <summary>
+            The activation data for the registry.
+             </summary>
+        </member>
+        <member name="P:Goedel.Repository.CatalogedRepository._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.CatalogedRepository._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.CatalogedRepository._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Repository.CatalogedRepository.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Repository.CatalogedRepository.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Repository.ContextRepository">
+            <summary>
+            Context for managing the callsign Repository account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Repository.ContextRepository.ContextUser">
+            <summary>The enclosing user context.</summary>
+        </member>
+        <member name="P:Goedel.Repository.ContextRepository.Profile">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ContextRepository.Connection">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Repository.ContextRepository.CatalogedCallsign">
+            <summary>The catalogued group description.</summary>
+        </member>
+        <member name="P:Goedel.Repository.ContextRepository.AccountAddress">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ContextRepository.DictionaryCatalogDelegates">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Repository.ContextRepository.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Repository.CatalogedRepository,Goedel.Mesh.ActivationCommon)">
+            <summary>
+            Default constuctor, creates a group context for <paramref name="catalogedCallsign"/>
+            </summary>
+            <param name="contextAccount">The enclosing account context.</param>
+            <param name="catalogedCallsign">Description of the group to return the
+            context for.</param>
+            <param name="activationAccount">The account activation.</param>
+        </member>
+        <member name="M:Goedel.Repository.ContextRepository.CreateGroup(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
+            <summary>
+            Create a threshold encryption group.
+            </summary>
+            <param name="contextUser">The user context in which the group is to be created.</param>
+            <param name="groupName">Name of the group to create.</param>
+            <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
+            <param name="roles">List of rights to be granted.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Repository.ContextRepository.CreateGroup(Goedel.Mesh.Client.ContextUser,Goedel.Repository.CatalogedRepository,Goedel.Mesh.ActivationCommon,Goedel.Mesh.MeshServiceClient)">
+            <summary>
+            Create a new group.
+            </summary>
+            <param name="contextAccount">The enclosing account context.</param>
+            <param name="catalogedRepository">Description of the group to create.</param>
+            <param name="activationAccount">The account activation.</param>
+            <param name="client">The client to connect to the service with.</param>
+            <returns>The group context.</returns>
+        </member>
+        <member name="T:Goedel.Repository.Internal">
+            <summary>
+            An internal assertion check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Repository.Internal.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="P:Goedel.Repository.TBS.Templates">
+        <member name="P:Goedel.Repository.Internal.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.Repository.TBS.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Repository.Internal.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -25,13 +353,13 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Repository.TBS._Throw(System.Object)">
+        <member name="M:Goedel.Repository.Internal._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="P:Goedel.Repository.TBS.Throw">
+        <member name="P:Goedel.Repository.Internal.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -166,6 +494,82 @@
             </summary>		
             <param name="request">The request object.</param>
             <returns>The response object</returns>
+        </member>
+        <member name="T:Goedel.Repository.ProfileRepository">
+             <summary>
+            
+             Describes a Repository issuer.
+             </summary>
+        </member>
+        <member name="P:Goedel.Repository.ProfileRepository._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ProfileRepository._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ProfileRepository._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Repository.ProfileRepository.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Repository.ProfileRepository._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Repository.ProfileRepository.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Repository.ProfileRepository.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Repository.ProfileRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Repository.ProfileRepository.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Repository.ProfileRepository.#ctor(System.String,Goedel.Mesh.ActivationCommon)">
+            <summary>
+            Construct a Profile Account instance  from <paramref name="accountAddress"/>.
+            </summary>
+            <param name="accountAddress">The account address</param>
+            <param name="activationAccount">The activation used to create the account data.</param>
+        </member>
+        <member name="M:Goedel.Repository.ProfileRepository.Validate">
+            <summary>
+            Verify the profile to check that it is correctly signed and consistent.
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Repository.PersistanceRequest">
              <summary>

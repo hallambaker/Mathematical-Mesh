@@ -10,46 +10,23 @@
     Using Goedel.Cryptography.Dare
 	Using Goedel.Mesh
 	Extern Assertion
-	Extern ProfileAccount
+
+
+
+	Section 3 "Profile and account registration"
+
+	Structure ProfileRegistry
+		External ProfileAccount
+		Description 
+			|Describes a callsign registry.
+
+
+
 
 	Section 3 "Callsign registration and transfer"
 		Description
 			|The following classes are used as common elements in
 			|Mesh profile specifications.
-
-	Structure Callsign
-		Description		
-			|A callsign entry
-
-		String Id
-			Description
-				|The callsign identifier in canonical form used for query.
-
-		String Presentation
-			Description
-				|The callsign identifier in the prefered presentation form.
-
-		String Holder
-			Description
-				|The UDF of the holder's root of trust
-
-		String Alias
-			Description
-				|This callsign is an alias for another registered callsign.
-
-		String Service
-			Description
-				|The callsign or DNS address of the service provider
-
-		String Dns
-			Multiple
-			Description
-				|Address(es) of a DNS service that resolves the authoritative domain 
-				|'id.mesh'.
-		
-		Struct ProfileAccount Account
-			Description
-				|The Mesh Account profile to which the callsign belongs.
 
 	Structure Registration
 		Description		
@@ -59,11 +36,9 @@
 			Description
 				|Unique registration identifier
 
-
-		Struct Enveloped<CallsignEntry> Entry
+		Struct Enveloped<CallsignBinding> Entry
 			Description
-				|Envelope containing the item that has been registered.
-
+				|The signed callsign binding
 
 		DateTime Submitted
 			Description
@@ -81,6 +56,20 @@
 			Description
 				|Reason for creating a registration:
 				|Initial/ Update/ Voluntary/ Administrative/ Revoke
+	
+	Structure CatalogedRegistration
+		External CatalogedEntry
+
+		String Canonical
+			Description
+				|The canonical form of the callsign.
+		String Id
+			Description
+				|Unique registration identifier
+
+		Struct Enveloped<Registration> EnvelopedRegistration
+			Description
+				|The registration entry for the item.
 		
 	Section 3 "Character page definition"
 
@@ -145,71 +134,6 @@
 
 	Section 3 "Trust Assertions"
 
-	Structure ProfileDns
-		Description
-			|
-		External Profile
-		
-
-		Struct SecurityPolicy  SecurityPolicies
-			Multiple
-			Description
-				|Specify TLS policies for use in the zone.
-
-	Structure SecurityPolicy
-		String CName
-			Multiple
-			Description
-				|The DNS zone(s) to which this policy applies.
-
-		String Protocol
-			Multiple
-			Description
-				|IANA protocol name, e.g. SMTP, SUBMIT, HTTP, HTTPS, etc.		
-		String Enhancements
-			Multiple
-			Description
-				|Enhancements that are supported for the specified protocol. 
-				|Allowed values include none/ tls1.2/ tls1.3/ http3/ dnssec
-		Boolean Require
-			Description
-				|If true, clients MUST use one of the supported enhancements.		
-		Struct KeyData Roots
-			Multiple
-			Description
-				|Keys specifying roots of trust for the specified protocol(s).
-
-
-	Structure Accreditation
-		External Assertion
-		Description
-			|Registration of a trusted third party accreditation
-		String Callsign
-			Description
-				|The callsigns to which the accreditation applies
-		String SubjectNames
-			Multiple
-			Description
-				|The validated names of the subject
-		String SubjectLogos
-			Multiple
-			Description
-				|Mesh strong URIs from which a validated logo belonging to the 
-				|subject MAY be retreived and validated.
-		DateTime Issued
-			Description
-				|The time the assertion was issued.
-		DateTime Expires
-			Description
-				|The time the assertion is due to expire
-		String Policy
-			Description
-				|The issuing policy under which the validation was performed.
-		String Practice
-			Description
-				|The issuing practices under which the validation was performed.
-
-
 	Structure Challenge
 		External Assertion
 		Description
@@ -235,6 +159,17 @@
 
 	Structure CallsignRegistrationResponse
 		External Message
-		Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
+		Boolean Registered
 			Description
-				|The enveloped binnding of the callsign to the profile.	
+				|True if and only if a new registration was created.
+		Struct CatalogedRegistration CatalogedRegistration
+			Description
+				|The resulting catalog entry if accepted or the prior registration otherwise.
+		String Reason
+			Description
+				|Reason for refusing the registration.
+
+	Structure ProcessResultCallsignRegistration
+		External ProcessResult
+		Struct CallsignRegistrationResponse CallsignRegistrationResponse
+

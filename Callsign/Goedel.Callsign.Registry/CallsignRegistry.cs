@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 17-May-22 5:11:20 PM
+//  This file was automatically generated at 20-May-22 5:56:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -49,6 +49,7 @@ using Goedel.Utilities;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 using Goedel.Callsign;
+using Goedel.Mesh;
 
 
 namespace Goedel.Callsign.Registry;
@@ -79,6 +80,9 @@ public abstract partial class CallsignRegistry : global::Goedel.Protocol.JsonObj
 	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 			new () {
 
+	    {"CatalogedRegistry", CatalogedRegistry._Factory},
+	    {"ActivationApplicationRegistry", ActivationApplicationRegistry._Factory},
+	    {"ApplicationEntryRegistry", ApplicationEntryRegistry._Factory},
 	    {"CallsignRequest", CallsignRequest._Factory},
 	    {"CallsignResponse", CallsignResponse._Factory},
 	    {"RegisterRequest", RegisterRequest._Factory},
@@ -262,6 +266,453 @@ public partial class RegistryServiceDirect: RegistryServiceClient {
 
 
 	// Transaction Classes
+	/// <summary>
+	/// </summary>
+public partial class CatalogedRegistry : CatalogedApplication {
+        /// <summary>
+        ///The connection allowing control of the registry.
+        /// </summary>
+
+	public virtual Enveloped<ConnectionStripped>						EnvelopedConnectionAddress  {get; set;}
+        /// <summary>
+        ///The Mesh profile
+        /// </summary>
+
+	public virtual Enveloped<ProfileAccount>						EnvelopedProfileRegistry  {get; set;}
+        /// <summary>
+        ///The activation data for the registry.
+        /// </summary>
+
+	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedConnectionAddress", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionAddress = _a as Enveloped<ConnectionStripped>; },
+				() => EnvelopedConnectionAddress,
+				"Enveloped<ConnectionStripped>" )} ,
+			{ "EnvelopedProfileRegistry", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedProfileRegistry = _a as Enveloped<ProfileAccount>; },
+				() => EnvelopedProfileRegistry,
+				"Enveloped<ProfileAccount>" )} ,
+			{ "EnvelopedActivationCommon", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivationCommon = _a as Enveloped<ActivationCommon>; },
+				() => EnvelopedActivationCommon,
+				"Enveloped<ActivationCommon>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedRegistry";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedRegistry();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((CatalogedApplication)this).SerializeX(_writer, false, ref _first);
+		if (EnvelopedConnectionAddress != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedConnectionAddress", 1);
+				EnvelopedConnectionAddress.Serialize (_writer, false);
+			}
+		if (EnvelopedProfileRegistry != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedProfileRegistry", 1);
+				EnvelopedProfileRegistry.Serialize (_writer, false);
+			}
+		if (EnvelopedActivationCommon != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedActivationCommon", 1);
+				EnvelopedActivationCommon.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedRegistry FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedRegistry;
+			}
+		var Result = new CatalogedRegistry ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "EnvelopedConnectionAddress" : {
+				// An untagged structure
+				EnvelopedConnectionAddress = new Enveloped<ConnectionStripped> ();
+				EnvelopedConnectionAddress.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedProfileRegistry" : {
+				// An untagged structure
+				EnvelopedProfileRegistry = new Enveloped<ProfileAccount> ();
+				EnvelopedProfileRegistry.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedActivationCommon" : {
+				// An untagged structure
+				EnvelopedActivationCommon = new Enveloped<ActivationCommon> ();
+				EnvelopedActivationCommon.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ActivationApplicationRegistry : ActivationApplication {
+        /// <summary>
+        ///Key used to decrypt registry messages.
+        /// </summary>
+
+	public virtual KeyData						AccountEncryption  {get; set;}
+        /// <summary>
+        ///Key or capability used to sign the registry log
+        /// </summary>
+
+	public virtual KeyData						AdministratorSignature  {get; set;}
+        /// <summary>
+        ///Signed connection service delegation allowing the device to
+        ///access the account.
+        /// </summary>
+
+	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "AccountEncryption", new MetaDataStruct(
+				delegate (object _a) {  AccountEncryption = _a as KeyData; },
+				() => AccountEncryption,
+				"KeyData" )} ,
+			{ "AdministratorSignature", new MetaDataStruct(
+				delegate (object _a) {  AdministratorSignature = _a as KeyData; },
+				() => AdministratorSignature,
+				"KeyData" )} ,
+			{ "EnvelopedConnectionService", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedConnectionService = _a as Enveloped<ConnectionService>; },
+				() => EnvelopedConnectionService,
+				"Enveloped<ConnectionService>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ActivationApplicationRegistry";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ActivationApplicationRegistry();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((ActivationApplication)this).SerializeX(_writer, false, ref _first);
+		if (AccountEncryption != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("AccountEncryption", 1);
+				AccountEncryption.Serialize (_writer, false);
+			}
+		if (AdministratorSignature != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("AdministratorSignature", 1);
+				AdministratorSignature.Serialize (_writer, false);
+			}
+		if (EnvelopedConnectionService != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedConnectionService", 1);
+				EnvelopedConnectionService.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ActivationApplicationRegistry FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ActivationApplicationRegistry;
+			}
+		var Result = new ActivationApplicationRegistry ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "AccountEncryption" : {
+				// An untagged structure
+				AccountEncryption = new KeyData ();
+				AccountEncryption.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "AdministratorSignature" : {
+				// An untagged structure
+				AdministratorSignature = new KeyData ();
+				AdministratorSignature.Deserialize (jsonReader);
+ 
+				break;
+				}
+			case "EnvelopedConnectionService" : {
+				// An untagged structure
+				EnvelopedConnectionService = new Enveloped<ConnectionService> ();
+				EnvelopedConnectionService.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ApplicationEntryRegistry : ApplicationEntry {
+        /// <summary>
+        /// </summary>
+
+	public virtual Enveloped<ActivationApplicationRegistry>						EnvelopedActivation  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "EnvelopedActivation", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivation = _a as Enveloped<ActivationApplicationRegistry>; },
+				() => EnvelopedActivation,
+				"Enveloped<ActivationApplicationRegistry>" )} 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ApplicationEntryRegistry";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ApplicationEntryRegistry();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((ApplicationEntry)this).SerializeX(_writer, false, ref _first);
+		if (EnvelopedActivation != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedActivation", 1);
+				EnvelopedActivation.Serialize (_writer, false);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ApplicationEntryRegistry FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ApplicationEntryRegistry;
+			}
+		var Result = new ApplicationEntryRegistry ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "EnvelopedActivation" : {
+				// An untagged structure
+				EnvelopedActivation = new Enveloped<ActivationApplicationRegistry> ();
+				EnvelopedActivation.Deserialize (jsonReader);
+ 
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
 	/// <summary>
 	///
 	/// Base class for all requests made to a registrar
@@ -488,7 +939,7 @@ public partial class RegisterRequest : CallsignRequest {
         ///be granted.
         /// </summary>
 
-	public virtual Enveloped<Callsign>						EnvelopedCallsign  {get; set;}
+	public virtual Enveloped<CallsignBinding>						EnvelopedCallsign  {get; set;}
 
     ///<inheritdoc/>
     public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
@@ -503,9 +954,9 @@ public partial class RegisterRequest : CallsignRequest {
 				delegate (string _a) {  Reason = _a; },
 				() => Reason) } ,
 			{ "EnvelopedCallsign", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedCallsign = _a as Enveloped<Callsign>; },
+				delegate (object _a) {  EnvelopedCallsign = _a as Enveloped<CallsignBinding>; },
 				() => EnvelopedCallsign,
-				"Enveloped<Callsign>" )} 
+				"Enveloped<CallsignBinding>" )} 
 		}.CacheValue(out _metaData);
 	Dictionary<string, MetaData> _metaData;
 		
@@ -610,7 +1061,7 @@ public partial class RegisterRequest : CallsignRequest {
 				}
 			case "EnvelopedCallsign" : {
 				// An untagged structure
-				EnvelopedCallsign = new Enveloped<Callsign> ();
+				EnvelopedCallsign = new Enveloped<CallsignBinding> ();
 				EnvelopedCallsign.Deserialize (jsonReader);
  
 				break;

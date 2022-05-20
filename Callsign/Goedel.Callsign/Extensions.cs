@@ -24,9 +24,10 @@ public static class Extensions {
                 this ContextAccount contextAccount,
                 string callsign,
                 bool bind = false,
+                string registry = null,
                 string transfer = null) {
 
-        var recipient = "@registry";
+
 
         var callsignBinding = new CallsignBinding() {
             Canonical = callsign.CannonicalAccountAddress(),
@@ -45,12 +46,12 @@ public static class Extensions {
         var envelopedBinding = callsignBinding.Envelope(signingKey: contextAccount.KeyAdministratorSign);
 
         var message = new CallsignRegistrationRequest() {
-
+            Recipient = registry,
             EnvelopedCallsignBinding = new Enveloped<CallsignBinding>(envelopedBinding)
             };
 
         using (var transact = contextAccount.TransactBegin()) {
-            transact.OutboundMessage(recipient, message);
+            transact.OutboundMessage(registry, message);
             contextAccount.Transact(transact);
             }
 

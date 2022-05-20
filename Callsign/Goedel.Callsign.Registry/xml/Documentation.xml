@@ -4,27 +4,281 @@
         <name>Goedel.Callsign.Registry</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Callsign.Registry.ContextCallsign">
+        <member name="T:Goedel.Callsign.Registry.ActivationApplicationRegistry">
             <summary>
-            Context for managing the callsign registry account.
             </summary>
         </member>
-        <member name="P:Goedel.Callsign.Registry.ContextCallsign.Profile">
+        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.GetEnvelopedActivationApplicationGroup">
+            <summary>The enveloped object</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry.AccountEncryption">
+             <summary>
+            Key used to decrypt registry messages.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry.AdministratorSignature">
+             <summary>
+            Key or capability used to sign the registry log
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry.EnvelopedConnectionService">
+             <summary>
+            Signed connection service delegation allowing the device to
+            access the account.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry._MetaDataParent">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.Registry.ContextCallsign.Connection">
+        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry._MetaData">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.Registry.ContextCallsign.AccountAddress">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Callsign.Registry.ContextCallsign.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
+        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry._Tag">
             <summary>
-            Constructor, creates a <see cref="T:Goedel.Mesh.Client.ContextUser"/> instance for the catalog entry 
-            <paramref name="catalogedMachine"/> on machine <paramref name="meshHost"/>.
+            Tag identifying this class
             </summary>
-            <param name="catalogedMachine">Description of the device profile.</param>
-            <param name="meshHost">The Mesh host to add the admin context to.</param>
+        </member>
+        <member name="F:Goedel.Callsign.Registry.ActivationApplicationRegistry.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Callsign.Registry.ApplicationEntryRegistry">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry.Activation">
+            <summary>The decrypted activation.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.Decode(Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.GetActivationAccount">
+            <summary>
+            Construct an activation record for the group.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry.EnvelopedActivation">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.Registry.ApplicationEntryRegistry.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Callsign.Registry.CatalogedRegistry">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.GetGroupID(System.String)">
+            <summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry._PrimaryKey">
+            <summary>
+            The primary key used to catalog the entry.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry.ProfileRegistry">
+            <summary>Cached convenience accessor that unpacks the value of <see cref="!:EnvelopedProfileGroup"/>
+            to return the <see cref="T:Goedel.Mesh.ProfileUser"/> value.</summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.GetEscrow">
+            <summary>
+            Return the escrowed keys.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.#ctor">
+            <summary>
+            Default constructor for serialization.
+            </summary>     
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.#ctor(Goedel.Callsign.ProfileRegistry,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Create and return a new catalog entry for <paramref name="profileGroup"/> with
+            the activation data <paramref name="activationAccount"/>.
+            </summary>
+            <param name="profileGroup">The group profile.</param>
+            <param name="activationAccount">The activation data.</param>
+            <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
+            <param name="connectionAddress">Connection binding profile to an address.</param>
+            <returns>The created group.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.GetActivation(Goedel.Mesh.CatalogedDevice)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.ToBuilder(System.Text.StringBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry.EnvelopedConnectionAddress">
+             <summary>
+            The connection allowing control of the registry.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry.EnvelopedProfileRegistry">
+             <summary>
+            The Mesh profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry.EnvelopedActivationCommon">
+             <summary>
+            The activation data for the registry.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.Registry.CatalogedRegistry.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Callsign.Registry.CallsignRegistry">
              <summary>
@@ -619,19 +873,76 @@
         <member name="P:Goedel.Callsign.Registry.CrossCertifier.Signer">
             <summary>Party to which the signature request is directed.</summary> 
         </member>
-        <member name="T:Goedel.Callsign.Registry.TBS">
+        <member name="T:Goedel.Callsign.Registry.ContextRegistry">
             <summary>
-            TBS
+            Context for managing the callsign registry account.
             </summary>
         </member>
-        <member name="P:Goedel.Callsign.Registry.TBS.ExceptionFormatDelegate">
+        <member name="F:Goedel.Callsign.Registry.ContextRegistry.ContextUser">
+            <summary>The enclosing user context.</summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.Profile">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.Connection">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.Registry.ContextRegistry.CatalogedRegistry">
+            <summary>The catalogued Registry description.</summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.AccountAddress">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.DictionaryCatalogDelegates">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Callsign.Registry.CatalogedRegistry,Goedel.Mesh.ActivationCommon)">
+            <summary>
+            Default constuctor, creates a Registry context for <paramref name="catalogedCallsign"/>
+            </summary>
+            <param name="contextAccount">The enclosing account context.</param>
+            <param name="catalogedCallsign">Description of the Registry to return the
+            context for.</param>
+            <param name="activationAccount">The account activation.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.CreateRegistry(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
+            <summary>
+            Create a threshold encryption Registry.
+            </summary>
+            <param name="contextUser">The user context in which the Registry is to be created.</param>
+            <param name="RegistryName">Name of the Registry to create.</param>
+            <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
+            <param name="roles">List of rights to be granted.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.CreateRegistry(Goedel.Mesh.Client.ContextUser,Goedel.Callsign.Registry.CatalogedRegistry,Goedel.Mesh.ActivationCommon,Goedel.Mesh.MeshServiceClient)">
+            <summary>
+            Create a new Registry.
+            </summary>
+            <param name="contextAccount">The enclosing account context.</param>
+            <param name="catalogedRegistry">Description of the Registry to create.</param>
+            <param name="activationAccount">The account activation.</param>
+            <param name="client">The client to connect to the service with.</param>
+            <returns>The Registry context.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.Process">
+            <summary>
+            Process the list of pending messages in order of receipt. 
+            </summary>
+        </member>
+        <member name="T:Goedel.Callsign.Registry.Internal">
+            <summary>
+            An internal assertion check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.Internal.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="P:Goedel.Callsign.Registry.TBS.Templates">
+        <member name="P:Goedel.Callsign.Registry.Internal.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.Callsign.Registry.TBS.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Callsign.Registry.Internal.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -640,13 +951,13 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Callsign.Registry.TBS._Throw(System.Object)">
+        <member name="M:Goedel.Callsign.Registry.Internal._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="P:Goedel.Callsign.Registry.TBS.Throw">
+        <member name="P:Goedel.Callsign.Registry.Internal.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -665,6 +976,15 @@
             <summary>
             Extensions class. Provides static convenience extensions.
             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.Extensions.CreateRegistry(Goedel.Mesh.Client.ContextUser,System.String)">
+            <summary>
+            Create a registry account under the name <paramref name="accountAddress"/> 
+            </summary>
+            <param name="contextUser"></param>
+            <param name="accountAddress"></param>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
         <member name="T:CallsignRegistry.NamespaceDoc">
             <summary>

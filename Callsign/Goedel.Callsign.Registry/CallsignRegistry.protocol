@@ -8,7 +8,38 @@
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare
 	Using Goedel.Callsign
+	Using Goedel.Mesh
 
+	Section 3 "Registry Account"
+
+	Structure CatalogedRegistry
+		External CatalogedApplication
+		Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
+			Description
+				|The connection allowing control of the registry.
+		Struct Enveloped<ProfileAccount> EnvelopedProfileRegistry
+			Description
+				|The Mesh profile
+		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
+			Description
+				|The activation data for the registry.
+
+	Structure ActivationApplicationRegistry
+		External ActivationApplication
+		Struct KeyData AccountEncryption
+			Description
+				|Key used to decrypt registry messages.
+		Struct KeyData AdministratorSignature
+			Description
+				|Key or capability used to sign the registry log
+		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+			Description
+				|Signed connection service delegation allowing the device to
+				|access the account.
+
+	Structure ApplicationEntryRegistry
+		External ApplicationEntry
+		Struct Enveloped<ActivationApplicationRegistry> EnvelopedActivation
 
 	Section 3 "Shared Classes"
 
@@ -32,8 +63,10 @@
 			|Base class for all response messages. Contains only the
 			|status code and status description fields.
 
-	Section 3 "Transactions"
-	
+
+
+
+	Section 3 "Transactions"	
 	Description 
 		|
 
@@ -58,7 +91,7 @@
 			Description
 				|Reason for creating a registration:
 				|Initial/ Update/ Voluntary/ Administrative/ Revoke
-		Struct Enveloped<Callsign> EnvelopedCallsign
+		Struct Enveloped<CallsignBinding> EnvelopedCallsign
 			Description
 				|The callsign request signed by the party to which the callsign is to
 				|be granted.

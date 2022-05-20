@@ -34,10 +34,7 @@ public partial class ContextUser : ContextAccount {
 
     #region // Public and private properties
 
-    ///<summary>The directory containing the catalogs related to the account.</summary>
-    public override string StoresDirectory => directoryAccount ??
-        GetStoresDirectory(MeshHost, ProfileUser).CacheValue(out directoryAccount);
-    string directoryAccount;
+
 
 
     ///<summary>The account profile</summary>
@@ -465,38 +462,38 @@ public partial class ContextUser : ContextAccount {
         return cataloged;
         }
 
-    /// <summary>
-    /// Get the default (i.e. minimum contact info). This has a single network 
-    /// address entry for this mesh and mesh account. 
-    /// </summary>
-    /// <returns>The default contact.</returns>
-    public override Contact CreateContact(
-                List<CryptographicCapability> capabilities = null) {
+    ///// <summary>
+    ///// Get the default (i.e. minimum contact info). This has a single network 
+    ///// address entry for this mesh and mesh account. 
+    ///// </summary>
+    ///// <returns>The default contact.</returns>
+    //public override Contact CreateContact(
+    //            List<CryptographicCapability> capabilities = null) {
 
-        var address = new NetworkAddress(AccountAddress, ProfileUser) {
-            Capabilities = capabilities
-            };
+    //    var address = new NetworkAddress(AccountAddress, ProfileUser) {
+    //        Capabilities = capabilities
+    //        };
 
-        var anchorAccount = new Anchor() {
-            Udf = ProfileUser.Udf,
-            Validation = "Self"
-            };
-        // ContextMesh.ProfileMesh.UDF 
+    //    var anchorAccount = new Anchor() {
+    //        Udf = ProfileUser.Udf,
+    //        Validation = "Self"
+    //        };
+    //    // ContextMesh.ProfileMesh.UDF 
 
-        var contact = new ContactPerson() {
-            Anchors = new List<Anchor>() { anchorAccount },
-            NetworkAddresses = new List<NetworkAddress>() { address }
-            };
+    //    var contact = new ContactPerson() {
+    //        Anchors = new List<Anchor>() { anchorAccount },
+    //        NetworkAddresses = new List<NetworkAddress>() { address }
+    //        };
 
-        return contact;
-        }
+    //    return contact;
+    //    }
 
     #endregion
 
 
     #region // Store management and convenience accessors
 
-    ///<summary>Dictionarry used to create stores</summary>
+    ///<inheritdoc/>
     public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => StaticCatalogDelegates;
     static readonly Dictionary<string, StoreFactoryDelegate> StaticCatalogDelegates = new() {
             { CatalogCredential.Label, CatalogCredential.Factory },
@@ -517,8 +514,7 @@ public partial class ContextUser : ContextAccount {
         //CatalogPublication.Label
         };
 
-    ///<summary>Returns the inbound spool for the account</summary>
-    public SpoolInbound GetSpoolInbound() => GetStore(SpoolInbound.Label) as SpoolInbound;
+
 
     /// <summary>
     /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
@@ -582,6 +578,16 @@ public partial class ContextUser : ContextAccount {
 
     #endregion
     #region // Message Handling - Get/Process pending.
+
+    ///<inheritdoc/>
+    public override int Sync() {
+        var statusRequest = new StatusRequest() {
+            CatalogedDeviceDigest = CatalogedMachine?.CatalogedDeviceDigest
+            };
+        return Sync(statusRequest);
+
+        }
+
 
     /// <summary>
     /// Return the latest unprocessed MessageConnectionRequest that was received.
@@ -720,17 +726,6 @@ public partial class ContextUser : ContextAccount {
         profileGroup.Validate();
 
 
-        //// create an administrative connection for this user
-        //var connectionGroup = new ConnectionStripped() {
-        //    ProfileUdf = groupName,
-        //    Subject = ProfileUser.Udf,
-        //    Authority = profileGroup.Udf
-        //    };
-        //var envelopedConnectionGroup = connectionGroup.Envelope(
-        //            activationGroup.AdministratorSignatureKey);
-
-
-
         // When we move to using thresholded keys, this needs to be modified
         // so that the activation for the cataloged group is saved under the 
         // account escrow key.
@@ -749,10 +744,6 @@ public partial class ContextUser : ContextAccount {
             EnvelopedProfileAccount = profileGroup.GetEnvelopedProfileAccount(),
             EnvelopedCallsignBinding = envelopedBindings
             };
-
-
-        // here we need to create aMesh client to use to control the group account.
-        // We should also preserve the group key so we can add users.
 
 
         // Since the service does not know this account (yet)
@@ -776,15 +767,6 @@ public partial class ContextUser : ContextAccount {
         using (var transaction = TransactBegin()) {
             // Add the group to the application catalog
             transaction.ApplicationCreate(catalogedGroup);
-
-            //var catalogApplication = transaction.GetCatalogApplication();
-            //transaction.CatalogUpdate(catalogApplication, catalogedGroup);
-
-            // need to provision ourselves a capability!
-
-            //transaction.Escrow(accountSeed, "admin", profileGroup.Udf, $"group {groupName}");
-
-
             var catalogAccess = transaction.GetCatalogAccess();
 
             // Create a contact for the group and add to the contact catalog
@@ -795,13 +777,7 @@ public partial class ContextUser : ContextAccount {
             transaction.Transact();
             }
 
-
-
-
-
         return contextGroup;
-
-
         }
 
     /// <summary>

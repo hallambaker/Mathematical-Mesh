@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 17-May-22 5:11:04 PM
+//  This file was automatically generated at 20-May-22 5:55:47 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -24,10 +24,10 @@ namespace Goedel.Carnet ;
 
 
 /// <summary>
-/// TBS
+/// An internal assertion check failed.
 /// </summary>
 [global::System.Serializable]
-public partial class TBS : global::Goedel.Utilities.GoedelException {
+public partial class Internal : global::Goedel.Utilities.GoedelException {
 
     ///<summary>The exception formatting delegate. May be overriden 
 	///locally or globally to implement different exception formatting.</summary>
@@ -39,7 +39,7 @@ public partial class TBS : global::Goedel.Utilities.GoedelException {
 	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
 			new () {
 
-			"Exception TBS"
+			"An internal error occurred"
 			};
 
 	/// <summary>
@@ -49,7 +49,7 @@ public partial class TBS : global::Goedel.Utilities.GoedelException {
 	/// generated message.</param>	
 	/// <param name="inner">Inner Exception</param>	
 	/// <param name="args">Optional list of parameterized arguments.</param>
-	public TBS  (string description=null, System.Exception inner=null,
+	public Internal  (string description=null, System.Exception inner=null,
 		params object[] args) : 
 			base (ExceptionFormatDelegate(description, Templates,
 				null, args), inner) {
@@ -64,7 +64,7 @@ public partial class TBS : global::Goedel.Utilities.GoedelException {
     /// </summary>
     /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-    static System.Exception _Throw(object reasons) => new TBS(args:reasons) ;
+    static System.Exception _Throw(object reasons) => new Internal(args:reasons) ;
 		
 	/// <summary>
     /// The public fatory delegate

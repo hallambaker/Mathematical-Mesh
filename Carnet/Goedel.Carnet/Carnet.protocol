@@ -1,9 +1,46 @@
 ﻿Protocol Goedel.Carnet CarnetProtocol CarnetProtocol
+	
+	Section 3 "Profile and account registration"
 
-	Section 2 "Registry service"
+	Structure ProfileCarnet
+		External ProfileAccount
+		Description 
+			|Describes a carnet issuer.
+
+
+	Structure CatalogedCarnet
+		External CatalogedApplication
+		Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
+			Description
+				|The connection allowing control of the registry.
+		Struct Enveloped<ProfileAccount> EnvelopedProfileCarnet
+			Description
+				|The Mesh profile
+		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
+			Description
+				|The activation data for the registry.
+
+	Structure ActivationApplicationCarnet
+		External ActivationApplication
+		Struct KeyData AccountEncryption
+			Description
+				|Key used to decrypt registry messages.
+		Struct KeyData AdministratorSignature
+			Description
+				|Key or capability used to sign the registry log
+		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+			Description
+				|Signed connection service delegation allowing the device to
+				|access the account.
+
+	Structure ApplicationEntryCarnet
+		External ApplicationEntry
+		Struct Enveloped<ActivationApplicationCarnet> EnvelopedActivation
+
+	Section 2 "Carnet service"
 
 	Description 
-		|Callsign Registry Protocol providing registry interactions.
+		|Carnet Ledger Protocol maintaining a record of carnet accounts.
 
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare

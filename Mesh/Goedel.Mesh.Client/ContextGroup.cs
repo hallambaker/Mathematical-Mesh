@@ -29,7 +29,7 @@ namespace Goedel.Mesh.Client;
 public partial class ContextGroup : ContextAccount {
     #region // Properties
 
-    ///<summary>The enclosing mesh context.</summary>
+    ///<summary>The enclosing user context.</summary>
     public ContextUser ContextUser;
 
     /////<summary>Returns the MeshClient of the user account under which the account is managed.
@@ -80,17 +80,6 @@ public partial class ContextGroup : ContextAccount {
         }
     MeshServiceClient meshClient;
 
-
-
-    //new(
-    //    null, ContextUser?.ConnectionDevice, CatalogedGroup?.ConnectionAddress,
-    //    ContextUser?.DeviceAuthentication);
-
-
-    ///<summary>The directory containing the catalogs related to the account.</summary>
-    public override string StoresDirectory => storesDirectory ??
-        Path.Combine(MeshMachine.DirectoryMesh, ProfileGroup.Udf).CacheValue(out storesDirectory);
-    string storesDirectory;
 
     ///<summary>Dictionarry used to create stores</summary>
     public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => stores;

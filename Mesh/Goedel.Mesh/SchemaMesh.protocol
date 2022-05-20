@@ -292,6 +292,41 @@
 				|service, these are listed in order of priority, most preferred first.
 
 
+	Structure Accreditation
+		External Assertion
+		Description
+			|Registration of a trusted third party accreditation of a callsign/profile binding.
+		String Callsign
+			Description
+				|The callsign to which the accreditation applies
+		String ProfileUdf
+			Description
+				|The profile to which the accreditation applies.
+		String SubjectNames
+			Multiple
+			Description
+				|The validated names of the subject
+		String SubjectLogos
+			Multiple
+			Description
+				|Mesh strong URIs from which a validated logo belonging to the 
+				|subject MAY be retreived and validated.
+		DateTime Issued
+			Description
+				|The time the assertion was issued.
+		DateTime Expires
+			Description
+				|The time the assertion is due to expire
+		String Policy
+			Description
+				|The issuing policy under which the validation was performed.
+		String Practice
+			Description
+				|The issuing practices under which the validation was performed.
+
+
+
+
 	Structure ConnectionStripped
 		Description
 			|Asserts that a profile is connected to an account address.
@@ -436,7 +471,7 @@
 				|Key or capability allowing administration of the group.
 		Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
-				|Sined connection service delegation allowing the device to
+				|Signed connection service delegation allowing the device to
 				|access the account.
 
 	Structure ActivationApplicationCallsign				

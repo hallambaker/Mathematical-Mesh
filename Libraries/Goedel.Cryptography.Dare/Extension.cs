@@ -28,6 +28,25 @@ namespace Goedel.Cryptography.Dare;
 public static partial class Extension {
 
     /// <summary>
+    /// Returns a new typed envelope containing the object <paramref name="data"/>
+    /// optionally encrypted under <paramref name="encryptionKey"/> and signed under
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="data">The object to be enveloped.</param>
+    /// <param name="signingKey">The signature key.</param>
+    /// <param name="encryptionKey">The encryption key.</param>
+    /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+    /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
+    /// <returns>The enveloped data</returns>
+    public static Enveloped<T> Enveloped<T>(this T data,
+                CryptoKey signingKey = null,
+                CryptoKey encryptionKey = null,
+                ContentMeta contentMeta = null,
+                ObjectEncoding objectEncoding = ObjectEncoding.JSON) where T : JsonObject =>
+        new Enveloped<T> (data, signingKey, encryptionKey, contentMeta, objectEncoding);
+
+
+    /// <summary>
     /// Return the algorithm class of an algorithm identifier.
     /// </summary>
     /// <param name="cryptoAlgorithmID">The algorithm identifier to categorize.</param>

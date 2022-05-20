@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 17-May-22 5:10:44 PM
+//  This file was automatically generated at 20-May-22 5:55:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -92,6 +92,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"ProfileHost", ProfileHost._Factory},
 	    {"Connection", Connection._Factory},
 	    {"CallsignBinding", CallsignBinding._Factory},
+	    {"Accreditation", Accreditation._Factory},
 	    {"ConnectionStripped", ConnectionStripped._Factory},
 	    {"ConnectionService", ConnectionService._Factory},
 	    {"ConnectionDevice", ConnectionDevice._Factory},
@@ -2827,6 +2828,273 @@ public partial class CallsignBinding : Assertion {
 
 	/// <summary>
 	///
+	/// Registration of a trusted third party accreditation of a callsign/profile binding.
+	/// </summary>
+public partial class Accreditation : Assertion {
+        /// <summary>
+        ///The callsign to which the accreditation applies
+        /// </summary>
+
+	public virtual string						Callsign  {get; set;}
+        /// <summary>
+        ///The profile to which the accreditation applies.
+        /// </summary>
+
+	public virtual string						ProfileUdf  {get; set;}
+        /// <summary>
+        ///The validated names of the subject
+        /// </summary>
+
+	public virtual List<string>				SubjectNames  {get; set;}
+        /// <summary>
+        ///Mesh strong URIs from which a validated logo belonging to the 
+        ///subject MAY be retreived and validated.
+        /// </summary>
+
+	public virtual List<string>				SubjectLogos  {get; set;}
+        /// <summary>
+        ///The time the assertion was issued.
+        /// </summary>
+
+	public virtual DateTime?						Issued  {get; set;}
+        /// <summary>
+        ///The time the assertion is due to expire
+        /// </summary>
+
+	public virtual DateTime?						Expires  {get; set;}
+        /// <summary>
+        ///The issuing policy under which the validation was performed.
+        /// </summary>
+
+	public virtual string						Policy  {get; set;}
+        /// <summary>
+        ///The issuing practices under which the validation was performed.
+        /// </summary>
+
+	public virtual string						Practice  {get; set;}
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+			{ "Callsign", new MetaDataString(
+				delegate (string _a) {  Callsign = _a; },
+				() => Callsign) } ,
+			{ "ProfileUdf", new MetaDataString(
+				delegate (string _a) {  ProfileUdf = _a; },
+				() => ProfileUdf) } ,
+			{ "SubjectNames", new MetaDataListString(
+				delegate (List<string> _a) {  SubjectNames = _a; },
+				() => SubjectNames) } ,
+			{ "SubjectLogos", new MetaDataListString(
+				delegate (List<string> _a) {  SubjectLogos = _a; },
+				() => SubjectLogos) } ,
+			{ "Issued", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Issued = _a; },
+				() => Issued) } ,
+			{ "Expires", new MetaDataDateTime(
+				delegate (DateTime? _a) {  Expires = _a; },
+				() => Expires) } ,
+			{ "Policy", new MetaDataString(
+				delegate (string _a) {  Policy = _a; },
+				() => Policy) } ,
+			{ "Practice", new MetaDataString(
+				delegate (string _a) {  Practice = _a; },
+				() => Practice) } 
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Accreditation";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Accreditation();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((Assertion)this).SerializeX(_writer, false, ref _first);
+		if (Callsign != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Callsign", 1);
+				_writer.WriteString (Callsign);
+			}
+		if (ProfileUdf != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("ProfileUdf", 1);
+				_writer.WriteString (ProfileUdf);
+			}
+		if (SubjectNames != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("SubjectNames", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in SubjectNames) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				_writer.WriteString (_index);
+				}
+			_writer.WriteArrayEnd ();
+			}
+
+		if (SubjectLogos != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("SubjectLogos", 1);
+			_writer.WriteArrayStart ();
+			bool _firstarray = true;
+			foreach (var _index in SubjectLogos) {
+				_writer.WriteArraySeparator (ref _firstarray);
+				_writer.WriteString (_index);
+				}
+			_writer.WriteArrayEnd ();
+			}
+
+		if (Issued != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Issued", 1);
+				_writer.WriteDateTime (Issued);
+			}
+		if (Expires != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Expires", 1);
+				_writer.WriteDateTime (Expires);
+			}
+		if (Policy != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Policy", 1);
+				_writer.WriteString (Policy);
+			}
+		if (Practice != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("Practice", 1);
+				_writer.WriteString (Practice);
+			}
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Accreditation FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Accreditation;
+			}
+		var Result = new Accreditation ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			case "Callsign" : {
+				Callsign = jsonReader.ReadString ();
+				break;
+				}
+			case "ProfileUdf" : {
+				ProfileUdf = jsonReader.ReadString ();
+				break;
+				}
+			case "SubjectNames" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				SubjectNames = new List <string> ();
+				while (_Going) {
+					string _Item = jsonReader.ReadString ();
+					SubjectNames.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "SubjectLogos" : {
+				// Have a sequence of values
+				bool _Going = jsonReader.StartArray ();
+				SubjectLogos = new List <string> ();
+				while (_Going) {
+					string _Item = jsonReader.ReadString ();
+					SubjectLogos.Add (_Item);
+					_Going = jsonReader.NextArray ();
+					}
+				break;
+				}
+			case "Issued" : {
+				Issued = jsonReader.ReadDateTime ();
+				break;
+				}
+			case "Expires" : {
+				Expires = jsonReader.ReadDateTime ();
+				break;
+				}
+			case "Policy" : {
+				Policy = jsonReader.ReadString ();
+				break;
+				}
+			case "Practice" : {
+				Practice = jsonReader.ReadString ();
+				break;
+				}
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	///
 	/// Asserts that a profile is connected to an account address.
 	/// Stripped down connection assertion
 	/// </summary>
@@ -4588,7 +4856,7 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 
 	public virtual KeyData						AccountAuthentication  {get; set;}
         /// <summary>
-        ///Sined connection service delegation allowing the device to
+        ///Signed connection service delegation allowing the device to
         ///access the account.
         /// </summary>
 
