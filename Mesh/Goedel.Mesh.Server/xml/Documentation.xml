@@ -34,10 +34,13 @@
         <member name="P:Goedel.Mesh.Server.AccountContext.KeyCollection">
             <summary>The key collection for decrypting associated data.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountContext.PermitPublicReadAccess">
+            <summary>If true, authorization is not necessary to access public catalogs.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Server.AccountContext.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountContext.#ctor">
+        <member name="M:Goedel.Mesh.Server.AccountContext.#ctor(Goedel.Mesh.Server.LockedCatalogedEntry{Goedel.Mesh.Server.AccountEntry},Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Return a new instance.
             </summary>
@@ -284,6 +287,9 @@
         <member name="F:Goedel.Mesh.Server.AccountPrivilege.Operate">
             <summary>???</summary> 
         </member>
+        <member name="F:Goedel.Mesh.Server.AccountPrivilege.Read">
+            <summary>???</summary> 
+        </member>
         <member name="F:Goedel.Mesh.Server.AccountPrivilege.All">
             <summary>All privileges.</summary> 
         </member>
@@ -383,10 +389,12 @@
             <param name="label">The store to add the envelopes to.</param>
             <param name="envelopes">The envelopes to append.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.GetContainerStatuses">
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.GetContainerStatuses(System.Collections.Generic.List{System.String})">
             <summary>
             Obtain status values for all the stores associated with an account.
             </summary>
+            <param name="catalogs">The named catalogs to return the status of. If
+            null, the default set of catalogs is returned.</param>
             <returns>The list of container status entries.</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.GetLocal(System.String)">
@@ -1443,7 +1451,7 @@
             <param name="jpcSession">The session connection data.</param>
             <param name="completeRequest">The completion request.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession,System.String)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession,System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.

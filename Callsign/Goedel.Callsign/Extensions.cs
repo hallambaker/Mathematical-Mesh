@@ -27,7 +27,7 @@ public static class Extensions {
                 string registry = null,
                 string transfer = null) {
 
-
+        registry ??= contextAccount.CallsignRegistry;
 
         var callsignBinding = new CallsignBinding() {
             Canonical = callsign.CannonicalAccountAddress(),

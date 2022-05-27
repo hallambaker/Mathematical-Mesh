@@ -54,6 +54,11 @@ public class AccountContext : Disposable {
 
     ///<summary>The key collection for decrypting associated data.</summary> 
     public IKeyCollection KeyCollection { get; init; }
+
+    ProfileAccount ProfileAccount { get; }
+
+    ///<summary>If true, authorization is not necessary to access public catalogs.</summary> 
+    public bool PermitPublicReadAccess { get; }
     #endregion
     #region // Dispose
 
@@ -68,8 +73,20 @@ public class AccountContext : Disposable {
     /// <summary>
     /// Return a new instance.
     /// </summary>
-    public AccountContext() => Created = Accessed = DateTime.Now;
+    public AccountContext(
+            LockedCatalogedEntry<AccountEntry> lockedAccountEntry,
+            IKeyCollection keyCollection) {
+        LockedAccountEntry = lockedAccountEntry;
+        KeyCollection = keyCollection;
 
+        Created = Accessed = DateTime.Now;
+        ProfileAccount = (AccountEntry as AccountUser)?.GetProfileAccount();
+
+        PermitPublicReadAccess = ProfileAccount switch {
+            ProfileRegistry profileRegistry => true,
+            _ => false
+            };
+        }
     #endregion
     #region // Methods
 
@@ -118,8 +135,10 @@ public class AccountContext : Disposable {
                 KeyCredentialPublic credential,
                 AccountPrivilege accountPrivilege) {
 
-        var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();
-
+        //var ProfileAccount = (AccountEntry as AccountUser).GetProfileAccount();
+        if (accountPrivilege == AccountPrivilege.Read & PermitPublicReadAccess) {
+            return true;
+            }
         // To operate under the account authentication key, the request must be
         // authenticated under the AccountAuthenticationKey
 
@@ -129,7 +148,7 @@ public class AccountContext : Disposable {
                     break;
                     }
             default: {
-                    (profileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
+                    (ProfileAccount.AccountAuthenticationKey.MatchKeyIdentifier(
                             credential.AuthenticationKeyId)).AssertTrue(NotAuthorized.Throw);
                     break;
                     }
@@ -145,7 +164,11 @@ public class AccountContext : Disposable {
         MeshCredentialPublic credential,
         AccountPrivilege accountPrivilege) {
 
-        var profileAccount = (AccountEntry as AccountUser).GetProfileAccount();
+        //var ProfileAccount = (AccountEntry as AccountUser).GetProfileAccount();
+
+        if (accountPrivilege == AccountPrivilege.Read & PermitPublicReadAccess) {
+            return true;
+            }
 
         var catalogCapability = GetCatalogCapability();
 
@@ -156,6 +179,7 @@ public class AccountContext : Disposable {
             case AccountPrivilege.Device: {
                     break;
                     }
+
             default: {
                     (AccessCapability?.Active == true).AssertTrue(NotAuthorized.Throw);
                     break;

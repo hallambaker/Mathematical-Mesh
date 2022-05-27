@@ -85,6 +85,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ///<summary>The connection binding the calling context to the account.</summary>
     public abstract Connection Connection { get; }
 
+    ///<summary>Contact address for the callsign registry broker.</summary> 
+    public string CallsignRegistry { get; set; }
+
     /// <summary>
     /// Create a new ICredential.
     /// </summary>
@@ -150,8 +153,25 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     #region // Store definitions
     ///<summary>The directory containing the catalogs related to the account.</summary>
     public virtual string StoresDirectory => storesDirectory ??
-        Path.Combine(MeshMachine.DirectoryMesh, Profile.Udf).CacheValue(out storesDirectory);
+        GetStoresDirectory(MeshMachine, Profile).CacheValue(out storesDirectory);
     string storesDirectory;
+
+
+
+    /// <summary>
+    /// Returns the stores directory on <paramref name="meshHost"/> for the profile 
+    /// <paramref name="profile"/>.
+    /// </summary>
+    /// <param name="meshHost">The host.</param>
+    /// <param name="profile">The profile.</param>
+    /// <returns>Path to the directory containing the profile stores.</returns>
+    public static string GetStoresDirectory(
+            MeshHost meshHost, Profile profile) =>
+                GetStoresDirectory(meshHost.MeshMachine, profile);
+
+
+    public static string GetStoresDirectory(IMeshMachineClient meshMachine, Profile profile) =>
+        Path.Combine(meshMachine.DirectoryMesh, profile.Udf);
 
     ///<summary>Dictionary locating the stores connected to the context.</summary>
     public Dictionary<string, SyncStatus> DictionaryStores = new();
@@ -348,10 +368,20 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             };
         return Sync(statusRequest);
         }
-    protected int Sync (StatusRequest statusRequest) {
-        int count = 0;
 
-        var status = MeshClient.Status(statusRequest);
+    /// <summary>
+    /// Synchronize this device to the catalogs at the service. Since the authoritative copy of
+    /// the service is held at the service, this means only downloading updates at present.
+    /// </summary>
+    /// <param name="statusRequest">The status request to present</param>
+    /// <param name="meshClient">If not-null specifies a client to override the account
+    /// client (used to synchronize against other accounts).</param>
+    /// <returns>The number of items synchronized</returns>
+    protected int Sync (StatusRequest statusRequest, MeshServiceClient meshClient =null) {
+        int count = 0;
+        meshClient ??= MeshClient;
+
+        var status = meshClient.Status(statusRequest);
 
         status.ContainerStatus.AssertNotNull(ServerResponseInvalid.Throw, status);
 
@@ -381,7 +411,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         // what is it with the ranges here? make sure they are all correct.
         // Then check that the remote versions are correct.
 
-        var download = MeshClient.Download(downloadRequest);
+        var download = meshClient.Download(downloadRequest);
 
         // check here to see if we have an update to the Cataloged Device
 

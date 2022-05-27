@@ -454,6 +454,9 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.Connection">
             <summary>The connection binding the calling context to the account.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.CallsignRegistry">
+            <summary>Contact address for the callsign registry broker.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetMeshCredentialPrivate">
             <summary>
             Create a new ICredential.
@@ -504,6 +507,15 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetStoresDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Profile)">
+            <summary>
+            Returns the stores directory on <paramref name="meshHost"/> for the profile 
+            <paramref name="profile"/>.
+            </summary>
+            <param name="meshHost">The host.</param>
+            <param name="profile">The profile.</param>
+            <returns>Path to the directory containing the profile stores.</returns>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextAccount.DictionaryStores">
             <summary>Dictionary locating the stores connected to the context.</summary>
@@ -578,6 +590,16 @@
             Synchronize this device to the catalogs at the service. Since the authoritative copy of
             the service is held at the service, this means only downloading updates at present.
             </summary>
+            <returns>The number of items synchronized</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.Sync(Goedel.Mesh.StatusRequest,Goedel.Mesh.MeshServiceClient)">
+            <summary>
+            Synchronize this device to the catalogs at the service. Since the authoritative copy of
+            the service is held at the service, this means only downloading updates at present.
+            </summary>
+            <param name="statusRequest">The status request to present</param>
+            <param name="meshClient">If not-null specifies a client to override the account
+            client (used to synchronize against other accounts).</param>
             <returns>The number of items synchronized</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.UpdateCatalogedMachine(Goedel.Mesh.CatalogedDevice,System.String,System.Boolean)">
@@ -1190,15 +1212,6 @@
             Create an administrator device entry.
             </summary>
             <param name="rights">The rights to be granted to the administrator device.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.GetStoresDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser)">
-            <summary>
-            Returns the stores directory on <paramref name="meshHost"/> for the profile 
-            <paramref name="profileUser"/>.
-            </summary>
-            <param name="meshHost">The host.</param>
-            <param name="profileUser">The profile.</param>
-            <returns>Path to the directory containing the profile stores.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.CreateDirectory(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
@@ -2800,6 +2813,11 @@
             The host profile
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedActivationCommon">
+             <summary>
+            The activation record for the service client (if used)
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedActivationHost">
              <summary>
             The activation record for this host
@@ -2808,6 +2826,11 @@
         <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedConnectionService">
              <summary>
             The connection of the host to the service
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService.ServiceIdentifier">
+             <summary>
+            Specifies the type of service 
              </summary>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedService._MetaDataParent">

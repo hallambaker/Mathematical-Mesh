@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 20-May-22 5:55:43 PM
+//  This file was automatically generated at 26-May-22 6:10:20 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -353,6 +353,11 @@ public partial class CatalogedService : CatalogedMachine {
 
 	public virtual Enveloped<ProfileHost>						EnvelopedProfileHost  {get; set;}
         /// <summary>
+        ///The activation record for the service client (if used)
+        /// </summary>
+
+	public virtual Enveloped<ActivationCommon>						EnvelopedActivationCommon  {get; set;}
+        /// <summary>
         ///The activation record for this host
         /// </summary>
 
@@ -362,6 +367,11 @@ public partial class CatalogedService : CatalogedMachine {
         /// </summary>
 
 	public virtual Enveloped<ConnectionService>						EnvelopedConnectionService  {get; set;}
+        /// <summary>
+        ///Specifies the type of service 
+        /// </summary>
+
+	public virtual string						ServiceIdentifier  {get; set;}
 
     ///<inheritdoc/>
     public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
@@ -377,6 +387,10 @@ public partial class CatalogedService : CatalogedMachine {
 				delegate (object _a) {  EnvelopedProfileHost = _a as Enveloped<ProfileHost>; },
 				() => EnvelopedProfileHost,
 				"Enveloped<ProfileHost>" )} ,
+			{ "EnvelopedActivationCommon", new MetaDataStruct(
+				delegate (object _a) {  EnvelopedActivationCommon = _a as Enveloped<ActivationCommon>; },
+				() => EnvelopedActivationCommon,
+				"Enveloped<ActivationCommon>" )} ,
 			{ "EnvelopedActivationHost", new MetaDataStruct(
 				delegate (object _a) {  EnvelopedActivationHost = _a as Enveloped<ActivationHost>; },
 				() => EnvelopedActivationHost,
@@ -384,7 +398,10 @@ public partial class CatalogedService : CatalogedMachine {
 			{ "EnvelopedConnectionService", new MetaDataStruct(
 				delegate (object _a) {  EnvelopedConnectionService = _a as Enveloped<ConnectionService>; },
 				() => EnvelopedConnectionService,
-				"Enveloped<ConnectionService>" )} 
+				"Enveloped<ConnectionService>" )} ,
+			{ "ServiceIdentifier", new MetaDataString(
+				delegate (string _a) {  ServiceIdentifier = _a; },
+				() => ServiceIdentifier) } 
 		}.CacheValue(out _metaData);
 	Dictionary<string, MetaData> _metaData;
 		
@@ -441,6 +458,11 @@ public partial class CatalogedService : CatalogedMachine {
 			_writer.WriteToken ("EnvelopedProfileHost", 1);
 				EnvelopedProfileHost.Serialize (_writer, false);
 			}
+		if (EnvelopedActivationCommon != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("EnvelopedActivationCommon", 1);
+				EnvelopedActivationCommon.Serialize (_writer, false);
+			}
 		if (EnvelopedActivationHost != null) {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("EnvelopedActivationHost", 1);
@@ -450,6 +472,11 @@ public partial class CatalogedService : CatalogedMachine {
 			_writer.WriteObjectSeparator (ref _first);
 			_writer.WriteToken ("EnvelopedConnectionService", 1);
 				EnvelopedConnectionService.Serialize (_writer, false);
+			}
+		if (ServiceIdentifier != null) {
+			_writer.WriteObjectSeparator (ref _first);
+			_writer.WriteToken ("ServiceIdentifier", 1);
+				_writer.WriteString (ServiceIdentifier);
 			}
 		if (_wrap) {
 			_writer.WriteObjectEnd ();
@@ -498,6 +525,13 @@ public partial class CatalogedService : CatalogedMachine {
  
 				break;
 				}
+			case "EnvelopedActivationCommon" : {
+				// An untagged structure
+				EnvelopedActivationCommon = new Enveloped<ActivationCommon> ();
+				EnvelopedActivationCommon.Deserialize (jsonReader);
+ 
+				break;
+				}
 			case "EnvelopedActivationHost" : {
 				// An untagged structure
 				EnvelopedActivationHost = new Enveloped<ActivationHost> ();
@@ -510,6 +544,10 @@ public partial class CatalogedService : CatalogedMachine {
 				EnvelopedConnectionService = new Enveloped<ConnectionService> ();
 				EnvelopedConnectionService.Deserialize (jsonReader);
  
+				break;
+				}
+			case "ServiceIdentifier" : {
+				ServiceIdentifier = jsonReader.ReadString ();
 				break;
 				}
 			default : {

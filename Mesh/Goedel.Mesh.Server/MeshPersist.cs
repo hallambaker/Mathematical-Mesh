@@ -302,12 +302,13 @@ public class MeshPersist : Disposable {
     /// entry.</param>
     public StatusResponse AccountStatus(
                     IJpcSession jpcSession,
-                    string catalogedDeviceDigest) {
+                    string catalogedDeviceDigest,
+                    List<string> catalogs) {
 
 
-        using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
+        using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Read);
 
-        var containerStatus = accountHandle.GetContainerStatuses();
+        var containerStatus = accountHandle.GetContainerStatuses(catalogs);
 
 
         var statusResponse = new StatusResponse() {
@@ -340,7 +341,7 @@ public class MeshPersist : Disposable {
 
                 List<ConstraintsSelect> selections) {
 
-        using var accountHandle = GetAccountHandleLocked(session, AccountPrivilege.Connected);
+        using var accountHandle = GetAccountHandleLocked(session, AccountPrivilege.Read);
 
         //using var accountEntry = GetAccountVerified(account, jpcSession);
         var updates = new List<ContainerUpdate>();
@@ -725,10 +726,7 @@ public class MeshPersist : Disposable {
             var profileUdf = GetProfileUdf(account);
 
             accountEntry = GetAccountLocked(profileUdf);
-            var accountContext = new AccountContext() {
-                LockedAccountEntry = accountEntry,
-                KeyCollection = KeyCollection
-                };
+            var accountContext = new AccountContext(accountEntry, KeyCollection);
 
             return new AccountHandleLocked(accountContext, Logger) {
                 AccountPrivilege = AccountPrivilege.Post
@@ -752,10 +750,7 @@ public class MeshPersist : Disposable {
 
 
             accountEntry = GetAccountLocked(session.TargetAccount);
-            var accountContext = new AccountContext() {
-                LockedAccountEntry = accountEntry,
-                KeyCollection = KeyCollection
-                };
+            var accountContext = new AccountContext(accountEntry, KeyCollection);
             accountContext.Authenticate(
                 session, accountPrivilege).AssertTrue(NotAuthenticated.Throw);
 

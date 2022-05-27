@@ -63,9 +63,9 @@ public partial class TestService {
     static readonly string AccountBob = "bob@example.com";
     static readonly string AccountQ = "q@example.com";
     static readonly string AccountMallet = "mallet@example.com";
+    static readonly string AccountRegistryAdmin = "registryadmin@example.com";
     static readonly string AccountRegistry = "registry@example.com";
-    static readonly string AccountCallsign = "callsign@example.com";
-
+    static readonly string AccountResolver = "resolver@example.com";
 
     public string DeviceAliceAdmin = "Alice Admin";
     public string DeviceAlice2 = "Alice Device 2";

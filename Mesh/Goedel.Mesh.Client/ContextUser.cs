@@ -373,16 +373,7 @@ public partial class ContextUser : ContextAccount {
 
 
 
-    /// <summary>
-    /// Returns the stores directory on <paramref name="meshHost"/> for the profile 
-    /// <paramref name="profileUser"/>.
-    /// </summary>
-    /// <param name="meshHost">The host.</param>
-    /// <param name="profileUser">The profile.</param>
-    /// <returns>Path to the directory containing the profile stores.</returns>
-    public static string GetStoresDirectory(
-            MeshHost meshHost, ProfileUser profileUser) =>
-                Path.Combine(meshHost.MeshMachine.DirectoryMesh, profileUser.Udf);
+
 
     /// <summary>
     /// Create the stores directory and initialize catalogs.
@@ -396,7 +387,7 @@ public partial class ContextUser : ContextAccount {
                 ProfileUser profileUser,
                 ActivationCommon activationAccount,
                 IKeyCollection keyLocate) {
-        var storesDirectory = ContextUser.GetStoresDirectory(meshHost, profileUser);
+        var storesDirectory = ContextAccount.GetStoresDirectory(meshHost, profileUser);
         Directory.CreateDirectory(storesDirectory);
 
 

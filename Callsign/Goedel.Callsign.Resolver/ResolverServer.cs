@@ -18,6 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using Goedel.Cryptography.Dare;
+using Goedel.Mesh.Client;
 using Goedel.Utilities;
 
 using System;
@@ -25,17 +27,37 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
 
-namespace Goedel.Callsign.Resolver; 
+namespace Goedel.Callsign.Resolver;
+
+
+
 public class ResolverServer  {
     #region // Properties
+
+    ///<summary>The resolver client context.</summary> 
+    ContextResolver ContextResolver { get; }
+
+    ///<summary>Resolver client configuration.</summary> 
+    CatalogedMachine CatalogedMachine { get; }
 
     #endregion
     #region // Constructors
 
-    public ResolverServer  (string Registry) {
+    /// <summary>
+    /// Constructs an instance of a Callsign resolver service bound to the registry 
+    /// specified in <paramref name="catalogedMachine"/>.
+    /// </summary>
+    /// <param name="meshHost">The Mesh host.</param>
+    /// <param name="catalogedMachine">The resolver client description.</param>
+    public ResolverServer  (
+                MeshHost meshHost,
+                CatalogedService catalogedMachine) {
+
+
+
+        // pull up client here.
+        ContextResolver = new ContextResolver(meshHost, catalogedMachine);
         }
 
 
@@ -47,13 +69,26 @@ public class ResolverServer  {
     #endregion
     #region // Methods
 
-
+    /// <summary>
+    /// Update dispatch
+    /// </summary>
     public void Update() {
+
+        //Synchronize client
+        ContextResolver.Update();
 
         }
 
-    public bool Resolve(string callsign) {
-        return true;
+    /// <summary>
+    /// Resolver dispatch.
+    /// </summary>
+    /// <param name="callsign">The callsign to resolve.</param>
+    /// <returns>The resolution result.</returns>
+    public Enveloped<Registration> Resolve(string callsign) {
+        
+        // Get callsign data and return.
+        
+        return ContextResolver.Resolve (callsign);
         }
 
 

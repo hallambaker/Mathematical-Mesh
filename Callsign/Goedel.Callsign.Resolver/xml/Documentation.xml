@@ -418,6 +418,64 @@
         <member name="P:Goedel.Callsign.Resolver.CallsignResolverConfiguration.Registry">
             <summary>The sevice address of the registry to resolve.</summary> 
         </member>
+        <member name="P:Goedel.Callsign.Resolver.ContextResolver.MeshClientRegistry">
+            <summary>Client used to connect to the regitry.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ContextResolver.MeshClient">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ContextResolver.Profile">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ContextResolver.ProfileResolver">
+            <summary>The resolver profile</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ContextResolver.ProfileRegistry">
+            <summary>The registry profile</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ContextResolver.Connection">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ContextResolver.AccountAddress">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ContextResolver.CatalogRegistration">
+            <summary>Returns the inbound spool for the account</summary>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ContextResolver.DictionaryCatalogDelegates">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.ContextResolver.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedService)">
+            <summary>
+            Constructor returning an instance of a resolver account context running on host
+            <paramref name="meshHost"/> using the description given in <paramref name="catalogedService"/>.
+            </summary>
+            <param name="meshHost">The mesh host.</param>
+            <param name="catalogedService">The resolver configuration description.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.ContextResolver.Create(Goedel.Mesh.Client.MeshHost,System.String,Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.ProfileAccount},Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
+            <summary>
+            Create a new client resolver context.
+            </summary>
+            <param name="meshHost">The mesh host.</param>
+            <param name="resolverAddress">The address of the resolver account.</param>
+            <param name="registryAddress">The address of the registry account.</param>
+            <param name="accountSeed">Optional account seed.</param>
+            <param name="roles">The authorized roles.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.ContextResolver.Update">
+            <summary>
+            Update the resolver state.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.ContextResolver.Resolve(System.String)">
+            <summary>
+            Resolve a request.
+            </summary>
+            <param name="callsign"></param>
+            <returns></returns>
+        </member>
         <member name="T:Goedel.Callsign.Resolver.TBS">
             <summary>
             TBS
@@ -459,6 +517,32 @@
             <summary>
             Static initializer, is called once when the module loads.
             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ResolverServer.ContextResolver">
+            <summary>The resolver client context.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.ResolverServer.CatalogedMachine">
+            <summary>Resolver client configuration.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.ResolverServer.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedService)">
+            <summary>
+            Constructs an instance of a Callsign resolver service bound to the registry 
+            specified in <paramref name="catalogedMachine"/>.
+            </summary>
+            <param name="meshHost">The Mesh host.</param>
+            <param name="catalogedMachine">The resolver client description.</param>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.ResolverServer.Update">
+            <summary>
+            Update dispatch
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.ResolverServer.Resolve(System.String)">
+            <summary>
+            Resolver dispatch.
+            </summary>
+            <param name="callsign">The callsign to resolve.</param>
+            <returns>The resolution result.</returns>
         </member>
         <member name="T:Goedel.Callsign.Extensions">
             <summary>

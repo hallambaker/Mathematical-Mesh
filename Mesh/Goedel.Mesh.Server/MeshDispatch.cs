@@ -540,7 +540,9 @@ public class PublicMeshService : MeshService {
     public override StatusResponse Status(
             StatusRequest request, IJpcSession jpcSession) {
         try {
-            return MeshPersist.AccountStatus(jpcSession, request.CatalogedDeviceDigest);
+            return MeshPersist.AccountStatus(jpcSession, 
+                    request.CatalogedDeviceDigest,
+                    request.Catalogs);
             }
         catch (System.Exception exception) {
             return new StatusResponse(exception);

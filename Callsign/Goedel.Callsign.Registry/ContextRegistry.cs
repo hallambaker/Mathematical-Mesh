@@ -72,9 +72,6 @@ public class ContextRegistry : ContextAccount {
         
         CatalogRegistration = GetStore(CatalogRegistration.Label) as CatalogRegistration;
         CatalogRegistration.CallsignMapping = CallsignMapping;
-
-
-
         }
 
 
@@ -163,13 +160,15 @@ public class ContextRegistry : ContextAccount {
                 CatalogedRegistry catalogedRegistry,
                 ActivationCommon activationAccount,
                 MeshServiceClient client) {
+
+        var storesDirectory = GetStoresDirectory(contextAccount.MeshMachine, catalogedRegistry.ProfileRegistry);
+        Directory.CreateDirectory(storesDirectory);
+
         var result = new ContextRegistry(contextAccount, catalogedRegistry, activationAccount) {
             MeshClient = client
             };
 
         // Prepopulate the catalogs
-        Directory.CreateDirectory(result.StoresDirectory);
-
         result.LoadStores();
         result.SyncProgressUpload();
 

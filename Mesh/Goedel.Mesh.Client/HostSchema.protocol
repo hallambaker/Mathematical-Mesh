@@ -45,12 +45,20 @@
 		Struct Enveloped<ProfileHost> EnvelopedProfileHost
 			Description
 				|The host profile
+		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
+			Description
+				|The activation record for the service client (if used)
 		Struct Enveloped<ActivationHost> EnvelopedActivationHost
 			Description
 				|The activation record for this host
 		Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
 				|The connection of the host to the service
+		String ServiceIdentifier
+			Description
+				|Specifies the type of service 
+
+
 
 
 	Structure CatalogedStandard

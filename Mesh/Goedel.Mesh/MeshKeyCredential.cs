@@ -71,8 +71,7 @@ public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate
     /// </summary>
     /// <returns></returns>
     public MeshKeyCredentialPublic GetMeshKeyCredentialPublic() =>
-        new(
-        AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced) {
+        new(    AuthenticationPrivate.KeyPairPublic() as KeyPairAdvanced) {
             Account = Account
             };
 

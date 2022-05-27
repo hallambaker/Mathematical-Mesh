@@ -44,7 +44,8 @@ public enum AccountPrivilege {
     Local = 0b0010_0000,
     ///<summary>???</summary> 
     Operate = 0b0100_0000,
-
+    ///<summary>???</summary> 
+    Read = 0b1000_0000,
     ///<summary>All privileges.</summary> 
     All = 0xFFF
     }
@@ -292,10 +293,21 @@ public class AccountHandleLocked : Disposable {
     /// <summary>
     /// Obtain status values for all the stores associated with an account.
     /// </summary>
+    /// <param name="catalogs">The named catalogs to return the status of. If
+    /// null, the default set of catalogs is returned.</param>
     /// <returns>The list of container status entries.</returns>
-    public List<ContainerStatus> GetContainerStatuses() {
+    public List<ContainerStatus> GetContainerStatuses(List <string> catalogs) {
         try {
             var result = new List<ContainerStatus>();
+            if (catalogs != null) {
+                // return the specified stores
+                foreach (var catalog in catalogs) {
+                    AddStatusStore(result, catalog);
+                    }
+                return result;
+                }
+
+            // return the default set of stores
             AddStatusStore(result, SpoolInbound.Label);
             AddStatusStore(result, SpoolOutbound.Label);
             AddStatusStore(result, SpoolLocal.Label);

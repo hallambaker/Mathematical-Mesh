@@ -16,10 +16,14 @@ public partial class TestService {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
 
         var contextAccountRegistry = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountRegistry, "main");
-        var contextRegistry = contextAccountRegistry.CreateRegistry(AccountCallsign);
-        var resolverServer = new ResolverServer(AccountCallsign);
+                DeviceAliceAdmin, AccountRegistryAdmin, "main");
+        var contextRegistry = contextAccountRegistry.CreateRegistry(AccountRegistry);
 
+        //var resolverServer = new ResolverServer(AccountCallsign);
+        var resolverServer = ContextResolver.Create(
+                contextAccountRegistry.MeshHost, AccountResolver, 
+                contextRegistry.CatalogedRegistry.EnvelopedProfileRegistry
+                );
 
 
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
@@ -27,12 +31,11 @@ public partial class TestService {
         var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceBobAdmin, AccountBob, "main");
 
-
-
-
+        contextAccountAlice.CallsignRegistry = AccountRegistry;
+        contextAccountBob.CallsignRegistry = AccountRegistry;
 
         var callsignRequestAlice1 = contextAccountAlice.CallsignRequest(CallsignAlice, true,
-                registry: AccountCallsign);
+                registry: AccountRegistry);
         contextRegistry.Process();
         resolverServer.Update();
 
@@ -55,7 +58,7 @@ public partial class TestService {
         var result6 = resolverServer.Resolve(CallsignAlice2);
 
 
-        var callsignRequestBob = contextAccountAlice.CallsignRequest(CallsignBob, true);
+        var callsignRequestBob = contextAccountBob.CallsignRequest(CallsignBob, true);
         contextRegistry.Process();
         resolverServer.Update();
 
@@ -76,9 +79,13 @@ public partial class TestService {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
 
         var contextAccountRegistry = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountRegistry, "main");
-        var contextRegistry = contextAccountRegistry.CreateRegistry(AccountCallsign);
-        var resolverServer = new ResolverServer(AccountCallsign);
+                DeviceAliceAdmin, AccountRegistryAdmin, "main");
+        var contextRegistry = contextAccountRegistry.CreateRegistry(AccountRegistry);
+        //var resolverServer = new ResolverServer(AccountCallsign);
+        var resolverServer = ContextResolver.Create(
+                contextAccountRegistry.MeshHost, AccountResolver, 
+                contextRegistry.CatalogedMachine.EnvelopedProfileAccount
+                );
 
         // create a payments server
 

@@ -32,7 +32,7 @@ namespace Goedel.Callsign;
 public class CatalogRegistration : Catalog<CatalogedRegistration> {
     #region // Properties
     ///<summary>The canonical label for the catalog</summary>
-    public const string Label = MeshConstants.MMM_Bookmark;
+    public const string Label = MeshConstants.MMM_Callsign;
 
 
 
@@ -125,7 +125,8 @@ public class CatalogRegistration : Catalog<CatalogedRegistration> {
             var enveloped = registration.Enveloped(sign);
 
             catalogedRegistration = new CatalogedRegistration() {
-                Id = id,
+                Canonical = id,
+                Id = UDF.Nonce(),
                 EnvelopedRegistration = enveloped
                 };
 

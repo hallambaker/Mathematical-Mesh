@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Callsign\Goedel.Callsign\Goedel.Callsign.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.GenericHost\Goedel.Protocol.GenericHost.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />

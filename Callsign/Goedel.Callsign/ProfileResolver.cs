@@ -1,5 +1,4 @@
-﻿#region // Copyright - MIT License
-//  © 2021 by Phill Hallam-Baker
+﻿//  Copyright © 2021 by Threshold Secrets Llc.
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -18,33 +17,38 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-#endregion
 
+using Goedel.Cryptography.Jose;
+using Goedel.Mesh;
 
-namespace Goedel.Mesh;
+namespace Goedel.Callsign;
 
-public partial class ProfileService {
-    #region // Properties
-    ///<summary>The actor type</summary> 
-    public override MeshActor MeshActor => MeshActor.Service;
+public partial class ProfileResolver {
 
     ///<summary>Typed enveloped data</summary> 
-    public Enveloped<ProfileService> GetEnvelopedProfileService() => new(DareEnvelope);
+    public Enveloped<ProfileService> GetEnvelopedProfileAccount() => new(DareEnvelope);
 
-    ///<summary>The service signature key</summary> 
-    public KeyPair KeySignature { get; private set; }
+    public ProfileResolver() {
+        }
 
-    ///<summary>The service encryption key</summary> 
-    public KeyPair KeyEncryption { get; private set; }
-
-    ///<summary>The service authentication key</summary> 
-    public KeyPair KeyAuthentication { get; private set; }
-    #endregion
-    #region // Constructors
     /// <summary>
-    /// Blank constructor for use by deserializers.
+    /// Construct a Profile Account instance  from <paramref name="accountAddress"/>.
     /// </summary>
-    public ProfileService() { }
+    /// <param name="accountAddress">The account address</param>
+    /// <param name="activationAccount">The activation used to create the account data.</param>
+    public ProfileResolver(
+                string accountAddress,
+                Enveloped<ProfileAccount> envelopedProfileRegistry,
+                ActivationCommon activationAccount) {
+        EnvelopedProfileRegistry = envelopedProfileRegistry;
+        ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
+
+        CommonEncryption = new KeyData(activationAccount.CommonEncryptionKey);
+        CommonAuthentication = new KeyData(activationAccount.CommonAuthenticationKey);
+
+
+        Envelope(activationAccount.ProfileSignatureKey);
+        }
 
     /// <summary>
     /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
@@ -53,26 +57,28 @@ public partial class ProfileService {
     /// <param name="keyCollection">The base key collection</param>
     /// <param name="persist">If true, persist the service record to the local machine
     /// store.</param>
-    protected ProfileService(
+    ProfileResolver(
+                string accountAddress,
+                Enveloped<ProfileAccount> envelopedProfileRegistry,
                 PrivateKeyUDF secretSeed,
                 IKeyCollection keyCollection,
                 bool persist = false) : base(secretSeed, keyCollection, persist) {
+
+        EnvelopedProfileRegistry = envelopedProfileRegistry;
+        Envelope(KeyProfileSign);
+
         }
-    #endregion
-    #region // Methods 
+
 
     /// <summary>
     /// Generate profile specific keys.
     /// </summary>
     protected override void Generate() {
         base.Generate();
-        (KeySignature, ServiceSignature) = SecretSeed.GenerateContributionKey(
-                MeshKeyType, MeshActor, MeshKeyOperation.Sign);
-        (KeyAuthentication, ServiceAuthentication) = SecretSeed.GenerateContributionKey(
-                MeshKeyType, MeshActor, MeshKeyOperation.Authenticate);
-        (KeyEncryption, ServiceEncryption) = SecretSeed.GenerateContributionKey(
-                MeshKeyType, MeshActor, MeshKeyOperation.Encrypt);
         }
+
+
+
 
     /// <summary>
     /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
@@ -87,7 +93,9 @@ public partial class ProfileService {
     /// <param name="persist">If <see langword="true"/> persist the secret seed value to
     /// <paramref name="keyCollection"/>.</param>
     /// <returns>The created profile.</returns>
-    public static ProfileService Generate(
+    public static ProfileResolver Generate(
+                string resolverAddress,
+                Enveloped<ProfileAccount> envelopedProfileRegistry,
                 IKeyCollection keyCollection,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
@@ -98,30 +106,24 @@ public partial class ProfileService {
         secretSeed ??= new PrivateKeyUDF(
             udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount, secret: null, algorithmEncrypt: algorithmEncrypt,
             algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
-        return new ProfileService(secretSeed, keyCollection, persist);
-        }
-
-    /// <summary>
-    /// Constructor create service with the signature key <paramref name="keySign"/>
-    /// </summary>
-    /// <param name="keySign">The offline signature key.</param>
-    /// <param name="keyEncrypt">The service encryption key.</param>
-    public ProfileService(KeyPair keySign, KeyPair keyEncrypt) {
-        KeySignature = keySign;
-        KeyEncryption = keyEncrypt;
-
-        ProfileSignature = new KeyData(keySign.KeyPairPublic());
-        ServiceEncryption = new KeyData(keyEncrypt.KeyPairPublic());
+        return new ProfileResolver(resolverAddress, envelopedProfileRegistry, 
+                    secretSeed, keyCollection, persist);
         }
 
 
+
+
     /// <summary>
-    /// Sign a host connection.
+    /// Verify the profile to check that it is correctly signed and consistent.
     /// </summary>
-    /// <param name="connection">The connection to sign.</param>
-    /// <param name="objectEncoding">The encoding for the connection object.</param>
-    public void Sign(Connection connection, ObjectEncoding objectEncoding) =>
-        connection.Envelope(KeySignature, objectEncoding:
-                    objectEncoding);
-    #endregion
+    /// <returns></returns>
+    public override void Validate() {
+        base.Validate();
+
+        //AccountEncryptionKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+        //AdministratorSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+
+        }
+
+
     }
