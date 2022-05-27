@@ -4,282 +4,6 @@
         <name>Goedel.Carnet</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Carnet.ActivationApplicationCarnet">
-            <summary>
-            </summary>
-        </member>
-        <member name="M:Goedel.Carnet.ActivationApplicationCarnet.GetEnvelopedActivationApplicationGroup">
-            <summary>The enveloped object</summary> 
-        </member>
-        <member name="P:Goedel.Carnet.ActivationApplicationCarnet.AccountEncryption">
-             <summary>
-            Key used to decrypt registry messages.
-             </summary>
-        </member>
-        <member name="P:Goedel.Carnet.ActivationApplicationCarnet.AdministratorSignature">
-             <summary>
-            Key or capability used to sign the registry log
-             </summary>
-        </member>
-        <member name="P:Goedel.Carnet.ActivationApplicationCarnet.EnvelopedConnectionService">
-             <summary>
-            Signed connection service delegation allowing the device to
-            access the account.
-             </summary>
-        </member>
-        <member name="P:Goedel.Carnet.ActivationApplicationCarnet._MetaDataParent">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.ActivationApplicationCarnet._MetaData">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.ActivationApplicationCarnet._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Carnet.ActivationApplicationCarnet.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Carnet.ActivationApplicationCarnet._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Carnet.ActivationApplicationCarnet.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Carnet.ActivationApplicationCarnet.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Carnet.ActivationApplicationCarnet.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Carnet.ActivationApplicationCarnet.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Carnet.ApplicationEntryCarnet">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Carnet.ApplicationEntryCarnet.Activation">
-            <summary>The decrypted activation.</summary> 
-        </member>
-        <member name="M:Goedel.Carnet.ApplicationEntryCarnet.Decode(Goedel.Cryptography.Dare.IKeyCollection)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Carnet.ApplicationEntryCarnet.GetActivationAccount">
-            <summary>
-            Construct an activation record for the group.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Goedel.Carnet.ApplicationEntryCarnet.EnvelopedActivation">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Carnet.ApplicationEntryCarnet._MetaDataParent">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.ApplicationEntryCarnet._MetaData">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.ApplicationEntryCarnet._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Carnet.ApplicationEntryCarnet.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Carnet.ApplicationEntryCarnet._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Carnet.ApplicationEntryCarnet.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Carnet.ApplicationEntryCarnet.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Carnet.ApplicationEntryCarnet.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Carnet.ApplicationEntryCarnet.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Carnet.CatalogedCarnet">
-            <summary>
-            </summary>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.GetGroupID(System.String)">
-            <summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
-        </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet._PrimaryKey">
-            <summary>
-            The primary key used to catalog the entry.
-            </summary>
-        </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet.ProfileGroup">
-            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Carnet.CatalogedCarnet.EnvelopedProfileCarnet"/>
-            to return the <see cref="T:Goedel.Mesh.ProfileUser"/> value.</summary>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.GetEscrow">
-            <summary>
-            Return the escrowed keys.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.#ctor">
-            <summary>
-            Default constructor for serialization.
-            </summary>     
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.#ctor(Goedel.Carnet.ProfileCarnet,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.CryptoKey)">
-            <summary>
-            Create and return a new catalog entry for <paramref name="profileGroup"/> with
-            the activation data <paramref name="activationAccount"/>.
-            </summary>
-            <param name="profileGroup">The group profile.</param>
-            <param name="activationAccount">The activation data.</param>
-            <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
-            <param name="connectionAddress">Connection binding profile to an address.</param>
-            <returns>The created group.</returns>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.GetActivation(Goedel.Mesh.CatalogedDevice)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.ToBuilder(System.Text.StringBuilder)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet.EnvelopedConnectionAddress">
-             <summary>
-            The connection allowing control of the registry.
-             </summary>
-        </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet.EnvelopedProfileCarnet">
-             <summary>
-            The Mesh profile
-             </summary>
-        </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet.EnvelopedActivationCommon">
-             <summary>
-            The activation data for the registry.
-             </summary>
-        </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet._MetaDataParent">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet._MetaData">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Carnet.CatalogedCarnet.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Carnet.CarnetProtocol">
              <summary>
             
@@ -441,6 +165,9 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Carnet.ProfileCarnet.GetEnvelopedProfileAccount">
+            <summary>Typed enveloped data</summary> 
+        </member>
         <member name="M:Goedel.Carnet.ProfileCarnet.#ctor(System.String,Goedel.Mesh.ActivationCommon)">
             <summary>
             Construct a Profile Account instance  from <paramref name="accountAddress"/>.
@@ -448,11 +175,129 @@
             <param name="accountAddress">The account address</param>
             <param name="activationAccount">The activation used to create the account data.</param>
         </member>
+        <member name="M:Goedel.Carnet.ProfileCarnet.#ctor(System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean)">
+            <summary>
+            Construct a Profile Host instance  from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
+            </summary>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="keyCollection">The base key collection</param>
+            <param name="persist">If true, persist the service record to the local machine
+            store.</param>
+        </member>
+        <member name="M:Goedel.Carnet.ProfileCarnet.Generate">
+            <summary>
+            Generate profile specific keys.
+            </summary>
+        </member>
+        <member name="M:Goedel.Carnet.ProfileCarnet.Generate(System.String,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Int32,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
+            <summary>
+            Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
+            seed.
+            </summary>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="algorithmEncrypt">The encryption algorithm.</param>
+            <param name="algorithmSign">The signature algorithm</param>
+            <param name="algorithmAuthenticate">The signature algorithm</param>
+            <param name="bits">The size of key to generate in bits/</param>
+            <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+            <param name="persist">If <see langword="true"/> persist the secret seed value to
+            <paramref name="keyCollection"/>.</param>
+            <returns>The created profile.</returns>
+        </member>
         <member name="M:Goedel.Carnet.ProfileCarnet.Validate">
             <summary>
             Verify the profile to check that it is correctly signed and consistent.
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:Goedel.Carnet.CatalogedCarnet">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet.Key">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet.EnvelopedConnectionAddress">
+             <summary>
+            The connection allowing control of the registry.
+             </summary>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet.EnvelopedProfileCarnet">
+             <summary>
+            The Mesh profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet.EnvelopedActivationCommon">
+             <summary>
+            The activation data for the registry.
+             </summary>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet._MetaDataParent">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet._MetaData">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Carnet.CatalogedCarnet.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Carnet.CatalogedCarnet._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Carnet.CatalogedCarnet.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Carnet.CatalogedCarnet.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Carnet.CatalogedCarnet.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Carnet.CatalogedCarnet.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet._PrimaryKey">
+            <summary>The primary key is protocol:site </summary>
+        </member>
+        <member name="M:Goedel.Carnet.CatalogedCarnet.Describe(System.Text.StringBuilder,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Carnet.CatalogedCarnet.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Carnet.CarnetRequest">
              <summary>
@@ -581,6 +426,45 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Carnet.CatalogCarnet">
+            <summary>
+            Bookmark catalog. Describes the bookmarks in the user's Mesh account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Carnet.CatalogCarnet.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogCarnet.ContainerDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="M:Goedel.Carnet.CatalogCarnet.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+            <summary>
+            Factory delegate
+            </summary>
+            <param name="directory">Directory of store file on local machine.</param>
+            <param name="storeId">Store identifier.</param>
+            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+            <param name="policy">The cryptographic policy to be applied to the catalog.</param>
+            <param name="keyCollection">Key collection to be used to resolve keys</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+        </member>
+        <member name="M:Goedel.Carnet.CatalogCarnet.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+        </member>
         <member name="T:Goedel.Carnet.ContextCarnet">
             <summary>
             Context for managing the callsign Carnet account.
@@ -595,7 +479,7 @@
         <member name="P:Goedel.Carnet.ContextCarnet.Connection">
             <inheritdoc/>
         </member>
-        <member name="F:Goedel.Carnet.ContextCarnet.CatalogedCallsign">
+        <member name="F:Goedel.Carnet.ContextCarnet.CatalogedCarnet">
             <summary>The catalogued group description.</summary>
         </member>
         <member name="P:Goedel.Carnet.ContextCarnet.DictionaryCatalogDelegates">
@@ -604,34 +488,27 @@
         <member name="P:Goedel.Carnet.ContextCarnet.AccountAddress">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Carnet.ContextCarnet.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Carnet.CatalogedCarnet,Goedel.Mesh.ActivationCommon)">
-            <summary>
-            Default constuctor, creates a group context for <paramref name="catalogedCallsign"/>
-            </summary>
-            <param name="contextAccount">The enclosing account context.</param>
-            <param name="catalogedCallsign">Description of the group to return the
-            context for.</param>
-            <param name="activationAccount">The account activation.</param>
+        <member name="P:Goedel.Carnet.ContextCarnet.CatalogCarnet">
+            <summary>Returns the inbound spool for the account</summary>
         </member>
-        <member name="M:Goedel.Carnet.ContextCarnet.CreateGroup(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Carnet.ContextCarnet.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedService)">
             <summary>
-            Create a threshold encryption group.
+            Constructor returning an instance of a resolver account context running on host
+            <paramref name="meshHost"/> using the description given in <paramref name="catalogedService"/>.
             </summary>
-            <param name="contextUser">The user context in which the group is to be created.</param>
-            <param name="groupName">Name of the group to create.</param>
-            <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
-            <param name="roles">List of rights to be granted.</param>
+            <param name="meshHost">The mesh host.</param>
+            <param name="catalogedService">The resolver configuration description.</param>
+        </member>
+        <member name="M:Goedel.Carnet.ContextCarnet.Create(Goedel.Mesh.Client.MeshHost,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
+            <summary>
+            Create a new client resolver context.
+            </summary>
+            <param name="meshHost">The mesh host.</param>
+            <param name="resolverAddress">The address of the resolver account.</param>
+            <param name="registryAddress">The address of the registry account.</param>
+            <param name="accountSeed">Optional account seed.</param>
+            <param name="roles">The authorized roles.</param>
             <returns></returns>
-        </member>
-        <member name="M:Goedel.Carnet.ContextCarnet.CreateGroup(Goedel.Mesh.Client.ContextUser,Goedel.Carnet.CatalogedCarnet,Goedel.Mesh.ActivationCommon,Goedel.Mesh.MeshServiceClient)">
-            <summary>
-            Create a new group.
-            </summary>
-            <param name="contextAccount">The enclosing account context.</param>
-            <param name="catalogedCarnet">Description of the group to create.</param>
-            <param name="activationAccount">The account activation.</param>
-            <param name="client">The client to connect to the service with.</param>
-            <returns>The group context.</returns>
         </member>
         <member name="T:Goedel.Carnet.Internal">
             <summary>

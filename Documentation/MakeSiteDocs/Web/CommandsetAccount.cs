@@ -44,7 +44,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("is of course dependent on authorization by the Mesh Service Provider ({1})\n{0}", _Indent, MeshServiceProvider);
 			_Output.Write ("and is likely to require authentication and possibly payment. \n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, FutureFeature("Create token", "Presentation of payment proof"));
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The account create command should support the presentation\n{0}", _Indent);
 			_Output.Write ("of some form of one time use token to allow binding of a Web interaction providing payment\n{0}", _Indent);
 			_Output.Write ("details to the request to bind the account to a service.\n{0}", _Indent);

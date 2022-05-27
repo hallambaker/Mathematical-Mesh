@@ -18,12 +18,13 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Callsign.dll\
+    Goedel.Protocol.GenericHost.dll\
     Goedel.Protocol.Service.dll\
     Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.dll\
     Goedel.Mesh.Core.dll\
-    Goedel.Mesh.ServiceAdmin.dll\
     Goedel.Mesh.dll
 
 ToolTargets = \

@@ -27,9 +27,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Protocol;
 
 namespace Goedel.Presence.Server; 
-public class PresenceServer  {
+public class PresenceServer : PresenceService {
     #region // Properties
 
     #endregion
@@ -37,6 +38,7 @@ public class PresenceServer  {
 
     public PresenceServer() {
         }
+
 
 
 
@@ -48,10 +50,13 @@ public class PresenceServer  {
     #region // Methods
 
 
-    public void Register(Message message) {
-
+    ///<inheritdoc/>
+    public override ConnectResponse Connect(ConnectRequest request, IJpcSession session) {
+        throw new NotImplementedException();
         }
-    public Message Find(string callsign) {
+
+    ///<inheritdoc/>
+    public override QueryResponse Query(QueryRequest request, IJpcSession session) {
         throw new NotImplementedException();
         }
     #endregion

@@ -63,9 +63,18 @@ public partial class TestService {
     static readonly string AccountBob = "bob@example.com";
     static readonly string AccountQ = "q@example.com";
     static readonly string AccountMallet = "mallet@example.com";
-    static readonly string AccountRegistryAdmin = "registryadmin@example.com";
+    static readonly string AccountRegistryAdmin = "registryadmin@example.com"; 
+    static readonly string AccountAdminCarnet = "carnetadmin@example.com";
     static readonly string AccountRegistry = "registry@example.com";
     static readonly string AccountResolver = "resolver@example.com";
+    static readonly string AccountCarnet = "carnet@example.com";
+
+    public string DeviceServiceRegistry = "Service Registry";
+    public string DeviceServiceResolver = "Service Resolver";
+    public string DeviceServiceCarnet = "Service Carnet";
+    public string DeviceServicePresence = "Service Presence";
+    public string DeviceServiceRepository = "Service Repository";
+
 
     public string DeviceAliceAdmin = "Alice Admin";
     public string DeviceAlice2 = "Alice Device 2";

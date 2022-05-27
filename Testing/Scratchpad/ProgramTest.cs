@@ -63,8 +63,8 @@ partial class Program {
         //ShellTestsAdmin.Test().TestMessageGroup();
 
 
-        TestService.Test().MeshCallsign();
-
+        //TestService.Test().MeshCallsign();
+        TestService.Test().MeshCarnet();
         //ShellTestsAdmin.Test().TestProfileContact();
 
 

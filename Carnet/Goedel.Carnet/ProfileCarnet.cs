@@ -18,11 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+using Goedel.Cryptography.Jose;
+using Goedel.Mesh;
+
 namespace Goedel.Carnet;
 
 public partial class ProfileCarnet {
 
-
+    ///<summary>Typed enveloped data</summary> 
+    public Enveloped<ProfileService> GetEnvelopedProfileAccount() => new(DareEnvelope);
 
     public ProfileCarnet() {
         }
@@ -34,8 +38,78 @@ public partial class ProfileCarnet {
     /// <param name="activationAccount">The activation used to create the account data.</param>
     public ProfileCarnet(
                 string accountAddress,
-                ActivationCommon activationAccount) : base(accountAddress, activationAccount) =>
+                //Enveloped<ProfileAccount> envelopedProfileRegistry,
+                ActivationCommon activationAccount) {
+        //EnvelopedProfileRegistry = envelopedProfileRegistry;
+        ProfileSignature = new KeyData(activationAccount.ProfileSignatureKey);
+
+        //CommonEncryption = new KeyData(activationAccount.CommonEncryptionKey);
+        //CommonAuthentication = new KeyData(activationAccount.CommonAuthenticationKey);
+
+
         Envelope(activationAccount.ProfileSignatureKey);
+        }
+
+    /// <summary>
+    /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
+    /// </summary>
+    /// <param name="secretSeed">The secret seed value.</param>
+    /// <param name="keyCollection">The base key collection</param>
+    /// <param name="persist">If true, persist the service record to the local machine
+    /// store.</param>
+    ProfileCarnet(
+                string accountAddress,
+                //Enveloped<ProfileAccount> envelopedProfileRegistry,
+                PrivateKeyUDF secretSeed,
+                IKeyCollection keyCollection,
+                bool persist = false) : base(secretSeed, keyCollection, persist) {
+
+        //EnvelopedProfileRegistry = envelopedProfileRegistry;
+        Envelope(KeyProfileSign);
+
+        }
+
+
+    /// <summary>
+    /// Generate profile specific keys.
+    /// </summary>
+    protected override void Generate() {
+        base.Generate();
+        }
+
+
+
+
+    /// <summary>
+    /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
+    /// seed.
+    /// </summary>
+    /// <param name="secretSeed">The secret seed value.</param>
+    /// <param name="algorithmEncrypt">The encryption algorithm.</param>
+    /// <param name="algorithmSign">The signature algorithm</param>
+    /// <param name="algorithmAuthenticate">The signature algorithm</param>
+    /// <param name="bits">The size of key to generate in bits/</param>
+    /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+    /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+    /// <paramref name="keyCollection"/>.</param>
+    /// <returns>The created profile.</returns>
+    public static ProfileCarnet Generate(
+                string resolverAddress,
+                //Enveloped<ProfileAccount> envelopedProfileRegistry,
+                IKeyCollection keyCollection,
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
+                int bits = 256,
+                PrivateKeyUDF secretSeed = null,
+                bool persist = false) {
+        secretSeed ??= new PrivateKeyUDF(
+            udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount, secret: null, algorithmEncrypt: algorithmEncrypt,
+            algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
+        return new ProfileCarnet(resolverAddress, 
+                    secretSeed, keyCollection, persist);
+        }
+
 
 
 
@@ -46,13 +120,10 @@ public partial class ProfileCarnet {
     public override void Validate() {
         base.Validate();
 
-        AccountEncryptionKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
-        AdministratorSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+        //AccountEncryptionKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
+        //AdministratorSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
 
         }
 
 
     }
-
-
-

@@ -98,7 +98,7 @@ public class ContextResolver : ContextAccount {
 
         MeshClient = MeshMachine.GetMeshClient(keyCredential, ProfileRegistry.Udf, ProfileRegistry.AccountAddress);
 
-        var storesDirectory = ContextAccount.GetStoresDirectory(meshHost, ProfileResolver);
+        var storesDirectory = GetStoresDirectory(meshHost, ProfileResolver);
  
         Update();
         CatalogRegistration = CatalogRegistration.Factory (storesDirectory, CatalogRegistration.Label, this,

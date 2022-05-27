@@ -1,166 +1,166 @@
-﻿#region // Copyright - MIT License
-//  © 2021 by Phill Hallam-Baker
-//  
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//  
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//  
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-#endregion
+﻿//#region // Copyright - MIT License
+////  © 2021 by Phill Hallam-Baker
+////  
+////  Permission is hereby granted, free of charge, to any person obtaining a copy
+////  of this software and associated documentation files (the "Software"), to deal
+////  in the Software without restriction, including without limitation the rights
+////  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+////  copies of the Software, and to permit persons to whom the Software is
+////  furnished to do so, subject to the following conditions:
+////  
+////  The above copyright notice and this permission notice shall be included in
+////  all copies or substantial portions of the Software.
+////  
+////  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+////  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+////  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+////  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+////  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+////  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+////  THE SOFTWARE.
+//#endregion
 
 
-using Goedel.Cryptography.Dare;
+//using Goedel.Cryptography.Dare;
 
-namespace Goedel.Carnet;
+//namespace Goedel.Carnet;
 
-#region // ActivationApplicationCarnet
-public partial class ActivationApplicationCarnet {
-    #region // Properties
-    ///<summary>The enveloped object</summary> 
-    public Enveloped<ActivationApplicationCarnet> GetEnvelopedActivationApplicationGroup() =>
-        new(DareEnvelope);
+//#region // ActivationApplicationCarnet
+//public partial class ActivationApplicationCarnet {
+//    #region // Properties
+//    ///<summary>The enveloped object</summary> 
+//    public Enveloped<ActivationApplicationCarnet> GetEnvelopedActivationApplicationGroup() =>
+//        new(DareEnvelope);
 
-    #endregion
-
-
-    }
-#endregion
-
-#region // ApplicationEntryCarnet
-
-public partial class ApplicationEntryCarnet {
-
-    #region // Properties
-    ///<summary>The decrypted activation.</summary> 
-    public ActivationApplicationCarnet Activation { get; set; }
-
-    #endregion
-    #region // Methods
-
-    ///<inheritdoc/>
-    public override void Decode(IKeyCollection keyCollection) =>
-        Activation = EnvelopedActivation.Decode(keyCollection);
-
-    /// <summary>
-    /// Construct an activation record for the group.
-    /// </summary>
-    /// <returns></returns>
-    public ActivationCommon GetActivationAccount() => new() {
-        CommonEncryptionKey = Activation.AccountEncryption.GetKeyPair(),
-        AdministratorSignatureKey = Activation.AdministratorSignature.GetKeyPair()
-        };
+//    #endregion
 
 
-    #endregion
+//    }
+//#endregion
 
-    }
-#endregion
+//#region // ApplicationEntryCarnet
 
-public partial class CatalogedCarnet{
-    #region // Properties
-    ///<summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
-    public static string GetGroupID(string groupAddress) => MeshConstants.PrefixCatalogedGroup + groupAddress;
+//public partial class ApplicationEntryCarnet {
 
-    /// <summary>
-    /// The primary key used to catalog the entry.
-    /// </summary>
-    public override string _PrimaryKey => GetGroupID(Key);
+//    #region // Properties
+//    ///<summary>The decrypted activation.</summary> 
+//    public ActivationApplicationCarnet Activation { get; set; }
 
+//    #endregion
+//    #region // Methods
 
-    ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileCarnet"/>
-    ///to return the <see cref="ProfileUser"/> value.</summary>
-    public ProfileCarnet? ProfileGroup => profileGroup ??
-                (EnvelopedProfileCarnet.Decode(KeyCollection) as ProfileCarnet).CacheValue(out profileGroup);
-    ProfileCarnet? profileGroup;
+//    ///<inheritdoc/>
+//    public override void Decode(IKeyCollection keyCollection) =>
+//        Activation = EnvelopedActivation.Decode(keyCollection);
 
-    ActivationCommon ActivationAccount { get; set; }
-
-    /// <summary>
-    /// Return the escrowed keys.
-    /// </summary>
-    /// <returns></returns>
-    public override KeyData[] GetEscrow() =>
-        new KeyData[] { new KeyData () {
-                PrivateParameters =ActivationAccount.SecretSeed } };
+//    /// <summary>
+//    /// Construct an activation record for the group.
+//    /// </summary>
+//    /// <returns></returns>
+//    public ActivationCommon GetActivationAccount() => new() {
+//        CommonEncryptionKey = Activation.AccountEncryption.GetKeyPair(),
+//        AdministratorSignatureKey = Activation.AdministratorSignature.GetKeyPair()
+//        };
 
 
+//    #endregion
 
-    #endregion
-    #region // Factory methods and constructors
-    /// <summary>
-    /// Default constructor for serialization.
-    /// </summary>     
-    public CatalogedCarnet() {
-        }
+//    }
+//#endregion
 
+//public partial class CatalogedCarnet{
+//    #region // Properties
+//    ///<summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
+//    public static string GetGroupID(string groupAddress) => MeshConstants.PrefixCatalogedGroup + groupAddress;
 
-    /// <summary>
-    /// Create and return a new catalog entry for <paramref name="profileGroup"/> with
-    /// the activation data <paramref name="activationAccount"/>.
-    /// </summary>
-    /// <param name="profileGroup">The group profile.</param>
-    /// <param name="activationAccount">The activation data.</param>
-    /// <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
-    /// <param name="connectionAddress">Connection binding profile to an address.</param>
-    /// <returns>The created group.</returns>
-    public CatalogedCarnet(
-                    ProfileCarnet profileGroup,
-                    ActivationCommon activationAccount,
-                    CryptoKey encryptionKey
-        //,
-        //            ConnectionStripped connectionAddress
-                    ) {
-        encryptionKey.Future();
-        //connectionAddress.Future();
-
-        profileGroup?.DareEnvelope.AssertNotNull(Internal.Throw);
-
-        ActivationAccount = activationAccount;
-        Key = profileGroup.AccountAddress;
-        EnvelopedProfileCarnet = profileGroup.GetEnvelopedProfileAccount();
-        }
+//    /// <summary>
+//    /// The primary key used to catalog the entry.
+//    /// </summary>
+//    public override string _PrimaryKey => GetGroupID(Key);
 
 
-    ///<inheritdoc/>
-    public override void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection) {
-        }
+//    ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileCarnet"/>
+//    ///to return the <see cref="ProfileUser"/> value.</summary>
+//    public ProfileCarnet? ProfileGroup => profileGroup ??
+//                (EnvelopedProfileCarnet.Decode(KeyCollection) as ProfileCarnet).CacheValue(out profileGroup);
+//    ProfileCarnet? profileGroup;
 
-    ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
-        var activation = new ActivationApplicationGroup() {
-            AccountEncryption = new KeyData(ActivationAccount.CommonEncryptionKey, true),
-            AdministratorSignature = new KeyData(ActivationAccount.AdministratorSignatureKey, true),
-            AccountAuthentication = new KeyData(ActivationAccount.CommonAuthenticationKey, true),
-            };
+//    ActivationCommon ActivationAccount { get; set; }
 
-        activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
+//    /// <summary>
+//    /// Return the escrowed keys.
+//    /// </summary>
+//    /// <returns></returns>
+//    public override KeyData[] GetEscrow() =>
+//        new KeyData[] { new KeyData () {
+//                PrivateParameters =ActivationAccount.SecretSeed } };
 
 
 
-        return new ApplicationEntryGroup() {
-            Identifier = ProfileGroup.AccountAddress,
-            EnvelopedActivation = activation.GetEnvelopedActivationApplicationGroup()
-            };
+//    #endregion
+//    #region // Factory methods and constructors
+//    /// <summary>
+//    /// Default constructor for serialization.
+//    /// </summary>     
+//    public CatalogedCarnet() {
+//        }
 
-        }
 
-    ///<inheritdoc/>
-    public override void ToBuilder(StringBuilder output) {
+//    /// <summary>
+//    /// Create and return a new catalog entry for <paramref name="profileGroup"/> with
+//    /// the activation data <paramref name="activationAccount"/>.
+//    /// </summary>
+//    /// <param name="profileGroup">The group profile.</param>
+//    /// <param name="activationAccount">The activation data.</param>
+//    /// <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
+//    /// <param name="connectionAddress">Connection binding profile to an address.</param>
+//    /// <returns>The created group.</returns>
+//    public CatalogedCarnet(
+//                    ProfileCarnet profileGroup,
+//                    ActivationCommon activationAccount,
+//                    CryptoKey encryptionKey
+//        //,
+//        //            ConnectionStripped connectionAddress
+//                    ) {
+//        encryptionKey.Future();
+//        //connectionAddress.Future();
 
-        }
+//        profileGroup?.DareEnvelope.AssertNotNull(Internal.Throw);
 
-    #endregion
+//        ActivationAccount = activationAccount;
+//        Key = profileGroup.AccountAddress;
+//        EnvelopedProfileCarnet = profileGroup.GetEnvelopedProfileAccount();
+//        }
 
-    }
+
+//    ///<inheritdoc/>
+//    public override void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection) {
+//        }
+
+//    ///<inheritdoc/>
+//    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+//        var activation = new ActivationApplicationGroup() {
+//            AccountEncryption = new KeyData(ActivationAccount.CommonEncryptionKey, true),
+//            AdministratorSignature = new KeyData(ActivationAccount.AdministratorSignatureKey, true),
+//            AccountAuthentication = new KeyData(ActivationAccount.CommonAuthenticationKey, true),
+//            };
+
+//        activation.Envelope(encryptionKey: catalogedDevice.ConnectionDevice.Encryption.GetKeyPair());
+
+
+
+//        return new ApplicationEntryGroup() {
+//            Identifier = ProfileGroup.AccountAddress,
+//            EnvelopedActivation = activation.GetEnvelopedActivationApplicationGroup()
+//            };
+
+//        }
+
+//    ///<inheritdoc/>
+//    public override void ToBuilder(StringBuilder output) {
+
+//        }
+
+//    #endregion
+
+//    }

@@ -3,39 +3,23 @@
 	Section 3 "Profile and account registration"
 
 	Structure ProfileCarnet
-		External ProfileAccount
+		External ProfileService
 		Description 
 			|Describes a carnet issuer.
 
 
 	Structure CatalogedCarnet
-		External CatalogedApplication
+		External CatalogedEntry
+		String Key
 		Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
 			Description
 				|The connection allowing control of the registry.
-		Struct Enveloped<ProfileAccount> EnvelopedProfileCarnet
+		Struct Enveloped<ProfileCarnet> EnvelopedProfileCarnet
 			Description
 				|The Mesh profile
 		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
 			Description
 				|The activation data for the registry.
-
-	Structure ActivationApplicationCarnet
-		External ActivationApplication
-		Struct KeyData AccountEncryption
-			Description
-				|Key used to decrypt registry messages.
-		Struct KeyData AdministratorSignature
-			Description
-				|Key or capability used to sign the registry log
-		Struct Enveloped<ConnectionService> EnvelopedConnectionService
-			Description
-				|Signed connection service delegation allowing the device to
-				|access the account.
-
-	Structure ApplicationEntryCarnet
-		External ApplicationEntry
-		Struct Enveloped<ActivationApplicationCarnet> EnvelopedActivation
 
 	Section 2 "Carnet service"
 

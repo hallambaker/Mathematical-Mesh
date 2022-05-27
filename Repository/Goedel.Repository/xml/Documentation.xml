@@ -312,16 +312,6 @@
             context for.</param>
             <param name="activationAccount">The account activation.</param>
         </member>
-        <member name="M:Goedel.Repository.ContextRepository.CreateGroup(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
-            <summary>
-            Create a threshold encryption group.
-            </summary>
-            <param name="contextUser">The user context in which the group is to be created.</param>
-            <param name="groupName">Name of the group to create.</param>
-            <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
-            <param name="roles">List of rights to be granted.</param>
-            <returns></returns>
-        </member>
         <member name="M:Goedel.Repository.ContextRepository.CreateGroup(Goedel.Mesh.Client.ContextUser,Goedel.Repository.CatalogedRepository,Goedel.Mesh.ActivationCommon,Goedel.Mesh.MeshServiceClient)">
             <summary>
             Create a new group.
@@ -372,6 +362,11 @@
         <member name="M:Goedel.Repository.EventExtensions.#cctor">
             <summary>
             Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Repository.Extensions">
+            <summary>
+            Extensions class. Provides static convenience extensions.
             </summary>
         </member>
         <member name="T:Goedel.Repository.PersistanceProtocol">
@@ -823,11 +818,6 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Presence.Extensions">
-            <summary>
-            Extensions class. Provides static convenience extensions.
-            </summary>
         </member>
         <member name="T:Goedel.Presence.NamespaceDoc">
             <summary>

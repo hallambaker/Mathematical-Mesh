@@ -16,7 +16,7 @@ public partial class TestService {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
 
         var contextAccountRegistry = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountRegistryAdmin, "main");
+                DeviceServiceRegistry, AccountRegistryAdmin, "main");
         var contextRegistry = contextAccountRegistry.CreateRegistry(AccountRegistry);
 
         //var resolverServer = new ResolverServer(AccountCallsign);
@@ -78,18 +78,18 @@ public partial class TestService {
     public void MeshCarnet() {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
 
-        var contextAccountRegistry = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountRegistryAdmin, "main");
-        var contextRegistry = contextAccountRegistry.CreateRegistry(AccountRegistry);
-        //var resolverServer = new ResolverServer(AccountCallsign);
-        var resolverServer = ContextResolver.Create(
-                contextAccountRegistry.MeshHost, AccountResolver, 
-                contextRegistry.CatalogedMachine.EnvelopedProfileAccount
-                );
+        var contextAccountCarnet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                DeviceServiceCarnet, AccountAdminCarnet, "main");
+        //var contextRegistry = contextAccountRegistry.CreateRegistry(AccountRegistry);
+        ////var resolverServer = new ResolverServer(AccountCallsign);
+        //var resolverServer = ContextResolver.Create(
+        //        contextAccountRegistry.MeshHost, AccountResolver, 
+        //        contextRegistry.CatalogedMachine.EnvelopedProfileAccount
+        //        );
 
-        // create a payments server
+        //// create a payments server
 
-        var contextCarnet = contextAccountRegistry.CreateCarnet();
+        var contextCarnet = ContextCarnet.Create(contextAccountCarnet.MeshHost, AccountCarnet);
         var carnetServer = new CarnetServer();
 
 
@@ -116,10 +116,10 @@ public partial class TestService {
 
 
     [Fact]
-    public void MeshPersist() {
+    public void MeshPresence() {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
 
-        var peresenceServer = new PresenceServer();
+        var presenceServer = new PresenceServer();
 
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main");
@@ -128,15 +128,14 @@ public partial class TestService {
                 DeviceBobAdmin, AccountBob, "main");
 
 
-        var messageAlice = contextAccountAlice.PresenceConnect();
-        var messageBob  = contextAccountBob.PresenceConnect();
 
-        peresenceServer.Register(messageAlice);
-        peresenceServer.Register(messageBob);
+        var messageAlice = contextAccountAlice.PresenceConnect(presenceServer);
+        var messageBob  = contextAccountBob.PresenceConnect(presenceServer);
 
-        var whereAlice = peresenceServer.Find(AccountAlice);
-        var whereBob = peresenceServer.Find(AccountAlice);
 
+
+        var whereAlice = contextAccountAlice.PresenceQuery(presenceServer, AccountBob);
+        var whereBob = contextAccountBob.PresenceQuery(presenceServer, AccountAlice);
 
         }
 
@@ -150,10 +149,11 @@ public partial class TestService {
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main");
 
+        var contextRepository = contextAccountAlice.Register(repositoryServer);
 
         repositoryServer.Publish(plaintext);
-        contextAccountAlice.Publish(plaintext);
-        contextAccountAlice.Publish(plaintext);
+        contextRepository.Publish(plaintext);
+        contextRepository.Publish(plaintext);
 
 
 

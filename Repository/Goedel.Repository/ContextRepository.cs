@@ -58,81 +58,7 @@ public class ContextRepository : ContextAccount {
         }
 
 
-    /// <summary>
-    /// Create a threshold encryption group.
-    /// </summary>
-    /// <param name="contextUser">The user context in which the group is to be created.</param>
-    /// <param name="groupName">Name of the group to create.</param>
-    /// <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
-    /// <param name="roles">List of rights to be granted.</param>
-    /// <returns></returns>
 
-    public ContextRepository CreateGroup(
-                    ContextUser contextUser,
-                    string groupName,
-                    PrivateKeyUDF accountSeed = null,
-                    List<string> roles = null
-                    ) {
-
-        // create the Repository profile
-        accountSeed ??= new PrivateKeyUDF(udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount);
-        var keyCollectionRepository = new KeyCollectionEphemeral();
-        var activationGroup = new ActivationCommon(keyCollectionRepository, accountSeed) {
-            ActivationKey = accountSeed.PrivateValue
-            };
-        var profileRepository = new ProfileRepository(groupName, activationGroup);
-        profileRepository.Validate();
-
-        // Wrap the Repository profile in an application entry.
-        var catalogedRepository = new CatalogedRepository(profileRepository,
-            activationGroup, KeyCommonEncryption) {
-            Grant = roles
-            };
-
-
-        var envelopedBindings = MakeBindings(profileRepository, groupName);
-
-        // here we request creation of the group at the service.
-        var createRequest = new BindRequest() {
-            AccountAddress = groupName,
-            EnvelopedProfileAccount = profileRepository.GetEnvelopedProfileAccount(),
-            EnvelopedCallsignBinding = envelopedBindings
-            };
-
-
-        // Since the service does not know this account (yet)
-        var credentialPrivate = new MeshKeyCredentialPrivate(
-                    activationGroup.CommonAuthenticationKey as KeyPairAdvanced, profileRepository.Udf);
-
-        var groupClient = MeshMachine.GetMeshClient(credentialPrivate, profileRepository.Udf);
-
-
-        var createResponse = groupClient.BindAccount(createRequest);
-        createResponse.AssertSuccess();
-
-        // create the group context
-        var contextGroup = CreateGroup(contextUser, catalogedRepository, activationGroup, groupClient);
-        contextGroup.MeshClient = groupClient;
-
-
-        var contact = contextGroup.CreateContact();
-
-        // Commit all changes to the administrator context in a single transaction.
-        using (var transaction = contextUser.TransactBegin()) {
-            // Add the group to the application catalog
-            transaction.ApplicationCreate(catalogedRepository);
-            var catalogAccess = transaction.GetCatalogAccess();
-
-            // Create a contact for the group and add to the contact catalog
-            var contactCatalog = transaction.GetCatalogContact();
-            var catalogedContact = new CatalogedContact(contact);
-            transaction.CatalogUpdate(contactCatalog, catalogedContact);
-
-            transaction.Transact();
-            }
-
-        return contextGroup;
-        }
 
 
     /// <summary>
@@ -165,9 +91,9 @@ public class ContextRepository : ContextAccount {
 
     #region Methods
 
-    public void Issue(string recipient, int tokens) {
-
-        } 
+    public Message Publish(byte[] data) {
+        throw new NotImplementedException();
+        }
     #endregion
 
 

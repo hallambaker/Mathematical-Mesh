@@ -31,7 +31,23 @@
 	
 	Section 3 "Transactions"	
 	
-	
+		// Make presence request.
+	Transaction Service Connect ConnectRequest ConnectResponse
+		Description
+			|Requests connection to a presence service
+
+	Message ConnectRequest
+		Description
+			|Register connection request. 
+		Inherits PresenceRequest
+
+
+	Message ConnectResponse
+		Description
+			|Return the result of a connection request
+		Inherits PresenceResponse
+
+
 	// Make presence request.
 	Transaction Service Query QueryRequest QueryResponse
 		Description

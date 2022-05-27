@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goedel.Presence;
-
-
+namespace Goedel.Repository;
 /// <summary>
 /// Extensions class. Provides static convenience extensions.
 /// </summary>
 public static class Extensions {
 
-
-    public static Message Publish(this ContextUser contextUser, byte[] data) {
+    public static ContextRepository Register(this ContextUser contextUser, RepositoryService repositoryServer) {
+        throw new NotImplementedException();
+        }
+    public static Message Publish(this ContextRepository contextUser, byte[] data) {
         throw new NotImplementedException();
         }
 

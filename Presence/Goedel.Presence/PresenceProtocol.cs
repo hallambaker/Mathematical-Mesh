@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 26-May-22 6:10:29 PM
+//  This file was automatically generated at 27-May-22 7:23:29 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -79,6 +79,8 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 
 	    {"PresenceRequest", PresenceRequest._Factory},
 	    {"PresenceResponse", PresenceResponse._Factory},
+	    {"ConnectRequest", ConnectRequest._Factory},
+	    {"ConnectResponse", ConnectResponse._Factory},
 	    {"QueryRequest", QueryRequest._Factory},
 	    {"QueryResponse", QueryResponse._Factory}
 		};
@@ -128,6 +130,7 @@ public abstract partial class PresenceService : Goedel.Protocol.JpcInterface {
 	public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
 		
 	static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {
+				{"Connect", ConnectRequest._Factory},
 				{"Query", QueryRequest._Factory}
 		};
 
@@ -136,6 +139,7 @@ public abstract partial class PresenceService : Goedel.Protocol.JpcInterface {
 			string token,
 			Goedel.Protocol.JsonObject request,
 			IJpcSession session) => token switch {
+		"Connect" => Connect(request as ConnectRequest, session),
 		"Query" => Query(request as QueryRequest, session),
 		_ => throw new Goedel.Protocol.UnknownOperation(),
         };
@@ -156,6 +160,15 @@ public abstract partial class PresenceService : Goedel.Protocol.JpcInterface {
 					Service = this
 					};
 
+
+    /// <summary>
+	/// Base method for implementing the transaction Connect.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+	/// <param name="session">The request context.</param>
+	/// <returns>The response object from the service</returns>
+    public abstract ConnectResponse Connect (
+            ConnectRequest request, IJpcSession session);
 
     /// <summary>
 	/// Base method for implementing the transaction Query.
@@ -198,6 +211,14 @@ public partial class PresenceServiceClient : Goedel.Protocol.JpcClientInterface 
     /// </summary>		
     /// <param name="request">The request object.</param>
 	/// <returns>The response object</returns>
+    public virtual ConnectResponse Connect (ConnectRequest request) =>
+			JpcSession.Post("Connect", request) as ConnectResponse;
+
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
     public virtual QueryResponse Query (QueryRequest request) =>
 			JpcSession.Post("Query", request) as QueryResponse;
 
@@ -213,6 +234,15 @@ public partial class PresenceServiceDirect: PresenceServiceClient {
 	/// Interface object to dispatch requests to.
 	/// </summary>	
 	public PresenceService Service {get; set;}
+
+
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public override ConnectResponse Connect (ConnectRequest request) =>
+			Service.Connect (request, JpcSession);
 
 
     /// <summary>
@@ -411,6 +441,210 @@ public partial class PresenceResponse : Goedel.Protocol.Response {
 			return Out as PresenceResponse;
 			}
 		var Result = new PresenceResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Register connection request. 
+	/// </summary>
+public partial class ConnectRequest : PresenceRequest {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ConnectRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ConnectRequest();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((PresenceRequest)this).SerializeX(_writer, false, ref _first);
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ConnectRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ConnectRequest;
+			}
+		var Result = new ConnectRequest ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+    /// <summary>
+    /// Having read a tag, process the corresponding value data.
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+    /// <param name="tag">The tag</param>
+	public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+		switch (tag) {
+			default : {
+				base.DeserializeToken(jsonReader, tag);
+				break;
+				}
+			}
+		// check up that all the required elements are present
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Return the result of a connection request
+	/// </summary>
+public partial class ConnectResponse : PresenceResponse {
+
+    ///<inheritdoc/>
+    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
+
+    ///<inheritdoc/>
+	public override Dictionary<string, MetaData> _MetaData => 
+		_metaData ??  new Dictionary<string, MetaData> () {
+		}.CacheValue(out _metaData);
+	Dictionary<string, MetaData> _metaData;
+		
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ConnectResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ConnectResponse();
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// </summary>
+    /// <param name="writer">Output stream</param>
+    /// <param name="wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="first">If true, item is the first entry in a list.</param>
+	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+		SerializeX (writer, wrap, ref first);
+
+
+    /// <summary>
+    /// Serialize this object to the specified output stream.
+    /// Unlike the Serlialize() method, this method is not inherited from the
+    /// parent class allowing a specific version of the method to be called.
+    /// </summary>
+    /// <param name="_writer">Output stream</param>
+    /// <param name="_wrap">If true, output is wrapped with object
+    /// start and end sequences '{ ... }'.</param>
+    /// <param name="_first">If true, item is the first entry in a list.</param>
+	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+		PreEncode();
+		if (_wrap) {
+			_writer.WriteObjectStart ();
+			}
+		((PresenceResponse)this).SerializeX(_writer, false, ref _first);
+		if (_wrap) {
+			_writer.WriteObjectEnd ();
+			}
+		}
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ConnectResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ConnectResponse;
+			}
+		var Result = new ConnectResponse ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

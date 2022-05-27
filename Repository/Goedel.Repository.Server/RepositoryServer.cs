@@ -27,9 +27,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Protocol;
 
 namespace Goedel.Repository.Server; 
-public class RepositoryServer  {
+public class RepositoryServer  : RepositoryService {
     #region // Properties
 
     #endregion
@@ -50,6 +51,10 @@ public class RepositoryServer  {
 
     public void Publish(byte [] data) {
 
+        }
+
+    public override QueryResponse Query(QueryRequest request, IJpcSession session) {
+        throw new NotImplementedException();
         }
 
     #endregion

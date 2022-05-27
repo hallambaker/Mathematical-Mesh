@@ -51,6 +51,12 @@
             Desctiption of the 
             </summary>
         </member>
+        <member name="M:Goedel.Presence.Server.PresenceServer.Connect(Goedel.Presence.ConnectRequest,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceServer.Query(Goedel.Presence.QueryRequest,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Presence.Server.PresenceServiceConfiguration">
             <summary>
             The Mesh service configuration.

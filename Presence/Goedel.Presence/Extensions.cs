@@ -12,9 +12,16 @@ namespace Goedel.Presence;
 /// </summary>
 public static class Extensions {
 
-    public static Message PresenceConnect(this ContextUser contextUser) {
+    public static Message PresenceConnect(
+                this ContextUser contextUser,
+                PresenceService presenceServer) {
         throw new NotImplementedException();
         }
 
-
+    public static Message PresenceQuery(
+                this ContextUser contextUser,
+                PresenceService presenceServer,
+                string contactee) {
+        throw new NotImplementedException();
+        }
     }
