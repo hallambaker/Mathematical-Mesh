@@ -74,24 +74,24 @@ public partial class DareHeader {
     ///<summary>The content type.</summary>
     public string ContentType => ContentMeta?.ContentType;
 
-    ///<summary>Routine called before serialization.</summary>
-    public override void PreEncode() {
+    ///<inheritdoc/>
+    public override void Serialize(Writer writer, bool tagged = false) {
         if (ContentMeta != null) {
             ContentMetaData = ContentMeta.GetContentMetaData();
             }
+        base.Serialize(writer, tagged);
         }
+
 
     ///<summary>Routine called after serialization.</summary>
     public override void PostDecode() =>
         ContentMeta = ContentMeta.GetContentInfo(ContentMetaData);
-
 
     /// <summary>
     /// Create a message header.
     /// </summary>
     public DareHeader() {
         }
-
 
     /// <summary>
     /// Use information from the specified header to speficy defaults.

@@ -126,11 +126,6 @@
 				|If present, the Annotations field contains a sequence of Encrypted Data 
 				|Segments encrypted under the envelope base seed. The interpretation of these fields 
 				|is application specific.
-		Struct DareSignature Signers
-			Multiple
-			Tag "signatures"
-			Description
-				|A list of 'presignature'
 		Struct DareRecipient Recipients
 			Multiple
 			Tag "recipients"

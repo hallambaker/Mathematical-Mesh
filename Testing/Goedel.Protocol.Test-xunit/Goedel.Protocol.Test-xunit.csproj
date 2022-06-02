@@ -9,4 +9,22 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Compile Update="TestExample.cs">
+			<DependentUpon>TestExample.protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="TestExample.protocol">
+			<LastGenOutput>TestExample.cs</LastGenOutput>
+			<Generator>Protogen</Generator>
+		</None>
+
+	</ItemGroup>
+	
+	
 </Project>

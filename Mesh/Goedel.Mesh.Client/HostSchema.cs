@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 27-May-22 7:23:26 PM
+//  This file was automatically generated at 02-Jun-22 4:54:04 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.971
+//  Generator:  protogen version 3.0.0.1009
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -147,39 +147,124 @@ public partial class CatalogedMachine : HostCatalogItem {
 
 	public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Id", new MetaDataString(
-				delegate (string _a) {  Id = _a; },
-				() => Id) } ,
-			{ "Local", new MetaDataString(
-				delegate (string _a) {  Local = _a; },
-				() => Local) } ,
-			{ "Default", new MetaDataBoolean(
-				delegate (bool? _a) {  Default = _a; },
-				() => Default) } ,
-			{ "EnvelopedProfileAccount", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedProfileAccount = _a as Enveloped<ProfileAccount>; },
-				() => EnvelopedProfileAccount,
-				"Enveloped<ProfileAccount>" )} ,
-			{ "CatalogedDevice", new MetaDataStruct(
-				delegate (object _a) {  CatalogedDevice = _a as CatalogedDevice; },
-				() => CatalogedDevice,
-				"CatalogedDevice" )} ,
-			{ "CatalogedDeviceDigest", new MetaDataString(
-				delegate (string _a) {  CatalogedDeviceDigest = _a; },
-				() => CatalogedDeviceDigest) } ,
-			{ "EnvelopedAccountHostAssignment", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedAccountHostAssignment = _a as Enveloped<AccountHostAssignment>; },
-				() => EnvelopedAccountHostAssignment,
-				"Enveloped<AccountHostAssignment>" )} 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Id" : {
+				if (value is TokenValueString vvalue) {
+					Id = vvalue.Value;
+					}
+				break;
+				}
+			case "Local" : {
+				if (value is TokenValueString vvalue) {
+					Local = vvalue.Value;
+					}
+				break;
+				}
+			case "Default" : {
+				if (value is TokenValueBoolean vvalue) {
+					Default = vvalue.Value;
+					}
+				break;
+				}
+			case "EnvelopedProfileAccount" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedProfileAccount = vvalue.Value as Enveloped<ProfileAccount>;
+					}
+				break;
+				}
+			case "CatalogedDevice" : {
+				if (value is TokenValueStructObject vvalue) {
+					CatalogedDevice = vvalue.Value as CatalogedDevice;
+					}
+				break;
+				}
+			case "CatalogedDeviceDigest" : {
+				if (value is TokenValueString vvalue) {
+					CatalogedDeviceDigest = vvalue.Value;
+					}
+				break;
+				}
+			case "EnvelopedAccountHostAssignment" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedAccountHostAssignment = vvalue.Value as Enveloped<AccountHostAssignment>;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Id" : {
+				return new TokenValueString (Id);
+				}
+			case "Local" : {
+				return new TokenValueString (Local);
+				}
+			case "Default" : {
+				return new TokenValueBoolean (Default);
+				}
+			case "EnvelopedProfileAccount" : {
+				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileAccount);
+				}
+			case "CatalogedDevice" : {
+				return new TokenValueStruct<CatalogedDevice> (CatalogedDevice);
+				}
+			case "CatalogedDeviceDigest" : {
+				return new TokenValueString (CatalogedDeviceDigest);
+				}
+			case "EnvelopedAccountHostAssignment" : {
+				return new TokenValueStruct<Enveloped<AccountHostAssignment>> (EnvelopedAccountHostAssignment);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Id", new Property (typeof(TokenValueString), false)} ,
+			{ "Local", new Property (typeof(TokenValueString), false)} ,
+			{ "Default", new Property (typeof(TokenValueBoolean), false)} ,
+			{ "EnvelopedProfileAccount", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
+			{ "CatalogedDevice", new Property ( typeof(TokenValueStruct), false,
+					()=>new CatalogedDevice(), ()=>new CatalogedDevice(), false)} ,
+			{ "CatalogedDeviceDigest", new Property (typeof(TokenValueString), false)} ,
+			{ "EnvelopedAccountHostAssignment", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -196,71 +281,6 @@ public partial class CatalogedMachine : HostCatalogItem {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedMachine();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		if (Id != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Id", 1);
-				_writer.WriteString (Id);
-			}
-		if (Local != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Local", 1);
-				_writer.WriteString (Local);
-			}
-		if (Default != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Default", 1);
-				_writer.WriteBoolean (Default);
-			}
-		if (EnvelopedProfileAccount != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedProfileAccount", 1);
-				EnvelopedProfileAccount.Serialize (_writer, false);
-			}
-		if (CatalogedDevice != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("CatalogedDevice", 1);
-				CatalogedDevice.Serialize (_writer, false);
-			}
-		if (CatalogedDeviceDigest != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("CatalogedDeviceDigest", 1);
-				_writer.WriteString (CatalogedDeviceDigest);
-			}
-		if (EnvelopedAccountHostAssignment != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedAccountHostAssignment", 1);
-				EnvelopedAccountHostAssignment.Serialize (_writer, false);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -373,38 +393,117 @@ public partial class CatalogedService : CatalogedMachine {
 
 	public virtual string						ServiceIdentifier  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "EnvelopedProfileService", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedProfileService = _a as Enveloped<ProfileService>; },
-				() => EnvelopedProfileService,
-				"Enveloped<ProfileService>" )} ,
-			{ "EnvelopedProfileHost", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedProfileHost = _a as Enveloped<ProfileHost>; },
-				() => EnvelopedProfileHost,
-				"Enveloped<ProfileHost>" )} ,
-			{ "EnvelopedActivationCommon", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedActivationCommon = _a as Enveloped<ActivationCommon>; },
-				() => EnvelopedActivationCommon,
-				"Enveloped<ActivationCommon>" )} ,
-			{ "EnvelopedActivationHost", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedActivationHost = _a as Enveloped<ActivationHost>; },
-				() => EnvelopedActivationHost,
-				"Enveloped<ActivationHost>" )} ,
-			{ "EnvelopedConnectionService", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedConnectionService = _a as Enveloped<ConnectionService>; },
-				() => EnvelopedConnectionService,
-				"Enveloped<ConnectionService>" )} ,
-			{ "ServiceIdentifier", new MetaDataString(
-				delegate (string _a) {  ServiceIdentifier = _a; },
-				() => ServiceIdentifier) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "EnvelopedProfileService" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedProfileService = vvalue.Value as Enveloped<ProfileService>;
+					}
+				break;
+				}
+			case "EnvelopedProfileHost" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedProfileHost = vvalue.Value as Enveloped<ProfileHost>;
+					}
+				break;
+				}
+			case "EnvelopedActivationCommon" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedActivationCommon = vvalue.Value as Enveloped<ActivationCommon>;
+					}
+				break;
+				}
+			case "EnvelopedActivationHost" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedActivationHost = vvalue.Value as Enveloped<ActivationHost>;
+					}
+				break;
+				}
+			case "EnvelopedConnectionService" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedConnectionService = vvalue.Value as Enveloped<ConnectionService>;
+					}
+				break;
+				}
+			case "ServiceIdentifier" : {
+				if (value is TokenValueString vvalue) {
+					ServiceIdentifier = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "EnvelopedProfileService" : {
+				return new TokenValueStruct<Enveloped<ProfileService>> (EnvelopedProfileService);
+				}
+			case "EnvelopedProfileHost" : {
+				return new TokenValueStruct<Enveloped<ProfileHost>> (EnvelopedProfileHost);
+				}
+			case "EnvelopedActivationCommon" : {
+				return new TokenValueStruct<Enveloped<ActivationCommon>> (EnvelopedActivationCommon);
+				}
+			case "EnvelopedActivationHost" : {
+				return new TokenValueStruct<Enveloped<ActivationHost>> (EnvelopedActivationHost);
+				}
+			case "EnvelopedConnectionService" : {
+				return new TokenValueStruct<Enveloped<ConnectionService>> (EnvelopedConnectionService);
+				}
+			case "ServiceIdentifier" : {
+				return new TokenValueString (ServiceIdentifier);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "EnvelopedProfileService", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>(), false)} ,
+			{ "EnvelopedProfileHost", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ProfileHost>(), ()=>new Enveloped<ProfileHost>(), false)} ,
+			{ "EnvelopedActivationCommon", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>(), false)} ,
+			{ "EnvelopedActivationHost", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ActivationHost>(), ()=>new Enveloped<ActivationHost>(), false)} ,
+			{ "EnvelopedConnectionService", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>(), false)} ,
+			{ "ServiceIdentifier", new Property (typeof(TokenValueString), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedMachine._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -421,67 +520,6 @@ public partial class CatalogedService : CatalogedMachine {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedService();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
-		if (EnvelopedProfileService != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedProfileService", 1);
-				EnvelopedProfileService.Serialize (_writer, false);
-			}
-		if (EnvelopedProfileHost != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedProfileHost", 1);
-				EnvelopedProfileHost.Serialize (_writer, false);
-			}
-		if (EnvelopedActivationCommon != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedActivationCommon", 1);
-				EnvelopedActivationCommon.Serialize (_writer, false);
-			}
-		if (EnvelopedActivationHost != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedActivationHost", 1);
-				EnvelopedActivationHost.Serialize (_writer, false);
-			}
-		if (EnvelopedConnectionService != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedConnectionService", 1);
-				EnvelopedConnectionService.Serialize (_writer, false);
-			}
-		if (ServiceIdentifier != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("ServiceIdentifier", 1);
-				_writer.WriteString (ServiceIdentifier);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -567,15 +605,52 @@ public partial class CatalogedService : CatalogedMachine {
 	/// </summary>
 public partial class CatalogedStandard : CatalogedMachine {
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedMachine._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -592,37 +667,6 @@ public partial class CatalogedStandard : CatalogedMachine {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedStandard();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -690,29 +734,94 @@ public partial class CatalogedPending : CatalogedMachine {
 
 	public virtual string						AccountAddress  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "DeviceUDF", new MetaDataString(
-				delegate (string _a) {  DeviceUDF = _a; },
-				() => DeviceUDF) } ,
-			{ "EnvelopedProfileDevice", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedProfileDevice = _a as Enveloped<ProfileDevice>; },
-				() => EnvelopedProfileDevice,
-				"Enveloped<ProfileDevice>" )} ,
-			{ "EnvelopedAcknowledgeConnection", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedAcknowledgeConnection = _a as Enveloped<AcknowledgeConnection>; },
-				() => EnvelopedAcknowledgeConnection,
-				"Enveloped<AcknowledgeConnection>" )} ,
-			{ "AccountAddress", new MetaDataString(
-				delegate (string _a) {  AccountAddress = _a; },
-				() => AccountAddress) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "DeviceUDF" : {
+				if (value is TokenValueString vvalue) {
+					DeviceUDF = vvalue.Value;
+					}
+				break;
+				}
+			case "EnvelopedProfileDevice" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedProfileDevice = vvalue.Value as Enveloped<ProfileDevice>;
+					}
+				break;
+				}
+			case "EnvelopedAcknowledgeConnection" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedAcknowledgeConnection = vvalue.Value as Enveloped<AcknowledgeConnection>;
+					}
+				break;
+				}
+			case "AccountAddress" : {
+				if (value is TokenValueString vvalue) {
+					AccountAddress = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "DeviceUDF" : {
+				return new TokenValueString (DeviceUDF);
+				}
+			case "EnvelopedProfileDevice" : {
+				return new TokenValueStruct<Enveloped<ProfileDevice>> (EnvelopedProfileDevice);
+				}
+			case "EnvelopedAcknowledgeConnection" : {
+				return new TokenValueStruct<Enveloped<AcknowledgeConnection>> (EnvelopedAcknowledgeConnection);
+				}
+			case "AccountAddress" : {
+				return new TokenValueString (AccountAddress);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "DeviceUDF", new Property (typeof(TokenValueString), false)} ,
+			{ "EnvelopedProfileDevice", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>(), false)} ,
+			{ "EnvelopedAcknowledgeConnection", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>(), false)} ,
+			{ "AccountAddress", new Property (typeof(TokenValueString), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedMachine._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -729,57 +838,6 @@ public partial class CatalogedPending : CatalogedMachine {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedPending();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
-		if (DeviceUDF != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("DeviceUDF", 1);
-				_writer.WriteString (DeviceUDF);
-			}
-		if (EnvelopedProfileDevice != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedProfileDevice", 1);
-				EnvelopedProfileDevice.Serialize (_writer, false);
-			}
-		if (EnvelopedAcknowledgeConnection != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedAcknowledgeConnection", 1);
-				EnvelopedAcknowledgeConnection.Serialize (_writer, false);
-			}
-		if (AccountAddress != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AccountAddress", 1);
-				_writer.WriteString (AccountAddress);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -884,39 +942,125 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 
 	public virtual string						DeviceAuthenticator  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "EnvelopedProfileDevice", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedProfileDevice = _a as Enveloped<ProfileDevice>; },
-				() => EnvelopedProfileDevice,
-				"Enveloped<ProfileDevice>" )} ,
-			{ "EnvelopedConnectionService", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedConnectionService = _a as Enveloped<ConnectionService>; },
-				() => EnvelopedConnectionService,
-				"Enveloped<ConnectionService>" )} ,
-			{ "EnvelopedConnectionDevice", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedConnectionDevice = _a as Enveloped<ConnectionDevice>; },
-				() => EnvelopedConnectionDevice,
-				"Enveloped<ConnectionDevice>" )} ,
-			{ "AccountAddress", new MetaDataString(
-				delegate (string _a) {  AccountAddress = _a; },
-				() => AccountAddress) } ,
-			{ "PublicationId", new MetaDataString(
-				delegate (string _a) {  PublicationId = _a; },
-				() => PublicationId) } ,
-			{ "ServiceAuthenticator", new MetaDataString(
-				delegate (string _a) {  ServiceAuthenticator = _a; },
-				() => ServiceAuthenticator) } ,
-			{ "DeviceAuthenticator", new MetaDataString(
-				delegate (string _a) {  DeviceAuthenticator = _a; },
-				() => DeviceAuthenticator) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "EnvelopedProfileDevice" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedProfileDevice = vvalue.Value as Enveloped<ProfileDevice>;
+					}
+				break;
+				}
+			case "EnvelopedConnectionService" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedConnectionService = vvalue.Value as Enveloped<ConnectionService>;
+					}
+				break;
+				}
+			case "EnvelopedConnectionDevice" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedConnectionDevice = vvalue.Value as Enveloped<ConnectionDevice>;
+					}
+				break;
+				}
+			case "AccountAddress" : {
+				if (value is TokenValueString vvalue) {
+					AccountAddress = vvalue.Value;
+					}
+				break;
+				}
+			case "PublicationId" : {
+				if (value is TokenValueString vvalue) {
+					PublicationId = vvalue.Value;
+					}
+				break;
+				}
+			case "ServiceAuthenticator" : {
+				if (value is TokenValueString vvalue) {
+					ServiceAuthenticator = vvalue.Value;
+					}
+				break;
+				}
+			case "DeviceAuthenticator" : {
+				if (value is TokenValueString vvalue) {
+					DeviceAuthenticator = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "EnvelopedProfileDevice" : {
+				return new TokenValueStruct<Enveloped<ProfileDevice>> (EnvelopedProfileDevice);
+				}
+			case "EnvelopedConnectionService" : {
+				return new TokenValueStruct<Enveloped<ConnectionService>> (EnvelopedConnectionService);
+				}
+			case "EnvelopedConnectionDevice" : {
+				return new TokenValueStruct<Enveloped<ConnectionDevice>> (EnvelopedConnectionDevice);
+				}
+			case "AccountAddress" : {
+				return new TokenValueString (AccountAddress);
+				}
+			case "PublicationId" : {
+				return new TokenValueString (PublicationId);
+				}
+			case "ServiceAuthenticator" : {
+				return new TokenValueString (ServiceAuthenticator);
+				}
+			case "DeviceAuthenticator" : {
+				return new TokenValueString (DeviceAuthenticator);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "EnvelopedProfileDevice", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>(), false)} ,
+			{ "EnvelopedConnectionService", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>(), false)} ,
+			{ "EnvelopedConnectionDevice", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>(), false)} ,
+			{ "AccountAddress", new Property (typeof(TokenValueString), false)} ,
+			{ "PublicationId", new Property (typeof(TokenValueString), false)} ,
+			{ "ServiceAuthenticator", new Property (typeof(TokenValueString), false)} ,
+			{ "DeviceAuthenticator", new Property (typeof(TokenValueString), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedMachine._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -933,72 +1077,6 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedPreconfigured();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
-		if (EnvelopedProfileDevice != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedProfileDevice", 1);
-				EnvelopedProfileDevice.Serialize (_writer, false);
-			}
-		if (EnvelopedConnectionService != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedConnectionService", 1);
-				EnvelopedConnectionService.Serialize (_writer, false);
-			}
-		if (EnvelopedConnectionDevice != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedConnectionDevice", 1);
-				EnvelopedConnectionDevice.Serialize (_writer, false);
-			}
-		if (AccountAddress != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AccountAddress", 1);
-				_writer.WriteString (AccountAddress);
-			}
-		if (PublicationId != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("PublicationId", 1);
-				_writer.WriteString (PublicationId);
-			}
-		if (ServiceAuthenticator != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("ServiceAuthenticator", 1);
-				_writer.WriteString (ServiceAuthenticator);
-			}
-		if (DeviceAuthenticator != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("DeviceAuthenticator", 1);
-				_writer.WriteString (DeviceAuthenticator);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream

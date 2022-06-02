@@ -25,7 +25,8 @@ public static class Extensions {
 
 
     public static int Spend(this ContextUser contextUser, int amount) {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        return 0;
         }
 
 

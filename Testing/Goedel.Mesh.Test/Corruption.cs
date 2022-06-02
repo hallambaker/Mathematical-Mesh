@@ -40,12 +40,12 @@ public static class Extension {
         jsonReader.PeekToken();
 
         switch (jsonReader.TokenType) {
-            case JsonReader.Token.Binary: {
+            case Token.Binary: {
                     CorruptBinaryJSON(inputStream); 
                     return;
                     }
 
-            case JsonReader.Token.String: {
+            case Token.String: {
                     CorruptStringJSON(inputStream);
                     return;
                     }

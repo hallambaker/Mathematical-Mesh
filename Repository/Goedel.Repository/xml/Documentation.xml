@@ -27,10 +27,25 @@
             access the account.
              </summary>
         </member>
-        <member name="P:Goedel.Repository.ActivationApplicationRepository._MetaDataParent">
+        <member name="M:Goedel.Repository.ActivationApplicationRepository.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Repository.ActivationApplicationRepository._MetaData">
+        <member name="M:Goedel.Repository.ActivationApplicationRepository.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Repository.ActivationApplicationRepository._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Repository.ActivationApplicationRepository._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Repository.ActivationApplicationRepository._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ActivationApplicationRepository._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ActivationApplicationRepository._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.ActivationApplicationRepository._Tag">
@@ -48,26 +63,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Repository.ActivationApplicationRepository.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Repository.ActivationApplicationRepository.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Repository.ActivationApplicationRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -104,10 +99,25 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Repository.ApplicationEntryRepository._MetaDataParent">
+        <member name="M:Goedel.Repository.ApplicationEntryRepository.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Repository.ApplicationEntryRepository._MetaData">
+        <member name="M:Goedel.Repository.ApplicationEntryRepository.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Repository.ApplicationEntryRepository._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Repository.ApplicationEntryRepository._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Repository.ApplicationEntryRepository._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ApplicationEntryRepository._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ApplicationEntryRepository._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.ApplicationEntryRepository._Tag">
@@ -125,26 +135,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Repository.ApplicationEntryRepository.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Repository.ApplicationEntryRepository.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Repository.ApplicationEntryRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -223,10 +213,25 @@
             The activation data for the registry.
              </summary>
         </member>
-        <member name="P:Goedel.Repository.CatalogedRepository._MetaDataParent">
+        <member name="M:Goedel.Repository.CatalogedRepository.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Repository.CatalogedRepository._MetaData">
+        <member name="M:Goedel.Repository.CatalogedRepository.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Repository.CatalogedRepository._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Repository.CatalogedRepository._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Repository.CatalogedRepository._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.CatalogedRepository._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.CatalogedRepository._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.CatalogedRepository._Tag">
@@ -244,26 +249,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Repository.CatalogedRepository.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Repository.CatalogedRepository.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Repository.CatalogedRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -496,10 +481,25 @@
              Describes a Repository issuer.
              </summary>
         </member>
-        <member name="P:Goedel.Repository.ProfileRepository._MetaDataParent">
+        <member name="M:Goedel.Repository.ProfileRepository.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Repository.ProfileRepository._MetaData">
+        <member name="M:Goedel.Repository.ProfileRepository.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Repository.ProfileRepository._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Repository.ProfileRepository._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Repository.ProfileRepository._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ProfileRepository._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.ProfileRepository._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.ProfileRepository._Tag">
@@ -517,26 +517,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Repository.ProfileRepository.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Repository.ProfileRepository.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Repository.ProfileRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -572,10 +552,25 @@
              Base class for all requests made to a registrar
              </summary>
         </member>
-        <member name="P:Goedel.Repository.PersistanceRequest._MetaDataParent">
+        <member name="M:Goedel.Repository.PersistanceRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Repository.PersistanceRequest._MetaData">
+        <member name="M:Goedel.Repository.PersistanceRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Repository.PersistanceRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Repository.PersistanceRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Repository.PersistanceRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.PersistanceRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.PersistanceRequest._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.PersistanceRequest._Tag">
@@ -593,26 +588,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Repository.PersistanceRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Repository.PersistanceRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Repository.PersistanceRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -636,10 +611,25 @@
              status code and status description fields.
              </summary>
         </member>
-        <member name="P:Goedel.Repository.PersistanceResponse._MetaDataParent">
+        <member name="M:Goedel.Repository.PersistanceResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Repository.PersistanceResponse._MetaData">
+        <member name="M:Goedel.Repository.PersistanceResponse.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Repository.PersistanceResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Repository.PersistanceResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Repository.PersistanceResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.PersistanceResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.PersistanceResponse._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.PersistanceResponse._Tag">
@@ -657,26 +647,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Repository.PersistanceResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Repository.PersistanceResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Repository.PersistanceResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -699,10 +669,25 @@
              Register connection request. 
              </summary>
         </member>
-        <member name="P:Goedel.Repository.QueryRequest._MetaDataParent">
+        <member name="M:Goedel.Repository.QueryRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Repository.QueryRequest._MetaData">
+        <member name="M:Goedel.Repository.QueryRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Repository.QueryRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Repository.QueryRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Repository.QueryRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.QueryRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.QueryRequest._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.QueryRequest._Tag">
@@ -720,26 +705,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Repository.QueryRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Repository.QueryRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Repository.QueryRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -762,10 +727,25 @@
              Return the result of a connection request
              </summary>
         </member>
-        <member name="P:Goedel.Repository.QueryResponse._MetaDataParent">
+        <member name="M:Goedel.Repository.QueryResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Repository.QueryResponse._MetaData">
+        <member name="M:Goedel.Repository.QueryResponse.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Repository.QueryResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Repository.QueryResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Repository.QueryResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.QueryResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Repository.QueryResponse._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.QueryResponse._Tag">
@@ -783,26 +763,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Repository.QueryResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Repository.QueryResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Repository.QueryResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>

@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 27-May-22 7:23:29 PM
+//  This file was automatically generated at 02-Jun-22 4:54:06 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.971
+//  Generator:  protogen version 3.0.0.1009
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -266,15 +266,52 @@ public partial class PresenceServiceDirect: PresenceServiceClient {
 	/// </summary>
 public partial class PresenceRequest : Goedel.Protocol.Request {
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Goedel.Protocol.Request._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -291,37 +328,6 @@ public partial class PresenceRequest : Goedel.Protocol.Request {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceRequest();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((Goedel.Protocol.Request)this).SerializeX(_writer, false, ref _first);
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -369,15 +375,52 @@ public partial class PresenceRequest : Goedel.Protocol.Request {
 	/// </summary>
 public partial class PresenceResponse : Goedel.Protocol.Response {
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Goedel.Protocol.Response._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -394,37 +437,6 @@ public partial class PresenceResponse : Goedel.Protocol.Response {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceResponse();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((Goedel.Protocol.Response)this).SerializeX(_writer, false, ref _first);
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -471,15 +483,52 @@ public partial class PresenceResponse : Goedel.Protocol.Response {
 	/// </summary>
 public partial class ConnectRequest : PresenceRequest {
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, PresenceRequest._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -496,37 +545,6 @@ public partial class ConnectRequest : PresenceRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ConnectRequest();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((PresenceRequest)this).SerializeX(_writer, false, ref _first);
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -573,15 +591,52 @@ public partial class ConnectRequest : PresenceRequest {
 	/// </summary>
 public partial class ConnectResponse : PresenceResponse {
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, PresenceResponse._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -598,37 +653,6 @@ public partial class ConnectResponse : PresenceResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ConnectResponse();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((PresenceResponse)this).SerializeX(_writer, false, ref _first);
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -675,15 +699,52 @@ public partial class ConnectResponse : PresenceResponse {
 	/// </summary>
 public partial class QueryRequest : PresenceRequest {
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, PresenceRequest._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -700,37 +761,6 @@ public partial class QueryRequest : PresenceRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new QueryRequest();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((PresenceRequest)this).SerializeX(_writer, false, ref _first);
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -777,15 +807,52 @@ public partial class QueryRequest : PresenceRequest {
 	/// </summary>
 public partial class QueryResponse : PresenceResponse {
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, PresenceResponse._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -802,37 +869,6 @@ public partial class QueryResponse : PresenceResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new QueryResponse();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((PresenceResponse)this).SerializeX(_writer, false, ref _first);
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream

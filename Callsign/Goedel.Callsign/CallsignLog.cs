@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 27-May-22 7:23:29 PM
+//  This file was automatically generated at 02-Jun-22 4:54:06 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.971
+//  Generator:  protogen version 3.0.0.1009
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -123,15 +123,52 @@ public abstract partial class CallsignEntry : global::Goedel.Protocol.JsonObject
 	/// </summary>
 public partial class ProfileRegistry : ProfileAccount {
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, ProfileAccount._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -148,37 +185,6 @@ public partial class ProfileRegistry : ProfileAccount {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ProfileRegistry();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((ProfileAccount)this).SerializeX(_writer, false, ref _first);
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -247,30 +253,95 @@ public partial class ProfileResolver : ProfileService {
 
 	public virtual KeyData						CommonAuthentication  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "RegistryAddress", new MetaDataString(
-				delegate (string _a) {  RegistryAddress = _a; },
-				() => RegistryAddress) } ,
-			{ "EnvelopedProfileRegistry", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedProfileRegistry = _a as Enveloped<ProfileAccount>; },
-				() => EnvelopedProfileRegistry,
-				"Enveloped<ProfileAccount>" )} ,
-			{ "CommonEncryption", new MetaDataStruct(
-				delegate (object _a) {  CommonEncryption = _a as KeyData; },
-				() => CommonEncryption,
-				"KeyData" )} ,
-			{ "CommonAuthentication", new MetaDataStruct(
-				delegate (object _a) {  CommonAuthentication = _a as KeyData; },
-				() => CommonAuthentication,
-				"KeyData" )} 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "RegistryAddress" : {
+				if (value is TokenValueString vvalue) {
+					RegistryAddress = vvalue.Value;
+					}
+				break;
+				}
+			case "EnvelopedProfileRegistry" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedProfileRegistry = vvalue.Value as Enveloped<ProfileAccount>;
+					}
+				break;
+				}
+			case "CommonEncryption" : {
+				if (value is TokenValueStructObject vvalue) {
+					CommonEncryption = vvalue.Value as KeyData;
+					}
+				break;
+				}
+			case "CommonAuthentication" : {
+				if (value is TokenValueStructObject vvalue) {
+					CommonAuthentication = vvalue.Value as KeyData;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "RegistryAddress" : {
+				return new TokenValueString (RegistryAddress);
+				}
+			case "EnvelopedProfileRegistry" : {
+				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileRegistry);
+				}
+			case "CommonEncryption" : {
+				return new TokenValueStruct<KeyData> (CommonEncryption);
+				}
+			case "CommonAuthentication" : {
+				return new TokenValueStruct<KeyData> (CommonAuthentication);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "RegistryAddress", new Property (typeof(TokenValueString), false)} ,
+			{ "EnvelopedProfileRegistry", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
+			{ "CommonEncryption", new Property ( typeof(TokenValueStruct), false,
+					()=>new KeyData(), ()=>new KeyData(), false)} ,
+			{ "CommonAuthentication", new Property ( typeof(TokenValueStruct), false,
+					()=>new KeyData(), ()=>new KeyData(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, ProfileService._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -287,57 +358,6 @@ public partial class ProfileResolver : ProfileService {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ProfileResolver();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((ProfileService)this).SerializeX(_writer, false, ref _first);
-		if (RegistryAddress != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("RegistryAddress", 1);
-				_writer.WriteString (RegistryAddress);
-			}
-		if (EnvelopedProfileRegistry != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedProfileRegistry", 1);
-				EnvelopedProfileRegistry.Serialize (_writer, false);
-			}
-		if (CommonEncryption != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("CommonEncryption", 1);
-				CommonEncryption.Serialize (_writer, false);
-			}
-		if (CommonAuthentication != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("CommonAuthentication", 1);
-				CommonAuthentication.Serialize (_writer, false);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -440,34 +460,112 @@ public partial class Registration : CallsignEntry {
 
 	public virtual string						Reason  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Id", new MetaDataString(
-				delegate (string _a) {  Id = _a; },
-				() => Id) } ,
-			{ "Entry", new MetaDataStruct(
-				delegate (object _a) {  Entry = _a as Enveloped<CallsignBinding>; },
-				() => Entry,
-				"Enveloped<CallsignBinding>" )} ,
-			{ "Submitted", new MetaDataDateTime(
-				delegate (DateTime? _a) {  Submitted = _a; },
-				() => Submitted) } ,
-			{ "Registrar", new MetaDataString(
-				delegate (string _a) {  Registrar = _a; },
-				() => Registrar) } ,
-			{ "PriorId", new MetaDataString(
-				delegate (string _a) {  PriorId = _a; },
-				() => PriorId) } ,
-			{ "Reason", new MetaDataString(
-				delegate (string _a) {  Reason = _a; },
-				() => Reason) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Id" : {
+				if (value is TokenValueString vvalue) {
+					Id = vvalue.Value;
+					}
+				break;
+				}
+			case "Entry" : {
+				if (value is TokenValueStructObject vvalue) {
+					Entry = vvalue.Value as Enveloped<CallsignBinding>;
+					}
+				break;
+				}
+			case "Submitted" : {
+				if (value is TokenValueDateTime vvalue) {
+					Submitted = vvalue.Value;
+					}
+				break;
+				}
+			case "Registrar" : {
+				if (value is TokenValueString vvalue) {
+					Registrar = vvalue.Value;
+					}
+				break;
+				}
+			case "PriorId" : {
+				if (value is TokenValueString vvalue) {
+					PriorId = vvalue.Value;
+					}
+				break;
+				}
+			case "Reason" : {
+				if (value is TokenValueString vvalue) {
+					Reason = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Id" : {
+				return new TokenValueString (Id);
+				}
+			case "Entry" : {
+				return new TokenValueStruct<Enveloped<CallsignBinding>> (Entry);
+				}
+			case "Submitted" : {
+				return new TokenValueDateTime (Submitted);
+				}
+			case "Registrar" : {
+				return new TokenValueString (Registrar);
+				}
+			case "PriorId" : {
+				return new TokenValueString (PriorId);
+				}
+			case "Reason" : {
+				return new TokenValueString (Reason);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Id", new Property (typeof(TokenValueString), false)} ,
+			{ "Entry", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>(), false)} ,
+			{ "Submitted", new Property (typeof(TokenValueDateTime), false)} ,
+			{ "Registrar", new Property (typeof(TokenValueString), false)} ,
+			{ "PriorId", new Property (typeof(TokenValueString), false)} ,
+			{ "Reason", new Property (typeof(TokenValueString), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -484,66 +582,6 @@ public partial class Registration : CallsignEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Registration();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		if (Id != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Id", 1);
-				_writer.WriteString (Id);
-			}
-		if (Entry != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Entry", 1);
-				Entry.Serialize (_writer, false);
-			}
-		if (Submitted != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Submitted", 1);
-				_writer.WriteDateTime (Submitted);
-			}
-		if (Registrar != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Registrar", 1);
-				_writer.WriteString (Registrar);
-			}
-		if (PriorId != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("PriorId", 1);
-				_writer.WriteString (PriorId);
-			}
-		if (Reason != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Reason", 1);
-				_writer.WriteString (Reason);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -629,25 +667,83 @@ public partial class CatalogedRegistration : CatalogedEntry {
 
 	public virtual Enveloped<Registration>						EnvelopedRegistration  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Canonical", new MetaDataString(
-				delegate (string _a) {  Canonical = _a; },
-				() => Canonical) } ,
-			{ "Id", new MetaDataString(
-				delegate (string _a) {  Id = _a; },
-				() => Id) } ,
-			{ "EnvelopedRegistration", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedRegistration = _a as Enveloped<Registration>; },
-				() => EnvelopedRegistration,
-				"Enveloped<Registration>" )} 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Canonical" : {
+				if (value is TokenValueString vvalue) {
+					Canonical = vvalue.Value;
+					}
+				break;
+				}
+			case "Id" : {
+				if (value is TokenValueString vvalue) {
+					Id = vvalue.Value;
+					}
+				break;
+				}
+			case "EnvelopedRegistration" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedRegistration = vvalue.Value as Enveloped<Registration>;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Canonical" : {
+				return new TokenValueString (Canonical);
+				}
+			case "Id" : {
+				return new TokenValueString (Id);
+				}
+			case "EnvelopedRegistration" : {
+				return new TokenValueStruct<Enveloped<Registration>> (EnvelopedRegistration);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Canonical", new Property (typeof(TokenValueString), false)} ,
+			{ "Id", new Property (typeof(TokenValueString), false)} ,
+			{ "EnvelopedRegistration", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<Registration>(), ()=>new Enveloped<Registration>(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -664,52 +760,6 @@ public partial class CatalogedRegistration : CatalogedEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedRegistration();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((CatalogedEntry)this).SerializeX(_writer, false, ref _first);
-		if (Canonical != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Canonical", 1);
-				_writer.WriteString (Canonical);
-			}
-		if (Id != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Id", 1);
-				_writer.WriteString (Id);
-			}
-		if (EnvelopedRegistration != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedRegistration", 1);
-				EnvelopedRegistration.Serialize (_writer, false);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -784,25 +834,82 @@ public partial class Page : CallsignEntry {
 
 	public virtual List<CharacterSpan>				CharacterSpans  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Id", new MetaDataString(
-				delegate (string _a) {  Id = _a; },
-				() => Id) } ,
-			{ "Allow", new MetaDataListString(
-				delegate (List<string> _a) {  Allow = _a; },
-				() => Allow) } ,
-			{ "CharacterSpans", new MetaDataListStruct(
-				delegate (object _a) {  CharacterSpans = _a as List<CharacterSpan>; },
-				() => CharacterSpans,
-				"CharacterSpan", true)}
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Id" : {
+				if (value is TokenValueString vvalue) {
+					Id = vvalue.Value;
+					}
+				break;
+				}
+			case "Allow" : {
+				if (value is TokenValueListString vvalue) {
+					Allow = vvalue.Value;
+					}
+				break;
+				}
+			case "CharacterSpans" : {
+				if (value is TokenValueListStructObject vvalue) {
+					CharacterSpans = vvalue.Value as List<CharacterSpan>;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Id" : {
+				return new TokenValueString (Id);
+				}
+			case "Allow" : {
+				return new TokenValueListString (Allow);
+				}
+			case "CharacterSpans" : {
+				return new TokenValueListStruct<CharacterSpan> (CharacterSpans);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Id", new Property (typeof(TokenValueString), false)} ,
+			{ "Allow", new Property (typeof(TokenValueListString), true)} ,
+			{ "CharacterSpans", new Property ( typeof(TokenValueListStruct), true,
+					()=>new List<CharacterSpan>(), null, true)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -819,69 +926,6 @@ public partial class Page : CallsignEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Page();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		if (Id != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Id", 1);
-				_writer.WriteString (Id);
-			}
-		if (Allow != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Allow", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in Allow) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				_writer.WriteString (_index);
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (CharacterSpans != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("CharacterSpans", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in CharacterSpans) {
-				_writer.WriteArraySeparator (ref _firstarray);
-                _writer.WriteObjectStart();
-                _writer.WriteToken(_index._Tag, 1);
-				bool firstinner = true;
-				_index.Serialize (_writer, true, ref firstinner);
-                _writer.WriteObjectEnd();
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -962,21 +1006,71 @@ public partial class CharacterSpan : CallsignEntry {
 
 	public virtual int?						Last  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "First", new MetaDataInteger32(
-				delegate (int? _a) {  First = _a; },
-				() => First) } ,
-			{ "Last", new MetaDataInteger32(
-				delegate (int? _a) {  Last = _a; },
-				() => Last) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "First" : {
+				if (value is TokenValueInteger32 vvalue) {
+					First = vvalue.Value;
+					}
+				break;
+				}
+			case "Last" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Last = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "First" : {
+				return new TokenValueInteger32 (First);
+				}
+			case "Last" : {
+				return new TokenValueInteger32 (Last);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "First", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Last", new Property (typeof(TokenValueInteger32), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -993,46 +1087,6 @@ public partial class CharacterSpan : CallsignEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CharacterSpan();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		if (First != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("First", 1);
-				_writer.WriteInteger32 (First);
-			}
-		if (Last != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Last", 1);
-				_writer.WriteInteger32 (Last);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -1086,15 +1140,52 @@ public partial class CharacterSpan : CallsignEntry {
 	/// </summary>
 public partial class Canonical : CharacterSpan {
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CharacterSpan._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -1111,37 +1202,6 @@ public partial class Canonical : CharacterSpan {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Canonical();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((CharacterSpan)this).SerializeX(_writer, false, ref _first);
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -1194,18 +1254,62 @@ public partial class MapChar : CharacterSpan {
 
 	public virtual int?						Target  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Target", new MetaDataInteger32(
-				delegate (int? _a) {  Target = _a; },
-				() => Target) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Target" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Target = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Target" : {
+				return new TokenValueInteger32 (Target);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Target", new Property (typeof(TokenValueInteger32), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CharacterSpan._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -1222,42 +1326,6 @@ public partial class MapChar : CharacterSpan {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new MapChar();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((CharacterSpan)this).SerializeX(_writer, false, ref _first);
-		if (Target != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Target", 1);
-				_writer.WriteInteger32 (Target);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -1315,18 +1383,62 @@ public partial class MapString : CharacterSpan {
 
 	public virtual string						Target  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Target", new MetaDataString(
-				delegate (string _a) {  Target = _a; },
-				() => Target) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Target" : {
+				if (value is TokenValueString vvalue) {
+					Target = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Target" : {
+				return new TokenValueString (Target);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Target", new Property (typeof(TokenValueString), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CharacterSpan._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -1343,42 +1455,6 @@ public partial class MapString : CharacterSpan {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new MapString();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((CharacterSpan)this).SerializeX(_writer, false, ref _first);
-		if (Target != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Target", 1);
-				_writer.WriteString (Target);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -1438,23 +1514,73 @@ public partial class Notarization : CallsignEntry {
 
 	public virtual Proof						Proof  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Entries", new MetaDataListStruct(
-				delegate (object _a) {  Entries = _a as List<Enveloped<Witness>>; },
-				() => Entries,
-				"Enveloped<Witness>" )} ,
-			{ "Proof", new MetaDataStruct(
-				delegate (object _a) {  Proof = _a as Proof; },
-				() => Proof,
-				"Proof" )} 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Entries" : {
+				if (value is TokenValueListStructObject vvalue) {
+					Entries = vvalue.Value as List<Enveloped<Witness>>;
+					}
+				break;
+				}
+			case "Proof" : {
+				if (value is TokenValueStructObject vvalue) {
+					Proof = vvalue.Value as Proof;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Entries" : {
+				return new TokenValueListStruct<Enveloped<Witness>> (Entries);
+				}
+			case "Proof" : {
+				return new TokenValueStruct<Proof> (Proof);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Entries", new Property ( typeof(TokenValueListStruct), true,
+					()=>new List<Enveloped<Witness>>(), ()=>new Enveloped<Witness>(), false)} ,
+			{ "Proof", new Property ( typeof(TokenValueStruct), false,
+					()=>new Proof(), ()=>new Proof(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -1471,58 +1597,6 @@ public partial class Notarization : CallsignEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Notarization();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		if (Entries != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Entries", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in Entries) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				// This is an untagged structure. Cannot inherit.
-                //_writer.WriteObjectStart();
-                //_writer.WriteToken(_index._Tag, 1);
-				bool firstinner = true;
-				_index.Serialize (_writer, true, ref firstinner);
-                //_writer.WriteObjectEnd();
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (Proof != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Proof", 1);
-				Proof.Serialize (_writer, false);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -1599,21 +1673,72 @@ public partial class Challenge : Assertion {
 
 	public virtual List<string>				Basis  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Subjects", new MetaDataListString(
-				delegate (List<string> _a) {  Subjects = _a; },
-				() => Subjects) } ,
-			{ "Basis", new MetaDataListString(
-				delegate (List<string> _a) {  Basis = _a; },
-				() => Basis) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Subjects" : {
+				if (value is TokenValueListString vvalue) {
+					Subjects = vvalue.Value;
+					}
+				break;
+				}
+			case "Basis" : {
+				if (value is TokenValueListString vvalue) {
+					Basis = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Subjects" : {
+				return new TokenValueListString (Subjects);
+				}
+			case "Basis" : {
+				return new TokenValueListString (Basis);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Subjects", new Property (typeof(TokenValueListString), true)} ,
+			{ "Basis", new Property (typeof(TokenValueListString), true)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Assertion._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -1630,61 +1755,6 @@ public partial class Challenge : Assertion {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Challenge();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((Assertion)this).SerializeX(_writer, false, ref _first);
-		if (Subjects != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Subjects", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in Subjects) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				_writer.WriteString (_index);
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (Basis != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Basis", 1);
-			_writer.WriteArrayStart ();
-			bool _firstarray = true;
-			foreach (var _index in Basis) {
-				_writer.WriteArraySeparator (ref _firstarray);
-				_writer.WriteString (_index);
-				}
-			_writer.WriteArrayEnd ();
-			}
-
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -1758,19 +1828,63 @@ public partial class CallsignRegistrationRequest : MessageValidated {
 
 	public virtual Enveloped<CallsignBinding>						EnvelopedCallsignBinding  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "EnvelopedCallsignBinding", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedCallsignBinding = _a as Enveloped<CallsignBinding>; },
-				() => EnvelopedCallsignBinding,
-				"Enveloped<CallsignBinding>" )} 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "EnvelopedCallsignBinding" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedCallsignBinding = vvalue.Value as Enveloped<CallsignBinding>;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "EnvelopedCallsignBinding" : {
+				return new TokenValueStruct<Enveloped<CallsignBinding>> (EnvelopedCallsignBinding);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "EnvelopedCallsignBinding", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, MessageValidated._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -1787,42 +1901,6 @@ public partial class CallsignRegistrationRequest : MessageValidated {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CallsignRegistrationRequest();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((MessageValidated)this).SerializeX(_writer, false, ref _first);
-		if (EnvelopedCallsignBinding != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedCallsignBinding", 1);
-				EnvelopedCallsignBinding.Serialize (_writer, false);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -1889,25 +1967,83 @@ public partial class CallsignRegistrationResponse : Message {
 
 	public virtual string						Reason  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Registered", new MetaDataBoolean(
-				delegate (bool? _a) {  Registered = _a; },
-				() => Registered) } ,
-			{ "CatalogedRegistration", new MetaDataStruct(
-				delegate (object _a) {  CatalogedRegistration = _a as CatalogedRegistration; },
-				() => CatalogedRegistration,
-				"CatalogedRegistration" )} ,
-			{ "Reason", new MetaDataString(
-				delegate (string _a) {  Reason = _a; },
-				() => Reason) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Registered" : {
+				if (value is TokenValueBoolean vvalue) {
+					Registered = vvalue.Value;
+					}
+				break;
+				}
+			case "CatalogedRegistration" : {
+				if (value is TokenValueStructObject vvalue) {
+					CatalogedRegistration = vvalue.Value as CatalogedRegistration;
+					}
+				break;
+				}
+			case "Reason" : {
+				if (value is TokenValueString vvalue) {
+					Reason = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Registered" : {
+				return new TokenValueBoolean (Registered);
+				}
+			case "CatalogedRegistration" : {
+				return new TokenValueStruct<CatalogedRegistration> (CatalogedRegistration);
+				}
+			case "Reason" : {
+				return new TokenValueString (Reason);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Registered", new Property (typeof(TokenValueBoolean), false)} ,
+			{ "CatalogedRegistration", new Property ( typeof(TokenValueStruct), false,
+					()=>new CatalogedRegistration(), ()=>new CatalogedRegistration(), false)} ,
+			{ "Reason", new Property (typeof(TokenValueString), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Message._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -1924,52 +2060,6 @@ public partial class CallsignRegistrationResponse : Message {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CallsignRegistrationResponse();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((Message)this).SerializeX(_writer, false, ref _first);
-		if (Registered != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Registered", 1);
-				_writer.WriteBoolean (Registered);
-			}
-		if (CatalogedRegistration != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("CatalogedRegistration", 1);
-				CatalogedRegistration.Serialize (_writer, false);
-			}
-		if (Reason != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Reason", 1);
-				_writer.WriteString (Reason);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -2033,19 +2123,63 @@ public partial class ProcessResultCallsignRegistration : ProcessResult {
 
 	public virtual CallsignRegistrationResponse						CallsignRegistrationResponse  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "CallsignRegistrationResponse", new MetaDataStruct(
-				delegate (object _a) {  CallsignRegistrationResponse = _a as CallsignRegistrationResponse; },
-				() => CallsignRegistrationResponse,
-				"CallsignRegistrationResponse" )} 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "CallsignRegistrationResponse" : {
+				if (value is TokenValueStructObject vvalue) {
+					CallsignRegistrationResponse = vvalue.Value as CallsignRegistrationResponse;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "CallsignRegistrationResponse" : {
+				return new TokenValueStruct<CallsignRegistrationResponse> (CallsignRegistrationResponse);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "CallsignRegistrationResponse", new Property ( typeof(TokenValueStruct), false,
+					()=>new CallsignRegistrationResponse(), ()=>new CallsignRegistrationResponse(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, ProcessResult._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -2062,42 +2196,6 @@ public partial class ProcessResultCallsignRegistration : ProcessResult {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ProcessResultCallsignRegistration();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((ProcessResult)this).SerializeX(_writer, false, ref _first);
-		if (CallsignRegistrationResponse != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("CallsignRegistrationResponse", 1);
-				CallsignRegistrationResponse.Serialize (_writer, false);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream

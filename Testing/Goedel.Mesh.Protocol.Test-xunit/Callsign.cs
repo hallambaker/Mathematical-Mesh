@@ -129,13 +129,13 @@ public partial class TestService {
 
 
 
-        var messageAlice = contextAccountAlice.PresenceConnect(presenceServer);
-        var messageBob  = contextAccountBob.PresenceConnect(presenceServer);
+        //var messageAlice = contextAccountAlice.PresenceConnect(presenceServer);
+        //var messageBob  = contextAccountBob.PresenceConnect(presenceServer);
 
 
 
-        var whereAlice = contextAccountAlice.PresenceQuery(presenceServer, AccountBob);
-        var whereBob = contextAccountBob.PresenceQuery(presenceServer, AccountAlice);
+        //var whereAlice = contextAccountAlice.PresenceQuery(presenceServer, AccountBob);
+        //var whereBob = contextAccountBob.PresenceQuery(presenceServer, AccountAlice);
 
         }
 
@@ -149,11 +149,11 @@ public partial class TestService {
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main");
 
-        var contextRepository = contextAccountAlice.Register(repositoryServer);
+        //var contextRepository = contextAccountAlice.Register(repositoryServer);
 
-        repositoryServer.Publish(plaintext);
-        contextRepository.Publish(plaintext);
-        contextRepository.Publish(plaintext);
+        //repositoryServer.Publish(plaintext);
+        //contextRepository.Publish(plaintext);
+        //contextRepository.Publish(plaintext);
 
 
 

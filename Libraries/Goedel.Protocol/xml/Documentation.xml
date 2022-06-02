@@ -535,6 +535,16 @@
             for testing etc.</param>
             <param name="JpcInterface">The service provider.</param>
         </member>
+        <member name="P:Goedel.Protocol.Endpoint.Protocol">
+            <summary>Directory to store persistence data.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Endpoint.Instance">
+            <summary>Optional instance tag to allow multiple instances to be run 
+            for testing etc.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Endpoint.JpcInterface">
+            <summary>The service provider.</summary>
+        </member>
         <member name="T:Goedel.Protocol.HttpEndpoint">
             <summary>
             A HTTP Endpoint
@@ -554,6 +564,12 @@
             <param name="Instance">The protocol instance.</param>
             <param name="Port">The port number.</param>
             <param name="JpcInterface">The service provider.</param>
+        </member>
+        <member name="P:Goedel.Protocol.HttpEndpoint.Domain">
+            <summary>The DNS address specified in the original HTTP URI</summary>
+        </member>
+        <member name="P:Goedel.Protocol.HttpEndpoint.Port">
+            <summary>The port number.</summary>
         </member>
         <member name="M:Goedel.Protocol.HttpEndpoint.Specializer(System.String)">
             <summary>
@@ -613,6 +629,12 @@
             <param name="Port">The port number.</param>
             <param name="AddressFamily">The address family.</param>
             <param name="JpcInterface">The service provider.</param>
+        </member>
+        <member name="P:Goedel.Protocol.UdpEndpoint.Port">
+            <summary>The port number.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.UdpEndpoint.AddressFamily">
+            <summary>The address family.</summary>
         </member>
         <member name="M:Goedel.Protocol.UdpEndpoint.GetClient">
             <summary>
@@ -1725,11 +1747,11 @@
             <summary>Write 64 bit integer</summary>
             <param name="Data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JSONAWriter.WriteFloat32(System.Single)">
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteFloat32(System.Nullable{System.Single})">
             <summary>Write float32</summary>
             <param name="Data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JSONAWriter.WriteFloat64(System.Double)">
+        <member name="M:Goedel.Protocol.JSONAWriter.WriteFloat64(System.Nullable{System.Double})">
             <summary>Write float64</summary>
             <param name="Data">Value to write</param>
         </member>
@@ -1959,27 +1981,27 @@
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.#ctor(System.IO.Stream)">
             <summary>
-            Create a new writer instance with the output <paramref name="Output"/>. 
-            If <paramref name="Output"/> is null, a memory stream is created and
+            Create a new writer instance with the output <paramref name="output"/>. 
+            If <paramref name="output"/> is null, a memory stream is created and
             used as the output.
             </summary>
-            <param name="Output">Output buffer</param> 
+            <param name="output">Output buffer</param> 
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteTag(System.Byte,System.Int64)">
             <summary>
             Write out a Tag-Length value using the shortest possible production
             </summary>
-            <param name="Code">Base code.</param>
-            <param name="Length">Length of data to follow.</param>
+            <param name="code">Base code.</param>
+            <param name="length">Length of data to follow.</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteTag(System.IO.Stream,System.Byte,System.Int64)">
             <summary>
             Write out a Tag-Length value using the shortest possible production
-            to <paramref name="Output"/>.
+            to <paramref name="output"/>.
             </summary>
-            <param name="Output">The output stream to write to.</param>
-            <param name="Code">Base code.</param>
-            <param name="Length">Length of data to follow.</param>
+            <param name="output">The output stream to write to.</param>
+            <param name="code">Base code.</param>
+            <param name="length">Length of data to follow.</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger(System.Nullable{System.Int64})">
             <summary>Write integer.</summary>
@@ -1989,37 +2011,37 @@
             <summary>
             Write Tag to the stream
             </summary>
-            <param name="Tag">Tag text.</param>
-            <param name="IndentIn">Current indent level.</param>
+            <param name="tag">Tag text.</param>
+            <param name="indentIn">Current indent level.</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger32(System.Nullable{System.Int32})">
             <summary>Write 32 bit integer.</summary>
-            <param name="Data">Value to write</param>
+            <param name="data">Value to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger64(System.Nullable{System.Int64})">
             <summary>Write 64 bit integer.</summary>
-            <param name="Data">Value to write</param>
+            <param name="data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonBWriter.WriteFloat32(System.Single)">
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteFloat32(System.Nullable{System.Single})">
             <summary>Write float32</summary>
-            <param name="Data">Value to write</param>
+            <param name="data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonBWriter.WriteFloat64(System.Double)">
+        <member name="M:Goedel.Protocol.JsonBWriter.WriteFloat64(System.Nullable{System.Double})">
             <summary>Write float64</summary>
-            <param name="Data">Value to write</param>
+            <param name="data">Value to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteBoolean(System.Nullable{System.Boolean})">
             <summary>Write boolean.</summary>
-            <param name="Data">Value to write</param>
+            <param name="data">Value to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteString(System.String)">
             <summary>Write string without escaping.</summary>
-            <param name="Data">Value to write</param>
+            <param name="data">Value to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteBinary(System.IO.Stream,System.Byte[],System.Int32,System.Int32)">
             <summary>Write binary data as length-data item.</summary>
             <param name="buffer">Value to write</param>
-            <param name="Stream">The output stream.</param>
+            <param name="stream">The output stream.</param>
             <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
             at which to begin copying bytes to the current stream.</param>
             <param name="count">The number of bytes to be written to the current stream.</param> 
@@ -2033,14 +2055,14 @@
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteBinaryBegin(System.Int64,System.Boolean)">
             <summary>Write binary data as length-data item.</summary>
-            <param name="Length">The length of the chunk to be written.</param>
-            <param name="Terminal">If true, this is the last chunk in a sequence.</param>
+            <param name="length">The length of the chunk to be written.</param>
+            <param name="terminal">If true, this is the last chunk in a sequence.</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteBinaryPart(System.Byte[],System.Int64,System.Int64)">
             <summary>Write binary data as length-data item.</summary>
-            <param name="Data">Value to write</param>
-            <param name="First">The index position of the first byte in the input data to process</param>
-            <param name="Length">The number of bytes to process</param>
+            <param name="data">Value to write</param>
+            <param name="first">The index position of the first byte in the input data to process</param>
+            <param name="length">The number of bytes to process</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteArrayStart">
             <summary>Mark start of array element</summary>
@@ -2163,10 +2185,25 @@
             duplicates.
              </summary>
         </member>
-        <member name="P:Goedel.Protocol.Request._MetaDataParent">
+        <member name="M:Goedel.Protocol.Request.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Protocol.Request._MetaData">
+        <member name="M:Goedel.Protocol.Request.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Protocol.Request._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Request._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Request._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Request._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Request._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.Request._Tag">
@@ -2184,26 +2221,6 @@
             Factory method. Throws exception as this is an abstract class.
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Request.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Request.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Protocol.Request.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -2278,10 +2295,25 @@
             The request to which the response corresponds.
              </summary>
         </member>
-        <member name="P:Goedel.Protocol.Response._MetaDataParent">
+        <member name="M:Goedel.Protocol.Response.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Protocol.Response._MetaData">
+        <member name="M:Goedel.Protocol.Response.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Protocol.Response._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Response._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Response._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Response._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Response._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.Response._Tag">
@@ -2299,26 +2331,6 @@
             Factory method. Throws exception as this is an abstract class.
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Response.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Response.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Protocol.Response.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -2412,6 +2424,12 @@
             <param name="JsonFactoryDelegate">Delegate returning object of the request type.</param>
             <param name="JsonDispatchDelegate">Dispatch method</param>
         </member>
+        <member name="P:Goedel.Protocol.JsonMethodDescription.JsonFactoryDelegate">
+            <summary>Delegate returning object of the request type.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonMethodDescription.JsonDispatchDelegate">
+            <summary>Dispatch method</summary>
+        </member>
         <member name="T:Goedel.Protocol.JsonObject">
             <summary>
             Base class for JSON Objects.
@@ -2487,6 +2505,51 @@
             </summary>
             <param name="dictionary">The dictionary to append the values to.</param>
         </member>
+        <member name="M:Goedel.Protocol.JsonObject.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <summary>
+            Sets the value of the property <paramref name="tag"/> to the value specified
+            by <paramref name="value"/>.
+            </summary>
+            <param name="tag">The string representation of the tag.</param>
+            <param name="value">The tokenized value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.Getter(System.String)">
+            <summary>
+            Gets the value of the property <paramref name="tag"/>;
+            </summary>
+            <param name="tag">The string representation of the tag.</param>
+            <returns>The value of the property with tag <paramref name="tag"/>.</returns>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._Unregistered">
+            <summary>
+            Dictionary of unregistered tags encountered when attempting to deserialize a
+            document.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonObject._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.JsonObject._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.Combine(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property})">
+            <summary>
+            Combine contents of the properties dictionaries <paramref name="first"/> and
+            <paramref name="second"/>.
+            </summary>
+            <param name="first">The first dictionary to add.</param>
+            <param name="second">The second dictionary to add.</param>
+            <returns>The combined dictionary.</returns>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._AllProperties">
+            <summary>The properties of the JsonObject instance.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._Properties">
+            <summary>The properties of the JsonObject instance.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._ParentProperties">
+            <summary>The properties of the parent JsonObject instance.</summary>
+        </member>
         <member name="M:Goedel.Protocol.JsonObject.#ctor">
             <summary>
             Base constructor.
@@ -2546,15 +2609,7 @@
             Serialize to the specified Writer.
             </summary>
             <param name="writer">Writer to serialize the data to</param>
-            <param name="tag">If true, serialization is tagged with the object type.</param>
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.PreEncode">
-            <summary>
-            Routine called before serializing the data structure. This may be used to perform
-            tasks such as serializing a sub-field to a byte array and/or signing subfields.
-            </summary>
-            <remarks>There is a potential for conflict between PostDecode and PreEncode, particularly
-            when debugging. </remarks>
+            <param name="tagged">If true, serialization is tagged with the object type.</param>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.PostDecode">
             <summary>
@@ -2563,26 +2618,6 @@
             </summary>
             <remarks>There is a potential for conflict between PostDecode and PreEncode, particularly
             when debugging. </remarks>
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize to the specified Writer.
-            </summary>
-            <param name="writer">Writer to serialize the data to</param>
-            <param name="first">This is the first field in the object being serialized. This 
-            value is set to false on exit.</param>
-            <param name="wrap">Wrap the objects for formatting.</param>
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize to the specified Writer. This is a dummy routine
-            whose sole purpose is to prevent 'new' causing issues in derived
-            classes.
-            </summary>
-            <param name="writer">Writer to serialize the data to</param>
-            <param name="first">This is the first field in the object being serialized. This 
-            value is set to false on exit.</param>
-            <param name="wrap">Wrap the objects for formatting.</param>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.From(System.Byte[])">
             <summary>
@@ -2618,12 +2653,19 @@
             </summary>
             <param name="jsonReader">Input data</param>
         </member>
+        <member name="M:Goedel.Protocol.JsonObject.DeserializeToken2(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Deserialize the input stream to populate this object having recieved the specified tag.
+            </summary>
+            <param name="jsonReader">Input data</param>
+            <param name="tag">Input tag</param>
+        </member>
         <member name="M:Goedel.Protocol.JsonObject.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Deserialize the input stream to populate this object having recieved the specified tag.
             </summary>
             <param name="jsonReader">Input data</param>
-            <param name="Tag">Input tag</param>
+            <param name="tag">Input tag</param>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.ToFile(System.String,Goedel.Protocol.DataEncoding,System.Boolean)">
             <summary>
@@ -2760,75 +2802,6 @@
         </member>
         <member name="F:Goedel.Protocol.JsonReader.Actions">
             <summary>Actions to perform on transitions</summary>
-        </member>
-        <member name="T:Goedel.Protocol.JsonReader.Token">
-            <summary>Tokens to return.</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Invalid">
-            <summary>The token is invalid</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.StartObject">
-            <summary>Start object token '{' </summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.EndObject">
-            <summary>End object token '}' </summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.StartArray">
-            <summary>Start array token '{'</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.EndArray">
-            <summary>End array token '}'</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Colon">
-            <summary>Colon</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Comma">
-            <summary>Comma</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.String">
-            <summary>String (UTF8)</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Tag">
-            <summary>String Tag(UTF8)</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Number">
-            <summary>Number</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Integer">
-            <summary>An Integer Number</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Real32">
-            <summary>A Real32 Number</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Real64">
-            <summary>A Real64 Number</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Litteral">
-            <summary>A string litteral, for internal use.</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.True">
-            <summary>The string litteral true</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.False">
-            <summary>The string litteral false</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Null">
-            <summary>The string litteral null</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.EndRecord">
-            <summary>End of record</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Binary">
-            <summary>Binary data</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.JSONBCD">
-            <summary>JSON-BCD extended tag, for internal use</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.BOM">
-            <summary>Byte Order Mark</summary>
-        </member>
-        <member name="F:Goedel.Protocol.JsonReader.Token.Empty">
-            <summary></summary>
         </member>
         <member name="F:Goedel.Protocol.JsonReader.Tokens">
             <summary>Tokens to be returned if the FSR stops in the specified state.</summary>
@@ -3096,11 +3069,11 @@
             <summary>Write 64 bit integer</summary>
             <param name="data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonWriter.WriteFloat32(System.Single)">
+        <member name="M:Goedel.Protocol.JsonWriter.WriteFloat32(System.Nullable{System.Single})">
             <summary>Write float32</summary>
             <param name="data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonWriter.WriteFloat64(System.Double)">
+        <member name="M:Goedel.Protocol.JsonWriter.WriteFloat64(System.Nullable{System.Double})">
             <summary>Write float64</summary>
             <param name="data">Value to write</param>
         </member>
@@ -3302,10 +3275,25 @@
             a redirect in the case that a service moves.
              </summary>
         </member>
-        <member name="P:Goedel.Protocol.Version._MetaDataParent">
+        <member name="M:Goedel.Protocol.Version.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Protocol.Version._MetaData">
+        <member name="M:Goedel.Protocol.Version.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Protocol.Version._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Version._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Version._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Version._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Version._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.Version._Tag">
@@ -3323,26 +3311,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Version.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Version.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Protocol.Version.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -3377,10 +3345,25 @@
             encoding scheme. 
              </summary>
         </member>
-        <member name="P:Goedel.Protocol.Encoding._MetaDataParent">
+        <member name="M:Goedel.Protocol.Encoding.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Protocol.Encoding._MetaData">
+        <member name="M:Goedel.Protocol.Encoding.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Protocol.Encoding._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Encoding._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Encoding._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Encoding._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Encoding._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.Encoding._Tag">
@@ -3398,26 +3381,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Encoding.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Encoding.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Protocol.Encoding.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -3440,10 +3403,25 @@
              Request service description.
              </summary>
         </member>
-        <member name="P:Goedel.Protocol.HelloRequest._MetaDataParent">
+        <member name="M:Goedel.Protocol.HelloRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Protocol.HelloRequest._MetaData">
+        <member name="M:Goedel.Protocol.HelloRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Protocol.HelloRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.HelloRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.HelloRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.HelloRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.HelloRequest._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.HelloRequest._Tag">
@@ -3461,26 +3439,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Protocol.HelloRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Protocol.HelloRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Protocol.HelloRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -3513,10 +3471,25 @@
             Enumerates alternate protocol version(s) supported
              </summary>
         </member>
-        <member name="P:Goedel.Protocol.HelloResponse._MetaDataParent">
+        <member name="M:Goedel.Protocol.HelloResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Protocol.HelloResponse._MetaData">
+        <member name="M:Goedel.Protocol.HelloResponse.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Protocol.HelloResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.HelloResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.HelloResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.HelloResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.HelloResponse._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.HelloResponse._Tag">
@@ -3534,26 +3507,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Protocol.HelloResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Protocol.HelloResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Protocol.HelloResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -3593,6 +3546,12 @@
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
         </member>
+        <member name="P:Goedel.Protocol.MetaDataBoolean.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataBoolean.Getter">
+            <summary>Get accessor</summary>
+        </member>
         <member name="T:Goedel.Protocol.MetaDataInteger32">
             <summary>
             Metadata class describing boolean field.
@@ -3606,6 +3565,12 @@
             </summary>
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataInteger32.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataInteger32.Getter">
+            <summary>Get accessor</summary>
         </member>
         <member name="T:Goedel.Protocol.MetaDataInteger64">
             <summary>
@@ -3621,6 +3586,12 @@
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
         </member>
+        <member name="P:Goedel.Protocol.MetaDataInteger64.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataInteger64.Getter">
+            <summary>Get accessor</summary>
+        </member>
         <member name="T:Goedel.Protocol.MetaDataBinary">
             <summary>
             Metadata class describing boolean field.
@@ -3634,6 +3605,12 @@
             </summary>
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataBinary.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataBinary.Getter">
+            <summary>Get accessor</summary>
         </member>
         <member name="T:Goedel.Protocol.MetaDataString">
             <summary>
@@ -3649,6 +3626,12 @@
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
         </member>
+        <member name="P:Goedel.Protocol.MetaDataString.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataString.Getter">
+            <summary>Get accessor</summary>
+        </member>
         <member name="T:Goedel.Protocol.MetaDataDateTime">
             <summary>
             Metadata class describing boolean field.
@@ -3662,6 +3645,12 @@
             </summary>
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataDateTime.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataDateTime.Getter">
+            <summary>Get accessor</summary>
         </member>
         <member name="T:Goedel.Protocol.MetaDataStruct">
             <summary>
@@ -3680,6 +3669,18 @@
             <param name="Getter">Get accessor</param>
             <param name="Type">The type name</param>
             <param name="Tagged">If true, the structure is a tagged structure</param>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataStruct.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataStruct.Getter">
+            <summary>Get accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataStruct.Type">
+            <summary>The type name</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataStruct.Tagged">
+            <summary>If true, the structure is a tagged structure</summary>
         </member>
         <member name="T:Goedel.Protocol.MetaDataList">
             <summary>
@@ -3700,6 +3701,12 @@
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
         </member>
+        <member name="P:Goedel.Protocol.MetaDataListBoolean.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListBoolean.Getter">
+            <summary>Get accessor</summary>
+        </member>
         <member name="T:Goedel.Protocol.MetaDataListInteger32">
             <summary>
             Metadata class describing boolean field.
@@ -3713,6 +3720,12 @@
             </summary>
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListInteger32.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListInteger32.Getter">
+            <summary>Get accessor</summary>
         </member>
         <member name="T:Goedel.Protocol.MetaDataListInteger64">
             <summary>
@@ -3728,6 +3741,12 @@
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
         </member>
+        <member name="P:Goedel.Protocol.MetaDataListInteger64.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListInteger64.Getter">
+            <summary>Get accessor</summary>
+        </member>
         <member name="T:Goedel.Protocol.MetaDataListBinary">
             <summary>
             Metadata class describing boolean field.
@@ -3741,6 +3760,12 @@
             </summary>
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListBinary.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListBinary.Getter">
+            <summary>Get accessor</summary>
         </member>
         <member name="T:Goedel.Protocol.MetaDataListString">
             <summary>
@@ -3756,6 +3781,12 @@
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
         </member>
+        <member name="P:Goedel.Protocol.MetaDataListString.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListString.Getter">
+            <summary>Get accessor</summary>
+        </member>
         <member name="T:Goedel.Protocol.MetaDataListDateTime">
             <summary>
             Metadata class describing boolean field.
@@ -3769,6 +3800,12 @@
             </summary>
             <param name="Setter">Set accessor</param>
             <param name="Getter">Get accessor</param>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListDateTime.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListDateTime.Getter">
+            <summary>Get accessor</summary>
         </member>
         <member name="T:Goedel.Protocol.MetaDataListStruct">
             <summary>
@@ -3787,6 +3824,18 @@
             <param name="Getter">Get accessor</param>
             <param name="Type">The type name</param>
             <param name="Tagged">If true, the structure is a tagged structure</param>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListStruct.Setter">
+            <summary>Set accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListStruct.Getter">
+            <summary>Get accessor</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListStruct.Type">
+            <summary>The type name</summary>
+        </member>
+        <member name="P:Goedel.Protocol.MetaDataListStruct.Tagged">
+            <summary>If true, the structure is a tagged structure</summary>
         </member>
         <member name="T:Goedel.Protocol.NamespaceDoc">
             <summary>
@@ -3818,6 +3867,14 @@
             <returns>Value read</returns>
         </member>
         <member name="M:Goedel.Protocol.Reader.ReadInteger64">
+            <summary>Read Integer64</summary>
+            <returns>Value read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.ReadFloat32">
+            <summary>Read Integer32</summary>
+            <returns>Value read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Reader.ReadFloat64">
             <summary>Read Integer64</summary>
             <returns>Value read</returns>
         </member>
@@ -3885,11 +3942,11 @@
             <summary>Write integer value token</summary>
             <param name="Data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.Writer.WriteFloat32(System.Single)">
+        <member name="M:Goedel.Protocol.Writer.WriteFloat32(System.Nullable{System.Single})">
             <summary>Write integer value token</summary>
             <param name="Data">Value to write</param>
         </member>
-        <member name="M:Goedel.Protocol.Writer.WriteFloat64(System.Double)">
+        <member name="M:Goedel.Protocol.Writer.WriteFloat64(System.Nullable{System.Double})">
             <summary>Write integer value token</summary>
             <param name="Data">Value to write</param>
         </member>
@@ -3994,6 +4051,686 @@
             <summary>Write out the Date Time as a string in RFC3339 Format</summary>
             <param name="Output">The stream to write the output to</param>
             <param name="Data">Data to write</param>
+        </member>
+        <member name="T:Goedel.Protocol.Property">
+            <summary>
+            Metadate record representing a property.
+            </summary>
+            <param name="TokenType">The token type (consider removing).</param>
+            <param name="Multiple">If true, represents a list of entries.</param>
+            <param name="Factory">Factory generating an instance of the node (if required).</param>
+            <param name="IFactory">Factory generating an instance of a list member (if required).</param>
+            <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Property.#ctor(System.Type,System.Boolean,System.Func{System.Object},System.Func{System.Object},System.Boolean,System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
+            <summary>
+            Metadate record representing a property.
+            </summary>
+            <param name="TokenType">The token type (consider removing).</param>
+            <param name="Multiple">If true, represents a list of entries.</param>
+            <param name="Factory">Factory generating an instance of the node (if required).</param>
+            <param name="IFactory">Factory generating an instance of a list member (if required).</param>
+            <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
+        </member>
+        <member name="P:Goedel.Protocol.Property.TokenType">
+            <summary>The token type (consider removing).</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Property.Multiple">
+            <summary>If true, represents a list of entries.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Property.Factory">
+            <summary>Factory generating an instance of the node (if required).</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Property.IFactory">
+            <summary>Factory generating an instance of a list member (if required).</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Property.Tagged">
+            <summary>If true, structures are to be represented as a tagged structure.</summary>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValue">
+            <summary>
+            Base record representing the value at a node in a JSON tree.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValue.#ctor">
+            <summary>
+            Base record representing the value at a node in a JSON tree.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.TokenValue.Unknown">
+            <summary>Static pointer to a single instance of the unknown token.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.TokenValue.IsEmpty">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Protocol.TokenValue.Token">
+            <summary>The parse token (consider removing)</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.TokenValue.Serialize(Goedel.Protocol.Writer)">
+            <summary>
+            Serialize this token to the writer <paramref name="writer"/>.
+            </summary>
+            <param name="writer">The writer to emit the structured data to.</param>
+            
+            
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueUnknown">
+            <summary>
+            Record returned to respresent an unknown entry.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueUnknown.#ctor">
+            <summary>
+            Record returned to respresent an unknown entry.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueUnknown.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueUnknown.Token">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueBoolean">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueBoolean.#ctor(System.Nullable{System.Boolean})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueBoolean.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueBoolean.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueBoolean.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueBoolean.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueString">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueString.#ctor(System.String)">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueString.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueString.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueString.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueString.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueBinary">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueBinary.#ctor(System.Byte[])">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueBinary.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueBinary.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueBinary.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueBinary.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueDateTime">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueDateTime.#ctor(System.Nullable{System.DateTime})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueDateTime.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueDateTime.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueDateTime.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueDateTime.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueInteger32">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueInteger32.#ctor(System.Nullable{System.Int32})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueInteger32.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueInteger32.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueInteger32.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueInteger32.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueInteger64">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueInteger64.#ctor(System.Nullable{System.Int64})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueInteger64.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueInteger64.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueInteger64.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueInteger64.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueReal32">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueReal32.#ctor(System.Nullable{System.Single})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueReal32.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueReal32.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueReal32.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueReal32.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueReal64">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueReal64.#ctor(System.Nullable{System.Double})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueReal64.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueReal64.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueReal64.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueReal64.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueStruct">
+            <summary>
+            Base record representing a structure value at a node in a JSON tree.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueStruct.#ctor">
+            <summary>
+            Base record representing a structure value at a node in a JSON tree.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueStruct.JsonObject">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueStruct.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueStruct.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueStruct.Serialize(Goedel.Protocol.Writer,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueStruct`1">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+            <typeparam name="T">The type of the node value</typeparam>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueStruct`1.#ctor(`0)">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+            <typeparam name="T">The type of the node value</typeparam>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueStruct`1.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueStruct`1.JsonObject">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueStruct`1.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueStructObject">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+            <typeparam name="T">The type of the node value</typeparam>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueStructObject.#ctor(System.Object)">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+            <typeparam name="T">The type of the node value</typeparam>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueStructObject.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueStructObject.JsonObject">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueStructObject.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueList">
+            <summary>
+            Base record representing a structure value at a node in a JSON tree.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueList.#ctor">
+            <summary>
+            Base record representing a structure value at a node in a JSON tree.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueListBoolean">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListBoolean.#ctor(System.Collections.Generic.List{System.Nullable{System.Boolean}})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListBoolean.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListBoolean.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListBoolean.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListBoolean.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueListString">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListString.#ctor(System.Collections.Generic.List{System.String})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListString.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListString.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListString.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListString.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueListBinary">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListBinary.#ctor(System.Collections.Generic.List{System.Byte[]})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListBinary.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListBinary.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListBinary.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListBinary.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueListDateTime">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListDateTime.#ctor(System.Collections.Generic.List{System.Nullable{System.DateTime}})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListDateTime.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListDateTime.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListDateTime.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListDateTime.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueListInteger32">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListInteger32.#ctor(System.Collections.Generic.List{System.Nullable{System.Int32}})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListInteger32.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListInteger32.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListInteger32.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListInteger32.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueListInteger64">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListInteger64.#ctor(System.Collections.Generic.List{System.Nullable{System.Int64}})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListInteger64.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListInteger64.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListInteger64.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListInteger64.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueListReal32">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListReal32.#ctor(System.Collections.Generic.List{System.Nullable{System.Single}})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListReal32.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListReal32.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListReal32.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListReal32.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueListReal64">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListReal64.#ctor(System.Collections.Generic.List{System.Nullable{System.Double}})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListReal64.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListReal64.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListReal64.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListReal64.Serialize(Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueListStruct">
+            <summary>
+            Base record representing the value of a list of structure at a node in a JSON tree.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListStruct.#ctor">
+            <summary>
+            Base record representing the value of a list of structure at a node in a JSON tree.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListStruct.Token">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueListStructObject">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+            <typeparam name="T">The type of the node value</typeparam>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListStructObject.#ctor(System.Object)">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+            <typeparam name="T">The type of the node value</typeparam>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListStructObject.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListStructObject.JsonObject">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListStructObject.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.TokenValueListStruct`1">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+            <typeparam name="T">The type of the node value</typeparam>
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListStruct`1.#ctor(System.Collections.Generic.List{`0})">
+            <summary>
+            Record representing a boolean value in a JSON tree.
+            </summary>
+            <param name="Value">The value.</param>
+            <typeparam name="T">The type of the node value</typeparam>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListStruct`1.Value">
+            <summary>The value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListStruct`1.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListStruct`1.Item(System.Int32)">
+            <summary>Gets or sets the element at the specified index.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.TokenValueListStruct`1.Count">
+            <summary>Gets the number of elements contained in the List&lt;T>.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListStruct`1.GetEnumerator">
+            <summary>Returns an enumerator that iterates through the List&lt;T>.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.TokenValueListStruct`1.Serialize(Goedel.Protocol.Writer,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.Token">
+            <summary>Tokens to return.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Invalid">
+            <summary>The token is invalid</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.StartObject">
+            <summary>Start object token '{' </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.EndObject">
+            <summary>End object token '}' </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.StartArray">
+            <summary>Start array token '{'</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.EndArray">
+            <summary>End array token '}'</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Colon">
+            <summary>Colon</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Comma">
+            <summary>Comma</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.String">
+            <summary>String (UTF8)</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.DateTime">
+            <summary>String encoding a DateTime value</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Tag">
+            <summary>String Tag(UTF8)</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Number">
+            <summary>Number</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Integer">
+            <summary>An Integer Number</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Real32">
+            <summary>A Real32 Number</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Real64">
+            <summary>A Real64 Number</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Litteral">
+            <summary>A string litteral, for internal use.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.True">
+            <summary>The string litteral true</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.False">
+            <summary>The string litteral false</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Null">
+            <summary>The string litteral null</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.EndRecord">
+            <summary>End of record</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Binary">
+            <summary>Binary data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.JSONBCD">
+            <summary>JSON-BCD extended tag, for internal use</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.BOM">
+            <summary>Byte Order Mark</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Token.Empty">
+            <summary></summary>
         </member>
         <member name="T:Goedel.Protocol.WrapWriter">
             <summary>

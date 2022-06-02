@@ -119,10 +119,25 @@
             The public key
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyDH.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyDH.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyDH._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyDH._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._Tag">
@@ -140,26 +155,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyDH.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyDH.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.PublicKeyDH.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -220,10 +215,25 @@
             The private key.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyDH.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyDH.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyDH._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyDH._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._Tag">
@@ -241,26 +251,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyDH.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyDH.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.PrivateKeyDH.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -332,10 +322,25 @@
             The public key
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyECDH.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyECDH.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyECDH._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyECDH._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._Tag">
@@ -353,26 +358,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyECDH.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyECDH.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.PublicKeyECDH.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -437,10 +422,25 @@
             The private key
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyECDH.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyECDH.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyECDH._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyECDH._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._Tag">
@@ -458,26 +458,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyECDH.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyECDH.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.PrivateKeyECDH.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -601,10 +581,25 @@
             The digest value
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Header._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.Header.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Header._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.Header.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Header._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Header._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Header._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Header._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Header._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Header._Tag">
@@ -622,26 +617,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Header.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Header.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.Header.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -733,10 +708,25 @@
             The signature value
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.JoseWebSignature.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.JoseWebSignature.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseWebSignature._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseWebSignature._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._Tag">
@@ -754,26 +744,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.JoseWebSignature.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.JoseWebSignature.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.JoseWebSignature.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -931,10 +901,25 @@
             Authentication tag
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.JoseWebEncryption.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.JoseWebEncryption.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseWebEncryption._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseWebEncryption._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._Tag">
@@ -952,26 +937,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.JoseWebEncryption.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.JoseWebEncryption.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.JoseWebEncryption.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -1190,10 +1155,25 @@
             The signature data
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Signed._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.Signed.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Signed._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.Signed.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Signed._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Signed._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Signed._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Signed._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Signed._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Signed._Tag">
@@ -1211,26 +1191,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Signed.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Signed.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.Signed.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -1273,10 +1233,25 @@
             The signature data
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Encrypted._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.Encrypted.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Encrypted._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.Encrypted.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Encrypted._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Encrypted._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Encrypted._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Encrypted._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Encrypted._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Encrypted._Tag">
@@ -1294,26 +1269,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Encrypted.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Encrypted.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.Encrypted.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -1380,10 +1335,25 @@
             SHA-2-256 fingerprint of X.509 certificate
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyCore._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.KeyCore.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyCore._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.KeyCore.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyCore._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyCore._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyCore._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyCore._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyCore._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyCore._Tag">
@@ -1401,26 +1371,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyCore.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyCore.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.KeyCore.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -1469,10 +1419,25 @@
             The signature value
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Signature._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.Signature.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Signature._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.Signature.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Signature._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Signature._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Signature._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Signature._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Signature._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Signature._Tag">
@@ -1490,26 +1455,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Signature.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Signature.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.Signature.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -1542,10 +1487,25 @@
             The key data.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyContainer._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.KeyContainer.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyContainer._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.KeyContainer.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyContainer._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyContainer._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyContainer._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyContainer._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyContainer._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyContainer._Tag">
@@ -1563,26 +1523,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyContainer.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyContainer.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.KeyContainer.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -1651,10 +1591,25 @@
             Symmetric key value.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Key._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.Key.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Key._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.Key.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Key._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Key._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Key._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Key._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Key._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Key._Tag">
@@ -1672,26 +1627,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Key.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Key.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.Key.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -1777,10 +1712,25 @@
             The decryption data for use by this recipient.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Recipient._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.Recipient.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Recipient._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.Recipient.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Recipient._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Recipient._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Recipient._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Recipient._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.Recipient._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Recipient._Tag">
@@ -1798,26 +1748,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Recipient.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.Recipient.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.Recipient.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -1881,10 +1811,25 @@
             The public exponent
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyRSA.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.PublicKeyRSA.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyRSA._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyRSA._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._Tag">
@@ -1902,26 +1847,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyRSA.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PublicKeyRSA.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.PublicKeyRSA.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -2008,10 +1933,25 @@
             The parameter QInverse
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyRSA.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyRSA.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyRSA._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyRSA._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._Tag">
@@ -2029,26 +1969,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyRSA.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyRSA.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.PrivateKeyRSA.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -2127,10 +2047,25 @@
             The algorithm used to derrive the encryption key
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyUDF.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyUDF.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyUDF._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyUDF._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._Tag">
@@ -2148,26 +2083,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyUDF.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.PrivateKeyUDF.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.PrivateKeyUDF.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -2238,10 +2153,25 @@
              </summary>
             <summary>Base class for JOSE key agreement result.</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.KeyAgreement.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.KeyAgreement.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreement._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreement._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreement._Tag">
@@ -2259,26 +2189,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreement.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreement.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.KeyAgreement.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -2321,10 +2231,25 @@
             The result
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.KeyAgreementDH.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.KeyAgreementDH.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreementDH._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreementDH._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._Tag">
@@ -2342,26 +2267,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreementDH.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreementDH.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.KeyAgreementDH.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -2413,10 +2318,25 @@
             The result
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Jose.KeyAgreementECDH.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._MetaData">
+        <member name="M:Goedel.Cryptography.Jose.KeyAgreementECDH.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreementECDH._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreementECDH._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._Tag">
@@ -2434,26 +2354,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreementECDH.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyAgreementECDH.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Jose.KeyAgreementECDH.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>

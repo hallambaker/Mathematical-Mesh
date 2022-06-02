@@ -24,7 +24,13 @@
 
 #pragma warning disable IDE1006
 
+using System.Formats.Asn1;
+
 namespace Goedel.Protocol;
+
+
+
+
 
 /// <summary>
 /// Encoding types for unified encoding
@@ -162,7 +168,70 @@ public abstract partial class JsonObject {
             }
         }
 
+    /// <summary>
+    /// Sets the value of the property <paramref name="tag"/> to the value specified
+    /// by <paramref name="value"/>.
+    /// </summary>
+    /// <param name="tag">The string representation of the tag.</param>
+    /// <param name="value">The tokenized value.</param>
+    public virtual void Setter(
+            string tag, TokenValue value) => _Unregistered[tag] = value;
 
+
+    /// <summary>
+    /// Gets the value of the property <paramref name="tag"/>;
+    /// </summary>
+    /// <param name="tag">The string representation of the tag.</param>
+    /// <returns>The value of the property with tag <paramref name="tag"/>.</returns>
+    public virtual TokenValue Getter(
+                string tag) => _unregistered == null ? TokenValue.Unknown :
+                    _unregistered.ContainsKey(tag) ? _unregistered[tag] : TokenValue.Unknown;
+
+    /// <summary>
+    /// Dictionary of unregistered tags encountered when attempting to deserialize a
+    /// document.
+    /// </summary>
+    public Dictionary<string, TokenValue> _Unregistered => _unregistered ??
+        new Dictionary<string, TokenValue>().CacheValue(out _unregistered);
+    protected Dictionary<string, TokenValue> _unregistered;
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static Dictionary<string, Property> _StaticProperties = new() {
+        };
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static Dictionary<string, Property> _StaticAllProperties = new() {
+        };
+
+    /// <summary>
+    /// Combine contents of the properties dictionaries <paramref name="first"/> and
+    /// <paramref name="second"/>.
+    /// </summary>
+    /// <param name="first">The first dictionary to add.</param>
+    /// <param name="second">The second dictionary to add.</param>
+    /// <returns>The combined dictionary.</returns>
+    public static Dictionary<string, Property> Combine(Dictionary<string, Property> first,
+            Dictionary<string, Property> second) {
+        var result = new Dictionary<string, Property>();
+        foreach (var entry in first) {
+            result.Add(entry.Key, entry.Value);
+            }
+        foreach (var entry in second) {
+            result.Add(entry.Key, entry.Value);
+            }
+        return result;
+        }
+
+
+    /// <summary>The properties of the JsonObject instance.</summary>
+    public virtual Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    /// <summary>The properties of the JsonObject instance.</summary>
+    public virtual Dictionary<string, Property> _Properties => _StaticProperties;
+
+    /// <summary>The properties of the parent JsonObject instance.</summary>
+    public virtual Dictionary<string, Property> _ParentProperties => null;
 
     /// <summary>
     /// Base constructor.
@@ -231,14 +300,9 @@ public abstract partial class JsonObject {
     public virtual byte[] GetBytes(bool tag = true,
                 ObjectEncoding objectEncoding = ObjectEncoding.JSON) {
 
-
-
         var _JSONWriter = GetJsonWriter(objectEncoding);
 
-
-
-
-        Serialize(_JSONWriter, tag);
+        Serialize(_JSONWriter, tag);    // Hack: Point back to Serialize...
         return _JSONWriter.GetBytes;
         }
 
@@ -256,34 +320,72 @@ public abstract partial class JsonObject {
         };
 
 
-
     /// <summary>
     /// Serialize to the specified Writer.
     /// </summary>
     /// <param name="writer">Writer to serialize the data to</param>
-    /// <param name="tag">If true, serialization is tagged with the object type.</param>
-    public virtual void Serialize(Writer writer, bool tag = false) {
+    /// <param name="tagged">If true, serialization is tagged with the object type.</param>
+    public virtual void Serialize(Writer writer, bool tagged = false) {
+        //int indent = 1;
         bool first = true;
-        if (tag) {
+        if (tagged) {
             writer.WriteObjectStart();
             writer.WriteToken(_Tag, 0);
             }
+        writer.WriteObjectStart();
+        foreach (var entry in _AllProperties) {
+            var tag = entry.Key;
+            var property = entry.Value;
 
-        Serialize(writer, true, ref first);
+            var value = Getter(tag);
 
-        if (tag) {
+            //Console.WriteLine($"Tag {tag} = {value.IsEmpty}");
+
+
+            if (!value.IsEmpty) {
+                writer.WriteObjectSeparator(ref first);
+                writer.WriteToken(tag, 1);
+                if (value is TokenValueStruct x) {
+                    x.Serialize(writer, property.Tagged);
+                    }
+                else if(value is TokenValueListStruct lx) {
+                    lx.Serialize(writer, property.Tagged);
+                    }
+                else {
+                    value.Serialize(writer);
+                    }
+                }
+            }
+
+        //Serialize(writer, true, ref first);
+        writer.WriteObjectEnd();
+        if (tagged) {
             writer.WriteObjectEnd();
             }
         }
 
-    /// <summary>
-    /// Routine called before serializing the data structure. This may be used to perform
-    /// tasks such as serializing a sub-field to a byte array and/or signing subfields.
-    /// </summary>
-    /// <remarks>There is a potential for conflict between PostDecode and PreEncode, particularly
-    /// when debugging. </remarks>
-    public virtual void PreEncode() {
-        }
+
+
+    ///// <summary>
+    ///// Serialize to the specified Writer.
+    ///// </summary>
+    ///// <param name="writer">Writer to serialize the data to</param>
+    ///// <param name="tag">If true, serialization is tagged with the object type.</param>
+    //public virtual void Serialize(Writer writer, bool tag = false) {
+    //    bool first = true;
+    //    if (tag) {
+    //        writer.WriteObjectStart();
+    //        writer.WriteToken(_Tag, 0);
+    //        }
+
+    //    Serialize(writer, true, ref first);
+
+    //    if (tag) {
+    //        writer.WriteObjectEnd();
+    //        }
+    //    }
+
+
 
     /// <summary>
     /// Routine called afer deserializing the wire form. This may be used to cause deserialization
@@ -294,29 +396,29 @@ public abstract partial class JsonObject {
     public virtual void PostDecode() {
         }
 
-    /// <summary>
-    /// Serialize to the specified Writer.
-    /// </summary>
-    /// <param name="writer">Writer to serialize the data to</param>
-    /// <param name="first">This is the first field in the object being serialized. This 
-    /// value is set to false on exit.</param>
-    /// <param name="wrap">Wrap the objects for formatting.</param>
-    public abstract void Serialize(Writer writer, bool wrap, ref bool first);
+    ///// <summary>
+    ///// Serialize to the specified Writer.
+    ///// </summary>
+    ///// <param name="writer">Writer to serialize the data to</param>
+    ///// <param name="first">This is the first field in the object being serialized. This 
+    ///// value is set to false on exit.</param>
+    ///// <param name="wrap">Wrap the objects for formatting.</param>
+    //public abstract void Serialize(Writer writer, bool wrap, ref bool first);
 
-    /// <summary>
-    /// Serialize to the specified Writer. This is a dummy routine
-    /// whose sole purpose is to prevent 'new' causing issues in derived
-    /// classes.
-    /// </summary>
-    /// <param name="writer">Writer to serialize the data to</param>
-    /// <param name="first">This is the first field in the object being serialized. This 
-    /// value is set to false on exit.</param>
-    /// <param name="wrap">Wrap the objects for formatting.</param>
-    public static void SerializeX(Writer writer, bool wrap, ref bool first) {
-        writer.Keep();
-        wrap.Keep();
-        first.Keep();
-        }
+    ///// <summary>
+    ///// Serialize to the specified Writer. This is a dummy routine
+    ///// whose sole purpose is to prevent 'new' causing issues in derived
+    ///// classes.
+    ///// </summary>
+    ///// <param name="writer">Writer to serialize the data to</param>
+    ///// <param name="first">This is the first field in the object being serialized. This 
+    ///// value is set to false on exit.</param>
+    ///// <param name="wrap">Wrap the objects for formatting.</param>
+    //public static void SerializeX(Writer writer, bool wrap, ref bool first) {
+    //    writer.Keep();
+    //    wrap.Keep();
+    //    first.Keep();
+    //    }
 
     /// <summary>
     /// Factory method to construct object from byte data.
@@ -354,7 +456,7 @@ public abstract partial class JsonObject {
     /// Deserialize the input string to populate this object
     /// </summary>
     /// <param name="input">Input string</param>
-    public virtual void Deserialize(string input) {
+    public void Deserialize(string input) {
         var reader = new StringReader(input);
         var jsonReader = new JsonReader(reader);
         Deserialize(jsonReader);
@@ -373,22 +475,186 @@ public abstract partial class JsonObject {
                 going = false;
                 }
             else {
-                DeserializeToken(jsonReader, Token);
+                DeserializeToken2(jsonReader, Token);
                 going = jsonReader.NextObject();
                 }
             }
         PostDecode();
-
-        // JSONReader.EndObject (); Implicit 
         }
+
+    /// <summary>
+    /// Deserialize the input stream to populate this object having recieved the specified tag.
+    /// </summary>
+    /// <param name="jsonReader">Input data</param>
+    /// <param name="tag">Input tag</param>
+    public void DeserializeToken2(JsonReader jsonReader, string tag) {
+
+        if (_AllProperties.TryGetValue(tag, out var property)) {
+            if (property.Multiple) {
+                if (property.TokenType == typeof(TokenValueListBoolean)) {
+                    bool going = jsonReader.StartArray();
+                    var array = new List<bool?>();
+                    while (going) {
+                        var value = jsonReader.ReadBoolean();
+                        array.Add(value);
+                        going = jsonReader.NextArray();
+                        }
+                    Setter(tag, new TokenValueListBoolean(array));
+                    }
+                else if (property.TokenType == typeof(TokenValueListString)) {
+                    bool going = jsonReader.StartArray();
+                    var array = new List<string?>();
+                    while (going) {
+                        var value = jsonReader.ReadString();
+                        array.Add(value);
+                        going = jsonReader.NextArray();
+                        }
+                    Setter(tag, new TokenValueListString(array));
+                    }
+                else if (property.TokenType == typeof(TokenValueListBinary)) {
+                    bool going = jsonReader.StartArray();
+                    var array = new List<byte[]>();
+                    while (going) {
+                        var value = jsonReader.ReadBinary();
+                        array.Add(value);
+                        going = jsonReader.NextArray();
+                        }
+                    Setter(tag, new TokenValueListBinary(array));
+                    }
+                else if (property.TokenType == typeof(TokenValueListDateTime)) {
+                    bool going = jsonReader.StartArray();
+                    var array = new List<DateTime?>();
+                    while (going) {
+                        var value = jsonReader.ReadDateTime();
+                        array.Add(value);
+                        going = jsonReader.NextArray();
+                        }
+                    Setter(tag, new TokenValueListDateTime(array));
+                    }
+                else if (property.TokenType == typeof(TokenValueListInteger32)) {
+                    bool going = jsonReader.StartArray();
+                    var array = new List<int?>();
+                    while (going) {
+                        var value = jsonReader.ReadInteger32();
+                        array.Add(value);
+                        going = jsonReader.NextArray();
+                        }
+                    Setter(tag, new TokenValueListInteger32(array));
+                    }
+                else if (property.TokenType == typeof(TokenValueListInteger64)) {
+                    bool going = jsonReader.StartArray();
+                    var array = new List<long?>();
+                    while (going) {
+                        var value = jsonReader.ReadInteger64();
+                        array.Add(value);
+                        going = jsonReader.NextArray();
+                        }
+                    Setter(tag, new TokenValueListInteger64(array));
+                    }
+                else if (property.TokenType == typeof(TokenValueListReal32)) {
+                    bool going = jsonReader.StartArray();
+                    var array = new List<float?>();
+                    while (going) {
+                        var value = jsonReader.ReadFloat32();
+                        array.Add(value);
+                        going = jsonReader.NextArray();
+                        }
+                    Setter(tag, new TokenValueListReal32(array));
+                    }
+                else if (property.TokenType == typeof(TokenValueListReal64)) {
+                    bool going = jsonReader.StartArray();
+                    var array = new List<double?>();
+                    while (going) {
+                        var value = jsonReader.ReadFloat64();
+                        array.Add(value);
+                        going = jsonReader.NextArray();
+                        }
+                    Setter(tag, new TokenValueListReal64(array));
+                    }
+                else if (property.TokenType == typeof(TokenValueListStruct)) {
+                    var array = property.Factory() as System.Collections.IList;
+                    bool going = jsonReader.StartArray();
+                    while (going) {
+                        if (property.Tagged) {
+                            var value = jsonReader.ReadTaggedObject(TagDictionary);
+                            array.Add(value);
+                            }
+                        else {
+                            var value = property.IFactory() as JsonObject;
+                            value.Deserialize(jsonReader);
+                            array.Add(value);
+                            }
+                        going = jsonReader.NextArray();
+                        }
+                    Setter(tag, new TokenValueListStructObject(array));
+                    }
+                }
+            else {
+                if (property.TokenType == typeof(TokenValueBoolean)) {
+                    var value = jsonReader.ReadBoolean();
+                    Setter(tag, new TokenValueBoolean(value));
+                    }
+                else if (property.TokenType == typeof(TokenValueString)) {
+                    var value = jsonReader.ReadString();
+                    Setter(tag, new TokenValueString(value));
+                    }
+                else if (property.TokenType == typeof(TokenValueBinary)) {
+                    var value = jsonReader.ReadBinary();
+                    Setter(tag, new TokenValueBinary(value));
+                    }
+                else if (property.TokenType == typeof(TokenValueDateTime)) {
+                    var value = jsonReader.ReadDateTime();
+                    Setter(tag, new TokenValueDateTime(value));
+                    }
+                else if (property.TokenType == typeof(TokenValueInteger32)) {
+                    var value = jsonReader.ReadInteger32();
+                    Setter(tag, new TokenValueInteger32(value));
+                    }
+                else if (property.TokenType == typeof(TokenValueInteger64)) {
+                    var value = jsonReader.ReadInteger64();
+                    Setter(tag, new TokenValueInteger64(value));
+                    }
+                else if (property.TokenType == typeof(TokenValueReal32)) {
+                    var value = jsonReader.ReadFloat32();
+                    Setter(tag, new TokenValueReal32(value));
+                    }
+                else if (property.TokenType == typeof(TokenValueReal64)) {
+                    var value = jsonReader.ReadFloat64();
+                    Setter(tag, new TokenValueReal64(value));
+                    }
+                else if (property.TokenType == typeof(TokenValueStruct)) {
+                    if (property.Tagged) {
+                        var value = jsonReader.ReadTaggedObject(TagDictionary);
+                        Setter(tag, new TokenValueStructObject(value));
+                        }
+                    else {
+                        var value = property.Factory() as JsonObject;
+                        value.Deserialize(jsonReader);
+                        Setter(tag, new TokenValueStructObject(value));
+                        }
+                    }
+                }
+            }
+        else {
+            throw new UnknownTag(); // NYI: should modify this to allow arbitrary values
+            }
+
+        }
+
+    public void Deserialize(JsonReader jsonReader, string tag, Property property) {
+
+
+
+        }
+
 
 
     /// <summary>
     /// Deserialize the input stream to populate this object having recieved the specified tag.
     /// </summary>
     /// <param name="jsonReader">Input data</param>
-    /// <param name="Tag">Input tag</param>
-    public virtual void DeserializeToken(JsonReader jsonReader, string Tag) {
+    /// <param name="tag">Input tag</param>
+    public virtual void DeserializeToken(JsonReader jsonReader, string tag) {
         }
 
 

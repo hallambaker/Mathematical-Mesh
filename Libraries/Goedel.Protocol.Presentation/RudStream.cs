@@ -211,7 +211,10 @@ public class RudStream {
 
         var span = PrePost(tag, request);
 
-
+        var spantxt = span.ToUTF8();
+        /*
+         * { "Hello": {}}
+         */
         //Screen.WriteLine($"Client {Protocol} - Post data to {RemoteStreamId?.ToStringBase16()}");
         var packet = await PostWeb(span);
 
@@ -480,9 +483,8 @@ public class RudStream {
         var writer = JsonObject.GetJsonWriter(RudConnection.ObjectEncoding, stream);
         writer.WriteObjectStart();
 
-        bool first = true;
         writer.WriteToken(tag, 0);
-        request.Serialize(writer, true, ref first);
+        request.Serialize(writer, false);
 
         writer.WriteObjectEnd();
 

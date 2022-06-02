@@ -573,7 +573,7 @@ public partial class ContextUser : ContextAccount {
     ///<inheritdoc/>
     public override int Sync() {
         var statusRequest = new StatusRequest() {
-            CatalogedDeviceDigest = CatalogedMachine?.CatalogedDeviceDigest
+            CatalogedDeviceDigest = CatalogedMachine?.CatalogedDeviceDigest ?? ""
             };
         return Sync(statusRequest);
 

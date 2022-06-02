@@ -52,6 +52,16 @@ public abstract class Reader : Disposable {
     /// <returns>Value read</returns>
     abstract public long ReadInteger64();
 
+
+    /// <summary>Read Integer32</summary>
+    /// <returns>Value read</returns>
+    virtual public int ReadFloat32() => throw new NYI();
+
+    /// <summary>Read Integer64</summary>
+    /// <returns>Value read</returns>
+    virtual public double ReadFloat64() => throw new NYI();
+
+
     /// <summary>Read boolen value</summary>
     /// <returns>Value read</returns>
     abstract public bool ReadBoolean();
@@ -121,11 +131,11 @@ public abstract class Writer : Disposable {
 
     /// <summary>Write integer value token</summary>
     /// <param name="Data">Value to write</param>
-    abstract public void WriteFloat32(float Data);
+    abstract public void WriteFloat32(float? Data);
 
     /// <summary>Write integer value token</summary>
     /// <param name="Data">Value to write</param>
-    abstract public void WriteFloat64(double Data);
+    abstract public void WriteFloat64(double? Data);
 
     /// <summary>Write integer value token</summary>
     /// <param name="Data">Value to write</param>

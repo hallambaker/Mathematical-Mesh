@@ -25,6 +25,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Goedel.Protocol;
+using Goedel.Protocol.Test;
 using Goedel.Test;
 using Goedel.Utilities;
 
@@ -36,7 +37,7 @@ namespace Goedel.XUnit;
 
 public partial class GoedelProtocol {
 
-    public static GoedelProtocol Test => new();
+    public static GoedelProtocol Test() => new();
 
 
 
@@ -108,6 +109,11 @@ public partial class GoedelProtocol {
                 DataEncoding DataEncoding,
                 JSONReaderFactoryDelegate ReaderFactory) {
         var FirstJSON = First.GetBytes(DataEncoding, true);
+
+
+        var asString = FirstJSON.ToUTF8();
+        Console.WriteLine(asString);
+
         var Second = MultiInstance.FromJson(ReaderFactory(FirstJSON));
         CheckEqual(First, Second);
         }
@@ -147,8 +153,8 @@ public partial class GoedelProtocol {
         FieldDateTime = DateTime.Now,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 },
-        ArrayBoolean = new List<bool> { true, false, true, false },
-        ArrayInteger = new List<int> { 0, 2, 4, 8 },
+        ArrayBoolean = new List<bool?> { true, false, true, false },
+        ArrayInteger = new List<int?> { 0, 2, 4, 8 },
         ArrayDateTime = new List<DateTime?> { DateTime.Now },
         ArrayString = new List<string> { "Alice", "Bob", "Carol", },
         ArrayBinary = new List<byte[]> { "One".ToBytes(), "Two".ToBytes() }
@@ -176,7 +182,7 @@ public partial class GoedelProtocol {
         FieldDateTime = DateTime.Now,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 },
-        ArrayBoolean = new List<bool> { true, false, true, false }
+        ArrayBoolean = new List<bool?> { true, false, true, false }
         };
 
 
@@ -186,8 +192,8 @@ public partial class GoedelProtocol {
         FieldDateTime = DateTime.Now,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 },
-        ArrayBoolean = new List<bool> { true, false, true, false },
-        ArrayInteger = new List<int> { 0, 2, 4, 8 },
+        ArrayBoolean = new List<bool?> { true, false, true, false },
+        ArrayInteger = new List<int?> { 0, 2, 4, 8 },
         ArrayDateTime = new List<DateTime?> { DateTime.Now },
         ArrayString = new List<string> { "Alice", "Bob", "Carol", },
         ArrayBinary = new List<byte[]> { "One".ToBytes(), "Two".ToBytes() },

@@ -48,7 +48,15 @@ partial class Program {
 
 
     static void Main() {
-        //Logger.LogInformation ("Start test {time}", DateTime.Now);
+
+
+
+
+
+        Logger.LogInformation("Start test {time}", DateTime.Now);
+
+
+        GoedelProtocol.Test().TestStruct();
 
         //TestService.Test().MeshCatalogGroup();
         //ShellTests.Test().TestAccountDelete();
@@ -63,12 +71,15 @@ partial class Program {
         //ShellTestsAdmin.Test().TestMessageGroup();
 
 
-        //TestService.Test().MeshCallsign();
-        TestService.Test().MeshCarnet();
+        //TestPersist.Test().TestPersistenceStoreAll();
+        //TestService.Test().MeshDeviceMail();
+
+
+
         //ShellTestsAdmin.Test().TestProfileContact();
 
 
-
+        //ShellTestsAdmin.Test().TestAccount();
 
         //RegistrationTests.Test().CallsignBind();
 
@@ -173,7 +184,6 @@ partial class Program {
 
 
 
-        //ShellTestsAdmin.Test().TestHello();
         //ShellTestsRud.Test().TestHello();
 
 

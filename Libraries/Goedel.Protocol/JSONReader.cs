@@ -25,6 +25,8 @@ using System.Numerics;
 
 namespace Goedel.Protocol;
 
+
+
 /// <summary>
 /// Delegate method for creating structured readers
 /// </summary>
@@ -205,56 +207,6 @@ public partial class JsonReader : Reader {
             Action.Ignore           // 27=18
             };
 
-    /// <summary>Tokens to return.</summary>
-    public enum Token {
-        /// <summary>The token is invalid</summary>
-        Invalid,
-        /// <summary>Start object token '{' </summary>
-        StartObject,
-        /// <summary>End object token '}' </summary>
-        EndObject,
-        /// <summary>Start array token '{'</summary>
-        StartArray,
-        /// <summary>End array token '}'</summary>
-        EndArray,
-        /// <summary>Colon</summary>
-        Colon,
-        /// <summary>Comma</summary>
-        Comma,
-        /// <summary>String (UTF8)</summary>
-        String,
-        /// <summary>String Tag(UTF8)</summary>
-        Tag,
-
-        /// <summary>Number</summary>
-        Number,
-
-        /// <summary>An Integer Number</summary>
-        Integer,
-        /// <summary>A Real32 Number</summary>
-        Real32,
-        /// <summary>A Real64 Number</summary>
-        Real64,
-
-        /// <summary>A string litteral, for internal use.</summary>
-        Litteral,
-        /// <summary>The string litteral true</summary>
-        True,
-        /// <summary>The string litteral false</summary>
-        False,
-        /// <summary>The string litteral null</summary>
-        Null,
-        /// <summary>End of record</summary>
-        EndRecord,
-        /// <summary>Binary data</summary>
-        Binary,
-        /// <summary>JSON-BCD extended tag, for internal use</summary>
-        JSONBCD,
-        /// <summary>Byte Order Mark</summary>
-        BOM,
-        /// <summary></summary>
-        Empty
-        }
 
     /// <summary>Tokens to be returned if the FSR stops in the specified state.</summary>
     protected Token[] Tokens = {

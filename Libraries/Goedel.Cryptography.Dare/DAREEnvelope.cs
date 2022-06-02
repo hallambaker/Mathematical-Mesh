@@ -247,30 +247,65 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
 
     #region // Serialization overrides
 
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-    public override void Serialize(Writer writer,
-        bool wrap,
-        ref bool first) => SerializeX(writer, wrap, ref first);
+    ///<inheritdoc/>
+    public override void Setter(
+            string tag, TokenValue value) {
+        switch (tag) {
+            case "Header": {
+                if (value is TokenValueStruct<DareHeader> vvalue) {
+                    Header = vvalue.Value;
+                    }
+                break;
+                }
+            case "Body": {
+                if (value is TokenValueBinary vvalue) {
+                    Body = vvalue.Value;
+                    }
+                break;
+                }
+            case "Trailer": {
+                if (value is TokenValueStruct<DareTrailer> vvalue) {
+                    Trailer = vvalue.Value;
+                    }
+                break;
+                }
 
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-    public new void SerializeX(Writer writer,
-                bool wrap,
-                ref bool first) {
-        first = false;
+
+            default: {
+                base.Setter(tag, value);
+                break;
+                }
+            }
+        }
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+            case "Header": {
+                return new TokenValueStruct<DareHeader>(Header);
+                }
+            case "Body": {
+                return new TokenValueBinary(Body);
+                }
+            case "Trailer": {
+                return new TokenValueStruct<DareTrailer>(Trailer);
+                }
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+    ///<inheritdoc/>
+    public override void Serialize(Writer writer,
+                bool tagged=false) {
+        var first = false;
+        if (tagged) {
+            writer.WriteObjectStart();
+            writer.WriteToken(_Tag, 0);
+            }
+
         writer.WriteArrayStart();
         if (Header != null) {
             Header.Serialize(writer, false);
@@ -286,6 +321,9 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             Trailer.Serialize(writer, false);
             }
         writer.WriteArrayEnd();
+        if (tagged) {
+            writer.WriteObjectEnd();
+            }
         }
 
 

@@ -98,19 +98,23 @@ public class JsonWriter : Writer {
 
     /// <summary>Write 32 bit integer.</summary>
     /// <param name="data">Value to write</param>
-    public override void WriteInteger32(int? data) => Output.Write(data.ToString());
+    public override void WriteInteger32(int? data) => Output.Write(
+            data == null ? "null" : data.ToString());
 
     /// <summary>Write 64 bit integer</summary>
     /// <param name="data">Value to write</param>
-    public override void WriteInteger64(long? data) => Output.Write(data.ToString());
+    public override void WriteInteger64(long? data) => Output.Write(
+            data == null ? "null" : data.ToString());
 
     /// <summary>Write float32</summary>
     /// <param name="data">Value to write</param>
-    public override void WriteFloat32(float data) => Output.Write(data.ToString());
+    public override void WriteFloat32(float? data) => Output.Write(
+            data == null ? "null" : data.ToString());
 
     /// <summary>Write float64</summary>
     /// <param name="data">Value to write</param>
-    public override void WriteFloat64(double data) => Output.Write(data.ToString());
+    public override void WriteFloat64(double? data) => Output.Write(
+            data == null ? "null" : data.ToString());
 
     /// <summary>Write boolean.</summary>
     /// <param name="data">Value to write</param>

@@ -104,10 +104,25 @@
             The profile status. Valid values are "Pending", "Connected", "Blocked"
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountEntry._MetaDataParent">
+        <member name="M:Goedel.Mesh.Server.AccountEntry.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountEntry._MetaData">
+        <member name="M:Goedel.Mesh.Server.AccountEntry.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountEntry._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountEntry._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Server.AccountEntry._Tag">
@@ -125,26 +140,6 @@
             Factory method. Throws exception as this is an abstract class.
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountEntry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountEntry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -204,10 +199,25 @@
             discover the host and encrypt data to it.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser._MetaDataParent">
+        <member name="M:Goedel.Mesh.Server.AccountUser.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser._MetaData">
+        <member name="M:Goedel.Mesh.Server.AccountUser.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountUser._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountUser._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Server.AccountUser._Tag">
@@ -225,26 +235,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountUser.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>

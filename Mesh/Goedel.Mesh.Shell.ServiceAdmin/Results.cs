@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 27-May-22 7:23:50 PM
+//  This file was automatically generated at 02-Jun-22 4:54:19 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.971
+//  Generator:  protogen version 3.0.0.1009
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -110,15 +110,52 @@ public abstract partial class ServiceAdminShellResult : global::Goedel.Protocol.
 	/// </summary>
 public partial class Result : ShellResult {
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, ShellResult._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -135,37 +172,6 @@ public partial class Result : ShellResult {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Result();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((ShellResult)this).SerializeX(_writer, false, ref _first);
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -210,15 +216,52 @@ public partial class Result : ShellResult {
 	/// </summary>
 public partial class ResultServiceConfiguration : Result {
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Result._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -235,37 +278,6 @@ public partial class ResultServiceConfiguration : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultServiceConfiguration();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((Result)this).SerializeX(_writer, false, ref _first);
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -342,39 +354,132 @@ public partial class ResultAbout : Result {
 
 	public virtual string						Build  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "DirectoryKeys", new MetaDataString(
-				delegate (string _a) {  DirectoryKeys = _a; },
-				() => DirectoryKeys) } ,
-			{ "DirectoryMesh", new MetaDataString(
-				delegate (string _a) {  DirectoryMesh = _a; },
-				() => DirectoryMesh) } ,
-			{ "AssemblyTitle", new MetaDataString(
-				delegate (string _a) {  AssemblyTitle = _a; },
-				() => AssemblyTitle) } ,
-			{ "AssemblyDescription", new MetaDataString(
-				delegate (string _a) {  AssemblyDescription = _a; },
-				() => AssemblyDescription) } ,
-			{ "AssemblyCopyright", new MetaDataString(
-				delegate (string _a) {  AssemblyCopyright = _a; },
-				() => AssemblyCopyright) } ,
-			{ "AssemblyCompany", new MetaDataString(
-				delegate (string _a) {  AssemblyCompany = _a; },
-				() => AssemblyCompany) } ,
-			{ "AssemblyVersion", new MetaDataString(
-				delegate (string _a) {  AssemblyVersion = _a; },
-				() => AssemblyVersion) } ,
-			{ "Build", new MetaDataString(
-				delegate (string _a) {  Build = _a; },
-				() => Build) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "DirectoryKeys" : {
+				if (value is TokenValueString vvalue) {
+					DirectoryKeys = vvalue.Value;
+					}
+				break;
+				}
+			case "DirectoryMesh" : {
+				if (value is TokenValueString vvalue) {
+					DirectoryMesh = vvalue.Value;
+					}
+				break;
+				}
+			case "AssemblyTitle" : {
+				if (value is TokenValueString vvalue) {
+					AssemblyTitle = vvalue.Value;
+					}
+				break;
+				}
+			case "AssemblyDescription" : {
+				if (value is TokenValueString vvalue) {
+					AssemblyDescription = vvalue.Value;
+					}
+				break;
+				}
+			case "AssemblyCopyright" : {
+				if (value is TokenValueString vvalue) {
+					AssemblyCopyright = vvalue.Value;
+					}
+				break;
+				}
+			case "AssemblyCompany" : {
+				if (value is TokenValueString vvalue) {
+					AssemblyCompany = vvalue.Value;
+					}
+				break;
+				}
+			case "AssemblyVersion" : {
+				if (value is TokenValueString vvalue) {
+					AssemblyVersion = vvalue.Value;
+					}
+				break;
+				}
+			case "Build" : {
+				if (value is TokenValueString vvalue) {
+					Build = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "DirectoryKeys" : {
+				return new TokenValueString (DirectoryKeys);
+				}
+			case "DirectoryMesh" : {
+				return new TokenValueString (DirectoryMesh);
+				}
+			case "AssemblyTitle" : {
+				return new TokenValueString (AssemblyTitle);
+				}
+			case "AssemblyDescription" : {
+				return new TokenValueString (AssemblyDescription);
+				}
+			case "AssemblyCopyright" : {
+				return new TokenValueString (AssemblyCopyright);
+				}
+			case "AssemblyCompany" : {
+				return new TokenValueString (AssemblyCompany);
+				}
+			case "AssemblyVersion" : {
+				return new TokenValueString (AssemblyVersion);
+				}
+			case "Build" : {
+				return new TokenValueString (Build);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "DirectoryKeys", new Property (typeof(TokenValueString), false)} ,
+			{ "DirectoryMesh", new Property (typeof(TokenValueString), false)} ,
+			{ "AssemblyTitle", new Property (typeof(TokenValueString), false)} ,
+			{ "AssemblyDescription", new Property (typeof(TokenValueString), false)} ,
+			{ "AssemblyCopyright", new Property (typeof(TokenValueString), false)} ,
+			{ "AssemblyCompany", new Property (typeof(TokenValueString), false)} ,
+			{ "AssemblyVersion", new Property (typeof(TokenValueString), false)} ,
+			{ "Build", new Property (typeof(TokenValueString), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Result._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -391,77 +496,6 @@ public partial class ResultAbout : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultAbout();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((Result)this).SerializeX(_writer, false, ref _first);
-		if (DirectoryKeys != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("DirectoryKeys", 1);
-				_writer.WriteString (DirectoryKeys);
-			}
-		if (DirectoryMesh != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("DirectoryMesh", 1);
-				_writer.WriteString (DirectoryMesh);
-			}
-		if (AssemblyTitle != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AssemblyTitle", 1);
-				_writer.WriteString (AssemblyTitle);
-			}
-		if (AssemblyDescription != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AssemblyDescription", 1);
-				_writer.WriteString (AssemblyDescription);
-			}
-		if (AssemblyCopyright != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AssemblyCopyright", 1);
-				_writer.WriteString (AssemblyCopyright);
-			}
-		if (AssemblyCompany != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AssemblyCompany", 1);
-				_writer.WriteString (AssemblyCompany);
-			}
-		if (AssemblyVersion != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("AssemblyVersion", 1);
-				_writer.WriteString (AssemblyVersion);
-			}
-		if (Build != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Build", 1);
-				_writer.WriteString (Build);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream

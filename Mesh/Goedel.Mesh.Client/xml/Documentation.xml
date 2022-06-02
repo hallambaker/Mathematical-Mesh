@@ -80,10 +80,25 @@
             discover the host and encrypt data to it.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedMachine._MetaDataParent">
+        <member name="M:Goedel.Mesh.Client.CatalogedMachine.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedMachine._MetaData">
+        <member name="M:Goedel.Mesh.Client.CatalogedMachine.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedMachine._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedMachine._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedMachine._Tag">
@@ -101,26 +116,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedMachine.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedMachine.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.CatalogedMachine.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -146,10 +141,25 @@
         <member name="P:Goedel.Mesh.Client.CatalogedStandard.ProfileDevice">
             <summary>The device profile (from <see cref="T:Goedel.Mesh.CatalogedDevice"/>)</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedStandard._MetaDataParent">
+        <member name="M:Goedel.Mesh.Client.CatalogedStandard.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedStandard._MetaData">
+        <member name="M:Goedel.Mesh.Client.CatalogedStandard.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedStandard._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedStandard._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedStandard._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedStandard._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedStandard._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedStandard._Tag">
@@ -167,26 +177,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedStandard.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedStandard.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.CatalogedStandard.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -241,10 +231,25 @@
             The account at which the request is pending.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPending._MetaDataParent">
+        <member name="M:Goedel.Mesh.Client.CatalogedPending.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPending._MetaData">
+        <member name="M:Goedel.Mesh.Client.CatalogedPending.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedPending._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedPending._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPending._Tag">
@@ -262,26 +267,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPending.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPending.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.CatalogedPending.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -346,10 +331,25 @@
             Authenticator key used to authenticate claim to the device.	
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._MetaDataParent">
+        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._MetaData">
+        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedPreconfigured._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedPreconfigured._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._Tag">
@@ -367,26 +367,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -2833,10 +2813,25 @@
             Specifies the type of service 
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedService._MetaDataParent">
+        <member name="M:Goedel.Mesh.Client.CatalogedService.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedService._MetaData">
+        <member name="M:Goedel.Mesh.Client.CatalogedService.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedService._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedService._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedService._Tag">
@@ -2854,26 +2849,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedService.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedService.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.CatalogedService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>

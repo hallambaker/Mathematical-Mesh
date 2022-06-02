@@ -20,9 +20,6 @@
 //  THE SOFTWARE.
 #endregion
 
-
-using System.Xml.Linq;
-
 namespace Goedel.Protocol;
 
 /// <summary>
@@ -36,56 +33,56 @@ public class JsonBWriter : JsonWriter {
 
 
     /// <summary>
-    /// Create a new writer instance with the output <paramref name="Output"/>. 
-    /// If <paramref name="Output"/> is null, a memory stream is created and
+    /// Create a new writer instance with the output <paramref name="output"/>. 
+    /// If <paramref name="output"/> is null, a memory stream is created and
     /// used as the output.
     /// </summary>
-    /// <param name="Output">Output buffer</param> 
-    public JsonBWriter(Stream Output = null) => this.Output = Output ?? new MemoryStream();
+    /// <param name="output">Output buffer</param> 
+    public JsonBWriter(Stream output = null) => this.Output = output ?? new MemoryStream();
 
 
     /// <summary>
     /// Write out a Tag-Length value using the shortest possible production
     /// </summary>
-    /// <param name="Code">Base code.</param>
-    /// <param name="Length">Length of data to follow.</param>
-    public void WriteTag(byte Code, long Length) => WriteTag(Output, Code, Length);
+    /// <param name="code">Base code.</param>
+    /// <param name="length">Length of data to follow.</param>
+    public void WriteTag(byte code, long length) => WriteTag(Output, code, length);
 
 
     /// <summary>
     /// Write out a Tag-Length value using the shortest possible production
-    /// to <paramref name="Output"/>.
+    /// to <paramref name="output"/>.
     /// </summary>
-    /// <param name="Output">The output stream to write to.</param>
-    /// <param name="Code">Base code.</param>
-    /// <param name="Length">Length of data to follow.</param>
-    public static void WriteTag(Stream Output, byte Code, long Length) {
-        if (Length < 0x100) {
-            Output.Write((byte)(Code + JSONBCD.Length8));
-            Output.Write((byte)(Length & 0xff));
+    /// <param name="output">The output stream to write to.</param>
+    /// <param name="code">Base code.</param>
+    /// <param name="length">Length of data to follow.</param>
+    public static void WriteTag(Stream output, byte code, long length) {
+        if (length < 0x100) {
+            output.Write((byte)(code + JSONBCD.Length8));
+            output.Write((byte)(length & 0xff));
             }
-        else if (Length < 0x10000) {
-            Output.Write((byte)(Code + JSONBCD.Length16));
-            Output.Write((byte)((Length >> 8) & 0xff));
-            Output.Write((byte)(Length & 0xff));
+        else if (length < 0x10000) {
+            output.Write((byte)(code + JSONBCD.Length16));
+            output.Write((byte)((length >> 8) & 0xff));
+            output.Write((byte)(length & 0xff));
             }
-        else if (Length < 0x100000000) {
-            Output.Write((byte)(Code + JSONBCD.Length32));
-            Output.Write((byte)((Length >> 24) & 0xff));
-            Output.Write((byte)((Length >> 16) & 0xff));
-            Output.Write((byte)((Length >> 8) & 0xff));
-            Output.Write((byte)(Length & 0xff));
+        else if (length < 0x100000000) {
+            output.Write((byte)(code + JSONBCD.Length32));
+            output.Write((byte)((length >> 24) & 0xff));
+            output.Write((byte)((length >> 16) & 0xff));
+            output.Write((byte)((length >> 8) & 0xff));
+            output.Write((byte)(length & 0xff));
             }
         else {
-            Output.Write((byte)(Code + JSONBCD.Length64));
-            Output.Write((byte)((Length >> 56) & 0xff));
-            Output.Write((byte)((Length >> 48) & 0xff));
-            Output.Write((byte)((Length >> 40) & 0xff));
-            Output.Write((byte)((Length >> 32) & 0xff));
-            Output.Write((byte)((Length >> 24) & 0xff));
-            Output.Write((byte)((Length >> 16) & 0xff));
-            Output.Write((byte)((Length >> 8) & 0xff));
-            Output.Write((byte)(Length & 0xff));
+            output.Write((byte)(code + JSONBCD.Length64));
+            output.Write((byte)((length >> 56) & 0xff));
+            output.Write((byte)((length >> 48) & 0xff));
+            output.Write((byte)((length >> 40) & 0xff));
+            output.Write((byte)((length >> 32) & 0xff));
+            output.Write((byte)((length >> 24) & 0xff));
+            output.Write((byte)((length >> 16) & 0xff));
+            output.Write((byte)((length >> 8) & 0xff));
+            output.Write((byte)(length & 0xff));
             }
         }
 
@@ -109,36 +106,38 @@ public class JsonBWriter : JsonWriter {
     /// <summary>
     /// Write Tag to the stream
     /// </summary>
-    /// <param name="Tag">Tag text.</param>
-    /// <param name="IndentIn">Current indent level.</param>
-    public override void WriteToken(string Tag, int IndentIn) {
-        WriteTag(JSONBCD.TagString, Tag.Length);
-        Output.Write(Tag);
+    /// <param name="tag">Tag text.</param>
+    /// <param name="indentIn">Current indent level.</param>
+    public override void WriteToken(string tag, int indentIn) {
+        WriteTag(JSONBCD.TagString, tag.Length);
+        Output.Write(tag);
         }
 
     /// <summary>Write 32 bit integer.</summary>
-    /// <param name="Data">Value to write</param>
-    public override void WriteInteger32(int? Data) => WriteInteger(Data);
+    /// <param name="data">Value to write</param>
+    public override void WriteInteger32(int? data) => WriteInteger(data);
 
     /// <summary>Write 64 bit integer.</summary>
-    /// <param name="Data">Value to write</param>
-    public override void WriteInteger64(long? Data) => WriteInteger(Data);
+    /// <param name="data">Value to write</param>
+    public override void WriteInteger64(long? data) => WriteInteger(data);
 
     /// <summary>Write float32</summary>
-    /// <param name="Data">Value to write</param>
-    public override void WriteFloat32(float Data) => Output.Write(Data.ToString());
+    /// <param name="data">Value to write</param>
+    public override void WriteFloat32(float? data) => Output.Write(
+            data == null ? "null" : data.ToString());
 
     /// <summary>Write float64</summary>
-    /// <param name="Data">Value to write</param>
-    public override void WriteFloat64(double Data) => Output.Write(Data.ToString());
+    /// <param name="data">Value to write</param>
+    public override void WriteFloat64(double? data) => Output.Write(
+            data == null ? "null" : data.ToString());
 
     /// <summary>Write boolean.</summary>
-    /// <param name="Data">Value to write</param>
-    public override void WriteBoolean(bool? Data) {
-        if (Data == true) {
+    /// <param name="data">Value to write</param>
+    public override void WriteBoolean(bool? data) {
+        if (data == true) {
             Output.Write(JSONBCD.True);
             }
-        else if (Data == false) {
+        else if (data == false) {
             Output.Write(JSONBCD.False);
             }
         else {
@@ -146,23 +145,23 @@ public class JsonBWriter : JsonWriter {
             }
         }
     /// <summary>Write string without escaping.</summary>
-    /// <param name="Data">Value to write</param>
-    public override void WriteString(string Data) {
-        WriteTag(JSONBCD.StringTerm, Data.Length);
-        Output.Write(Data);
+    /// <param name="data">Value to write</param>
+    public override void WriteString(string data) {
+        WriteTag(JSONBCD.StringTerm, data.Length);
+        Output.Write(data);
         }
 
 
     /// <summary>Write binary data as length-data item.</summary>
     /// <param name="buffer">Value to write</param>
-    /// <param name="Stream">The output stream.</param>
+    /// <param name="stream">The output stream.</param>
     /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
     /// at which to begin copying bytes to the current stream.</param>
     /// <param name="count">The number of bytes to be written to the current stream.</param> 
-    public static void WriteBinary(Stream Stream, byte[] buffer, int offset = 0, int count = -1) {
+    public static void WriteBinary(Stream stream, byte[] buffer, int offset = 0, int count = -1) {
         var Length = count < 0 ? buffer.Length : count;
-        WriteTag(Stream, JSONBCD.DataTerm, Length);
-        Stream.Write(buffer, offset, Length);
+        WriteTag(stream, JSONBCD.DataTerm, Length);
+        stream.Write(buffer, offset, Length);
         }
 
     /// <summary>Write binary data as length-data item.</summary>
@@ -179,23 +178,23 @@ public class JsonBWriter : JsonWriter {
 
     long PartLength = 0;
     /// <summary>Write binary data as length-data item.</summary>
-    /// <param name="Length">The length of the chunk to be written.</param>
-    /// <param name="Terminal">If true, this is the last chunk in a sequence.</param>
-    public override void WriteBinaryBegin(long Length, bool Terminal = true) {
-        WriteTag(Terminal ? JSONBCD.DataTerm : JSONBCD.DataChunk, Length);
-        PartLength = Length;
+    /// <param name="length">The length of the chunk to be written.</param>
+    /// <param name="terminal">If true, this is the last chunk in a sequence.</param>
+    public override void WriteBinaryBegin(long length, bool terminal = true) {
+        WriteTag(terminal ? JSONBCD.DataTerm : JSONBCD.DataChunk, length);
+        PartLength = length;
         }
 
     /// <summary>Write binary data as length-data item.</summary>
-    /// <param name="Data">Value to write</param>
-    /// <param name="First">The index position of the first byte in the input data to process</param>
-    /// <param name="Length">The number of bytes to process</param>
-    public override void WriteBinaryPart(byte[] Data, long First = 0, long Length = -1) {
-        Length = Length < 0 ? Data.Length : Length;
+    /// <param name="data">Value to write</param>
+    /// <param name="first">The index position of the first byte in the input data to process</param>
+    /// <param name="length">The number of bytes to process</param>
+    public override void WriteBinaryPart(byte[] data, long first = 0, long length = -1) {
+        length = length < 0 ? data.Length : length;
 
-        PartLength -= Length;
+        PartLength -= length;
         Assert.AssertTrue(PartLength >= 0, BadPartLength.Throw);
-        Output.Write(Data, (int)First, (int)Length);
+        Output.Write(data, (int)first, (int)length);
         }
 
 

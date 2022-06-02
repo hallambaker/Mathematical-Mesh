@@ -24,7 +24,11 @@ LinkFiles = \
     Goedel.Test.Core.dll\
     Goedel.Test.dll
 
-ToolTargets = 
+ToolTargets = \
+	TestExample.cs
+TestExample.cs : TestExample.protocol 
+	protogen TestExample.protocol  /cs  TestExample.cs
+
 
 
 prebuildRecurse : 

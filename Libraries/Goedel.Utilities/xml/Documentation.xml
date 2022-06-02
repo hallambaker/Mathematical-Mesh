@@ -1509,6 +1509,18 @@
             <param name="Discovery">For a network service, specifies the DNS discovery prefix.</param>
             <param name="WellKnown">For a network service, specifies the HTTP .well-known prefix</param>
         </member>
+        <member name="P:Goedel.Utilities.ConfigurationEntry.Name">
+            <summary>The name used to describe the configuration in the options file.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.ConfigurationEntry.Type">
+            <summary>The type to which the configuration data is bound.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.ConfigurationEntry.Discovery">
+            <summary>For a network service, specifies the DNS discovery prefix.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.ConfigurationEntry.WellKnown">
+            <summary>For a network service, specifies the HTTP .well-known prefix</summary>
+        </member>
         <member name="T:Goedel.Utilities.ConsoleLoggerProvider">
             <summary>
             Console logger provider.

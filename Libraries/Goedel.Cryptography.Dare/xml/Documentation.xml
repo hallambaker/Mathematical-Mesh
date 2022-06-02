@@ -175,10 +175,25 @@
             to be found
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.SequenceInfo.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.SequenceInfo.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceInfo._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceInfo._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceInfo._Tag">
@@ -196,26 +211,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceInfo.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceInfo.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceInfo.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -257,10 +252,25 @@
             List of container position entries
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndex.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndex.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceIndex._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceIndex._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndex._Tag">
@@ -278,26 +288,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndex.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndex.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceIndex.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -340,10 +330,25 @@
             Unique object identifier
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.IndexPosition._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.IndexPosition.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.IndexPosition._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.IndexPosition.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.IndexPosition._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.IndexPosition._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.IndexPosition._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.IndexPosition._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.IndexPosition._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.IndexPosition._Tag">
@@ -361,26 +366,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.IndexPosition.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.IndexPosition.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.IndexPosition.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -413,10 +398,25 @@
             The value corresponding to the key
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.KeyValue._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.KeyValue.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.KeyValue._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.KeyValue.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.KeyValue._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.KeyValue._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.KeyValue._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.KeyValue._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.KeyValue._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.KeyValue._Tag">
@@ -434,26 +434,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.KeyValue.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.KeyValue.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.KeyValue.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -595,8 +575,8 @@
         <member name="P:Goedel.Cryptography.Dare.DareHeader.ContentType">
             <summary>The content type.</summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareHeader.PreEncode">
-            <summary>Routine called before serialization.</summary>
+        <member name="M:Goedel.Cryptography.Dare.DareHeader.Serialize(Goedel.Protocol.Writer,System.Boolean)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareHeader.PostDecode">
             <summary>Routine called after serialization.</summary>
@@ -747,11 +727,6 @@
             is application specific.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareHeader.Signers">
-             <summary>
-            A list of 'presignature'
-             </summary>
-        </member>
         <member name="P:Goedel.Cryptography.Dare.DareHeader.Recipients">
              <summary>
             A list of recipient key exchange information blocks.
@@ -784,10 +759,25 @@
             Date on which the envelope was received.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareHeader._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.DareHeader.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareHeader._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.DareHeader.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareHeader._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareHeader._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareHeader._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareHeader._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareHeader._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareHeader._Tag">
@@ -805,26 +795,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareHeader.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareHeader.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareHeader.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -2569,10 +2539,25 @@
             The per-recipient key exchange data.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareRecipient._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.DareRecipient.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareRecipient._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.DareRecipient.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareRecipient._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareRecipient._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareRecipient._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareRecipient._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareRecipient._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareRecipient._Tag">
@@ -2590,26 +2575,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareRecipient.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareRecipient.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareRecipient.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -2758,25 +2723,14 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Serialize(Goedel.Protocol.Writer,System.Boolean)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Deserialize(Goedel.Protocol.JsonReader)">
             <summary>
@@ -3166,10 +3120,25 @@
             If present, contains the Binary Merkle Tree digest value.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareTrailer._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.DareTrailer.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareTrailer._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.DareTrailer.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareTrailer._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareTrailer._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareTrailer._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareTrailer._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareTrailer._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareTrailer._Tag">
@@ -3187,26 +3156,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareTrailer.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareTrailer.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareTrailer.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -3310,10 +3259,25 @@
             Information describing the file entry on disk.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.ContentMeta._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.ContentMeta.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.ContentMeta._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.ContentMeta.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ContentMeta._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ContentMeta._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.ContentMeta._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.ContentMeta._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.ContentMeta._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.ContentMeta._Tag">
@@ -3331,26 +3295,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContentMeta.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContentMeta.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.ContentMeta.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -3686,10 +3630,25 @@
             If true the policy is immutable and cannot be changed by a subsequent policy override.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DarePolicy._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.DarePolicy.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DarePolicy._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.DarePolicy.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DarePolicy._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DarePolicy._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DarePolicy._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DarePolicy._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DarePolicy._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DarePolicy._Tag">
@@ -3707,26 +3666,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DarePolicy.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DarePolicy.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DarePolicy.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -3799,10 +3738,25 @@
             The envelope trailer. If present, this contains the signature.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeSequence.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeSequence.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareEnvelopeSequence._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareEnvelopeSequence._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._Tag">
@@ -3820,26 +3774,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeSequence.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeSequence.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelopeSequence.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -3905,10 +3839,25 @@
             key used to encrypt the envelope.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareSignature._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.DareSignature.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareSignature._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.DareSignature.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareSignature._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareSignature._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareSignature._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareSignature._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareSignature._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareSignature._Tag">
@@ -3926,26 +3875,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareSignature.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareSignature.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareSignature.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -3994,10 +3923,25 @@
             An X.509 public key certificate
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.X509Certificate._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.X509Certificate.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.X509Certificate._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.X509Certificate.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.X509Certificate._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.X509Certificate._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.X509Certificate._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.X509Certificate._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.X509Certificate._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.X509Certificate._Tag">
@@ -4015,26 +3959,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.X509Certificate.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.X509Certificate.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.X509Certificate.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -4083,10 +4007,25 @@
             The file attribues as a bitmapped integer.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.FileEntry._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.FileEntry.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.FileEntry._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.FileEntry.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.FileEntry._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.FileEntry._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileEntry._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileEntry._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileEntry._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.FileEntry._Tag">
@@ -4104,26 +4043,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.FileEntry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.FileEntry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.FileEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -4191,10 +4110,25 @@
             Specifies the index number assigned to the entry in the log.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.Witness._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.Witness.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.Witness._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.Witness.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Witness._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Witness._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Witness._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Witness._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Witness._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Witness._Tag">
@@ -4212,26 +4146,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Witness.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Witness.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Witness.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -4275,10 +4189,25 @@
             The list of entries from which the proof path is computed.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.Proof._MetaDataParent">
+        <member name="M:Goedel.Cryptography.Dare.Proof.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.Proof._MetaData">
+        <member name="M:Goedel.Cryptography.Dare.Proof.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Proof._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Proof._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Proof._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Proof._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Proof._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Proof._Tag">
@@ -4296,26 +4225,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Proof.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Proof.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Proof.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>

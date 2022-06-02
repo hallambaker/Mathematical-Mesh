@@ -776,7 +776,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
             Salt = headerIn.Salt,
             Cloaked = headerIn.Cloaked,
             EDSS = headerIn.EDSS,
-            Signers = headerIn.Signers,
             Recipients = headerIn.Recipients,
             ContentMeta = headerIn.ContentMeta,
             ContentMetaData = headerIn.ContentMetaData,

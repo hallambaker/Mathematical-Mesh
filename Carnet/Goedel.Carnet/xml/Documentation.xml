@@ -108,10 +108,25 @@
              Describes a carnet issuer.
              </summary>
         </member>
-        <member name="P:Goedel.Carnet.ProfileCarnet._MetaDataParent">
+        <member name="M:Goedel.Carnet.ProfileCarnet.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Carnet.ProfileCarnet._MetaData">
+        <member name="M:Goedel.Carnet.ProfileCarnet.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Carnet.ProfileCarnet._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Carnet.ProfileCarnet._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Carnet.ProfileCarnet._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.ProfileCarnet._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.ProfileCarnet._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Carnet.ProfileCarnet._Tag">
@@ -129,26 +144,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Carnet.ProfileCarnet.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Carnet.ProfileCarnet.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Carnet.ProfileCarnet.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -233,10 +228,25 @@
             The activation data for the registry.
              </summary>
         </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet._MetaDataParent">
+        <member name="M:Goedel.Carnet.CatalogedCarnet.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet._MetaData">
+        <member name="M:Goedel.Carnet.CatalogedCarnet.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Carnet.CatalogedCarnet._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Carnet.CatalogedCarnet._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Carnet.CatalogedCarnet._Tag">
@@ -254,26 +264,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Carnet.CatalogedCarnet.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Carnet.CatalogedCarnet.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -305,10 +295,25 @@
              Base class for all requests made to a registrar
              </summary>
         </member>
-        <member name="P:Goedel.Carnet.CarnetRequest._MetaDataParent">
+        <member name="M:Goedel.Carnet.CarnetRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Carnet.CarnetRequest._MetaData">
+        <member name="M:Goedel.Carnet.CarnetRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Carnet.CarnetRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Carnet.CarnetRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Carnet.CarnetRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.CarnetRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.CarnetRequest._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Carnet.CarnetRequest._Tag">
@@ -326,26 +331,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Carnet.CarnetRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Carnet.CarnetRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Carnet.CarnetRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -369,10 +354,25 @@
              status code and status description fields.
              </summary>
         </member>
-        <member name="P:Goedel.Carnet.CarnetResponse._MetaDataParent">
+        <member name="M:Goedel.Carnet.CarnetResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Carnet.CarnetResponse._MetaData">
+        <member name="M:Goedel.Carnet.CarnetResponse.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Carnet.CarnetResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Carnet.CarnetResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Carnet.CarnetResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.CarnetResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Carnet.CarnetResponse._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Carnet.CarnetResponse._Tag">
@@ -390,26 +390,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Carnet.CarnetResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Carnet.CarnetResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Carnet.CarnetResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>

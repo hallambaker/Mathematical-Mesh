@@ -143,10 +143,25 @@
              Describes a callsign registry.
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.ProfileRegistry._MetaDataParent">
+        <member name="M:Goedel.Callsign.ProfileRegistry.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.ProfileRegistry._MetaData">
+        <member name="M:Goedel.Callsign.ProfileRegistry.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.ProfileRegistry._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.ProfileRegistry._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.ProfileRegistry._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ProfileRegistry._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ProfileRegistry._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.ProfileRegistry._Tag">
@@ -164,26 +179,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.ProfileRegistry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.ProfileRegistry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.ProfileRegistry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -241,10 +236,25 @@
             purpose of enabling account recovery.
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.ProfileResolver._MetaDataParent">
+        <member name="M:Goedel.Callsign.ProfileResolver.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.ProfileResolver._MetaData">
+        <member name="M:Goedel.Callsign.ProfileResolver.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.ProfileResolver._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.ProfileResolver._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.ProfileResolver._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ProfileResolver._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ProfileResolver._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.ProfileResolver._Tag">
@@ -262,26 +272,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.ProfileResolver.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.ProfileResolver.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.ProfileResolver.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -380,10 +370,25 @@
             Initial/ Update/ Voluntary/ Administrative/ Revoke
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.Registration._MetaDataParent">
+        <member name="M:Goedel.Callsign.Registration.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.Registration._MetaData">
+        <member name="M:Goedel.Callsign.Registration.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.Registration._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Registration._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Registration._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registration._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Registration._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registration._Tag">
@@ -401,26 +406,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.Registration.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.Registration.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.Registration.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -456,10 +441,25 @@
             The registration entry for the item.
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.CatalogedRegistration._MetaDataParent">
+        <member name="M:Goedel.Callsign.CatalogedRegistration.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.CatalogedRegistration._MetaData">
+        <member name="M:Goedel.Callsign.CatalogedRegistration.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.CatalogedRegistration._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.CatalogedRegistration._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedRegistration._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedRegistration._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CatalogedRegistration._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.CatalogedRegistration._Tag">
@@ -477,26 +477,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.CatalogedRegistration.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.CatalogedRegistration.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.CatalogedRegistration.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -541,10 +521,25 @@
             Characters permitted within this code page.
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.Page._MetaDataParent">
+        <member name="M:Goedel.Callsign.Page.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.Page._MetaData">
+        <member name="M:Goedel.Callsign.Page.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.Page._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Page._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Page._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Page._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Page._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Page._Tag">
@@ -562,26 +557,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.Page.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.Page.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.Page.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -613,10 +588,25 @@
             equal to zero, this is the same as Last.
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.CharacterSpan._MetaDataParent">
+        <member name="M:Goedel.Callsign.CharacterSpan.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.CharacterSpan._MetaData">
+        <member name="M:Goedel.Callsign.CharacterSpan.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.CharacterSpan._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.CharacterSpan._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.CharacterSpan._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CharacterSpan._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CharacterSpan._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.CharacterSpan._Tag">
@@ -634,26 +624,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.CharacterSpan.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.CharacterSpan.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.CharacterSpan.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -676,10 +646,25 @@
              Canonical character span.
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.Canonical._MetaDataParent">
+        <member name="M:Goedel.Callsign.Canonical.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.Canonical._MetaData">
+        <member name="M:Goedel.Callsign.Canonical.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.Canonical._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Canonical._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Canonical._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Canonical._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Canonical._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Canonical._Tag">
@@ -697,26 +682,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.Canonical.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.Canonical.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.Canonical.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -745,10 +710,25 @@
             The character that First is mapped to.
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.MapChar._MetaDataParent">
+        <member name="M:Goedel.Callsign.MapChar.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.MapChar._MetaData">
+        <member name="M:Goedel.Callsign.MapChar.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.MapChar._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.MapChar._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.MapChar._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.MapChar._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.MapChar._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.MapChar._Tag">
@@ -766,26 +746,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.MapChar.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.MapChar.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.MapChar.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -815,10 +775,25 @@
             If count is greater than 1, all the characters map to the same string.
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.MapString._MetaDataParent">
+        <member name="M:Goedel.Callsign.MapString.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.MapString._MetaData">
+        <member name="M:Goedel.Callsign.MapString.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.MapString._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.MapString._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.MapString._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.MapString._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.MapString._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.MapString._Tag">
@@ -836,26 +811,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.MapString.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.MapString.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.MapString.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -887,10 +842,25 @@
             log.
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.Notarization._MetaDataParent">
+        <member name="M:Goedel.Callsign.Notarization.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.Notarization._MetaData">
+        <member name="M:Goedel.Callsign.Notarization.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.Notarization._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Notarization._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Notarization._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Notarization._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Notarization._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Notarization._Tag">
@@ -908,26 +878,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.Notarization.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.Notarization.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.Notarization.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -960,10 +910,25 @@
             The basis for the challenge
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.Challenge._MetaDataParent">
+        <member name="M:Goedel.Callsign.Challenge.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.Challenge._MetaData">
+        <member name="M:Goedel.Callsign.Challenge.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.Challenge._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Challenge._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Challenge._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Challenge._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Challenge._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Challenge._Tag">
@@ -981,26 +946,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.Challenge.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.Challenge.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.Challenge.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -1028,10 +973,25 @@
             The enveloped binnding of the callsign to the profile.	
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.CallsignRegistrationRequest._MetaDataParent">
+        <member name="M:Goedel.Callsign.CallsignRegistrationRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.CallsignRegistrationRequest._MetaData">
+        <member name="M:Goedel.Callsign.CallsignRegistrationRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignRegistrationRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.CallsignRegistrationRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationRequest._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.CallsignRegistrationRequest._Tag">
@@ -1049,26 +1009,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.CallsignRegistrationRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.CallsignRegistrationRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.CallsignRegistrationRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -1104,10 +1044,25 @@
             Reason for refusing the registration.
              </summary>
         </member>
-        <member name="P:Goedel.Callsign.CallsignRegistrationResponse._MetaDataParent">
+        <member name="M:Goedel.Callsign.CallsignRegistrationResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.CallsignRegistrationResponse._MetaData">
+        <member name="M:Goedel.Callsign.CallsignRegistrationResponse.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignRegistrationResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.CallsignRegistrationResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationResponse._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.CallsignRegistrationResponse._Tag">
@@ -1125,26 +1080,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.CallsignRegistrationResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.CallsignRegistrationResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.CallsignRegistrationResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -1169,10 +1104,25 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Callsign.ProcessResultCallsignRegistration._MetaDataParent">
+        <member name="M:Goedel.Callsign.ProcessResultCallsignRegistration.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Callsign.ProcessResultCallsignRegistration._MetaData">
+        <member name="M:Goedel.Callsign.ProcessResultCallsignRegistration.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.ProcessResultCallsignRegistration._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.ProcessResultCallsignRegistration._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.ProcessResultCallsignRegistration._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ProcessResultCallsignRegistration._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ProcessResultCallsignRegistration._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.ProcessResultCallsignRegistration._Tag">
@@ -1190,26 +1140,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.ProcessResultCallsignRegistration.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Callsign.ProcessResultCallsignRegistration.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Callsign.ProcessResultCallsignRegistration.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>

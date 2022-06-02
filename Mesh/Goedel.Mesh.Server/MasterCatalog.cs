@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 27-May-22 7:23:36 PM
+//  This file was automatically generated at 02-Jun-22 4:54:09 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.971
+//  Generator:  protogen version 3.0.0.1009
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -128,27 +128,91 @@ abstract public partial class AccountEntry : CatalogItem {
 
 	public virtual string						Status  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "Directory", new MetaDataString(
-				delegate (string _a) {  Directory = _a; },
-				() => Directory) } ,
-			{ "ProfileUdf", new MetaDataString(
-				delegate (string _a) {  ProfileUdf = _a; },
-				() => ProfileUdf) } ,
-			{ "Quota", new MetaDataInteger32(
-				delegate (int? _a) {  Quota = _a; },
-				() => Quota) } ,
-			{ "Status", new MetaDataString(
-				delegate (string _a) {  Status = _a; },
-				() => Status) } 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Directory" : {
+				if (value is TokenValueString vvalue) {
+					Directory = vvalue.Value;
+					}
+				break;
+				}
+			case "ProfileUdf" : {
+				if (value is TokenValueString vvalue) {
+					ProfileUdf = vvalue.Value;
+					}
+				break;
+				}
+			case "Quota" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Quota = vvalue.Value;
+					}
+				break;
+				}
+			case "Status" : {
+				if (value is TokenValueString vvalue) {
+					Status = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Directory" : {
+				return new TokenValueString (Directory);
+				}
+			case "ProfileUdf" : {
+				return new TokenValueString (ProfileUdf);
+				}
+			case "Quota" : {
+				return new TokenValueInteger32 (Quota);
+				}
+			case "Status" : {
+				return new TokenValueString (Status);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Directory", new Property (typeof(TokenValueString), false)} ,
+			{ "ProfileUdf", new Property (typeof(TokenValueString), false)} ,
+			{ "Quota", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Status", new Property (typeof(TokenValueString), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -165,56 +229,6 @@ abstract public partial class AccountEntry : CatalogItem {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		if (Directory != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Directory", 1);
-				_writer.WriteString (Directory);
-			}
-		if (ProfileUdf != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("ProfileUdf", 1);
-				_writer.WriteString (ProfileUdf);
-			}
-		if (Quota != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Quota", 1);
-				_writer.WriteInteger32 (Quota);
-			}
-		if (Status != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("Status", 1);
-				_writer.WriteString (Status);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream
@@ -284,23 +298,74 @@ public partial class AccountUser : AccountEntry {
 
 	public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
 
-    ///<inheritdoc/>
-    public override Dictionary<string, MetaData> _MetaDataParent => base._MetaData;
 
     ///<inheritdoc/>
-	public override Dictionary<string, MetaData> _MetaData => 
-		_metaData ??  new Dictionary<string, MetaData> () {
-			{ "EnvelopedProfileUser", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedProfileUser = _a as Enveloped<ProfileAccount>; },
-				() => EnvelopedProfileUser,
-				"Enveloped<ProfileAccount>" )} ,
-			{ "EnvelopedAccountHostAssignment", new MetaDataStruct(
-				delegate (object _a) {  EnvelopedAccountHostAssignment = _a as Enveloped<AccountHostAssignment>; },
-				() => EnvelopedAccountHostAssignment,
-				"Enveloped<AccountHostAssignment>" )} 
-		}.CacheValue(out _metaData);
-	Dictionary<string, MetaData> _metaData;
-		
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "EnvelopedProfileUser" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedProfileUser = vvalue.Value as Enveloped<ProfileAccount>;
+					}
+				break;
+				}
+			case "EnvelopedAccountHostAssignment" : {
+				if (value is TokenValueStructObject vvalue) {
+					EnvelopedAccountHostAssignment = vvalue.Value as Enveloped<AccountHostAssignment>;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "EnvelopedProfileUser" : {
+				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileUser);
+				}
+			case "EnvelopedAccountHostAssignment" : {
+				return new TokenValueStruct<Enveloped<AccountHostAssignment>> (EnvelopedAccountHostAssignment);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "EnvelopedProfileUser", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
+			{ "EnvelopedAccountHostAssignment", new Property ( typeof(TokenValueStruct), false,
+					()=>new Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, AccountEntry._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
@@ -317,47 +382,6 @@ public partial class AccountUser : AccountEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new AccountUser();
 
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// </summary>
-    /// <param name="writer">Output stream</param>
-    /// <param name="wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="first">If true, item is the first entry in a list.</param>
-	public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-		SerializeX (writer, wrap, ref first);
-
-
-    /// <summary>
-    /// Serialize this object to the specified output stream.
-    /// Unlike the Serlialize() method, this method is not inherited from the
-    /// parent class allowing a specific version of the method to be called.
-    /// </summary>
-    /// <param name="_writer">Output stream</param>
-    /// <param name="_wrap">If true, output is wrapped with object
-    /// start and end sequences '{ ... }'.</param>
-    /// <param name="_first">If true, item is the first entry in a list.</param>
-	public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-		PreEncode();
-		if (_wrap) {
-			_writer.WriteObjectStart ();
-			}
-		((AccountEntry)this).SerializeX(_writer, false, ref _first);
-		if (EnvelopedProfileUser != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedProfileUser", 1);
-				EnvelopedProfileUser.Serialize (_writer, false);
-			}
-		if (EnvelopedAccountHostAssignment != null) {
-			_writer.WriteObjectSeparator (ref _first);
-			_writer.WriteToken ("EnvelopedAccountHostAssignment", 1);
-				EnvelopedAccountHostAssignment.Serialize (_writer, false);
-			}
-		if (_wrap) {
-			_writer.WriteObjectEnd ();
-			}
-		}
 
     /// <summary>
     /// Deserialize a tagged stream

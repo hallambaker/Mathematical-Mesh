@@ -476,10 +476,25 @@
              Placeholder class to allow insertion of application specific properties.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._MetaDataParent">
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._MetaData">
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.Result._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.Result._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.Result._Tag">
@@ -497,26 +512,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -537,10 +532,25 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._MetaDataParent">
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._MetaData">
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration._Tag">
@@ -558,26 +568,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
@@ -636,10 +626,25 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._MetaDataParent">
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._MetaData">
+        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._ParentProperties">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout._Tag">
@@ -657,26 +662,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>

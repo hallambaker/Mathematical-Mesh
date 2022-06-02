@@ -110,7 +110,7 @@ public partial class TestPersist {
     [Fact]
     public void TestPersistenceStoreAll() {
         using (var TestStore = new TestItemContainerPersistenceStore(
-        FileTest, "application/test", FileStatus: FileStatus.Overwrite)) {
+                FileTest, "application/test", FileStatus: FileStatus.Overwrite)) {
             // retrieve by master key -fail
             AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
             TestStore.New(AccountAlice);
