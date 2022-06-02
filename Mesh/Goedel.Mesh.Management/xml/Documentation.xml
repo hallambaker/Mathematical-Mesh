@@ -210,13 +210,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Management.WsmpRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.Management.WsmpResponse">
              <summary>
             
@@ -269,13 +262,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Management.WsmpResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.Management.ServiceConfigRequest">
             <summary>
             </summary>
@@ -324,13 +310,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Management.ServiceConfigRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Management.ServiceConfigResponse">
             <summary>
@@ -381,13 +360,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceConfigResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.Management.ServiceStatusRequest">
             <summary>
             </summary>
@@ -436,13 +408,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Management.ServiceStatusRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Management.ServiceStatusResponse">
             <summary>
@@ -512,13 +477,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Management.ServiceStatusResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Protocol.Management.ServerNotSupported">
             <summary>

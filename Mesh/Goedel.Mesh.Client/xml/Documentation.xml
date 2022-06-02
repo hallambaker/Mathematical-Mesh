@@ -125,13 +125,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedMachine.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.Client.CatalogedStandard">
              <summary>
             
@@ -185,13 +178,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedStandard.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Client.CatalogedPending">
              <summary>
@@ -275,13 +261,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPending.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Client.CatalogedPreconfigured">
              <summary>
@@ -375,13 +354,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Client.SyncStatus">
             <summary>Track the synchronization status of an upload or download operation.</summary>
@@ -2857,13 +2829,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedService.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Client.IMeshMachineClient">
             <summary>

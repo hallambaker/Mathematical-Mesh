@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jun-22 4:54:06 PM
+//  This file was automatically generated at 02-Jun-22 5:29:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1009
+//  Generator:  protogen version 3.0.0.1015
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -349,22 +349,6 @@ public partial class PresenceRequest : Goedel.Protocol.Request {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -456,22 +440,6 @@ public partial class PresenceResponse : Goedel.Protocol.Response {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -566,22 +534,6 @@ public partial class ConnectRequest : PresenceRequest {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -672,22 +624,6 @@ public partial class ConnectResponse : PresenceResponse {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -782,22 +718,6 @@ public partial class QueryRequest : PresenceRequest {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -888,22 +808,6 @@ public partial class QueryResponse : PresenceResponse {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 

@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jun-22 4:54:15 PM
+//  This file was automatically generated at 02-Jun-22 5:29:44 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1009
+//  Generator:  protogen version 3.0.0.1015
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -235,22 +235,6 @@ public partial class Result : ShellResult {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -453,54 +437,6 @@ public partial class ResultAbout : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "DirectoryKeys" : {
-				DirectoryKeys = jsonReader.ReadString ();
-				break;
-				}
-			case "DirectoryMesh" : {
-				DirectoryMesh = jsonReader.ReadString ();
-				break;
-				}
-			case "AssemblyTitle" : {
-				AssemblyTitle = jsonReader.ReadString ();
-				break;
-				}
-			case "AssemblyDescription" : {
-				AssemblyDescription = jsonReader.ReadString ();
-				break;
-				}
-			case "AssemblyCopyright" : {
-				AssemblyCopyright = jsonReader.ReadString ();
-				break;
-				}
-			case "AssemblyCompany" : {
-				AssemblyCompany = jsonReader.ReadString ();
-				break;
-				}
-			case "AssemblyVersion" : {
-				AssemblyVersion = jsonReader.ReadString ();
-				break;
-				}
-			case "Build" : {
-				Build = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -589,22 +525,6 @@ public partial class ResultFail : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -739,41 +659,6 @@ public partial class ResultKey : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Key" : {
-				Key = jsonReader.ReadString ();
-				break;
-				}
-			case "Identifier" : {
-				Identifier = jsonReader.ReadString ();
-				break;
-				}
-			case "Shares" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Shares = new List <string> ();
-				while (_Going) {
-					string _Item = jsonReader.ReadString ();
-					Shares.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -906,34 +791,6 @@ public partial class ResultDigest : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Digest" : {
-				Digest = jsonReader.ReadString ();
-				break;
-				}
-			case "Key" : {
-				Key = jsonReader.ReadString ();
-				break;
-				}
-			case "Verified" : {
-				Verified = jsonReader.ReadBoolean ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -1064,34 +921,6 @@ public partial class ResultFile : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Filename" : {
-				Filename = jsonReader.ReadString ();
-				break;
-				}
-			case "TotalBytes" : {
-				TotalBytes = jsonReader.ReadInteger32 ();
-				break;
-				}
-			case "Verified" : {
-				Verified = jsonReader.ReadBoolean ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -1240,38 +1069,6 @@ public partial class ResultKeyFile : ResultFile {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Udf" : {
-				Udf = jsonReader.ReadString ();
-				break;
-				}
-			case "Private" : {
-				Private = jsonReader.ReadBoolean ();
-				break;
-				}
-			case "Algorithm" : {
-				Algorithm = jsonReader.ReadString ();
-				break;
-				}
-			case "Format" : {
-				Format = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -1390,30 +1187,6 @@ public partial class ResultListLog : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Filename" : {
-				Filename = jsonReader.ReadString ();
-				break;
-				}
-			case "Count" : {
-				Count = jsonReader.ReadInteger32 ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -1516,26 +1289,6 @@ public partial class ResultLog : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Count" : {
-				Count = jsonReader.ReadInteger32 ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -1685,48 +1438,6 @@ public partial class ResultArchive : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Entries" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Entries = new List <FileEntry> ();
-				while (_Going) {
-					// an untagged structure.
-					var _Item = new  FileEntry ();
-					_Item.Deserialize (jsonReader);
-					// var _Item = new FileEntry (jsonReader);
-					Entries.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "Frames" : {
-				Frames = jsonReader.ReadInteger32 ();
-				break;
-				}
-			case "Deleted" : {
-				Deleted = jsonReader.ReadInteger32 ();
-				break;
-				}
-			case "IndexFrame" : {
-				IndexFrame = jsonReader.ReadInteger32 ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -1830,29 +1541,6 @@ public partial class ResultFileDare : ResultFile {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Envelope" : {
-				// An untagged structure
-				Envelope = new DareEnvelope ();
-				Envelope.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -1987,34 +1675,6 @@ public partial class ResultFileEARL : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Source" : {
-				Source = jsonReader.ReadString ();
-				break;
-				}
-			case "Created" : {
-				Created = jsonReader.ReadString ();
-				break;
-				}
-			case "URI" : {
-				URI = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -2118,33 +1778,6 @@ public partial class ResultDump : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "CatalogedEntries" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				CatalogedEntries = new List <CatalogedEntry> ();
-				while (_Going) {
-					var _Item = CatalogedEntry.FromJson (jsonReader, true); // a tagged structure
-					CatalogedEntries.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -2267,47 +1900,6 @@ public partial class ResultList : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "CatalogedDevices" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				CatalogedDevices = new List <CatalogedDevice> ();
-				while (_Going) {
-					// an untagged structure.
-					var _Item = new  CatalogedDevice ();
-					_Item.Deserialize (jsonReader);
-					// var _Item = new CatalogedDevice (jsonReader);
-					CatalogedDevices.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "Profiles" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Profiles = new List <Assertion> ();
-				while (_Going) {
-					var _Item = Assertion.FromJson (jsonReader, true); // a tagged structure
-					Profiles.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -2413,29 +2005,6 @@ public partial class ResultAccountConnect : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "ProfileDevice" : {
-				// An untagged structure
-				ProfileDevice = new ProfileDevice ();
-				ProfileDevice.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -2538,26 +2107,6 @@ public partial class ResultPublish : ResultCreateDevice {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Uri" : {
-				Uri = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -2708,44 +2257,6 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Uri" : {
-				Uri = jsonReader.ReadString ();
-				break;
-				}
-			case "FileName" : {
-				FileName = jsonReader.ReadString ();
-				break;
-				}
-			case "DevicePreconfigurationPublic" : {
-				// An untagged structure
-				DevicePreconfigurationPublic = new DevicePreconfigurationPublic ();
-				DevicePreconfigurationPublic.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "DevicePreconfigurationPrivate" : {
-				// An untagged structure
-				DevicePreconfigurationPrivate = new DevicePreconfigurationPrivate ();
-				DevicePreconfigurationPrivate.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -2879,37 +2390,6 @@ public partial class ResultCreateDevice : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Default" : {
-				Default = jsonReader.ReadBoolean ();
-				break;
-				}
-			case "DeviceUDF" : {
-				DeviceUDF = jsonReader.ReadString ();
-				break;
-				}
-			case "CatalogedDevice" : {
-				// An untagged structure
-				CatalogedDevice = new CatalogedDevice ();
-				CatalogedDevice.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -3012,26 +2492,6 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "MeshUDF" : {
-				MeshUDF = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -3154,36 +2614,6 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "ProfileAccount" : {
-				// An untagged structure
-				ProfileAccount = new ProfileAccount ();
-				ProfileAccount.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "ActivationAccount" : {
-				// An untagged structure
-				ActivationAccount = new ActivationAccount ();
-				ActivationAccount.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -3286,26 +2716,6 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "UDF" : {
-				UDF = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -3412,26 +2822,6 @@ public partial class ResultRegisterService : ResultCreateAccount {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "AccountAddress" : {
-				AccountAddress = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -3520,22 +2910,6 @@ public partial class ResultRecover : ResultCreatePersonal {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -3641,29 +3015,6 @@ public partial class ResultStatus : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "StatusResponse" : {
-				// An untagged structure
-				StatusResponse = new StatusResponse ();
-				StatusResponse.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -3799,41 +3150,6 @@ public partial class ResultSync : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Fetched" : {
-				Fetched = jsonReader.ReadInteger32 ();
-				break;
-				}
-			case "ProcessedResults" : {
-				ProcessedResults = jsonReader.ReadInteger32 ();
-				break;
-				}
-			case "ProcessResults" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				ProcessResults = new List <ProcessResult> ();
-				while (_Going) {
-					var _Item = ProcessResult.FromJson (jsonReader, true); // a tagged structure
-					ProcessResults.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -3952,37 +3268,6 @@ public partial class ResultEscrow : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Service" : {
-				Service = jsonReader.ReadString ();
-				break;
-				}
-			case "Shares" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Shares = new List <string> ();
-				while (_Going) {
-					string _Item = jsonReader.ReadString ();
-					Shares.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -4086,36 +3371,6 @@ public partial class ResultMachine : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "CatalogedMachines" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				CatalogedMachines = new List <CatalogedMachine> ();
-				while (_Going) {
-					// an untagged structure.
-					var _Item = new  CatalogedMachine ();
-					_Item.Deserialize (jsonReader);
-					// var _Item = new CatalogedMachine (jsonReader);
-					CatalogedMachines.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -4237,33 +3492,6 @@ public partial class ResultPIN : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "MessagePIN" : {
-				// An untagged structure
-				MessagePIN = new MessagePin ();
-				MessagePIN.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "Uri" : {
-				Uri = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -4369,29 +3597,6 @@ public partial class ResultHello : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Response" : {
-				// An untagged structure
-				Response = new MeshHelloResponse ();
-				Response.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -4495,29 +3700,6 @@ public partial class ResultSequence : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Entries" : {
-				// An untagged structure
-				Entries = new LogEntry ();
-				Entries.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -4707,49 +3889,6 @@ public partial class LogEntry : MeshmanShellResult {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Key" : {
-				Key = jsonReader.ReadString ();
-				break;
-				}
-			case "Length" : {
-				Length = jsonReader.ReadInteger32 ();
-				break;
-				}
-			case "Digest" : {
-				Digest = jsonReader.ReadBinary ();
-				break;
-				}
-			case "Recorded" : {
-				Recorded = jsonReader.ReadDateTime ();
-				break;
-				}
-			case "Encrypted" : {
-				Encrypted = jsonReader.ReadBoolean ();
-				break;
-				}
-			case "Signed" : {
-				Signed = jsonReader.ReadBoolean ();
-				break;
-				}
-			case "KeyExchange" : {
-				KeyExchange = jsonReader.ReadBoolean ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -4853,26 +3992,6 @@ public partial class ResultEntry : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "CatalogEntry" : {
-				CatalogEntry = CatalogedEntry.FromJson (jsonReader, true) ;  // A tagged structure
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -4995,33 +4114,6 @@ public partial class ResultEntrySent : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "CatalogEntry" : {
-				CatalogEntry = CatalogedEntry.FromJson (jsonReader, true) ;  // A tagged structure
-				break;
-				}
-			case "Message" : {
-				// An untagged structure
-				Message = new Message ();
-				Message.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -5110,22 +4202,6 @@ public partial class ResultMail : ResultEntry {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -5218,22 +4294,6 @@ public partial class ResultSSH : ResultEntry {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -5322,22 +4382,6 @@ public partial class ResultGroupCreate : ResultEntry {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -5459,33 +4503,6 @@ public partial class ResultSent : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Message" : {
-				// An untagged structure
-				Message = new Message ();
-				Message.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "Status" : {
-				Status = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -5589,36 +4606,6 @@ public partial class ResultPending : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Messages" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Messages = new List <Message> ();
-				while (_Going) {
-					// an untagged structure.
-					var _Item = new  Message ();
-					_Item.Deserialize (jsonReader);
-					// var _Item = new Message (jsonReader);
-					Messages.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -5726,33 +4713,6 @@ public partial class ResultAuthorize : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Messages" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Messages = new List <ProcessResult> ();
-				while (_Going) {
-					var _Item = ProcessResult.FromJson (jsonReader, true); // a tagged structure
-					Messages.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -5856,29 +4816,6 @@ public partial class ResultProcess : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "ProcessResult" : {
-				// An untagged structure
-				ProcessResult = new Message ();
-				ProcessResult.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -6076,68 +5013,6 @@ public partial class ResultConnect : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Profile" : {
-				Profile = Profile.FromJson (jsonReader, true) ;  // A tagged structure
-				break;
-				}
-			case "CatalogedMachine" : {
-				// An untagged structure
-				CatalogedMachine = new CatalogedMachine ();
-				CatalogedMachine.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "ActivationAccount" : {
-				// An untagged structure
-				ActivationAccount = new ActivationAccount ();
-				ActivationAccount.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "ActivationCommon" : {
-				// An untagged structure
-				ActivationCommon = new ActivationCommon ();
-				ActivationCommon.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "RequestConnection" : {
-				// An untagged structure
-				RequestConnection = new RequestConnection ();
-				RequestConnection.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "AcknowledgeConnection" : {
-				// An untagged structure
-				AcknowledgeConnection = new AcknowledgeConnection ();
-				AcknowledgeConnection.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "RespondConnection" : {
-				// An untagged structure
-				RespondConnection = new RespondConnection ();
-				RespondConnection.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -6240,26 +5115,6 @@ public partial class ResultTransactionRequest : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Identifier" : {
-				Identifier = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -6381,33 +5236,6 @@ public partial class ResultReceived : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Status" : {
-				Status = jsonReader.ReadString ();
-				break;
-				}
-			case "Message" : {
-				// An untagged structure
-				Message = new Message ();
-				Message.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -6513,26 +5341,6 @@ public partial class ResultApplication : Result {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Application" : {
-				Application = CatalogedApplication.FromJson (jsonReader, true) ;  // A tagged structure
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -6636,33 +5444,6 @@ public partial class ResultApplicationList : Result {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Applications" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Applications = new List <CatalogedApplication> ();
-				while (_Going) {
-					var _Item = CatalogedApplication.FromJson (jsonReader, true); // a tagged structure
-					Applications.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 

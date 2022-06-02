@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jun-22 4:53:58 PM
+//  This file was automatically generated at 02-Jun-22 5:29:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1009
+//  Generator:  protogen version 3.0.0.1015
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -252,39 +252,6 @@ public partial class DareEnvelopeSequence : Dare {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Header" : {
-				// An untagged structure
-				Header = new DareHeader ();
-				Header.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "Body" : {
-				Body = jsonReader.ReadBinary ();
-				break;
-				}
-			case "Trailer" : {
-				// An untagged structure
-				Trailer = new DareTrailer ();
-				Trailer.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -453,51 +420,6 @@ public partial class DareTrailer : Dare {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "signatures" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Signatures = new List <DareSignature> ();
-				while (_Going) {
-					// an untagged structure.
-					var _Item = new  DareSignature ();
-					_Item.Deserialize (jsonReader);
-					// var _Item = new DareSignature (jsonReader);
-					Signatures.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "SignedData" : {
-				SignedData = jsonReader.ReadBinary ();
-				break;
-				}
-			case "PayloadDigest" : {
-				PayloadDigest = jsonReader.ReadBinary ();
-				break;
-				}
-			case "ChainDigest" : {
-				ChainDigest = jsonReader.ReadBinary ();
-				break;
-				}
-			case "TreeDigest" : {
-				TreeDigest = jsonReader.ReadBinary ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -822,104 +744,6 @@ public partial class DareHeader : DareTrailer {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "EnvelopeId" : {
-				EnvelopeId = jsonReader.ReadString ();
-				break;
-				}
-			case "enc" : {
-				EncryptionAlgorithm = jsonReader.ReadString ();
-				break;
-				}
-			case "dig" : {
-				DigestAlgorithm = jsonReader.ReadString ();
-				break;
-				}
-			case "kid" : {
-				KeyIdentifier = jsonReader.ReadString ();
-				break;
-				}
-			case "Salt" : {
-				Salt = jsonReader.ReadBinary ();
-				break;
-				}
-			case "Malt" : {
-				Malt = jsonReader.ReadBinary ();
-				break;
-				}
-			case "cloaked" : {
-				Cloaked = jsonReader.ReadBinary ();
-				break;
-				}
-			case "annotations" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				EDSS = new List <byte[]> ();
-				while (_Going) {
-					byte[] _Item = jsonReader.ReadBinary ();
-					EDSS.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "recipients" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Recipients = new List <DareRecipient> ();
-				while (_Going) {
-					// an untagged structure.
-					var _Item = new  DareRecipient ();
-					_Item.Deserialize (jsonReader);
-					// var _Item = new DareRecipient (jsonReader);
-					Recipients.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "policy" : {
-				// An untagged structure
-				Policy = new DarePolicy ();
-				Policy.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "ContentMetaData" : {
-				ContentMetaData = jsonReader.ReadBinary ();
-				break;
-				}
-			case "SequenceInfo" : {
-				// An untagged structure
-				SequenceInfo = new SequenceInfo ();
-				SequenceInfo.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "SequenceIndex" : {
-				// An untagged structure
-				SequenceIndex = new SequenceIndex ();
-				SequenceIndex.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "Received" : {
-				Received = jsonReader.ReadDateTime ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -1221,104 +1045,6 @@ public partial class ContentMeta : Dare {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "UniqueId" : {
-				UniqueId = jsonReader.ReadString ();
-				break;
-				}
-			case "Labels" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Labels = new List <string> ();
-				while (_Going) {
-					string _Item = jsonReader.ReadString ();
-					Labels.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "KeyValues" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				KeyValues = new List <KeyValue> ();
-				while (_Going) {
-					// an untagged structure.
-					var _Item = new  KeyValue ();
-					_Item.Deserialize (jsonReader);
-					// var _Item = new KeyValue (jsonReader);
-					KeyValues.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "MessageType" : {
-				MessageType = jsonReader.ReadString ();
-				break;
-				}
-			case "cty" : {
-				ContentType = jsonReader.ReadString ();
-				break;
-				}
-			case "Paths" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Paths = new List <string> ();
-				while (_Going) {
-					string _Item = jsonReader.ReadString ();
-					Paths.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "Filename" : {
-				Filename = jsonReader.ReadString ();
-				break;
-				}
-			case "Event" : {
-				Event = jsonReader.ReadString ();
-				break;
-				}
-			case "Created" : {
-				Created = jsonReader.ReadDateTime ();
-				break;
-				}
-			case "Modified" : {
-				Modified = jsonReader.ReadDateTime ();
-				break;
-				}
-			case "Expire" : {
-				Expire = jsonReader.ReadDateTime ();
-				break;
-				}
-			case "First" : {
-				First = jsonReader.ReadInteger32 ();
-				break;
-				}
-			case "Previous" : {
-				Previous = jsonReader.ReadInteger32 ();
-				break;
-				}
-			case "FileEntry" : {
-				// An untagged structure
-				FileEntry = new FileEntry ();
-				FileEntry.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -1535,59 +1261,6 @@ public partial class DareSignature : Dare {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "dig" : {
-				Dig = jsonReader.ReadString ();
-				break;
-				}
-			case "alg" : {
-				Alg = jsonReader.ReadString ();
-				break;
-				}
-			case "kid" : {
-				KeyIdentifier = jsonReader.ReadString ();
-				break;
-				}
-			case "cert" : {
-				// An untagged structure
-				Certificate = new X509Certificate ();
-				Certificate.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "path" : {
-				// An untagged structure
-				Path = new X509Certificate ();
-				Path.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "Manifest" : {
-				Manifest = jsonReader.ReadBinary ();
-				break;
-				}
-			case "signature" : {
-				SignatureValue = jsonReader.ReadBinary ();
-				break;
-				}
-			case "witness" : {
-				WitnessValue = jsonReader.ReadBinary ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -1705,29 +1378,6 @@ public partial class X509Certificate : Dare {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "x5u" : {
-				X5u = jsonReader.ReadString ();
-				break;
-				}
-			case "x5c" : {
-				X5 = jsonReader.ReadBinary ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -1896,41 +1546,6 @@ public partial class DareRecipient : Dare {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "kid" : {
-				KeyIdentifier = jsonReader.ReadString ();
-				break;
-				}
-			case "kwd" : {
-				KeyWrapDerivation = jsonReader.ReadString ();
-				break;
-				}
-			case "epk" : {
-				Epk = Key.FromJson (jsonReader, true) ;  // A tagged structure
-				break;
-				}
-			case "wmk" : {
-				WrappedBaseSeed = jsonReader.ReadBinary ();
-				break;
-				}
-			case "rkd" : {
-				RecipientKeyData = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -2140,63 +1755,6 @@ public partial class DarePolicy : Dare {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "enc" : {
-				EncryptionAlgorithm = jsonReader.ReadString ();
-				break;
-				}
-			case "dig" : {
-				DigestAlgorithm = jsonReader.ReadString ();
-				break;
-				}
-			case "Encryption" : {
-				Encryption = jsonReader.ReadString ();
-				break;
-				}
-			case "Signature" : {
-				Signature = jsonReader.ReadString ();
-				break;
-				}
-			case "EncryptKeys" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				EncryptKeys = new List <Key> ();
-				while (_Going) {
-					var _Item = Key.FromJson (jsonReader, true); // a tagged structure
-					EncryptKeys.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "SignKeys" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				SignKeys = new List <Key> ();
-				while (_Going) {
-					var _Item = Key.FromJson (jsonReader, true); // a tagged structure
-					SignKeys.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "Sealed" : {
-				Sealed = jsonReader.ReadBoolean ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -2361,41 +1919,6 @@ public partial class FileEntry : Dare {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Path" : {
-				Path = jsonReader.ReadString ();
-				break;
-				}
-			case "CreationTime" : {
-				CreationTime = jsonReader.ReadDateTime ();
-				break;
-				}
-			case "LastAccessTime" : {
-				LastAccessTime = jsonReader.ReadDateTime ();
-				break;
-				}
-			case "LastWriteTime" : {
-				LastWriteTime = jsonReader.ReadDateTime ();
-				break;
-				}
-			case "Attributes" : {
-				Attributes = jsonReader.ReadInteger32 ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -2545,37 +2068,6 @@ public partial class Witness : Dare {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Id" : {
-				Id = jsonReader.ReadString ();
-				break;
-				}
-			case "Issuer" : {
-				Issuer = jsonReader.ReadString ();
-				break;
-				}
-			case "Apex" : {
-				Apex = jsonReader.ReadBinary ();
-				break;
-				}
-			case "Index" : {
-				Index = jsonReader.ReadInteger32 ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -2729,47 +2221,6 @@ public partial class Proof : Dare {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "SignedWitness" : {
-				// An untagged structure
-				SignedWitness = new DareEnvelope ();
-				SignedWitness.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "Hash" : {
-				Hash = jsonReader.ReadBinary ();
-				break;
-				}
-			case "Index" : {
-				Index = jsonReader.ReadInteger32 ();
-				break;
-				}
-			case "Path" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Path = new List <byte[]> ();
-				while (_Going) {
-					byte[] _Item = jsonReader.ReadBinary ();
-					Path.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 

@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jun-22 4:54:13 PM
+//  This file was automatically generated at 02-Jun-22 5:29:45 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1009
+//  Generator:  protogen version 3.0.0.1015
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -259,41 +259,6 @@ public partial class MultiInstance : TestSchema {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "FieldBoolean" : {
-				FieldBoolean = jsonReader.ReadBoolean ();
-				break;
-				}
-			case "FieldInteger" : {
-				FieldInteger = jsonReader.ReadInteger32 ();
-				break;
-				}
-			case "FieldDateTime" : {
-				FieldDateTime = jsonReader.ReadDateTime ();
-				break;
-				}
-			case "FieldString" : {
-				FieldString = jsonReader.ReadString ();
-				break;
-				}
-			case "FieldBinary" : {
-				FieldBinary = jsonReader.ReadBinary ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -454,77 +419,6 @@ public partial class MultiArray : MultiInstance {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "ArrayBoolean" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				ArrayBoolean = new List <bool?> ();
-				while (_Going) {
-					bool? _Item = jsonReader.ReadBoolean ();
-					ArrayBoolean.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "ArrayInteger" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				ArrayInteger = new List <int?> ();
-				while (_Going) {
-					int? _Item = jsonReader.ReadInteger32 ();
-					ArrayInteger.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "ArrayDateTime" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				ArrayDateTime = new List <DateTime?> ();
-				while (_Going) {
-					DateTime? _Item = jsonReader.ReadDateTime ();
-					ArrayDateTime.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "ArrayString" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				ArrayString = new List <string> ();
-				while (_Going) {
-					string _Item = jsonReader.ReadString ();
-					ArrayString.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "ArrayBinary" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				ArrayBinary = new List <byte[]> ();
-				while (_Going) {
-					byte[] _Item = jsonReader.ReadBinary ();
-					ArrayBinary.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -673,58 +567,6 @@ public partial class MultiStruct : MultiArray {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "FieldMultiInstance" : {
-				// An untagged structure
-				FieldMultiInstance = new MultiInstance ();
-				FieldMultiInstance.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "ArrayMultiInstance" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				ArrayMultiInstance = new List <MultiInstance> ();
-				while (_Going) {
-					// an untagged structure.
-					var _Item = new  MultiInstance ();
-					_Item.Deserialize (jsonReader);
-					// var _Item = new MultiInstance (jsonReader);
-					ArrayMultiInstance.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			case "TFieldMultiInstance" : {
-				TFieldMultiInstance = MultiInstance.FromJson (jsonReader, true) ;  // A tagged structure
-				break;
-				}
-			case "TArrayMultiInstance" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				TArrayMultiInstance = new List <MultiInstance> ();
-				while (_Going) {
-					var _Item = MultiInstance.FromJson (jsonReader, true); // a tagged structure
-					TArrayMultiInstance.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 

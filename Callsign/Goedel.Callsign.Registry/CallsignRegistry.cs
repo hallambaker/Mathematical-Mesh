@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jun-22 4:54:09 PM
+//  This file was automatically generated at 02-Jun-22 5:29:38 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1009
+//  Generator:  protogen version 3.0.0.1015
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -401,43 +401,6 @@ public partial class CatalogedRegistry : CatalogedApplication {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "EnvelopedConnectionAddress" : {
-				// An untagged structure
-				EnvelopedConnectionAddress = new Enveloped<ConnectionStripped> ();
-				EnvelopedConnectionAddress.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedProfileRegistry" : {
-				// An untagged structure
-				EnvelopedProfileRegistry = new Enveloped<ProfileAccount> ();
-				EnvelopedProfileRegistry.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedActivationCommon" : {
-				// An untagged structure
-				EnvelopedActivationCommon = new Enveloped<ActivationCommon> ();
-				EnvelopedActivationCommon.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -577,43 +540,6 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "AccountEncryption" : {
-				// An untagged structure
-				AccountEncryption = new KeyData ();
-				AccountEncryption.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "AdministratorSignature" : {
-				// An untagged structure
-				AdministratorSignature = new KeyData ();
-				AdministratorSignature.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedConnectionService" : {
-				// An untagged structure
-				EnvelopedConnectionService = new Enveloped<ConnectionService> ();
-				EnvelopedConnectionService.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -719,29 +645,6 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "EnvelopedActivation" : {
-				// An untagged structure
-				EnvelopedActivation = new Enveloped<ActivationApplicationRegistry> ();
-				EnvelopedActivation.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -832,22 +735,6 @@ public partial class CallsignRequest : Goedel.Protocol.Request {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -941,22 +828,6 @@ public partial class CallsignResponse : Goedel.Protocol.Response {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -1099,37 +970,6 @@ public partial class RegisterRequest : CallsignRequest {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "PriorId" : {
-				PriorId = jsonReader.ReadString ();
-				break;
-				}
-			case "Reason" : {
-				Reason = jsonReader.ReadString ();
-				break;
-				}
-			case "EnvelopedCallsign" : {
-				// An untagged structure
-				EnvelopedCallsign = new Enveloped<CallsignBinding> ();
-				EnvelopedCallsign.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -1238,29 +1078,6 @@ public partial class RegisterResponse : CallsignResponse {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Result" : {
-				// An untagged structure
-				Result = new Enveloped<Registration> ();
-				Result.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -1367,29 +1184,6 @@ public partial class NotarizeRequest : CallsignRequest {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Witness" : {
-				// An untagged structure
-				Witness = new Enveloped<Witness> ();
-				Witness.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -1514,36 +1308,6 @@ public partial class NotarizeResponse : CallsignResponse {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Witness" : {
-				// An untagged structure
-				Witness = new Enveloped<Witness> ();
-				Witness.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "Notarization" : {
-				// An untagged structure
-				Notarization = new Enveloped<Notarization> ();
-				Notarization.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 

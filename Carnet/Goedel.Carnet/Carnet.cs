@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jun-22 4:54:06 PM
+//  This file was automatically generated at 02-Jun-22 5:29:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1009
+//  Generator:  protogen version 3.0.0.1015
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -290,22 +290,6 @@ public partial class ProfileCarnet : ProfileService {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -458,47 +442,6 @@ public partial class CatalogedCarnet : CatalogedEntry {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Key" : {
-				Key = jsonReader.ReadString ();
-				break;
-				}
-			case "EnvelopedConnectionAddress" : {
-				// An untagged structure
-				EnvelopedConnectionAddress = new Enveloped<ConnectionStripped> ();
-				EnvelopedConnectionAddress.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedProfileCarnet" : {
-				// An untagged structure
-				EnvelopedProfileCarnet = new Enveloped<ProfileCarnet> ();
-				EnvelopedProfileCarnet.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedActivationCommon" : {
-				// An untagged structure
-				EnvelopedActivationCommon = new Enveloped<ActivationCommon> ();
-				EnvelopedActivationCommon.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -589,22 +532,6 @@ public partial class CarnetRequest : Goedel.Protocol.Request {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -698,22 +625,6 @@ public partial class CarnetResponse : Goedel.Protocol.Response {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 

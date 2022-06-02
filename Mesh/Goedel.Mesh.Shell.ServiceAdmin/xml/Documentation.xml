@@ -521,13 +521,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.Result.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration">
             <summary>
             </summary>
@@ -576,13 +569,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="P:Goedel.Mesh.Shell.ServiceAdmin.ResultServiceConfiguration.Configuration">
             <summary>The service/host configuration.</summary> 
@@ -670,13 +656,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
         </member>
         <member name="M:Goedel.Mesh.Shell.ServiceAdmin.ResultAbout.ToBuilder(System.Text.StringBuilder,Goedel.Command.Verbosity)">
             <inheritdoc/>

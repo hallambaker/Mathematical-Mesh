@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jun-22 4:54:09 PM
+//  This file was automatically generated at 02-Jun-22 5:29:38 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1009
+//  Generator:  protogen version 3.0.0.1015
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -247,37 +247,6 @@ abstract public partial class AccountEntry : CatalogItem {
 		throw new CannotCreateAbstract();
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Directory" : {
-				Directory = jsonReader.ReadString ();
-				break;
-				}
-			case "ProfileUdf" : {
-				ProfileUdf = jsonReader.ReadString ();
-				break;
-				}
-			case "Quota" : {
-				Quota = jsonReader.ReadInteger32 ();
-				break;
-				}
-			case "Status" : {
-				Status = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -401,36 +370,6 @@ public partial class AccountUser : AccountEntry {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "EnvelopedProfileUser" : {
-				// An untagged structure
-				EnvelopedProfileUser = new Enveloped<ProfileAccount> ();
-				EnvelopedProfileUser.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedAccountHostAssignment" : {
-				// An untagged structure
-				EnvelopedAccountHostAssignment = new Enveloped<AccountHostAssignment> ();
-				EnvelopedAccountHostAssignment.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 

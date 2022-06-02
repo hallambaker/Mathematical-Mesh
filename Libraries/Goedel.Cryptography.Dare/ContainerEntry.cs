@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jun-22 4:53:58 PM
+//  This file was automatically generated at 02-Jun-22 5:29:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1009
+//  Generator:  protogen version 3.0.0.1015
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -321,53 +321,6 @@ public partial class SequenceInfo : SequenceData {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "DataEncoding" : {
-				DataEncoding = jsonReader.ReadString ();
-				break;
-				}
-			case "ContainerType" : {
-				ContainerType = jsonReader.ReadString ();
-				break;
-				}
-			case "Index" : {
-				Index = jsonReader.ReadInteger64 ();
-				break;
-				}
-			case "IsMeta" : {
-				IsMeta = jsonReader.ReadBoolean ();
-				break;
-				}
-			case "Default" : {
-				Default = jsonReader.ReadBoolean ();
-				break;
-				}
-			case "TreePosition" : {
-				TreePosition = jsonReader.ReadInteger64 ();
-				break;
-				}
-			case "IndexPosition" : {
-				IndexPosition = jsonReader.ReadInteger64 ();
-				break;
-				}
-			case "ExchangePosition" : {
-				ExchangePosition = jsonReader.ReadInteger64 ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -491,39 +444,6 @@ public partial class SequenceIndex : SequenceData {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Full" : {
-				Full = jsonReader.ReadBoolean ();
-				break;
-				}
-			case "Positions" : {
-				// Have a sequence of values
-				bool _Going = jsonReader.StartArray ();
-				Positions = new List <IndexPosition> ();
-				while (_Going) {
-					// an untagged structure.
-					var _Item = new  IndexPosition ();
-					_Item.Deserialize (jsonReader);
-					// var _Item = new IndexPosition (jsonReader);
-					Positions.Add (_Item);
-					_Going = jsonReader.NextArray ();
-					}
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -662,33 +582,6 @@ public partial class IndexPosition : SequenceData {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Index" : {
-				Index = jsonReader.ReadInteger64 ();
-				break;
-				}
-			case "Position" : {
-				Position = jsonReader.ReadInteger64 ();
-				break;
-				}
-			case "UniqueId" : {
-				UniqueId = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -808,29 +701,6 @@ public partial class KeyValue : SequenceData {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Key" : {
-				Key = jsonReader.ReadString ();
-				break;
-				}
-			case "Value" : {
-				Value = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 

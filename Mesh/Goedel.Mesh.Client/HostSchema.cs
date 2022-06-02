@@ -20,11 +20,11 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jun-22 4:54:04 PM
+//  This file was automatically generated at 02-Jun-22 5:29:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  protogen version 3.0.0.1009
+//  Generator:  protogen version 3.0.0.1015
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -302,58 +302,6 @@ public partial class CatalogedMachine : HostCatalogItem {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "Id" : {
-				Id = jsonReader.ReadString ();
-				break;
-				}
-			case "Local" : {
-				Local = jsonReader.ReadString ();
-				break;
-				}
-			case "Default" : {
-				Default = jsonReader.ReadBoolean ();
-				break;
-				}
-			case "EnvelopedProfileAccount" : {
-				// An untagged structure
-				EnvelopedProfileAccount = new Enveloped<ProfileAccount> ();
-				EnvelopedProfileAccount.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "CatalogedDevice" : {
-				// An untagged structure
-				CatalogedDevice = new CatalogedDevice ();
-				CatalogedDevice.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "CatalogedDeviceDigest" : {
-				CatalogedDeviceDigest = jsonReader.ReadString ();
-				break;
-				}
-			case "EnvelopedAccountHostAssignment" : {
-				// An untagged structure
-				EnvelopedAccountHostAssignment = new Enveloped<AccountHostAssignment> ();
-				EnvelopedAccountHostAssignment.Deserialize (jsonReader);
- 
-				break;
-				}
-			default : {
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -541,61 +489,6 @@ public partial class CatalogedService : CatalogedMachine {
 		return Result;
 		}
 
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "EnvelopedProfileService" : {
-				// An untagged structure
-				EnvelopedProfileService = new Enveloped<ProfileService> ();
-				EnvelopedProfileService.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedProfileHost" : {
-				// An untagged structure
-				EnvelopedProfileHost = new Enveloped<ProfileHost> ();
-				EnvelopedProfileHost.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedActivationCommon" : {
-				// An untagged structure
-				EnvelopedActivationCommon = new Enveloped<ActivationCommon> ();
-				EnvelopedActivationCommon.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedActivationHost" : {
-				// An untagged structure
-				EnvelopedActivationHost = new Enveloped<ActivationHost> ();
-				EnvelopedActivationHost.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedConnectionService" : {
-				// An untagged structure
-				EnvelopedConnectionService = new Enveloped<ConnectionService> ();
-				EnvelopedConnectionService.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "ServiceIdentifier" : {
-				ServiceIdentifier = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
-		}
-
 
 	}
 
@@ -686,22 +579,6 @@ public partial class CatalogedStandard : CatalogedMachine {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -857,44 +734,6 @@ public partial class CatalogedPending : CatalogedMachine {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "DeviceUDF" : {
-				DeviceUDF = jsonReader.ReadString ();
-				break;
-				}
-			case "EnvelopedProfileDevice" : {
-				// An untagged structure
-				EnvelopedProfileDevice = new Enveloped<ProfileDevice> ();
-				EnvelopedProfileDevice.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedAcknowledgeConnection" : {
-				// An untagged structure
-				EnvelopedAcknowledgeConnection = new Enveloped<AcknowledgeConnection> ();
-				EnvelopedAcknowledgeConnection.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "AccountAddress" : {
-				AccountAddress = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
@@ -1096,59 +935,6 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
-		}
-
-    /// <summary>
-    /// Having read a tag, process the corresponding value data.
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-    /// <param name="tag">The tag</param>
-	public override void DeserializeToken (JsonReader jsonReader, string tag) {
-			
-		switch (tag) {
-			case "EnvelopedProfileDevice" : {
-				// An untagged structure
-				EnvelopedProfileDevice = new Enveloped<ProfileDevice> ();
-				EnvelopedProfileDevice.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedConnectionService" : {
-				// An untagged structure
-				EnvelopedConnectionService = new Enveloped<ConnectionService> ();
-				EnvelopedConnectionService.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "EnvelopedConnectionDevice" : {
-				// An untagged structure
-				EnvelopedConnectionDevice = new Enveloped<ConnectionDevice> ();
-				EnvelopedConnectionDevice.Deserialize (jsonReader);
- 
-				break;
-				}
-			case "AccountAddress" : {
-				AccountAddress = jsonReader.ReadString ();
-				break;
-				}
-			case "PublicationId" : {
-				PublicationId = jsonReader.ReadString ();
-				break;
-				}
-			case "ServiceAuthenticator" : {
-				ServiceAuthenticator = jsonReader.ReadString ();
-				break;
-				}
-			case "DeviceAuthenticator" : {
-				DeviceAuthenticator = jsonReader.ReadString ();
-				break;
-				}
-			default : {
-				base.DeserializeToken(jsonReader, tag);
-				break;
-				}
-			}
-		// check up that all the required elements are present
 		}
 
 
