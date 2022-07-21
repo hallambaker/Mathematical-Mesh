@@ -122,9 +122,8 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     ///<inheritdoc cref="IMeshMachine"/>
     public virtual MeshServiceClient GetMeshClient(
             ICredentialPrivate credential,
-            string accountAddress,
-            string service=null) {
-        service ??= accountAddress.GetService();
+            string accountAddress) {
+        var service = accountAddress.GetService();
         var meshServiceBinding = new ConnectionInitiator(
         credential, service, null, TransportType.Http, MeshServiceClient.WellKnown);
 

@@ -132,7 +132,7 @@ public partial class RegistrationTests {
         }
 
     LogService Logger { get; set; }
-    string HostFileCallsign;
+
     IMeshMachineClient MeshMachineHost => TestEnvironment.HostMachineMesh;
     Configuration ConfigurationCallSign { get; set; }
     PublicMeshService CallSignServiceProvider { get; set; }
@@ -147,21 +147,6 @@ public partial class RegistrationTests {
                     int charge = 0) {
 
         TestEnvironment.StartServiceCallSign();
-        //var registryCli = TestEnvironment.GetTestCLI(TestEnvironment.HostMachineRegistry);
-
-        //HostFileCallsign = System.IO.Path.Combine(MeshMachineHost.DirectoryMesh, "mmmconfiguration.json");
-        //ConfigurationCallSign = PublicMeshService.Create(MeshMachineHost, HostFileCallsign,
-        //            CallSignDns, admin:"@registry");
-
-        //Logger = new LogService(ConfigurationCallSign.GenericHostConfiguration, ConfigurationCallSign.MeshServiceConfiguration, null);
-
-
-        //CallSignServiceProvider = new PublicMeshService(MeshMachineHost,
-        //    ConfigurationCallSign.GenericHostConfiguration, ConfigurationCallSign.MeshServiceConfiguration, Logger);
-
-
-
-
 
         throw new NYI();
         }

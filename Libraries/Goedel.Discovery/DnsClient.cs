@@ -146,8 +146,8 @@ public abstract class DNSContext : Disposable {
 
     CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
 
-    Task taskRetry; // A task that expires when it is time to retry requests
-    readonly Task taskTimeout; // A task that expires when it is time to give up
+    //Task taskRetry; // A task that expires when it is time to retry requests
+    //readonly Task taskTimeout; // A task that expires when it is time to give up
 
     /// <summary>
     /// A task listening on the DNS port
@@ -183,13 +183,13 @@ public abstract class DNSContext : Disposable {
     /// </summary>
     /// <param name="timeout">The maximum length of time to wait for a query to be satisfied</param>
     /// <param name="retry">Retry interval.</param>
-    public DNSContext(int timeout = 5000, int retry = 1000) {
+    public DNSContext(int timeout = 2000, int retry = 500) {
         this.timeout = timeout;
         this.retry = retry;
         iDCounter = (ushort)Goedel.Cryptography.Platform.GetRandomInteger(0x10000);
 
-        taskTimeout = Task.Delay(this.timeout);
-        taskRetry = Task.Delay(this.retry);
+        //taskTimeout = Task.Delay(this.timeout);
+        //taskRetry = Task.Delay(this.retry);
 
         }
 
@@ -198,7 +198,7 @@ public abstract class DNSContext : Disposable {
     /// </summary>
     /// <param name="Request">DNS request set</param>
     /// <returns>Task instance.</returns>
-    public abstract void SendRequest(DNSRequest Request);
+    public abstract void SendRequest(DNSRequest Request, int index=0);
 
 
     /// <summary>
@@ -224,10 +224,13 @@ public abstract class DNSContext : Disposable {
     /// Return the next response to a pending DNS request.
     /// </summary>
     /// <returns>Task instance.</returns>
-    public virtual async Task<DNSResponse> NextAsync() {
-
+    public virtual async Task<DNSResponse> NextAsync(Task taskTimeout, Task taskRetry) {
+        var index = 0;
         while (Active) {
-            await Task.WhenAny(TaskListen, taskTimeout);
+            //Console.WriteLine("Start Any");
+            await Task.WhenAny(TaskListen, taskRetry, taskTimeout);
+            //Console.WriteLine("Finish Any");
+
 
             if (TaskListen.IsCompleted) {
                 var Data = TaskListen.Result;
@@ -247,12 +250,19 @@ public abstract class DNSContext : Disposable {
                 //Debug.WriteLine("Problem");
                 }
             if (taskTimeout.IsCompleted) { // query has expired
+                //Console.WriteLine("Timeout");
                 Logger.Timeout(timeout);
                 Active = false;
                 return null;
                 }
 
             if (taskRetry.IsCompleted) { // attempt a retransmit of the query
+                //Console.WriteLine("Resend DNS request");
+                foreach (var request in pendingRequests) {
+                    index++;
+                    SendRequest(request, index);
+                    }
+                
                 taskRetry = Task.Delay(retry);
                 }
             }
@@ -298,18 +308,29 @@ public abstract class DNSContext : Disposable {
                     DNSFallback fallback = DNSFallback.Prefix) {
 
         Logger.Resolution(address, service);
-
+        //Console.WriteLine("Try resolve");
         var serviceDescription = new ServiceDescription(address, service, port, fallback);
 
         if (service == null) {
             return serviceDescription;
             }
 
+
+
+        var taskTimeout = Task.Delay(0);
+        var taskRetry = Task.Delay(0);
+        //Console.WriteLine($"Timeouts {timeout} {retry}");
+
+        await taskRetry;
+        //Console.WriteLine("Retry complete");
+
         QueueRequest(serviceDescription.ServiceAddress, DNSTypeCode.SRV);
         QueueRequest(serviceDescription.ServiceAddress, DNSTypeCode.TXT);
 
         while (Pending) {
-            var result = await NextAsync();
+            //Console.WriteLine("Pending");
+
+            var result = await NextAsync(taskTimeout, taskRetry);
             if (result != null) {
                 foreach (var Record in result.Answers) {
                     Add(serviceDescription, Record);
@@ -319,10 +340,10 @@ public abstract class DNSContext : Disposable {
                     }
                 }
             else {
-                Debug.WriteLine("timed out");
+                //Console.WriteLine("timed out");
                 }
             }
-
+        //Console.WriteLine("abort");
         if (serviceDescription.Entries.Count == 0) {
             serviceDescription.Fallback(port, fallback);
             }

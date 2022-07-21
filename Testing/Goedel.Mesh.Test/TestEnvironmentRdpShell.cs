@@ -193,8 +193,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
     public override MeshServiceClient GetMeshClient(
             MeshMachineTest meshMachineTest,
             ICredentialPrivate credential,
-             string accountAddress,
-            string service
+             string accountAddress
            ) {
 
         if (RudService == null) {

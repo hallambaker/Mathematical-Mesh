@@ -46,6 +46,11 @@ public partial class Notarization {
     #endregion
     #region // Methods
 
+    /// <summary>
+    /// Return a witness value for the index <paramref name="index"/>
+    /// </summary>
+    /// <param name="index">The index to return a witness value for.</param>
+    /// <returns>The Witness value.</returns>
     public Witness GetWitness(int index = 0) {
 
         var enveloped = Entries[index];

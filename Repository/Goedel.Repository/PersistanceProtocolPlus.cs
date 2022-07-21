@@ -27,7 +27,9 @@ using System.Collections.Generic;
 
 
 namespace Goedel.Repository; 
-public partial class PresenceRequest : Request {
+
+
+public partial class PersistanceRequest : Request {
 
     #region // Properties
     #endregion 
@@ -45,7 +47,7 @@ public partial class PresenceRequest : Request {
     #endregion 
     }
 
-public partial class PresenceResponse : Response {
+public partial class PersistanceResponse : Response {
 
     #region // Properties
     #endregion 

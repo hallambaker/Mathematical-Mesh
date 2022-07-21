@@ -30,12 +30,20 @@ using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 
 namespace Goedel.Repository.Server; 
+
+/// <summary>
+/// The Repository service implementation.
+/// </summary>
 public class RepositoryServer  : RepositoryService {
     #region // Properties
 
     #endregion
     #region // Constructors
 
+
+    /// <summary>
+    /// Default constructor, returns an empty instance.
+    /// </summary>
     public RepositoryServer  () {
         }
 
@@ -48,11 +56,15 @@ public class RepositoryServer  : RepositoryService {
     #endregion
     #region // Methods
 
-
+    /// <summary>
+    /// Publish the content <paramref name="data"/>.
+    /// </summary>
+    /// <param name="data">The content to publish.</param>
     public void Publish(byte [] data) {
 
         }
 
+    ///<inheritdoc/>
     public override QueryResponse Query(QueryRequest request, IJpcSession session) {
         throw new NotImplementedException();
         }

@@ -156,6 +156,11 @@
         <member name="M:Goedel.Carnet.ProfileCarnet.GetEnvelopedProfileAccount">
             <summary>Typed enveloped data</summary> 
         </member>
+        <member name="M:Goedel.Carnet.ProfileCarnet.#ctor">
+            <summary>
+            Default constructor, returns an empty instance.
+            </summary>
+        </member>
         <member name="M:Goedel.Carnet.ProfileCarnet.#ctor(System.String,Goedel.Mesh.ActivationCommon)">
             <summary>
             Construct a Profile Account instance  from <paramref name="accountAddress"/>.
@@ -167,6 +172,7 @@
             <summary>
             Construct a Profile Host instance  from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             </summary>
+            <param name="accountAddress">The account address.</param>
             <param name="secretSeed">The secret seed value.</param>
             <param name="keyCollection">The base key collection</param>
             <param name="persist">If true, persist the service record to the local machine
@@ -182,6 +188,7 @@
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
             </summary>
+            <param name="serviceAddress">The service address</param>
             <param name="secretSeed">The secret seed value.</param>
             <param name="algorithmEncrypt">The encryption algorithm.</param>
             <param name="algorithmSign">The signature algorithm</param>
@@ -268,6 +275,16 @@
         </member>
         <member name="P:Goedel.Carnet.CatalogedCarnet._PrimaryKey">
             <summary>The primary key is protocol:site </summary>
+        </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet.ProfileCarnet">
+            <summary>
+            the unwrapped carnet profile.
+            </summary>
+        </member>
+        <member name="M:Goedel.Carnet.CatalogedCarnet.#ctor">
+            <summary>
+            Create and return an empty instance.
+            </summary>
         </member>
         <member name="M:Goedel.Carnet.CatalogedCarnet.Describe(System.Text.StringBuilder,System.Boolean)">
             <inheritdoc/>
@@ -457,10 +474,16 @@
             </summary>
             <param name="meshHost">The mesh host.</param>
             <param name="resolverAddress">The address of the resolver account.</param>
-            <param name="registryAddress">The address of the registry account.</param>
             <param name="accountSeed">Optional account seed.</param>
             <param name="roles">The authorized roles.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Carnet.ContextCarnet.Issue(System.String,System.Int32)">
+            <summary>
+            Issue a carnet to <paramref name="recipient"/> with value <paramref name="tokens"/>.
+            </summary>
+            <param name="recipient">The recipient name.</param>
+            <param name="tokens">The number of tokens.</param>
         </member>
         <member name="T:Goedel.Carnet.Internal">
             <summary>
@@ -508,6 +531,14 @@
             <summary>
             Extensions class. Provides static convenience extensions.
             </summary>
+        </member>
+        <member name="M:Goedel.Carnet.Extensions.Spend(Goedel.Mesh.Client.ContextUser,System.Int32)">
+            <summary>
+            Spend <paramref name="amount"/> tokens from the wallet of <paramref name="contextUser"/>.
+            </summary>
+            <param name="contextUser">The user context.</param>
+            <param name="amount">The number of tokens to spend.</param>
+            <returns>The number of tokens spent??</returns>
         </member>
         <member name="T:Goedel.Carnet.NamespaceDoc">
             <summary>

@@ -1179,6 +1179,16 @@
             <param name="fileSpec">The service description specifier.</param>
             <returns>The file path.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.AddAdministrator(Goedel.Mesh.Client.IMeshMachineClient,System.String,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.GenericHost.DareLoggerConfiguration)">
+            <summary>
+            Add administrator account <paramref name="admin"/> to the service.
+            </summary>
+            <param name="meshMachine">The mesh machine context.</param>
+            <param name="admin">The administration account to create.</param>
+            <param name="serviceConfiguration">The service configuration.</param>
+            <param name="dareLogger">Logger configuration.</param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Create(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.GenericHostConfiguration,System.String)">
             <summary>
             Create new service and host configurations and attach the service to the host.
@@ -1340,7 +1350,7 @@
         <member name="M:Goedel.Mesh.Server.MeshMachineDirect.GetFilePath(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshMachineDirect.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String,System.String)">
+        <member name="M:Goedel.Mesh.Server.MeshMachineDirect.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Server.LockedCatalogedEntry`1">
@@ -1403,6 +1413,7 @@
             Add a new account. The account name must be unique.
             </summary>
             <param name="accountEntry">Account data to add.</param>
+            <param name="catalogedCallsigns">The catalogued callsigns to bind.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountUnbind(Goedel.Protocol.IJpcSession,System.String)">
             <summary>
@@ -1434,7 +1445,8 @@
             </summary>
             <param name="jpcSession">The session connection data.</param>
             <param name="catalogedDeviceDigest">The digest version identifier of the device catalog
-            entry.</param>
+            </param>
+            <param name="catalogs">The list of catalogs for which status is requested.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountDownload(Goedel.Protocol.IJpcSession,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect})">
             <summary>

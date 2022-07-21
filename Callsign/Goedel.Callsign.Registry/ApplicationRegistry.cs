@@ -79,8 +79,8 @@ public partial class CatalogedRegistry{
     public override string _PrimaryKey => GetGroupID(Key);
 
 
-    ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileGroup"/>
-    ///to return the <see cref="ProfileUser"/> value.</summary>
+    ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileRegistry"/>
+    ///to return the <see cref="ProfileRegistry"/> value.</summary>
     public ProfileRegistry? ProfileRegistry => profileRegistry ??
                 (EnvelopedProfileRegistry.Decode(KeyCollection) as ProfileRegistry).CacheValue(out profileRegistry);
     ProfileRegistry? profileRegistry;
@@ -113,7 +113,6 @@ public partial class CatalogedRegistry{
     /// <param name="profileGroup">The group profile.</param>
     /// <param name="activationAccount">The activation data.</param>
     /// <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
-    /// <param name="connectionAddress">Connection binding profile to an address.</param>
     /// <returns>The created group.</returns>
     public CatalogedRegistry(
                     ProfileRegistry profileGroup,

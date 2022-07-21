@@ -3645,6 +3645,9 @@
             Metadata record 
             </summary>
         </member>
+        <member name="P:Goedel.Protocol.MetaDataList.Multiple">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Protocol.MetaDataListBoolean">
             <summary>
             Metadata class describing boolean field.
@@ -4019,6 +4022,7 @@
             <param name="Factory">Factory generating an instance of the node (if required).</param>
             <param name="IFactory">Factory generating an instance of a list member (if required).</param>
             <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
+            <param name="tagDictionary">Tag dictionary to be used to deserialize the property.</param>
         </member>
         <member name="M:Goedel.Protocol.Property.#ctor(System.Type,System.Boolean,System.Func{System.Object},System.Func{System.Object},System.Boolean,System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
             <summary>
@@ -4029,6 +4033,7 @@
             <param name="Factory">Factory generating an instance of the node (if required).</param>
             <param name="IFactory">Factory generating an instance of a list member (if required).</param>
             <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
+            <param name="tagDictionary">Tag dictionary to be used to deserialize the property.</param>
         </member>
         <member name="P:Goedel.Protocol.Property.TokenType">
             <summary>The token type (consider removing).</summary>
@@ -4044,6 +4049,9 @@
         </member>
         <member name="P:Goedel.Protocol.Property.Tagged">
             <summary>If true, structures are to be represented as a tagged structure.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Property.tagDictionary">
+            <summary>Tag dictionary to be used to deserialize the property.</summary>
         </member>
         <member name="T:Goedel.Protocol.TokenValue">
             <summary>
@@ -4330,14 +4338,12 @@
             Record representing a boolean value in a JSON tree.
             </summary>
             <param name="Value">The value.</param>
-            <typeparam name="T">The type of the node value</typeparam>
         </member>
         <member name="M:Goedel.Protocol.TokenValueStructObject.#ctor(System.Object)">
             <summary>
             Record representing a boolean value in a JSON tree.
             </summary>
             <param name="Value">The value.</param>
-            <typeparam name="T">The type of the node value</typeparam>
         </member>
         <member name="P:Goedel.Protocol.TokenValueStructObject.Value">
             <summary>The value.</summary>
@@ -4563,19 +4569,25 @@
         <member name="P:Goedel.Protocol.TokenValueListStruct.Token">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Protocol.TokenValueListStruct.Serialize(Goedel.Protocol.Writer,System.Boolean)">
+            <summary>
+            Serialize the value by calling methods on the writer <paramref name="writer"/>.
+            </summary>
+            <param name="writer">The writer to serialize the value to.</param>
+            <param name="tagged">If true, structured values to be written as a tagged
+            structure.</param>
+        </member>
         <member name="T:Goedel.Protocol.TokenValueListStructObject">
             <summary>
             Record representing a boolean value in a JSON tree.
             </summary>
             <param name="Value">The value.</param>
-            <typeparam name="T">The type of the node value</typeparam>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListStructObject.#ctor(System.Object)">
             <summary>
             Record representing a boolean value in a JSON tree.
             </summary>
             <param name="Value">The value.</param>
-            <typeparam name="T">The type of the node value</typeparam>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListStructObject.Value">
             <summary>The value.</summary>

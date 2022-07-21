@@ -28,6 +28,10 @@ using System.Xml.Linq;
 
 namespace Goedel.Callsign.Resolver;
 
+
+/// <summary>
+/// Callsign resolution service.
+/// </summary>
 public class ContextResolver : ContextAccount {
 
     #region Properties
@@ -96,7 +100,7 @@ public class ContextResolver : ContextAccount {
 
         var keyCredential = new MeshKeyCredentialPrivate(KeyAuthentication as KeyPairAdvanced, AccountAddress);
 
-        MeshClient = MeshMachine.GetMeshClient(keyCredential, ProfileRegistry.Udf, ProfileRegistry.AccountAddress);
+        MeshClient = MeshMachine.GetMeshClient(keyCredential, ProfileRegistry.AccountAddress);
 
         var storesDirectory = GetStoresDirectory(meshHost, ProfileResolver);
  
@@ -111,20 +115,14 @@ public class ContextResolver : ContextAccount {
         }
 
 
-    void Activate() {
-
-        }
-
-
-
     /// <summary>
     /// Create a new client resolver context.
     /// </summary>
     /// <param name="meshHost">The mesh host.</param>
     /// <param name="resolverAddress">The address of the resolver account.</param>
-    /// <param name="registryAddress">The address of the registry account.</param>
     /// <param name="accountSeed">Optional account seed.</param>
     /// <param name="roles">The authorized roles.</param>
+    /// <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
     /// <returns></returns>
     public static ContextResolver Create(
                 MeshHost meshHost,

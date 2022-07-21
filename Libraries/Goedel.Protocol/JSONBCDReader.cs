@@ -345,6 +345,7 @@ public class JsonBcdReader : JsonReader {
     /// </summary>
     /// <returns>True if there is a next object.</returns>
     public override bool NextObject() {
+        
         PeekToken();
         switch (TokenType) {
             case Token.Comma: {

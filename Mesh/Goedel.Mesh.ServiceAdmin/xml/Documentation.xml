@@ -249,6 +249,11 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.ServiceAdmin.Extensions">
+            <summary>
+            Static class containing convenience extensions.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.ServiceAdmin.Extensions.CreatePublicMeshService(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Create a new Mesh Service

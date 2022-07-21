@@ -112,7 +112,7 @@ public partial class TestService {
                 new MeshCredentialPrivate(profileDevice, null, null,
                     profileDevice.KeyAuthentication as KeyPairAdvanced);
 
-        var meshClient = machineAdminAlice.GetMeshClient(credentialTemp, ServiceName, null);
+        var meshClient = machineAdminAlice.GetMeshClient(credentialTemp, ServiceName);
 
         var request = new HelloRequest();
         var response = meshClient.Hello(request);

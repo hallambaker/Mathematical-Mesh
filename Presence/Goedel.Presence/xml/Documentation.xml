@@ -51,6 +51,25 @@
             Extensions class. Provides static convenience extensions.
             </summary>
         </member>
+        <member name="M:Goedel.Presence.Extensions.PresenceConnect(Goedel.Mesh.Client.ContextUser,Goedel.Presence.PresenceService)">
+            <summary>
+            
+            </summary>
+            <param name="contextUser"></param>
+            <param name="presenceServer"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Goedel.Presence.Extensions.PresenceQuery(Goedel.Mesh.Client.ContextUser,Goedel.Presence.PresenceService,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="contextUser"></param>
+            <param name="presenceServer"></param>
+            <param name="contactee"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
         <member name="T:Goedel.Presence.NamespaceDoc">
             <summary>
             Desctiption of the 

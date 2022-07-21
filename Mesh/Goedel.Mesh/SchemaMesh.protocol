@@ -233,6 +233,10 @@
 			|Describes a group. Note that while a group is created by one person who
 			|becomes its first administrator, control of the group may pass to other
 			|administrators over time.
+		Binary Cover
+			Description
+				|HTML document containing cover text to be presented if a document 
+				|encrypted under the group key cannot be decrypted.
 
 	Structure ProfileService
 		Inherits Profile

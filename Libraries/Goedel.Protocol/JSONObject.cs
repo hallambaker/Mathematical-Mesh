@@ -193,7 +193,7 @@ public abstract partial class JsonObject {
     /// </summary>
     public Dictionary<string, TokenValue> _Unregistered => _unregistered ??
         new Dictionary<string, TokenValue>().CacheValue(out _unregistered);
-    protected Dictionary<string, TokenValue> _unregistered;
+    Dictionary<string, TokenValue> _unregistered;
 
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -476,6 +476,7 @@ public abstract partial class JsonObject {
                 }
             else {
                 DeserializeToken2(jsonReader, Token);
+                
                 going = jsonReader.NextObject();
                 }
             }
@@ -640,13 +641,6 @@ public abstract partial class JsonObject {
             }
 
         }
-
-    public void Deserialize(JsonReader jsonReader, string tag, Property property) {
-
-
-
-        }
-
 
 
     /// <summary>

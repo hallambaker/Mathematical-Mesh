@@ -29,12 +29,21 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 
 namespace Goedel.Carnet.Server; 
+
+
+/// <summary>
+/// Carnet Service.
+/// </summary>
 public class CarnetServer  {
     #region // Properties
 
     #endregion
     #region // Constructors
 
+
+    /// <summary>
+    /// Create and return an empty instance.
+    /// </summary>
     public CarnetServer() {
         }
 
@@ -48,6 +57,10 @@ public class CarnetServer  {
     #region // Methods
 
 
+    /// <summary>
+    /// Spend <paramref name="token"/> tokens.
+    /// </summary>
+    /// <param name="token">The number of tokens to spend.</param>
     public void Spend(int token) {
 
         }

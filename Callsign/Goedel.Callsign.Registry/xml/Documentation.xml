@@ -150,8 +150,8 @@
             </summary>
         </member>
         <member name="P:Goedel.Callsign.Registry.CatalogedRegistry.ProfileRegistry">
-            <summary>Cached convenience accessor that unpacks the value of <see cref="!:EnvelopedProfileGroup"/>
-            to return the <see cref="T:Goedel.Mesh.ProfileUser"/> value.</summary>
+            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Callsign.Registry.CatalogedRegistry.EnvelopedProfileRegistry"/>
+            to return the <see cref="P:Goedel.Callsign.Registry.CatalogedRegistry.ProfileRegistry"/> value.</summary>
         </member>
         <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.GetEscrow">
             <summary>
@@ -172,7 +172,6 @@
             <param name="profileGroup">The group profile.</param>
             <param name="activationAccount">The activation data.</param>
             <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
-            <param name="connectionAddress">Connection binding profile to an address.</param>
             <returns>The created group.</returns>
         </member>
         <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
@@ -782,6 +781,12 @@
         <member name="F:Goedel.Callsign.Registry.ContextRegistry.CatalogedRegistry">
             <summary>The catalogued Registry description.</summary>
         </member>
+        <member name="F:Goedel.Callsign.Registry.ContextRegistry.CatalogRegistration">
+            <summary>The registation catalog.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Registry.ContextRegistry.CallsignMapping">
+            <summary>The callsign mapping</summary> 
+        </member>
         <member name="P:Goedel.Callsign.Registry.ContextRegistry.AccountAddress">
             <inheritdoc/>
         </member>
@@ -821,6 +826,13 @@
             <summary>
             Process the list of pending messages in order of receipt. 
             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.Process(Goedel.Callsign.CallsignRegistrationRequest)">
+            <summary>
+            Process the callsign registration request <paramref name="registrationRequest"/>.
+            </summary>
+            <param name="registrationRequest">The request to process.</param>
+            <returns>Reports the processing result.</returns>
         </member>
         <member name="T:Goedel.Callsign.Registry.Internal">
             <summary>

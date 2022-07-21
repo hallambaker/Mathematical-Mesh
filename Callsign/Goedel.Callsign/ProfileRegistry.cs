@@ -23,7 +23,9 @@ namespace Goedel.Callsign;
 public partial class ProfileRegistry {
 
 
-
+    /// <summary>
+    /// Default constructor, returns an empty instance.
+    /// </summary>
     public ProfileRegistry() {
         }
 

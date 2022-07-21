@@ -81,8 +81,9 @@ internal class DareEnvelopeWriter : Stream {
         ContentMeta contentMeta = null,
         long contentLength = -1,
         byte[] cloaked = null,
-        List<byte[]> dataSequences = null) : this(cryptoParameters,
-        new JsonWriter(outputStream), contentMeta, contentLength, cloaked, dataSequences) {
+        List<byte[]> dataSequences = null,
+        byte[] cover = null) : this(cryptoParameters,
+                new JsonWriter(outputStream), contentMeta, contentLength, cloaked, dataSequences, cover) {
         }
 
 
@@ -111,10 +112,13 @@ internal class DareEnvelopeWriter : Stream {
         ContentMeta contentMeta = null,
         long contentLength = -1,
         byte[] cloaked = null,
-        List<byte[]> dataSequences = null) {
+        List<byte[]> dataSequences = null,
+        byte[] cover = null) {
         this.outputStream = outputStream;
 
-        dareHeader = new DareHeader();
+        dareHeader = new DareHeader() { 
+            Cover = cover
+            };
         dareHeader.BindEncoder(cryptoParameters, cloaked, dataSequences);
 
         //cryptoStack = new CryptoStackEncode(cryptoParameters, dareHeader, cloaked, dataSequences);

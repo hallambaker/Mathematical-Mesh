@@ -35,7 +35,7 @@ public class CatalogRegistration : Catalog<CatalogedRegistration> {
     public const string Label = MeshConstants.MMM_Callsign;
 
 
-
+    ///<summary>The callsign mapping to be applied to registrations in this catalog.</summary> 
     public CallsignMapping CallsignMapping { get; set; }
 
     ///<summary>The catalog label</summary>
@@ -94,6 +94,15 @@ public class CatalogRegistration : Catalog<CatalogedRegistration> {
     #region Methods
 
 
+    /// <summary>
+    /// Prepare addition of the callsign binding <paramref name="envelopedCallsignBinding"/>, signing
+    /// it with the key <paramref name="sign"/>.
+    /// </summary>
+    /// <param name="envelopedCallsignBinding">The binding to sign.</param>
+    /// <param name="sign">The signature key.</param>
+    /// <param name="catalogedRegistration">The catalog registration for the binding.</param>
+    /// <param name="reason">The failure reason.</param>
+    /// <returns>True if the binding is created, otherwise null.</returns>
     public bool PrepareAdd(
                 Enveloped<CallsignBinding> envelopedCallsignBinding, 
                 KeyPair sign,
@@ -142,9 +151,6 @@ public class CatalogRegistration : Catalog<CatalogedRegistration> {
 
         }
 
-
-
-
     #endregion
 
     }
@@ -155,13 +161,16 @@ public partial class CatalogedRegistration {
     ///<summary>The primary key is protocol:site </summary>
     public override string _PrimaryKey => Canonical;
 
+    ///<summary>The unpacked value of <see cref="EnvelopedRegistration"/></summary> 
     public Registration Registration => registration ?? 
         EnvelopedRegistration.Decode().CacheValue(out registration);
     Registration registration;
 
 
 
-
+    /// <summary>
+    /// Create an empty instance and return.
+    /// </summary>
     #region Constructors
     public CatalogedRegistration() {
         }

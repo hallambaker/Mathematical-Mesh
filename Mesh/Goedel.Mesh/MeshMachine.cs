@@ -96,12 +96,10 @@ public interface IMeshMachine {
     /// </summary>
     /// <param name="credential">Credential to be used to establish the client.</param>
     /// <param name="accountAddress">Account under which service is requested.</param>
-    /// <param name="service">Service name</param>
     /// <returns>The client instance.</returns>
     MeshServiceClient GetMeshClient(
             ICredentialPrivate credential,
-            string accountAddress,
-            string service=null);
+            string accountAddress);
 
 
     /// <summary>

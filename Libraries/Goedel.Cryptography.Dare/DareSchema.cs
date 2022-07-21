@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jun-22 5:29:27 PM
+//  This file was automatically generated at 19-Jul-22 11:26:21 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -516,6 +516,11 @@ public partial class DareHeader : DareTrailer {
         /// </summary>
 
 	public virtual DateTime?						Received  {get; set;}
+        /// <summary>
+        ///HTML document containing cover text to be presented if the document cannot be decrypted.
+        /// </summary>
+
+	public virtual byte[]						Cover  {get; set;}
 
 
     ///<inheritdoc/>
@@ -606,6 +611,12 @@ public partial class DareHeader : DareTrailer {
 					}
 				break;
 				}
+			case "Cover" : {
+				if (value is TokenValueBinary vvalue) {
+					Cover = vvalue.Value;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -660,6 +671,9 @@ public partial class DareHeader : DareTrailer {
 			case "Received" : {
 				return new TokenValueDateTime (Received);
 				}
+			case "Cover" : {
+				return new TokenValueBinary (Cover);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -688,7 +702,8 @@ public partial class DareHeader : DareTrailer {
 					()=>new SequenceInfo(), ()=>new SequenceInfo(), false)} ,
 			{ "SequenceIndex", new Property ( typeof(TokenValueStruct), false,
 					()=>new SequenceIndex(), ()=>new SequenceIndex(), false)} ,
-			{ "Received", new Property (typeof(TokenValueDateTime), false)} 
+			{ "Received", new Property (typeof(TokenValueDateTime), false)} ,
+			{ "Cover", new Property (typeof(TokenValueBinary), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

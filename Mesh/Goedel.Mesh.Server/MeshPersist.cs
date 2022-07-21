@@ -152,6 +152,7 @@ public class MeshPersist : Disposable {
     /// Add a new account. The account name must be unique.
     /// </summary>
     /// <param name="accountEntry">Account data to add.</param>
+    /// <param name="catalogedCallsigns">The catalogued callsigns to bind.</param>
     public void AccountBind(
                     AccountEntry accountEntry,
                     List<CatalogedCallsign> catalogedCallsigns) {
@@ -299,7 +300,8 @@ public class MeshPersist : Disposable {
     /// </summary>
     /// <param name="jpcSession">The session connection data.</param>
     /// <param name="catalogedDeviceDigest">The digest version identifier of the device catalog
-    /// entry.</param>
+    /// </param>
+    /// <param name="catalogs">The list of catalogs for which status is requested.</param>
     public StatusResponse AccountStatus(
                     IJpcSession jpcSession,
                     string catalogedDeviceDigest,

@@ -230,14 +230,14 @@ public partial class Shell : _Shell {
         address ??= options.AccountAddress.Value;
         address.AssertNotNull(ServiceNotSpecified.Throw);
 
-        var service = address.GetService(); 
+        //var service = address.GetService(); 
 
         var profileDevice = ProfileDevice.Generate();
         var credential = new MeshCredentialPrivate(profileDevice, null, null, profileDevice.KeyAuthentication as KeyPairAdvanced);
 
 
 
-        return MeshMachine.GetMeshClient(credential, "@anonymous", service);
+        return MeshMachine.GetMeshClient(credential, address);
 
         }
 

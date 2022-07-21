@@ -44,7 +44,10 @@ namespace Goedel.Mesh;
 /// </summary>
 public partial class CallsignBinding  {
 
-
+	/// <summary>
+	/// Validate the binding value against the specified root of trust.
+	/// </summary>
+	/// <returns>True if the binding is valid, otherwise false.</returns>
 	public bool Validate() {
 		"Implement callsign binding validation logic".TaskValidate();
 

@@ -31,7 +31,9 @@ using System.Threading.Tasks;
 namespace Goedel.Callsign.Resolver;
 
 
-
+/// <summary>
+/// The resolver server.
+/// </summary>
 public class ResolverServer  {
     #region // Properties
 

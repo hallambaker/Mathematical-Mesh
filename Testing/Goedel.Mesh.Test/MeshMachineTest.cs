@@ -70,10 +70,9 @@ public class MeshMachineTest : MeshMachineCore {
     ///<inheritdoc/>
     public override MeshServiceClient GetMeshClient(
                 ICredentialPrivate credential,
-                string accountAddress,
-                string service=null
+                string accountAddress
                 ) => // Pass through to the test environment.
-        testEnvironmentCommon.GetMeshClient(this, credential, accountAddress, service);
+        testEnvironmentCommon.GetMeshClient(this, credential, accountAddress);
 
 
     public static Contact ContactAlice { get; } = new ContactPerson(

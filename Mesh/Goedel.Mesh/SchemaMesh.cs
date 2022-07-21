@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 02-Jun-22 5:29:31 PM
+//  This file was automatically generated at 19-Jul-22 11:26:33 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1798,12 +1798,24 @@ public partial class ProfileUser : ProfileAccount {
 	/// administrators over time.
 	/// </summary>
 public partial class ProfileGroup : ProfileAccount {
+        /// <summary>
+        ///HTML document containing cover text to be presented if a document 
+        ///encrypted under the group key cannot be decrypted.
+        /// </summary>
+
+	public virtual byte[]						Cover  {get; set;}
 
 
     ///<inheritdoc/>
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
+			case "Cover" : {
+				if (value is TokenValueBinary vvalue) {
+					Cover = vvalue.Value;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -1816,6 +1828,9 @@ public partial class ProfileGroup : ProfileAccount {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
+			case "Cover" : {
+				return new TokenValueBinary (Cover);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -1827,6 +1842,7 @@ public partial class ProfileGroup : ProfileAccount {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
+			{ "Cover", new Property (typeof(TokenValueBinary), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

@@ -30,12 +30,20 @@ using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 
 namespace Goedel.Presence.Server; 
+
+/// <summary>
+/// The presence service.
+/// </summary>
 public class PresenceServer : PresenceService {
     #region // Properties
 
     #endregion
     #region // Constructors
 
+
+    /// <summary>
+    /// Default constructor, returns an empty instance.
+    /// </summary>
     public PresenceServer() {
         }
 

@@ -9,6 +9,10 @@ using System.Net;
 
 namespace Goedel.Mesh.ServiceAdmin;
 
+
+/// <summary>
+/// Static class containing convenience extensions.
+/// </summary>
 public static class Extensions {
 
 

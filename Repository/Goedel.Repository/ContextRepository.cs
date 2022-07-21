@@ -91,6 +91,12 @@ public class ContextRepository : ContextAccount {
 
     #region Methods
 
+    /// <summary>
+    /// Publish the content <paramref name="data"/>.
+    /// </summary>
+    /// <param name="data">The content to publish.</param>
+    /// <returns>The publication message.</returns>
+    /// <exception cref="NotImplementedException"></exception>
     public Message Publish(byte[] data) {
         throw new NotImplementedException();
         }

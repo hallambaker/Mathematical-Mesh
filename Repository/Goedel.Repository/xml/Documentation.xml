@@ -172,7 +172,6 @@
             <param name="profileGroup">The group profile.</param>
             <param name="activationAccount">The activation data.</param>
             <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
-            <param name="connectionAddress">Connection binding profile to an address.</param>
             <returns>The created group.</returns>
         </member>
         <member name="M:Goedel.Repository.CatalogedRepository.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
@@ -286,6 +285,14 @@
             <param name="client">The client to connect to the service with.</param>
             <returns>The group context.</returns>
         </member>
+        <member name="M:Goedel.Repository.ContextRepository.Publish(System.Byte[])">
+            <summary>
+            Publish the content <paramref name="data"/>.
+            </summary>
+            <param name="data">The content to publish.</param>
+            <returns>The publication message.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
         <member name="T:Goedel.Repository.Internal">
             <summary>
             An internal assertion check failed.
@@ -332,6 +339,25 @@
             <summary>
             Extensions class. Provides static convenience extensions.
             </summary>
+        </member>
+        <member name="M:Goedel.Repository.Extensions.Register(Goedel.Mesh.Client.ContextUser,Goedel.Repository.RepositoryService)">
+            <summary>
+            Register the repository service <paramref name="repositoryServer"/> under the
+            user contect <paramref name="contextUser"/>.
+            </summary>
+            <param name="contextUser">The user context.</param>
+            <param name="repositoryServer">The repository service</param>
+            <returns>The corresponding repository context.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Goedel.Repository.Extensions.Publish(Goedel.Repository.ContextRepository,System.Byte[])">
+            <summary>
+            Publish <paramref name="data"/> to the context <paramref name="contextUser"/>
+            </summary>
+            <param name="contextUser">The repository context.</param>
+            <param name="data">The data to publish.</param>
+            <returns>The publication message.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="T:Goedel.Repository.PersistanceProtocol">
              <summary>
@@ -504,6 +530,11 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Repository.ProfileRepository.#ctor">
+            <summary>
+            Create and return an empty instance.
+            </summary>
         </member>
         <member name="M:Goedel.Repository.ProfileRepository.#ctor(System.String,Goedel.Mesh.ActivationCommon)">
             <summary>

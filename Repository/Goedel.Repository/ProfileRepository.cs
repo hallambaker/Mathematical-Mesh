@@ -23,7 +23,9 @@ namespace Goedel.Repository;
 public partial class ProfileRepository {
 
 
-
+    /// <summary>
+    /// Create and return an empty instance.
+    /// </summary>
     public ProfileRepository() {
         }
 

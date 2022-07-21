@@ -67,7 +67,7 @@
             <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
             <returns>The created key pair</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String,System.String)">
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
             <inheritdoc cref="T:Goedel.Mesh.IMeshMachine"/>
         </member>
         <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetCredential(System.String,System.String)">

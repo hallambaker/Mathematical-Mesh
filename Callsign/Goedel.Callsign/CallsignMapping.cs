@@ -30,19 +30,19 @@ using System.Threading.Tasks;
 namespace Goedel.Callsign;
 
 
-public record CallSign {
+//public record CallSign {
 
-    public CallsignMapping CallsignMapping { get; init; }
+//    public CallsignMapping CallsignMapping { get; init; }
 
-    public string Id { get; set; }
-    public string Presentation { get; set; }
-    }
+//    public string Id { get; set; }
+//    public string Presentation { get; set; }
+//    }
 
+/// <summary>
+/// Maintains a collection of callsign mapping pages that map a callsign to a value. 
+/// </summary>
 public partial class CallsignMapping {
     #region // Properties
-
-    public string Id { get; set; }
-    public string Presentation { get; set; }
 
 
     ///<summary>List of callsign code pages.</summary> 
@@ -59,14 +59,9 @@ public partial class CallsignMapping {
 
 
     /// <summary>
-    /// Constructor returning a callsign instance. If the parameter <paramref name="presentation"/>
-    /// is not null, the presentation value of the callsign is set to the specified value.
+    /// Constructor returning a callsign mapping instance. 
     /// </summary>
-    /// <param name="presentation">The presentation value to be set.</param>
-    public CallsignMapping(string presentation = null) {
-        if (presentation != null) {
-            SetPresentation(presentation);
-            }
+    public CallsignMapping() {
 
 
         }
@@ -78,32 +73,18 @@ public partial class CallsignMapping {
     #endregion
     #region // Methods
 
-
+    /// <summary>
+    /// Validate the callsign binding <paramref name="callsignBinding"/> for consistency of the
+    /// presentation value according to the mapping rules specified.
+    /// </summary>
+    /// <param name="callsignBinding">The callsign binding to verify.</param>
+    /// <returns>True if the mapping is valid, otherwise false.</returns>
     public bool Validate(CallsignBinding callsignBinding) {
         "Implement callsign binding validation logic".TaskValidate();
 
         return true;
-
         }
 
-
-    /// <summary>
-    /// Set the presentation value of the callsign. 
-    /// </summary>
-    /// <param name="presentation">The presentation value to be set.</param>
-    /// <exception cref="InvalidPresentation">The presentation is invalid</exception>
-    public void SetPresentation(string presentation) {
-        presentation.AssertNotNull(InvalidPresentation.Throw, presentation, Id);
-
-        if (Id == null) {
-            Id = Canonicalize(presentation);
-            }
-        else {
-            Id.AssertEqual(Canonicalize(presentation), InvalidPresentation.Throw);
-            }
-
-        Presentation = presentation;
-        }
 
     /// <summary>
     /// Add the code page <paramref name="page"/>

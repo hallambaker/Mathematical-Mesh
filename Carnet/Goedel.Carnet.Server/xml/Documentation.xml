@@ -4,6 +4,22 @@
         <name>Goedel.Carnet.Server</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Carnet.Server.CarnetServer">
+            <summary>
+            Carnet Service.
+            </summary>
+        </member>
+        <member name="M:Goedel.Carnet.Server.CarnetServer.#ctor">
+            <summary>
+            Create and return an empty instance.
+            </summary>
+        </member>
+        <member name="M:Goedel.Carnet.Server.CarnetServer.Spend(System.Int32)">
+            <summary>
+            Spend <paramref name="token"/> tokens.
+            </summary>
+            <param name="token">The number of tokens to spend.</param>
+        </member>
         <member name="T:Goedel.Carnet.Server.CarnetServiceConfiguration">
             <summary>
             The Mesh service configuration.

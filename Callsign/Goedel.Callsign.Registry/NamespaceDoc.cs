@@ -17,18 +17,17 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-global using Goedel.Utilities;
-global using Goedel.Mesh;
 global using Goedel.Cryptography;
 global using Goedel.Cryptography.Dare;
 global using Goedel.Mesh;
 global using Goedel.Mesh.Client;
 global using Goedel.Protocol.Service;
+global using Goedel.Utilities;
 global using System.Text;
 
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 
-namespace CallsignRegistry; 
+namespace CallsignRegistry;
 /// <summary>
 /// Desctiption of the 
 /// </summary>

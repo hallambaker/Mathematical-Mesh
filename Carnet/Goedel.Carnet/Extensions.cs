@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Goedel.Cryptography.Jose;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,9 +24,15 @@ public static class Extensions {
     //    ContextCarnet.Create(contextUser, accountAddress);
     //}
 
-
+    /// <summary>
+    /// Spend <paramref name="amount"/> tokens from the wallet of <paramref name="contextUser"/>.
+    /// </summary>
+    /// <param name="contextUser">The user context.</param>
+    /// <param name="amount">The number of tokens to spend.</param>
+    /// <returns>The number of tokens spent??</returns>
     public static int Spend(this ContextUser contextUser, int amount) {
-        //throw new NotImplementedException();
+        contextUser.Future();
+        amount.Future();
         return 0;
         }
 

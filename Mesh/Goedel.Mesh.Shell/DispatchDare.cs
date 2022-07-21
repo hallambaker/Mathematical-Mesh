@@ -45,9 +45,13 @@ public partial class Shell {
             ContentType = contentType
             };
 
+        byte[] cover = null;
+        if (options.Cover.Value != null) {
+            options.Cover.Value.OpenReadToEnd(out cover);
+            }
 
         var Length = DareEnvelope.Encode(cryptoParameters, inputFile, outputFile,
-            contentMeta: ContentInfo);
+            contentMeta: ContentInfo, cover: cover);
 
         return new ResultFile() {
             Filename = outputFile,

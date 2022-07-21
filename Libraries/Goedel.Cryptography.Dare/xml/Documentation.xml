@@ -731,6 +731,11 @@
             Date on which the envelope was received.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareHeader.Cover">
+             <summary>
+            HTML document containing cover text to be presented if the document cannot be decrypted.
+             </summary>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.DareHeader.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
@@ -2775,7 +2780,7 @@
             <param name="jsonReader">The stream from which data is to be read.</param>
             <returns>The DareEnvelope instance.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.String,System.String,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32)">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.String,System.String,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
             <summary>
             Decode a streamed message
             </summary>
@@ -2791,7 +2796,7 @@
             system chunk size (2048) is used.</param>
             <returns>The number of bytes in the input file.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32)">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
             <summary>
             Decode a streamed message
             </summary>
@@ -2806,7 +2811,7 @@
             system chunk size (2048) is used.</param>
             <returns>The serialized encoding of the data.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.IO.Stream,System.IO.Stream,System.Int64,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32)">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.IO.Stream,System.IO.Stream,System.Int64,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
             <summary>
             Encode data received on the input stream to the output stream with the specified
             security enhancements. If the input stream supports the seek operation, and
@@ -2845,6 +2850,15 @@
             <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Decode(System.IO.Stream,System.IO.Stream,System.String,Goedel.Cryptography.IKeyLocate)">
+            <summary>
+            Decode a streamed message
+            </summary>
+            <param name="inputStream">The input stream, must support reading.</param>
+            <param name="outputStream">The output stream, must support writing</param>
+            <param name="outputFile">The output file, must support writing</param>
+            <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.TryDecode(System.IO.Stream,System.IO.Stream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.DareHeader@)">
             <summary>
             Decode a streamed message
             </summary>
@@ -2897,7 +2911,7 @@
                 Gets the position within the current stream.  (not implemented).
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.CryptoParameters,System.IO.Stream,Goedel.Cryptography.Dare.ContentMeta,System.Int64,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.CryptoParameters,System.IO.Stream,Goedel.Cryptography.Dare.ContentMeta,System.Int64,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Byte[])">
             <summary>Create a writer to output a DARE Message to a stream.</summary>
             <param name="cryptoParameters">
                 Specifies the cryptographic enhancements to
@@ -2916,7 +2930,7 @@
                 as an EDSS header entry.
             </param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Protocol.JsonWriter,Goedel.Cryptography.Dare.ContentMeta,System.Int64,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Protocol.JsonWriter,Goedel.Cryptography.Dare.ContentMeta,System.Int64,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Byte[])">
             <summary>
                 Create a writer to output a DARE Message to a stream.
             </summary>

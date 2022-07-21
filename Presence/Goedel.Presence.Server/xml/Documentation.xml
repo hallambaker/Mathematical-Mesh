@@ -51,6 +51,16 @@
             Desctiption of the 
             </summary>
         </member>
+        <member name="T:Goedel.Presence.Server.PresenceServer">
+            <summary>
+            The presence service.
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceServer.#ctor">
+            <summary>
+            Default constructor, returns an empty instance.
+            </summary>
+        </member>
         <member name="M:Goedel.Presence.Server.PresenceServer.Connect(Goedel.Presence.ConnectRequest,Goedel.Protocol.IJpcSession)">
             <inheritdoc/>
         </member>

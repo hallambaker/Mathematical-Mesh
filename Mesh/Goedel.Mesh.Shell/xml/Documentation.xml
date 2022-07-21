@@ -2659,6 +2659,9 @@
         <member name="P:Goedel.Mesh.Shell._GroupCreate.GroupID">
             <summary>Field accessor for parameter []</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.Cover">
+            <summary>Field accessor for option [cover]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._GroupAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -3670,6 +3673,9 @@
         <member name="P:Goedel.Mesh.Shell._DareEncode.Hash">
             <summary>Field accessor for option [hash]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareEncode.Cover">
+            <summary>Field accessor for option [cover]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareEncode.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
@@ -3811,6 +3817,9 @@
         <member name="P:Goedel.Mesh.Shell._DareCreate.Hash">
             <summary>Field accessor for option [hash]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareCreate.Cover">
+            <summary>Field accessor for option [cover]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareCreate.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
@@ -3858,6 +3867,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareArchive.Hash">
             <summary>Field accessor for option [hash]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareArchive.Cover">
+            <summary>Field accessor for option [cover]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareArchive.Algorithms">
             <summary>Field accessor for option [alg]</summary>
@@ -3913,6 +3925,9 @@
         <member name="P:Goedel.Mesh.Shell._DareLog.Hash">
             <summary>Field accessor for option [hash]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareLog.Cover">
+            <summary>Field accessor for option [cover]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareLog.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
@@ -3954,6 +3969,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareAppend.Hash">
             <summary>Field accessor for option [hash]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareAppend.Cover">
+            <summary>Field accessor for option [cover]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareAppend.Algorithms">
             <summary>Field accessor for option [alg]</summary>
@@ -4063,6 +4081,9 @@
         <member name="P:Goedel.Mesh.Shell._DareIndex.Hash">
             <summary>Field accessor for option [hash]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareIndex.Cover">
+            <summary>Field accessor for option [cover]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareIndex.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
@@ -4143,6 +4164,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DareCopy.Hash">
             <summary>Field accessor for option [hash]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareCopy.Cover">
+            <summary>Field accessor for option [cover]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareCopy.Algorithms">
             <summary>Field accessor for option [alg]</summary>

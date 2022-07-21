@@ -28,6 +28,10 @@ public partial class ProfileResolver {
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<ProfileService> GetEnvelopedProfileAccount() => new(DareEnvelope);
 
+
+    /// <summary>
+    /// Default constructor, returns an empty instance.
+    /// </summary>
     public ProfileResolver() {
         }
 
@@ -36,6 +40,7 @@ public partial class ProfileResolver {
     /// </summary>
     /// <param name="accountAddress">The account address</param>
     /// <param name="activationAccount">The activation used to create the account data.</param>
+    /// <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
     public ProfileResolver(
                 string accountAddress,
                 Enveloped<ProfileAccount> envelopedProfileRegistry,
@@ -56,6 +61,8 @@ public partial class ProfileResolver {
     /// <param name="secretSeed">The secret seed value.</param>
     /// <param name="keyCollection">The base key collection</param>
     /// <param name="persist">If true, persist the service record to the local machine
+    /// <param name="accountAddress">The account address.</param>
+    /// <param name="envelopedProfileRegistry">The enveloped registry profile</param>
     /// store.</param>
     ProfileResolver(
                 string accountAddress,
@@ -84,6 +91,8 @@ public partial class ProfileResolver {
     /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
     /// seed.
     /// </summary>
+    /// <param name="resolverAddress">The resolver address</param>
+    /// <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
     /// <param name="secretSeed">The secret seed value.</param>
     /// <param name="algorithmEncrypt">The encryption algorithm.</param>
     /// <param name="algorithmSign">The signature algorithm</param>

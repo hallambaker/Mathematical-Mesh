@@ -40,16 +40,27 @@ public partial class Registration {
     #region // Constructors
 
 
+    /// <summary>
+    /// Default constructor, returns an empty instance.
+    /// </summary>
     public Registration() {
 
 
 
         }
 
-
+    /// <summary>
+    /// Return a registration instance for the callsign <paramref name="callsign"/> with optional
+    /// prior registration <paramref name="registration"/> and 
+    /// </summary>
+    /// <param name="callsign">The callsign binding.</param>
+    /// <param name="registration">The prior registration for the canonical callsign
+    /// value.</param>
+    /// <param name="registrationReason">The registration reason. This is ignored if 
+    /// <paramref name="registration"/> is null.</param>
     public Registration(
             CallsignBinding callsign, 
-            Registration registration=null, 
+            Registration? registration=null, 
             RegistrationReason registrationReason= RegistrationReason.Update) {
         Id = UDF.Nonce();
         Entry = callsign.Enveloped as Enveloped<CallsignBinding>;

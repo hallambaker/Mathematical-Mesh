@@ -56,7 +56,7 @@ partial class Program {
         Logger.LogInformation("Start test {time}", DateTime.Now);
 
 
-        GoedelProtocol.Test().TestStruct();
+        ServiceDiscovery.Test().TestDNSMultiple(20);
 
         //TestService.Test().MeshCatalogGroup();
         //ShellTests.Test().TestAccountDelete();

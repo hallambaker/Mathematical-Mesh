@@ -17,7 +17,12 @@
     },
     "Group Create": {
       "commandName": "Project",
-      "commandLineArgs": "group create fred@example.com",
+      "commandLineArgs": "group create fred@example.com  /web",
+      "workingDirectory": "..\\..\\TestResults\\Service"
+    },
+    "Group Create Cover": {
+      "commandName": "Project",
+      "commandLineArgs": "group create fred@example.com /cover SF-703.html  /web",
       "workingDirectory": "..\\..\\TestResults\\Service"
     },
     "Account sync": {
@@ -45,6 +50,11 @@
     "Encode": {
       "commandName": "Project",
       "commandLineArgs": "dare encode foo.txt foo.dare /encrypt alice@example.com",
+      "workingDirectory": "C:\\Users\\hallam\\Mesh"
+    },
+    "Encode Cover": {
+      "commandName": "Project",
+      "commandLineArgs": "dare encode foo.txt foo.dare /encrypt alice@example.com /cover SF-703.html",
       "workingDirectory": "C:\\Users\\hallam\\Mesh"
     },
     "Decode": {
@@ -84,7 +94,12 @@
     },
     "Group Add": {
       "commandName": "Project",
-      "commandLineArgs": "group add fred@example.com me@example.com",
+      "commandLineArgs": "group add groupw@example.com alice@example.com",
+      "workingDirectory": "C:\\Users\\hallam\\Mesh"
+    },
+    "Group Delete": {
+      "commandName": "Project",
+      "commandLineArgs": "group delete groupw@example.com alice@example.com",
       "workingDirectory": "C:\\Users\\hallam\\Mesh"
     },
     "Recover": {

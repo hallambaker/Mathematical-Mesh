@@ -169,7 +169,13 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             MeshHost meshHost, Profile profile) =>
                 GetStoresDirectory(meshHost.MeshMachine, profile);
 
-
+    /// <summary>
+    /// Returns the stores directory on <paramref name="meshMachine"/> for the profile 
+    /// <paramref name="profile"/>.
+    /// </summary>
+    /// <param name="meshMachine">The Mesh machine</param>
+    /// <param name="profile">The profile.</param>
+    /// <returns>Path to the directory containing the profile stores.</returns>
     public static string GetStoresDirectory(IMeshMachineClient meshMachine, Profile profile) =>
         Path.Combine(meshMachine.DirectoryMesh, profile.Udf);
 
@@ -202,15 +208,12 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     #endregion
     #endregion
 
-
-    static int countStores = 0;
-
     /// <summary>
     /// Disposal method called on exit.
     /// </summary>
     protected override void Disposing() {
         //Screen.WriteLine($"*** Dispose ContextAccount {AccountAddress} {countStores}");
-        countStores--;
+        //countStores--;
         foreach (var status in DictionaryStores) {
             var store = status.Value.Store;
             store.Dispose();
@@ -229,7 +232,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public ContextAccount(
             MeshHost meshHost,
             CatalogedMachine catalogedMachine) {
-        countStores++;
+        //countStores++;
         //Screen.WriteLine($"*** Create ContextAccount {AccountAddress} {countStores}");
 
 
@@ -341,7 +344,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <returns>The Mesh service client</returns>
     public MeshServiceClient GetMeshClient(ICredentialPrivate credentialPrivate) =>
-                MeshMachine.GetMeshClient(credentialPrivate, Profile.Udf);
+                MeshMachine.GetMeshClient(credentialPrivate, AccountAddress);
 
 
     /// <summary>
@@ -916,7 +919,13 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         }
 
  
-
+    /// <summary>
+    /// Make bindings of the profile <paramref name="profile"/> to the account address
+    /// <paramref name="accountAddress"/>.
+    /// </summary>
+    /// <param name="profile">The profile to bind.</param>
+    /// <param name="accountAddress">The address to be bound.</param>
+    /// <returns>The bindings created.</returns>
     public List<Enveloped<CallsignBinding>> MakeBindings(
             Profile profile, string accountAddress) {
         var callsignBinding = new CallsignBinding() {

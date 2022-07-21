@@ -469,6 +469,15 @@
             <param name="profile">The profile.</param>
             <returns>Path to the directory containing the profile stores.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetStoresDirectory(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.Profile)">
+            <summary>
+            Returns the stores directory on <paramref name="meshMachine"/> for the profile 
+            <paramref name="profile"/>.
+            </summary>
+            <param name="meshMachine">The Mesh machine</param>
+            <param name="profile">The profile.</param>
+            <returns>Path to the directory containing the profile stores.</returns>
+        </member>
         <member name="F:Goedel.Mesh.Client.ContextAccount.DictionaryStores">
             <summary>Dictionary locating the stores connected to the context.</summary>
         </member>
@@ -756,6 +765,15 @@
             Make a resolution request to the Callsign Resolution service provisioned.
             </summary>
             <param name="callsign">The callsign to resolve.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.MakeBindings(Goedel.Mesh.Profile,System.String)">
+            <summary>
+            Make bindings of the profile <paramref name="profile"/> to the account address
+            <paramref name="accountAddress"/>.
+            </summary>
+            <param name="profile">The profile to bind.</param>
+            <param name="accountAddress">The address to be bound.</param>
+            <returns>The bindings created.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.TransactBegin">
             <summary>
@@ -1254,13 +1272,14 @@
             <param name="read">If true, the message has already been read.</param>
             <returns>The message value (if unread).</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateGroup(System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateGroup(System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String},System.Byte[])">
             <summary>
             Create a threshold encryption group.
             </summary>
             <param name="groupName">Name of the group to create.</param>
             <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
             <param name="roles">List of rights to be granted.</param>
+            <param name="cover">Specifies HTML content containing a default cover page.</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.EscrowSeed(Goedel.Mesh.KeyData[])">

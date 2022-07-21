@@ -98,6 +98,7 @@ public partial class CatalogedCallsign {
     ///<summary>The primary key is protocol:site </summary>
     public override string _PrimaryKey => Canonical;
 
+    ///<inheritdoc/>
     public override void Activate(List<ApplicationEntry> activationEntry, IKeyCollection keyCollection) {
         throw new NotImplementedException();
         }

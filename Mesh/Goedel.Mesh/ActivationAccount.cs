@@ -48,16 +48,17 @@ public partial class ActivationHost : ActivationAccount {
     /// length <paramref name="bits"/> is generated.
     /// </summary>
     /// <param name="profileDevice">The base profile that the activation activates.</param>
+    /// <param name="serviceUdf">The service profile UDF.</param>
     /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
     /// a seed value of <paramref name="bits"/> length is generated.</param>
     /// <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
     /// is null.</param>
     public ActivationHost(
                 ProfileDevice profileDevice,
-                string profileUdf,
+                string serviceUdf,
                 byte[] masterSecret = null,
                 int bits = 256) : base(
-                    profileDevice, profileUdf, masterSecret, bits) {
+                    profileDevice, serviceUdf, masterSecret, bits) {
         ProfileDevice = profileDevice;
         AccountUdf = profileDevice.Udf;
         }
@@ -123,6 +124,7 @@ public partial class ActivationAccount {
     /// <see cref="ConnectionService"/> generated for the public values.
     /// </summary>
     /// <param name="profileDevice">The base profile that the activation activates.</param>
+    /// <param name="profileUdf">The user profile UDF.</param>
     /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
     /// a seed value of <paramref name="bits"/> length is generated.</param>
     /// <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>

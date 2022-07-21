@@ -35,7 +35,14 @@ public partial class Shell {
         var groupID = options.GroupID.Value;
         rights ??= new List<string> {"super", "admin" };
         var contextAccount = GetContextUser(options);
-        var contextGroup = contextAccount.CreateGroup(groupID, roles: rights);
+
+        byte[] cover = null;
+        if (options.Cover.Value != null) {
+             options.Cover.Value.OpenReadToEnd(out cover);
+            }
+
+
+        var contextGroup = contextAccount.CreateGroup(groupID, roles: rights, cover: cover);
 
         //Screen.WriteLine($"Group Encryption key is {contextGroup.ProfileGroup.AccountEncryptionKey.KeyIdentifier}");
 

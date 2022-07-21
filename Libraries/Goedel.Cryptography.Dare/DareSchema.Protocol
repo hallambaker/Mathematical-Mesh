@@ -152,7 +152,9 @@
 		DateTime Received
 			Description
 				|Date on which the envelope was received.
-
+		Binary Cover
+			Description
+				|HTML document containing cover text to be presented if the document cannot be decrypted.
 
 	Structure ContentMeta
 		String UniqueId

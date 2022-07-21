@@ -21,6 +21,8 @@
 #endregion
 
 using Goedel.Utilities;
+
+using System.Net;
 namespace Goedel.IO;
 
 /// <summary>
@@ -45,11 +47,20 @@ public static class UriClient {
     public static async Task<byte[]> UploadDataTaskAsync(this string address, byte[] data) {
 
 
-        var request = new ByteArrayContent(data);
-        var response = await HttpClient.PostAsync(address, request);
-        var content = response.Content;
-        var bytes = await content.ReadAsByteArrayAsync();
-        var discard = bytes.ToUTF8();
+
+
+        var webClient = new WebClient();
+        var bytes = webClient.UploadData(address, data);
+
+        //var request = new ByteArrayContent(data);
+        //var response = await HttpClient.PostAsync(address, request);
+        //var content = response.Content;
+        //var bytes = await content.ReadAsByteArrayAsync();
+        //var discard = bytes.ToUTF8();
         return bytes;
         }
+
+
+
+
     }

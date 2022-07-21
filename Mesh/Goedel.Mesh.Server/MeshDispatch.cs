@@ -205,6 +205,14 @@ public class PublicMeshService : MeshService {
     #region // Create service
 
 
+    /// <summary>
+    /// Add administrator account <paramref name="admin"/> to the service.
+    /// </summary>
+    /// <param name="meshMachine">The mesh machine context.</param>
+    /// <param name="admin">The administration account to create.</param>
+    /// <param name="serviceConfiguration">The service configuration.</param>
+    /// <param name="dareLogger">Logger configuration.</param>
+    /// <returns></returns>
     public virtual ContextUser AddAdministrator(
                 IMeshMachineClient meshMachine, 
                 string admin, 
@@ -395,6 +403,9 @@ public class PublicMeshService : MeshService {
 
     bool VerifyBinding(ProfileAccount profileAccount, CallsignBinding callsignBinding) {
         CatalogCallsign.Get(callsignBinding.Canonical).AssertNull(NYI.Throw);
+
+        profileAccount.Future();
+
         return true;
         }
     bool ServiceBinding(CallsignBinding callsignBinding) => true;

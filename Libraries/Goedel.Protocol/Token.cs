@@ -32,6 +32,7 @@ namespace Goedel.Protocol;
 /// <param name="Factory">Factory generating an instance of the node (if required).</param>
 /// <param name="IFactory">Factory generating an instance of a list member (if required).</param>
 /// <param name="Tagged">If true, structures are to be represented as a tagged structure.</param>
+/// <param name="tagDictionary">Tag dictionary to be used to deserialize the property.</param>
 public record Property(
 
             Type TokenType,
@@ -255,7 +256,6 @@ public record TokenValueStruct<T>(T Value) : TokenValueStruct where T: JsonObjec
 /// Record representing a boolean value in a JSON tree.
 /// </summary>
 /// <param name="Value">The value.</param>
-/// <typeparam name="T">The type of the node value</typeparam>
 public record TokenValueStructObject(object Value) : TokenValueStruct {
     ///<inheritdoc/>
     public override JsonObject JsonObject => Value as JsonObject;
@@ -486,6 +486,12 @@ public abstract record TokenValueListStruct() : TokenValue {
     ///<inheritdoc/>
     public override Token Token => Token.StartObject;
 
+    /// <summary>
+    /// Serialize the value by calling methods on the writer <paramref name="writer"/>.
+    /// </summary>
+    /// <param name="writer">The writer to serialize the value to.</param>
+    /// <param name="tagged">If true, structured values to be written as a tagged
+    /// structure.</param>
     public abstract void Serialize(Writer writer, bool tagged);
     }
 
@@ -493,7 +499,6 @@ public abstract record TokenValueListStruct() : TokenValue {
 /// Record representing a boolean value in a JSON tree.
 /// </summary>
 /// <param name="Value">The value.</param>
-/// <typeparam name="T">The type of the node value</typeparam>
 public record TokenValueListStructObject(object Value) : TokenValueStruct {
     ///<inheritdoc/>
     public override JsonObject JsonObject => Value as JsonObject;

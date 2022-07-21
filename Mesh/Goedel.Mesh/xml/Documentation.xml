@@ -124,6 +124,7 @@
             length <paramref name="bits"/> is generated.
             </summary>
             <param name="profileDevice">The base profile that the activation activates.</param>
+            <param name="serviceUdf">The service profile UDF.</param>
             <param name="masterSecret">If not null, specifies the seed value. Otherwise,
             a seed value of <paramref name="bits"/> length is generated.</param>
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
@@ -223,6 +224,7 @@
             <see cref="P:Goedel.Mesh.ActivationAccount.ConnectionService"/> generated for the public values.
             </summary>
             <param name="profileDevice">The base profile that the activation activates.</param>
+            <param name="profileUdf">The user profile UDF.</param>
             <param name="masterSecret">If not null, specifies the seed value. Otherwise,
             a seed value of <paramref name="bits"/> length is generated.</param>
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
@@ -1418,6 +1420,12 @@
             </summary>
             <summary>
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CallsignBinding.Validate">
+            <summary>
+            Validate the binding value against the specified root of trust.
+            </summary>
+            <returns>True if the binding is valid, otherwise false.</returns>
         </member>
         <member name="P:Goedel.Mesh.CallsignBinding.Canonical">
              <summary>
@@ -2890,6 +2898,9 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogedCallsign._PrimaryKey">
             <summary>The primary key is protocol:site </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedCallsign.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogedCallsign.Describe(System.Text.StringBuilder,System.Boolean)">
             <inheritdoc/>
@@ -6900,13 +6911,12 @@
             <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
             <returns>The created key pair</returns>
         </member>
-        <member name="M:Goedel.Mesh.IMeshMachine.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String,System.String)">
+        <member name="M:Goedel.Mesh.IMeshMachine.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
             <summary>
             Return a MeshService client for the service ID <paramref name="credential"/>.
             </summary>
             <param name="credential">Credential to be used to establish the client.</param>
             <param name="accountAddress">Account under which service is requested.</param>
-            <param name="service">Service name</param>
             <returns>The client instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.IMeshMachine.GetCredential(System.String,System.String)">
@@ -8788,6 +8798,12 @@
             </summary>
             <param name="accountAddress">The account address</param>
             <param name="activationAccount">The activation used to create the account data.</param>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileGroup.Cover">
+             <summary>
+            HTML document containing cover text to be presented if a document 
+            encrypted under the group key cannot be decrypted.
+             </summary>
         </member>
         <member name="M:Goedel.Mesh.ProfileGroup.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>

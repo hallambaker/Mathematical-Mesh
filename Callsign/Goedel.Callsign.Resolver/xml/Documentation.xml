@@ -370,6 +370,11 @@
         <member name="P:Goedel.Callsign.Resolver.CallsignResolverConfiguration.Registry">
             <summary>The sevice address of the registry to resolve.</summary> 
         </member>
+        <member name="T:Goedel.Callsign.Resolver.ContextResolver">
+            <summary>
+            Callsign resolution service.
+            </summary>
+        </member>
         <member name="P:Goedel.Callsign.Resolver.ContextResolver.MeshClientRegistry">
             <summary>Client used to connect to the regitry.</summary> 
         </member>
@@ -411,9 +416,9 @@
             </summary>
             <param name="meshHost">The mesh host.</param>
             <param name="resolverAddress">The address of the resolver account.</param>
-            <param name="registryAddress">The address of the registry account.</param>
             <param name="accountSeed">Optional account seed.</param>
             <param name="roles">The authorized roles.</param>
+            <param name="envelopedProfileRegistry">The enveloped registry profile.</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Callsign.Resolver.ContextResolver.Update">
@@ -468,6 +473,11 @@
         <member name="M:Goedel.Callsign.Resolver.EventExtensions.#cctor">
             <summary>
             Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Callsign.Resolver.ResolverServer">
+            <summary>
+            The resolver server.
             </summary>
         </member>
         <member name="P:Goedel.Callsign.Resolver.ResolverServer.ContextResolver">

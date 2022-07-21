@@ -299,7 +299,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
         // Check to make sure the object does not already exist
         Assert.AssertTrue(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), EntryNotFound.Throw);
         ObjectIndex.Remove(containerStoreEntry.UniqueID);
-        DeletedObjects.Add(containerStoreEntry.UniqueID, containerStoreEntry);
+        //DeletedObjects.Add(containerStoreEntry.UniqueID, containerStoreEntry);
 
         KeyValueIndexDelete(containerStoreEntry);
         }

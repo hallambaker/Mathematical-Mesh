@@ -104,7 +104,7 @@ public partial class ContextUser : ContextAccount {
     ///<summary>The contact catalog, used for key location of group keys.</summary>  
     protected CatalogContact CatalogContact { get; set; }
 
-    string? deviceSeedId, accountSeedId;
+    string? deviceSeedId;
 
     /// <summary>
     /// Create a new ICredential.
@@ -200,7 +200,7 @@ public partial class ContextUser : ContextAccount {
         output.WriteLine($"        Signature {ProfileUser.CommonSignature.Udf}");
         output.WriteLine($"        Authentication {ProfileUser.CommonAuthentication.Udf}");
         output.WriteLine($"        Encryption {ProfileUser.CommonEncryption.Udf}");
-        output.WriteLine($"    Account Device {accountSeedId}");
+        output.WriteLine($"    Account Device");
         output.WriteLine($"        Signature {ConnectionAccount?.Signature?.Udf} " +
             $"Loaded = {ActivationAccount.AccountSignature != null}");
         output.WriteLine($"        Authentication {ConnectionAccount?.Authentication?.Udf}" +
@@ -282,7 +282,7 @@ public partial class ContextUser : ContextAccount {
                     KeyCommonAuthentication as KeyPairAdvanced, ProfileUser.Udf);
 
 
-        MeshClient = MeshMachine.GetMeshClient(credentialPrivate, ProfileUser.Udf);
+        MeshClient = MeshMachine.GetMeshClient(credentialPrivate, accountAddress);
 
         // Query the service capabilities
         var helloRequest = new HelloRequest();
@@ -695,11 +695,13 @@ public partial class ContextUser : ContextAccount {
     /// <param name="groupName">Name of the group to create.</param>
     /// <param name="accountSeed">Specifies the secret seed and algorithms used to generate private keys.</param>
     /// <param name="roles">List of rights to be granted.</param>
+    /// <param name="cover">Specifies HTML content containing a default cover page.</param>
     /// <returns></returns>
 
     public ContextGroup CreateGroup(string groupName,
                     PrivateKeyUDF accountSeed = null,
-                    List<string> roles = null
+                    List<string> roles = null,
+                    byte[]cover=null
                     ) {
 
         // create the cataloged group
@@ -711,7 +713,9 @@ public partial class ContextUser : ContextAccount {
         var activationGroup = new ActivationCommon(keyCollectionGroup, accountSeed) {
             ActivationKey = accountSeed.PrivateValue
             };
-        var profileGroup = new ProfileGroup(groupName, activationGroup);
+        var profileGroup = new ProfileGroup(groupName, activationGroup) {
+            Cover = cover
+            };
 
         // Check that the profile is valid before using it.
         profileGroup.Validate();
@@ -741,7 +745,7 @@ public partial class ContextUser : ContextAccount {
         var credentialPrivate = new MeshKeyCredentialPrivate(
                     activationGroup.CommonAuthenticationKey as KeyPairAdvanced, profileGroup.Udf);
 
-        var groupClient = MeshMachine.GetMeshClient(credentialPrivate, profileGroup.Udf);
+        var groupClient = MeshMachine.GetMeshClient(credentialPrivate, groupName);
 
 
         var createResponse = groupClient.BindAccount(createRequest);

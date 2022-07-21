@@ -465,7 +465,7 @@
             <param name="timeout">The maximum length of time to wait for a query to be satisfied</param>
             <param name="retry">Retry interval.</param>
         </member>
-        <member name="M:Goedel.Discovery.DNSContext.SendRequest(Goedel.Discovery.DNSRequest)">
+        <member name="M:Goedel.Discovery.DNSContext.SendRequest(Goedel.Discovery.DNSRequest,System.Int32)">
             <summary>
             Make a DNS request to the default client without waiting for a response
             </summary>
@@ -489,7 +489,7 @@
             Close the context.
             </summary>
         </member>
-        <member name="M:Goedel.Discovery.DNSContext.NextAsync">
+        <member name="M:Goedel.Discovery.DNSContext.NextAsync(System.Threading.Tasks.Task,System.Threading.Tasks.Task)">
             <summary>
             Return the next response to a pending DNS request.
             </summary>
@@ -551,26 +551,26 @@
             <summary>
             Constructor from server name.
             </summary>
-            <param name="Server">Address of DNS server</param>
+            <param name="server">Address of DNS server</param>
         </member>
         <member name="M:Goedel.Discovery.DnsClientUDP.#ctor(System.Net.IPAddress)">
             <summary>
             Constructor from IP Address using default DNS port (53).
             </summary>
-            <param name="IPAddress">Address of DNS server</param>
+            <param name="iPAddress">Address of DNS server</param>
         </member>
         <member name="M:Goedel.Discovery.DnsClientUDP.#ctor(System.Collections.Generic.List{System.Net.IPAddress})">
             <summary>
             Constructor from list of IP Addresses
             </summary>
-            <param name="ListIPAddress">List of addresses of DNS server</param>
+            <param name="listIPAddress">List of addresses of DNS server</param>
         </member>
         <member name="M:Goedel.Discovery.DnsClientUDP.#ctor(System.Net.IPAddress,System.UInt16)">
             <summary>
             Constructor from IP Address and port.
             </summary>
-            <param name="IPAddress">Address of DNS server</param>
-            <param name="Port">Port number</param>
+            <param name="iPAddress">Address of DNS server</param>
+            <param name="port">Port number</param>
         </member>
         <member name="M:Goedel.Discovery.DnsClientUDP.GetHostDNS">
             <summary>
@@ -597,26 +597,19 @@
             <summary>
             Default Constructor
             </summary>
-            <param name="ListIPAddress">List of IP addresses to contact.</param>
-            <param name="Port">Port number.</param>
+            <param name="listIPAddress">List of IP addresses to contact.</param>
+            <param name="port">Port number.</param>
         </member>
         <member name="M:Goedel.Discovery.DNSContextUDP.Close">
             <summary>
             Close the context.
             </summary>
         </member>
-        <member name="M:Goedel.Discovery.DNSContextUDP.SendRequest(Goedel.Discovery.DNSRequest)">
-            <summary>
-            Make a DNS request to the default client without waiting for a response
-            </summary>
-            <param name="Request">DNS request set</param>
-            <returns>Task instance.</returns>
+        <member name="M:Goedel.Discovery.DNSContextUDP.SendRequest(Goedel.Discovery.DNSRequest,System.Int32)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Discovery.DNSContextUDP.GetResponseAsync">
-            <summary>
-            Make DNS query and wait for response.
-            </summary>
-            <returns>The first valid response received.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Discovery.DNSContextUDP.GetResponseRawAsync">
             <summary>

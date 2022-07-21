@@ -113,7 +113,6 @@ public partial class CatalogedRepository{
     /// <param name="profileGroup">The group profile.</param>
     /// <param name="activationAccount">The activation data.</param>
     /// <param name="encryptionKey">Key under which the activation is to be encrypted.</param>
-    /// <param name="connectionAddress">Connection binding profile to an address.</param>
     /// <returns>The created group.</returns>
     public CatalogedRepository(
                     ProfileRepository profileGroup,

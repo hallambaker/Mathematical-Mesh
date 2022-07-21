@@ -27,10 +27,12 @@ public class ContextRegistry : ContextAccount {
 
     ///<summary>The catalogued Registry description.</summary>
     public CatalogedRegistry CatalogedRegistry;
+    
+    ///<summary>The registation catalog.</summary> 
 
     public CatalogRegistration CatalogRegistration;
 
-
+    ///<summary>The callsign mapping</summary> 
     public CallsignMapping CallsignMapping { get; }
 
 
@@ -120,7 +122,7 @@ public class ContextRegistry : ContextAccount {
         // Since the service does not know this account (yet)
         var credentialPrivate = new MeshKeyCredentialPrivate(
                     activationRegistry.CommonAuthenticationKey as KeyPairAdvanced, profileRegistry.Udf);
-        var registryClient = contextUser.MeshMachine.GetMeshClient(credentialPrivate, profileRegistry.Udf);
+        var registryClient = contextUser.MeshMachine.GetMeshClient(credentialPrivate, RegistryName);
         var createResponse = registryClient.BindAccount(createRequest);
         createResponse.AssertSuccess();
 
@@ -215,6 +217,11 @@ public class ContextRegistry : ContextAccount {
         }
 
 
+    /// <summary>
+    /// Process the callsign registration request <paramref name="registrationRequest"/>.
+    /// </summary>
+    /// <param name="registrationRequest">The request to process.</param>
+    /// <returns>Reports the processing result.</returns>
     public ProcessResult Process (
                 CallsignRegistrationRequest registrationRequest) {
 

@@ -56,6 +56,25 @@
             Desctiption of the 
             </summary>
         </member>
+        <member name="T:Goedel.Repository.Server.RepositoryServer">
+            <summary>
+            The Repository service implementation.
+            </summary>
+        </member>
+        <member name="M:Goedel.Repository.Server.RepositoryServer.#ctor">
+            <summary>
+            Default constructor, returns an empty instance.
+            </summary>
+        </member>
+        <member name="M:Goedel.Repository.Server.RepositoryServer.Publish(System.Byte[])">
+            <summary>
+            Publish the content <paramref name="data"/>.
+            </summary>
+            <param name="data">The content to publish.</param>
+        </member>
+        <member name="M:Goedel.Repository.Server.RepositoryServer.Query(Goedel.Repository.QueryRequest,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Repository.Server.RepositoryServiceConfiguration">
             <summary>
             The Mesh service configuration.

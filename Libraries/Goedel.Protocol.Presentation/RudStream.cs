@@ -164,7 +164,7 @@ public class RudStream {
         // only set the URI if we are creating an initiator stream.
         if (RudConnection is ConnectionInitiator initiator) {
 
-            var serviceDescription = DnsClient.ResolveService(initiator.Domain, protocol);
+            var serviceDescription = DnsClient.ResolveService(initiator.Domain, protocol, port:15099);
             Uri = serviceDescription.GetUri(initiator.Instance);
             //Uri = HttpEndpoint.GetUri(initiator.Domain, 15099, protocol, initiator.Instance);
 

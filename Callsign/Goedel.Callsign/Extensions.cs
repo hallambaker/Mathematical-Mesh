@@ -17,9 +17,11 @@ public static class Extensions {
     /// <summary>
     /// Make a callsign registration, binding or transfer request
     /// </summary>
-    /// <param name="callsign"></param>
-    /// <param name="bind"></param>
-    /// <param name="transfer"></param>
+    /// <param name="callsign">The presentation of the callsign to be registered.</param>
+    /// <param name="bind">If true bind to the account context.</param>
+    /// <param name="transfer">Transfer the callsign to the specified address.</param>
+    /// <param name="contextAccount">The account context in which to make the request.</param>
+    /// <param name="registry">The registry address.</param>
     public static CallsignRegistrationRequest CallsignRequest(
                 this ContextAccount contextAccount,
                 string callsign,

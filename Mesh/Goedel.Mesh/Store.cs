@@ -190,8 +190,11 @@ public class Store : Disposable {
     /// Append the envelopes <paramref name="envelope"/> to the
     /// store.
     /// </summary>
-    public virtual void AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) =>
+    public virtual void AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
         Container.Append(envelope, updateEnvelope);
+        }
+
+
 
     /// <summary>
     /// Returns an enumerator for traversing the store. If <paramref name="reverse"/>

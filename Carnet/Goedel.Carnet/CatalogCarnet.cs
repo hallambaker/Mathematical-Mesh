@@ -156,6 +156,9 @@ public partial class CatalogedCarnet {
     ///<summary>The primary key is protocol:site </summary>
     public override string _PrimaryKey => Key;
 
+    /// <summary>
+    /// the unwrapped carnet profile.
+    /// </summary>
     public ProfileCarnet ProfileCarnet => (profileCarnet ??
         EnvelopedProfileCarnet.Decode().CacheValue(out profileCarnet));
     ProfileCarnet profileCarnet;
@@ -164,6 +167,10 @@ public partial class CatalogedCarnet {
 
 
     #region Constructors
+
+    /// <summary>
+    /// Create and return an empty instance.
+    /// </summary>
     public CatalogedCarnet() {
         }
 

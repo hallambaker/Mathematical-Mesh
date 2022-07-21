@@ -115,6 +115,7 @@ public record MetaDataStruct(
 /// Metadata record 
 /// </summary>
 public abstract record MetaDataList : MetaData {
+    ///<inheritdoc/>
     public override bool Multiple => true;
     }
 

@@ -579,12 +579,13 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         ContentMeta contentMeta = null,
         byte[] cloaked = null,
         List<byte[]> dataSequences = null,
-        int chunk = -1) {
+        int chunk = -1,
+        byte[] cover = null) {
         using var output = outputFile.OpenFileNew();
         using var input = inputFile.OpenFileRead();
         Encode(
             cryptoParameters, input, output, input.Length,
-            contentMeta, cloaked, dataSequences, chunk);
+            contentMeta, cloaked, dataSequences, chunk, cover);
         return input.Length;
         }
 
@@ -607,12 +608,13 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         ContentMeta contentMeta = null,
         byte[] cloaked = null,
         List<byte[]> dataSequences = null,
-        int chunk = -1) {
+        int chunk = -1,
+        byte[] cover = null) {
         using var outputStream = new MemoryStream();
         using var inputStream = new MemoryStream(inputData);
         Encode(
             cryptoParameters, inputStream, outputStream, inputStream.Length,
-            contentMeta, cloaked, dataSequences, chunk);
+            contentMeta, cloaked, dataSequences, chunk, cover);
         return outputStream.ToArray();
         }
 
@@ -645,10 +647,11 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         ContentMeta contentMeta = null,
         byte[] cloaked = null,
         List<byte[]> dataSequences = null,
-        int chunk = -1) {
+        int chunk = -1,
+        byte[] cover=null) {
         using var dareEnvelopeWriter = new DareEnvelopeWriter(
             cryptoParameters,
-            outputStream, contentMeta, contentLength, cloaked, dataSequences);
+            outputStream, contentMeta, contentLength, cloaked, dataSequences, cover);
         inputStream.CopyTo(dareEnvelopeWriter);
         }
 
@@ -725,6 +728,42 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         decoder.Close();
 
         return length;
+        }
+
+    /// <summary>
+    /// Decode a streamed message
+    /// </summary>
+    /// <param name="inputStream">The input stream, must support reading.</param>
+    /// <param name="outputStream">The output stream, must support writing</param>
+    /// <param name="outputFile">The output file, must support writing</param>
+    /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+    public static bool TryDecode(
+        Stream inputStream,
+        Stream outputStream,
+        IKeyLocate keyCollection,
+        out DareHeader dareHeader
+        ) {
+        keyCollection ??= Cryptography.KeyCollection.Default;
+
+        var jsonBcdReader = new JsonBcdReader(inputStream);
+        using var message = DecodeHeader(jsonBcdReader);
+        dareHeader = message.Header;
+
+        try {
+            var decoder = message.Header.GetDecoder(
+                jsonBcdReader, out var Reader,
+                keyCollection: keyCollection);
+
+            Reader.CopyTo(outputStream);
+            outputStream.Flush();
+
+            decoder.Close();
+
+            return true;
+            }
+        catch {
+            return false;
+            }
         }
 
 

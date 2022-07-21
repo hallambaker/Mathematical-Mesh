@@ -28,6 +28,9 @@ public partial class ProfileCarnet {
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<ProfileService> GetEnvelopedProfileAccount() => new(DareEnvelope);
 
+    /// <summary>
+    /// Default constructor, returns an empty instance.
+    /// </summary>
     public ProfileCarnet() {
         }
 
@@ -53,6 +56,7 @@ public partial class ProfileCarnet {
     /// <summary>
     /// Construct a Profile Host instance  from a <see cref="PrivateKeyUDF"/>
     /// </summary>
+    /// <param name="accountAddress">The account address.</param>
     /// <param name="secretSeed">The secret seed value.</param>
     /// <param name="keyCollection">The base key collection</param>
     /// <param name="persist">If true, persist the service record to the local machine
@@ -84,6 +88,7 @@ public partial class ProfileCarnet {
     /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
     /// seed.
     /// </summary>
+    /// <param name="serviceAddress">The service address</param>
     /// <param name="secretSeed">The secret seed value.</param>
     /// <param name="algorithmEncrypt">The encryption algorithm.</param>
     /// <param name="algorithmSign">The signature algorithm</param>
@@ -94,7 +99,7 @@ public partial class ProfileCarnet {
     /// <paramref name="keyCollection"/>.</param>
     /// <returns>The created profile.</returns>
     public static ProfileCarnet Generate(
-                string resolverAddress,
+                string serviceAddress,
                 //Enveloped<ProfileAccount> envelopedProfileRegistry,
                 IKeyCollection keyCollection,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
@@ -106,7 +111,7 @@ public partial class ProfileCarnet {
         secretSeed ??= new PrivateKeyUDF(
             udfAlgorithmIdentifier: UdfAlgorithmIdentifier.MeshProfileAccount, secret: null, algorithmEncrypt: algorithmEncrypt,
             algorithmSign: algorithmSign, algorithmAuthenticate: algorithmAuthenticate, bits: bits);
-        return new ProfileCarnet(resolverAddress, 
+        return new ProfileCarnet(serviceAddress, 
                     secretSeed, keyCollection, persist);
         }
 
