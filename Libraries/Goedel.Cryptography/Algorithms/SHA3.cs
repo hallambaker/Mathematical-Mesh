@@ -196,6 +196,13 @@ public abstract class SHA3 : HashAlgorithm {
             }
         //Console.WriteLine();
 
+        KeccakF();
+        }
+
+    /// <summary>
+    /// Perform the core Keccak sponge function on the state vector
+    /// </summary>
+    protected void KeccakF () {
         ulong Aba, Abe, Abi, Abo, Abu;
         ulong Aga, Age, Agi, Ago, Agu;
         ulong Aka, Ake, Aki, Ako, Aku;
@@ -468,7 +475,7 @@ public abstract class SHA3 : HashAlgorithm {
     /// <param name="cbSize"></param>
     protected override void HashCore(byte[] array, int ibStart, int cbSize) {
 
-        //Console.WriteLine($"array {array.ToBase16String()} ibStart {ibStart} cbSize {cbSize}");
+        //Console.WriteLine($"array  ibStart {ibStart} cbSize {cbSize}");
         if (array == null) {
             throw new ArgumentNullException(nameof(array));
             }

@@ -354,4 +354,80 @@ public static class NumberSplit {
                 Data.Byte3(), Data.Byte2(), Data.Byte1(), Data.Byte0() };
 
 
+
+    /// <summary>
+    /// Read in a ulong from <paramref name="data"/> starting at index
+    /// <paramref name="index"/> in little endian form. 
+    /// <para>
+    /// Note, does not perform additional array bounds checking.
+    /// </para>
+    /// </summary>
+    /// <param name="data">The data to read.</param>
+    /// <param name="index">The starting index.</param>
+    /// <returns>The converted data.</returns>
+    public static ulong LittleEndian64(this byte[] data, int index = 0) {
+        ulong result = 0;
+
+        for (int i = 7; i >= 0; i--) {
+            result = (result <<8) | data[index + i];
+            }
+
+        return result;
+        }
+
+    /// <summary>
+    /// Read in a ulong from <paramref name="data"/> starting at index
+    /// <paramref name="index"/> in little endian form. 
+    /// <para>
+    /// Note, does not perform additional array bounds checking.
+    /// </para>
+    /// </summary>
+    /// <param name="data">The data to read.</param>
+    /// <param name="index">The starting index.</param>
+    /// <returns>The converted data.</returns>
+    public static uint LittleEndian32(this byte[] data, int index = 0) {
+        uint result = 0;
+
+        for (int i = 3; i >= 0; i--) {
+            result = (result << 8) | data[index + i];
+            }
+
+        return result;
+        }
+
+    /// <summary>
+    /// Read in a ulong from <paramref name="data"/> starting at index
+    /// <paramref name="index"/> in little endian form. 
+    /// <para>
+    /// Note, does not perform additional array bounds checking.
+    /// </para>
+    /// </summary>
+    /// <param name="data">The data to read.</param>
+    /// <param name="index">The starting index.</param>
+    /// <returns>The converted data.</returns>
+    public static uint LittleEndian24(this byte[] data, int index = 0) {
+        uint result = 0;
+
+        for (int i = 2; i >= 0; i--) {
+            result = (result << 8) | data[index + i];
+            }
+
+        return result;
+        }
+
+
+
+
+    public static void LittleEndianStore(this byte[] data, ulong value, int index = 0) {
+
+        for (var i = 0; i < 8; i++) {
+            data[index + i] = (byte)(value & 0xff);
+            value >>= 8;
+            }
+
+
+        }
+
+
+
     }

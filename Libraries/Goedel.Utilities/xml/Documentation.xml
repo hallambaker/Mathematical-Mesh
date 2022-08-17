@@ -2213,6 +2213,42 @@
             <param name="Data">Input</param>
             <returns>Output array</returns>
         </member>
+        <member name="M:Goedel.Utilities.NumberSplit.LittleEndian64(System.Byte[],System.Int32)">
+            <summary>
+            Read in a ulong from <paramref name="data"/> starting at index
+            <paramref name="index"/> in little endian form. 
+            <para>
+            Note, does not perform additional array bounds checking.
+            </para>
+            </summary>
+            <param name="data">The data to read.</param>
+            <param name="index">The starting index.</param>
+            <returns>The converted data.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.LittleEndian32(System.Byte[],System.Int32)">
+            <summary>
+            Read in a ulong from <paramref name="data"/> starting at index
+            <paramref name="index"/> in little endian form. 
+            <para>
+            Note, does not perform additional array bounds checking.
+            </para>
+            </summary>
+            <param name="data">The data to read.</param>
+            <param name="index">The starting index.</param>
+            <returns>The converted data.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.LittleEndian24(System.Byte[],System.Int32)">
+            <summary>
+            Read in a ulong from <paramref name="data"/> starting at index
+            <paramref name="index"/> in little endian form. 
+            <para>
+            Note, does not perform additional array bounds checking.
+            </para>
+            </summary>
+            <param name="data">The data to read.</param>
+            <param name="index">The starting index.</param>
+            <returns>The converted data.</returns>
+        </member>
         <member name="T:Goedel.Utilities.RFC3339">
             <summary>
             Conversion class to and from RFC3339 DateTime representation.

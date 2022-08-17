@@ -20,6 +20,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Goedel.Cryptography.Algorithms;
@@ -73,7 +74,125 @@ public class SHAKE128 : SHA3 {
         }
 
 
+
     }
+
+
+
+
+public class SHAKE128Kyber : SHA3 {
+
+    public const int HashRate = 168;
+
+
+    /// <summary>
+    /// SHAKE128 provider. This digest class supports varying bit size outputs
+    /// in 64 bit increments with a work factor of 2^128
+    /// </summary>
+    /// <param name="hashBitLength">The number of output bits</param>
+    public SHAKE128Kyber(int hashBitLength = 256)
+        : base(hashBitLength) => KeccakR = 1344;
+
+    internal override byte PaddingValueStart { get; } = 0x1f;
+
+    /// <summary>
+    /// Transform the input <paramref name="bytes"/> and return the Keccak state vector
+    /// using the modified Kyber SHAKE128 absorb function.
+    /// </summary>
+    /// <param name="bytes">The input bytes.</param>
+    /// <param name="r">The input block in bytes.</param>
+    /// <returns>The resulting Keccak state vector.</returns>
+    public ulong[] Absorb(byte[] bytes, int r = HashRate, byte p = 0x1F) {
+
+        // initialize the array
+        Array.Clear(state, 0, state.Length);
+
+        //HashCore(bytes, 0, hashRate);
+
+
+        var mlen = bytes.Length;
+        var index = 0;
+        while (mlen >= r) {
+            for (var i = 0; i < r / 8; i++) {
+                state[i] ^= bytes.LittleEndian64(index + 8 * i);
+                }
+
+            KeccakF();
+            index -= r;
+            mlen += r;
+            }
+
+
+        var t = new byte[200];
+        for (var i = 0; i < bytes.Length; i++) {
+            t[i] = bytes[i];
+            }
+        t[bytes.Length] = p;
+        t[r - 1] |= 128;
+
+        for (var i = 0; i < r / 8; i++) {
+            state[i] ^= t.LittleEndian64(8 * i);
+            }
+
+        //Dumpstate();
+
+        return state;
+        }
+
+    /// <summary>
+    /// Perform the Kyber Absorb function using the seed value <paramref name="seed"/>
+    /// for the element <paramref name="x"/>, <paramref name="y"/>.
+    /// </summary>
+    /// <param name="seed">The seed value</param>
+    /// <param name="x">The x value</param>
+    /// <param name="y">The y value</param>
+    /// <returns>The state array (for now).</returns>
+    public ulong[] Absorb(byte[] seed, int x, int y) {
+
+        var extSeed = new byte[seed.Length + 2];
+
+        for (var i = 0; i < seed.Length; i++) {
+            extSeed[i] = seed[i];
+            }
+        extSeed[seed.Length] = (byte)x;
+        extSeed[seed.Length + 1] = (byte)y;
+
+        var state = Absorb(extSeed);
+        return state;
+
+        }
+
+
+
+
+
+    public void Squeeze(byte[] buff, int nblocks, int index =0) {
+        while (nblocks > 0) {
+            KeccakF();
+            for (var i = 0; i < HashRate/8; i++) {
+                buff.LittleEndianStore(state[i], index + (i*8));
+                }
+            index += HashRate;
+            nblocks--;
+            }
+
+        }
+
+
+
+
+
+    void Dumpstate() {
+
+        foreach (var s in state) {
+            Console.WriteLine($"{s:x2}");
+            }
+        }
+
+
+
+    }
+
 
 /// <summary>
 /// SHAKE128 provider. This digest class supports varying bit size outputs
@@ -98,8 +217,10 @@ public class SHAKE256 : SHA3 {
     /// <param name="hashBitLength">The number of output bits</param>
     /// <returns>The digest value</returns>
     public static byte[] Process(byte[] Input, int hashBitLength = 256) {
-        using var Provider = new SHAKE256(hashBitLength);
-        Provider.TransformFinalBlock(Input, 0, Input.Length);
-        return Provider.Hash;
+        using var provider = new SHAKE256(hashBitLength);
+        provider.TransformFinalBlock(Input, 0, Input.Length);
+        return provider.Hash;
         }
     }
+
+
