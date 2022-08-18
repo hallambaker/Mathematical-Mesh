@@ -43,6 +43,31 @@ public class SHA3Managed : SHA3 {
             512 => 576,
             _ => throw new ArgumentException("hashBitLength must be 224, 256, 384, or 512", nameof(hashBitLength)),
             };
+
+    /// <summary>
+    /// Convenience routine to preform one stop processing.
+    /// </summary>
+    /// <param name="input">The input data</param>
+    /// <param name="outputLength">The number of output bits</param>
+    /// <returns>The digest value</returns>
+    public static byte[] Process512(byte[] input, int outputLength = 512) {
+        using var Provider = new SHA3Managed(512);
+        Provider.TransformFinalBlock(input, 0, input.Length);
+        return Provider.Hash;
+
+        //if (outputLength == 512) {
+        //    return Provider.Hash;
+        //    }
+
+        //// Truncate the output.
+        //var bytes = outputLength / 8;
+        //var result = new byte[bytes];
+        //Array.Copy(Provider.Hash, result, bytes);
+        //return result;
+
+        }
+
+
     }
 
 /// <summary>
@@ -64,12 +89,12 @@ public class SHAKE128 : SHA3 {
     /// <summary>
     /// Convenience routine to preform one stop processing.
     /// </summary>
-    /// <param name="Input">The input data</param>
+    /// <param name="input">The input data</param>
     /// <param name="hashBitLength">The number of output bits</param>
     /// <returns>The digest value</returns>
-    public static byte[] Process(byte[] Input, int hashBitLength = 256) {
+    public static byte[] Process(byte[] input, int hashBitLength = 256) {
         using var Provider = new SHAKE128(hashBitLength);
-        Provider.TransformFinalBlock(Input, 0, Input.Length);
+        Provider.TransformFinalBlock(input, 0, input.Length);
         return Provider.Hash;
         }
 
@@ -109,19 +134,16 @@ public class SHAKE128Kyber : SHA3 {
 
         //HashCore(bytes, 0, hashRate);
 
-
         var mlen = bytes.Length;
         var index = 0;
         while (mlen >= r) {
             for (var i = 0; i < r / 8; i++) {
                 state[i] ^= bytes.LittleEndian64(index + 8 * i);
                 }
-
             KeccakF();
             index -= r;
             mlen += r;
             }
-
 
         var t = new byte[200];
         for (var i = 0; i < bytes.Length; i++) {
@@ -133,8 +155,6 @@ public class SHAKE128Kyber : SHA3 {
         for (var i = 0; i < r / 8; i++) {
             state[i] ^= t.LittleEndian64(8 * i);
             }
-
-        //Dumpstate();
 
         return state;
         }
@@ -162,10 +182,6 @@ public class SHAKE128Kyber : SHA3 {
 
         }
 
-
-
-
-
     public void Squeeze(byte[] buff, int nblocks, int index =0) {
         while (nblocks > 0) {
             KeccakF();
@@ -177,19 +193,6 @@ public class SHAKE128Kyber : SHA3 {
             }
 
         }
-
-
-
-
-
-    void Dumpstate() {
-
-        foreach (var s in state) {
-            Console.WriteLine($"{s:x2}");
-            }
-        }
-
-
 
     }
 

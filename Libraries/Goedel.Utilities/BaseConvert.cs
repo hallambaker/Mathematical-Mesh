@@ -200,16 +200,16 @@ public static partial class BaseConvert {
     /// Convert data to base32 encoded string
     /// </summary>
     /// <param name="data">The data to convert</param>
-    /// <param name="First">The index position of the first byte to convert.</param>
-    /// <param name="Length">The number of bytes to convert</param>
+    /// <param name="first">The index position of the first byte to convert.</param>
+    /// <param name="length">The number of bytes to convert</param>
     /// <param name="Format">Specifies the output format</param>
     /// <returns>The encoded data</returns>
     public static string ToStringBase16(
             this byte[] data,
-            int First = 0,
-            int Length = -1,
+            int first = 0,
+            int length = -1,
             ConversionFormat Format = ConversionFormat.None) => StringBuilderConvertBits.Convert(
-                    data, BASE16, 4, Format, First, Length);
+                    data, BASE16, 4, Format, first, length);
 
     /// <summary>
     /// Convert data to base32 encoded string
@@ -505,10 +505,10 @@ public static partial class BaseConvert {
     /// the ticket mechanism needs to be overhauled anyway.
     /// </summary>
     /// <param name="data">The data to convert</param>
-    /// <param name="Length">The maximum number of characters in the output string</param>
+    /// <param name="length">The maximum number of characters in the output string</param>
     /// <returns>The resulting string.</returns>
-    public static string ToStringBase32hs(this byte[] data, int Length) =>
-        ToStringBase32(data, format: ConversionFormat.Dash4, length: Length);
+    public static string ToStringBase32hs(this byte[] data, int length) =>
+        ToStringBase32(data, format: ConversionFormat.Dash4, length: length);
 
 
     /// <summary>
@@ -516,10 +516,10 @@ public static partial class BaseConvert {
     /// that because the two character sets are unambiguous, a single conversion
     /// function converts both types of data.
     /// </summary>
-    /// <param name="Data">The string to convert</param>
+    /// <param name="data">The string to convert</param>
     /// <returns>The resulting binary data.</returns>
-    public static byte[] FromBase64(this string Data) =>
-        StreamConvertString.Convert(BASE64Value, 6, Data);
+    public static byte[] FromBase64(this string data) =>
+        StreamConvertString.Convert(BASE64Value, 6, data);
 
     /// <summary>
     /// Return a streaming converter to 
@@ -532,10 +532,10 @@ public static partial class BaseConvert {
     /// <summary>
     /// Convert Base32 character string data to binary data.
     /// </summary>
-    /// <param name="Data">The string to convert</param>
+    /// <param name="data">The string to convert</param>
     /// <returns>The resulting binary data.</returns>
-    public static byte[] FromBase32(this string Data) =>
-        StreamConvertString.Convert(BASE32Value, 5, Data);
+    public static byte[] FromBase32(this string data) =>
+        StreamConvertString.Convert(BASE32Value, 5, data);
 
     /// <summary>
     /// Return a streaming converter to 
@@ -548,9 +548,9 @@ public static partial class BaseConvert {
     /// <summary>
     /// Convert Base16 character string data to binary data.
     /// </summary>
-    /// <param name="Data">The string to convert</param>
+    /// <param name="data">The string to convert</param>
     /// <returns>The resulting binary data.</returns>
-    public static byte[] FromBase16(this string Data) =>
-        StreamConvertString.Convert(BASE16Value, 4, Data);
+    public static byte[] FromBase16(this string data) =>
+        StreamConvertString.Convert(BASE16Value, 4, data);
 
     }

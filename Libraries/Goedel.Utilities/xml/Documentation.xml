@@ -1040,8 +1040,8 @@
             Convert data to base32 encoded string
             </summary>
             <param name="data">The data to convert</param>
-            <param name="First">The index position of the first byte to convert.</param>
-            <param name="Length">The number of bytes to convert</param>
+            <param name="first">The index position of the first byte to convert.</param>
+            <param name="length">The number of bytes to convert</param>
             <param name="Format">Specifies the output format</param>
             <returns>The encoded data</returns>
         </member>
@@ -1235,7 +1235,7 @@
             the ticket mechanism needs to be overhauled anyway.
             </summary>
             <param name="data">The data to convert</param>
-            <param name="Length">The maximum number of characters in the output string</param>
+            <param name="length">The maximum number of characters in the output string</param>
             <returns>The resulting string.</returns>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.FromBase64(System.String)">
@@ -1244,7 +1244,7 @@
             that because the two character sets are unambiguous, a single conversion
             function converts both types of data.
             </summary>
-            <param name="Data">The string to convert</param>
+            <param name="data">The string to convert</param>
             <returns>The resulting binary data.</returns>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.FromBase32">
@@ -1258,7 +1258,7 @@
             <summary>
             Convert Base32 character string data to binary data.
             </summary>
-            <param name="Data">The string to convert</param>
+            <param name="data">The string to convert</param>
             <returns>The resulting binary data.</returns>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.FromBase16">
@@ -1272,7 +1272,7 @@
             <summary>
             Convert Base16 character string data to binary data.
             </summary>
-            <param name="Data">The string to convert</param>
+            <param name="data">The string to convert</param>
             <returns>The resulting binary data.</returns>
         </member>
         <member name="T:Goedel.Utilities.BaseConvert.StreamConvertString">
