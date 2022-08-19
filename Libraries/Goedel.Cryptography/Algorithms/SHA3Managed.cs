@@ -54,20 +54,19 @@ public class SHA3Managed : SHA3 {
         using var Provider = new SHA3Managed(512);
         Provider.TransformFinalBlock(input, 0, input.Length);
         return Provider.Hash;
-
-        //if (outputLength == 512) {
-        //    return Provider.Hash;
-        //    }
-
-        //// Truncate the output.
-        //var bytes = outputLength / 8;
-        //var result = new byte[bytes];
-        //Array.Copy(Provider.Hash, result, bytes);
-        //return result;
-
         }
 
-
+    /// <summary>
+    /// Convenience routine to preform one stop processing.
+    /// </summary>
+    /// <param name="input">The input data</param>
+    /// <param name="outputLength">The number of output bits</param>
+    /// <returns>The digest value</returns>
+    public static byte[] Process256(byte[] input, int outputLength = 512) {
+        using var Provider = new SHA3Managed(256);
+        Provider.TransformFinalBlock(input, 0, input.Length);
+        return Provider.Hash;
+        }
     }
 
 /// <summary>

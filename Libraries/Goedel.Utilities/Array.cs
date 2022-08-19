@@ -139,6 +139,22 @@ public static class ArrayUtilities {
         return Result;
         }
 
+    /// <summary>
+    /// Extract <paramref name="length"/> bytes starting at <paramref name="offset"/>
+    /// from <paramref name="source"/> and return as a new array.
+    /// </summary>
+    /// <param name="source">The source buffer</param>
+    /// <param name="offset">The first byte to read</param>
+    /// <param name="length">The number of bytes to read.</param>
+    /// <returns>The created buffer.</returns>
+    public static byte[] Extract(this byte[] source, int offset, int length) {
+        var result = new byte[length];
+        Array.Copy(source, offset, result, 0, length);
+        return result;
+        }
+
+
+
 
     /// <summary>
     /// Wrapper for the Dictionary Add method to force replacement of the previous value if it exists.

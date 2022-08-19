@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Goedel.Cryptography.PQC;
 
 
-public abstract class Kyber {
+public  class Kyber {
 
     ///<summary>The number of vectors.</summary> 
-    public abstract int K {get;}
+    public  int K {get;}
 
     ///<summary></summary> 
-    public abstract int ETA1 { get; }
+    public  int ETA1 { get; }
 
     ///<summary></summary> 
     public virtual int ETA2 => 2;
 
     ///<summary>Number of bytes in compressed form polynomial.</summary> 
-    public abstract int POLYCOMPRESSEDBYTES { get; }
+    public  int POLYCOMPRESSEDBYTES { get; }
 
     ///<suwmmary>The vector length.</suwmmary> 
     public const int N = 256;
@@ -62,6 +63,37 @@ public abstract class Kyber {
     //public short[,,] GetMatrix() => new short [K,K,N];
 
 
+    public Kyber(int keySize) {
+        switch (keySize) {
+            case 512: {
+                K = 2;
+                ETA1 = 3;
+                POLYCOMPRESSEDBYTES = 128;
+                break;
+                }
+            case 768: {
+                K = 3;
+                ETA1 = 2;
+                POLYCOMPRESSEDBYTES = 128;
+                break;
+                }
+            case 1024: {
+                K = 4;
+                ETA1 = 2;
+                POLYCOMPRESSEDBYTES = 160;
+                break;
+                }
+
+            default: {
+                throw new ArgumentOutOfRangeException(nameof(keySize));
+                }
+            }
+
+
+        }
+
+
+
     public void Randomize(byte[] buffer, int index=0, int count=-1) {
         count = count<0 ? buffer.Length-index : count;
 
@@ -85,21 +117,35 @@ public abstract class Kyber {
     /// <returns>The public key and the private key.</returns>
     public (byte[], byte[]) KeyPair(byte[]? seed = null) {
 
-        var (publicKey, privateKey) = IndcpaKeypair(seed);
 
-        Test.DumpBufferHex(publicKey);
-        Test.DumpBufferHex(privateKey);
+        var publicKey = new byte[KYBER_PUBLICKEYBYTES];
+        var privateKey = new byte[KYBER_SECRETKEYBYTES];
+
+
+        IndcpaKeypair(publicKey, privateKey, seed);
+
+        //Test.DumpBufferHex(publicKey);
+
 
 
         Array.Copy(publicKey, 0, privateKey, KYBER_INDCPA_SECRETKEYBYTES, 
                 KYBER_INDCPA_PUBLICKEYBYTES);
 
+        //Test.DumpBufferHex(privateKey);
+        var publicDigest = SHA3Managed.Process256(publicKey);
+        Array.Copy(publicDigest,0, privateKey, KYBER_SECRETKEYBYTES-(2* SymBytes), publicDigest.Length);
+
+        FakeRand(privateKey, KYBER_SECRETKEYBYTES - SymBytes, SymBytes);
+
         //hash_h(sk + KYBER_SECRETKEYBYTES - 2 * KYBER_SYMBYTES, pk, KYBER_PUBLICKEYBYTES);
         ///* Value z for pseudo-random output on reject */
         //randombytes(sk + KYBER_SECRETKEYBYTES - KYBER_SYMBYTES, KYBER_SYMBYTES);
 
+        //Console.WriteLine();
+        //Test.DumpBufferHex(privateKey);
 
-        throw new NYI();
+
+        return (publicKey, privateKey);
         }
 
     /// <summary>
@@ -131,8 +177,16 @@ public abstract class Kyber {
 
 
 
-
-    public (byte[], byte[]) IndcpaKeypair(byte[]? seed = null) {
+    /// <summary>
+    /// Generate a public, private key pair and the resulting vectors into the initial octets 
+    /// of <paramref name="publicKey"/> and <paramref name="privateKey"/>.
+    /// </summary>
+    /// <param name="publicKey">Buffer of <see cref="KYBER_PUBLICKEYBYTES"/> to 
+    /// receive the public key.</param>
+    /// <param name="privateKey">Buffer of <see cref="KYBER_SECRETKEYBYTES"/> to
+    /// receive the private key.</param>
+    /// <param name="seed">Optional seed to be used for deterministic key generation.</param>
+    public void IndcpaKeypair(byte[] publicKey, byte[]privateKey, byte[]? seed = null) {
         seed ??= RandomBytes(SymBytes);
         var buf = SHA3Managed.Process512(seed);
 
@@ -170,10 +224,10 @@ public abstract class Kyber {
         pkpv.Add(e);
         pkpv.Reduce();
 
-        var privateKey = skpv.Pack();
-        var publicKey = skpv.Pack(publicSeed);
+        skpv.Pack(privateKey);
+        pkpv.Pack(publicKey, publicSeed);
 
-        return (publicKey, privateKey);
+        return ;
         }
 
 
@@ -229,7 +283,21 @@ public abstract class Kyber {
         }
 
 
+    public static byte[] FakeRand(int len) {
+        var result = new byte[len];
+        FakeRand(result);
+        return result;
+        }
 
+
+    public static void FakeRand(byte[] buffer, int offset=0, int len=-1) {
+        len = len < 0? buffer.Length-offset : len;
+
+        for (int i = 0; i < len; i++) {
+            buffer[offset+i] = (byte)i;
+            }
+
+        }
     public Polynomial CbdEta1(byte[] buffer) => ETA1 == 2 ? Polynomial.CBD2(buffer) : Polynomial.CBD3(buffer);
 
 
@@ -291,39 +359,270 @@ public abstract class Kyber {
     #endregion
     }
 
-public class Kyber1024 : Kyber {
 
-    public override int K => 4;
-    public override int ETA1 => 2;
-    public override int POLYCOMPRESSEDBYTES => 160;
 
+public class KyberPublic : Kyber {
+
+
+    public const int PolyVectorBytes512 = 2 * Kyber.PolyBytes;
+    public const int PolyVectorBytes768 = 3 * Kyber.PolyBytes;
+    public const int PolyVectorBytes1024 = 4 * Kyber.PolyBytes;
+
+    public const int PublicKeyBytes512 = PolyVectorBytes512 + Kyber.SymBytes;
+    public const int PublicKeyBytes768 = PolyVectorBytes768 + Kyber.SymBytes;
+    public const int PublicKeyBytes1024 = PolyVectorBytes1024 + Kyber.SymBytes;
+
+    byte[] PublicKey { get; }
+    byte[] HashPublicKey { get; }
+
+
+    int K { get; }
+
+    public static int SharedSecretBytes => Kyber.SharedSecretBytes;
+
+    public int PolyVectorBytes => K * Kyber.PolyBytes;
+
+    ///<summary>The Public key polynomial vector.</summary> 
+    PolynomialVector Pkpv { get; }
+
+
+    PolynomialMatrix at { get; }
+
+    ///<summary>The seed value.</summary> 
+    byte[] Seed { get; }
+
+    readonly static int[] KeySize =
+        new int[] { 512, 768, 1024 };
+
+
+    /// <summary>
+    /// Constructor, initialize a public key from the keyblob <paramref name="publicKey"/>.
+    /// The Kyber strength parameter is specified implicitly by the key size.
+    /// </summary>
+    /// <param name="publicKey">The private key.</param>
+    public KyberPublic(byte[] publicKey) : this (publicKey, GetStrength (publicKey.Length)) {
+        }
+
+    /// <summary>
+    /// Protected constructor in which the key size is specified explicitly by 
+    /// <paramref name="strength"/>.
+    /// </summary>
+    /// <param name="publicKey">An octet sequence that includes the public key bytes
+    /// starting at byte <paramref name="offset"/>.</param>
+    /// <param name="strength">The strength parameter; 0 => 512, 1 => 768, 2 => 1024.</param>
+    /// <param name="offset">Offset at which the public key is located within 
+    /// <paramref name="publicKey"/></param>
+    protected KyberPublic(byte[] publicKey, int strength, int offset=0) : base (KeySize[strength]) {
+        PublicKey = publicKey;
+        HashPublicKey = SHA3Managed.Process256(PublicKey);
+        K = strength+2;
+
+        Pkpv = new PolynomialVector(K, PublicKey, offset);
+        Seed = PublicKey.Extract(PolyVectorBytes, Kyber.SymBytes);
+
+        at = PolynomialMatrix.GenerateMatrix(K, Seed, true);
+
+
+
+
+        }
+
+    static int GetStrength(int length) => length switch {
+        PublicKeyBytes512 => 0,
+        PublicKeyBytes768 => 1,
+        PublicKeyBytes1024 => 2,
+        _ => throw new ArgumentOutOfRangeException()
+        };
+
+
+
+    public (byte[],byte[]) Encrypt(byte[] seed) {
+        // SHA3-256 seed to mask the system seed
+        var hashSeed = SHA3Managed.Process256(seed);
+
+        // Multitarget countermeasure for coins + contributory KEM
+        var (buf, kr) = GetBufKr(hashSeed);
+
+
+        // coins are in kr+KYBER_SYMBYTES 
+        var coins = kr.Extract(Kyber.SymBytes, Kyber.SymBytes);
+
+        // call indcpa here
+        var ct = IndCpaEncrypt(buf, coins);
+
+        /* overwrite coins in kr with H(c) */
+        var overwrite = SHA3Managed.Process256(ct);
+        Array.Copy(overwrite, 0, kr, Kyber.SymBytes, overwrite.Length);
+
+        /* hash concatenation of pre-k and H(c) to k */
+        var ss = SHAKE256.Process(kr);
+
+        return (ct, ss);
+        }
+
+    /// <summary>
+    /// Multitarget countermeasure for coins + contributory KEM
+    /// </summary>
+    /// <param name="hashSeed">The input</param>
+    /// <returns>The values buf and kr</returns>
+    protected (byte[], byte[]) GetBufKr(byte[] hashSeed) {
+        var buf = new byte[2 * Kyber.SymBytes];
+        Array.Copy(hashSeed, 0, buf, 0, hashSeed.Length);
+        Array.Copy(HashPublicKey, 0, buf, hashSeed.Length, hashSeed.Length);
+        var kr = SHA3Managed.Process512(buf);
+
+        return (buf, kr);
+        }
+
+
+    public byte[] IndCpaEncrypt(byte[] message, byte[] coins) {
+        var size = 2 * Kyber.SymBytes;
+
+        // Moved out to key set up.
+        //var p1 = new PolynomialVector(K, PublicKey, 0);
+        //var seed = PublicKey.Extract(PolyVectorBytes, Kyber.SymBytes);
+
+        var k = Polynomial.FromMessageBytes(message);
+
+
+        byte nonce = 0;
+        var sp = new PolynomialVector(K, false);
+        var ep = new PolynomialVector(K, false);
+
+        for (var i = 0; i < K; i++) {
+            sp.Polynomial[i] = GetNoiseEta1(coins, nonce++);
+            }
+        for (var i = 0; i < K; i++) {
+            ep.Polynomial[i] = GetNoiseEta2(coins, nonce++);
+            }
+        var epp = GetNoiseEta2(coins, nonce++);
+
+        sp.NTT();
+
+        // matrix-vector multiplication
+
+        var bp = new PolynomialVector(K, false);
+        for (var i = 0; i < K; i++) {
+            bp.Polynomial[i] = at.PolynomialVector[i].PointwiseAccMontgomery(sp);
+            }
+
+        var v = Pkpv.PointwiseAccMontgomery(sp);
+
+        bp.PolyInvNTT();
+        v.PolyInvNTT();
+
+        bp.Add(ep);
+        v.Add(epp);
+        v.Add(k);
+        bp.Reduce();
+        v.Reduce();
+
+        return bp.PackCiphertext(v);
+        }
 
     }
 
 
+public class KyberPrivate : KyberPublic {
+
+    public const int PrivateKeyBytes512 = PublicKeyBytes512 + PolyVectorBytes512 + 2* Kyber.SymBytes;
+    public const int PrivateKeyBytes768 = PublicKeyBytes768 + PolyVectorBytes768 + 2 * Kyber.SymBytes;
+    public const int PrivateKeyBytes1024 = PublicKeyBytes1024 + PolyVectorBytes1024 + 2 * Kyber.SymBytes;
+
+    public const int PublicKeyOffset512 = PolyVectorBytes512;
+    public const int PublicKeyOffset768 = PolyVectorBytes768;
+    public const int PublicKeyOffset1024 = PolyVectorBytes1024;
+
+    public int EncryptFailOffset => throw new NYI();
+
+    readonly static int[] PublicKeyLength = 
+        new int[] { PublicKeyBytes512, PublicKeyBytes768, PublicKeyBytes1024 };
+    readonly static int[] PublicKeyOffset = 
+        new int[] { PublicKeyOffset512, PublicKeyOffset768, PublicKeyOffset1024 };
+
+    byte[] PrivateKey {get;}
+
+    ///<summary>The Public key polynomial vector.</summary> 
+    PolynomialVector Skpv { get; }
+
+
+    /// <summary>
+    /// Constructor, initialize a private key from the keyblob <paramref name="privateKey"/>.
+    /// The Kyber strength parameter is specified implicitly by the key size.
+    /// </summary>
+    /// <param name="privateKey">The private key.</param>
+    public KyberPrivate(byte[] privateKey) : this (privateKey, GetStrength(privateKey.Length)){
+        }
+
+    KyberPrivate(byte[] privateKey, int strength) : base(privateKey, strength, PublicKeyOffset[strength]) {
+        PrivateKey = privateKey;
+
+
+        Skpv = new PolynomialVector(K, PrivateKey, 0);
+        }
+
+    static int GetStrength(int length) => length switch {
+        PrivateKeyBytes512 => 0,
+        PrivateKeyBytes768 => 1,
+        PrivateKeyBytes1024 => 2,
+        _ => throw new ArgumentOutOfRangeException()
+        };
+
+    //static byte[] GetPublic(byte[] privateKey, int strength) =>
+    //    privateKey.Extract(PublicKeyOffset[strength], PublicKeyLength[strength]);
+    
 
 
 
+    public byte[] Decrypt(byte[] ciphertext) {
 
-//public class Kyber512 : Kyber {
-//    ///<inheritdoc/>
-//    public override int K => 2;
-//    ///<inheritdoc/>
-//    public override int ETA1 => 3;
-//    ///<inheritdoc/>
-//    public override int POLYCOMPRESSEDBYTES => 128;
+        var hashSeed = IndCpaDecrypt (ciphertext);
 
+        // Multitarget countermeasure for coins + contributory KEM
+        var (buf, kr) = GetBufKr(hashSeed);
 
-
-//    }
-
-//public class Kyber768 : Kyber {
-//    ///<inheritdoc/>
-//    public override int K => 3;
-//    ///<inheritdoc/>
-//    public override int ETA1 => 2;
-//    ///<inheritdoc/>
-//    public override int POLYCOMPRESSEDBYTES => 128;
-//    }
+        // call indcpa here
+        var cmp = IndCpaEncrypt(buf, kr);
 
 
+        var fail = Verify(ciphertext, cmp);
+
+        // overwrite coins in kr with H(c) 
+        var overwrite = SHA3Managed.Process256(ciphertext);
+        Array.Copy(overwrite, 0, kr, Kyber.SymBytes, overwrite.Length);
+
+        // Overwrite pre-k with z on re-encryption failure
+        if (fail) {
+            Array.Copy(PrivateKey, EncryptFailOffset, kr, 0, Kyber.SymBytes);
+            }
+
+        // hash concatenation of pre-k and H(c) to k
+        var ss = SHAKE256.Process(kr);
+
+        return ss;
+        }
+
+    public byte[] IndCpaDecrypt(byte[] buffer) {
+
+        var (bp, v) = PolynomialVector.UnPackCiphertext(buffer);
+
+        bp.NTT();
+
+        var mp = Skpv.PointwiseAccMontgomery (bp);
+
+        mp.PolyInvNTT();
+
+        mp.SubNeg(v);
+        mp.Reduce();
+
+        mp.ToMessageBytes();
+
+        throw new NYI();
+        }
+
+    public bool Verify(byte[] ciphertext, byte[] compare) {
+        throw new NYI();
+        }
+
+
+    }

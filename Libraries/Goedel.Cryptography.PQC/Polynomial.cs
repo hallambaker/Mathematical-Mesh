@@ -26,7 +26,29 @@ public struct Polynomial {
 
 
 
+    public Polynomial(byte[] buffer, int offset) : this(){
 
+        int j = 0;
+        for (var i = 0; i < Coefficients.Length;) {
+            ushort b0 = buffer[j++];
+            ushort b1 = buffer[j++];
+            ushort b2 = buffer[j++];
+            Coefficients[i++] = (short) (b0 | (b1 << 8 & 0xfff));
+            Coefficients[i++] = (short)((b1>>4) | (b2 << 4 & 0xfff));
+            }
+        
+        }
+
+
+
+
+    public static Polynomial FromMessageBytes(byte[] message) {
+        throw new NotImplementedException();
+        }
+
+    public byte[] ToMessageBytes() {
+        throw new NotImplementedException();
+        }
     /// <summary>
     /// Run rejection sampling on uniform random bytes to generate
     /// uniform random integers mod q
@@ -224,7 +246,7 @@ public struct Polynomial {
         short f = (short)(((ulong)1 << 32) % Kyber.Q);
 
         for (var i = 0; i < Kyber.N; i++) {
-            Coefficients[i] = Kyber.MontgomeryReduce((short)(Coefficients[i]*f));
+            Coefficients[i] = Kyber.MontgomeryReduce(Coefficients[i]*f);
             }
         }
 
@@ -251,6 +273,20 @@ public struct Polynomial {
             Coefficients[i] += polynomial.Coefficients[i];
             }
         }
+
+
+    /// <summary>
+    /// Add the polynomial <paramref name="polynomial"/> to the value in place.
+    /// </summary>
+    /// <param name="polynomial">The polynomial to add.</param>
+    /// <exception cref="NYI"></exception>
+    public void SubNeg(Polynomial polynomial) {
+        for (var i = 0; i < Kyber.N; i++) {
+            throw new NYI();
+            ////Coefficients[i] += polynomial.Coefficients[i];
+            }
+        }
+
 
     /// <summary>
     /// Multiplication of two polynomials in NTT domain storing the product in place.
@@ -288,10 +324,25 @@ public struct Polynomial {
         }
 
 
-
+    /// <summary>
+    /// Normalize the vector and serialize to <paramref name="output"/> starting at position 
+    /// <paramref name="offset"/>.
+    /// </summary>
+    /// <param name="offset">starting point at which to fill the <paramref name="output"/></param>
+    /// <returns>The packed polynomial vector.</returns>
     public void ToBytes(byte[] output, int offset) {
 
-        throw new NYI();
+        
+        PolyCSubQ();
+
+        for (var i = 0; i < Coefficients.Length/2; i++) {
+            var t0 = (short) Coefficients[i*2];
+            var t1 = (short)Coefficients[i * 2+1];
+
+            output[offset++] = (byte)t0;
+            output[offset++] = (byte)((t0>>8) |(t1<<4));
+            output[offset++] = (byte)(t1>>4);
+            }
 
         }
 

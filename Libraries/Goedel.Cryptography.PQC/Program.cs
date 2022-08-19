@@ -2,6 +2,7 @@
 
 using Goedel.Utilities;
 
+using Goedel.Test;
 namespace Goedel.Cryptography.PQC;
 
 
@@ -12,7 +13,7 @@ public class Test {
         // See https://aka.ms/new-console-template for more information
         Console.WriteLine("Gen martix");
 
-        var kyber = new Kyber1024();
+        var kyber = new Kyber(1024);
         var seed = new byte[Kyber.SymBytes];
 
 
@@ -32,27 +33,34 @@ public class Test {
         //ap2.PolyInvNTT();
         //Console.WriteLine(ap2.GetHash());
         
-        var seed2 = FakeRand(Kyber.SymBytes);
+        var seed2 = Kyber.FakeRand(Kyber.SymBytes);
         var (publicKey, privateKey) = kyber.KeyPair(seed2);
+        // publicKey = A1DC-91E9-9D1D-12D3-38F4-2C53-6D9D-4C4C-395A-A822-3C2A-4B29-80F4-60AD-AE1B-52FA
+        // privateKey = BA54-C21A-D741-BEBB-D9DA-FC7A-EC44-45C0-F4AA-B983-EA9B-D64A-50F0-ADF6-09BB-61E0
+
+        DumpBufferFingerprint(publicKey);
+        DumpBufferFingerprint(privateKey);
+
+        var seed3 = Kyber.FakeRand(KyberPublic.SharedSecretBytes);
+        DumpBufferHex(seed3);
+
+        var encryptor = new KyberPublic(publicKey);
+        var (ciphertext, sharedSecret) = encryptor.Encrypt(seed3);
+
+        DumpBufferHex(ciphertext);
+
+        var decryptor = new KyberPrivate(publicKey);
+        var plaintext = decryptor.Decrypt(ciphertext);
+        DumpBufferHex(plaintext);
+
+        plaintext.TestEqual(sharedSecret);
 
 
-        DumpBufferHex(publicKey);
-        DumpBufferHex(privateKey);
         }
 
-    public static byte[] FakeRand(int len) {
-        var result = new byte[len];
-        FakeRand(result);
-        return result;
-        }
 
 
-    public static void FakeRand(byte[] buffer) {
-        for (int i = 0; i < buffer.Length; i++) {
-            buffer[i]=(byte)i;
-            }
 
-        }
 
 
     public static void DumpBufferHex(byte[] buffer, int length = -1) {

@@ -2666,6 +2666,14 @@
             <param name="outputLength">The number of output bits</param>
             <returns>The digest value</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Algorithms.SHA3Managed.Process256(System.Byte[],System.Int32)">
+            <summary>
+            Convenience routine to preform one stop processing.
+            </summary>
+            <param name="input">The input data</param>
+            <param name="outputLength">The number of output bits</param>
+            <returns>The digest value</returns>
+        </member>
         <member name="T:Goedel.Cryptography.Algorithms.SHAKE128">
             <summary>
             SHAKE128 provider. This digest class supports varying bit size outputs

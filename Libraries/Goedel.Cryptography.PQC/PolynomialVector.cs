@@ -20,10 +20,22 @@ public struct PolynomialVector {
     /// <param name="k">The number coefficient vectors.</param>
     public PolynomialVector(int k, bool initialize = true) {
         Polynomial = new Polynomial[k];
-        for (var i = 0; i < Polynomial.Length; i++) {
+        for (var i = 0; i < k; i++) {
             Polynomial[i] = new Polynomial();
             }
         }
+
+
+    public PolynomialVector(int k, byte[] input, int offset = 0) {
+        Polynomial = new Polynomial[k];
+        for (var i = 0; i < k; i++) {
+            Polynomial[i] = new Polynomial(input, offset);
+            offset += Kyber.PolyBytes;
+            }
+
+        }
+
+
 
 
     /// <summary>
@@ -37,6 +49,17 @@ public struct PolynomialVector {
             p.PolyNTT();
             }
         }
+
+    /// <summary>
+    /// Computes negacyclic number-theoretic transform (NTT) of
+    /// a polynomial in place.
+    /// Inputs assumed to be in normal order, output in bitreversed order
+    /// </summary>
+    /// <param name="r">The polynomial to transform.</param>
+    public void PolyInvNTT() {
+        throw new NotImplementedException();
+        }
+
 
     /// <summary>
     /// Pointwise multiply elements of this vector with <paramref name="vector"/>, accumulate into result
@@ -87,24 +110,31 @@ public struct PolynomialVector {
     /// <param name="seed">Optional additional seed value to be appended to the output.</param>
     /// <returns>The packed polynomial vector.</returns>
 
-    public byte[] Pack(byte[]? seed = null) {
+    public void Pack(byte[]buffer, byte[]? seed = null) {
         var length = KYBER_POLYVECBYTES ;
         if (seed != null) {
             length += seed.Length;
             }
-        var buffer = new byte[length];
+
 
         for (var i = 0; i < Polynomial.Length; i++) {
-            Polynomial[i].ToBytes(buffer, i* KYBER_POLYVECBYTES);
+            Polynomial[i].ToBytes(buffer, i* Kyber.PolyBytes);
             }
 
         if (seed != null) {
             Array.Copy (seed, 0, buffer, KYBER_POLYVECBYTES, seed.Length);
             }
 
-        return buffer;
         }
 
+
+    public byte[] PackCiphertext(Polynomial v) {
+        throw new NotImplementedException ();
+        }
+
+    public static (PolynomialVector, Polynomial) UnPackCiphertext(byte[] v) {
+        throw new NotImplementedException();
+        }
 
 
     // ----------------------------------------------------------------------
