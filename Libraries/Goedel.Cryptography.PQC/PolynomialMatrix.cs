@@ -20,6 +20,9 @@ public struct PolynomialMatrix {
         PolynomialVector = new PolynomialVector[k];
         for (var i = 0; i < k; i++) {
             PolynomialVector[i] = new PolynomialVector(k);
+            for (var j = 0; j < k; j++) {
+                PolynomialVector[i].Polynomial[j] = new Polynomial();
+                }
             }
         }
 

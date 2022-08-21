@@ -42,13 +42,87 @@ public struct Polynomial {
 
 
 
+
     public static Polynomial FromMessageBytes(byte[] message) {
         throw new NotImplementedException();
         }
 
-    public byte[] ToMessageBytes() {
+    public byte[] ToMessageBytes(int k) {
         throw new NotImplementedException();
         }
+
+    public void Compress160(byte[] buffer, int offset = 0) {
+        var t = new short[8];
+
+        for (var j = 0; j < Kyber.N / 8; j++) {
+            for (var k = 0; k < 8; k++) {
+                t[k] = (short)(((((uint)Coefficients[8 * j + k] << 5) + Kyber.Q / 2) / Kyber.Q) & 0x31);
+                }
+
+            buffer[offset++] = (byte)(t[0] >> 0 | t[1] << 5);               // 0
+            buffer[offset++] = (byte)(t[1] >> 3 | t[2] << 2 | t[3] << 7);   // 1
+            buffer[offset++] = (byte)(t[3] >> 1 | t[4] << 4);               // 2
+            buffer[offset++] = (byte)(t[4] >> 4 | t[5] << 1 | t[6] << 6);   // 3
+            buffer[offset++] = (byte)(t[6] >> 2 | t[7] << 3);               // 4
+            }
+
+        }
+
+
+    public void Compress128(byte[] buffer, int offset = 0) {
+        var t = new short[8];
+
+
+        for (var j = 0; j < Kyber.N / 8; j++) {
+            for (var k = 0; k < 8; k++) {
+                t[k] = (short)(((((uint)Coefficients[8 * j + k] << 11) + Kyber.Q / 2) / Kyber.Q) & 0x7ff);
+                }
+
+            buffer[offset++] = (byte)(t[0] | (short)(t[1] << 4));  // 0
+            buffer[offset++] = (byte)(t[2] | (short)(t[3] << 4));  // 1
+            buffer[offset++] = (byte)(t[4] | (short)(t[5] << 4));  // 2
+            buffer[offset++] = (byte)(t[6] | (short)(t[7] << 4));  // 3
+            }
+
+        }
+
+
+
+    public static Polynomial Decompress352(byte[] buffer, int offset = 0) {
+        var result = new Polynomial();
+
+        var t = new short[8];
+        for (var j = 0; j < Kyber.N / 8; j++) {
+
+            t[0] = (short)((buffer[offset + 0] >> 0));
+            t[1] = (short)((buffer[offset + 0] >> 5) | (buffer[offset + 1] << 3));
+            t[2] = (short)((buffer[offset + 1] >> 2));
+            t[3] = (short)((buffer[offset + 1] >> 7) | (buffer[offset + 2] << 1));
+            t[4] = (short)((buffer[offset + 2] >> 4) | (buffer[offset + 3] << 4));
+            t[5] = (short)((buffer[offset + 3] >> 1));
+            t[6] = (short)((buffer[offset + 3] >> 6) | (buffer[offset + 4] << 2));
+            t[7] = (short)((buffer[offset + 4] >> 3));
+            
+            for (var k = 0; k < 4; k++) {
+                result.Coefficients[8 * j + k] = (short)(((t[k] & 0x31) * Kyber.Q + 16) >> 5);
+                }
+            offset += 11;
+            }
+
+        return result;
+        }
+
+    public static Polynomial Decompress320(byte[] buffer, int offset = 0) {
+        var result = new Polynomial();
+
+        for (var j = 0; j < Kyber.N / 2; j++) {
+            result.Coefficients[8 * j + 0] = (short)((((buffer[offset + 0] & 15) * Kyber.Q) + 8) >> 4);
+            result.Coefficients[8 * j + 1] = (short)((((buffer[offset + 0] >> 4) * Kyber.Q) + 8) >> 4);
+            }
+
+        return result;
+        }
+
     /// <summary>
     /// Run rejection sampling on uniform random bytes to generate
     /// uniform random integers mod q

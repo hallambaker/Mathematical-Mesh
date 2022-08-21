@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace Goedel.Cryptography.PQC;
 
@@ -8,7 +9,7 @@ public struct PolynomialVector {
 
     public int KYBER_POLYVECBYTES => Kyber.PolyBytes * Polynomial.Length;
 
-
+    int K { get; }
 
     ///<summary>The coeficients vectors.</summary> 
     public Polynomial[] Polynomial;
@@ -18,15 +19,14 @@ public struct PolynomialVector {
     /// <paramref name="k"/>.<see cref="Kyber.N"/>.
     /// </summary>
     /// <param name="k">The number coefficient vectors.</param>
-    public PolynomialVector(int k, bool initialize = true) {
+    public PolynomialVector(int k) {
+        K = k;
         Polynomial = new Polynomial[k];
-        for (var i = 0; i < k; i++) {
-            Polynomial[i] = new Polynomial();
-            }
         }
 
 
     public PolynomialVector(int k, byte[] input, int offset = 0) {
+        K = k;
         Polynomial = new Polynomial[k];
         for (var i = 0; i < k; i++) {
             Polynomial[i] = new Polynomial(input, offset);
@@ -34,8 +34,6 @@ public struct PolynomialVector {
             }
 
         }
-
-
 
 
     /// <summary>
@@ -128,14 +126,102 @@ public struct PolynomialVector {
         }
 
 
-    public byte[] PackCiphertext(Polynomial v) {
-        throw new NotImplementedException ();
+
+    public void Compress352(byte[] buffer, int offset = 0) {
+
+        var t = new short[8];
+
+        for (var i = 0; i < K; i++) {
+            for (var j = 0; j < Kyber.N/8; j++) {
+                for (var k = 0; k < 8; k++) {
+                    t[k] = (short)(((((uint)Polynomial[i].Coefficients[8 * j + k] << 11) + Kyber.Q / 2) / Kyber.Q) & 0x7ff);
+                    }
+                buffer[offset++] = (byte)(t[0] >> 0);               // 0
+                buffer[offset++] = (byte)(t[0] >> 8  | t[1] << 3);  // 1
+                buffer[offset++] = (byte)(t[1] >> 5  | t[2] << 6);  // 2
+                buffer[offset++] = (byte)(t[2] >> 2);               // 3
+                buffer[offset++] = (byte)(t[2] >> 10 | t[3] << 1);  // 4
+                buffer[offset++] = (byte)(t[3] >> 7  | t[4] << 4);  // 5
+                buffer[offset++] = (byte)(t[4] >> 4  | t[5] >> 7);  // 6
+                buffer[offset++] = (byte)(t[5] >> 1);               // 7
+                buffer[offset++] = (byte)(t[5] >> 9  | t[6] >> 2);  // 8
+                buffer[offset++] = (byte)(t[6] >> 6  | t[7] >> 5);  // 9
+                buffer[offset++] = (byte)(t[7] >> 3);               // 10
+                }
+            }
         }
 
-    public static (PolynomialVector, Polynomial) UnPackCiphertext(byte[] v) {
-        throw new NotImplementedException();
+    public void Compress320(byte[] buffer, int offset = 0) {
+
+        var t = new short[4];
+
+        for (var i = 0; i < K; i++) {
+            for (var j = 0; j < Kyber.N / 8; j++) {
+                for (var k = 0; k < 8; k++) {
+                    t[k] = (short)(((((uint)Polynomial[i].Coefficients[4 * j + k] << 10) + Kyber.Q / 2) / Kyber.Q) & 0x3ff);
+                    }
+                buffer[offset++] = (byte)(t[0] >> 0);               // 0
+                buffer[offset++] = (byte)(t[0] >> 8  | t[1] << 2);  // 1
+                buffer[offset++] = (byte)(t[1] >> 6  | t[2] << 4);  // 2
+                buffer[offset++] = (byte)(t[2] >> 4  | t[3] << 6);  // 3
+                buffer[offset++] = (byte)(t[3] >> 2);               // 4
+                }
+            }
         }
 
+
+
+    public static PolynomialVector Decompress352(int K, byte[] buffer, int offset = 0) {
+        var vector = new PolynomialVector(K);
+
+        var t = new short[8];
+
+        for (var i = 0; i < K; i++) {
+            for (var j = 0; j < Kyber.N / 8; j++) {
+
+                t[0] = (short)((buffer[offset + 0] >> 0) | (buffer[offset + 1] << 8));
+                t[1] = (short)((buffer[offset + 3] >> 3) | (buffer[offset + 2] << 5));
+                t[2] = (short)((buffer[offset + 6] >> 6) | (buffer[offset + 3] << 2) | (buffer[offset + 4] << 10));
+                t[3] = (short)((buffer[offset + 1] >> 1) | (buffer[offset + 5] << 7));
+                t[4] = (short)((buffer[offset + 4] >> 4) | (buffer[offset + 6] << 4));
+                t[5] = (short)((buffer[offset + 7] >> 7) | (buffer[offset + 7] << 1) | (buffer[offset + 8] << 9));
+                t[6] = (short)((buffer[offset + 2] >> 2) | (buffer[offset + 9] << 6));
+                t[7] = (short)((buffer[offset + 5] >> 5) | (buffer[offset +10] << 3));
+
+                for (var k = 0; k < 8; k++) {
+                    vector.Polynomial[i].Coefficients[8 * j + k] = (short)(((t[k] & 0x7FF) * Kyber.Q + 1024) >> 11);
+                    }
+                
+                offset += 11;
+                }
+            }
+        return vector;
+
+        }
+
+    public static PolynomialVector Decompress320(int K, byte[] buffer, int offset = 0) {
+
+        var vector = new PolynomialVector(K);
+
+        var t = new short[8];
+
+        for (var i = 0; i < K; i++) {
+            for (var j = 0; j < Kyber.N / 4; j++) {
+
+                t[0] = (short)((buffer[offset + 0] >> 0) | (buffer[offset + 1] << 8));
+                t[1] = (short)((buffer[offset + 2] >> 2) | (buffer[offset + 2] << 6));
+                t[2] = (short)((buffer[offset + 4] >> 4) | (buffer[offset + 3] << 4));
+                t[3] = (short)((buffer[offset + 6] >> 6) | (buffer[offset + 4] << 2));
+
+                for (var k = 0; k < 4; k++) {
+                    vector.Polynomial[i].Coefficients[4 * j + k] = (short)(((t[k] & 0x3FF) * Kyber.Q + 512) >> 10);
+                    }
+
+                offset += 11;
+                }
+            }
+        return vector;
+        }
 
     // ----------------------------------------------------------------------
 

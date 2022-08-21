@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Goedel.ASN;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -46,7 +47,7 @@ public  class Kyber {
     public int PolyVecBytes => PolyBytes * K;
 
     ///<summary>Number of bytes in compressed form polynomial vector.</summary> 
-    public int POLYVECCOMPRESSEDBYTES => K * POLYCOMPRESSEDBYTES;
+    public int POLYVECCOMPRESSEDBYTES { get; }
 
     public int KYBER_INDCPA_PUBLICKEYBYTES => PolyVecBytes + SymBytes;
     public int KYBER_INDCPA_SECRETKEYBYTES => PolyVecBytes;
@@ -69,18 +70,21 @@ public  class Kyber {
                 K = 2;
                 ETA1 = 3;
                 POLYCOMPRESSEDBYTES = 128;
+                POLYVECCOMPRESSEDBYTES = K*320;
                 break;
                 }
             case 768: {
                 K = 3;
                 ETA1 = 2;
                 POLYCOMPRESSEDBYTES = 128;
+                POLYVECCOMPRESSEDBYTES = K * 320;
                 break;
                 }
             case 1024: {
                 K = 4;
                 ETA1 = 2;
                 POLYCOMPRESSEDBYTES = 160;
+                POLYVECCOMPRESSEDBYTES = K * 352;
                 break;
                 }
 
@@ -91,6 +95,50 @@ public  class Kyber {
 
 
         }
+
+    public byte[] PackCiphertext(PolynomialVector v, Polynomial p) {
+
+        var buffer = new byte[KYBER_INDCPA_BYTES];
+        switch (K) {
+            case 4: {
+                v.Compress352(buffer);
+                p.Compress160(buffer, POLYVECCOMPRESSEDBYTES);
+                break;
+                }
+            case 2:
+            case 3: {
+                v.Compress320(buffer);
+                p.Compress128(buffer, POLYVECCOMPRESSEDBYTES);
+                break;
+                }
+            }
+        return buffer;
+        }
+
+    public (PolynomialVector, Polynomial) UnPackCiphertext(byte[] data) {
+
+        data.Length.AssertEqual(KYBER_INDCPA_BYTES, NYI.Throw);
+
+        switch (K) {
+            case 4: {
+                var v = PolynomialVector.Decompress352(K, data);
+                var p = Polynomial.Decompress352(data, POLYVECCOMPRESSEDBYTES);
+                return (v, p);
+                }
+            case 2:
+            case 3: {
+                var v = PolynomialVector.Decompress320(K, data);
+                var p = Polynomial.Decompress320(data, POLYVECCOMPRESSEDBYTES);
+                return (v, p);
+                }
+            }
+
+        throw new NotImplementedException();
+        }
+
+
+
+
 
 
 
@@ -203,8 +251,8 @@ public  class Kyber {
         Console.WriteLine(matrix.GetHash());
 
         byte nonce = 0;
-        var skpv = new PolynomialVector(K, false);
-        var e = new PolynomialVector(K, false);
+        var skpv = new PolynomialVector(K);
+        var e = new PolynomialVector(K);
 
         for (var i = 0; i < K; i++) {
             skpv.Polynomial[i] = GetNoiseEta1(noiseSeed, nonce++);
@@ -215,7 +263,7 @@ public  class Kyber {
         skpv.NTT();
         e.NTT();
 
-        var pkpv = new PolynomialVector(K, false);
+        var pkpv = new PolynomialVector(K);
         for (var i = 0; i < K; i++) {
             pkpv.Polynomial[i] = matrix.PolynomialVector[i].PointwiseAccMontgomery(skpv);
             pkpv.Polynomial[i].PolyToMont();
@@ -486,8 +534,8 @@ public class KyberPublic : Kyber {
 
 
         byte nonce = 0;
-        var sp = new PolynomialVector(K, false);
-        var ep = new PolynomialVector(K, false);
+        var sp = new PolynomialVector(K);
+        var ep = new PolynomialVector(K);
 
         for (var i = 0; i < K; i++) {
             sp.Polynomial[i] = GetNoiseEta1(coins, nonce++);
@@ -501,7 +549,7 @@ public class KyberPublic : Kyber {
 
         // matrix-vector multiplication
 
-        var bp = new PolynomialVector(K, false);
+        var bp = new PolynomialVector(K);
         for (var i = 0; i < K; i++) {
             bp.Polynomial[i] = at.PolynomialVector[i].PointwiseAccMontgomery(sp);
             }
@@ -517,7 +565,7 @@ public class KyberPublic : Kyber {
         bp.Reduce();
         v.Reduce();
 
-        return bp.PackCiphertext(v);
+        return PackCiphertext(bp, v);
         }
 
     }
@@ -604,7 +652,7 @@ public class KyberPrivate : KyberPublic {
 
     public byte[] IndCpaDecrypt(byte[] buffer) {
 
-        var (bp, v) = PolynomialVector.UnPackCiphertext(buffer);
+        var (bp, v) = UnPackCiphertext(buffer);
 
         bp.NTT();
 
@@ -615,7 +663,7 @@ public class KyberPrivate : KyberPublic {
         mp.SubNeg(v);
         mp.Reduce();
 
-        mp.ToMessageBytes();
+        mp.ToMessageBytes(K);
 
         throw new NYI();
         }
