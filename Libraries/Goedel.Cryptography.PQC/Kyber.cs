@@ -255,18 +255,18 @@ public  class Kyber {
         var e = new PolynomialVector(K);
 
         for (var i = 0; i < K; i++) {
-            skpv.Polynomial[i] = GetNoiseEta1(noiseSeed, nonce++);
+            skpv.Vector[i] = GetNoiseEta1(noiseSeed, nonce++);
             }
         for (var i = 0; i < K; i++) {
-            e.Polynomial[i] = GetNoiseEta1(noiseSeed, nonce++);
+            e.Vector[i] = GetNoiseEta1(noiseSeed, nonce++);
             }
         skpv.NTT();
         e.NTT();
 
         var pkpv = new PolynomialVector(K);
         for (var i = 0; i < K; i++) {
-            pkpv.Polynomial[i] = matrix.PolynomialVector[i].PointwiseAccMontgomery(skpv);
-            pkpv.Polynomial[i].PolyToMont();
+            pkpv.Vector[i] = matrix.PolynomialVector[i].PointwiseAccMontgomery(skpv);
+            pkpv.Vector[i].PolyToMont();
             }
 
         pkpv.Add(e);
@@ -443,12 +443,13 @@ public class KyberPublic : Kyber {
         new int[] { 512, 768, 1024 };
 
 
+
     /// <summary>
     /// Constructor, initialize a public key from the keyblob <paramref name="publicKey"/>.
     /// The Kyber strength parameter is specified implicitly by the key size.
     /// </summary>
     /// <param name="publicKey">The private key.</param>
-    public KyberPublic(byte[] publicKey) : this (publicKey, GetStrength (publicKey.Length)) {
+    public KyberPublic(byte[] publicKey) : this (publicKey, GetStrength (publicKey.Length), publicKey.Length) {
         }
 
     /// <summary>
@@ -460,12 +461,22 @@ public class KyberPublic : Kyber {
     /// <param name="strength">The strength parameter; 0 => 512, 1 => 768, 2 => 1024.</param>
     /// <param name="offset">Offset at which the public key is located within 
     /// <paramref name="publicKey"/></param>
-    protected KyberPublic(byte[] publicKey, int strength, int offset=0) : base (KeySize[strength]) {
-        PublicKey = publicKey;
+    protected KyberPublic(byte[] key, int strength, int length, int offset=0) : 
+                base (KeySize[strength]) {
+        PublicKey = key.Extract(offset, length); ;
+
+
+        Console.WriteLine($"Public key bytes {length}");
+
+        //Test.DumpBufferHex(PublicKey, "Public key bytes");
         HashPublicKey = SHA3Managed.Process256(PublicKey);
         K = strength+2;
 
-        Pkpv = new PolynomialVector(K, PublicKey, offset);
+
+        Test.DumpBufferFingerprint(PublicKey, "**** Public Key:  A1DC-91E9-");
+        Pkpv = new PolynomialVector(K, key, offset); //failing
+        Pkpv.GetHash("Pkpv: 8C43-E3D2-");
+
         Seed = PublicKey.Extract(PolyVectorBytes, Kyber.SymBytes);
 
         at = PolynomialMatrix.GenerateMatrix(K, Seed, true);
@@ -487,6 +498,9 @@ public class KyberPublic : Kyber {
     public (byte[],byte[]) Encrypt(byte[] seed) {
         // SHA3-256 seed to mask the system seed
         var hashSeed = SHA3Managed.Process256(seed);
+
+        Test.DumpBufferHex(hashSeed);
+
 
         // Multitarget countermeasure for coins + contributory KEM
         var (buf, kr) = GetBufKr(hashSeed);
@@ -538,32 +552,51 @@ public class KyberPublic : Kyber {
         var ep = new PolynomialVector(K);
 
         for (var i = 0; i < K; i++) {
-            sp.Polynomial[i] = GetNoiseEta1(coins, nonce++);
+            sp.Vector[i] = GetNoiseEta1(coins, nonce++);
             }
         for (var i = 0; i < K; i++) {
-            ep.Polynomial[i] = GetNoiseEta2(coins, nonce++);
+            ep.Vector[i] = GetNoiseEta2(coins, nonce++);
             }
         var epp = GetNoiseEta2(coins, nonce++);
 
         sp.NTT();
 
+        sp.GetHash("Sp");
         // matrix-vector multiplication
 
         var bp = new PolynomialVector(K);
         for (var i = 0; i < K; i++) {
-            bp.Polynomial[i] = at.PolynomialVector[i].PointwiseAccMontgomery(sp);
+            bp.Vector[i] = at.PolynomialVector[i].PointwiseAccMontgomery(sp);
             }
 
+        bp.GetHash("Initial bp");
+
+
+
         var v = Pkpv.PointwiseAccMontgomery(sp);
+
+        v.GetHash("Initial v");
 
         bp.PolyInvNTT();
         v.PolyInvNTT();
 
+        bp.GetHash("After polyinv bp");
+        ep.GetHash("ep value");
+
         bp.Add(ep);
+
+        bp.GetHash("After add");
+
         v.Add(epp);
         v.Add(k);
         bp.Reduce();
         v.Reduce();
+
+        bp.GetHash("After reduce");
+
+
+
+        v.GetHash("Final v");
 
         return PackCiphertext(bp, v);
         }
@@ -602,7 +635,8 @@ public class KyberPrivate : KyberPublic {
     public KyberPrivate(byte[] privateKey) : this (privateKey, GetStrength(privateKey.Length)){
         }
 
-    KyberPrivate(byte[] privateKey, int strength) : base(privateKey, strength, PublicKeyOffset[strength]) {
+    KyberPrivate(byte[] privateKey, int strength) : 
+                base(privateKey, strength, PublicKeyLength[strength], PublicKeyOffset[strength]) {
         PrivateKey = privateKey;
 
 
@@ -625,9 +659,17 @@ public class KyberPrivate : KyberPublic {
     public byte[] Decrypt(byte[] ciphertext) {
 
         var hashSeed = IndCpaDecrypt (ciphertext);
+        Test.DumpBufferHex(hashSeed, "Hashseed = 050A-4873-");
+
 
         // Multitarget countermeasure for coins + contributory KEM
         var (buf, kr) = GetBufKr(hashSeed);
+
+
+
+
+        Test.DumpBufferHex(buf, "buf  = 050A-4873- - -55E6-E7BF");
+        Test.DumpBufferHex(kr, "kr = 652B-9090-");
 
         // call indcpa here
         var cmp = IndCpaEncrypt(buf, kr);
@@ -654,6 +696,12 @@ public class KyberPrivate : KyberPublic {
 
         var (bp, v) = UnPackCiphertext(buffer);
 
+        bp.GetHash("Initial bp = EEBA-4E0B");
+        v.GetHash("Initial v = 18D8-F841");
+
+        // H(bp) = EEBA-4E0B-426C-1B7C-F9E4-4A79-8F5E-F9A2-5DE0-1342-0D0E-66A9-B4FE-9AC2-FC95-63AE
+        // H(v) =  6187-12EB-082F-1D4D-AC40-1AE6-3AAA-1924-CBB4-A78C-CF59-09D0-EC83-937D-763C-147C
+
         bp.NTT();
 
         var mp = Skpv.PointwiseAccMontgomery (bp);
@@ -663,13 +711,24 @@ public class KyberPrivate : KyberPublic {
         mp.SubNeg(v);
         mp.Reduce();
 
-        mp.ToMessageBytes(K);
+        mp.GetHash("Final mp = 0831-9D6B-");
 
-        throw new NYI();
+        return mp.ToMessageBytes();
+
         }
 
     public bool Verify(byte[] ciphertext, byte[] compare) {
-        throw new NYI();
+
+        byte b = 0;
+        for (var i = 0; i < ciphertext.Length; i++) {
+            b |= (byte)(ciphertext[i] ^ compare[i]);
+            }
+
+        byte x = (byte)((b * -1) >> 31);
+
+
+        return b == 0;
+
         }
 
 

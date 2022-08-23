@@ -2658,20 +2658,21 @@
             </summary>
             <param name="hashBitLength"></param>
         </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHA3Managed.Process512(System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Algorithms.SHA3Managed.Process512(System.Byte[])">
             <summary>
             Convenience routine to preform one stop processing.
             </summary>
             <param name="input">The input data</param>
-            <param name="outputLength">The number of output bits</param>
+            
             <returns>The digest value</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHA3Managed.Process256(System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Algorithms.SHA3Managed.Process256(System.Byte[])">
             <summary>
             Convenience routine to preform one stop processing.
             </summary>
-            <param name="input">The input data</param>
-            <param name="outputLength">The number of output bits</param>
+            <param name="input">The input data.</param>
+            <param name="start">Start position.</param>
+            <param name="length">Number of octets to process.</param>
             <returns>The digest value</returns>
         </member>
         <member name="T:Goedel.Cryptography.Algorithms.SHAKE128">
@@ -2712,6 +2713,16 @@
             <returns>The resulting Keccak state vector.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.SHAKE128Kyber.Absorb(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Perform the Kyber Absorb function using the seed value <paramref name="seed"/>
+            for the element <paramref name="x"/>, <paramref name="y"/>.
+            </summary>
+            <param name="seed">The seed value</param>
+            <param name="x">The x value</param>
+            <param name="y">The y value</param>
+            <returns>The state array (for now).</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Algorithms.SHAKE128Kyber.AbsorbD(System.Byte[],System.Int32)">
             <summary>
             Perform the Kyber Absorb function using the seed value <paramref name="seed"/>
             for the element <paramref name="x"/>, <paramref name="y"/>.

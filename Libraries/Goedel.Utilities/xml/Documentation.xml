@@ -471,6 +471,16 @@
             <param name="length">The truncation length, 0 for no truncation.</param>
             <returns>Truncated value</returns>
         </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.Extract(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Extract <paramref name="length"/> bytes starting at <paramref name="offset"/>
+            from <paramref name="source"/> and return as a new array.
+            </summary>
+            <param name="source">The source buffer</param>
+            <param name="offset">The first byte to read</param>
+            <param name="length">The number of bytes to read.</param>
+            <returns>The created buffer.</returns>
+        </member>
         <member name="M:Goedel.Utilities.ArrayUtilities.Replace``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
             <summary>
             Wrapper for the Dictionary Add method to force replacement of the previous value if it exists.

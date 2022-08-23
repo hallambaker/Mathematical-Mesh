@@ -26,17 +26,16 @@ public struct Polynomial {
 
 
 
-    public Polynomial(byte[] buffer, int offset) : this(){
+    public Polynomial(byte[] buffer, int offset) : this() {
 
-        int j = 0;
         for (var i = 0; i < Coefficients.Length;) {
-            ushort b0 = buffer[j++];
-            ushort b1 = buffer[j++];
-            ushort b2 = buffer[j++];
-            Coefficients[i++] = (short) (b0 | (b1 << 8 & 0xfff));
-            Coefficients[i++] = (short)((b1>>4) | (b2 << 4 & 0xfff));
+            ushort b0 = buffer[offset++];
+            ushort b1 = buffer[offset++];
+            ushort b2 = buffer[offset++];
+            Coefficients[i++] = (short)(b0 | (b1 << 8 & 0xfff));
+            Coefficients[i++] = (short)((b1 >> 4) | (b2 << 4 & 0xfff));
             }
-        
+
         }
 
 
@@ -44,11 +43,38 @@ public struct Polynomial {
 
 
     public static Polynomial FromMessageBytes(byte[] message) {
-        throw new NotImplementedException();
+        var result = new Polynomial();
+        for (var i = 0; i < Kyber.N / 8; i++) {
+            for (var j = 0; j < 8; j++) {
+                short mask = (short)(-(short)((message[i] >> j) & 1));
+                result.Coefficients[8 * i + j] = (short)(mask & ((Kyber.Q + 1) / 2));
+                }
+            }
+        return result;
         }
 
-    public byte[] ToMessageBytes(int k) {
-        throw new NotImplementedException();
+    public byte[] ToMessageBytes() {
+        var result = new byte[Kyber.SymBytes]; 
+
+        // result is automatically initialized to zeros.
+        
+        for (var i = 0; i < Kyber.N / 8; i++) {
+            for (var j = 0; j < 8; j++) {
+
+
+                //var t =((((ushort)Coefficients[8 * i + j] <<1)+ (Kyber.Q / 2) / Kyber.Q) & 1);
+
+                var t1 = (uint)Coefficients[8 * i + j] << 1;
+                var t = ((t1 + (Kyber.Q / 2)) / Kyber.Q) & 1;
+
+
+                //Console.WriteLine($"{Coefficients[8 * i + j]} -> {t}  [{t1}]");
+
+                result[i] |= (byte) (t << j);
+                } 
+            }
+
+        return result;
         }
 
     public void Compress160(byte[] buffer, int offset = 0) {
@@ -56,7 +82,7 @@ public struct Polynomial {
 
         for (var j = 0; j < Kyber.N / 8; j++) {
             for (var k = 0; k < 8; k++) {
-                t[k] = (short)(((((uint)Coefficients[8 * j + k] << 5) + Kyber.Q / 2) / Kyber.Q) & 0x31);
+                t[k] = (short)(((((uint)Coefficients[8 * j + k] << 5) + Kyber.Q / 2) / Kyber.Q) & 31);
                 }
 
             buffer[offset++] = (byte)(t[0] >> 0 | t[1] << 5);               // 0
@@ -91,22 +117,22 @@ public struct Polynomial {
     public static Polynomial Decompress352(byte[] buffer, int offset = 0) {
         var result = new Polynomial();
 
-        var t = new short[8];
+        var t = new byte[8];
         for (var j = 0; j < Kyber.N / 8; j++) {
 
-            t[0] = (short)((buffer[offset + 0] >> 0));
-            t[1] = (short)((buffer[offset + 0] >> 5) | (buffer[offset + 1] << 3));
-            t[2] = (short)((buffer[offset + 1] >> 2));
-            t[3] = (short)((buffer[offset + 1] >> 7) | (buffer[offset + 2] << 1));
-            t[4] = (short)((buffer[offset + 2] >> 4) | (buffer[offset + 3] << 4));
-            t[5] = (short)((buffer[offset + 3] >> 1));
-            t[6] = (short)((buffer[offset + 3] >> 6) | (buffer[offset + 4] << 2));
-            t[7] = (short)((buffer[offset + 4] >> 3));
+            t[0] = (byte)((buffer[offset + 0] >> 0));
+            t[1] = (byte)((buffer[offset + 0] >> 5) | (buffer[offset + 1] << 3));
+            t[2] = (byte)((buffer[offset + 1] >> 2));
+            t[3] = (byte)((buffer[offset + 1] >> 7) | (buffer[offset + 2] << 1));
+            t[4] = (byte)((buffer[offset + 2] >> 4) | (buffer[offset + 3] << 4));
+            t[5] = (byte)((buffer[offset + 3] >> 1));
+            t[6] = (byte)((buffer[offset + 3] >> 6) | (buffer[offset + 4] << 2));
+            t[7] = (byte)((buffer[offset + 4] >> 3));
             
-            for (var k = 0; k < 4; k++) {
-                result.Coefficients[8 * j + k] = (short)(((t[k] & 0x31) * Kyber.Q + 16) >> 5);
+            for (var k = 0; k < 8; k++) {
+                result.Coefficients[8 * j + k] = (short)(((t[k] & 31) * Kyber.Q + 16) >> 5);
                 }
-            offset += 11;
+            offset += 5;
             }
 
         return result;
@@ -356,8 +382,7 @@ public struct Polynomial {
     /// <exception cref="NYI"></exception>
     public void SubNeg(Polynomial polynomial) {
         for (var i = 0; i < Kyber.N; i++) {
-            throw new NYI();
-            ////Coefficients[i] += polynomial.Coefficients[i];
+            Coefficients[i] = (short)(polynomial.Coefficients[i] - Coefficients[i]);
             }
         }
 
@@ -427,7 +452,7 @@ public struct Polynomial {
     /// Return a SHAKE128 fingerprint of the polynomial coefficients.
     /// </summary>
     /// <returns>String containing the base16 representation of the values.</returns>
-    public string GetHash() {
+    public string GetHash(string tag = null) {
 
         var d2 = Coefficients.Length;
 
@@ -439,7 +464,14 @@ public struct Polynomial {
             buffer[offset++] = (byte)(Coefficients[k] & 0xff);
             buffer[offset++] = (byte)(Coefficients[k] >> 8);
             }
-        return Test.GetBufferFingerprint(buffer);
+        var v = Test.GetBufferFingerprint(buffer);
+
+        if (tag != null) {
+            Console.WriteLine(tag);
+            Console.WriteLine(v);
+            }
+
+        return v;
         }
 
     }

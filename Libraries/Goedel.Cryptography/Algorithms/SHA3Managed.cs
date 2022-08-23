@@ -48,9 +48,9 @@ public class SHA3Managed : SHA3 {
     /// Convenience routine to preform one stop processing.
     /// </summary>
     /// <param name="input">The input data</param>
-    /// <param name="outputLength">The number of output bits</param>
+    /// 
     /// <returns>The digest value</returns>
-    public static byte[] Process512(byte[] input, int outputLength = 512) {
+    public static byte[] Process512(byte[] input) {
         using var Provider = new SHA3Managed(512);
         Provider.TransformFinalBlock(input, 0, input.Length);
         return Provider.Hash;
@@ -59,10 +59,13 @@ public class SHA3Managed : SHA3 {
     /// <summary>
     /// Convenience routine to preform one stop processing.
     /// </summary>
-    /// <param name="input">The input data</param>
-    /// <param name="outputLength">The number of output bits</param>
+    /// <param name="input">The input data.</param>
+    /// <param name="start">Start position.</param>
+    /// <param name="length">Number of octets to process.</param>
     /// <returns>The digest value</returns>
-    public static byte[] Process256(byte[] input, int outputLength = 512) {
+
+    public static byte[] Process256(byte[] input) {
+
         using var Provider = new SHA3Managed(256);
         Provider.TransformFinalBlock(input, 0, input.Length);
         return Provider.Hash;
@@ -180,6 +183,30 @@ public class SHAKE128Kyber : SHA3 {
         return state;
 
         }
+
+    /// <summary>
+    /// Perform the Kyber Absorb function using the seed value <paramref name="seed"/>
+    /// for the element <paramref name="x"/>, <paramref name="y"/>.
+    /// </summary>
+    /// <param name="seed">The seed value</param>
+    /// <param name="x">The x value</param>
+    /// <param name="y">The y value</param>
+    /// <returns>The state array (for now).</returns>
+    public ulong[] AbsorbD(byte[] seed, int x) {
+
+        var extSeed = new byte[seed.Length + 2];
+
+        for (var i = 0; i < seed.Length; i++) {
+            extSeed[i] = seed[i];
+            }
+        extSeed[seed.Length] = (byte)x;
+        extSeed[seed.Length+1] = (byte)(x >>8);
+
+        var state = Absorb(extSeed);
+        return state;
+
+        }
+
 
     public void Squeeze(byte[] buff, int nblocks, int index =0) {
         while (nblocks > 0) {

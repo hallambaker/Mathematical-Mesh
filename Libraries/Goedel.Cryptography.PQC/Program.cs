@@ -3,12 +3,19 @@
 using Goedel.Utilities;
 
 using Goedel.Test;
+using System;
+
 namespace Goedel.Cryptography.PQC;
 
 
 public class Test {
 
     static void Main() {
+
+        //for (int i = 0; i < 256; i++) {
+        //    var b = (int) i;
+        //    Console.WriteLine( (byte)((b * -1) >> 31));
+        //    }
 
         // See https://aka.ms/new-console-template for more information
         Console.WriteLine("Gen martix");
@@ -41,16 +48,24 @@ public class Test {
         DumpBufferFingerprint(publicKey);
         DumpBufferFingerprint(privateKey);
 
+        Console.WriteLine();
         var seed3 = Kyber.FakeRand(KyberPublic.SharedSecretBytes);
         DumpBufferHex(seed3);
 
         var encryptor = new KyberPublic(publicKey);
         var (ciphertext, sharedSecret) = encryptor.Encrypt(seed3);
 
+        Console.WriteLine("Ciphertext");
         DumpBufferHex(ciphertext);
 
-        var decryptor = new KyberPrivate(publicKey);
+        Console.WriteLine("Result encrypt");
+        DumpBufferFingerprint(ciphertext);
+        DumpBufferHex(sharedSecret);
+
+        var decryptor = new KyberPrivate(privateKey);
         var plaintext = decryptor.Decrypt(ciphertext);
+
+        Console.WriteLine("Result decrypt: 7B80-BF7A-");
         DumpBufferHex(plaintext);
 
         plaintext.TestEqual(sharedSecret);
@@ -63,11 +78,18 @@ public class Test {
 
 
 
-    public static void DumpBufferHex(byte[] buffer, int length = -1) {
-        Console.WriteLine(buffer.ToStringBase16(length: length, Format: ConversionFormat.Dash4));
+    public static void DumpBufferHex(byte[] buffer, string tag = null, int length = -1, int first =0) {
+        if (tag != null) {
+            Console.WriteLine(tag);
+            }
+        Console.WriteLine(buffer.ToStringBase16(length: length, Format: ConversionFormat.Dash4, first: first));
         }
 
-    public static void DumpBufferFingerprint(byte[] buffer) {
+    public static void DumpBufferFingerprint(byte[] buffer, string tag = null) {
+        if (tag != null) {
+            Console.WriteLine(tag);
+            }
+
         Console.WriteLine(GetBufferFingerprint(buffer));
         }
 

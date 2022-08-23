@@ -21,7 +21,7 @@ public struct PolynomialMatrix {
         for (var i = 0; i < k; i++) {
             PolynomialVector[i] = new PolynomialVector(k);
             for (var j = 0; j < k; j++) {
-                PolynomialVector[i].Polynomial[j] = new Polynomial();
+                PolynomialVector[i].Vector[j] = new Polynomial();
                 }
             }
         }
@@ -60,7 +60,7 @@ public struct PolynomialMatrix {
 
                 //Test.DumpBufferHex(buf, buflen);
 
-                ctr = a.PolynomialVector[i].Polynomial[j].RejUniform(buf, buflen);
+                ctr = a.PolynomialVector[i].Vector[j].RejUniform(buf, buflen);
 
                 //Console.WriteLine($"{ctr}");
                 //ctr -= 20; // NASTY HACK HERE
@@ -75,7 +75,7 @@ public struct PolynomialMatrix {
                     shake.Squeeze(buf, 1, off);
                     buflen = off + SHAKE128Kyber.HashRate;
 
-                    ctr = a.PolynomialVector[i].Polynomial[j].RejUniform(buf, buflen, ctr);
+                    ctr = a.PolynomialVector[i].Vector[j].RejUniform(buf, buflen, ctr);
                     }
                 }
             }
@@ -104,8 +104,8 @@ public struct PolynomialMatrix {
         for (var i = 0; i < d0; i++) {
             for (var j = 0; j < d1; j++) {
                 for (var k = 0; k < d2; k++) {
-                    buffer[offset++] = (byte)(PolynomialVector[i].Polynomial[j].Coefficients[k] & 0xff);
-                    buffer[offset++] = (byte)(PolynomialVector[i].Polynomial[j].Coefficients[k] >> 8);
+                    buffer[offset++] = (byte)(PolynomialVector[i].Vector[j].Coefficients[k] & 0xff);
+                    buffer[offset++] = (byte)(PolynomialVector[i].Vector[j].Coefficients[k] >> 8);
                     }
                 }
             }

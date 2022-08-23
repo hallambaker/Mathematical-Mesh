@@ -7,12 +7,12 @@ namespace Goedel.Cryptography.PQC;
 public struct PolynomialVector {
 
 
-    public int KYBER_POLYVECBYTES => Kyber.PolyBytes * Polynomial.Length;
+    public int KYBER_POLYVECBYTES => Kyber.PolyBytes * Vector.Length;
 
     int K { get; }
 
     ///<summary>The coeficients vectors.</summary> 
-    public Polynomial[] Polynomial;
+    public Polynomial[] Vector;
 
     /// <summary>
     /// Constructor, create a Kyber polynomial of size 
@@ -21,15 +21,15 @@ public struct PolynomialVector {
     /// <param name="k">The number coefficient vectors.</param>
     public PolynomialVector(int k) {
         K = k;
-        Polynomial = new Polynomial[k];
+        Vector = new Polynomial[k];
         }
 
 
     public PolynomialVector(int k, byte[] input, int offset = 0) {
         K = k;
-        Polynomial = new Polynomial[k];
+        Vector = new Polynomial[k];
         for (var i = 0; i < k; i++) {
-            Polynomial[i] = new Polynomial(input, offset);
+            Vector[i] = new Polynomial(input, offset);
             offset += Kyber.PolyBytes;
             }
 
@@ -43,7 +43,7 @@ public struct PolynomialVector {
     /// </summary>
     /// <param name="r">The polynomial to transform.</param>
     public void NTT() {
-        foreach (var p in Polynomial) {
+        foreach (var p in Vector) {
             p.PolyNTT();
             }
         }
@@ -55,7 +55,9 @@ public struct PolynomialVector {
     /// </summary>
     /// <param name="r">The polynomial to transform.</param>
     public void PolyInvNTT() {
-        throw new NotImplementedException();
+        foreach (var p in Vector) {
+            p.PolyInvNTT();
+            }
         }
 
 
@@ -69,9 +71,9 @@ public struct PolynomialVector {
         var r = new Polynomial();
         var t = new Polynomial();
 
-        r.PolyBasemulMontgomery(Polynomial[0], vector.Polynomial[0]);
-        for (var i = 1; i < Polynomial.Length; i++) {
-            t.PolyBasemulMontgomery(Polynomial[i], vector.Polynomial[i]);
+        r.PolyBasemulMontgomery(Vector[0], vector.Vector[0]);
+        for (var i = 1; i < Vector.Length; i++) {
+            t.PolyBasemulMontgomery(Vector[i], vector.Vector[i]);
             r.Add(t);
             }
         r.Reduce();
@@ -85,8 +87,8 @@ public struct PolynomialVector {
     /// </summary>
     /// <param name="vector"></param>
     public void Add(PolynomialVector vector) {
-        for (var i = 0; i < Polynomial.Length; i++) {
-            Polynomial[i].Add(vector.Polynomial[i]);
+        for (var i = 0; i < Vector.Length; i++) {
+            Vector[i].Add(vector.Vector[i]);
             }
         }
 
@@ -96,8 +98,8 @@ public struct PolynomialVector {
     /// For details of the Barrett reduction see <see cref="Kyber.BarrettReduce"/>.
     /// </summary>
     public void Reduce() {
-        for (var i = 0; i < Polynomial.Length; i++) {
-            Polynomial[i].Reduce();
+        for (var i = 0; i < Vector.Length; i++) {
+            Vector[i].Reduce();
             }
         }
 
@@ -115,8 +117,8 @@ public struct PolynomialVector {
             }
 
 
-        for (var i = 0; i < Polynomial.Length; i++) {
-            Polynomial[i].ToBytes(buffer, i* Kyber.PolyBytes);
+        for (var i = 0; i < Vector.Length; i++) {
+            Vector[i].ToBytes(buffer, i* Kyber.PolyBytes);
             }
 
         if (seed != null) {
@@ -134,7 +136,7 @@ public struct PolynomialVector {
         for (var i = 0; i < K; i++) {
             for (var j = 0; j < Kyber.N/8; j++) {
                 for (var k = 0; k < 8; k++) {
-                    t[k] = (short)(((((uint)Polynomial[i].Coefficients[8 * j + k] << 11) + Kyber.Q / 2) / Kyber.Q) & 0x7ff);
+                    t[k] = (short)(((((uint)Vector[i].Coefficients[8 * j + k] << 11) + Kyber.Q / 2) / Kyber.Q) & 0x7ff);
                     }
                 buffer[offset++] = (byte)(t[0] >> 0);               // 0
                 buffer[offset++] = (byte)(t[0] >> 8  | t[1] << 3);  // 1
@@ -142,10 +144,10 @@ public struct PolynomialVector {
                 buffer[offset++] = (byte)(t[2] >> 2);               // 3
                 buffer[offset++] = (byte)(t[2] >> 10 | t[3] << 1);  // 4
                 buffer[offset++] = (byte)(t[3] >> 7  | t[4] << 4);  // 5
-                buffer[offset++] = (byte)(t[4] >> 4  | t[5] >> 7);  // 6
+                buffer[offset++] = (byte)(t[4] >> 4  | t[5] << 7);  // 6
                 buffer[offset++] = (byte)(t[5] >> 1);               // 7
-                buffer[offset++] = (byte)(t[5] >> 9  | t[6] >> 2);  // 8
-                buffer[offset++] = (byte)(t[6] >> 6  | t[7] >> 5);  // 9
+                buffer[offset++] = (byte)(t[5] >> 9  | t[6] << 2);  // 8
+                buffer[offset++] = (byte)(t[6] >> 6  | t[7] << 5);  // 9
                 buffer[offset++] = (byte)(t[7] >> 3);               // 10
                 }
             }
@@ -158,7 +160,7 @@ public struct PolynomialVector {
         for (var i = 0; i < K; i++) {
             for (var j = 0; j < Kyber.N / 8; j++) {
                 for (var k = 0; k < 8; k++) {
-                    t[k] = (short)(((((uint)Polynomial[i].Coefficients[4 * j + k] << 10) + Kyber.Q / 2) / Kyber.Q) & 0x3ff);
+                    t[k] = (short)(((((uint)Vector[i].Coefficients[4 * j + k] << 10) + Kyber.Q / 2) / Kyber.Q) & 0x3ff);
                     }
                 buffer[offset++] = (byte)(t[0] >> 0);               // 0
                 buffer[offset++] = (byte)(t[0] >> 8  | t[1] << 2);  // 1
@@ -177,19 +179,20 @@ public struct PolynomialVector {
         var t = new short[8];
 
         for (var i = 0; i < K; i++) {
+            vector.Vector[i] = new();
             for (var j = 0; j < Kyber.N / 8; j++) {
 
                 t[0] = (short)((buffer[offset + 0] >> 0) | (buffer[offset + 1] << 8));
-                t[1] = (short)((buffer[offset + 3] >> 3) | (buffer[offset + 2] << 5));
-                t[2] = (short)((buffer[offset + 6] >> 6) | (buffer[offset + 3] << 2) | (buffer[offset + 4] << 10));
-                t[3] = (short)((buffer[offset + 1] >> 1) | (buffer[offset + 5] << 7));
-                t[4] = (short)((buffer[offset + 4] >> 4) | (buffer[offset + 6] << 4));
-                t[5] = (short)((buffer[offset + 7] >> 7) | (buffer[offset + 7] << 1) | (buffer[offset + 8] << 9));
-                t[6] = (short)((buffer[offset + 2] >> 2) | (buffer[offset + 9] << 6));
-                t[7] = (short)((buffer[offset + 5] >> 5) | (buffer[offset +10] << 3));
+                t[1] = (short)((buffer[offset + 1] >> 3) | (buffer[offset + 2] << 5));
+                t[2] = (short)((buffer[offset + 2] >> 6) | (buffer[offset + 3] << 2) | (buffer[offset + 4] << 10));
+                t[3] = (short)((buffer[offset + 4] >> 1) | (buffer[offset + 5] << 7));
+                t[4] = (short)((buffer[offset + 5] >> 4) | (buffer[offset + 6] << 4));
+                t[5] = (short)((buffer[offset + 6] >> 7) | (buffer[offset + 7] << 1) | (buffer[offset + 8] << 9));
+                t[6] = (short)((buffer[offset + 8] >> 2) | (buffer[offset + 9] << 6));
+                t[7] = (short)((buffer[offset + 9] >> 5) | (buffer[offset +10] << 3));
 
                 for (var k = 0; k < 8; k++) {
-                    vector.Polynomial[i].Coefficients[8 * j + k] = (short)(((t[k] & 0x7FF) * Kyber.Q + 1024) >> 11);
+                    vector.Vector[i].Coefficients[8 * j + k] = (short)(((t[k] & 0x7FF) * Kyber.Q + 1024) >> 11);
                     }
                 
                 offset += 11;
@@ -214,7 +217,7 @@ public struct PolynomialVector {
                 t[3] = (short)((buffer[offset + 6] >> 6) | (buffer[offset + 4] << 2));
 
                 for (var k = 0; k < 4; k++) {
-                    vector.Polynomial[i].Coefficients[4 * j + k] = (short)(((t[k] & 0x3FF) * Kyber.Q + 512) >> 10);
+                    vector.Vector[i].Coefficients[4 * j + k] = (short)(((t[k] & 0x3FF) * Kyber.Q + 512) >> 10);
                     }
 
                 offset += 11;
@@ -238,9 +241,9 @@ public struct PolynomialVector {
         var r = new Polynomial();
         var t = new Polynomial();
 
-        r.PolyBasemulMontgomery(a.Polynomial[0], b.Polynomial[0]);
-        for (var i = 1; i < a.Polynomial.Length; i++) {
-            t.PolyBasemulMontgomery(a.Polynomial[i], b.Polynomial[i]);
+        r.PolyBasemulMontgomery(a.Vector[0], b.Vector[0]);
+        for (var i = 1; i < a.Vector.Length; i++) {
+            t.PolyBasemulMontgomery(a.Vector[i], b.Vector[i]);
             r.Add(t);
             }
         r.Reduce();
@@ -350,9 +353,10 @@ public struct PolynomialVector {
     /// Return a SHAKE128 fingerprint of the polynomial coefficients.
     /// </summary>
     /// <returns>String containing the base16 representation of the values.</returns>
-    public string GetHash() {
-        var d1 = Polynomial.GetLength(1);
-        var d2 = Polynomial[0].Coefficients.Length;
+    public string GetHash(string tag=null) {
+
+        var d1 = Vector.GetLength(0);
+        var d2 = Vector[0].Coefficients.Length;
 
         int size = d1 * d2 * 2;
         byte[] buffer = new byte[size];
@@ -360,12 +364,19 @@ public struct PolynomialVector {
         var offset = 0;
         for (var j = 0; j < d1; j++) {
             for (var k = 0; k < d2; k++) {
-                buffer[offset++] = (byte)(Polynomial[j].Coefficients[k] & 0xff);
-                buffer[offset++] = (byte)(Polynomial[j].Coefficients[k] >> 8);
+                buffer[offset++] = (byte)(Vector[j].Coefficients[k] & 0xff);
+                buffer[offset++] = (byte)(Vector[j].Coefficients[k] >> 8);
                 }
             }
 
-        return Test.GetBufferFingerprint(buffer);
+        var v= Test.GetBufferFingerprint(buffer);
+
+        if (tag != null) {
+            Console.WriteLine(tag); 
+            Console.WriteLine(v);
+            }
+
+        return v;
         }
 
 
