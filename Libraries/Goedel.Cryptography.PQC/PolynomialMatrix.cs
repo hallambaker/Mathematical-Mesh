@@ -5,10 +5,10 @@ public struct PolynomialMatrix {
     public PolynomialVector[] PolynomialVector;
 
     ///<summary></summary> 
-    public const int GEN_MATRIX_BYTES = 12 * Kyber.N / 8 * (1 << 12) / Kyber.Q + SHAKE128Kyber.HashRate;
+    public const int GEN_MATRIX_BYTES = 12 * Kyber.N / 8 * (1 << 12) / Kyber.Q + SHA3.HashRateShake128;
 
     ///<summary></summary> 
-    public const int GEN_MATRIX_NBLOCKS = GEN_MATRIX_BYTES / SHAKE128Kyber.HashRate;
+    public const int GEN_MATRIX_NBLOCKS = GEN_MATRIX_BYTES / SHA3.HashRateShake128;
 
     /// <summary>
     /// Constructor, create a Kyber matrix of size 
@@ -42,7 +42,7 @@ public struct PolynomialMatrix {
         var buf = new byte[GEN_MATRIX_BYTES + 2];
         uint ctr;
 
-        using var shake = new SHAKE128Kyber();
+        using var shake = new SHAKEExtended();
 
         for (var i = 0; i < kyberK; i++) {
             for (var j = 0; j < kyberK; j++) {
@@ -53,7 +53,7 @@ public struct PolynomialMatrix {
                     state = shake.Absorb(seed, j, i);
                     }
 
-                var buflen = GEN_MATRIX_NBLOCKS * SHAKE128Kyber.HashRate;
+                var buflen = GEN_MATRIX_NBLOCKS * SHA3.HashRateShake128;
 
                 //DumpVector(state);
                 shake.Squeeze(buf, GEN_MATRIX_NBLOCKS);
@@ -73,7 +73,7 @@ public struct PolynomialMatrix {
                         buf[k] = buf[buflen - off + k];
                         }
                     shake.Squeeze(buf, 1, off);
-                    buflen = off + SHAKE128Kyber.HashRate;
+                    buflen = off + SHA3.HashRateShake128;
 
                     ctr = a.PolynomialVector[i].Vector[j].RejUniform(buf, buflen, ctr);
                     }
@@ -117,31 +117,4 @@ public struct PolynomialMatrix {
 
 
     }
-
-
-
-
-
-
-//public class Kyber512 : Kyber {
-//    ///<inheritdoc/>
-//    public override int K => 2;
-//    ///<inheritdoc/>
-//    public override int ETA1 => 3;
-//    ///<inheritdoc/>
-//    public override int POLYCOMPRESSEDBYTES => 128;
-
-
-
-//    }
-
-//public class Kyber768 : Kyber {
-//    ///<inheritdoc/>
-//    public override int K => 3;
-//    ///<inheritdoc/>
-//    public override int ETA1 => 2;
-//    ///<inheritdoc/>
-//    public override int POLYCOMPRESSEDBYTES => 128;
-//    }
-
 

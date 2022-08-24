@@ -14,14 +14,16 @@ public enum DilithiumMode {
     }
 
 
-public class Dilithium {
+public class Dilithium : IPolynomial {
 
     public const int SEEDBYTES = 32;
     public const int CRHBYTES = 48;
-    public const int N = 256;
-    public const int Q = 8380417;
-    public const int D = 13;
-    public const int ROOT_OF_UNITY = 1753;
+    public int N =>  256;
+
+    const int q = 8380417;
+    public int Q => q;
+    public int D => 13;
+    public int ROOT_OF_UNITY => 1753;
 
     public  int K { get; }
     public  int L { get; }
@@ -32,10 +34,14 @@ public class Dilithium {
     public  int GAMMA1 { get; }
     public  int GAMMA2{ get; }
     public  int OMEGA{ get; }
-
+    public DilithiumMode Mode { get; }
 
     int Index { get; }
     int[] MODEs = new int[] { 2, 3, 5};
+
+
+    public const int GAMMA_17 = (1 << 17);
+    public const int GAMMA_19 = (1 << 19);
 
     readonly int[] Ks =         new int[] { 4, 6, 8 };
     readonly int[] Ls =         new int[] { 4, 5, 7 };
@@ -43,11 +49,12 @@ public class Dilithium {
     readonly int[] TAUs =       new int[] { 39, 49, 60 };
 
     readonly int[] BETAs =      new int[] { 78, 196, 120 };
-    readonly int[] GAMMA1s =    new int[] { (1 << 17), (1 << 19), (1 << 19) };
-    readonly int[] GAMMA2s =    new int[] { ((Q - 1) / 88), ((Q - 1) / 32), ((Q - 1) / 32) };
+    readonly int[] GAMMA1s =    new int[] { GAMMA_17, GAMMA_19, GAMMA_19 };
+    readonly int[] GAMMA2s =    new int[] { ((q - 1) / 88), ((q - 1) / 32), ((q - 1) / 32) };
     readonly int[] OMEGAs =     new int[] { 80, 55, 75 };
 
     public Dilithium(DilithiumMode mode) {
+        Mode = mode;
         Index = (int)mode;
         K = Ks[Index];
         L = Ls[Index];

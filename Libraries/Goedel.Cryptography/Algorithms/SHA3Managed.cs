@@ -105,11 +105,43 @@ public class SHAKE128 : SHA3 {
     }
 
 
+/// <summary>
+/// SHAKE128 provider. This digest class supports varying bit size outputs
+/// in 64 bit increments with a work factor of 2^256
+/// </summary>
+public class SHAKE256 : SHA3 {
+
+    internal override byte PaddingValueStart { get; } = 0x1f;
+
+    /// <summary>
+    /// SHAKE128 provider. This digest class supports varying bit size outputs
+    /// in 64 bit increments with a work factor of 2^256
+    /// </summary>
+    /// <param name="hashBitLength">The number of output bits</param>
+    public SHAKE256(int hashBitLength = 512)
+        : base(hashBitLength) => KeccakR = 1088;
+
+    /// <summary>
+    /// Convenience routine to preform one stop processing.
+    /// </summary>
+    /// <param name="Input">The input data</param>
+    /// <param name="hashBitLength">The number of output bits</param>
+    /// <returns>The digest value</returns>
+    public static byte[] Process(byte[] Input, int hashBitLength = 256) {
+        using var provider = new SHAKE256(hashBitLength);
+        provider.TransformFinalBlock(Input, 0, Input.Length);
+        return provider.Hash;
+        }
+    }
 
 
-public class SHAKE128Kyber : SHA3 {
 
-    public const int HashRate = 168;
+
+public class SHAKEExtended : SHA3 {
+
+
+    internal override byte PaddingValueStart { get; } = 0x1f;
+    public int HashRate { get; }
 
 
     /// <summary>
@@ -117,44 +149,58 @@ public class SHAKE128Kyber : SHA3 {
     /// in 64 bit increments with a work factor of 2^128
     /// </summary>
     /// <param name="hashBitLength">The number of output bits</param>
-    public SHAKE128Kyber(int hashBitLength = 256)
-        : base(hashBitLength) => KeccakR = 1344;
+    public SHAKEExtended(int hashBitLength = 256) : base(hashBitLength) {
+        switch (hashBitLength) {
+            case 256: {
+                KeccakR = 1344;
+                HashRate = HashRateShake128;
+                break;
+                }
+            case 512: {
+                KeccakR = 1088;
+                HashRate = HashRateShake256;
+                break;
+                }
+            }
+        }
 
-    internal override byte PaddingValueStart { get; } = 0x1f;
+
+    public static SHAKEExtended Shake128() => new SHAKEExtended(256);
+
+    public static SHAKEExtended Shake256() => new SHAKEExtended(512);
+
+
 
     /// <summary>
     /// Transform the input <paramref name="bytes"/> and return the Keccak state vector
     /// using the modified Kyber SHAKE128 absorb function.
     /// </summary>
     /// <param name="bytes">The input bytes.</param>
-    /// <param name="r">The input block in bytes.</param>
     /// <returns>The resulting Keccak state vector.</returns>
-    public ulong[] Absorb(byte[] bytes, int r = HashRate, byte p = 0x1F) {
+    public ulong[] Absorb(byte[] bytes) {
 
         // initialize the array
         Array.Clear(state, 0, state.Length);
 
-        //HashCore(bytes, 0, hashRate);
-
         var mlen = bytes.Length;
         var index = 0;
-        while (mlen >= r) {
-            for (var i = 0; i < r / 8; i++) {
+        while (mlen >= HashRate) {
+            for (var i = 0; i < HashRate / 8; i++) {
                 state[i] ^= bytes.LittleEndian64(index + 8 * i);
                 }
             KeccakF();
-            index -= r;
-            mlen += r;
+            index -= HashRate;
+            mlen += HashRate;
             }
 
         var t = new byte[200];
         for (var i = 0; i < bytes.Length; i++) {
             t[i] = bytes[i];
             }
-        t[bytes.Length] = p;
-        t[r - 1] |= 128;
+        t[bytes.Length] = PaddingValueStart;
+        t[HashRate - 1] |= 128;
 
-        for (var i = 0; i < r / 8; i++) {
+        for (var i = 0; i < HashRate / 8; i++) {
             state[i] ^= t.LittleEndian64(8 * i);
             }
 
@@ -211,7 +257,7 @@ public class SHAKE128Kyber : SHA3 {
     public void Squeeze(byte[] buff, int nblocks, int index =0) {
         while (nblocks > 0) {
             KeccakF();
-            for (var i = 0; i < HashRate/8; i++) {
+            for (var i = 0; i < HashRate / 8; i++) {
                 buff.LittleEndianStore(state[i], index + (i*8));
                 }
             index += HashRate;
@@ -220,36 +266,6 @@ public class SHAKE128Kyber : SHA3 {
 
         }
 
-    }
-
-
-/// <summary>
-/// SHAKE128 provider. This digest class supports varying bit size outputs
-/// in 64 bit increments with a work factor of 2^256
-/// </summary>
-public class SHAKE256 : SHA3 {
-
-    internal override byte PaddingValueStart { get; } = 0x1f;
-
-    /// <summary>
-    /// SHAKE128 provider. This digest class supports varying bit size outputs
-    /// in 64 bit increments with a work factor of 2^256
-    /// </summary>
-    /// <param name="hashBitLength">The number of output bits</param>
-    public SHAKE256(int hashBitLength = 512)
-        : base(hashBitLength) => KeccakR = 1088;
-
-    /// <summary>
-    /// Convenience routine to preform one stop processing.
-    /// </summary>
-    /// <param name="Input">The input data</param>
-    /// <param name="hashBitLength">The number of output bits</param>
-    /// <returns>The digest value</returns>
-    public static byte[] Process(byte[] Input, int hashBitLength = 256) {
-        using var provider = new SHAKE256(hashBitLength);
-        provider.TransformFinalBlock(Input, 0, Input.Length);
-        return provider.Hash;
-        }
     }
 
 

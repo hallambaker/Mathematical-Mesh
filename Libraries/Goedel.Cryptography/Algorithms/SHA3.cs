@@ -30,14 +30,17 @@ namespace Goedel.Cryptography.Algorithms;
 [ComVisible(true)]
 public abstract class SHA3 : HashAlgorithm {
 
-    static SHA3() {
-        //CryptoConfig.AddAlgorithm(typeof(SHA3Managed), "SHA3", "SHA3Managed", 
-        //                "SHA-3", "System.Security.Cryptography.SHA3");
-        //CryptoConfig.AddAlgorithm(typeof(SHAKE128), "SHAKE128", "SHAKE-128");
-        //CryptoConfig.AddAlgorithm(typeof(SHAKE128), "SHAKE256", "SHAKE-256");
+    public const int HashRateShake128 = 168;
 
-        //CryptoConfig.AddOID("2.16.840.1.101.3.4.2.10", 
-        //            "SHA3", "SHA3Managed", "SHA-3", "System.Security.Cryptography.SHA3");
+    public const int HashRateShake256 = 136;
+
+
+    public const int HashRateSHA3_256 = 136;
+
+    public const int HashRateSHA3_512 = 72;
+
+
+    static SHA3() {
         }
 
     /// <summary>
