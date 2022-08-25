@@ -39,16 +39,16 @@ public class Test {
         a.GetHash("UniformGamma1 = 46D9-90D3-28CF-3F23");
 
         a.NTT();
-        a.GetHash("NTT = 911B-1F04-6EB5-F5AA");
+        a.GetHash("NTT = 7A2B-EE89-795E-6D82");
 
         a.InvnttTomont();
-        a.GetHash("InvnttTomont = F452-754A-4342-6AA8");
+        a.GetHash("InvnttTomont = 2C87-462C-A37A-B7F5");
 
-        var c2 = a.PointwiseMontgomery(b);
-        c2.GetHash("PointwiseMontgomery = C2CF-8BB1-BF77-9E9F");
+        c.PointwiseMontgomery(a, b);
+        c.GetHash("PointwiseMontgomery = 29BC-1206-8835-39BA");
 
-        var c3 = PolynomialInt32.Challenge(dilithium, seed);
-        c3.GetHash("Challenge = D001-BC96-6AF4-D12F");
+        c.Challenge(seed);
+        c.GetHash("Challenge = D001-BC96-6AF4-D12F");
 
         var (pk, sk) = Dilithium.GenerateKeypair (keySeed);
         var privateKey = new DilithiumPrivate(sk);

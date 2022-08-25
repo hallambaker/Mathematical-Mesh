@@ -20,7 +20,12 @@ public class Dilithium : IPolynomial {
     public const int CRHBYTES = 48;
     public int N =>  256;
 
+    const int mont = -4186625;
+    const int qinv = 58728449 ;
     const int q = 8380417;
+
+
+
     public int Q => q;
     public int D => 13;
     public int ROOT_OF_UNITY => 1753;
@@ -71,6 +76,21 @@ public class Dilithium : IPolynomial {
     public static (byte[], byte[]) GenerateKeypair(byte[] seed) {
         return (null, null);
         }
+
+
+    /// <summary>
+    /// Montgomery reduction according to <see cref="q"/>. Changed return
+    /// type to int since this appears more consistent with use in the code.
+    /// </summary>
+    /// <param name="a">The value to reduce.</param>
+    /// <returns>The Montgomery reduction.</returns>
+    public static int MontgomeryReduce(long a) {
+        int t = (int)(a * qinv);
+        return (int) (a - ((long)t * q) >> 32);
+        }
+
+
+
     }
 
 
