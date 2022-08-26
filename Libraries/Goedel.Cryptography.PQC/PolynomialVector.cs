@@ -4,7 +4,7 @@ using System.Numerics;
 namespace Goedel.Cryptography.PQC;
 
 
-public struct PolynomialVector {
+public struct PolynomialVectorInt16 {
 
 
     public int KYBER_POLYVECBYTES => Kyber.PolyBytes * Vector.Length;
@@ -19,13 +19,13 @@ public struct PolynomialVector {
     /// <paramref name="k"/>.<see cref="Kyber.N"/>.
     /// </summary>
     /// <param name="k">The number coefficient vectors.</param>
-    public PolynomialVector(int k) {
+    public PolynomialVectorInt16(int k) {
         K = k;
         Vector = new Polynomial[k];
         }
 
 
-    public PolynomialVector(int k, byte[] input, int offset = 0) {
+    public PolynomialVectorInt16(int k, byte[] input, int offset = 0) {
         K = k;
         Vector = new Polynomial[k];
         for (var i = 0; i < k; i++) {
@@ -67,7 +67,7 @@ public struct PolynomialVector {
     /// </summary>
     /// <param name="vector">Second input vector.</param>
     /// <returns>The result.</returns>
-    public Polynomial PointwiseAccMontgomery(PolynomialVector vector) {
+    public Polynomial PointwiseAccMontgomery(PolynomialVectorInt16 vector) {
         var r = new Polynomial();
         var t = new Polynomial();
 
@@ -86,7 +86,7 @@ public struct PolynomialVector {
     /// Add the polynomial vector <paramref name="vector"/> to this in place.
     /// </summary>
     /// <param name="vector"></param>
-    public void Add(PolynomialVector vector) {
+    public void Add(PolynomialVectorInt16 vector) {
         for (var i = 0; i < Vector.Length; i++) {
             Vector[i].Add(vector.Vector[i]);
             }
@@ -173,8 +173,8 @@ public struct PolynomialVector {
 
 
 
-    public static PolynomialVector Decompress352(int K, byte[] buffer, int offset = 0) {
-        var vector = new PolynomialVector(K);
+    public static PolynomialVectorInt16 Decompress352(int K, byte[] buffer, int offset = 0) {
+        var vector = new PolynomialVectorInt16(K);
 
         var t = new short[8];
 
@@ -202,9 +202,9 @@ public struct PolynomialVector {
 
         }
 
-    public static PolynomialVector Decompress320(int K, byte[] buffer, int offset = 0) {
+    public static PolynomialVectorInt16 Decompress320(int K, byte[] buffer, int offset = 0) {
 
-        var vector = new PolynomialVector(K);
+        var vector = new PolynomialVectorInt16(K);
 
         var t = new short[8];
 
@@ -236,7 +236,7 @@ public struct PolynomialVector {
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
     /// <returns>The result.</returns>
-    public static Polynomial PolyBasemulMontgomery(PolynomialVector a, PolynomialVector b) {
+    public static Polynomial PolyBasemulMontgomery(PolynomialVectorInt16 a, PolynomialVectorInt16 b) {
 
         var r = new Polynomial();
         var t = new Polynomial();
@@ -263,7 +263,7 @@ public struct PolynomialVector {
     /// <param name="b"></param>
     /// <returns></returns>
     /// <exception cref="NYI"></exception>
-    public static PolynomialVector PolyAdd(PolynomialVector a, PolynomialVector b) {
+    public static PolynomialVectorInt16 PolyAdd(PolynomialVectorInt16 a, PolynomialVectorInt16 b) {
         throw new NYI();
         }
 
@@ -274,7 +274,7 @@ public struct PolynomialVector {
     /// <param name="b"></param>
     /// <returns></returns>
     /// <exception cref="NYI"></exception>
-    public static PolynomialVector PolySub(PolynomialVector a, PolynomialVector b) {
+    public static PolynomialVectorInt16 PolySub(PolynomialVectorInt16 a, PolynomialVectorInt16 b) {
         throw new NYI();
         }
 
@@ -294,7 +294,7 @@ public struct PolynomialVector {
     /// </summary>
     /// <returns>Serialization of the polynomial.</returns>
     /// <exception cref="NYI"></exception>
-    public static PolynomialVector Decompress(byte[] input) {
+    public static PolynomialVectorInt16 Decompress(byte[] input) {
         throw new NYI();
         }
 
@@ -314,7 +314,7 @@ public struct PolynomialVector {
     /// </summary>
     /// <returns>Serialization of the polynomial.</returns>
     /// <exception cref="NYI"></exception>
-    public static PolynomialVector FromBytes(byte[] input) {
+    public static PolynomialVectorInt16 FromBytes(byte[] input) {
         throw new NYI();
         }
 
@@ -334,7 +334,7 @@ public struct PolynomialVector {
     /// </summary>
     /// <returns>Serialization of the polynomial.</returns>
     /// <exception cref="NYI"></exception>
-    public static PolynomialVector FromMsg(byte[] input) {
+    public static PolynomialVectorInt16 FromMsg(byte[] input) {
         throw new NYI();
         }
 

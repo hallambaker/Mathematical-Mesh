@@ -96,7 +96,7 @@ public  class Kyber {
 
         }
 
-    public byte[] PackCiphertext(PolynomialVector v, Polynomial p) {
+    public byte[] PackCiphertext(PolynomialVectorInt16 v, Polynomial p) {
 
         var buffer = new byte[KYBER_INDCPA_BYTES];
         switch (K) {
@@ -115,19 +115,19 @@ public  class Kyber {
         return buffer;
         }
 
-    public (PolynomialVector, Polynomial) UnPackCiphertext(byte[] data) {
+    public (PolynomialVectorInt16, Polynomial) UnPackCiphertext(byte[] data) {
 
         data.Length.AssertEqual(KYBER_INDCPA_BYTES, NYI.Throw);
 
         switch (K) {
             case 4: {
-                var v = PolynomialVector.Decompress352(K, data);
+                var v = PolynomialVectorInt16.Decompress352(K, data);
                 var p = Polynomial.Decompress352(data, POLYVECCOMPRESSEDBYTES);
                 return (v, p);
                 }
             case 2:
             case 3: {
-                var v = PolynomialVector.Decompress320(K, data);
+                var v = PolynomialVectorInt16.Decompress320(K, data);
                 var p = Polynomial.Decompress320(data, POLYVECCOMPRESSEDBYTES);
                 return (v, p);
                 }
@@ -246,13 +246,13 @@ public  class Kyber {
         Array.Copy (buf, publicSeed, SymBytes);
         Array.Copy(buf, SymBytes, noiseSeed, 0, SymBytes);
 
-        var matrix = PolynomialMatrix.GenerateMatrix(K, publicSeed);
+        var matrix = PolynomialMatrixInt16.MatrixExpandFromSeed(K, publicSeed);
 
         Console.WriteLine(matrix.GetHash());
 
         byte nonce = 0;
-        var skpv = new PolynomialVector(K);
-        var e = new PolynomialVector(K);
+        var skpv = new PolynomialVectorInt16(K);
+        var e = new PolynomialVectorInt16(K);
 
         for (var i = 0; i < K; i++) {
             skpv.Vector[i] = GetNoiseEta1(noiseSeed, nonce++);
@@ -263,7 +263,7 @@ public  class Kyber {
         skpv.NTT();
         e.NTT();
 
-        var pkpv = new PolynomialVector(K);
+        var pkpv = new PolynomialVectorInt16(K);
         for (var i = 0; i < K; i++) {
             pkpv.Vector[i] = matrix.PolynomialVector[i].PointwiseAccMontgomery(skpv);
             pkpv.Vector[i].PolyToMont();
@@ -431,10 +431,10 @@ public class KyberPublic : Kyber {
     public int PolyVectorBytes => K * Kyber.PolyBytes;
 
     ///<summary>The Public key polynomial vector.</summary> 
-    PolynomialVector Pkpv { get; }
+    PolynomialVectorInt16 Pkpv { get; }
 
 
-    PolynomialMatrix at { get; }
+    PolynomialMatrixInt16 at { get; }
 
     ///<summary>The seed value.</summary> 
     byte[] Seed { get; }
@@ -474,12 +474,12 @@ public class KyberPublic : Kyber {
 
 
         Test.DumpBufferFingerprint(PublicKey, "**** Public Key:  A1DC-91E9-");
-        Pkpv = new PolynomialVector(K, key, offset); //failing
+        Pkpv = new PolynomialVectorInt16(K, key, offset); //failing
         Pkpv.GetHash("Pkpv: 8C43-E3D2-");
 
         Seed = PublicKey.Extract(PolyVectorBytes, Kyber.SymBytes);
 
-        at = PolynomialMatrix.GenerateMatrix(K, Seed, true);
+        at = PolynomialMatrixInt16.MatrixExpandFromSeed(K, Seed, true);
 
 
 
@@ -548,8 +548,8 @@ public class KyberPublic : Kyber {
 
 
         byte nonce = 0;
-        var sp = new PolynomialVector(K);
-        var ep = new PolynomialVector(K);
+        var sp = new PolynomialVectorInt16(K);
+        var ep = new PolynomialVectorInt16(K);
 
         for (var i = 0; i < K; i++) {
             sp.Vector[i] = GetNoiseEta1(coins, nonce++);
@@ -564,7 +564,7 @@ public class KyberPublic : Kyber {
         sp.GetHash("Sp");
         // matrix-vector multiplication
 
-        var bp = new PolynomialVector(K);
+        var bp = new PolynomialVectorInt16(K);
         for (var i = 0; i < K; i++) {
             bp.Vector[i] = at.PolynomialVector[i].PointwiseAccMontgomery(sp);
             }
@@ -624,7 +624,7 @@ public class KyberPrivate : KyberPublic {
     byte[] PrivateKey {get;}
 
     ///<summary>The Public key polynomial vector.</summary> 
-    PolynomialVector Skpv { get; }
+    PolynomialVectorInt16 Skpv { get; }
 
 
     /// <summary>
@@ -640,7 +640,7 @@ public class KyberPrivate : KyberPublic {
         PrivateKey = privateKey;
 
 
-        Skpv = new PolynomialVector(K, PrivateKey, 0);
+        Skpv = new PolynomialVectorInt16(K, PrivateKey, 0);
         }
 
     static int GetStrength(int length) => length switch {

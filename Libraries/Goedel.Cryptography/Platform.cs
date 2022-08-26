@@ -266,4 +266,27 @@ public static class Platform {
 
 
 
+    /// <summary>
+    /// Wipe contents of each <paramref name="inputs"/> unless null.
+    /// </summary>
+    /// <param name="inputs">List of arrays to wipe</param>
+    public static void Wipe(params byte[][] inputs) {
+        foreach (var x in inputs) {
+            if (x != null) {
+                Array.Clear(x);
+                }
+            }
+        }
+
+    /// <summary>
+    /// Dispose each of <paramref name="inputs"/> unless null.
+    /// </summary>
+    /// <param name="inputs">List of arrays to wipe</param>
+    public static void Dispose(params IDisposable[] inputs) {
+        foreach (var x in inputs) {
+            x?.Dispose();
+            }
+        }
+
+
     }

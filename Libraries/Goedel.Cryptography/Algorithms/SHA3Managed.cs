@@ -132,6 +132,21 @@ public class SHAKE256 : SHA3 {
         provider.TransformFinalBlock(Input, 0, Input.Length);
         return provider.Hash;
         }
+
+
+
+    public static byte[] GetBytes(int length, params byte[][] input) {
+
+        using var provider = new SHAKE256(length*8);
+
+        foreach (var inputItem in input) {
+            provider.HashCore(inputItem, 0, inputItem.Length);
+            }
+
+        provider.HashFinal();
+        return provider.Hash;
+        }
+
     }
 
 

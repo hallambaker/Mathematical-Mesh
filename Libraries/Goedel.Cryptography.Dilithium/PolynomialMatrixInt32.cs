@@ -1,26 +1,45 @@
 ﻿using System.Reflection.Metadata;
 using System.Security.Cryptography;
-
+using Goedel.Utilities;
 namespace Goedel.Cryptography.PQC;
 
-public class PolynomialMatrixInt32 {
+public class PolynomialMatrixInt32 : Disposable {
 
+    #region // Properties and fields
     public PolynomialVectorInt32[] Vectors;
-    IPolynomial Parameters { get; }
 
-    int K { get; }
-    int L { get; }
+    IDilithium Parameters { get; } 
 
-    public PolynomialMatrixInt32(IPolynomial parameters) {
+
+    int K => Parameters.K;
+    int L => Parameters.L;
+    #endregion
+
+    #region // Disposing
+    bool Wipe { get; } = true;
+    protected override void Disposing() {
+        if (!Wipe) {
+            return;
+            }
+        for (var v = 0; v < Parameters.K; v++) {
+            Vectors[v].Dispose();
+            }
+        }
+    #endregion
+    #region // Constructors
+    public PolynomialMatrixInt32(IDilithium parameters, bool wipe = true) {
+        Wipe = wipe;
         Parameters = parameters;
 
         Vectors = new PolynomialVectorInt32[parameters.K];
-        for (var i= 0; i< parameters.K; i++) {
-            Vectors[i] = new PolynomialVectorInt32(parameters);
+        for (var i = 0; i < parameters.K; i++) {
+            Vectors[i] = new PolynomialVectorInt32(parameters, wipe);
             }
         }
+    #endregion
+    #region // Matrix operations, Expand from seed, Pointwise Montgomery
 
-    public static PolynomialMatrixInt32 MatrixExpand(IPolynomial parameters, byte[] rho) {
+    public static PolynomialMatrixInt32 MatrixExpandFromSeed(IDilithium parameters, byte[] rho) {
 
         var result = new PolynomialMatrixInt32(parameters);
         for (var v = 0; v < parameters.K; v++) {
@@ -29,11 +48,36 @@ public class PolynomialMatrixInt32 {
                 }
             }
         return result;
-
         }
 
 
-    public string GetHash(string tag) {
+
+    public PolynomialVectorInt32 MatrixPointwiseMontgomery(PolynomialVectorInt32 a) {
+        var result = new PolynomialVectorInt32(Parameters);
+
+        MatrixPointwiseMontgomery(a, result);
+
+        return result;
+        }
+
+    public void MatrixPointwiseMontgomery(PolynomialVectorInt32 v, PolynomialVectorInt32 t) {
+
+        // NB: this only operates over the first K elements of t which actually has L entries.
+        for (var i = 0; i < Parameters.K; i++) {
+            Vectors[i].PointwiseAccMontgomery(v, t.Polynomials[i]);
+            }
+
+        }
+
+    #endregion
+    #region // Diagnostics
+    /// <summary>
+    /// Return a SHAKE128 fingerprint of the matrix coefficients. If <paramref name="tag"/>
+    /// is not null, writes the tag and fingerprint to the console.
+    /// </summary>
+    /// <param name="tag">Optional tag for identifying console output.</param>
+    /// <returns>String containing the base16 representation of the values.</returns>
+    public string GetHash(string? tag=null) {
         int size = Parameters.K * Parameters.L * Parameters.N * 4;
         byte[] buffer = new byte[size];
 
@@ -57,7 +101,7 @@ public class PolynomialMatrixInt32 {
             }
 
         return hash;
-
-
         }
+    #endregion
+
     }

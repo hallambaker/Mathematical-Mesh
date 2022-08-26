@@ -101,8 +101,8 @@ public class Test {
 
 
 
-    static string GetHash(PolynomialMatrix data) => data.GetHash();
-    static string GetHash(PolynomialVector data) => data.GetHash();
+    static string GetHash(PolynomialMatrixInt16 data) => data.GetHash();
+    static string GetHash(PolynomialVectorInt16 data) => data.GetHash();
     static string GetHash(Polynomial data) => data.GetHash();
     static string GetHash(byte[] data) => GetBufferFingerprint(data);
 

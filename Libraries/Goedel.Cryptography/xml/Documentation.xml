@@ -12639,6 +12639,18 @@
         <member name="P:Goedel.Cryptography.Platform.GetPlatformInformation">
             <summary>Returns information used to configure the platform.</summary>
         </member>
+        <member name="M:Goedel.Cryptography.Platform.Wipe(System.Byte[][])">
+            <summary>
+            Wipe contents of each <paramref name="inputs"/> unless null.
+            </summary>
+            <param name="inputs">List of arrays to wipe</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Platform.Dispose(System.IDisposable[])">
+            <summary>
+            Dispose each of <paramref name="inputs"/> unless null.
+            </summary>
+            <param name="inputs">List of arrays to wipe</param>
+        </member>
         <member name="T:Goedel.Cryptography.Standard.CryptoProviderAuthentication">
             <summary>
             Provider for bulk authentication algorithms (e.g. HMAC-SHA256).

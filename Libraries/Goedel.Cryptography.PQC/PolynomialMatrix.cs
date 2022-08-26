@@ -1,14 +1,31 @@
-﻿namespace Goedel.Cryptography.PQC;
+﻿using Goedel.Utilities;
 
-public struct PolynomialMatrix {
+namespace Goedel.Cryptography.PQC;
+
+public struct PolynomialMatrixInt16 {
+
+    #region // Properties and fields
     ///<summary>The coeficients vectors.</summary> 
-    public PolynomialVector[] PolynomialVector;
+    public PolynomialVectorInt16[] PolynomialVector;
 
     ///<summary></summary> 
     public const int GEN_MATRIX_BYTES = 12 * Kyber.N / 8 * (1 << 12) / Kyber.Q + SHA3.HashRateShake128;
 
     ///<summary></summary> 
     public const int GEN_MATRIX_NBLOCKS = GEN_MATRIX_BYTES / SHA3.HashRateShake128;
+    #endregion
+
+    #region // Disposing
+    //bool Wipe { get; } = true;
+    //protected override void Disposing() {
+    //    if (!Wipe) {
+    //        return;
+    //        }
+    //    //for (var v = 0; v < Parameters.K; v++) {
+    //    //    Vectors[v].Dispose();
+    //    //    }
+    //    }
+    #endregion
 
     /// <summary>
     /// Constructor, create a Kyber matrix of size 
@@ -16,10 +33,10 @@ public struct PolynomialMatrix {
     /// </summary>
     /// <param name="k">The number of polynomials and coefficient vectors per polynomial.</param>
     /// <param name="n">The coefficient vector length.</param>
-    public PolynomialMatrix(int k) {
-        PolynomialVector = new PolynomialVector[k];
+    public PolynomialMatrixInt16(int k) {
+        PolynomialVector = new PolynomialVectorInt16[k];
         for (var i = 0; i < k; i++) {
-            PolynomialVector[i] = new PolynomialVector(k);
+            PolynomialVector[i] = new PolynomialVectorInt16(k);
             for (var j = 0; j < k; j++) {
                 PolynomialVector[i].Vector[j] = new Polynomial();
                 }
@@ -35,8 +52,8 @@ public struct PolynomialMatrix {
     /// <param name="transposed">If true, transpose the matrix when absorbing the seed.</param>
     /// <returns>A matrix of short integers [K,K,N] initialized according to
     /// the seed <paramref name="seed"/></returns>
-    public static PolynomialMatrix GenerateMatrix(int kyberK, byte[] seed, bool transposed = false) {
-        var a = new PolynomialMatrix(kyberK);
+    public static PolynomialMatrixInt16 MatrixExpandFromSeed(int kyberK, byte[] seed, bool transposed = false) {
+        var a = new PolynomialMatrixInt16(kyberK);
         ulong[] state;
 
         var buf = new byte[GEN_MATRIX_BYTES + 2];
@@ -87,17 +104,20 @@ public struct PolynomialMatrix {
 
 
 
+    #region // Diagnostics
     /// <summary>
-    /// Return a SHAKE128 fingerprint of the matrix coefficients.
+    /// Return a SHAKE128 fingerprint of the matrix coefficients. If <paramref name="tag"/>
+    /// is not null, writes the tag and fingerprint to the console.
     /// </summary>
+    /// <param name="tag">Optional tag for identifying console output.</param>
     /// <returns>String containing the base16 representation of the values.</returns>
-    public string GetHash() {
+    public string GetHash(string? tag = null) {
 
         var d0 = PolynomialVector.GetLength(0);
         var d1 = d0;
         var d2 = Kyber.N;
 
-        int size = d0 * d1 *d2 * 2;
+        int size = d0 * d1 * d2 * 2;
         byte[] buffer = new byte[size];
 
         var offset = 0;
@@ -110,9 +130,17 @@ public struct PolynomialMatrix {
                 }
             }
 
-        return Test.GetBufferFingerprint(buffer);
+        var hash = Test.GetBufferFingerprint(buffer);
+
+        if (tag != null) {
+            Console.WriteLine(tag);
+            Console.WriteLine(hash);
+            }
+
+        return hash;
         }
 
+    #endregion
 
 
 
