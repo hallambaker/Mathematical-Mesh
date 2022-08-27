@@ -22,13 +22,6 @@ public class Dilithium : IDilithium {
     public const int CRHBYTES = 48;
     public int N => 256;
 
-
-
-
-
-
-
-
     public int ROOT_OF_UNITY => 1753;
 
     public int K { get; }
@@ -45,9 +38,6 @@ public class Dilithium : IDilithium {
     int Index { get; }
     int[] MODEs = new int[] { 2, 3, 5 };
 
-
-
-
     readonly int[] Ks = new int[] { 4, 6, 8 };
     readonly int[] Ls = new int[] { 4, 5, 7 };
     readonly int[] ETAs = new int[] { 2, 4, 2 };
@@ -57,11 +47,6 @@ public class Dilithium : IDilithium {
     readonly int[] GAMMA1s = new int[] { IDilithium.GAMMA_17, IDilithium.GAMMA_19, IDilithium.GAMMA_19 };
     readonly int[] GAMMA2s = new int[] { IDilithium.GAMMA_2_88, IDilithium.GAMMA_2_32, IDilithium.GAMMA_2_32 };
     readonly int[] OMEGAs = new int[] { 80, 55, 75 };
-
-
-
-
-
 
 
     public static Dilithium Mode2 { get; } 

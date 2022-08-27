@@ -4,12 +4,10 @@ namespace Goedel.Cryptography.PQC;
 
 
 /// <summary>
-/// Vector operations on polynomials and coefficients for use in Dilithium. Could be
-/// adapted to other applications if required.
+/// Operations on vectors of polynomials expressed as a list of coefficients for use in Dilithium. 
+/// Could be adapted to other applications if required.
 /// </summary>
 public class PolynomialVectorInt32 : Disposable {
-
-
     #region // Fields and Properties
 
     ///<summary>The polynomial vector</summary> 
@@ -25,6 +23,7 @@ public class PolynomialVectorInt32 : Disposable {
     int L => Parameters.L;
 
     #endregion
+ 
     #region // Disposing
     bool Wipe { get; } = true;
     protected override void Disposing() {
@@ -47,6 +46,7 @@ public class PolynomialVectorInt32 : Disposable {
         }
 
     #endregion
+
     #region // Basic vector operations - Add, Sub, SubFrom, Copy, ShiftLeft
     public void Add(PolynomialVectorInt32 value) {
         for (var p = 0; p < L; p++) {
@@ -271,5 +271,4 @@ public class PolynomialVectorInt32 : Disposable {
         return v;
         } 
     #endregion
-
     }

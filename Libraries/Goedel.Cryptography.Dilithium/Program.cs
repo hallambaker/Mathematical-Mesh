@@ -13,7 +13,7 @@ public class Test {
     static void Main() {
 
         //for (int i = -50; i < 50; i++) {
-        //    var x = i >> 31;
+        //    var x = i << 20;
         //    var y = x & 42;
         //    Console.WriteLine($"{i} {x} {y}");
         //    }

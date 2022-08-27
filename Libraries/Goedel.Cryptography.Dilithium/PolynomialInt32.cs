@@ -2,17 +2,19 @@
 
 namespace Goedel.Cryptography.PQC;
 
-
+/// <summary>
+/// Operations on polynomials expressed as a list of coefficients for use in Dilithium.
+/// Could be adapted to other applications if required.
+/// </summary>
 public class PolynomialInt32 : Disposable {
-
     #region // Fields and Properties
     const int stream128BlockBytes = 168;
     const int stream256BlockBytes = 136;
 
     public int[] Coefficients;
     public int N { get; }
-
-
+    int ETA => Parameters.ETA;
+    int D => Parameters.ETA;
     const int Q = IDilithium.Q;
 
     IDilithium Parameters;
@@ -77,7 +79,6 @@ public class PolynomialInt32 : Disposable {
         }
 
     #endregion
-
     #region // Constructors and factory methods
 
     public PolynomialInt32(IDilithium parameters, bool wipe = true) {
@@ -93,6 +94,7 @@ public class PolynomialInt32 : Disposable {
         }
 
     #endregion
+    
     #region // Basic vector operations - Add, Sub, SubFrom, Copy, ShiftLeft
     
     /// <summary>
@@ -168,10 +170,6 @@ public class PolynomialInt32 : Disposable {
             }
         } 
     #endregion
-
-
-
-
     #region // Uniform expansions from a nonced seed - Uniform, UniformEta, UniformGamma1, RejectUniformX, RejectETA
 
     public void Uniform(byte[] seed, int x) {
@@ -224,7 +222,7 @@ public class PolynomialInt32 : Disposable {
         var buf = new byte[nblocks * stream256BlockBytes];
         shake.Squeeze(buf, nblocks);
 
-        ZUnpack(buf);
+        UnpackZ(buf);
         }
 
     public void Challenge(byte[] seed) {
@@ -257,10 +255,7 @@ public class PolynomialInt32 : Disposable {
             Coefficients[i] = Coefficients[b];
             Coefficients[b] = 1 - 2 * (int)(signs & 1);
             signs >>= 1;
-
             }
-
-
         }
 
 
@@ -312,8 +307,6 @@ public class PolynomialInt32 : Disposable {
                     break;
                     }
                 }
-
-
             }
         return ctr;
         }
@@ -480,8 +473,7 @@ public class PolynomialInt32 : Disposable {
     #endregion
     #region // Packaging
 
-
-
+    #region // Pack Eta
     /// <summary>
     /// 
     /// </summary>
@@ -489,12 +481,72 @@ public class PolynomialInt32 : Disposable {
     /// <param name="offset"></param>
     /// <exception cref="NYI"></exception>
     public void PackEta(byte[] buffer, ref int offset) {
-        for (var c = 0; c < N; c++) {
 
+        if (ETA == 2) {
+            for (var i = 0; i < N / 8; i++) {
+                var t0 = (byte)(ETA - Coefficients[8 * i + 0]);
+                var t1 = (byte)(ETA - Coefficients[8 * i + 1]);
+                var t2 = (byte)(ETA - Coefficients[8 * i + 2]);
+                var t3 = (byte)(ETA - Coefficients[8 * i + 3]);
+                var t4 = (byte)(ETA - Coefficients[8 * i + 4]);
+                var t5 = (byte)(ETA - Coefficients[8 * i + 5]);
+                var t6 = (byte)(ETA - Coefficients[8 * i + 6]);
+                var t7 = (byte)(ETA - Coefficients[8 * i + 7]);
+
+                buffer[offset++] = (byte)((t0 >> 0) | (t1 << 3) | (t2 << 6));
+                buffer[offset++] = (byte)((t2 >> 2) | (t3 << 1) | (t4 << 4) | (t5 << 7));
+                buffer[offset++] = (byte)((t5 >> 1) | (t6 << 2) | (t7 << 5));
+                }
+            }
+        else {
+            for (var i = 0; i < N/2; i++) {
+                var t0 = (byte)(ETA - Coefficients[2 * i + 0]);
+                var t1 = (byte)(ETA - Coefficients[2 * i + 1]);
+
+                buffer[offset++] = (byte)(t0  | (t1 << 4));
+                }
             }
 
-        throw new NYI();
+        } 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="buffer"></param>
+    /// <param name="offset"></param>
+    /// <exception cref="NYI"></exception>
+    public void UnpackEta(byte[] buffer, ref int offset) {
+        if (Parameters.ETA == 2) {
+            for (var i = 0; i < N/8; i++) {
+                var b0 = buffer[offset++];
+                var b1 = buffer[offset++];
+                var b2 = buffer[offset++];
+                
+                Coefficients[8 * i + 0] = ETA -  ((b0 >> 0) & 7);
+                Coefficients[8 * i + 1] = ETA -  ((b0 >> 3) & 7);
+                Coefficients[8 * i + 2] = ETA - (((b0 >> 6) & 7) | ((b1 <<2) & 7));
+                Coefficients[8 * i + 3] = ETA -  ((b1 >> 1) & 7);
+                Coefficients[8 * i + 4] = ETA -  ((b1 >> 4) & 7);
+                Coefficients[8 * i + 5] = ETA - (((b2 >> 1) & 7) | ((b2 << 1) & 7));
+                Coefficients[8 * i + 6] = ETA -  ((b2 >> 2) & 7);
+                Coefficients[8 * i + 7] = ETA -  ((b2 >> 5) & 7);
+                }
+            }
+        else {
+            for (var i = 0; i < N/2; i++) {
+                var b0 = buffer[offset++];
+                var b1 = buffer[offset++];
+
+                Coefficients[8 * i + 0] = ETA - (b0 & 0xf);
+                Coefficients[8 * i + 0] = ETA - (b1 >> 4);
+                }
+            }
+
+
         }
+
+    #endregion
+    #region // Pack T1
 
     /// <summary>
     /// 
@@ -503,13 +555,43 @@ public class PolynomialInt32 : Disposable {
     /// <param name="offset"></param>
     /// <exception cref="NYI"></exception>
     public void PackT1(byte[] buffer, ref int offset) {
-        for (var c = 0; c < N; c++) {
+        for (var i = 0; i < N/4; i++) {
+            var t0 = Coefficients[8 * i + 0];
+            var t1 = Coefficients[8 * i + 1];
+            var t2 = Coefficients[8 * i + 2];
+            var t3 = Coefficients[8 * i + 3];
 
+            buffer[offset++] = (byte) (t0 >> 0);
+            buffer[offset++] = (byte)((t0 >> 8) | (t1 << 2));
+            buffer[offset++] = (byte)((t1 >> 6) | (t2 << 4));
+            buffer[offset++] = (byte)((t2 >> 8) | (t3 << 6));
+            buffer[offset++] = (byte) (t3 >> 2);
             }
-
-        throw new NYI();
         }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="buffer"></param>
+    /// <param name="offset"></param>
+    /// <exception cref="NYI"></exception>
+    public void UnpackT1(byte[] buffer, ref int offset) {
+        for (var i = 0; i < N/4; i++) {
+            var b0 = buffer[offset++];
+            var b1 = buffer[offset++];
+            var b2 = buffer[offset++];
+            var b3 = buffer[offset++];
+            var b4 = buffer[offset++];
+
+            Coefficients[4 * i + 0] = (b0 >> 0) | (b1 << 8);
+            Coefficients[4 * i + 1] = (b1 >> 2) | (b2 << 6);
+            Coefficients[4 * i + 2] = (b2 >> 4) | (b3 << 4);
+            Coefficients[4 * i + 3] = (b3 >> 6) | (b4 << 2);
+            }
+        }
+
+    #endregion
+    #region // PackT0
     /// <summary>
     /// 
     /// </summary>
@@ -517,12 +599,34 @@ public class PolynomialInt32 : Disposable {
     /// <param name="offset"></param>
     /// <exception cref="NYI"></exception>
     public void PackT0(byte[] buffer, ref int offset) {
-        for (var c = 0; c < N; c++) {
 
+        var d = 1 << (D - 1);
+        for (var i = 0; i < N/8; i++) {
+            var t0 = (d - Coefficients[8 * i + 0]);
+            var t1 = (d - Coefficients[8 * i + 1]);
+            var t2 = (d - Coefficients[8 * i + 2]);
+            var t3 = (d - Coefficients[8 * i + 3]);
+            var t4 = (d - Coefficients[8 * i + 4]);
+            var t5 = (d - Coefficients[8 * i + 5]);
+            var t6 = (d - Coefficients[8 * i + 6]);
+            var t7 = (d - Coefficients[8 * i + 7]);
+
+            buffer[offset++] = (byte)  t0;                           //  0
+            buffer[offset++] = (byte)((t0 >> 8)  | (t1 << 5));       //  1
+            buffer[offset++] = (byte) (t1 >> 3) ;                    //  2
+            buffer[offset++] = (byte)((t1 >> 11) | (t2 << 2));       //  3
+            buffer[offset++] = (byte)((t2 >> 6)  | (t3 << 7));       //  4
+            buffer[offset++] = (byte) (t3 >> 1);                     //  5
+            buffer[offset++] = (byte)((t3 >> 9)  | (t4 << 4));       //  6
+            buffer[offset++] = (byte) (t4 >> 4);                     //  7
+            buffer[offset++] = (byte)((t4 >> 12) | (t5 << 1));       //  8
+            buffer[offset++] = (byte)((t5 >> 1)  | (t6 << 2));       //  9
+            buffer[offset++] = (byte) (t6 >> 2);                     // 10
+            buffer[offset++] = (byte)((t6 >> 10) | (t7 << 3));       // 11
+            buffer[offset++] = (byte) (t7 >> 5);                     // 12
             }
-
-        throw new NYI();
         }
+
 
     /// <summary>
     /// 
@@ -530,19 +634,41 @@ public class PolynomialInt32 : Disposable {
     /// <param name="buffer"></param>
     /// <param name="offset"></param>
     /// <exception cref="NYI"></exception>
-    public void PackW1(byte[] buffer, ref int offset) {
-        for (var c = 0; c < N; c++) {
+    public void UnackT0(byte[] buffer, ref int offset) {
+        for (var i = 0; i < N; i++) {
+            var b0  = buffer[offset++];
+            var b1  = buffer[offset++];
+            var b2  = buffer[offset++];
+            var b3  = buffer[offset++];
+            var b4  = buffer[offset++];
+            var b5  = buffer[offset++];
+            var b6  = buffer[offset++];
+            var b7  = buffer[offset++];
+            var b8  = buffer[offset++];
+            var b9  = buffer[offset++];
+            var b10 = buffer[offset++];
+            var b11 = buffer[offset++];
+            var b12 = buffer[offset++];
 
-            }
+            var d = 1 << (D - 1);
 
-        throw new NYI();
+            Coefficients[4 * i +  0] = d - (((b0 >> 0) | (b1 << 8)) & 0x1FFF);
+            Coefficients[4 * i +  1] = d - (((b1 >> 5) | (b2 << 3) | (b3 << 11)) & 0x1FFF);
+            Coefficients[4 * i +  2] = d - (((b3 >> 3) | (b4 << 6)) & 0x1FFF);
+            Coefficients[4 * i +  3] = d - (((b4 >> 7) | (b5 << 1) | (b6 << 9)) & 0x1FFF);
+            Coefficients[4 * i +  4] = d - (((b6 >> 4) | (b7 << 4) | (b8 << 12)) & 0x1FFF);
+            Coefficients[4 * i +  5] = d - (((b8 >> 1) | (b9 << 7)) & 0x1FFF);
+            Coefficients[4 * i +  6] = d - (((b9 >> 6) | (b10 << 2) | (b11 << 11)) & 0x1FFF);
+            Coefficients[4 * i +  7] = d - (((b11 >> 3) | (b12 << 5)) & 0x1FFF);
         }
 
+        }
+
+    #endregion
+    #region // PackZ
 
 
-
-
-    public void ZPack(byte[] buf, int gamma) {
+    public void PackZ(byte[] buf, int gamma) {
         if (Parameters.GAMMA1 == IDilithium.GAMMA_19) {
             for (var i = 0; i < N / 2; i++) {
                 var t0 = (uint)(Parameters.GAMMA1 - Coefficients[2 * i + 0]);
@@ -564,59 +690,87 @@ public class PolynomialInt32 : Disposable {
                 var t2 = (uint)(Parameters.GAMMA1 - Coefficients[2 * i + 2]);
                 var t3 = (uint)(Parameters.GAMMA1 - Coefficients[2 * i + 3]);
 
-                buf[9 * i + 0]  = (byte)t0;
-                buf[9 * i + 1]  = (byte)(t0 >> 8);
-                buf[9 * i + 2]  = (byte)(t0 >> 16);
+                buf[9 * i + 0] = (byte)t0;
+                buf[9 * i + 1] = (byte)(t0 >> 8);
+                buf[9 * i + 2] = (byte)(t0 >> 16);
                 buf[9 * i + 2] |= (byte)(t1 << 2);
-                buf[9 * i + 3]  = (byte)(t1 >> 6);
-                buf[9 * i + 4]  = (byte)(t1 >> 14);
+                buf[9 * i + 3] = (byte)(t1 >> 6);
+                buf[9 * i + 4] = (byte)(t1 >> 14);
                 buf[9 * i + 4] |= (byte)(t2 << 4);
-                buf[9 * i + 5]  = (byte)(t2 >> 4);
-                buf[9 * i + 6]  = (byte)(t2 >> 12);
+                buf[9 * i + 5] = (byte)(t2 >> 4);
+                buf[9 * i + 6] = (byte)(t2 >> 12);
                 buf[9 * i + 6] |= (byte)(t3 << 6);
-                buf[9 * i + 7]  = (byte)(t3 >> 2);
-                buf[9 * i + 8]  = (byte)(t3 >> 10);
+                buf[9 * i + 7] = (byte)(t3 >> 2);
+                buf[9 * i + 8] = (byte)(t3 >> 10);
                 }
             }
         }
 
 
-    public void ZUnpack(byte[] buf) {
+    public void UnpackZ(byte[] buf) {
         if (Parameters.GAMMA1 == IDilithium.GAMMA_19) {
             for (var i = 0; i < N / 2; i++) {
                 uint c0, c1;
-
 
                 c0 = buf[5 * i + 0];
                 c0 |= ((uint)(buf[5 * i + 1]) << 8);
                 c0 |= ((uint)(buf[5 * i + 2]) << 16);
                 c0 &= 0xFFFFF;
 
-                c1 = (uint) (buf[5 * i + 2] >> 4);
+                c1 = (uint)(buf[5 * i + 2] >> 4);
                 c1 |= ((uint)(buf[5 * i + 3]) << 4);
                 c1 |= ((uint)(buf[5 * i + 4]) << 12);
-                
+
                 // BUG: This appears to be a bug in the reference code.
+                // corrested here.
                 c1 &= 0xFFFFF;
 
                 Coefficients[2 * i + 0] = (int)(IDilithium.GAMMA_19 - c0);
                 Coefficients[2 * i + 1] = (int)(IDilithium.GAMMA_19 - c1);
                 }
-
             }
         else {
             for (var i = 0; i < N / 4; i++) {
-
                 Coefficients[4 * i + 0] = buf[9 * i + 0];
-
-
                 }
             }
 
         }
 
+    #endregion
+    #region // Pack W1
 
+    /// <summary>
+    /// Bit-pack polynomial w1 with coefficients in [0,15] or [0,43].
+    /// Input coefficients are assumed to be standard representatives.
+    /// </summary>
+    /// <param name="buffer">Output buffer.</param>
+    /// <param name="offset">Index of first byte to be written.</param>
 
+    public void PackW1(byte[] buffer, ref int offset) {
+        if (Parameters.GAMMA2 == IDilithium.GAMMA_2_88) {
+            for (var i = 0; i < N /4 ; i++) {
+                var t0 = Coefficients[8 * i + 0];
+                var t1 = Coefficients[8 * i + 1];
+                var t2 = Coefficients[8 * i + 2];
+                var t3 = Coefficients[8 * i + 3];
+
+                buffer[offset++] = (byte)((t0) | (t1 << 6));
+                buffer[offset++] = (byte)((t1 >> 2) | (t2 << 4));
+                buffer[offset++] = (byte)((t2 >> 4) | (t3 << 2));
+                }
+            }
+        else {
+            for (var i = 0; i < N / 2; i++) {
+                buffer[offset++] = (byte)(Coefficients[2 * i + 0] | (Coefficients[2 * i + 1] << 4));
+                }
+            }
+        } 
+
+    #endregion
+    #endregion
+
+    #region // Diagnostic hash
 
     public string GetHash(string tag) {
 
