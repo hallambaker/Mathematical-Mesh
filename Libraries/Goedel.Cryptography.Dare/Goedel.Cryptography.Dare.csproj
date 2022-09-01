@@ -1,61 +1,61 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
-    <Product>Goedel.Cryptography.Dare</Product>
-    <Description>Data At Rest Envelope and Sequence support.</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Cryptography.Dare</Title>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Product>Goedel.Cryptography.Dare</Product>
+		<Description>Data At Rest Envelope and Sequence support.</Description>
+		<Copyright>© 2020</Copyright>
+		<Title>Goedel.Cryptography.Dare</Title>
+	</PropertyGroup>
 
 
-  <ItemGroup>
-    <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="ContainerEntry.cs">
-      <DependentUpon>ContainerEntry.pschema</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="DareSchema.cs">
-      <DependentUpon>DareSchema.Protocol</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="DareConstants.cs">
-      <DependentUpon>DareConstants.constant</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="ContainerEntry.cs">
+			<DependentUpon>ContainerEntry.pschema</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="DareSchema.cs">
+			<DependentUpon>DareSchema.Protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="DareConstants.cs">
+			<DependentUpon>DareConstants.constant</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="ContainerEntry.pschema">
-      <LastGenOutput>ContainerEntry.cs</LastGenOutput>
-      <Generator>PROTOGEN</Generator>
-    </None>
-    <None Update="DareSchema.Protocol">
-      <LastGenOutput>DareSchema.cs</LastGenOutput>
-      <Generator>PROTOGEN</Generator>
-    </None>
-    <None Update="Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
-    <None Update="DareConstants.constant">
-      <LastGenOutput>DareConstants.cs</LastGenOutput>
-      <Generator>Constant</Generator>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="ContainerEntry.pschema">
+			<LastGenOutput>ContainerEntry.cs</LastGenOutput>
+			<Generator>PROTOGEN</Generator>
+		</None>
+		<None Update="DareSchema.Protocol">
+			<LastGenOutput>DareSchema.cs</LastGenOutput>
+			<Generator>PROTOGEN</Generator>
+		</None>
+		<None Update="Exceptions.exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+		<None Update="DareConstants.constant">
+			<LastGenOutput>DareConstants.cs</LastGenOutput>
+			<Generator>Constant</Generator>
+		</None>
+	</ItemGroup>
 
 
 

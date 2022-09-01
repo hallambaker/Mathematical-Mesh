@@ -30,13 +30,16 @@ namespace Goedel.Cryptography.Algorithms;
 [ComVisible(true)]
 public abstract class SHA3 : HashAlgorithm {
 
+    ///<summary>The SHAKE128 hash rate in bytes.</summary> 
     public const int HashRateShake128 = 168;
 
+    ///<summary>The SHAKE256 hash rate in bytes.</summary> 
     public const int HashRateShake256 = 136;
 
-
+    ///<summary>The SHA2 256 hash rate in bytes.</summary> 
     public const int HashRateSHA3_256 = 136;
 
+    ///<summary>The SHA2 512 hash rate in bytes.</summary> 
     public const int HashRateSHA3_512 = 72;
 
 

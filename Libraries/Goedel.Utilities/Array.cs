@@ -154,9 +154,38 @@ public static class ArrayUtilities {
         }
 
 
+    /// <summary>
+    /// Append the bytes <paramref name="source"/> to <paramref name="target"/>
+    /// starting at byte <paramref name="offset"/> of the destination.
+    /// </summary>
+    /// <param name="source">The data to append.</param>
+    /// <param name="target">The buffer to write to.</param>
+    /// <param name="offset">The starting point to write on input, next byte
+    /// to write on output.</param>
+    public static void Append(this byte[] source, byte[] target, ref int offset) {
 
+        Array.Copy(source, 0, target, offset, source.Length);
+        offset += source.Length;
+        }
 
+    /// <summary>
+    /// Extract a span of <paramref name="length"/> bytes starting at position
+    /// <paramref name="offset"/> from <paramref name="source"/> and return as
+    /// a new array.
+    /// </summary>
+    /// <param name="source">The source bytes.</param>
+    /// <param name="offset">The first byte to copy on input, the next byte to copy
+    /// on output.</param>
+    /// <param name="length">Number of bytes to copy.</param>
+    /// <returns>The copied bytes.</returns>
+    public static byte[] Extract(this byte[] source, ref int offset, int length) {
+        var target = new byte[length];
 
+        Array.Copy(source, offset, target, 0, length);
+        offset += length;
+
+        return target;
+        }
 
 
     /// <summary>

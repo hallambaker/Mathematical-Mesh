@@ -11,18 +11,23 @@ public class PolynomialInt32 : Disposable {
     const int stream128BlockBytes = 168;
     const int stream256BlockBytes = 136;
 
+    ///<summary>The polynomial coefficients.</summary> 
     public int[] Coefficients;
+
+    ///<summary>The number of polynomial coefficients.</summary> 
     public int N { get; }
-    int ETA => Parameters.ETA;
-    int D => Parameters.ETA;
-    const int Q = IDilithium.Q;
-
-    IDilithium Parameters;
+    int Eta => Parameters.Eta;
 
 
-    delegate int RejectDelegate (byte[] buf, int ctr);
+    static int D => Dilithium.D;
+    const int Q = Dilithium.Q;
 
-    RejectDelegate RejectUniform;
+    Dilithium Parameters { get; }
+    
+
+    //delegate int RejectDelegate (byte[] buf, int ctr);
+
+    //RejectDelegate RejectUniform;
 
 
     #region // Zetas, InvZetas
@@ -68,7 +73,10 @@ public class PolynomialInt32 : Disposable {
     #endregion
 
     #region // Disposing
+    ///<summary>If true, data is wiped on dispose.</summary> 
     public bool Wipe { get;  } = true;
+
+    ///<inheritdoc/>
     protected override void Disposing() {
         if (!Wipe) {
             return;
@@ -81,16 +89,21 @@ public class PolynomialInt32 : Disposable {
     #endregion
     #region // Constructors and factory methods
 
-    public PolynomialInt32(IDilithium parameters, bool wipe = true) {
+    /// <summary>
+    /// Constructor, return polynomial according to parameters specified in
+    /// <paramref name="parameters"/>. If the parameter <paramref name="wipe"/>
+    /// is true, the coefficients will be cleared before memory is released.
+    /// </summary>
+    /// <param name="parameters">The Dilithium parameters.</param>
+    /// <param name="wipe">If true, contents wiped on dispose.</param>
+    public PolynomialInt32(Dilithium parameters, bool wipe = true) {
         Wipe = wipe;
         Parameters = parameters;
 
         // Fix N so the compiler knows that it cannot change inside a loop.
-        N = parameters.N;
+        N = Dilithium.N;
         Coefficients = new int[N];
 
-        // Initialize Delegates
-        RejectUniform = RejectUniformX;
         }
 
     #endregion
@@ -136,7 +149,7 @@ public class PolynomialInt32 : Disposable {
     /// </summary>
     public void Caddq() {
         for (var c = 0; c < N; c++) {
-            Coefficients[c] = IDilithium.Caddq(Coefficients[c]);
+            Coefficients[c] = Dilithium.Caddq(Coefficients[c]);
             }
         }
 
@@ -146,7 +159,7 @@ public class PolynomialInt32 : Disposable {
     /// </summary>
     public void Reduce32() {
         for (var c = 0; c < N; c++) {
-            Coefficients[c] = IDilithium.Reduce32(Coefficients[c]);
+            Coefficients[c] = Dilithium.Reduce32(Coefficients[c]);
             }
         }
 
@@ -156,7 +169,7 @@ public class PolynomialInt32 : Disposable {
     /// </summary>
     public void Freeze() {
         for (var c = 0; c < N; c++) {
-            Coefficients[c] = IDilithium.Freeze(Coefficients[c]);
+            Coefficients[c] = Dilithium.Freeze(Coefficients[c]);
             }
         }
 
@@ -166,19 +179,25 @@ public class PolynomialInt32 : Disposable {
     /// </summary>
     public void ShiftLeft() {
         for (var c = 0; c < N; c++) {
-            Coefficients[c] <<= IDilithium.D;
+            Coefficients[c] <<= Dilithium.D;
             }
-        } 
+        }
     #endregion
     #region // Uniform expansions from a nonced seed - Uniform, UniformEta, UniformGamma1, RejectUniformX, RejectETA
 
-    public void Uniform(byte[] seed, int x) {
+    /// <summary>
+    /// Compute uniformly distributed Q values from <paramref name="seed"/>, 
+    /// <paramref name="nonce"/> across.
+    /// </summary>
+    /// <param name="seed">The seed value.</param>
+    /// <param name="nonce">The nonce value.</param>
+    public void Uniform(byte[] seed, int nonce) {
         using var shake = new SHAKEExtended();
 
         var nblocks = (768 + stream128BlockBytes - 1) / stream128BlockBytes;
         var buf = new byte[nblocks * stream128BlockBytes];
 
-        shake.AbsorbD(seed, x);
+        shake.AbsorbD(seed, nonce);
         shake.Squeeze(buf, nblocks);
 
         var ctr = RejectUniform(buf, 0);
@@ -187,17 +206,24 @@ public class PolynomialInt32 : Disposable {
             ctr = RejectUniform(buf, ctr);
             }
         }
-    public void UniformEta(byte[] seed, int x) {
+
+    /// <summary>
+    /// Compute uniformly distributed Eta values from <paramref name="seed"/>, 
+    /// <paramref name="nonce"/> across.
+    /// </summary>
+    /// <param name="seed">The seed value.</param>
+    /// <param name="nonce">The nonce value.</param>
+    public void UniformEta(byte[] seed, int nonce) {
         using var shake = new SHAKEExtended();
 
-        var nblocks = Parameters.ETA switch {
+        var nblocks = Parameters.Eta switch {
             2 => (136 + stream128BlockBytes -1) / stream128BlockBytes,
             4 => (227 + stream128BlockBytes - 1) / stream128BlockBytes,
             _ => throw new Exception()
             };
         var buf = new byte[nblocks* stream128BlockBytes];
 
-        shake.AbsorbD(seed, x);
+        shake.AbsorbD(seed, nonce);
         shake.Squeeze(buf, nblocks);
 
         var ctr = RejectETA(buf, 0);
@@ -207,24 +233,34 @@ public class PolynomialInt32 : Disposable {
             }
         }
 
-    public void UniformGamma1(byte[] seed, int x) {
+    /// <summary>
+    /// Compute uniformly distributed Gamma1 values from <paramref name="seed"/>, 
+    /// <paramref name="nonce"/> across.
+    /// </summary>
+    /// <param name="seed">The seed value.</param>
+    /// <param name="nonce">The nonce value.</param>
+    public void UniformGamma1(byte[] seed, int nonce) {
 
-        var nblocks = Parameters.GAMMA1 switch {
+        var nblocks = Parameters.Gamma1 switch {
             (1 << 17) => (576 + stream256BlockBytes - 1) / stream256BlockBytes,
             (1 << 19) => (640 + stream256BlockBytes - 1) / stream256BlockBytes,
             _ => throw new Exception()
             };
 
-
         using var shake = SHAKEExtended.Shake256();
-        shake.AbsorbD(seed, x);
+        shake.AbsorbD(seed, nonce);
 
         var buf = new byte[nblocks * stream256BlockBytes];
         shake.Squeeze(buf, nblocks);
 
-        UnpackZ(buf);
+        var offset = 0;
+        UnpackZ(buf, ref offset);
         }
 
+    /// <summary>
+    /// Return a challenge polynomial against <paramref name="seed"/>.
+    /// </summary>
+    /// <param name="seed">The seed value.</param>
     public void Challenge(byte[] seed) {
 
         var buf = new byte[SHA3.HashRateShake256];
@@ -242,7 +278,7 @@ public class PolynomialInt32 : Disposable {
 
         for (var i = 0; i < N; ++i)
             Coefficients[i] = 0;
-        for (var i = N - Parameters.TAU; i < N; ++i) {
+        for (var i = N - Parameters.Tau; i < N; ++i) {
             do {
                 if (pos >= SHA3.HashRateShake256) {
                     shake.Squeeze(buf, 1);
@@ -260,55 +296,67 @@ public class PolynomialInt32 : Disposable {
 
 
 
-
-    public int RejectUniformX(byte[] buf, int ctr) {
+    /// <summary>
+    /// Fill coefficients from <paramref name="buffer"/> starting with coefficient
+    /// <paramref name="index"/> rejecting uniformly values outside <see cref="Q"/>.
+    /// </summary>
+    /// <param name="buffer">The buffer to sample.</param>
+    /// <param name="index">The first coefficient index to fill.</param>
+    /// <returns>The new index value.</returns>
+    public int RejectUniform(byte[] buffer, int index) {
 
         var pos = 0;
-        while (ctr < N & pos < buf.Length) {
-            var t = (uint) buf[pos++];
-            t |= (uint)(buf[pos++] << 8);
-            t |= (uint)(buf[pos++] << 16);
+        while (index < N & pos < buffer.Length) {
+            var t = (uint) buffer[pos++];
+            t |= (uint)(buffer[pos++] << 8);
+            t |= (uint)(buffer[pos++] << 16);
             t &= 0x7FFFFF;
 
-            if (t < IDilithium.Q) {
-                Coefficients[ctr++] = (int)t;
+            if (t < Dilithium.Q) {
+                Coefficients[index++] = (int)t;
                 }
             }
-        return ctr;
+        return index;
         }
 
-
-    public int RejectETA(byte[] buf, int ctr) {
+    /// <summary>
+    /// Fill coefficients from <paramref name="buffer"/> starting with coefficient
+    /// <paramref name="index"/> rejecting uniformly values outside <see cref="Eta"/>.
+    /// </summary>
+    /// <param name="buffer">The buffer to sample.</param>
+    /// <param name="index">The first coefficient index to fill.</param>
+    /// <returns>The new index value.</returns>
+    public int RejectETA(byte[] buffer, int index) {
 
         var pos = 0;
-        while (ctr < N & pos < buf.Length) {
-            var t0 = (uint)(buf[pos] & 0xF);
-            var t1 = (uint)(buf[pos++] >>4);
+        while (index < N & pos < buffer.Length) {
+            var t0 = (uint)(buffer[pos] & 0xF);
+            var t1 = (uint)(buffer[pos++] >>4);
 
-            switch (Parameters.ETA) {
+            switch (Parameters.Eta) {
                 case 2: {
                     if (t0 < 15) {
-                        t0 = t0 - (205 * t0 >> 10) * 5;
-                        Coefficients[ctr++] = (int) (2 - t0);
+                        t0 -= (205 * t0 >> 10) * 5;
+                        Coefficients[index++] = (int) (2 - t0);
                         }
-                    if (t1 < 15 & ctr < N) {
-                        t1 = t1 - (205 * t1 >> 10) * 5;
-                        Coefficients[ctr++] = (int) (2 - t1);
+                    if (t1 < 15 & index < N) {
+                        t1 -= (205 * t1 >> 10) * 5;
+                        Coefficients[index++] = (int) (2 - t1);
                         }
                     break;
                     }
                 case 4: {
                     if (t0 < 9) {
-                        Coefficients[ctr++] = (int)(4 - t0);
+                        Coefficients[index++] = (int)(4 - t0);
                         }
-                    if (t1 < 9 & ctr < N) {
-                        Coefficients[ctr++] = (int)(4 - t1);
+                    if (t1 < 9 & index < N) {
+                        Coefficients[index++] = (int)(4 - t1);
                         }
                     break;
                     }
                 }
             }
-        return ctr;
+        return index;
         }
 
 
@@ -321,27 +369,34 @@ public class PolynomialInt32 : Disposable {
     /// </summary>
     public void NTT() {
         int zeta;
-        int j = 0;
+        int j;
 
         int k = 0;
         for (var len = 128; len > 0; len >>= 1) {
             for (var start = 0; start < N; start = j + len) {
                 zeta = Zetas[++k];
                 for (j = start; j < start + len; ++j) {
-                    var t = IDilithium.MontgomeryReduce((long)zeta * Coefficients[j + len]);
+                    var t = Dilithium.MontgomeryReduce((long)zeta * Coefficients[j + len]);
                     Coefficients[j + len] = Coefficients[j] - t;
                     Coefficients[j] = Coefficients[j] + t;
+
+
+
+                    //Console.WriteLine($"{len}: {start}: {j} t={t}");
                     }
                 }
             }
         }
+
+    /// <summary>
+    /// Inverse NTT, in-place with implicit Montgomery tranformation.
+    /// </summary>
     public void InvNTT2Mont() {
 
         const int f = 41978; // mont^2/256
 
         int zeta;
-        int j = 0;
-
+        int j;
 
         int k = 256;
         for (var len = 1; len < N; len <<= 1) {
@@ -351,15 +406,13 @@ public class PolynomialInt32 : Disposable {
                     var t = Coefficients[j];
                     Coefficients[j] = t + Coefficients[j + len];
                     Coefficients[j + len] = t - Coefficients[j + len];
-                    Coefficients[j + len] = IDilithium.MontgomeryReduce((long)zeta * Coefficients[j + len]);
+                    Coefficients[j + len] = Dilithium.MontgomeryReduce((long)zeta * Coefficients[j + len]);
                     }
                 }
-
-
             }
 
         for (j = 0; j < N; ++j) {
-            Coefficients[j] = IDilithium.MontgomeryReduce((long)f * Coefficients[j]);
+            Coefficients[j] = Dilithium.MontgomeryReduce((long)f * Coefficients[j]);
             }
 
         }
@@ -367,22 +420,18 @@ public class PolynomialInt32 : Disposable {
     #endregion
     #region // Montgomery operations - PointwiseAccMontgomery
 
-
+    /// <summary>
+    /// Perform pointwise Montgomery operation on coefficients of
+    /// <paramref name="a"/> and <paramref name="b"/> and return result 
+    /// in place.
+    /// </summary>
+    /// <param name="a">First polynomial.</param>
+    /// <param name="b">Second polynomial.</param>
     public void PointwiseMontgomery(PolynomialInt32 a, PolynomialInt32 b) {
         for (var i = 0; i < N; i++) {
-            Coefficients[i] = IDilithium.MontgomeryReduce((long)a.Coefficients[i] * (long)b.Coefficients[i]);
+            Coefficients[i] = Dilithium.MontgomeryReduce((long)a.Coefficients[i] * (long)b.Coefficients[i]);
             }
         }
-
-    public PolynomialVectorInt32 PointwisePolyMontgomery(PolynomialVectorInt32 a) {
-        var result = new PolynomialVectorInt32(Parameters);
-        a.PointwisePolyMontgomery(this, result);
-        return result;
-        }
-
-    public void PointwisePolyMontgomery(PolynomialVectorInt32 a, PolynomialVectorInt32 result) => throw new NYI();
-
-
 
     #endregion
     #region // Operations on vectors - Chknorm, Power2Round, Decompose
@@ -393,7 +442,7 @@ public class PolynomialInt32 : Disposable {
     ///  Assumes input coefficients were reduced by reduce32().
     /// </summary>
     /// <param name="bound">norm bound</param>
-    /// <returns>Returns False if norm is strictly smaller than B <= (Q-1)/8 and True otherwise.</returns>
+    /// <returns>Returns False if norm is strictly smaller than B &lt;= (Q-1)/8 and True otherwise.</returns>
 
     public bool Chknorm(int bound) {
         // It is ok to leak which coefficient violates the bound since
@@ -406,7 +455,7 @@ public class PolynomialInt32 : Disposable {
         for (var c = 0; c < N; c++) {
             var t = Coefficients[c] >> 31;
             t = Coefficients[c] - (t & 2 * Coefficients[c]);
-            if (t >= 8) {
+            if (t >= bound) {
                 return true;
                 }
             }
@@ -421,7 +470,7 @@ public class PolynomialInt32 : Disposable {
     /// <param name="p">The vector to add</param>
     public void Power2Round(PolynomialInt32 p) {
         for (var c = 0; c < N; c++) {
-            (Coefficients[c], p.Coefficients[c]) = IDilithium.Power2Round(Coefficients[c]);
+            (p.Coefficients[c], Coefficients[c]) = Dilithium.Power2Round(Coefficients[c]);
             }
         }
 
@@ -473,25 +522,59 @@ public class PolynomialInt32 : Disposable {
     #endregion
     #region // Packaging
 
+
+    //static void PackBits(int coefficient, int bits, byte[] buffer, ref int offset, ref int bit) {
+
+    //    if (bits - bit >= 8) {
+    //        buffer[offset++] |= (byte)(coefficient >> bit);
+    //        bit += 8;
+    //        }
+    //    if (bits - bit >= 8) {
+    //        buffer[offset++] = (byte)(coefficient >> bit);
+    //        bit += 8;
+    //        }
+    //    if (bits - bit >= 8) {
+    //        buffer[offset++] = (byte)(coefficient >> bit);
+    //        bit += 8;
+    //        }
+
+    //    if (bits - bit > 0) {
+    //        buffer[offset++] = (byte)(coefficient >> bit);
+    //        bit = 8 + bit - bits;
+    //        }
+    //    }
+
+
+    //public void Pack(int bits, byte[] buffer, ref int offset) {
+    //    var bit = 0;
+    //    for (var i = 0; i < N; i++) {
+    //        PackBits(Coefficients[i], bits, buffer, ref offset, ref bit);
+
+    //        }
+
+    //    }
+
     #region // Pack Eta
     /// <summary>
-    /// 
+    /// Pack coefficients to <paramref name="buffer"/> as Z data, starting at 
+    /// <paramref name="offset"/> and updating <paramref name="offset"/> to point
+    /// to next unwritten byte.
     /// </summary>
-    /// <param name="buffer"></param>
-    /// <param name="offset"></param>
-    /// <exception cref="NYI"></exception>
+    /// <param name="buffer">Buffer to write vector to.</param>
+    /// <param name="offset">Index of first byte to write on entry and index of
+    /// next byte to write to on exit.</param>
     public void PackEta(byte[] buffer, ref int offset) {
 
-        if (ETA == 2) {
+        if (Eta == 2) {
             for (var i = 0; i < N / 8; i++) {
-                var t0 = (byte)(ETA - Coefficients[8 * i + 0]);
-                var t1 = (byte)(ETA - Coefficients[8 * i + 1]);
-                var t2 = (byte)(ETA - Coefficients[8 * i + 2]);
-                var t3 = (byte)(ETA - Coefficients[8 * i + 3]);
-                var t4 = (byte)(ETA - Coefficients[8 * i + 4]);
-                var t5 = (byte)(ETA - Coefficients[8 * i + 5]);
-                var t6 = (byte)(ETA - Coefficients[8 * i + 6]);
-                var t7 = (byte)(ETA - Coefficients[8 * i + 7]);
+                var t0 = (byte)(Eta - Coefficients[8 * i + 0]);
+                var t1 = (byte)(Eta - Coefficients[8 * i + 1]);
+                var t2 = (byte)(Eta - Coefficients[8 * i + 2]);
+                var t3 = (byte)(Eta - Coefficients[8 * i + 3]);
+                var t4 = (byte)(Eta - Coefficients[8 * i + 4]);
+                var t5 = (byte)(Eta - Coefficients[8 * i + 5]);
+                var t6 = (byte)(Eta - Coefficients[8 * i + 6]);
+                var t7 = (byte)(Eta - Coefficients[8 * i + 7]);
 
                 buffer[offset++] = (byte)((t0 >> 0) | (t1 << 3) | (t2 << 6));
                 buffer[offset++] = (byte)((t2 >> 2) | (t3 << 1) | (t4 << 4) | (t5 << 7));
@@ -500,8 +583,8 @@ public class PolynomialInt32 : Disposable {
             }
         else {
             for (var i = 0; i < N/2; i++) {
-                var t0 = (byte)(ETA - Coefficients[2 * i + 0]);
-                var t1 = (byte)(ETA - Coefficients[2 * i + 1]);
+                var t0 = (byte)(Eta - Coefficients[2 * i + 0]);
+                var t1 = (byte)(Eta - Coefficients[2 * i + 1]);
 
                 buffer[offset++] = (byte)(t0  | (t1 << 4));
                 }
@@ -516,20 +599,20 @@ public class PolynomialInt32 : Disposable {
     /// <param name="offset"></param>
     /// <exception cref="NYI"></exception>
     public void UnpackEta(byte[] buffer, ref int offset) {
-        if (Parameters.ETA == 2) {
+        if (Parameters.Eta == 2) {
             for (var i = 0; i < N/8; i++) {
                 var b0 = buffer[offset++];
                 var b1 = buffer[offset++];
                 var b2 = buffer[offset++];
                 
-                Coefficients[8 * i + 0] = ETA -  ((b0 >> 0) & 7);
-                Coefficients[8 * i + 1] = ETA -  ((b0 >> 3) & 7);
-                Coefficients[8 * i + 2] = ETA - (((b0 >> 6) & 7) | ((b1 <<2) & 7));
-                Coefficients[8 * i + 3] = ETA -  ((b1 >> 1) & 7);
-                Coefficients[8 * i + 4] = ETA -  ((b1 >> 4) & 7);
-                Coefficients[8 * i + 5] = ETA - (((b2 >> 1) & 7) | ((b2 << 1) & 7));
-                Coefficients[8 * i + 6] = ETA -  ((b2 >> 2) & 7);
-                Coefficients[8 * i + 7] = ETA -  ((b2 >> 5) & 7);
+                Coefficients[8 * i + 0] = Eta -  ((b0 >> 0) & 7);
+                Coefficients[8 * i + 1] = Eta -  ((b0 >> 3) & 7);
+                Coefficients[8 * i + 2] = Eta - (((b0 >> 6) & 7) | ((b1 <<2) & 7));
+                Coefficients[8 * i + 3] = Eta -  ((b1 >> 1) & 7);
+                Coefficients[8 * i + 4] = Eta -  ((b1 >> 4) & 7);
+                Coefficients[8 * i + 5] = Eta - (((b1 >> 7) & 7) | ((b2 << 1) & 7));
+                Coefficients[8 * i + 6] = Eta -  ((b2 >> 2) & 7);
+                Coefficients[8 * i + 7] = Eta -  ((b2 >> 5) & 7);
                 }
             }
         else {
@@ -537,8 +620,8 @@ public class PolynomialInt32 : Disposable {
                 var b0 = buffer[offset++];
                 var b1 = buffer[offset++];
 
-                Coefficients[8 * i + 0] = ETA - (b0 & 0xf);
-                Coefficients[8 * i + 0] = ETA - (b1 >> 4);
+                Coefficients[8 * i + 0] = Eta - (b0 & 0xf);
+                Coefficients[8 * i + 0] = Eta - (b1 >> 4);
                 }
             }
 
@@ -549,22 +632,24 @@ public class PolynomialInt32 : Disposable {
     #region // Pack T1
 
     /// <summary>
-    /// 
+    /// Pack coefficients to <paramref name="buffer"/> as Z data, starting at 
+    /// <paramref name="offset"/> and updating <paramref name="offset"/> to point
+    /// to next unwritten byte.
     /// </summary>
-    /// <param name="buffer"></param>
-    /// <param name="offset"></param>
-    /// <exception cref="NYI"></exception>
+    /// <param name="buffer">Buffer to write vector to.</param>
+    /// <param name="offset">Index of first byte to write on entry and index of
+    /// next byte to write to on exit.</param>
     public void PackT1(byte[] buffer, ref int offset) {
         for (var i = 0; i < N/4; i++) {
-            var t0 = Coefficients[8 * i + 0];
-            var t1 = Coefficients[8 * i + 1];
-            var t2 = Coefficients[8 * i + 2];
-            var t3 = Coefficients[8 * i + 3];
+            var t0 = Coefficients[4 * i + 0];
+            var t1 = Coefficients[4 * i + 1];
+            var t2 = Coefficients[4 * i + 2];
+            var t3 = Coefficients[4 * i + 3];
 
             buffer[offset++] = (byte) (t0 >> 0);
             buffer[offset++] = (byte)((t0 >> 8) | (t1 << 2));
             buffer[offset++] = (byte)((t1 >> 6) | (t2 << 4));
-            buffer[offset++] = (byte)((t2 >> 8) | (t3 << 6));
+            buffer[offset++] = (byte)((t2 >> 4) | (t3 << 6));
             buffer[offset++] = (byte) (t3 >> 2);
             }
         }
@@ -583,21 +668,23 @@ public class PolynomialInt32 : Disposable {
             var b3 = buffer[offset++];
             var b4 = buffer[offset++];
 
-            Coefficients[4 * i + 0] = (b0 >> 0) | (b1 << 8);
-            Coefficients[4 * i + 1] = (b1 >> 2) | (b2 << 6);
-            Coefficients[4 * i + 2] = (b2 >> 4) | (b3 << 4);
-            Coefficients[4 * i + 3] = (b3 >> 6) | (b4 << 2);
+            Coefficients[4 * i + 0] = ((b0 >> 0) | (b1 << 8) & 0x3FF);
+            Coefficients[4 * i + 1] = ((b1 >> 2) | (b2 << 6) & 0x3FF);
+            Coefficients[4 * i + 2] = ((b2 >> 4) | (b3 << 4) & 0x3FF);
+            Coefficients[4 * i + 3] = ((b3 >> 6) | (b4 << 2) & 0x3FF);
             }
         }
 
     #endregion
     #region // PackT0
     /// <summary>
-    /// 
+    /// Pack coefficients to <paramref name="buffer"/> as Z data, starting at 
+    /// <paramref name="offset"/> and updating <paramref name="offset"/> to point
+    /// to next unwritten byte.
     /// </summary>
-    /// <param name="buffer"></param>
-    /// <param name="offset"></param>
-    /// <exception cref="NYI"></exception>
+    /// <param name="buffer">Buffer to write vector to.</param>
+    /// <param name="offset">Index of first byte to write on entry and index of
+    /// next byte to write to on exit.</param>
     public void PackT0(byte[] buffer, ref int offset) {
 
         var d = 1 << (D - 1);
@@ -620,7 +707,7 @@ public class PolynomialInt32 : Disposable {
             buffer[offset++] = (byte)((t3 >> 9)  | (t4 << 4));       //  6
             buffer[offset++] = (byte) (t4 >> 4);                     //  7
             buffer[offset++] = (byte)((t4 >> 12) | (t5 << 1));       //  8
-            buffer[offset++] = (byte)((t5 >> 1)  | (t6 << 2));       //  9
+            buffer[offset++] = (byte)((t5 >> 7)  | (t6 << 6));       //  9
             buffer[offset++] = (byte) (t6 >> 2);                     // 10
             buffer[offset++] = (byte)((t6 >> 10) | (t7 << 3));       // 11
             buffer[offset++] = (byte) (t7 >> 5);                     // 12
@@ -634,104 +721,127 @@ public class PolynomialInt32 : Disposable {
     /// <param name="buffer"></param>
     /// <param name="offset"></param>
     /// <exception cref="NYI"></exception>
-    public void UnackT0(byte[] buffer, ref int offset) {
-        for (var i = 0; i < N; i++) {
-            var b0  = buffer[offset++];
-            var b1  = buffer[offset++];
-            var b2  = buffer[offset++];
-            var b3  = buffer[offset++];
-            var b4  = buffer[offset++];
-            var b5  = buffer[offset++];
-            var b6  = buffer[offset++];
-            var b7  = buffer[offset++];
-            var b8  = buffer[offset++];
-            var b9  = buffer[offset++];
+    public void UnpackT0(byte[] buffer, ref int offset) {
+        var d = 1 << (D - 1);
+
+        for (var i = 0; i < N/8; i++) {
+            var b0 = buffer[offset++];
+            var b1 = buffer[offset++];
+            var b2 = buffer[offset++];
+            var b3 = buffer[offset++];
+            var b4 = buffer[offset++];
+            var b5 = buffer[offset++];
+            var b6 = buffer[offset++];
+            var b7 = buffer[offset++];
+            var b8 = buffer[offset++];
+            var b9 = buffer[offset++];
             var b10 = buffer[offset++];
             var b11 = buffer[offset++];
             var b12 = buffer[offset++];
 
-            var d = 1 << (D - 1);
-
-            Coefficients[4 * i +  0] = d - (((b0 >> 0) | (b1 << 8)) & 0x1FFF);
-            Coefficients[4 * i +  1] = d - (((b1 >> 5) | (b2 << 3) | (b3 << 11)) & 0x1FFF);
-            Coefficients[4 * i +  2] = d - (((b3 >> 3) | (b4 << 6)) & 0x1FFF);
-            Coefficients[4 * i +  3] = d - (((b4 >> 7) | (b5 << 1) | (b6 << 9)) & 0x1FFF);
-            Coefficients[4 * i +  4] = d - (((b6 >> 4) | (b7 << 4) | (b8 << 12)) & 0x1FFF);
-            Coefficients[4 * i +  5] = d - (((b8 >> 1) | (b9 << 7)) & 0x1FFF);
-            Coefficients[4 * i +  6] = d - (((b9 >> 6) | (b10 << 2) | (b11 << 11)) & 0x1FFF);
-            Coefficients[4 * i +  7] = d - (((b11 >> 3) | (b12 << 5)) & 0x1FFF);
-        }
+            Coefficients[8 * i + 0] = d - (((b0 >> 0) | (b1 << 8)) & 0x1FFF);
+            Coefficients[8 * i + 1] = d - (((b1 >> 5) | (b2 << 3) | (b3 << 11)) & 0x1FFF);
+            Coefficients[8 * i + 2] = d - (((b3 >> 2) | (b4 << 6)) & 0x1FFF);
+            Coefficients[8 * i + 3] = d - (((b4 >> 7) | (b5 << 1) | (b6 << 9)) & 0x1FFF);
+            Coefficients[8 * i + 4] = d - (((b6 >> 4) | (b7 << 4) | (b8 << 12)) & 0x1FFF);
+            Coefficients[8 * i + 5] = d - (((b8 >> 1) | (b9 << 7)) & 0x1FFF);
+            Coefficients[8 * i + 6] = d - (((b9 >> 6) | (b10 << 2) | (b11 << 10)) & 0x1FFF);
+            Coefficients[8 * i + 7] = d - (((b11 >> 3) | (b12 << 5)) & 0x1FFF);
+            }
 
         }
 
     #endregion
     #region // PackZ
 
-
-    public void PackZ(byte[] buf, int gamma) {
-        if (Parameters.GAMMA1 == IDilithium.GAMMA_19) {
+    /// <summary>
+    /// Pack coefficients to <paramref name="buffer"/> as Z data, starting at 
+    /// <paramref name="offset"/> and updating <paramref name="offset"/> to point
+    /// to next unwritten byte.
+    /// </summary>
+    /// <param name="buffer">Buffer to write vector to.</param>
+    /// <param name="offset">Index of first byte to write on entry and index of
+    /// next byte to write to on exit.</param>
+    public void PackZ(byte[] buffer, ref int offset) {
+        if (Parameters.Gamma1 == Dilithium.Gamma1_19) {
             for (var i = 0; i < N / 2; i++) {
-                var t0 = (uint)(Parameters.GAMMA1 - Coefficients[2 * i + 0]);
-                var t1 = (uint)(Parameters.GAMMA1 - Coefficients[2 * i + 1]);
+                var t0 = (uint)(Parameters.Gamma1 - Coefficients[2 * i + 0]);
+                var t1 = (uint)(Parameters.Gamma1 - Coefficients[2 * i + 1]);
 
-                buf[5 * i + 0] = (byte)t0;
-                buf[5 * i + 1] = (byte)(t0 >> 8);
-                buf[5 * i + 2] = (byte)(t0 >> 16);
-                buf[5 * i + 2] |= (byte)(t1 << 4);
-                buf[5 * i + 3] = (byte)(t1 >> 4);
-                buf[5 * i + 4] = (byte)(t1 >> 12);
+                buffer[offset++] = (byte)t0;
+                buffer[offset++] = (byte)(t0 >> 8);
+                buffer[offset++] = (byte)((t0 >> 16)| (byte)(t1 << 4));
+                buffer[offset++] = (byte)(t1 >> 4);
+                buffer[offset++] = (byte)(t1 >> 12);
                 }
             }
         else {
 
             for (var i = 0; i < N / 4; i++) {
-                var t0 = (uint)(Parameters.GAMMA1 - Coefficients[2 * i + 0]);
-                var t1 = (uint)(Parameters.GAMMA1 - Coefficients[2 * i + 1]);
-                var t2 = (uint)(Parameters.GAMMA1 - Coefficients[2 * i + 2]);
-                var t3 = (uint)(Parameters.GAMMA1 - Coefficients[2 * i + 3]);
+                var t0 = (uint)(Parameters.Gamma1 - Coefficients[2 * i + 0]);
+                var t1 = (uint)(Parameters.Gamma1 - Coefficients[2 * i + 1]);
+                var t2 = (uint)(Parameters.Gamma1 - Coefficients[2 * i + 2]);
+                var t3 = (uint)(Parameters.Gamma1 - Coefficients[2 * i + 3]);
 
-                buf[9 * i + 0] = (byte)t0;
-                buf[9 * i + 1] = (byte)(t0 >> 8);
-                buf[9 * i + 2] = (byte)(t0 >> 16);
-                buf[9 * i + 2] |= (byte)(t1 << 2);
-                buf[9 * i + 3] = (byte)(t1 >> 6);
-                buf[9 * i + 4] = (byte)(t1 >> 14);
-                buf[9 * i + 4] |= (byte)(t2 << 4);
-                buf[9 * i + 5] = (byte)(t2 >> 4);
-                buf[9 * i + 6] = (byte)(t2 >> 12);
-                buf[9 * i + 6] |= (byte)(t3 << 6);
-                buf[9 * i + 7] = (byte)(t3 >> 2);
-                buf[9 * i + 8] = (byte)(t3 >> 10);
+                buffer[offset++] = (byte)t0;
+                buffer[offset++] = (byte)(t0 >> 8);
+                buffer[offset++] = (byte)((t0 >> 16)| (byte)(t1 << 2));
+                buffer[offset++] = (byte)(t1 >> 6);
+                buffer[offset++] = (byte)((t1 >> 14) | (byte)(t2 << 4));
+                buffer[offset++] = (byte)(t2 >> 4);
+                buffer[offset++] = (byte)((t2 >> 12) | (byte)(t3 << 6));
+                buffer[offset++] = (byte)(t3 >> 2);
+                buffer[offset++] = (byte)(t3 >> 10);
                 }
             }
         }
 
-
-    public void UnpackZ(byte[] buf) {
-        if (Parameters.GAMMA1 == IDilithium.GAMMA_19) {
+    /// <summary>
+    /// Unack coefficients to <paramref name="buffer"/> as Z data, starting at 
+    /// <paramref name="offset"/> and updating <paramref name="offset"/> to point
+    /// to next unwritten byte.
+    /// </summary>
+    /// <param name="buffer">Buffer to read vector from.</param>
+    /// <param name="offset">Index of first byte to read on entry and index of
+    /// next byte to read to on exit.</param>
+    public void UnpackZ(byte[] buffer, ref int offset) {
+        if (Parameters.Gamma1 == Dilithium.Gamma1_19) {
             for (var i = 0; i < N / 2; i++) {
-                uint c0, c1;
+                var b0 = buffer[offset++];
+                var b1 = buffer[offset++];
+                var b2 = buffer[offset++];
+                var b3 = buffer[offset++];
+                var b4 = buffer[offset++];
 
-                c0 = buf[5 * i + 0];
-                c0 |= ((uint)(buf[5 * i + 1]) << 8);
-                c0 |= ((uint)(buf[5 * i + 2]) << 16);
-                c0 &= 0xFFFFF;
 
-                c1 = (uint)(buf[5 * i + 2] >> 4);
-                c1 |= ((uint)(buf[5 * i + 3]) << 4);
-                c1 |= ((uint)(buf[5 * i + 4]) << 12);
+                var c0 = (b0 |( b1 << 8) | (b2<< 16))& 0xFFFFF;
+                var c1 = ((b2 >> 4) | (b3 << 4) | (b4 << 12)) & 0xFFFFF;
 
-                // BUG: This appears to be a bug in the reference code.
-                // corrested here.
-                c1 &= 0xFFFFF;
-
-                Coefficients[2 * i + 0] = (int)(IDilithium.GAMMA_19 - c0);
-                Coefficients[2 * i + 1] = (int)(IDilithium.GAMMA_19 - c1);
+                Coefficients[2 * i + 0] = (int)(Dilithium.Gamma1_19 - c0);
+                Coefficients[2 * i + 1] = (int)(Dilithium.Gamma1_19 - c1);
                 }
             }
         else {
             for (var i = 0; i < N / 4; i++) {
-                Coefficients[4 * i + 0] = buf[9 * i + 0];
+                var b0 = buffer[offset++];
+                var b1 = buffer[offset++];
+                var b2 = buffer[offset++];
+                var b3 = buffer[offset++];
+                var b4 = buffer[offset++];
+                var b5 = buffer[offset++];
+                var b6 = buffer[offset++];
+                var b7 = buffer[offset++];
+                var b8 = buffer[offset++];
+
+                var c0 = (b0 | (b1 << 8) | (b2 << 16)) & 0x3FFFF;
+                var c1 = ((b3 >> 2) | (b3 << 6) | (b4 << 14)) & 0x3FFFF;
+                var c2 = ((b4 >> 4) | (b5 << 4) | (b6 << 12)) & 0x3FFFF;
+                var c3 = ((b6 >> 6) | (b7 << 2) | (b8 << 10)) & 0x3FFFF;
+
+                Coefficients[2 * i + 0] = (int)(Dilithium.Gamma1_19 - c0);
+                Coefficients[2 * i + 1] = (int)(Dilithium.Gamma1_19 - c1);
+                Coefficients[2 * i + 2] = (int)(Dilithium.Gamma1_19 - c2);
+                Coefficients[2 * i + 3] = (int)(Dilithium.Gamma1_19 - c3);
                 }
             }
 
@@ -748,7 +858,7 @@ public class PolynomialInt32 : Disposable {
     /// <param name="offset">Index of first byte to be written.</param>
 
     public void PackW1(byte[] buffer, ref int offset) {
-        if (Parameters.GAMMA2 == IDilithium.GAMMA_2_88) {
+        if (Parameters.Gamma2 == Dilithium.Gamma2_88) {
             for (var i = 0; i < N /4 ; i++) {
                 var t0 = Coefficients[8 * i + 0];
                 var t1 = Coefficients[8 * i + 1];
@@ -765,13 +875,18 @@ public class PolynomialInt32 : Disposable {
                 buffer[offset++] = (byte)(Coefficients[2 * i + 0] | (Coefficients[2 * i + 1] << 4));
                 }
             }
-        } 
+        }
 
     #endregion
     #endregion
 
     #region // Diagnostic hash
-
+    /// <summary>
+    /// Return a SHAKE128 fingerprint of the matrix coefficients. If <paramref name="tag"/>
+    /// is not null, writes the tag and fingerprint to the console.
+    /// </summary>
+    /// <param name="tag">Optional tag for identifying console output.</param>
+    /// <returns>String containing the base16 representation of the values.</returns>
     public string GetHash(string tag) {
 
         var d2 = Coefficients.Length;

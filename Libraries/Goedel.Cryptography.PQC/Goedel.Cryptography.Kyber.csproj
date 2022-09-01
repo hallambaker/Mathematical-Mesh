@@ -1,11 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <RootNamespace>Goedel.Cryptography.PQC</RootNamespace>
+	  <Product>Goedel.Cryptography.PQC.Kyber</Product>
+	  <Description>Implementation of NIST PQC Kyber Key Exchange.</Description>
+	  <Copyright>© 2022</Copyright>
+	  <Title>Goedel.Cryptography.PQC.Kyber</Title>
   </PropertyGroup>
 
   <ItemGroup>

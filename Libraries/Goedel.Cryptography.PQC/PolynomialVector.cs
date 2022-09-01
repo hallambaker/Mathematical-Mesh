@@ -3,16 +3,19 @@ using System.Numerics;
 
 namespace Goedel.Cryptography.PQC;
 
-
+/// <summary>
+/// Operations on vectors of polynomials expressed as a list of coefficients for use in Kyber. 
+/// Could be adapted to other applications if required.
+/// </summary>
 public struct PolynomialVectorInt16 {
 
-
-    public int KYBER_POLYVECBYTES => Kyber.PolyBytes * Vector.Length;
+    ///<summary>The number of bytes required to store the vector.</summary> 
+    public int PolyVectorBytes => Kyber.PolyBytes * Vector.Length;
 
     int K { get; }
 
     ///<summary>The coeficients vectors.</summary> 
-    public Polynomial[] Vector;
+    public PolynomialInt16[] Vector;
 
     /// <summary>
     /// Constructor, create a Kyber polynomial of size 
@@ -21,15 +24,22 @@ public struct PolynomialVectorInt16 {
     /// <param name="k">The number coefficient vectors.</param>
     public PolynomialVectorInt16(int k) {
         K = k;
-        Vector = new Polynomial[k];
+        Vector = new PolynomialInt16[k];
         }
 
 
+    /// <summary>
+    /// Constructor, create a Kyber vector of length <paramref name="k"/> from 
+    /// the data in <paramref name="input"/> beginning at byte <paramref name="offset"/>.
+    /// </summary>
+    /// <param name="k">Vector length.</param>
+    /// <param name="input">Input data.</param>
+    /// <param name="offset">First byte to read.</param>
     public PolynomialVectorInt16(int k, byte[] input, int offset = 0) {
         K = k;
-        Vector = new Polynomial[k];
+        Vector = new PolynomialInt16[k];
         for (var i = 0; i < k; i++) {
-            Vector[i] = new Polynomial(input, offset);
+            Vector[i] = new PolynomialInt16(input, offset);
             offset += Kyber.PolyBytes;
             }
 
@@ -41,7 +51,6 @@ public struct PolynomialVectorInt16 {
     /// the polynomial vector elements in place.
     /// Inputs assumed to be in normal order, output in bitreversed order
     /// </summary>
-    /// <param name="r">The polynomial to transform.</param>
     public void NTT() {
         foreach (var p in Vector) {
             p.PolyNTT();
@@ -53,7 +62,6 @@ public struct PolynomialVectorInt16 {
     /// a polynomial in place.
     /// Inputs assumed to be in normal order, output in bitreversed order
     /// </summary>
-    /// <param name="r">The polynomial to transform.</param>
     public void PolyInvNTT() {
         foreach (var p in Vector) {
             p.PolyInvNTT();
@@ -67,9 +75,9 @@ public struct PolynomialVectorInt16 {
     /// </summary>
     /// <param name="vector">Second input vector.</param>
     /// <returns>The result.</returns>
-    public Polynomial PointwiseAccMontgomery(PolynomialVectorInt16 vector) {
-        var r = new Polynomial();
-        var t = new Polynomial();
+    public PolynomialInt16 PointwiseAccMontgomery(PolynomialVectorInt16 vector) {
+        var r = new PolynomialInt16();
+        var t = new PolynomialInt16();
 
         r.PolyBasemulMontgomery(Vector[0], vector.Vector[0]);
         for (var i = 1; i < Vector.Length; i++) {
@@ -108,10 +116,11 @@ public struct PolynomialVectorInt16 {
     /// Serialize the vector to produce the public or private key.
     /// </summary>
     /// <param name="seed">Optional additional seed value to be appended to the output.</param>
+    /// <param name="buffer">The buffer to write the result to.</param>
     /// <returns>The packed polynomial vector.</returns>
 
     public void Pack(byte[]buffer, byte[]? seed = null) {
-        var length = KYBER_POLYVECBYTES ;
+        var length = PolyVectorBytes ;
         if (seed != null) {
             length += seed.Length;
             }
@@ -122,13 +131,17 @@ public struct PolynomialVectorInt16 {
             }
 
         if (seed != null) {
-            Array.Copy (seed, 0, buffer, KYBER_POLYVECBYTES, seed.Length);
+            Array.Copy (seed, 0, buffer, PolyVectorBytes, seed.Length);
             }
 
         }
 
 
-
+    /// <summary>
+    /// Compress vector using 352 bytes per polynomial.
+    /// </summary>
+    /// <param name="buffer">The buffer to write to.</param>
+    /// <param name="offset">The first byte to write.</param>
     public void Compress352(byte[] buffer, int offset = 0) {
 
         var t = new short[8];
@@ -153,6 +166,11 @@ public struct PolynomialVectorInt16 {
             }
         }
 
+    /// <summary>
+    /// Compress vector using 320 bytes per polynomial.
+    /// </summary>
+    /// <param name="buffer">The buffer to write to.</param>
+    /// <param name="offset">The first byte to write.</param>
     public void Compress320(byte[] buffer, int offset = 0) {
 
         var t = new short[4];
@@ -172,14 +190,19 @@ public struct PolynomialVectorInt16 {
         }
 
 
-
-    public static PolynomialVectorInt16 Decompress352(int K, byte[] buffer, int offset = 0) {
-        var vector = new PolynomialVectorInt16(K);
+    /// <summary>
+    /// Deompress vector using 352 bytes per polynomial.
+    /// </summary>
+    /// <param name="k">The Kyber vector length.</param>
+    /// <param name="buffer">The buffer to read from.</param>
+    /// <param name="offset">The first byte to read.</param>
+    public static PolynomialVectorInt16 Decompress352(int k, byte[] buffer, int offset = 0) {
+        var vector = new PolynomialVectorInt16(k);
 
         var t = new short[8];
 
-        for (var i = 0; i < K; i++) {
-            vector.Vector[i] = new();
+        for (var v = 0; v < k; v++) {
+            vector.Vector[v] = new();
             for (var j = 0; j < Kyber.N / 8; j++) {
 
                 t[0] = (short)((buffer[offset + 0] >> 0) | (buffer[offset + 1] << 8));
@@ -191,8 +214,8 @@ public struct PolynomialVectorInt16 {
                 t[6] = (short)((buffer[offset + 8] >> 2) | (buffer[offset + 9] << 6));
                 t[7] = (short)((buffer[offset + 9] >> 5) | (buffer[offset +10] << 3));
 
-                for (var k = 0; k < 8; k++) {
-                    vector.Vector[i].Coefficients[8 * j + k] = (short)(((t[k] & 0x7FF) * Kyber.Q + 1024) >> 11);
+                for (var c = 0; c < 8; c++) {
+                    vector.Vector[v].Coefficients[8 * j + c] = (short)(((t[c] & 0x7FF) * Kyber.Q + 1024) >> 11);
                     }
                 
                 offset += 11;
@@ -202,13 +225,19 @@ public struct PolynomialVectorInt16 {
 
         }
 
-    public static PolynomialVectorInt16 Decompress320(int K, byte[] buffer, int offset = 0) {
+    /// <summary>
+    /// Deompress vector using 320 bytes per polynomial.
+    /// </summary>
+    /// <param name="buffer">The buffer to read from.</param>
+    /// <param name="offset">The first byte to read.</param>
+    /// <param name="k">Kyber vector length.</param>
+    public static PolynomialVectorInt16 Decompress320(int k, byte[] buffer, int offset = 0) {
 
-        var vector = new PolynomialVectorInt16(K);
+        var vector = new PolynomialVectorInt16(k);
 
         var t = new short[8];
 
-        for (var i = 0; i < K; i++) {
+        for (var v = 0; v < k; v++) {
             for (var j = 0; j < Kyber.N / 4; j++) {
 
                 t[0] = (short)((buffer[offset + 0] >> 0) | (buffer[offset + 1] << 8));
@@ -216,8 +245,8 @@ public struct PolynomialVectorInt16 {
                 t[2] = (short)((buffer[offset + 4] >> 4) | (buffer[offset + 3] << 4));
                 t[3] = (short)((buffer[offset + 6] >> 6) | (buffer[offset + 4] << 2));
 
-                for (var k = 0; k < 4; k++) {
-                    vector.Vector[i].Coefficients[4 * j + k] = (short)(((t[k] & 0x3FF) * Kyber.Q + 512) >> 10);
+                for (var c = 0; c < 4; c++) {
+                    vector.Vector[v].Coefficients[4 * j + c] = (short)(((t[c] & 0x3FF) * Kyber.Q + 512) >> 10);
                     }
 
                 offset += 11;
@@ -236,10 +265,10 @@ public struct PolynomialVectorInt16 {
     /// <param name="a">First input vector.</param>
     /// <param name="b">Second input vector.</param>
     /// <returns>The result.</returns>
-    public static Polynomial PolyBasemulMontgomery(PolynomialVectorInt16 a, PolynomialVectorInt16 b) {
+    public static PolynomialInt16 PolyBasemulMontgomery(PolynomialVectorInt16 a, PolynomialVectorInt16 b) {
 
-        var r = new Polynomial();
-        var t = new Polynomial();
+        var r = new PolynomialInt16();
+        var t = new PolynomialInt16();
 
         r.PolyBasemulMontgomery(a.Vector[0], b.Vector[0]);
         for (var i = 1; i < a.Vector.Length; i++) {

@@ -4,9 +4,12 @@ using System.Collections.Generic;
 namespace Goedel.Cryptography.PQC;
 
 
+/// <summary>
+/// Polynomial coefficient vector of size Int16 used in Kyber.
+/// </summary>
+public struct PolynomialInt16 {
 
-public struct Polynomial {
-
+    #region // Properties and fields.
     ///<summary>The Kyber modulus.</summary> 
     public const int q = Kyber.Q;
 
@@ -16,17 +19,24 @@ public struct Polynomial {
     public short[] Coefficients;
 
 
+    #endregion
+    #region // Constructors
 
     /// <summary>
     /// Constructor, create a Kyber coefficient vector of length <see cref="Kyber.N"/>.
     /// </summary>
-    public Polynomial() {
+    public PolynomialInt16() {
         Coefficients = new short[Kyber.N];
         }
 
 
-
-    public Polynomial(byte[] buffer, int offset) : this() {
+    /// <summary>
+    /// Constructor, initialize polynomial using data from <paramref name="buffer"/>
+    /// at offset <paramref name="offset"/>.
+    /// </summary>
+    /// <param name="buffer">The serialized data.</param>
+    /// <param name="offset">The first byte to read.</param>
+    public PolynomialInt16(byte[] buffer, int offset) : this() {
 
         for (var i = 0; i < Coefficients.Length;) {
             ushort b0 = buffer[offset++];
@@ -38,12 +48,15 @@ public struct Polynomial {
 
         }
 
+    #endregion
 
-
-
-
-    public static Polynomial FromMessageBytes(byte[] message) {
-        var result = new Polynomial();
+    /// <summary>
+    /// Unpack <paramref name="message"/> to recover polynomial.
+    /// </summary>
+    /// <param name="message">The message to unpack.</param>
+    /// <returns>The unpacked polynomial.</returns>
+    public static PolynomialInt16 FromMessageBytes(byte[] message) {
+        var result = new PolynomialInt16();
         for (var i = 0; i < Kyber.N / 8; i++) {
             for (var j = 0; j < 8; j++) {
                 short mask = (short)(-(short)((message[i] >> j) & 1));
@@ -53,6 +66,10 @@ public struct Polynomial {
         return result;
         }
 
+    /// <summary>
+    /// Pack polynomial into byte array and return array.
+    /// </summary>
+    /// <returns>The packed polynomial.</returns>
     public byte[] ToMessageBytes() {
         var result = new byte[Kyber.SymBytes]; 
 
@@ -77,6 +94,11 @@ public struct Polynomial {
         return result;
         }
 
+    /// <summary>
+    /// Compress vector using 160 bytes per polynomial.
+    /// </summary>
+    /// <param name="buffer">The buffer to write to.</param>
+    /// <param name="offset">The first byte to write.</param>
     public void Compress160(byte[] buffer, int offset = 0) {
         var t = new short[8];
 
@@ -94,7 +116,11 @@ public struct Polynomial {
 
         }
 
-
+    /// <summary>
+    /// Compress vector using 128 bytes per polynomial.
+    /// </summary>
+    /// <param name="buffer">The buffer to write to.</param>
+    /// <param name="offset">The first byte to write.</param>
     public void Compress128(byte[] buffer, int offset = 0) {
         var t = new short[8];
 
@@ -113,9 +139,13 @@ public struct Polynomial {
         }
 
 
-
-    public static Polynomial Decompress352(byte[] buffer, int offset = 0) {
-        var result = new Polynomial();
+    /// <summary>
+    /// Compress vector using 352 bytes per polynomial.
+    /// </summary>
+    /// <param name="buffer">The buffer to write to.</param>
+    /// <param name="offset">The first byte to write.</param>
+    public static PolynomialInt16 Decompress352(byte[] buffer, int offset = 0) {
+        var result = new PolynomialInt16();
 
         var t = new byte[8];
         for (var j = 0; j < Kyber.N / 8; j++) {
@@ -138,8 +168,13 @@ public struct Polynomial {
         return result;
         }
 
-    public static Polynomial Decompress320(byte[] buffer, int offset = 0) {
-        var result = new Polynomial();
+    /// <summary>
+    /// Compress vector using 320 bytes per polynomial.
+    /// </summary>
+    /// <param name="buffer">The buffer to write to.</param>
+    /// <param name="offset">The first byte to write.</param>
+    public static PolynomialInt16 Decompress320(byte[] buffer, int offset = 0) {
+        var result = new PolynomialInt16();
 
         for (var j = 0; j < Kyber.N / 2; j++) {
             result.Coefficients[8 * j + 0] = (short)((((buffer[offset + 0] & 15) * Kyber.Q) + 8) >> 4);
@@ -188,9 +223,9 @@ public struct Polynomial {
     /// </summary>
     /// <param name="input">input byte array</param>
     /// <returns>output polynomial</returns>
-    public static Polynomial CBD2(byte[] input) {
+    public static PolynomialInt16 CBD2(byte[] input) {
         (input.Length == (2 * Kyber.N) / 4).AssertTrue(NYI.Throw);
-        var result = new Polynomial();
+        var result = new PolynomialInt16();
 
         for (var i = 0; i < Kyber.N/8; i++) {
             var t = input.LittleEndian32(4 * i);
@@ -215,9 +250,9 @@ public struct Polynomial {
     /// </summary>
     /// <param name="input">input byte array</param>
     /// <returns>output polynomial</returns>
-    public static Polynomial CBD3(byte[] input) {
+    public static PolynomialInt16 CBD3(byte[] input) {
         (input.Length == (3 * Kyber.N) / 4).AssertTrue(NYI.Throw);
-        var result = new Polynomial();
+        var result = new PolynomialInt16();
 
         for (var i = 0; i < Kyber.N/4; i++) {
             var t = input.LittleEndian24(3 * i);
@@ -243,7 +278,6 @@ public struct Polynomial {
     /// a polynomial in place.
     /// Inputs assumed to be in normal order, output in bitreversed order
     /// </summary>
-    /// <param name="r">The polynomial to transform.</param>
     public  void PolyNTT() {
         NTT();
         Reduce();
@@ -268,7 +302,6 @@ public struct Polynomial {
     /// a polynomial in place.
     /// Inputs assumed to be in bitreversed order, output in normal order
     /// </summary>
-    /// <param name="r">The polynomial to transform.</param>
     public void PolyInvNTT() => InvNTT();
 
 
@@ -277,7 +310,7 @@ public struct Polynomial {
     private void NTT() {
         short zeta, t;
         uint k = 1;
-        uint j = 0;
+        uint j;
 
         for (uint len = 128; len >= 2; len >>= 1) {
             for (uint start = 0; start < 256; start = j + len) {
@@ -308,7 +341,7 @@ public struct Polynomial {
     private void InvNTT() {
         uint k = 0;
         short t, zeta;
-        uint j = 0;
+        uint j;
 
         for (uint len = 2; len <= 128; len <<= 1) {
             for (uint start = 0; start < 256; start = j + len) {
@@ -368,7 +401,7 @@ public struct Polynomial {
     /// </summary>
     /// <param name="polynomial">The polynomial to add.</param>
     /// <exception cref="NYI"></exception>
-    public void Add(Polynomial polynomial) {
+    public void Add(PolynomialInt16 polynomial) {
         for (var i = 0; i < Kyber.N; i++) {
             Coefficients[i] += polynomial.Coefficients[i];
             }
@@ -380,7 +413,7 @@ public struct Polynomial {
     /// </summary>
     /// <param name="polynomial">The polynomial to add.</param>
     /// <exception cref="NYI"></exception>
-    public void SubNeg(Polynomial polynomial) {
+    public void SubNeg(PolynomialInt16 polynomial) {
         for (var i = 0; i < Kyber.N; i++) {
             Coefficients[i] = (short)(polynomial.Coefficients[i] - Coefficients[i]);
             }
@@ -393,7 +426,7 @@ public struct Polynomial {
     /// <param name="a">First input polynomial</param>
     /// <param name="b">Second input polynomial</param>
     /// <returns></returns>
-    public void PolyBasemulMontgomery(Polynomial a, Polynomial b) {
+    public void PolyBasemulMontgomery(PolynomialInt16 a, PolynomialInt16 b) {
 
         for (var i = 0; i < Kyber.N / 4; i++) {
             (Coefficients[4 * i], Coefficients[(4 * i)+1] ) = Basemul(a, b, 4*i, (short) zetas[64+i]);
@@ -411,7 +444,7 @@ public struct Polynomial {
     /// <param name="i">Index of array to operate at.</param>
     /// <param name="zeta">Integer defining the reduction polynomial</param>
     /// <returns></returns>
-    public static (short, short)  Basemul(Polynomial a, Polynomial b, int i, short zeta) {
+    public static (short, short)  Basemul(PolynomialInt16 a, PolynomialInt16 b, int i, short zeta) {
         var r0 = Fqmul(a.Coefficients[i+1], b.Coefficients[i + 1]);
         r0 = Fqmul(r0, zeta);
         r0 += Fqmul(a.Coefficients[i], b.Coefficients[i]);
@@ -428,7 +461,7 @@ public struct Polynomial {
     /// <paramref name="offset"/>.
     /// </summary>
     /// <param name="offset">starting point at which to fill the <paramref name="output"/></param>
-    /// <returns>The packed polynomial vector.</returns>
+    /// <param name="output">The buffer to which the output is to be written.</param>
     public void ToBytes(byte[] output, int offset) {
 
         

@@ -196,9 +196,11 @@ public abstract class DNSContext : Disposable {
     /// <summary>
     /// Make a DNS request to the default client without waiting for a response
     /// </summary>
-    /// <param name="Request">DNS request set</param>
+    /// <param name="request">DNS request set</param>
+    /// <param name="index">The number of times the request has been 
+    /// repeated.</param>
     /// <returns>Task instance.</returns>
-    public abstract void SendRequest(DNSRequest Request, int index=0);
+    public abstract void SendRequest(DNSRequest request, int index=0);
 
 
     /// <summary>

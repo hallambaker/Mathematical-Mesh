@@ -2794,6 +2794,8 @@
                 as an EDSS header entry.</param>
             <param name="chunk">The maximum chunk size. If unspecified, the default
             system chunk size (2048) is used.</param>
+            <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+            to be presented in place of an encrypted document if it cannot be decrypted.</param>
             <returns>The number of bytes in the input file.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
@@ -2809,6 +2811,8 @@
                 as an EDSS header entry.</param>
             <param name="chunk">The maximum chunk size. If unspecified, the default
             system chunk size (2048) is used.</param>
+            <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+            to be presented in place of an encrypted document if it cannot be decrypted.</param>
             <returns>The serialized encoding of the data.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.IO.Stream,System.IO.Stream,System.Int64,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
@@ -2832,6 +2836,8 @@
             <param name="contentLength">The content length. This value is ignored if the Plaintext
             parameter is not null. If the value is less than 0, chunked encoding
             will be used for the payload data. </param>         
+            <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+            to be presented in place of an encrypted document if it cannot be decrypted.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.DecodeJsonObject(Goedel.Cryptography.IKeyLocate)">
             <summary>
@@ -2864,8 +2870,8 @@
             </summary>
             <param name="inputStream">The input stream, must support reading.</param>
             <param name="outputStream">The output stream, must support writing</param>
-            <param name="outputFile">The output file, must support writing</param>
             <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+            <param name="dareHeader">The header data.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Verify(System.String,Goedel.Cryptography.IKeyLocate)">
             <summary>
@@ -2929,6 +2935,8 @@
                 Data sequences to be converted to an EDS and presented
                 as an EDSS header entry.
             </param>
+            <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+            to be presented in place of an encrypted document if it cannot be decrypted.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Protocol.JsonWriter,Goedel.Cryptography.Dare.ContentMeta,System.Int64,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Byte[])">
             <summary>
@@ -2950,6 +2958,8 @@
                 Data sequences to be converted to an EDS and presented
                 as an EDSS header entry.
             </param>
+            <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+            to be presented in place of an encrypted document if it cannot be decrypted.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelopeWriter.Write(System.Byte[],System.Int32,System.Int32)">
             <summary>

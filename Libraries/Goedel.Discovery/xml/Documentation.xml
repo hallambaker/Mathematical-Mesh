@@ -469,7 +469,9 @@
             <summary>
             Make a DNS request to the default client without waiting for a response
             </summary>
-            <param name="Request">DNS request set</param>
+            <param name="request">DNS request set</param>
+            <param name="index">The number of times the request has been 
+            repeated.</param>
             <returns>Task instance.</returns>
         </member>
         <member name="M:Goedel.Discovery.DNSContext.GetResponseAsync">

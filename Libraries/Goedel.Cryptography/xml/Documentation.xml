@@ -2559,6 +2559,18 @@
             Computes the <see cref="T:System.Security.Cryptography.SHA3" /> hash for the input data.
             </summary>
         </member>
+        <member name="F:Goedel.Cryptography.Algorithms.SHA3.HashRateShake128">
+            <summary>The SHAKE128 hash rate in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Algorithms.SHA3.HashRateShake256">
+            <summary>The SHAKE256 hash rate in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Algorithms.SHA3.HashRateSHA3_256">
+            <summary>The SHA2 256 hash rate in bytes.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Algorithms.SHA3.HashRateSHA3_512">
+            <summary>The SHA2 512 hash rate in bytes.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Algorithms.SHA3.#ctor">
             <summary>
             Initializes a new instance of <see cref="T:System.Security.Cryptography.SHA3" />.
@@ -2671,8 +2683,6 @@
             Convenience routine to preform one stop processing.
             </summary>
             <param name="input">The input data.</param>
-            <param name="start">Start position.</param>
-            <param name="length">Number of octets to process.</param>
             <returns>The digest value</returns>
         </member>
         <member name="T:Goedel.Cryptography.Algorithms.SHAKE128">
@@ -2717,12 +2727,45 @@
             <param name="hashBitLength">The number of output bits</param>
             <returns>The digest value</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Algorithms.SHAKE256.GetBytes(System.Int32,System.Byte[][])">
+            <summary>
+            Perform a SHAKE256 operation of the concatenated inputs
+            <paramref name="input"/> ignoring null elements and return a
+            byte array of length <paramref name="length"/> bytes containing
+            the result.
+            </summary>
+            <param name="length">The number of bytes to return.</param>
+            <param name="input">The input data.</param>
+            <returns>Byte array of length <paramref name="length"/> bytes containing
+            the result.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Algorithms.SHAKEExtended">
+            <summary>
+            Extended version of SHA3 used to expose internals of the KeccakR transformation
+            used in Kyber, Dilithium, etc.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Algorithms.SHAKEExtended.HashRate">
+            <summary>The hash rate in bytes.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.#ctor(System.Int32)">
             <summary>
             SHAKE128 provider. This digest class supports varying bit size outputs
             in 64 bit increments with a work factor of 2^128
             </summary>
             <param name="hashBitLength">The number of output bits</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.Shake128">
+            <summary>
+            Factory method, return new SHAKE128 provider.
+            </summary>
+            <returns>The provider.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.Shake256">
+            <summary>
+            Factory method, return new SHAKE256 provider.
+            </summary>
+            <returns>The provider.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.Absorb(System.Byte[])">
             <summary>
@@ -2745,12 +2788,21 @@
         <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.AbsorbD(System.Byte[],System.Int32)">
             <summary>
             Perform the Kyber Absorb function using the seed value <paramref name="seed"/>
-            for the element <paramref name="x"/>, <paramref name="y"/>.
+            for the element <paramref name="x"/>.
             </summary>
             <param name="seed">The seed value</param>
             <param name="x">The x value</param>
-            <param name="y">The y value</param>
             <returns>The state array (for now).</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.Squeeze(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Perform the Keccak squeeze function on the current state vector to return
+            <paramref name="nblocks"/> of data in <paramref name="buffer"/> starting
+            at byte <paramref name="index"/>/
+            </summary>
+            <param name="buffer">The output buffer.</param>
+            <param name="nblocks">The number of output blocks to generate.</param>
+            <param name="index">The first byte to write.</param>
         </member>
         <member name="T:Goedel.Cryptography.Algorithms.ShortBlockPermute">
             <summary>

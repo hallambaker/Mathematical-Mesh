@@ -417,7 +417,13 @@ public static class NumberSplit {
 
 
 
-
+    /// <summary>
+    /// Store data <paramref name="value"/> at index <paramref name="index"/>
+    /// in little endian form in <paramref name="data"/>.
+    /// </summary>
+    /// <param name="data">The buffer to write the output to.,</param>
+    /// <param name="value">The value to write.</param>
+    /// <param name="index">The starting index in the array.</param>
     public static void LittleEndianStore(this byte[] data, ulong value, int index = 0) {
 
         for (var i = 0; i < 8; i++) {

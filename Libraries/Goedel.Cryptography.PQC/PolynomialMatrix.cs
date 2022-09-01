@@ -2,6 +2,10 @@
 
 namespace Goedel.Cryptography.PQC;
 
+/// <summary>
+/// Operations on matrix of polynomials expressed as a list of coefficients 
+/// for use in Kyber. Could be adapted to other applications if required.
+/// </summary>
 public struct PolynomialMatrixInt16 {
 
     #region // Properties and fields
@@ -32,13 +36,12 @@ public struct PolynomialMatrixInt16 {
     /// <paramref name="k"/>.<paramref name="k"/>.<see cref="Kyber.N"/>.
     /// </summary>
     /// <param name="k">The number of polynomials and coefficient vectors per polynomial.</param>
-    /// <param name="n">The coefficient vector length.</param>
     public PolynomialMatrixInt16(int k) {
         PolynomialVector = new PolynomialVectorInt16[k];
         for (var i = 0; i < k; i++) {
             PolynomialVector[i] = new PolynomialVectorInt16(k);
             for (var j = 0; j < k; j++) {
-                PolynomialVector[i].Vector[j] = new Polynomial();
+                PolynomialVector[i].Vector[j] = new PolynomialInt16();
                 }
             }
         }

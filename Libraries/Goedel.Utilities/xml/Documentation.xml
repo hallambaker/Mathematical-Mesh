@@ -481,6 +481,28 @@
             <param name="length">The number of bytes to read.</param>
             <returns>The created buffer.</returns>
         </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.Append(System.Byte[],System.Byte[],System.Int32@)">
+            <summary>
+            Append the bytes <paramref name="source"/> to <paramref name="target"/>
+            starting at byte <paramref name="offset"/> of the destination.
+            </summary>
+            <param name="source">The data to append.</param>
+            <param name="target">The buffer to write to.</param>
+            <param name="offset">The starting point to write on input, next byte
+            to write on output.</param>
+        </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.Extract(System.Byte[],System.Int32@,System.Int32)">
+            <summary>
+            Extract a span of <paramref name="length"/> bytes starting at position
+            <paramref name="offset"/> from <paramref name="source"/> and return as
+            a new array.
+            </summary>
+            <param name="source">The source bytes.</param>
+            <param name="offset">The first byte to copy on input, the next byte to copy
+            on output.</param>
+            <param name="length">Number of bytes to copy.</param>
+            <returns>The copied bytes.</returns>
+        </member>
         <member name="M:Goedel.Utilities.ArrayUtilities.Replace``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
             <summary>
             Wrapper for the Dictionary Add method to force replacement of the previous value if it exists.
@@ -2258,6 +2280,15 @@
             <param name="data">The data to read.</param>
             <param name="index">The starting index.</param>
             <returns>The converted data.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.NumberSplit.LittleEndianStore(System.Byte[],System.UInt64,System.Int32)">
+            <summary>
+            Store data <paramref name="value"/> at index <paramref name="index"/>
+            in little endian form in <paramref name="data"/>.
+            </summary>
+            <param name="data">The buffer to write the output to.,</param>
+            <param name="value">The value to write.</param>
+            <param name="index">The starting index in the array.</param>
         </member>
         <member name="T:Goedel.Utilities.RFC3339">
             <summary>

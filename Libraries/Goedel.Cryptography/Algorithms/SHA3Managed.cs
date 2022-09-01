@@ -60,8 +60,6 @@ public class SHA3Managed : SHA3 {
     /// Convenience routine to preform one stop processing.
     /// </summary>
     /// <param name="input">The input data.</param>
-    /// <param name="start">Start position.</param>
-    /// <param name="length">Number of octets to process.</param>
     /// <returns>The digest value</returns>
 
     public static byte[] Process256(byte[] input) {
@@ -134,28 +132,44 @@ public class SHAKE256 : SHA3 {
         }
 
 
-
+    /// <summary>
+    /// Perform a SHAKE256 operation of the concatenated inputs
+    /// <paramref name="input"/> ignoring null elements and return a
+    /// byte array of length <paramref name="length"/> bytes containing
+    /// the result.
+    /// </summary>
+    /// <param name="length">The number of bytes to return.</param>
+    /// <param name="input">The input data.</param>
+    /// <returns>Byte array of length <paramref name="length"/> bytes containing
+    /// the result.</returns>
     public static byte[] GetBytes(int length, params byte[][] input) {
 
         using var provider = new SHAKE256(length*8);
 
         foreach (var inputItem in input) {
-            provider.HashCore(inputItem, 0, inputItem.Length);
+            if (inputItem != null) {
+                provider.HashCore(inputItem, 0, inputItem.Length);
+                }
             }
 
-        provider.HashFinal();
-        return provider.Hash;
+        return provider.HashFinal();
+
         }
 
     }
 
 
 
-
+/// <summary>
+/// Extended version of SHA3 used to expose internals of the KeccakR transformation
+/// used in Kyber, Dilithium, etc.
+/// </summary>
 public class SHAKEExtended : SHA3 {
 
 
     internal override byte PaddingValueStart { get; } = 0x1f;
+
+    ///<summary>The hash rate in bytes.</summary> 
     public int HashRate { get; }
 
 
@@ -179,10 +193,17 @@ public class SHAKEExtended : SHA3 {
             }
         }
 
+    /// <summary>
+    /// Factory method, return new SHAKE128 provider.
+    /// </summary>
+    /// <returns>The provider.</returns>
+    public static SHAKEExtended Shake128() => new(256);
 
-    public static SHAKEExtended Shake128() => new SHAKEExtended(256);
-
-    public static SHAKEExtended Shake256() => new SHAKEExtended(512);
+    /// <summary>
+    /// Factory method, return new SHAKE256 provider.
+    /// </summary>
+    /// <returns>The provider.</returns>
+    public static SHAKEExtended Shake256() => new(512);
 
 
 
@@ -247,11 +268,10 @@ public class SHAKEExtended : SHA3 {
 
     /// <summary>
     /// Perform the Kyber Absorb function using the seed value <paramref name="seed"/>
-    /// for the element <paramref name="x"/>, <paramref name="y"/>.
+    /// for the element <paramref name="x"/>.
     /// </summary>
     /// <param name="seed">The seed value</param>
     /// <param name="x">The x value</param>
-    /// <param name="y">The y value</param>
     /// <returns>The state array (for now).</returns>
     public ulong[] AbsorbD(byte[] seed, int x) {
 
@@ -268,12 +288,19 @@ public class SHAKEExtended : SHA3 {
 
         }
 
-
-    public void Squeeze(byte[] buff, int nblocks, int index =0) {
+    /// <summary>
+    /// Perform the Keccak squeeze function on the current state vector to return
+    /// <paramref name="nblocks"/> of data in <paramref name="buffer"/> starting
+    /// at byte <paramref name="index"/>/
+    /// </summary>
+    /// <param name="buffer">The output buffer.</param>
+    /// <param name="nblocks">The number of output blocks to generate.</param>
+    /// <param name="index">The first byte to write.</param>
+    public void Squeeze(byte[] buffer, int nblocks, int index =0) {
         while (nblocks > 0) {
             KeccakF();
             for (var i = 0; i < HashRate / 8; i++) {
-                buff.LittleEndianStore(state[i], index + (i*8));
+                buffer.LittleEndianStore(state[i], index + (i*8));
                 }
             index += HashRate;
             nblocks--;

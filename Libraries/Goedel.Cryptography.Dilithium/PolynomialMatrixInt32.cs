@@ -3,20 +3,25 @@ using System.Security.Cryptography;
 using Goedel.Utilities;
 namespace Goedel.Cryptography.PQC;
 
+/// <summary>
+/// Operations on matrix of polynomials expressed as a list of coefficients 
+/// for use in Dilithium. Could be adapted to other applications if required.
+/// </summary>
 public class PolynomialMatrixInt32 : Disposable {
 
     #region // Properties and fields
+    
+    ///<summary>The polynomial vectors.</summary> 
     public PolynomialVectorInt32[] Vectors;
 
-    IDilithium Parameters { get; } 
+    Dilithium Parameters { get; } 
 
-
-    int K => Parameters.K;
-    int L => Parameters.L;
     #endregion
 
     #region // Disposing
     bool Wipe { get; } = true;
+
+    ///<inheritdoc/>
     protected override void Disposing() {
         if (!Wipe) {
             return;
@@ -27,19 +32,34 @@ public class PolynomialMatrixInt32 : Disposable {
         }
     #endregion
     #region // Constructors
-    public PolynomialMatrixInt32(IDilithium parameters, bool wipe = true) {
+
+    /// <summary>
+    /// Constructor, return matrix according to parameters specified in
+    /// <paramref name="parameters"/>. If the parameter <paramref name="wipe"/>
+    /// is true, the coefficients will be cleared before memory is released.
+    /// </summary>
+    /// <param name="parameters">The Dilithium parameters.</param>
+    /// <param name="wipe">If true, contents wiped on dispose.</param>
+    public PolynomialMatrixInt32(Dilithium parameters, bool wipe = true) {
         Wipe = wipe;
         Parameters = parameters;
 
         Vectors = new PolynomialVectorInt32[parameters.K];
         for (var i = 0; i < parameters.K; i++) {
-            Vectors[i] = new PolynomialVectorInt32(parameters, wipe);
+            Vectors[i] = parameters.GetVectorL(wipe);
             }
         }
     #endregion
     #region // Matrix operations, Expand from seed, Pointwise Montgomery
 
-    public static PolynomialMatrixInt32 MatrixExpandFromSeed(IDilithium parameters, byte[] rho) {
+    /// <summary>
+    /// Create matrix according to parameters <paramref name="parameters"/> and
+    /// perform expansion from seed <paramref name="rho"/>
+    /// </summary>
+    /// <param name="parameters">The dilithium parameters.</param>
+    /// <param name="rho">The seed value.</param>
+    /// <returns>The matrrix created</returns>
+    public static PolynomialMatrixInt32 MatrixExpandFromSeed(Dilithium parameters, byte[] rho) {
 
         var result = new PolynomialMatrixInt32(parameters);
         for (var v = 0; v < parameters.K; v++) {
@@ -50,19 +70,33 @@ public class PolynomialMatrixInt32 : Disposable {
         return result;
         }
 
+    /// <summary>
+    /// Perform montgomery operation against the vector
+    /// <paramref name="v"/> and return as a new vector.
+    /// </summary>
+    /// <param name="v">The vector.</param>
+    /// <returns>The result vector.</returns>
 
+    public PolynomialVectorInt32 MatrixPointwiseMontgomery(PolynomialVectorInt32 v) {
 
-    public PolynomialVectorInt32 MatrixPointwiseMontgomery(PolynomialVectorInt32 a) {
-        var result = new PolynomialVectorInt32(Parameters);
+        // This is an extra long vector of length K
+        var result = new PolynomialVectorInt32(Parameters, lengthK: true);
 
-        MatrixPointwiseMontgomery(a, result);
+        MatrixPointwiseMontgomery(v, result);
 
         return result;
         }
 
+
+    /// <summary>
+    /// Perform montgomery operation against the vector
+    /// <paramref name="v"/> and return result in <paramref name="t"/> in place.
+    /// </summary>
+    /// <param name="v">The vector.</param>
+    /// <param name="t">The result vector.</param>
+    /// <returns>The result vector.</returns>
     public void MatrixPointwiseMontgomery(PolynomialVectorInt32 v, PolynomialVectorInt32 t) {
 
-        // NB: this only operates over the first K elements of t which actually has L entries.
         for (var i = 0; i < Parameters.K; i++) {
             Vectors[i].PointwiseAccMontgomery(v, t.Polynomials[i]);
             }
@@ -78,13 +112,13 @@ public class PolynomialMatrixInt32 : Disposable {
     /// <param name="tag">Optional tag for identifying console output.</param>
     /// <returns>String containing the base16 representation of the values.</returns>
     public string GetHash(string? tag=null) {
-        int size = Parameters.K * Parameters.L * Parameters.N * 4;
+        int size = Parameters.K * Parameters.L * Dilithium.N * 4;
         byte[] buffer = new byte[size];
 
         var offset = 0;
         for (var v = 0; v < Parameters.K; v++) {
             for (var p = 0; p < Parameters.L; p++) {
-                for (var c = 0; c < Parameters.N; c++) {
+                for (var c = 0; c < Dilithium.N; c++) {
                     var data = Vectors[v].Polynomials[p].Coefficients[c];
                     buffer[offset++] = (byte)(data & 0xff);
                     buffer[offset++] = (byte)(data >> 8);

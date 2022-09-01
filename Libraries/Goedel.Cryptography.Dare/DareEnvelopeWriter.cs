@@ -75,6 +75,8 @@ internal class DareEnvelopeWriter : Stream {
     ///     Data sequences to be converted to an EDS and presented
     ///     as an EDSS header entry.
     /// </param>
+    /// <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+    /// to be presented in place of an encrypted document if it cannot be decrypted.</param>
     public DareEnvelopeWriter(
         CryptoParameters cryptoParameters,
         Stream outputStream,
@@ -106,6 +108,8 @@ internal class DareEnvelopeWriter : Stream {
     ///     Data sequences to be converted to an EDS and presented
     ///     as an EDSS header entry.
     /// </param>
+    /// <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+    /// to be presented in place of an encrypted document if it cannot be decrypted.</param>
     public DareEnvelopeWriter(
         CryptoParameters cryptoParameters,
         JsonWriter outputStream,

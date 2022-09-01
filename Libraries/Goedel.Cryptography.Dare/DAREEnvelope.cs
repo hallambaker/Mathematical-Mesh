@@ -571,6 +571,8 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     ///     as an EDSS header entry.</param>
     /// <param name="chunk">The maximum chunk size. If unspecified, the default
     /// system chunk size (2048) is used.</param>
+    /// <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+    /// to be presented in place of an encrypted document if it cannot be decrypted.</param>
     /// <returns>The number of bytes in the input file.</returns>
     public static long Encode(
         CryptoParameters cryptoParameters,
@@ -601,6 +603,8 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     ///     as an EDSS header entry.</param>
     /// <param name="chunk">The maximum chunk size. If unspecified, the default
     /// system chunk size (2048) is used.</param>
+    /// <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+    /// to be presented in place of an encrypted document if it cannot be decrypted.</param>
     /// <returns>The serialized encoding of the data.</returns>
     public static byte[] Encode(
         CryptoParameters cryptoParameters,
@@ -639,6 +643,8 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <param name="contentLength">The content length. This value is ignored if the Plaintext
     /// parameter is not null. If the value is less than 0, chunked encoding
     /// will be used for the payload data. </param>         
+    /// <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+    /// to be presented in place of an encrypted document if it cannot be decrypted.</param>
     public static void Encode(
         CryptoParameters cryptoParameters,
         Stream inputStream,
@@ -735,8 +741,8 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// </summary>
     /// <param name="inputStream">The input stream, must support reading.</param>
     /// <param name="outputStream">The output stream, must support writing</param>
-    /// <param name="outputFile">The output file, must support writing</param>
     /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+    /// <param name="dareHeader">The header data.</param>
     public static bool TryDecode(
         Stream inputStream,
         Stream outputStream,

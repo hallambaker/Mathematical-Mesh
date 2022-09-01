@@ -7,7 +7,9 @@ using System;
 
 namespace Goedel.Cryptography.PQC;
 
-
+/// <summary>
+/// 
+/// </summary>
 public class Test {
 
     static void Main() {
@@ -77,15 +79,26 @@ public class Test {
 
 
 
-
-    public static void DumpBufferHex(byte[] buffer, string tag = null, int length = -1, int first =0) {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="buffer"></param>
+    /// <param name="tag"></param>
+    /// <param name="length"></param>
+    /// <param name="first"></param>
+    public static void DumpBufferHex(byte[] buffer, string? tag = null, int length = -1, int first =0) {
         if (tag != null) {
             Console.WriteLine(tag);
             }
         Console.WriteLine(buffer.ToStringBase16(length: length, Format: ConversionFormat.Dash4, first: first));
         }
 
-    public static void DumpBufferFingerprint(byte[] buffer, string tag = null) {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="buffer"></param>
+    /// <param name="tag"></param>
+    public static void DumpBufferFingerprint(byte[] buffer, string? tag = null) {
         if (tag != null) {
             Console.WriteLine(tag);
             }
@@ -93,17 +106,15 @@ public class Test {
         Console.WriteLine(GetBufferFingerprint(buffer));
         }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="buffer"></param>
+    /// <returns></returns>
     public static string GetBufferFingerprint(byte[] buffer) {
         var hash = SHAKE128.Process(buffer);
         return hash.ToStringBase16(Format: ConversionFormat.Dash4);
         }
 
-
-
-
-    static string GetHash(PolynomialMatrixInt16 data) => data.GetHash();
-    static string GetHash(PolynomialVectorInt16 data) => data.GetHash();
-    static string GetHash(Polynomial data) => data.GetHash();
-    static string GetHash(byte[] data) => GetBufferFingerprint(data);
 
     }
