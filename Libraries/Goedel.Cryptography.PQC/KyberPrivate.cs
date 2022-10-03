@@ -1,16 +1,25 @@
 ﻿namespace Goedel.Cryptography.PQC;
 
+/// <summary>
+/// Kyber private key.
+/// </summary>
 public class KyberPrivate : KyberPublic {
 
+    ///<summary>Size of 512 bit private key in bytes.</summary> 
     public const int PrivateKeyBytes512 = PublicKeyBytes512 + PolyVectorBytes512 + 2* Kyber.SymBytes;
+    ///<summary>Size of 512 bit private key in bytes.</summary> 
     public const int PrivateKeyBytes768 = PublicKeyBytes768 + PolyVectorBytes768 + 2 * Kyber.SymBytes;
+    ///<summary>Size of 512 bit private key in bytes.</summary> 
     public const int PrivateKeyBytes1024 = PublicKeyBytes1024 + PolyVectorBytes1024 + 2 * Kyber.SymBytes;
 
+    ///<summary>Size of 512 bit public key in bytes.</summary> 
     public const int PublicKeyOffset512 = PolyVectorBytes512;
+    ///<summary>Size of 512 bit public key in bytes.</summary> 
     public const int PublicKeyOffset768 = PolyVectorBytes768;
+    ///<summary>Size of 512 bit public key in bytes.</summary> 
     public const int PublicKeyOffset1024 = PolyVectorBytes1024;
 
-    public int EncryptFailOffset => throw new NYI();
+    int EncryptFailOffset => PrivateKeyBytes - SymBytes;
 
     readonly static int[] PublicKeyLength = 
         new int[] { PublicKeyBytes512, PublicKeyBytes768, PublicKeyBytes1024 };
@@ -51,21 +60,22 @@ public class KyberPrivate : KyberPublic {
     
 
 
-
+    /// <summary>
+    /// Decrypt the ciphertext <paramref name="ciphertext"/> and return the plaintext.
+    /// </summary>
+    /// <param name="ciphertext">The ciphertext.</param>
+    /// <returns>The plaintext.</returns>
     public byte[] Decrypt(byte[] ciphertext) {
 
         var hashSeed = IndCpaDecrypt (ciphertext);
-        Test.DumpBufferHex(hashSeed, "Hashseed = 050A-4873-");
+        //Test.DumpBufferHex(hashSeed, "Hashseed = 050A-4873-");
 
 
         // Multitarget countermeasure for coins + contributory KEM
         var (buf, kr) = GetBufKr(hashSeed);
 
-
-
-
-        Test.DumpBufferHex(buf, "buf  = 050A-4873- - -55E6-E7BF");
-        Test.DumpBufferHex(kr, "kr = 652B-9090-");
+        //Test.DumpBufferHex(buf, "buf  = 050A-4873- - -55E6-E7BF");
+        //Test.DumpBufferHex(kr, "kr = 652B-9090-");
 
         // call indcpa here
         var cmp = IndCpaEncrypt(buf, kr);
@@ -88,15 +98,17 @@ public class KyberPrivate : KyberPublic {
         return ss;
         }
 
-    public byte[] IndCpaDecrypt(byte[] buffer) {
+    /// <summary>
+    /// Decrypt the ciphertext <paramref name="ciphertext"/> and return the plaintext.
+    /// </summary>
+    /// <param name="ciphertext">The ciphertext.</param>
+    /// <returns>The plaintext.</returns>
+    public byte[] IndCpaDecrypt(byte[] ciphertext) {
 
-        var (bp, v) = UnPackCiphertext(buffer);
+        var (bp, v) = UnPackCiphertext(ciphertext);
 
-        bp.GetHash("Initial bp = EEBA-4E0B");
-        v.GetHash("Initial v = 18D8-F841");
-
-        // H(bp) = EEBA-4E0B-426C-1B7C-F9E4-4A79-8F5E-F9A2-5DE0-1342-0D0E-66A9-B4FE-9AC2-FC95-63AE
-        // H(v) =  6187-12EB-082F-1D4D-AC40-1AE6-3AAA-1924-CBB4-A78C-CF59-09D0-EC83-937D-763C-147C
+        //bp.GetHash("Initial bp = EEBA-4E0B");
+        //v.GetHash("Initial v = 18D8-F841");
 
         bp.NTT();
 
@@ -107,17 +119,26 @@ public class KyberPrivate : KyberPublic {
         mp.SubNeg(v);
         mp.Reduce();
 
-        mp.GetHash("Final mp = 0831-9D6B-");
+        //mp.GetHash("Final mp = 0831-9D6B-");
 
         return mp.ToMessageBytes();
 
         }
 
-    public bool Verify(byte[] ciphertext, byte[] compare) {
+
+    /// <summary>
+    /// Verify that <paramref name="first"/> matches <paramref name="second"/>
+    /// exactly in constant time.
+    /// </summary>
+    /// <param name="first">The first input.</param>
+    /// <param name="second">The second input.</param>
+    /// <returns>True if <paramref name="first"/> exactly matches <paramref name="second"/>,
+    /// otherwise false.</returns>
+    public bool Verify(byte[] first, byte[] second) {
 
         byte b = 0;
-        for (var i = 0; i < ciphertext.Length; i++) {
-            b |= (byte)(ciphertext[i] ^ compare[i]);
+        for (var i = 0; i < first.Length; i++) {
+            b |= (byte)(first[i] ^ second[i]);
             }
 
         byte x = (byte)((b * -1) >> 31);

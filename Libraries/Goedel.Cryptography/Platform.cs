@@ -244,6 +244,28 @@ public static class Platform {
         return Test % Ceiling;
         }
 
+    /// <summary>
+    /// Create an (encryptor, decryptor) pair for AES with a 128 bit key derrived from
+    /// <paramref name="randomSeed"/> (if not null) and the platform random number
+    /// generator otherwise. The seed input is guarded against leaking the random seed 
+    /// output by performing a KDF using the value <paramref name="tag"/> for
+    /// domain separation.
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <param name="randomSeed"></param>
+    /// <returns></returns>
+    public static (ICryptoTransform, ICryptoTransform) GetAes128FromSeed(
+            string tag, byte[]? randomSeed = null) {
+        // Initialize the encryptor and decryptor.
+        randomSeed ??= GetRandomBytes(128);
+        var aesKey = SHAKE128.GetBytes(16, tag.ToUTF8(), randomSeed);
+        var aes = Aes.Create();
+        aes.Mode = CipherMode.ECB;
+        var decryptor = aes.CreateDecryptor(aesKey, null);
+        var encryptor = aes.CreateEncryptor(aesKey, null);
+        return (encryptor, decryptor);
+        }
+
 
     /// <summary>Find a key by fingerprint in the local key stores</summary>
     /// <param name="UDF"></param>

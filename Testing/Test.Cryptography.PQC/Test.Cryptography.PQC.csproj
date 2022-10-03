@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/CommonSettingsTest.xml" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dilithium\Goedel.Cryptography.Dilithium.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.PQC\Goedel.Cryptography.Kyber.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
+		<ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+	</ItemGroup>
+	
+</Project>

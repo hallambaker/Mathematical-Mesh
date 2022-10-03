@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="$(SolutionDir)Settings/CommonSettingsTest.xml" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+		<ProjectReference Include="..\..\Presence\Goedel.Presence.Client\Goedel.Presence.Client.csproj" />
+		<ProjectReference Include="..\..\Presence\Goedel.Presence.Server\Goedel.Presence.Server.csproj" />
+		<ProjectReference Include="..\..\Presence\Goedel.Presence\Goedel.Presence.csproj" />
+		<ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
+	</ItemGroup>
+
+</Project>

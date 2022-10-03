@@ -36,6 +36,9 @@ using Goedel.Utilities;
 namespace Goedel.Mesh.Test;
 
 public partial class TestShell : Goedel.Mesh.Shell.Shell {
+
+
+    
     public string MachineName = "Test";
 
 
@@ -124,6 +127,13 @@ public partial class ResultDirect : Result {
     }
 
 public partial class TestCLI : CommandLineInterpreter {
+
+///<summary>Convenience accessor returning the account context for direct access.</summary> 
+    public ContextUser ContextUser => Shell.MeshHost.GetContextMesh() as ContextUser;
+
+    public string Account;
+
+
     public TestShell Shell;
 
     public List<Result> Results = new();
@@ -282,7 +292,7 @@ public partial class TestCLI : CommandLineInterpreter {
             }
         }
 
-    public Result CreateAccount(string account) => Dispatch($"mesh create /service={account}");
+    public Result CreateAccount(string account) => Dispatch($"account create account");
 
 
     //public bool AssertAccount(int count = -1, string account = null, bool exists = true) => throw new NYI();
@@ -386,4 +396,18 @@ public partial class TestCLI : CommandLineInterpreter {
 
 
     public void CheckHostCatalogExtended() => Shell.MeshMachineTest.CheckHostCatalogExtended();
+
+
+
+    /// <summary>
+    /// Add a device names <paramref name="device"/> and return the CLI.
+    /// </summary>
+    /// <param name="device"></param>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
+    public TestCLI AddDevice(string device) {
+        throw new NYI();
+        
+        }
+    
     }

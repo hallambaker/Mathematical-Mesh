@@ -39,6 +39,7 @@ LinkFiles = \
     Goedel.Protocol.Test-xunit.dll\
     Goedel.Utilities.Test-xunit.dll\
     Test.Common.dll\
+    Test.Cryptography.PQC.dll\
     Test.MakeSiteDocs.dll
 
 ToolTargets = 

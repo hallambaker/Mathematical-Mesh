@@ -39,9 +39,6 @@ public class Kyber {
     ///<summary>The value q^-1 mod 2^16</summary> 
     public const int QINV = 62209;
 
-    ///<summary>The value 2^16 mod q</summary> 
-    public const int MONT = 2285;
-
     #endregion
     #region // Data sizes
     ///<summary>Size of hashes and seeds in bytes.</summary> 
@@ -51,21 +48,21 @@ public class Kyber {
     public const int SharedSecretBytes = 32;
 
     ///<summary>Number of bytes in the polynomial representation.</summary> 
-    public const int PolyBytes = 384;
+    public const int PolynomialBytes = 384;
     ///<summary>Number of bytes in the vector polynomial representation.</summary> 
-    public int PolyVecBytes => PolyBytes * K;
+    public int PolyVectorBytes => PolynomialBytes * K;
 
     ///<summary>Number of bytes in compressed form polynomial vector.</summary> 
-    public int PolyvectoCompressedBytes { get; }
+    public int PolyvectorCompressedBytes { get; }
 
     ///<summary>Bytes in ind cpa public key.</summary> 
-    public int IndCpaPublicKeyBytes => PolyVecBytes + SymBytes;
+    public int IndCpaPublicKeyBytes => PolyVectorBytes + SymBytes;
 
     ///<summary>Bytes in ind cpa private key.</summary> 
-    public int IndCpaPrivateKeyBytes => PolyVecBytes;
+    public int IndCpaPrivateKeyBytes => PolyVectorBytes;
 
     ///<summary>Bytes in ciphertext.</summary> 
-    public int IndCpaBytes => PolyvectoCompressedBytes + PolyCompressedBytes;
+    public int IndCpaBytes => PolyvectorCompressedBytes + PolyCompressedBytes;
 
     ///<summary>Bytes in public key.</summary> 
     public int PublicKeyBytes => IndCpaPublicKeyBytes;
@@ -112,21 +109,21 @@ public class Kyber {
                 K = 2;
                 ETA1 = 3;
                 PolyCompressedBytes = 128;
-                PolyvectoCompressedBytes = K * 320;
+                PolyvectorCompressedBytes = K * 320;
                 break;
                 }
             case 768: {
                 K = 3;
                 ETA1 = 2;
                 PolyCompressedBytes = 128;
-                PolyvectoCompressedBytes = K * 320;
+                PolyvectorCompressedBytes = K * 320;
                 break;
                 }
             case 1024: {
                 K = 4;
                 ETA1 = 2;
                 PolyCompressedBytes = 160;
-                PolyvectoCompressedBytes = K * 352;
+                PolyvectorCompressedBytes = K * 352;
                 break;
                 }
 
@@ -152,13 +149,13 @@ public class Kyber {
         switch (K) {
             case 4: {
                 v.Compress352(buffer);
-                p.Compress160(buffer, PolyvectoCompressedBytes);
+                p.Compress160(buffer, PolyvectorCompressedBytes);
                 break;
                 }
             case 2:
             case 3: {
                 v.Compress320(buffer);
-                p.Compress128(buffer, PolyvectoCompressedBytes);
+                p.Compress128(buffer, PolyvectorCompressedBytes);
                 break;
                 }
             }
@@ -179,13 +176,13 @@ public class Kyber {
         switch (K) {
             case 4: {
                 var v = PolynomialVectorInt16.Decompress352(K, data);
-                var p = PolynomialInt16.Decompress352(data, PolyvectoCompressedBytes);
+                var p = PolynomialInt16.Decompress352(data, PolyvectorCompressedBytes);
                 return (v, p);
                 }
             case 2:
             case 3: {
                 var v = PolynomialVectorInt16.Decompress320(K, data);
-                var p = PolynomialInt16.Decompress320(data, PolyvectoCompressedBytes);
+                var p = PolynomialInt16.Decompress320(data, PolyvectorCompressedBytes);
                 return (v, p);
                 }
             }
@@ -215,7 +212,13 @@ public class Kyber {
         var publicDigest = SHA3Managed.Process256(publicKey);
         Array.Copy(publicDigest, 0, privateKey, PrivateKeyBytes - (2 * SymBytes), publicDigest.Length);
 
-        FakeRand(privateKey, PrivateKeyBytes - SymBytes, SymBytes);
+        if (seed == null) {
+            Platform.FillRandom(privateKey, PrivateKeyBytes - SymBytes, SymBytes);
+            }
+        else {
+            var fill = SHAKE256.GetBytes(SymBytes, seed, publicKey);
+            Array.Copy (fill, 0, privateKey, PrivateKeyBytes - SymBytes, SymBytes);
+            }
 
         return (publicKey, privateKey);
         }
@@ -230,10 +233,10 @@ public class Kyber {
     /// receive the private key.</param>
     /// <param name="seed">Optional seed to be used for deterministic key generation.</param>
     public void IndcpaKeypair(byte[] publicKey, byte[] privateKey, byte[]? seed = null) {
-        seed ??= RandomBytes(SymBytes);
+        seed ??= Platform.GetRandomBytes(SymBytes);
         var buf = SHA3Managed.Process512(seed);
 
-        Test.DumpBufferFingerprint(buf);
+        //Test.DumpBufferFingerprint(buf);
 
         // Truncate the buffer since we only use the first 128 bits.
         var publicSeed = new byte[SymBytes];
@@ -243,7 +246,7 @@ public class Kyber {
 
         var matrix = PolynomialMatrixInt16.MatrixExpandFromSeed(K, publicSeed);
 
-        Console.WriteLine(matrix.GetHash());
+        //Console.WriteLine(matrix.GetHash());
 
         byte nonce = 0;
         var skpv = new PolynomialVectorInt16(K);
@@ -275,30 +278,30 @@ public class Kyber {
     #endregion
     #region // Randomness management
 
-    /// <summary>
-    /// Temporary random number generator... remove in final.
-    /// </summary>
-    /// <param name="buffer">The buffer to fill with data.</param>
-    /// <param name="index">The index to fill from.</param>
-    /// <param name="count">The number of bytes to add. If negative, 
-    /// fill remainder of the buffer.</param>
-    public void Randomize(byte[] buffer, int index = 0, int count = -1) {
-        count = count < 0 ? buffer.Length - index : count;
+    ///// <summary>
+    ///// Temporary random number generator... remove in final.
+    ///// </summary>
+    ///// <param name="buffer">The buffer to fill with data.</param>
+    ///// <param name="index">The index to fill from.</param>
+    ///// <param name="count">The number of bytes to add. If negative, 
+    ///// fill remainder of the buffer.</param>
+    //public void Randomize(byte[] buffer, int index = 0, int count = -1) {
+    //    count = count < 0 ? buffer.Length - index : count;
 
-        return;
-        }
+    //    return;
+    //    }
 
-    /// <summary>
-    /// Obtain <paramref name="length"/> random bytes.
-    /// </summary>
-    /// <param name="length">The number of bytes to return.</param>
-    /// <returns>The random bytes.</returns>
-    public byte[] RandomBytes(int length) {
-        var result = new byte[length];
-        Randomize(result);
-        return result;
+    ///// <summary>
+    ///// Obtain <paramref name="length"/> random bytes.
+    ///// </summary>
+    ///// <param name="length">The number of bytes to return.</param>
+    ///// <returns>The random bytes.</returns>
+    //public byte[] RandomBytes(int length) {
+    //    var result = new byte[length];
+    //    Randomize(result);
+    //    return result;
 
-        }
+    //    }
 
     /// <summary>
     /// Pseudo-random function using SHAKE256, concatenates secret <paramref name="seed"/>
@@ -316,31 +319,31 @@ public class Kyber {
         return SHAKE256.Process(input, length * 8);
         }
 
-    /// <summary>
-    /// Fake random number generator for testing.
-    /// </summary>
-    /// <param name="len">Number of bytes to return.</param>
-    /// <returns>The random data.</returns>
-    public static byte[] FakeRand(int len) {
-        var result = new byte[len];
-        FakeRand(result);
-        return result;
-        }
+    ///// <summary>
+    ///// Fake random number generator for testing.
+    ///// </summary>
+    ///// <param name="len">Number of bytes to return.</param>
+    ///// <returns>The random data.</returns>
+    //public static byte[] FakeRand(int len) {
+    //    var result = new byte[len];
+    //    FakeRand(result);
+    //    return result;
+    //    }
 
-    /// <summary>
-    /// Fake random number generator for testing.
-    /// </summary>
-    /// <param name="buffer">The buffer to fill with data.</param>
-    /// <param name="offset">First byte to fill.</param>
-    /// <param name="len">Number of bytes to fill, if negative, fill rest of buffer.</param>
-    public static void FakeRand(byte[] buffer, int offset = 0, int len = -1) {
-        len = len < 0 ? buffer.Length - offset : len;
+    ///// <summary>
+    ///// Fake random number generator for testing.
+    ///// </summary>
+    ///// <param name="buffer">The buffer to fill with data.</param>
+    ///// <param name="offset">First byte to fill.</param>
+    ///// <param name="len">Number of bytes to fill, if negative, fill rest of buffer.</param>
+    //public static void FakeRand(byte[] buffer, int offset = 0, int len = -1) {
+    //    len = len < 0 ? buffer.Length - offset : len;
 
-        for (int i = 0; i < len; i++) {
-            buffer[offset + i] = (byte)i;
-            }
+    //    for (int i = 0; i < len; i++) {
+    //        buffer[offset + i] = (byte)i;
+    //        }
 
-        }
+    //    }
 
     #endregion
     #region // Noise ETA 

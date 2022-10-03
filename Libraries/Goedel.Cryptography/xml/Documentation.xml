@@ -2706,6 +2706,18 @@
             <param name="hashBitLength">The number of output bits</param>
             <returns>The digest value</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Algorithms.SHAKE128.GetBytes(System.Int32,System.Byte[][])">
+            <summary>
+            Perform a SHAKE256 operation of the concatenated inputs
+            <paramref name="input"/> ignoring null elements and return a
+            byte array of length <paramref name="length"/> bytes containing
+            the result.
+            </summary>
+            <param name="length">The number of bytes to return.</param>
+            <param name="input">The input data.</param>
+            <returns>Byte array of length <paramref name="length"/> bytes containing
+            the result.</returns>
+        </member>
         <member name="T:Goedel.Cryptography.Algorithms.SHAKE256">
             <summary>
             SHAKE128 provider. This digest class supports varying bit size outputs
@@ -2803,6 +2815,34 @@
             <param name="buffer">The output buffer.</param>
             <param name="nblocks">The number of output blocks to generate.</param>
             <param name="index">The first byte to write.</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Algorithms.Extensions">
+            <summary>
+            Extension class with convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Algorithms.Extensions.GetBufferFingerprint(System.Byte[])">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Algorithms.Extensions.DumpBufferFingerprint(System.Byte[],System.String)">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <param name="tag"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Algorithms.Extensions.DumpBufferHex(System.Byte[],System.String,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <param name="tag"></param>
+            <param name="length"></param>
+            <param name="first"></param>
         </member>
         <member name="T:Goedel.Cryptography.Algorithms.ShortBlockPermute">
             <summary>
@@ -12672,6 +12712,18 @@
             </summary>
             <param name="Ceiling">Number of bits to get</param>
             <returns>Random data</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Platform.GetAes128FromSeed(System.String,System.Byte[])">
+            <summary>
+            Create an (encryptor, decryptor) pair for AES with a 128 bit key derrived from
+            <paramref name="randomSeed"/> (if not null) and the platform random number
+            generator otherwise. The seed input is guarded against leaking the random seed 
+            output by performing a KDF using the value <paramref name="tag"/> for
+            domain separation.
+            </summary>
+            <param name="tag"></param>
+            <param name="randomSeed"></param>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Cryptography.Platform.FindLocalDelegate">
             <summary>Find a key by fingerprint in the local key stores</summary>

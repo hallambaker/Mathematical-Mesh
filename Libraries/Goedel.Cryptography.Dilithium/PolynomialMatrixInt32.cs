@@ -127,7 +127,7 @@ public class PolynomialMatrixInt32 : Disposable {
                     }
                 }
             }
-        var hash = Test.GetBufferFingerprint(buffer);
+        var hash = buffer.GetBufferFingerprint();
 
         if (tag != null) {
             Console.WriteLine(tag);

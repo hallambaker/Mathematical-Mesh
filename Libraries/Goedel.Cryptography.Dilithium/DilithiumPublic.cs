@@ -50,10 +50,11 @@ public class DilithiumPublic : Dilithium {
     /// Verify the signature <paramref name="signature"/>.
     /// </summary>
     /// <param name="signature">The signature and message to verify.</param>
+    /// <param name="message">The signed message.</param>
     /// <returns>True if signature isvalid, otherwise false.</returns>
-    public bool Verify(byte[] signature) {
+    public bool Verify(byte[] signature, byte[]message) {
 
-        if (!UnpackSignature(signature, out var c, out byte[] message, out var z, out var h)) {
+        if (!UnpackSignature(signature, out var c, out var z, out var h, out byte[] messageSig)) {
             return false;
             }
         if (z.Chknorm(Gamma1 - Beta)) {
@@ -98,12 +99,12 @@ public class DilithiumPublic : Dilithium {
     /// </summary>
     /// <param name="signature">The signature bytes.</param>
     /// <param name="sig">The sig parameter.</param>
-    /// <param name="message">The signed message.</param>
     /// <param name="v">The Z vector.</param>
     /// <param name="h">The hints vector.</param>
+    /// <param name="message">The signed message.</param>
     /// <returns>False if the signature parameters are invalid.</returns>
     public bool UnpackSignature(byte[] signature,
-        out byte[] sig, out byte[] message, out PolynomialVectorInt32 v, out PolynomialVectorInt32 h) {
+        out byte[] sig, out PolynomialVectorInt32 v, out PolynomialVectorInt32 h, out byte[] message) {
         var offset = 0;
 
         sig = signature.Extract(ref offset, SeedBytes);
@@ -144,7 +145,7 @@ public class DilithiumPublic : Dilithium {
 
         // extract the message;
         offset = SignatureBytes;
-        message = signature.Extract(ref offset, signature.Length - offset);
+        //message = signature.Extract(ref offset, signature.Length - offset);
 
         return true;
         }

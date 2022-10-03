@@ -39,5 +39,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Cryptography.Kyber.exe $(LinkFiles) 
+	powershell publishtarget Goedel.Cryptography.Kyber.dll
 

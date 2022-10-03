@@ -133,7 +133,7 @@ public struct PolynomialMatrixInt16 {
                 }
             }
 
-        var hash = Test.GetBufferFingerprint(buffer);
+        var hash = buffer.GetBufferFingerprint();
 
         if (tag != null) {
             Console.WriteLine(tag);

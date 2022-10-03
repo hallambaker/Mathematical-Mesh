@@ -5,15 +5,22 @@
     <StartupObject>Scratchpad.Program</StartupObject>
   </PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Test.Constants\Test.Common.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+	</ItemGroup>
+	
+  <ItemGroup Condition="'$(Configuration)'=='Never'">
     <ProjectReference Include="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+
+
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
-    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+
     <ProjectReference Include="..\Goedel.ASN1.Test-xunit\Goedel.ASN1.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Callsign.Test-xunit\Goedel.Callsign.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Dare.Test-xunit\Goedel.Cryptography.Dare.Test-xunit.csproj" />
@@ -26,10 +33,17 @@
     <ProjectReference Include="..\Goedel.Mesh.Store.Test-xunit\Goedel.Mesh.Store.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Protocol.Test-xunit\Goedel.Protocol.Test-xunit.csproj" />
     <ProjectReference Include="..\Goedel.Utilities.Test-xunit\Goedel.Utilities.Test-xunit.csproj" />
-    <ProjectReference Include="..\Test.Constants\Test.Common.csproj" />
+
+    <ProjectReference Include="..\Test.Cryptography.PQC\Test.Cryptography.PQC.csproj" />
     <ProjectReference Include="..\Test.MakeSiteDocs\Test.MakeSiteDocs.csproj" />
+
   </ItemGroup>
 
+
+	<ItemGroup>
+		<ProjectReference Include="..\Test.Mesh.Presence\Test.Mesh.Presence.csproj" />
+	</ItemGroup>
+	
   <ItemGroup>
     <Folder Include="Test\" />
   </ItemGroup>

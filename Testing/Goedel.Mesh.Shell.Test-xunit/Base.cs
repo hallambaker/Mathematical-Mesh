@@ -96,7 +96,8 @@ public partial class ShellTests : Disposable {
     #region // The test environment specific calls
     public virtual TestEnvironmentBase GetTestEnvironment() => new TestEnvironmentCommon();
 
-    public virtual TestCLI GetTestCLI(string machineName = null) => TestEnvironment.GetTestCLI(machineName);
+    public virtual TestCLI GetTestCLI(string machineName = null) => 
+        TestEnvironment.GetTestCLI(machineName);
 
         //{
         //var testShell = new TestShell(TestEnvironment, MachineName);

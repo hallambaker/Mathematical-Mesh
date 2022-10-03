@@ -98,7 +98,29 @@ public class SHAKE128 : SHA3 {
         return Provider.Hash;
         }
 
+    /// <summary>
+    /// Perform a SHAKE256 operation of the concatenated inputs
+    /// <paramref name="input"/> ignoring null elements and return a
+    /// byte array of length <paramref name="length"/> bytes containing
+    /// the result.
+    /// </summary>
+    /// <param name="length">The number of bytes to return.</param>
+    /// <param name="input">The input data.</param>
+    /// <returns>Byte array of length <paramref name="length"/> bytes containing
+    /// the result.</returns>
+    public static byte[] GetBytes(int length, params byte[][] input) {
 
+        using var provider = new SHAKE128(length * 8);
+
+        foreach (var inputItem in input) {
+            if (inputItem != null) {
+                provider.HashCore(inputItem, 0, inputItem.Length);
+                }
+            }
+
+        return provider.HashFinal();
+
+        }
 
     }
 
@@ -311,3 +333,45 @@ public class SHAKEExtended : SHA3 {
     }
 
 
+/// <summary>
+/// Extension class with convenience methods.
+/// </summary>
+public static class Extensions {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="buffer"></param>
+    /// <returns></returns>
+    public static string GetBufferFingerprint(this byte[] buffer) {
+        var hash = SHAKE128.Process(buffer);
+        return hash.ToStringBase16(Format: ConversionFormat.Dash4);
+        }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="buffer"></param>
+    /// <param name="tag"></param>
+    public static void DumpBufferFingerprint(this byte[] buffer, string? tag = null) {
+        if (tag != null) {
+            Console.WriteLine(tag);
+            }
+
+        Console.WriteLine(GetBufferFingerprint(buffer));
+        }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="buffer"></param>
+    /// <param name="tag"></param>
+    /// <param name="length"></param>
+    /// <param name="first"></param>
+    public static void DumpBufferHex(this byte[] buffer, string? tag = null, int length = -1, int first = 0) {
+        if (tag != null) {
+            Console.WriteLine(tag);
+            }
+        Console.WriteLine(buffer.ToStringBase16(length: length, Format: ConversionFormat.Dash4, first: first));
+        }
+
+    }

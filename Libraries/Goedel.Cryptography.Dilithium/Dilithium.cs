@@ -218,24 +218,24 @@ public class Dilithium  {
         var s2 = parameters.GetVectorK(true);
         s2.UniformEta(rhoPrime, parameters.L);
 
-        mat.GetHash("Generate Keypair: Matrix  0696-9C1B-30B1");
-        s1.GetHash("Generate Keypair: S1      6871-6921-BD10");
-        s2.GetHash("Generate Keypair: S2      EFAD-D95F-F68C");
+        //mat.GetHash("Generate Keypair: Matrix  0696-9C1B-30B1");
+        //s1.GetHash("Generate Keypair: S1      6871-6921-BD10");
+        //s2.GetHash("Generate Keypair: S2      EFAD-D95F-F68C");
 
         // Matrix-vector multiplication
         var s1hat = s1.Copy();
         s1hat.NTT();
 
-        s1hat.GetHash("Generate Keypair: S1hat      ");
+        //s1hat.GetHash("Generate Keypair: S1hat      ");
 
 
         var t1 = mat.MatrixPointwiseMontgomery(s1hat);
-        t1.GetHash("MatrixPointwiseMontgomery      517D-9F33-F9CA");
+        //t1.GetHash("MatrixPointwiseMontgomery      517D-9F33-F9CA");
 
         t1.Reduce();
         t1.InvNTT2Mont();
 
-        t1.GetHash("InvNTT2Mont      CE5A-92EF-1DFC");
+        //t1.GetHash("InvNTT2Mont      CE5A-92EF-1DFC");
 
 
         // Add error vector s2
@@ -245,11 +245,11 @@ public class Dilithium  {
         t1.Caddq();
         var t0 = t1.Power2Round();
 
-        t0.GetHash("Generate Keypair: T0  D03F-7BE4-914D");
-        t1.GetHash("Generate Keypair: T1  FFA8-A33C-EF64");
+        //t0.GetHash("Generate Keypair: T0  D03F-7BE4-914D");
+        //t1.GetHash("Generate Keypair: T1  FFA8-A33C-EF64");
 
 
-        Test.DumpBufferHex(rho, "rho");
+        //Test.DumpBufferHex(rho, "rho");
 
         var pk = parameters.PackPublicKey(rho, t1);
 
@@ -464,28 +464,28 @@ public class Dilithium  {
         var offset = 0;
 
         rho.Append(result, ref offset);
-        Test.DumpBufferFingerprint(result, offset, "Private key");
+        //Test.DumpBufferFingerprint(result, offset, "Private key");
 
         key.Append(result, ref offset);
-        Test.DumpBufferFingerprint(result, offset, "Private key");
+        //Test.DumpBufferFingerprint(result, offset, "Private key");
 
         tr.Append(result, ref offset);
-        Test.DumpBufferFingerprint(result, offset, "Private key");
+        //Test.DumpBufferFingerprint(result, offset, "Private key");
 
         for (var i = 0; i < s1.Polynomials.Length; i++) {
             s1.Polynomials[i].PackEta(result, ref offset);
             }
-        Test.DumpBufferFingerprint(result, offset, "Private key s1");
+        //Test.DumpBufferFingerprint(result, offset, "Private key s1");
 
         for (var i = 0; i < s2.Polynomials.Length; i++) {
             s2.Polynomials[i].PackEta(result, ref offset);
             }
-        Test.DumpBufferFingerprint(result, offset, "Private key s2");
+        //Test.DumpBufferFingerprint(result, offset, "Private key s2");
 
         for (var i = 0; i < t0.Polynomials.Length; i++) {
             t0.Polynomials[i].PackT0(result, ref offset);
             }
-        Test.DumpBufferFingerprint(result, offset, "Private key t0");
+        //Test.DumpBufferFingerprint(result, offset, "Private key t0");
 
         return result;
         }

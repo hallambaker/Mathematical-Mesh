@@ -50,10 +50,10 @@
 
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
-		<Exec Command="VSPreBuild" />
+		<!--<Exec Command="VSPreBuild" />-->
 	</Target>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
-		<Exec Command="VSPostBuild" />
+		<!--<Exec Command="VSPostBuild" />-->
 	</Target>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Github'">

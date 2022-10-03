@@ -4,6 +4,97 @@
         <name>Goedel.Presence.Client</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Presence.Client.MessageId">
+            <summary>
+            Message identifier, returned when a message is sent, used to wait for 
+            confirmation of message receipt.
+            </summary>
+        </member>
+        <member name="T:Goedel.Presence.Client.ContextPoll">
+            <summary>
+            Result of polling the presence service for context.
+            </summary>
+        </member>
+        <member name="T:Goedel.Presence.Client.ContextPresence">
+            <summary>
+            Context for a presence service connection.
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.GetContext(Goedel.Mesh.Client.ContextUser)">
+            <summary>
+            Factory method returning a new presence context on the presence service
+            provided to the account <paramref name="contextAccount"/>.
+            </summary>
+            <param name="contextAccount">The account under which the presence service 
+            is provided.</param>
+            <returns>The presence context.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.BindPresence(Goedel.Mesh.Client.UdpServiceEndpoint)">
+            <summary>
+            Bind a presence service provider. A presence context may have multiple presence
+            providers bound simultaneously???
+            </summary>
+            <param name="udpServiceEndpoint"></param>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.Poll">
+            <summary>
+            Force sending a poll message to the presence service.
+            </summary>
+            <returns>Asynchronous poll result.</returns>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.SessionRequest(System.String)">
+            <summary>
+            Request creation of an outbound session to the account <paramref name="account"/>.
+            </summary>
+            <param name="account">The account to connect to.</param>
+            <returns>The created session context (asynchronously).</returns>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.GetSessionRequest">
+            <summary>
+            Returns the next inbound session request. If one or more inbound requests 
+            have already been received, it returns the first request received. Otherwise
+            waits for the next inbound request to be received and returns asynchronously.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Presence.Client.ContextSession">
+            <summary>
+            Messaging session context. Used to exchange messages with a single endpoint.
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextSession.Accepted">
+            <summary>If true, messaging session has been established.</summary> 
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextSession.SessionResponse(System.Boolean)">
+            <summary>
+            Respond to session creation request.
+            </summary>
+            <param name="accept">If true, session request was accepted, otherwise false.</param>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextSession.SendMessage(Goedel.Presence.Client.MessageContent)">
+            <summary>
+            Send the message <paramref name="messageContent"/> to the session endpoint.
+            </summary>
+            <param name="messageContent">The message to send.</param>
+            <returns>Message identifier that can be used to create an an asynchronous
+            wait task for confirmation of receipt.</returns>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextSession.GetMessage">
+            <summary>
+            If one or more messages have been received but not delivered, return
+            the first. Otherwise wait asynchronously for arival of a message.
+            </summary>
+            <returns>The message content (synchronously)</returns>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextSession.Synchronize(Goedel.Presence.Client.MessageId)">
+            <summary>
+            Return a task waiting on confirmation of receipt of the message 
+            <paramref name="messageId"/>.
+            </summary>
+            <param name="messageId">The message to await receipt of.</param>
+            <returns>The message receipt (asynchronously).</returns>
+        </member>
         <member name="T:Goedel.Presence.Client.TBS">
             <summary>
             TBS
@@ -45,6 +136,40 @@
             <summary>
             Static initializer, is called once when the module loads.
             </summary>
+        </member>
+        <member name="T:Goedel.Presence.Client.MessageContentType">
+            <summary>
+            Message content type identifiers.
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.Client.MessageContentType.Binary">
+            <summary>Raw binary data.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Client.MessageContentType.Plaintext">
+            <summary>Plaintext message without formatting.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Client.MessageContentType.Richtext">
+            <summary>Message with limited formatting.</summary> 
+        </member>
+        <member name="T:Goedel.Presence.Client.MessageContent">
+            <summary>
+            Base class for message content.
+            </summary>
+            <param name="ContentType">Content type identifier.</param>
+            <param name="Payload">The message payload.</param>
+        </member>
+        <member name="M:Goedel.Presence.Client.MessageContent.#ctor(Goedel.Presence.Client.MessageContentType,System.Byte[])">
+            <summary>
+            Base class for message content.
+            </summary>
+            <param name="ContentType">Content type identifier.</param>
+            <param name="Payload">The message payload.</param>
+        </member>
+        <member name="P:Goedel.Presence.Client.MessageContent.ContentType">
+            <summary>Content type identifier.</summary>
+        </member>
+        <member name="P:Goedel.Presence.Client.MessageContent.Payload">
+            <summary>The message payload.</summary>
         </member>
         <member name="T:Goedel.Presence.Client.NamespaceDoc">
             <summary>

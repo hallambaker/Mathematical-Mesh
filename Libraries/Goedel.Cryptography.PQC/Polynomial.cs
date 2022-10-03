@@ -497,7 +497,7 @@ public struct PolynomialInt16 {
             buffer[offset++] = (byte)(Coefficients[k] & 0xff);
             buffer[offset++] = (byte)(Coefficients[k] >> 8);
             }
-        var v = Test.GetBufferFingerprint(buffer);
+        var v = buffer.GetBufferFingerprint();
 
         if (tag != null) {
             Console.WriteLine(tag);

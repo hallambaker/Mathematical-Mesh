@@ -91,32 +91,30 @@ public class DilithiumPrivate : Dilithium, IDisposable {
         key = privateKey.Extract(ref offset, SeedBytes);
         tr = privateKey.Extract(ref offset, CrhBytes);
 
-
-
         s1 = GetVectorL(true);
         for (var i = 0; i < s1.Polynomials.Length; i++) {
             s1.Polynomials[i].UnpackEta(privateKey, ref offset);
             }
-        s1.GetHash("Recover S1:  6871-6921-BD10");
+        //s1.GetHash("Recover S1:  6871-6921-BD10");
 
 
         s2 = GetVectorK(true);
         for (var i = 0; i < s2.Polynomials.Length; i++) {
             s2.Polynomials[i].UnpackEta(privateKey, ref offset);
             }
-        s2.GetHash("Recover S2:  EFAD-D95F-F68C");
+        //s2.GetHash("Recover S2:  EFAD-D95F-F68C");
 
 
         t0 = GetVectorK(true);
         for (var i = 0; i < t0.Polynomials.Length; i++) {
             t0.Polynomials[i].UnpackT0(privateKey, ref offset);
             }
-        t0.GetHash("Recover t0:  D03F-7BE4-914D");
+        //t0.GetHash("Recover t0:  D03F-7BE4-914D");
 
 
         // Expand matrix and transform vectors
         mat = PolynomialMatrixInt32.MatrixExpandFromSeed(this, rho);
-        mat.GetHash("Recover: Matrix  0696-9C1B-30B1");
+        //mat.GetHash("Recover: Matrix  0696-9C1B-30B1");
 
         s1.NTT();
         s2.NTT();
@@ -145,7 +143,7 @@ public class DilithiumPrivate : Dilithium, IDisposable {
 
         while (true) {
             while (true) {
-                Console.WriteLine();
+                //Console.WriteLine();
                 //Console.WriteLine($"*** Start {nonce}");
                 //Sample intermediate vector y 
 
@@ -223,7 +221,8 @@ public class DilithiumPrivate : Dilithium, IDisposable {
     /// <param name="h">The hints vector.</param>
     /// <returns>The packed byte array.</returns>
     public byte[] PackSignature(byte[]sig, byte[] message, PolynomialVectorInt32 z, PolynomialVectorInt32 h) {
-        var result = new byte[SignatureBytes+ message.Length];
+        //var result = new byte[SignatureBytes+ message.Length];
+        var result = new byte[SignatureBytes];
         var offset = 0;
 
         sig.Append(result, ref offset);
@@ -242,7 +241,7 @@ public class DilithiumPrivate : Dilithium, IDisposable {
             result[offset + OMEGA + p] = (byte)k;
             }
         offset = SignatureBytes;
-        message.Append(result, ref offset);
+        //message.Append(result, ref offset);
         return result;
         }
 

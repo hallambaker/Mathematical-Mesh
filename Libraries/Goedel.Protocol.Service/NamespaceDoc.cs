@@ -30,6 +30,11 @@ global using Goedel.Cryptography.PKIX;
 global using Goedel.Utilities;
 global using Goedel.Protocol;
 global using Microsoft.Extensions.Logging;
+global using System.Threading.Tasks.Dataflow;
+global using Goedel.Discovery;
+global using System.Net.Sockets;
+global using System.Net;
+global using System.Security.Cryptography;
 
 using System.Diagnostics.CodeAnalysis;
 

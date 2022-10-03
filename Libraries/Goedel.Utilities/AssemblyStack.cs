@@ -51,5 +51,25 @@ public static class AssemblyStack {
         return method.Name;
         }
 
+    /// <summary>
+    /// Return the name of the caller of the calling method.
+    /// </summary>
+    /// <returns>The name of the caller of the calling method.</returns>
+    public static string GetMethodCallingConstructorName() {
+        var stack = new StackTrace();
 
+        int index = 1;
+        var frame = stack.GetFrame(index);
+
+        while (frame != null) {
+            var method = frame.GetMethod();
+            if (!method.IsConstructor) {
+                return method.Name;
+                }
+
+            frame = stack.GetFrame(++index);
+            }
+
+        return "Error";
+        }
     }

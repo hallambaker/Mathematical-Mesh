@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
 	<PropertyGroup>
-		    <OutputType>Exe</OutputType>		
 		<Product>Goedel.Cryptography.PQC.Dilithium</Product>
 		<Description>Implementation of NIST PQC Dilithium Signature.</Description>
 		<Copyright>© 2022</Copyright>

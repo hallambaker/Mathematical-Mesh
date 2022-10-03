@@ -115,7 +115,7 @@ public abstract class ServiceRequest {
     /// Process the buffer containing inbound data.
     /// </summary>
     protected virtual void ProcessBuffer() {
-        var (sourceId, offset) = StreamId.GetSourceId(Buffer);
+        var (sourceId, offset) = Presentation.StreamId.GetSourceId(Buffer);
 
         //Screen.WriteLine($"Received Request {sourceId.Value}");
 
@@ -181,7 +181,7 @@ public abstract class ServiceRequest {
                     //var buffer = new byte[Constants.MinimumPacketSize];
 
                     var responsePacket = sessionResponder.SerializeResponderChallenge(
-                                StreamId.GetClientCompleteDeferred(), packetClient.SourceId,
+                                Presentation.StreamId.GetClientCompleteDeferred(), packetClient.SourceId,
                                 responseBytes, challenge);
 
                     ReturnResponse(responsePacket);
@@ -228,7 +228,7 @@ public abstract class ServiceRequest {
         return Listener.GetTemporaryResponder(packetClient); ;
         }
 
-    RudStream ProcessClientData(StreamId SourceId, int offset) {
+    RudStream ProcessClientData(Presentation.StreamId SourceId, int offset) {
 
 
         //Screen.WriteLine($"Try to match inbound stream {SourceId.Value}");

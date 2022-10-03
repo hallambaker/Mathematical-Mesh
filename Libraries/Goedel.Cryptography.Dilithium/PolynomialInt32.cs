@@ -902,7 +902,7 @@ public class PolynomialInt32 : Disposable {
             buffer[offset++] = (byte)(data >> 16);
             buffer[offset++] = (byte)(data >> 24);
             }
-        var v = Test.GetBufferFingerprint(buffer);
+        var v = buffer.GetBufferFingerprint();
 
         if (tag != null) {
             Console.WriteLine(tag);

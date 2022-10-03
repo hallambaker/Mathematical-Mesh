@@ -22,6 +22,7 @@
 
 
 using Goedel.Cryptography.Jose;
+using System.Net;
 
 namespace Goedel.Mesh.Client;
 
@@ -946,9 +947,26 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
 
+    public List<UdpServiceEndpoint> GetPresenceEndpoints() {
 
+        var endpoint = new UdpServiceEndpoint(
+            new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8888)
+            );
+
+        return new List<UdpServiceEndpoint>() { endpoint};
+        }
 
     #endregion
+
+
+    }
+
+public record UdpServiceEndpoint(
+        IPEndPoint IPEndPoint,
+        int Priorit=1,
+        int Weight=1) {
+
+
 
 
     }

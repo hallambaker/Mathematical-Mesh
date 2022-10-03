@@ -30,7 +30,7 @@
         <member name="F:Goedel.Cryptography.PQC.Dilithium.qinv">
             <summary>Inverse of Q</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.N">
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.N">
             <summary>Degree of the polynomial.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.PQC.Dilithium.OMEGA">
@@ -90,10 +90,10 @@
         <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyEtaPackedBytes">
             <summary>Length of packed Eta polynomial in bytes.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyT1PackedBytes">
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.PolyT1PackedBytes">
             <summary>Length of packed T1 polynomial in bytes.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyT0PackedBytes">
+        <member name="F:Goedel.Cryptography.PQC.Dilithium.PolyT0PackedBytes">
             <summary>Length of packed T0 polynomial in bytes.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.PQC.Dilithium.PolyVecHPackedBytes">
@@ -116,6 +116,11 @@
         </member>
         <member name="P:Goedel.Cryptography.PQC.Dilithium.Mode5">
             <summary>Parameter set for Mode 5.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.PQC.Dilithium.#cctor">
+            <summary>
+            Do a one time initialization of the parameter presets on assembly load.
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.PQC.Dilithium.#ctor(Goedel.Cryptography.PQC.DilithiumMode)">
             <summary>
@@ -307,23 +312,24 @@
             </summary>
             <param name="publicKey">The public key bytes.</param>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.DilithiumPublic.Verify(System.Byte[])">
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPublic.Verify(System.Byte[],System.Byte[])">
             <summary>
             Verify the signature <paramref name="signature"/>.
             </summary>
             <param name="signature">The signature and message to verify.</param>
+            <param name="message">The signed message.</param>
             <returns>True if signature isvalid, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.PQC.DilithiumPublic.UnpackSignature(System.Byte[],System.Byte[]@,System.Byte[]@,Goedel.Cryptography.PQC.PolynomialVectorInt32@,Goedel.Cryptography.PQC.PolynomialVectorInt32@)">
+        <member name="M:Goedel.Cryptography.PQC.DilithiumPublic.UnpackSignature(System.Byte[],System.Byte[]@,Goedel.Cryptography.PQC.PolynomialVectorInt32@,Goedel.Cryptography.PQC.PolynomialVectorInt32@,System.Byte[]@)">
             <summary>
             Unpack the signature bytes <paramref name="signature"/> and return the 
             corresponding parameters.
             </summary>
             <param name="signature">The signature bytes.</param>
             <param name="sig">The sig parameter.</param>
-            <param name="message">The signed message.</param>
             <param name="v">The Z vector.</param>
             <param name="h">The hints vector.</param>
+            <param name="message">The signed message.</param>
             <returns>False if the signature parameters are invalid.</returns>
         </member>
         <member name="T:Goedel.Cryptography.PQC.NamespaceDoc">
@@ -827,49 +833,6 @@
             </summary>
             <param name="tag">Optional tag for identifying console output.</param>
             <returns>String containing the base16 representation of the values.</returns>
-        </member>
-        <member name="T:Goedel.Cryptography.PQC.Test">
-            <summary>
-            Class containing test stubs DELETE
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.PQC.Test.RandomBytes(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="length"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.PQC.Test.DumpBufferHex(System.Byte[],System.String,System.Int32,System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="buffer"></param>
-            <param name="tag"></param>
-            <param name="length"></param>
-            <param name="first"></param>
-        </member>
-        <member name="M:Goedel.Cryptography.PQC.Test.DumpBufferFingerprint(System.Byte[],System.Int32,System.String)">
-            <summary>
-            
-            </summary>
-            <param name="buffer"></param>
-            <param name="length"></param>
-            <param name="tag"></param>
-        </member>
-        <member name="M:Goedel.Cryptography.PQC.Test.DumpBufferFingerprint(System.Byte[],System.String)">
-            <summary>
-            
-            </summary>
-            <param name="buffer"></param>
-            <param name="tag"></param>
-        </member>
-        <member name="M:Goedel.Cryptography.PQC.Test.GetBufferFingerprint(System.Byte[])">
-            <summary>
-            
-            </summary>
-            <param name="buffer"></param>
-            <returns></returns>
         </member>
     </members>
 </doc>

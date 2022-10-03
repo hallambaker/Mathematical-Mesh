@@ -6,11 +6,11 @@
 public class KyberPublic : Kyber {
 
     ///<summary>Length of a polyvector for 512 bit key in bytes.</summary> 
-    public const int PolyVectorBytes512 = 2 * Kyber.PolyBytes;
+    public const int PolyVectorBytes512 = 2 * Kyber.PolynomialBytes;
     ///<summary>Length of a polyvector for 768 bit key in bytes.</summary> 
-    public const int PolyVectorBytes768 = 3 * Kyber.PolyBytes;
+    public const int PolyVectorBytes768 = 3 * Kyber.PolynomialBytes;
     ///<summary>Length of a polyvector for 1024 bit key in bytes.</summary> 
-    public const int PolyVectorBytes1024 = 4 * Kyber.PolyBytes;
+    public const int PolyVectorBytes1024 = 4 * Kyber.PolynomialBytes;
 
     ///<summary>Length of a public key for 512 bit key in bytes.</summary> 
     public const int PublicKeyBytes512 = PolyVectorBytes512 + Kyber.SymBytes;
@@ -22,9 +22,6 @@ public class KyberPublic : Kyber {
     byte[] PublicKey { get; }
     byte[] HashPublicKey { get; }
 
-
-    ///<summary>Size of the polyvector in bytes.</summary>  
-    public int PolyVectorBytes => K * Kyber.PolyBytes;
 
     ///<summary>The Public key polynomial vector.</summary> 
     PolynomialVectorInt16 Pkpv { get; }
@@ -60,16 +57,16 @@ public class KyberPublic : Kyber {
         PublicKey = publicKey.Extract(offset, length); ;
 
 
-        Console.WriteLine($"Public key bytes {length}");
+        //Console.WriteLine($"Public key bytes {length}");
 
         //Test.DumpBufferHex(PublicKey, "Public key bytes");
         HashPublicKey = SHA3Managed.Process256(PublicKey);
         //K = strength+2;
 
 
-        Test.DumpBufferFingerprint(PublicKey, "**** Public Key:  A1DC-91E9-");
+        //Test.DumpBufferFingerprint(PublicKey, "**** Public Key:  A1DC-91E9-");
         Pkpv = new PolynomialVectorInt16(K, publicKey, offset); //failing
-        Pkpv.GetHash("Pkpv: 8C43-E3D2-");
+        //Pkpv.GetHash("Pkpv: 8C43-E3D2-");
 
         Seed = PublicKey.Extract(PolyVectorBytes, Kyber.SymBytes);
 
@@ -94,7 +91,7 @@ public class KyberPublic : Kyber {
     /// <param name="seed">Optional seed value for deterministic testing.</param>
     /// <returns>The ciphertext and shared secret.</returns>
     public (byte[],byte[]) Encrypt(byte[]? seed=null) {
-        seed ??= RandomBytes(SharedSecretBytes);
+        seed ??= Platform.GetRandomBytes(SharedSecretBytes);
 
         // SHA3-256 seed to mask the system seed
         var hashSeed = SHA3Managed.Process256(seed);
@@ -159,7 +156,7 @@ public class KyberPublic : Kyber {
 
         sp.NTT();
 
-        sp.GetHash("Sp");
+        //sp.GetHash("Sp");
         // matrix-vector multiplication
 
         var bp = new PolynomialVectorInt16(K);

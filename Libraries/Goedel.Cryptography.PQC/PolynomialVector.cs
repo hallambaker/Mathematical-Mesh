@@ -10,7 +10,7 @@ namespace Goedel.Cryptography.PQC;
 public struct PolynomialVectorInt16 {
 
     ///<summary>The number of bytes required to store the vector.</summary> 
-    public int PolyVectorBytes => Kyber.PolyBytes * Vector.Length;
+    public int PolyVectorBytes => Kyber.PolynomialBytes * Vector.Length;
 
     int K { get; }
 
@@ -40,7 +40,7 @@ public struct PolynomialVectorInt16 {
         Vector = new PolynomialInt16[k];
         for (var i = 0; i < k; i++) {
             Vector[i] = new PolynomialInt16(input, offset);
-            offset += Kyber.PolyBytes;
+            offset += Kyber.PolynomialBytes;
             }
 
         }
@@ -127,7 +127,7 @@ public struct PolynomialVectorInt16 {
 
 
         for (var i = 0; i < Vector.Length; i++) {
-            Vector[i].ToBytes(buffer, i* Kyber.PolyBytes);
+            Vector[i].ToBytes(buffer, i* Kyber.PolynomialBytes);
             }
 
         if (seed != null) {
@@ -398,7 +398,7 @@ public struct PolynomialVectorInt16 {
                 }
             }
 
-        var v= Test.GetBufferFingerprint(buffer);
+        var v= buffer.GetBufferFingerprint();
 
         if (tag != null) {
             Console.WriteLine(tag); 

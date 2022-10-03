@@ -27,6 +27,8 @@ using Goedel.Protocol.Presentation;
 
 namespace Goedel.Protocol.Service;
 
+
+
 /// <summary>
 /// Service provider managing HTTP and UDP listeners.
 /// </summary>
@@ -105,6 +107,9 @@ public class RudService : Disposable {
 
     #endregion
     #region // Constructors
+
+
+
 
 
 

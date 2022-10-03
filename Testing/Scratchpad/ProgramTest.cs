@@ -24,6 +24,7 @@
 using System;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
+//using Goedel.Cryptography.PQC;
 using Goedel.Mesh;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
@@ -52,11 +53,27 @@ partial class Program {
 
 
 
-
         Logger.LogInformation("Start test {time}", DateTime.Now);
 
 
-        ServiceDiscovery.Test().TestDNSMultiple(20);
+        TestPresence.Test().UdpStreamBasic();
+        //TestPresence.Test().UdpServiceBasic(2000);
+
+
+
+        //TestPresence.Test().ClientServerDirect();
+        //TestPresence.Test().Poll();
+        //TestPresence.Test().ConnectAccept();
+        //TestPresence.Test().ClientServerDirect();
+
+
+        //TestPQC.Test().Kyber(1024, 1);
+        //TestPQC.Test().Dilithium(DilithiumMode.Mode5, 1);
+
+        //TestPQC.Test().Kyber(768);
+        //TestPQC.Test().Kyber(512);
+
+        //ServiceDiscovery.Test().TestDNSMultiple(20);
 
         //TestService.Test().MeshCatalogGroup();
         //ShellTests.Test().TestAccountDelete();
