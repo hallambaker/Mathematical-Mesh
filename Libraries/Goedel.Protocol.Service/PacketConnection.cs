@@ -262,12 +262,33 @@ public class PacketConnection {
     /// request packet.
     /// </summary>
     /// <param name="inboundPacket">The packet to process.</param>
-    public void ProcessInitial(InboundPacket inboundPacket) {
+    public void ProcessInitial(PacketInbound inboundPacket) {
+
+        // Here we put all the code to handle setting up the cryptography.
+
+        ProcessPacket(inboundPacket);
         }
 
 
 
-    public void ProcessPacket(InboundPacket inboundPacket) {
+    public void ProcessPacket(PacketInbound inboundPacket) {
+
+        inboundPacket.ParseHeader(Decryptor);
+
+        bool active = true;
+
+        while (active) {
+
+            // grab a data chunk
+            // handle the chunk
+
+
+            // last chunk?
+
+            active = false;
+            }
+
+
         }
 
 

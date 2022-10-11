@@ -1799,6 +1799,9 @@
         <member name="P:Goedel.Protocol.Service.UdpSocket.IPEndPoint">
             <summary>The IP Endpoint (Address, port).</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Service.UdpSocket.InboundConnectionQueue">
+            <summary>Dispatch queue for receipt of inbound connections.</summary> 
+        </member>
         <member name="M:Goedel.Protocol.Service.UdpSocket.Disposing">
             <summary>
             Disposing method. Performs shutdown on the listener.

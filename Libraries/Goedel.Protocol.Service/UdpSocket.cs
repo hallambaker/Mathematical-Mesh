@@ -60,7 +60,7 @@ public class UdpSocket : Disposable {
     private CancellationTokenSource CancellationTokenSource { get; }
 
 
-    Task<InboundPacket>[] ListenerTasks;
+    Task<PacketInbound>[] ListenerTasks;
 
 
 
@@ -82,8 +82,9 @@ public class UdpSocket : Disposable {
 
     BufferBlock<PacketConnection> OutboundConnectionQueue { get; } = new();
 
-    BufferBlock<OutboundData> OutboundDataQueue { get; } 
+    BufferBlock<OutboundData> OutboundDataQueue { get; }
 
+    ///<summary>Dispatch queue for receipt of inbound connections.</summary> 
     BufferBlock<PacketConnection> InboundConnectionQueue { get; } = new();
 
     int TimeOut {  get; set; } = 1000;
@@ -126,7 +127,7 @@ public class UdpSocket : Disposable {
 
         // set up the listener tasks to buffer UDP input.
         listenerTaskCount = listenerTaskCount > 0 ? listenerTaskCount : DefaultListenerTasks;
-        ListenerTasks = new Task<InboundPacket>[listenerTaskCount];
+        ListenerTasks = new Task<PacketInbound>[listenerTaskCount];
         for (var i = 0; i < ListenerTasks.Length; i++) {
             ListenerTasks[i] = GetPacketAsync();
             }
@@ -172,10 +173,10 @@ public class UdpSocket : Disposable {
                 await Task.WhenAny(ListenerTasks);
                 Console.WriteLine("Received Packet");
 
-                var connectionF = GetNextConnection(false);
-                InboundConnectionQueue.Post(connectionF);
-                var packetStreamF = new PacketStream();
-                connectionF.PacketStreamBuffer.Post(packetStreamF);
+                //var connectionF = GetNextConnection(false);
+                //InboundConnectionQueue.Post(connectionF);
+                //var packetStreamF = new PacketStream();
+                //connectionF.PacketStreamBuffer.Post(packetStreamF);
 
 
                 var idle = ListenerTasks.Length;
@@ -186,6 +187,8 @@ public class UdpSocket : Disposable {
                         if (packet.ConnectionId.IsInitial) {
                             var connection = GetNextConnection(false);
                             connection.ProcessInitial(packet);
+
+                            InboundConnectionQueue.Post(connection);
                             }
                         else {
                             if (TryGetReceiverId(packet.ConnectionId, out var connection)) {
@@ -224,16 +227,16 @@ public class UdpSocket : Disposable {
     /// Await receipt of a packet, extract the stream ID and return the result.
     /// </summary>
     /// <returns></returns>
-    async Task<InboundPacket> GetPacketAsync() {
+    async Task<PacketInbound> GetPacketAsync() {
         var udpResult = await UdpClient.ReceiveAsync(CancellationToken);
-        return new InboundPacket(udpResult, Decryptor);
+        return new PacketInbound(udpResult, Decryptor);
         }
 
     /// <summary>
     /// Handle an inbound request with an unknown stream ID.
     /// </summary>
     /// <param name="inboundPacket"></param>
-    async void HandleUnknownStream(InboundPacket inboundPacket) {
+    async void HandleUnknownStream(PacketInbound inboundPacket) {
         // Do nothing for now
         inboundPacket.Future();
         this.Future();

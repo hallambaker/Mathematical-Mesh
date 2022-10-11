@@ -81,6 +81,23 @@ public record PendingItem {
     }
 
 /// <summary>
+/// Payload marking the end of the payload data section.
+/// </summary>
+public record PendingEnd : PendingItem {
+
+    public readonly static PendingEnd Empty = new PendingEnd();
+    }
+
+/// <summary>
+/// Unknown / unsupported payload.
+/// </summary>
+public record PendingUnknown : PendingItem {
+
+    public readonly static PendingUnknown Empty = new PendingUnknown();
+
+    }
+
+/// <summary>
 /// Pending stream assignment request.
 /// </summary>
 /// <param name="StreamId">The stream identifier to assign.</param>

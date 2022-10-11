@@ -109,6 +109,10 @@ public class PacketReader {
     /// <returns></returns>
     public byte ReadByte() => Packet[Position++];
 
+
+    public long ReadByteLong() => Packet[Position++];
+
+
     /// <summary>
     /// Return a Span containing the next <paramref name="length"/> bytes.
     /// </summary>
@@ -126,15 +130,15 @@ public class PacketReader {
     /// <returns>The tagged data.</returns>
     public (PacketTag, long) ReadTag() {
         var tag = ReadByte();
-        var length = tag & 0b0000_0011;
-        var packetTag = (PacketTag)(tag & 0b1111_1100);
+        var length = tag & 0b1100_0000;
+        var packetTag = (PacketTag)(tag & 0b0011_1111);
 
         var data = length switch {
-            0 => ReadByte(),
-            1 => (ReadByte() << 8) | ReadByte(),
-            2 => (ReadByte() << 24) | (ReadByte() << 16) | (ReadByte() << 8) | ReadByte(),
-            3 => (ReadByte() << 56) | (ReadByte() << 48) | (ReadByte() << 40) | (ReadByte() << 32) |
-                    (ReadByte() << 24) | (ReadByte() << 16) | (ReadByte() << 8) | ReadByte(),
+            0b0000_0000 => ReadByteLong(),
+            0b0100_0000 => (ReadByteLong() << 8) | ReadByteLong(),
+            0b1000_0000 => (ReadByteLong() << 24) | (ReadByteLong() << 16) | (ReadByteLong() << 8) | ReadByteLong(),
+            0b1100_0000 => (ReadByteLong() << 56) | (ReadByteLong() << 48) | (ReadByteLong() << 40) | (ReadByteLong() << 32) |
+                    (ReadByteLong() << 24) | (ReadByteLong() << 16) | (ReadByteLong() << 8) | ReadByteLong(),
             _ => throw new NYI()
             };
         return (packetTag, data);

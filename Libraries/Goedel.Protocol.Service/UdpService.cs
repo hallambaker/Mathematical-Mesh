@@ -46,7 +46,7 @@ public record Frame {
 public record FrameReceiver {
 
 
-    public void ProcessPacket(InboundPacket inboundPacket) {
+    public void ProcessPacket(PacketInbound inboundPacket) {
         }
 
     }
