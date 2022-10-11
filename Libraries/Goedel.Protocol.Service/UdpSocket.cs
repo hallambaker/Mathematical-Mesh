@@ -25,6 +25,7 @@ using Goedel.Protocol.Presentation;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 
 namespace Goedel.Protocol.Service;
 
@@ -169,6 +170,13 @@ public class UdpSocket : Disposable {
         while (active) {
             try {
                 await Task.WhenAny(ListenerTasks);
+                Console.WriteLine("Received Packet");
+
+                var connectionF = GetNextConnection(false);
+                InboundConnectionQueue.Post(connectionF);
+                var packetStreamF = new PacketStream();
+                connectionF.PacketStreamBuffer.Post(packetStreamF);
+
 
                 var idle = ListenerTasks.Length;
                 for (var i = 0; i < ListenerTasks.Length; i++) {
@@ -246,8 +254,8 @@ public class UdpSocket : Disposable {
         var nextWake = DateTime.MaxValue.Ticks;
         var timeNow = DateTime.Now.Ticks;
 
-        var waitInterval = new TimeSpan(nextWake - timeNow);
-
+        //var waitInterval = new TimeSpan(nextWake - timeNow);
+        var waitInterval = new TimeSpan (1000);
 
         // change this so that the loop waits for the next connection with work to do.
         // then construct the next packet to send
@@ -255,15 +263,29 @@ public class UdpSocket : Disposable {
         // ?? wait if more than n packets are in the send queue
 
 
-
+        ValueTask<int> SendTask;
 
         while (active) {
             try {
-                var task = OutboundConnectionQueue.ReceiveAsync(waitInterval, CancellationToken);
-                await task;
+                var task = OutboundConnectionQueue.ReceiveAsync(CancellationToken);
+
+                Console.WriteLine("Wait Sender");
+                var connection = await task;
+
 
                 if (task.IsCompleted) {
+                    Console.WriteLine("Got work");
+
+                    var packet = connection.QueueOutbound();
+                    Console.WriteLine("Compiled Packet");
+
+                    SendTask = UdpClient.SendAsync(packet, connection.InitialEndpoint);
+                    Console.WriteLine("Sent Packet");
                     // process the new work items here
+                    }
+
+                else {
+                    Console.WriteLine("timeout");
                     }
 
                 // Initialize the timer
@@ -271,18 +293,24 @@ public class UdpSocket : Disposable {
 
                 // Perform all actions defered until this time.
                 var expired = timeNow + MinimumWait;
-                waitInterval = new TimeSpan(nextWake - timeNow);
+                //waitInterval = new TimeSpan(nextWake - timeNow);
                 }
 
             catch (OperationCanceledException) {
                 }
             }
 
+
+        Console.WriteLine("Terminate Sender");
+
         }
 
-    public async Task Queue(PacketConnection packetConnection) => await
-        OutboundConnectionQueue.SendAsync(packetConnection);
+    public async Task Queue(PacketConnection packetConnection) {
+        OutboundConnectionQueue.Post(packetConnection);
 
+        //var queued = await OutboundConnectionQueue.SendAsync(packetConnection);
+        Console.WriteLine($"Queued");
+        }
 
     #endregion
 

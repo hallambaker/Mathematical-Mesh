@@ -27,6 +27,9 @@
         <member name="P:Goedel.Protocol.Service.ConnectionId.IsInitial">
             <summary>If true the connection identifier is an initial connection.</summary> 
         </member>
+        <member name="F:Goedel.Protocol.Service.ConnectionId.InitialPacket">
+            <summary>Connection token used for an initial packet.</summary> 
+        </member>
         <member name="M:Goedel.Protocol.Service.ConnectionId.#ctor(System.UInt64)">
             <summary>
             Constructor, return an instance with unique serial number <paramref name="serial"/>.
@@ -406,6 +409,55 @@
         </member>
         <member name="P:Goedel.Protocol.Service.IServiceConfiguration.Addresses">
             <summary>List of service addresses.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketOutbound.ConnectionTokenSize">
+            <summary>The connection token size (16 bytes)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketOutbound.OffsetSalt">
+            <summary>Byte offset for the salt field (2 bytes)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketOutbound.OffsetSerial">
+            <summary>Byte offset for the truncated serial field (2 bytes)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketOutbound.OffsetExpecting">
+            <summary>Byte offset for the expecting field (2 bytes)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketOutbound.OffsetAcknowledge">
+            <summary>Byte offset for the acknowledgements field (2 bytes)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketOutbound.StartPayload">
+            <summary>Byte offset for the reserved field (2 bytes)</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.PacketOutbound.Plaintext">
+            <summary>The packet plaintext data. This is retained in case the 
+            packet needs to be resent.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.PacketOutbound.#ctor(System.Int32)">
+            <summary>
+            Initialize a new outbound packet.
+            </summary>
+            <param name="length">The packet length in bytes.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.PacketOutbound.OpenStream(Goedel.Protocol.Service.PendingStream)">
+            <summary>
+            Attempt to write an open stream request to the packet, returning 
+            false if there is insufficient space.
+            </summary>
+            <param name="streamId">The stream to write to.</param>
+            <param name="streamName">The stream label.</param>
+            <returns>True if the action succeeded.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.PacketOutbound.PostData(Goedel.Protocol.Service.PendingPost)">
+            <summary>
+            Attempt to post <paramref name="length"/> bytes from <paramref name="data"/> 
+            starting at byte <paramref name="start"/> and return the number of bytes
+            written.
+            </summary>
+            <param name="streamId"></param>
+            <param name="data"></param>
+            <param name="start"></param>
+            <param name="length"></param>
+            <returns>The number of bytes written. If zero, no bytes were written.</returns>
         </member>
         <member name="T:Goedel.Protocol.Service.InboundPacket">
             <summary>
@@ -824,6 +876,9 @@
             <summary>Maps from the stream identifier assigned by the local end of the connection
             to the stream handle.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Service.PacketConnection.PacketLengthBytes">
+            <summary>Packet length in bytes for the connection.</summary> 
+        </member>
         <member name="M:Goedel.Protocol.Service.PacketConnection.#ctor(Goedel.Protocol.Service.UdpSocket,Goedel.Protocol.Service.ConnectionId,System.Boolean)">
             <summary>
             Constructor returning a stream identifier for the endpoint <paramref name="connectionID"/>.
@@ -857,6 +912,14 @@
             <summary>
             Asynchronously queue this connection as an outbound work item.
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.PacketConnection.QueueOutbound">
+            <summary>
+            
+            </summary>
+            <remarks>This routine is NOT thread safe as it is only to be called by the 
+            sender task that services the connection.</remarks>
             <returns></returns>
         </member>
         <member name="M:Goedel.Protocol.Service.PacketConnection.ServiceRequest(System.String,System.Byte[])">
@@ -940,16 +1003,21 @@
             </summary>
             <param name="StreamId">The stream identifier to assign.</param>
             <param name="PacketStream">The handle for the stream.</param>
+            <param name="Label">The stream label, (must be less than 64 bytes)</param>
         </member>
-        <member name="M:Goedel.Protocol.Service.PendingStream.#ctor(Goedel.Protocol.Service.StreamId,Goedel.Protocol.Service.PacketStream)">
+        <member name="M:Goedel.Protocol.Service.PendingStream.#ctor(Goedel.Protocol.Service.StreamId,System.Byte[],Goedel.Protocol.Service.PacketStream)">
             <summary>
             Pending stream assignment request.
             </summary>
             <param name="StreamId">The stream identifier to assign.</param>
             <param name="PacketStream">The handle for the stream.</param>
+            <param name="Label">The stream label, (must be less than 64 bytes)</param>
         </member>
         <member name="P:Goedel.Protocol.Service.PendingStream.StreamId">
             <summary>The stream identifier to assign.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.PendingStream.Label">
+            <summary>The stream label, (must be less than 64 bytes)</summary>
         </member>
         <member name="P:Goedel.Protocol.Service.PendingStream.PacketStream">
             <summary>The handle for the stream.</summary>
@@ -1300,6 +1368,195 @@
         <member name="P:Goedel.Protocol.Service.ServiceConfiguration.HostPath">
             <summary>Path to the host data.</summary> 
         </member>
+        <member name="T:Goedel.Protocol.Service.PayloadTag">
+            <summary>Payload tags</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.DataFull">
+            <summary>Full message</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.DataStart">
+            <summary>Message start unchunked</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.DataStartChunked">
+            <summary>Message start chunked</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.Data">
+            <summary>Message data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.DataAbort">
+            <summary>Abort data send</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.StreamOpen">
+            <summary>Open stream</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.StreamClose">
+            <summary>Close stream</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.StreamConfigure">
+            <summary>Configure stream</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.ConnectionOpen">
+            <summary>Open connection</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.ConnectionClose">
+            <summary>Close connection</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.ConnectionConfigure">
+            <summary>Configure connection</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.ConnectionTokensIssue">
+            <summary>Issue tokens</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.ConnectionTokensRequest">
+            <summary>Request additional tokens</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.EndpointOpen">
+            <summary>Open additional endpoint</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.EndpointClose">
+            <summary>Close endpoint</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.EndpointConfigure">
+            <summary>Configure endpoint</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.EndpointMeasure">
+            <summary>Measure endpoint</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.EndOfPayload">
+            <summary>End of packet payload.</summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.ServiceConstants">
+            <summary>
+            Constants specified in hallambaker-mesh-rud
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataFullTag">
+            <summary>Jose enumeration tag for PayloadTag.DataFull</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataFullTitle">
+            <summary>Description for PayloadTag.DataFull</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataStartTag">
+            <summary>Jose enumeration tag for PayloadTag.DataStart</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataStartTitle">
+            <summary>Description for PayloadTag.DataStart</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataStartChunkedTag">
+            <summary>Jose enumeration tag for PayloadTag.DataStartChunked</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataStartChunkedTitle">
+            <summary>Description for PayloadTag.DataStartChunked</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataTag">
+            <summary>Jose enumeration tag for PayloadTag.Data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataTitle">
+            <summary>Description for PayloadTag.Data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataAbortTag">
+            <summary>Jose enumeration tag for PayloadTag.DataAbort</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataAbortTitle">
+            <summary>Description for PayloadTag.DataAbort</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagStreamOpenTag">
+            <summary>Jose enumeration tag for PayloadTag.StreamOpen</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagStreamOpenTitle">
+            <summary>Description for PayloadTag.StreamOpen</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagStreamCloseTag">
+            <summary>Jose enumeration tag for PayloadTag.StreamClose</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagStreamCloseTitle">
+            <summary>Description for PayloadTag.StreamClose</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagStreamConfigureTag">
+            <summary>Jose enumeration tag for PayloadTag.StreamConfigure</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagStreamConfigureTitle">
+            <summary>Description for PayloadTag.StreamConfigure</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagConnectionOpenTag">
+            <summary>Jose enumeration tag for PayloadTag.ConnectionOpen</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagConnectionOpenTitle">
+            <summary>Description for PayloadTag.ConnectionOpen</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagConnectionCloseTag">
+            <summary>Jose enumeration tag for PayloadTag.ConnectionClose</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagConnectionCloseTitle">
+            <summary>Description for PayloadTag.ConnectionClose</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagConnectionConfigureTag">
+            <summary>Jose enumeration tag for PayloadTag.ConnectionConfigure</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagConnectionConfigureTitle">
+            <summary>Description for PayloadTag.ConnectionConfigure</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagConnectionTokensIssueTag">
+            <summary>Jose enumeration tag for PayloadTag.ConnectionTokensIssue</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagConnectionTokensIssueTitle">
+            <summary>Description for PayloadTag.ConnectionTokensIssue</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagConnectionTokensRequestTag">
+            <summary>Jose enumeration tag for PayloadTag.ConnectionTokensRequest</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagConnectionTokensRequestTitle">
+            <summary>Description for PayloadTag.ConnectionTokensRequest</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagEndpointOpenTag">
+            <summary>Jose enumeration tag for PayloadTag.EndpointOpen</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagEndpointOpenTitle">
+            <summary>Description for PayloadTag.EndpointOpen</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagEndpointCloseTag">
+            <summary>Jose enumeration tag for PayloadTag.EndpointClose</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagEndpointCloseTitle">
+            <summary>Description for PayloadTag.EndpointClose</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagEndpointConfigureTag">
+            <summary>Jose enumeration tag for PayloadTag.EndpointConfigure</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagEndpointConfigureTitle">
+            <summary>Description for PayloadTag.EndpointConfigure</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagEndpointMeasureTag">
+            <summary>Jose enumeration tag for PayloadTag.EndpointMeasure</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagEndpointMeasureTitle">
+            <summary>Description for PayloadTag.EndpointMeasure</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagEndOfPayloadTag">
+            <summary>Jose enumeration tag for PayloadTag.EndOfPayload</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagEndOfPayloadTitle">
+            <summary>Description for PayloadTag.EndOfPayload</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceConstants.ToPayloadTag(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.ServiceConstants.ToLabel(Goedel.Protocol.Service.PayloadTag)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
         <member name="T:Goedel.Protocol.Service.RequestQuality">
             <summary>
             Describe the result of request source analysis.
@@ -1465,12 +1722,8 @@
         <member name="P:Goedel.Protocol.Service.PacketStream.PacketConnection">
             <summary>The connection under which this stream is established.</summary> 
         </member>
-        <member name="P:Goedel.Protocol.Service.PacketStream.OutboundStream">
+        <member name="P:Goedel.Protocol.Service.PacketStream.StreamId">
             <summary>The outbound stream, which is always assigned by the local end
-            of the connection.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Service.PacketStream.InboundStream">
-            <summary>Inbound stream which is always assigned by the remote end
             of the connection.</summary> 
         </member>
         <member name="P:Goedel.Protocol.Service.PacketStream.MessageBuffer">

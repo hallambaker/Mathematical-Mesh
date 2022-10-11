@@ -18,14 +18,15 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Test.Common.dll\
+    Goedel.Utilities.dll\
+    Goedel.Test.dll\
+    Goedel.Cryptography.dll\
+    Goedel.Cryptography.Jose.dll\
+    Goedel.Mesh.dll\
     Goedel.Discovery.dll\
     Goedel.IO.dll\
-    Goedel.Utilities.dll\
-    Goedel.Cryptography.Jose.dll\
-    Goedel.Cryptography.dll\
     Goedel.Protocol.dll\
-    Goedel.Test.dll\
-    Goedel.Mesh.dll\
     Goedel.ASN1.Test-xunit.dll\
     Goedel.Callsign.Test-xunit.dll\
     Goedel.Cryptography.Dare.Test-xunit.dll\
@@ -38,9 +39,9 @@ LinkFiles = \
     Goedel.Mesh.Store.Test-xunit.dll\
     Goedel.Protocol.Test-xunit.dll\
     Goedel.Utilities.Test-xunit.dll\
-    Test.Common.dll\
     Test.Cryptography.PQC.dll\
-    Test.MakeSiteDocs.dll
+    Test.MakeSiteDocs.dll\
+    Test.Mesh.Presence.dll
 
 ToolTargets = 
 

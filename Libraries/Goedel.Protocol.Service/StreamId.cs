@@ -90,11 +90,9 @@ public class PacketStream {
 
     ///<summary>The outbound stream, which is always assigned by the local end
     ///of the connection.</summary> 
-    public StreamId OutboundStream { get; init; }
+    public StreamId StreamId { get; init; }
 
-    ///<summary>Inbound stream which is always assigned by the remote end
-    ///of the connection.</summary> 
-    public StreamId InboundStream => throw new NYI();
+
 
     // NO!!!! The party that created the connection owns stream ids 0..MAXINT/2 and the
     // other side owns MAXINT/2..X

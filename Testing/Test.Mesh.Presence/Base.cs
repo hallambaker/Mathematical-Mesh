@@ -108,6 +108,7 @@ public class TestPresence : Disposable {
         using var socketReceiver = new UdpSocket();
         using var socketSender = new UdpSocket();
 
+        var receiverEndpoint = new IPEndPoint(IPAddress.Loopback, socketReceiver.IPEndPoint.Port);
         var message = environment.GetBytes(length);
 
         // Put the receiver in wait mode.
@@ -115,7 +116,7 @@ public class TestPresence : Disposable {
 
         // Reserve a connection identifier to the specified endpoint. 
         // NB: this does not cause any packets to be sent.
-        var connection = socketSender.ReserveConnection(socketReceiver.IPEndPoint);
+        var connection = socketSender.ReserveConnection(receiverEndpoint);
 
         // Create the connection and send the data. The operations are batched for efficiency
         var pending = connection.BeginPending();
@@ -156,9 +157,9 @@ public class TestPresence : Disposable {
 
         var connection = await receive.GetConnectionAsync();
         var stream = await connection.GetStreamAsync();
-        var data = await stream.ReadBytesAsync();
+        //var data = await stream.ReadBytesAsync();
 
-        return data;
+        return null;
         }
 
 

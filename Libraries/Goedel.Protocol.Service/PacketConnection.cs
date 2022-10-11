@@ -74,13 +74,27 @@ public class PacketConnection {
 
     List<PendingItem> PendingItems { get; } = new();
 
-    BufferBlock<PacketStream> PacketStreamBuffer { get; } = new();
+    public BufferBlock<PacketStream> PacketStreamBuffer { get; } = new();
 
     ///<summary>Maps from the stream identifier assigned by the local end of the connection
     ///to the stream handle.</summary> 
     Dictionary<StreamId, PacketStream> DictionaryStream{ get; } = new();
 
     public bool QueuedPending { get; set; } = false;
+
+    public ulong PacketSerial { get; private set; } = 0;
+
+    public ulong PacketExpecting { get; private set; } = 0;
+
+    public ulong Acknowledge { get; private set; } = 0;
+
+    ///<summary>Packet length in bytes for the connection.</summary> 
+    public int PacketLengthBytes { get; private set; } = 1200;
+
+    ICryptoTransform Encryptor { get; set; }
+
+    ICryptoTransform Decryptor { get; set; }
+
 
     /// <summary>
     /// Constructor returning a stream identifier for the endpoint <paramref name="connectionID"/>.
@@ -148,22 +162,75 @@ public class PacketConnection {
         }
 
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>This routine is NOT thread safe as it is only to be called by the 
+    /// sender task that services the connection.</remarks>
+    /// <returns></returns>
+    public byte[] QueueOutbound() {
 
-    public bool QueueOutbound() {
-        var requeue = false;
         // construct the next outbound packet to be sent to connection.
 
+        var packetOutbound = new PacketOutbound (PacketLengthBytes);
+        byte[] token = null;
 
-        lock (this) {
-            
-            
-            
+        switch (ConnectionState) {
+            case ConnectionState.OutboundInitial: {
+                token = ConnectionId.InitialPacket;
+
+                break;
+                }
+            case ConnectionState.InboundReceived: {
+
+                break;
+                }
+            default: throw new NYI();
+            }
+
+        bool pending = PendingItems.Count > 0;
+        while (pending){
+            Console.WriteLine("Add item");
+
+
+            var item = PendingItems[0];
+            var completed = false;
+
+            switch (item) {
+                case PendingStream pendingStream: {
+                    completed = packetOutbound.OpenStream(pendingStream);
+                    break;
+                    }
+                case PendingPost pendingPost: {
+                    completed = packetOutbound.PostData(pendingPost);
+                    break;
+                    }
+                }
+
+            if (completed) {
+                PendingItems.RemoveAt(0);
+                pending = PendingItems.Count > 0;
+                }
+            else {
+                pending = false;
+                }
+
             }
 
 
-        return requeue;
-        }
 
+
+        switch (ConnectionState) {
+            case ConnectionState.OutboundInitial: {
+                return packetOutbound.Plaintext;
+                }
+            default: {
+                return packetOutbound.Encrypt(token, PacketSerial++, PacketExpecting,
+                    Acknowledge, Encryptor);
+
+                }
+            }
+        }
 
 
 

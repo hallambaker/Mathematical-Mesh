@@ -41,7 +41,7 @@
       <Generator>exceptional</Generator>
     </None>
     <None Update="PresentationConstants.constant">
-      <LastGenOutput>MeshConstants.cs</LastGenOutput>
+      <LastGenOutput>PresentationConstants.cs</LastGenOutput>
       <Generator>Constant</Generator>
     </None>
     <None Update="PacketSchema.yaschema">

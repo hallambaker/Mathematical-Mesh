@@ -1,0 +1,73 @@
+﻿Namespace Goedel.Protocol.Service ServiceConstants
+	|Constants specified in hallambaker-mesh-rud
+
+File ServiceConstants
+
+	Enum PayloadTag "Payload tags"
+		// Data chunk related
+		Integer DataFull				 0 "Full message"
+			Description
+				|Packet contains a full message.
+		Integer DataStart				 1 "Message start unchunked"
+			Description
+				|Packet contains the start of an unchunked message.
+		Integer DataStartChunked		 2 "Message start chunked"
+			Description
+				|Packet contains the start of a chunked message.
+		Integer Data 					 3 "Message data"
+			Description
+				|Packet contains the continuation of a message.
+		Integer DataAbort				 4 "Abort data send"
+			Description
+				|Abort the current message send.
+
+		// Stream related
+		Integer StreamOpen				 8 "Open stream"
+			Description
+				|
+		Integer StreamClose				 9 "Close stream"
+			Description
+				|
+		Integer StreamConfigure			10 "Configure stream"
+			Description
+				|
+
+		// Connection related
+		Integer ConnectionOpen			16 "Open connection"
+			Description
+				|
+		Integer ConnectionClose			17 "Close connection"
+			Description
+				|
+		Integer ConnectionConfigure		18 "Configure connection"
+			Description
+				|
+		Integer ConnectionTokensIssue	19 "Issue tokens"
+			Description
+				|
+		Integer ConnectionTokensRequest	20 "Request additional tokens"
+			Description
+				|
+
+		// Endpoint related
+		Integer EndpointOpen			24	"Open additional endpoint"
+			Description
+				|Open an additional endpoint to the source of this packet.
+		Integer EndpointClose			25	"Close endpoint"
+			Description
+				|Stop sending to this endpoint.
+		Integer EndpointConfigure		26	"Configure endpoint"
+			Description
+				|Configure the endpoint sending parameters.
+		Integer EndpointMeasure			27	"Measure endpoint"
+			Description
+				|This packet is an endpoint measurement probe.
+
+
+		// Packet related
+		Integer EndOfPayload			63	"End of packet payload."
+			Description
+				|Marks the end of the packet payload. Ignore all data that follows.
+
+
+

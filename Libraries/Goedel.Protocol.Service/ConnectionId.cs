@@ -54,6 +54,9 @@ public record ConnectionId {
     ///<summary>If true the connection identifier is an initial connection.</summary> 
     public bool IsInitial => Serial == connectionInitial;
 
+    ///<summary>Connection token used for an initial packet.</summary> 
+    public static readonly byte[] InitialPacket = new byte[16];
+
     /// <summary>
     /// Constructor, return an instance with unique serial number <paramref name="serial"/>.
     /// </summary>

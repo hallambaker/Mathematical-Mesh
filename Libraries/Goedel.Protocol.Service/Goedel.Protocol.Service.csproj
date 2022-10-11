@@ -37,6 +37,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 	  </Compile>
+	  <Compile Update="ServiceConstants.cs">
+		  <DependentUpon>ServiceConstants.constant</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+	  </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +57,10 @@
   <ItemGroup>
     <None Update="Exceptions.exceptional">
       <Generator>exceptional</Generator>
+    </None>
+    <None Update="ServiceConstants.constant">
+      <LastGenOutput>ServiceConstants.cs</LastGenOutput>
+      <Generator>Constant</Generator>
     </None>
   </ItemGroup>
 

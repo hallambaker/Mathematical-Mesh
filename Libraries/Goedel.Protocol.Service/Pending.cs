@@ -48,11 +48,13 @@ public record Pending(
     public PacketStream OpenOutboundStreamPending(
                 string? serviceId = null) {
         var streamId = PacketConnection.StreamIdGenerator.GetNext();
+        var label = (serviceId ?? "").ToUTF8();
+
         var packetStream = new PacketStream() {
             PacketConnection = PacketConnection,
-            OutboundStream = streamId,
+            StreamId = streamId,
             };
-        PendingItems.Add (new PendingStream (streamId, packetStream));
+        PendingItems.Add (new PendingStream (streamId, label, packetStream));
         return packetStream;
         }
 
@@ -83,8 +85,10 @@ public record PendingItem {
 /// </summary>
 /// <param name="StreamId">The stream identifier to assign.</param>
 /// <param name="PacketStream">The handle for the stream.</param>
+/// <param name="Label">The stream label, (must be less than 64 bytes)</param>
 public record PendingStream (
             StreamId StreamId,
+            byte[] Label,
             PacketStream PacketStream) : PendingItem {
 
     }
