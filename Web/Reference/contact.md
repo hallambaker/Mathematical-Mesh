@@ -103,7 +103,7 @@ by means of a dynamic URI.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact exchange mcu://carol@example.com/EFQF-DPLD-IIUR-ZIUO-G5PK-4WRD-ZFGA
+<cmd>Alice> meshman contact exchange mcu://carol@example.com/EFQA-DQID-HXWJ-ODDF-Q32H-SCCC-QQXA
 <rsp></div>
 ~~~~
 
@@ -134,7 +134,7 @@ presented as a URI or QR code without reciprocating the exchange.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman contact fetch mcu://doug@example.com/EFQJ-TZRT-O3DN-YTJH-TOUC-IMGI-6KAQ
+<cmd>Alice> meshman contact fetch mcu://doug@example.com/EFQP-SYGG-2ZKN-QLBU-V4RF-NJFC-KYGA
 <rsp>[CatalogedContact]
 
 </div>
@@ -225,29 +225,29 @@ The 'contact list' command lists all data in the contact catalog.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman contact list
-<rsp>Entry<CatalogedContact>: MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
-  Person MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
-  Anchor MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
+<rsp>Entry<CatalogedContact>: MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
+  Person MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
+  Anchor MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
   Address alice@example.com
 
-Entry<CatalogedContact>: NBE6-3ZYP-G52L-B6HG-EIRK-XZ7H-73HR
+Entry<CatalogedContact>: NBL7-CLVR-MT2M-EWR5-U2NY-NWEN-IF7S
   Person 
-  Anchor MDDO-B6Z7-4YXY-BJLQ-WFQZ-BOMG-QB6Y
+  Anchor MDLP-RRZJ-ZASG-GUBZ-PP2K-5YDH-EMGE
   Address bob@example.com
 
-Entry<CatalogedContact>: NDGW-DE77-QMTX-65RU-GNV2-LMT3-TFDI
+Entry<CatalogedContact>: NC3A-QZN6-Z4HW-5PHE-G2GQ-O3KF-GF2G
   Person 
-  Anchor MDUH-SCDO-UMPO-LCBP-QGOU-AZIG-PJ5D
+  Anchor MAXE-Z6UJ-A7XI-MIEH-IDQK-L2LH-2DEG
   Address groupw@example.com
 
-Entry<CatalogedContact>: NCX4-Y3QO-5DIZ-23JD-HHLG-EY5C-T3KQ
+Entry<CatalogedContact>: NAVT-2ACI-ENSO-GNZ4-UFLN-C6E3-CMMN
   Person 
-  Anchor MDUH-SCDO-UMPO-LCBP-QGOU-AZIG-PJ5D
+  Anchor MAXE-Z6UJ-A7XI-MIEH-IDQK-L2LH-2DEG
   Address groupw@example.com
 
-Entry<CatalogedContact>: NB3K-UFSL-CNOL-VR4I-BXVW-KEUE-4RFG
+Entry<CatalogedContact>: NAY6-3SLL-LGK5-EBRF-5CJK-D2L3-PCZL
   Person 
-  Anchor MB3W-TFQZ-FMLI-7V2O-TINP-Z33G-VSLD
+  Anchor MAEO-D3GK-A6HR-NAEV-4HSM-4HKP-BM2S
   Address carol@example.com
 
 </div>

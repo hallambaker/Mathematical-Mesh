@@ -32,16 +32,16 @@ The `bookmark add` command adds a bookmark entry to a catalog:
 <div="terminal">
 <cmd>Alice> meshman bookmark add http://example.com/ "Example Dot Com" ^
     /id=Folder1-1 
-<rsp>[NBAV-XFBJ-AUVM-JZRJ-WWSB-MCSU-X6XM/Folder1-1] http://example.com/
+<rsp>[NC6W-NPAV-E6OY-5LV4-OW5Q-6U6T-D5BR/Folder1-1] http://example.com/
 "Example
 <cmd>Alice> meshman bookmark add http://example.net/Bananas "Banana Site" ^
     /id=Folder1-2 
-<rsp>[NALO-AYLP-XACB-XXRM-PF2C-JX22-W6QU/Folder1-2] http://example.net/Ban
+<rsp>[NCLI-BMKQ-KPPS-V6XO-J47J-5UTB-7TFE/Folder1-2] http://example.net/Ban
 anas
 "Banana
 <cmd>Alice> meshman bookmark add http://example.com/Fred "The Fred Space" ^
     /id=Folder1-1a
-<rsp>[NCBI-NZYE-FICI-BRBJ-CONT-Z7FM-KP73/Folder1-1a] http://example.com/Fr
+<rsp>[NC2K-YF7L-KQ7E-DJCH-T3KC-EC2K-SKQS/Folder1-1a] http://example.com/Fr
 ed
 "The
 </div>
@@ -64,7 +64,7 @@ The `bookmark get`  command retreives a bookmark  by its index label:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman bookmark get Folder1-2
-<rsp>[NALO-AYLP-XACB-XXRM-PF2C-JX22-W6QU/Folder1-2] http://example.net/Ban
+<rsp>[NCLI-BMKQ-KPPS-V6XO-J47J-5UTB-7TFE/Folder1-2] http://example.net/Ban
 anas
 "Banana
 </div>
@@ -79,11 +79,11 @@ Bookmark entries may be deleted using the  `bookmark delete` command:
 <div="terminal">
 <cmd>Alice> meshman bookmark delete Folder1-2
 <cmd>Alice> meshman bookmark list
-<rsp>[NCWF-76MM-XKST-CE36-NPLP-T3JQ-37YW/Sites-1] http://www.example.com
+<rsp>[NCQL-JSFV-RDXN-GTGT-LYZQ-H7YK-CE74/Sites-1] http://www.example.com
 site1
-[NBAV-XFBJ-AUVM-JZRJ-WWSB-MCSU-X6XM/Folder1-1] http://example.com/
+[NC6W-NPAV-E6OY-5LV4-OW5Q-6U6T-D5BR/Folder1-1] http://example.com/
 "Example
-[NCBI-NZYE-FICI-BRBJ-CONT-Z7FM-KP73/Folder1-1a] http://example.com/Fr
+[NC2K-YF7L-KQ7E-DJCH-T3KC-EC2K-SKQS/Folder1-1a] http://example.com/Fr
 ed
 "The
 </div>
@@ -97,14 +97,14 @@ A complete list of bookmarks is obtained using the  `bookmark list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman bookmark list
-<rsp>[NCWF-76MM-XKST-CE36-NPLP-T3JQ-37YW/Sites-1] http://www.example.com
+<rsp>[NCQL-JSFV-RDXN-GTGT-LYZQ-H7YK-CE74/Sites-1] http://www.example.com
 site1
-[NBAV-XFBJ-AUVM-JZRJ-WWSB-MCSU-X6XM/Folder1-1] http://example.com/
+[NC6W-NPAV-E6OY-5LV4-OW5Q-6U6T-D5BR/Folder1-1] http://example.com/
 "Example
-[NALO-AYLP-XACB-XXRM-PF2C-JX22-W6QU/Folder1-2] http://example.net/Ban
+[NCLI-BMKQ-KPPS-V6XO-J47J-5UTB-7TFE/Folder1-2] http://example.net/Ban
 anas
 "Banana
-[NCBI-NZYE-FICI-BRBJ-CONT-Z7FM-KP73/Folder1-1a] http://example.com/Fr
+[NC2K-YF7L-KQ7E-DJCH-T3KC-EC2K-SKQS/Folder1-1a] http://example.com/Fr
 ed
 "The
 </div>

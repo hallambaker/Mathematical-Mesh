@@ -26,6 +26,7 @@
 
 
 using Goedel.Protocol.Presentation;
+using System.Collections.Generic;
 
 namespace Goedel.Protocol.Service;
 
@@ -35,7 +36,7 @@ namespace Goedel.Protocol.Service;
 /// Inbound packet record.Containst parse methods.
 /// </summary>
 
-public record PacketInbound : Packet {
+public record PacketInbound : PacketUDP {
 
     ///<summary>The received data.</summary> 
     public UdpReceiveResult UdpReceiveResult { get; }
@@ -56,8 +57,8 @@ public record PacketInbound : Packet {
     ///<summary>The acknowledgement field.</summary> 
     public ushort Acknowledge { get; private set; }
 
-
-
+    ///<summary>The time at which the packet was received.</summary> 
+    public long Received { get; }
     int readPointer;
 
 
@@ -74,6 +75,8 @@ public record PacketInbound : Packet {
             ICryptoTransform decryptor
             ) {
         UdpReceiveResult = udpReceiveResult;
+        Received = DateTime.Now.Ticks;
+
         var connectionTokenLength = decryptor.InputBlockSize;
 
         if (udpReceiveResult.Buffer == null ||
@@ -117,8 +120,8 @@ public record PacketInbound : Packet {
     int Space => Plaintext.Length - readPointer;
 
 
-
-    ulong ReadInteger() {
+    int ReadInt() => (int)ReadLong();
+    ulong ReadLong() {
         var first = ReadByteLong();
         var length = first & IntegerMask;
         var result = (ulong) first & IntegerFirst;
@@ -141,8 +144,27 @@ public record PacketInbound : Packet {
         }
 
     byte[] ReadLabel() {
+        var length = ReadByte();
+        var result = new byte[length];
+        Array.Copy(Plaintext, readPointer, result, 0, length);
+        readPointer += length;
+
+        return result;
+        }
+
+
+    void ReadData(byte[] data, int start, ulong length) {
+
+
         throw new NYI();
         }
+
+
+    StreamId ReadStreamId() => new StreamId(ReadLong());
+
+
+
+
 
     //ulong ReadByte() => Plaintext[readPointer++];
     public void ParseHeader(ICryptoTransform decryptor) {
@@ -157,92 +179,159 @@ public record PacketInbound : Packet {
 
         }
 
-    PendingItem GetChunk() {
+    public bool GetChunk(PacketConnection packetConnection) {
 
-        var tag = ReadInteger();
+        var tag = ReadLong();
 
         switch (tag) {
             case (ulong)PayloadTag.StreamOpen: {
 
-                var streamId = new StreamId (ReadInteger());
+                var streamId = ReadStreamId();
                 var label = ReadLabel();
+                packetConnection.Deliver(streamId, label);
 
-                return new PendingStream (streamId, label, null);
+                break;
                 }
 
             case (ulong)PayloadTag.DataFull: {
-                return PendingUnknown.Empty;
+
+
+                var streamId = ReadStreamId();
+                var length = ReadInt();
+
+                if (packetConnection.TryGetStream(streamId, out var stream)) {
+                    stream.Deliver(Plaintext, readPointer, length);
+                    }
+                else {
+                    packetConnection.Error(PendingItem.PendingInvalidStream);
+                    }
+                readPointer += length;
+                Console.WriteLine("Data full");
+                break;
                 }
-            case (ulong)PayloadTag.DataStart: {
-                return PendingUnknown.Empty;
-                }
+            case (ulong)PayloadTag.DataStart:
             case (ulong)PayloadTag.DataStartChunked: {
-                return PendingUnknown.Empty;
+                var streamId = ReadStreamId();
+                var total = ReadInt();
+                var length = ReadInt();
+                var chunked = tag == (ulong)PayloadTag.DataStartChunked;
+
+                if (packetConnection.TryGetStream(streamId, out var stream)) {
+                    stream.Start(total, chunked, Plaintext, readPointer, length);
+                    }
+                else {
+                    packetConnection.Error(PendingItem.PendingInvalidStream);
+                    }
+
+                readPointer += length;
+
+                break;
                 }
-            case (ulong)PayloadTag.Data: {
-                return PendingUnknown.Empty;
+
+            case (ulong)PayloadTag.Data:
+            case (ulong)PayloadTag.DataLast: {
+                var streamId = ReadStreamId();
+                var total = ReadInt();
+                var length = ReadInt();
+                var last = tag == (ulong)PayloadTag.DataLast;
+
+                if (packetConnection.TryGetStream(streamId, out var stream)) {
+                    stream.Data(last, Plaintext, readPointer, length);
+                    }
+                else {
+                    packetConnection.Error(PendingItem.PendingInvalidStream);
+                    }
+
+                readPointer += length;
+
+                break;
                 }
             case (ulong)PayloadTag.DataAbort: {
-                return PendingUnknown.Empty;
+                var streamId = ReadStreamId();
+                if (packetConnection.TryGetStream(streamId, out var stream)) {
+                    stream.Abort();
+                    }
+                else {
+                    packetConnection.Error(PendingItem.PendingInvalidStream);
+                    }
+                break;
                 }
 
 
             case (ulong)PayloadTag.ConnectionTokensIssue: {
-                return PendingUnknown.Empty;
+                break;
                 }
 
 
             case (ulong)PayloadTag.EndOfPayload: {
-                return PendingEnd.Empty;
+                return false;
                 }
 
             default: {
+                break;
 
-                return PendingUnknown.Empty;
                 }
             }
-
+        return true;
         }
 
     }
 
-
 /// <summary>
-/// Buffer used to build an inbound message.
+/// Message data response record. Introducing this structure allows handling of 
+/// chunked streams and a means of eventually substituting in the ability to
+/// return a reader over the raw packet data so as to avoid repeated copying.
 /// </summary>
-public record BufferedMessage {
+public record MessageData {
 
-    ///<summary>If true, the complete message has been received.</summary> 
-    public bool IsComplete => Last == MessageData.Length;
+    ///<summary>The message data.</summary> 
+    public byte[] Data;
 
-    /// <summary>Index of the last byte sent or received.</summary>
-    public int Last { get; set; } = 0;
+    ///<summary>If true, this is one of a series of chunks.</summary> 
+    public bool IsChunked;
 
-    ///<summary>The consolidated message data.</summary> 
-    public byte[] MessageData;
-
-    /// <summary>
-    /// Constructor creating a instance to receive an inbound message 
-    /// of <paramref name="length"/> bytes.
-    /// </summary>
-    /// <param name="length">Length of the buffer to reserve in bytes.</param>
-    public BufferedMessage(int length) => MessageData = new byte[length];
-
-    /// <summary>
-    /// Copnstructor returning an instance to send an outbound message with
-    /// the data <paramref name="data"/>.
-    /// </summary>
-    /// <param name="data">The data to be sent.</param>
-    public BufferedMessage(byte[] data) => MessageData = data;
+    ///<summary>If true, this is the last chunk (always true for non chunked data).</summary> 
+    public bool IsLast;
 
     }
 
-public record MessageToService {
 
-    public byte[] Data { get; init; }
-    public PacketConnection ConnectionId { get; init; }
-    public PacketStream StreamId { get; init; }
+///// <summary>
+///// Buffer used to build an inbound message.
+///// </summary>
+//public record BufferedMessage {
 
-    }
+//    ///<summary>If true, the complete message has been received.</summary> 
+//    public bool IsComplete => Last == MessageData.Length;
+
+//    /// <summary>Index of the last byte sent or received.</summary>
+//    public int Last { get; set; } = 0;
+
+//    ///<summary>The consolidated message data.</summary> 
+//    public byte[] MessageData;
+
+//    /// <summary>
+//    /// Constructor creating a instance to receive an inbound message 
+//    /// of <paramref name="length"/> bytes.
+//    /// </summary>
+//    /// <param name="length">Length of the buffer to reserve in bytes.</param>
+//    public BufferedMessage(int length) => MessageData = new byte[length];
+
+//    /// <summary>
+//    /// Copnstructor returning an instance to send an outbound message with
+//    /// the data <paramref name="data"/>.
+//    /// </summary>
+//    /// <param name="data">The data to be sent.</param>
+//    public BufferedMessage(byte[] data) => MessageData = data;
+
+//    }
+
+//public record MessageToService {
+
+//    public byte[] Data { get; init; }
+//    public PacketConnection ConnectionId { get; init; }
+//    public PacketStream StreamId { get; init; }
+
+//    }
 
 

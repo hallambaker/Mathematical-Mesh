@@ -8,7 +8,7 @@ account that it has access rights for:
 ~~~~
 {
   "StatusRequest":{
-    "CatalogedDeviceDigest":"MCVS-2II3-VYAM-XP25-A3AE-37V4-IY"}}
+    "CatalogedDeviceDigest":"MAC5-ZJWC-FFYC-2KIO-YYOE-OO43-OZ"}}
 ~~~~
 
 
@@ -22,8 +22,6 @@ Merkle tree apex digest values for each:
 ~~~~
 {
   "StatusResponse":{
-    "Status":201,
-    "StatusDescription":"Operation completed successfully",
     "ContainerStatus":[{
         "Container":"MMM_Inbound",
         "Index":3},
@@ -38,44 +36,46 @@ Merkle tree apex digest values for each:
       {
         "Container":"MMM_Access",
         "Index":3,
-        "Digest":"v795u7iQguBcYMOykxRJQURYNtKB9FpsUr2HhbIA80ogeJf
-  XTE-hLg4VTDN0KInkgjDB8mWbZk8s_YKtp7kk2w"},
+        "Digest":"r5IajJWI1RhTXt1j2_O75SUzphUMofZvSyfO5kLWLh20OGp
+  kLPsCcCEXprd0_QVPMr4PxBO6Mg7cS-WsOlumJw"},
       {
         "Container":"MMM_Credential",
         "Index":4,
-        "Digest":"plYLtIgRdVJB82LEKiUn3rs9guARA9bnSf6eGOmmR5Wuj5u
-  IEYhnL2q2v29mOD8SUZdYeL6f5CDLciY0onNHnw"},
+        "Digest":"aNMogtuGtBohOUNSCfPXDNONUz5BQ86TNDOfE_HZ5zi2Bw_
+  FWQik3E1qWyXFi-GuWipin-bJuFPJ2JPu-mIj4w"},
       {
         "Container":"MMM_Device",
         "Index":3,
-        "Digest":"Uxv1sKwhMiAPW9C6UFz8fa6hxsVIWg2V4SfNeiY7451Hguk
-  vNZ-2tKcLAwUb1h8Vr1CclTvp6VahC-NZSnGwtQ"},
+        "Digest":"qg4Zf_QebDEnR4kPOfPnQQiNmEhW0G01F8aJR83z5ibKUvK
+  cImrRFGTTRDIN2sRNKJZ6HSoAL0Wr1wzEj9NtVQ"},
       {
         "Container":"MMM_Contact",
         "Index":2,
-        "Digest":"E5cy6H92RWEXAYbMmbl5A590rKBETQd3YFkAy7A28rvtH8I
-  pN4ewUA8KK5Lt_ZWL7dT5ILymkidLeW99pnRqbw"},
+        "Digest":"urm7SZRuU2rWHYs-eoxZLg_WI4Hs4ICidDe_RM-GC__aANA
+  P8OKAEx5Bu_SN-P77U1h63JkQpDDeUtOrvn_qLw"},
       {
         "Container":"MMM_Application",
         "Index":1,
-        "Digest":"R4anFVpXdWUhO_RmILwy3oXpnEuqJ5g8pFNBozTARZXGNuw
-  TX5IxX210ZYF5C6_N-F9Q6UOJNrz5n4ta0_IaMQ"},
+        "Digest":"nljVIfu_F6lHDSSYn8dYdpE_QMBgs2KBSP4sI6E8vTA0E5X
+  4fJZHS8TVzCVIEL7urcVdLxcB0eeoPO82fYhyuQ"},
       {
         "Container":"MMM_Publication",
         "Index":1,
-        "Digest":"NJYOQsft6BrQXQc5qUWCsHgAhU-7n8suQOZnVs5laRaNTAY
-  0OGTb2rgjWehKgf9F_4Em-1PWhOeUNmfeY2YNVA"},
+        "Digest":"XhOEeG1waPc8GRUl1BI_dDoKQnXkaS9Jz16V1Ow5caT9WUL
+  1W2YU-z6_CxDafc7JfSwXfdYDv62sVyYwFq5Ieg"},
       {
         "Container":"MMM_Bookmark",
         "Index":1,
-        "Digest":"Wf_YvfuKlCCpmPo-FYoPXMxEX9-YI2xl6vUN_TSW8BRVIHy
-  yvsEB86TohoxCVhdj0VvO47DOux-Z8hrgVGfz_A"},
+        "Digest":"VuysvMaN2_bZXrJuQ-gYpfCHKN-gM7XlRBIkNLY_fB25hu7
+  hzdCWMWxgwHK-3KVNMWFC-I8jYYgZxmIOgfVWyQ"},
       {
         "Container":"MMM_Task",
         "Index":1,
-        "Digest":"uCUYDH2jYoeU_2j2ICR6AfhsxlaFKFLkxbXhOTsHp0d38Jo
-  BI_zaCzf-2g9Ay7kyCieJWFAtHTsztVC8UBtVfQ"}
-      ]}}
+        "Digest":"pbjJC7NvIJQF5ke1bpO65uvTe1zvFpur_XK4ddy61dInDLh
+  ulURJU9cEsScpMrdkxU7rNxN0i-RGRq5RL3ALFA"}
+      ],
+    "Status":201,
+    "StatusDescription":"Operation completed successfully"}}
 ~~~~
 
 

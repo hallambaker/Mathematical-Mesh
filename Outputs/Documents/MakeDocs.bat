@@ -8,6 +8,19 @@ set DocSource=../Word
 echo Generate schemas etc.
 cd Generated 
 
+protogen ../../../Mesh/Goedel.Mesh/SchemaMesh.protocol  /md  SchemaMesh.md
+protogen ../../../Mesh/Goedel.Mesh/ProtocolSchema.protocol  /md  ProtocolSchema.md
+protogen ../../../Mesh/Goedel.Mesh.Client/HostSchema.protocol  /md  HostSchema.md
+protogen ../../../Mesh/Goedel.Mesh.Server/MasterCatalog.protocol  /md  MasterCatalog.md
+protogen ../../../Everything/Goedel.Mesh.Everything/EverythingFeed.protocol  /md  EverythingFeed.md
+protogen ../../../Callsign/Goedel.Callsign/CallsignLog.protocol  /md  CallsignLog.md
+protogen ../../../Callsign/Goedel.Callsign.Registry/CallsignRegistry.protocol  /md  CallsignRegistry.md
+protogen ../../../Callsign/Goedel.Callsign.Resolver/CallsignResolver.protocol  /md  CallsignResolver.md
+protogen ../../../Carnet/Goedel.Carnet/Carnet.protocol  /md  Carnet.md
+protogen ../../../Libraries/Goedel.Cryptography.Dare/DareSchema.protocol  /md  DareSchema.md
+protogen ../../../Libraries/Goedel.Cryptography.Jose/JoseSchema.protocol  /md  JoseSchema.md
+protogen ../../../Mesh/Goedel.Mesh.Management/StatusSchema.protocol  /md  StatusSchema.md
+protogen ../../../Mesh/Goedel.Mesh.Presence/PresenceSchema.protocol  /md  PresenceSchema.md
 
 constant %Root%/Libraries/Goedel.Cryptography/UDFConstants.constant /md
 constant %Root%/Mesh/Goedel.Mesh/MeshConstants.constant /md
@@ -34,9 +47,14 @@ rfctool %DocSource%\hallambaker-mesh-4-schema.docx /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-5-protocol.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-6-rud.docx  /auto /cache=bib.xml
 :: Callsign is 7
+rfctool %DocSource%\hallambaker-mesh-7-callsign.docx /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-8-cryptography.docx /auto /cache=bib.xml
-rfctool %DocSource%\hallambaker-mesh-9-security.docx /auto /cache=bib.xml
-rfctool %DocSource%\hallambaker-mesh-10-trust.docx /auto /cache=bib.xml
+rfctool %DocSource%\hallambaker-mesh-9-notarization.docx /auto /cache=bib.xml
+rfctool %DocSource%\hallambaker-mesh-10-everything.docx  /auto /cache=bib.xml
+rfctool %DocSource%\hallambaker-mesh-11-presence.docx /auto /cache=bib.xml
+
+
+
 :: Presence is 11
 :: Repository is 12
 

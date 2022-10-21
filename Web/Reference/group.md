@@ -45,7 +45,7 @@ specifies the name of the user to be added.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group add groupw@example.com bob@example.com
-<rsp>bob@example.com [MDBY-XPMU-ABQL-ZN7F-X4E6-JBPX-DHQ4]
+<rsp>bob@example.com [MD5B-HJIJ-2Q6Z-2O3U-UY4K-PYRQ-O3N6]
 
 </div>
 ~~~~
@@ -79,6 +79,7 @@ create   Create recryption group
     /member   Authorize member rights for specified Mesh group
     /group   Authorize group administrator rights for specified Mesh group
     /null   Do not authorize any device rights at all (cannot be used with any rights grant))
+    /cover   File containing a default cover to be added to encrypted files
 <over>
 </div>
 ~~~~
@@ -94,7 +95,7 @@ to be used to share a calendar or password catalog etc.
 <div="terminal">
 <cmd>Alice> meshman group create groupw@example.com /web
 <rsp>Account=groupw@example.com
-UDF=MDUH-SCDO-UMPO-LCBP-QGOU-AZIG-PJ5D
+UDF=MAXE-Z6UJ-A7XI-MIEH-IDQK-L2LH-2DEG
 </div>
 ~~~~
 
@@ -131,7 +132,7 @@ To delete the group account itself, the 'account delete' command is required.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group delete groupw@example.com bob@example.com
-<rsp>bob@example.com [MDBY-XPMU-ABQL-ZN7F-X4E6-JBPX-DHQ4]
+<rsp>bob@example.com [MD5B-HJIJ-2Q6Z-2O3U-UY4K-PYRQ-O3N6]
 
 </div>
 ~~~~
@@ -166,7 +167,7 @@ specifies the name of the user whose information is requested.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman group get groupw@example.com bob@example.com
-<rsp>bob@example.com [MDBY-XPMU-ABQL-ZN7F-X4E6-JBPX-DHQ4]
+<rsp>bob@example.com [MD5B-HJIJ-2Q6Z-2O3U-UY4K-PYRQ-O3N6]
 
 </div>
 ~~~~

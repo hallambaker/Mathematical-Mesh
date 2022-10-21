@@ -4,10 +4,10 @@ The service sends out the following request:
 ~~~~
 {
   "RequestConfirmation":{
-    "MessageId":"NAJ7-2JAE-5VND-GLM3-YYHF-FQX2-TCF7",
+    "Text":"start",
+    "MessageId":"NBGK-6BGU-5C5H-4WUR-OGDF-NZTH-ZLCW",
     "Sender":"console@example.com",
-    "Recipient":"alice@example.com",
-    "Text":"start"}}
+    "Recipient":"alice@example.com"}}
 ~~~~
 
 Alice accepts the request and returns the following response:
@@ -15,25 +15,25 @@ Alice accepts the request and returns the following response:
 ~~~~
 {
   "ResponseConfirmation":{
-    "MessageId":"MCYE-BSU4-GBBY-O5J4-CCVD-ZHYF-VKGH",
-    "Sender":"alice@example.com",
-    "Recipient":"console@example.com",
     "Request":[{
-        "EnvelopeId":"MD5E-FTHA-N7K2-HEBG-S5U6-3CKT-NIRE",
-        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQUo3LTJKQUUtNV
-  ZORC1HTE0zLVlZSEYtRlFYMi1UQ0Y3IiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
+        "EnvelopeId":"MBFM-RPD5-MYYX-UK3M-2SCV-GUYR-J446",
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJOQkdLLTZCR1UtNU
+  M1SC00V1VSLU9HREYtTlpUSC1aTENXIiwKICAiTWVzc2FnZVR5cGUiOiAiUmVxdWV
   zdENvbmZpcm1hdGlvbiIsCiAgImN0eSI6ICJhcHBsaWNhdGlvbi9tbW0vb2JqZWN0
-  IiwKICAiQ3JlYXRlZCI6ICIyMDIyLTA1LTAzVDE2OjQ3OjIzWiJ9",
+  IiwKICAiQ3JlYXRlZCI6ICIyMDIyLTEwLTE4VDEyOjQ0OjA1WiJ9",
         "SequenceInfo":{
           "Index":7,
           "TreePosition":6201},
-        "Received":"2022-05-03T16:47:23Z"},
-      "ewogICJSZXF1ZXN0Q29uZmlybWF0aW9uIjogewogICAgIk1lc3NhZ2VJZC
-  I6ICJOQUo3LTJKQUUtNVZORC1HTE0zLVlZSEYtRlFYMi1UQ0Y3IiwKICAgICJTZW5
-  kZXIiOiAiY29uc29sZUBleGFtcGxlLmNvbSIsCiAgICAiUmVjaXBpZW50IjogImFs
-  aWNlQGV4YW1wbGUuY29tIiwKICAgICJUZXh0IjogInN0YXJ0In19",
+        "Received":"2022-10-18T12:44:05Z"},
+      "ewogICJSZXF1ZXN0Q29uZmlybWF0aW9uIjogewogICAgIlRleHQiOiAic3
+  RhcnQiLAogICAgIk1lc3NhZ2VJZCI6ICJOQkdLLTZCR1UtNUM1SC00V1VSLU9HREY
+  tTlpUSC1aTENXIiwKICAgICJTZW5kZXIiOiAiY29uc29sZUBleGFtcGxlLmNvbSIs
+  CiAgICAiUmVjaXBpZW50IjogImFsaWNlQGV4YW1wbGUuY29tIn19",
       {}
       ],
-    "Accept":true}}
+    "Accept":true,
+    "MessageId":"MA6X-RZBB-RBT7-EWC2-ZPDV-ZUJI-3BRE",
+    "Sender":"alice@example.com",
+    "Recipient":"console@example.com"}}
 ~~~~
 

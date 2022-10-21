@@ -7,31 +7,31 @@ the account and the list of roles that have been authorized for the device..
 ~~~~
 {
   "ConnectionDevice":{
-    "Authentication":{
-      "Udf":"MD75-RPX5-5NK4-FHKK-2PSE-DWSY-WU6Y",
-      "PublicParameters":{
-        "PublicKeyECDH":{
-          "crv":"X448",
-          "Public":"W28GpEdJVvrelRzN2hCyOI3lg5yK2nkzsQyyq4YzfuN3U
-  wCPWc73iuehOe5u1XeJKU9Y4MiI5UGA"}}},
-    "ProfileUdf":"MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V",
     "Roles":["message",
       "web"
       ],
     "Signature":{
-      "Udf":"MBLJ-ADU3-FC24-MNUN-QVH2-7PRQ-XXQA",
+      "Udf":"MA56-V5KL-YMCF-GI3D-PI2F-4OWT-73K6",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"YJF91CS0ZhNQkzdmyfL_Eg5oSRjNXyd1cyKHsKXfGTYwc
-  KfS1FpEolLTL0B67NOkzPAeKo-7aOwA"}}},
+          "Public":"297PWEg-l0jLJzknMVhNY9OGAZZNYHc_leI4Nq72_XRQa
+  8LZSajlhJBKOtEjVGyUITQRLj0aYO8A"}}},
     "Encryption":{
-      "Udf":"MAST-EV3R-CLXM-LVOO-L3FH-QHJ7-WATP",
+      "Udf":"MA6D-RU2J-LL73-LAW6-7JO6-IFCU-WRNI",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"BCNPHKNfgzlzwVjqv1u9uHkyshl6qJUZgj_bDwwLki5L1
-  u88TCB6Kr1sIcxqdihoCEUMqGuWsL4A"}}}}}
+          "Public":"D-HnzU7WQrAjSfiQYLRxSiIK-PBqBHXKSR-1oX1CO5Gb6
+  1L31-IV13stjhnXipqeNmuYfpovg0EA"}}},
+    "ProfileUdf":"MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA",
+    "Authentication":{
+      "Udf":"MBYN-SC4W-IU4X-LIVF-PSC6-6ADO-ZJOF",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"e1nZiuxVRE20PCUKSfqC-ee5yRis7TaKZrlwmEI9RpacG
+  f0vc7n3i8l7D_BaryByAUmpFyfKUs0A"}}}}}
 ~~~~
 
 The ConnectionService assertion is used to authenticate the device to the 
@@ -44,13 +44,13 @@ The corresponding ConnectionService assertion is:
 ~~~~
 {
   "ConnectionService":{
+    "ProfileUdf":"MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA",
     "Authentication":{
-      "Udf":"MD75-RPX5-5NK4-FHKK-2PSE-DWSY-WU6Y",
+      "Udf":"MBYN-SC4W-IU4X-LIVF-PSC6-6ADO-ZJOF",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"X448",
-          "Public":"W28GpEdJVvrelRzN2hCyOI3lg5yK2nkzsQyyq4YzfuN3U
-  wCPWc73iuehOe5u1XeJKU9Y4MiI5UGA"}}},
-    "ProfileUdf":"MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V"}}
+          "Public":"e1nZiuxVRE20PCUKSfqC-ee5yRis7TaKZrlwmEI9RpacG
+  f0vc7n3i8l7D_BaryByAUmpFyfKUs0A"}}}}}
 ~~~~
 

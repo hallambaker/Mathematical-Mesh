@@ -1,0 +1,167 @@
+﻿Protocol Goedel.Mesh.Everything Feed Feed
+	Description 
+		|An entry in the Mesh linked logchain.
+
+	Section 2 "Shared Classes"
+		Description
+			|The following classes are used as common elements in
+			|Mesh profile specifications.
+
+
+	Structure Header
+		Description
+			|Describes the feed
+		String Title
+			Description
+				|The name of the channel. 
+		String Link
+			Description
+				|The URL to the HTML website corresponding to the channel.
+		String Description
+			Description
+				|Phrase or sentence describing the channel
+		String Language
+			Description
+				|The language the channel is written in. As specified in the HTM: lang attribute.
+		String Copyright
+			Description
+				|Copyright notice for content in the channel.
+		String ManagingEditor
+			Description
+				|Email address for person responsible for editorial content.
+		String WebMaster
+			Description
+				|Email address for person responsible for technical issues relating to channel.
+
+		String Category
+			Multiple
+			Description
+				|Specifies one or more categories that the channel belongs to. 
+		String Generator
+			Description
+				|A string indicating the program used to generate the channel.
+		String Docs
+			Description
+				|A URL that points to the documentation for the format used in the RSS file.
+		String cloud
+			Description
+				|Allows processes to register with a cloud to be notified of updates to the channel, 
+				|implementing a lightweight publish-subscribe protocol for RSS feeds.
+		String Image
+			Description
+				|Specifies a GIF, JPEG, PNG or SVG image that can be displayed with the channel
+		String Rating
+			Description
+				|A PICS rating for the channel.
+		Struct TextInput TextInput
+			Description
+				|Specifies a text input box that can be displayed with the channel for HTML 
+				|or RSS feedreader interaction.
+		String skipHours
+			Description
+				|A hint for aggregators telling them which hours they can skip. This 
+				|element contains up to 24 hour sub-elements whose value is a number 
+				|between 0 and 23, representing a time in UTC, when aggregators, 
+				|if they support the feature, may not read the channel on hours listed 
+				|in the skipHours element. The hour beginning at midnight is hour zero.
+		String skipDays
+			Description
+				|A hint for aggregators telling them which days they can skip. This element 
+				|contains up to seven day sub-elements whose value is Monday, Tuesday, 
+				|Wednesday, Thursday, Friday, Saturday or Sunday. Aggregators may not read 
+				|the channel during days listed in the skipDays element.
+
+	Structure TextInput
+		Description
+			|Provided for compatibility with legacy RSS readers.
+		String Title
+			Description
+				|The label of the Submit button in the text input area.
+		String Description
+			Description
+				|Explains the text input area
+		String Name
+			Description
+				|The name of the text object in the text input area.
+		String Link
+			Description
+				|The URL of the CGI script that processes text input requests.
+
+	Structure Footer
+		Inherits Header
+		DateTime PubDate
+			Description
+				|The publication date for the content in the channel.
+		DateTime LastBuildDate
+			Description
+				|The last time the content of the channel changed.
+
+	Structure Item
+		Description
+			|Base class for feed items.
+		String Author
+			Description
+				|Identifies the author of the item. Defaults to the value specified
+				|in the feed descriptor.
+		DateTime PubDate
+			Description
+				|Indicates when the item was published.
+
+	Structure Feedback
+		Inherits Item
+		Description
+			|A response item consisting of only a subject specified and semantic, no
+			|content is included.
+		String Subject
+			Description
+				|The URI of the subject matter being commented on.
+		String Semantic
+			Description
+				|The feedback semantic
+	
+	Structure Comment
+		Inherits Item
+		Description
+			|A response item consisting of a short form response to a single
+			|subject.
+		String ContentType
+			Description
+				|The content type.
+		Binary Text
+			Description
+				|The comment content.
+
+	Structure Publication
+		Inherits Feedback
+		Description
+			|Publication notice for a document that is not a comment on another
+			|publication or comment or is of extended length.
+		String Title
+			Description
+				|The title of the item.	
+		String Link
+			Description
+				|A URI from which the content may be retreived. This is used for 
+				|longer content such as a document.
+		String Description
+			Description
+				|The item synopsis.
+
+		String Category
+			Multiple
+			Description
+				|Includes the item in one or more categories.
+		String Comments
+			Description
+				|URL of a page for comments relating to the item.
+		String Enclosure
+			Description
+				|Describes a media object that is attached to the item.
+		String Guid
+			Description
+				|A string that uniquely identifies the item.
+		String Source
+			Description
+				|The RSS channel that the item came from.
+
+

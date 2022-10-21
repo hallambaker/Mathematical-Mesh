@@ -78,6 +78,7 @@ public record Pending(
 /// Base record for pending outbound items.
 /// </summary>
 public record PendingItem {
+    public readonly static PendingInvalidStream PendingInvalidStream = new PendingInvalidStream();
     }
 
 /// <summary>
@@ -96,6 +97,17 @@ public record PendingUnknown : PendingItem {
     public readonly static PendingUnknown Empty = new PendingUnknown();
 
     }
+
+/// <summary>
+/// Unknown / unsupported payload.
+/// </summary>
+public record PendingInvalidStream : PendingItem {
+
+
+
+    }
+
+
 
 /// <summary>
 /// Pending stream assignment request.

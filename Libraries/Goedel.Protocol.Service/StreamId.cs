@@ -92,17 +92,15 @@ public class PacketStream {
     ///of the connection.</summary> 
     public StreamId StreamId { get; init; }
 
-
-
-    // NO!!!! The party that created the connection owns stream ids 0..MAXINT/2 and the
-    // other side owns MAXINT/2..X
+   ///<summary>The stream label</summary> 
+    public byte[] Label { get; init; }
 
 
     ///<summary>The inbound message block. Consumers of the stream MAY obtain more
     ///detailed information on the inbound messages by consuming messages 
     ///directly from the buffer rather than as raw bytes returned by
     ///<see cref="ReadBytesAsync"/>.</summary> 
-    public BufferBlock<BufferedMessage> MessageBuffer { get; init; }
+    public BufferBlock<MessageData> MessageBuffer { get; init; }
 
     /// <summary>
     /// Queue the data <paramref name="data"/> to be sent out on the stream.
@@ -120,9 +118,31 @@ public class PacketStream {
     /// <returns></returns>
     public async Task<byte[]> ReadBytesAsync() {
         var message = await MessageBuffer.ReceiveAsync();
-        return message.MessageData;
+        return message.Data;
         }
 
+    public void Deliver(byte[] packet, int start, int length) {
+        var data = new byte[length];
+        Array.Copy(packet, start, data, 0, length);
+
+        var message = new MessageData() {
+            Data = data,
+            IsChunked = false,
+            IsLast = true
+            };
+        MessageBuffer.Post (message);
+
+        }
+
+
+    public void Start(int total, bool chunked, byte[] packet, int start, int length) {
+        }
+
+    public void Data(bool last, byte[] packet, int start, int length) {
+        }
+
+    public void Abort() {
+        }
 
 
     }

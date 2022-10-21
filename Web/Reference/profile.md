@@ -81,7 +81,7 @@ may be used to specify the most commonly used authorizations.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account connect mcu://maker@example.com/EDRL-4MZP-3OUD-OZBS-SPZN-7OSO-OM /web
+<cmd>Alice> meshman account connect mcu://maker@example.com/ED6B-KIW3-TSCC-P4LM-4D3I-IAPD-LE /web
 <rsp></div>
 ~~~~
 
@@ -95,6 +95,7 @@ may be used to specify the most commonly used authorizations.
 create   Create new account profile
        New account
     /localname   Account friendly name
+    /payment   Optional payment token
     /new   Force creation of new device profile
     /dudf   Device profile fingerprint
     /did   Device identifier
@@ -124,7 +125,7 @@ a default name will be used.
 <div="terminal">
 <cmd>Alice> meshman account create alice@example.com
 <rsp>Account=alice@example.com
-UDF=MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
+UDF=MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
 </div>
 ~~~~
 
@@ -155,7 +156,7 @@ use, the UDF of the device profile must be specified.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account delete MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
+<cmd>Alice> meshman account delete MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
 <rsp>Device Profile UDF=
 </div>
 ~~~~
@@ -193,9 +194,9 @@ The options 'shares' and 'quorum' are used to specify the number of shares to be
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account escrow
-<rsp>Share: SAQC-YE5R-BE3C-37IF-AG43-SGNT-3NLP-VURL-YWEH-FTBE-J755-IN6F-ZPXR-N6O5-3AVQ
-Share: SAQZ-AJS7-NJMO-B6S3-4J6U-AHPD-TL5C-HEPS-523G-VBSK-FUDG-X3IR-5S2X-UGBI-YWIA
-Share: SARP-IOIN-ZN5Z-H55S-YNAM-OIQT-LKOU-YUN2-C7SG-EQDQ-BIIQ-HIS6-BV55-2NTT-WL2Q
+<rsp>Share: SAQE-JRDL-32AC-GBJK-6WC5-IUEO-5VGH-5LHC-F6GO-7R4S-UAMS-IDDQ-LXHD-GHKE-GTPQ
+Share: SAQ4-DB6V-V4E3-DTCA-OTCE-K56Z-JQ4L-66NG-QDFF-SGJ4-47QM-RQT4-ST36-UX6R-IPIQ
+Share: SARD-4SZ7-P6JU-BE2V-6QBL-NHZD-VMSQ-ARTK-2ID4-E2XH-F6UG-26EI-ZQQ2-DIS6-KKLA
 </div>
 ~~~~
 
@@ -287,7 +288,7 @@ service configuration if successful.
 <div="terminal">
 <cmd>Alice> meshman account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MD3P-ALTL-T6I4-U6ER-O4ZD-5AP5-J6SO
+   Service UDF = MBYH-BJ3I-EUWL-7QAI-NGIE-TPC6-X4KU
 </div>
 ~~~~
 
@@ -404,8 +405,8 @@ that the connection can be completed without additional user interaction.
 ~~~~
 <div="terminal">
 <cmd>Alice> meshman account pin /threshold
-<rsp>PIN=ADKW-K2ZB-PPZM-ECG4-P3NQ-UN4K-XI
- (Expires=2022-05-04T16:47:51Z)
+<rsp>PIN=AAIT-WXRD-BVB7-3BBT-D6JS-44GE-B4
+ (Expires=2022-10-19T12:48:11Z)
 </div>
 ~~~~
 
@@ -436,7 +437,7 @@ deleted from the service.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman account purge MARP-HH6B-D2JW-WLQ6-RWPQ-2SLS-AI2V
+<cmd>Alice> meshman account purge MDRR-5W72-3RJO-VZB3-VUVQ-IOEC-6UNA
 <rsp>ERROR - An unknown error occurred
 </div>
 ~~~~
@@ -477,7 +478,7 @@ recovery shares.
 
 ~~~~
 <div="terminal">
-<cmd>Alice2> meshman account recover SAQC-YE5R-BE3C-37IF-AG43-SGNT-3NLP-VURL-YWEH-FTBE-J755-IN6F-ZPXR-N6O5-3AVQ SARP-IOIN-ZN5Z-H55S-YNAM-OIQT-LKOU-YUN2-C7SG-EQDQ-BIIQ-HIS6-BV55-2NTT-WL2Q /verify
+<cmd>Alice2> meshman account recover SAQE-JRDL-32AC-GBJK-6WC5-IUEO-5VGH-5LHC-F6GO-7R4S-UAMS-IDDQ-LXHD-GHKE-GTPQ SARD-4SZ7-P6JU-BE2V-6QBL-NHZD-VMSQ-ARTK-2ID4-E2XH-F6UG-26EI-ZQQ2-DIS6-KKLA /verify
 <rsp>ERROR - No account specified
 </div>
 ~~~~
@@ -512,14 +513,14 @@ without attempting to synchronize with the service.
 <rsp>   [MMM_Inbound] 3  
    [MMM_Outbound] 1  CRA7-FW4G-HJYL-GKDU-GXLB-67LE-KXGZ-VXJX-MGGX-H2FA-UHUS-YBXW-EW5Q-5VME-E4TI-SZVD-AXAG-A6DE-HBTD-JEQN-4OWK-GU4N-3M2J-WJ7Y-B4GW-Y5Q
    [MMM_Local] 2  
-   [MMM_Access] 3  X67X-TO5Y-SCBO-AXDA-YOZJ-GFCJ-IFCF-QNWS-QH2F-U3CS-XWDY-LMQA-6NFC-A6EX-25GE-7IJO-BYKU-YM3U-FCE6-JARQ-YHZG-LG3G-J4WP-3AVN-U64S-JWY
-   [MMM_Credential] 3  5PI5-GXXV-UWWM-Z4G4-SS62-CHJF-TFA4-TAY7-O4B7-3QE6-YYVP-RBYY-OPAD-HBIQ-63PZ-VDD2-N4YD-B7KV-WOMS-RX47-DBYU-SGOZ-MRLP-WQIM-F7TI-VYQ
-   [MMM_Device] 3  KMN7-LMFM-EEZC-AD23-2C5F-AXH4-PWXK-DRWF-JBNA-3FPB-E7GX-UJR3-4OOU-PAXJ-F42Z-7NVU-U4FQ-GBI3-2YPR-LL2Q-TSKT-X2PJ-K2QQ-XY2Z-JJY3-BNI
-   [MMM_Contact] 2  COLT-F2D7-OZCW-CFYB-Q3GJ-TOLZ-AOPX-JLFA-IRGQ-O53A-LEAM-XMBW-6K56-2H6C-FE3Y-PMCQ-B4FC-XEXN-7WKY-X3OU-7EQL-ZJUS-E5FX-S335-UZ2G-U3Y
-   [MMM_Application] 1  I6DK-OFK2-K52W-KIJ3-6RTC-BPBS-32C6-THCL-VITZ-QPFE-KNA2-GNGA-IWK4-MNXM-CNPZ-EMK7-NV2G-LALZ-BOX4-36C7-KDUU-HCJW-XT4Z-7C22-2PZB-UMI
-   [MMM_Publication] 1  GSLA-4QWH-5XUB-VUC5-A442-SRMC-WB4A-BBKP-XOP4-WLSA-4ZTV-NTTF-NELI-2TAG-GQ4G-JW62-XARV-T2CK-QH7U-L74B-E35V-HVUE-46KD-MZ66-MNTA-2VA
-   [MMM_Bookmark] 1  LH75-RPP3-RKKC-BKMY-7I7B-LCQP-LTGE-IX67-TARW-YZPK-6UG7-2NEW-6AKF-KID4-WK7M-CAPT-UTUI-NDCC-KYLW-HUK3-Z3R3-BTV3-D6M7-EGXA-KRT7-H7A
-   [MMM_Task] 1  XASR-QDD5-UNRI-PFH7-ND3C-AJD2-AH4G-ZRSW-QUUF-FZGF-WXQT-SOYH-U5DX-P4E2-AER7-ZWQL-G77N-UD2A-ZO4T-ECRH-RFMF-ALI5-HMZ3-KUF4-KANV-K7I
+   [MMM_Access] 3  V6JB-VDEV-RDKR-QU26-3VR5-X453-4UST-HJQV-BSQ7-M32L-E7HO-MQWW-FYO3-IODK-MQWP-WATQ-EEL2-NN3U-7UCU-6MV6-B7CB-HORS-B3OE-XZNM-HJN2-MJY
+   [MMM_Credential] 3  A6IB-GU3Y-HYXT-4IUA-RHJ4-YVVS-6AR2-VPVF-GHQN-TCMK-AVQ5-HZZU-VM3G-W2OV-OW3B-YCMC-ULOC-HDIQ-OP45-INQQ-UEFD-N2V7-ZLUG-XIXF-MIHB-P5I
+   [MMM_Device] 3  VIHB-S77U-DZWD-CJ2H-REHT-T47H-IEEI-3GCI-K3IG-2NIX-Y2EU-PTPT-4YTM-UUXS-TQRG-VUIU-MTJU-IMQN-3LCE-2KEW-PIOS-UABP-IWV5-ODGE-R7JW-2VI
+   [MMM_Contact] 2  XK43-WSMU-NZJW-VVQ5-RM7H-VDCZ-FYH5-MI4B-5TQI-BITU-G67U-JT4G-BP75-UAGQ-B7YO-FAAT-DZA3-X5EN-7D7P-WU2Y-PLOJ-SEFE-GDPF-FU5L-XZ76-ULY
+   [MMM_Application] 1  TZMN-KIP3-X4L2-SRYN-ESMJ-7R2Y-O2IT-6QGA-MCZW-FAKI-7YWC-HIJ4-XUYD-IE4V-7B6J-MR2L-YTK4-YJKI-CC7O-5LOF-LUXR-OAOR-46UD-Z3ZW-PWEH-FOI
+   [MMM_Publication] 1  LYJY-I6DN-OBUP-OPAZ-CUS5-IER7-OQ5A-UQTV-4RUS-6SOP-L2K5-J3BZ-OGSP-2WKC-6VNW-MFH3-H27Q-WEG2-PXHM-S7JM-C565-MA57-VWWF-OJRQ-C2XE-Q6Q
+   [MMM_Bookmark] 1  K3WK-ZPGG-RXN7-NWK6-WJXE-H2AY-UXYI-OKG7-UAZ3-LZKE-CISD-JNR7-PQO3-TBXO-4HG5-BFRR-NRQM-A4V6-3SSU-2MLB-IL4I-6I3B-RAM4-MYQO-QH2V-NSI
+   [MMM_Task] 1  UW4M-SC5T-N4QJ-IBPG-I62W-5E52-43V5-G624-54LJ-XK75-OK4H-LXF2-2XJC-ODFY-N2KU-ISKT-24CL-CJZJ-GK3W-JRKO-5M3R-G5EL-4RDE-NLSR-F5YA-WFA
 </div>
 ~~~~
 

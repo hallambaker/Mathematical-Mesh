@@ -233,6 +233,10 @@ public class PacketConnection {
         }
 
 
+    public bool TryGetStream (StreamId streamId, out PacketStream packetStream) =>
+        DictionaryStream.TryGetValue (streamId, out  packetStream);
+
+
 
 
     /// <summary>
@@ -266,7 +270,6 @@ public class PacketConnection {
 
         // Here we put all the code to handle setting up the cryptography.
 
-        ProcessPacket(inboundPacket);
         }
 
 
@@ -275,21 +278,55 @@ public class PacketConnection {
 
         inboundPacket.ParseHeader(Decryptor);
 
-        bool active = true;
 
-        while (active) {
-
-            // grab a data chunk
-            // handle the chunk
-
-
-            // last chunk?
-
-            active = false;
+        // is this the next packet we are expecting?
+        if (inboundPacket.Serial < PacketExpecting) {
+            return; // Have already handled this packet, ignore.
             }
+
+        if (inboundPacket.Serial > PacketExpecting) {
+            Queue(inboundPacket);
+            return; // This packet was received out of order, ignore it.
+            }
+
+
+
+        // if so, we can process the entire queue
+
+
+        // otherwise we have to postpone processing till we have a complete set.
+        Process(inboundPacket);
+
 
 
         }
 
+    void Process(PacketInbound inboundPacket) {
+        bool active = true;
+
+        while (active) {
+            active = inboundPacket.GetChunk (this);
+            }
+        }
+
+
+    internal void Error(PendingItem pendingItem) {
+        }
+
+    void Queue(PacketInbound inboundPacket) {
+        }
+
+
+    internal void Deliver(StreamId streamId, byte[] label) {
+        var stream = new PacketStream() {
+            PacketConnection = this,
+            StreamId = streamId,
+            Label = label
+            };
+
+        DictionaryStream.Add(streamId, stream);
+
+        PacketStreamBuffer.Post(stream);
+        }
 
     }

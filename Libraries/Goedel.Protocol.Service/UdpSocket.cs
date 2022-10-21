@@ -186,9 +186,12 @@ public class UdpSocket : Disposable {
                         var packet = task.Result;
                         if (packet.ConnectionId.IsInitial) {
                             var connection = GetNextConnection(false);
+                            Console.WriteLine("Got connection - post");
                             connection.ProcessInitial(packet);
 
                             InboundConnectionQueue.Post(connection);
+
+                            connection.ProcessPacket(packet);
                             }
                         else {
                             if (TryGetReceiverId(packet.ConnectionId, out var connection)) {

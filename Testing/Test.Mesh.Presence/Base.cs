@@ -124,6 +124,8 @@ public class TestPresence : Disposable {
         pending.Post(streamSocket, message);
         var task2 = pending.CommitAsync();
 
+        Console.WriteLine("Write complete");
+
         //wait for the receiver to complete. We don't need to wait for the sender because this
         // is implicit.
         var all = Task.WhenAll(task1, task2);
@@ -154,12 +156,20 @@ public class TestPresence : Disposable {
         }
 
     async Task<byte[]> WaitStreamData(UdpSocket receive) {
+        Console.WriteLine("Read start");
 
         var connection = await receive.GetConnectionAsync();
-        var stream = await connection.GetStreamAsync();
-        //var data = await stream.ReadBytesAsync();
+        Console.WriteLine("Read got connection");
 
-        return null;
+        var stream = await connection.GetStreamAsync();
+
+        Console.WriteLine("Read got stream");
+        var data = await stream.ReadBytesAsync();
+
+
+        Console.WriteLine("Read complete");
+
+        return data;
         }
 
 

@@ -27,7 +27,7 @@ namespace Goedel.Protocol.Service;
 /// Base type for inbound and outbound packets.
 /// </summary>
 
-public abstract record Packet {
+public abstract record PacketUDP {
     ///<summary>The connection token size (16 bytes)</summary> 
     public const int ConnectionTokenLength = 16;
 
@@ -67,19 +67,19 @@ public abstract record Packet {
 
 
     ///<summary>Tag indicating a 1 byte integer encoding.</summary> 
-    public const byte Integer1 = 0b0000000;
+    public const byte Integer1 = 0b0000_0000;
     ///<summary>Tag indicating a 2 byte integer encoding.</summary> 
-    public const byte Integer2 = 0b0100000;
+    public const byte Integer2 = 0b0100_0000;
     ///<summary>Tag indicating a 4 byte integer encoding.</summary> 
-    public const byte Integer4 = 0b1000000;
+    public const byte Integer4 = 0b1000_0000;
     ///<summary>Tag indicating a 8 byte integer encoding.</summary> 
-    public const byte Integer8 = 0b1100000;
+    public const byte Integer8 = 0b1100_0000;
 
     ///<summary>Tag indicating a 8 byte integer encoding.</summary> 
-    public const byte IntegerMask = 0b1100000;
+    public const byte IntegerMask = 0b1100_0000;
 
     ///<summary>Tag indicating a 8 byte integer encoding.</summary> 
-    public const byte IntegerFirst = 0b00111111;
+    public const byte IntegerFirst = 0b0011_1111;
     }
 
 

@@ -26,7 +26,7 @@ namespace Goedel.Protocol.Service;
 /// <summary>
 /// Outbound packet record.Containst write methods.
 /// </summary>
-public record PacketOutbound : Packet {
+public record PacketOutbound : PacketUDP {
 
     int writeIndex = StartPayload;
     int lastByte;
@@ -132,10 +132,7 @@ public record PacketOutbound : Packet {
     /// starting at byte <paramref name="start"/> and return the number of bytes
     /// written.
     /// </summary>
-    /// <param name="streamId"></param>
-    /// <param name="data"></param>
-    /// <param name="start"></param>
-    /// <param name="length"></param>
+    /// <param name="pendingPost">Contains the data to post.</param>
     /// <returns>The number of bytes written. If zero, no bytes were written.</returns>
     public bool PostData(PendingPost pendingPost) {
         var streamId = pendingPost.PacketStream.StreamId;
@@ -152,15 +149,17 @@ public record PacketOutbound : Packet {
             return false;
             }
 
+
         if (start == 0) {
             if (1 + length + LengthOf((ulong)length) < Space) {
                 payloadTag = PayloadTag.DataFull;
+                Write(payloadTag);
                 completed = true;
                 }
             else {
                 payloadTag = PayloadTag.DataStart;
+                Write(payloadTag);
                 length = Space - 3;
-
                 }
             }
         else {
@@ -171,9 +170,12 @@ public record PacketOutbound : Packet {
             else {
                 length = Space - 3;
                 }
+            Write(payloadTag);
             }
 
-        Write(payloadTag);
+        Write(streamId);
+
+
         Write(data, start, length);
         if (!completed) {
             pendingPost.Sent += length;

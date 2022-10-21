@@ -7,6 +7,12 @@
 <dd>Manage bookmark catalogs connected to an account
 <dt><a href="calendar.html">calendar</a>
 <dd>Manage calendar catalogs connected to an account
+<dt><a href="callsign.html">callsign</a>
+<dd><Unspecified>
+<dt><a href="carnet.html">carnet</a>
+<dd><Unspecified>
+<dt><a href="chat.html">chat</a>
+<dd><Unspecified>
 <dt><a href="contact.html">contact</a>
 <dd>Manage contact catalogs connected to an account
 <dt><a href="dare.html">dare</a>
@@ -29,6 +35,8 @@
 <dd>Manage password catalogs connected to an account
 <dt><a href="ssh.html">ssh</a>
 <dd>Manage SSH profiles connected to a personal profile
+<dt><a href="wallet.html">wallet</a>
+<dd><Unspecified>
 </dl>
 
 # Command format

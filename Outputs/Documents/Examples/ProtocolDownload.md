@@ -20,27 +20,20 @@ The response contains the requested envelope:
 ~~~~
 {
   "DownloadResponse":{
-    "Status":201,
-    "StatusDescription":"Operation completed successfully",
     "Updates":[{
-        "Container":"MMM_Credential",
         "Envelopes":[[{
-              "PayloadDigest":"ViOel6XEERd8vS3cNPnNkXk14rcjfxhBrf
-  tQ8FycWhL0MCUaHVA9jKTRT7xWKzUbPklrANlpZl4y7j8erUnpdQ",
-              "TreeDigest":"plYLtIgRdVJB82LEKiUn3rs9guARA9bnSf6eG
-  OmmR5Wuj5uIEYhnL2q2v29mOD8SUZdYeL6f5CDLciY0onNHnw",
               "enc":"A256CBC",
               "dig":"S512",
-              "Salt":"GMsUn6jn1sXUinpjWN0n2Q",
+              "Salt":"9G8s-0EiAgsU9KfVUcNhmg",
               "recipients":[{
-                  "kid":"MA67-4U5O-PTDZ-WX4D-PDFU-F7RD-3A5O",
+                  "kid":"MD3C-QNUT-ZU52-7ZYI-KKLE-634C-FX46",
                   "epk":{
                     "PublicKeyECDH":{
                       "crv":"X448",
-                      "Public":"HkhGCfROdc42ZybuyXddvfhPY2iNJCTAU
-  9zZO0ho8k7uV9Br8oBhasuYhsEdWGoh_w9oclPnWWIA"}},
-                  "wmk":"ZwwmmwI-YSDEjCFjpcZeOo6_GYIDCVfYMPitwsHL
-  Dq5ZQqi5xL9P8Q"}
+                      "Public":"hnlO_tCx1jlYE7whov_zahfrvFiVv9FxS
+  lBtr3ujmPBYkc6h8qfMDV1oRWOGbt8giT03J0g37S-A"}},
+                  "wmk":"zBUGL2OKIECJ120IqN1kQicryZXen5qsZWA7yLZK
+  tzQfLyimnOkVjw"}
                 ],
               "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICI6ZnRwLmV4
   YW1wbGUuY29tIiwKICAiRXZlbnQiOiAiVXBkYXRlIiwKICAiRmlyc3QiOiAxLAogI
@@ -48,14 +41,21 @@ The response contains the requested envelope:
               "SequenceInfo":{
                 "Index":3,
                 "TreePosition":825},
-              "Received":"2022-05-03T16:47:09Z"},
-            "WUD_7MrlZuD3MCvUbaf_BpzNvShS6WJonZjyWYfOJSMiy9nh8Sav
-  wkUc41OMnnBLyLXXZEtojbPhQasAt2pRCQaURCcm8gwfp1SF9TY0j0De-JJKRIYgS
-  e9fAXhWF4Ytt7DGW4FK1aJFMLGGoY4p4fwrIglr7HRLnzXb8nGI9k4",
+              "Received":"2022-10-18T12:43:49Z",
+              "PayloadDigest":"isMr-j-qxmeh4Jl4M4fFHLMcHNGC0rhRMf
+  C_fBgP9KLiY7eIwtZmJ9zRDT-LsqD6qTuWgKDDOr5EIdr3F4dYBg",
+              "TreeDigest":"aNMogtuGtBohOUNSCfPXDNONUz5BQ86TNDOfE
+  _HZ5zi2Bw_FWQik3E1qWyXFi-GuWipin-bJuFPJ2JPu-mIj4w"},
+            "i5YiMuM69xy42g6FbOBjc3P-lfIRpsR4FBXKhvu6_OsZxZHSqHTY
+  GUYuommb9YdpCvZbxrm1W7_mNiBQPMdFWP69r6J3WCT1qYRboEvVSTI3nz8G-RO4G
+  UlxuYzMZUtMZ4x4EZxpLmbGseS4U7VYe-aqJg6RA-Qjgnijp50y0wQ",
             {}
             ]
-          ]}
-      ]}}
+          ],
+        "Container":"MMM_Credential"}
+      ],
+    "Status":201,
+    "StatusDescription":"Operation completed successfully"}}
 ~~~~
 
 

@@ -17,7 +17,10 @@ File ServiceConstants
 		Integer Data 					 3 "Message data"
 			Description
 				|Packet contains the continuation of a message.
-		Integer DataAbort				 4 "Abort data send"
+		Integer DataLast				 4 "Complete data send"
+			Description
+				|Abort the current message send.
+		Integer DataAbort				 5 "Abort data send"
 			Description
 				|Abort the current message send.
 

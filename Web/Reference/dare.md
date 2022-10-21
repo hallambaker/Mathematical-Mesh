@@ -42,6 +42,7 @@ append   Append the specified file as an entry to the specified sequence.
     /encrypt   Encrypt data for specified recipient
     /sign   Sign data with specified key
     /hash   Compute hash of content
+    /cover   File containing a cover to be added to encrypted files
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
@@ -79,6 +80,7 @@ archive   Create a new DARE archive and add the specified files
     /encrypt   Encrypt data for specified recipient
     /sign   Sign data with specified key
     /hash   Compute hash of content
+    /cover   File containing a cover to be added to encrypted files
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
@@ -120,6 +122,7 @@ create   Create a new DARE Sequence
     /encrypt   Encrypt data for specified recipient
     /sign   Sign data with specified key
     /hash   Compute hash of content
+    /cover   File containing a cover to be added to encrypted files
     /alg   List of algorithm specifiers
     /type   The sequence type, plain/tree/digest/chain/tree
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
@@ -159,6 +162,7 @@ copy   Copy sequence contents to create a new sequence removing deleted elements
     /encrypt   Encrypt data for specified recipient
     /sign   Sign data with specified key
     /hash   Compute hash of content
+    /cover   File containing a cover to be added to encrypted files
     /alg   List of algorithm specifiers
     /type   The sequence type, plain/tree/digest/chain/tree
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
@@ -221,7 +225,7 @@ with the extension `.undare` otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare /encrypt=IKT5-XING-IF3Y-UC52-GWRI-RDWI-NY
+<cmd>Alice> meshman dare decode TestFile1.txt.symmetric.dare /encrypt=UGRA-AAKA-D7YU-XFC5-5YZ3-NWZC-SE
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -322,6 +326,7 @@ encode   Encode data as DARE Message.
     /encrypt   Encrypt data for specified recipient
     /sign   Sign data with specified key
     /hash   Compute hash of content
+    /cover   File containing a cover to be added to encrypted files
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
@@ -368,7 +373,7 @@ file name is the input file name with the additional extension `.dare`.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare/key=IKT5-XING-IF3Y-UC52-GWRI-RDWI-NY
+<cmd>Alice> meshman dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare/key=UGRA-AAKA-D7YU-XFC5-5YZ3-NWZC-SE
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -423,6 +428,7 @@ index   Compile an index for the specified sequence and append to the end.
     /encrypt   Encrypt data for specified recipient
     /sign   Sign data with specified key
     /hash   Compute hash of content
+    /cover   File containing a cover to be added to encrypted files
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
@@ -493,6 +499,7 @@ log   Append the specified string to the sequence.
     /encrypt   Encrypt data for specified recipient
     /sign   Sign data with specified key
     /hash   Compute hash of content
+    /cover   File containing a cover to be added to encrypted files
     /alg   List of algorithm specifiers
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /local   Local name for account (e.g. personal)
@@ -546,7 +553,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare /encrypt=IKT5-XING-IF3Y-UC52-GWRI-RDWI-NY
+<cmd>Alice> meshman dare verify TestFile1.txt.symmetric.dare /encrypt=UGRA-AAKA-D7YU-XFC5-5YZ3-NWZC-SE
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~

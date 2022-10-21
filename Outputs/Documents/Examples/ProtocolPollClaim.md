@@ -9,7 +9,7 @@ and the publication ID:
 ~~~~
 {
   "PollClaimRequest":{
-    "PublicationId":"EBQB-KJVT-BYND-4GE2-U65R-FZFH-4C7O",
+    "PublicationId":"EBQM-KNOL-3JSA-7ODT-IDYR-4MIF-T372",
     "TargetAccountAddress":"maker@example.com"}}
 ~~~~
 
@@ -20,38 +20,38 @@ The response returns the latest claim made as signed message:
 ~~~~
 {
   "PollClaimResponse":{
-    "Status":201,
-    "StatusDescription":"Operation completed successfully",
     "EnvelopedMessage":[{
-        "PayloadDigest":"5rbP0ACwMxu-M8RKeXElgiEFeiCMtvhmaUfryItH
-  dvjWhzOrpcTiTjE8yjyFEOZ_jBQS6fXec9IYSDnmdA-gIQ",
-        "EnvelopeId":"MC4E-5C44-IEHC-EEKA-KPSY-YGMQ-54HQ",
+        "EnvelopeId":"MBRA-UGUV-W5GN-5VFJ-MVZH-MMG3-VSIE",
         "dig":"S512",
-        "signatures":[{
-            "alg":"S512",
-            "kid":"MDWZ-36RF-622V-XT6X-O6KB-3S5J-4JE3",
-            "signature":"IcU7z-AssGRaQXnR6p9Dx1hwrZBLmZutUe3jgHnX
-  53-HTX1cQeQp8QYDHB-GxpOGVsS91LXNMQmA8keb0exzT8xdnOX6J1I7mXcG12nvs
-  i6fUDkXOcc6Yl8OXw6UpoiK75I1f8Gu1UDj6x-Zado4TTEA"}
-          ],
-        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJORFo0LUxHWE0tVz
-  dKSS02TlJILUkyQVMtVVBVQi1RVUJMIiwKICAiTWVzc2FnZVR5cGUiOiAiTWVzc2F
+        "ContentMetaData":"ewogICJVbmlxdWVJZCI6ICJORE1XLVM1NkItTz
+  NEMy1OQUs2LVNLSEYtM0tIUi1VQ0Q3IiwKICAiTWVzc2FnZVR5cGUiOiAiTWVzc2F
   nZUNsYWltIiwKICAiY3R5IjogImFwcGxpY2F0aW9uL21tbS9vYmplY3QiLAogICJD
-  cmVhdGVkIjogIjIwMjItMDUtMDNUMTY6NDc6NTdaIn0",
+  cmVhdGVkIjogIjIwMjItMTAtMThUMTI6NDg6MThaIn0",
         "SequenceInfo":{
           "Index":1,
           "TreePosition":0},
-        "Received":"2022-05-03T16:47:58Z"},
-      "ewogICJNZXNzYWdlQ2xhaW0iOiB7CiAgICAiTWVzc2FnZUlkIjogIk5EWj
-  QtTEdYTS1XN0pJLTZOUkgtSTJBUy1VUFVCLVFVQkwiLAogICAgIlNlbmRlciI6ICJ
-  hbGljZUBleGFtcGxlLmNvbSIsCiAgICAiUmVjaXBpZW50IjogIm1ha2VyQGV4YW1w
-  bGUuY29tIiwKICAgICJQdWJsaWNhdGlvbklkIjogIkVCUUItS0pWVC1CWU5ELTRHR
-  TItVTY1Ui1GWkZILTRDN08iLAogICAgIlNlcnZpY2VBdXRoZW50aWNhdGUiOiAiQU
-  FYMi1QQVk3LVFCUDYtTUlGNC1RNkNQLVJHUTMtWFlUNyIsCiAgICAiRGV2aWNlQXV
-  0aGVudGljYXRlIjogIkFEWlItQzQyRS1PU0dHLTVBUFktUlVXVC1XQUFMLTZJRFci
+        "Received":"2022-10-18T12:48:18Z",
+        "signatures":[{
+            "alg":"S512",
+            "kid":"MCDG-TS7T-UPDD-V667-OXSX-QJ5G-FQRZ",
+            "signature":"AZPN7yQXHU7HGacLw1ggJW_huQ2Kx6JDuBhnraAA
+  U7b-PFHBMqcLEExjp7uvP_wJRdOHx9vVZJuAvu9qpnOoH2uJpE7i-LHsonlgTSZH9
+  _RqqOKXNzQvHhj81K3LecFAFige_yHZXP4aFpLDMVldLh8A"}
+          ],
+        "PayloadDigest":"UzMKbHTyfoSBf2pi03m-mgLhgFwb6e0qyYFYdV--
+  MO5icQ_AxmcJCvoHT698416SI4qvEz749uiE1ZnNf8-AZQ"},
+      "ewogICJNZXNzYWdlQ2xhaW0iOiB7CiAgICAiUHVibGljYXRpb25JZCI6IC
+  JFQlFNLUtOT0wtM0pTQS03T0RULUlEWVItNE1JRi1UMzcyIiwKICAgICJTZXJ2aWN
+  lQXV0aGVudGljYXRlIjogIkFEQjYtTEw2Uy1DRkdKLVdFR04tQVRRSC1CSVdQLUMy
+  NzUiLAogICAgIkRldmljZUF1dGhlbnRpY2F0ZSI6ICJBRDVJLVRXR1ItNUpMVy1QW
+  U1ILTZQUUMtTFZNTy1NTUJWIiwKICAgICJNZXNzYWdlSWQiOiAiTkRNVy1TNTZCLU
+  8zRDMtTkFLNi1TS0hGLTNLSFItVUNENyIsCiAgICAiU2VuZGVyIjogImFsaWNlQGV
+  4YW1wbGUuY29tIiwKICAgICJSZWNpcGllbnQiOiAibWFrZXJAZXhhbXBsZS5jb20i
   fX0",
       {}
-      ]}}
+      ],
+    "Status":201,
+    "StatusDescription":"Operation completed successfully"}}
 ~~~~
 
 

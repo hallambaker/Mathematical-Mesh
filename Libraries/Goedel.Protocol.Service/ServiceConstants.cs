@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 11-Oct-22 12:52:56 PM
+//  This file was automatically generated at 18-Oct-22 12:41:56 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -34,8 +34,10 @@ public enum PayloadTag {
     DataStartChunked = 2,
     ///<summary>Message data</summary>
     Data = 3,
+    ///<summary>Complete data send</summary>
+    DataLast = 4,
     ///<summary>Abort data send</summary>
-    DataAbort = 4,
+    DataAbort = 5,
     ///<summary>Open stream</summary>
     StreamOpen = 8,
     ///<summary>Close stream</summary>
@@ -88,6 +90,10 @@ public static partial class ServiceConstants {
     public const string  PayloadTagDataTag = "Data";
     ///<summary>Description for PayloadTag.Data</summary>
     public const string  PayloadTagDataTitle = "Message data";
+    ///<summary>Jose enumeration tag for PayloadTag.DataLast</summary>
+    public const string  PayloadTagDataLastTag = "DataLast";
+    ///<summary>Description for PayloadTag.DataLast</summary>
+    public const string  PayloadTagDataLastTitle = "Complete data send";
     ///<summary>Jose enumeration tag for PayloadTag.DataAbort</summary>
     public const string  PayloadTagDataAbortTag = "DataAbort";
     ///<summary>Description for PayloadTag.DataAbort</summary>

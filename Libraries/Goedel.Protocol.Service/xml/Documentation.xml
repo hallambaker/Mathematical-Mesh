@@ -410,146 +410,6 @@
         <member name="P:Goedel.Protocol.Service.IServiceConfiguration.Addresses">
             <summary>List of service addresses.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Service.PacketOutbound.ConnectionTokenSize">
-            <summary>The connection token size (16 bytes)</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.PacketOutbound.OffsetSalt">
-            <summary>Byte offset for the salt field (2 bytes)</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.PacketOutbound.OffsetSerial">
-            <summary>Byte offset for the truncated serial field (2 bytes)</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.PacketOutbound.OffsetExpecting">
-            <summary>Byte offset for the expecting field (2 bytes)</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.PacketOutbound.OffsetAcknowledge">
-            <summary>Byte offset for the acknowledgements field (2 bytes)</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Service.PacketOutbound.StartPayload">
-            <summary>Byte offset for the reserved field (2 bytes)</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Service.PacketOutbound.Plaintext">
-            <summary>The packet plaintext data. This is retained in case the 
-            packet needs to be resent.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Service.PacketOutbound.#ctor(System.Int32)">
-            <summary>
-            Initialize a new outbound packet.
-            </summary>
-            <param name="length">The packet length in bytes.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Service.PacketOutbound.OpenStream(Goedel.Protocol.Service.PendingStream)">
-            <summary>
-            Attempt to write an open stream request to the packet, returning 
-            false if there is insufficient space.
-            </summary>
-            <param name="streamId">The stream to write to.</param>
-            <param name="streamName">The stream label.</param>
-            <returns>True if the action succeeded.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.Service.PacketOutbound.PostData(Goedel.Protocol.Service.PendingPost)">
-            <summary>
-            Attempt to post <paramref name="length"/> bytes from <paramref name="data"/> 
-            starting at byte <paramref name="start"/> and return the number of bytes
-            written.
-            </summary>
-            <param name="streamId"></param>
-            <param name="data"></param>
-            <param name="start"></param>
-            <param name="length"></param>
-            <returns>The number of bytes written. If zero, no bytes were written.</returns>
-        </member>
-        <member name="T:Goedel.Protocol.Service.InboundPacket">
-            <summary>
-            The inbound packet data.
-            <para>
-            The inbound packet is constructed as follows:
-            </para>
-            <para>
-            Salt: 16 bytes. The salt value is used as an input to the
-            KDF to determine the decryption ke and to identify the
-            originator to the receiver. In this implementation, the 
-            salt is created by encrypting the 8 byte stream identifier
-            and an 8 byte nonce.
-            </para>
-            <para>
-            The rest of the packet is encrypted.
-            </para>
-            <para>
-            Sequence Counter: 
-            </para>
-            <para>
-            Outbound Pending: Hint telling the receiver how many more packets
-            are currently queued to be sent. It this value reaches zero, the
-            sender MUST stop sending packets until an acknowledgement is 
-            received.
-            </para>
-            <para>
-            Expecting: The sequence identifier of the earliest packet that
-            has not (yet) been received.
-            </para>
-            <para>
-            Acknowledgements: A sequence of 0-15 bytes reporting receipt of 
-            packets sent after the packet [Expecting], 1=received.
-            </para>
-            <para>
-            Chunk Identifiers: A sequence of 0-15 StreamID/Length specifiers.
-            </para>
-            <para>
-            Chunks
-            </para>
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.Service.InboundPacket.UdpReceiveResult">
-            <summary>The received data.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Service.InboundPacket.ConnectionId">
-            <summary>The stream identifier assigned by the receiver endpoint.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Service.InboundPacket.PlaintextPrefix">
-            <summary>The first block of the inbound packet decrypted under the common key.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Service.InboundPacket.IsInitial">
-            <summary></summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Service.InboundPacket.#ctor(System.Net.Sockets.UdpReceiveResult,System.Security.Cryptography.ICryptoTransform)">
-            <summary>
-            Constructor, returns an instance using data extracted from <paramref name="udpReceiveResult"/>
-            with the <see cref="P:Goedel.Protocol.Service.InboundPacket.PlaintextPrefix"/> and <see cref="P:Goedel.Protocol.Service.InboundPacket.ConnectionId"/> properties initialized 
-            from values extracted from the first encryption block, decrypted using 
-            <paramref name="decryptor"/>.
-            </summary>
-            <param name="udpReceiveResult">The UDP packet received.</param>
-            <param name="decryptor">The block decryptor.</param>
-        </member>
-        <member name="T:Goedel.Protocol.Service.BufferedMessage">
-            <summary>
-            Buffer used to build an inbound message.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.Service.BufferedMessage.IsComplete">
-            <summary>If true, the complete message has been received.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Service.BufferedMessage.Last">
-            <summary>Index of the last byte sent or received.</summary>
-        </member>
-        <member name="F:Goedel.Protocol.Service.BufferedMessage.MessageData">
-            <summary>The consolidated message data.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.Service.BufferedMessage.#ctor(System.Int32)">
-            <summary>
-            Constructor creating a instance to receive an inbound message 
-            of <paramref name="length"/> bytes.
-            </summary>
-            <param name="length">Length of the buffer to reserve in bytes.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Service.BufferedMessage.#ctor(System.Byte[])">
-            <summary>
-            Copnstructor returning an instance to send an outbound message with
-            the data <paramref name="data"/>.
-            </summary>
-            <param name="data">The data to be sent.</param>
-        </member>
         <member name="T:Goedel.Protocol.Service.LogService">
             <summary>
             Service level logging class.
@@ -828,6 +688,65 @@
         <member name="F:Goedel.Protocol.Service.OutboundItemPost.Data">
             <summary>The data to post.</summary> 
         </member>
+        <member name="T:Goedel.Protocol.Service.PacketUDP">
+            <summary>
+            Base type for inbound and outbound packets.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.ConnectionTokenLength">
+            <summary>The connection token size (16 bytes)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.OffsetSalt">
+            <summary>Byte offset for the salt field (2 bytes)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.SaltLength">
+            <summary>The salt length, currently fixed at 2 bytes but could be expanded
+            or variable. Since the IV is the connection ID plus the salt, and
+            since we are using a mode that does not collapse on nonce reuse such as OCB,
+            this is more than sufficient.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.OffsetSerial">
+            <summary>Byte offset for the truncated serial field (2 bytes)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.SerialLength">
+            <summary>The serial number precision. This is currently 2 bytes allowing for
+            32767 simultaneous packets in flight without ambiguity.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.OffsetExpecting">
+            <summary>Byte offset for the expecting field (2 bytes)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.OffsetAcknowledge">
+            <summary>Byte offset for the acknowledgements field (2 bytes)</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.AcknowledgeLength">
+            <summary>The acknowledgement field length. This does not need to extend
+            to the entire window. In the case that the </summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.StartPayload">
+            <summary>Byte offset for the reserved field (2 bytes)</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.PacketUDP.Plaintext">
+            <summary>The packet plaintext data. This is retained even for an 
+            an outbound packet in case the packet needs to be resent.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.Integer1">
+            <summary>Tag indicating a 1 byte integer encoding.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.Integer2">
+            <summary>Tag indicating a 2 byte integer encoding.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.Integer4">
+            <summary>Tag indicating a 4 byte integer encoding.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.Integer8">
+            <summary>Tag indicating a 8 byte integer encoding.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.IntegerMask">
+            <summary>Tag indicating a 8 byte integer encoding.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.PacketUDP.IntegerFirst">
+            <summary>Tag indicating a 8 byte integer encoding.</summary> 
+        </member>
         <member name="T:Goedel.Protocol.Service.ConnectionState">
             <summary>
             Connection states
@@ -939,12 +858,93 @@
             </summary>
             <returns>The next stream request received.</returns>
         </member>
-        <member name="M:Goedel.Protocol.Service.PacketConnection.ProcessInitial(Goedel.Protocol.Service.InboundPacket)">
+        <member name="M:Goedel.Protocol.Service.PacketConnection.ProcessInitial(Goedel.Protocol.Service.PacketInbound)">
             <summary>
             Process the packet <paramref name="inboundPacket"/> as connection creation
             request packet.
             </summary>
             <param name="inboundPacket">The packet to process.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Service.PacketInbound">
+            <summary>
+            Inbound packet record.Containst parse methods.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Service.PacketInbound.UdpReceiveResult">
+            <summary>The received data.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.PacketInbound.ConnectionId">
+            <summary>The stream identifier assigned by the receiver endpoint.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.PacketInbound.PlaintextPrefix">
+            <summary>The first block of the inbound packet decrypted under the common key.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.PacketInbound.Serial">
+            <summary>The truncated serial number.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.PacketInbound.Expecting">
+            <summary>The truncated expected serial number.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.PacketInbound.Acknowledge">
+            <summary>The acknowledgement field.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Service.PacketInbound.Received">
+            <summary>The time at which the packet was received.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Service.PacketInbound.#ctor(System.Net.Sockets.UdpReceiveResult,System.Security.Cryptography.ICryptoTransform)">
+            <summary>
+            Constructor, returns an instance using data extracted from <paramref name="udpReceiveResult"/>
+            with the <see cref="P:Goedel.Protocol.Service.PacketInbound.PlaintextPrefix"/> and <see cref="P:Goedel.Protocol.Service.PacketInbound.ConnectionId"/> properties initialized 
+            from values extracted from the first encryption block, decrypted using 
+            <paramref name="decryptor"/>.
+            </summary>
+            <param name="udpReceiveResult">The UDP packet received.</param>
+            <param name="decryptor">The block decryptor.</param>
+        </member>
+        <member name="T:Goedel.Protocol.Service.MessageData">
+            <summary>
+            Message data response record. Introducing this structure allows handling of 
+            chunked streams and a means of eventually substituting in the ability to
+            return a reader over the raw packet data so as to avoid repeated copying.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.MessageData.Data">
+            <summary>The message data.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.MessageData.IsChunked">
+            <summary>If true, this is one of a series of chunks.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Service.MessageData.IsLast">
+            <summary>If true, this is the last chunk (always true for non chunked data).</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Service.PacketOutbound">
+            <summary>
+            Outbound packet record.Containst write methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.Service.PacketOutbound.#ctor(System.Int32)">
+            <summary>
+            Initialize a new outbound packet.
+            </summary>
+            <param name="length">The packet length in bytes.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Service.PacketOutbound.OpenStream(Goedel.Protocol.Service.PendingStream)">
+            <summary>
+            Attempt to write an open stream request to the packet, returning 
+            false if there is insufficient space.
+            </summary>
+            <param name="streamId">The stream to write to.</param>
+            <param name="streamName">The stream label.</param>
+            <returns>True if the action succeeded.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Service.PacketOutbound.PostData(Goedel.Protocol.Service.PendingPost)">
+            <summary>
+            Attempt to post <paramref name="length"/> bytes from <paramref name="data"/> 
+            starting at byte <paramref name="start"/> and return the number of bytes
+            written.
+            </summary>
+            <param name="pendingPost">Contains the data to post.</param>
+            <returns>The number of bytes written. If zero, no bytes were written.</returns>
         </member>
         <member name="T:Goedel.Protocol.Service.Pending">
             <summary>
@@ -995,6 +995,21 @@
         <member name="T:Goedel.Protocol.Service.PendingItem">
             <summary>
             Base record for pending outbound items.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.PendingEnd">
+            <summary>
+            Payload marking the end of the payload data section.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.PendingUnknown">
+            <summary>
+            Unknown / unsupported payload.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.Service.PendingInvalidStream">
+            <summary>
+            Unknown / unsupported payload.
             </summary>
         </member>
         <member name="T:Goedel.Protocol.Service.PendingStream">
@@ -1386,6 +1401,9 @@
         <member name="F:Goedel.Protocol.Service.PayloadTag.Data">
             <summary>Message data</summary>
         </member>
+        <member name="F:Goedel.Protocol.Service.PayloadTag.DataLast">
+            <summary>Complete data send</summary>
+        </member>
         <member name="F:Goedel.Protocol.Service.PayloadTag.DataAbort">
             <summary>Abort data send</summary>
         </member>
@@ -1456,6 +1474,12 @@
         </member>
         <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataTitle">
             <summary>Description for PayloadTag.Data</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataLastTag">
+            <summary>Jose enumeration tag for PayloadTag.DataLast</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataLastTitle">
+            <summary>Description for PayloadTag.DataLast</summary>
         </member>
         <member name="F:Goedel.Protocol.Service.ServiceConstants.PayloadTagDataAbortTag">
             <summary>Jose enumeration tag for PayloadTag.DataAbort</summary>
@@ -1726,6 +1750,9 @@
             <summary>The outbound stream, which is always assigned by the local end
             of the connection.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Service.PacketStream.Label">
+            <summary>The stream label</summary> 
+        </member>
         <member name="P:Goedel.Protocol.Service.PacketStream.MessageBuffer">
             <summary>The inbound message block. Consumers of the stream MAY obtain more
             detailed information on the inbound messages by consuming messages 
@@ -1835,7 +1862,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Protocol.Service.UdpSocket.HandleUnknownStream(Goedel.Protocol.Service.InboundPacket)">
+        <member name="M:Goedel.Protocol.Service.UdpSocket.HandleUnknownStream(Goedel.Protocol.Service.PacketInbound)">
             <summary>
             Handle an inbound request with an unknown stream ID.
             </summary>
