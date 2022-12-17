@@ -41,6 +41,8 @@ Base class for all request messages made by a user.
 <dt>Account: String (Optional)
 <dd>The fully qualified account name (including DNS address) to which the
 request is directed.
+<dt>Capability: String (Optional)
+<dd>The identifier of the capability under which access is claimed.
 <dt>EnvelopedProfileDevice: Enveloped<ProfileDevice> (Optional)
 <dd>Device profile of the device making the request.
 </dl>
@@ -178,6 +180,12 @@ the service.
 The PostConstraints field MAY be used to advise senders of a maximum
 size of payload that MAY be sent in an initial Post request.
 
+###Message: MeshHelloRequest
+
+<dl>
+<dt>CallsignBinding: CallsignBinding (Optional)
+<dd>Contains a proposed callsign binding to the account.
+</dl>
 ###Message: MeshHelloResponse
 
 <dl>
@@ -189,8 +197,9 @@ size of payload that MAY be sent in an initial Post request.
 <dd>Specifies the account creation policy
 <dt>EnvelopedProfileService: Enveloped<ProfileService> (Optional)
 <dd>The enveloped master profile of the service.
-<dt>EnvelopedProfileHost: Enveloped<ProfileHost> (Optional)
-<dd>The enveloped profile of the host.
+<dt>CallsignBinding: CallsignBinding (Optional)
+<dd>If the request specifies a callsign binding, returns a proposed binding for
+the requested callsign.
 </dl>
 ##Transaction: BindAccount
 
@@ -199,9 +208,11 @@ size of payload that MAY be sent in an initial Post request.
 <dt>Response:  BindResponse
 </dl>
 
-Request creation of a new service account or group.
+Request binding of an account to the service. This method
+is called during account creation and binding.
 
-Attempt 
+The operation is called Bind rather than Create because the 
+account is created by the user, not the service.
 
 ###Message: BindRequest
 
@@ -216,6 +227,8 @@ Request binding of an account to a service address.
 <dd>The service account to bind to.
 <dt>EnvelopedProfileAccount: Enveloped<ProfileAccount> (Optional)
 <dd>The signed assertion describing the account.
+<dt>EnvelopedCallsignBinding: Enveloped<CallsignBinding> [0..Many]
+<dd>Contains one or more bindings of a callsign to the account.
 </dl>
 ###Message: BindResponse
 
@@ -231,6 +244,9 @@ Reports the success or failure of a Create transaction.
 <dt>URL: String (Optional)
 <dd>A URL to which the user is directed to complete the account creation 
 request.
+<dt>EnvelopedAccountHostAssignment: Enveloped<AccountHostAssignment> (Optional)
+<dd>The enveloped assignment describing how the client should
+discover the host and encrypt data to it.
 </dl>
 ##Transaction: UnbindAccount
 
@@ -322,6 +338,9 @@ Request information necessary to begin making a connection request.
 <dl>
 <dt>EnvelopedRespondConnection: Enveloped<RespondConnection> (Optional)
 <dd>The signed assertion describing the result of the connect request
+<dt>EnvelopedAccountHostAssignment: Enveloped<AccountHostAssignment> (Optional)
+<dd>The enveloped assignment describing how the client should
+discover the host and encrypt data to it.
 </dl>
 ##Transaction: Status
 
@@ -338,7 +357,7 @@ Request information necessary to begin making a connection request.
 
 <dl>
 <dt>DeviceUDF: String (Optional)
-<dt>ProfileMasterDigest: Binary (Optional)
+<dt>CatalogedDeviceDigest: String (Optional)
 <dt>Catalogs: String [0..Many]
 <dt>Spools: String [0..Many]
 </dl>
@@ -353,7 +372,11 @@ Request information necessary to begin making a connection request.
 <dd>The account profile providing the root of trust for this account.
 <dt>EnvelopedCatalogedDevice: Enveloped<CatalogedDevice> (Optional)
 <dd>The catalog device entry
+<dt>CatalogedDeviceDigest: String (Optional)
 <dt>ContainerStatus: ContainerStatus [0..Many]
+<dt>EnvelopedAccountHostAssignment: Enveloped<AccountHostAssignment> (Optional)
+<dd>The enveloped assignment describing how the client should
+discover the host and encrypt data to it.
 </dl>
 ##Transaction: Download
 

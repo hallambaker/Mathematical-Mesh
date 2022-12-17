@@ -98,8 +98,6 @@ header.
 <dd>If present, the Annotations field contains a sequence of Encrypted Data 
 Segments encrypted under the envelope base seed. The interpretation of these fields 
 is application specific.
-<dt>Signers: DareSignature [0..Many]
-<dd>A list of 'presignature'
 <dt>Recipients: DareRecipient [0..Many]
 <dd>A list of recipient key exchange information blocks.
 <dt>Policy: DarePolicy (Optional)
@@ -114,6 +112,8 @@ plaintext content metadata and forms one of the inputs to the envelope digest va
 this one.
 <dt>Received: DateTime (Optional)
 <dd>Date on which the envelope was received.
+<dt>Cover: Binary (Optional)
+<dd>HTML document containing cover text to be presented if the document cannot be decrypted.
 </dl>
 ###Structure: ContentMeta
 
@@ -239,4 +239,33 @@ entry specifying this policy.
 <dd>The last write time of the file on disk in UTC
 <dt>Attributes: Integer (Optional)
 <dd>The file attribues as a bitmapped integer.
+</dl>
+###Structure: Witness
+
+Entry containing the latest apex value of a specified append only log.
+
+<dl>
+<dt>Id: String (Optional)
+<dd>Globally unique log identifier
+<dt>Issuer: String (Optional)
+<dd>The issuer of the log
+<dt>Apex: Binary (Optional)
+<dd>The Apex hash value
+<dt>Index: Integer (Optional)
+<dd>Specifies the index number assigned to the entry in the log.
+</dl>
+###Structure: Proof
+
+Provides a proof that the payload with digest [hash] in the log described by 
+SignedWitness occurs at the index [Index]
+
+<dl>
+<dt>SignedWitness: DareEnvelope (Optional)
+<dd>The signed apex under which this proof chain is established
+<dt>Hash: Binary (Optional)
+<dd>
+<dt>Index: Integer (Optional)
+<dd>Specifies the index number assigned to the entry in the log.
+<dt>Path: Binary [0..Many]
+<dd>The list of entries from which the proof path is computed.
 </dl>

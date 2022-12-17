@@ -1,0 +1,22 @@
+ .---------------------. 
+|   hvac.alice.mesh     |    Name to be resolved
+ '---------------------' 
+           |
+           v
+ .---------------------. 
+|  Callsign: @alice     |    Callsign registration of holder
+|  Provider: @provider  |
+ '---------------------' 
+           |
+           v
+ .---------------------. 
+|  Callsign: @provider  |    Callsign registration of provider
+|  DNS:      10.2.1.1   |
+ '---------------------' 
+           |
+           v
+ .---------------------. 
+|  IP:       10.2.1.1   |    Authoritative DNS advertised by provider
+|  $ORIGIN alice.mesh.  |
+|  hvac IN A  10.8.8.8  |    Address for hvac.alice.mesh
+ '---------------------' 

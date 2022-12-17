@@ -341,13 +341,6 @@ public class RudStream {
         }
 
 
-
-
-
-
-
-
-
     async Task<Packet> PostWebHello(byte[] span, List<PacketExtension> extensions = null) {
         InitializeStream(ref extensions);
 

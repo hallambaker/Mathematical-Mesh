@@ -29,8 +29,8 @@ public class TestPQC : Disposable {
     public static TestPQC Test() => new();
 
     [Theory]
-    [InlineData(512)]
-    [InlineData(768)]
+    //[InlineData(512)]
+    //[InlineData(768)]
     [InlineData(1024)]
     public void Kyber(int bits, int repeat=1) {
         for (var i = 0; i < repeat; i++) {

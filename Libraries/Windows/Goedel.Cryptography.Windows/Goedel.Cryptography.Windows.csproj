@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/BaseSettings.xml" />
+	<Import Project="$(SolutionDir)Settings/CommonSettingsWindows.xml" />
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>Goedel.Cryptography.Windows</RootNamespace>
     <Product>Goedel.Cryptography.Windows</Product>
     <Description>Platform specific windows libraries.</Description>

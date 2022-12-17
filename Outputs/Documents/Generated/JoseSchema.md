@@ -63,7 +63,7 @@ Compact representation for encrypted data
 <dt>Signature: Binary (Optional)
 <dd>The signature data
 </dl>
-###Structure: KeyData
+###Structure: KeyCore
 
 Describe a cryptographic key
 
@@ -91,7 +91,7 @@ key it is placed in this field.
 A JOSE Header.
 
 <dl>
-<dt>Inherits:  KeyData
+<dt>Inherits:  KeyCore
 </dl>
 
 <dl>
@@ -126,7 +126,7 @@ A wrapper object for storing key data.
 <dl>
 <dt>Exportable: Boolean (Optional)
 <dd>If false a handler library MUST NOT permit the private key to be exported.
-<dt>KeyData: Binary (Optional)
+<dt>KeyCore: Binary (Optional)
 <dd>The key data.
 </dl>
 ###Structure: Key
@@ -135,7 +135,7 @@ A JOSE key. All fields map onto the equivalent fields defined in
 RFC 7517
 
 <dl>
-<dt>Inherits:  KeyData
+<dt>Inherits:  KeyCore
 </dl>
 
 <dl>
@@ -249,6 +249,26 @@ Diffie Helllman private key parameters
 <dt>Private: Binary (Optional)
 <dd>The private key
 </dl>
+###Structure: PrivateKeyUDF
+
+<dl>
+<dt>Inherits:  Key
+</dl>
+
+A UDF Key
+
+<dl>
+<dt>PrivateValue: String (Optional)
+<dd>The private value
+<dt>KeyType: String (Optional)
+<dd>The UDF key identifier
+<dt>AlgorithmEncrypt: String (Optional)
+<dd>The algorithm used to derrive the encryption key
+<dt>AlgorithmSign: String (Optional)
+<dd>The algorithm used to derrive the encryption key
+<dt>AlgorithmAuthenticate: String (Optional)
+<dd>The algorithm used to derrive the encryption key
+</dl>
 ###Structure: KeyAgreement
 
 Result of applying a key agreement.
@@ -276,6 +296,8 @@ Result of applying a key agreement.
 </dl>
 
 <dl>
+<dt>Curve: String (Optional)
+<dd>The curve name
 <dt>Result: Binary (Optional)
 <dd>The result
 </dl>

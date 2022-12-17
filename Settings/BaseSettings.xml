@@ -6,8 +6,6 @@
 		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
-    <IsPackable>false</IsPackable>
-    <RootNamespace>Goedel.XUnit</RootNamespace>
   </PropertyGroup>
 
 

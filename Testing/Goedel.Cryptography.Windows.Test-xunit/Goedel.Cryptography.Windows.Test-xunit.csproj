@@ -2,7 +2,7 @@
   <Import Project="$(SolutionDir)Settings/BaseSettings.xml" />
   <Import Project="$(SolutionDir)Settings/TestSettings.xml" />
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
   </PropertyGroup>
   
   <ItemGroup>

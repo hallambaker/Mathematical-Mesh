@@ -170,15 +170,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{5A
 	ProjectSection(SolutionItems) = preProject
 		Settings\BaseSettings.xml = Settings\BaseSettings.xml
 		Settings\CommonSettings.xml = Settings\CommonSettings.xml
-		Settings\CommonSettingsApplication.xml = Settings\CommonSettingsApplication.xml
 		Settings\CommonSettingsFrameworks.xml = Settings\CommonSettingsFrameworks.xml
+		Settings\CommonSettingsLinux.xml = Settings\CommonSettingsLinux.xml
+		Settings\CommonSettingsMacos.xml = Settings\CommonSettingsMacos.xml
 		Settings\CommonSettingsNoDocs.xml = Settings\CommonSettingsNoDocs.xml
-		Settings\CommonSettingsPlatform.xml = Settings\CommonSettingsPlatform.xml
 		Settings\CommonSettingsTest.xml = Settings\CommonSettingsTest.xml
 		Settings\CommonSettingsWindows.xml = Settings\CommonSettingsWindows.xml
 		Settings\Nuget.xml = Settings\Nuget.xml
 		Settings\TestSettings.xml = Settings\TestSettings.xml
 		Settings\Version.xml = Settings\Version.xml
+		Settings\XCommonSettingsApplication.xml = Settings\XCommonSettingsApplication.xml
+		Settings\XCommonSettingsPlatform.xml = Settings\XCommonSettingsPlatform.xml
+		Settings\XCommonSettingsWindows.xml = Settings\XCommonSettingsWindows.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol.GenericHost", "Libraries\Goedel.Protocol.GenericHost\Goedel.Protocol.GenericHost.csproj", "{87B9A1DB-3379-4316-B73D-D97106BCB91E}"

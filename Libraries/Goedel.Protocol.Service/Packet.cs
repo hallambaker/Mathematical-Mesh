@@ -61,6 +61,10 @@ public abstract record PacketUDP {
     public const int StartPayload = OffsetAcknowledge + AcknowledgeLength;
 
 
+
+    ///<summary>The default window size to be used by a connection.</summary> 
+    public const int DefaultWindowSize = 16;
+
     ///<summary>The packet plaintext data. This is retained even for an 
     ///an outbound packet in case the packet needs to be resent.</summary> 
     public byte[] Plaintext { get; set; }

@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/BaseSettings.xml" />
+	<Import Project="$(SolutionDir)Settings/CommonSettingsMacos.xml" />
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Goedel.Cryptography.Windows</RootNamespace>
     <Product>Goedel.Cryptography.macos</Product>
     <Description>Platform specific macos libraries.</Description>

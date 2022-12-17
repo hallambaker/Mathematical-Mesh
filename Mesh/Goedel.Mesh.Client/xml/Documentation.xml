@@ -775,6 +775,13 @@
             <param name="accountAddress">The address to be bound.</param>
             <returns>The bindings created.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPresenceEndpoints">
+            <summary>
+            Return a list of endpoints for the presence service associated with the
+            account.
+            </summary>
+            <returns>The list of presence service endpoints.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.TransactBegin">
             <summary>
             Begin a transaction.
@@ -788,6 +795,31 @@
             </summary>
             <param name="transact">The transaction to perform.</param>
             <returns>Response from the Mesh service.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Client.UdpServiceEndpoint">
+            <summary>
+            A UDP Service Endpoint
+            </summary>
+            <param name="IPEndPoint">The IP address and port.</param>
+            <param name="Priority">SRV record Priority.</param>
+            <param name="Weight">SRV record weight.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.UdpServiceEndpoint.#ctor(System.Net.IPEndPoint,System.Int32,System.Int32)">
+            <summary>
+            A UDP Service Endpoint
+            </summary>
+            <param name="IPEndPoint">The IP address and port.</param>
+            <param name="Priority">SRV record Priority.</param>
+            <param name="Weight">SRV record weight.</param>
+        </member>
+        <member name="P:Goedel.Mesh.Client.UdpServiceEndpoint.IPEndPoint">
+            <summary>The IP address and port.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.UdpServiceEndpoint.Priority">
+            <summary>SRV record Priority.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.UdpServiceEndpoint.Weight">
+            <summary>SRV record weight.</summary>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextGroup">
             <summary>

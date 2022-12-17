@@ -1,0 +1,6 @@
+0 @bob
+1 @bob & @provisional
+2 @bob & @provisional
+3 @bob & @provisional & @registry & @provider
+4 @bob & @provisional & @registry & @provider
+5 @bob & @provisional & @registry & @provider & @alice

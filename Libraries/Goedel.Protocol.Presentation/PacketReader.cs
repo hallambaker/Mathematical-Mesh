@@ -130,14 +130,14 @@ public class PacketReader {
     /// <returns>The tagged data.</returns>
     public (PacketTag, long) ReadTag() {
         var tag = ReadByte();
-        var length = tag & 0b1100_0000;
-        var packetTag = (PacketTag)(tag & 0b0011_1111);
+        var length = tag & 0b000_1111;
+        var packetTag = (PacketTag)(tag & 0b1111_0000);
 
         var data = length switch {
-            0b0000_0000 => ReadByteLong(),
-            0b0100_0000 => (ReadByteLong() << 8) | ReadByteLong(),
-            0b1000_0000 => (ReadByteLong() << 24) | (ReadByteLong() << 16) | (ReadByteLong() << 8) | ReadByteLong(),
-            0b1100_0000 => (ReadByteLong() << 56) | (ReadByteLong() << 48) | (ReadByteLong() << 40) | (ReadByteLong() << 32) |
+            JSONBCD.Length8 => ReadByteLong(),
+            JSONBCD.Length16 => (ReadByteLong() << 8) | ReadByteLong(),
+            JSONBCD.Length32 => (ReadByteLong() << 24) | (ReadByteLong() << 16) | (ReadByteLong() << 8) | ReadByteLong(),
+            JSONBCD.Length64 => (ReadByteLong() << 56) | (ReadByteLong() << 48) | (ReadByteLong() << 40) | (ReadByteLong() << 32) |
                     (ReadByteLong() << 24) | (ReadByteLong() << 16) | (ReadByteLong() << 8) | ReadByteLong(),
             _ => throw new NYI()
             };
@@ -211,6 +211,8 @@ public class PacketReader {
     public List<PacketExtension> ReadExtensions() {
         List<PacketExtension> result = null;
         for (var tag = ReadString(); tag != null; tag = ReadString()) {
+            Console.WriteLine($"Read Pos = {Position}  Tag = {tag}");
+
             result ??= new();
             var value = ReadBinary();
             var extension = new PacketExtension() { Tag = tag, Value = value };

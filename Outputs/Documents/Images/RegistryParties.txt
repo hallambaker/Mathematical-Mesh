@@ -1,0 +1,15 @@
+  .-------------------.     .
+ |       Registry      |     |  Fixed, one off charge
+  '-------------------'     '
+            ^
+            |
+            v
+  .-------------------.     .   Ongoing support
+ |      Registrars     |     |  Customer service
+  '-------------------'     '   Value add
+            ^
+            |
+            v
+  .-------------------.     .
+ |        Holders      |     |  Switching capability
+  '-------------------'     '

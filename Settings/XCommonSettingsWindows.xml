@@ -1,0 +1,35 @@
+<Project DefaultTargets="Build">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+		<Company>Threshold Secrets LLC.</Company>
+		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<Configurations>Debug;Release;Sandcastle;Github</Configurations>
+		<DocumentationFile>xml\Documentation.xml</DocumentationFile>
+		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+		<UseSharedCompilation>false</UseSharedCompilation>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+	</PropertyGroup>
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Windows\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+	</ItemGroup>
+
+
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">
+		<Exec Command="VSPreBuild" />
+	</Target>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'!='Github'">
+		<Exec Command="VSPostBuild" />
+	</Target>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Github'">
+		<DefineConstants>TRACE;_Github_</DefineConstants>
+	</PropertyGroup>
+</Project>

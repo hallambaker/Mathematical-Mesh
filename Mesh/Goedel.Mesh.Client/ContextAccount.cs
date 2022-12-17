@@ -946,7 +946,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         }
 
 
-
+    /// <summary>
+    /// Return a list of endpoints for the presence service associated with the
+    /// account.
+    /// </summary>
+    /// <returns>The list of presence service endpoints.</returns>
     public List<UdpServiceEndpoint> GetPresenceEndpoints() {
 
         var endpoint = new UdpServiceEndpoint(
@@ -961,9 +965,15 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
     }
 
+/// <summary>
+/// A UDP Service Endpoint
+/// </summary>
+/// <param name="IPEndPoint">The IP address and port.</param>
+/// <param name="Priority">SRV record Priority.</param>
+/// <param name="Weight">SRV record weight.</param>
 public record UdpServiceEndpoint(
         IPEndPoint IPEndPoint,
-        int Priorit=1,
+        int Priority=1,
         int Weight=1) {
 
 

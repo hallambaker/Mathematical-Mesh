@@ -6,6 +6,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Callsign.Test-xunit\Goedel.Callsign.Test-xunit.csproj" />
 		<ProjectReference Include="..\Test.Constants\Test.Common.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
