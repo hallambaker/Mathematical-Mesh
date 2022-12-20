@@ -106,10 +106,13 @@ public class PacketReader {
     /// <summary>
     /// Read the next byte in the packet.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The byte value read.</returns>
     public byte ReadByte() => Packet[Position++];
 
-
+    /// <summary>
+    /// Read the next byte in the packet and return as a long.
+    /// </summary>
+    /// <returns>The byte value read.</returns>
     public long ReadByteLong() => Packet[Position++];
 
 
@@ -211,7 +214,7 @@ public class PacketReader {
     public List<PacketExtension> ReadExtensions() {
         List<PacketExtension> result = null;
         for (var tag = ReadString(); tag != null; tag = ReadString()) {
-            Console.WriteLine($"Read Pos = {Position}  Tag = {tag}");
+            //Console.WriteLine($"Read Pos = {Position}  Tag = {tag}");
 
             result ??= new();
             var value = ReadBinary();

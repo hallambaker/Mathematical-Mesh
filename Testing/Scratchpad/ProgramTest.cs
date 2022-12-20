@@ -55,11 +55,11 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", DateTime.Now);
 
-        RegistrationTests.Test().CallsignBind();
+        //RegistrationTests.Test().CallsignBind();
 
 
 
-        //TestPresence.Test().UdpStreamBasic();
+        TestPresence.Test().PresenceStatusUpdate();
 
 
 

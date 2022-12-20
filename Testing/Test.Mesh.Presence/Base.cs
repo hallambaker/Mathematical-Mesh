@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Sockets;
 using Goedel.Mesh.Client;
 using Xunit.Sdk;
+using Goedel.Mesh.Test;
 
 namespace Goedel.XUnit;
 
@@ -19,7 +20,61 @@ namespace Goedel.XUnit;
 /// <summary>
 /// Test library for PQC algorithms.
 /// </summary>
-public class TestPresence : Disposable {
+public class TestPresence : ShellTestBase {
+
+
+    public override TestEnvironmentBase GetTestEnvironment() => new TestEnvironmentPresence();
+
+
+
+    /// <summary>
+    /// Convenience constructor for all things Alice.
+    /// </summary>
+    /// <param name="contextAccount">The account context.</param>
+    /// <param name="contextPresence">The presence context.</param>
+    /// <returns></returns>
+    public TestCLI GetAlice(
+                out ContextUser contextAccount,
+                out ContextPresence contextPresence) =>
+                        MakeAccount(AliceAccount, out contextAccount, out contextPresence);
+
+    /// <summary>
+    /// Convenience constructor for all things Bob.
+    /// </summary>
+    /// <param name="contextAccount">The account context.</param>
+    /// <param name="contextPresence">The presence context.</param>
+    public TestCLI GetBob(
+                out ContextUser contextAccount,
+                out ContextPresence contextPresence) =>
+                MakeAccount(AccountB, out contextAccount, out contextPresence);
+
+
+    /// <summary>
+    /// Make an account for address <paramref name="address"/> and establishn a presence 
+    /// provider context.
+    /// </summary>
+    /// <param name="address">That address of the account.</param>
+    /// <param name="contextAccount">The account context.</param>
+    /// <param name="contextPresence">The presence context.</param>
+    /// <returns>The account CLI.</returns>
+    public TestCLI MakeAccount(string address,
+                out ContextUser contextAccount,
+                out ContextPresence contextPresence) {
+
+        address.SplitAccountIDService(out _, out var user);
+
+        var cli = GetTestCLI(user + "-Admin");
+
+        cli.ExampleNoCatch("account create {address}");
+        cli.Account = address;
+
+        contextAccount = cli.ContextUser;
+        contextPresence = contextAccount.GetPresence();
+
+
+        return cli;
+        }
+
 
     /// <summary>
     /// Static constructor, put initializations here.
@@ -33,6 +88,85 @@ public class TestPresence : Disposable {
     /// </summary>
     /// <returns>The instance</returns>
     public static TestPresence Test() => new();
+
+
+    /// <summary>
+    /// Test collection of presence service parameters from the MSP and
+    /// use to bind to the presence service, then unbind.
+    /// </summary>
+    [Fact]
+    public void PresenceServiceConnect() {
+
+
+        var aliceCli = GetAlice(out var contextAlice, out var presenceAlice);
+
+
+        }
+
+
+    /// <summary>
+    /// Test status update notification on catalog update
+    /// </summary>
+    [Fact] 
+    public async void PresenceStatusUpdate() {
+
+
+        var aliceCli = GetAlice(out var contextAlice, out var presenceAlice);
+        var pollResult = await presenceAlice.Poll();
+
+        }
+
+    /// <summary>
+    /// Alice attempts to establish connection to Bob by placing a request at
+    /// Bob's MSP. Bob receives notification via update.
+    /// </summary>
+    [Fact] 
+    public async void PresenceSessionRequest() {
+
+
+        var aliceCli = GetAlice(out var contextAlice, out var presenceAlice);
+        var bobCli = GetAlice(out var contextBob, out var presenceBob);
+
+        // Make sure both sender and receiver are ready before attempting to establish connection
+        var pollResultA = await presenceAlice.Poll();
+        var pollResultB = await presenceBob.Poll();
+
+        // Test Alice sends before Bob calls to wait.
+        await AliceContactBob(presenceAlice);
+        await BobWaitAlice(presenceBob);
+
+        // Test Alice sends after Bob calls to wait.
+        await BobWaitAlice(presenceBob);
+        await AliceContactBob(presenceAlice);
+
+        }
+
+
+    async Task AliceContactBob(ContextPresence contextPresence) {
+
+        await contextPresence.SessionRequest(AccountB);
+        }
+
+    async Task BobWaitAlice(ContextPresence contextPresence) {
+
+        await contextPresence.GetSessionRequest();
+
+        }
+
+    /// <summary>
+    /// Test status update notification with presence service shutdown and restart.
+    /// </summary>
+    [Fact] 
+    public void PresenceStatusRebind() => throw new NYI();
+
+
+    /// <summary>
+    /// Test status update notification with unreliable UDP service.
+    /// </summary>
+    [Fact] 
+    public void PresenceStatusUnreliable() => throw new NYI();
+
+
 
 
     //[Theory]

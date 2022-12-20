@@ -96,6 +96,7 @@ public class MeshPersist : Disposable {
 
     private ILogger Logger { get; }
 
+    IPresence PresenceService { get; }
     #endregion
 
 
@@ -119,15 +120,21 @@ public class MeshPersist : Disposable {
     /// <param name="directory">The directory in which all the service data is stored.</param>
     /// <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
     /// <param name="logger">Output logger.</param>
+    /// <param name="presenceService">Optional presence service.</param>
     public MeshPersist(
                 IKeyCollection keyCollection, 
                 string directory, 
                 FileStatus fileStatus,
-                ILogger logger) {
+                ILogger logger,
+                IPresence presenceService = null) {
         Logger = logger;
+        PresenceService = presenceService;
+
         KeyCollection = keyCollection;
         // Load/create the accounts catalog
         DirectoryRoot = directory;
+
+
         Directory.CreateDirectory(directory);
         var fileName = Path.Combine(directory, "Master.cat");
         Container = new PersistenceStore(fileName, "application/mmm-catalog",
@@ -302,10 +309,12 @@ public class MeshPersist : Disposable {
     /// <param name="catalogedDeviceDigest">The digest version identifier of the device catalog
     /// </param>
     /// <param name="catalogs">The list of catalogs for which status is requested.</param>
+    /// <param name="services">List of services requested.</param>
     public StatusResponse AccountStatus(
                     IJpcSession jpcSession,
                     string catalogedDeviceDigest,
-                    List<string> catalogs) {
+                    List<string> catalogs,
+                    List<string> services) {
 
 
         using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Read);
@@ -326,6 +335,10 @@ public class MeshPersist : Disposable {
                 statusResponse.CatalogedDeviceDigest = accountHandle.CatalogedDeviceDigest;
                 }
             }
+
+        if (services != null) {
+            }
+
 
         //Screen.Write($"Status complete");
         return statusResponse;

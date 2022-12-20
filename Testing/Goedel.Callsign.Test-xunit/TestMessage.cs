@@ -44,7 +44,7 @@ public partial class RegistrationTests {
         var resulta = MakeAccount(deviceA, AliceAccount);
 
         var serviceCallsign = GetCallSignService();
-
+        Console.WriteLine("");
 
 
         var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;

@@ -1,5 +1,7 @@
 ﻿
 
+using Goedel.Mesh;
+
 namespace Goedel.Presence.Client;
 
 /// <summary>
@@ -23,19 +25,34 @@ public record ContextPoll {
 /// </summary>
 public class ContextPresence : Disposable {
 
+    CancellationTokenSource ListenerCancel { get; }
+
+    ///<inheritdoc/>
+    protected override void Disposing() {
+        ListenerActive = false;
+        ListenerCancel.Cancel();
+        }
+
 
     bool ListenerActive {get; set;} = false;
 
-    public int Heartbeat { get; set; } = 1000;
+    ///<summary>Keepalive timer in Ticks. Default value is 1 second.</summary> 
+    public int Heartbeat { get; set; } =(int) TimeSpan.TicksPerSecond;
 
 
     UdpClient UdpClient {get; set;}
 
     Task ListenerTask;
 
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ContextPresence"/> class.
+    /// </summary>
     public ContextPresence() {
 
         UdpClient = new();
+
+        ListenerCancel = new CancellationTokenSource();
         }
 
     /// <summary>
@@ -48,6 +65,12 @@ public class ContextPresence : Disposable {
     /// <exception cref="NYI"></exception>
     public static ContextPresence GetContext(ContextUser contextAccount) {
 
+        var statusRequest = new StatusRequest() {
+            Services = new List<String>() { "mmm_presence" }
+            };
+        contextAccount.Sync(statusRequest);
+
+        "Here do a status call".TaskFunctionality(true);
 
 
         var presenceServiceEndpoints = contextAccount.GetPresenceEndpoints();
@@ -83,32 +106,44 @@ public class ContextPresence : Disposable {
         }
 
 
-
-    public async Task Listener() {
+    /// <summary>
+    /// The listener task.
+    /// </summary>
+    /// <returns></returns>
+    async Task Listener() {
         ListenerActive = true;
+        var token = ListenerCancel.Token;
+
+        // ToDo: add in cancellation token for gracefull termination.
+        // Needs to be from a source established in the context account.
 
 
-        while (ListenerActive) {
-            var receiveTask = UdpClient.ReceiveAsync();
+        try {
+            var receiveTask = UdpClient.ReceiveAsync(token).AsTask();
             var timerTask = Task.Delay(Heartbeat);
-            // timer task here
+            while (ListenerActive) {
 
-            await Task.WhenAny(receiveTask, timerTask);
+                // timer task here
 
-            if (receiveTask.IsCompleted) {
-                // process received data
+                await Task.WhenAny(receiveTask, timerTask);
 
-                receiveTask = UdpClient.ReceiveAsync();
+                if (receiveTask.IsCompleted) {
+                    // process received data
+
+                    receiveTask = UdpClient.ReceiveAsync(token).AsTask();
+                    }
+                if (timerTask.IsCompleted) {
+                    // send out a heartbeat
+
+                    timerTask = Task.Delay(Heartbeat);
+                    }
+
+
                 }
-            if (timerTask.IsCompleted) {
-                // process received data
-
-                timerTask = Task.Delay(Heartbeat);
-                }
-
-
             }
-
+        catch (TaskCanceledException) {
+            // The presence context was disposed, carry on.
+            }
 
         }
 

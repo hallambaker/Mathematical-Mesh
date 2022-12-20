@@ -1438,7 +1438,7 @@
             <param name="jpcSession">The session connection data.</param>
             <param name="completeRequest">The completion request.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession,System.String,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession,System.String,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String})">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.
@@ -1447,6 +1447,7 @@
             <param name="catalogedDeviceDigest">The digest version identifier of the device catalog
             </param>
             <param name="catalogs">The list of catalogs for which status is requested.</param>
+            <param name="services">List of services requested.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountDownload(Goedel.Protocol.IJpcSession,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect})">
             <summary>

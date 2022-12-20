@@ -20,6 +20,17 @@
             Context for a presence service connection.
             </summary>
         </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.Disposing">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.Heartbeat">
+            <summary>Keepalive timer in Ticks. Default value is 1 second.</summary> 
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Goedel.Presence.Client.ContextPresence"/> class.
+            </summary>
+        </member>
         <member name="M:Goedel.Presence.Client.ContextPresence.GetContext(Goedel.Mesh.Client.ContextUser)">
             <summary>
             Factory method returning a new presence context on the presence service
@@ -36,6 +47,12 @@
             providers bound simultaneously???
             </summary>
             <param name="udpServiceEndpoint"></param>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.Listener">
+            <summary>
+            The listener task.
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Presence.Client.ContextPresence.Poll">
             <summary>
@@ -136,6 +153,18 @@
             <summary>
             Static initializer, is called once when the module loads.
             </summary>
+        </member>
+        <member name="T:Goedel.Presence.Client.Extensions">
+            <summary>
+            Class containing utility extension methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.Client.Extensions.GetPresence(Goedel.Mesh.Client.ContextUser)">
+            <summary>
+            Returns a presence context for the account context <paramref name="contextAccount"/>.
+            </summary>
+            <param name="contextAccount">The account context to return presence context for.</param>
+            <returns>The presence context.</returns>
         </member>
         <member name="T:Goedel.Presence.Client.MessageContentType">
             <summary>

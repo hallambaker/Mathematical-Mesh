@@ -24,8 +24,8 @@ namespace Goedel.Mesh.Test;
 
 
 public class TestEnvironmentCommon : TestEnvironmentBase {
-    LogService Logger { get; set; }
-    Configuration Configuration { get; set; }
+    protected LogService Logger { get; set; }
+    protected Configuration Configuration { get; set; }
 
     protected override void Disposing() {
         base.Disposing();
@@ -43,12 +43,12 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
     public IMeshMachineClient MeshMachineHost { get; set; }
 
 
-    string HostFile = "whatev";
+    protected string HostFile = "whatev";
     public TestEnvironmentCommon() {
 
         }
 
-    PublicMeshService GetPublicMeshService() {
+    protected virtual PublicMeshService GetPublicMeshService() {
         // create the Mesh service
 
         //ServiceAdmin($"create example.com /host=host1.example.com /admin=alice.example.com /account=Domain\\user");
@@ -93,6 +93,9 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
         return session.GetWebClient<MeshServiceClient>();
         }
     }
+
+
+
 /// <summary>
 /// Test environment for one test with one service with one or more devices.
 /// </summary>

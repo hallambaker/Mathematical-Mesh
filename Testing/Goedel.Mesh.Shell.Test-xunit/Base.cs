@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Mesh.Client;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Utilities;
@@ -30,7 +31,57 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
-[Collection("Sequential")]
+//[Collection("Sequential")]
+
+
+
+public partial class ShellTestBase : Disposable {
+
+    public string ServiceDns => TestEnvironment.ServiceDns;
+
+    public string AliceAccount => $"alice@{ServiceDns}";
+
+    public string MalletAccount => $"mallet@{ServiceDns}";
+
+
+
+    public string AccountB => $"bob@{ServiceDns}";
+
+    public string AccountC => $"carol@{ServiceDns}";
+
+    public string AccountQ => $"quartermaster@{ServiceDns}";
+
+    public static string DeviceQName => "DeviceQ";
+
+    public static string DeviceAdminName => "DeviceAdmin";
+
+    public static string DeviceConnect1Name => "DeviceConnect1";
+
+
+
+    #region // The test environment specific calls
+
+    ///<summary>The test environment, base for all </summary>
+    public TestEnvironmentBase TestEnvironment => testEnvironment ??
+        GetTestEnvironment().CacheValue(out testEnvironment);
+    TestEnvironmentBase testEnvironment;
+
+    public virtual TestEnvironmentBase GetTestEnvironment() => new TestEnvironmentCommon();
+
+    public virtual TestCLI GetTestCLI(string machineName = null) =>
+    TestEnvironment.GetTestCLI(machineName);
+
+    protected virtual void EndTest() {
+        testEnvironment?.Dispose();
+        testEnvironment = null;
+        }
+
+
+    #endregion
+
+
+    }
+
 public partial class ShellTestsAdmin : ShellTests {
     TestEnvironmentBase testEnvironmentCommon;
 
@@ -43,12 +94,6 @@ public partial class ShellTestsAdmin : ShellTests {
 
     // Use the new test environment (when defined.)
     public override TestEnvironmentBase GetTestEnvironment() {
-
-        //var shell = new Goedel.Mesh.Shell.ServiceAdmin.Shell() {
-        //    };
-
-        //throw new NYI();
-
         testEnvironmentCommon = new TestEnvironmentRdpShell() {
             JpcConnection = Protocol.JpcConnection.Http
             };
@@ -75,42 +120,22 @@ public partial class ShellTestsAdmin : ShellTests {
 
 
 
-public partial class ShellTests : Disposable {
+public partial class ShellTests : ShellTestBase {
 
     static ShellTests() {
         }
 
     public static ShellTests Test() => new();
 
-    protected virtual void EndTest() {
-        testEnvironment?.Dispose();
-        testEnvironment = null;
-        }
 
-    public string ServiceDns => TestEnvironment.ServiceDns;
+
+
 
     TestCLI DefaultDevice => defaultDevice ?? GetTestCLI().CacheValue(out defaultDevice);
     TestCLI defaultDevice;
 
 
-    #region // The test environment specific calls
-    public virtual TestEnvironmentBase GetTestEnvironment() => new TestEnvironmentCommon();
 
-    public virtual TestCLI GetTestCLI(string machineName = null) => 
-        TestEnvironment.GetTestCLI(machineName);
-
-        //{
-        //var testShell = new TestShell(TestEnvironment, MachineName);
-        //return new TestCLI(testShell);
-        //}
-    #endregion
-
-
-
-    ///<summary>The test environment, base for all </summary>
-    public TestEnvironmentBase TestEnvironment => testEnvironment ??
-        GetTestEnvironment().CacheValue(out testEnvironment);
-    TestEnvironmentBase testEnvironment;
 
     public ShellTests() { }
 

@@ -36,7 +36,13 @@ public static class Initialization {
     }
 
 
+/// <summary>
+/// Windows specifice component initialization. Provides access to platform specific
+/// features such as keys encrypted to the platform.
+/// </summary>
 public class ComponentCryptographyWindows : IComponent {
+
+    ///<inheritdoc/>
     public void Initialize() {
 
         // Force Goedel.Cryptography to initialize first.
@@ -50,6 +56,7 @@ public class ComponentCryptographyWindows : IComponent {
 
         }
 
+    ///<inheritdoc/>
     public void Terminate() {
         // do nothing
         }

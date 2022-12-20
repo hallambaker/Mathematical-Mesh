@@ -10,6 +10,7 @@
 		<ProjectReference Include="..\..\Presence\Goedel.Presence.Client\Goedel.Presence.Client.csproj" />
 		<ProjectReference Include="..\..\Presence\Goedel.Presence.Server\Goedel.Presence.Server.csproj" />
 		<ProjectReference Include="..\..\Presence\Goedel.Presence\Goedel.Presence.csproj" />
+		<ProjectReference Include="..\Goedel.Mesh.Shell.Test-xunit\Goedel.Mesh.Shell.Test-xunit.csproj" />
 		<ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
 	</ItemGroup>
 

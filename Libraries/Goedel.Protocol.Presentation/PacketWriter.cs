@@ -223,7 +223,7 @@ public class PacketWriter : Disposable {
 
             foreach (var option in extensions) {
                 Write(option.Tag);
-                Console.WriteLine($"Write Pos = {Position}  Tag = {option.Tag}");
+                //Console.WriteLine($"Write Pos = {Position}  Tag = {option.Tag}");
                 Write(option.Value);
                 }
             }

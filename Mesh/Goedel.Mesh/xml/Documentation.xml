@@ -10817,6 +10817,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.StatusRequest.Services">
+            <summary>
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.StatusRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
@@ -10889,6 +10893,10 @@
             The enveloped assignment describing how the client should
             discover the host and encrypt data to it.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.StatusResponse.Services">
+            <summary>
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.StatusResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>

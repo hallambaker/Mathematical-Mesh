@@ -34,7 +34,7 @@ namespace Goedel.Presence.Server;
 /// <summary>
 /// The presence service.
 /// </summary>
-public class PresenceServer : PresenceService {
+public class PresenceServer : PresenceService, IPresence {
     #region // Properties
 
     #endregion
@@ -51,7 +51,20 @@ public class PresenceServer : PresenceService {
 
 
     #endregion
-    #region // Implement Inteface $$$
+    #region // Implement Inteface IPresence
+
+    ///<inheritdoc/>
+    public List<string> GetDevices() {
+        throw new NotImplementedException();
+        }
+    ///<inheritdoc/>
+    public string GetEndPoint() {
+        throw new NotImplementedException();
+        }
+    ///<inheritdoc/>
+    public void Notify() {
+        throw new NotImplementedException();
+        }
     #endregion
     #region // Override Methods
     #endregion
@@ -62,6 +75,8 @@ public class PresenceServer : PresenceService {
     public override ConnectResponse Connect(ConnectRequest request, IJpcSession session) {
         throw new NotImplementedException();
         }
+
+
 
     ///<inheritdoc/>
     public override QueryResponse Query(QueryRequest request, IJpcSession session) {

@@ -152,6 +152,18 @@
         <member name="P:Goedel.Cryptography.Windows.Initialization.Initialized">
             <summary>Always returns true. Requesting this value forces initialization.</summary> 
         </member>
+        <member name="T:Goedel.Cryptography.Windows.ComponentCryptographyWindows">
+            <summary>
+            Windows specifice component initialization. Provides access to platform specific
+            features such as keys encrypted to the platform.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.ComponentCryptographyWindows.Initialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.ComponentCryptographyWindows.Terminate">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Cryptography.Windows.KeyContainer">
             <summary>Key container class. This makes use of windows specific platform
             encryption to bind keys to the user's log in password in a transparent fashion.</summary>

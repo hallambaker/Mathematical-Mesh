@@ -67,14 +67,14 @@ public partial class ShellTests {
         foreach (var test in commitmentTests) {
             if (test.SHA2 != null) {
                 var result = TestCommitmentInt(test.Data, test.Key);
-                Console.WriteLine(result);
+                //Console.WriteLine(result);
                 result.Digest.TestEqual(test.SHA2);
                 var result2 = TestCommitmentInt(test.Data, test.Key, "sha2");
                 result.Digest.TestEqual(result2.Digest);
                 }
             if (test.SHA3 != null) {
                 var result = TestCommitmentInt(test.Data, test.Key, "sha3");
-                Console.WriteLine(result);
+                //Console.WriteLine(result);
                 result.Digest.TestEqual(test.SHA3);
                 }
             }

@@ -1347,7 +1347,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     public static void ToConsole(string fileName) {
         var builder = new StringBuilder();
         ToBuilder(fileName, builder, 0);
-        Console.WriteLine(builder);
+        //Console.WriteLine(builder);
         }
 
 

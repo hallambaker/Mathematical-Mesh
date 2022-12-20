@@ -24,8 +24,10 @@ using System.Threading;
 
 using Goedel.Mesh;
 using Goedel.Mesh.Shell;
+using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Test.Core;
+using Goedel.Utilities;
 
 using Xunit;
 
@@ -34,24 +36,15 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
-public partial class ShellTests {
-    string AliceAccount => $"alice@{ServiceDns}";
-
-    string MalletAccount => $"mallet@{ServiceDns}";
 
 
 
-    string AccountB => $"bob@{ServiceDns}";
 
-    string AccountC => $"carol@{ServiceDns}";
 
-    string AccountQ => $"quartermaster@{ServiceDns}";
+public partial class ShellTests  {
 
-    static string DeviceQName => "DeviceQ";
 
-    static string DeviceAdminName => "DeviceAdmin";
 
-    static string DeviceConnect1Name => "DeviceConnect1";
 
 
     [Fact]

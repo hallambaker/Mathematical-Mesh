@@ -979,7 +979,13 @@
             <summary>
             Read the next byte in the packet.
             </summary>
-            <returns></returns>
+            <returns>The byte value read.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadByteLong">
+            <summary>
+            Read the next byte in the packet and return as a long.
+            </summary>
+            <returns>The byte value read.</returns>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketReader.ReadSpan(System.Int32)">
             <summary>

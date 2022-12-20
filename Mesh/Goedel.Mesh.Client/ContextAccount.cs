@@ -381,7 +381,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="meshClient">If not-null specifies a client to override the account
     /// client (used to synchronize against other accounts).</param>
     /// <returns>The number of items synchronized</returns>
-    protected int Sync (StatusRequest statusRequest, MeshServiceClient meshClient =null) {
+    public int Sync (StatusRequest statusRequest, MeshServiceClient meshClient =null) {
         int count = 0;
         meshClient ??= MeshClient;
 

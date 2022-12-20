@@ -102,6 +102,9 @@ public class PublicMeshService : MeshService {
 
     MeshServiceConfiguration MeshHostConfiguration { get; }
 
+    IPresence PresenceService { get; }
+
+
     #endregion
     #region // Disposing
     ///<inheritdoc/>
@@ -122,16 +125,19 @@ public class PublicMeshService : MeshService {
     /// <param name="hostConfiguration">Host configuration.</param>
     /// <param name="meshServiceConfiguration">Service configuration.</param>
     /// <param name="logService">The transaction logging service.</param>
+    /// <param name="presenceService">Optional presence service.</param>
     public PublicMeshService(
             IMeshMachine meshMachine,
             GenericHostConfiguration hostConfiguration,
             MeshServiceConfiguration meshServiceConfiguration,
-            LogService logService) {
+            LogService logService,
+            IPresence presenceService=null) {
         LogService = logService;
         MeshMachine = meshMachine;
         GenericHostConfiguration = hostConfiguration;
         MeshHostConfiguration = meshServiceConfiguration;
         KeyCollection = MeshMachine.KeyCollection;
+        PresenceService = presenceService;
 
         Logger.ServiceStart(PublicMeshService.WellKnown, 
             meshServiceConfiguration.ServiceUdf, GenericHostConfiguration.HostUdf);
@@ -139,10 +145,6 @@ public class PublicMeshService : MeshService {
         // Load the Mesh persistence base
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
         MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger);
-
-
-
-
 
 
         var instance = GenericHostConfiguration.Instance ?? meshMachine.Instance;
@@ -553,7 +555,8 @@ public class PublicMeshService : MeshService {
         try {
             return MeshPersist.AccountStatus(jpcSession, 
                     request.CatalogedDeviceDigest,
-                    request.Catalogs);
+                    request.Catalogs,
+                    request.Services);
             }
         catch (System.Exception exception) {
             return new StatusResponse(exception);
