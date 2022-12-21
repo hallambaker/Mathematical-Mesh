@@ -1,7 +1,7 @@
 ﻿
 
-namespace Goedel.Mesh.Server;
 
+namespace Goedel.Mesh.Server;
 
 /// <summary>
 /// Extensions class for adding a Mesh Service Provider to a host.

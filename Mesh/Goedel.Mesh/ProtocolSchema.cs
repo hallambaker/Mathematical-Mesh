@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 19-Dec-22 10:56:08 PM
+//  This file was automatically generated at 20-Dec-22 11:44:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -3186,9 +3186,10 @@ public partial class StatusResponse : MeshResponse {
 
 	public virtual Enveloped<AccountHostAssignment>						EnvelopedAccountHostAssignment  {get; set;}
         /// <summary>
+        ///A series of access tokens for the requested services.
         /// </summary>
 
-	public virtual List<NamedService>				Services  {get; set;}
+	public virtual List<ServiceAccessToken>				Services  {get; set;}
 
 
     ///<inheritdoc/>
@@ -3227,7 +3228,7 @@ public partial class StatusResponse : MeshResponse {
 				}
 			case "Services" : {
 				if (value is TokenValueListStructObject vvalue) {
-					Services = vvalue.Value as List<NamedService>;
+					Services = vvalue.Value as List<ServiceAccessToken>;
 					}
 				break;
 				}
@@ -3259,7 +3260,7 @@ public partial class StatusResponse : MeshResponse {
 				return new TokenValueStruct<Enveloped<AccountHostAssignment>> (EnvelopedAccountHostAssignment);
 				}
 			case "Services" : {
-				return new TokenValueListStruct<NamedService> (Services);
+				return new TokenValueListStruct<ServiceAccessToken> (Services);
 				}
 
             default: {
@@ -3282,7 +3283,7 @@ public partial class StatusResponse : MeshResponse {
 			{ "EnvelopedAccountHostAssignment", new Property ( typeof(TokenValueStruct), false,
 					()=>new Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>(), false)} ,
 			{ "Services", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<NamedService>(), ()=>new NamedService(), false)} 
+					()=>new List<ServiceAccessToken>(), ()=>new ServiceAccessToken(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

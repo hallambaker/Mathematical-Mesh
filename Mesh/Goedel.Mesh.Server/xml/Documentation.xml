@@ -1080,6 +1080,29 @@
             <param name="authorized">Authorized</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
+        <member name="T:Goedel.Mesh.Server.IPresence">
+            <summary>
+            Presence Service interface.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.IPresence.GetEndPoint(Goedel.Mesh.Server.AccountHandleLocked)">
+            <summary>
+            Return a presence service endpoint for the specified account.
+            </summary>
+            <param name="accountHandle">The handle of the account making the request.</param>
+            <returns>A service endpoint allowing the client to access the service..</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.IPresence.Notify">
+            <summary>
+            Called when an account handle is updated.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.IPresence.GetDevices">
+            <summary>
+            Return the connected devices for the specified account.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">
              <summary>
             
@@ -1156,7 +1179,7 @@
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Protocol.GenericHostConfiguration,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.Service.LogService)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Protocol.GenericHostConfiguration,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.Service.LogService,Goedel.Mesh.Server.IPresence)">
             <summary>
             A Mesh service provider.
             </summary>
@@ -1164,6 +1187,7 @@
             <param name="hostConfiguration">Host configuration.</param>
             <param name="meshServiceConfiguration">Service configuration.</param>
             <param name="logService">The transaction logging service.</param>
+            <param name="presenceService">Optional presence service.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.GetService(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
             <summary>
@@ -1399,7 +1423,7 @@
         <member name="M:Goedel.Mesh.Server.MeshPersist.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(Goedel.Cryptography.Dare.IKeyCollection,System.String,Goedel.IO.FileStatus,Microsoft.Extensions.Logging.ILogger)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(Goedel.Cryptography.Dare.IKeyCollection,System.String,Goedel.IO.FileStatus,Microsoft.Extensions.Logging.ILogger,Goedel.Mesh.Server.IPresence)">
             <summary>
             Open or create the accounts persistence container.
             </summary>
@@ -1407,6 +1431,7 @@
             <param name="directory">The directory in which all the service data is stored.</param>
             <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
             <param name="logger">Output logger.</param>
+            <param name="presenceService">Optional presence service.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountBind(Goedel.Mesh.Server.AccountEntry,System.Collections.Generic.List{Goedel.Mesh.CatalogedCallsign})">
             <summary>

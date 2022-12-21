@@ -5402,6 +5402,11 @@
             Transaction result tag Expired
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MeshPresenceService">
+            <summary>
+            To be requested IANA service name for Mesh presence service
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.DevicePreconfigurationPrivate">
              <summary>
             
@@ -10895,8 +10900,9 @@
              </summary>
         </member>
         <member name="P:Goedel.Mesh.StatusResponse.Services">
-            <summary>
-            </summary>
+             <summary>
+            A series of access tokens for the requested services.
+             </summary>
         </member>
         <member name="M:Goedel.Mesh.StatusResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
@@ -14343,9 +14349,9 @@
             Optional name mapping, (e.g. alice@example.com -> alice.mesh)
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.NamedService.Endpoint">
+        <member name="P:Goedel.Mesh.NamedService.Endpoints">
              <summary>
-            The service endpoint. This MAY be specified as a callsign (@alice),
+            The service endpoints. This MAY be specified as a callsign (@alice),
             a DNS address (example.com), an IP address (10.0.0.1) or a fully
             qualified URI.
              </summary>
@@ -14388,6 +14394,65 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.NamedService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.ServiceAccessToken">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAccessToken.Token">
+             <summary>
+            Session initiation token
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAccessToken.SharedSecret">
+             <summary>
+            Session shared secret
+             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAccessToken.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAccessToken.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAccessToken._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAccessToken._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAccessToken._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAccessToken._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAccessToken._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ServiceAccessToken._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServiceAccessToken.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAccessToken._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ServiceAccessToken.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

@@ -342,9 +342,10 @@
 			Description
 				|The enveloped assignment describing how the client should
 				|discover the host and encrypt data to it.
-		Struct NamedService Services
+		Struct ServiceAccessToken Services
 			Multiple
-
+			Description
+				|A series of access tokens for the requested services.
 		
 
 	//

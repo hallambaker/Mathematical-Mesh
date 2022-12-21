@@ -189,3 +189,9 @@ File MiscUnsorted
 	String TransactionResultExpired "Expired"
 		Description
 			|Transaction result tag Expired
+
+	String MeshPresenceService "mmm_presence"
+		Description
+			|To be requested IANA service name for Mesh presence service
+
+

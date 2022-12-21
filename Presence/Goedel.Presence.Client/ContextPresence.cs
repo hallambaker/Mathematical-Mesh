@@ -66,7 +66,7 @@ public class ContextPresence : Disposable {
     public static ContextPresence GetContext(ContextUser contextAccount) {
 
         var statusRequest = new StatusRequest() {
-            Services = new List<String>() { "mmm_presence" }
+            Services = new List<String>() { MeshConstants.MeshPresenceService }
             };
         contextAccount.Sync(statusRequest);
 

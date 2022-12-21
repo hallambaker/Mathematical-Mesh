@@ -47,8 +47,9 @@ public class TestEnvironmentPresence : TestEnvironmentCommon {
 
         Logger = new LogService(Configuration.GenericHostConfiguration, Configuration.MeshServiceConfiguration, null);
 
-
-        var presenceServer = new PresenceServer();
+        var presenceServer = new PresenceServer(
+            Configuration.GenericHostConfiguration,
+            Configuration.PresenceServiceConfiguration); 
 
         return new PublicMeshService(MeshMachineHost,
             Configuration.GenericHostConfiguration, 

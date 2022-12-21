@@ -21,29 +21,30 @@
 //  THE SOFTWARE.
 #endregion
 
+namespace Goedel.Mesh.Server;
 
 /// <summary>
 /// Presence Service interface.
 /// </summary>
 public interface IPresence {
 
-
     /// <summary>
     /// Return a presence service endpoint for the specified account.
     /// </summary>
-    /// <returns>The account endpoint.</returns>
-    string GetEndPoint();
+    /// <param name="accountHandle">The handle of the account making the request.</param>
+    /// <returns>A unique device connection identifier and a service endpoint allowing the client to access the service..</returns>
+    (ulong, ServiceAccessToken) GetEndPoint(AccountHandleLocked accountHandle);
 
 
     /// <summary>
     /// Called when an account handle is updated.
     /// </summary>
-    void Notify();
+    void Notify(ulong connectionId);
 
     /// <summary>
     /// Return the connected devices for the specified account.
     /// </summary>
     /// <returns></returns>
-    List<string> GetDevices();
+    List<string> GetDevices(ulong connectionId);
 
     }

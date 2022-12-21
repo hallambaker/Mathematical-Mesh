@@ -56,10 +56,19 @@
             The presence service.
             </summary>
         </member>
-        <member name="M:Goedel.Presence.Server.PresenceServer.#ctor">
+        <member name="M:Goedel.Presence.Server.PresenceServer.#ctor(Goedel.Protocol.GenericHostConfiguration,Goedel.Presence.Server.PresenceServiceConfiguration)">
             <summary>
             Default constructor, returns an empty instance.
             </summary>
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceServer.GetEndPoint(Goedel.Mesh.Server.AccountHandleLocked)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceServer.GetDevices">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceServer.Notify">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Presence.Server.PresenceServer.Connect(Goedel.Presence.ConnectRequest,Goedel.Protocol.IJpcSession)">
             <inheritdoc/>
@@ -71,6 +80,9 @@
             <summary>
             The Mesh service configuration.
             </summary>
+        </member>
+        <member name="P:Goedel.Presence.Server.PresenceServiceConfiguration.IP">
+            <summary>The IP address and port numbers</summary> 
         </member>
         <member name="F:Goedel.Presence.Server.PresenceServiceConfiguration.ConfigurationEntry">
             <summary>The configuration entry.</summary> 

@@ -529,6 +529,43 @@
             <param name="serviceDescription">The service description to add to</param>
             <param name="record">DNS record to add data from</param>
         </member>
+        <member name="T:Goedel.Discovery.HostNetwork">
+            <summary>
+            Convenience wrapper to extract the pertinent information from the host network
+            configuration, assign ports, etc. etc.
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.HostNetwork.GetHostDNS">
+            <summary>
+            Stub method for non portable function to get the host DNS server address.
+            </summary>
+            <returns>List of DNS servers.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.HostNetwork.GetUDPClient(System.Net.Sockets.AddressFamily)">
+            <summary>
+            Return a UDP client for the address family <paramref name="addressFamily"/>
+            with a randomly selected local port.
+            </summary>
+            <param name="addressFamily">The address family, either   
+            <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork"/> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6"/>.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Discovery.HostNetwork.GetLocalEndpoints(System.Boolean)">
+            <summary>
+            Return a list of the local IP endpoints.
+            </summary>
+            <returns>The list of endpoints.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.HostNetwork.Filter(System.Net.IPAddress,System.Boolean)">
+            <summary>
+            Filter the address <paramref name="address"/> according to the setting of
+            <paramref name="includeLoopback"/>.
+            </summary>
+            <param name="address">The address to filter.</param>
+            <param name="includeLoopback">If true, include loopback addresses.</param>
+            <returns>true if the address meets the filtering criteria,
+            otherwise false.</returns>
+        </member>
         <member name="T:Goedel.Discovery.DnsClientUDP">
             <summary>
             DNS client implementation
@@ -573,12 +610,6 @@
             </summary>
             <param name="iPAddress">Address of DNS server</param>
             <param name="port">Port number</param>
-        </member>
-        <member name="M:Goedel.Discovery.DnsClientUDP.GetHostDNS">
-            <summary>
-            Stub method for non portable function to get the host DNS server address.
-            </summary>
-            <returns>List of DNS servers.</returns>
         </member>
         <member name="M:Goedel.Discovery.DnsClientUDP.GetContext">
             <summary>Return a DNS Client Context in which to make a set of queries.

@@ -39,77 +39,10 @@ using System.Net.Sockets;
 namespace Goedel.Discovery;
 
 /// <summary>
-/// DNS client implementation
+/// Convenience wrapper to extract the pertinent information from the host network
+/// configuration, assign ports, etc. etc.
 /// </summary>
-public partial class DnsClientUDP : DnsClient {
-    /// <summary>
-    /// List of IP addresses to contact.
-    /// </summary>
-    public List<IPAddress> ListIPAddress;
-
-    /// <summary>
-    /// Port number to contact.
-    /// </summary>
-    public ushort Port;
-
-
-    void SetIPAddress(IPAddress iPAddress) {
-        ListIPAddress = new List<IPAddress>();
-        if (iPAddress != null) {
-            ListIPAddress.Add(iPAddress);
-            }
-        }
-
-    /// <summary>
-    /// Default constructor using platform default DNS.
-    /// </summary>
-    public DnsClientUDP() {
-        ListIPAddress = GetHostDNS();
-        Port = 53;
-        }
-
-    /// <summary>
-    /// Constructor from server name.
-    /// </summary>
-    /// <param name="server">Address of DNS server</param>
-    public DnsClientUDP(string server) {
-        if (server != null) {
-            IPAddress.TryParse(server, out var Address);
-            SetIPAddress(Address);
-            // Should add in code to query against the ICANN root servers...
-            }
-        else {
-            ListIPAddress = GetHostDNS();
-            }
-        Port = 53;
-        }
-
-    /// <summary>
-    /// Constructor from IP Address using default DNS port (53).
-    /// </summary>
-    /// <param name="iPAddress">Address of DNS server</param>
-    public DnsClientUDP(IPAddress iPAddress) :
-        this(iPAddress, 53) {
-        }
-
-    /// <summary>
-    /// Constructor from list of IP Addresses
-    /// </summary>
-    /// <param name="listIPAddress">List of addresses of DNS server</param>
-    public DnsClientUDP(List<IPAddress> listIPAddress) {
-        this.ListIPAddress = listIPAddress;
-        this.Port = 53;
-        }
-
-    /// <summary>
-    /// Constructor from IP Address and port.
-    /// </summary>
-    /// <param name="iPAddress">Address of DNS server</param>
-    /// <param name="port">Port number</param>
-    public DnsClientUDP(IPAddress iPAddress, ushort port) {
-        SetIPAddress(iPAddress);
-        this.Port = port;
-        }
+public static class HostNetwork {
 
     /// <summary>
     /// Stub method for non portable function to get the host DNS server address.
@@ -173,6 +106,152 @@ public partial class DnsClientUDP : DnsClient {
         return DNSServices;
         }
 
+    /// <summary>
+    /// Return a UDP client for the address family <paramref name="addressFamily"/>
+    /// with a randomly selected local port.
+    /// </summary>
+    /// <param name="addressFamily">The address family, either   
+    /// <see cref="AddressFamily.InterNetwork"/> or <see cref="AddressFamily.InterNetworkV6"/>.</param>
+    /// <returns></returns>
+    public static UdpClient GetUDPClient(AddressFamily addressFamily = AddressFamily.InterNetwork) {
+
+        for (var tries = 0; tries < 200; tries++) {
+            try {
+                var randomPort = Goedel.Cryptography.Platform.GetRandomPort();
+                var UdpClient = new UdpClient(randomPort, addressFamily);
+                return UdpClient;
+                }
+            catch {
+                }
+            }
+
+        return new UdpClient(Goedel.Cryptography.Platform.GetRandomPort(), addressFamily);
+        }
+
+
+
+    /// <summary>
+    /// Return a list of the local IP endpoints.
+    /// </summary>
+    /// <returns>The list of endpoints.</returns>
+    public static List<IPAddress> GetLocalEndpoints(bool includeLoopback = false) {
+        var result = new List<IPAddress>();
+
+        NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
+        foreach (NetworkInterface adapter in adapters) {
+            if (adapter.OperationalStatus == OperationalStatus.Up) {
+                var adapterProperties = adapter.GetIPProperties();
+                var unicast = adapterProperties?.UnicastAddresses;
+
+                foreach (var ip in unicast) {
+                    var address = ip.Address;
+                    if (Filter(address, includeLoopback)) {
+                        result.Add(address);
+                        }
+                    }
+                }
+            }
+
+
+        return result;
+        }
+
+    /// <summary>
+    /// Filter the address <paramref name="address"/> according to the setting of
+    /// <paramref name="includeLoopback"/>.
+    /// </summary>
+    /// <param name="address">The address to filter.</param>
+    /// <param name="includeLoopback">If true, include loopback addresses.</param>
+    /// <returns>true if the address meets the filtering criteria,
+    /// otherwise false.</returns>
+    static bool Filter(IPAddress address, bool includeLoopback = false) {
+        if (address == null) return false;
+
+        if (IPAddress.IsLoopback(address)) {
+            return includeLoopback;
+            }
+
+        return true;
+        }
+
+    }
+
+
+
+/// <summary>
+/// DNS client implementation
+/// </summary>
+public partial class DnsClientUDP : DnsClient {
+    /// <summary>
+    /// List of IP addresses to contact.
+    /// </summary>
+    public List<IPAddress> ListIPAddress;
+
+    /// <summary>
+    /// Port number to contact.
+    /// </summary>
+    public ushort Port;
+
+
+    void SetIPAddress(IPAddress iPAddress) {
+        ListIPAddress = new List<IPAddress>();
+        if (iPAddress != null) {
+            ListIPAddress.Add(iPAddress);
+            }
+        }
+
+    /// <summary>
+    /// Default constructor using platform default DNS.
+    /// </summary>
+    public DnsClientUDP() {
+        ListIPAddress = HostNetwork.GetHostDNS();
+        Port = 53;
+        }
+
+    /// <summary>
+    /// Constructor from server name.
+    /// </summary>
+    /// <param name="server">Address of DNS server</param>
+    public DnsClientUDP(string server) {
+        if (server != null) {
+            IPAddress.TryParse(server, out var Address);
+            SetIPAddress(Address);
+            // Should add in code to query against the ICANN root servers...
+            }
+        else {
+            ListIPAddress = HostNetwork.GetHostDNS();
+            }
+        Port = 53;
+        }
+
+    /// <summary>
+    /// Constructor from IP Address using default DNS port (53).
+    /// </summary>
+    /// <param name="iPAddress">Address of DNS server</param>
+    public DnsClientUDP(IPAddress iPAddress) :
+        this(iPAddress, 53) {
+        }
+
+    /// <summary>
+    /// Constructor from list of IP Addresses
+    /// </summary>
+    /// <param name="listIPAddress">List of addresses of DNS server</param>
+    public DnsClientUDP(List<IPAddress> listIPAddress) {
+        this.ListIPAddress = listIPAddress;
+        this.Port = 53;
+        }
+
+    /// <summary>
+    /// Constructor from IP Address and port.
+    /// </summary>
+    /// <param name="iPAddress">Address of DNS server</param>
+    /// <param name="port">Port number</param>
+    public DnsClientUDP(IPAddress iPAddress, ushort port) {
+        SetIPAddress(iPAddress);
+        this.Port = port;
+        }
+
+
 
 
     /// <summary>Return a DNS Client Context in which to make a set of queries.
@@ -214,7 +293,7 @@ public partial class DNSContextUDP : DNSContext {
             IPEndpoints[index++] = new IPEndPoint(address, 53);
             }
 
-        UdpClient = GetUDPClient(listIPAddress[0], port);
+        UdpClient = HostNetwork.GetUDPClient();
         TaskListen = GetResponseRawAsync();
         }
 
@@ -267,27 +346,5 @@ public partial class DNSContextUDP : DNSContext {
 
     // This is the blocking version of the query implementation that is used to 
     // build the async interfaces
-
-
-    private static UdpClient GetUDPClient(IPAddress address, int port) {
-
-        for (var tries = 0; tries < 200; tries++) {
-            try {
-                //Console.WriteLine($"Create UDP client {address}:{port}");
-
-                // attempt to allocate a randomly allocated port
-                var randomPort = Goedel.Cryptography.Platform.GetRandomPort();
-                var UdpClient = new UdpClient(randomPort);
-                return UdpClient;
-                }
-            catch {
-                //Console.WriteLine($"Collision");
-                }
-            }
-
-        //UdpClient.Connect(address, port);
-        return new UdpClient(Goedel.Cryptography.Platform.GetRandomPort()); 
-        }
-
 
     }

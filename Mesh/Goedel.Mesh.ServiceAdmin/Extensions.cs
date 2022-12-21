@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net;
+using Goedel.Discovery;
 
 namespace Goedel.Mesh.ServiceAdmin;
 
@@ -37,8 +38,21 @@ public static class Extensions {
         string? hostAccount = null) {
 
         hostDns ??= Dns.GetHostName();
-        hostIp ??= "127.0.0.1:666";
         hostDns ??= serviceDns;
+
+
+        var localEndPoints = HostNetwork.GetLocalEndpoints();
+        var ip = new List<string>();
+
+        if (hostIp is null) {
+            foreach (var localEndpoint in localEndPoints) {
+                ip.Add(localEndpoint.ToString());
+                }
+            }
+        else {
+            ip.Add(hostIp);
+            }
+
 
         var pathHost = GetHost(meshMachine, hostDns);
         var pathLog = GetHost(meshMachine, "Logs");
@@ -55,12 +69,16 @@ public static class Extensions {
             HostPath = pathHost
             };
 
+        var presenceServiceConfiguration = new PresenceServiceConfiguration {
+            };
+
+
         var hostConfiguration = new GenericHostConfiguration {
             // HostUdf later
             // DeviceUdf later
             Description = $"New service configuration created on {DateTime.Now.ToRFC3339()}",
             HostDns = hostDns,
-            IP = new List<string> { hostIp },
+            IP = ip,
             RunAs = hostAccount
             };
 
@@ -79,6 +97,7 @@ public static class Extensions {
 
 
         configuration.Add(MeshServiceConfiguration.ConfigurationEntry, serviceConfiguration);
+        configuration.Add(PresenceServiceConfiguration.ConfigurationEntry, presenceServiceConfiguration);
         configuration.Add(GenericHostConfiguration.ConfigurationEntry, hostConfiguration);
         configuration.Dictionary.Add("Logging", logging);
 
@@ -86,7 +105,8 @@ public static class Extensions {
         using var service = PublicMeshService.Create(meshMachine, serviceConfiguration, hostConfiguration);
 
         if (admin != null) {
-            ContextUser contextUser = service.AddAdministrator(meshMachine, admin, serviceConfiguration, dareLogger);
+            ContextUser contextUser = service.AddAdministrator(meshMachine, 
+                admin, serviceConfiguration, dareLogger);
             }
 
         // Write the configuration out to the file

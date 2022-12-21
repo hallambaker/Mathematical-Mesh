@@ -1012,15 +1012,23 @@
 		String Mapping
 			Description
 				|Optional name mapping, (e.g. alice@example.com -> alice.mesh)
-		String Endpoint
+		String Endpoints
 			Multiple
 			Description
-				|The service endpoint. This MAY be specified as a callsign (@alice),
+				|The service endpoints. This MAY be specified as a callsign (@alice),
 				|a DNS address (example.com), an IP address (10.0.0.1) or a fully
 				|qualified URI.
 
 
 
+	Structure ServiceAccessToken
+		Inherits NamedService
+		Binary Token
+			Description
+				|Session initiation token
+		Binary SharedSecret
+			Description
+				|Session shared secret
 
 	Structure CatalogedBookmark
 		Inherits CatalogedEntry

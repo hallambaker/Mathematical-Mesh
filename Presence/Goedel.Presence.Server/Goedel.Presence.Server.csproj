@@ -13,6 +13,7 @@
      <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
      <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
      <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj" />
+     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
      <ProjectReference Include="..\Goedel.Presence\Goedel.Presence.csproj" />
    </ItemGroup>
 

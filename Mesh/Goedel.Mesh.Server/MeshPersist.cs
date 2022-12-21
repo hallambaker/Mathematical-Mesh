@@ -337,6 +337,15 @@ public class MeshPersist : Disposable {
             }
 
         if (services != null) {
+            foreach (var service in services) {
+                if (service == MeshConstants.MeshPresenceService & PresenceService is not null) {
+                    statusResponse.Services ??= new();
+                    statusResponse.Services.Add (PresenceService.GetEndPoint(accountHandle));
+                    }
+
+                }
+
+
             }
 
 

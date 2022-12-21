@@ -119,7 +119,6 @@ public partial class TestService {
     public void MeshPresence() {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
 
-        var presenceServer = new PresenceServer();
 
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main");

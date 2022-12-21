@@ -144,7 +144,7 @@ public class PublicMeshService : MeshService {
 
         // Load the Mesh persistence base
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryMesh;
-        MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger);
+        MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger, PresenceService);
 
 
         var instance = GenericHostConfiguration.Instance ?? meshMachine.Instance;

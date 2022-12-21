@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 19-Dec-22 10:56:09 PM
+//  This file was automatically generated at 20-Dec-22 11:44:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -149,6 +149,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CapabilityFairExchange", CapabilityFairExchange._Factory},
 	    {"CatalogedCallsign", CatalogedCallsign._Factory},
 	    {"NamedService", NamedService._Factory},
+	    {"ServiceAccessToken", ServiceAccessToken._Factory},
 	    {"CatalogedBookmark", CatalogedBookmark._Factory},
 	    {"CatalogedTask", CatalogedTask._Factory},
 	    {"CatalogedApplication", CatalogedApplication._Factory},
@@ -9850,12 +9851,12 @@ public partial class NamedService : MeshItem {
 
 	public virtual string						Mapping  {get; set;}
         /// <summary>
-        ///The service endpoint. This MAY be specified as a callsign (@alice),
+        ///The service endpoints. This MAY be specified as a callsign (@alice),
         ///a DNS address (example.com), an IP address (10.0.0.1) or a fully
         ///qualified URI.
         /// </summary>
 
-	public virtual List<string>				Endpoint  {get; set;}
+	public virtual List<string>				Endpoints  {get; set;}
 
 
     ///<inheritdoc/>
@@ -9874,9 +9875,9 @@ public partial class NamedService : MeshItem {
 					}
 				break;
 				}
-			case "Endpoint" : {
+			case "Endpoints" : {
 				if (value is TokenValueListString vvalue) {
-					Endpoint = vvalue.Value;
+					Endpoints = vvalue.Value;
 					}
 				break;
 				}
@@ -9898,8 +9899,8 @@ public partial class NamedService : MeshItem {
 			case "Mapping" : {
 				return new TokenValueString (Mapping);
 				}
-			case "Endpoint" : {
-				return new TokenValueListString (Endpoint);
+			case "Endpoints" : {
+				return new TokenValueListString (Endpoints);
 				}
 
             default: {
@@ -9914,7 +9915,7 @@ public partial class NamedService : MeshItem {
 
 			{ "Prefix", new Property (typeof(TokenValueString), false)} ,
 			{ "Mapping", new Property (typeof(TokenValueString), false)} ,
-			{ "Endpoint", new Property (typeof(TokenValueListString), true)} 
+			{ "Endpoints", new Property (typeof(TokenValueListString), true)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -9964,6 +9965,126 @@ public partial class NamedService : MeshItem {
 			return Out as NamedService;
 			}
 		var Result = new NamedService ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class ServiceAccessToken : NamedService {
+        /// <summary>
+        ///Session initiation token
+        /// </summary>
+
+	public virtual byte[]						Token  {get; set;}
+        /// <summary>
+        ///Session shared secret
+        /// </summary>
+
+	public virtual byte[]						SharedSecret  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Token" : {
+				if (value is TokenValueBinary vvalue) {
+					Token = vvalue.Value;
+					}
+				break;
+				}
+			case "SharedSecret" : {
+				if (value is TokenValueBinary vvalue) {
+					SharedSecret = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Token" : {
+				return new TokenValueBinary (Token);
+				}
+			case "SharedSecret" : {
+				return new TokenValueBinary (SharedSecret);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Token", new Property (typeof(TokenValueBinary), false)} ,
+			{ "SharedSecret", new Property (typeof(TokenValueBinary), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, NamedService._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ServiceAccessToken";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ServiceAccessToken();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ServiceAccessToken FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ServiceAccessToken;
+			}
+		var Result = new ServiceAccessToken ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 19-Dec-22 10:56:08 PM
+//  This file was automatically generated at 20-Dec-22 11:44:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -589,6 +589,11 @@ public static partial class MeshConstants {
     ///Transaction result tag Expired
     ///</summary>
     public const string TransactionResultExpired = "Expired";
+
+    ///<summary>
+    ///To be requested IANA service name for Mesh presence service
+    ///</summary>
+    public const string MeshPresenceService = "mmm_presence";
 
     }
 
