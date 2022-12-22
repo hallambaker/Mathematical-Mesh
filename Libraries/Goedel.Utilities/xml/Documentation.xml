@@ -1999,6 +1999,13 @@
             <param name="minimum">The minimum value to return.</param>
             <returns>The greater of <paramref name="value"/> and <paramref name="minimum"/></returns>
         </member>
+        <member name="M:Goedel.Utilities.NumberSplit.BoundInt32(System.Int64)">
+            <summary>
+            Return the lesser of <paramref name="value"/> and <see cref="F:System.Int32.MaxValue"/>.
+            </summary>
+            <param name="value">The value to bound.</param>
+            <returns>The bounded value.</returns>
+        </member>
         <member name="M:Goedel.Utilities.NumberSplit.GetLast(System.Array,System.Int32,System.Int32)">
             <summary>
             Calculate the upper bound for an array index given a specified first position and

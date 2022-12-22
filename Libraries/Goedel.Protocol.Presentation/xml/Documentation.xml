@@ -670,6 +670,15 @@
             <param name="ephemeral">Ephemeral data specifying a public key </param>
             <returns>The ephemeral private key and credential public key.</returns>
         </member>
+        <member name="T:Goedel.Protocol.Presentation.IQueuableTask">
+            <summary>
+            Describes a queueable task. Used to schedule UDP packet delivery for 
+            connection keepalive etc.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.IQueuableTask.WakeAt">
+            <summary>The time at which the task item should be activated.</summary> 
+        </member>
         <member name="T:Goedel.Protocol.Presentation.KeyCredentialPublic">
             <summary>
             Connection credentialed by means of raw key alone.
@@ -1294,6 +1303,68 @@
         </member>
         <member name="M:Goedel.Protocol.Presentation.PacketWriterDebug.Encrypt(System.Byte[],Goedel.Protocol.Presentation.PacketWriter,System.Boolean)">
             <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.Presentation.PendingQueue`1">
+            <summary>
+            Implements a queue of pending items.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PendingQueue`1.WakeAt">
+            <summary>The wake time for the next item in the queue.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PendingQueue`1.Sleep">
+            <summary>
+            Timespan giving the sleep time in ticks bounded by the Int32 maximum value
+            so as to avoid timer length limit.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PendingQueue`1.Count">
+            <summary>The number of items currently in the queue.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.PendingQueue`1.Queue">
+            <summary>The queue itself.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PendingQueue`1.Insert(`0,System.DateTime)">
+            <summary>
+            Insert the task <paramref name="task"/> in the queue with a wakeup time 
+            of <paramref name="wakeAtTime"/> unless the item is already scheduled to be
+            woken earlier.
+            </summary>
+            <param name="task">The task to queue.</param>
+            <param name="wakeAtTime">The wakeup time.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PendingQueue`1.Insert(`0,System.Int32)">
+            <summary>
+            Insert the task <paramref name="task"/> in the queue with a wakeup time 
+            of <paramref name="wakeAtTicks"/> unless the item is already scheduled to be
+            woken earlier.
+            </summary>
+            <param name="task">The task to queue.</param>
+            <param name="wakeAtTicks">The wakeup time in ticks from the current time.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PendingQueue`1.Next(System.Boolean)">
+            <summary>
+            If the queue is not empty and either <paramref name="ifWoken"/> is false 
+            or the next task in the queue is ready to run, remove the next task 
+            in the queue and return it. Otherwise return null.
+            </summary>
+            <param name="ifWoken">If true, only return the next task if it is
+            ready to be processed.</param>
+            <returns>The next task or null if no items are pending.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PendingQueue`1.Remove(`0)">
+            <summary>
+            Remove the task <paramref name="task"/> from the queue.
+            </summary>
+            <param name="task">The task to remove.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Presentation.PendingQueue`1.Add(`0,System.DateTime)">
+            <summary>
+            Add the task to the queue.
+            </summary>
+            <param name="task"></param>
+            <param name="wakeAt"></param>
         </member>
         <member name="T:Goedel.Protocol.Presentation.InitiatorMessageType">
             <summary>Inbound spool message state</summary>

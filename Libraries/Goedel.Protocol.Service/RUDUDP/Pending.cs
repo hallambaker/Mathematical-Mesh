@@ -21,10 +21,10 @@
 //#endregion
 
 
-//using Goedel.Protocol.Presentation;
-//using System.IO;
 
 //namespace Goedel.Protocol.Service;
+
+
 
 
 ///// <summary>
@@ -34,8 +34,8 @@
 ///// <param name="Priority">The priority of the request set, higher values 
 ///// indicate higher priority.</param>
 //public record Pending(
-//            PacketConnection PacketConnection, 
-//            int Priority=0) {
+//            PacketConnection PacketConnection,
+//            int Priority = 0) {
 
 //    ///<summary>List of pending items.</summary> 
 //    List<PendingItem> PendingItems { get; } = new();
@@ -54,7 +54,7 @@
 //            PacketConnection = PacketConnection,
 //            StreamId = streamId,
 //            };
-//        PendingItems.Add (new PendingStream (streamId, label, packetStream));
+//        PendingItems.Add(new PendingStream(streamId, label, packetStream));
 //        return packetStream;
 //        }
 
@@ -64,7 +64,7 @@
 //    /// </summary>
 //    /// <param name="stream">The stream to post to.</param>
 //    /// <param name="data">The data to post.</param>
-//    public void Post(PacketStream stream, byte[]data) {
+//    public void Post(PacketStream stream, byte[] data) {
 //        PendingItems.Add(new PendingPost(stream, data));
 //        }
 
@@ -113,7 +113,7 @@
 ///// <param name="StreamId">The stream identifier to assign.</param>
 ///// <param name="PacketStream">The handle for the stream.</param>
 ///// <param name="Label">The stream label, (must be less than 64 bytes)</param>
-//public record PendingStream (
+//public record PendingStream(
 //            StreamId StreamId,
 //            byte[] Label,
 //            PacketStream PacketStream) : PendingItem {

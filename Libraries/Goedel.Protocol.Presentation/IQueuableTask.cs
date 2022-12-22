@@ -1,5 +1,4 @@
-﻿
-#region // Copyright - MIT License
+﻿#region // Copyright - MIT License
 //  © 2021 by Phill Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,30 +20,16 @@
 //  THE SOFTWARE.
 #endregion
 
-namespace Goedel.Mesh.Server;
+
+
+namespace Goedel.Protocol.Presentation;
 
 /// <summary>
-/// Presence Service interface.
+/// Describes a queueable task. Used to schedule UDP packet delivery for 
+/// connection keepalive etc.
 /// </summary>
-public interface IPresence {
+public interface IQueuableTask : IComparable {
 
-    /// <summary>
-    /// Return a presence service endpoint for the specified account.
-    /// </summary>
-    /// <param name="accountHandle">The handle of the account making the request.</param>
-    /// <returns>A unique device connection identifier and a service endpoint allowing the client to access the service..</returns>
-    (ulong, ServiceAccessToken) GetEndPoint(AccountHandleLocked accountHandle);
-
-
-    /// <summary>
-    /// Called when an account handle is updated.
-    /// </summary>
-    void Notify(ulong connectionId);
-
-    /// <summary>
-    /// Return the connected devices for the specified account.
-    /// </summary>
-    /// <returns>List of the device identifiers of the connected devices.</returns>
-    List<string> GetDevices(ulong connectionId);
-
+    ///<summary>The time at which the task item should be activated.</summary> 
+    DateTime WakeAt { get; set; }
     }

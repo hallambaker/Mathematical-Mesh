@@ -51,30 +51,143 @@
             Desctiption of the 
             </summary>
         </member>
+        <member name="T:Goedel.Presence.Server.DeviceState">
+            <summary>
+            Tracks the state of a device connection.
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.Server.DeviceState.Initial">
+            <summary>Connection requested, no contact.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Server.DeviceState.Connected">
+            <summary>Device has sent information within the timeout window.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Server.DeviceState.Overdue1">
+            <summary>Device was sent first overdue notice.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Server.DeviceState.Overdue2">
+            <summary>Device was sent first overdue notice.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Server.DeviceState.Closed">
+            <summary>Connection pending deletion.</summary> 
+        </member>
+        <member name="T:Goedel.Presence.Server.DeviceBinding">
+            <summary>
+            Tracks a device connected to the service.
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.DeviceState">
+            <summary>State of the device connection</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Server.DeviceBinding.ConnectionId">
+            <summary>The unique connection ID assigned by the service.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Server.DeviceBinding.DeviceId">
+            <summary>The device profile UDF.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.AccountBinding">
+            <summary>The corresponding account binding.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.FirstContact">
+            <summary>Time at which the binding was created.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.LastContact">
+            <summary>Time at which the binding was last used.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.CurrentEndpoint">
+            <summary>The last endpoint from which the device was accessed.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.LastConnectionSerial">
+            <summary>Monotonically increasing connection request counter. To prevent replay
+            attacks, a connection request MUST be rejected unless it contains a greater or equal
+            serial number.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.Notify">
+            <summary>When set, there is a pending notification to be sent to the device.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.EncryptKey">
+            <summary>The shared secret to be used to encrypt outbound messages</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.DecryptKey">
+            <summary>The shared secret to be used to decrypt inbound messages</summary>
+        </member>
+        <member name="M:Goedel.Presence.Server.DeviceBinding.GetPackets">
+            <summary>
+            Compile a packet sequence providing notification of the current status.
+            </summary>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.WakeAt">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.Server.DeviceBinding.CompareTo(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Presence.Server.AccountBinding">
+            <summary>
+            Tracks an account with device(s) connected to the service.
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.Server.AccountBinding.AccountId">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.AccountBinding.FirstContact">
+            <summary>Time at which the binding was created.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.AccountBinding.LastContact">
+            <summary>Time at which the binding was last used.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.AccountBinding.ConnectedDevices">
+            <summary>Dictionary of connected devices.</summary> 
+        </member>
         <member name="T:Goedel.Presence.Server.PresenceServer">
             <summary>
             The presence service.
             </summary>
+        </member>
+        <member name="P:Goedel.Presence.Server.PresenceServer.TimeOutInitial">
+            <summary>Time to wait before cancelling connection request.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.PresenceServer.TimeOut1">
+            <summary>Time to wait before the first overdue notice is sent.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.PresenceServer.TimeOut2">
+            <summary>Time to wait before the second overdue notice is sent.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Server.PresenceServer.PendingQueue">
+            <summary>The queue of pending items associated with a device.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.PresenceServer.ImmediateQueue">
+            <summary>Queue of items for immediate processing.</summary> 
+        </member>
+        <member name="M:Goedel.Presence.Server.PresenceServer.Disposing">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Presence.Server.PresenceServer.#ctor(Goedel.Protocol.GenericHostConfiguration,Goedel.Presence.Server.PresenceServiceConfiguration)">
             <summary>
             Default constructor, returns an empty instance.
             </summary>
         </member>
+        <member name="M:Goedel.Presence.Server.PresenceServer.WaitQueuedTasks">
+            <summary>
+            Thread to process queued tasks.
+            </summary>
+        </member>
         <member name="M:Goedel.Presence.Server.PresenceServer.GetEndPoint(Goedel.Mesh.Server.AccountHandleLocked)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Presence.Server.PresenceServer.GetDevices">
+        <member name="M:Goedel.Presence.Server.PresenceServer.GetDevices(System.UInt64)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Presence.Server.PresenceServer.Notify">
+        <member name="M:Goedel.Presence.Server.PresenceServer.Notify(System.UInt64)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Presence.Server.PresenceServer.Connect(Goedel.Presence.ConnectRequest,Goedel.Protocol.IJpcSession)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Presence.Server.PresenceServer.Query(Goedel.Presence.QueryRequest,Goedel.Protocol.IJpcSession)">
-            <inheritdoc/>
+        <member name="M:Goedel.Presence.Server.PresenceServer.QueueNotification(Goedel.Presence.Server.DeviceBinding)">
+            <summary>
+            Queue a notification to a device unless there is a pending notification already.
+            </summary>
+            <param name="deviceBinding"></param>
         </member>
         <member name="T:Goedel.Presence.Server.PresenceServiceConfiguration">
             <summary>
@@ -83,6 +196,9 @@
         </member>
         <member name="P:Goedel.Presence.Server.PresenceServiceConfiguration.IP">
             <summary>The IP address and port numbers</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Server.PresenceServiceConfiguration.UdpSocketListeners">
+            <summary>Number of UDP socket listeners per protocol.</summary> 
         </member>
         <member name="F:Goedel.Presence.Server.PresenceServiceConfiguration.ConfigurationEntry">
             <summary>The configuration entry.</summary> 

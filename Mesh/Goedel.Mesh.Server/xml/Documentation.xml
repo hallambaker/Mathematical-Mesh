@@ -1090,18 +1090,18 @@
             Return a presence service endpoint for the specified account.
             </summary>
             <param name="accountHandle">The handle of the account making the request.</param>
-            <returns>A service endpoint allowing the client to access the service..</returns>
+            <returns>A unique device connection identifier and a service endpoint allowing the client to access the service..</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.IPresence.Notify">
+        <member name="M:Goedel.Mesh.Server.IPresence.Notify(System.UInt64)">
             <summary>
             Called when an account handle is updated.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Server.IPresence.GetDevices">
+        <member name="M:Goedel.Mesh.Server.IPresence.GetDevices(System.UInt64)">
             <summary>
             Return the connected devices for the specified account.
             </summary>
-            <returns></returns>
+            <returns>List of the device identifiers of the connected devices.</returns>
         </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">
              <summary>

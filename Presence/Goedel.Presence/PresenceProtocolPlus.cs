@@ -24,10 +24,10 @@ using Goedel.Protocol;
 
 using System;
 using System.Collections.Generic;
-
+using System.Net;
 
 namespace Goedel.Presence; 
-public partial class PresenceRequest : Request {
+public partial class PresenceFromClient : Request {
 
     #region // Properties
     #endregion 
@@ -45,9 +45,11 @@ public partial class PresenceRequest : Request {
     #endregion 
     }
 
-public partial class PresenceResponse : Response {
+public partial class PresenceFromService : Response {
 
     #region // Properties
+    IPEndPoint Source{ get; set; }
+
     #endregion 
 
     #region // Destructor

@@ -340,7 +340,12 @@ public class MeshPersist : Disposable {
             foreach (var service in services) {
                 if (service == MeshConstants.MeshPresenceService & PresenceService is not null) {
                     statusResponse.Services ??= new();
-                    statusResponse.Services.Add (PresenceService.GetEndPoint(accountHandle));
+
+                    var (connectionId, serviceAccessToken) = PresenceService.GetEndPoint(accountHandle);
+
+                    statusResponse.Services.Add (serviceAccessToken);
+
+                    // add the connectionId to the locked account handle here.
                     }
 
                 }

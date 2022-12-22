@@ -51,6 +51,15 @@ public static class NumberSplit {
     public static int Minimum(this int value, int minimum) =>
         value >= minimum ? value : minimum;
 
+    /// <summary>
+    /// Return the lesser of <paramref name="value"/> and <see cref="Int32.MaxValue"/>.
+    /// </summary>
+    /// <param name="value">The value to bound.</param>
+    /// <returns>The bounded value.</returns>
+    public static long BoundInt32 (this long value) => 
+        value >= Int32.MaxValue ? value : Int32.MaxValue;
+
+
 
     /// <summary>
     /// Calculate the upper bound for an array index given a specified first position and
