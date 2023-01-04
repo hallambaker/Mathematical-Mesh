@@ -46,6 +46,9 @@ public record DeviceBinding : IQueuableTask {
     ///<summary>Time at which the binding was last used.</summary> 
     public System.DateTime LastContact { get; set; } = System.DateTime.Now;
 
+    ///<summary>Time at which the binding was last used.</summary> 
+    public System.DateTime Expire { get; set; } = System.DateTime.Now;
+
     ///<summary>The last endpoint from which the device was accessed.</summary> 
     public IPEndPoint CurrentEndpoint { get; set; }
 

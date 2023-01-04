@@ -56,7 +56,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	public void _Colophon(CreateExamples Example) {
 
 			_Output.Write ("\n{0}", _Indent);
-        _Output.Write ("The examples in this document were created on {1}. \n{0}", _Indent, System.DateTime.Now.ToString());
+			_Output.Write ("The examples in this document were created on {1}. \n{0}", _Indent, DateTime.Now.ToString());
 			_Output.Write ("Out of {1} examples,\n{0}", _Indent, TestCLI.CountTotal);
 			if (  (TestCLI.ErrorCountTotal ==0) ) {
 				_Output.Write ("all passed.\n{0}", _Indent);

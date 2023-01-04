@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 03-Jan-23 3:38:12 PM
+//  This file was automatically generated at 04-Jan-23 11:57:58 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -109,12 +109,12 @@ abstract public partial class TestEntry : TestSchema {
         ///Time the pending item was created.
         /// </summary>
 
-	public virtual System.DateTime?						Created  {get; set;}
+	public virtual DateTime?						Created  {get; set;}
         /// <summary>
         ///Time the pending item was last modified.
         /// </summary>
 
-	public virtual System.DateTime?						Modified  {get; set;}
+	public virtual DateTime?						Modified  {get; set;}
 
 
     ///<inheritdoc/>

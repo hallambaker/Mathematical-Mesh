@@ -120,7 +120,7 @@ public class PresenceServer : Disposable, IPresence {
 
     ///<summary>Time to wait before the first heartbeat overdue notice is 
     ///sent in milliseconds.</summary> 
-    public int TimeOut1MilliSeconds { get; set; } = (int) 60_000;
+    public int TimeOutHeartbeatMilliSeconds { get; set; } = (int) 60_000;
 
     ///<summary>Time to wait before the second overdue notice is sent in 
     ///milliseconds.</summary> 
@@ -443,10 +443,11 @@ public class PresenceServer : Disposable, IPresence {
                 return null; // Connection ID is not in use.
                 }
             var accountBinding = deviceBinding.AccountBinding;
-
+            var now = DateTime.UtcNow;
             foreach (var deviceEntry in accountBinding.ConnectedDevices) {
-                result.Add(deviceEntry.Value.DeviceId);
-                // ToDo: consider adding more information here.
+                if (deviceEntry.Value.Expire < now) {
+                    result.Add(deviceEntry.Value.DeviceId);
+                    }
                 }
             }
 
@@ -461,12 +462,14 @@ public class PresenceServer : Disposable, IPresence {
                 }
             var accountBinding = deviceBinding.AccountBinding;
 
+            var now = DateTime.UtcNow;
             foreach (var deviceEntry in accountBinding.ConnectedDevices) {
                 var device = deviceEntry.Value; ;
-
-                var notification = new PresenceNotify() {
-                    };
-                QueueResponse(device, notification, device.CurrentEndpoint);
+                if (device.Expire < now) {
+                    var notification = new PresenceNotify() {
+                        };
+                    QueueResponse(device, notification, device.CurrentEndpoint);
+                    }
                 }
             }
         }
@@ -520,7 +523,7 @@ public class PresenceServer : Disposable, IPresence {
             deviceBinding.DeviceState = DeviceState.Connected;
 
             var response = new PresenceConnectResponse() {
-                ConnectionTimeout = TimeOut1MilliSeconds
+                ConnectionTimeout = TimeOutHeartbeatMilliSeconds
                 };
             QueueResponse(deviceBinding, response, connectRequest.SourceEndPoint);
             }
@@ -536,7 +539,11 @@ public class PresenceServer : Disposable, IPresence {
             // have recieved a keepalive here so update the connection state
 
             QueueResponse(deviceBinding, message, heartbeat.SourceEndPoint);
-            PendingQueue.Insert(deviceBinding, TimeOut1MilliSeconds);
+            deviceBinding.Expire = DateTime.Now.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
+
+
+
+            //PendingQueue.Insert(deviceBinding, TimeOut1MilliSeconds);
             }
         }
 
@@ -552,17 +559,7 @@ public class PresenceServer : Disposable, IPresence {
         Console.WriteLine($"Received Resolve");
         }
 
-    /////<inheritdoc/>
-    //public override ConnectResponse Connect(ConnectRequest request, IJpcSession session) {
-    //    throw new NotImplementedException();
-    //    }
 
-
-
-    /////<inheritdoc/>
-    //public override QueryResponse Query(QueryRequest request, IJpcSession session) {
-    //    throw new NotImplementedException();
-    //    }
     #endregion
     }
 
