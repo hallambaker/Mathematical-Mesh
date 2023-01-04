@@ -7,7 +7,9 @@
 
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare
-
+    Using Goedel.Mesh
+	Extern Message
+	
 	Section 3 "Shared Classes"
 
 
@@ -34,6 +36,10 @@
 
 	Message PresenceHeartbeat
 		Inherits PresenceFromClient
+
+	Message PresenceEndpointRequest
+		Inherits PresenceFromClient
+
 
 	Message PresenceAcknowledge
 		Inherits PresenceFromClient
@@ -72,6 +78,8 @@
 	Message PresenceStatus
 		Inherits PresenceFromService
 
+	Message PresenceEndpointResponse
+		Inherits PresenceFromService
 
 	Message PresenceNotify
 		Inherits PresenceFromService
@@ -79,4 +87,32 @@
 	Message PresenceResolveResponse
 		Inherits PresenceFromService
 		Binary DnsResponse
+
+
+	Structure SessionRequest
+		Inherits Message
+		String Protocol
+		String Options
+			Multiple
+		Struct SessionEndpoint Inbound
+			Multiple
+		DateTime Expires
+
+
+	Structure SessionResponse
+		Inherits Message
+		Boolean Accept
+		String Protocol
+		String Options
+			Multiple
+		Struct SessionEndpoint Inbound
+			Multiple
+
+	Structure SessionEndpoint
+		Binary IpAddress
+		Integer Port
+		String Protocol
+		String Options
+			Multiple
+
 

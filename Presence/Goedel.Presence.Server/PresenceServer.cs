@@ -521,6 +521,7 @@ public class PresenceServer : Disposable, IPresence {
             // ToDo: Will require some sophistication to prevent a MitM attack here.
             deviceBinding.CurrentEndpoint = connectRequest.SourceEndPoint;
             deviceBinding.DeviceState = DeviceState.Connected;
+            deviceBinding.Expire = DateTime.Now.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
 
             var response = new PresenceConnectResponse() {
                 ConnectionTimeout = TimeOutHeartbeatMilliSeconds
@@ -540,10 +541,6 @@ public class PresenceServer : Disposable, IPresence {
 
             QueueResponse(deviceBinding, message, heartbeat.SourceEndPoint);
             deviceBinding.Expire = DateTime.Now.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
-
-
-
-            //PendingQueue.Insert(deviceBinding, TimeOut1MilliSeconds);
             }
         }
 
@@ -551,7 +548,7 @@ public class PresenceServer : Disposable, IPresence {
         Console.WriteLine($"Received Acknowledge");
         lock (deviceBinding) {
             // have recieved a keepalive here so update the connection state
-
+            deviceBinding.Expire = DateTime.Now.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
             }
         }
 

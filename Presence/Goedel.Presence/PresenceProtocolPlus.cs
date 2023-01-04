@@ -165,3 +165,17 @@ public partial class PresenceFromService : Response {
     }
 
 
+public partial class SessionEndpoint {
+
+    public SessionEndpoint() {
+        }
+
+
+    public SessionEndpoint(IPEndPoint externalEndpoint) {
+
+
+
+        }
+
+
+    }

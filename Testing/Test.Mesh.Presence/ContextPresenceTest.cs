@@ -4,6 +4,7 @@ using Goedel.Presence;
 using System.Net.Sockets;
 using Goedel.Protocol.Presentation;
 using System;
+using Goedel.Mesh.Client;
 
 namespace Goedel.XUnit;
 
@@ -13,8 +14,9 @@ public class ContextPresenceTest : ContextPresence {
 
     public int Count { get; set; } = 0;
 
-    public ContextPresenceTest(ServiceAccessToken serviceAccessToken) :
-        base(serviceAccessToken) {
+    public ContextPresenceTest(ContextUser contextUser, 
+            ServiceAccessToken serviceAccessToken) :
+        base(contextUser, serviceAccessToken) {
         }
 
 

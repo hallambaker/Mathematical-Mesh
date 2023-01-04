@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 04-Jan-23 11:57:07 AM
+//  This file was automatically generated at 04-Jan-23 6:02:06 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -48,6 +48,7 @@ using Goedel.Utilities;
 
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
+using Goedel.Mesh;
 
 
 namespace Goedel.Presence;
@@ -80,14 +81,19 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 	    {"PresenceFromClient", PresenceFromClient._Factory},
 	    {"PresenceConnectRequest", PresenceConnectRequest._Factory},
 	    {"PresenceHeartbeat", PresenceHeartbeat._Factory},
+	    {"PresenceEndpointRequest", PresenceEndpointRequest._Factory},
 	    {"PresenceAcknowledge", PresenceAcknowledge._Factory},
 	    {"PresenceResolveRequest", PresenceResolveRequest._Factory},
 	    {"PresenceFromService", PresenceFromService._Factory},
 	    {"PresenceConnectResponse", PresenceConnectResponse._Factory},
 	    {"PresenceErrorInvalidSerial", PresenceErrorInvalidSerial._Factory},
 	    {"PresenceStatus", PresenceStatus._Factory},
+	    {"PresenceEndpointResponse", PresenceEndpointResponse._Factory},
 	    {"PresenceNotify", PresenceNotify._Factory},
-	    {"PresenceResolveResponse", PresenceResolveResponse._Factory}
+	    {"PresenceResolveResponse", PresenceResolveResponse._Factory},
+	    {"SessionRequest", SessionRequest._Factory},
+	    {"SessionResponse", SessionResponse._Factory},
+	    {"SessionEndpoint", SessionEndpoint._Factory}
 		};
 
     [ModuleInitializer]
@@ -394,6 +400,96 @@ public partial class PresenceHeartbeat : PresenceFromClient {
 			return Out as PresenceHeartbeat;
 			}
 		var Result = new PresenceHeartbeat ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class PresenceEndpointRequest : PresenceFromClient {
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, PresenceFromClient._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PresenceEndpointRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PresenceEndpointRequest();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PresenceEndpointRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PresenceEndpointRequest;
+			}
+		var Result = new PresenceEndpointRequest ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -1049,6 +1145,96 @@ public partial class PresenceStatus : PresenceFromService {
 
 	/// <summary>
 	/// </summary>
+public partial class PresenceEndpointResponse : PresenceFromService {
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PresenceEndpointResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PresenceEndpointResponse();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PresenceEndpointResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PresenceEndpointResponse;
+			}
+		var Result = new PresenceEndpointResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
 public partial class PresenceNotify : PresenceFromService {
 
 
@@ -1233,6 +1419,445 @@ public partial class PresenceResolveResponse : PresenceFromService {
 			return Out as PresenceResolveResponse;
 			}
 		var Result = new PresenceResolveResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class SessionRequest : Message {
+        /// <summary>
+        /// </summary>
+
+	public virtual string						Protocol  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>				Options  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<SessionEndpoint>				Inbound  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual DateTime?						Expires  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Protocol" : {
+				if (value is TokenValueString vvalue) {
+					Protocol = vvalue.Value;
+					}
+				break;
+				}
+			case "Options" : {
+				if (value is TokenValueListString vvalue) {
+					Options = vvalue.Value;
+					}
+				break;
+				}
+			case "Inbound" : {
+				if (value is TokenValueListStructObject vvalue) {
+					Inbound = vvalue.Value as List<SessionEndpoint>;
+					}
+				break;
+				}
+			case "Expires" : {
+				if (value is TokenValueDateTime vvalue) {
+					Expires = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Protocol" : {
+				return new TokenValueString (Protocol);
+				}
+			case "Options" : {
+				return new TokenValueListString (Options);
+				}
+			case "Inbound" : {
+				return new TokenValueListStruct<SessionEndpoint> (Inbound);
+				}
+			case "Expires" : {
+				return new TokenValueDateTime (Expires);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Protocol", new Property (typeof(TokenValueString), false)} ,
+			{ "Options", new Property (typeof(TokenValueListString), true)} ,
+			{ "Inbound", new Property ( typeof(TokenValueListStruct), true,
+					()=>new List<SessionEndpoint>(), ()=>new SessionEndpoint(), false)} ,
+			{ "Expires", new Property (typeof(TokenValueDateTime), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Message._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "SessionRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new SessionRequest();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new SessionRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as SessionRequest;
+			}
+		var Result = new SessionRequest ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class SessionResponse : Message {
+        /// <summary>
+        /// </summary>
+
+	public virtual bool?						Accept  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						Protocol  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>				Options  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<SessionEndpoint>				Inbound  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Accept" : {
+				if (value is TokenValueBoolean vvalue) {
+					Accept = vvalue.Value;
+					}
+				break;
+				}
+			case "Protocol" : {
+				if (value is TokenValueString vvalue) {
+					Protocol = vvalue.Value;
+					}
+				break;
+				}
+			case "Options" : {
+				if (value is TokenValueListString vvalue) {
+					Options = vvalue.Value;
+					}
+				break;
+				}
+			case "Inbound" : {
+				if (value is TokenValueListStructObject vvalue) {
+					Inbound = vvalue.Value as List<SessionEndpoint>;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Accept" : {
+				return new TokenValueBoolean (Accept);
+				}
+			case "Protocol" : {
+				return new TokenValueString (Protocol);
+				}
+			case "Options" : {
+				return new TokenValueListString (Options);
+				}
+			case "Inbound" : {
+				return new TokenValueListStruct<SessionEndpoint> (Inbound);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Accept", new Property (typeof(TokenValueBoolean), false)} ,
+			{ "Protocol", new Property (typeof(TokenValueString), false)} ,
+			{ "Options", new Property (typeof(TokenValueListString), true)} ,
+			{ "Inbound", new Property ( typeof(TokenValueListStruct), true,
+					()=>new List<SessionEndpoint>(), ()=>new SessionEndpoint(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Message._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "SessionResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new SessionResponse();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new SessionResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as SessionResponse;
+			}
+		var Result = new SessionResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class SessionEndpoint : PresenceProtocol {
+        /// <summary>
+        /// </summary>
+
+	public virtual byte[]						IpAddress  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						Port  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						Protocol  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>				Options  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "IpAddress" : {
+				if (value is TokenValueBinary vvalue) {
+					IpAddress = vvalue.Value;
+					}
+				break;
+				}
+			case "Port" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Port = vvalue.Value;
+					}
+				break;
+				}
+			case "Protocol" : {
+				if (value is TokenValueString vvalue) {
+					Protocol = vvalue.Value;
+					}
+				break;
+				}
+			case "Options" : {
+				if (value is TokenValueListString vvalue) {
+					Options = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "IpAddress" : {
+				return new TokenValueBinary (IpAddress);
+				}
+			case "Port" : {
+				return new TokenValueInteger32 (Port);
+				}
+			case "Protocol" : {
+				return new TokenValueString (Protocol);
+				}
+			case "Options" : {
+				return new TokenValueListString (Options);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "IpAddress", new Property (typeof(TokenValueBinary), false)} ,
+			{ "Port", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Protocol", new Property (typeof(TokenValueString), false)} ,
+			{ "Options", new Property (typeof(TokenValueListString), true)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "SessionEndpoint";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new SessionEndpoint();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new SessionEndpoint FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as SessionEndpoint;
+			}
+		var Result = new SessionEndpoint ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

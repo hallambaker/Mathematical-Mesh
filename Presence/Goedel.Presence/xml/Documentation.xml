@@ -258,6 +258,55 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Presence.PresenceEndpointRequest">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.PresenceEndpointRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.PresenceEndpointRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Presence.PresenceEndpointRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceEndpointRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.PresenceEndpointRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.PresenceEndpointRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.PresenceEndpointRequest._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.PresenceEndpointRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.PresenceEndpointRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.PresenceEndpointRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Presence.PresenceEndpointRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Presence.PresenceAcknowledge">
             <summary>
             </summary>
@@ -599,6 +648,55 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Presence.PresenceEndpointResponse">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.PresenceEndpointResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.PresenceEndpointResponse.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Presence.PresenceEndpointResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceEndpointResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.PresenceEndpointResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.PresenceEndpointResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.PresenceEndpointResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.PresenceEndpointResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.PresenceEndpointResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.PresenceEndpointResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Presence.PresenceEndpointResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Presence.PresenceNotify">
             <summary>
             </summary>
@@ -694,6 +792,201 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Presence.PresenceResolveResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Presence.SessionRequest">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionRequest.Protocol">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionRequest.Options">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionRequest.Inbound">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionRequest.Expires">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.SessionRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.SessionRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Presence.SessionRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.SessionRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.SessionRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.SessionRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.SessionRequest._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.SessionRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.SessionRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.SessionRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Presence.SessionRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Presence.SessionResponse">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionResponse.Accept">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionResponse.Protocol">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionResponse.Options">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionResponse.Inbound">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.SessionResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.SessionResponse.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Presence.SessionResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.SessionResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.SessionResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.SessionResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.SessionResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.SessionResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.SessionResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.SessionResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Presence.SessionResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Presence.SessionEndpoint">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionEndpoint.IpAddress">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionEndpoint.Port">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionEndpoint.Protocol">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.SessionEndpoint.Options">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.SessionEndpoint.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.SessionEndpoint.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Presence.SessionEndpoint._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.SessionEndpoint._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.SessionEndpoint._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.SessionEndpoint._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.SessionEndpoint._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.SessionEndpoint._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.SessionEndpoint.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.SessionEndpoint._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Presence.SessionEndpoint.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

@@ -27,6 +27,9 @@
         <member name="P:Goedel.Presence.Server.DeviceBinding.LastContact">
             <summary>Time at which the binding was last used.</summary> 
         </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.Expire">
+            <summary>Time at which the binding was last used.</summary> 
+        </member>
         <member name="P:Goedel.Presence.Server.DeviceBinding.CurrentEndpoint">
             <summary>The last endpoint from which the device was accessed.</summary> 
         </member>
@@ -158,7 +161,7 @@
         <member name="P:Goedel.Presence.Server.PresenceServer.TimeOutInitialMilliSeconds">
             <summary>Time to wait before cancelling connection request.</summary> 
         </member>
-        <member name="P:Goedel.Presence.Server.PresenceServer.TimeOut1MilliSeconds">
+        <member name="P:Goedel.Presence.Server.PresenceServer.TimeOutHeartbeatMilliSeconds">
             <summary>Time to wait before the first heartbeat overdue notice is 
             sent in milliseconds.</summary> 
         </member>

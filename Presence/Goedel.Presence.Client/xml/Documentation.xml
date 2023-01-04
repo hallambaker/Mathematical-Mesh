@@ -75,7 +75,7 @@
         <member name="P:Goedel.Presence.Client.ContextPresence.AcknowledgmentSerial">
             <summary>Serial number of the pending acknowledgement we are waiting on.</summary> 
         </member>
-        <member name="M:Goedel.Presence.Client.ContextPresence.#ctor(Goedel.Mesh.ServiceAccessToken)">
+        <member name="M:Goedel.Presence.Client.ContextPresence.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.ServiceAccessToken)">
             <summary>
             Initializes a new instance of the <see cref="T:Goedel.Presence.Client.ContextPresence"/> class.
             </summary>
@@ -121,14 +121,21 @@
             </summary>
             <returns>Asynchronous poll result.</returns>
         </member>
-        <member name="M:Goedel.Presence.Client.ContextPresence.SessionRequest(System.String)">
+        <member name="M:Goedel.Presence.Client.ContextPresence.MessageWait(System.Type)">
             <summary>
             Request creation of an outbound session to the account <paramref name="account"/>.
             </summary>
             <param name="account">The account to connect to.</param>
             <returns>The created session context (asynchronously).</returns>
         </member>
-        <member name="M:Goedel.Presence.Client.ContextPresence.GetSessionRequest">
+        <member name="M:Goedel.Presence.Client.ContextPresence.SessionRequestAsync(System.String)">
+            <summary>
+            Request creation of an outbound session to the account <paramref name="account"/>.
+            </summary>
+            <param name="account">The account to connect to.</param>
+            <returns>The created session context (asynchronously).</returns>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.GetSessionRequestAsync">
             <summary>
             Returns the next inbound session request. If one or more inbound requests 
             have already been received, it returns the first request received. Otherwise
@@ -140,9 +147,6 @@
             <summary>
             Messaging session context. Used to exchange messages with a single endpoint.
             </summary>
-        </member>
-        <member name="P:Goedel.Presence.Client.ContextSession.Accepted">
-            <summary>If true, messaging session has been established.</summary> 
         </member>
         <member name="M:Goedel.Presence.Client.ContextSession.SessionResponse(System.Boolean)">
             <summary>

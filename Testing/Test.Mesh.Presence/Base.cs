@@ -103,7 +103,7 @@ public class TestPresence : ShellTestBase {
         contextAccount = cli.ContextUser;
 
         var service = ContextPresence.GetService(contextAccount);
-        contextPresence = new ContextPresenceTest(service) {
+        contextPresence = new ContextPresenceTest(contextAccount, service) {
             HeartbeatMilliSeconds = heartbeatTimeout,
             RetransmitHeartbeatMilliSeconds = heartbeatTimeout/5,
             Stride =stride, 
@@ -195,7 +195,7 @@ public class TestPresence : ShellTestBase {
 
 
         var aliceCli = GetAlice(out var contextAlice, out var presenceAlice);
-        var bobCli = GetAlice(out var contextBob, out var presenceBob);
+        var bobCli = GetBob(out var contextBob, out var presenceBob);
 
         // Make sure both sender and receiver are ready before attempting to establish connection
         var pollResultA = presenceAlice.Poll();
@@ -214,12 +214,12 @@ public class TestPresence : ShellTestBase {
 
     async Task AliceContactBob(ContextPresence contextPresence) {
 
-        await contextPresence.SessionRequest(AccountB);
+        await contextPresence.SessionRequestAsync(AccountB);
         }
 
     async Task BobWaitAlice(ContextPresence contextPresence) {
 
-        await contextPresence.GetSessionRequest();
+        await contextPresence.GetSessionRequestAsync();
 
         }
 

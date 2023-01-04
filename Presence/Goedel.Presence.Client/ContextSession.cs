@@ -5,8 +5,19 @@
 /// </summary>
 public class ContextSession {
 
-    ///<summary>If true, messaging session has been established.</summary> 
-    public bool Accepted { get; set; }
+
+    public UdpClient UdpClient { get; init; }
+
+    public IPEndPoint ExternalEndpoint { get; init; }
+
+
+
+    public ContextSession(
+                    SessionRequest sessionRequest,
+                    SessionResponse sessionResponse) {
+        }
+
+
 
 
     /// <summary>

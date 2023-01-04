@@ -87,6 +87,7 @@ public class ContextPresence : Disposable {
 
 
     ManualResetEventSlim WaitPoll = new(false);
+    int waitPollWaiting = 0;
 
     ///<summary></summary> 
     public int UdpListenerTasks { get; init; } = 4;
@@ -136,10 +137,17 @@ public class ContextPresence : Disposable {
 
     System.DateTime WakeupUnacknowledged { get; set; } = System.DateTime.Now;
 
+
+
+    ContextUser ContextUser;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ContextPresence"/> class.
     /// </summary>
-    public ContextPresence(ServiceAccessToken serviceAccessToken) {
+    public ContextPresence(
+                ContextUser contextUser,
+                ServiceAccessToken serviceAccessToken) {
+        ContextUser = contextUser;
         ServiceAccessToken = serviceAccessToken;
         UdpClient = HostNetwork.GetUDPClient();
 
@@ -187,7 +195,7 @@ public class ContextPresence : Disposable {
 
         service.AssertNotNull(NYI.Throw);
 
-        var result = new ContextPresence(service);
+        var result = new ContextPresence(contextAccount, service);
         result.Start();
 
         return result;
@@ -270,7 +278,7 @@ public class ContextPresence : Disposable {
         }
 
     void ReleaseWait() {
-        Console.WriteLine("Release wait");
+        //Console.WriteLine("Release wait");
         WaitPoll.Set();
 
         }
@@ -318,14 +326,13 @@ public class ContextPresence : Disposable {
     DateTime GetDateTime() =>
         // Here check to see if we are really past our wakeup time
 
-
         PresenceListenerState switch {
             PresenceListenerState.Initial => WakeupUnacknowledged,
             PresenceListenerState.Unacknowledged => WakeupUnacknowledged,
             PresenceListenerState.Connected => WakeupHeartbeat,
-            PresenceListenerState.Disconnected => WakeupHeartbeat
-            }
-        ;
+            PresenceListenerState.Disconnected => WakeupHeartbeat,
+            _ => WakeupHeartbeat
+            };
 
 
 
@@ -439,21 +446,46 @@ public class ContextPresence : Disposable {
     /// Force sending a poll message to the presence service.
     /// </summary>
     /// <returns>Asynchronous poll result.</returns>
-    public  bool Poll() {
-        WaitPoll.Reset();
-        WaitPoll.Wait();
-        WaitPoll.Reset();
+    public bool Poll() {
 
+        lock (WaitPoll) {
+            waitPollWaiting++;
+            }
+        
+        WaitPoll.Wait();
+        
+        lock (WaitPoll) {
+            waitPollWaiting--;
+            if (waitPollWaiting <= 0) {
+                WaitPoll.Reset();
+                }
+            }
         return ListenerActive;
 
         }
 
 
-    public bool TryGetEndpoint(
-            out IPEndPoint localEndPoint,
-            out IPEndPoint externalEndPoint) {
 
-        
+
+
+    public async Task<IPEndPoint> RemoteEndpointAsync(UdpClient local) {
+
+        Poll();
+
+        throw new NYI();
+        }
+
+
+
+
+    /// <summary>
+    /// Request creation of an outbound session to the account <paramref name="account"/>.
+    /// </summary>
+    /// <param name="account">The account to connect to.</param>
+    /// <returns>The created session context (asynchronously).</returns>
+    public Message MessageWait (Type messageType) {
+
+
 
         throw new NYI();
         }
@@ -464,7 +496,35 @@ public class ContextPresence : Disposable {
     /// </summary>
     /// <param name="account">The account to connect to.</param>
     /// <returns>The created session context (asynchronously).</returns>
-    public async Task<ContextSession> SessionRequest (string account) => throw new NYI();
+    public async Task<ContextSession> SessionRequestAsync(string account) {
+
+        // Create a local endpoint
+        var udpClient = HostNetwork.GetUDPClient();
+
+        // Get external endpoint(s)
+        var externalEndpoint = await RemoteEndpointAsync(udpClient);
+
+        // Post connection request to account
+
+        var endpoint = new SessionEndpoint(externalEndpoint);
+        var sessionRequest = new SessionRequest() {
+            Inbound = new List<SessionEndpoint>() { endpoint }
+            };
+
+        ContextUser.SendMessage(account, sessionRequest);
+
+        // Wait for response
+        var sessionResponse = MessageWait(typeof (SessionResponse)) as SessionResponse;
+
+        // Build session for request/response and endpoint bindings
+        var result = new ContextSession(sessionRequest, sessionResponse) {
+            UdpClient = udpClient,
+            ExternalEndpoint = externalEndpoint
+            };
+        return result;
+
+
+        }
 
     /// <summary>
     /// Returns the next inbound session request. If one or more inbound requests 
@@ -472,6 +532,30 @@ public class ContextPresence : Disposable {
     /// waits for the next inbound request to be received and returns asynchronously.
     /// </summary>
     /// <returns></returns>
-    public async Task<ContextSession> GetSessionRequest() => throw new NYI();
+    public async Task<ContextSession> GetSessionRequestAsync() {
+
+
+        // Wait for response
+        var sessionRequest = MessageWait(typeof(SessionRequest)) as SessionRequest;
+
+        // obtain necessary endpoints
+        var udpClient = HostNetwork.GetUDPClient();
+        var externalEndpoint = await RemoteEndpointAsync(udpClient);
+
+        // Send response
+        var endpoint = new SessionEndpoint(externalEndpoint);
+        var sessionResponse = new SessionResponse() {
+            Inbound = new List<SessionEndpoint>() { endpoint }
+            };
+
+        // Build session for request/response and endpoint bindings
+        var result = new ContextSession(sessionRequest, sessionResponse) {
+            UdpClient = udpClient,
+            ExternalEndpoint = externalEndpoint
+            };
+        return result;
+
+
+        }
 
     }

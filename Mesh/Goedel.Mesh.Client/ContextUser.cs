@@ -570,6 +570,15 @@ public partial class ContextUser : ContextAccount {
     #endregion
     #region // Message Handling - Get/Process pending.
 
+
+    public void SendMessage(string recipientAddress, Message message) {
+        var transact = TransactBegin();
+        transact.OutboundMessage(recipientAddress, message);
+        Transact(transact);
+
+        }
+
+
     ///<inheritdoc/>
     public override int Sync() {
         var statusRequest = new StatusRequest() {
@@ -1675,9 +1684,8 @@ public partial class ContextUser : ContextAccount {
             Text = messageText
             };
 
-        var transact = TransactBegin();
-        transact.OutboundMessage(recipientAddress, message);
-        Transact(transact);
+        SendMessage(recipientAddress, message);
+
 
         // send it to the service
         return message;
