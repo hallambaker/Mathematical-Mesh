@@ -105,6 +105,7 @@ public class TestPresence : ShellTestBase {
         var service = ContextPresence.GetService(contextAccount);
         contextPresence = new ContextPresenceTest(service) {
             HeartbeatMilliSeconds = heartbeatTimeout,
+            RetransmitHeartbeatMilliSeconds = heartbeatTimeout/5,
             Stride =stride, 
             Skip = skip};
         contextPresence.Start();

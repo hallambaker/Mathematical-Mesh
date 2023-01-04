@@ -60,7 +60,7 @@ partial class Program {
 
 
         //TestPresence.Test().PresenceStatusUpdate();
-        TestPresence.Test().PresenceHeartbeat();
+        TestPresence.Test().PresenceHeartbeat(cycles:30, clientSkip: 1);
 
 
         //TestPresence.Test().UdpServiceBasic(2000);
