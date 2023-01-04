@@ -54,7 +54,7 @@ public partial class TestPersist {
     static readonly string AccountIDInvalid = "invalid";
 
     // create new
-    readonly static DateTime Now = DateTime.Now;
+    readonly static System.DateTime Now = System.DateTime.Now;
     readonly static TestItem AccountAlice = new() {
         AccountID = AccountIDAlice,
         Status = "Open",

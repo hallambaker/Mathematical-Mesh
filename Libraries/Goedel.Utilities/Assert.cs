@@ -214,7 +214,7 @@ public static class Assert {
     /// <summary>
     /// Provides a means of optionally expiring a value specified by <paramref name="value"/>.
     /// If <paramref name="expiry"/> is not null and specifies a time value that is strictly 
-    /// less than the value of <see cref="DateTime.Now"/>, the value null is returned. Otherwise
+    /// less than the value of <see cref="System.DateTime.Now"/>, the value null is returned. Otherwise
     /// the value <paramref name="value"/> is returned.
     /// </summary>
     /// <typeparam name="T">The type to return and of <paramref name="value"/>.</typeparam>
@@ -225,11 +225,11 @@ public static class Assert {
     /// is not null and is strictly less than the current time in which case the value 
     /// <code>null</code> is returned. 
     ///</returns>
-    public static T? Expired<T>(this DateTime? expiry, T value) {
+    public static T? Expired<T>(this System.DateTime? expiry, T value) {
         if (expiry == null) {
             return value;
             }
-        if (DateTime.Now < expiry) {
+        if (System.DateTime.Now < expiry) {
             return value;
             }
         return default;

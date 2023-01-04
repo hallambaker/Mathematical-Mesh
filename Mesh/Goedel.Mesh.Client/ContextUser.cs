@@ -575,7 +575,7 @@ public partial class ContextUser : ContextAccount {
         var statusRequest = new StatusRequest() {
             CatalogedDeviceDigest = CatalogedMachine?.CatalogedDeviceDigest ?? ""
             };
-        return Sync(statusRequest);
+        return Sync(statusRequest).Count;
 
         }
 
@@ -1543,7 +1543,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="expire">Expiry time for the corresponding PIN</param>
     /// <param name="automatic">If true, presentation of the pin code is sufficient
     /// to authenticate and authorize the action.</param>
-    public string ContactUri(bool automatic, DateTime? expire, string localName = null) {
+    public string ContactUri(bool automatic, System.DateTime? expire, string localName = null) {
         var envelope = GetSelf(localName);
         var combinedKey = new CryptoKeySymmetricSigner();
 

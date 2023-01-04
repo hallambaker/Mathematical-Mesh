@@ -10,10 +10,26 @@
             confirmation of message receipt.
             </summary>
         </member>
-        <member name="T:Goedel.Presence.Client.ContextPoll">
+        <member name="T:Goedel.Presence.Client.PresenceListenerState">
             <summary>
-            Result of polling the presence service for context.
+            Presence listener state.
             </summary>
+        </member>
+        <member name="F:Goedel.Presence.Client.PresenceListenerState.Initial">
+            <summary>Listener has yet to receive contact from the service.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Client.PresenceListenerState.Connected">
+            <summary>Listener has recently received a valid contact message from the service
+            </summary> 
+        </member>
+        <member name="F:Goedel.Presence.Client.PresenceListenerState.Unacknowledged">
+            <summary>Listener has not acknowledged request sent to it.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Client.PresenceListenerState.Disconnected">
+            <summary>Listener has not recently received a valid contact message.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Client.PresenceListenerState.Aborted">
+            <summary>The presence association was aborted.</summary> 
         </member>
         <member name="T:Goedel.Presence.Client.ContextPresence">
             <summary>
@@ -23,12 +39,51 @@
         <member name="M:Goedel.Presence.Client.ContextPresence.Disposing">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Presence.Client.ContextPresence.Heartbeat">
-            <summary>Keepalive timer in Ticks. Default value is 1 second.</summary> 
+        <member name="P:Goedel.Presence.Client.ContextPresence.LocalEndPoint">
+            <summary>The current local endpoint</summary> 
         </member>
-        <member name="M:Goedel.Presence.Client.ContextPresence.#ctor">
+        <member name="P:Goedel.Presence.Client.ContextPresence.PresenceListenerState">
+            <summary>The state of the presence listener.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.UdpListenerTasks">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.RetransmitConnectRequestTries">
+            <summary>Maximum number of retry requests.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.RetransmitHeartbeatTries">
+            <summary>Maximum number of retry requests.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.RetransmitConnectRequestMilliSeconds">
+            <summary>Time delay before retrying a connection request in milliseconds.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.HeartbeatMilliSeconds">
+            <summary>Connection heartbeat timer in milliseconds.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.RetransmitHeartbeatMilliSeconds">
+            <summary>Connection heartbeat timer in milliseconds.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.ReconnectAttemptMilliSeconds">
+            <summary>Connection heartbeat timer in milliseconds.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.RetransmitRequestMilliSeconds">
+            <summary>Request retransmission timeout in milliseconds</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.MessageSerial">
+            <summary>Serial number of the last message sent</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.AcknowledgmentSerial">
+            <summary>Serial number of the pending acknowledgement we are waiting on.</summary> 
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.#ctor(Goedel.Mesh.ServiceAccessToken)">
             <summary>
             Initializes a new instance of the <see cref="T:Goedel.Presence.Client.ContextPresence"/> class.
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.Start">
+            <summary>
+            Start the presence listener. Waiting for an explicit start allows the
+            caller to adjust the listener parameters as init parameters.
             </summary>
         </member>
         <member name="M:Goedel.Presence.Client.ContextPresence.GetContext(Goedel.Mesh.Client.ContextUser)">
@@ -39,20 +94,26 @@
             <param name="contextAccount">The account under which the presence service 
             is provided.</param>
             <returns>The presence context.</returns>
-            <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
-        <member name="M:Goedel.Presence.Client.ContextPresence.BindPresence(Goedel.Mesh.Client.UdpServiceEndpoint)">
-            <summary>
-            Bind a presence service provider. A presence context may have multiple presence
-            providers bound simultaneously???
-            </summary>
-            <param name="udpServiceEndpoint"></param>
-        </member>
-        <member name="M:Goedel.Presence.Client.ContextPresence.Listener">
+        <member name="M:Goedel.Presence.Client.ContextPresence.Listen">
             <summary>
             The listener task.
             </summary>
-            <returns></returns>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.MakeConnectRequest">
+            <summary>
+            Send initial connect request.
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.SendHeartbeat">
+            <summary>
+            Send the heartbeat message. No telemetry at this point.
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.UdpListener">
+            <summary>
+            Udp client listener, read requests and post to <see cref="P:Goedel.Presence.Client.ContextPresence.UdpReceiveBuffer"/>
+            </summary>
         </member>
         <member name="M:Goedel.Presence.Client.ContextPresence.Poll">
             <summary>

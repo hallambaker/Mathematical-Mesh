@@ -143,7 +143,7 @@ public partial class Shell {
 
         var data = Entry.ToUTF8();
         var contentMeta = new ContentMeta() {
-            Created = DateTime.Now
+            Created = System.DateTime.Now
             };
 
         Writer.AddData(data, contentMeta);

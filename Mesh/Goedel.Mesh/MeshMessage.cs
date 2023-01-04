@@ -199,7 +199,7 @@ public partial class MessageValidated {
         if ((messagePin.MessageStatus & MessageStatus.Closed) == MessageStatus.Closed) {
             return ProcessingResult.PinUsed;
             }
-        if (messagePin.Expires != null && messagePin.Expires < DateTime.Now) {
+        if (messagePin.Expires != null && messagePin.Expires < System.DateTime.Now) {
             return ProcessingResult.PinExpired;
             }
         var pinWitness = MessagePin.GetPinWitness(
@@ -241,7 +241,7 @@ public partial class MessagePin {
     /// <param name="accountAddress">The account address the PIN is issued for.</param>
     /// <param name="automatic">If true, the actions authenticated with the PIN should be
     /// automatically authorized.</param>
-    public MessagePin(string pin, bool automatic, DateTime? expires, string accountAddress, string action) {
+    public MessagePin(string pin, bool automatic, System.DateTime? expires, string accountAddress, string action) {
         Account = accountAddress;
         Automatic = automatic;
         Expires = expires;
@@ -286,7 +286,7 @@ public partial class MessagePin {
         if ((messagePin.MessageStatus & MessageStatus.Closed) == MessageStatus.Closed) {
             return ProcessingResult.PinUsed;
             }
-        if (messagePin.Expires != null && messagePin.Expires < DateTime.Now) {
+        if (messagePin.Expires != null && messagePin.Expires < System.DateTime.Now) {
             return ProcessingResult.PinExpired;
             }
         var pinWitness = MessagePin.GetPinWitness(

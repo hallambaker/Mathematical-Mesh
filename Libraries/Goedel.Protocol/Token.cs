@@ -144,7 +144,7 @@ public record TokenValueBinary(byte[] Value) : TokenValue {
 /// Record representing a boolean value in a JSON tree.
 /// </summary>
 /// <param name="Value">The value.</param>
-public record TokenValueDateTime(DateTime? Value) : TokenValue {
+public record TokenValueDateTime(System.DateTime? Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
 
@@ -357,7 +357,7 @@ public record TokenValueListBinary(List<byte[]> Value) : TokenValue {
 /// Record representing a boolean value in a JSON tree.
 /// </summary>
 /// <param name="Value">The value.</param>
-public record TokenValueListDateTime(List<DateTime?> Value) : TokenValue {
+public record TokenValueListDateTime(List<System.DateTime?> Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
 

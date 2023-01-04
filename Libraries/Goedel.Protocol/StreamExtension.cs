@@ -123,5 +123,5 @@ public static class StreamExtension {
     /// <summary>Write out the Date Time as a string in RFC3339 Format</summary>
     /// <param name="Output">The stream to write the output to</param>
     /// <param name="Data">Data to write</param>
-    public static void Write(this Stream Output, DateTime Data) => Output.Write(Data.ToString("yyyy-MM-dd'T'HH:mm:ssZ"));
+    public static void Write(this Stream Output, System.DateTime Data) => Output.Write(Data.ToString("yyyy-MM-dd'T'HH:mm:ssZ"));
     }

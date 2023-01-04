@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Dec-22 7:47:09 PM
+//  This file was automatically generated at 03-Jan-23 3:36:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -117,7 +117,7 @@ public partial class MultiInstance : TestSchema {
         /// <summary>
         /// </summary>
 
-	public virtual DateTime?						FieldDateTime  {get; set;}
+	public virtual System.DateTime?						FieldDateTime  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -276,7 +276,7 @@ public partial class MultiArray : MultiInstance {
         /// <summary>
         /// </summary>
 
-	public virtual List<DateTime?>				ArrayDateTime  {get; set;}
+	public virtual List<System.DateTime?>				ArrayDateTime  {get; set;}
         /// <summary>
         /// </summary>
 

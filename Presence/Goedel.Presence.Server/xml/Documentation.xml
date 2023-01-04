@@ -4,6 +4,62 @@
         <name>Goedel.Presence.Server</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Presence.Server.DeviceBinding">
+            <summary>
+            Tracks a device connected to the service.
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.DeviceState">
+            <summary>State of the device connection</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Server.DeviceBinding.ConnectionId">
+            <summary>The unique connection ID assigned by the service.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.Server.DeviceBinding.DeviceId">
+            <summary>The device profile UDF.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.AccountBinding">
+            <summary>The corresponding account binding.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.FirstContact">
+            <summary>Time at which the binding was created.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.LastContact">
+            <summary>Time at which the binding was last used.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.CurrentEndpoint">
+            <summary>The last endpoint from which the device was accessed.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.LastConnectionSerial">
+            <summary>Monotonically increasing connection request counter. To prevent replay
+            attacks, a connection request MUST be rejected unless it contains a greater or equal
+            serial number.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.LastSerial">
+            <summary>Monotonically increasing message request counter. </summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.Notify">
+            <summary>When set, there is a pending notification to be sent to the device.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.EncryptKey">
+            <summary>The shared secret to be used to encrypt outbound messages</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.DecryptKey">
+            <summary>The shared secret to be used to decrypt inbound messages</summary>
+        </member>
+        <member name="M:Goedel.Presence.Server.DeviceBinding.GetPackets">
+            <summary>
+            Compile a packet sequence providing notification of the current status.
+            </summary>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="P:Goedel.Presence.Server.DeviceBinding.WakeAt">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.Server.DeviceBinding.CompareTo(System.Object)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Presence.Server.TBS">
             <summary>
             TBS
@@ -71,59 +127,6 @@
         <member name="F:Goedel.Presence.Server.DeviceState.Closed">
             <summary>Connection pending deletion.</summary> 
         </member>
-        <member name="T:Goedel.Presence.Server.DeviceBinding">
-            <summary>
-            Tracks a device connected to the service.
-            </summary>
-        </member>
-        <member name="P:Goedel.Presence.Server.DeviceBinding.DeviceState">
-            <summary>State of the device connection</summary> 
-        </member>
-        <member name="F:Goedel.Presence.Server.DeviceBinding.ConnectionId">
-            <summary>The unique connection ID assigned by the service.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.Server.DeviceBinding.DeviceId">
-            <summary>The device profile UDF.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.Server.DeviceBinding.AccountBinding">
-            <summary>The corresponding account binding.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.Server.DeviceBinding.FirstContact">
-            <summary>Time at which the binding was created.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.Server.DeviceBinding.LastContact">
-            <summary>Time at which the binding was last used.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.Server.DeviceBinding.CurrentEndpoint">
-            <summary>The last endpoint from which the device was accessed.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.Server.DeviceBinding.LastConnectionSerial">
-            <summary>Monotonically increasing connection request counter. To prevent replay
-            attacks, a connection request MUST be rejected unless it contains a greater or equal
-            serial number.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.Server.DeviceBinding.Notify">
-            <summary>When set, there is a pending notification to be sent to the device.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.Server.DeviceBinding.EncryptKey">
-            <summary>The shared secret to be used to encrypt outbound messages</summary> 
-        </member>
-        <member name="P:Goedel.Presence.Server.DeviceBinding.DecryptKey">
-            <summary>The shared secret to be used to decrypt inbound messages</summary>
-        </member>
-        <member name="M:Goedel.Presence.Server.DeviceBinding.GetPackets">
-            <summary>
-            Compile a packet sequence providing notification of the current status.
-            </summary>
-            <returns></returns>
-            <exception cref="T:Goedel.Utilities.NYI"></exception>
-        </member>
-        <member name="P:Goedel.Presence.Server.DeviceBinding.WakeAt">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Presence.Server.DeviceBinding.CompareTo(System.Object)">
-            <inheritdoc/>
-        </member>
         <member name="T:Goedel.Presence.Server.AccountBinding">
             <summary>
             Tracks an account with device(s) connected to the service.
@@ -146,14 +149,25 @@
             The presence service.
             </summary>
         </member>
-        <member name="P:Goedel.Presence.Server.PresenceServer.TimeOutInitial">
+        <member name="P:Goedel.Presence.Server.PresenceServer.UdpServiceIpv4">
+            <summary>Client for IPv4 traffic.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.PresenceServer.UdpServiceIpv6">
+            <summary>Client for IPv6 traffic.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.PresenceServer.TimeOutInitialMilliSeconds">
             <summary>Time to wait before cancelling connection request.</summary> 
         </member>
-        <member name="P:Goedel.Presence.Server.PresenceServer.TimeOut1">
-            <summary>Time to wait before the first overdue notice is sent.</summary> 
+        <member name="P:Goedel.Presence.Server.PresenceServer.TimeOut1MilliSeconds">
+            <summary>Time to wait before the first heartbeat overdue notice is 
+            sent in milliseconds.</summary> 
         </member>
-        <member name="P:Goedel.Presence.Server.PresenceServer.TimeOut2">
-            <summary>Time to wait before the second overdue notice is sent.</summary> 
+        <member name="P:Goedel.Presence.Server.PresenceServer.TimeOut2MilliSeconds">
+            <summary>Time to wait before the second overdue notice is sent in 
+            milliseconds.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Server.PresenceServer.UdpSocketListeners">
+            <summary>The number of socket listeners to deploy per service.</summary> 
         </member>
         <member name="F:Goedel.Presence.Server.PresenceServer.PendingQueue">
             <summary>The queue of pending items associated with a device.</summary> 
@@ -174,6 +188,15 @@
             Thread to process queued tasks.
             </summary>
         </member>
+        <member name="M:Goedel.Presence.Server.PresenceServer.Send(System.Net.Sockets.UdpClient,System.Byte[],System.Int32,System.Net.IPEndPoint)">
+            <summary>
+            Send UDP packet. This function is made into a method to allow for testing.
+            </summary>
+            <param name="client"></param>
+            <param name="packet"></param>
+            <param name="bytes"></param>
+            <param name="endPoint"></param>
+        </member>
         <member name="M:Goedel.Presence.Server.PresenceServer.GetEndPoint(Goedel.Mesh.Server.AccountHandleLocked)">
             <inheritdoc/>
         </member>
@@ -182,12 +205,6 @@
         </member>
         <member name="M:Goedel.Presence.Server.PresenceServer.Notify(System.UInt64)">
             <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Presence.Server.PresenceServer.QueueNotification(Goedel.Presence.Server.DeviceBinding)">
-            <summary>
-            Queue a notification to a device unless there is a pending notification already.
-            </summary>
-            <param name="deviceBinding"></param>
         </member>
         <member name="T:Goedel.Presence.Server.PresenceServiceConfiguration">
             <summary>

@@ -26,7 +26,39 @@ namespace Goedel.Utilities;
 /// <summary>
 /// Conversion class to and from RFC3339 DateTime representation.
 /// </summary>
-public static class RFC3339 {
+public static class Utilities {
+
+    /// <summary>
+    /// Return the earliest time instant in the presented parameters.
+    /// </summary>
+    /// <param name="first">First parameter.</param>
+    /// <param name="others">Remaining parameters.</param>
+    /// <returns>The earliest occurring time instant.</returns>
+    public static DateTime Earliest(this DateTime first,
+            params DateTime[] others) {
+        foreach (var other in others) {
+            if (other < first) {
+                first = other;
+                }
+            }
+        return first;
+        }
+
+    /// <summary>
+    /// Return the earliest time instant in the presented parameters.
+    /// </summary>
+    /// <param name="first">First parameter.</param>
+    /// <param name="others">Remaining parameters.</param>
+    /// <returns>The earliest occurring time instant.</returns>
+    public static DateTime Latest(this DateTime first,
+            params DateTime[] others) {
+        foreach (var other in others) {
+            if (other > first) {
+                first = other;
+                }
+            }
+        return first;
+        }
 
     /// <summary>
     /// If C is a digit (0-9), return the numeric value. Otherwise return -1
@@ -58,15 +90,15 @@ public static class RFC3339 {
     /// </summary>
     /// <param name="DateTime">The time to convert.</param>
     /// <returns>The converted date time</returns>
-    public static string ToRFC3339(this DateTime DateTime) => DateTime.ToString("yyyy-MM-dd'T'HH:mm:ssZ");
+    public static string ToRFC3339(this System.DateTime DateTime) => DateTime.ToString("yyyy-MM-dd'T'HH:mm:ssZ");
 
     /// <summary>
     /// Format a DateTime value in RFC3339 format.
     /// </summary>
     /// <param name="DateTime">The time to convert.</param>
     /// <returns>The converted date time</returns>
-    public static string ToRFC3339(this DateTime? DateTime) => DateTime == null ? "null" :
-        ((DateTime)DateTime).ToString("yyyy-MM-dd'T'HH:mm:ssZ");
+    public static string ToRFC3339(this System.DateTime? DateTime) => DateTime == null ? "null" :
+        ((System.DateTime)DateTime).ToString("yyyy-MM-dd'T'HH:mm:ssZ");
 
 
 
@@ -75,7 +107,7 @@ public static class RFC3339 {
     /// </summary>
     /// <param name="Text">The date to parse</param>
     /// <returns>The date value</returns>
-    public static DateTime FromRFC3339(this string Text) {
+    public static System.DateTime FromRFC3339(this string Text) {
         int Index = 0;
 
         try {
@@ -106,11 +138,11 @@ public static class RFC3339 {
             Accumulate(ref Seconds, Text[Index++]);
             Test('Z', Text[Index++]);
 
-            return new DateTime(Year, Month, Day, Hour, Minute, Seconds, DateTimeKind.Utc);
+            return new System.DateTime(Year, Month, Day, Hour, Minute, Seconds, DateTimeKind.Utc);
 
             }
         catch {
-            return DateTime.MinValue;
+            return System.DateTime.MinValue;
             }
 
         }

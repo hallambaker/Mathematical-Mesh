@@ -30,14 +30,14 @@ public class MonitorResult {
     #region // Properties
 
     ///<summary>The time at which the result interval began</summary> 
-    public DateTime TimeBegin => new(timeBegin);
+    public System.DateTime TimeBegin => new(timeBegin);
 
     ///<summary>The time at which the next result interval began</summary> 
-    public DateTime TimeEnd => new(timeEnd);
+    public System.DateTime TimeEnd => new(timeEnd);
 
     ///<summary>The elapsed time.</summary> 
     public long TimeElapsed =>
-        (timeEnd == DateTime.MaxValue.Ticks ? DateTime.Now.Ticks : timeEnd) - timeBegin;
+        (timeEnd == System.DateTime.MaxValue.Ticks ? System.DateTime.Now.Ticks : timeEnd) - timeBegin;
 
     long timeBegin;
     long timeEnd;
@@ -66,8 +66,8 @@ public class MonitorResult {
     /// <param name="listeners">The number of listener threads.</param>
     /// <param name="dispatchers">The number of dispatcher threads.</param>
     public MonitorResult(int listeners, int dispatchers) {
-        timeBegin = DateTime.Now.Ticks;
-        timeEnd = DateTime.MaxValue.Ticks;
+        timeBegin = System.DateTime.Now.Ticks;
+        timeEnd = System.DateTime.MaxValue.Ticks;
         listenerRequests = new int[listeners];
         dispatcherRequests = new int[dispatchers];
         dispatcherBusy = new long[dispatchers];

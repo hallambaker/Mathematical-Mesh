@@ -49,8 +49,8 @@ public class HostMonitor {
     public MonitorResult Recent { get; private set; }
 
     private MonitorResult current;
-    private DateTime[] dispatcherStart;
-    DateTime busyStart;
+    private System.DateTime[] dispatcherStart;
+    System.DateTime busyStart;
     
     ///<summary>The system logger.</summary> 
     public ILogger Logger { get; }
@@ -94,20 +94,20 @@ public class HostMonitor {
         Recent = current.CopyClear();
         Total = Recent.CopyClear();
 
-        dispatcherStart = new DateTime[dispatchers];
+        dispatcherStart = new System.DateTime[dispatchers];
         }
 
 
     /// <summary>
     /// Mark the start of period when the service is blocked because no dispatcher threads are available.
     /// </summary>
-    public void StartBusy() => busyStart = DateTime.Now;
+    public void StartBusy() => busyStart = System.DateTime.Now;
 
     /// <summary>
     /// Mark the end of period when the service is blocked because no dispatcher threads are available.
     /// </summary>
     public void EndBusy() {
-        var now = DateTime.Now;
+        var now = System.DateTime.Now;
         var interval = (now - busyStart).Milliseconds;
         Interlocked.Add(ref (current.Busy), interval);
         }
@@ -117,7 +117,7 @@ public class HostMonitor {
     /// </summary>
     /// <param name="dispatch">Index of the thread that was started.</param>
     public void StartDispatch(int dispatch) {
-        dispatcherStart[dispatch] = DateTime.Now;
+        dispatcherStart[dispatch] = System.DateTime.Now;
         Interlocked.Increment(ref (current.DispatcherRequests[dispatch]));
         }
 
@@ -126,7 +126,7 @@ public class HostMonitor {
     /// </summary>
     /// <param name="dispatch">Index of the thread that was ended.</param>
     public void EndDispatch(int dispatch) {
-        var now = DateTime.Now;
+        var now = System.DateTime.Now;
         var interval = (now - dispatcherStart[dispatch]).Milliseconds;
         Interlocked.Add(ref (current.DispatcherBusy[dispatch]), interval);
         }

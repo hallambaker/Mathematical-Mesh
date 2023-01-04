@@ -47,7 +47,7 @@ public record PortId {
 public record PortHistory {
     #region // Properties
     ///<summary>Time at which the last challenge was issued.</summary> 
-    public DateTime LastChallenge;
+    public System.DateTime LastChallenge;
 
     ///<summary>Number of challenges issued.</summary> 
     public int Challenges;
@@ -60,7 +60,7 @@ public record PortHistory {
     /// <summary>
     /// Constructor, initialize the last challenge time to now.
     /// </summary>
-    public PortHistory() => LastChallenge = DateTime.Now;
+    public PortHistory() => LastChallenge = System.DateTime.Now;
 
     #endregion
     }

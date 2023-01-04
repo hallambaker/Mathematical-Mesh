@@ -68,11 +68,11 @@ public partial class MeshItem {
                 ) {
 
         var contentMeta = new ContentMeta() {
-            UniqueId = _PrimaryKey,
-            Created = DateTime.Now,
+            UniqueId = base._PrimaryKey,
+            Created = System.DateTime.Now,
             ContentType = MeshConstants.IanaTypeMeshObject,
             MessageType = _Tag
-            };
+        };
 
         Enveloped = new Enveloped<MeshItem>(this,
                     signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,
@@ -151,6 +151,9 @@ public partial class MeshItem {
 
 
     }
+
+
+
 public partial class MessageError {
     /////<summary>Always false for an error result.</summary>
     //public override bool Success => false;

@@ -779,7 +779,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
             Recipients = headerIn.Recipients,
             ContentMeta = headerIn.ContentMeta,
             ContentMetaData = headerIn.ContentMetaData,
-            Received = headerIn.Received ?? DateTime.Now,
+            Received = headerIn.Received ?? System.DateTime.Now,
 
             Signatures = trailerIn?.Signatures ?? headerIn.Signatures,
             SignedData = trailerIn?.SignedData ?? headerIn.SignedData,

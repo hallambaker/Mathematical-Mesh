@@ -537,7 +537,7 @@ public class NetworkProtocolEntry {
     CryptoKey meshKeyAdministrator;
 
     ///<summary>The expiry time for the derived keys.</summary>
-    public DateTime? Expire { get; private set; }
+    public System.DateTime? Expire { get; private set; }
 
 
     /// <summary>

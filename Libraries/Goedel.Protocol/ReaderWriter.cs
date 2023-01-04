@@ -83,7 +83,7 @@ public abstract class Reader : Disposable {
 
     /// <summary>Read date time item</summary>
     /// <returns>Value read</returns>
-    abstract public DateTime ReadDateTime();
+    abstract public System.DateTime ReadDateTime();
 
     /// <summary>Read</summary>
     /// <returns>If true, is an item to read, otherwise have reached end.</returns>
@@ -161,7 +161,7 @@ public abstract class Writer : Disposable {
 
     /// <summary>Write integer value token</summary>
     /// <param name="Data">Value to write</param>
-    abstract public void WriteDateTime(DateTime? Data);
+    abstract public void WriteDateTime(System.DateTime? Data);
 
 
     /// <summary>Write array start</summary>

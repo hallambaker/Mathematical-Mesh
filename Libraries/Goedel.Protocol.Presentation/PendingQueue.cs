@@ -32,14 +32,14 @@ public class PendingQueue<T> where T : IQueuableTask {
 
     #region // Properties.
     ///<summary>The wake time for the next item in the queue.</summary> 
-    public DateTime WakeAt { get; private set; } = DateTime.MaxValue;
+    public System.DateTime WakeAt { get; private set; } = System.DateTime.MaxValue;
 
     /// <summary>
     /// Timespan giving the sleep time in ticks bounded by the Int32 maximum value
     /// so as to avoid timer length limit.
     /// </summary>
     public TimeSpan Sleep => new TimeSpan(
-        (WakeAt - DateTime.Now).Ticks.BoundInt32());
+        (WakeAt - System.DateTime.Now).Ticks.BoundInt32());
 
     ///<summary>The number of items currently in the queue.</summary> 
     public int Count => Queue.Count;
@@ -57,7 +57,7 @@ public class PendingQueue<T> where T : IQueuableTask {
     /// </summary>
     /// <param name="task">The task to queue.</param>
     /// <param name="wakeAtTime">The wakeup time.</param>
-    public void Insert(T task, DateTime wakeAtTime) {
+    public void Insert(T task, System.DateTime wakeAtTime) {
         lock (this) {
             if (Queue.TryGetValue(task, out var taskQueued)) {
                 if (taskQueued.CompareTo(this) < 0) {
@@ -75,13 +75,13 @@ public class PendingQueue<T> where T : IQueuableTask {
 
     /// <summary>
     /// Insert the task <paramref name="task"/> in the queue with a wakeup time 
-    /// of <paramref name="wakeAtTicks"/> unless the item is already scheduled to be
+    /// of <paramref name="wakeAtMilliseconds"/> unless the item is already scheduled to be
     /// woken earlier.
     /// </summary>
     /// <param name="task">The task to queue.</param>
-    /// <param name="wakeAtTicks">The wakeup time in ticks from the current time.</param>
-    public void Insert(T task, int wakeAtTicks) =>
-        Insert(task, DateTime.Now.AddTicks(wakeAtTicks));
+    /// <param name="wakeAtMilliseconds">The wakeup time in ticks from the current time.</param>
+    public void Insert(T task, int wakeAtMilliseconds) =>
+        Insert(task, System.DateTime.Now.AddMilliseconds(wakeAtMilliseconds));
 
     /// <summary>
     /// If the queue is not empty and either <paramref name="ifWoken"/> is false 
@@ -97,7 +97,7 @@ public class PendingQueue<T> where T : IQueuableTask {
                 return default;
                 }
             var next = Queue.GetValueAtIndex(0);
-            if (ifWoken && next.WakeAt > DateTime.Now) {
+            if (ifWoken && next.WakeAt > System.DateTime.Now) {
                 return default;
                 }
 
@@ -124,7 +124,7 @@ public class PendingQueue<T> where T : IQueuableTask {
     /// </summary>
     /// <param name="task"></param>
     /// <param name="wakeAt"></param>
-    void Add(T task, DateTime wakeAt) {
+    void Add(T task, System.DateTime wakeAt) {
         task.WakeAt = wakeAt;
         Queue.Add(task, task);
         if (wakeAt < WakeAt) {

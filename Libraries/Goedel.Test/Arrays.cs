@@ -29,14 +29,14 @@ namespace Goedel.Test;
 
 public static class Extensions {
 
-    public static long SecondsInCE(this DateTime time) => time.Ticks / 10_000_000;
-    public static long SecondsInCE(this DateTime? time) =>
-                time == null ? -1 : SecondsInCE((DateTime)time);
+    public static long SecondsInCE(this System.DateTime time) => time.Ticks / 10_000_000;
+    public static long SecondsInCE(this System.DateTime? time) =>
+                time == null ? -1 : SecondsInCE((System.DateTime)time);
 
-    public static bool IsEqualTo(this DateTime first, DateTime second) =>
+    public static bool IsEqualTo(this System.DateTime first, System.DateTime second) =>
         first.SecondsInCE() == second.SecondsInCE();
 
-    public static bool IsEqualTo(this DateTime? first, DateTime? second) =>
+    public static bool IsEqualTo(this System.DateTime? first, System.DateTime? second) =>
                 first.SecondsInCE() == second.SecondsInCE();
 
     public static int[] Shuffle(int length) {

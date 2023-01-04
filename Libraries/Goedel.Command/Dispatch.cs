@@ -46,10 +46,10 @@ public enum Verbosity {
 /// <summary>Track start and end time of parse.</summary>
 public abstract class Dispatch{
     /// <summary>Record start time.</summary>
-    public DateTime Started = DateTime.Now;
+    public System.DateTime Started = System.DateTime.Now;
 
     /// <summary>Calculate elapsed time.</summary>
-    public TimeSpan Elapsed => DateTime.Now - Started;
+    public TimeSpan Elapsed => System.DateTime.Now - Started;
 
     /// <summary>Command type data</summary>
     public virtual Type[] _Data { get; set; }

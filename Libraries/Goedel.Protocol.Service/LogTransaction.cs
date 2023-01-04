@@ -152,10 +152,10 @@ public class LogService {
 public record LogTransaction {
 
     ///<summary>Transaction start time.</summary> 
-    public DateTime Start { get; init; }
+    public System.DateTime Start { get; init; }
 
     ///<summary>Transaction finish time.</summary> 
-    public DateTime Finish { get; set; } = DateTime.MinValue;
+    public System.DateTime Finish { get; set; } = System.DateTime.MinValue;
 
     ///<summary>The service logging instance.</summary> 
     public LogService LogService { get; }
@@ -181,7 +181,7 @@ public record LogTransaction {
     /// </summary>
     /// <param name="logService">The service to log.</param>
     public LogTransaction(LogService logService) {
-        Start = DateTime.Now;
+        Start = System.DateTime.Now;
         LogService = logService;
         }
 
@@ -190,7 +190,7 @@ public record LogTransaction {
     /// </summary>
     /// <param name="response">The response object.</param>
     public void Success(IReport response) {
-        Finish = DateTime.Now;
+        Finish = System.DateTime.Now;
         Response = response;
         LogService.Success(this);
         }
@@ -201,7 +201,7 @@ public record LogTransaction {
     /// <param name="exception">The exception raised.</param>
     /// <param name="response">The response object.</param>
     public void Fail(Exception exception, IReport response = null) {
-        Finish = DateTime.Now;
+        Finish = System.DateTime.Now;
         Exception = exception;
         Response = response;
         LogService.Fail(this);

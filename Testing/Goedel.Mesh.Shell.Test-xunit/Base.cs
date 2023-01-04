@@ -20,10 +20,12 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Utilities;
+
 
 using Xunit;
 //using Goedel.Mesh.Shell.ServiceAdmin;
@@ -32,6 +34,10 @@ using Xunit;
 namespace Goedel.XUnit;
 
 //[Collection("Sequential")]
+
+
+
+
 
 
 
@@ -81,6 +87,7 @@ public partial class ShellTestBase : Disposable {
 
 
     }
+
 
 public partial class ShellTestsAdmin : ShellTests {
     TestEnvironmentBase testEnvironmentCommon;

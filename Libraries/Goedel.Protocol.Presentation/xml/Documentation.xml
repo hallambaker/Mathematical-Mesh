@@ -1337,11 +1337,11 @@
         <member name="M:Goedel.Protocol.Presentation.PendingQueue`1.Insert(`0,System.Int32)">
             <summary>
             Insert the task <paramref name="task"/> in the queue with a wakeup time 
-            of <paramref name="wakeAtTicks"/> unless the item is already scheduled to be
+            of <paramref name="wakeAtMilliseconds"/> unless the item is already scheduled to be
             woken earlier.
             </summary>
             <param name="task">The task to queue.</param>
-            <param name="wakeAtTicks">The wakeup time in ticks from the current time.</param>
+            <param name="wakeAtMilliseconds">The wakeup time in ticks from the current time.</param>
         </member>
         <member name="M:Goedel.Protocol.Presentation.PendingQueue`1.Next(System.Boolean)">
             <summary>

@@ -443,6 +443,24 @@ public static class NumberSplit {
 
         }
 
+    /// <summary>
+    /// Read in a ulong from <paramref name="data"/> starting at index
+    /// <paramref name="index"/> in little endian form. 
+    /// <para>
+    /// Note, does not perform additional array bounds checking.
+    /// </para>
+    /// </summary>
+    /// <param name="data">The data to read.</param>
+    /// <param name="index">The starting index.</param>
+    /// <returns>The converted data.</returns>
+    public static ulong BigEndian64(this byte[] data, int index = 0) {
+        ulong result = 0;
 
+        for (int i = 0; i <8; i++) {
+            result = (result << 8) | data[index + i];
+            }
+
+        return result;
+        }
 
     }

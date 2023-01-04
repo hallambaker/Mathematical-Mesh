@@ -1626,6 +1626,55 @@
         <member name="M:Goedel.Utilities.ConsoleLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
             <summary>Return configuration entry description.</summary> 
         </member>
+        <member name="T:Goedel.Utilities.Utilities">
+            <summary>
+            Conversion class to and from RFC3339 DateTime representation.
+            </summary>
+        </member>
+        <member name="M:Goedel.Utilities.Utilities.Earliest(System.DateTime,System.DateTime[])">
+            <summary>
+            Return the earliest time instant in the presented parameters.
+            </summary>
+            <param name="first">First parameter.</param>
+            <param name="others">Remaining parameters.</param>
+            <returns>The earliest occurring time instant.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Utilities.Latest(System.DateTime,System.DateTime[])">
+            <summary>
+            Return the earliest time instant in the presented parameters.
+            </summary>
+            <param name="first">First parameter.</param>
+            <param name="others">Remaining parameters.</param>
+            <returns>The earliest occurring time instant.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Utilities.Digit(System.Char)">
+            <summary>
+            If C is a digit (0-9), return the numeric value. Otherwise return -1
+            </summary>
+            <param name="C">Character to convert</param>
+            <returns>Integer value of character</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Utilities.ToRFC3339(System.DateTime)">
+            <summary>
+            Format a DateTime value in RFC3339 format.
+            </summary>
+            <param name="DateTime">The time to convert.</param>
+            <returns>The converted date time</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Utilities.ToRFC3339(System.Nullable{System.DateTime})">
+            <summary>
+            Format a DateTime value in RFC3339 format.
+            </summary>
+            <param name="DateTime">The time to convert.</param>
+            <returns>The converted date time</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Utilities.FromRFC3339(System.String)">
+            <summary>
+            Parse an RFC3339 format date time value.
+            </summary>
+            <param name="Text">The date to parse</param>
+            <returns>The date value</returns>
+        </member>
         <member name="T:Goedel.Utilities.AssertionFail">
             <summary>
             An internal assertion check failed.
@@ -2303,38 +2352,17 @@
             <param name="value">The value to write.</param>
             <param name="index">The starting index in the array.</param>
         </member>
-        <member name="T:Goedel.Utilities.RFC3339">
+        <member name="M:Goedel.Utilities.NumberSplit.BigEndian64(System.Byte[],System.Int32)">
             <summary>
-            Conversion class to and from RFC3339 DateTime representation.
+            Read in a ulong from <paramref name="data"/> starting at index
+            <paramref name="index"/> in little endian form. 
+            <para>
+            Note, does not perform additional array bounds checking.
+            </para>
             </summary>
-        </member>
-        <member name="M:Goedel.Utilities.RFC3339.Digit(System.Char)">
-            <summary>
-            If C is a digit (0-9), return the numeric value. Otherwise return -1
-            </summary>
-            <param name="C">Character to convert</param>
-            <returns>Integer value of character</returns>
-        </member>
-        <member name="M:Goedel.Utilities.RFC3339.ToRFC3339(System.DateTime)">
-            <summary>
-            Format a DateTime value in RFC3339 format.
-            </summary>
-            <param name="DateTime">The time to convert.</param>
-            <returns>The converted date time</returns>
-        </member>
-        <member name="M:Goedel.Utilities.RFC3339.ToRFC3339(System.Nullable{System.DateTime})">
-            <summary>
-            Format a DateTime value in RFC3339 format.
-            </summary>
-            <param name="DateTime">The time to convert.</param>
-            <returns>The converted date time</returns>
-        </member>
-        <member name="M:Goedel.Utilities.RFC3339.FromRFC3339(System.String)">
-            <summary>
-            Parse an RFC3339 format date time value.
-            </summary>
-            <param name="Text">The date to parse</param>
-            <returns>The date value</returns>
+            <param name="data">The data to read.</param>
+            <param name="index">The starting index.</param>
+            <returns>The converted data.</returns>
         </member>
         <member name="T:Goedel.Utilities.Screen">
             <summary>

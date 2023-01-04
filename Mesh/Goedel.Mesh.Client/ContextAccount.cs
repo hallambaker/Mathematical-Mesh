@@ -276,7 +276,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
         var pin = UDF.AuthenticationKey(bits);
-        var expires = DateTime.Now.AddTicks(validity);
+        var expires = System.DateTime.Now.AddTicks(validity);
         var messagePin = new MessagePin(pin, automatic, expires, AccountAddress, action) {
             Roles = roles
             };
@@ -370,7 +370,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public virtual int Sync() {
         var statusRequest = new StatusRequest() {
             };
-        return Sync(statusRequest);
+        return Sync(statusRequest).Count;
         }
 
     /// <summary>
@@ -381,7 +381,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="meshClient">If not-null specifies a client to override the account
     /// client (used to synchronize against other accounts).</param>
     /// <returns>The number of items synchronized</returns>
-    public int Sync (StatusRequest statusRequest, MeshServiceClient meshClient =null) {
+    public StatusResponse Sync (StatusRequest statusRequest, MeshServiceClient meshClient =null) {
         int count = 0;
         meshClient ??= MeshClient;
 
@@ -404,7 +404,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             }
 
         if (constraintsSelects.Count == 0) {
-            return 0;
+            return status;
             }
 
         var downloadRequest = new DownloadRequest() {
@@ -427,8 +427,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         // At this point we want to look at all the pending messages and see if there
         // are any PIN authenticated auto-executing messages.
         // TBS: If we have synchronized the catalogs, upload cached offline updates here.
-
-        return count;
+        status.Count = count;
+        return status;
         }
 
     //public bool SyncProgress(int maxEnvelopes = -1) => SyncProgressUpload(maxEnvelopes);
@@ -946,19 +946,19 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         }
 
 
-    /// <summary>
-    /// Return a list of endpoints for the presence service associated with the
-    /// account.
-    /// </summary>
-    /// <returns>The list of presence service endpoints.</returns>
-    public List<UdpServiceEndpoint> GetPresenceEndpoints() {
+    ///// <summary>
+    ///// Return a list of endpoints for the presence service associated with the
+    ///// account.
+    ///// </summary>
+    ///// <returns>The list of presence service endpoints.</returns>
+    //public List<UdpServiceEndpoint> GetPresenceEndpoints() {
 
-        var endpoint = new UdpServiceEndpoint(
-            new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8888)
-            );
+    //    var endpoint = new UdpServiceEndpoint(
+    //        new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8888)
+    //        );
 
-        return new List<UdpServiceEndpoint>() { endpoint};
-        }
+    //    return new List<UdpServiceEndpoint>() { endpoint};
+    //    }
 
     #endregion
 

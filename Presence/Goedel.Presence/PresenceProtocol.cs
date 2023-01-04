@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 21-Dec-22 7:46:52 PM
+//  This file was automatically generated at 04-Jan-23 12:44:35 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -78,15 +78,16 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 			new () {
 
 	    {"PresenceFromClient", PresenceFromClient._Factory},
+	    {"PresenceConnectRequest", PresenceConnectRequest._Factory},
+	    {"PresenceHeartbeat", PresenceHeartbeat._Factory},
+	    {"PresenceAcknowledge", PresenceAcknowledge._Factory},
+	    {"PresenceResolveRequest", PresenceResolveRequest._Factory},
 	    {"PresenceFromService", PresenceFromService._Factory},
-	    {"ConnectRequest", ConnectRequest._Factory},
-	    {"ConnectResponse", ConnectResponse._Factory},
-	    {"ErrorInvalidSerial", ErrorInvalidSerial._Factory},
-	    {"Heartbeat", Heartbeat._Factory},
-	    {"Acknowledge", Acknowledge._Factory},
-	    {"Notify", Notify._Factory},
-	    {"ResolveRequest", ResolveRequest._Factory},
-	    {"ResolveResponse", ResolveResponse._Factory}
+	    {"PresenceConnectResponse", PresenceConnectResponse._Factory},
+	    {"PresenceErrorInvalidSerial", PresenceErrorInvalidSerial._Factory},
+	    {"PresenceStatus", PresenceStatus._Factory},
+	    {"PresenceNotify", PresenceNotify._Factory},
+	    {"PresenceResolveResponse", PresenceResolveResponse._Factory}
 		};
 
     [ModuleInitializer]
@@ -116,12 +117,24 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 	/// Base class for all requests made to a registrar
 	/// </summary>
 public partial class PresenceFromClient : Goedel.Protocol.Request {
+        /// <summary>
+        ///Monotonically increasing counter used to prevent replay
+        ///attacks on client request.
+        /// </summary>
+
+	public virtual int?						Serial  {get; set;}
 
 
     ///<inheritdoc/>
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
+			case "Serial" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Serial = vvalue.Value;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -134,6 +147,9 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
+			case "Serial" : {
+				return new TokenValueInteger32 (Serial);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -145,6 +161,7 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
+			{ "Serial", new Property (typeof(TokenValueInteger32), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -205,462 +222,9 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 
 	/// <summary>
 	///
-	/// Base class for all response messages. Contains only the
-	/// status code and status description fields.
-	/// </summary>
-public partial class PresenceFromService : Goedel.Protocol.Response {
-        /// <summary>
-        /// </summary>
-
-	public virtual byte[]						SourceIpAddress  {get; set;}
-        /// <summary>
-        /// </summary>
-
-	public virtual int?						Port  {get; set;}
-        /// <summary>
-        /// </summary>
-
-	public virtual DateTime?						Now  {get; set;}
-
-
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "SourceIpAddress" : {
-				if (value is TokenValueBinary vvalue) {
-					SourceIpAddress = vvalue.Value;
-					}
-				break;
-				}
-			case "Port" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Port = vvalue.Value;
-					}
-				break;
-				}
-			case "Now" : {
-				if (value is TokenValueDateTime vvalue) {
-					Now = vvalue.Value;
-					}
-				break;
-				}
-
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "SourceIpAddress" : {
-				return new TokenValueBinary (SourceIpAddress);
-				}
-			case "Port" : {
-				return new TokenValueInteger32 (Port);
-				}
-			case "Now" : {
-				return new TokenValueDateTime (Now);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-			{ "SourceIpAddress", new Property (typeof(TokenValueBinary), false)} ,
-			{ "Port", new Property (typeof(TokenValueInteger32), false)} ,
-			{ "Now", new Property (typeof(TokenValueDateTime), false)} 
-        };
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.Response._StaticAllProperties);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "PresenceFromService";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new PresenceFromService();
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceFromService FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceFromService;
-			}
-		var Result = new PresenceFromService ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-
-	}
-
-	/// <summary>
-	///
 	/// Register connection request. 
 	/// </summary>
-public partial class ConnectRequest : PresenceFromClient {
-        /// <summary>
-        ///Monotonically increasing counter used to prevent replay
-        ///attacks on connection request.
-        /// </summary>
-
-	public virtual int?						Serial  {get; set;}
-
-
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Serial" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Serial = vvalue.Value;
-					}
-				break;
-				}
-
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Serial" : {
-				return new TokenValueInteger32 (Serial);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-			{ "Serial", new Property (typeof(TokenValueInteger32), false)} 
-        };
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromClient._StaticAllProperties);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "ConnectRequest";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ConnectRequest();
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ConnectRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ConnectRequest;
-			}
-		var Result = new ConnectRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-
-	}
-
-	/// <summary>
-	///
-	/// Return the result of a connection request
-	/// </summary>
-public partial class ConnectResponse : PresenceFromService {
-        /// <summary>
-        ///The time after which the presence service will start to 
-        ///assume the device has disconnected.
-        /// </summary>
-
-	public virtual int?						ConnectionTimeout  {get; set;}
-
-
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "ConnectionTimeout" : {
-				if (value is TokenValueInteger32 vvalue) {
-					ConnectionTimeout = vvalue.Value;
-					}
-				break;
-				}
-
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "ConnectionTimeout" : {
-				return new TokenValueInteger32 (ConnectionTimeout);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-			{ "ConnectionTimeout", new Property (typeof(TokenValueInteger32), false)} 
-        };
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "ConnectResponse";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ConnectResponse();
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ConnectResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ConnectResponse;
-			}
-		var Result = new ConnectResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-
-	}
-
-	/// <summary>
-	/// </summary>
-public partial class ErrorInvalidSerial : PresenceFromService {
-        /// <summary>
-        /// </summary>
-
-	public virtual int?						Serial  {get; set;}
-
-
-    ///<inheritdoc/>
-	public override void Setter(
-			string tag, TokenValue value) { 
-		switch (tag) {
-			case "Serial" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Serial = vvalue.Value;
-					}
-				break;
-				}
-
-			default: {
-				base.Setter(tag, value);
-				break;
-				}
-			}
-		}
-
-    ///<inheritdoc/>
-    public override TokenValue Getter(
-            string tag) {
-        switch (tag) {
-			case "Serial" : {
-				return new TokenValueInteger32 (Serial);
-				}
-
-            default: {
-                return base.Getter(tag);
-                }
-            }
-        }
-
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
-
-			{ "Serial", new Property (typeof(TokenValueInteger32), false)} 
-        };
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "ErrorInvalidSerial";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ErrorInvalidSerial();
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ErrorInvalidSerial FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ErrorInvalidSerial;
-			}
-		var Result = new ErrorInvalidSerial ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-
-	}
-
-	/// <summary>
-	/// </summary>
-public partial class Heartbeat : PresenceFromClient {
+public partial class PresenceConnectRequest : PresenceFromClient {
 
 
     ///<inheritdoc/>
@@ -716,13 +280,13 @@ public partial class Heartbeat : PresenceFromClient {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Heartbeat";
+	public new const string __Tag = "PresenceConnectRequest";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Heartbeat();
+	public static new JsonObject _Factory () => new PresenceConnectRequest();
 
 
     /// <summary>
@@ -731,15 +295,15 @@ public partial class Heartbeat : PresenceFromClient {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new Heartbeat FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new PresenceConnectRequest FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Heartbeat;
+			return Out as PresenceConnectRequest;
 			}
-		var Result = new Heartbeat ();
+		var Result = new PresenceConnectRequest ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -750,7 +314,7 @@ public partial class Heartbeat : PresenceFromClient {
 
 	/// <summary>
 	/// </summary>
-public partial class Acknowledge : PresenceFromClient {
+public partial class PresenceHeartbeat : PresenceFromClient {
 
 
     ///<inheritdoc/>
@@ -806,13 +370,13 @@ public partial class Acknowledge : PresenceFromClient {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Acknowledge";
+	public new const string __Tag = "PresenceHeartbeat";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Acknowledge();
+	public static new JsonObject _Factory () => new PresenceHeartbeat();
 
 
     /// <summary>
@@ -821,15 +385,15 @@ public partial class Acknowledge : PresenceFromClient {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new Acknowledge FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new PresenceHeartbeat FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Acknowledge;
+			return Out as PresenceHeartbeat;
 			}
-		var Result = new Acknowledge ();
+		var Result = new PresenceHeartbeat ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -840,7 +404,7 @@ public partial class Acknowledge : PresenceFromClient {
 
 	/// <summary>
 	/// </summary>
-public partial class Notify : PresenceFromService {
+public partial class PresenceAcknowledge : PresenceFromClient {
 
 
     ///<inheritdoc/>
@@ -874,7 +438,7 @@ public partial class Notify : PresenceFromService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+			Combine(_StaticProperties, PresenceFromClient._StaticAllProperties);
 
 
     ///<inheritdoc/>
@@ -896,13 +460,13 @@ public partial class Notify : PresenceFromService {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Notify";
+	public new const string __Tag = "PresenceAcknowledge";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Notify();
+	public static new JsonObject _Factory () => new PresenceAcknowledge();
 
 
     /// <summary>
@@ -911,15 +475,15 @@ public partial class Notify : PresenceFromService {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new Notify FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new PresenceAcknowledge FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Notify;
+			return Out as PresenceAcknowledge;
 			}
-		var Result = new Notify ();
+		var Result = new PresenceAcknowledge ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -930,7 +494,7 @@ public partial class Notify : PresenceFromService {
 
 	/// <summary>
 	/// </summary>
-public partial class ResolveRequest : PresenceFromClient {
+public partial class PresenceResolveRequest : PresenceFromClient {
         /// <summary>
         /// </summary>
 
@@ -1000,13 +564,13 @@ public partial class ResolveRequest : PresenceFromClient {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "ResolveRequest";
+	public new const string __Tag = "PresenceResolveRequest";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ResolveRequest();
+	public static new JsonObject _Factory () => new PresenceResolveRequest();
 
 
     /// <summary>
@@ -1015,15 +579,272 @@ public partial class ResolveRequest : PresenceFromClient {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new ResolveRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new PresenceResolveRequest FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResolveRequest;
+			return Out as PresenceResolveRequest;
 			}
-		var Result = new ResolveRequest ();
+		var Result = new PresenceResolveRequest ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Base class for all response messages. Contains only the
+	/// status code and status description fields.
+	/// </summary>
+public partial class PresenceFromService : Goedel.Protocol.Response {
+        /// <summary>
+        /// </summary>
+
+	public virtual byte[]						SourceIpAddress  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						Port  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual DateTime?						Now  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						Acknowledge  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "SourceIpAddress" : {
+				if (value is TokenValueBinary vvalue) {
+					SourceIpAddress = vvalue.Value;
+					}
+				break;
+				}
+			case "Port" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Port = vvalue.Value;
+					}
+				break;
+				}
+			case "Now" : {
+				if (value is TokenValueDateTime vvalue) {
+					Now = vvalue.Value;
+					}
+				break;
+				}
+			case "Acknowledge" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Acknowledge = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "SourceIpAddress" : {
+				return new TokenValueBinary (SourceIpAddress);
+				}
+			case "Port" : {
+				return new TokenValueInteger32 (Port);
+				}
+			case "Now" : {
+				return new TokenValueDateTime (Now);
+				}
+			case "Acknowledge" : {
+				return new TokenValueInteger32 (Acknowledge);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "SourceIpAddress", new Property (typeof(TokenValueBinary), false)} ,
+			{ "Port", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Now", new Property (typeof(TokenValueDateTime), false)} ,
+			{ "Acknowledge", new Property (typeof(TokenValueInteger32), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Goedel.Protocol.Response._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PresenceFromService";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PresenceFromService();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PresenceFromService FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PresenceFromService;
+			}
+		var Result = new PresenceFromService ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Return the result of a connection request
+	/// </summary>
+public partial class PresenceConnectResponse : PresenceFromService {
+        /// <summary>
+        ///The time after which the presence service will start to 
+        ///assume the device has disconnected in milliseconds.
+        /// </summary>
+
+	public virtual int?						ConnectionTimeout  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "ConnectionTimeout" : {
+				if (value is TokenValueInteger32 vvalue) {
+					ConnectionTimeout = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "ConnectionTimeout" : {
+				return new TokenValueInteger32 (ConnectionTimeout);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "ConnectionTimeout", new Property (typeof(TokenValueInteger32), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PresenceConnectResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PresenceConnectResponse();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PresenceConnectResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PresenceConnectResponse;
+			}
+		var Result = new PresenceConnectResponse ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -1034,7 +855,291 @@ public partial class ResolveRequest : PresenceFromClient {
 
 	/// <summary>
 	/// </summary>
-public partial class ResolveResponse : PresenceFromService {
+public partial class PresenceErrorInvalidSerial : PresenceFromService {
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						Serial  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Serial" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Serial = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Serial" : {
+				return new TokenValueInteger32 (Serial);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Serial", new Property (typeof(TokenValueInteger32), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PresenceErrorInvalidSerial";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PresenceErrorInvalidSerial();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PresenceErrorInvalidSerial FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PresenceErrorInvalidSerial;
+			}
+		var Result = new PresenceErrorInvalidSerial ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class PresenceStatus : PresenceFromService {
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PresenceStatus";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PresenceStatus();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PresenceStatus FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PresenceStatus;
+			}
+		var Result = new PresenceStatus ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class PresenceNotify : PresenceFromService {
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PresenceNotify";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PresenceNotify();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new PresenceNotify FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as PresenceNotify;
+			}
+		var Result = new PresenceNotify ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class PresenceResolveResponse : PresenceFromService {
         /// <summary>
         /// </summary>
 
@@ -1104,13 +1209,13 @@ public partial class ResolveResponse : PresenceFromService {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "ResolveResponse";
+	public new const string __Tag = "PresenceResolveResponse";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ResolveResponse();
+	public static new JsonObject _Factory () => new PresenceResolveResponse();
 
 
     /// <summary>
@@ -1119,15 +1224,15 @@ public partial class ResolveResponse : PresenceFromService {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new ResolveResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new PresenceResolveResponse FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResolveResponse;
+			return Out as PresenceResolveResponse;
 			}
-		var Result = new ResolveResponse ();
+		var Result = new PresenceResolveResponse ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

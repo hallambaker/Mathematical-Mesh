@@ -364,29 +364,6 @@ public abstract partial class JsonObject {
             }
         }
 
-
-
-    ///// <summary>
-    ///// Serialize to the specified Writer.
-    ///// </summary>
-    ///// <param name="writer">Writer to serialize the data to</param>
-    ///// <param name="tag">If true, serialization is tagged with the object type.</param>
-    //public virtual void Serialize(Writer writer, bool tag = false) {
-    //    bool first = true;
-    //    if (tag) {
-    //        writer.WriteObjectStart();
-    //        writer.WriteToken(_Tag, 0);
-    //        }
-
-    //    Serialize(writer, true, ref first);
-
-    //    if (tag) {
-    //        writer.WriteObjectEnd();
-    //        }
-    //    }
-
-
-
     /// <summary>
     /// Routine called afer deserializing the wire form. This may be used to cause deserialization
     /// of nested binary fields.
@@ -395,30 +372,6 @@ public abstract partial class JsonObject {
     /// when debugging. </remarks>
     public virtual void PostDecode() {
         }
-
-    ///// <summary>
-    ///// Serialize to the specified Writer.
-    ///// </summary>
-    ///// <param name="writer">Writer to serialize the data to</param>
-    ///// <param name="first">This is the first field in the object being serialized. This 
-    ///// value is set to false on exit.</param>
-    ///// <param name="wrap">Wrap the objects for formatting.</param>
-    //public abstract void Serialize(Writer writer, bool wrap, ref bool first);
-
-    ///// <summary>
-    ///// Serialize to the specified Writer. This is a dummy routine
-    ///// whose sole purpose is to prevent 'new' causing issues in derived
-    ///// classes.
-    ///// </summary>
-    ///// <param name="writer">Writer to serialize the data to</param>
-    ///// <param name="first">This is the first field in the object being serialized. This 
-    ///// value is set to false on exit.</param>
-    ///// <param name="wrap">Wrap the objects for formatting.</param>
-    //public static void SerializeX(Writer writer, bool wrap, ref bool first) {
-    //    writer.Keep();
-    //    wrap.Keep();
-    //    first.Keep();
-    //    }
 
     /// <summary>
     /// Factory method to construct object from byte data.
@@ -524,7 +477,7 @@ public abstract partial class JsonObject {
                     }
                 else if (property.TokenType == typeof(TokenValueListDateTime)) {
                     bool going = jsonReader.StartArray();
-                    var array = new List<DateTime?>();
+                    var array = new List<System.DateTime?>();
                     while (going) {
                         var value = jsonReader.ReadDateTime();
                         array.Add(value);

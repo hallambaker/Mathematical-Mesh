@@ -240,15 +240,15 @@ public class Spool : Store {
     /// <paramref name="notBefore"/> or <paramref name="notOnOrAfter"/> </returns> is not
     /// met in which case return <code>false</code>.
     public static bool CheckTime(
-                DateTime? dateTime,
+                System.DateTime? dateTime,
                 long maxTicks = -1,
-                DateTime? notBefore = null,
-                DateTime? notOnOrAfter = null) {
+                System.DateTime? notBefore = null,
+                System.DateTime? notOnOrAfter = null) {
         dateTime.AssertNotNull(InvalidDate.Throw);
 
-        var dateTime1 = (DateTime)dateTime;
+        var dateTime1 = (System.DateTime)dateTime;
 
-        if ((maxTicks >= 0) && ((DateTime.Now.Ticks - dateTime1.Ticks) > maxTicks)) {
+        if ((maxTicks >= 0) && ((System.DateTime.Now.Ticks - dateTime1.Ticks) > maxTicks)) {
             return false;
             }
 
@@ -274,8 +274,8 @@ public class Spool : Store {
     public SpoolEntry GetByMessageId(
                 string messageID,
                 MessageStatus select = MessageStatus.All,
-                DateTime? notBefore = null,
-                DateTime? notOnOrAfter = null,
+                System.DateTime? notBefore = null,
+                System.DateTime? notOnOrAfter = null,
                 long maxSearch = -1) => GetByEnvelopeId(Message.GetEnvelopeId(messageID),
                     select, notBefore, notOnOrAfter, maxSearch);
 
@@ -292,8 +292,8 @@ public class Spool : Store {
     public SpoolEntry GetByEnvelopeId(
                 string envelopeId,
                 MessageStatus select = MessageStatus.All,
-                DateTime? notBefore = null,
-                DateTime? notOnOrAfter = null,
+                System.DateTime? notBefore = null,
+                System.DateTime? notOnOrAfter = null,
                 long maxSearch = -1) {
 
 
@@ -325,8 +325,8 @@ public class Spool : Store {
     /// <returns>The enumerator.</returns>
     public SpoolEnumeratorRaw GetMessages(
                 MessageStatus select = MessageStatus.All,
-                DateTime? notBefore = null,
-                DateTime? notOnOrAfter = null,
+                System.DateTime? notBefore = null,
+                System.DateTime? notOnOrAfter = null,
                 SpoolEntry last = null,
                 long maxResults = -1) => new(this,
                     select, notBefore, notOnOrAfter, last, maxResults);
@@ -505,8 +505,8 @@ public class SpoolEnumeratorRaw : IEnumerator<SpoolEntry> {
     public SpoolEnumeratorRaw(
                 Spool spool,
                 MessageStatus select = MessageStatus.All,
-                DateTime? notBefore = null,
-                DateTime? notOnOrAfter = null,
+                System.DateTime? notBefore = null,
+                System.DateTime? notOnOrAfter = null,
                 SpoolEntry last = null,
                 long maxResults = -1) {
         notBefore.Future();

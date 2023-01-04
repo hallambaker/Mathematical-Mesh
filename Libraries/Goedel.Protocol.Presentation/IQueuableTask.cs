@@ -31,5 +31,5 @@ namespace Goedel.Protocol.Presentation;
 public interface IQueuableTask : IComparable {
 
     ///<summary>The time at which the task item should be activated.</summary> 
-    DateTime WakeAt { get; set; }
+    System.DateTime WakeAt { get; set; }
     }

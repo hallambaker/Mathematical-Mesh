@@ -32,10 +32,10 @@ public class AccountContext : Disposable {
     #region // Public and private properties
 
     ///<summary>Timestamp of context creation.</summary> 
-    public DateTime Created { get; }
+    public System.DateTime Created { get; }
 
     ///<summary>Timestamp of context last accessed</summary> 
-    public DateTime Accessed { get; private set; }
+    public System.DateTime Accessed { get; private set; }
 
     ///<summary>The account entry from the host store.</summary> 
     public LockedCatalogedEntry<AccountEntry> LockedAccountEntry { get; init; } = null;
@@ -79,7 +79,7 @@ public class AccountContext : Disposable {
         LockedAccountEntry = lockedAccountEntry;
         KeyCollection = keyCollection;
 
-        Created = Accessed = DateTime.Now;
+        Created = Accessed = System.DateTime.Now;
         ProfileAccount = (AccountEntry as AccountUser)?.GetProfileAccount();
 
         PermitPublicReadAccess = ProfileAccount switch {
@@ -106,7 +106,7 @@ public class AccountContext : Disposable {
     /// last access timestamp to allow intelligent cache management.
     /// </summary>
     public void Close() {
-        Accessed = DateTime.Now;
+        Accessed = System.DateTime.Now;
         }
 
     /// <summary>

@@ -10949,6 +10949,9 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="P:Goedel.Mesh.StatusResponse.Count">
+            <summary>The number of stores that were updated as a resul of the request.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.StatusResponse.#ctor(System.Exception)">
             <summary>
             Default constructor. 

@@ -669,7 +669,7 @@ public partial class JsonReader : Reader {
     /// Attempt to read date time from input.
     /// </summary>
     /// <returns>The data read</returns>
-    public override DateTime ReadDateTime() {
+    public override System.DateTime ReadDateTime() {
         GetToken();
         if (TokenType != Token.String) {
             throw new InvalidInput("Expected \"DateTime\"");

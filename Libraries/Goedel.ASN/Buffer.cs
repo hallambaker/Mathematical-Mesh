@@ -633,7 +633,7 @@ public partial class Buffer {
     /// <param name="data">Data to encode</param>
     /// <param name="flags">ASN.1 Flags</param>
     /// <param name="code">ASN.1 Code</param>        
-    public void Encode__Time(DateTime data, int flags, int code) {
+    public void Encode__Time(System.DateTime data, int flags, int code) {
 
         //if (NullCheck (Data == null, Flags, Code)) return;
 
@@ -651,7 +651,7 @@ public partial class Buffer {
     /// <param name="Data">Data to encode</param>
     /// <param name="Flags">ASN.1 Flags</param>
     /// <param name="Code">ASN.1 Code</param>
-    public void Encode__UTCTime(DateTime Data, int Flags, int Code) {
+    public void Encode__UTCTime(System.DateTime Data, int Flags, int Code) {
         int position = pointer;
 
         string time = Data.ToString("yyMMddhhmmssZ");
@@ -668,7 +668,7 @@ public partial class Buffer {
     /// <param name="data">Data to encode</param>
     /// <param name="flags">ASN.1 Flags</param>
     /// <param name="code">ASN.1 Code</param>
-    public void Encode__GeneralizedTime(DateTime data, int flags, int code) {
+    public void Encode__GeneralizedTime(System.DateTime data, int flags, int code) {
         int position = pointer;
 
         string time = data.ToString("yyyyMMddhhmmssZ");

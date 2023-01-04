@@ -105,15 +105,15 @@ public partial class TBSCertificate {
     /// </summary>
     /// <param name="TimeSpan">Time interval.</param>
     public void SetValidity(TimeSpan TimeSpan) {
-        DateTime NotBefore = DateTime.Now.ToUniversalTime();
-        DateTime NotAfter = NotBefore.Add(TimeSpan);
+        System.DateTime NotBefore = System.DateTime.Now.ToUniversalTime();
+        System.DateTime NotAfter = NotBefore.Add(TimeSpan);
 
         // Predate the certificate by one day plus an hour to avoid issues with the day roll round
         NotBefore = NotBefore.AddHours(-25);
 
         // Predate the certificate to 1 minute past midnight (UTC) on the date of 
         // issue to avoid clock sync issues
-        NotBefore = new DateTime(NotBefore.Year, NotBefore.Month, NotBefore.Day,
+        NotBefore = new System.DateTime(NotBefore.Year, NotBefore.Month, NotBefore.Day,
                     0, 0, 1, DateTimeKind.Utc);
 
         SetValidity(NotBefore, NotAfter);
@@ -124,7 +124,7 @@ public partial class TBSCertificate {
     /// </summary>
     /// <param name="NotBefore">First time instant that the certificate is valid.</param>
     /// <param name="NotAfter">Last time instant that the certificate is valid.</param>
-    public void SetValidity(DateTime NotBefore, DateTime NotAfter) => Validity = new Validity(NotBefore, NotAfter);
+    public void SetValidity(System.DateTime NotBefore, System.DateTime NotAfter) => Validity = new Validity(NotBefore, NotAfter);
 
     /// <summary>
     /// Add an X.509v3 extension encty
@@ -370,7 +370,7 @@ public partial class Validity {
     /// </summary>
     /// <param name="NotBefore">Time before which the enclosing certificate is not valid.</param>
     /// <param name="NotAfter">Time after which the enclosing certificate is not valid.</param>
-    public Validity(DateTime NotBefore, DateTime NotAfter) {
+    public Validity(System.DateTime NotBefore, System.DateTime NotAfter) {
         this.NotBefore = NotBefore;
         this.NotAfter = NotAfter;
         }

@@ -64,7 +64,7 @@ public partial class Registration {
             RegistrationReason registrationReason= RegistrationReason.Update) {
         Id = UDF.Nonce();
         Entry = callsign.Enveloped as Enveloped<CallsignBinding>;
-        Submitted = DateTime.Now;
+        Submitted = System.DateTime.Now;
 
         if (registration is null) {
             Reason = CallsignConstants.RegistrationReasonInitialTag;

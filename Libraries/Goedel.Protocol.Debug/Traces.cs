@@ -112,7 +112,7 @@ public class TraceDictionary {
     /// </summary>
     /// <param name="Payload">The message Payload</param>
     /// <returns>The trace message entry</returns>
-    public TraceMessage Request(JsonObject Payload) => new(Current, Payload, DateTime.Now, true);
+    public TraceMessage Request(JsonObject Payload) => new(Current, Payload, System.DateTime.Now, true);
 
 
     /// <summary>
@@ -122,7 +122,7 @@ public class TraceDictionary {
     /// <param name="Payload">The message Payload</param>
     /// <returns>The trace message entry</returns>
     public TraceMessage Response(string Status, JsonObject Payload) {
-        var Message = new TraceMessage(Current, Payload, DateTime.Now, false) {
+        var Message = new TraceMessage(Current, Payload, System.DateTime.Now, false) {
             Status = Status
             };
 
@@ -192,7 +192,7 @@ public class TraceMessage {
     /// <summary>
     /// The time the message was sent
     /// </summary>
-    public DateTime Time { get; }
+    public System.DateTime Time { get; }
 
     /// <summary>
     /// If true message was a request, otherwise is a response.
@@ -215,7 +215,7 @@ public class TraceMessage {
     /// <param name="IsRequest">If true, this was a request message (sent by the initiator
     /// of the conversation. Otherwise it is a response.</param>
     public TraceMessage(TracePoint TracePoint,
-                JsonObject Payload, DateTime Time, bool IsRequest) {
+                JsonObject Payload, System.DateTime Time, bool IsRequest) {
         this.TracePoint = TracePoint;
         this.Payload = Payload.DeepCopy();
         this.Time = Time.ToUniversalTime();

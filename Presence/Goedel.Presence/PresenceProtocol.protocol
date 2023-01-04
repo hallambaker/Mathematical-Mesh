@@ -14,10 +14,36 @@
 	Description
 		|Protocol interactions supported by the Mesh Service.
 
+
+	Section 3 "Client to Service"	
+	
+
 	Message PresenceFromClient
 		External Goedel.Protocol.Request
 		Description
 			|Base class for all requests made to a registrar
+		Integer Serial
+			Description
+				|Monotonically increasing counter used to prevent replay
+				|attacks on client request.
+
+	Message PresenceConnectRequest
+		Description
+			|Register connection request. 
+		Inherits PresenceFromClient
+
+	Message PresenceHeartbeat
+		Inherits PresenceFromClient
+
+	Message PresenceAcknowledge
+		Inherits PresenceFromClient
+
+	Message PresenceResolveRequest
+		Inherits PresenceFromClient
+		Binary DnsRequest
+
+
+	Section 3 "Service to Client"	
 
 
 	Message PresenceFromService
@@ -28,47 +54,29 @@
 		Binary SourceIpAddress
 		Integer Port
 		DateTime Now
-	
+		Integer Acknowledge
 
-	Section 3 "Transactions"	
-	
-	Message ConnectRequest
-		Description
-			|Register connection request. 
-		Inherits PresenceFromClient
-		Integer Serial
-			Description
-				|Monotonically increasing counter used to prevent replay
-				|attacks on connection request.
-
-
-	Message ConnectResponse
+	Message PresenceConnectResponse
 		Inherits PresenceFromService
 		Description
 			|Return the result of a connection request
 		Integer ConnectionTimeout
 			Description
 				|The time after which the presence service will start to 
-				|assume the device has disconnected.
+				|assume the device has disconnected in milliseconds.
 	
-	Message ErrorInvalidSerial
+	Message PresenceErrorInvalidSerial
 		Inherits PresenceFromService
 		Integer Serial
 
-	Message Heartbeat
-		Inherits PresenceFromClient
-
-	Message Acknowledge
-		Inherits PresenceFromClient
-
-	Message Notify
+	Message PresenceStatus
 		Inherits PresenceFromService
 
-	Message ResolveRequest
-		Inherits PresenceFromClient
-		Binary DnsRequest
 
-	Message ResolveResponse
+	Message PresenceNotify
+		Inherits PresenceFromService
+
+	Message PresenceResolveResponse
 		Inherits PresenceFromService
 		Binary DnsResponse
 

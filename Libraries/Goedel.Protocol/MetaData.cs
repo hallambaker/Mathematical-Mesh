@@ -91,8 +91,8 @@ public record MetaDataString(
 /// <param name="Setter">Set accessor</param>
 /// <param name="Getter">Get accessor</param>
 public record MetaDataDateTime(
-        Action<DateTime?> Setter,
-        Func<DateTime?> Getter) : MetaData {
+        Action<System.DateTime?> Setter,
+        Func<System.DateTime?> Getter) : MetaData {
     }
 
 /// <summary>
@@ -176,8 +176,8 @@ public record MetaDataListString(
 /// <param name="Setter">Set accessor</param>
 /// <param name="Getter">Get accessor</param>
 public record MetaDataListDateTime(
-        Action<List<DateTime?>> Setter,
-        Func<List<DateTime?>> Getter) : MetaDataList {
+        Action<List<System.DateTime?>> Setter,
+        Func<List<System.DateTime?>> Getter) : MetaDataList {
     }
 
 /// <summary>

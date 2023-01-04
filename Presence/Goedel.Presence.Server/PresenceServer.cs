@@ -36,6 +36,7 @@ using Goedel.Protocol.Presentation;
 using System.Threading.Tasks.Dataflow;
 using Goedel.IO;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Goedel.Mesh;
 
 namespace Goedel.Presence.Server;
 
@@ -66,75 +67,6 @@ public enum DeviceState {
     }
 
 /// <summary>
-/// Tracks a device connected to the service.
-/// </summary>
-public record DeviceBinding : IQueuableTask {
-    
-    ///<summary>State of the device connection</summary> 
-    public DeviceState DeviceState {get; set; } = DeviceState.Initial;
-
-    ///<summary>The unique connection ID assigned by the service.</summary> 
-    public ulong ConnectionId;
-
-    ///<summary>The device profile UDF.</summary> 
-    public string DeviceId;
-
-    ///<summary>The corresponding account binding.</summary> 
-    public AccountBinding AccountBinding { get; init; }
-
-    ///<summary>Time at which the binding was created.</summary> 
-    public DateTime FirstContact { get; } = DateTime.Now;
-
-    ///<summary>Time at which the binding was last used.</summary> 
-    public DateTime LastContact { get; set; } = DateTime.Now;
-
-    ///<summary>The last endpoint from which the device was accessed.</summary> 
-    public IPEndPoint CurrentEndpoint { get; set; }
-
-    ///<summary>Monotonically increasing connection request counter. To prevent replay
-    ///attacks, a connection request MUST be rejected unless it contains a greater or equal
-    ///serial number.</summary> 
-    public int LastConnectionSerial { get; set; } = -1;
-
-    ///<summary>When set, there is a pending notification to be sent to the device.</summary> 
-    public bool Notify { get; set; } = false;
-
-
-    ///<summary>The shared secret to be used to encrypt outbound messages</summary> 
-    public byte[] EncryptKey { get; }
-
-    ///<summary>The shared secret to be used to decrypt inbound messages</summary>
-    public byte[] DecryptKey { get; }
-
-    /// <summary>
-    /// Compile a packet sequence providing notification of the current status.
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="NYI"></exception>
-    public List<byte[]> GetPackets() => throw new NYI();
-
-    #region // Implement IQueuableTask
-
-    ///<inheritdoc/>
-    public DateTime WakeAt { get; set; }
-
-    ///<inheritdoc/>
-    public int CompareTo(object obj) {
-        var other = obj as DeviceBinding;
-
-        if (other == null) {
-            throw new ArgumentException ($"Argument not of type {nameof(DeviceBinding)}");
-            }
-
-        var compare = WakeAt.CompareTo( other.WakeAt );
-        return compare != 0 ? compare : ConnectionId.CompareTo(other.ConnectionId);
-
-
-        } 
-    #endregion
-    }
-
-/// <summary>
 /// Tracks an account with device(s) connected to the service.
 /// </summary>
 public class AccountBinding {
@@ -143,10 +75,10 @@ public class AccountBinding {
     public string AccountId;
 
     ///<summary>Time at which the binding was created.</summary> 
-    public DateTime FirstContact { get; } = DateTime.Now;
+    public System.DateTime FirstContact { get; } = System.DateTime.Now;
 
     ///<summary>Time at which the binding was last used.</summary> 
-    public DateTime LastContact { get; set;  } = DateTime.Now;
+    public System.DateTime LastContact { get; set;  } = System.DateTime.Now;
 
     ///<summary>Dictionary of connected devices.</summary> 
     public Dictionary<ulong, DeviceBinding> ConnectedDevices { get;  }  = new();
@@ -159,8 +91,12 @@ public class AccountBinding {
 /// </summary>
 public class PresenceServer : Disposable, IPresence {
     #region // Properties and fields
-    UdpClient UdpServiceIpv4;
-    UdpClient UdpServiceIpv6;
+
+    ///<summary>Client for IPv4 traffic.</summary> 
+    protected UdpClient UdpServiceIpv4 {get; set; }
+
+    ///<summary>Client for IPv6 traffic.</summary> 
+    protected UdpClient UdpServiceIpv6 { get; set; }
 
     int PortIpv4;
     int PortIpv6;
@@ -180,15 +116,17 @@ public class PresenceServer : Disposable, IPresence {
     ulong ConnectionID = 0;
 
     ///<summary>Time to wait before cancelling connection request.</summary> 
-    public int TimeOutInitial { get; set; } = (int)TimeSpan.TicksPerSecond * 60;
+    public int TimeOutInitialMilliSeconds { get; set; } = 60_000;
 
-    ///<summary>Time to wait before the first overdue notice is sent.</summary> 
-    public int TimeOut1 { get; set; } = (int) TimeSpan.TicksPerSecond * 60;
+    ///<summary>Time to wait before the first heartbeat overdue notice is 
+    ///sent in milliseconds.</summary> 
+    public int TimeOut1MilliSeconds { get; set; } = (int) 60_000;
 
-    ///<summary>Time to wait before the second overdue notice is sent.</summary> 
-    public int TimeOut2 { get; set; } = (int)TimeSpan.TicksPerSecond * 60;
+    ///<summary>Time to wait before the second overdue notice is sent in 
+    ///milliseconds.</summary> 
+    public int TimeOut2MilliSeconds { get; set; } = 1_000;
 
-
+    ///<summary>The number of socket listeners to deploy per service.</summary> 
     public int UdpSocketListeners { get; }
 
     ///<summary>The queue of pending items associated with a device.</summary> 
@@ -198,7 +136,7 @@ public class PresenceServer : Disposable, IPresence {
     ManualResetEventSlim PendingEvent = new ManualResetEventSlim();
 
     ///<summary>Queue of items for immediate processing.</summary> 
-    BufferBlock<DeviceBinding> ImmediateQueue { get; }
+    BufferBlock<PresenceFromService> ImmediateQueue { get; }
 
     bool active = true;
     CancellationTokenSource CancellationTokenSource= new CancellationTokenSource();
@@ -211,6 +149,7 @@ public class PresenceServer : Disposable, IPresence {
 
     ///<inheritdoc/>
     protected override void Disposing() {
+        Console.WriteLine("Disposing PresenceServer");
 
         // dispose the send and receive threads.
         active = false;
@@ -238,9 +177,13 @@ public class PresenceServer : Disposable, IPresence {
         PortIpv6 = GetPort(UdpServiceIpv6);
 
         // Set the number of UDP socket listeners.
-        UdpSocketListeners = presenceServiceConfiguration.UdpSocketListeners > 0 ?
-            presenceServiceConfiguration.UdpSocketListeners : 8;
 
+        UdpSocketListeners = 8;
+        if (presenceServiceConfiguration is not null) {
+            if (presenceServiceConfiguration.UdpSocketListeners > 0) {
+                UdpSocketListeners = presenceServiceConfiguration.UdpSocketListeners;
+                }
+            }
 
         IP = presenceServiceConfiguration?.IP ?? hostConfiguration?.IP;
 
@@ -273,7 +216,7 @@ public class PresenceServer : Disposable, IPresence {
         var queueOptions = new DataflowBlockOptions() {
             CancellationToken = CancellationTokenSource.Token
             };
-        ImmediateQueue = new BufferBlock<DeviceBinding>(queueOptions);
+        ImmediateQueue = new BufferBlock<PresenceFromService>(queueOptions);
 
         SenderThread = Start(UdpSender);
         ReceiverThread = Start(UdpReceiver);
@@ -320,17 +263,33 @@ public class PresenceServer : Disposable, IPresence {
 
             // drain the queue of pending tasks.
             for (var next = PendingQueue.Next(); next != null; next = PendingQueue.Next()) {
-                QueueNotification(next);
+                Console.WriteLine("Wakeup for device");
+
+
+                //QueueNotification(next);
                 }
             }
         }
+
+    /// <summary>
+    /// Send UDP packet. This function is made into a method to allow for testing.
+    /// </summary>
+    /// <param name="client"></param>
+    /// <param name="packet"></param>
+    /// <param name="bytes"></param>
+    /// <param name="endPoint"></param>
+    protected virtual void Send (UdpClient client, byte[]packet, int bytes, IPEndPoint endPoint) =>
+        client.Send(packet, packet.Length, endPoint);
 
 
     void UdpSender() {
         try {
             while (active) {
                 var task = ImmediateQueue.Receive(CancellationTokenSource.Token);
-                Process(task).Wait();
+                var client = GetClient(task.Destination);
+                foreach (var packet in task.Packets) {
+                    Send(client, packet, packet.Length, task.Destination);
+                    }
                 }
             }
 
@@ -338,6 +297,14 @@ public class PresenceServer : Disposable, IPresence {
             // We are disposing.
             }
         }
+
+
+    protected UdpClient GetClient(IPEndPoint endPoint) =>
+        endPoint.AddressFamily switch {
+            AddressFamily.InterNetwork => UdpServiceIpv4,
+            _ => UdpServiceIpv6
+            };
+
 
 
     void UdpReceiver() {
@@ -389,53 +356,40 @@ public class PresenceServer : Disposable, IPresence {
                 }
 
             var request = ParseBuffer(udpRequest, deviceBinding.DecryptKey);
+            deviceBinding.LastContact = System.DateTime.UtcNow;
+            deviceBinding.LastSerial = deviceBinding.LastSerial.Maximum(
+                    request.Serial ?? 0);
 
             switch (request) {
-                case ConnectRequest connectRequest: {
+                case PresenceConnectRequest connectRequest: {
+                    Connect(deviceBinding, connectRequest);
                     break;
                     }
-
-                }
-
-            // lock whatever resource is required
-
-            // Send response if required
-
-            // Reset pending queue
+                case PresenceHeartbeat presenceHeartbeat: {
+                    Heartbeat(deviceBinding, presenceHeartbeat);
+                    break;
                     }
+                case PresenceAcknowledge presenceAcknowledge: {
+                    break;
+                    }
+                case PresenceResolveRequest presenceResolveRequest: {
+                    break;
+                    }
+                }
+            }
         catch (OperationCanceledException) {
             return; // We are disposing, abort.
             }
         }
 
     ulong GetConnectionId(byte[] data) {
-        throw new NYI();
-
-        }
-
-    
-
-
-    async Task Process(DeviceBinding deviceBinding) {
-        if (deviceBinding.DeviceState == DeviceState.Initial) {
-            // we do not have an endpoint yet.
-            return;
+        if (data == null | data?.Length < 8) {
+            return 0;
             }
 
-        var client = GetClient(deviceBinding.CurrentEndpoint);
-
-        var packets = deviceBinding.GetPackets();
-        foreach (var packet in packets) {
-            await client.SendAsync (packet, packet.Length, deviceBinding.CurrentEndpoint);
-
-            }
-
+        return data.BigEndian64();
         }
 
-
-    UdpClient GetClient(IPEndPoint iPEndPoint) =>
-        iPEndPoint.AddressFamily == AddressFamily.InterNetwork ? UdpServiceIpv4 :
-            UdpServiceIpv6;
 
     #endregion
 
@@ -453,18 +407,18 @@ public class PresenceServer : Disposable, IPresence {
                     };
                 Accounts.Add(accountHandle.AccountAddress, accountBinding);
                 }
-            accountBinding.LastContact = DateTime.Now;
+            accountBinding.LastContact = System.DateTime.Now;
 
             var deviceBinding = new DeviceBinding() {
                 DeviceId = accountHandle.EnvelopedCatalogedDevice.EnvelopeId,
                 AccountBinding = accountBinding,
                 ConnectionId = connectionId,
-                LastContact = DateTime.Now
+                LastContact = System.DateTime.Now
                 };
 
             accountBinding.ConnectedDevices.Add(connectionId, deviceBinding);
             Devices.Add(connectionId, deviceBinding);
-            PendingQueue.Insert(deviceBinding, TimeOutInitial);
+            PendingQueue.Insert(deviceBinding, TimeOutInitialMilliSeconds);
             // ToDo, add a connection deletion action to the events queue.
             }
 
@@ -508,76 +462,94 @@ public class PresenceServer : Disposable, IPresence {
             var accountBinding = deviceBinding.AccountBinding;
 
             foreach (var deviceEntry in accountBinding.ConnectedDevices) {
-                QueueNotification(deviceBinding);
+                var device = deviceEntry.Value; ;
+
+                var notification = new PresenceNotify() {
+                    };
+                QueueResponse(device, notification, device.CurrentEndpoint);
                 }
             }
         }
 
-
-    /// <summary>
-    /// Queue a notification to a device unless there is a pending notification already.
-    /// </summary>
-    /// <param name="deviceBinding"></param>
-    void QueueNotification(DeviceBinding deviceBinding) {
-        // add another notification to the work queue.
-        // This is locked on the device binding, probably unnecessary as the worst
-        // that can happen is an additional packet is sent out.
-        lock (deviceBinding) {
-            if (deviceBinding.Notify) {
-                // We already have a notification pending so return.
-                // This will need to be expanded to merge notification data in future.
-                return;
-                }
-            deviceBinding.Notify = true;
-            ImmediateQueue.Post(deviceBinding);
-            }
-
-        }
 
     #endregion
     #region // Message Parsing
-    PresenceFromClient ParseBuffer(UdpReceiveResult udpReceive, byte[] key) => throw new NYI();
+    PresenceFromClient ParseBuffer(UdpReceiveResult udpReceive, byte[] key) {
+        var message = PresenceFromClient.FromBytes(udpReceive.Buffer, 8);
+        message.AssertNotNull(NYI.Throw);
+
+        message.SourceEndPoint = udpReceive.RemoteEndPoint;
+        return message;
+        }
+
+    void QueueResponse(
+           DeviceBinding deviceBinding,
+           PresenceFromService message,
+           IPEndPoint endPoint) {
+        message.SourceIpAddress = endPoint.Address.GetAddressBytes();
+        message.Port = endPoint.Port;
+        message.Destination = endPoint;
+        message.Now = System.DateTime.UtcNow;
+
+        message.Packets = message.ToBytes();
+
+        ImmediateQueue.Post(message);
+        }
 
 
     #endregion
     #region // Methods
 
 
-    void QueueResponse (DeviceBinding deviceBinding, PresenceFromClient connectRequest,
-                PresenceFromService message) => throw new NYI();
 
-    void Connect(DeviceBinding deviceBinding, ConnectRequest connectRequest) {
+    void Connect(DeviceBinding deviceBinding, PresenceConnectRequest connectRequest) {
+        Console.WriteLine("Received Connect Request");
         lock (deviceBinding) {
+
+            // Prevent replay attack 
             if (connectRequest.Serial <= deviceBinding.LastConnectionSerial) {
-                var error = new ErrorInvalidSerial() {
+                var error = new PresenceErrorInvalidSerial() {
                     Serial = deviceBinding.LastConnectionSerial
                     };
-                QueueResponse(deviceBinding, connectRequest, error);
+                QueueResponse(deviceBinding, error, connectRequest.SourceEndPoint);
                 return;
                 }
-            var response = new ConnectResponse() {
-                ConnectionTimeout = TimeOut1
+
+            // ToDo: Will require some sophistication to prevent a MitM attack here.
+            deviceBinding.CurrentEndpoint = connectRequest.SourceEndPoint;
+            deviceBinding.DeviceState = DeviceState.Connected;
+
+            var response = new PresenceConnectResponse() {
+                ConnectionTimeout = TimeOut1MilliSeconds
                 };
-            QueueResponse(deviceBinding, connectRequest, response);
+            QueueResponse(deviceBinding, response, connectRequest.SourceEndPoint);
             }
         }
 
 
-    void Heartbeat(DeviceBinding deviceBinding, Heartbeat heartbeat) {
+    void Heartbeat(DeviceBinding deviceBinding, PresenceHeartbeat heartbeat) {
+        Console.WriteLine($"Received Heartbeat");
+        lock (deviceBinding) {
+            var message = new PresenceStatus() {
+                Acknowledge = heartbeat.Serial
+                };
+            // have recieved a keepalive here so update the connection state
+
+            QueueResponse(deviceBinding, message, heartbeat.SourceEndPoint);
+            PendingQueue.Insert(deviceBinding, TimeOut1MilliSeconds);
+            }
+        }
+
+    void Acknowledge(DeviceBinding deviceBinding, PresenceAcknowledge acknowledge) {
+        Console.WriteLine($"Received Acknowledge");
         lock (deviceBinding) {
             // have recieved a keepalive here so update the connection state
 
             }
         }
 
-    void Acknowledge(DeviceBinding deviceBinding, Acknowledge acknowledge) {
-        lock (deviceBinding) {
-            // have recieved a keepalive here so update the connection state
-
-            }
-        }
-
-    void Resolve(DeviceBinding deviceBinding, ResolveRequest resolveRequest) {
+    void Resolve(DeviceBinding deviceBinding, PresenceResolveRequest resolveRequest) {
+        Console.WriteLine($"Received Resolve");
         }
 
     /////<inheritdoc/>

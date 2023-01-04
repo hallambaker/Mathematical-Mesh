@@ -193,10 +193,10 @@ public class JsonWriter : Writer {
 
     /// <summary>Write Date-Time value in RFC3339 format.</summary>
     /// <param name="data">Value to write</param>
-    public override void WriteDateTime(DateTime? data) {
+    public override void WriteDateTime(System.DateTime? data) {
         if (data != null) {
             Output.Write("\"");
-            Output.Write((DateTime)data);
+            Output.Write((System.DateTime)data);
             Output.Write("\"");
             }
         else {

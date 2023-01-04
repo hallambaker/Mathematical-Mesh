@@ -775,13 +775,6 @@
             <param name="accountAddress">The address to be bound.</param>
             <returns>The bindings created.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPresenceEndpoints">
-            <summary>
-            Return a list of endpoints for the presence service associated with the
-            account.
-            </summary>
-            <returns>The list of presence service endpoints.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.TransactBegin">
             <summary>
             Begin a transaction.

@@ -216,6 +216,10 @@ public partial class UnbindResponse {
 
 public partial class StatusResponse {
 
+    ///<summary>The number of stores that were updated as a resul of the request.</summary> 
+    public int Count { get; set; } = 0;
+
+
     /// <summary>
     /// Default constructor. 
     /// </summary>
@@ -237,6 +241,16 @@ public partial class StatusResponse {
                 }
             }
 
+        }
+
+
+    public ServiceAccessToken GetService(string serviceId) {
+        foreach (var service in Services) {
+            if (service.Prefix == serviceId) {
+                return service;
+                }
+            }
+        return null;
         }
 
 

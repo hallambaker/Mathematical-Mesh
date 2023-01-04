@@ -53,14 +53,14 @@ partial class Program {
 
 
 
-        Logger.LogInformation("Start test {time}", DateTime.Now);
+        Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
         //RegistrationTests.Test().CallsignBind();
 
 
 
-        TestPresence.Test().PresenceStatusUpdate();
-
+        //TestPresence.Test().PresenceStatusUpdate();
+        TestPresence.Test().PresenceHeartbeat();
 
 
         //TestPresence.Test().UdpServiceBasic(2000);
@@ -274,7 +274,7 @@ partial class Program {
         //TestPresentationMesh.Test().TestImpersonationConfirm();
 
         //TestPresentationMesh.Test().TestImpersonationGroup();
-        Logger.LogInformation("End test {time}, Fail={Softfail}", DateTime.Now, TestCLI.CountSoftFail);
+        Logger.LogInformation("End test {time}, Fail={Softfail}", System.DateTime.Now, TestCLI.CountSoftFail);
         //Screen.WriteLine($"Total Soft fail {TestCLI.CountSoftFail}");
         }
 

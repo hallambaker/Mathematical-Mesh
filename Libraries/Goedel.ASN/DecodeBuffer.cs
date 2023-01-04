@@ -275,7 +275,7 @@ public class DecodeBuffer {
     /// <param name="Flags">ASN.1 Flags</param>
     /// <param name="Code">ASN.1 Code</param>
     /// <returns>Big integer decoded to buffer with MSB in index 0 </returns>
-    public virtual DateTime Decode__Time(int Flags, int Code) => throw new NotImplementedException();
+    public virtual System.DateTime Decode__Time(int Flags, int Code) => throw new NotImplementedException();
 
 
     }

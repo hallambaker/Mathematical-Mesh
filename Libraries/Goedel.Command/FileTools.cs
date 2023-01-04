@@ -38,9 +38,9 @@ public class FileTools {
     /// </summary>
     /// <param name="fileName">The file to test</param>
     /// <returns>The time the file was created.</returns>
-    public static DateTime GetFileDateTime(string fileName) {
+    public static System.DateTime GetFileDateTime(string fileName) {
         if (!File.Exists(fileName)) {
-            return DateTime.MinValue;
+            return System.DateTime.MinValue;
             }
         return File.GetLastWriteTimeUtc(fileName);
         }
@@ -68,15 +68,15 @@ public class FileTools {
     /// <returns>True if the source was created before the destination.</returns>
     public static bool UpToDate(string source, string destination) {
 
-        DateTime OutputDateTime = GetFileDateTime(destination);
-        if (OutputDateTime == DateTime.MinValue) {
+        System.DateTime OutputDateTime = GetFileDateTime(destination);
+        if (OutputDateTime == System.DateTime.MinValue) {
             return false;
             }
-        DateTime ToolDateTime = Script.AssemblyBuildTime;
+        System.DateTime ToolDateTime = Script.AssemblyBuildTime;
         if (OutputDateTime < ToolDateTime) {
             return false;
             }
-        DateTime SourceDateTime = GetFileDateTime(source);
+        System.DateTime SourceDateTime = GetFileDateTime(source);
         return (OutputDateTime > SourceDateTime);
         }
 
