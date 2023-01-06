@@ -10966,6 +10966,14 @@
             <param name="builder">The string builder to append the description to.</param>
             <param name="indent">The indentation level.</param>
         </member>
+        <member name="M:Goedel.Mesh.StatusResponse.GetService(System.String)">
+            <summary>
+            Obtain the <see cref="T:Goedel.Mesh.ServiceAccessToken"/> for the service with
+            prefix <paramref name="serviceId"/>.
+            </summary>
+            <param name="serviceId">The prefix to find.</param>
+            <returns>The matching service access token if found, otherwise null.</returns>
+        </member>
         <member name="T:Goedel.Mesh.DownloadRequest">
              <summary>
             

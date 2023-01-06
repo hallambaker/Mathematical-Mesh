@@ -42,6 +42,9 @@
         <member name="P:Goedel.Presence.Client.ContextPresence.LocalEndPoint">
             <summary>The current local endpoint</summary> 
         </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.LastTimeStamp">
+            <summary>Timestamp of last packet received.</summary> 
+        </member>
         <member name="P:Goedel.Presence.Client.ContextPresence.PresenceListenerState">
             <summary>The state of the presence listener.</summary> 
         </member>
@@ -66,6 +69,9 @@
         <member name="P:Goedel.Presence.Client.ContextPresence.ReconnectAttemptMilliSeconds">
             <summary>Connection heartbeat timer in milliseconds.</summary> 
         </member>
+        <member name="P:Goedel.Presence.Client.ContextPresence.Connected">
+            <summary>If true, client is connected to the presence4 service.</summary> 
+        </member>
         <member name="P:Goedel.Presence.Client.ContextPresence.RetransmitRequestMilliSeconds">
             <summary>Request retransmission timeout in milliseconds</summary> 
         </member>
@@ -85,6 +91,13 @@
             Start the presence listener. Waiting for an explicit start allows the
             caller to adjust the listener parameters as init parameters.
             </summary>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.GetService(Goedel.Mesh.Client.ContextUser)">
+            <summary>
+            Get a presence service client for the user context <paramref name="contextAccount"/>.
+            </summary>
+            <param name="contextAccount">The user context.</param>
+            <returns>The context created.</returns>
         </member>
         <member name="M:Goedel.Presence.Client.ContextPresence.GetContext(Goedel.Mesh.Client.ContextUser)">
             <summary>
@@ -115,20 +128,54 @@
             Udp client listener, read requests and post to <see cref="P:Goedel.Presence.Client.ContextPresence.UdpReceiveBuffer"/>
             </summary>
         </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.SendData(Goedel.Presence.PresenceFromClient,System.Byte[])">
+            <summary>
+            Send the message <paramref name="message"/> with connection token 
+            <paramref name="token"/> to the service on the persistent connection.
+            </summary>
+            <param name="message">The message to send.</param>
+            <param name="token">Connection token.</param>
+        </member>
         <member name="M:Goedel.Presence.Client.ContextPresence.Poll">
             <summary>
             Force sending a poll message to the presence service.
             </summary>
             <returns>Asynchronous poll result.</returns>
         </member>
-        <member name="M:Goedel.Presence.Client.ContextPresence.MessageWait(System.Type)">
+        <member name="M:Goedel.Presence.Client.ContextPresence.RemoteEndpoint(System.Net.Sockets.UdpClient)">
             <summary>
-            Request creation of an outbound session to the account <paramref name="account"/>.
+            Query the presence service to obtain the external endpoint to which 
+            <paramref name="local"/> is connected.
+            </summary>
+            <param name="local">The client whose external endpoint is to be discovered.</param>
+            <returns>The endpoint.</returns>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.RemoteEndpointAsync(System.Net.Sockets.UdpClient)">
+            <summary>
+            Query the presence service to obtain the external endpoint to which 
+            <paramref name="local"/> is connected and return the result asynchronously.
+            </summary>
+            <param name="local">The client whose external endpoint is to be discovered.</param>
+            <returns>The endpoint.</returns>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.MessageWait(System.Type,System.Int64)">
+            <summary>
+            Wait for the client to receive a new message of type <paramref name="messageType"/>.
+            </summary>
+            <param name="messageType">The type of message to wait for.</param>
+            <param name="outBoxCount">The starting point for the count, ignore messages 
+            earlier than this.</param>
+            <returns>The message received.</returns>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.SessionRequestAsync(System.String)">
+            <summary>
+            Request creation of an outbound session to the account <paramref name="account"/>
+            and return the result asynchronously.
             </summary>
             <param name="account">The account to connect to.</param>
             <returns>The created session context (asynchronously).</returns>
         </member>
-        <member name="M:Goedel.Presence.Client.ContextPresence.SessionRequestAsync(System.String)">
+        <member name="M:Goedel.Presence.Client.ContextPresence.SessionRequest(System.String)">
             <summary>
             Request creation of an outbound session to the account <paramref name="account"/>.
             </summary>
@@ -137,16 +184,33 @@
         </member>
         <member name="M:Goedel.Presence.Client.ContextPresence.GetSessionRequestAsync">
             <summary>
-            Returns the next inbound session request. If one or more inbound requests 
-            have already been received, it returns the first request received. Otherwise
-            waits for the next inbound request to be received and returns asynchronously.
+            Wait for an external session creation request and return when received asynchronously.
             </summary>
-            <returns></returns>
+            <returns>The created session context (asynchronously).</returns>
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextPresence.GetSessionRequest">
+            <summary>
+            Wait for an external session creation request and return when received.
+            </summary>
+            <returns>The created session context (asynchronously).</returns>
         </member>
         <member name="T:Goedel.Presence.Client.ContextSession">
             <summary>
             Messaging session context. Used to exchange messages with a single endpoint.
             </summary>
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextSession.UdpClient">
+            <summary>The UdpClient used to control the session.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.Client.ContextSession.ExternalEndpoint">
+            <summary>The external address associated with the endpoint.</summary> 
+        </member>
+        <member name="M:Goedel.Presence.Client.ContextSession.#ctor(Goedel.Presence.SessionRequest,Goedel.Presence.SessionResponse)">
+            <summary>
+            Default constructor.
+            </summary>
+            <param name="sessionRequest">The session request message.</param>
+            <param name="sessionResponse">The session response message.</param>
         </member>
         <member name="M:Goedel.Presence.Client.ContextSession.SessionResponse(System.Boolean)">
             <summary>
@@ -177,19 +241,19 @@
             <param name="messageId">The message to await receipt of.</param>
             <returns>The message receipt (asynchronously).</returns>
         </member>
-        <member name="T:Goedel.Presence.Client.TBS">
+        <member name="T:Goedel.Presence.Client.PresenceServiceNotResponding">
             <summary>
             TBS
             </summary>
         </member>
-        <member name="P:Goedel.Presence.Client.TBS.ExceptionFormatDelegate">
+        <member name="P:Goedel.Presence.Client.PresenceServiceNotResponding.ExceptionFormatDelegate">
             <summary>The exception formatting delegate. May be overriden 
             locally or globally to implement different exception formatting.</summary>
         </member>
-        <member name="P:Goedel.Presence.Client.TBS.Templates">
+        <member name="P:Goedel.Presence.Client.PresenceServiceNotResponding.Templates">
             <summary>Templates for formatting response messages.</summary>
         </member>
-        <member name="M:Goedel.Presence.Client.TBS.#ctor(System.String,System.Exception,System.Object[])">
+        <member name="M:Goedel.Presence.Client.PresenceServiceNotResponding.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
             Construct instance for exception
             </summary>		
@@ -198,13 +262,13 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Presence.Client.TBS._Throw(System.Object)">
+        <member name="M:Goedel.Presence.Client.PresenceServiceNotResponding._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
-        <member name="P:Goedel.Presence.Client.TBS.Throw">
+        <member name="P:Goedel.Presence.Client.PresenceServiceNotResponding.Throw">
             <summary>
             The public fatory delegate
             </summary>

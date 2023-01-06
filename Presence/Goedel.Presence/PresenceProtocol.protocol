@@ -57,8 +57,7 @@
 		Description
 			|Base class for all response messages. Contains only the
 			|status code and status description fields.
-		Binary SourceIpAddress
-		Integer Port
+		Struct UdpEndpoint EndPoint
 		DateTime Now
 		Integer Acknowledge
 
@@ -94,8 +93,7 @@
 		String Protocol
 		String Options
 			Multiple
-		Struct SessionEndpoint Inbound
-			Multiple
+		Struct UdpEndpoint Inbound
 		DateTime Expires
 
 
@@ -105,8 +103,7 @@
 		String Protocol
 		String Options
 			Multiple
-		Struct SessionEndpoint Inbound
-			Multiple
+		Struct UdpEndpoint Inbound
 
 	Structure SessionEndpoint
 		Binary IpAddress
@@ -116,3 +113,6 @@
 			Multiple
 
 
+	Structure UdpEndpoint
+		Binary IpAddress
+		Integer Port

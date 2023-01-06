@@ -1253,6 +1253,13 @@
             <param name="cryptoKey">The found key </param>
             <returns>The key pair if found.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.SendMessage(System.String,Goedel.Mesh.Message)">
+            <summary>
+            Send the message <paramref name="message"/> to <paramref name="recipientAddress"/>.
+            </summary>
+            <param name="recipientAddress">The address to send the message to.</param>
+            <param name="message">The message to send.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Sync">
             <inheritdoc/>
         </member>

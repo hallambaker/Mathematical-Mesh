@@ -57,12 +57,12 @@ partial class Program {
 
         //RegistrationTests.Test().CallsignBind();
 
-
+        //ShellTests.Test().TestMessageGroup();
 
         //TestPresence.Test().PresenceStatusUpdate();
-        TestPresence.Test().PresenceHeartbeat(cycles:30, clientSkip: 1);
+        //TestPresence.Test().PresenceHeartbeat(cycles:30, clientSkip: 1);
 
-
+        TestPresence.Test().PresenceSessionRequest();
         //TestPresence.Test().UdpServiceBasic(2000);
 
 

@@ -1,50 +1,71 @@
-﻿using System;
+﻿global using System;
 
-using Goedel.Test;
-using Goedel.Utilities;
-using Xunit;
-using Goedel.Presence.Client;
-using Goedel.Protocol.Service;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Net.Sockets;
-using Goedel.Mesh.Client;
-using Xunit.Sdk;
-using Goedel.Mesh.Test;
-using System.Collections.Generic;
+global using Goedel.Test;
+global using Goedel.Utilities;
+global using Xunit;
+global using Goedel.Presence.Client;
+global using Goedel.Protocol.Service;
+global using System.Threading.Tasks;
+global using System.Threading;
+global using System.Net.Sockets;
+global using Goedel.Mesh.Client;
+global using Goedel.Mesh.Test;
+global using System.Collections.Generic;
+global using Goedel.Mesh.Shell;
 
 namespace Goedel.XUnit;
 
+
 /// <summary>
-/// Test library for PQC algorithms.
+/// Test involving the presence client.
 /// </summary>
-public class TestPresence : ShellTestBase {
+public partial class TestPresence : ShellTestBase {
 
 
     List<IDisposable> Disposables= new List<IDisposable>();
 
-    public void Disposing() {
+    protected override void Disposing() {
+        base.Disposing();
         foreach (var disposable in Disposables) {
             disposable.Dispose();
             }
         TestEnvironment.Dispose();
         }
 
+    CommunicationConditions CommunicationConditions { get; set; }
+    //public int ServiceSkip = 0;
+    //public int ServiceStride = 0;
 
-    public int ServiceSkip = 0;
-    public int ServiceStride = 0;
+    //public int AliceSkip = 0;
+    //public int AliceStride = 0;
 
-    public int AliceSkip = 0;
-    public int AliceStride = 0;
-
-    public int BobSkip = 0;
-    public int BobStride = 0;
+    //public int BobSkip = 0;
+    //public int BobStride = 0;
 
     public override TestEnvironmentBase GetTestEnvironment() =>
             new TestEnvironmentPresence() {
-                Skip= ServiceSkip,
-                Stride= ServiceStride,
+                CommunicationConditions = CommunicationConditions
                 };
+
+
+
+    bool CreateAliceBob(
+            out TestCLI aliceCLI,
+            out TestCLI bobCLI, out ContextPresence alicePresence,
+            out ContextPresence bobPresence, CommunicationConditions communicationConditions) {
+
+        aliceCLI = GetAlice(out var contextAlice, out alicePresence, communicationConditions);
+        bobCLI = GetBob(out var contextBob, out bobPresence, communicationConditions);
+
+        var resultcuri = aliceCLI.Dispatch($"contact dynamic") as ResultPublish;
+        var uri = resultcuri.Uri;
+
+        var resultfetch = bobCLI.Dispatch($"contact exchange {uri}");
+
+        var result6 = aliceCLI.Dispatch($"account sync /auto");
+
+        return true;
+        }
 
 
 
@@ -57,10 +78,9 @@ public class TestPresence : ShellTestBase {
     public TestCLI GetAlice(
                 out ContextUser contextAccount,
                 out ContextPresence contextPresence,
-                int heartbeatTimeout = 30_000) =>
-                        MakeAccount(AliceAccount, out contextAccount, 
-                            out contextPresence, heartbeatTimeout,
-                            AliceSkip, AliceStride);
+                CommunicationConditions communicationConditions = null) =>
+                MakeAccount(AliceAccount, out contextAccount, 
+                    out contextPresence, communicationConditions?.Alice);
 
     /// <summary>
     /// Convenience constructor for all things Bob.
@@ -70,10 +90,9 @@ public class TestPresence : ShellTestBase {
     public TestCLI GetBob(
                 out ContextUser contextAccount,
                 out ContextPresence contextPresence,
-                int heartbeatTimeout = 30_000) =>
+                CommunicationConditions communicationConditions = null) =>
                 MakeAccount(AccountB, out contextAccount, 
-                    out contextPresence, heartbeatTimeout,
-                            BobSkip, BobStride);
+                    out contextPresence, communicationConditions?.Bob);
 
 
     /// <summary>
@@ -87,9 +106,8 @@ public class TestPresence : ShellTestBase {
     public TestCLI MakeAccount(string address,
                 out ContextUser contextAccount,
                 out ContextPresence contextPresence,
-                int heartbeatTimeout = 30_000,
-                int skip=0, int stride=1) {
-
+                CommunicationDisruptor communicationDisruptor) {
+        communicationDisruptor ??= CommunicationDisruptor.None;
 
         Console.WriteLine($"Make account {address}");
 
@@ -97,17 +115,13 @@ public class TestPresence : ShellTestBase {
 
         var cli = GetTestCLI(user + "-Admin");
 
-        cli.ExampleNoCatch("account create {address}");
+        cli.ExampleNoCatch($"account create {address}");
         cli.Account = address;
 
         contextAccount = cli.ContextUser;
 
         var service = ContextPresence.GetService(contextAccount);
-        contextPresence = new ContextPresenceTest(contextAccount, service) {
-            HeartbeatMilliSeconds = heartbeatTimeout,
-            RetransmitHeartbeatMilliSeconds = heartbeatTimeout/5,
-            Stride =stride, 
-            Skip = skip};
+        contextPresence = new ContextPresenceTest(contextAccount, service, communicationDisruptor);
         contextPresence.Start();
 
         Disposables.Add(contextPresence);
@@ -132,112 +146,6 @@ public class TestPresence : ShellTestBase {
     public static TestPresence Test() => new();
 
 
-
-    /// <summary>
-    /// Test status update notification on catalog update
-    /// </summary>
-    [Fact] 
-    public void PresenceStatusUpdate() {
-
-
-        var aliceCli = GetAlice(out var contextAlice, out var presenceAlice);
-        var pollResult = presenceAlice.Poll();
-
-        Disposing();
-        }
-
-
-
-    [Theory]
-    [InlineData()]
-    public void PresenceHeartbeat(
-                int cycles = 30, 
-                int timeout = 1000,
-                int clientSkip = 0,
-                int clientStride = 5,
-                int serviceSkip = 0,
-                int serviceStride = 5) {
-        
-        ServiceSkip = serviceSkip; 
-        ServiceStride = serviceStride;
-        AliceSkip = clientSkip; 
-        AliceStride = clientStride;
-
-        var aliceCli = GetAlice(out var contextAlice, 
-                out var presenceAlice, timeout);
-        var pollResult = presenceAlice.Poll();
-
-        Thread.Sleep(timeout * cycles);
-
-        // Count the number of heartbeats collected.
-
-        (presenceAlice.PresenceListenerState ==
-            PresenceListenerState.Connected).TestTrue();
-
-        // Check that we got close to the expected number of heartbeats
-        (presenceAlice.MessageSerial > (cycles-5)).TestTrue();
-
-        Disposing();
-        }
-
-
-
-
-
-
-
-    /// <summary>
-    /// Alice attempts to establish connection to Bob by placing a request at
-    /// Bob's MSP. Bob receives notification via update.
-    /// </summary>
-    [Fact] 
-    public async void PresenceSessionRequest() {
-
-
-        var aliceCli = GetAlice(out var contextAlice, out var presenceAlice);
-        var bobCli = GetBob(out var contextBob, out var presenceBob);
-
-        // Make sure both sender and receiver are ready before attempting to establish connection
-        var pollResultA = presenceAlice.Poll();
-        var pollResultB = presenceBob.Poll();
-
-        // Test Alice sends before Bob calls to wait.
-        await AliceContactBob(presenceAlice);
-        await BobWaitAlice(presenceBob);
-
-        // Test Alice sends after Bob calls to wait.
-        await BobWaitAlice(presenceBob);
-        await AliceContactBob(presenceAlice);
-
-        }
-
-
-    async Task AliceContactBob(ContextPresence contextPresence) {
-
-        await contextPresence.SessionRequestAsync(AccountB);
-        }
-
-    async Task BobWaitAlice(ContextPresence contextPresence) {
-
-        await contextPresence.GetSessionRequestAsync();
-
-        }
-
-    /// <summary>
-    /// Test status update notification with presence service shutdown and restart.
-    /// </summary>
-    [Fact] 
-    public void PresenceStatusRebind() => throw new NYI();
-
-
-    /// <summary>
-    /// Test status update notification with unreliable UDP service.
-    /// </summary>
-    [Fact] 
-    public void PresenceStatusUnreliable() => throw new NYI();
-
-
-
     MessageContent GenerateMessage (int index) => throw new NYI();
 
 
@@ -245,11 +153,3 @@ public class TestPresence : ShellTestBase {
 
     }
 
-
-public class TestService {
-
-    public const string ReflectId = "Reflect";
-
-
-
-    }

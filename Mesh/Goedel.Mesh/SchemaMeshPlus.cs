@@ -68,7 +68,8 @@ public partial class MeshItem {
                 ) {
 
         var contentMeta = new ContentMeta() {
-            UniqueId = base._PrimaryKey,
+            //UniqueId = base._PrimaryKey,
+            UniqueId = _PrimaryKey,
             Created = System.DateTime.Now,
             ContentType = MeshConstants.IanaTypeMeshObject,
             MessageType = _Tag

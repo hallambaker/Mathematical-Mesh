@@ -1,7 +1,9 @@
 ﻿
 
+using Goedel.Cryptography.Dare;
 using Goedel.Discovery;
 using Goedel.Mesh;
+using Goedel.Protocol;
 using System.Net;
 using System.Threading.Tasks.Dataflow;
 
@@ -70,6 +72,7 @@ public class ContextPresence : Disposable {
     ///<summary>The current local endpoint</summary> 
     public IPEndPoint? LocalEndPoint { get; private set; } = null;
 
+    ///<summary>Timestamp of last packet received.</summary> 
     public System.DateTime? LastTimeStamp { get; private set; } = null;
 
 
@@ -113,7 +116,7 @@ public class ContextPresence : Disposable {
     ///<summary>Connection heartbeat timer in milliseconds.</summary> 
     public int ReconnectAttemptMilliSeconds { get; set; } = 60_000;
 
-
+    ///<summary>If true, client is connected to the presence4 service.</summary> 
     public bool Connected => PresenceListenerState != PresenceListenerState.Disconnected;
 
 
@@ -123,7 +126,7 @@ public class ContextPresence : Disposable {
 
 
     ///<summary>Request retransmission timeout in milliseconds</summary> 
-    public int RetransmitRequestMilliSeconds { get; set; } = 150_000;
+    public int RetransmitRequestMilliSeconds { get; set; } = 1_000;
 
     ///<summary>Serial number of the last message sent</summary> 
     public int MessageSerial { get; set; } = 0;
@@ -172,7 +175,11 @@ public class ContextPresence : Disposable {
         }
 
 
-
+    /// <summary>
+    /// Get a presence service client for the user context <paramref name="contextAccount"/>.
+    /// </summary>
+    /// <param name="contextAccount">The user context.</param>
+    /// <returns>The context created.</returns>
     public static ServiceAccessToken GetService(
                 ContextUser contextAccount) {
         var statusRequest = new StatusRequest() {
@@ -234,12 +241,13 @@ public class ContextPresence : Disposable {
                     Process(waitTask.Result);
                     }
                 }
+            catch (TimeoutException) {
+                Timeout();
+                }
             catch (OperationCanceledException) {
                 return;
                 }
-            catch (TimeoutException e) {
-                Timeout();
-                }
+
             }
         }
 
@@ -288,10 +296,10 @@ public class ContextPresence : Disposable {
         PresenceListenerState = PresenceListenerState.Connected;
 
 
-        if (presenceConnectResponse.SourceIpAddress != null) {
+        if (presenceConnectResponse.EndPoint != null) {
             
-            var address = new IPAddress(presenceConnectResponse.SourceIpAddress);
-            var port = presenceConnectResponse.Port ?? 0;
+            var address = new IPAddress(presenceConnectResponse.EndPoint.IpAddress);
+            var port = presenceConnectResponse.EndPoint.Port ?? 0;
 
             LocalEndPoint = new IPEndPoint(address, port);
             }
@@ -424,21 +432,27 @@ public class ContextPresence : Disposable {
                 UdpReceiveBuffer.Post(receive);
                 }
             }
-        catch (Exception e){
+        catch {
             return;
             }
         
         }
 
-    protected virtual void SendData(PresenceFromClient message, byte[] token) {
+    /// <summary>
+    /// Send the message <paramref name="message"/> with connection token 
+    /// <paramref name="token"/> to the service on the persistent connection.
+    /// </summary>
+    /// <param name="message">The message to send.</param>
+    /// <param name="token">Connection token.</param>
+    protected virtual void SendData(PresenceFromClient message, byte[] token) =>
+        SendData(UdpClient, message, token);
+
+    void SendData(UdpClient udpClient, PresenceFromClient message, byte[] token) {
         message.Serial = MessageSerial++;
         var data = message.ToBytes(token);
-        UdpClient.Send(data, data.Length, IPEndpoints[currentEndPoint]);
+        udpClient.Send(data, data.Length, IPEndpoints[currentEndPoint]);
 
         }
-
-
-
 
 
 
@@ -465,56 +479,135 @@ public class ContextPresence : Disposable {
         }
 
 
-
-
-
-    public async Task<IPEndPoint> RemoteEndpointAsync(UdpClient local) {
-
-        Poll();
-
-        throw new NYI();
-        }
-
-
-
-
     /// <summary>
-    /// Request creation of an outbound session to the account <paramref name="account"/>.
+    /// Query the presence service to obtain the external endpoint to which 
+    /// <paramref name="local"/> is connected.
     /// </summary>
-    /// <param name="account">The account to connect to.</param>
-    /// <returns>The created session context (asynchronously).</returns>
-    public Message MessageWait (Type messageType) {
+    /// <param name="local">The client whose external endpoint is to be discovered.</param>
+    /// <returns>The endpoint.</returns>
+    public UdpEndpoint RemoteEndpoint(
+                UdpClient local) {
 
+        var task = RemoteEndpointAsync(local);
+        task.Wait();
+        return task.Result;
+        }
 
+    /// <summary>
+    /// Query the presence service to obtain the external endpoint to which 
+    /// <paramref name="local"/> is connected and return the result asynchronously.
+    /// </summary>
+    /// <param name="local">The client whose external endpoint is to be discovered.</param>
+    /// <returns>The endpoint.</returns>
+    public async Task<UdpEndpoint> RemoteEndpointAsync(
+                UdpClient local) {
+        var attempt = 0;
 
-        throw new NYI();
+        var endpointRequest = new PresenceEndpointRequest() {
+            };
+        SendData(local, endpointRequest, ServiceAccessToken.Token);
+
+        var timeout = TimeSpan.FromMilliseconds(RetransmitRequestMilliSeconds);
+        while (ListenerActive) {
+            try {
+                var receiveResult = await local.ReceiveAsync(ListenerCancel.Token);
+                var message = PresenceFromService.FromBytes(receiveResult.Buffer, 0);
+
+                if (message is PresenceEndpointResponse) {
+                    return message.EndPoint;
+                    }
+                }
+            catch (TimeoutException) {
+                attempt++;
+                if (attempt >= RetransmitHeartbeatTries) {
+                    return null;
+                    }
+                }
+            }
+        return null;
+
         }
 
 
+
+
     /// <summary>
-    /// Request creation of an outbound session to the account <paramref name="account"/>.
+    /// Wait for the client to receive a new message of type <paramref name="messageType"/>.
+    /// </summary>
+    /// <param name="messageType">The type of message to wait for.</param>
+    /// <param name="outBoxCount">The starting point for the count, ignore messages 
+    /// earlier than this.</param>
+    /// <returns>The message received.</returns>
+    public Message MessageWait (Type messageType, long outBoxCount) {
+
+        var inbound = ContextUser.GetSpoolInbound();
+        // wait on notification of an update.
+        while (ListenerActive) {
+            if (inbound.FrameCount > outBoxCount) {
+                foreach (var envelope in inbound.Select((int)outBoxCount + 1)) {
+                    var message = Message.Decode(envelope, ContextUser.KeyCollection);
+
+                    if (message.GetType() == messageType) { 
+                        return message; 
+                        }
+                    outBoxCount = inbound.FrameCount;
+                    }
+                }
+            Poll();
+            }
+
+        return null;
+        }
+
+    long GetInboxCount() {
+        ContextUser.Sync();
+        var inbound = ContextUser.GetSpoolInbound();
+        return inbound.FrameCount;
+
+        }
+
+    /// <summary>
+    /// Request creation of an outbound session to the account <paramref name="account"/>
+    /// and return the result asynchronously.
     /// </summary>
     /// <param name="account">The account to connect to.</param>
     /// <returns>The created session context (asynchronously).</returns>
     public async Task<ContextSession> SessionRequestAsync(string account) {
+        var t = new Task<ContextSession>(
+                      () => SessionRequest(account));
+        t.Start();
+        await t;
+        return t.Result;
+        }
+
+
+    /// <summary>
+    /// Request creation of an outbound session to the account <paramref name="account"/>.
+    /// </summary>
+    /// <param name="account">The account to connect to.</param>
+    /// <returns>The created session context (asynchronously).</returns>
+    public ContextSession SessionRequest(string account) {
+        Console.WriteLine($"SessionRequestAsync {account}");
 
         // Create a local endpoint
         var udpClient = HostNetwork.GetUDPClient();
 
         // Get external endpoint(s)
-        var externalEndpoint = await RemoteEndpointAsync(udpClient);
+        var externalEndpoint = RemoteEndpoint(udpClient);
+        externalEndpoint.AssertNotNull(PresenceServiceNotResponding.Throw);
+
+
+        var inboxCount = GetInboxCount();
 
         // Post connection request to account
-
-        var endpoint = new SessionEndpoint(externalEndpoint);
         var sessionRequest = new SessionRequest() {
-            Inbound = new List<SessionEndpoint>() { endpoint }
+            Inbound = externalEndpoint
             };
 
         ContextUser.SendMessage(account, sessionRequest);
 
         // Wait for response
-        var sessionResponse = MessageWait(typeof (SessionResponse)) as SessionResponse;
+        var sessionResponse = MessageWait(typeof(SessionResponse), inboxCount) as SessionResponse;
 
         // Build session for request/response and endpoint bindings
         var result = new ContextSession(sessionRequest, sessionResponse) {
@@ -527,25 +620,38 @@ public class ContextPresence : Disposable {
         }
 
     /// <summary>
-    /// Returns the next inbound session request. If one or more inbound requests 
-    /// have already been received, it returns the first request received. Otherwise
-    /// waits for the next inbound request to be received and returns asynchronously.
+    /// Wait for an external session creation request and return when received asynchronously.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The created session context (asynchronously).</returns>
     public async Task<ContextSession> GetSessionRequestAsync() {
+        return await Task.Run<ContextSession>(GetSessionRequest);
 
+        //var t = new Task<ContextSession>(GetSessionRequest);
+        //t.Start();
+        //await t;
+        //return t.Result;
+        }
+
+    /// <summary>
+    /// Wait for an external session creation request and return when received.
+    /// </summary>
+    /// <returns>The created session context (asynchronously).</returns>
+    public ContextSession GetSessionRequest() {
+        Console.WriteLine("GetSessionRequestAsync");
+
+        var inboxCount = GetInboxCount();
 
         // Wait for response
-        var sessionRequest = MessageWait(typeof(SessionRequest)) as SessionRequest;
+        var sessionRequest = MessageWait(typeof(SessionRequest), inboxCount) as SessionRequest;
 
         // obtain necessary endpoints
         var udpClient = HostNetwork.GetUDPClient();
-        var externalEndpoint = await RemoteEndpointAsync(udpClient);
+        var externalEndpoint = RemoteEndpoint(udpClient);
+        externalEndpoint.AssertNotNull(PresenceServiceNotResponding.Throw);
 
         // Send response
-        var endpoint = new SessionEndpoint(externalEndpoint);
         var sessionResponse = new SessionResponse() {
-            Inbound = new List<SessionEndpoint>() { endpoint }
+            Inbound = externalEndpoint
             };
 
         // Build session for request/response and endpoint bindings

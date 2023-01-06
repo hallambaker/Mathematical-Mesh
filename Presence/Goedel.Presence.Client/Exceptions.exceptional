@@ -1,8 +1,8 @@
 ﻿
 Namespace Goedel.Presence.Client
 
-	Exception TBS
-		Console "Exception TBS"
+	Exception PresenceServiceNotResponding
+		Console "The presence service is not responding"
 		Description
 			|TBS
 

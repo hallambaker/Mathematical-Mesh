@@ -416,11 +416,7 @@
              status code and status description fields.
              </summary>
         </member>
-        <member name="P:Goedel.Presence.PresenceFromService.SourceIpAddress">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Presence.PresenceFromService.Port">
+        <member name="P:Goedel.Presence.PresenceFromService.EndPoint">
             <summary>
             </summary>
         </member>
@@ -476,6 +472,12 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="P:Goedel.Presence.PresenceFromService.Destination">
+            <summary>The UDP endpoing to which the message is to be sent.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.PresenceFromService.Packets">
+            <summary>The packets encoding this message.</summary> 
         </member>
         <member name="M:Goedel.Presence.PresenceFromService.ToBytes">
             <summary>
@@ -993,6 +995,74 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Presence.UdpEndpoint">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.UdpEndpoint.IpAddress">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.UdpEndpoint.Port">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.UdpEndpoint.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Presence.UdpEndpoint.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Presence.UdpEndpoint._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Presence.UdpEndpoint._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Presence.UdpEndpoint._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.UdpEndpoint._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.UdpEndpoint._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Presence.UdpEndpoint._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Presence.UdpEndpoint.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.UdpEndpoint._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Presence.UdpEndpoint.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Presence.UdpEndpoint.#ctor">
+            <summary>
+            Default constructor used for serialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Presence.UdpEndpoint.#ctor(System.Net.IPEndPoint)">
+            <summary>
+            Constructor returning a new instance for the endpoing <paramref name="endPoint"/>
+            </summary>
+            <param name="endPoint">The IP endpoint.</param>
         </member>
     </members>
 </doc>

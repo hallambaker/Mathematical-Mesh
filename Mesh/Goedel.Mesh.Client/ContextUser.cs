@@ -570,7 +570,11 @@ public partial class ContextUser : ContextAccount {
     #endregion
     #region // Message Handling - Get/Process pending.
 
-
+    /// <summary>
+    /// Send the message <paramref name="message"/> to <paramref name="recipientAddress"/>.
+    /// </summary>
+    /// <param name="recipientAddress">The address to send the message to.</param>
+    /// <param name="message">The message to send.</param>
     public void SendMessage(string recipientAddress, Message message) {
         var transact = TransactBegin();
         transact.OutboundMessage(recipientAddress, message);
@@ -694,6 +698,8 @@ public partial class ContextUser : ContextAccount {
         read = false;
         return null;
         }
+
+
 
     #endregion
     #region // Group operations

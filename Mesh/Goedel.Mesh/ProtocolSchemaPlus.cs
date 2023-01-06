@@ -243,7 +243,12 @@ public partial class StatusResponse {
 
         }
 
-
+    /// <summary>
+    /// Obtain the <see cref="ServiceAccessToken"/> for the service with
+    /// prefix <paramref name="serviceId"/>.
+    /// </summary>
+    /// <param name="serviceId">The prefix to find.</param>
+    /// <returns>The matching service access token if found, otherwise null.</returns>
     public ServiceAccessToken GetService(string serviceId) {
         foreach (var service in Services) {
             if (service.Prefix == serviceId) {

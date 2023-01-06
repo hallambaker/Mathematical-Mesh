@@ -178,7 +178,7 @@ public class PresenceServer : Disposable, IPresence {
 
         // Set the number of UDP socket listeners.
 
-        UdpSocketListeners = 8;
+        UdpSocketListeners = 2;
         if (presenceServiceConfiguration is not null) {
             if (presenceServiceConfiguration.UdpSocketListeners > 0) {
                 UdpSocketListeners = presenceServiceConfiguration.UdpSocketListeners;
@@ -299,6 +299,12 @@ public class PresenceServer : Disposable, IPresence {
         }
 
 
+    /// <summary>
+    /// Returns the UdpClient to be used to send a packet to the address 
+    /// <paramref name="endPoint"/>
+    /// </summary>
+    /// <param name="endPoint">The endpoint to send to.</param>
+    /// <returns>The client to use.</returns>
     protected UdpClient GetClient(IPEndPoint endPoint) =>
         endPoint.AddressFamily switch {
             AddressFamily.InterNetwork => UdpServiceIpv4,
@@ -369,6 +375,11 @@ public class PresenceServer : Disposable, IPresence {
                     Heartbeat(deviceBinding, presenceHeartbeat);
                     break;
                     }
+                case PresenceEndpointRequest presenceEndpointRequest: {
+                    Endpoint(deviceBinding, presenceEndpointRequest);
+                    break;
+                    }
+
                 case PresenceAcknowledge presenceAcknowledge: {
                     break;
                     }
@@ -489,8 +500,7 @@ public class PresenceServer : Disposable, IPresence {
            DeviceBinding deviceBinding,
            PresenceFromService message,
            IPEndPoint endPoint) {
-        message.SourceIpAddress = endPoint.Address.GetAddressBytes();
-        message.Port = endPoint.Port;
+        message.EndPoint = new UdpEndpoint(endPoint);
         message.Destination = endPoint;
         message.Now = System.DateTime.UtcNow;
 
@@ -543,6 +553,20 @@ public class PresenceServer : Disposable, IPresence {
             deviceBinding.Expire = DateTime.Now.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
             }
         }
+
+    void Endpoint(DeviceBinding deviceBinding, PresenceEndpointRequest request) {
+        Console.WriteLine($"Received Endpoint");
+        lock (deviceBinding) {
+            var message = new PresenceEndpointResponse() {
+                Acknowledge = request.Serial
+                };
+            // have recieved a keepalive here so update the connection state
+
+            QueueResponse(deviceBinding, message, request.SourceEndPoint);
+            deviceBinding.Expire = DateTime.Now.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
+            }
+        }
+
 
     void Acknowledge(DeviceBinding deviceBinding, PresenceAcknowledge acknowledge) {
         Console.WriteLine($"Received Acknowledge");

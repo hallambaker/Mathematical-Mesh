@@ -32,9 +32,7 @@ namespace Goedel.XUnit;
 //    }
 public class TestEnvironmentPresence : TestEnvironmentCommon {
 
-    public int Skip { get; set; }
-    public int Stride { get; set; }
-
+    public CommunicationConditions CommunicationConditions { get; set; }
 
     PresenceServer PresenceServer;
 
@@ -60,10 +58,8 @@ public class TestEnvironmentPresence : TestEnvironmentCommon {
 
         PresenceServer = new PresenceServerTesting(
             Configuration.GenericHostConfiguration,
-            Configuration.PresenceServiceConfiguration) {
-                Skip = Skip,
-                Stride = Stride
-                };
+            Configuration.PresenceServiceConfiguration,
+            CommunicationConditions);
 
         return new PublicMeshService(MeshMachineHost,
             Configuration.GenericHostConfiguration, 

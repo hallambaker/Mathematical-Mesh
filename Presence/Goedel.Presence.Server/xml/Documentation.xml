@@ -200,6 +200,14 @@
             <param name="bytes"></param>
             <param name="endPoint"></param>
         </member>
+        <member name="M:Goedel.Presence.Server.PresenceServer.GetClient(System.Net.IPEndPoint)">
+            <summary>
+            Returns the UdpClient to be used to send a packet to the address 
+            <paramref name="endPoint"/>
+            </summary>
+            <param name="endPoint">The endpoint to send to.</param>
+            <returns>The client to use.</returns>
+        </member>
         <member name="M:Goedel.Presence.Server.PresenceServer.GetEndPoint(Goedel.Mesh.Server.AccountHandleLocked)">
             <inheritdoc/>
         </member>

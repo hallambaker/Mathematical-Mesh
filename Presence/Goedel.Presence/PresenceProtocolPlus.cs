@@ -25,6 +25,7 @@ using Goedel.Protocol;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Goedel.Mesh;
 
 namespace Goedel.Presence;
 
@@ -101,8 +102,11 @@ public partial class PresenceFromClient : Request {
 public partial class PresenceFromService : Response {
 
     #region // Properties
+
+    ///<summary>The UDP endpoing to which the message is to be sent.</summary> 
     public IPEndPoint Destination { get; set; }
 
+    ///<summary>The packets encoding this message.</summary> 
     public List<byte[]> Packets { get; set; }
     #endregion
 
@@ -165,14 +169,22 @@ public partial class PresenceFromService : Response {
     }
 
 
-public partial class SessionEndpoint {
 
-    public SessionEndpoint() {
+public partial class UdpEndpoint {
+
+    /// <summary>
+    /// Default constructor used for serialization.
+    /// </summary>
+    public UdpEndpoint() {
         }
 
-
-    public SessionEndpoint(IPEndPoint externalEndpoint) {
-
+    /// <summary>
+    /// Constructor returning a new instance for the endpoing <paramref name="endPoint"/>
+    /// </summary>
+    /// <param name="endPoint">The IP endpoint.</param>
+    public UdpEndpoint(IPEndPoint endPoint) {
+        IpAddress = endPoint.Address.GetAddressBytes();
+        Port = endPoint.Port;
 
 
         }

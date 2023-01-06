@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 04-Jan-23 6:02:06 PM
+//  This file was automatically generated at 06-Jan-23 6:30:58 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -93,7 +93,8 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 	    {"PresenceResolveResponse", PresenceResolveResponse._Factory},
 	    {"SessionRequest", SessionRequest._Factory},
 	    {"SessionResponse", SessionResponse._Factory},
-	    {"SessionEndpoint", SessionEndpoint._Factory}
+	    {"SessionEndpoint", SessionEndpoint._Factory},
+	    {"UdpEndpoint", UdpEndpoint._Factory}
 		};
 
     [ModuleInitializer]
@@ -701,11 +702,7 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
         /// <summary>
         /// </summary>
 
-	public virtual byte[]						SourceIpAddress  {get; set;}
-        /// <summary>
-        /// </summary>
-
-	public virtual int?						Port  {get; set;}
+	public virtual UdpEndpoint						EndPoint  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -720,15 +717,9 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
-			case "SourceIpAddress" : {
-				if (value is TokenValueBinary vvalue) {
-					SourceIpAddress = vvalue.Value;
-					}
-				break;
-				}
-			case "Port" : {
-				if (value is TokenValueInteger32 vvalue) {
-					Port = vvalue.Value;
+			case "EndPoint" : {
+				if (value is TokenValueStructObject vvalue) {
+					EndPoint = vvalue.Value as UdpEndpoint;
 					}
 				break;
 				}
@@ -756,11 +747,8 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
-			case "SourceIpAddress" : {
-				return new TokenValueBinary (SourceIpAddress);
-				}
-			case "Port" : {
-				return new TokenValueInteger32 (Port);
+			case "EndPoint" : {
+				return new TokenValueStruct<UdpEndpoint> (EndPoint);
 				}
 			case "Now" : {
 				return new TokenValueDateTime (Now);
@@ -779,8 +767,8 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "SourceIpAddress", new Property (typeof(TokenValueBinary), false)} ,
-			{ "Port", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "EndPoint", new Property ( typeof(TokenValueStruct), false,
+					()=>new UdpEndpoint(), ()=>new UdpEndpoint(), false)} ,
 			{ "Now", new Property (typeof(TokenValueDateTime), false)} ,
 			{ "Acknowledge", new Property (typeof(TokenValueInteger32), false)} 
         };
@@ -1441,7 +1429,7 @@ public partial class SessionRequest : Message {
         /// <summary>
         /// </summary>
 
-	public virtual List<SessionEndpoint>				Inbound  {get; set;}
+	public virtual UdpEndpoint						Inbound  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -1465,8 +1453,8 @@ public partial class SessionRequest : Message {
 				break;
 				}
 			case "Inbound" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Inbound = vvalue.Value as List<SessionEndpoint>;
+				if (value is TokenValueStructObject vvalue) {
+					Inbound = vvalue.Value as UdpEndpoint;
 					}
 				break;
 				}
@@ -1495,7 +1483,7 @@ public partial class SessionRequest : Message {
 				return new TokenValueListString (Options);
 				}
 			case "Inbound" : {
-				return new TokenValueListStruct<SessionEndpoint> (Inbound);
+				return new TokenValueStruct<UdpEndpoint> (Inbound);
 				}
 			case "Expires" : {
 				return new TokenValueDateTime (Expires);
@@ -1513,8 +1501,8 @@ public partial class SessionRequest : Message {
 
 			{ "Protocol", new Property (typeof(TokenValueString), false)} ,
 			{ "Options", new Property (typeof(TokenValueListString), true)} ,
-			{ "Inbound", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<SessionEndpoint>(), ()=>new SessionEndpoint(), false)} ,
+			{ "Inbound", new Property ( typeof(TokenValueStruct), false,
+					()=>new UdpEndpoint(), ()=>new UdpEndpoint(), false)} ,
 			{ "Expires", new Property (typeof(TokenValueDateTime), false)} 
         };
 
@@ -1592,7 +1580,7 @@ public partial class SessionResponse : Message {
         /// <summary>
         /// </summary>
 
-	public virtual List<SessionEndpoint>				Inbound  {get; set;}
+	public virtual UdpEndpoint						Inbound  {get; set;}
 
 
     ///<inheritdoc/>
@@ -1618,8 +1606,8 @@ public partial class SessionResponse : Message {
 				break;
 				}
 			case "Inbound" : {
-				if (value is TokenValueListStructObject vvalue) {
-					Inbound = vvalue.Value as List<SessionEndpoint>;
+				if (value is TokenValueStructObject vvalue) {
+					Inbound = vvalue.Value as UdpEndpoint;
 					}
 				break;
 				}
@@ -1645,7 +1633,7 @@ public partial class SessionResponse : Message {
 				return new TokenValueListString (Options);
 				}
 			case "Inbound" : {
-				return new TokenValueListStruct<SessionEndpoint> (Inbound);
+				return new TokenValueStruct<UdpEndpoint> (Inbound);
 				}
 
             default: {
@@ -1661,8 +1649,8 @@ public partial class SessionResponse : Message {
 			{ "Accept", new Property (typeof(TokenValueBoolean), false)} ,
 			{ "Protocol", new Property (typeof(TokenValueString), false)} ,
 			{ "Options", new Property (typeof(TokenValueListString), true)} ,
-			{ "Inbound", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<SessionEndpoint>(), ()=>new SessionEndpoint(), false)} 
+			{ "Inbound", new Property ( typeof(TokenValueStruct), false,
+					()=>new UdpEndpoint(), ()=>new UdpEndpoint(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1858,6 +1846,123 @@ public partial class SessionEndpoint : PresenceProtocol {
 			return Out as SessionEndpoint;
 			}
 		var Result = new SessionEndpoint ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class UdpEndpoint : PresenceProtocol {
+        /// <summary>
+        /// </summary>
+
+	public virtual byte[]						IpAddress  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						Port  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "IpAddress" : {
+				if (value is TokenValueBinary vvalue) {
+					IpAddress = vvalue.Value;
+					}
+				break;
+				}
+			case "Port" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Port = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "IpAddress" : {
+				return new TokenValueBinary (IpAddress);
+				}
+			case "Port" : {
+				return new TokenValueInteger32 (Port);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "IpAddress", new Property (typeof(TokenValueBinary), false)} ,
+			{ "Port", new Property (typeof(TokenValueInteger32), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "UdpEndpoint";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new UdpEndpoint();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new UdpEndpoint FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as UdpEndpoint;
+			}
+		var Result = new UdpEndpoint ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

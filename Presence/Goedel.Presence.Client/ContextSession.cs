@@ -5,13 +5,19 @@
 /// </summary>
 public class ContextSession {
 
-
+    ///<summary>The UdpClient used to control the session.</summary> 
     public UdpClient UdpClient { get; init; }
 
-    public IPEndPoint ExternalEndpoint { get; init; }
+    ///<summary>The external address associated with the endpoint.</summary> 
+
+    public UdpEndpoint ExternalEndpoint { get; init; }
 
 
-
+    /// <summary>
+    /// Default constructor.
+    /// </summary>
+    /// <param name="sessionRequest">The session request message.</param>
+    /// <param name="sessionResponse">The session response message.</param>
     public ContextSession(
                     SessionRequest sessionRequest,
                     SessionResponse sessionResponse) {
