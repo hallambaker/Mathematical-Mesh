@@ -92,7 +92,7 @@ public class FileCollection {
     /// <param name="fileInfo">File information block.</param>
     /// <param name="path">The path to be recorded.</param>
     /// <param name="index">Index of the frame in the sequence.</param>
-    /// <param name="position">Position of the first byte of the frame.</param>
+    /// <param name="position">PositionRead of the first byte of the frame.</param>
     /// <returns>The file entry created. This will contain relative links to the
     /// previous entry (if it exists).</returns>
     public FileEntry Add(FileInfo fileInfo, string path, long index, long position) {
@@ -121,7 +121,7 @@ public class FileCollection {
     /// Add a file to the collection.
     /// </summary>
     /// <param name="dareHeader">DARE header describing the entry.</param>
-    /// <param name="position">Position within the sequence file.</param>
+    /// <param name="position">PositionRead within the sequence file.</param>
     /// <returns></returns>
     public FileEntry Add(DareHeader dareHeader, long position) {
         var filename = dareHeader.ContentMeta?.Filename;
@@ -153,7 +153,7 @@ public class FileCollection {
     /// Remove a file entry by appending a record saying it is deleted.
     /// </summary>
     /// <param name="dareHeader">DARE header describing the entry.</param>
-    /// <param name="position">Position within the sequence file.</param>
+    /// <param name="position">PositionRead within the sequence file.</param>
     /// <returns>The original file entry if found.</returns>
     public FileEntry Remove(DareHeader dareHeader, long position) {
         if (!DictionaryByPath.TryGetValue(dareHeader.ContentMeta?.Filename, out var previous)) {

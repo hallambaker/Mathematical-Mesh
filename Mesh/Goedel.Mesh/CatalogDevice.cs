@@ -33,10 +33,13 @@ public class CatalogDevice : Catalog<CatalogedDevice> {
     #region // Properties
 
     ///<summary>The canonical label for the catalog</summary>
-    public const string Label = MeshConstants.MMM_Device;
+    public const string Label = MeshConstants.StoreTypeDeviceTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Device;
 
     ///<summary>The catalog label</summary>
-    public override string ContainerDefault => Label;
+    public override string SequenceDefault => Label;
 
     #endregion
     #region // Factory methods and constructors
@@ -52,6 +55,8 @@ public class CatalogDevice : Catalog<CatalogedDevice> {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+    /// <returns>The instance created.</returns>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -60,8 +65,10 @@ public class CatalogDevice : Catalog<CatalogedDevice> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new CatalogDevice(directory, storeId, meshClient, policy, cryptoParameters, keyCollection, decrypt, create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new CatalogDevice(directory, storeId, meshClient, policy, cryptoParameters, 
+            keyCollection, decrypt, create, bitmask: bitmask);
 
     //string directory;
 
@@ -83,6 +90,7 @@ public class CatalogDevice : Catalog<CatalogedDevice> {
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public CatalogDevice(
                 string directory,
                 string storeName = null,
@@ -91,9 +99,11 @@ public class CatalogDevice : Catalog<CatalogedDevice> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) :
+                bool create = true,
+                byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, meshClient, decrypt: decrypt, create: create) {
+                    policy, cryptoParameters, keyCollection, meshClient, 
+                    decrypt: decrypt, create: create, bitmask: bitmask) {
         //this.directory = directory;
         //Screen.WriteLine($"^^^^^^^^Create Device Catalog {this.directory}");
 

@@ -21,157 +21,18 @@
 #endregion
 
 
-
-using System.Collections;
-
 namespace Goedel.Mesh;
-
-///<summary>Message entry in spool catalog</summary>
-public class SpoolEntry {
-
-
-    ///<summary>The spool the message is enrolled in.</summary>
-    public Spool Spool { get; }
-
-    ///<summary>The unique envelope identifier.</summary>
-    public string EnvelopeID { get; private set; }
-
-    ///<summary>The envelope from the spool.</summary>
-    public DareEnvelope DareEnvelope { get; private set; }
-
-    ///<summary>The next entry in the spool.</summary>
-    public SpoolEntry Next { get; private set; }
-
-    ///<summary>The previous entry in the spool.</summary>
-    public SpoolEntry Previous { get; private set; }
-
-    ///<summary>Returns true iff message status is Closed.</summary>
-    public bool Closed => (MessageStatus & MessageStatus.Closed) == MessageStatus.Closed;
-
-    ///<summary>Returns true iff message status is Open.</summary>
-    public bool Open => (MessageStatus & MessageStatus.Open) == MessageStatus.Open;
-
-    ///<summary>The list of references to the message, most recently added first.</summary>
-    public List<Reference> References;
-
-    ///<summary>Returns the message</summary>
-    public Message Message => message ?? Decode().CacheValue(out message);
-    Message message;
-
-    ///<summary>Convenience accessor for the envelope index number.</summary>
-    public long Index => DareEnvelope.Index;
-
-    ///<summary>The message status value.</summary>
-    public MessageStatus MessageStatus;
-
-
-    /// <summary>
-    /// Construct a Spool entry for the previously unregistered envelope
-    /// <paramref name="envelope"/>.
-    /// </summary>
-    /// <param name="spool">The spool the entry is created for.</param>
-    /// <param name="envelope">The envelope value.</param>
-    /// <param name="next">The next entry in the spool.</param>
-    public SpoolEntry(Spool spool, DareEnvelope envelope, SpoolEntry next) {
-        Spool = spool;
-        MessageStatus = MessageStatus.Open;
-        EnvelopeID = envelope.EnvelopeId;
-        AddEnvelope(envelope, next);
-        }
-
-
-    /// <summary>
-    /// Construct a Spool entry for an envelope that has not yet been registered
-    /// that has been referenced by <paramref name="reference"/>.
-    /// </summary>
-    /// <param name="spool">The spool the entry is created for.</param>
-    /// <param name="reference">The reference.</param>
-    public SpoolEntry(Spool spool, Reference reference) {
-        Spool = spool;
-        EnvelopeID = reference.MessageId;
-        MessageStatus = reference.MessageStatus;
-        }
-
-
-    /// <summary>
-    /// Add an envelope to an existing entry created because a status value was reported.
-    /// </summary>
-    /// <param name="envelope">The envelope to add.</param>
-    /// <param name="next">The next entry in the spool.</param>
-    public void AddEnvelope(DareEnvelope envelope, SpoolEntry next) {
-        DareEnvelope = envelope;
-        Link(next);
-        }
-
-    /// <summary>
-    /// Link the spool entry <paramref name="next"/> to this entry as the next
-    /// entry in the chain.
-    /// </summary>
-    /// <param name="next">The next entry to link.</param>
-    public void Link(SpoolEntry next) {
-        if (next == null) {
-            return;
-            }
-        Next = next;
-        next.Previous = this;
-        }
-
-
-
-    /// <summary>
-    /// Add a reference to this entry. The reference will cause the message status to be 
-    /// updated if either this is the first reference to be added or the 
-    /// <paramref name="force"/> parameter is true.
-    /// </summary>
-    /// <param name="reference">The reference to add.</param>
-    /// <param name="force">Force updating of the status.</param>
-    public void AddReference(Reference reference, bool force) {
-        if ((References == null) | force) {
-            References ??= new List<Reference>();
-            References.Insert(0, reference);
-            MessageStatus = reference.MessageStatus;
-            // Message.MessageStatus = MessageStatus;
-            "Handle the message status properly".TaskFunctionality();
-            }
-        else {
-            References.Add(reference);
-            }
-        }
-
-
-    /// <summary>
-    /// Decode the envelope as a DARE Message using the current
-    /// KeyCollection and return the result.
-    /// </summary>
-    /// <returns>The decoded message</returns>
-    Message Decode() {
-
-
-
-        if (DareEnvelope.JsonObject != null) {
-            return DareEnvelope.JsonObject as Message;
-            }
-        try {
-
-            DareEnvelope.JsonObject = Message.Decode(DareEnvelope, Spool.KeyCollection);
-            return DareEnvelope.JsonObject as Message;
-            }
-        catch (NoAvailableDecryptionKey) {
-            return null;
-            }
-
-        }
-
-
-    }
 
 /// <summary>
 /// Base class for stores of type Spool.
 /// </summary>
 public class Spool : Store {
 
+    ///<summary>The first spool entry.</summary>
+    public SpoolEntry SpoolEntryFirst { get; set; } = null;
+
     ///<summary>The last spool entry.</summary>
-    SpoolEntry SpoolEntryLast { get; set; } = null;
+    public SpoolEntry SpoolEntryLast { get; set; } = null;
 
     ///<summary>Dictionary of entries by identifier.</summary>
     Dictionary<string, SpoolEntry> SpoolEntryById { get; } = new Dictionary<string, SpoolEntry>();
@@ -188,6 +49,7 @@ public class Spool : Store {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public Spool(
                 string directory,
                 string storeId,
@@ -196,8 +58,10 @@ public class Spool : Store {
                 IKeyCollection keyCollection = null,
                 IMeshClient meshClient = null,
                 bool decrypt = true,
-                bool create = true) :
-            base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create) {
+                bool create = true,
+                byte[] bitmask = null) :
+            base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+                decrypt, create, bitmask) {
 
         }
 
@@ -208,7 +72,7 @@ public class Spool : Store {
     /// </summary>
     /// <param name="envelope"></param>
     public SpoolEntry Add(DareEnvelope envelope) {
-        Container.Append(envelope, true);
+        Sequence.Append(envelope, true);
         return Intern(envelope, null);
         }
 
@@ -217,7 +81,7 @@ public class Spool : Store {
     /// store.
     /// </summary>
     public override void AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
-        Container.Append(envelope, updateEnvelope);
+        Sequence.Append(envelope, updateEnvelope);
         Intern(envelope, null);
         }
 
@@ -328,8 +192,9 @@ public class Spool : Store {
                 System.DateTime? notBefore = null,
                 System.DateTime? notOnOrAfter = null,
                 SpoolEntry last = null,
-                long maxResults = -1) => new(this,
-                    select, notBefore, notOnOrAfter, last, maxResults);
+                long maxResults = -1,
+                bool reverse=true) => new(this,
+                    select, notBefore, notOnOrAfter, last, maxResults, reverse);
 
 
     /// <summary>
@@ -340,6 +205,7 @@ public class Spool : Store {
     /// <param name="next">The next frame number</param>
     /// <returns>The interned envelope instance.</returns>
     SpoolEntry Intern(DareEnvelope envelope, SpoolEntry next) {
+        
         if (envelope == null) {
             return null;
             }
@@ -410,16 +276,47 @@ public class Spool : Store {
             return current.Previous;
             }
 
-        if (!Container.MoveToIndex(current.Index)) {// not found?
+        if (!Sequence.MoveToIndex(current.Index)) {// not found?
             return null;
             }
 
-        var envelope = Container.ReadDirectReverse();
+        var envelope = Sequence.ReadDirectReverse();
 
         return Intern(envelope, current);
         }
 
+    public SpoolEntry GetNext(SpoolEntry current) {
 
+        if (current?.Next != null) {
+            return current.Next;
+            }
+
+        if (current == null) {
+            return GetFirst();
+            }
+
+        if (!Sequence.MoveToIndex(current.Index)) {// not found?
+            return null;
+            }
+
+        var envelope = Sequence.ReadDirect();
+        return Intern(envelope, current);
+
+        }
+
+
+    public SpoolEntry GetFirst() {
+        if (SpoolEntryFirst != null) {
+            return SpoolEntryFirst;
+            }
+
+        if (!Sequence.Start()) {  // not found?
+            return null;
+            }
+        var envelope = Sequence.ReadDirect();
+
+        return Intern(envelope, null);
+        }
     /// <summary>
     /// Return the last message in the spool.
     /// </summary>
@@ -430,12 +327,12 @@ public class Spool : Store {
             return SpoolEntryLast;
             }
 
-        if (!Container.MoveToLast()) {  // not found?
+        if (!Sequence.MoveToLast()) {  // not found?
 
             return null;
             }
 
-        var envelope = Container.ReadDirectReverse();
+        var envelope = Sequence.ReadDirectReverse();
 
         return Intern(envelope, null);
         }
@@ -456,112 +353,6 @@ public class Spool : Store {
         throw new NYI();
         }
 
-    }
-
-/// <summary>
-/// Enumerator that returns the raw, unencrypted container data.
-/// </summary>
-public class SpoolEnumeratorRaw : IEnumerator<SpoolEntry> {
-
-    // Parameters passed in from search criteria.
-    private readonly Spool spool;
-    private readonly MessageStatus select;
-
-    private readonly long maxResults;
-    private readonly SpoolEntry last;
-
-    // Mask parameters.
-    private readonly bool checkMaxResults;
-
-
-    // Local variables
-    private long results;
-
-    ///<summary>The current enumerated value.</summary>
-    public SpoolEntry Current { get; private set; } = null;
-
-    /// <summary>
-    /// When called on an instance of this class, returns the instance. Thus allowing
-    /// selectors to be used in sub classes.
-    /// </summary>
-    /// <returns>This instance</returns>
-    public SpoolEnumeratorRaw GetEnumerator() => this;
-
-    object IEnumerator.Current => Current;
-
-    /// <summary>
-    /// Constructor for an enumerator on the store <paramref name="spool"/> with search constraints.
-    /// 
-    /// 
-    /// </summary>
-    /// <remarks>This enumerator is NOT currently thread safe though it should be.</remarks>
-    /// <param name="spool"></param>
-    /// <param name="select"></param>
-    /// <param name="notBefore"></param>
-    /// <param name="notOnOrAfter"></param>
-    /// <param name="last"></param>
-
-    /// <param name="maxResults"></param>
-    public SpoolEnumeratorRaw(
-                Spool spool,
-                MessageStatus select = MessageStatus.All,
-                System.DateTime? notBefore = null,
-                System.DateTime? notOnOrAfter = null,
-                SpoolEntry last = null,
-                long maxResults = -1) {
-        notBefore.Future();
-        notOnOrAfter.Future();
-
-
-        this.spool = spool;
-        this.select = select;
-        this.last = last;
-        this.maxResults = maxResults;
-
-        this.select.Future();
-
-        checkMaxResults = maxResults >= 0;
-
-        Reset();
-        }
-
-    /// <summary>
-    /// Disposal method.
-    /// </summary>
-    public void Dispose() => GC.SuppressFinalize(this);
-
-    /// <summary>
-    /// Move to the next value in the enumeration.
-    /// </summary>
-    /// <returns>True if successful, otherwise false.</returns>
-    public bool MoveNext() {
-        while (true) {
-
-            // Check the conditions for continuing to search
-            if (checkMaxResults && (results >= maxResults)) {
-                Current = null;
-                return false;
-                }
-
-            // move to the next item
-            Current = spool.GetPrevious(Current);
-
-            // do we meet the selection criteria?
-            if (Current != null) {
-                results++;
-                return true;
-                }
-            return false;
-            }
-        }
-
-    /// <summary>
-    /// Reset the enumeration to the origin of the search.
-    /// </summary>
-    public void Reset() {
-        results = 0;
-        Current = last;
-        }
 
 
 
@@ -575,7 +366,10 @@ public class SpoolLocal : Spool {
     #region // Properties
 
     ///<summary>Canonical name for local spool</summary>
-    public const string Label = MeshConstants.MMM_Local;
+    public const string Label = MeshConstants.StoreTypeLocalTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Local;
 
     /// <summary>
     /// 
@@ -598,6 +392,7 @@ public class SpoolLocal : Spool {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -606,8 +401,10 @@ public class SpoolLocal : Spool {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new SpoolLocal(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new SpoolLocal(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+            decrypt, create, bitmask: bitmask);
 
     /// <summary>
     /// Constructor.
@@ -620,6 +417,7 @@ public class SpoolLocal : Spool {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public SpoolLocal(
                 string directory,
                 string storeId,
@@ -628,8 +426,10 @@ public class SpoolLocal : Spool {
                 IKeyCollection keyCollection = null,
                 IMeshClient meshClient = null,
                 bool decrypt = true,
-                bool create = true) :
-            base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create) {
+                bool create = true,
+                byte[] bitmask = null) :
+            base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+                decrypt, create, bitmask: bitmask) {
         }
 
     #endregion
@@ -666,7 +466,10 @@ public class SpoolLocal : Spool {
 public class SpoolInbound : Spool {
     #region // Properties
     ///<summary>Canonical name for inbound spool</summary>
-    public const string Label = MeshConstants.MMM_Inbound;
+    public const string Label = MeshConstants.StoreTypeInboundTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Inbound;
     #endregion
     #region // Factory methods and constructors
 
@@ -681,6 +484,7 @@ public class SpoolInbound : Spool {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -689,8 +493,10 @@ public class SpoolInbound : Spool {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new SpoolInbound(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new SpoolInbound(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+            decrypt, create, bitmask: bitmask);
 
     /// <summary>
     /// Constructor.
@@ -703,6 +509,7 @@ public class SpoolInbound : Spool {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public SpoolInbound(
                 string directory,
                 string storeId,
@@ -711,8 +518,10 @@ public class SpoolInbound : Spool {
                 IKeyCollection keyCollection = null,
                 IMeshClient meshClient = null,
                 bool decrypt = true,
-                bool create = true) :
-            base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create) {
+                bool create = true,
+                byte[] bitmask = null) :
+            base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+                decrypt, create, bitmask: bitmask) {
 
         }
 
@@ -725,7 +534,10 @@ public class SpoolInbound : Spool {
 public class SpoolOutbound : Spool {
     #region // Properties
     ///<summary>Canonical name for outbound spool</summary>
-    public const string Label = MeshConstants.MMM_Outbound;
+    public const string Label = MeshConstants.StoreTypeOutboundTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Outbound;
     #endregion
     #region // Factory methods and constructors
     /// <summary>
@@ -739,6 +551,7 @@ public class SpoolOutbound : Spool {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -747,8 +560,10 @@ public class SpoolOutbound : Spool {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new SpoolOutbound(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new SpoolOutbound(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+            decrypt, create, bitmask: bitmask);
 
 
     /// <summary>
@@ -762,14 +577,17 @@ public class SpoolOutbound : Spool {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public SpoolOutbound(string directory, string storeName,
         DarePolicy policy = null,
         CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 IMeshClient meshClient = null,
                 bool decrypt = true,
-                bool create = true) :
-            base(directory, storeName, policy, cryptoParameters, keyCollection, meshClient, decrypt, create) {
+                bool create = true,
+                byte[] bitmask = null) :
+            base(directory, storeName, policy, cryptoParameters, keyCollection, meshClient, 
+                decrypt, create, bitmask: bitmask) {
 
         }
     #endregion
@@ -781,7 +599,11 @@ public class SpoolOutbound : Spool {
 public class SpoolArchive : Spool {
     #region // Properties
     ///<summary>Canonical name for outbound spool</summary>
-    public const string Label = MeshConstants.MMM_Archive;
+    public const string Label = MeshConstants.StoreTypeArchiveTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Archive;
+
     #endregion
     #region // Factory methods and constructors
     /// <summary>
@@ -795,6 +617,7 @@ public class SpoolArchive : Spool {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -803,8 +626,10 @@ public class SpoolArchive : Spool {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new SpoolArchive(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new SpoolArchive(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+            decrypt, create, bitmask: bitmask);
 
     /// <summary>
     /// Constructor.
@@ -817,6 +642,7 @@ public class SpoolArchive : Spool {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public SpoolArchive(
                 string directory,
                 string storeId,
@@ -825,8 +651,10 @@ public class SpoolArchive : Spool {
                 IKeyCollection keyCollection = null,
                 IMeshClient meshClient = null,
                 bool decrypt = true,
-                bool create = true) :
-            base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create) {
+                bool create = true,
+                byte[] bitmask = null) :
+            base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+                decrypt, create, bitmask: bitmask) {
 
         }
     #endregion

@@ -55,6 +55,9 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+
+        StoreTests.Test().TestAppendDirect();
+
         //RegistrationTests.Test().CallsignBind();
 
         //ShellTests.Test().TestMessageGroup();

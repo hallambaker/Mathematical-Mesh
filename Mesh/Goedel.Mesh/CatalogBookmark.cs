@@ -30,10 +30,13 @@ namespace Goedel.Mesh;
 public class CatalogBookmark : Catalog<CatalogedBookmark> {
     #region // Properties
     ///<summary>The canonical label for the catalog</summary>
-    public const string Label = MeshConstants.MMM_Bookmark;
+    public const string Label = MeshConstants.StoreTypeBookmarkTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Bookmark;
 
     ///<summary>The catalog label</summary>
-    public override string ContainerDefault => Label;
+    public override string SequenceDefault => Label;
     #endregion
     #region // Factory methods and constructors
     /// <summary>
@@ -47,6 +50,8 @@ public class CatalogBookmark : Catalog<CatalogedBookmark> {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+    /// <returns>The instance created.</returns>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -55,8 +60,10 @@ public class CatalogBookmark : Catalog<CatalogedBookmark> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new CatalogBookmark(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new CatalogBookmark(directory, storeId, policy, cryptoParameters, keyCollection, 
+            meshClient, decrypt, create, bitmask: bitmask);
 
     /// <summary>
     /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -71,6 +78,7 @@ public class CatalogBookmark : Catalog<CatalogedBookmark> {
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public CatalogBookmark(
                 string directory,
                 string storeName = null,
@@ -79,9 +87,11 @@ public class CatalogBookmark : Catalog<CatalogedBookmark> {
                 IKeyCollection keyCollection = null,
                 IMeshClient meshClient = null,
                 bool decrypt = true,
-                bool create = true) :
+                bool create = true,
+                byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                    policy, cryptoParameters, keyCollection, 
+                    decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 
     #endregion

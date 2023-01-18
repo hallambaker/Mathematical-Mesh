@@ -41,7 +41,7 @@
 
 //    public string Filename { get; }
 
-//    public Sequence Container;
+//    public Sequence Sequence;
 
 //    #endregion
 //    #region // Constructors
@@ -60,7 +60,7 @@
 
 //        Filename = callsign.Id + ".dares";
 
-//        Container = Sequence.Open(
+//        Sequence = Sequence.Open(
 //            Filename,
 //            FileStatus.ConcurrentLocked,
 //            keyCollection ?? cryptoParameters?.KeyLocate,
@@ -83,7 +83,7 @@
 //    public void Enter(CallsignEntry callsignEntry) {
 
 //        var envelope = Enveloped<CallsignEntry>.Envelope(callsignEntry, KeySign);
-//        Container.Append(envelope);
+//        Sequence.Append(envelope);
 //        }
 
 
@@ -96,7 +96,7 @@
 //        var witness = new Witness() {
 //            Id = Callsign.Id,
 //            Issuer = Callsign.Id,
-//            Apex = Container.TrailerLast.PayloadDigest
+//            Apex = Sequence.TrailerLast.PayloadDigest
 //            };
 //        var envelopedWitness = Enveloped<Witness>.Envelope(witness, KeySign);
 
@@ -121,7 +121,7 @@
         
 //        var envelopedNotarization = Enveloped<Notarization>.Envelope(notarization, KeySign);
 
-//        Container.Append(envelopedNotarization);
+//        Sequence.Append(envelopedNotarization);
 
 //        //return CreateNotarization();
 //        }

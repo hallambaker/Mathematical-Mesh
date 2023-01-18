@@ -30,7 +30,7 @@ namespace Goedel.Cryptography.Dare;
 public class ContainerMerkleTree : ContainerTree {
 
 
-    ///<summary>If true, the Container type requires a digest calculated on the payload.</summary> 
+    ///<summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
     public override bool DigestRequired => true;
 
     /// <summary>
@@ -94,7 +94,7 @@ public class ContainerMerkleTree : ContainerTree {
     /// Register a frame in the container access dictionaries.
     /// </summary>
     /// <param name="containerInfo">Frame header</param>
-    /// <param name="position">Position of the frame</param>
+    /// <param name="position">PositionRead of the frame</param>
     protected override void RegisterFrame(SequenceInfo containerInfo, long position) {
         var Index = containerInfo.LIndex;
         FrameIndexToPositionDictionary.Add(Index, position);

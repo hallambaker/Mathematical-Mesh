@@ -75,8 +75,8 @@ public class ContainerChain : ContainerDigest {
     /// of values leading up to the apex value.
     /// </summary>
     /// <param name="header">Final frame header</param>
-    /// <param name="firstPosition">Position of frame 1</param>
-    /// <param name="positionLast">Position of the last frame</param>
+    /// <param name="firstPosition">PositionRead of frame 1</param>
+    /// <param name="positionLast">PositionRead of the last frame</param>
     protected override void FillDictionary(
                     SequenceInfo header,
                     long firstPosition,

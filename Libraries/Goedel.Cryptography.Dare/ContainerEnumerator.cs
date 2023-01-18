@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using static System.Net.Mime.MediaTypeNames;
+
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
@@ -29,6 +31,10 @@ public class SequenceEnumeratorRaw : IEnumerator<DareEnvelope> {
     readonly Sequence container;
     readonly long lowIndex;
     readonly bool reverse;
+
+
+    long next;
+
     bool active;
 
     /// <summary>
@@ -48,6 +54,9 @@ public class SequenceEnumeratorRaw : IEnumerator<DareEnvelope> {
         this.container = container;
         this.lowIndex = lowIndex;
         this.reverse = reverse;
+
+        next = reverse ? container.FrameIndexLast : lowIndex;
+
         Reset();
         }
 

@@ -88,12 +88,12 @@ public partial class TestPersist {
         FileTest, "application/test", FileStatus: FileStatus.Overwrite);
         // retrieve by master key -fail
         AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
-        (TestStore.Container.FrameCount == 1).TestTrue();
+        (TestStore.Sequence.FrameCount == 1).TestTrue();
 
 
         TestStore.New(AccountAlice);
 
-        (TestStore.Container.FrameCount == 2).TestTrue();
+        (TestStore.Sequence.FrameCount == 2).TestTrue();
 
 
         AssertTest.TestTrue(TestStore.Contains(AccountIDAlice));

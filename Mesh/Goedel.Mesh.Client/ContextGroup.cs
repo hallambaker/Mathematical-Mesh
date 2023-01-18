@@ -95,34 +95,6 @@ public partial class ContextGroup : ContextAccount {
     #endregion
     #region // Factory methods and constructors
 
-    ///// <summary>
-    ///// Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
-    ///// </summary>
-    ///// <param name="contextAccount">The enclosing account context.</param>
-    ///// <param name="catalogedGroup">Description of the group to return the
-    ///// context for.</param>
-    //public ContextGroup(ContextUser contextAccount, CatalogedGroup catalogedGroup) :
-    //            this (contextAccount, catalogedGroup, GetActivationAccount())  { 
-
-
-    //    }
-
-
-
-    // Here we have to recover the application group entry
-
-    // create a fake activation account with just
-    // Signing key
-    // encryption key.
-
-
-    //// Activate the device to communicate as the account (via threshold)
-    //ActivationAccount = CatalogedGroup?.GetActivationAccount(ContextUser);
-
-    //// Phase2: This is a hack, we are throwing the encryption key away rather than registering it.
-    //var keyCollectionGroup = new KeyCollectionEphemeral();
-
-
     /// <summary>
     /// Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
     /// </summary>

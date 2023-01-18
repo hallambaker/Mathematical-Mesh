@@ -49,11 +49,11 @@ public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : Catalo
     /// </summary>
     /// <param name="catalog">The catalog on which the transaction is to be performed.</param>
     public TransactionUpdate(Catalog<TEntry> catalog) {
-        Container = catalog.ContainerName;
+        Container = catalog.StoreName;
         Envelopes = new List<DareEnvelope>();
         Catalog = catalog;
 
-        // ToDo: fill in the fields Index and Digest here
+        // ToDo: fill in the fields Index and Bitmask here
         }
 
     /// <summary>
@@ -152,7 +152,7 @@ public partial class ContextAccount {
 
         //if (transactRequest.Updates != null) {
         //    foreach (var update in transactRequest.Updates) {
-        //        if (update.Container == CatalogAccess.Label) {
+        //        if (update.Sequence == CatalogAccess.Label) {
         //            if (update.Envelopes != null) {
         //                foreach (var envelope in update.Envelopes) {
         //                    if (envelope.Header?.Recipients?.Count != 2) {
@@ -462,7 +462,7 @@ public abstract class Transaction<TAccount> : Disposable
             ) where TEntry : CatalogedEntry {
 
         foreach (var update in containerUpdates) {
-            if (update.Container == catalog.ContainerName) {
+            if (update.Container == catalog.StoreName) {
                 return update as TransactionUpdate<TEntry>;
                 }
             }

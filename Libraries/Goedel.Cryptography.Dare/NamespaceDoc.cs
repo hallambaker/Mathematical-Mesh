@@ -60,7 +60,7 @@ global using Goedel.Utilities;
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
-/// Classes to manage a JBCD Container file.
+/// Classes to manage a JBCD Sequence file.
 /// 
 /// <para>All JBCD Containers support efficient append only access with 
 /// efficient read-only access in both the forward and the reverse 

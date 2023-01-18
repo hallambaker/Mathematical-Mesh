@@ -73,7 +73,7 @@ public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
     /// that permits read access.</param>
     /// <param name="keyCollection">Key collection to be used to resolve private key references.</param>
     /// <param name="decrypt">If true attempt to decrypt the sequence contents.</param>
-    /// <returns>File Container instance</returns>
+    /// <returns>File Sequence instance</returns>
     public DareLogReader(
             string fileName,
             IKeyLocate keyCollection = null,
@@ -92,9 +92,9 @@ public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
             }
 
 
-        FileCollection.Add(Sequence.GetHeader(DictionaryStart), Sequence.Position);
+        FileCollection.Add(Sequence.GetHeader(DictionaryStart), Sequence.PositionRead);
         while (Sequence.Previous()) {
-            FileCollection.Add(Sequence.Header, Sequence.Position);
+            FileCollection.Add(Sequence.Header, Sequence.PositionRead);
             }
         }
 
@@ -218,7 +218,7 @@ public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
                 }
 
             // unpack the file
-            //Screen.WriteLine($"File: {fileEntry.Path} Position is {fileEntry.Index}");
+            //Screen.WriteLine($"File: {fileEntry.Path} PositionRead is {fileEntry.Index}");
             var containerDataReader = Sequence.GetSequenceFrameIndex(fileEntry.Index);
             containerDataReader.CopyToFile(Sequence, destination);
             }

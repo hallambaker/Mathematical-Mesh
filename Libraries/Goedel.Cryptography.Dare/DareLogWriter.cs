@@ -45,7 +45,7 @@ public class DareLogWriter : DareLogReader {
     /// that permits write access.</param>
     /// <param name="containerType">The container type to use. If unspecified,
     /// a type appropriate for the type of use will be selected.</param>
-    /// <returns>File Container instance</returns>
+    /// <returns>File Sequence instance</returns>
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <returns>The newly constructed container.</returns>
     public DareLogWriter(
@@ -55,7 +55,8 @@ public class DareLogWriter : DareLogReader {
             bool digest = true,
             FileStatus fileStatus = FileStatus.Overwrite,
             SequenceType containerType = SequenceType.Unknown) :
-                    this(new JbcdStream(fileName, fileStatus), archive, digest, containerType) => Sequence.DisposeJBCDStream = Sequence.JbcdStream;
+                    this(new JbcdStream(fileName, fileStatus), archive, digest, containerType) => 
+        Sequence.DisposeStream = true;
 
 
     /// <summary>
@@ -67,7 +68,7 @@ public class DareLogWriter : DareLogReader {
     /// <param name="digest">If true, construct a digest </param>
     /// <param name="containerType">The container type to use. If unspecified,
     /// a type appropriate for the type of use will be selected.</param>
-    /// <returns>File Container instance</returns>
+    /// <returns>File Sequence instance</returns>
     public DareLogWriter(
             JbcdStream jbcdStream,
             bool archive = false,
@@ -133,7 +134,7 @@ public class DareLogWriter : DareLogReader {
             };
 
         var index = Sequence.FrameCount;
-        var position = Sequence.JbcdStream.PositionWrite;
+        var position = Sequence.PositionWrite;
 
         Sequence.AppendFile(file.FullName, contentMeta);
 
@@ -211,7 +212,7 @@ public class DareLogWriter : DareLogReader {
     /// <param name="fileStatus">The mode to open the file in, this must be a mode
     /// that permits write access.</param>
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
-    /// <returns>File Container instance</returns>
+    /// <returns>File Sequence instance</returns>
     public static void ArchiveFile(
             string fileName,
             DarePolicy policy,
@@ -234,7 +235,7 @@ public class DareLogWriter : DareLogReader {
     /// that permits write access.</param>
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="index">If true add an index record to the end of the archive.</param>
-    /// <returns>File Container instance</returns>
+    /// <returns>File Sequence instance</returns>
     public static void ArchiveDirectory(
             string fileName,
             DarePolicy policy,

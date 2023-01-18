@@ -115,7 +115,7 @@ namespace Goedel.Mesh.Shell {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Digest Algorithm.
+        ///   Looks up a localized string similar to Bitmask Algorithm.
         /// </summary>
         internal static string DigestAlgorithm {
             get {
@@ -223,7 +223,7 @@ namespace Goedel.Mesh.Shell {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Payload Digest.
+        ///   Looks up a localized string similar to Payload Bitmask.
         /// </summary>
         internal static string PayloadDigest {
             get {

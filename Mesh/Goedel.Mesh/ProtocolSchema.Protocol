@@ -326,9 +326,11 @@
 			Multiple
 		String Services
 			Multiple
+		Boolean DeviceStatus
 
 	Message StatusResponse
 		Inherits MeshResponse
+		Binary Bitmask
 		Struct Enveloped<ProfileAccount> EnvelopedProfileAccount
 			Description
 				|The account profile providing the root of trust for this account.
@@ -346,7 +348,16 @@
 			Multiple
 			Description
 				|A series of access tokens for the requested services.
-		
+		Struct DeviceStatus DeviceStatuses
+			Multiple
+			Description
+	
+	Structure DeviceStatus
+		String Id
+		String Status
+		String Comment
+		DateTime LastConnected
+
 
 	//
 	Transaction User Download DownloadRequest DownloadResponse
@@ -395,6 +406,7 @@
 		Description
 			|Upload entries to a container. This request is only valid if it is issued
 			|by the owner of the account
+
 		Struct ContainerUpdate Updates			
 			Multiple
 			Description
@@ -426,6 +438,7 @@
 		Inherits MeshResponse
 		Description
 			|Response to an upload request. 
+		Binary Bitmask
 		Struct EntryResponse Entries
 			Multiple
 			Description

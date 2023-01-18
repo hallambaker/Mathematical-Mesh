@@ -48,7 +48,7 @@ public partial class TestService {
     // Verify: Validate mesh profile signature
     // Verify: Validate contact signature
 
-    // Sign: Container updates
+    // Sign: Sequence updates
 
     // Encrypt: Encrypt credential entry
     // Encrypt: Encrypt contact request
@@ -701,7 +701,7 @@ public partial class TestService {
     static bool VerifyStoreEncrypted(
                 Store container,
                 KeyPair encryptionKey = null) =>
-        VerifyContainerEncrypted(container.Container, encryptionKey);
+        VerifyContainerEncrypted(container.Sequence, encryptionKey);
 
     static bool VerifyContainerEncrypted(Goedel.Cryptography.Dare.Sequence container,
                 KeyPair encryptionKey = null) {

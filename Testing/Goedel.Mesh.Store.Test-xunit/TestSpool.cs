@@ -21,6 +21,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
@@ -51,6 +52,68 @@ public partial class StoreTests {
         }
 
     public static StoreTests Test() => new();
+
+
+    [Theory]
+    [InlineData()]
+    public void TestAppendDirect(
+        int batches = 10,
+        int items = 5,
+        bool direct= true) {
+
+        // Create store
+        var directory = TestEnvironment.Path;
+        var filename = TestName.Get(batches, items, direct);
+        var signingKey = KeyPair.Factory(CryptoAlgorithmId.Ed448, KeySecurity.Exportable, KeyCollection);
+
+        var store = new SpoolOutbound(directory, filename, create: true);
+
+
+        var count = 0;
+        // loop
+        for (var batch = 0; batch < batches; batch++) {
+
+            var spoolEntry = store.SpoolEntryLast;
+            for (var item = 0; item < items; item++) {
+                var message = MakeMessage($"{filename} {count++}", signingKey);
+
+                if (direct) {
+                    store.AppendDirect(message, true);
+                    }
+                else {
+                    store.Add(message);
+                    }
+                }
+
+            var i = 0;
+            foreach (var envelope in store.Select(1)) {
+                i++;
+                }
+            //Console.WriteLine($"Got {i}/{count}");
+
+
+            var j = 0;
+            foreach (var entry in store.GetMessages(last: spoolEntry, reverse:false)) {
+                j++;
+                Console.WriteLine($"Got {j}/{items} ${entry.Index}");
+                }
+
+            (i == count).TestTrue();
+            }
+
+
+
+
+
+        // append element
+
+        // enumerate over store
+
+
+
+        }
+
+
 
 
     [Fact]
@@ -96,9 +159,9 @@ public partial class StoreTests {
 
         }
 
-    static DareEnvelope MakeMessage(string id, KeyPair signingKey) {
+    static DareEnvelope MakeMessage(string id, KeyPair signingKey=null) {
         var message = new Message() {
-            MessageId = id
+            Sender = id
             };
         return message.Envelope(signingKey);
         }

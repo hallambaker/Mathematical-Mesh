@@ -31,7 +31,7 @@ namespace Goedel.Cryptography.Dare;
 /// <threadsafety static="true" instance="false"/>
 public class ContainerDigest : ContainerList {
 
-    ///<summary>If true, the Container type requires a digest calculated on the payload.</summary> 
+    ///<summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
     public override bool DigestRequired => true;
 
 

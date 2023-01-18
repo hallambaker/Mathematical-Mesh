@@ -64,7 +64,7 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// Base constuctor.
     /// </summary>
     /// <param name="directory">Directory to create the catalog in.</param>
-    /// <param name="containerName">Container name.</param>
+    /// <param name="containerName">Sequence name.</param>
     /// <param name="cryptoParameters">Cryptographic parameters.</param>
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">Key collection to use for decryption.</param>
@@ -72,6 +72,7 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// <param name="readContainer">If true, read the container.</param>
     /// <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
     /// <param name="create">If true, create a container if it does not already exist.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public Catalog(string directory, string containerName,
                  DarePolicy? policy = null,
                 CryptoParameters? cryptoParameters = null,
@@ -79,15 +80,17 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
                 IMeshClient? meshClient = null,
                 bool readContainer = true,
                 bool decrypt = true,
-                bool create = true) :
-            base(directory, containerName, policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                bool create = true,
+                byte[] bitmask = null) :
+            base(directory, containerName, policy, cryptoParameters, keyCollection, 
+                decrypt: decrypt, create: create, bitmask: bitmask) {
 
-        if (!create & Container == null) {
+        if (!create & Sequence == null) {
             return;
             }
         MeshClient = meshClient;
 
-        PersistenceStore = new PersistenceStore(Container, keyCollection, readContainer);
+        PersistenceStore = new PersistenceStore(Sequence, keyCollection, readContainer);
 
         if (readContainer) {
             foreach (var indexEntry in PersistenceStore.ObjectIndex) {
@@ -103,7 +106,7 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// store.
     /// </summary>
     public override void AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
-        //var index = Container.Append(envelope, updateEnvelope);
+        //var index = Sequence.Append(envelope, updateEnvelope);
 
         // This is not viable because the envelope that is applied has to be the container
         // envelope;
@@ -353,9 +356,9 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
 
 
         // Dump the title
-        output.WriteLine($"Catalog: {ContainerDefault}");
+        output.WriteLine($"Catalog: {SequenceDefault}");
 
-        foreach (var envelope in Container) {
+        foreach (var envelope in Sequence) {
             var header = envelope.Header;
             var trailer = envelope.Trailer;
             var signatures = trailer?.Signatures ?? header?.Signatures;

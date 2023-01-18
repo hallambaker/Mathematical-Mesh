@@ -35,6 +35,7 @@ namespace Goedel.Mesh;
 /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
 /// <param name="create">If true, create a new file if none exists.</param>
 /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+/// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
 public delegate Store StoreFactoryDelegate(
                 string directory,
                 string storeId,
@@ -43,24 +44,25 @@ public delegate Store StoreFactoryDelegate(
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true);
+                bool create = true,
+                byte[] bitmask = null);
 
 /// <summary>
 /// Base class for managing Mesh stores (catalogs, spools).
 /// </summary>
 /// 
 public class Store : Disposable {
-    ///<summary>The default name for the container</summary>
-    public virtual string ContainerDefault => throw new NYI();
+    ///<summary>The default name for the sequence</summary>
+    public virtual string SequenceDefault => throw new NYI();
 
-    ///<summary>The container</summary>
-    public virtual Sequence Container { get; }
+    ///<summary>The sequence</summary>
+    public virtual Sequence Sequence { get; }
 
     ///<summary>The frame count (returns -1 if no container has been created)</summary>
-    public long FrameCount => Container == null ? -1 : Container.FrameCount;
+    public long FrameCount => Sequence == null ? -1 : Sequence.FrameCount;
 
 
-    //protected override void Disposing() => Container?.Dispose();
+    //protected override void Disposing() => Sequence?.Dispose();
 
     /////<summary>The cryptographic parameters</summary>
     //protected CryptoParameters CryptoParameters { get; set; }
@@ -68,12 +70,18 @@ public class Store : Disposable {
     ///<summary>The key collection used for decryption</summary>
     public IKeyCollection? KeyCollection { get; set; }
 
-    ///<summary>The container identifier. Must be unique within a given account.</summary>
-    public string ContainerName { get; set; }
+    ///<summary>The store identifier. Must be unique within a given account.</summary>
+    public string StoreName { get; set; }
 
     ///<summary>The disposal routing</summary>
-    protected override void Disposing() => Container?.Dispose();
+    protected override void Disposing() => Sequence?.Dispose();
 
+
+    ///<summary>The default bitmask identifier for update notification.</summary> 
+    public virtual StoreType StoreType => StoreType.Any;
+
+
+    int BitmaskSizeBytes => 4;
 
     /// <summary>
     /// Factory delegate
@@ -86,6 +94,7 @@ public class Store : Disposable {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public static Store Factory(
                 string directory,
                 string storeId,
@@ -94,8 +103,9 @@ public class Store : Disposable {
                 CryptoParameters? cryptoParameters = null,
                 IKeyCollection? keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new(directory, storeId, policy, cryptoParameters, keyCollection, meshClient);
+                bool create = true,
+                byte[] bitmask = null) => throw new NYI();
+        //new(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, bitmask: bitmask);
 
 
     /// <summary>
@@ -109,6 +119,7 @@ public class Store : Disposable {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public Store(string directory,
                 string? storeId = null,
                 DarePolicy? policy = null,
@@ -116,12 +127,15 @@ public class Store : Disposable {
                 IKeyCollection? keyCollection = null,
                 IMeshClient? meshClient = null,
                 bool decrypt = true,
-                bool create = true) {
+                bool create = true,
+                byte[] bitmask = null) {
 
-        ContainerName = storeId ?? ContainerDefault;
-        var fileName = FileName(directory, ContainerName);
+        bitmask ??= MakeMask();
 
-        Container = Sequence.Open(
+        StoreName = storeId ?? SequenceDefault;
+        var fileName = FileName(directory, StoreName);
+
+        Sequence = Sequence.Open(
             fileName,
             FileStatus.ConcurrentLocked,
             keyCollection ?? cryptoParameters?.KeyLocate,
@@ -129,13 +143,23 @@ public class Store : Disposable {
             policy,
             "application/mmm-catalog",
             decrypt: decrypt,
-            create: create
+            create: create,
+            bitmask: bitmask
             );
 
 
 
         KeyCollection = keyCollection;
         //CryptoParameters = cryptoParameters;
+        }
+
+
+    byte[] MakeMask() {
+        var bitmask = new byte[BitmaskSizeBytes];
+
+        var index = (int)StoreType;
+        bitmask[index / 8] = (byte)(0x1 << (index & 0b0111));
+        return bitmask;
         }
 
 
@@ -191,7 +215,7 @@ public class Store : Disposable {
     /// store.
     /// </summary>
     public virtual void AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
-        Container.Append(envelope, updateEnvelope);
+        Sequence.Append(envelope, updateEnvelope);
         }
 
 
@@ -208,8 +232,8 @@ public class Store : Disposable {
     /// work backwards. Otherwise begin at <paramref name="minIndex"/> and move
     /// forwards.</param>
     /// <returns></returns>
-    public SequenceEnumeratorRaw Select(int minIndex, bool reverse = false) =>
-        Container.Select(minIndex, reverse);
+    public virtual SequenceEnumeratorRaw Select(int minIndex, bool reverse = false) =>
+        Sequence.Select(minIndex, reverse);
 
 
 

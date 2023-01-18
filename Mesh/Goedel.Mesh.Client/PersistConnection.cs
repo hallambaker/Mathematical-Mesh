@@ -36,7 +36,7 @@ namespace Goedel.Mesh.Client;
 
 
 /// <summary>
-/// Container persisting entries for the connection catalog. This is the only type of catalog that
+/// Sequence persisting entries for the connection catalog. This is the only type of catalog that
 /// is never synchronized to a service under any circumstance.
 /// </summary>
 public class PersistHost : PersistenceStore {
@@ -66,7 +66,7 @@ public class PersistHost : PersistenceStore {
     /// <param name="policy">The cryptographic policy to be applied to the spool.</param>
     /// <param name="fileName">Log file.</param>
     /// <param name="type">Type of data to store (the schema name).</param>
-    /// <param name="containerType">The Container type.</param>
+    /// <param name="containerType">The Sequence type.</param>
     /// <param name="dataEncoding">The data encoding.</param>
     /// <param name="fileStatus">The file status in which to open the container.</param>
     /// <param name="keyCollection">The key collection to use to resolve private keys.</param>

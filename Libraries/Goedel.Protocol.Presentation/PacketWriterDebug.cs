@@ -82,11 +82,11 @@ public class PacketWriterDebug : PacketWriter {
     /// <param name="text"></param>
     void Debug(string text = null) {
         //Screen.WriteLine(text ?? "");
-        //positionDebug = Position;
+        //positionDebug = PositionRead;
         }
 
     void DebugBytes() {
-        //for (; positionDebug < Position; positionDebug++) {
+        //for (; positionDebug < PositionRead; positionDebug++) {
         //    Screen.Write($"{Packet[positionDebug]:X2} ");
 
 

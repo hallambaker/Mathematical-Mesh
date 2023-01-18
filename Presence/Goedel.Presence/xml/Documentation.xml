@@ -97,6 +97,10 @@
             attacks on client request.
              </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceFromClient.Acknowledge">
+            <summary>
+            </summary>
+        </member>
         <member name="M:Goedel.Presence.PresenceFromClient.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
@@ -700,6 +704,14 @@
             <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Presence.PresenceNotify">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.PresenceNotify.Bitmask">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Presence.PresenceNotify.Serial">
             <summary>
             </summary>
         </member>

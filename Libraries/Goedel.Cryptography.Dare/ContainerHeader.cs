@@ -39,6 +39,11 @@ public partial class DareHeader {
     public long Index => SequenceInfo.LIndex;
 
 
+    public long FrameStart {get; set;}
+
+    public long FrameLength {get; set;}
+
+
     /////<summary>If true, the field ExchangePosition is specified</summary>
     //public bool HasExchangePosition => SequenceInfo.HasExchangePosition();
     //// Should get rid of these and use nullable types.

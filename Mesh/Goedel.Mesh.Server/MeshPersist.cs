@@ -139,7 +139,7 @@ public class MeshPersist : Disposable {
         var fileName = Path.Combine(directory, "Master.cat");
         Container = new PersistenceStore(fileName, "application/mmm-catalog",
             fileStatus: fileStatus,
-            containerType: SequenceType.Merkle
+            sequenceType: SequenceType.Merkle
             );
 
         CatalogCallsign = new CatalogCallsign(directory);
@@ -192,12 +192,12 @@ public class MeshPersist : Disposable {
             Directory.CreateDirectory(directory);
             //if (storeEntries != null) {
             //    foreach (var entry in storeEntries) {
-            //        Store.Append(directory, null, entry.Envelopes, entry.Container);
+            //        Store.Append(directory, null, entry.Envelopes, entry.Sequence);
             //        }
             //    }
-            new Spool(directory, SpoolInbound.Label).Dispose();
-            new Spool(directory, SpoolOutbound.Label).Dispose();
-            new Spool(directory, SpoolLocal.Label).Dispose();
+            new SpoolInbound(directory, SpoolInbound.Label).Dispose();
+            new SpoolOutbound(directory, SpoolOutbound.Label).Dispose();
+            new SpoolLocal(directory, SpoolLocal.Label).Dispose();
             }
         //Console.WriteLine("End bind");
 
@@ -262,7 +262,10 @@ public class MeshPersist : Disposable {
 
         // the key isn't being filled in on the envelope ???
         acknowledgeConnection.Envelope(ServiceSignatureKey);
-        accountHandle.PostInbound(acknowledgeConnection.DareEnvelope);
+
+
+        var bitmask = new Bitmask();
+        accountHandle.PostInbound(acknowledgeConnection.DareEnvelope, bitmask);
 
         var connectResponse = new ConnectResponse() {
             EnvelopedAcknowledgeConnection = acknowledgeConnection.GetEnvelopedAcknowledgeConnection(),
@@ -310,11 +313,13 @@ public class MeshPersist : Disposable {
     /// </param>
     /// <param name="catalogs">The list of catalogs for which status is requested.</param>
     /// <param name="services">List of services requested.</param>
+    /// <param name="deviceStatus">If true return the device status vector from the presence service.</param>
     public StatusResponse AccountStatus(
                     IJpcSession jpcSession,
                     string catalogedDeviceDigest,
                     List<string> catalogs,
-                    List<string> services) {
+                    List<string> services,
+                    bool deviceStatus) {
 
 
         using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Read);
@@ -341,7 +346,8 @@ public class MeshPersist : Disposable {
                 if (service == MeshConstants.MeshPresenceService & PresenceService is not null) {
                     statusResponse.Services ??= new();
 
-                    var (connectionId, serviceAccessToken) = PresenceService.GetEndPoint(accountHandle);
+                    var serviceAccessToken = PresenceService.GetEndPoint(accountHandle);
+
 
                     statusResponse.Services.Add (serviceAccessToken);
 
@@ -352,7 +358,9 @@ public class MeshPersist : Disposable {
 
 
             }
-
+        if (deviceStatus & PresenceService is not null) {
+            statusResponse.DeviceStatuses = PresenceService?.GetDevices(accountHandle.AccountAddress);
+            }
 
         //Screen.Write($"Status complete");
         return statusResponse;
@@ -402,7 +410,7 @@ public class MeshPersist : Disposable {
     /// <param name="outbound">Entries to be added to the user's outbound store.</param>
     /// <param name="local">Entries to be added to the user's local store.</param>
     /// <param name="accounts">Accounts to which outbound messages are to be sent.</param>
-    public void AccountTransact(
+    public byte[] AccountTransact(
                 IJpcSession jpcSession,
                 List<ContainerUpdate> updates,
                 List<Enveloped<Message>> inbound,
@@ -432,21 +440,21 @@ public class MeshPersist : Disposable {
         //using var accountEntry = GetAccountVerified(account, jpcSession);
         //accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
 
-
+        var bitmask = new Bitmask();
         if (updates != null) {
             foreach (var update in updates) {
                 //Screen.WriteLine(update.ToString());
-                accountHandle.StoreAppend(update.Container, update.Envelopes);
+                accountHandle.StoreAppend(update.Container, update.Envelopes, bitmask);
                 }
             }
         if (inbound != null) {
             foreach (var envelope in inbound) {
-                accountHandle.PostInbound(envelope);
+                accountHandle.PostInbound(envelope, bitmask);
                 }
             }
         if (local != null) {
             foreach (var envelope in local) {
-                accountHandle.PostLocal(envelope);
+                accountHandle.PostLocal(envelope, bitmask);
                 }
             }
 
@@ -458,9 +466,17 @@ public class MeshPersist : Disposable {
             }
 
         // report the final status of the containers here.
-
+        var bits = bitmask.GetBits;
+        Notify(accountHandle, bits);
+        return bits;
 
         }
+
+    void Notify(AccountHandleLocked accountHandle, byte[] bitmask) {
+        PresenceService?.Notify(accountHandle.AccountAddress, bitmask);
+
+        }
+    
 
     #endregion
     #region // Post
@@ -526,7 +542,14 @@ public class MeshPersist : Disposable {
 
 
         using var recipientAccount = GetAccountHandleLocked(recipient, jpcSession, AccountPrivilege.Local);
-        recipientAccount.PostInbound(dareMessage);
+
+        var bitmask = new Bitmask();
+
+        recipientAccount.PostInbound(dareMessage, bitmask);
+
+        Notify(recipientAccount, bitmask.GetBits);
+
+
 
         return true;
         }
@@ -675,7 +698,9 @@ public class MeshPersist : Disposable {
         // Post the claim to the local spool. The unique identifier is the
         // publication identifier.
         dareEnvelope.Header.EnvelopeId = Message.GetEnvelopeId(id);
-        accountHandle.PostLocal(dareEnvelope);
+
+        var bitmask = new Bitmask();
+        accountHandle.PostLocal(dareEnvelope, bitmask);
 
         // Hack: Allow for the possibility of multiple claims on the same item.
         // Test: Multiple claims on the same item functions correctly.

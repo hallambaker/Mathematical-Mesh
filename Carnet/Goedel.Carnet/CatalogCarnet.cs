@@ -33,14 +33,17 @@ namespace Goedel.Carnet;
 public class CatalogCarnet : Catalog<CatalogedCarnet> {
     #region // Properties
     ///<summary>The canonical label for the catalog</summary>
-    public const string Label = MeshConstants.MMM_Callsign;
+    public const string Label = MeshConstants.StoreTypeCarnetTag;
 
 
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Carnet;
 
     //public CallsignMapping CallsignMapping { get; set; }
 
     ///<summary>The catalog label</summary>
-    public override string ContainerDefault => Label;
+    public override string SequenceDefault => Label;
+
     #endregion
     #region // Factory methods and constructors
     /// <summary>
@@ -54,6 +57,8 @@ public class CatalogCarnet : Catalog<CatalogedCarnet> {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+    /// <returns>The instance created.</returns>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -62,8 +67,10 @@ public class CatalogCarnet : Catalog<CatalogedCarnet> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new CatalogCarnet(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new CatalogCarnet(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+            decrypt, create, bitmask: bitmask);
 
     /// <summary>
     /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -78,6 +85,7 @@ public class CatalogCarnet : Catalog<CatalogedCarnet> {
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    ///  <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public CatalogCarnet(
                 string directory,
                 string storeName = null,
@@ -86,9 +94,10 @@ public class CatalogCarnet : Catalog<CatalogedCarnet> {
                 IKeyCollection keyCollection = null,
                 IMeshClient meshClient = null,
                 bool decrypt = true,
-                bool create = true) :
+                bool create = true,
+                byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                    policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 
     #endregion

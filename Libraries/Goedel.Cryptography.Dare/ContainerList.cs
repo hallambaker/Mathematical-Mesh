@@ -81,8 +81,8 @@ public class ContainerList : Sequence {
     /// of values leading up to the apex value.
     /// </summary>
     /// <param name="containerInfo">Final frame header container information.</param>
-    /// <param name="firstPosition">Position of frame 1</param>
-    /// <param name="positionLast">Position of the last frame</param>
+    /// <param name="firstPosition">PositionRead of frame 1</param>
+    /// <param name="positionLast">PositionRead of the last frame</param>
     protected override void FillDictionary(SequenceInfo containerInfo, long firstPosition, long positionLast) {
 
 
@@ -153,7 +153,7 @@ public class ContainerList : Sequence {
 
     long frameRemaining;
 
-    #region // Container navigation
+    #region // Sequence navigation
 
     /// <summary>
     /// Obtain a ContainerFrameIndex instance for <paramref name="index"/> if
@@ -169,8 +169,29 @@ public class ContainerList : Sequence {
             MoveToIndex(index);
             position = PositionRead;
             }
-        return new SequenceFrameIndex(JbcdStream, Position: position);
 
+        var frameLength = JbcdStream.FramerOpen(position);
+        var headerBytes = JbcdStream.FramerGetData();
+        var header = DareHeader.FromJson(headerBytes.JsonReader(), false);
+
+        JbcdStream.FramerGetFrameIndex(out var dataPosition, out var dataLength);
+
+        var TrailerBytes = JbcdStream.FramerGetData();
+        DareTrailer trailer = null;
+        if (TrailerBytes != null && TrailerBytes.Length > 0) {
+            var TrailerText = TrailerBytes.ToUTF8();
+            trailer = DareTrailer.FromJson(TrailerText.JsonReader(), false);
+            }
+
+        return new SequenceFrameIndex() {
+            Sequence = this,
+            FramePosition= position,
+            FrameLength= frameLength,
+            DataPosition = dataPosition,
+            DataLength = dataLength,
+            Header = header,
+            Trailer = trailer
+            };
 
         }
 
@@ -239,7 +260,7 @@ public class ContainerList : Sequence {
         }
 
     /// <summary>
-    /// Move to the frame with index Position in the file. 
+    /// Move to the frame with index PositionRead in the file. 
     /// <para>Since the file format only supports sequential access, this is slow.</para>
     /// </summary>
     /// <param name="index">The frame index to move to</param>

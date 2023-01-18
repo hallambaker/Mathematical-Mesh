@@ -5305,7 +5305,7 @@
         </member>
         <member name="P:Goedel.Mesh.Shell.Resources.DigestAlgorithm">
             <summary>
-              Looks up a localized string similar to Digest Algorithm.
+              Looks up a localized string similar to Bitmask Algorithm.
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.Resources.EncryptionAlgorithm">
@@ -5365,7 +5365,7 @@
         </member>
         <member name="P:Goedel.Mesh.Shell.Resources.PayloadDigest">
             <summary>
-              Looks up a localized string similar to Payload Digest.
+              Looks up a localized string similar to Payload Bitmask.
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.Resources.PIN">

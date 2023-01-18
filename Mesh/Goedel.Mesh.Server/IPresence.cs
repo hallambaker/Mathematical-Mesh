@@ -23,6 +23,48 @@
 
 namespace Goedel.Mesh.Server;
 
+
+/// <summary>
+/// Tracks the state of a device connection.
+/// </summary>
+public enum DeviceState {
+
+    ///<summary>Connection requested, no contact.</summary> 
+    Initial,
+
+    ///<summary>Device has sent information within the timeout window.</summary> 
+    Connected,
+
+    ///<summary>Device was sent first overdue notice.</summary> 
+    Overdue1,
+
+    ///<summary>Device was sent first overdue notice.</summary> 
+    Overdue2,
+
+    ///<summary>Connection pending deletion.</summary> 
+    Closed
+
+    }
+
+
+
+public interface IPresenceAccount {
+    
+    
+    }
+
+public interface IPresenceDevice {
+
+
+    ///<summary>The device profile UDF.</summary> 
+    public string DeviceId { get; set; }
+
+
+    ///<summary>The device status.</summary> 
+    public DeviceState DeviceState { get; set; }
+    }
+
+
 /// <summary>
 /// Presence Service interface.
 /// </summary>
@@ -32,19 +74,22 @@ public interface IPresence {
     /// Return a presence service endpoint for the specified account.
     /// </summary>
     /// <param name="accountHandle">The handle of the account making the request.</param>
+    /// <param name="presenceConnection">Existing presence connection, if deffined (used
+    /// to reconnect to disconnected device).</param>
     /// <returns>A unique device connection identifier and a service endpoint allowing the client to access the service..</returns>
-    (ulong, ServiceAccessToken) GetEndPoint(AccountHandleLocked accountHandle);
+    ServiceAccessToken GetEndPoint(
+        AccountHandleLocked accountHandle);
 
 
     /// <summary>
     /// Called when an account handle is updated.
     /// </summary>
-    void Notify(ulong connectionId);
+    void Notify(string accountIdentifier, byte[] bitMask);
 
     /// <summary>
     /// Return the connected devices for the specified account.
     /// </summary>
     /// <returns>List of the device identifiers of the connected devices.</returns>
-    List<string> GetDevices(ulong connectionId);
+    List<DeviceStatus> GetDevices(string accountIdentifier);
 
     }

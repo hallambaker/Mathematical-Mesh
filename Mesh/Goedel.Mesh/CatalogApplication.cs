@@ -32,10 +32,13 @@ namespace Goedel.Mesh;
 public class CatalogApplication : Catalog<CatalogedApplication> {
     #region // Properties
     ///<summary>The canonical label for the catalog</summary>
-    public const string Label = MeshConstants.MMM_Application;
+    public const string Label = MeshConstants.StoreTypeApplicationTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Application;
 
     ///<summary>The catalog label</summary>
-    public override string ContainerDefault => Label;
+    public override string SequenceDefault => Label;
 
     #endregion
     #region // Factory methods and constructors
@@ -51,6 +54,8 @@ public class CatalogApplication : Catalog<CatalogedApplication> {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+    /// <returns>The instance created.</returns>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -59,8 +64,10 @@ public class CatalogApplication : Catalog<CatalogedApplication> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new CatalogApplication(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new CatalogApplication(directory, storeId, policy, cryptoParameters, keyCollection, 
+            meshClient, decrypt, create, bitmask: bitmask);
 
 
     /// <summary>
@@ -76,6 +83,7 @@ public class CatalogApplication : Catalog<CatalogedApplication> {
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public CatalogApplication(
                 string directory,
                 string storeName = null,
@@ -83,8 +91,10 @@ public class CatalogApplication : Catalog<CatalogedApplication> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 IMeshClient meshClient = null,
-                bool decrypt = true, bool create = true) :
-        base(directory, storeName, policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                bool decrypt = true, bool create = true,
+                byte[] bitmask = null) :
+        base(directory, storeName, policy, cryptoParameters, keyCollection, 
+            decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 
     #endregion

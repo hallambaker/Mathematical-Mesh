@@ -47,7 +47,7 @@ public class SequenceWriter {
     ///<summary>The trailer of the envelope currently being written.</summary>
     public DareTrailer DareTrailer;
 
-    ///<summary>Position of the frame start.</summary>
+    ///<summary>PositionRead of the frame start.</summary>
     public virtual long FrameStart => throw new NYI();
 
     /// <summary>
@@ -64,7 +64,7 @@ public class SequenceWriter {
 /// </summary>
 public class SequenceWriterFile : SequenceWriter {
 
-    ///<summary>Position of the frame start.</summary>
+    ///<summary>PositionRead of the frame start.</summary>
     public override long FrameStart => frameStart;
 
     readonly long frameStart;

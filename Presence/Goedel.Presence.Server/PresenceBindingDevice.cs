@@ -19,6 +19,8 @@
 //  THE SOFTWARE.
 
 using System.Net;
+using Goedel.Mesh;
+using Goedel.Mesh.Server;
 using Goedel.Protocol.Presentation;
 
 namespace Goedel.Presence.Server;
@@ -26,7 +28,7 @@ namespace Goedel.Presence.Server;
 /// <summary>
 /// Tracks a device connected to the service.
 /// </summary>
-public record DeviceBinding : IQueuableTask {
+public record PresenceBindingDevice : IQueuableTask, IPresenceDevice {
     
     ///<summary>State of the device connection</summary> 
     public DeviceState DeviceState {get; set; } = DeviceState.Initial;
@@ -34,11 +36,14 @@ public record DeviceBinding : IQueuableTask {
     ///<summary>The unique connection ID assigned by the service.</summary> 
     public ulong ConnectionId;
 
-    ///<summary>The device profile UDF.</summary> 
-    public string DeviceId;
+    /// <inheritdoc/>
+    public string DeviceId { get; set; }
+
+    /// <inheritdoc/>
+    public DeviceStatus DeviceStatus { get; set; }
 
     ///<summary>The corresponding account binding.</summary> 
-    public AccountBinding AccountBinding { get; init; }
+    public PresenceBindingAccount AccountBinding { get; init; }
 
     ///<summary>Time at which the binding was created.</summary> 
     public System.DateTime FirstContact { get; } = System.DateTime.Now;
@@ -84,10 +89,10 @@ public record DeviceBinding : IQueuableTask {
 
     ///<inheritdoc/>
     public int CompareTo(object obj) {
-        var other = obj as DeviceBinding;
+        var other = obj as PresenceBindingDevice;
 
         if (other == null) {
-            throw new ArgumentException ($"Argument not of type {nameof(DeviceBinding)}");
+            throw new ArgumentException ($"Argument not of type {nameof(PresenceBindingDevice)}");
             }
 
         var compare = WakeAt.CompareTo( other.WakeAt );
@@ -96,6 +101,10 @@ public record DeviceBinding : IQueuableTask {
 
         } 
     #endregion
+
+
+
+    public DeviceStatus GetDeviceStatus() => throw new NYI();
     }
 
 

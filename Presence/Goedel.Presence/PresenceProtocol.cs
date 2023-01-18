@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 06-Jan-23 6:30:58 PM
+//  This file was automatically generated at 18-Jan-23 1:41:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -130,6 +130,10 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
         /// </summary>
 
 	public virtual int?						Serial  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						Acknowledge  {get; set;}
 
 
     ///<inheritdoc/>
@@ -139,6 +143,12 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 			case "Serial" : {
 				if (value is TokenValueInteger32 vvalue) {
 					Serial = vvalue.Value;
+					}
+				break;
+				}
+			case "Acknowledge" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Acknowledge = vvalue.Value;
 					}
 				break;
 				}
@@ -157,6 +167,9 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 			case "Serial" : {
 				return new TokenValueInteger32 (Serial);
 				}
+			case "Acknowledge" : {
+				return new TokenValueInteger32 (Acknowledge);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -168,7 +181,8 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Serial", new Property (typeof(TokenValueInteger32), false)} 
+			{ "Serial", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Acknowledge", new Property (typeof(TokenValueInteger32), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1224,12 +1238,32 @@ public partial class PresenceEndpointResponse : PresenceFromService {
 	/// <summary>
 	/// </summary>
 public partial class PresenceNotify : PresenceFromService {
+        /// <summary>
+        /// </summary>
+
+	public virtual byte[]						Bitmask  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						Serial  {get; set;}
 
 
     ///<inheritdoc/>
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
+			case "Bitmask" : {
+				if (value is TokenValueBinary vvalue) {
+					Bitmask = vvalue.Value;
+					}
+				break;
+				}
+			case "Serial" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Serial = vvalue.Value;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -1242,6 +1276,12 @@ public partial class PresenceNotify : PresenceFromService {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
+			case "Bitmask" : {
+				return new TokenValueBinary (Bitmask);
+				}
+			case "Serial" : {
+				return new TokenValueInteger32 (Serial);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -1253,6 +1293,8 @@ public partial class PresenceNotify : PresenceFromService {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
+			{ "Bitmask", new Property (typeof(TokenValueBinary), false)} ,
+			{ "Serial", new Property (typeof(TokenValueInteger32), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

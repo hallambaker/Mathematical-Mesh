@@ -28,6 +28,7 @@
 			Description
 				|Monotonically increasing counter used to prevent replay
 				|attacks on client request.
+		Integer Acknowledge
 
 	Message PresenceConnectRequest
 		Description
@@ -82,6 +83,9 @@
 
 	Message PresenceNotify
 		Inherits PresenceFromService
+		Binary Bitmask
+		Integer Serial
+			Description
 
 	Message PresenceResolveResponse
 		Inherits PresenceFromService

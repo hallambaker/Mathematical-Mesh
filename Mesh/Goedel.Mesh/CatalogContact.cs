@@ -33,14 +33,17 @@ public class CatalogContact : Catalog<CatalogedContact> {
 
     #region // Properties
     ///<summary>The canonical label for the catalog</summary>
-    public const string Label = MeshConstants.MMM_Contact;
+    public const string Label = MeshConstants.StoreTypeContactTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Contact;
 
     ///<summary>Dictionary mapping email addresses to contacts.</summary>
     public Dictionary<string, NetworkProtocolEntry> DictionaryByNetworkAddress { get; set; } =
                 new Dictionary<string, NetworkProtocolEntry>();
 
     ///<inheritdoc/>
-    public override string ContainerDefault => Label;
+    public override string SequenceDefault => Label;
 
     ///<summary>Dictionary for locating capabilities for use.</summary>
     public Dictionary<string, CapabilityDecrypt> DictionaryDecryptByKeyId =
@@ -59,6 +62,8 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">The mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+    /// <returns>The instance created.</returns>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -67,8 +72,10 @@ public class CatalogContact : Catalog<CatalogedContact> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new CatalogContact(directory, storeId, policy, cryptoParameters, keyCollection, decrypt, create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new CatalogContact(directory, storeId, policy, cryptoParameters, keyCollection, 
+            decrypt, create, bitmask: bitmask);
 
     /// <summary>
     /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -82,6 +89,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public CatalogContact(
                 string directory,
                 string storeName = null,
@@ -89,9 +97,11 @@ public class CatalogContact : Catalog<CatalogedContact> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) :
+                bool create = true,
+                byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                    policy, cryptoParameters, keyCollection, 
+                    decrypt: decrypt, create: create, bitmask: bitmask) {
         }
     #endregion
     #region // Override methods

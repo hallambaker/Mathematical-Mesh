@@ -86,13 +86,16 @@ public class AccountHandleLocked : Disposable {
     public Enveloped<CatalogedDevice> EnvelopedCatalogedDevice =>
                 AccountContext.AccessCapability?.EnvelopedCatalogedDevice;
 
-    ///<summary>Digest of the cataloged device envelope, used to detect changes.</summary> 
+    ///<summary>Bitmask of the cataloged device envelope, used to detect changes.</summary> 
     public string CatalogedDeviceDigest =>
                         AccountContext.AccessCapability?.CatalogedDeviceDigest;
 
     Dictionary<string, Sequence> DictionarySequences { get; set; }
 
     private ILogger Logger { get; }
+
+
+
     #endregion
     #region // Disposal
 
@@ -136,9 +139,14 @@ public class AccountHandleLocked : Disposable {
     #endregion
     #region // Methods
 
-    Sequence MakeNewSequence(string label, List<DareEnvelope> envelopes) {
+    Sequence MakeNewSequence(string label, List<DareEnvelope> envelopes, Bitmask bitmask) {
         var fileName = Store.FileName(Directory, label);
         var sequence = Sequence.MakeNewSequence(fileName, null, envelopes);
+
+        if (sequence.Bitmask != null) {
+            bitmask?.Add(sequence.Bitmask);
+            }
+
         //Screen.Write($"Create {label}");
         DictionarySequences ??= new();
         DictionarySequences.Add(label, sequence);
@@ -157,7 +165,7 @@ public class AccountHandleLocked : Disposable {
         if (label == CatalogAccess.Label) {
             var catalog = AccountContext.GetCatalogCapability();
             //Screen.WriteLine($" [Access]");
-            return catalog.Container;
+            return catalog.Sequence;
             }
         DictionarySequences ??= new();
         if (DictionarySequences.TryGetValue(label, out var sequence)) {
@@ -217,7 +225,7 @@ public class AccountHandleLocked : Disposable {
     /// that is supported for a device that is not connected to the account profile.
     /// </summary>
     /// <param name="envelope">The message to post.</param>
-    public void PostInbound(DareEnvelope envelope) {
+    public void PostInbound(DareEnvelope envelope, Bitmask bitmask) {
 
         "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
 
@@ -229,6 +237,16 @@ public class AccountHandleLocked : Disposable {
 
         var sequence = GetSequence(SpoolInbound.Label);
         sequence.Append(envelope);
+        if (sequence.Bitmask != null) {
+            bitmask?.Add(sequence.Bitmask);
+            }
+
+
+        Console.WriteLine($"{AccountAddress}: Receive message {sequence.FrameCount}");
+
+        if (sequence.FrameCount == 3) {
+            }
+
         }
 
     /// <summary>
@@ -236,7 +254,7 @@ public class AccountHandleLocked : Disposable {
     /// that is supported for a device that is not connected to the account profile.
     /// </summary>
     /// <param name="envelope">The message to post.</param>
-    public void PostLocal(DareEnvelope envelope) {
+    public void PostLocal(DareEnvelope envelope, Bitmask bitmask) {
         //AccountPrivilege.HasFlag(AccountPrivilege.Local).AssertTrue(NotAuthorized.Throw);
 
         "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
@@ -247,6 +265,9 @@ public class AccountHandleLocked : Disposable {
 
         var sequence = GetSequence(SpoolLocal.Label);
         sequence.Append(envelope);
+        if (sequence.Bitmask != null) {
+            bitmask?.Add(sequence.Bitmask);
+            }
         }
 
     /// <summary>
@@ -255,7 +276,7 @@ public class AccountHandleLocked : Disposable {
     /// </summary>
     /// <param name="label">The store to add the envelopes to.</param>
     /// <param name="envelopes">The envelopes to append.</param>
-    public void StoreAppend(string label, List<DareEnvelope> envelopes) {
+    public void StoreAppend(string label, List<DareEnvelope> envelopes, Bitmask bitmask) {
         "Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
 
 
@@ -265,19 +286,15 @@ public class AccountHandleLocked : Disposable {
             return;
             }
 
-
-        //foreach (var envelope in envelopes) {
-        //    envelope.Header.PayloadDigest.AssertNotNull(NYI.Throw);
-        //    envelope.Header.TreeDigest.AssertNotNull(NYI.Throw);
-        //    }
-
-
         if (envelopes[0].Header.SequenceInfo.LIndex == 0) {
-            MakeNewSequence(label, envelopes);
+            MakeNewSequence(label, envelopes, bitmask);
             }
         else {
             var sequence = GetSequence(label);
             sequence.Append(envelopes);
+            if (sequence.Bitmask != null) {
+                bitmask?.Add(sequence.Bitmask);
+                }
             }
         }
 

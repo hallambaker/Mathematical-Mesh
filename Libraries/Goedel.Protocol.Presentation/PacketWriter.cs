@@ -51,7 +51,7 @@ public delegate PacketWriter PacketWriterFactoryDelegate(
 /// </summary>
 public class PacketWriter : Disposable {
     #region // Properties
-    ///<summary>Position of the writer within the packet.</summary> 
+    ///<summary>PositionRead of the writer within the packet.</summary> 
     public long Position => MemoryStream.Position;
 
     ///<summary>The Packet data</summary> 
@@ -119,7 +119,7 @@ public class PacketWriter : Disposable {
     /// </summary>
     /// <param name="b"></param>
     void Write(byte b) => MemoryStream.WriteByte((byte)b);
-    //Packet[Position++] = b;
+    //Packet[PositionRead++] = b;
 
     /// <summary>
     /// Write out a Tag-Length value using the shortest possible production.
@@ -170,7 +170,7 @@ public class PacketWriter : Disposable {
     /// <param name="data"></param>
     public virtual void WriteStreamId(byte[] data) {
         data ??= PresentationConstants.StreamIdClientInitial;
-        // We could just increment Position, but the buffer might not be clean on entry.
+        // We could just increment PositionRead, but the buffer might not be clean on entry.
         // This is the safest approach.
         MemoryStream.Write(data, 0, data.Length);
         }
@@ -223,7 +223,7 @@ public class PacketWriter : Disposable {
 
             foreach (var option in extensions) {
                 Write(option.Tag);
-                //Console.WriteLine($"Write Pos = {Position}  Tag = {option.Tag}");
+                //Console.WriteLine($"Write Pos = {PositionRead}  Tag = {option.Tag}");
                 Write(option.Value);
                 }
             }

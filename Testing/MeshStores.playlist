@@ -1,0 +1,362 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="Goedel.Cryptography.Dare.Test-xunit" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Goedel.XUnit" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="TestContainers" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerFixedExchangeTest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerFixedExchangeTest(encryptPolicy: &quot;Session&quot;, seal: True, records: 50, maxSize: 2048, reOpen: 5, moveStep: 2, cryptoAlgorithmId: X25519)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerFixedExchangeTest(encryptPolicy: &quot;Session&quot;, seal: True, records: 50, maxSize: 2048, reOpen: 5, moveStep: 2, cryptoAlgorithmId: X448)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerFixedExchangeTest(encryptPolicy: &quot;Isolated&quot;, seal: True, records: 50, maxSize: 2048, reOpen: 5, moveStep: 2, cryptoAlgorithmId: X25519)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerFixedExchangeTest(encryptPolicy: &quot;Isolated&quot;, seal: True, records: 50, maxSize: 2048, reOpen: 5, moveStep: 2, cryptoAlgorithmId: X448)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerFixedExchangeTest(encryptPolicy: &quot;Once&quot;, seal: True, records: 50, maxSize: 2048, reOpen: 5, moveStep: 2, cryptoAlgorithmId: X25519)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerFixedExchangeTest(encryptPolicy: &quot;Once&quot;, seal: True, records: 50, maxSize: 2048, reOpen: 5, moveStep: 2, cryptoAlgorithmId: X448)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerIsolatedPolicy" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerIsolatedPolicy" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerOnceExchange" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerOnceExchange" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerSessionPolicy" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerSessionPolicy" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTest0" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTest0" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTest1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTest1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTest10" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTest10" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTest500" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTest500" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestChain" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestChain" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestDigest" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestDigest" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestEncrypted" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestEncrypted" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestEncryptedItem" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestEncryptedItem" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestList" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestList" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestList0" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestList0" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestList1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestList1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestMerkleTree" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestMerkleTree" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestSigned" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestSigned" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestTree" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestTree" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestTree1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestTree1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestContainers.ContainerTestTree10" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestContainers.ContainerTestTree10" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="TestDare" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopeCryptoParameters" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopeCryptoParameters" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopeDigestAtomic" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopeDigestAtomic" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopeDigestAtomicCorrupted" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopeDigestAtomicCorrupted" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopeEncrypted" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopeEncrypted" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedAtomic" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedAtomic" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedAtomicFail" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedAtomicFail" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedCryptoParameters" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedCryptoParameters" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedFixed" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedFixed" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedVariable" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedVariable" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedWithData" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopeEncryptedWithData" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopePlaintext" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopePlaintext" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopePlaintextAtomic" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopePlaintextAtomic" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopePlaintextFixed" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopePlaintextFixed" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopePlaintextJSON" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopePlaintextJSON" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopePlaintextVariable" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopePlaintextVariable" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDare.EnvelopeSignAtomic" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDare.EnvelopeSignAtomic" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="TestDareArchive" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDareArchive.TestArchive0" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDareArchive.TestArchive0" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDareArchive.TestArchive1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDareArchive.TestArchive1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDareArchive.TestArchive10" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDareArchive.TestArchive10" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDareArchive.TestArchiveEncrypted10Bulk" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDareArchive.TestArchiveEncrypted10Bulk" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDareArchive.TestArchiveEncrypted10Individual" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDareArchive.TestArchiveEncrypted10Individual" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDareArchive.TestArchiveMulti" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDareArchive.TestArchiveMulti" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDareArchive.TestFileContainer1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDareArchive.TestFileContainer1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDareArchive.TestFileContainer16" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDareArchive.TestFileContainer16" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDareArchive.TestFileContainerEncrypted1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDareArchive.TestFileContainerEncrypted1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestDareArchive.TestFileContainerEncrypted16" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestDareArchive.TestFileContainerEncrypted16" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="TestJBCD" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestJBCD.TestJBCDStream" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestJBCD.TestJBCDStream(FileName: &quot;JBCD0.jbcd&quot;, Records: 0, MaxSize: 0)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestJBCD.TestJBCDStream(FileName: &quot;JBCD1.jbcd&quot;, Records: 1, MaxSize: 0)" />
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestJBCD.TestJBCDStream(FileName: &quot;JBCD10.jbcd&quot;, Records: 10, MaxSize: 0)" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="TestPersist" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestPersist.TestPersistenceStoreAdd" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestPersist.TestPersistenceStoreAdd" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestPersist.TestPersistenceStoreAll" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestPersist.TestPersistenceStoreAll" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestPersist.TestPersistenceStoreCreate" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestPersist.TestPersistenceStoreCreate" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="TestStores" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Goedel.XUnit.TestStores.TestAppendDirect" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Goedel.XUnit.TestStores.TestAppendDirect(batches: 10, items: 5, sequenceType: 4)" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>

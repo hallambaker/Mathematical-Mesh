@@ -1,67 +1,85 @@
 ﻿Namespace Goedel.Mesh MeshConstants
 	|Constants specified in hallambaker-mesh-schema
 
-File CatalogLabels
 
-	Code MMM_Access "Access Catalog"
-		Description
-			|Access control policy and keys used to perform threshold enforcement of policy
-	Code MMM_Application "Application Catalog"
-		Description
-			|Configuration information for applications including mail (SMTP, IMAP, OpenPGP, 
-			|S/MIME, etc) and SSH and for the MeshAccount application itself.
-	Code MMM_Bookmark "Bookmark Catalog"
-		Description
-			|Web bookmarks and other citations allowing them to be shared between devices 
-			|connected to the profile.
-	Code MMM_Contact "Contact Catalog"
-		Description
-			|Logical and physical contact information for people and organizations.
-	Code MMM_Credential "Credential Catalog"
-		Description
-			|Credentials used to access network resources.
-	Code MMM_Device "Device Catalog"
-		Description
-			|Descriptions of devices connected to the account and the permissions assigned to them
-	Code MMM_Member "Member Catalog"
-		Description
-			|Group membership.
-	Code MMM_Network "Network Catalog"
-		Description
-			|Network settings such as WiFi access points, IPSEC and TLS VPN configurations, etc.
-	Code MMM_Publication "Publication Catalog"
-		Description
-			|Documents published to the account.
-	Code MMM_Task "Task Catalog"
-		Description
-			|Tasks and appointments assigned to the user including calendar entries and to do lists.
-	Code MMM_Callsign "Callsign Catalog"
-		Description
-			|Catalog identifier used on the service.
+
+
+File CatalogLabels
+	Enum StoreType "Store labels"
+		Code Any "Any Store"
+			Description
+				|Label used to indicate that at least one store has changed in notifications.
+
+
+		Code Local "Local Spool"
+			Description
+				|Messages sent to the account. 
+			Description
+				|Messages are encrypted under the account encryption keys of the sender and receiver 
+				|that were current at the time the message was sent.
+		Code Inbound "Inbound Spool"
+			Description
+				|Messages sent from the account.. 
+			Description
+				|Messages are encrypted under the account encryption keys of the sender and receiver 
+				|that were current at the time the message was sent. 
+		Code Outbound "Outbound Spool"
+			Description
+				|Messages sent from the account for internal use. 
+			Description
+				|Messages are encrypted under the encryption key of the intended recipient alone. 
+				|This is either the account administration encryption key or a device encryption key.
+		Code Archive "Archive Spool"
+			Description
+				|Archival spool. 
+
+		Code Access  "Access Catalog"
+			Description
+				|Access control policy and keys used to perform threshold enforcement of policy
+		Code Application "Application Catalog"
+			Description
+				|Configuration information for applications including mail (SMTP, IMAP, OpenPGP, 
+				|S/MIME, etc) and SSH and for the MeshAccount application itself.
+		Code Bookmark "Bookmark Catalog"
+			Description
+				|Web bookmarks and other citations allowing them to be shared between devices 
+				|connected to the profile.
+		Code Callsign "Callsign Catalog"
+			Description
+				|Catalog identifier used on the service.
+		Code Carnet "Carnet Catalog"
+			Description
+				|Catalog containing payment tokens.
+		Code Contact "Contact Catalog"
+			Description
+				|Logical and physical contact information for people and organizations.
+		Code Credential "Credential Catalog"
+			Description
+				|Credentials used to access network resources.
+		Code Device "Device Catalog"
+			Description
+				|Descriptions of devices connected to the account and the permissions assigned to them
+		Code Member "Member Catalog"
+			Description
+				|Group membership.
+		Code Network "Network Catalog"
+			Description
+				|Network settings such as WiFi access points, IPSEC and TLS VPN configurations, etc.
+		Code Publication "Publication Catalog"
+			Description
+				|Documents published to the account.
+		Code Task "Task Catalog"
+			Description
+				|Tasks and appointments assigned to the user including calendar entries and to do lists.
+
+
+
+
+
+
+
 
 File SpoolLabels
-	Code MMM_Local "Local Spool"
-		Description
-			|Messages sent to the account. 
-		Description
-			|Messages are encrypted under the account encryption keys of the sender and receiver 
-			|that were current at the time the message was sent.
-	Code MMM_Inbound "Inbound Spool"
-		Description
-			|Messages sent from the account.. 
-		Description
-			|Messages are encrypted under the account encryption keys of the sender and receiver 
-			|that were current at the time the message was sent. 
-	Code MMM_Outbound "Outbound Spool"
-		Description
-			|Messages sent from the account for internal use. 
-		Description
-			|Messages are encrypted under the encryption key of the intended recipient alone. 
-			|This is either the account administration encryption key or a device encryption key.
-	Code MMM_Archive "Archive Spool"
-		Description
-			|Archival spool. 
-
 
 File MessageStateInbound
 	Enum StateSpoolInbound "Inbound spool message state"

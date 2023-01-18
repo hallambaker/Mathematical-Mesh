@@ -556,7 +556,8 @@ public class PublicMeshService : MeshService {
             return MeshPersist.AccountStatus(jpcSession, 
                     request.CatalogedDeviceDigest,
                     request.Catalogs,
-                    request.Services);
+                    request.Services,
+                    request.DeviceStatus == true);
             }
         catch (System.Exception exception) {
             return new StatusResponse(exception);
@@ -594,9 +595,11 @@ public class PublicMeshService : MeshService {
             TransactRequest request, IJpcSession jpcSession) {
         try {
             //var account = VerifyAccount(jpcSession);
-            MeshPersist.AccountTransact(jpcSession,
+            var digest = MeshPersist.AccountTransact(jpcSession,
                     request.Updates, request.Inbound, request.Outbound, request.Local, request.Accounts); ;
-            return new TransactResponse();
+            return new TransactResponse() {
+                Bitmask = digest
+                };
             }
         catch (System.Exception exception) {
             return new TransactResponse(exception);

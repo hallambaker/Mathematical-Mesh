@@ -146,7 +146,7 @@ public partial class CreateExamples {
                     Header = container.HeaderFirst
                     }
                 };
-        //Console.WriteLine($"First Frame {Container.ContainerHeader}");
+        //Console.WriteLine($"First Frame {Sequence.ContainerHeader}");
         foreach (var ContainerDataReader in container) {
             ContainerHeaders.Add(new SequenceFrame {
                 Header = ContainerDataReader.Header,
@@ -235,7 +235,7 @@ public partial class CreateExamples {
         Dare.ContainerFramingSimple = consoleWriter.ToString();
 
 
-        // Digest
+        // Bitmask
         TContainer = MakeContainer("Test1Chain", policyPlaintext, SequenceType.Chain);
         TContainer.Append(testData300);
         TContainer.Append(testData300);

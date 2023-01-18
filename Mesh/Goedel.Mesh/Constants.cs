@@ -69,6 +69,9 @@ public enum MessageStatus {
 /// Collected constants used in the Mathematical Mesh
 /// </summary>
 public static partial class MeshConstants {
+
+
+
     // Constants for calculating timeout values.
 
     ///<summary>Number of ticks in a millisecond</summary>
@@ -91,6 +94,9 @@ public static partial class MeshConstants {
 
     ///<summary>Default master seed size in bits.</summary>
     public const int DefaultMasterKeyBits = 256;
+
+    ///<summary>The maximum length of a bitlength mask in bits</summary> 
+    public const int MaximumBitmaskLengthBits = 1024;
 
 
     // CryptoAlgorithmID related constants and convenience functions

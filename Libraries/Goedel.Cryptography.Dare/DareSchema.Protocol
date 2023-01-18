@@ -155,6 +155,12 @@
 		Binary Cover
 			Description
 				|HTML document containing cover text to be presented if the document cannot be decrypted.
+		Binary Bitmask
+			Description
+				|Bitmask used to identify a container within a group for use in update notification
+				|etc.
+
+
 
 	Structure ContentMeta
 		String UniqueId

@@ -76,7 +76,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     ///<summary>If true, decrypt payload contents.</summary> 
     public bool Decrypt { get; }
 
-
     ///<summary>The apex digest value of the sequence as written to the file.</summary>
     public byte[] Digest;
 
@@ -87,7 +86,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     public DareEnvelope FrameZero;
 
     /// <summary>The underlying file stream</summary>
-    public JbcdStream JbcdStream { get; set; }
+    protected JbcdStream JbcdStream { get; init; }
 
     /// <summary>The byte offset from the start of the file for Record 1</summary>
     public virtual long StartOfData { get; protected set; }
@@ -108,11 +107,15 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     public IKeyLocate KeyLocate { get; protected set; }
 
     ///<summary>The current read position.</summary> 
-    public long Position => JbcdStream.PositionRead;
+    public long PositionRead => JbcdStream.PositionRead;
 
+    ///<summary>The current write position.</summary> 
+    public long PositionWrite => JbcdStream.PositionWrite;
 
+    ///<summary>The length.</summary> 
+    public long Length => JbcdStream.Length;
 
-    ///<summary>Position of the last index in the file.</summary> 
+    ///<summary>PositionRead of the last index in the file.</summary> 
     public long PositionIndex { get; set; }
 
     ///<summary>The last sequence index found.</summary> 
@@ -173,8 +176,36 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// </summary>
     public JbcdStream DisposeJBCDStream;
 
+    /// <summary>
+    /// If set to true, the instance will dispose the underlying <see cref="JbcdStream"/>
+    /// instance when disposed, otherwise not.
+    /// </summary>
+    public bool DisposeStream {
+        get => DisposeJBCDStream != null;
+        set => DisposeJBCDStream = value ? JbcdStream : null;
+        }
+
+
     ///<summary>Name of the underlying file (may be used to reconnect to file)</summary> 
     public string Filename { get; set; }
+
+
+    ///<summary>The bitmask identifier of the container.</summary> 
+    public byte[] Bitmask => HeaderFirst.Bitmask;
+
+
+    /// <summary>
+    /// Dictionary of frame index to frame position.
+    /// </summary>
+    public Dictionary<long, long> FrameIndexToPositionDictionary =
+        new();
+
+
+    ///<summary>Frame index number to index entry.</summary> 
+    public Dictionary<long, SequenceFrameIndex> FrameIndexToEntry = new ();
+
+    ///<summary>Sequence position to index entry.</summary> 
+    public Dictionary<long, SequenceFrameIndex> SequencePositionToEntry = new();
 
 
     #endregion
@@ -227,6 +258,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// <param name="decrypt">If true, enable decryption of sequence payload,
     /// otherwise return payload contents as plaintext.</param>
     /// <param name="create">If true, create a sequence file if none already exists</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     /// <returns>The new sequence.</returns>
     public static Sequence Open(
                     string fileName,
@@ -237,7 +269,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
                     DarePolicy? policy = null,
                     string? contentType = null,
                     bool decrypt = true,
-                    bool create = true) {
+                    bool create = true,
+                    byte[] bitmask = null) {
 
         if (!create && !File.Exists(fileName)) {
             return null;
@@ -249,7 +282,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
             // Create new sequence if empty or read the old one.
             if (jbcdStream.Length == 0) {
                 Container = NewContainer(jbcdStream, decrypt:decrypt,
-                    keyLocate: keyLocate, sequenceType: sequenceType, policy: policy, contentType: contentType);
+                    keyLocate: keyLocate, sequenceType: sequenceType, policy: policy, 
+                    contentType: contentType, bitmask: bitmask);
                 }
             else {
                 Container = OpenExisting(jbcdStream, keyLocate, decrypt: decrypt);
@@ -461,6 +495,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
     ///     as an EDSS header entry.</param>
     /// <param name="decrypt">If true, decrypt the container payload contents.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     /// <exception cref="InvalidFileModeException">The file mode specified was not valid.</exception>
     public static Sequence NewContainer(
                     string filename,
@@ -472,7 +507,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     byte[]? cloaked = null,
                     List<byte[]>? dataSequences = null,
-                    bool decrypt=true
+                    bool decrypt=true,
+                    byte[] bitmask = null
                     ) {
 
         Assert.AssertTrue(fileStatus == FileStatus.New | fileStatus == FileStatus.Overwrite,
@@ -509,6 +545,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
     ///     as an EDSS header entry.</param>
     /// <param name="decrypt">If true, decrypt the container payload contents.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public static Sequence NewContainer(
                     JbcdStream jbcdStream,
                     IKeyLocate? keyLocate = null,
@@ -519,7 +556,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     byte[]? cloaked = null,
                     List<byte[]>? dataSequences = null,
-                    bool decrypt=true) {
+                    bool decrypt=true,
+                    byte[] bitmask = null) {
         var sequence = MakeNewSequence(jbcdStream, decrypt, sequenceType: sequenceType);
         var sequenceHeaderFirst = sequence.HeaderFirst;
         var sequenceInfoFirst = sequenceHeaderFirst.SequenceInfo;
@@ -540,7 +578,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
             ContentType = contentType
             };
 
-
+        sequenceHeaderFirst.Bitmask = bitmask;
 
         sequence.CryptoStack = sequenceHeaderFirst.BindEncoder(sequence.CryptoParametersSequence,
                 cloaked, dataSequences);
@@ -655,17 +693,12 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
         new(this, minIndex, reverse);
 
 
-    /// <summary>
-    /// Dictionary of frame index to frame position.
-    /// </summary>
-    public Dictionary<long, long> FrameIndexToPositionDictionary =
-        new();
 
     /// <summary>
     /// Register a frame in the sequence access dictionaries.
     /// </summary>
     /// <param name="sequenceInfo">Frame header</param>
-    /// <param name="position">Position of the frame</param>
+    /// <param name="position">PositionRead of the frame</param>
     protected virtual void RegisterFrame(SequenceInfo sequenceInfo, long position) {
         var index = sequenceInfo.LIndex;
         FrameIndexToPositionDictionary.AddSafe(index, position);
@@ -706,7 +739,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
             JbcdStream.WriteWrappedFrame(header, payload, trailer);
 
 
-
+    public StreamReaderBounded FramerGetReader(long DataPosition, long DataLength) =>
+        JbcdStream.FramerGetReader(DataPosition, DataLength);
 
 
 
@@ -886,7 +920,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// Read data from the specified file and append to the sequence.
     /// </summary>
     /// <param name="fileName">The file to append</param>
-    /// <param name="contentInfo">Container header data.</param>
+    /// <param name="contentInfo">Sequence header data.</param>
     /// <param name="contentType">The payload content type.</param>
     /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
     /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
@@ -911,7 +945,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// </summary>
     /// <param name="input">The stream to be read.</param>
     /// <param name="contentLength"> The number of bytes to read from <paramref name="input"/>.</param>
-    /// <param name="contentInfo">Container header data.</param>
+    /// <param name="contentInfo">Sequence header data.</param>
     /// <param name="contentType">The payload content type.</param>
     /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
     /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
@@ -1113,8 +1147,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// of values leading up to the apex value.
     /// </summary>
     /// <param name="header">Final frame header</param>
-    /// <param name="firstPosition">Position of frame 1</param>
-    /// <param name="positionLast">Position of the last frame</param>
+    /// <param name="firstPosition">PositionRead of frame 1</param>
+    /// <param name="positionLast">PositionRead of the last frame</param>
     protected abstract void FillDictionary(
                 SequenceInfo header, long firstPosition, long positionLast);
 
@@ -1282,7 +1316,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     public abstract bool Previous();
 
     /// <summary>
-    /// Move to the frame with index Position in the file. 
+    /// Move to the frame with index PositionRead in the file. 
     /// <para>If the tree positioning mechanism is in use, the
     /// time complexity for this operation is log2(n) where n is
     /// the difference between the current position and the new 
@@ -1319,14 +1353,14 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceFrameIndex> {
     /// </summary>
     /// <returns></returns>
     public DareEnvelope ReadDirectReverse() {
-        //Console.WriteLine($"Position Read {JBCDStream.PositionRead}");
+        //Console.WriteLine($"PositionRead Read {JBCDStream.PositionRead}");
 
         var position = JbcdStream.MoveFrameReverse();
         if (position <= 0) {
             return null; // Exclude the first frame from reverse enumeration.
             }
 
-        //Console.WriteLine($"Position ReadII {position}");
+        //Console.WriteLine($"PositionRead ReadII {position}");
 
         var message = ReadDirect();
         JbcdStream.PositionRead = position;

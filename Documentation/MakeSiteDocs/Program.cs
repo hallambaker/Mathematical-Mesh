@@ -46,7 +46,7 @@ namespace ExampleGenerator;
 
 // ToDo: Documentation Schema rewrite 6.5
 // ToDo: Documentation Schema write 9.3
-// ToDo: Documentation Schema Appendix A: Example Container Organization(not normative)
+// ToDo: Documentation Schema Appendix A: Example Sequence Organization(not normative)
 
 
 // ToDo: Documentation Protocol 3. Mesh Protocols link to RUD 

@@ -46,23 +46,32 @@ public enum SequenceIntegrity {
 /// </summary>
 public partial class SequenceFrameIndex {
 
-    ///<summary>The frame header</summary>
-    public DareHeader Header;
+    public Sequence Sequence { get; init; }
 
-    ///<summary>The frame trailer</summary>
-    public DareTrailer Trailer;
 
     ///<summary>The first byte of the data segment (excluding the length indicator)</summary>
-    public long DataPosition;
+    public long FramePosition { get; init; }
 
     ///<summary>The length of the data segment.</summary>
-    public long DataLength;
+    public long FrameLength { get; init; }
+
+    ///<summary>The first byte of the data segment (excluding the length indicator)</summary>
+    public long DataPosition { get; init; }
+
+    ///<summary>The length of the data segment.</summary>
+    public long DataLength { get; init; }
+
+    ///<summary>The frame header</summary>
+    public DareHeader Header { get; init;  }
+
+    ///<summary>The frame trailer</summary>
+    public DareTrailer Trailer { get; init; }
 
     ///<summary>If true, the frame has a payload section</summary>
     public bool HasPayload => DataLength > 0;
 
     ///<summary>The decoded JSONObject</summary>
-    public JsonObject JsonObject;
+    public JsonObject JsonObject { get; init; }
 
     ///<summary>Convenience property, set true iff payload is encrypted.</summary> 
     public bool IsEncrypted => Header?.EncryptionAlgorithm != null;
@@ -70,7 +79,9 @@ public partial class SequenceFrameIndex {
     ///<summary>Convenience property, set true iff header contains direct key exchange.</summary> 
     public bool KeyExchange => Header?.Recipients != null;
 
-    readonly JbcdStream jbcdStream;
+    //readonly JbcdStream jbcdStream;
+
+
 
     /// <summary>
     /// Return the frame payload.
@@ -87,7 +98,7 @@ public partial class SequenceFrameIndex {
             exchange = sequence.GetHeader(Header.SequenceInfo.ExchangePosition ?? 0);
             }
 
-        using var input = jbcdStream.FramerGetReader(DataPosition, DataLength);
+        using var input = Sequence.FramerGetReader(DataPosition, DataLength);
         Header.GetDecoder(input,
             out var Reader, keyCollection: keyCollection, exchange: exchange);
 
@@ -100,12 +111,13 @@ public partial class SequenceFrameIndex {
     /// </summary>
     /// <param name="envelope">The envelope to return an index for.</param>
     /// <param name="sequence">The sequence in which the envelope is embedded.</param>
-    /// <param name="dataPosition">Position of the envelope in the sequence.</param>
+    /// <param name="dataPosition">PositionRead of the envelope in the sequence.</param>
     public SequenceFrameIndex(Sequence sequence, DareEnvelope envelope, long dataPosition) {
         Header = envelope.Header;
         Trailer = envelope.Trailer;
         JsonObject = envelope.JsonObject;
-        jbcdStream = sequence.JbcdStream;
+        Sequence = sequence;
+        //jbcdStream = sequence.JbcdStream;
         DataPosition = dataPosition;
 
         if (envelope.Body != null) {
@@ -117,22 +129,21 @@ public partial class SequenceFrameIndex {
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="jsonStream">Stream reader positioned to the start of the frame.</param>
-    /// <param name="Position">The position in the file.</param>
-    public SequenceFrameIndex(JbcdStream jsonStream, long Position = -1) {
-        jbcdStream = jsonStream;
 
-        jsonStream.FramerOpen(Position);
-        var headerBytes = jsonStream.FramerGetData();
-        Header = DareHeader.FromJson(headerBytes.JsonReader(), false);
+    public SequenceFrameIndex() {
+        //Sequence = sequence;
 
-        jsonStream.FramerGetFrameIndex(out DataPosition, out DataLength);
+        //jsonStream.FramerOpen(Position);
+        //var headerBytes = jsonStream.FramerGetData();
+        //Header = DareHeader.FromJson(headerBytes.JsonReader(), false);
 
-        var TrailerBytes = jsonStream.FramerGetData();
-        if (TrailerBytes != null && TrailerBytes.Length > 0) {
-            var TrailerText = TrailerBytes.ToUTF8();
-            Trailer = DareTrailer.FromJson(TrailerText.JsonReader(), false);
-            }
+        //sequence.FramerGetFrameIndex(out DataPosition, out DataLength);
+
+        //var TrailerBytes = jsonStream.FramerGetData();
+        //if (TrailerBytes != null && TrailerBytes.Length > 0) {
+        //    var TrailerText = TrailerBytes.ToUTF8();
+        //    Trailer = DareTrailer.FromJson(TrailerText.JsonReader(), false);
+        //    }
         }
 
     /// <summary>
@@ -165,7 +176,7 @@ public partial class SequenceFrameIndex {
     /// <param name="sequence">The indexed sequence.</param>
     /// <returns>The frame payload</returns>
     public byte[] GetBody(Sequence sequence) {
-        using var input = sequence.JbcdStream.FramerGetReader(DataPosition, DataLength);
+        using var input = sequence.FramerGetReader(DataPosition, DataLength);
         using var output = new MemoryStream();
         input.CopyTo(output);
         return output.ToArray();

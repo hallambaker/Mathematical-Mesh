@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 06-Jan-23 6:30:52 PM
+//  This file was automatically generated at 18-Jan-23 1:41:39 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -21,6 +21,45 @@ using Goedel.Utilities;
 
 namespace Goedel.Mesh ;
 
+
+///<summary>Store labels</summary>
+public enum StoreType {
+    ///<summary>Undefined type</summary>
+    Unknown = -1,
+    ///<summary>Any Store</summary>
+    Any,
+    ///<summary>Local Spool</summary>
+    Local,
+    ///<summary>Inbound Spool</summary>
+    Inbound,
+    ///<summary>Outbound Spool</summary>
+    Outbound,
+    ///<summary>Archive Spool</summary>
+    Archive,
+    ///<summary>Access Catalog</summary>
+    Access,
+    ///<summary>Application Catalog</summary>
+    Application,
+    ///<summary>Bookmark Catalog</summary>
+    Bookmark,
+    ///<summary>Callsign Catalog</summary>
+    Callsign,
+    ///<summary>Carnet Catalog</summary>
+    Carnet,
+    ///<summary>Contact Catalog</summary>
+    Contact,
+    ///<summary>Credential Catalog</summary>
+    Credential,
+    ///<summary>Device Catalog</summary>
+    Device,
+    ///<summary>Member Catalog</summary>
+    Member,
+    ///<summary>Network Catalog</summary>
+    Network,
+    ///<summary>Publication Catalog</summary>
+    Publication,
+    ///<summary>Task Catalog</summary>
+    Task    }
 
 ///<summary>Inbound spool message state</summary>
 public enum StateSpoolInbound {
@@ -129,52 +168,99 @@ public static partial class MeshConstants {
 
     // File: CatalogLabels
 
-    ///<summary>Access Catalog</summary>
-    public const string MMM_Access = "MMM_Access";
 
-    ///<summary>Application Catalog</summary>
-    public const string MMM_Application = "MMM_Application";
+    ///<summary>Jose enumeration tag for StoreType.Any</summary>
+    public const string  StoreTypeAnyTag = "Any";
+    ///<summary>Jose enumeration tag for StoreType.Local</summary>
+    public const string  StoreTypeLocalTag = "Local";
+    ///<summary>Jose enumeration tag for StoreType.Inbound</summary>
+    public const string  StoreTypeInboundTag = "Inbound";
+    ///<summary>Jose enumeration tag for StoreType.Outbound</summary>
+    public const string  StoreTypeOutboundTag = "Outbound";
+    ///<summary>Jose enumeration tag for StoreType.Archive</summary>
+    public const string  StoreTypeArchiveTag = "Archive";
+    ///<summary>Jose enumeration tag for StoreType.Access</summary>
+    public const string  StoreTypeAccessTag = "Access";
+    ///<summary>Jose enumeration tag for StoreType.Application</summary>
+    public const string  StoreTypeApplicationTag = "Application";
+    ///<summary>Jose enumeration tag for StoreType.Bookmark</summary>
+    public const string  StoreTypeBookmarkTag = "Bookmark";
+    ///<summary>Jose enumeration tag for StoreType.Callsign</summary>
+    public const string  StoreTypeCallsignTag = "Callsign";
+    ///<summary>Jose enumeration tag for StoreType.Carnet</summary>
+    public const string  StoreTypeCarnetTag = "Carnet";
+    ///<summary>Jose enumeration tag for StoreType.Contact</summary>
+    public const string  StoreTypeContactTag = "Contact";
+    ///<summary>Jose enumeration tag for StoreType.Credential</summary>
+    public const string  StoreTypeCredentialTag = "Credential";
+    ///<summary>Jose enumeration tag for StoreType.Device</summary>
+    public const string  StoreTypeDeviceTag = "Device";
+    ///<summary>Jose enumeration tag for StoreType.Member</summary>
+    public const string  StoreTypeMemberTag = "Member";
+    ///<summary>Jose enumeration tag for StoreType.Network</summary>
+    public const string  StoreTypeNetworkTag = "Network";
+    ///<summary>Jose enumeration tag for StoreType.Publication</summary>
+    public const string  StoreTypePublicationTag = "Publication";
+    ///<summary>Jose enumeration tag for StoreType.Task</summary>
+    public const string  StoreTypeTaskTag = "Task";
 
-    ///<summary>Bookmark Catalog</summary>
-    public const string MMM_Bookmark = "MMM_Bookmark";
+    /// <summary>
+    /// Convert the string <paramref name="text"/> to the corresponding enumeration
+    /// value.
+    /// </summary>
+    /// <param name="text">The string to convert.</param>
+    /// <returns>The enumeration value.</returns>
+    public static StoreType ToStoreType (this string text) =>
+        text switch {
+            StoreTypeAnyTag => StoreType.Any,
+            StoreTypeLocalTag => StoreType.Local,
+            StoreTypeInboundTag => StoreType.Inbound,
+            StoreTypeOutboundTag => StoreType.Outbound,
+            StoreTypeArchiveTag => StoreType.Archive,
+            StoreTypeAccessTag => StoreType.Access,
+            StoreTypeApplicationTag => StoreType.Application,
+            StoreTypeBookmarkTag => StoreType.Bookmark,
+            StoreTypeCallsignTag => StoreType.Callsign,
+            StoreTypeCarnetTag => StoreType.Carnet,
+            StoreTypeContactTag => StoreType.Contact,
+            StoreTypeCredentialTag => StoreType.Credential,
+            StoreTypeDeviceTag => StoreType.Device,
+            StoreTypeMemberTag => StoreType.Member,
+            StoreTypeNetworkTag => StoreType.Network,
+            StoreTypePublicationTag => StoreType.Publication,
+            StoreTypeTaskTag => StoreType.Task,
+            _ => StoreType.Unknown
+            };
 
-    ///<summary>Contact Catalog</summary>
-    public const string MMM_Contact = "MMM_Contact";
-
-    ///<summary>Credential Catalog</summary>
-    public const string MMM_Credential = "MMM_Credential";
-
-    ///<summary>Device Catalog</summary>
-    public const string MMM_Device = "MMM_Device";
-
-    ///<summary>Member Catalog</summary>
-    public const string MMM_Member = "MMM_Member";
-
-    ///<summary>Network Catalog</summary>
-    public const string MMM_Network = "MMM_Network";
-
-    ///<summary>Publication Catalog</summary>
-    public const string MMM_Publication = "MMM_Publication";
-
-    ///<summary>Task Catalog</summary>
-    public const string MMM_Task = "MMM_Task";
-
-    ///<summary>Callsign Catalog</summary>
-    public const string MMM_Callsign = "MMM_Callsign";
+    /// <summary>
+    /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+    /// value.
+    /// </summary>
+    /// <param name="data">The enumerated value.</param>
+    /// <returns>The text value.</returns>
+    public static string ToLabel (this StoreType data) =>
+        data switch {
+            StoreType.Any => StoreTypeAnyTag,
+            StoreType.Local => StoreTypeLocalTag,
+            StoreType.Inbound => StoreTypeInboundTag,
+            StoreType.Outbound => StoreTypeOutboundTag,
+            StoreType.Archive => StoreTypeArchiveTag,
+            StoreType.Access => StoreTypeAccessTag,
+            StoreType.Application => StoreTypeApplicationTag,
+            StoreType.Bookmark => StoreTypeBookmarkTag,
+            StoreType.Callsign => StoreTypeCallsignTag,
+            StoreType.Carnet => StoreTypeCarnetTag,
+            StoreType.Contact => StoreTypeContactTag,
+            StoreType.Credential => StoreTypeCredentialTag,
+            StoreType.Device => StoreTypeDeviceTag,
+            StoreType.Member => StoreTypeMemberTag,
+            StoreType.Network => StoreTypeNetworkTag,
+            StoreType.Publication => StoreTypePublicationTag,
+            StoreType.Task => StoreTypeTaskTag,
+            _ => null
+            };
 
     // File: SpoolLabels
-
-    ///<summary>Local Spool</summary>
-    public const string MMM_Local = "MMM_Local";
-
-    ///<summary>Inbound Spool</summary>
-    public const string MMM_Inbound = "MMM_Inbound";
-
-    ///<summary>Outbound Spool</summary>
-    public const string MMM_Outbound = "MMM_Outbound";
-
-    ///<summary>Archive Spool</summary>
-    public const string MMM_Archive = "MMM_Archive";
 
     // File: MessageStateInbound
 

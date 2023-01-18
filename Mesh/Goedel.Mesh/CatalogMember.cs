@@ -31,10 +31,13 @@ namespace Goedel.Mesh;
 public class CatalogMember : Catalog<CatalogedMember> {
     #region // Properties
     ///<summary>The canonical label for the catalog</summary>
-    public const string Label = MeshConstants.MMM_Member;
+    public const string Label = MeshConstants.StoreTypeMemberTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Member;
 
     ///<summary>The catalog label</summary>
-    public override string ContainerDefault => Label;
+    public override string SequenceDefault => Label;
     #endregion
     #region // Factory methods and constructors
     /// <summary>
@@ -49,6 +52,8 @@ public class CatalogMember : Catalog<CatalogedMember> {
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">If present provides a means of obtaining a MeshClient instance
     /// which may be used to resolve thresholded key shares.</param>
+    ///  <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+    ///   <returns>The instance created.</returns>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -57,8 +62,9 @@ public class CatalogMember : Catalog<CatalogedMember> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new CatalogMember(directory, storeId, policy, cryptoParameters, keyCollection, decrypt, create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new CatalogMember(directory, storeId, policy, cryptoParameters, keyCollection, decrypt, create, bitmask: bitmask);
 
 
 
@@ -74,6 +80,7 @@ public class CatalogMember : Catalog<CatalogedMember> {
     /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+    ///  <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public CatalogMember(
                 string directory,
                 string storeName = null,
@@ -81,9 +88,10 @@ public class CatalogMember : Catalog<CatalogedMember> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) :
+                bool create = true,
+                byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                    policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create, bitmask: bitmask) {
         }
     #endregion
     }

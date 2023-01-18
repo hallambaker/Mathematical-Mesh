@@ -87,7 +87,7 @@ public partial class TestContainers {
             };
 
         var namebase = $"Incremental-{encryptPolicy}-";
-        // Exercise Container
+        // Exercise Sequence
         TestContainerIncremental(namebase, keyCollection, policy, records, maxSize, reOpen, moveStep);
         }
 

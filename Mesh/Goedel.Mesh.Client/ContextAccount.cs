@@ -206,6 +206,10 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public SpoolInbound GetSpoolInbound() => GetStore(SpoolInbound.Label) as SpoolInbound;
 
 
+    //uint storeCount = 0;
+    //int BitMaskSize = 64;
+
+
     #endregion
     #endregion
 
@@ -385,6 +389,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         int count = 0;
         meshClient ??= MeshClient;
 
+        Console.WriteLine($"Sync account {AccountAddress}");
+
         var status = meshClient.Status(statusRequest);
 
         status.ContainerStatus.AssertNotNull(ServerResponseInvalid.Throw, status);
@@ -428,6 +434,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         // are any PIN authenticated auto-executing messages.
         // TBS: If we have synchronized the catalogs, upload cached offline updates here.
         status.Count = count;
+
+        Console.WriteLine($"Sync complete {AccountAddress}");
+
         return status;
         }
 
@@ -496,7 +505,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
     static int AddUpload(List<ContainerUpdate> containerUpdates, SyncStatus syncStatus, int maxEnvelopes = -1) {
 
-        //Console.WriteLine($"Initial sync of {syncStatus.Store.ContainerName}");
+        //Console.WriteLine($"Initial sync of {syncStatus.Store.StoreName}");
 
         int uploads = 0;
         if (maxEnvelopes == 0) {
@@ -505,10 +514,10 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
         if (syncStatus.Index <= syncStatus.Store.FrameCount) {
-            var container = syncStatus.Store.Container;
+            var container = syncStatus.Store.Sequence;
             var envelopes = new List<DareEnvelope>();
             var containerUpdate = new ContainerUpdate() {
-                Container = syncStatus.Store.ContainerName,
+                Container = syncStatus.Store.StoreName,
                 Envelopes = envelopes,
                 Digest = container.Digest
                 // put the digest value here
@@ -587,7 +596,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         else {
             using var storeLocal = new Store(StoresDirectory, statusRemote.Container,
                         decrypt: false, create: false);
-            //Console.WriteLine($"Container {statusRemote.Container}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
+            //Console.WriteLine($"Sequence {statusRemote.Sequence}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
             return storeLocal.FrameCount >= statusRemote.Index ? null :
                 new ConstraintsSelect() {
                     Container = statusRemote.Container,
@@ -677,11 +686,13 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 bool decrypt=true,
                 bool create=true) {
 
-        //// special case this for now
-        //switch (name) {
-        //    case CatalogAccess.Label : return new CatalogAccess(StoresDirectory,
-        //            name, ContainerCryptoParameters, KeyCollection, meshClient: (this as IMeshClient));
-        //    }
+        // Set up the bitmask.
+        // We intentionally skip the first bit so as to allow for later use as a Bloom filter
+        //var count = Interlocked.Increment(ref storeCount);
+        //var bitmask = new byte[(BitMaskSize+7)/8];
+        //bitmask[(count % (BitMaskSize)) / 8] = (byte) (0x01 << (int)(count & 0x7));
+
+
 
         if (DictionaryCatalogDelegates.TryGetValue(name, out var factory)) {
             darePolicy ??= ActivationCommon.GetDarePolicy(name);

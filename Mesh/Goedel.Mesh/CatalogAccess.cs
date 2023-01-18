@@ -31,10 +31,13 @@ namespace Goedel.Mesh;
 public class CatalogAccess : Catalog<CatalogedAccess> {
     #region // Properties
     ///<summary>The canonical label for the catalog</summary>
-    public const string Label = MeshConstants.MMM_Access;
+    public const string Label = MeshConstants.StoreTypeAccessTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Access;
 
     ///<summary>The catalog label</summary>
-    public override string ContainerDefault => Label;
+    public override string SequenceDefault => Label;
 
 
     ///<summary>Dictionary for locating capabilities for use.</summary>
@@ -68,6 +71,8 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+    /// <returns>The instance created.</returns>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -76,8 +81,10 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
                 CryptoParameters? cryptoParameters = null,
                 IKeyCollection? keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new CatalogAccess(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt: decrypt, create: create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new CatalogAccess(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
+            decrypt: decrypt, create: create, bitmask: bitmask);
 
 
     /// <summary>
@@ -93,6 +100,7 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public CatalogAccess(
                 string directory,
                 string? storeName = null,
@@ -101,9 +109,11 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
                 IKeyCollection? keyCollection = null,
                 IMeshClient? meshClient = null,
                 bool decrypt = true,
-                bool create = true) :
+                bool create = true,
+                byte[] bitmask = null) :
                 base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, meshClient: meshClient, decrypt: decrypt, create: create) {
+                    policy, cryptoParameters, keyCollection, meshClient: meshClient, 
+                    decrypt: decrypt, create: create, bitmask: bitmask) {
         //Screen.WriteLine($"*** Create Access {countStores++}");
         // Hack: likely to have issues here because the CatalogAccess needs to be readable by the service
         // Should treat this like any other account except that the service is granted access when it

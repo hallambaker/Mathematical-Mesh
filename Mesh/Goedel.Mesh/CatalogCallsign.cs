@@ -30,10 +30,13 @@ namespace Goedel.Mesh;
 public class CatalogCallsign : Catalog<CatalogedCallsign> {
     #region // Properties
     ///<summary>The canonical label for the catalog</summary>
-    public const string Label = MeshConstants.MMM_Callsign;
+    public const string Label = MeshConstants.StoreTypeCallsignTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Callsign;
 
     ///<summary>The catalog label</summary>
-    public override string ContainerDefault => Label;
+    public override string SequenceDefault => Label;
     #endregion
     #region // Factory methods and constructors
     /// <summary>

@@ -814,7 +814,7 @@ public partial class JbcdStream {
             ReadRecord(ref Length, out FrameHeader);
             }
         if (Length > 0) {
-            //FrameDataPosition = StreamRead.Position;
+            //FrameDataPosition = StreamRead.PositionRead;
             StreamRead.Seek(Length, System.IO.SeekOrigin.Current);
             }
         if ((Code & TypeMask) == BFrame) {
@@ -910,8 +910,14 @@ public partial class JbcdStream {
     /// </summary>
     /// <returns>The current frame header</returns>
     public DareHeader ReadFrameHeader() {
-        ReadFrame(out var HeaderData);
-        return DareHeader.FromJson(HeaderData.JsonReader(), false);
+        var position = PositionRead;
+        var length = ReadFrame(out var HeaderData);
+
+        var header = DareHeader.FromJson(HeaderData.JsonReader(), false);
+        header.FrameStart= position;
+        header.FrameLength = length;
+
+        return header;
         }
 
 
@@ -921,8 +927,7 @@ public partial class JbcdStream {
     /// <returns>The last frame header</returns>
     public DareHeader ReadFirstFrameHeader() {
         Begin();
-        ReadFrame(out var HeaderData);
-        return DareHeader.FromJson(HeaderData.JsonReader(), false);
+        return ReadFrameHeader();
         }
 
     /// <summary>
@@ -931,12 +936,16 @@ public partial class JbcdStream {
     /// <returns>The last frame header</returns>
     public DareHeader ReadLastFrameHeader() {
         End();
-        ReadFrameReverse(out var HeaderData);
+        var position = PositionRead;
+        var length = ReadFrameReverse(out var HeaderData);
         End();
 
-        var HeaderText = HeaderData.ToUTF8();
 
-        return DareHeader.FromJson(HeaderData.JsonReader(), false);
+        var header = DareHeader.FromJson(HeaderData.JsonReader(), false);
+        header.FrameStart = position - length;
+        header.FrameLength = length;
+
+        return header;
         }
 
     /// <summary>

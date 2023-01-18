@@ -170,7 +170,7 @@ public partial class TestDareArchive {
         // Create container
         DareLogWriter.ArchiveFile(fileName, policy, testData, null);
 
-        // Read Container
+        // Read Sequence
         DareLogReader.File(fileName, policy.KeyLocation,
                     out var ReadData, out var ContentMetaOut);
 

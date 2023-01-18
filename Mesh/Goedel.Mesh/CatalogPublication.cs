@@ -31,10 +31,13 @@ namespace Goedel.Mesh;
 public class CatalogPublication : Catalog<CatalogedPublication> {
 
     ///<summary>The canonical label for the catalog</summary>
-    public const string Label = MeshConstants.MMM_Publication;
+    public const string Label = MeshConstants.StoreTypePublicationTag;
+
+    ///<inheritdocs/>
+    public override StoreType StoreType => StoreType.Publication;
 
     ///<summary>The catalog label</summary>
-    public override string ContainerDefault => Label;
+    public override string SequenceDefault => Label;
 
     /// <summary>
     /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -48,6 +51,7 @@ public class CatalogPublication : Catalog<CatalogedPublication> {
     /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
     /// <param name="policy">The cryptographic policy to be applied to the catalog.</param>
     /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     public CatalogPublication(
                 string directory,
                 string storeName = null,
@@ -55,9 +59,11 @@ public class CatalogPublication : Catalog<CatalogedPublication> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) :
+                bool create = true,
+                byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                    policy, cryptoParameters, keyCollection, decrypt: decrypt, 
+                    create: create, bitmask: bitmask) {
         }
 
 
@@ -72,6 +78,8 @@ public class CatalogPublication : Catalog<CatalogedPublication> {
     /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
     /// <param name="create">If true, create a new file if none exists.</param><param name="meshClient">If present provides a means of obtaining a MeshClient instance
     /// which may be used to resolve thresholded key shares.</param>
+    /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+    /// <returns>The instance created.</returns>
     public static new Store Factory(
             string directory,
                 string storeId,
@@ -80,8 +88,10 @@ public class CatalogPublication : Catalog<CatalogedPublication> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new CatalogPublication(directory, storeId, policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new CatalogPublication(directory, storeId, policy, cryptoParameters, keyCollection, 
+            decrypt: decrypt, create: create, bitmask: bitmask);
 
 
     }

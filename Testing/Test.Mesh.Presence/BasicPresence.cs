@@ -10,7 +10,7 @@ public partial class TestPresence  {
     /// </summary>
     [Fact]
     public void PresenceStatusUpdate() {
-
+        "Disable".TaskFunctionality(true);
 
         var aliceCli = GetAlice(out var contextAlice, out var presenceAlice);
         var pollResult = presenceAlice.Poll();
@@ -24,7 +24,7 @@ public partial class TestPresence  {
     [InlineData(null, 30)]
     public void PresenceHeartbeat(CommunicationConditions communicationConditions = null,
                 int cycles = 30) {
-
+        "Disable".TaskFunctionality(true);
         //ServiceSkip = serviceSkip; 
         //ServiceStride = serviceStride;
         //AliceSkip = clientSkip; 
@@ -57,6 +57,9 @@ public partial class TestPresence  {
     /// </summary>
     [Fact]
     public void PresenceSessionRequest() {
+        "Disable".TaskFunctionality(true);
+
+
         ThreadPool.SetMinThreads(100, 100);
 
         CreateAliceBob(out var aliceCli,

@@ -2095,12 +2095,12 @@
             Disposal method, disposes the underlying persistence store if defined.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Catalog`1.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Base constuctor.
             </summary>
             <param name="directory">Directory to create the catalog in.</param>
-            <param name="containerName">Container name.</param>
+            <param name="containerName">Sequence name.</param>
             <param name="cryptoParameters">Cryptographic parameters.</param>
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">Key collection to use for decryption.</param>
@@ -2108,6 +2108,7 @@
             <param name="readContainer">If true, read the container.</param>
             <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
             <param name="create">If true, create a container if it does not already exist.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
             <summary>
@@ -2276,7 +2277,10 @@
         <member name="F:Goedel.Mesh.CatalogAccess.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogAccess.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogAccess.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogAccess.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
         <member name="F:Goedel.Mesh.CatalogAccess.DictionaryDecryptByKeyId">
@@ -2291,7 +2295,7 @@
         <member name="F:Goedel.Mesh.CatalogAccess.DictionaryFairExchange">
             <summary>Dictionary for locating capabilities for use.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogAccess.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogAccess.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -2303,8 +2307,10 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogAccess.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogAccess.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2318,6 +2324,7 @@
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogAccess.TryFindKeyDecryption(System.String,Goedel.Cryptography.IKeyDecrypt@)">
             <summary>
@@ -2478,10 +2485,13 @@
         <member name="F:Goedel.Mesh.CatalogApplication.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogApplication.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogApplication.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogApplication.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogApplication.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogApplication.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -2493,8 +2503,10 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogApplication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogApplication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2508,6 +2520,7 @@
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogApplication.LocateGroup(System.String)">
             <summary>
@@ -2725,7 +2738,7 @@
             available.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogBlind.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogBlind.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogBlind.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection)">
@@ -2748,10 +2761,13 @@
         <member name="F:Goedel.Mesh.CatalogBookmark.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogBookmark.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogBookmark.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogBookmark.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogBookmark.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogBookmark.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -2763,8 +2779,10 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogBookmark.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogBookmark.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2778,6 +2796,7 @@
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedBookmark">
             <summary>
@@ -2858,7 +2877,10 @@
         <member name="F:Goedel.Mesh.CatalogCallsign.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogCallsign.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogCallsign.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogCallsign.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogCallsign.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
@@ -3041,16 +3063,19 @@
         <member name="F:Goedel.Mesh.CatalogContact.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogContact.StoreType">
+            <inheritdocs/>
+        </member>
         <member name="P:Goedel.Mesh.CatalogContact.DictionaryByNetworkAddress">
             <summary>Dictionary mapping email addresses to contacts.</summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogContact.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogContact.SequenceDefault">
             <inheritdoc/>
         </member>
         <member name="F:Goedel.Mesh.CatalogContact.DictionaryDecryptByKeyId">
             <summary>Dictionary for locating capabilities for use.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogContact.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogContact.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -3062,8 +3087,10 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">The mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogContact.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogContact.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -3076,6 +3103,7 @@
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.NewEntry(Goedel.Mesh.CatalogedContact)">
             <inheritdoc/>
@@ -3659,10 +3687,13 @@
         <member name="F:Goedel.Mesh.CatalogCredential.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogCredential.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogCredential.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogCredential.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogCredential.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogCredential.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -3674,8 +3705,10 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Means of obtaining a Mesh Client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogCredential.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogCredential.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -3688,6 +3721,7 @@
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogCredential.GetCredentialByService(System.String)">
             <summary>
@@ -3797,10 +3831,13 @@
         <member name="F:Goedel.Mesh.CatalogDevice.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogDevice.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogDevice.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogDevice.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogDevice.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogDevice.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -3812,13 +3849,15 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogDevice.Disposing">
             <summary>
             Disposing method.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogDevice.#ctor(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogDevice.#ctor(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -3832,6 +3871,7 @@
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogDevice.Report">
             <summary>
@@ -4167,10 +4207,13 @@
         <member name="F:Goedel.Mesh.CatalogMember.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogMember.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogMember.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogMember.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogMember.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogMember.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -4183,8 +4226,10 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">If present provides a means of obtaining a MeshClient instance
             which may be used to resolve thresholded key shares.</param>
+             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+              <returns>The instance created.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogMember.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogMember.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -4197,6 +4242,7 @@
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedMember">
             <summary>
@@ -4283,10 +4329,13 @@
         <member name="F:Goedel.Mesh.CatalogNetwork.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogNetwork.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogNetwork.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogNetwork.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogNetwork.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogNetwork.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -4299,8 +4348,10 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">If present provides a means of obtaining a MeshClient instance
             which may be used to resolve thresholded key shares.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogNetwork.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogNetwork.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -4313,6 +4364,7 @@
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogNetwork.LocateByService(System.String)">
             <summary>
@@ -4412,10 +4464,13 @@
         <member name="F:Goedel.Mesh.CatalogPublication.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogPublication.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogPublication.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogPublication.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogPublication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogPublication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -4428,8 +4483,9 @@
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="policy">The cryptographic policy to be applied to the catalog.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogPublication.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogPublication.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -4441,6 +4497,8 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param><param name="meshClient">If present provides a means of obtaining a MeshClient instance
             which may be used to resolve thresholded key shares.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
         </member>
         <member name="T:Goedel.Mesh.CatalogedPublication">
              <summary>
@@ -4590,10 +4648,13 @@
         <member name="F:Goedel.Mesh.CatalogTask.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogTask.ContainerDefault">
+        <member name="P:Goedel.Mesh.CatalogTask.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogTask.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogTask.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogTask.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -4606,8 +4667,10 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">If present provides a means of obtaining a MeshClient instance
             which may be used to resolve thresholded key shares.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogTask.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogTask.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -4620,6 +4683,7 @@
             <param name="storeName">The catalog persistence container file name.</param>
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedTask">
             <summary>
@@ -4986,6 +5050,9 @@
         <member name="F:Goedel.Mesh.MeshConstants.DefaultMasterKeyBits">
             <summary>Default master seed size in bits.</summary>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.MaximumBitmaskLengthBits">
+            <summary>The maximum length of a bitlength mask in bits</summary> 
+        </member>
         <member name="F:Goedel.Mesh.MeshConstants.DefaultAlgorithmEncryptID">
             <summary>The default encryption algorithm</summary>
         </member>
@@ -5028,50 +5095,72 @@
             <returns>The value <paramref name="cryptoAlgorithmID"/> with the
             specified substitution if the value is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>.</returns>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Access">
-            <summary>Access Catalog</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeAnyTag">
+            <summary>Jose enumeration tag for StoreType.Any</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Application">
-            <summary>Application Catalog</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeLocalTag">
+            <summary>Jose enumeration tag for StoreType.Local</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Bookmark">
-            <summary>Bookmark Catalog</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeInboundTag">
+            <summary>Jose enumeration tag for StoreType.Inbound</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Contact">
-            <summary>Contact Catalog</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeOutboundTag">
+            <summary>Jose enumeration tag for StoreType.Outbound</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Credential">
-            <summary>Credential Catalog</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeArchiveTag">
+            <summary>Jose enumeration tag for StoreType.Archive</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Device">
-            <summary>Device Catalog</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeAccessTag">
+            <summary>Jose enumeration tag for StoreType.Access</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Member">
-            <summary>Member Catalog</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeApplicationTag">
+            <summary>Jose enumeration tag for StoreType.Application</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Network">
-            <summary>Network Catalog</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeBookmarkTag">
+            <summary>Jose enumeration tag for StoreType.Bookmark</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Publication">
-            <summary>Publication Catalog</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeCallsignTag">
+            <summary>Jose enumeration tag for StoreType.Callsign</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Task">
-            <summary>Task Catalog</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeCarnetTag">
+            <summary>Jose enumeration tag for StoreType.Carnet</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Callsign">
-            <summary>Callsign Catalog</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeContactTag">
+            <summary>Jose enumeration tag for StoreType.Contact</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Local">
-            <summary>Local Spool</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeCredentialTag">
+            <summary>Jose enumeration tag for StoreType.Credential</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Inbound">
-            <summary>Inbound Spool</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeDeviceTag">
+            <summary>Jose enumeration tag for StoreType.Device</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Outbound">
-            <summary>Outbound Spool</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeMemberTag">
+            <summary>Jose enumeration tag for StoreType.Member</summary>
         </member>
-        <member name="F:Goedel.Mesh.MeshConstants.MMM_Archive">
-            <summary>Archive Spool</summary>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeNetworkTag">
+            <summary>Jose enumeration tag for StoreType.Network</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypePublicationTag">
+            <summary>Jose enumeration tag for StoreType.Publication</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeTaskTag">
+            <summary>Jose enumeration tag for StoreType.Task</summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshConstants.ToStoreType(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshConstants.ToLabel(Goedel.Mesh.StoreType)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
         </member>
         <member name="F:Goedel.Mesh.MeshConstants.StateSpoolInboundInitialTag">
             <summary>Jose enumeration tag for StateSpoolInbound.Initial</summary>
@@ -6630,6 +6719,63 @@
         </member>
         <member name="M:Goedel.Mesh.KeyPairServiced.SignHash(System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.StoreType">
+            <summary>Store labels</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Any">
+            <summary>Any Store</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Local">
+            <summary>Local Spool</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Inbound">
+            <summary>Inbound Spool</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Outbound">
+            <summary>Outbound Spool</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Archive">
+            <summary>Archive Spool</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Access">
+            <summary>Access Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Application">
+            <summary>Application Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Bookmark">
+            <summary>Bookmark Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Callsign">
+            <summary>Callsign Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Carnet">
+            <summary>Carnet Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Contact">
+            <summary>Contact Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Credential">
+            <summary>Credential Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Device">
+            <summary>Device Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Member">
+            <summary>Member Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Network">
+            <summary>Network Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Publication">
+            <summary>Publication Catalog</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StoreType.Task">
+            <summary>Task Catalog</summary>
         </member>
         <member name="T:Goedel.Mesh.StateSpoolInbound">
             <summary>Inbound spool message state</summary>
@@ -10826,6 +10972,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.StatusRequest.DeviceStatus">
+            <summary>
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.StatusRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
@@ -10875,6 +11025,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.StatusResponse.Bitmask">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.StatusResponse.EnvelopedProfileAccount">
              <summary>
             The account profile providing the root of trust for this account.
@@ -10903,6 +11057,10 @@
              <summary>
             A series of access tokens for the requested services.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.StatusResponse.DeviceStatuses">
+            <summary>
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.StatusResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
@@ -10973,6 +11131,71 @@
             </summary>
             <param name="serviceId">The prefix to find.</param>
             <returns>The matching service access token if found, otherwise null.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.DeviceStatus">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceStatus.Id">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceStatus.Status">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceStatus.Comment">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceStatus.LastConnected">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.DeviceStatus.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.DeviceStatus.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.DeviceStatus._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DeviceStatus._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.DeviceStatus._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceStatus._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceStatus._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceStatus._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.DeviceStatus.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.DeviceStatus._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.DeviceStatus.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Mesh.DownloadRequest">
              <summary>
@@ -11191,6 +11414,10 @@
             
              Response to an upload request. 
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.TransactResponse.Bitmask">
+            <summary>
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.TransactResponse.Entries">
              <summary>
@@ -14680,6 +14907,301 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Mesh.Spool">
+            <summary>
+            Base class for stores of type Spool.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Spool.SpoolEntryFirst">
+            <summary>The first spool entry.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Spool.SpoolEntryLast">
+            <summary>The last spool entry.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Spool.SpoolEntryById">
+            <summary>Dictionary of entries by identifier.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="directory">Directory of store file on local machine.</param>
+            <param name="storeId">Store identifier.</param>
+            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+            <param name="policy">The cryptographic policy to be applied to the spool.</param>
+            <param name="keyCollection">Key collection to be used to resolve keys</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.Add(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Add an envelope to the spool. All information provided in the ContainerInfo
+            field is discarded. The trailer, if present must be rewritten for the 
+            purposes of the container.
+            </summary>
+            <param name="envelope"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
+            <summary>
+            Append the envelopes <paramref name="envelope"/> to the
+            store.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.CheckTime(System.Nullable{System.DateTime},System.Int64,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Check that the time value <paramref name="dateTime"/> is within the boundaries
+            defined by <paramref name="maxTicks"/>, <paramref name="notBefore"/> and
+            <paramref name="notOnOrAfter"/>.
+            </summary>
+            <param name="dateTime">The time to test.</param>
+            <param name="maxTicks">If greater or equal to zero, return <code>false</code> if 
+            <paramref name="dateTime"/> is more than
+            this number of ticks earlier than the current time.</param>
+            <param name="notBefore">If not null, return <code>false</code> if <paramref name="dateTime"/>
+            is earlier than this time.</param>
+            <param name="notOnOrAfter">If not null, return <code>false</code> if <paramref name="dateTime"/>
+            is later than or the same as this time.</param>
+            <returns><code>true</code> unless one of the conditions defined by <paramref name="maxTicks"/>, 
+            <paramref name="notBefore"/> or <paramref name="notOnOrAfter"/> </returns> is not
+            met in which case return <code>false</code>.
+        </member>
+        <member name="M:Goedel.Mesh.Spool.GetByMessageId(System.String,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int64)">
+            <summary>
+            Retrieve a message by message ID. 
+            </summary>
+            <param name="messageID"></param>
+            <param name="select"></param>
+            <param name="notBefore"></param>
+            <param name="notOnOrAfter"></param>
+            <param name="maxSearch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.GetByEnvelopeId(System.String,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int64)">
+            <summary>
+            Retrieve a message by message ID. 
+            </summary>
+            <param name="envelopeId"></param>
+            <param name="select"></param>
+            <param name="notBefore"></param>
+            <param name="notOnOrAfter"></param>
+            <param name="maxSearch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.GetMessages(Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},Goedel.Mesh.SpoolEntry,System.Int64,System.Boolean)">
+            <summary>
+            Returns an enumerator over the messages in the spool that match the
+            constraints specified by <paramref name="select"/>, <paramref name="notBefore"/>, 
+            <paramref name="notOnOrAfter"/> and <paramref name="maxResults"/>.
+            </summary>
+            <param name="select">Message status selection mask.</param>
+            <param name="notBefore">Exclude messages sent before this time.</param>
+            <param name="notOnOrAfter">Exclude messages sent after this time.</param>
+            <param name="last">The point from which to begin the enumeration (exclusive).</param>
+            <param name="maxResults">Maximum number of records to check (-1 = check all).</param>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.Intern(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.SpoolEntry)">
+            <summary>
+            Intern <paramref name="envelope"/> with the following envelope 
+            <paramref name="next"/>.
+            </summary>
+            <param name="envelope"></param>
+            <param name="next">The next frame number</param>
+            <returns>The interned envelope instance.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.GetPrevious(Goedel.Mesh.SpoolEntry)">
+            <summary>
+            Return the spool entry previous to <paramref name="current"/>.
+            </summary>
+            <param name="current">The entry to return the prior entry for.</param>
+            <returns>The spool entry if found, otherwise, null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.GetLast">
+            <summary>
+            Return the last message in the spool.
+            </summary>
+            <returns>The spool entry if found, otherwise, null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.SetStatus(System.Collections.Generic.List{Goedel.Mesh.Reference})">
+            <summary>
+            Apply the list of message status updates specified in <paramref name="references"/>.
+            </summary>
+            <param name="references">List of message status values to be updated.</param>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolLocal">
+            <summary>
+            Class for the local spool
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolLocal.Label">
+            <summary>Canonical name for local spool</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolLocal.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolLocal.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolLocal.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Factory delegate
+            </summary>
+            <param name="directory">Directory of store file on local machine.</param>
+            <param name="storeId">Store identifier.</param>
+            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">Key collection to be used to resolve keys</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolLocal.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="directory">The directory in which the spool is stored.</param>
+            <param name="storeId">The store name.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">The key collection to fetch keys from.</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolLocal.CheckPIN(System.String,System.Int64,System.Int64)">
+            <summary>
+            Check the spool for a matching unexpired PIN identifier and return the plaintext of the
+            first unexpired message.
+            </summary>
+            <param name="pinId">The identifier of the corresponding PIN value.</param>
+            <param name="maxTicks">Maximum message age in ticks (-1 = check all).</param>
+            <param name="maxSearch">Maximum number of records to check (-1 = check all).</param>
+            <returns>The plaintext message.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolInbound">
+            <summary>
+            Class for the inbound spool
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolInbound.Label">
+            <summary>Canonical name for inbound spool</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolInbound.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolInbound.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Factory delegate
+            </summary>
+            <param name="directory">Directory of store file on local machine.</param>
+            <param name="storeId">Store identifier.</param>
+            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">Key collection to be used to resolve keys</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolInbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="directory">The directory in which the spool is stored.</param>
+            <param name="storeId">The store name.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">The key collection to fetch keys from.</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolOutbound">
+            <summary>
+            Class for the outbound spool
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolOutbound.Label">
+            <summary>Canonical name for outbound spool</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolOutbound.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolOutbound.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Factory delegate
+            </summary>
+            <param name="directory">Directory of store file on local machine.</param>
+            <param name="storeId">Store identifier.</param>
+            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">Key collection to be used to resolve keys</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolOutbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="directory">The directory in which the spool is stored.</param>
+            <param name="storeName">The store name.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">The key collection to fetch keys from.</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolArchive">
+            <summary>
+            Class for the outbound spool
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolArchive.Label">
+            <summary>Canonical name for outbound spool</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolArchive.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolArchive.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Factory delegate
+            </summary>
+            <param name="directory">Directory of store file on local machine.</param>
+            <param name="storeId">Store identifier.</param>
+            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">Key collection to be used to resolve keys</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolArchive.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="directory">The directory in which the spool is stored.</param>
+            <param name="storeId">The store name.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">The key collection to fetch keys from.</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
         <member name="T:Goedel.Mesh.SpoolEntry">
             <summary>Message entry in spool catalog</summary>
         </member>
@@ -14763,125 +15285,6 @@
             </summary>
             <returns>The decoded message</returns>
         </member>
-        <member name="T:Goedel.Mesh.Spool">
-            <summary>
-            Base class for stores of type Spool.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Spool.SpoolEntryLast">
-            <summary>The last spool entry.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Spool.SpoolEntryById">
-            <summary>Dictionary of entries by identifier.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
-            <summary>
-            Constructor.
-            </summary>
-            <param name="directory">Directory of store file on local machine.</param>
-            <param name="storeId">Store identifier.</param>
-            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
-            <param name="policy">The cryptographic policy to be applied to the spool.</param>
-            <param name="keyCollection">Key collection to be used to resolve keys</param>
-            <param name="decrypt">If true, attempt decryption of payload contents./</param>
-            <param name="create">If true, create a new file if none exists.</param>
-            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.Add(Goedel.Cryptography.Dare.DareEnvelope)">
-            <summary>
-            Add an envelope to the spool. All information provided in the ContainerInfo
-            field is discarded. The trailer, if present must be rewritten for the 
-            purposes of the container.
-            </summary>
-            <param name="envelope"></param>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
-            <summary>
-            Append the envelopes <paramref name="envelope"/> to the
-            store.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.CheckTime(System.Nullable{System.DateTime},System.Int64,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
-            <summary>
-            Check that the time value <paramref name="dateTime"/> is within the boundaries
-            defined by <paramref name="maxTicks"/>, <paramref name="notBefore"/> and
-            <paramref name="notOnOrAfter"/>.
-            </summary>
-            <param name="dateTime">The time to test.</param>
-            <param name="maxTicks">If greater or equal to zero, return <code>false</code> if 
-            <paramref name="dateTime"/> is more than
-            this number of ticks earlier than the current time.</param>
-            <param name="notBefore">If not null, return <code>false</code> if <paramref name="dateTime"/>
-            is earlier than this time.</param>
-            <param name="notOnOrAfter">If not null, return <code>false</code> if <paramref name="dateTime"/>
-            is later than or the same as this time.</param>
-            <returns><code>true</code> unless one of the conditions defined by <paramref name="maxTicks"/>, 
-            <paramref name="notBefore"/> or <paramref name="notOnOrAfter"/> </returns> is not
-            met in which case return <code>false</code>.
-        </member>
-        <member name="M:Goedel.Mesh.Spool.GetByMessageId(System.String,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int64)">
-            <summary>
-            Retrieve a message by message ID. 
-            </summary>
-            <param name="messageID"></param>
-            <param name="select"></param>
-            <param name="notBefore"></param>
-            <param name="notOnOrAfter"></param>
-            <param name="maxSearch"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.GetByEnvelopeId(System.String,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int64)">
-            <summary>
-            Retrieve a message by message ID. 
-            </summary>
-            <param name="envelopeId"></param>
-            <param name="select"></param>
-            <param name="notBefore"></param>
-            <param name="notOnOrAfter"></param>
-            <param name="maxSearch"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.GetMessages(Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},Goedel.Mesh.SpoolEntry,System.Int64)">
-            <summary>
-            Returns an enumerator over the messages in the spool that match the
-            constraints specified by <paramref name="select"/>, <paramref name="notBefore"/>, 
-            <paramref name="notOnOrAfter"/> and <paramref name="maxResults"/>.
-            </summary>
-            <param name="select">Message status selection mask.</param>
-            <param name="notBefore">Exclude messages sent before this time.</param>
-            <param name="notOnOrAfter">Exclude messages sent after this time.</param>
-            <param name="last">The point from which to begin the enumeration (exclusive).</param>
-            <param name="maxResults">Maximum number of records to check (-1 = check all).</param>
-            <returns>The enumerator.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.Intern(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.SpoolEntry)">
-            <summary>
-            Intern <paramref name="envelope"/> with the following envelope 
-            <paramref name="next"/>.
-            </summary>
-            <param name="envelope"></param>
-            <param name="next">The next frame number</param>
-            <returns>The interned envelope instance.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.GetPrevious(Goedel.Mesh.SpoolEntry)">
-            <summary>
-            Return the spool entry previous to <paramref name="current"/>.
-            </summary>
-            <param name="current">The entry to return the prior entry for.</param>
-            <returns>The spool entry if found, otherwise, null.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.GetLast">
-            <summary>
-            Return the last message in the spool.
-            </summary>
-            <returns>The spool entry if found, otherwise, null.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.SetStatus(System.Collections.Generic.List{Goedel.Mesh.Reference})">
-            <summary>
-            Apply the list of message status updates specified in <paramref name="references"/>.
-            </summary>
-            <param name="references">List of message status values to be updated.</param>
-        </member>
         <member name="T:Goedel.Mesh.SpoolEnumeratorRaw">
             <summary>
             Enumerator that returns the raw, unencrypted container data.
@@ -14897,7 +15300,7 @@
             </summary>
             <returns>This instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.#ctor(Goedel.Mesh.Spool,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},Goedel.Mesh.SpoolEntry,System.Int64)">
+        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.#ctor(Goedel.Mesh.Spool,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},Goedel.Mesh.SpoolEntry,System.Int64,System.Boolean)">
             <summary>
             Constructor for an enumerator on the store <paramref name="spool"/> with search constraints.
             
@@ -14927,158 +15330,6 @@
             Reset the enumeration to the origin of the search.
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.SpoolLocal">
-            <summary>
-            Class for the local spool
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.SpoolLocal.Label">
-            <summary>Canonical name for local spool</summary>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolLocal.Dispose(System.Boolean)">
-            <summary>
-            
-            </summary>
-            <param name="disposing"></param>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolLocal.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
-            <summary>
-            Factory delegate
-            </summary>
-            <param name="directory">Directory of store file on local machine.</param>
-            <param name="storeId">Store identifier.</param>
-            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
-            <param name="keyCollection">Key collection to be used to resolve keys</param>
-            <param name="decrypt">If true, attempt decryption of payload contents./</param>
-            <param name="create">If true, create a new file if none exists.</param>
-            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolLocal.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
-            <summary>
-            Constructor.
-            </summary>
-            <param name="directory">The directory in which the spool is stored.</param>
-            <param name="storeId">The store name.</param>
-            <param name="cryptoParameters">The cryptographic parameters.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
-            <param name="keyCollection">The key collection to fetch keys from.</param>
-            <param name="decrypt">If true, attempt decryption of payload contents./</param>
-            <param name="create">If true, create a new file if none exists.</param>
-            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolLocal.CheckPIN(System.String,System.Int64,System.Int64)">
-            <summary>
-            Check the spool for a matching unexpired PIN identifier and return the plaintext of the
-            first unexpired message.
-            </summary>
-            <param name="pinId">The identifier of the corresponding PIN value.</param>
-            <param name="maxTicks">Maximum message age in ticks (-1 = check all).</param>
-            <param name="maxSearch">Maximum number of records to check (-1 = check all).</param>
-            <returns>The plaintext message.</returns>
-        </member>
-        <member name="T:Goedel.Mesh.SpoolInbound">
-            <summary>
-            Class for the inbound spool
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.SpoolInbound.Label">
-            <summary>Canonical name for inbound spool</summary>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolInbound.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
-            <summary>
-            Factory delegate
-            </summary>
-            <param name="directory">Directory of store file on local machine.</param>
-            <param name="storeId">Store identifier.</param>
-            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
-            <param name="keyCollection">Key collection to be used to resolve keys</param>
-            <param name="decrypt">If true, attempt decryption of payload contents./</param>
-            <param name="create">If true, create a new file if none exists.</param>
-            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolInbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
-            <summary>
-            Constructor.
-            </summary>
-            <param name="directory">The directory in which the spool is stored.</param>
-            <param name="storeId">The store name.</param>
-            <param name="cryptoParameters">The cryptographic parameters.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
-            <param name="keyCollection">The key collection to fetch keys from.</param>
-            <param name="decrypt">If true, attempt decryption of payload contents./</param>
-            <param name="create">If true, create a new file if none exists.</param>
-            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
-        <member name="T:Goedel.Mesh.SpoolOutbound">
-            <summary>
-            Class for the outbound spool
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.SpoolOutbound.Label">
-            <summary>Canonical name for outbound spool</summary>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolOutbound.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
-            <summary>
-            Factory delegate
-            </summary>
-            <param name="directory">Directory of store file on local machine.</param>
-            <param name="storeId">Store identifier.</param>
-            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
-            <param name="keyCollection">Key collection to be used to resolve keys</param>
-            <param name="decrypt">If true, attempt decryption of payload contents./</param>
-            <param name="create">If true, create a new file if none exists.</param>
-            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolOutbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
-            <summary>
-            Constructor.
-            </summary>
-            <param name="directory">The directory in which the spool is stored.</param>
-            <param name="storeName">The store name.</param>
-            <param name="cryptoParameters">The cryptographic parameters.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
-            <param name="keyCollection">The key collection to fetch keys from.</param>
-            <param name="decrypt">If true, attempt decryption of payload contents./</param>
-            <param name="create">If true, create a new file if none exists.</param>
-            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
-        <member name="T:Goedel.Mesh.SpoolArchive">
-            <summary>
-            Class for the outbound spool
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.SpoolArchive.Label">
-            <summary>Canonical name for outbound spool</summary>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolArchive.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
-            <summary>
-            Factory delegate
-            </summary>
-            <param name="directory">Directory of store file on local machine.</param>
-            <param name="storeId">Store identifier.</param>
-            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
-            <param name="keyCollection">Key collection to be used to resolve keys</param>
-            <param name="decrypt">If true, attempt decryption of payload contents./</param>
-            <param name="create">If true, create a new file if none exists.</param>
-            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolArchive.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
-            <summary>
-            Constructor.
-            </summary>
-            <param name="directory">The directory in which the spool is stored.</param>
-            <param name="storeId">The store name.</param>
-            <param name="cryptoParameters">The cryptographic parameters.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
-            <param name="keyCollection">The key collection to fetch keys from.</param>
-            <param name="decrypt">If true, attempt decryption of payload contents./</param>
-            <param name="create">If true, create a new file if none exists.</param>
-            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-        </member>
         <member name="T:Goedel.Mesh.StoreFactoryDelegate">
             <summary>
             Factory delegate
@@ -15091,6 +15342,7 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="T:Goedel.Mesh.Store">
             <summary>
@@ -15098,11 +15350,11 @@
             </summary>
             
         </member>
-        <member name="P:Goedel.Mesh.Store.ContainerDefault">
-            <summary>The default name for the container</summary>
+        <member name="P:Goedel.Mesh.Store.SequenceDefault">
+            <summary>The default name for the sequence</summary>
         </member>
-        <member name="P:Goedel.Mesh.Store.Container">
-            <summary>The container</summary>
+        <member name="P:Goedel.Mesh.Store.Sequence">
+            <summary>The sequence</summary>
         </member>
         <member name="P:Goedel.Mesh.Store.FrameCount">
             <summary>The frame count (returns -1 if no container has been created)</summary>
@@ -15110,13 +15362,16 @@
         <member name="P:Goedel.Mesh.Store.KeyCollection">
             <summary>The key collection used for decryption</summary>
         </member>
-        <member name="P:Goedel.Mesh.Store.ContainerName">
-            <summary>The container identifier. Must be unique within a given account.</summary>
+        <member name="P:Goedel.Mesh.Store.StoreName">
+            <summary>The store identifier. Must be unique within a given account.</summary>
         </member>
         <member name="M:Goedel.Mesh.Store.Disposing">
             <summary>The disposal routing</summary>
         </member>
-        <member name="M:Goedel.Mesh.Store.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="P:Goedel.Mesh.Store.StoreType">
+            <summary>The default bitmask identifier for update notification.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Store.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -15128,8 +15383,9 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
-        <member name="M:Goedel.Mesh.Store.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Store.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             The constructor
             </summary>
@@ -15141,6 +15397,7 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="M:Goedel.Mesh.Store.Append(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.String)">
             <summary>

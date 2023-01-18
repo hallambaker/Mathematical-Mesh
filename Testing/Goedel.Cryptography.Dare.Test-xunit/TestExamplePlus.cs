@@ -65,7 +65,7 @@ public partial class TestItem {
 
 
     /// <summary>
-    /// Container header corresponding to persistence store entry
+    /// Sequence header corresponding to persistence store entry
     /// </summary>
     public DareHeader ContainerHeader {
         get => _Metadata as DareHeader; set => _Metadata = value;
@@ -88,7 +88,7 @@ public class TestItemContainerPersistenceStore : PersistenceStore {
     /// if none exists.</param>
     /// <param name="Type">Type of data to store (the schema name).</param>
     /// <param name="Comment">Comment to be written to the log.</param>
-    /// <param name="ContainerType">The Container type.</param>
+    /// <param name="ContainerType">The Sequence type.</param>
     /// <param name="FileStatus">The file status in which to open the container.</param>
     public TestItemContainerPersistenceStore(string FileName, string Type = null,
                 FileStatus FileStatus = FileStatus.OpenOrCreate,

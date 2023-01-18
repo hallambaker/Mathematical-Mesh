@@ -33,7 +33,6 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
-
 public partial class TestContainers {
 
     public static TestContainers Test() => new();

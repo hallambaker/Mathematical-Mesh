@@ -292,7 +292,7 @@ public class ContainerPersistenceStoreThreadSafe : PersistenceStore {
     /// </summary>
     /// <param name="FileName">Log file.</param>
     /// <param name="Type">Type of data to store (the schema name).</param>
-    /// <param name="ContainerType">The Container type.</param>
+    /// <param name="ContainerType">The Sequence type.</param>
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="DataEncoding">The data encoding.</param>
     /// <param name="FileStatus">The file status in which to open the container.</param>

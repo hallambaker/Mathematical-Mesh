@@ -161,7 +161,7 @@ public class PacketReader {
     /// Read a <see cref="ResponderMessageType"/> in a connection packet.
     /// </summary>
     /// <param name="buffer">Buffer to be read from.</param>
-    /// <param name="position">Position at which to read.</param>
+    /// <param name="position">PositionRead at which to read.</param>
     /// <returns>The value read.</returns>
     public static ResponderMessageType ReadResponderMessageType(
                 byte[] buffer,
@@ -171,7 +171,7 @@ public class PacketReader {
     /// Read a <see cref="InitiatorMessageType"/> in a connection packet.
     /// </summary>
     /// <param name="buffer">Buffer to be read from.</param>
-    /// <param name="position">Position at which to read.</param>
+    /// <param name="position">PositionRead at which to read.</param>
     /// <returns>The value read.</returns>
     public static InitiatorMessageType ReadInitiatorMessageType(
         byte[] buffer,
@@ -214,7 +214,7 @@ public class PacketReader {
     public List<PacketExtension> ReadExtensions() {
         List<PacketExtension> result = null;
         for (var tag = ReadString(); tag != null; tag = ReadString()) {
-            //Console.WriteLine($"Read Pos = {Position}  Tag = {tag}");
+            //Console.WriteLine($"Read Pos = {PositionRead}  Tag = {tag}");
 
             result ??= new();
             var value = ReadBinary();

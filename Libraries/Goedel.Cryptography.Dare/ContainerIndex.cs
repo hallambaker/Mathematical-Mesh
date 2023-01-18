@@ -37,7 +37,7 @@ public partial class SequenceIndex {
     ///// <param name="AdditionalInputs"></param>
     ///// <param name="Filter"></param>
     //public ContainerIndex (
-    //        IndexType IndexType = IndexType.Position,
+    //        IndexType IndexType = IndexType.PositionRead,
     //        JBCDStream FirstInput = null,
     //        List<JBCDStream> AdditionalInputs = null,
     //        FrameFilterDelegate Filter = null) {

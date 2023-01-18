@@ -27,7 +27,7 @@ namespace Goedel.Cryptography.Dare;
 
 
 /// <summary>
-/// Persistence store based on a container interface.
+/// Persistence store based on a sequence interface.
 /// </summary>
 public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<StoreEntry> {
 
@@ -35,7 +35,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
     // Test: enumeration mechanisms, forward and reverse.
 
-    // Goal: Implement indexing of containers, archives, etc.
+    // Goal: Implement indexing of sequences, archives, etc.
 
     // Goal: Make use of Indexes.
 
@@ -46,13 +46,13 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     //// Objects that MUST be disposed correctly when leaving a using section.
     //JBCDStream JBCDStream;
 
-    ///<summary>The underlying container.</summary>
-    public Sequence Container;
+    ///<summary>The underlying sequence.</summary>
+    public Sequence Sequence;
 
 
 
     /// <summary>The value of the last frame index</summary>
-    public long FrameCount => Container.FrameCount;
+    public long FrameCount => Sequence.FrameCount;
 
 
 
@@ -60,7 +60,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// The disposal routine. This is wrapped to provide the IDisposable interface. 
     /// </summary>
     protected override void Disposing() =>
-                Container?.Dispose();
+                Sequence?.Dispose();
     #endregion
 
 
@@ -96,19 +96,19 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
     #region --- IEnumerable Implementation 
     ///<summary>Return an enumerator over a set of catalog items</summary>
-    public IEnumerator<StoreEntry> GetEnumerator() => new EnumeratorContainerStoreEntry(ObjectIndex);
+    public IEnumerator<StoreEntry> GetEnumerator() => new EnumeratorStoreEntry(ObjectIndex);
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
     private IEnumerator GetEnumerator1() => this.GetEnumerator();
 
-    private class EnumeratorContainerStoreEntry : IEnumerator<StoreEntry> {
+    private class EnumeratorStoreEntry : IEnumerator<StoreEntry> {
         Dictionary<string, StoreEntry>.Enumerator baseEnumerator;
         public StoreEntry Current => baseEnumerator.Current.Value;
         object IEnumerator.Current => baseEnumerator.Current.Value;
         public void Dispose() => baseEnumerator.Dispose();
         public bool MoveNext() => baseEnumerator.MoveNext();
         public void Reset() => throw new NotImplementedException();
-        public EnumeratorContainerStoreEntry(Dictionary<string, StoreEntry> baseEnumerator) =>
+        public EnumeratorStoreEntry(Dictionary<string, StoreEntry> baseEnumerator) =>
             this.baseEnumerator = baseEnumerator.GetEnumerator();
         }
 
@@ -120,72 +120,71 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// Open or create a persistence store in specified mode with 
     /// the specified file name, content type and optional comment.
     /// </summary>
-    /// <param name="policy">The cryptographic policy to be applied to the container.</param>
+    /// <param name="policy">The cryptographic policy to be applied to the sequence.</param>
     /// <param name="fileName">Log file.</param>
     /// <param name="contentType">Type of data to store (the schema name).</param>
-    /// <param name="containerType">The Container type.</param>
+    /// <param name="sequenceType">The Sequence type.</param>
     /// <param name="dataEncoding">The data encoding.</param>
-    /// <param name="fileStatus">The file status in which to open the container.</param>
+    /// <param name="fileStatus">The file status in which to open the sequence.</param>
     /// <param name="keyCollection">The key collection to use to resolve private keys.</param>
-    /// <param name="readContainer">If true read the container to initialize the persistence store.</param>
+    /// <param name="read">If true read the sequence to initialize the persistence store.</param>
     /// <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
     public PersistenceStore(string fileName, string contentType = null,
                 FileStatus fileStatus = FileStatus.OpenOrCreate,
-                SequenceType containerType = SequenceType.Chain,
+                SequenceType sequenceType = SequenceType.Chain,
                 DarePolicy policy = null,
                 DataEncoding dataEncoding = DataEncoding.JSON,
                 IKeyLocate keyCollection = null,
-                bool readContainer = true,
+                bool read = true,
                 bool decrypt = true) : this(
                     Sequence.Open(
                         fileName,
                         fileStatus,
                         keyCollection,
-                        containerType,
+                        sequenceType,
                         policy,
                         contentType,
                         decrypt
-                        ), keyCollection, readContainer) { }
+                        ), keyCollection, read) { }
 
 
     /// <summary>
-    /// Create a persisetence store round an already opened container.
+    /// Create a persisetence store round an already opened sequence.
     /// </summary>
-    /// <param name="container"></param>
-    /// <param name="readContainer"></param>
+    /// <param name="sequence"></param>
+    /// <param name="read"></param>
     /// <param name="keyLocate">The key collection to be used to resolve keys</param>
-    public PersistenceStore(Sequence container, IKeyLocate keyLocate, bool readContainer = true) {
-        container.AssertNotNull(NoAvailableDecryptionKey.Throw);
+    public PersistenceStore(Sequence sequence, IKeyLocate keyLocate, bool read = true) {
+        sequence.AssertNotNull(NoAvailableDecryptionKey.Throw);
 
-        Container = container;
+        Sequence = sequence;
 
-        // Barfing in the docs because we do not have the key required to decrypt the container
+        // Barfing in the docs because we do not have the key required to decrypt the sequence
 
-        if (readContainer & container.JbcdStream.Length > 0) {
-            ReadContainer(keyLocate);
+        if (read & sequence.Length > 0) {
+            Read(keyLocate);
             }
         }
 
 
     /// <summary>
-    /// Read the container contents in fast mode generating indexes only without reading contents.
+    /// Read the sequence contents in fast mode generating indexes only without reading contents.
     /// </summary>
-    public void FastReadContainer() {
-        foreach (var frameIndex in Container) {
+    public void FastRead() {
+        foreach (var frameIndex in Sequence) {
             var contentMeta = frameIndex.Header.ContentMeta;
-            //var containerInfo = frameIndex.Header.SequenceInfo;
 
             var uniqueID = contentMeta.UniqueId;
 
             ObjectIndex.TryGetValue(uniqueID, out var previous);
-            var ContainerStoreEntry = new StoreEntry(frameIndex, previous, Container);
+            var storeEntry = new StoreEntry(frameIndex, previous, Sequence);
 
 
             ObjectIndex.Remove(uniqueID);
             switch (contentMeta.Event) {
                 case EventUpdate:
                 case EventNew: {
-                        ObjectIndex.Add(uniqueID, ContainerStoreEntry);
+                        ObjectIndex.Add(uniqueID, storeEntry);
                         break;
                         }
 
@@ -199,17 +198,17 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
 
     /// <summary>
-    /// Read a container from the first frame to the last.
+    /// Read a sequence from the first frame to the last.
     /// </summary>
-    /// <param name="containerIntegrity">Specifies the degree of container integrity checking to perform.</param>
+    /// <param name="integrity">Specifies the degree of sequence integrity checking to perform.</param>
     /// <param name="keyLocate">The key collection to be used to resolve keys</param>
-    void ReadContainer(IKeyLocate keyLocate, SequenceIntegrity containerIntegrity = SequenceIntegrity.None) {
-        foreach (var frameIndex in Container) {
+    void Read(IKeyLocate keyLocate, SequenceIntegrity integrity = SequenceIntegrity.None) {
+        foreach (var frameIndex in Sequence) {
 
-            var item = frameIndex.GetJSONObject(Container);
+            var item = frameIndex.GetJSONObject(Sequence);
 
             CommitTransaction(frameIndex, item);
-            if (containerIntegrity != SequenceIntegrity.None) {
+            if (integrity != SequenceIntegrity.None) {
                 throw new NYI();
                 }
             }
@@ -217,13 +216,13 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
 
     /// <summary>
-    /// Apply the specified message to the container.
+    /// Apply the specified message to the sequence.
     /// </summary>
     /// <param name="dareMessage"></param>
     public virtual StoreEntry Apply(DareEnvelope dareMessage) {
 
         //Console.WriteLine($"Append");
-        var frameIndex = Container.Append(dareMessage);
+        var frameIndex = Sequence.Append(dareMessage);
         //Console.WriteLine($"Commit");
         return CommitTransaction(frameIndex, dareMessage.JsonObject);
         }
@@ -233,7 +232,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <summary>
     /// Commit a transaction to memory.
     /// </summary>
-    /// <param name="frameIndex">The container position</param>
+    /// <param name="frameIndex">The sequence position</param>
     /// <param name="jSONObject">The object being committed in deserialized form.</param>
     public virtual StoreEntry CommitTransaction(SequenceFrameIndex frameIndex, JsonObject jSONObject) {
         if (frameIndex.Header.Index == 0) {
@@ -243,99 +242,99 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
         var contentMeta = frameIndex.Header.ContentMeta;
 
         ObjectIndex.TryGetValue(contentMeta.UniqueId, out var Previous);
-        var ContainerStoreEntry = new StoreEntry(frameIndex, Previous, Container, jSONObject);
+        var storeEntry = new StoreEntry(frameIndex, Previous, Sequence, jSONObject);
 
         switch (contentMeta.Event) {
             case EventNew: {
-                    //MemoryCommitNew(ContainerStoreEntry);
-                    MemoryCommitUpdate(ContainerStoreEntry);
+                    //MemoryCommitNew(storeEntry);
+                    MemoryCommitUpdate(storeEntry);
                     break;
                     }
             case EventUpdate: {
-                    MemoryCommitUpdate(ContainerStoreEntry);
+                    MemoryCommitUpdate(storeEntry);
                     break;
                     }
             case EventDelete: {
-                    MemoryCommitDelete(ContainerStoreEntry);
+                    MemoryCommitDelete(storeEntry);
                     break;
                     }
             default: {
                     throw new UndefinedStoreAction(contentMeta.Event);
                     }
             }
-        return ContainerStoreEntry;
+        return storeEntry;
         }
 
     /// <summary>
     /// Commit a New transaction to memory
     /// </summary>
-    /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
-    protected virtual void MemoryCommitNew(StoreEntry containerStoreEntry) {
+    /// <param name="storeEntry">The sequence store entry representing the transaction</param>
+    protected virtual void MemoryCommitNew(StoreEntry storeEntry) {
         // Check to make sure the object does not already exist
-        Assert.AssertFalse(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), EntryAlreadyExists.Throw);
-        ObjectIndex.Add(containerStoreEntry.UniqueID, containerStoreEntry);
+        Assert.AssertFalse(ObjectIndex.ContainsKey(storeEntry.UniqueID), EntryAlreadyExists.Throw);
+        ObjectIndex.Add(storeEntry.UniqueID, storeEntry);
 
-        KeyValueIndexAdd(containerStoreEntry);
+        KeyValueIndexAdd(storeEntry);
         }
 
     /// <summary>
     /// Commit an Update transaction to memory
     /// </summary>
-    /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
-    protected virtual void MemoryCommitUpdate(StoreEntry containerStoreEntry) {
+    /// <param name="storeEntry">The sequence store entry representing the transaction</param>
+    protected virtual void MemoryCommitUpdate(StoreEntry storeEntry) {
         // Check to make sure the object does not already exist
-        if (ObjectIndex.ContainsKey(containerStoreEntry.UniqueID)) {
-            ObjectIndex.Remove(containerStoreEntry.UniqueID);
+        if (ObjectIndex.ContainsKey(storeEntry.UniqueID)) {
+            ObjectIndex.Remove(storeEntry.UniqueID);
             }
-        ObjectIndex.Add(containerStoreEntry.UniqueID, containerStoreEntry);
-        KeyValueIndexAdd(containerStoreEntry);
+        ObjectIndex.Add(storeEntry.UniqueID, storeEntry);
+        KeyValueIndexAdd(storeEntry);
         }
 
     /// <summary>
     /// Commit a Delete transaction to memory
     /// </summary>
-    /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
-    protected virtual void MemoryCommitDelete(StoreEntry containerStoreEntry) {
+    /// <param name="storeEntry">The sequence store entry representing the transaction</param>
+    protected virtual void MemoryCommitDelete(StoreEntry storeEntry) {
         // Check to make sure the object does not already exist
-        Assert.AssertTrue(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), EntryNotFound.Throw);
-        ObjectIndex.Remove(containerStoreEntry.UniqueID);
-        //DeletedObjects.Add(containerStoreEntry.UniqueID, containerStoreEntry);
+        Assert.AssertTrue(ObjectIndex.ContainsKey(storeEntry.UniqueID), EntryNotFound.Throw);
+        ObjectIndex.Remove(storeEntry.UniqueID);
+        //DeletedObjects.Add(storeEntry.UniqueID, storeEntry);
 
-        KeyValueIndexDelete(containerStoreEntry);
+        KeyValueIndexDelete(storeEntry);
         }
 
 
     // Hack: Right now the key value pairs are only indexed when the object is initially
     // interned. These are immutable subsequently.
-    void KeyValueIndexAdd(StoreEntry containerStoreEntry) {
-        if (containerStoreEntry.ContentInfo.KeyValues == null) {
+    void KeyValueIndexAdd(StoreEntry storeEntry) {
+        if (storeEntry.ContentInfo.KeyValues == null) {
             return;
             }
 
-        foreach (var KeyValue in containerStoreEntry.ContentInfo.KeyValues) {
-            var Index = GetContainerStoreIndex(KeyValue.Key, true);
-            Index.Add(containerStoreEntry, KeyValue.Value);
+        foreach (var KeyValue in storeEntry.ContentInfo.KeyValues) {
+            var Index = GetStoreIndex(KeyValue.Key, true);
+            Index.Add(storeEntry, KeyValue.Value);
             }
         }
 
 
     // Hack: Right now the key value pairs are only indexed when the object is initially
     // interned. These are immutable subsequently.
-    void KeyValueIndexDelete(StoreEntry containerStoreEntry) {
-        var First = containerStoreEntry.First as StoreEntry;
+    void KeyValueIndexDelete(StoreEntry storeEntry) {
+        var First = storeEntry.First as StoreEntry;
         if (First.ContentInfo.KeyValues == null) {
             return;
             }
 
         foreach (var KeyValue in First.ContentInfo.KeyValues) {
-            var Index = GetContainerStoreIndex(KeyValue.Key, true);
-            Index.Delete(containerStoreEntry, KeyValue.Value);
+            var Index = GetStoreIndex(KeyValue.Key, true);
+            Index.Delete(storeEntry, KeyValue.Value);
             }
         }
 
     #endregion
 
-    #region Prepare and commit transaction to container
+    #region Prepare and commit transaction to sequence
 
     /// <summary>
     /// Prepare a transaction to be committed.
@@ -349,7 +348,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
             JsonObject jsonObject,
                 List<KeyPair> additionalRecipients = null) {
 
-        var contextWrite = new SequenceWriterDeferred(Container) {
+        var contextWrite = new SequenceWriterDeferred(Sequence) {
             AdditionalRecipients = additionalRecipients
             };
 
@@ -371,19 +370,19 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
 
     /// <summary>
-    /// Write a persistence entry to the container.
+    /// Write a persistence entry to the sequence.
     /// </summary>
     /// <param name="item">The object to write.</param>
     /// <param name="previous">The previous entry.</param>
     /// <param name="dareEnvelope">The serialized persistence data.</param>
     /// <returns></returns>
-    public virtual StoreEntry CommitToContainer(
+    public virtual StoreEntry CommitToSequence(
             DareEnvelope dareEnvelope,
             JsonObject item,
             StoreEntry previous = null) {
 
-        Container.Append(dareEnvelope);
-        return new StoreEntry(Container, dareEnvelope, previous, item);
+        Sequence.Append(dareEnvelope);
+        return new StoreEntry(Sequence, dareEnvelope, previous, item);
         }
 
 
@@ -405,7 +404,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
         var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out var Previous);
         Assert.AssertFalse(Exists, ObjectIdentifierNotUnique.Throw);
 
-        // Create new container
+        // Create new sequence
         var contentInfo = new ContentMeta() {
             Event = EventNew,
             UniqueId = jsonObject._PrimaryKey,
@@ -416,10 +415,10 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
         }
 
     /// <summary>
-    /// Create a container header to update an existing persistence entry
+    /// Create a sequence header to update an existing persistence entry
     /// </summary>
 
-    /// <param name="previous">The previous container store entry for this object</param>
+    /// <param name="previous">The previous sequence store entry for this object</param>
     /// <param name="jsonObject">The new object value</param>
     /// <param name="create">If true, create a new value if one does not already exist</param>
     /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
@@ -437,7 +436,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
         var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out previous);
         Assert.AssertTrue(Exists | create, EntryNotFound.Throw);
 
-        // Create new container
+        // Create new sequence
         var contentInfo = new ContentMeta() {
             Event = Exists ? EventUpdate : EventNew,
             UniqueId = jsonObject._PrimaryKey,
@@ -455,7 +454,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <summary>
     /// Delete a persistence entry
     /// </summary>
-    /// <param name="previous">The previous container store entry for this object</param>
+    /// <param name="previous">The previous sequence store entry for this object</param>
     /// <param name="uniqueID">The UniqueID of the object to delete</param>
     /// <returns>True if the object was updated, otherwise false.</returns>
     /// 
@@ -467,7 +466,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
             }
 
         var First = previous?.First as StoreEntry;
-        // Create new container
+        // Create new sequence
         var contentInfo = new ContentMeta() {
             Event = EventDelete,
             UniqueId = uniqueID,
@@ -486,10 +485,10 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <param name="transaction">The transaction context in which to prepare the update.</param>
     public virtual IPersistenceEntry New(JsonObject jsonObject, Transaction transaction = null) {
         var envelope = PrepareNew(jsonObject);
-        var ContainerStoreEntry = CommitToContainer(envelope, jsonObject);
-        MemoryCommitNew(ContainerStoreEntry);
+        var storeEntry = CommitToSequence(envelope, jsonObject);
+        MemoryCommitNew(storeEntry);
 
-        return ContainerStoreEntry;
+        return storeEntry;
         }
 
 
@@ -503,10 +502,10 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
         var envelope = PrepareUpdate(out var Previous, jsonObject, create);
 
-        var ContainerStoreEntry = CommitToContainer(envelope, jsonObject, Previous);
-        MemoryCommitUpdate(ContainerStoreEntry);
+        var storeEntry = CommitToSequence(envelope, jsonObject, Previous);
+        MemoryCommitUpdate(storeEntry);
 
-        return ContainerStoreEntry;
+        return storeEntry;
         }
 
     /// <summary>
@@ -522,8 +521,8 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
             return false;
             }
 
-        var ContainerStoreEntry = CommitToContainer(envelope, null, Previous);
-        MemoryCommitDelete(ContainerStoreEntry);
+        var storeEntry = CommitToSequence(envelope, null, Previous);
+        MemoryCommitDelete(storeEntry);
         return true;
         }
 
@@ -540,7 +539,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <param name="key">The key for which the index is requested.</param>
     /// <param name="create">If true, will create an index if none is found.</param>
     /// <returns>The index.</returns>
-    public virtual StoreIndex GetContainerStoreIndex(string key, bool create = true) {
+    public virtual StoreIndex GetStoreIndex(string key, bool create = true) {
         var found = IndexDictionary.TryGetValue(key, out var Index);
 
         if (!found & create) {
@@ -560,7 +559,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <param name="create">If true, will create an index if none is found.</param>
     /// <returns>The index.</returns>
     public virtual IPersistenceIndex GetIndex(string key, bool create = true) =>
-        GetContainerStoreIndex(key, create);
+        GetStoreIndex(key, create);
 
 
     /// <summary>

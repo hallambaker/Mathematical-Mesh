@@ -302,7 +302,7 @@
             <summary>The enveloped catalog device.</summary> 
         </member>
         <member name="P:Goedel.Mesh.Server.AccountHandleLocked.CatalogedDeviceDigest">
-            <summary>Digest of the cataloged device envelope, used to detect changes.</summary> 
+            <summary>Bitmask of the cataloged device envelope, used to detect changes.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleLocked.Disposing">
             <inheritdoc/>
@@ -343,21 +343,21 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostInbound(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostInbound(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.Server.Bitmask)">
             <summary>
             Post a message to the spool associated with the account. This is the only operation
             that is supported for a device that is not connected to the account profile.
             </summary>
             <param name="envelope">The message to post.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostLocal(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostLocal(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.Server.Bitmask)">
             <summary>
             Post a message to the spool associated with the account. This is the only operation
             that is supported for a device that is not connected to the account profile.
             </summary>
             <param name="envelope">The message to post.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.StoreAppend(System.String,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope})">
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.StoreAppend(System.String,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},Goedel.Mesh.Server.Bitmask)">
             <summary>
             Append the envelopes <paramref name="envelopes"/> to the store named
             <paramref name="label"/>.
@@ -379,6 +379,18 @@
             </summary>
             <param name="messageId">Message to return.</param>
             <returns>The message (if found).</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.Bitmask.Add(System.Byte[])">
+            <summary>
+            Add the data in <paramref name="data"/> to the bit field vector
+            creating or extended as necessary.
+            </summary>
+            <param name="data">The data to add.</param>
+        </member>
+        <member name="P:Goedel.Mesh.Server.Bitmask.GetBits">
+            <summary>
+            Return the bit field vector.
+            </summary>
         </member>
         <member name="T:Goedel.Mesh.Server.ConsoleLoggerExtensions">
             <summary>
@@ -1080,6 +1092,32 @@
             <param name="authorized">Authorized</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
+        <member name="T:Goedel.Mesh.Server.DeviceState">
+            <summary>
+            Tracks the state of a device connection.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.DeviceState.Initial">
+            <summary>Connection requested, no contact.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.DeviceState.Connected">
+            <summary>Device has sent information within the timeout window.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.DeviceState.Overdue1">
+            <summary>Device was sent first overdue notice.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.DeviceState.Overdue2">
+            <summary>Device was sent first overdue notice.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.DeviceState.Closed">
+            <summary>Connection pending deletion.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.IPresenceDevice.DeviceId">
+            <summary>The device profile UDF.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.IPresenceDevice.DeviceState">
+            <summary>The device status.</summary> 
+        </member>
         <member name="T:Goedel.Mesh.Server.IPresence">
             <summary>
             Presence Service interface.
@@ -1090,14 +1128,16 @@
             Return a presence service endpoint for the specified account.
             </summary>
             <param name="accountHandle">The handle of the account making the request.</param>
+            <param name="presenceConnection">Existing presence connection, if deffined (used
+            to reconnect to disconnected device).</param>
             <returns>A unique device connection identifier and a service endpoint allowing the client to access the service..</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.IPresence.Notify(System.UInt64)">
+        <member name="M:Goedel.Mesh.Server.IPresence.Notify(System.String,System.Byte[])">
             <summary>
             Called when an account handle is updated.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Server.IPresence.GetDevices(System.UInt64)">
+        <member name="M:Goedel.Mesh.Server.IPresence.GetDevices(System.String)">
             <summary>
             Return the connected devices for the specified account.
             </summary>
@@ -1463,7 +1503,7 @@
             <param name="jpcSession">The session connection data.</param>
             <param name="completeRequest">The completion request.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession,System.String,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.IJpcSession,System.String,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Boolean)">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.
@@ -1473,6 +1513,7 @@
             </param>
             <param name="catalogs">The list of catalogs for which status is requested.</param>
             <param name="services">List of services requested.</param>
+            <param name="deviceStatus">If true return the device status vector from the presence service.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountDownload(Goedel.Protocol.IJpcSession,System.Collections.Generic.List{Goedel.Mesh.ConstraintsSelect})">
             <summary>

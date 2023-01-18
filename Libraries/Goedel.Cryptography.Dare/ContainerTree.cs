@@ -107,15 +107,15 @@ public class ContainerTree : ContainerList {
 
 
 
-    #region // Container navigation
+    #region // Sequence navigation
 
     /// <summary>
     /// Initialize the dictionaries used to manage the tree by registering the set
     /// of values leading up to the apex value.
     /// </summary>
     /// <param name="containerInfo">Final frame header</param>
-    /// <param name="firstPosition">Position of frame 1</param>
-    /// <param name="positionLast">Position of the last frame</param>
+    /// <param name="firstPosition">PositionRead of frame 1</param>
+    /// <param name="positionLast">PositionRead of the last frame</param>
     protected override void FillDictionary(SequenceInfo containerInfo, long firstPosition, long positionLast) {
         FrameIndexToPositionDictionary.Add(0, 0);
         if (containerInfo.LIndex == 0) {
@@ -146,8 +146,6 @@ public class ContainerTree : ContainerList {
 
                 }
 
-
-            // This is failing because the container index is set to 2 when it should be 1.
             Assert.AssertTrue(index == containerInfo.LIndex, SequenceDataCorrupt.Throw);
             treePosition = containerInfo.TreePosition;
             }
@@ -183,8 +181,7 @@ public class ContainerTree : ContainerList {
         }
 
     /// <summary>
-    /// Move to the frame with index Position in the file. 
-    /// <para>Since the file format only supports sequential access, this is slow.</para>
+    /// Move to the frame with index PositionRead in the file. 
     /// </summary>
     /// <param name="index">The frame index to move to</param>
     /// <returns>If success, the frame index.</returns>
@@ -262,7 +259,7 @@ public class ContainerTree : ContainerList {
             position = nextPosition;
             Record = nextRecord;
 
-            //Console.WriteLine("    {0}: {1}", Record, Position);
+            //Console.WriteLine("    {0}: {1}", Record, PositionRead);
             }
 
         PositionRead = position;

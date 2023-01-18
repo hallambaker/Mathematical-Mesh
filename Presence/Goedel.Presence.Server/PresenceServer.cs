@@ -37,6 +37,7 @@ using System.Threading.Tasks.Dataflow;
 using Goedel.IO;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Goedel.Mesh;
+using System.Security.Principal;
 
 namespace Goedel.Presence.Server;
 
@@ -44,46 +45,6 @@ namespace Goedel.Presence.Server;
 
 
 
-/// <summary>
-/// Tracks the state of a device connection.
-/// </summary>
-public enum DeviceState {
-    
-    ///<summary>Connection requested, no contact.</summary> 
-    Initial,
-
-    ///<summary>Device has sent information within the timeout window.</summary> 
-    Connected,
-
-    ///<summary>Device was sent first overdue notice.</summary> 
-    Overdue1,
-
-    ///<summary>Device was sent first overdue notice.</summary> 
-    Overdue2,
-
-    ///<summary>Connection pending deletion.</summary> 
-    Closed
-
-    }
-
-/// <summary>
-/// Tracks an account with device(s) connected to the service.
-/// </summary>
-public class AccountBinding {
-
-    ///<summary></summary> 
-    public string AccountId;
-
-    ///<summary>Time at which the binding was created.</summary> 
-    public System.DateTime FirstContact { get; } = System.DateTime.Now;
-
-    ///<summary>Time at which the binding was last used.</summary> 
-    public System.DateTime LastContact { get; set;  } = System.DateTime.Now;
-
-    ///<summary>Dictionary of connected devices.</summary> 
-    public Dictionary<ulong, DeviceBinding> ConnectedDevices { get;  }  = new();
-
-    }
 
 
 /// <summary>
@@ -110,9 +71,9 @@ public class PresenceServer : Disposable, IPresence {
     List<string> Endpoints { get; } = new();
 
 
-    Dictionary<string, AccountBinding> Accounts { get; } = new();
+    Dictionary<string, PresenceBindingAccount> Accounts { get; } = new();
 
-    Dictionary <ulong, DeviceBinding>Devices { get; } = new();
+    Dictionary <ulong, PresenceBindingDevice>Devices { get; } = new();
     ulong ConnectionID = 0;
 
     ///<summary>Time to wait before cancelling connection request.</summary> 
@@ -130,7 +91,7 @@ public class PresenceServer : Disposable, IPresence {
     public int UdpSocketListeners { get; }
 
     ///<summary>The queue of pending items associated with a device.</summary> 
-    PendingQueue<DeviceBinding> PendingQueue = new();
+    PendingQueue<PresenceBindingDevice> PendingQueue = new();
 
 
     ManualResetEventSlim PendingEvent = new ManualResetEventSlim();
@@ -140,7 +101,6 @@ public class PresenceServer : Disposable, IPresence {
 
     bool active = true;
     CancellationTokenSource CancellationTokenSource= new CancellationTokenSource();
-
 
     Thread SenderThread { get; }
     Thread ReceiverThread { get; }
@@ -354,7 +314,7 @@ public class PresenceServer : Disposable, IPresence {
             var connectionId = GetConnectionId(udpRequest.Buffer);
 
             // identify the device
-            DeviceBinding deviceBinding = null;
+            PresenceBindingDevice deviceBinding = null;
             lock (Devices) {
                 if (!Devices.TryGetValue(connectionId, out deviceBinding)) {
                     return; // unrecognized connection id, ignore.
@@ -407,20 +367,23 @@ public class PresenceServer : Disposable, IPresence {
 
     #region // Implement Inteface IPresence
     ///<inheritdoc/>
-    public (ulong, ServiceAccessToken) GetEndPoint(AccountHandleLocked accountHandle) {
+    public ServiceAccessToken GetEndPoint(
+                AccountHandleLocked accountHandle) {
 
         var connectionId = Interlocked.Increment(ref ConnectionID);
 
+
         lock (Accounts) {
+
             if (!Accounts.TryGetValue(accountHandle.AccountAddress, out var accountBinding)) {
-                accountBinding = new AccountBinding() {
+                accountBinding = new PresenceBindingAccount() {
                     AccountId = accountHandle.AccountAddress
                     };
                 Accounts.Add(accountHandle.AccountAddress, accountBinding);
                 }
             accountBinding.LastContact = System.DateTime.Now;
 
-            var deviceBinding = new DeviceBinding() {
+            var deviceBinding = new PresenceBindingDevice() {
                 DeviceId = accountHandle.EnvelopedCatalogedDevice.EnvelopeId,
                 AccountBinding = accountBinding,
                 ConnectionId = connectionId,
@@ -431,6 +394,8 @@ public class PresenceServer : Disposable, IPresence {
             Devices.Add(connectionId, deviceBinding);
             PendingQueue.Insert(deviceBinding, TimeOutInitialMilliSeconds);
             // ToDo, add a connection deletion action to the events queue.
+
+
             }
 
         var tokenId = connectionId.BigEndian();
@@ -441,44 +406,50 @@ public class PresenceServer : Disposable, IPresence {
             Token = tokenId,
             Endpoints = Endpoints
             };
-        return (connectionId, result);
+        return result;
 
         }
 
     ///<inheritdoc/>
-    public List<string> GetDevices(ulong connectionId) {
+    public List<DeviceStatus> GetDevices(string accountId) {
 
-        var result = new List<string>();
+
         lock (Accounts) {
-            if (!Devices.TryGetValue (connectionId, out var deviceBinding)) {
-                return null; // Connection ID is not in use.
+            if (!Accounts.TryGetValue(accountId, out var accountBinding)) {
+                return null;
                 }
-            var accountBinding = deviceBinding.AccountBinding;
+
+            var result = new List<DeviceStatus>();
             var now = DateTime.UtcNow;
             foreach (var deviceEntry in accountBinding.ConnectedDevices) {
                 if (deviceEntry.Value.Expire < now) {
-                    result.Add(deviceEntry.Value.DeviceId);
                     }
                 }
+            return result;
             }
 
-        return result;
         }
 
+
+
     ///<inheritdoc/>
-    public void Notify(ulong connectionId) {
-        lock (Accounts) {
-            if (!Devices.TryGetValue(connectionId, out var deviceBinding)) {
+    public void Notify(string accountId, byte[] bitmask) {
+
+        lock (Accounts){
+            if (!Accounts.TryGetValue(accountId, out var accountBinding)) {
                 return;
-                }
-            var accountBinding = deviceBinding.AccountBinding;
+            }
+            accountBinding.Bitmask = bitmask;
+            var notification = new PresenceNotify() {
+                Bitmask = accountBinding.Bitmask,
+                Serial = accountBinding.Serial
+                };
 
             var now = DateTime.UtcNow;
             foreach (var deviceEntry in accountBinding.ConnectedDevices) {
                 var device = deviceEntry.Value; ;
                 if (device.Expire < now) {
-                    var notification = new PresenceNotify() {
-                        };
+
                     QueueResponse(device, notification, device.CurrentEndpoint);
                     }
                 }
@@ -497,7 +468,7 @@ public class PresenceServer : Disposable, IPresence {
         }
 
     void QueueResponse(
-           DeviceBinding deviceBinding,
+           PresenceBindingDevice deviceBinding,
            PresenceFromService message,
            IPEndPoint endPoint) {
         message.EndPoint = new UdpEndpoint(endPoint);
@@ -515,7 +486,7 @@ public class PresenceServer : Disposable, IPresence {
 
 
 
-    void Connect(DeviceBinding deviceBinding, PresenceConnectRequest connectRequest) {
+    void Connect(PresenceBindingDevice deviceBinding, PresenceConnectRequest connectRequest) {
         Console.WriteLine("Received Connect Request");
         lock (deviceBinding) {
 
@@ -541,7 +512,7 @@ public class PresenceServer : Disposable, IPresence {
         }
 
 
-    void Heartbeat(DeviceBinding deviceBinding, PresenceHeartbeat heartbeat) {
+    void Heartbeat(PresenceBindingDevice deviceBinding, PresenceHeartbeat heartbeat) {
         Console.WriteLine($"Received Heartbeat");
         lock (deviceBinding) {
             var message = new PresenceStatus() {
@@ -554,7 +525,7 @@ public class PresenceServer : Disposable, IPresence {
             }
         }
 
-    void Endpoint(DeviceBinding deviceBinding, PresenceEndpointRequest request) {
+    void Endpoint(PresenceBindingDevice deviceBinding, PresenceEndpointRequest request) {
         Console.WriteLine($"Received Endpoint");
         lock (deviceBinding) {
             var message = new PresenceEndpointResponse() {
@@ -568,7 +539,7 @@ public class PresenceServer : Disposable, IPresence {
         }
 
 
-    void Acknowledge(DeviceBinding deviceBinding, PresenceAcknowledge acknowledge) {
+    void Acknowledge(PresenceBindingDevice deviceBinding, PresenceAcknowledge acknowledge) {
         Console.WriteLine($"Received Acknowledge");
         lock (deviceBinding) {
             // have recieved a keepalive here so update the connection state
@@ -576,7 +547,7 @@ public class PresenceServer : Disposable, IPresence {
             }
         }
 
-    void Resolve(DeviceBinding deviceBinding, PresenceResolveRequest resolveRequest) {
+    void Resolve(PresenceBindingDevice deviceBinding, PresenceResolveRequest resolveRequest) {
         Console.WriteLine($"Received Resolve");
         }
 

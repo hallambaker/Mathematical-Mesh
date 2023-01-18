@@ -32,7 +32,8 @@ namespace Goedel.Mesh;
 public class CatalogBlind : Catalog<CatalogedEntry> {
 
     ///<summary>The catalog label</summary>
-    public override string ContainerDefault => throw new NYI();
+    public override string SequenceDefault => throw new NYI();
+
 
 
     /// <summary>
@@ -52,6 +53,6 @@ public class CatalogBlind : Catalog<CatalogedEntry> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null) :
         base(directory, containerName, policy, cryptoParameters, keyCollection,
-                    readContainer: false, decrypt: false, create: false) => PersistenceStore?.FastReadContainer();
+                    readContainer: false, decrypt: false, create: false) => PersistenceStore?.FastRead();
 
     }

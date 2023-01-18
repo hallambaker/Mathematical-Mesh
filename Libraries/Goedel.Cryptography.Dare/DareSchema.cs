@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 06-Jan-23 6:30:47 PM
+//  This file was automatically generated at 18-Jan-23 1:41:33 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -521,6 +521,12 @@ public partial class DareHeader : DareTrailer {
         /// </summary>
 
 	public virtual byte[]						Cover  {get; set;}
+        /// <summary>
+        ///Bitmask used to identify a container within a group for use in update notification
+        ///etc.
+        /// </summary>
+
+	public virtual byte[]						Bitmask  {get; set;}
 
 
     ///<inheritdoc/>
@@ -617,6 +623,12 @@ public partial class DareHeader : DareTrailer {
 					}
 				break;
 				}
+			case "Bitmask" : {
+				if (value is TokenValueBinary vvalue) {
+					Bitmask = vvalue.Value;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -674,6 +686,9 @@ public partial class DareHeader : DareTrailer {
 			case "Cover" : {
 				return new TokenValueBinary (Cover);
 				}
+			case "Bitmask" : {
+				return new TokenValueBinary (Bitmask);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -703,7 +718,8 @@ public partial class DareHeader : DareTrailer {
 			{ "SequenceIndex", new Property ( typeof(TokenValueStruct), false,
 					()=>new SequenceIndex(), ()=>new SequenceIndex(), false)} ,
 			{ "Received", new Property (typeof(TokenValueDateTime), false)} ,
-			{ "Cover", new Property (typeof(TokenValueBinary), false)} 
+			{ "Cover", new Property (typeof(TokenValueBinary), false)} ,
+			{ "Bitmask", new Property (typeof(TokenValueBinary), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

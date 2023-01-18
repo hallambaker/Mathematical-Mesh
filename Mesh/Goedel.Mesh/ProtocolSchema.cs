@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 06-Jan-23 6:30:52 PM
+//  This file was automatically generated at 18-Jan-23 1:41:38 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -98,6 +98,7 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 	    {"CompleteResponse", CompleteResponse._Factory},
 	    {"StatusRequest", StatusRequest._Factory},
 	    {"StatusResponse", StatusResponse._Factory},
+	    {"DeviceStatus", DeviceStatus._Factory},
 	    {"DownloadRequest", DownloadRequest._Factory},
 	    {"DownloadResponse", DownloadResponse._Factory},
 	    {"TransactRequest", TransactRequest._Factory},
@@ -3021,6 +3022,10 @@ public partial class StatusRequest : MeshRequestUser {
         /// </summary>
 
 	public virtual List<string>				Services  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual bool?						DeviceStatus  {get; set;}
 
 
     ///<inheritdoc/>
@@ -3057,6 +3062,12 @@ public partial class StatusRequest : MeshRequestUser {
 					}
 				break;
 				}
+			case "DeviceStatus" : {
+				if (value is TokenValueBoolean vvalue) {
+					DeviceStatus = vvalue.Value;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -3084,6 +3095,9 @@ public partial class StatusRequest : MeshRequestUser {
 			case "Services" : {
 				return new TokenValueListString (Services);
 				}
+			case "DeviceStatus" : {
+				return new TokenValueBoolean (DeviceStatus);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -3099,7 +3113,8 @@ public partial class StatusRequest : MeshRequestUser {
 			{ "CatalogedDeviceDigest", new Property (typeof(TokenValueString), false)} ,
 			{ "Catalogs", new Property (typeof(TokenValueListString), true)} ,
 			{ "Spools", new Property (typeof(TokenValueListString), true)} ,
-			{ "Services", new Property (typeof(TokenValueListString), true)} 
+			{ "Services", new Property (typeof(TokenValueListString), true)} ,
+			{ "DeviceStatus", new Property (typeof(TokenValueBoolean), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3162,6 +3177,10 @@ public partial class StatusRequest : MeshRequestUser {
 	/// </summary>
 public partial class StatusResponse : MeshResponse {
         /// <summary>
+        /// </summary>
+
+	public virtual byte[]						Bitmask  {get; set;}
+        /// <summary>
         ///The account profile providing the root of trust for this account.
         /// </summary>
 
@@ -3190,12 +3209,22 @@ public partial class StatusResponse : MeshResponse {
         /// </summary>
 
 	public virtual List<ServiceAccessToken>				Services  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<DeviceStatus>				DeviceStatuses  {get; set;}
 
 
     ///<inheritdoc/>
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
+			case "Bitmask" : {
+				if (value is TokenValueBinary vvalue) {
+					Bitmask = vvalue.Value;
+					}
+				break;
+				}
 			case "EnvelopedProfileAccount" : {
 				if (value is TokenValueStructObject vvalue) {
 					EnvelopedProfileAccount = vvalue.Value as Enveloped<ProfileAccount>;
@@ -3232,6 +3261,12 @@ public partial class StatusResponse : MeshResponse {
 					}
 				break;
 				}
+			case "DeviceStatuses" : {
+				if (value is TokenValueListStructObject vvalue) {
+					DeviceStatuses = vvalue.Value as List<DeviceStatus>;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -3244,6 +3279,9 @@ public partial class StatusResponse : MeshResponse {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
+			case "Bitmask" : {
+				return new TokenValueBinary (Bitmask);
+				}
 			case "EnvelopedProfileAccount" : {
 				return new TokenValueStruct<Enveloped<ProfileAccount>> (EnvelopedProfileAccount);
 				}
@@ -3262,6 +3300,9 @@ public partial class StatusResponse : MeshResponse {
 			case "Services" : {
 				return new TokenValueListStruct<ServiceAccessToken> (Services);
 				}
+			case "DeviceStatuses" : {
+				return new TokenValueListStruct<DeviceStatus> (DeviceStatuses);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -3273,6 +3314,7 @@ public partial class StatusResponse : MeshResponse {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
+			{ "Bitmask", new Property (typeof(TokenValueBinary), false)} ,
 			{ "EnvelopedProfileAccount", new Property ( typeof(TokenValueStruct), false,
 					()=>new Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>(), false)} ,
 			{ "EnvelopedCatalogedDevice", new Property ( typeof(TokenValueStruct), false,
@@ -3283,7 +3325,9 @@ public partial class StatusResponse : MeshResponse {
 			{ "EnvelopedAccountHostAssignment", new Property ( typeof(TokenValueStruct), false,
 					()=>new Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>(), false)} ,
 			{ "Services", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<ServiceAccessToken>(), ()=>new ServiceAccessToken(), false)} 
+					()=>new List<ServiceAccessToken>(), ()=>new ServiceAccessToken(), false)} ,
+			{ "DeviceStatuses", new Property ( typeof(TokenValueListStruct), true,
+					()=>new List<DeviceStatus>(), ()=>new DeviceStatus(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3334,6 +3378,151 @@ public partial class StatusResponse : MeshResponse {
 			return Out as StatusResponse;
 			}
 		var Result = new StatusResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	/// </summary>
+public partial class DeviceStatus : MeshProtocol {
+        /// <summary>
+        /// </summary>
+
+	public virtual string						Id  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						Status  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						Comment  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual DateTime?						LastConnected  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Id" : {
+				if (value is TokenValueString vvalue) {
+					Id = vvalue.Value;
+					}
+				break;
+				}
+			case "Status" : {
+				if (value is TokenValueString vvalue) {
+					Status = vvalue.Value;
+					}
+				break;
+				}
+			case "Comment" : {
+				if (value is TokenValueString vvalue) {
+					Comment = vvalue.Value;
+					}
+				break;
+				}
+			case "LastConnected" : {
+				if (value is TokenValueDateTime vvalue) {
+					LastConnected = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Id" : {
+				return new TokenValueString (Id);
+				}
+			case "Status" : {
+				return new TokenValueString (Status);
+				}
+			case "Comment" : {
+				return new TokenValueString (Comment);
+				}
+			case "LastConnected" : {
+				return new TokenValueDateTime (LastConnected);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Id", new Property (typeof(TokenValueString), false)} ,
+			{ "Status", new Property (typeof(TokenValueString), false)} ,
+			{ "Comment", new Property (typeof(TokenValueString), false)} ,
+			{ "LastConnected", new Property (typeof(TokenValueDateTime), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DeviceStatus";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DeviceStatus();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new DeviceStatus FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as DeviceStatus;
+			}
+		var Result = new DeviceStatus ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -3764,6 +3953,10 @@ public partial class TransactRequest : MeshRequestUser {
 	/// </summary>
 public partial class TransactResponse : MeshResponse {
         /// <summary>
+        /// </summary>
+
+	public virtual byte[]						Bitmask  {get; set;}
+        /// <summary>
         ///The responses to the entries.
         /// </summary>
 
@@ -3781,6 +3974,12 @@ public partial class TransactResponse : MeshResponse {
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
+			case "Bitmask" : {
+				if (value is TokenValueBinary vvalue) {
+					Bitmask = vvalue.Value;
+					}
+				break;
+				}
 			case "Entries" : {
 				if (value is TokenValueListStructObject vvalue) {
 					Entries = vvalue.Value as List<EntryResponse>;
@@ -3805,6 +4004,9 @@ public partial class TransactResponse : MeshResponse {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
+			case "Bitmask" : {
+				return new TokenValueBinary (Bitmask);
+				}
 			case "Entries" : {
 				return new TokenValueListStruct<EntryResponse> (Entries);
 				}
@@ -3822,6 +4024,7 @@ public partial class TransactResponse : MeshResponse {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
+			{ "Bitmask", new Property (typeof(TokenValueBinary), false)} ,
 			{ "Entries", new Property ( typeof(TokenValueListStruct), true,
 					()=>new List<EntryResponse>(), ()=>new EntryResponse(), false)} ,
 			{ "ConstraintsData", new Property ( typeof(TokenValueStruct), false,

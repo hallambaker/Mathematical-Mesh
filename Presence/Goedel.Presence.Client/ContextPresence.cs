@@ -310,15 +310,21 @@ public class ContextPresence : Disposable {
     void Process(PresenceErrorInvalidSerial errorInvalidSerial) {
         }
     void Process(PresenceStatus status) {
-        ProcessAcknowledge(status);
+        ProcessStatus(status);
         }
     void Process(PresenceNotify notify) {
-        ProcessAcknowledge(notify);
+        Console.WriteLine("Got notification");
+        ProcessStatus(notify);
 
-        // here trigger any tasks waiting on a notification.
+        var message = new PresenceAcknowledge() {
+            Acknowledge = notify.Serial
+            };
+        SendData(message, ServiceAccessToken.Token);
+        ContextUser.Sync();
+        ReleaseWait();
         }
 
-    void ProcessAcknowledge(PresenceFromService message) {
+    void ProcessStatus(PresenceFromService message) {
         if ((message.Acknowledge ??0)  < AcknowledgmentSerial) {
             return;
             }
@@ -543,16 +549,28 @@ public class ContextPresence : Disposable {
         var inbound = ContextUser.GetSpoolInbound();
         // wait on notification of an update.
         while (ListenerActive) {
-            if (inbound.FrameCount > outBoxCount) {
-                foreach (var envelope in inbound.Select((int)outBoxCount + 1)) {
-                    var message = Message.Decode(envelope, ContextUser.KeyCollection);
+            foreach (var envelope in inbound.Select(1)) {
+                var message = Message.Decode(envelope, ContextUser.KeyCollection);
+                Console.WriteLine($"{ContextUser.AccountAddress}: Message {envelope.Header.Index} type {message.GetType()} (Want {messageType})");
 
-                    if (message.GetType() == messageType) { 
-                        return message; 
-                        }
-                    outBoxCount = inbound.FrameCount;
+                if (message.GetType() == messageType) {
+                    return message;
                     }
+                outBoxCount = inbound.FrameCount;
                 }
+
+
+
+            //if (inbound.FrameCount > outBoxCount) {
+            //    foreach (var envelope in inbound.Select((int)outBoxCount + 1)) {
+            //        var message = Message.Decode(envelope, ContextUser.KeyCollection);
+
+            //        if (message.GetType() == messageType) { 
+            //            return message; 
+            //            }
+            //        outBoxCount = inbound.FrameCount;
+            //        }
+            //    }
             Poll();
             }
 

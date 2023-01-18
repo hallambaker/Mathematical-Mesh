@@ -1167,13 +1167,16 @@
         <member name="F:Goedel.Callsign.CatalogRegistration.Label">
             <summary>The canonical label for the catalog</summary>
         </member>
+        <member name="P:Goedel.Callsign.CatalogRegistration.StoreType">
+            <inheritdocs/>
+        </member>
         <member name="P:Goedel.Callsign.CatalogRegistration.CallsignMapping">
             <summary>The callsign mapping to be applied to registrations in this catalog.</summary> 
         </member>
-        <member name="P:Goedel.Callsign.CatalogRegistration.ContainerDefault">
+        <member name="P:Goedel.Callsign.CatalogRegistration.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Callsign.CatalogRegistration.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Callsign.CatalogRegistration.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -1185,8 +1188,10 @@
             <param name="decrypt">If true, attempt decryption of payload contents./</param>
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
         </member>
-        <member name="M:Goedel.Callsign.CatalogRegistration.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Callsign.CatalogRegistration.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -1200,6 +1205,7 @@
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="M:Goedel.Callsign.CatalogRegistration.PrepareAdd(Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.CallsignBinding},Goedel.Cryptography.KeyPair,Goedel.Callsign.CatalogedRegistration@,System.String@)">
             <summary>
