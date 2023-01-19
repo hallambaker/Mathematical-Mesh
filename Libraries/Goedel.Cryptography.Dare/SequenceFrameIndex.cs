@@ -58,16 +58,16 @@ public partial class SequenceIndexEntry {
     public long FramePosition { get; init; }
 
     ///<summary>The length of the data segment.</summary>
-    public long FrameLength { get; init; }
+    public long FrameLength { get; set; }
 
     ///<summary>The length of the data segment.</summary>
     public long FramePositionNext => FramePosition + FrameLength;
 
     ///<summary>The first byte of the data segment (excluding the length indicator)</summary>
-    public long DataPosition { get; init; }
+    public long DataPosition { get; set; }
 
     ///<summary>The length of the data segment.</summary>
-    public long DataLength { get; init; }
+    public long DataLength { get; set; }
 
     ///<summary>The frame header</summary>
     public DareHeader Header { get; init;  }
@@ -77,7 +77,7 @@ public partial class SequenceIndexEntry {
 
 
     ///<summary>The frame trailer</summary>
-    public DareTrailer Trailer { get; init; }
+    public DareTrailer Trailer { get; set; }
 
     ///<summary>If true, the frame has a payload section</summary>
     public bool HasPayload => DataLength > 0;

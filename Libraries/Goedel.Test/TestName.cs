@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography;
+using Goedel.Cryptography.Algorithms;
 using System.Diagnostics;
 
 using System.Text;
@@ -58,6 +60,14 @@ public static class TestName {
         return builder.ToString();
 
         }
+
+
+    public static byte[] GetTestBytes(string tag, int length, string info = "") =>
+        KeyDeriveHKDF.Derive(tag.ToBytes(), info: info.ToBytes(), length: length);
+
+    public static byte[] GetTestBytes(string tag, int length, int info) =>
+        KeyDeriveHKDF.Derive(tag.ToBytes(), info: info.ToString().ToBytes(), length: length*8);
+
 
     }
 

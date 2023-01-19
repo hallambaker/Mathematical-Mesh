@@ -21,6 +21,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 using Goedel.Cryptography;
@@ -53,9 +54,69 @@ public partial class TestContainers {
         TestContainer(filename, containerType, records, maxSize, reOpen, moveStep);
         }
 
+    [Theory]
+    [InlineData(SequenceType.List)]
+    [InlineData(SequenceType.List, 5)]
+    [InlineData(SequenceType.List, 100)]
+    [InlineData(SequenceType.List, 1,  false)]
+    [InlineData(SequenceType.List, 5, false)]
+    [InlineData(SequenceType.List, 100, false)]
+    public void TestAppend(SequenceType containerType,
+        int records = 1, bool atomic = true) {
+
+        var filename = TestName.Get(containerType, records, atomic);
+        var entries = new List<SequenceIndexEntry>();
 
 
+        //Create container
+        var i = 0;
+        using (var sequence = Sequence.NewContainer(filename, FileStatus.Overwrite, containerType)) {
+            var header = new DareHeader() {
+                };
+            var payload = TestName.GetTestBytes(filename, 100, i++);
 
+            if (atomic) {
+                var entry = sequence.Append(header, payload);
+                entries.Add(entry);
+                }
+            else {
+                var entry = sequence.Append(payload);
+
+                entries.Add(entry);
+                }
+
+
+            }
+
+        var j = 0;
+        using (var stream = filename.OpenFileRead()) {
+            var payload = TestName.GetTestBytes(filename, 100, j++);
+            foreach (var entry in entries) {
+                Validate(stream, entry, payload);
+                }
+            }
+
+        (i == j).TestTrue();
+        }
+
+
+    static void Validate(FileStream stream, SequenceIndexEntry entry, byte[] data) {
+
+        // check frame boundaries
+        (entry.FramePosition < entry.DataPosition).TestTrue();
+        (entry.FrameLength > entry.DataLength).TestTrue();
+
+        // check data boundaries
+        (entry.DataLength == data.Length).TestTrue();
+
+        // check data segment
+        stream.Position = entry.DataPosition;
+        for (var i = 0; i < entry.DataLength; i++) {
+            var b = stream.ReadByte();
+            (data[i] == b).TestTrue();
+            }
+
+        }
 
 
 

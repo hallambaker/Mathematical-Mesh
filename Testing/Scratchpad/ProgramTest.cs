@@ -56,9 +56,13 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+
+
+        //TestContainers.Test().TestAppend(SequenceType.List, 1);
+        //TestContainers.Test().TestAppend(SequenceType.List, 1, false);
+
+
         TestContainers.Test().TestSequence(SequenceType.List, 1);
-
-
 
 
         //StoreTests.Test().TestAppendDirect();

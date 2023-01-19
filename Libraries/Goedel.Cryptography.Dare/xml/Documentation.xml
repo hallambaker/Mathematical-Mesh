@@ -416,6 +416,9 @@
         <member name="P:Goedel.Cryptography.Dare.DareHeader.ContentType">
             <summary>The content type.</summary>
         </member>
+        <member name="F:Goedel.Cryptography.Dare.DareHeader.BodyWriter">
+            <summary>Writer used to assemble stream</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Dare.DareHeader.Serialize(Goedel.Protocol.Writer,System.Boolean)">
             <inheritdoc/>
         </member>
@@ -433,7 +436,7 @@
             </summary>
             <param name="DAREHeader"></param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareHeader.BodyWriter(System.IO.Stream)">
+        <member name="M:Goedel.Cryptography.Dare.DareHeader.MakeBodyWriter(System.IO.Stream)">
             <summary>
             Construct a stream that will write the body data with whatever crypto stream
             modules are required.
@@ -5545,49 +5548,12 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(Goedel.Cryptography.Dare.DareHeader,System.Byte[],Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.DataEncoding,Goedel.Protocol.JsonObject)">
-            <summary>
-            The only valid way to append data to the sequence.
-            </summary>
-            <param name="header">The header data.</param>
-            <param name="payload">The payload as bytes.</param>
-            <param name="trailer">The trailer data.</param>
-            <param name="dataEncoding">The encoding to use.</param>
-            <param name="jsonObject">The object represented by the payload bytes. If
-            <paramref name="jsonObject"/> is specified without <paramref name="payload"/>,
-            the payload bytes are calculated automatically. Otherwise, it is assumed
-            the value of <paramref name="payload"/> is correct.</param>
-            <returns></returns>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.MakeSequenceInfo">
             <summary>
             Initialize a <see cref="T:Goedel.Cryptography.Dare.SequenceInfo"/> instance for the current Sequence
             position.
             </summary>
             <returns>The initialized instance.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(Goedel.Cryptography.Dare.SequenceIndex,Goedel.Cryptography.Dare.ContentMeta)">
-            <summary>
-            Append an empty frame containing Sequence index or content information.
-            </summary>
-            <param name="sequenceIndex">The SequenceIndex to append.</param>
-            <param name="contentMeta">The ContentMeta to append.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
-            <summary>
-            Write a previously prepared or validated Dare Envelope to the Sequence directly.
-            </summary>
-            <param name="envelope">The envelope to append to the Sequence</param>
-            <param name="updateEnvelope">If true, update the headerData and trailerData of 
-            <paramref name="envelope"/> to the computed values.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Int64)">
-            <summary>
-            Append the envelopes <paramref name="envelopes"/> to the Sequence starting
-            with the <paramref name="index"/>th envelope.
-            </summary>
-            <param name="envelopes">The enveolpes to append</param>
-            <param name="index">The starting point at which to begin appending.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.PrepareFrame(Goedel.Cryptography.Dare.SequenceInfo)">
             <summary>
@@ -5604,6 +5570,99 @@
             <param name="previous">If true read the previous frame, otherwise, read the
             next.</param>
             <returns>The frame read.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
+            <summary>
+            Intern the entry <paramref name="indexEntry"/> in the sequence dictionaries.
+            
+            </summary>
+            <param name="indexEntry"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(Goedel.Cryptography.Dare.DareHeader,System.Byte[],Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.DataEncoding,Goedel.Protocol.JsonObject)">
+            <summary>
+            The only valid way to append data to the sequence.
+            </summary>
+            <param name="header">The header data.</param>
+            <param name="payload">The payload as bytes.</param>
+            <param name="trailer">The trailer data.</param>
+            <param name="dataEncoding">The encoding to use.</param>
+            <param name="jsonObject">The object represented by the payload bytes. If
+            <paramref name="jsonObject"/> is specified without <paramref name="payload"/>,
+            the payload bytes are calculated automatically. Otherwise, it is assumed
+            the value of <paramref name="payload"/> is correct.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
+            <summary>
+            Write a previously prepared or validated Dare Envelope to the Sequence directly.
+            </summary>
+            <param name="envelope">The envelope to append to the Sequence</param>
+            <param name="updateEnvelope">If true, update the headerData and trailerData of 
+            <paramref name="envelope"/> to the computed values.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(Goedel.Cryptography.Dare.SequenceIndex,Goedel.Cryptography.Dare.ContentMeta)">
+            <summary>
+            Append an empty frame containing Sequence index or content information.
+            </summary>
+            <param name="sequenceIndex">The SequenceIndex to append.</param>
+            <param name="contentMeta">The ContentMeta to append.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Int64)">
+            <summary>
+            Append the envelopes <paramref name="envelopes"/> to the Sequence starting
+            with the <paramref name="index"/>th envelope.
+            </summary>
+            <param name="envelopes">The enveolpes to append</param>
+            <param name="index">The starting point at which to begin appending.</param>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Sequence.IncrementalAppendIndex">
+            <summary>
+            Header of the framer being written
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.AppendBegin(System.Int64,Goedel.Cryptography.Dare.ContentMeta,System.String,System.Byte[],System.Collections.Generic.List{System.Byte[]},Goedel.Cryptography.Dare.CryptoParameters)">
+            <summary>
+            Begin appending a data frame.
+            </summary>
+            <remarks>This call is not thread safe. It is the responsibility of the caller
+            to ensure that only one process writes to the Sequence at once and that no other
+            process has access.</remarks>
+            <param name="dataLength">The plaintext payload data length. the final payload
+            length may be longer as a result of padding.</param>
+            <param name="contentInfo">Pre-populated Sequence headerData.</param>
+            <param name="contentType">The payload content type.</param>
+            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked headerData.</param>
+            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+                as an EDSS headerData entry.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
+            <returns>The number of bytes written</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.AppendProcess(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Process record data. This method may be called any number
+            of times but the total count of the number of items must match
+            the Content Length specified in the original call.
+            </summary>
+            <param name="data">The data to procees</param>
+            <param name="offset">Index of first byte to process.</param>
+            <param name="count">Number of bytes to process.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.AppendEnd">
+            <summary>
+            Complete appending a record.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Defer(Goedel.Cryptography.Dare.SequenceWriterDeferred,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Byte[],System.Collections.Generic.List{System.Byte[]})">
+            <summary>
+            Create a DareEnvelope to be added to the Sequence in deferred write mode.
+            </summary>
+            <param name="contextWrite">The Sequence write context the envelope is to be written in.</param>
+            <param name="contentMeta">The content metadata.</param>
+            <param name="data">The data plaintext payload.</param>
+            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked headerData.</param>
+            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+                as an EDSS headerData entry.</param>
+            <returns>The created envelope</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Append(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.String,System.Byte[],System.Collections.Generic.List{System.Byte[]},Goedel.Cryptography.Dare.CryptoParameters)">
             <summary>
@@ -5645,69 +5704,14 @@
             <remarks>At present, the file stream MUST support the seek operation
             which is an issue that has to be removed.</remarks>
         </member>
-        <member name="F:Goedel.Cryptography.Dare.Sequence.contextWrite">
-            <summary>
-            Header of the framer being written
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.AppendBegin(System.Int64,Goedel.Cryptography.Dare.ContentMeta,System.String,System.Byte[],System.Collections.Generic.List{System.Byte[]},Goedel.Cryptography.Dare.CryptoParameters)">
-            <summary>
-            Begin appending a data frame.
-            </summary>
-            <remarks>This call is not thread safe. It is the responsibility of the caller
-            to ensure that only one process writes to the Sequence at once and that no other
-            process has access.</remarks>
-            <param name="contentLength">The plaintext payload data length. the final payload
-            length may be longer as a result of padding.</param>
-            <param name="contentInfo">Pre-populated Sequence headerData.</param>
-            <param name="contentType">The payload content type.</param>
-            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked headerData.</param>
-            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-                as an EDSS headerData entry.</param>
-            <param name="cryptoParameters">The cryptographic parameters.</param>
-            <returns>The number of bytes written</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.AppendProcess(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Process record data. This method may be called any number
-            of times but the total count of the number of items must match
-            the Content Length specified in the original call.
-            </summary>
-            <param name="data">The data to procees</param>
-            <param name="offset">Index of first byte to process.</param>
-            <param name="count">Number of bytes to process.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.AppendEnd">
-            <summary>
-            Complete appending a record.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Defer(Goedel.Cryptography.Dare.SequenceWriterDeferred,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Byte[],System.Collections.Generic.List{System.Byte[]})">
-            <summary>
-            Create a DareEnvelope to be added to the Sequence in deferred write mode.
-            </summary>
-            <param name="contextWrite">The Sequence write context the envelope is to be written in.</param>
-            <param name="contentMeta">The content metadata.</param>
-            <param name="data">The data plaintext payload.</param>
-            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked headerData.</param>
-            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-                as an EDSS headerData entry.</param>
-            <returns>The created envelope</returns>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.PrepareFrame(Goedel.Cryptography.Dare.SequenceWriter)">
             <summary>
             Prepare the headerData information to write an envelope to a Sequence.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.ValidateFrame(Goedel.Cryptography.Dare.SequenceWriter)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.PrepareFrame(Goedel.Cryptography.Dare.DareHeader,System.Int64)">
             <summary>
-            Validate a frame to be added to the Sequence.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.CommitHeader(Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.SequenceWriter)">
-            <summary>
-            Append the headerData to the frame. This is called after the payload data
-            has been passed using AppendPreprocess.
+            Prepare the headerData information to write an envelope to a Sequence.
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.GetHeader(System.Int64)">
@@ -6151,11 +6155,6 @@
             Prepare the data to be incorporated into the header.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceList.CommitHeader(Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.SequenceWriter)">
-            <summary>
-            Commit the header data to the Sequence.
-            </summary>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceList.FillDummyTrailer(Goedel.Cryptography.Dare.CryptoStack)">
             <summary>
             The number of bytes to be reserved for the trailer.
@@ -6370,7 +6369,7 @@
         <member name="P:Goedel.Cryptography.Dare.SequenceWriterFile.FrameStart">
             <summary>PositionRead of the frame start.</summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceWriterFile.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.JbcdStream)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceWriterFile.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.JbcdStream,System.Int64,System.Int64,System.Int64)">
             <summary>
             Main constructor.
             </summary>

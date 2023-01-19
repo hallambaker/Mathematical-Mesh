@@ -74,6 +74,10 @@ public partial class DareHeader {
     ///<summary>The content type.</summary>
     public string ContentType => ContentMeta?.ContentType;
 
+    ///<summary>Writer used to assemble stream</summary> 
+    public CryptoStackStreamWriter BodyWriter = null;
+
+
     ///<inheritdoc/>
     public override void Serialize(Writer writer, bool tagged = false) {
         if (ContentMeta != null) {
@@ -105,7 +109,6 @@ public partial class DareHeader {
 
     #region // Consider moving this functionality out to ContextWrite
 
-    CryptoStackStreamWriter currentBodyWriter = null;
 
     /// <summary>
     /// Construct a stream that will write the body data with whatever crypto stream
@@ -113,22 +116,22 @@ public partial class DareHeader {
     /// </summary>
     /// <param name="output">The ultimate output stream.</param>
     /// <returns></returns>
-    public Stream BodyWriter(Stream output) {
+    public Stream MakeBodyWriter(Stream output) {
         if (CryptoStack == null) {
             return output;
             }
-        currentBodyWriter = CryptoStack.GetEncoder(output, PackagingFormat.Direct);
-        return currentBodyWriter.Writer;
+        BodyWriter = CryptoStack.GetEncoder(output, PackagingFormat.Direct);
+        return BodyWriter.Writer;
         }
 
     /// <summary>
     /// Close the body writer stack and free all associated resources.
     /// </summary>
     public void CloseBodyWriter(out DareTrailer dareTrailer) {
-        currentBodyWriter.Close();
-        dareTrailer = GetTrailer(currentBodyWriter);
-        currentBodyWriter?.Dispose();
-        currentBodyWriter = null;
+        BodyWriter.Close();
+        dareTrailer = GetTrailer(BodyWriter);
+        BodyWriter?.Dispose();
+        BodyWriter = null;
         }
 
 

@@ -128,11 +128,11 @@ public class SequenceList : Sequence {
     /// </summary>
     public override void PrepareFrame(SequenceWriter contextWrite) { }
 
-    /// <summary>
-    /// Commit the header data to the Sequence.
-    /// </summary>
-    public override void CommitHeader(DareHeader containerHeader, SequenceWriter contextWrite) =>
-                throw new NYI();
+    ///// <summary>
+    ///// Commit the header data to the Sequence.
+    ///// </summary>
+    //public override void CommitHeader(DareHeader containerHeader, SequenceWriter contextWrite) =>
+    //            throw new NYI();
 
         //FrameIndexToPositionDictionary.Add(containerHeader.SequenceInfo.LIndex,
         //        contextWrite.FrameStart);

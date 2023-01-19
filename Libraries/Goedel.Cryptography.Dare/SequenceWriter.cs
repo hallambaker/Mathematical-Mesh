@@ -69,16 +69,35 @@ public class SequenceWriterFile : SequenceWriter {
 
     readonly long frameStart;
 
+    public SequenceIndexEntry SequenceIndexEntry { get; }
+
     /// <summary>
     /// Main constructor.
     /// </summary>
     /// <param name="sequence">The Sequence to be written</param>
     /// <param name="header">The Sequence header???</param>
     /// <param name="JBCDStream">The stream???</param>
-    public SequenceWriterFile(Sequence sequence, DareHeader header, JbcdStream JBCDStream) {
+    public SequenceWriterFile(
+                Sequence sequence,
+                DareHeader header,
+                JbcdStream JBCDStream,
+                long dataPosition,
+                long dataLength,
+                long frameLength) {
         base.Sequence = sequence;
         frameStart = JBCDStream.PositionWrite;
         SequenceHeader = header;
+
+
+        SequenceIndexEntry = new SequenceIndexEntry() {
+            Sequence = sequence,
+            FramePosition = JBCDStream.PositionWrite,
+            FrameLength = frameLength,
+            DataPosition = dataPosition,
+            DataLength = dataLength,
+            Header = header,
+            };
+
         }
 
     /// <summary>
@@ -87,8 +106,8 @@ public class SequenceWriterFile : SequenceWriter {
     /// <param name="dareTrailer">The trailer to write.</param>
     public override void CommitFrame(DareTrailer dareTrailer = null) {
         DareTrailer = dareTrailer;
-        Sequence.CommitHeader(SequenceHeader, this);
-        //Sequence.Digest = DareTrailer?.TreeDigest ?? DareTrailer?.ChainDigest;
+        SequenceIndexEntry.Trailer = dareTrailer;
+
         }
 
     }
