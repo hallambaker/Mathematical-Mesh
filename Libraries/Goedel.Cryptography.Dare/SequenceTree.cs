@@ -30,10 +30,36 @@ namespace Goedel.Cryptography.Dare;
 public class SequenceTree : SequenceList {
 
     /// <summary>
+    /// Dictionary of frame index to frame position. OBSOLETE REMOVE
+    /// </summary>
+    public Dictionary<long, long> FrameIndexToPositionDictionary =
+        new();
+
+
+    /// <summary>
+    /// Get or set the read position in the stream.
+    /// </summary>
+    protected new long PositionRead {
+        get => JbcdStream.PositionRead;
+        set {
+            JbcdStream.PositionRead = value;
+            }
+        }
+
+
+
+
+    /// <summary>
     /// Default constructor
     /// </summary>
-    public SequenceTree(bool decrypt) : base(decrypt) {
+    public SequenceTree() {
         }
+
+
+
+
+
+
 
     /// <summary>
     /// Append the header to the frame. This is called after the payload data
@@ -60,6 +86,28 @@ public class SequenceTree : SequenceList {
 
         }
 
+    /// <summary>
+    /// Register a frame in the Sequence access dictionaries.
+    /// </summary>
+    /// <param name="sequenceInfo">First headerData</param>
+    /// <param name="position">PositionRead of the frame</param>
+    protected virtual void RegisterFrame(SequenceInfo sequenceInfo, long position) {
+        var index = sequenceInfo.LIndex;
+        FrameIndexToPositionDictionary.AddSafe(index, position);
+        }
+
+
+
+
+    ///// <summary>
+    ///// Get the frame position.
+    ///// </summary>
+    ///// <param name="frame">The frame index</param>
+    ///// <returns>The frame position.</returns>
+    //public virtual long GetFramePosition(long frame) {
+    //    FrameIndexToPositionDictionary.TryGetValue(frame, out var position);
+    //    return position;
+    //    }
 
     #region // Sequence navigation
 
@@ -123,23 +171,23 @@ public class SequenceTree : SequenceList {
         return true;
         }
 
-    /// <summary>
-    /// Move to the specified frame index.
-    /// </summary>
-    /// <param name="index">First index to move to</param>
-    /// <returns>If the move to the specified index succeeded, returns <code>true</code>.
-    /// Otherwise, returns <code>false</code>.</returns>
-    public bool Move(long index) {
-        MoveToIndex(index);
-        return Next();
-        }
+    ///// <summary>
+    ///// Move to the specified frame index.
+    ///// </summary>
+    ///// <param name="index">First index to move to</param>
+    ///// <returns>If the move to the specified index succeeded, returns <code>true</code>.
+    ///// Otherwise, returns <code>false</code>.</returns>
+    //public bool Move(long index) {
+    //    MoveToIndex(index);
+    //    return Next();
+    //    }
 
     /// <summary>
     /// Move to the frame with index PositionRead in the file. 
     /// </summary>
     /// <param name="index">The frame index to move to</param>
     /// <returns>If success, the frame index.</returns>
-    public override bool MoveToIndex(long index) {
+    public virtual bool MoveToIndex(long index) {
         if (index == FrameCount) {
             JbcdStream.PositionRead = JbcdStream.Length;
             return false;
@@ -227,7 +275,7 @@ public class SequenceTree : SequenceList {
     /// </summary>
     /// <param name="frame">The frame index</param>
     /// <returns>The frame position.</returns>
-    public override long GetFramePosition(long frame) {
+    public  long GetFramePosition(long frame) {
 
 
         var Found = FrameIndexToPositionDictionary.TryGetValue(frame, out var Position);

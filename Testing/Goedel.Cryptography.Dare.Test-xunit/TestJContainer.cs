@@ -42,6 +42,22 @@ public partial class TestContainers {
     [Fact]
     public void ContainerTestList1() => TestContainer($"ContainerList", SequenceType.List, 1);
 
+    [Theory]
+    [InlineData(SequenceType.List, 0)]
+    [InlineData(SequenceType.List, 1)]
+    [InlineData(SequenceType.List, 50)]
+    public void TestSequence(SequenceType containerType,
+        int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0) {
+
+        var filename = TestName.Get(containerType, records, maxSize, reOpen, moveStep);
+        TestContainer(filename, containerType, records, maxSize, reOpen, moveStep);
+        }
+
+
+
+
+
+
 
     [Fact]
     public void ContainerTestEncrypted() {
@@ -208,6 +224,11 @@ public partial class TestContainers {
             policy, CryptoParametersEntry);
         }
 
+
+
+
+
+
     static void TestContainer(string fileName, SequenceType containerType,
                 int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0,
                 DarePolicy policy = null,
@@ -278,7 +299,7 @@ public partial class TestContainers {
             using (var XContainer = Sequence.Open(fileName, FileStatus.Read,
                         policy: policy)) {
                 for (Record = moveStep; Record < records; Record += moveStep) {
-                    var ContainerDataReader = XContainer.GetSequenceFrameIndex(Record);
+                    var ContainerDataReader = XContainer.Frame(Record);
                     (ContainerDataReader.Header.SequenceInfo.LIndex == Record).TestTrue(); ;
                     }
 
@@ -288,7 +309,7 @@ public partial class TestContainers {
             using (var XContainer = Sequence.Open(fileName, FileStatus.Read,
                         policy: policy)) {
                 for (Record = records; Record > 0; Record -= moveStep) {
-                    var ContainerDataReader = XContainer.GetSequenceFrameIndex(Record);
+                    var ContainerDataReader = XContainer.Frame(Record);
                     (ContainerDataReader.Header.SequenceInfo.LIndex == Record).TestTrue(); ;
                     }
                 }

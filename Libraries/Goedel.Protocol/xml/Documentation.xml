@@ -1038,6 +1038,9 @@
         <member name="T:Goedel.Protocol.DataEncoding">
             <summary>Data encoding forms</summary>
         </member>
+        <member name="F:Goedel.Protocol.DataEncoding.Default">
+            <summary>Default encoding</summary> 
+        </member>
         <member name="F:Goedel.Protocol.DataEncoding.JSON">
             <summary>JSON encoding in UTF8</summary>
         </member>

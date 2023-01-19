@@ -34,22 +34,30 @@ public static class TestName {
         var frame = stack.GetFrame(1);
         var method = frame.GetMethod();
 
+        return Format(method.Name, parameters);
+        }
+
+    public static string GetCaller(params object[] parameters) {
+        var stack = new StackTrace();
+        var frame = stack.GetFrame(1);
+        var method = frame.GetMethod();
+
+        return Format(method.Name, parameters);
+        }
+
+
+    static string Format(string tag, params object[] parameters) {
+
         var builder = new StringBuilder();
-        builder.Append(method.Name);
+        builder.Append(tag);
         foreach (var v in parameters) {
             builder.Append('-');
             builder.Append(v.ToString());
             }
 
-
-
-
         return builder.ToString();
 
         }
-
-
-
 
     }
 

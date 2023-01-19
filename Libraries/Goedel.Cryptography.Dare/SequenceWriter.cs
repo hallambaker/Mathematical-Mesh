@@ -88,7 +88,7 @@ public class SequenceWriterFile : SequenceWriter {
     public override void CommitFrame(DareTrailer dareTrailer = null) {
         DareTrailer = dareTrailer;
         Sequence.CommitHeader(SequenceHeader, this);
-        Sequence.Digest = DareTrailer?.TreeDigest ?? DareTrailer?.ChainDigest;
+        //Sequence.Digest = DareTrailer?.TreeDigest ?? DareTrailer?.ChainDigest;
         }
 
     }

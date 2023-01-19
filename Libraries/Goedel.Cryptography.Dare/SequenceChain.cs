@@ -36,7 +36,7 @@ public class SequenceChain : SequenceDigest {
     /// <summary>
     /// Default constructor
     /// </summary>
-    public SequenceChain(bool decrypt) : base(decrypt) {
+    public SequenceChain()  {
         }
 
 

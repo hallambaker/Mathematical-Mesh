@@ -519,7 +519,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             var containerUpdate = new ContainerUpdate() {
                 Container = syncStatus.Store.StoreName,
                 Envelopes = envelopes,
-                Digest = sequence.Digest
+                //Digest = sequence.Digest
                 // put the digest value here
                 };
 
@@ -528,7 +528,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 Math.Min((start + maxEnvelopes), syncStatus.Store.FrameCount);
 
             if (start == 0) {
-                envelopes.Add(sequence.FrameZero);
+                envelopes.Add(sequence.SequenceIndexEntryFirst.GetEnvelope());
                 start++;
                 }
 

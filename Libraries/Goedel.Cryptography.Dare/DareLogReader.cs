@@ -150,7 +150,7 @@ public class DareLogReader : Disposable, IEnumerable<SequenceIndexEntry> {
             string path = null) {
         path.Future();
 
-        var ContainerDataReader = Sequence.GetSequenceFrameIndex(index);
+        var ContainerDataReader = Sequence.Frame(index);
         Data = ContainerDataReader.GetPayload(Sequence, keyLocate);
         contentMeta = ContainerDataReader?.Header.ContentMeta;
         }
@@ -172,7 +172,7 @@ public class DareLogReader : Disposable, IEnumerable<SequenceIndexEntry> {
             index = entry.Index;
             }
 
-        var containerDataReader = Sequence.GetSequenceFrameIndex(index);
+        var containerDataReader = Sequence.Frame(index);
         containerDataReader.CopyToFile(Sequence, outputFile);
         }
 
@@ -211,7 +211,7 @@ public class DareLogReader : Disposable, IEnumerable<SequenceIndexEntry> {
 
             // unpack the file
             //Screen.WriteLine($"File: {fileEntry.Path} PositionRead is {fileEntry.Index}");
-            var containerDataReader = Sequence.GetSequenceFrameIndex(fileEntry.Index);
+            var containerDataReader = Sequence.Frame(fileEntry.Index);
             containerDataReader.CopyToFile(Sequence, destination);
             }
 

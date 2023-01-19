@@ -24,6 +24,7 @@
 using System;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
+using Goedel.Cryptography.Dare;
 //using Goedel.Cryptography.PQC;
 using Goedel.Mesh;
 using Goedel.Mesh.Shell;
@@ -55,8 +56,19 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+        TestContainers.Test().TestSequence(SequenceType.List, 1);
 
-        StoreTests.Test().TestAppendDirect();
+
+
+
+        //StoreTests.Test().TestAppendDirect();
+        //TestPresence.Test().PresenceSessionRequest();
+
+
+
+
+
+
 
         //RegistrationTests.Test().CallsignBind();
 
@@ -65,7 +77,7 @@ partial class Program {
         //TestPresence.Test().PresenceStatusUpdate();
         //TestPresence.Test().PresenceHeartbeat(cycles:30, clientSkip: 1);
 
-        TestPresence.Test().PresenceSessionRequest();
+
         //TestPresence.Test().UdpServiceBasic(2000);
 
 

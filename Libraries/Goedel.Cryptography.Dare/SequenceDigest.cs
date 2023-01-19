@@ -39,7 +39,7 @@ public class SequenceDigest : SequenceList {
     /// Default constructor
     /// </summary>
 
-    public SequenceDigest(bool decrypt) : base(decrypt) {
+    public SequenceDigest() {
         }
 
 

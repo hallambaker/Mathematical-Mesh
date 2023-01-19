@@ -37,7 +37,7 @@ public class SequenceMerkleTree : SequenceTree {
     /// Default constructor
     /// </summary>
 
-    public SequenceMerkleTree(bool decrypt=true) : base(decrypt) {
+    public SequenceMerkleTree() {
         }
 
     /// <summary>

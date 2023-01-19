@@ -213,6 +213,9 @@ public partial class JbcdStream {
             }
         }
 
+
+
+
     /// <summary>
     /// Write a wrapped frame containing a header and an optional data section
     /// to the current stream at the current write position. 
@@ -223,7 +226,7 @@ public partial class JbcdStream {
     /// <param name="FrameData2">Second data record, contains protected metadata.</param>
     /// <param name="flush">If true, flush the frame data value to the file.</param>
     /// <returns>The total size of the frame.</returns>
-    public long WriteWrappedFrame(
+    public long WriteWrappedFrame (
                 byte[] FrameHeader,
                 byte[] FrameData1 = null,
                 byte[] FrameData2 = null,

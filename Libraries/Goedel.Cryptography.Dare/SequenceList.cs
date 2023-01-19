@@ -35,30 +35,61 @@ public class SequenceList : Sequence {
     /// Default constructor
     /// </summary>
 
-    public SequenceList(bool decrypt) : base(decrypt) {
+    public SequenceList() {
         }
 
+    SequenceIndexEntry IndexedFromStart { get; set; } = null;
+
+    SequenceIndexEntry IndexedFromEnd { get; set; } = null;
 
 
 
-    // The lowest 
-    long frameIndexUnknownLow = 0;
-    long frameHighUnknown = 0;
-
-
+    ///<inheritdoc/>
     protected override void FillDictionary() {
+        IndexedFromStart = SequenceIndexEntryFirst;
+        IndexedFromEnd = SequenceIndexEntryLast;
+
         }
 
-    public override SequenceIndexEntry Frame(long Index) {
-        throw new NYI();
+    ///<inheritdoc/>
+    public override SequenceIndexEntry Frame(long index) {
+        if (FrameIndexToEntry.TryGetValue(index, out var entry)) {
+            return entry;
+            }
+        var fromStart = index - IndexedFromStart.Index;
+        var fromEnd = IndexedFromEnd.Index - index;
+
+        if (fromStart <= fromEnd) {
+            do {
+                entry = IndexedFromStart.Next();
+                if (entry.Index == index) {
+                    return entry;
+                    }
+                }
+            while (entry != null && entry.Index < index);
+            }
+        else {
+            do {
+                entry = IndexedFromEnd.Previous();
+                if (entry.Index == index) {
+                    return entry;
+                    }
+                }
+            while (entry != null && entry.Index > index);
+            }
+
+        return null;
         }
 
-    public override SequenceIndexEntry FrameLast() {
-        throw new NYI();
-        }
+    ///<inheritdoc/>
+    public override SequenceIndexEntry FrameLast() => SequenceIndexEntryLast;
 
+    ///<inheritdoc/>
     public override SequenceIndexEntry Position(long position) {
-        throw new NYI();
+        if (SequencePositionToEntry.TryGetValue(position, out var entry)) {
+            return entry;
+            }
+        return ReadAtPosition(position);
         }
 
 
@@ -73,23 +104,23 @@ public class SequenceList : Sequence {
     /// <param name="firstPosition">PositionRead of frame 1</param>
     /// <param name="positionLast">PositionRead of the last frame</param>
     protected override void FillDictionary(SequenceInfo containerInfo, long firstPosition, long positionLast) {
-        FrameIndexToPositionDictionary.Add(0, 0);
-        if (containerInfo.LIndex == 0) {
-            frameIndexUnknownLow = 0;
-            frameHighUnknown = 0;
-            return;
-            }
+        //FrameIndexToPositionDictionary.Add(0, 0);
+        //if (containerInfo.LIndex == 0) {
+        //    frameIndexUnknownLow = 0;
+        //    frameHighUnknown = 0;
+        //    return;
+        //    }
 
-        FrameIndexToPositionDictionary.Add(1, firstPosition);
-        frameIndexUnknownLow = 1;
+        //FrameIndexToPositionDictionary.Add(1, firstPosition);
+        //frameIndexUnknownLow = 1;
 
-        if (containerInfo.LIndex == 1) {
-            frameHighUnknown = 1;
-            return;
-            }
+        //if (containerInfo.LIndex == 1) {
+        //    frameHighUnknown = 1;
+        //    return;
+        //    }
 
-        frameHighUnknown = containerInfo.LIndex;
-        RegisterFrame(containerInfo, positionLast);
+        //frameHighUnknown = containerInfo.LIndex;
+        //RegisterFrame(containerInfo, positionLast);
         }
 
     /// <summary>
@@ -101,8 +132,10 @@ public class SequenceList : Sequence {
     /// Commit the header data to the Sequence.
     /// </summary>
     public override void CommitHeader(DareHeader containerHeader, SequenceWriter contextWrite) =>
-        FrameIndexToPositionDictionary.Add(containerHeader.SequenceInfo.LIndex,
-                contextWrite.FrameStart);
+                throw new NYI();
+
+        //FrameIndexToPositionDictionary.Add(containerHeader.SequenceInfo.LIndex,
+        //        contextWrite.FrameStart);
 
 
     /// <summary>
@@ -113,149 +146,10 @@ public class SequenceList : Sequence {
         cryptoStack?.GetDummyTrailer();
 
 
-    /// <summary>If positive, specifies the file position of the next frame.
-    /// This is used to store an index to be applied to the file pointer before 
-    /// a Next or Previous method operates on the stream.</summary>
-    long frameReadStartPosition = -1;
-
-    /// <summary>
-    /// Get or set the read position in the stream.
-    /// </summary>
-    protected long PositionRead {
-        get => JbcdStream.PositionRead;
-        set {
-            frameReadStartPosition = -1;
-            JbcdStream.PositionRead = value;
-            }
-        }
-
-    void PositionStream() {
-        if (frameReadStartPosition >= 0) {
-            JbcdStream.PositionRead = frameReadStartPosition;
-            frameReadStartPosition = -1;
-            }
-        }
-
-    long frameRemaining;
-
-    #region // Sequence navigation
 
 
 
 
-
-    ///// <summary>
-    ///// Read the next frame in the file.
-    ///// </summary>
-    ///// <returns>True if a next frame exists, otherwise false</returns>
-    //public override bool NextFrame() => JbcdStream.FramerNext();
-
-    ///// <summary>
-    ///// Read the next frame in the file.
-    ///// </summary>
-    ///// <returns>True if a next frame exists, otherwise false</returns>
-    //public override bool PreviousFrame() => JbcdStream.FramerPrevious();
-
-
-    /// <summary>
-    /// Read the next frame in the file.
-    /// </summary>
-    /// <returns>True if a next frame exists, otherwise false</returns>
-    protected virtual bool Next() {
-        PositionStream();
-
-        var RecordStart = PositionRead;
-
-        //_FrameData = null;
-        frameRemaining = JbcdStream.ReadFrame(out var FrameHeader);
-        frameReadStartPosition = PositionRead;
-
-        this.HeaderBytes = FrameHeader;
-
-
-        if (FrameHeader != null) {
-            var Index = Header.SequenceInfo.LIndex;
-            if (!FrameIndexToPositionDictionary.TryGetValue(Index, out _)) {
-                FrameIndexToPositionDictionary.Add(Index, RecordStart);
-                }
-            }
-
-
-        return frameRemaining >= 0;
-        }
-
-    /// <summary>
-    /// Read the previous frame in the file and leave the read pointer positioned at the start
-    /// of the frame just read.
-    /// </summary>
-    /// <returns>True if a previous frame exists, otherwise false</returns>
-    public override bool Previous() {
-        PositionStream();
-
-        frameRemaining = JbcdStream.ReadFrameReverse(out var FrameHeader);
-        frameReadStartPosition = PositionRead;
-
-        this.HeaderBytes = FrameHeader;
-        if (FrameHeader != null) {
-            var Index = Header.SequenceInfo.LIndex;
-            if (!FrameIndexToPositionDictionary.TryGetValue(Index, out _)) {
-                FrameIndexToPositionDictionary.Add(Index, frameReadStartPosition);
-                }
-            }
-
-        return frameRemaining >= 0;
-        }
-
-    /// <summary>
-    /// Move to the frame with index PositionRead in the file. 
-    /// <para>Since the file format only supports sequential access, this is slow.</para>
-    /// </summary>
-    /// <param name="index">The frame index to move to</param>
-    /// <returns>If success, the frame index.</returns>
-    public override bool MoveToIndex(long index) {
-
-        if (FrameIndexToPositionDictionary.TryGetValue(index, out var position)) {
-            PositionRead = position;
-            }
-        else {
-            Assert.AssertTrue(index > frameIndexUnknownLow & index < frameHighUnknown, SequenceDataCorrupt.Throw);
-
-            if (index - frameIndexUnknownLow <= frameHighUnknown - index) {
-                Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(
-                    frameIndexUnknownLow, out position), SequenceDataCorrupt.Throw);
-                PositionRead = position;
-                var Last = PositionRead;
-                Next();
-                while (SequenceInfo != null && SequenceInfo.LIndex < index) {
-                    Last = PositionRead;
-                    Next();
-                    }
-                PositionRead = Last;
-                frameIndexUnknownLow = SequenceInfo.LIndex;
-                return SequenceInfo.LIndex == index;
-                }
-
-            else {
-                Assert.AssertTrue(
-                    FrameIndexToPositionDictionary.TryGetValue(frameHighUnknown, out position),
-                    SequenceDataCorrupt.Throw);
-                PositionRead = position;
-
-                Previous();
-                while (SequenceInfo != null && (SequenceInfo.LIndex > index)) {
-                    Previous();
-                    }
-
-                frameHighUnknown = SequenceInfo.LIndex;
-                return SequenceInfo.LIndex == index;
-                }
-            }
-        return true;
-        //return Next();
-
-        }
-
-    #endregion
 
     #region // Verification
     /// <summary>

@@ -218,7 +218,7 @@ public partial class TestContainers {
             // Check in forward direction
             using (var XContainer = Sequence.Open(filename, FileStatus.Read, keyCollection)) {
                 for (record = moveStep; record < records; record += moveStep) {
-                    var ContainerDataReader = XContainer.GetSequenceFrameIndex(record);
+                    var ContainerDataReader = XContainer.Frame(record);
                     (ContainerDataReader.Header.SequenceInfo.LIndex == record).TestTrue();
                     }
 
@@ -227,7 +227,7 @@ public partial class TestContainers {
             // Check in backwards direction
             using (var XContainer = Sequence.Open(filename, FileStatus.Read, keyCollection)) {
                 for (record = records; record > 0; record -= moveStep) {
-                    var ContainerDataReader = XContainer.GetSequenceFrameIndex(record);
+                    var ContainerDataReader = XContainer.Frame(record);
                     (ContainerDataReader.Header.SequenceInfo.LIndex == record).TestTrue();
                     }
                 }

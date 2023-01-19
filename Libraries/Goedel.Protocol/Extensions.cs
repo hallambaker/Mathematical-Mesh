@@ -24,6 +24,8 @@ namespace Goedel.Protocol;
 
 /// <summary>Data encoding forms</summary>
 public enum DataEncoding {
+    ///<summary>Default encoding</summary> 
+    Default,
     /// <summary>JSON encoding in UTF8</summary>
     JSON,
     /// <summary>JSON easy to edit format in UTF8</summary>

@@ -83,7 +83,7 @@ public partial class SequenceIndexEntry {
     public bool HasPayload => DataLength > 0;
 
     ///<summary>The decoded JSONObject</summary>
-    public JsonObject JsonObject { get; init; }
+    public JsonObject JsonObject { get; set; }
 
     ///<summary>Convenience property, set true iff payload is encrypted.</summary> 
     public bool IsEncrypted => Header?.EncryptionAlgorithm != null;
