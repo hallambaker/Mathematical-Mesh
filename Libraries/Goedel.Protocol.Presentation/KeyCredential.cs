@@ -177,7 +177,7 @@ public class KeyCredentialPrivate : KeyCredentialPublic, ICredentialPrivate {
         foreach (var extension in extensions) {
             if (extension.Tag == PresentationConstants.ExtensionTagsX448Tag) {
                 var ephemeral = new KeyPairX448(extension.Value, KeySecurity.Public);
-                //Screen.WriteLine($"Select = {ephemeral}");
+                //Screen.WriteLine($"SelectEnvelope = {ephemeral}");
                 return (AuthenticationPrivate, ephemeral);
                 }
             }

@@ -49,6 +49,21 @@ public class SequenceList : Sequence {
     protected override void FillDictionary() {
         }
 
+    public override SequenceIndexEntry Frame(long Index) {
+        throw new NYI();
+        }
+
+    public override SequenceIndexEntry FrameLast() {
+        throw new NYI();
+        }
+
+    public override SequenceIndexEntry Position(long position) {
+        throw new NYI();
+        }
+
+
+
+
 
     /// <summary>
     /// Initialize the dictionaries used to manage the tree by registering the set
@@ -58,8 +73,6 @@ public class SequenceList : Sequence {
     /// <param name="firstPosition">PositionRead of frame 1</param>
     /// <param name="positionLast">PositionRead of the last frame</param>
     protected override void FillDictionary(SequenceInfo containerInfo, long firstPosition, long positionLast) {
-
-
         FrameIndexToPositionDictionary.Add(0, 0);
         if (containerInfo.LIndex == 0) {
             frameIndexUnknownLow = 0;
@@ -78,8 +91,6 @@ public class SequenceList : Sequence {
         frameHighUnknown = containerInfo.LIndex;
         RegisterFrame(containerInfo, positionLast);
         }
-
-
 
     /// <summary>
     /// Prepare the data to be incorporated into the header.

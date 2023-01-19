@@ -47,7 +47,7 @@ public interface ICredentialPublic : ICredential {
 
 
     /// <summary>
-    /// Select an ephemeral from <paramref name="ephemerals"/> that is compatible with 
+    /// SelectEnvelope an ephemeral from <paramref name="ephemerals"/> that is compatible with 
     /// the creedential key <paramref name="keyId"/>.
     /// </summary>
     /// <param name="keyId">If specified, the first ephemeral in the list compatible
@@ -107,7 +107,7 @@ public interface ICredentialPrivate : ICredentialPublic {
 
 
     /// <summary>
-    /// Select a private key compatible with the ephemeral keys offered in 
+    /// SelectEnvelope a private key compatible with the ephemeral keys offered in 
     /// <paramref name="extensions"/> and return the private key and ephemeral
     /// chosen.
     /// </summary>

@@ -562,7 +562,7 @@ public class ContextPresence : Disposable {
 
 
             //if (inbound.FrameCount > outBoxCount) {
-            //    foreach (var envelope in inbound.Select((int)outBoxCount + 1)) {
+            //    foreach (var envelope in inbound.SelectEnvelope((int)outBoxCount + 1)) {
             //        var message = Message.Decode(envelope, ContextUser.KeyCollection);
 
             //        if (message.GetType() == messageType) { 

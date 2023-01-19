@@ -4,93 +4,6 @@
         <name>Goedel.Cryptography.Dare</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Cryptography.Dare.ContainerChain">
-            <summary>
-            Simple container that supports the append and index functions but does not 
-            provide for cryptographic integrity.
-            </summary>
-            <threadsafety static="true" instance="false"/>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerChain.#ctor(System.Boolean)">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerChain.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream,System.Boolean)">
-            <summary>
-            Create a new container file of the specified type and write the initial
-            data record
-            </summary>
-            <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
-            in a read access mode and should have exclusive read access. All existing
-            content in the file will be overwritten.</param>
-            <param name="decrypt">If true, decrypt the container payload contents.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerChain.FillDictionary(Goedel.Cryptography.Dare.SequenceInfo,System.Int64,System.Int64)">
-            <summary>
-            Initialize the dictionaries used to manage the tree by registering the set
-            of values leading up to the apex value.
-            </summary>
-            <param name="header">Final frame header</param>
-            <param name="firstPosition">PositionRead of frame 1</param>
-            <param name="positionLast">PositionRead of the last frame</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerChain.PrepareFrame(Goedel.Cryptography.Dare.SequenceWriter)">
-            <summary>
-            Append the header to the frame. This is called after the payload data
-            has been passed using AppendPreprocess.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerChain.FillDummyTrailer(Goedel.Cryptography.Dare.CryptoStack)">
-            <summary>
-            Pre-populate the dummy trailer so as to allow the length to be calculated.
-            </summary>
-            <returns>The dummy trailer.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerChain.MakeTrailer(Goedel.Cryptography.Dare.DareTrailer@)">
-            <summary>
-            The dummy trailer to add to the end of the frame.
-            </summary>
-            <param name="trailer">The trailer to augment.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerChain.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
-            <summary>
-            Perform sanity checking on a list of container headers.
-            </summary>
-            <param name="headers">List of headers to check</param>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.ContainerDigest">
-            <summary>
-            Simple container that supports the append and index functions but does not 
-            provide for linked cryptographic integrity.
-            </summary>
-            <threadsafety static="true" instance="false"/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ContainerDigest.DigestRequired">
-            <summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerDigest.#ctor(System.Boolean)">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerDigest.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream,System.Boolean)">
-            <summary>
-            Create a new container file of the specified type and write the initial
-            data record
-            </summary>
-            <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
-            in a read access mode and should have exclusive read access. All existing
-            content in the file will be overwritten.</param>
-            <returns>The newly constructed container.</returns>
-            <param name="decrypt">If true, decrypt the container payload contents.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerDigest.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
-            <summary>
-            Perform sanity checking on a list of container headers.
-            </summary>
-            <param name="Headers">List of headers to check</param>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceData">
              <summary>
             
@@ -422,53 +335,9 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Cryptography.Dare.SequenceEnumeratorRaw">
-            <summary>
-            Enumerator that returns the raw, unencrypted container data.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.Current">
-            <summary>
-            Gets the element in the collection at the current position of the enumerator.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Boolean)">
-            <summary>
-            Create an enumerator for <paramref name="container"/>.
-            </summary>
-            <param name="lowIndex">The lowest index to be returned.</param>
-            <param name="reverse">If true, enumeratre from the last item to <paramref name="lowIndex"/> (inclusive).
-            otherwise, enumerate from <paramref name="lowIndex"/> to the first.</param>
-            <param name="container">The container to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.GetEnumerator">
-            <summary>
-            When called on an instance of this class, returns the instance. Thus allowing
-            selectors to be used in sub classes.
-            </summary>
-            <returns>This instance</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.Dispose">
-            <summary>
-            Dispose method.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns>If true, the next item was found. Otherwise, the end of the enumeration 
-            was reached.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.Reset">
-            <summary>
-            Sets the enumerator to its initial position, which is before the first element 
-            in the collection.
-            </summary>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.ContainerEnumerator">
             <summary>
-            Enumerator for frames in a container beginning with frame 1.
+            Enumerator for frames in a Sequence beginning with frame 1.
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.ContainerEnumerator.Current">
@@ -476,11 +345,11 @@
             Gets the element in the collection at the current position of the enumerator.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerEnumerator.#ctor(Goedel.Cryptography.Dare.Sequence)">
+        <member name="M:Goedel.Cryptography.Dare.ContainerEnumerator.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Int64)">
             <summary>
-            Create an enumerator for <paramref name="container"/>.
+            Create an enumerator for <paramref name="sequence"/>.
             </summary>
-            <param name="container">The container to enumerate.</param>
+            <param name="sequence">The Sequence to enumerate.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.ContainerEnumerator.GetEnumerator">
             <summary>
@@ -515,7 +384,7 @@
              </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareHeader.Index">
-            <summary>The container index value.</summary>
+            <summary>The Sequence index value.</summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareHeader.OutputLength(System.Int64)">
             <summary>
@@ -588,7 +457,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareHeader.EnhanceBody(System.Byte[],Goedel.Cryptography.Dare.DareTrailer@)">
             <summary>
-            Return a binary EDS sequence of the specified plaintext under this header. A
+            Return a binary EDS Sequence of the specified plaintext under this header. A
             unique salt will be assigned.
             </summary>
             <param name="Plaintext">The EDS plaintext.</param>
@@ -787,112 +656,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Cryptography.Dare.ContainerList">
-            <summary>
-            Simple container that supports the append and index functions but does not 
-            provide for linked cryptographic integrity.
-            </summary>
-            <threadsafety static="true" instance="false"/>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.#ctor(System.Boolean)">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream,System.Boolean)">
-            <summary>
-            Create a new container file of the specified type and write the initial
-            data record
-            </summary>
-            <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
-            in a read access mode and should have exclusive read access. All existing
-            content in the file will be overwritten.</param>
-            <returns>The newly constructed container.</returns>
-            <param name="decrypt">If true, decrypt the container payload contents.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.FillDictionary(Goedel.Cryptography.Dare.SequenceInfo,System.Int64,System.Int64)">
-            <summary>
-            Initialize the dictionaries used to manage the tree by registering the set
-            of values leading up to the apex value.
-            </summary>
-            <param name="containerInfo">Final frame header container information.</param>
-            <param name="firstPosition">PositionRead of frame 1</param>
-            <param name="positionLast">PositionRead of the last frame</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.PrepareFrame(Goedel.Cryptography.Dare.SequenceWriter)">
-            <summary>
-            Prepare the data to be incorporated into the header.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.CommitHeader(Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.SequenceWriter)">
-            <summary>
-            Commit the header data to the container.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.FillDummyTrailer(Goedel.Cryptography.Dare.CryptoStack)">
-            <summary>
-            The number of bytes to be reserved for the trailer.
-            </summary>
-            <returns>The number of bytes to reserve</returns>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.ContainerList.frameReadStartPosition">
-            <summary>If positive, specifies the file position of the next frame.
-            This is used to store an index to be applied to the file pointer before 
-            a Next or Previous method operates on the stream.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ContainerList.PositionRead">
-            <summary>
-            Get or set the read position in the stream.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.GetSequenceFrameIndex(System.Int64,System.Int64)">
-            <summary>
-            Obtain a ContainerFrameIndex instance for <paramref name="index"/> if
-            specified or <paramref name="position"/> otherwise.
-            </summary>
-            <param name="index">The container index to obtain the frame index for.</param>
-            <param name="position">The container position to obtain the frame index for.</param>
-            <returns>The created ContainerFrameIndex instance,</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.NextFrame">
-            <summary>
-            Read the next frame in the file.
-            </summary>
-            <returns>True if a next frame exists, otherwise false</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.PreviousFrame">
-            <summary>
-            Read the next frame in the file.
-            </summary>
-            <returns>True if a next frame exists, otherwise false</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.Next">
-            <summary>
-            Read the next frame in the file.
-            </summary>
-            <returns>True if a next frame exists, otherwise false</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.Previous">
-            <summary>
-            Read the previous frame in the file and leave the read pointer positioned at the start
-            of the frame just read.
-            </summary>
-            <returns>True if a previous frame exists, otherwise false</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.MoveToIndex(System.Int64)">
-            <summary>
-            Move to the frame with index PositionRead in the file. 
-            <para>Since the file format only supports sequential access, this is slow.</para>
-            </summary>
-            <param name="index">The frame index to move to</param>
-            <returns>If success, the frame index.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerList.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
-            <summary>
-            Perform sanity checking on a list of container headers.
-            </summary>
-            <param name="headers">List of headers to check</param>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.ContainerMasterStore">
             <summary>
             
@@ -1082,9 +845,9 @@
             <param name="FileName">Log file.</param>
             <param name="Type">Type of data to store (the schema name).</param>
             <param name="ContainerType">The Sequence type.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
             <param name="DataEncoding">The data encoding.</param>
-            <param name="FileStatus">The file status in which to open the container.</param>
+            <param name="FileStatus">The file status in which to open the Sequence.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.ContainerPersistenceStoreThreadSafe.GetHandleRead(System.Boolean)">
             <summary>
@@ -1102,98 +865,13 @@
             even when there are no outstanding access handles.</param>
             <returns>The read handle</returns>
         </member>
-        <member name="T:Goedel.Cryptography.Dare.ContainerMerkleTree">
-            <summary>
-            Simple container that supports the append and index functions but does not 
-            provide for cryptographic integrity.
-            </summary>
-            <threadsafety static="true" instance="false"/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ContainerMerkleTree.DigestRequired">
-            <summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.#ctor(System.Boolean)">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream,System.Boolean)">
-            <summary>
-            Create a new container file of the specified type and write the initial
-            data record
-            </summary>
-            <param name="jbcdStream">The underlying JBCDStream stream. This MUST be opened
-            in a read access mode and should have exclusive read access. All existing
-            content in the file will be overwritten.</param>
-            <returns>The newly constructed container.</returns>
-            <param name="decrypt">If true, decrypt the container payload contents.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.PrepareFrame(Goedel.Cryptography.Dare.SequenceInfo)">
-            <summary>
-            Prepare the ContainerInfo data for the frame.
-            </summary>
-            <param name="containerInfo">The frame to prepare.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.RegisterFrame(Goedel.Cryptography.Dare.SequenceInfo,System.Int64)">
-            <summary>
-            Register a frame in the container access dictionaries.
-            </summary>
-            <param name="containerInfo">Frame header</param>
-            <param name="position">PositionRead of the frame</param>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.ContainerMerkleTree.FrameDigestDictionary">
-            <summary>
-            Dictionary mapping the frame index to the corresponding digest value.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.FillDummyTrailer(Goedel.Cryptography.Dare.CryptoStack)">
-            <summary>
-            Pre-populate the dummy trailer so as to allow the length to be calculated.
-            </summary>
-            <returns>The dummy trailer.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.MakeTrailer(Goedel.Cryptography.Dare.DareTrailer@)">
-             <summary>
-             The dummy trailer to add to the end of the frame.
-             </summary>
-            <param name="trailer">The trailer to augment.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.GetTreeDigest(System.Int64,System.Byte[])">
-            <summary>
-            Calculate the digest of the specified tree node
-            </summary>
-            <param name="frame">The frame number</param>
-            <param name="contentDigest">The content digest</param>
-            <returns>The calculated digest</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.DigestFrame(System.Int64,System.Byte[])">
-            <summary>
-            Obtain the digest value for a frame.
-            </summary>
-            <param name="frame">The frame index.</param>
-            <param name="right">The digest of the rightmost component.</param>
-            <returns>The calculated digest.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.GetFrameDigest(System.Int64)">
-            <summary>
-            Get the digest value of the specified frame.
-            </summary>
-            <param name="Frame">The frame index.</param>
-            <returns>The digest value.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerMerkleTree.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
-            <summary>
-            Perform sanity checking on a list of container headers.
-            </summary>
-            <param name="headers">List of headers to check</param>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.PersistenceStore">
             <summary>
-            Persistence store based on a sequence interface.
+            Persistence store based on a Sequence interface.
             </summary>
         </member>
         <member name="F:Goedel.Cryptography.Dare.PersistenceStore.Sequence">
-            <summary>The underlying sequence.</summary>
+            <summary>The underlying Sequence.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.PersistenceStore.FrameCount">
             <summary>The value of the last frame index</summary>
@@ -1240,19 +918,19 @@
             Open or create a persistence store in specified mode with 
             the specified file name, content type and optional comment.
             </summary>
-            <param name="policy">The cryptographic policy to be applied to the sequence.</param>
+            <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
             <param name="fileName">Log file.</param>
             <param name="contentType">Type of data to store (the schema name).</param>
             <param name="sequenceType">The Sequence type.</param>
             <param name="dataEncoding">The data encoding.</param>
-            <param name="fileStatus">The file status in which to open the sequence.</param>
+            <param name="fileStatus">The file status in which to open the Sequence.</param>
             <param name="keyCollection">The key collection to use to resolve private keys.</param>
-            <param name="read">If true read the sequence to initialize the persistence store.</param>
+            <param name="read">If true read the Sequence to initialize the persistence store.</param>
             <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.IKeyLocate,System.Boolean)">
             <summary>
-            Create a persisetence store round an already opened sequence.
+            Create a persisetence store round an already opened Sequence.
             </summary>
             <param name="sequence"></param>
             <param name="read"></param>
@@ -1260,46 +938,46 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.FastRead">
             <summary>
-            Read the sequence contents in fast mode generating indexes only without reading contents.
+            Read the Sequence contents in fast mode generating indexes only without reading contents.
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Read(Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceIntegrity)">
             <summary>
-            Read a sequence from the first frame to the last.
+            Read a Sequence from the first frame to the last.
             </summary>
-            <param name="integrity">Specifies the degree of sequence integrity checking to perform.</param>
+            <param name="integrity">Specifies the degree of Sequence integrity checking to perform.</param>
             <param name="keyLocate">The key collection to be used to resolve keys</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Apply(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
-            Apply the specified message to the sequence.
+            Apply the specified message to the Sequence.
             </summary>
             <param name="dareMessage"></param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.CommitTransaction(Goedel.Cryptography.Dare.SequenceFrameIndex,Goedel.Protocol.JsonObject)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.CommitTransaction(Goedel.Cryptography.Dare.SequenceIndexEntry,Goedel.Protocol.JsonObject)">
             <summary>
             Commit a transaction to memory.
             </summary>
-            <param name="frameIndex">The sequence position</param>
+            <param name="frameIndex">The Sequence position</param>
             <param name="jSONObject">The object being committed in deserialized form.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitNew(Goedel.Cryptography.Dare.StoreEntry)">
             <summary>
             Commit a New transaction to memory
             </summary>
-            <param name="storeEntry">The sequence store entry representing the transaction</param>
+            <param name="storeEntry">The Sequence store entry representing the transaction</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitUpdate(Goedel.Cryptography.Dare.StoreEntry)">
             <summary>
             Commit an Update transaction to memory
             </summary>
-            <param name="storeEntry">The sequence store entry representing the transaction</param>
+            <param name="storeEntry">The Sequence store entry representing the transaction</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitDelete(Goedel.Cryptography.Dare.StoreEntry)">
             <summary>
             Commit a Delete transaction to memory
             </summary>
-            <param name="storeEntry">The sequence store entry representing the transaction</param>
+            <param name="storeEntry">The Sequence store entry representing the transaction</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Prepare(Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.JsonObject,System.Collections.Generic.List{Goedel.Cryptography.KeyPair})">
             <summary>
@@ -1312,7 +990,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.CommitToSequence(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.StoreEntry)">
             <summary>
-            Write a persistence entry to the sequence.
+            Write a persistence entry to the Sequence.
             </summary>
             <param name="item">The object to write.</param>
             <param name="previous">The previous entry.</param>
@@ -1328,9 +1006,9 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.PrepareUpdate(Goedel.Cryptography.Dare.StoreEntry@,Goedel.Protocol.JsonObject,System.Boolean,Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{Goedel.Cryptography.KeyPair})">
             <summary>
-            Create a sequence header to update an existing persistence entry
+            Create a Sequence header to update an existing persistence entry
             </summary>
-            <param name="previous">The previous sequence store entry for this object</param>
+            <param name="previous">The previous Sequence store entry for this object</param>
             <param name="jsonObject">The new object value</param>
             <param name="create">If true, create a new value if one does not already exist</param>
             <param name="encryptionKey">Key under which the item is to be encrypted.</param>
@@ -1341,7 +1019,7 @@
             <summary>
             Delete a persistence entry
             </summary>
-            <param name="previous">The previous sequence store entry for this object</param>
+            <param name="previous">The previous Sequence store entry for this object</param>
             <param name="uniqueID">The UniqueID of the object to delete</param>
             <returns>True if the object was updated, otherwise false.</returns>
             
@@ -1411,98 +1089,6 @@
         <member name="T:Goedel.Cryptography.Dare.Transaction">
             <summary>
             Base class for transactions.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.ContainerTree">
-            <summary>
-            Simple container that supports the append and index functions but does not 
-            provide for cryptographic integrity.
-            </summary>
-            <threadsafety static="true" instance="false"/>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.#ctor(System.Boolean)">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.MakeNewContainer(Goedel.Cryptography.Dare.JbcdStream,System.Boolean)">
-            <summary>
-            Create a new container file of the specified type and write the initial
-            data record
-            </summary>
-            <param name="jbcdStream">The underlying JBCDStream stream. This MUST be opened
-            in a read access mode and should have exclusive read access. All existing
-            content in the file will be overwritten.</param>
-            <returns>The newly constructed container.</returns>
-            <param name="decrypt">If true, decrypt the container payload contents.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.PrepareFrame(Goedel.Cryptography.Dare.SequenceWriter)">
-            <summary>
-            Append the header to the frame. This is called after the payload data
-            has been passed using AppendPreprocess.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.PrepareFrame(Goedel.Cryptography.Dare.SequenceInfo)">
-            <summary>
-            Prepare the ContainerInfo data for the frame.
-            </summary>
-            <param name="containerInfo">The frame to prepare.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.FillDictionary(Goedel.Cryptography.Dare.SequenceInfo,System.Int64,System.Int64)">
-            <summary>
-            Initialize the dictionaries used to manage the tree by registering the set
-            of values leading up to the apex value.
-            </summary>
-            <param name="containerInfo">Final frame header</param>
-            <param name="firstPosition">PositionRead of frame 1</param>
-            <param name="positionLast">PositionRead of the last frame</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.Move(System.Int64)">
-            <summary>
-            Move to the specified frame index.
-            </summary>
-            <param name="index">Frame index to move to</param>
-            <returns>If the move to the specified index succeeded, returns <code>true</code>.
-            Otherwise, returns <code>false</code>.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.MoveToIndex(System.Int64)">
-            <summary>
-            Move to the frame with index PositionRead in the file. 
-            </summary>
-            <param name="index">The frame index to move to</param>
-            <returns>If success, the frame index.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.GetFramePosition(System.Int64)">
-            <summary>
-            Get the frame position.
-            </summary>
-            <param name="frame">The frame index</param>
-            <returns>The frame position.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.PreviousFramePosition(System.Int64)">
-            <summary>
-            Returns the start position of the prior frame in the tree.
-            </summary>
-            <param name="frameIndex">The Frame Index</param>
-            <returns>The position of the frame.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.PreviousFrame(System.Int64)">
-            <summary>
-            Returns the index of the prior frame in the tree.
-            </summary>
-            <param name="frame">The frame index</param>
-            <returns>The preceding frame index.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
-            <summary>
-            Perform sanity checking on a list of container headers.
-            </summary>
-            <param name="headers">List of headers to check</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerTree.VerifySequence">
-            <summary>
-            Verify container contents by reading every frame starting with the first and checking
-            for integrity. This is likely to take a very long time.
             </summary>
         </member>
         <member name="T:Goedel.Cryptography.Dare.CryptoParameters">
@@ -1624,16 +1210,16 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.CryptoParametersSequence.#ctor(Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DareHeader,System.Boolean,Goedel.Cryptography.IKeyLocate)">
             <summary>
-            Create cryptoparameters for a container from the specified policy.
+            Create cryptoparameters for a Sequence from the specified policy.
             </summary>
-            <param name="containerType">The container type.</param>
+            <param name="containerType">The Sequence type.</param>
             <param name="header">Header specifying the governing policy.</param>
             <param name="recover">Attempt to recover the master secret.</param>
             <param name="keyLocate">Key location instance.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.CryptoParametersSequence.ReuseKeyExchange(System.Int32,System.Int32@)">
             <summary>
-            Applies the security policy and container status information to determine if a prior
+            Applies the security policy and Sequence status information to determine if a prior
             key exchange can be reused. If the value false is returned, a new key exchange is
             required. Otherwise, the value <paramref name="previousFrame"/> is set to the index value
             of the prior frame where the key exchange can be found.
@@ -2674,7 +2260,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.DataSequence(System.Int32)">
             <summary>
-            Return the plaintext of a data sequence.
+            Return the plaintext of a data Sequence.
             </summary>
             <param name="i"></param>
             <returns></returns>
@@ -2799,7 +2385,7 @@
                 as an EDSS header entry.</param>
             <param name="chunk">The maximum chunk size. If unspecified, the default
             system chunk size (2048) is used.</param>
-            <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
             to be presented in place of an encrypted document if it cannot be decrypted.</param>
             <returns>The number of bytes in the input file.</returns>
         </member>
@@ -2816,7 +2402,7 @@
                 as an EDSS header entry.</param>
             <param name="chunk">The maximum chunk size. If unspecified, the default
             system chunk size (2048) is used.</param>
-            <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
             to be presented in place of an encrypted document if it cannot be decrypted.</param>
             <returns>The serialized encoding of the data.</returns>
         </member>
@@ -2825,7 +2411,7 @@
             Encode data received on the input stream to the output stream with the specified
             security enhancements. If the input stream supports the seek operation, and
             the maximum chunk size is less than 1, the output file will be written as a 
-            single sequence. Otherwise, the file will be written with a chunk size no
+            single Sequence. Otherwise, the file will be written with a chunk size no
             greater than the maximum specified.
             </summary>
             <param name="inputStream">The input stream, must support reading.</param>
@@ -2841,7 +2427,7 @@
             <param name="contentLength">The content length. This value is ignored if the Plaintext
             parameter is not null. If the value is less than 0, chunked encoding
             will be used for the payload data. </param>         
-            <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
             to be presented in place of an encrypted document if it cannot be decrypted.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.DecodeJsonObject(Goedel.Cryptography.IKeyLocate)">
@@ -2940,7 +2526,7 @@
                 Data sequences to be converted to an EDS and presented
                 as an EDSS header entry.
             </param>
-            <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
             to be presented in place of an encrypted document if it cannot be decrypted.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.CryptoParameters,Goedel.Protocol.JsonWriter,Goedel.Cryptography.Dare.ContentMeta,System.Int64,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Byte[])">
@@ -2963,7 +2549,7 @@
                 Data sequences to be converted to an EDS and presented
                 as an EDSS header entry.
             </param>
-            <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
             to be presented in place of an encrypted document if it cannot be decrypted.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelopeWriter.Write(System.Byte[],System.Int32,System.Int32)">
@@ -3290,7 +2876,7 @@
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareLogReader.Sequence">
-            <summary>The underlying sequence</summary> 
+            <summary>The underlying Sequence</summary> 
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogReader.Disposing">
             <summary>
@@ -3299,7 +2885,7 @@
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareLogReader.Count">
             <summary>
-            The number of entries in the container. Note that this will have to be 
+            The number of entries in the Sequence. Note that this will have to be 
             changed when entries spanning multiple frames are supported.
             </summary>
         </member>
@@ -3320,18 +2906,18 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogReader.#ctor(System.String,Goedel.Cryptography.IKeyLocate,Goedel.IO.FileStatus,System.Boolean)">
             <summary>
-            Open an existing file sequence in read mode.
+            Open an existing file Sequence in read mode.
             </summary>
             <param name="fileName">The file name to read</param>
             <param name="fileStatus">The mode to open the file in, this must be a mode
             that permits read access.</param>
             <param name="keyCollection">Key collection to be used to resolve private key references.</param>
-            <param name="decrypt">If true attempt to decrypt the sequence contents.</param>
+            <param name="decrypt">If true attempt to decrypt the Sequence contents.</param>
             <returns>File Sequence instance</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogReader.GetIndex">
             <summary>
-            Compile an index over the sequence.
+            Compile an index over the Sequence.
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogReader.List(System.IO.TextWriter)">
@@ -3343,7 +2929,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogReader.File(System.String,Goedel.Cryptography.IKeyLocate,System.Byte[]@,Goedel.Cryptography.Dare.ContentMeta@)">
             <summary>
-            Open a file container and then read and return the last entry in the file.
+            Open a file Sequence and then read and return the last entry in the file.
             </summary>
             <param name="FileName">The file name to create</param>
             <param name="Data">The content data</param>
@@ -3352,7 +2938,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogReader.Read(Goedel.Cryptography.IKeyLocate,System.Byte[]@,Goedel.Cryptography.Dare.ContentMeta@,System.Int32,System.String)">
             <summary>
-            Read an entry from a container. 
+            Read an entry from a Sequence. 
             </summary>
             <param name="Data">The data read.</param>
             <param name="contentMeta">The metadata of the entry.</param>
@@ -3379,9 +2965,9 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogReader.CopyArchive(Goedel.Cryptography.Dare.DareLogWriter)">
             <summary>
-            Copy data from this container to the specified container writer.
+            Copy data from this Sequence to the specified Sequence writer.
             </summary>
-            <param name="fileContainerWriter">The container to be written to.</param>
+            <param name="fileContainerWriter">The Sequence to be written to.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogReader.GetExchange(System.Collections.Generic.List{Goedel.Cryptography.Jose.Recipient},Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -3411,29 +2997,29 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogWriter.#ctor(System.String,Goedel.Cryptography.Dare.DarePolicy,System.Boolean,System.Boolean,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.SequenceType)">
             <summary>
-            Open a new file container for write access.
+            Open a new file Sequence for write access.
             </summary>
             <param name="fileName">The file name to create</param>
-            <param name="archive">If true, the container is intended to be used to create a multi-file
+            <param name="archive">If true, the Sequence is intended to be used to create a multi-file
             archive.</param>
             <param name="digest">If true, construct a digest </param>
             <param name="fileStatus">The mode to open the file in, this must be a mode
             that permits write access.</param>
-            <param name="containerType">The container type to use. If unspecified,
+            <param name="containerType">The Sequence type to use. If unspecified,
             a type appropriate for the type of use will be selected.</param>
             <returns>File Sequence instance</returns>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
-            <returns>The newly constructed container.</returns>
+            <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
+            <returns>The newly constructed Sequence.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogWriter.#ctor(Goedel.Cryptography.Dare.JbcdStream,System.Boolean,System.Boolean,Goedel.Cryptography.Dare.SequenceType)">
             <summary>
-            Open a new file container for write access.
+            Open a new file Sequence for write access.
             </summary>
-            <param name="jbcdStream">The stream to use to write the container.</param>
-            <param name="archive">If true, the container is intended to be used to create a multi-file
+            <param name="jbcdStream">The stream to use to write the Sequence.</param>
+            <param name="archive">If true, the Sequence is intended to be used to create a multi-file
             archive.</param>
             <param name="digest">If true, construct a digest </param>
-            <param name="containerType">The container type to use. If unspecified,
+            <param name="containerType">The Sequence type to use. If unspecified,
             a type appropriate for the type of use will be selected.</param>
             <returns>File Sequence instance</returns>
         </member>
@@ -3457,46 +3043,46 @@
             Add a file entry
             </summary>
             <param name="file">The file to add</param>
-            <param name="path">The path name attribute to give the file in the container</param>
+            <param name="path">The path name attribute to give the file in the Sequence</param>
             <param name="contentMeta">Metadata describing the content.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogWriter.Delete(System.String)">
             <summary>
             Delete a file entry
             </summary>
-            <param name="path">The path name attribute to give the file in the container</param>
+            <param name="path">The path name attribute to give the file in the Sequence</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.Add(Goedel.Cryptography.Dare.SequenceFrameIndex,Goedel.Cryptography.Dare.CryptoParameters)">
+        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.Add(Goedel.Cryptography.Dare.SequenceIndexEntry,Goedel.Cryptography.Dare.CryptoParameters)">
             <summary>
-            Read a container data entry from one container and add it to this one.
+            Read a Sequence data entry from one Sequence and add it to this one.
             </summary>Add 
-            <param name="containerDataReader">Frame reader from which the
-            container data is to be read.</param>
+            <param name="containerDataReader">First reader from which the
+            Sequence data is to be read.</param>
             <param name="cryptoParameters">The new crypto parameters to be used to 
-            write the container data.</param>
+            write the Sequence data.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogWriter.AddIndex(System.Collections.Generic.List{Goedel.Cryptography.KeyPair})">
             <summary>
-            Append an archive frame to the container.
+            Append an archive frame to the Sequence.
             </summary>
             <param name="signatures">List of JWS signatures. Since this is the first block, the signature
             is always over the payload data only.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogWriter.ArchiveFile(System.String,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,Goedel.IO.FileStatus)">
             <summary>
-            Open a new file container for write access and write a single file entry.
+            Open a new file Sequence for write access and write a single file entry.
             </summary>
             <param name="fileName">The file name to create</param>
             <param name="data">The content data</param>
             <param name="contentMeta">The content metadata</param>
             <param name="fileStatus">The mode to open the file in, this must be a mode
             that permits write access.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
             <returns>File Sequence instance</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareLogWriter.ArchiveDirectory(System.String,Goedel.Cryptography.Dare.DarePolicy,System.String,Goedel.Cryptography.Dare.ContentMeta,Goedel.IO.FileStatus,System.Boolean)">
             <summary>
-            Open a new file container for write access and append all the files in the directory 
+            Open a new file Sequence for write access and append all the files in the directory 
             <paramref name="directory"/>.
             </summary>
             <param name="fileName">The file name to create</param>
@@ -3504,7 +3090,7 @@
             <param name="contentMeta">The content metadata</param>
             <param name="fileStatus">The mode to open the file in, this must be a mode
             that permits write access.</param>
-            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
             <param name="index">If true add an index record to the end of the archive.</param>
             <returns>File Sequence instance</returns>
         </member>
@@ -3534,7 +3120,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.DarePolicy.#ctor(Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
-            Convenience constructor to create a policy to be used to encode a container. The parameter
+            Convenience constructor to create a policy to be used to encode a Sequence. The parameter
             <paramref name="keyLocate"/> is used to resolve the keys specified in 
             <paramref name="signers"/> and <paramref name="recipients"/>. The parameters 
             <paramref name="encrypt"/> and <paramref name="digest"/> allow the bulk ciphers to be
@@ -3549,7 +3135,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.DarePolicy.#ctor(Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
-            Convenience constructor to create a policy to be used to encode a container.
+            Convenience constructor to create a policy to be used to encode a Sequence.
             </summary>
             <param name="keyLocate">The key location instance.</param>
             <param name="signer">Signer key</param>
@@ -4001,13 +3587,13 @@
             <summary>The index in the log.</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.FileEntry.Position">
-            <summary>The position within the container.</summary> 
+            <summary>The position within the Sequence.</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.FileEntry.Previous">
             <summary>The index of the previous version of this file in the log.</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.FileEntry.PreviousPosition">
-            <summary>The previous position within the container.</summary> 
+            <summary>The previous position within the Sequence.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.Dare.FileEntry.#ctor">
             <summary>
@@ -4017,7 +3603,7 @@
         <member name="M:Goedel.Cryptography.Dare.FileEntry.#ctor(Goedel.Cryptography.Dare.DareHeader,System.Int64)">
             <summary>
             Constructor to create an instance for the header <paramref name="dareHeader"/>
-            located at file sequence position <paramref name="position"/>.
+            located at file Sequence position <paramref name="position"/>.
             </summary>
             <param name="dareHeader">The header describing the file entry.</param>
             <param name="position">The position of the entry in the file.</param>
@@ -4830,7 +4416,7 @@
         </member>
         <member name="T:Goedel.Cryptography.Dare.FileCollection">
             <summary>
-            Class tracking a set of files in a sequence.
+            Class tracking a set of files in a Sequence.
             </summary>
         </member>
         <member name="F:Goedel.Cryptography.Dare.FileCollection.DictionaryByPath">
@@ -4851,7 +4437,7 @@
             </summary>
             <param name="fileInfo">File information block.</param>
             <param name="path">The path to be recorded.</param>
-            <param name="index">Index of the frame in the sequence.</param>
+            <param name="index">Index of the frame in the Sequence.</param>
             <param name="position">PositionRead of the first byte of the frame.</param>
             <returns>The file entry created. This will contain relative links to the
             previous entry (if it exists).</returns>
@@ -4861,7 +4447,7 @@
             Add a file to the collection.
             </summary>
             <param name="dareHeader">DARE header describing the entry.</param>
-            <param name="position">PositionRead within the sequence file.</param>
+            <param name="position">PositionRead within the Sequence file.</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.FileCollection.Remove(Goedel.Cryptography.Dare.DareHeader,System.Int64)">
@@ -4869,7 +4455,7 @@
             Remove a file entry by appending a record saying it is deleted.
             </summary>
             <param name="dareHeader">DARE header describing the entry.</param>
-            <param name="position">PositionRead within the sequence file.</param>
+            <param name="position">PositionRead within the Sequence file.</param>
             <returns>The original file entry if found.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.FileCollection.Add(Goedel.Cryptography.Dare.FileEntry)">
@@ -4881,7 +4467,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.FileCollection.Delete(System.String,System.Int64)">
             <summary>
-            Delete the file entry <paramref name="path"/> from the sequence.
+            Delete the file entry <paramref name="path"/> from the Sequence.
             </summary>
             <param name="path">The unique identifier of the entry to delete.</param>
             <param name="position">The index position of the entry.</param>
@@ -4889,7 +4475,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.FileCollection.MakeIndex">
             <summary>
-            Make a sequence index from the specified values.
+            Make a Sequence index from the specified values.
             </summary>
             <returns>The created index.</returns>
         </member>
@@ -5178,7 +4764,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.SeekWrite">
             <summary>
-            Set the write pointer to the end of the container.
+            Set the write pointer to the end of the Sequence.
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteByte(System.Byte)">
@@ -5189,7 +4775,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.Write(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Writes a sequence of bytes to the current stream and advances
+            Writes a Sequence of bytes to the current stream and advances
             the current position within this stream by the number of bytes written.
             </summary>
             <param name="Buffer">An array of bytes. This method copies count bytes from buffer to the current stream.</param>
@@ -5203,7 +4789,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.Read(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.
+            Reads a Sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.
             </summary>
             <param name="Buffer"> An array of bytes. When this method returns, the buffer contains the specified byte array with the values between 
             offset and (offset + count - 1) replaced by the bytes read from the current source.</param>
@@ -5221,7 +4807,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadByteReverse">
             <summary>
-            Read a byte in the reverse direction, i.e. the byte immediately preceding the current position.
+            Read a byte in the Reverse direction, i.e. the byte immediately preceding the current position.
             </summary>
             <returns>The byte read or -1.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
@@ -5372,7 +4958,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadLengthReverse(System.Int32,System.Int64@)">
             <summary>
-            Read a length value of known length in the reverse direction.
+            Read a length value of known length in the Reverse direction.
             </summary>
             <param name="LengthLength">The number of bytes to read.</param>
             <param name="Length">The length value read.</param>
@@ -5433,16 +5019,15 @@
             Records the start position of the last frame that was read.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.JbcdStream.FramerOpen(System.Int64)">
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.FramerOpen(System.Int64,System.Boolean)">
             <summary>
-            Open a frame reader at the position indicated by <paramref name="Position"/>
+            Open a frame reader at the position indicated by <paramref name="position"/>
             and return the frame length.
             </summary>
-            <param name="Position">The file position at which to begin reading. If
-            less than 0, the frame reader position is reset. This will cause the last
-            record read with FramerOpen to be re-read unless FramerClose has been called 
-            in which case the next frame in the stream will be read.</param>
-            <returns>The length of the frame if it could be read, otherwise -1.</returns>
+            <param name="position">The file position at which to begin reading.</param>
+            <param name="previous">Read the previous frame.</param>
+            <returns>The length of the frame if it could be read, otherwise an error
+            is thrown.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.FramerGetData">
             <summary>
@@ -5492,7 +5077,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadFrameReverse(System.Byte[]@,System.Byte[]@)">
             <summary>
-            Read a pair of wrapped frames in the reverse direction. This is typically done to read the last
+            Read a pair of wrapped frames in the Reverse direction. This is typically done to read the last
             record in a file to see how the file should be extended.
             </summary>
             <param name="FrameData">The payload data that was read.</param>
@@ -5502,7 +5087,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadFrameReverse(System.Byte[]@)">
             <summary>
-            Read a pair of wrapped frames in the reverse direction. This is typically done to read the last
+            Read a pair of wrapped frames in the Reverse direction. This is typically done to read the last
             record in a file to see how the file should be extended.
             </summary>
             <param name="FrameHeader">The header data that was read.</param>
@@ -5511,7 +5096,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.MoveFrameReverse">
             <summary>
-            Move a frame in the reverse direction.
+            Move a frame in the Reverse direction.
             </summary>
             <returns></returns>
         </member>
@@ -5535,9 +5120,9 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadDareEnvelope">
             <summary>
-            Return the current container frame as a DareEnvelope.
+            Return the current Sequence frame as a DareEnvelope.
             </summary>
-            <returns>The container data.</returns>
+            <returns>The Sequence data.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Dare.JBCDStreamDebug">
             <summary>
@@ -5574,14 +5159,14 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.JBCDStreamDebug.ReadByteReverse">
             <summary>
-            Read a byte in the reverse direction, i.e. the byte immediately preceding the current position.
+            Read a byte in the Reverse direction, i.e. the byte immediately preceding the current position.
             </summary>
             <returns>The byte read or -1.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JBCDStreamDebug.Read(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.
+            Reads a Sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.
             </summary>
             <param name="Buffer"> An array of bytes. When this method returns, the buffer contains the specified byte array with the values between 
             offset and (offset + count - 1) replaced by the bytes read from the current source.</param>
@@ -5647,16 +5232,16 @@
             Classes to manage a JBCD Sequence file.
             
             <para>All JBCD Containers support efficient append only access with 
-            efficient read-only access in both the forward and the reverse 
+            efficient read-only access in both the forward and the Reverse 
             directions.</para>
             
-            <para>Setting the IsTree parameter to true when a container is 
+            <para>Setting the IsTree parameter to true when a Sequence is 
             first created causes a binary tree structure to be embedded into
             the file as it is written. This incurs a modest (log n) performance
             penalty on write but enables efficient random access (log n).</para>
             
-            <para>Either type of container may be protected against an insertion
-            attack with the use of a chained digest. If the container type if a 
+            <para>Either type of Sequence may be protected against an insertion
+            attack with the use of a chained digest. If the Sequence type if a 
             binary tree, a Merkle Tree is constructed. Otherwise, a simple chain 
             construction is used.</para>
             </summary>
@@ -5678,7 +5263,7 @@
         </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceFrame">
             <summary>
-            Class to allow enumeration of sequence frames
+            Class to allow enumeration of Sequence frames
             </summary>
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceFrame.FrameCount">
@@ -5710,31 +5295,28 @@
             <summary>If true, decrypt payload contents.</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.Sequence.Digest">
-            <summary>The apex digest value of the sequence as written to the file.</summary>
+            <summary>The apex digest value of the Sequence as written to the file.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.DigestRequired">
             <summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.Dare.Sequence.FrameZero">
-            <summary>The first frame in the sequence</summary>
+        <member name="P:Goedel.Cryptography.Dare.Sequence.FrameZero">
+            <summary>Return an envelope for the first frame in the Sequence</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.JbcdStream">
             <summary>The underlying file stream</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Sequence.StartOfData">
-            <summary>The byte offset from the start of the file for Record 1</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.DataEncoding">
             <summary>The encoding to use for creating the FrameHeader entry</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.FrameCount">
-            <summary>The value of the last frame index</summary>
+            <summary>The value of the last frame index plus 1</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.PositionFinalFrameStart">
             <summary>The start of the last frame.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.FrameIndexLast">
-            <summary>The last frame in the sequence</summary>
+            <summary>The last frame in the Sequence</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.KeyLocate">
             <summary>The key location instance.</summary>
@@ -5747,15 +5329,6 @@
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.Length">
             <summary>The length.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Sequence.PositionIndex">
-            <summary>PositionRead of the last index in the file.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Sequence.SequenceIndex">
-            <summary>The last sequence index found.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Sequence.TrailerLast">
-            <summary>The trailer section of the last envelope in the sequence.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.HeaderBytes">
             <summary>The current frame header as binary data</summary>
@@ -5774,21 +5347,24 @@
             <summary>The current frame header as a parsed object.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.SequenceInfo">
-            <summary>Convenience accessor for the SequenceInfo field of the sequence.</summary>
+            <summary>Convenience accessor for the SequenceInfo field of the Sequence.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.HeaderFirst">
             <summary>
-            The first sequence header. This is read only since it is fixed after
+            The first Sequence header. This is read only since it is fixed after
             the record is written.
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.HeaderFinal">
-            <summary>The last sequence header.</summary>
+            <summary>The last Sequence header.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Sequence.TrailerLast">
+            <summary>The trailer section of the last envelope in the Sequence.</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.Sequence.DisposeJBCDStream">
             <summary>
-            The underlying stream reader/writer for the sequence. This will be disposed of when
-            the sequence is released.
+            The underlying stream reader/writer for the Sequence. This will be disposed of when
+            the Sequence is released.
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.DisposeStream">
@@ -5801,18 +5377,30 @@
             <summary>Name of the underlying file (may be used to reconnect to file)</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.Bitmask">
-            <summary>The bitmask identifier of the container.</summary> 
+            <summary>The bitmask identifier of the Sequence.</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.Sequence.FrameIndexToPositionDictionary">
             <summary>
             Dictionary of frame index to frame position.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Sequence.SequenceIndexEntryFirst">
+            <summary>Index entry of the first frame.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Sequence.SequenceIndexEntryLast">
+            <summary>Index entry of the last frame.</summary> 
+        </member>
         <member name="F:Goedel.Cryptography.Dare.Sequence.FrameIndexToEntry">
-            <summary>Frame index number to index entry.</summary> 
+            <summary>First index number to index entry.</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.Sequence.SequencePositionToEntry">
             <summary>Sequence position to index entry.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Sequence.SequenceNextToEntry">
+            <summary>Sequence position to index entry.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Sequence.InternSequenceIndexEntryDelegate">
+            <summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.#ctor(System.Boolean)">
             <summary>
@@ -5826,39 +5414,46 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.GetEnumerator">
             <summary>
-            Returns an enumerator over the sequence contents starting with the
+            Returns an enumerator over the Sequence contents starting with the
+            first frame.
+            </summary>
+            <returns>The enumerator</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Select(System.Int64,System.Int64)">
+            <summary>
+            Returns an enumerator over the Sequence contents starting with the
             first frame.
             </summary>
             <returns>The enumerator</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Open(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.String,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
-            Open or create sequence according to the setting of FileStatus. The underlying 
-            filestreams will be disposed of automatically when the sequence is disposed.
+            Open or create Sequence according to the setting of FileStatus. The underlying 
+            filestreams will be disposed of automatically when the Sequence is disposed.
             </summary>
             <param name="fileName">The file name.</param>
             <param name="fileStatus">The file access mode.</param>
             <param name="keyLocate">The key collection to be used to resolve requests
             for decryption keys. If unspecified, the default KeyCollection is used.</param>
-            <param name="policy">The cryptographic policy to govern the sequence.</param>
-            <param name="sequenceType">The sequence type to create if the sequence does
+            <param name="policy">The cryptographic policy to govern the Sequence.</param>
+            <param name="sequenceType">The Sequence type to create if the Sequence does
             not already exist.</param>
-            <param name="contentType">The content type to declare if a new sequence is
+            <param name="contentType">The content type to declare if a new Sequence is
             created.</param>
-            <param name="decrypt">If true, enable decryption of sequence payload,
+            <param name="decrypt">If true, enable decryption of Sequence payload,
             otherwise return payload contents as plaintext.</param>
-            <param name="create">If true, create a sequence file if none already exists</param>
+            <param name="create">If true, create a Sequence file if none already exists</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
-            <returns>The new sequence.</returns>
+            <returns>The new Sequence.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Open(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate)">
             <summary>
-            Open or create sequence according to the setting of FileStatus. The underlying 
-            filestreams will be disposed of automatically when the sequence is disposed.
+            Open or create Sequence according to the setting of FileStatus. The underlying 
+            filestreams will be disposed of automatically when the Sequence is disposed.
             </summary>
-            <param name="jbcdStream">The stream to use to access the sequence.</param>
+            <param name="jbcdStream">The stream to use to access the Sequence.</param>
             <param name="keyLocate">The key collection to be used to resolve keys</param>
-            <returns>The new sequence.</returns>
+            <returns>The new Sequence.</returns>
         </member>
         <member name="F:Goedel.Cryptography.Dare.Sequence.KeyCollection">
             <summary>
@@ -5867,49 +5462,49 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,System.Boolean)">
             <summary>
-            Open an existing sequence file.
+            Open an existing Sequence file.
             </summary>
-            <param name="fileName">The file to open as a sequence.</param>
+            <param name="fileName">The file to open as a Sequence.</param>
             <param name="fileStatus">The file status.</param>
             <param name="keyCollection">The key collection to be used to decrypt the contents
-            of the sequence.</param>
+            of the Sequence.</param>
             <param name="decrypt">If true configure to enable decryption of bodies.</param>
-            <returns>The sequence object if found. Otherwise, an exception is thrown.</returns>
+            <returns>The Sequence object if found. Otherwise, an exception is thrown.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,System.Boolean)">
             <summary>
-            Open an existing sequence according to the information contained in the next frame to be read.
+            Open an existing Sequence according to the information contained in the next frame to be read.
             </summary>
             <param name="jbcdStream">The frame reader. Since this is passed to the
-            method to create the class it is not disposed with the sequence using it.</param>
+            method to create the class it is not disposed with the Sequence using it.</param>
             <param name="keyCollection">The key collection to be used to resolve requests
             for decryption keys. If unspecified, the default KeyCollection is used.</param>
-            <param name="decrypt">If true, enable decryption of sequence payload,
+            <param name="decrypt">If true, enable decryption of Sequence payload,
             otherwise return payload contents as plaintext.</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.NewContainer(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean,System.Byte[])">
             <summary>
-            Create a new sequence file of the specified type and write the initial
+            Create a new Sequence file of the specified type and write the initial
             data record
             </summary>
             <param name="filename">The file to open</param>
             <param name="fileStatus">The file status.</param>
             <param name="payload">Optional data payload. </param>
             <param name="contentType">Content type of the optional data payload</param>
-            <param name="sequenceType">The sequence type.</param>
-            <param name="policy">The cryptographic policy to be applied to the sequence.</param>
+            <param name="sequenceType">The Sequence type.</param>
+            <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
             <param name="dataEncoding">The data encoding.</param>
             <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
             <param name="dataSequences">Data sequences to be converted to an EDS and presented 
                 as an EDSS header entry.</param>
-            <param name="decrypt">If true, decrypt the container payload contents.</param>
+            <param name="decrypt">If true, decrypt the Sequence payload contents.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileModeException">The file mode specified was not valid.</exception>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.NewContainer(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean,System.Byte[])">
             <summary>
-            Create a new sequence file of the specified type and write the initial
+            Create a new Sequence file of the specified type and write the initial
             data record
             </summary>
             <param name="jbcdStream">The underlying file stream. This MUST be opened
@@ -5920,52 +5515,52 @@
             <param name="payload">Optional data payload. </param>
             <param name="dataEncoding">The data encoding.</param>
             <param name="contentType">Content type of the optional data payload</param>
-            <param name="sequenceType">The sequence type. This determines whether
+            <param name="sequenceType">The Sequence type. This determines whether
             a tree index is to be created or not and if so, whether </param>
-            <param name="policy">The cryptographic policy to govern the sequence.</param>
+            <param name="policy">The cryptographic policy to govern the Sequence.</param>
             <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
             <param name="dataSequences">Data sequences to be converted to an EDS and presented 
                 as an EDSS header entry.</param>
-            <param name="decrypt">If true, decrypt the container payload contents.</param>
+            <param name="decrypt">If true, decrypt the Sequence payload contents.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(Goedel.Cryptography.Dare.JbcdStream,System.Boolean,Goedel.Cryptography.Dare.SequenceType)">
             <summary>
-            Create a new sequence file of the specified type and write the initial
+            Create a new Sequence file of the specified type and write the initial
             data record
             </summary>
             <param name="jbcdStream">The underlying JBCDStream stream. This MUST be opened
             in a read access mode and should have exclusive read access. All existing
             content in the file will be overwritten.</param>
-            <param name="sequenceType">The sequence type. This determines whether
+            <param name="sequenceType">The Sequence type. This determines whether
             a tree index is to be created or not and if so, whether </param>
-            <returns>The newly constructed sequence.</returns>
-            <param name="decrypt">If true, decrypt the container payload contents.</param>
+            <returns>The newly constructed Sequence.</returns>
+            <param name="decrypt">If true, decrypt the Sequence payload contents.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},Goedel.IO.FileStatus)">
             <summary>
-            Create a new sequence with the name <paramref name="fileName"/> and
-            append <paramref name="envelopes"/> to the end of the sequence.
+            Create a new Sequence with the name <paramref name="fileName"/> and
+            append <paramref name="envelopes"/> to the end of the Sequence.
             </summary>
-            <param name="fileName">Name of the sequence to create</param>
+            <param name="fileName">Name of the Sequence to create</param>
             <param name="envelopes">Envelopes to add</param>
             <param name="fileStatus">File status (used for concurrency locking)</param>
             <param name="keyLocate">The key location collection to be used to resolve keys.</param>
-            <returns>The created sequence</returns>
+            <returns>The created Sequence</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Select(System.Int64,System.Boolean)">
             <summary>
             Return an enumerator with the specified selectors.
             </summary>
             <param name="minIndex">The minimum index.</param>
-            <param name="reverse">If true, read the sequence from the end.</param>
+            <param name="reverse">If true, read the Sequence from the end.</param>
             <returns>The enumerator.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.RegisterFrame(Goedel.Cryptography.Dare.SequenceInfo,System.Int64)">
             <summary>
-            Register a frame in the sequence access dictionaries.
+            Register a frame in the Sequence access dictionaries.
             </summary>
-            <param name="sequenceInfo">Frame header</param>
+            <param name="sequenceInfo">First header</param>
             <param name="position">PositionRead of the frame</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.GetFramePosition(System.Int64)">
@@ -5998,7 +5593,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Append(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Int64)">
             <summary>
-            Append the envelopes <paramref name="envelopes"/> to the sequence starting
+            Append the envelopes <paramref name="envelopes"/> to the Sequence starting
             with the <paramref name="index"/>th envelope.
             </summary>
             <param name="envelopes">The enveolpes to append</param>
@@ -6006,39 +5601,39 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.MakeSequenceInfo">
             <summary>
-            Initialize a <see cref="P:Goedel.Cryptography.Dare.Sequence.SequenceInfo"/> instance for the current sequence
+            Initialize a <see cref="P:Goedel.Cryptography.Dare.Sequence.SequenceInfo"/> instance for the current Sequence
             position.
             </summary>
             <returns>The initialized instance.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Append(Goedel.Cryptography.Dare.SequenceIndex,Goedel.Cryptography.Dare.ContentMeta)">
             <summary>
-            Append an empty frame containing sequence index or content information.
+            Append an empty frame containing Sequence index or content information.
             </summary>
             <param name="sequenceIndex">The SequenceIndex to append.</param>
             <param name="contentMeta">The ContentMeta to append.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Append(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
             <summary>
-            Write a previously prepared or validated Dare Envelope to the sequence directly.
+            Write a previously prepared or validated Dare Envelope to the Sequence directly.
             </summary>
-            <param name="envelope">The envelope to append to the sequence</param>
+            <param name="envelope">The envelope to append to the Sequence</param>
             <param name="updateEnvelope">If true, update the header and trailer of 
             <paramref name="envelope"/> to the computed values.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.PrepareFrame(Goedel.Cryptography.Dare.SequenceInfo)">
             <summary>
-            Prepare the sequence frame information in <paramref name="sequenceInfo"/>.
+            Prepare the Sequence frame information in <paramref name="sequenceInfo"/>.
             </summary>
-            <param name="sequenceInfo">The sequence information to be prepared.</param>
+            <param name="sequenceInfo">The Sequence information to be prepared.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.GetSequenceFrameIndex(System.Int64,System.Int64)">
             <summary>
             Obtain a ContainerFrameIndex instance for <paramref name="index"/> if
             specified or <paramref name="position"/> otherwise.
             </summary>
-            <param name="index">The sequence index to obtain the frame index for.</param>
-            <param name="position">The sequence position to obtain the frame index for.</param>
+            <param name="index">The Sequence index to obtain the frame index for.</param>
+            <param name="position">The Sequence position to obtain the frame index for.</param>
             <returns>The created ContainerFrameIndex instance,</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Append(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.String,System.Byte[],System.Collections.Generic.List{System.Byte[]},Goedel.Cryptography.Dare.CryptoParameters)">
@@ -6055,7 +5650,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.AppendFile(System.String,Goedel.Cryptography.Dare.ContentMeta,System.String,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
             <summary>
-            Read data from the specified file and append to the sequence.
+            Read data from the specified file and append to the Sequence.
             </summary>
             <param name="fileName">The file to append</param>
             <param name="contentInfo">Sequence header data.</param>
@@ -6067,7 +5662,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.AppendFromStream(System.IO.Stream,System.Int64,Goedel.Cryptography.Dare.ContentMeta,System.String,System.Byte[],System.Collections.Generic.List{System.Byte[]},Goedel.Cryptography.Dare.CryptoParameters)">
             <summary>
-            Read data from the specified file and append to the sequence.
+            Read data from the specified file and append to the Sequence.
             </summary>
             <param name="input">The stream to be read.</param>
             <param name="contentLength"> The number of bytes to read from <paramref name="input"/>.</param>
@@ -6091,11 +5686,11 @@
             Begin appending a data frame.
             </summary>
             <remarks>This call is not thread safe. It is the responsibility of the caller
-            to ensure that only one process writes to the sequence at once and that no other
+            to ensure that only one process writes to the Sequence at once and that no other
             process has access.</remarks>
             <param name="contentLength">The plaintext payload data length. the final payload
             length may be longer as a result of padding.</param>
-            <param name="contentInfo">Pre-populated sequence header.</param>
+            <param name="contentInfo">Pre-populated Sequence header.</param>
             <param name="contentType">The payload content type.</param>
             <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
             <param name="dataSequences">Data sequences to be converted to an EDS and presented 
@@ -6120,9 +5715,9 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Defer(Goedel.Cryptography.Dare.SequenceWriterDeferred,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Byte[],System.Collections.Generic.List{System.Byte[]})">
             <summary>
-            Create a DareEnvelope to be added to the sequence in deferred write mode.
+            Create a DareEnvelope to be added to the Sequence in deferred write mode.
             </summary>
-            <param name="contextWrite">The sequence write context the envelope is to be written in.</param>
+            <param name="contextWrite">The Sequence write context the envelope is to be written in.</param>
             <param name="contentMeta">The content metadata.</param>
             <param name="data">The data plaintext payload.</param>
             <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
@@ -6132,12 +5727,12 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.PrepareFrame(Goedel.Cryptography.Dare.SequenceWriter)">
             <summary>
-            Prepare the header information to write an envelope to a sequence.
+            Prepare the header information to write an envelope to a Sequence.
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.ValidateFrame(Goedel.Cryptography.Dare.SequenceWriter)">
             <summary>
-            Validate a frame to be added to the sequence.
+            Validate a frame to be added to the Sequence.
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.CommitHeader(Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.SequenceWriter)">
@@ -6162,22 +5757,28 @@
             <param name="firstPosition">PositionRead of frame 1</param>
             <param name="positionLast">PositionRead of the last frame</param>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.FillDictionary">
+            <summary>
+            Initialize the dictionaries used to manage the tree by registering the set
+            of values leading up to the apex value.
+            </summary>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.VerifyPolicy(System.String,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Verify that the file <paramref name="filename"/> is a DARE Sequence that
             is in compliance with its specified policy.
             </summary>
-            <param name="filename">The sequence to verify.</param>
+            <param name="filename">The Sequence to verify.</param>
             <param name="keyLocate">Key location to be used to resolve keys.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.VerifyPolicy">
             <summary>
-            Verify policy on the sequence.
+            Verify policy on the Sequence.
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
             <summary>
-            Perform sanity checking on a list of sequence headers.
+            Perform sanity checking on a list of Sequence headers.
             </summary>
             <param name="headers">List of headers to check</param>
         </member>
@@ -6192,27 +5793,23 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Start">
             <summary>
-            Move read pointer to Frame 1.
+            Move read pointer to First 1.
             </summary>
             <returns>True if a next frame exists, otherwise false</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.NextFrame">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Next(Goedel.Cryptography.Dare.SequenceIndexEntry)">
             <summary>
-            Read the next frame in the file.
+            Return the next entry folowing the index <paramref name="indexEntry"/>.
             </summary>
-            <returns>True if a next frame exists, otherwise false</returns>
+            <param name="indexEntry">The index entry.</param>
+            <returns>The next index entry.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.PreviousFrame">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Previous(Goedel.Cryptography.Dare.SequenceIndexEntry)">
             <summary>
-            Read the next frame in the file.
+            Return the previous entry prior to the index <paramref name="indexEntry"/>.
             </summary>
-            <returns>True if a next frame exists, otherwise false</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Previous">
-            <summary>
-            Read the previous frame in the file.
-            </summary>
-            <returns>True if a previous frame exists, otherwise false</returns>
+            <param name="indexEntry">The index entry.</param>
+            <returns>The previous index entry.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.MoveToIndex(System.Int64)">
             <summary>
@@ -6222,18 +5819,18 @@
             the difference between the current position and the new 
             position.</para>
             </summary>
-            <param name="frameIndex">Frame index to move to.</param>
+            <param name="frameIndex">First index to move to.</param>
             <returns>True if the position exists.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.MoveToLast">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Previous">
             <summary>
-            Move to begin reading the last frame in the sequence.
+            Read the previous frame in the file.
             </summary>
-            <returns></returns>
+            <returns>True if a previous frame exists, otherwise false</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.VerifySequence">
             <summary>
-            Verify sequence contents by reading every frame starting with the first and checking
+            Verify Sequence contents by reading every frame starting with the first and checking
             for integrity. This is likely to take a very long time.
             </summary>
         </member>
@@ -6247,26 +5844,136 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.ReadDirect">
             <summary>
-            Return the current sequence frame as a DareEnvelope.
+            Return the current Sequence frame as a DareEnvelope.
             </summary>
-            <returns>The sequence data.</returns>
+            <returns>The Sequence data.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.ToConsole(System.String)">
             <summary>
-            Pretty print the sequence specified to the console
+            Pretty print the Sequence specified to the console
             </summary>
-            <param name="fileName">The sequence file.</param>
+            <param name="fileName">The Sequence file.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.ToBuilder(System.String,System.Text.StringBuilder,System.Int32)">
             <summary>
-            Pretty print the sequence specified.
+            Pretty print the Sequence specified.
             </summary>
-            <param name="fileName">The sequence file.</param>
+            <param name="fileName">The Sequence file.</param>
             <param name="builder">The stringbuilder to use.</param>
             <param name="indent">The indent level.</param>
         </member>
+        <member name="T:Goedel.Cryptography.Dare.SequenceChain">
+            <summary>
+            Simple Sequence that supports the append and index functions but does not 
+            provide for cryptographic integrity.
+            </summary>
+            <threadsafety static="true" instance="false"/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceChain.#ctor(System.Boolean)">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceChain.FillDictionary(Goedel.Cryptography.Dare.SequenceInfo,System.Int64,System.Int64)">
+            <summary>
+            Initialize the dictionaries used to manage the tree by registering the set
+            of values leading up to the apex value.
+            </summary>
+            <param name="header">Final frame header</param>
+            <param name="firstPosition">PositionRead of frame 1</param>
+            <param name="positionLast">PositionRead of the last frame</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceChain.PrepareFrame(Goedel.Cryptography.Dare.SequenceWriter)">
+            <summary>
+            Append the header to the frame. This is called after the payload data
+            has been passed using AppendPreprocess.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceChain.FillDummyTrailer(Goedel.Cryptography.Dare.CryptoStack)">
+            <summary>
+            Pre-populate the dummy trailer so as to allow the length to be calculated.
+            </summary>
+            <returns>The dummy trailer.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceChain.MakeTrailer(Goedel.Cryptography.Dare.DareTrailer@)">
+            <summary>
+            The dummy trailer to add to the end of the frame.
+            </summary>
+            <param name="trailer">The trailer to augment.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceChain.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
+            <summary>
+            Perform sanity checking on a list of Sequence headers.
+            </summary>
+            <param name="headers">List of headers to check</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.SequenceDigest">
+            <summary>
+            Simple Sequence that supports the append and index functions but does not 
+            provide for linked cryptographic integrity.
+            </summary>
+            <threadsafety static="true" instance="false"/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceDigest.DigestRequired">
+            <summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceDigest.#ctor(System.Boolean)">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceDigest.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
+            <summary>
+            Perform sanity checking on a list of Sequence headers.
+            </summary>
+            <param name="Headers">List of headers to check</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.SequenceEnumeratorRaw">
+            <summary>
+            Enumerator that returns the raw, unencrypted Sequence data.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.Current">
+            <summary>
+            Gets the element in the collection at the current position of the enumerator.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Boolean)">
+            <summary>
+            Create an enumerator for <paramref name="sequence"/>.
+            </summary>
+            <param name="lowIndex">The lowest index to be returned.</param>
+            <param name="reverse">If true, enumeratre from the last item to <paramref name="lowIndex"/> (inclusive).
+            otherwise, enumerate from <paramref name="lowIndex"/> to the first.</param>
+            <param name="sequence">The Sequence to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.GetEnumerator">
+            <summary>
+            When called on an instance of this class, returns the instance. Thus allowing
+            selectors to be used in sub classes.
+            </summary>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.Dispose">
+            <summary>
+            Dispose method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.MoveNext">
+            <summary>
+            Move to the next item in the enumeration.
+            </summary>
+            <returns>If true, the next item was found. Otherwise, the end of the enumeration 
+            was reached.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.Reset">
+            <summary>
+            Sets the enumerator to its initial position, which is before the first element 
+            in the collection.
+            </summary>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceIntegrity">
-            <summary>Describe the integrity checking to be applied when reading a sequence.</summary>
+            <summary>Describe the integrity checking to be applied when reading a Sequence.</summary>
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceIntegrity.None">
             <summary>Do not perform integrity checks.</summary>
@@ -6281,114 +5988,417 @@
             consistent with the payload digest value specified and verify the payload digest 
             value against the payload contents.</summary>
         </member>
-        <member name="T:Goedel.Cryptography.Dare.SequenceFrameIndex">
+        <member name="T:Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate">
+            <summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.SequenceIndexEntry">
             <summary>
             Sequence index with the decoded head and tail and extent information for
             the body.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceFrameIndex.FramePosition">
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Sequence">
+            <summary>The Sequence that is indexed.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.FramePosition">
             <summary>The first byte of the data segment (excluding the length indicator)</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceFrameIndex.FrameLength">
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.FrameLength">
             <summary>The length of the data segment.</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceFrameIndex.DataPosition">
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.FramePositionNext">
+            <summary>The length of the data segment.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.DataPosition">
             <summary>The first byte of the data segment (excluding the length indicator)</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceFrameIndex.DataLength">
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.DataLength">
             <summary>The length of the data segment.</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceFrameIndex.Header">
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Header">
             <summary>The frame header</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceFrameIndex.Trailer">
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Index">
+            <summary>The frame index.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Trailer">
             <summary>The frame trailer</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceFrameIndex.HasPayload">
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.HasPayload">
             <summary>If true, the frame has a payload section</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceFrameIndex.JsonObject">
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.JsonObject">
             <summary>The decoded JSONObject</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceFrameIndex.IsEncrypted">
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsEncrypted">
             <summary>Convenience property, set true iff payload is encrypted.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceFrameIndex.KeyExchange">
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.KeyExchange">
             <summary>Convenience property, set true iff header contains direct key exchange.</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceFrameIndex.CopyPayload(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.IKeyLocate,System.IO.Stream)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.CopyPayload(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.IKeyLocate,System.IO.Stream)">
             <summary>
             Return the frame payload.
             </summary>
             <returns>The frame payload data.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceFrameIndex.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.Dare.DareEnvelope,System.Int64)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.Dare.DareEnvelope,System.Int64)">
             <summary>
             Constructor returning an instance for the envelope <paramref name="envelope"/>.
             </summary>
             <param name="envelope">The envelope to return an index for.</param>
-            <param name="sequence">The sequence in which the envelope is embedded.</param>
-            <param name="dataPosition">PositionRead of the envelope in the sequence.</param>
+            <param name="sequence">The Sequence in which the envelope is embedded.</param>
+            <param name="dataPosition">PositionRead of the envelope in the Sequence.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceFrameIndex.#ctor">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.#ctor">
             <summary>
             Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceFrameIndex.GetJSONObject(Goedel.Cryptography.Dare.Sequence)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.#ctor(Goedel.Cryptography.Dare.JbcdStream,System.Int64,System.Boolean)">
+            <summary>
+            Constructor returning an instance by reading <paramref name="jbcdStream"/>
+            at the position specified by <paramref name="position"/>. If 
+            <paramref name="previous"/> is true, the previous record is read, 
+            otherwise the next record is read.
+            </summary>
+            <param name="jbcdStream">The stream to read.</param>
+            <param name="position">The starting point for the read operation.</param>
+            <param name="previous">If true, read the previous frame, otherwise 
+            return the next frame.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.Read(Goedel.Cryptography.Dare.JbcdStream,System.Int64)">
+            <summary>
+            Read a frame from <paramref name="jbcdStream"/> at the position 
+            specified by <paramref name="position"/>. 
+            </summary>
+            <param name="jbcdStream">The stream to read.</param>
+            <param name="position">The starting point for the read operation.</param>
+            <returns>The index entry.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.ReadLast(Goedel.Cryptography.Dare.JbcdStream)">
+            <summary>
+            Read the last frame from <paramref name="jbcdStream"/>. 
+            </summary>
+            <param name="jbcdStream">The stream to read.</param>
+            <returns>The index entry.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetEnvelope">
+            <summary>
+            Return an envelope for the index data.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetBody">
+            <summary>
+            Return the raw body bytes.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetJSONObject(Goedel.Cryptography.Dare.Sequence)">
             <summary>
             Read the payload data from the specified position in <paramref name="sequence"/>
             and deserialize to return the corresponding object.
             </summary>
-            <param name="sequence">The container that was indexed.</param>
+            <param name="sequence">The Sequence that was indexed.</param>
             <returns>The deserialized object.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceFrameIndex.GetBody(Goedel.Cryptography.Dare.Sequence)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetBody(Goedel.Cryptography.Dare.Sequence)">
             <summary>
             Return the frame payload verbatim (i.e. ciphertext if encrypted).
             </summary>
-            <param name="sequence">The indexed sequence.</param>
+            <param name="sequence">The indexed Sequence.</param>
             <returns>The frame payload</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceFrameIndex.GetEnvelope(Goedel.Cryptography.Dare.Sequence,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetEnvelope(Goedel.Cryptography.Dare.Sequence,System.Boolean)">
             <summary>
             Return a DareEnvelope wrapping the fnewrame.
             </summary>
-            <param name="sequence">The indexed container.</param>
+            <param name="sequence">The indexed Sequence.</param>
             <param name="detatched">If true, </param>
             <returns>The frame payload</returns>      
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceFrameIndex.CopyToFile(Goedel.Cryptography.Dare.Sequence,System.String)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.CopyToFile(Goedel.Cryptography.Dare.Sequence,System.String)">
             <summary>
             Copy the payload data to file.
             </summary>
             <param name="file">The file to write the payload to.</param>
-            <param name="sequence">The sequence in which the payload is recorded.</param>
+            <param name="sequence">The Sequence in which the payload is recorded.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceFrameIndex.GetPayload(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.IKeyLocate)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetPayload(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Return the frame payload.
             </summary>
             <returns>The frame payload data.</returns>
         </member>
+        <member name="T:Goedel.Cryptography.Dare.GetBodyDelegate">
+            <summary>
+            Delegate returning the body of a DARE envelope.
+            </summary>
+            <returns>The body of the envelope.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.DareEnvelopeLazy">
+            <summary>
+            Lazy evaluation version of <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/>, only reads the
+            body part when needed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeLazy.Body">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeLazy.#ctor(Goedel.Cryptography.Dare.GetBodyDelegate)">
+            <summary>
+            Constructor, returns an envelope that will only read the body when needed
+            using the <paramref name="getbody"/> delegate.
+            </summary>
+            <param name="getbody">Delegate returning the body of the envelope.</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.SequenceList">
+            <summary>
+            Simple Sequence that supports the append and index functions but does not 
+            provide for linked cryptographic integrity.
+            </summary>
+            <threadsafety static="true" instance="false"/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceList.#ctor(System.Boolean)">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceList.FillDictionary(Goedel.Cryptography.Dare.SequenceInfo,System.Int64,System.Int64)">
+            <summary>
+            Initialize the dictionaries used to manage the tree by registering the set
+            of values leading up to the apex value.
+            </summary>
+            <param name="containerInfo">Final frame header Sequence information.</param>
+            <param name="firstPosition">PositionRead of frame 1</param>
+            <param name="positionLast">PositionRead of the last frame</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceList.PrepareFrame(Goedel.Cryptography.Dare.SequenceWriter)">
+            <summary>
+            Prepare the data to be incorporated into the header.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceList.CommitHeader(Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.SequenceWriter)">
+            <summary>
+            Commit the header data to the Sequence.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceList.FillDummyTrailer(Goedel.Cryptography.Dare.CryptoStack)">
+            <summary>
+            The number of bytes to be reserved for the trailer.
+            </summary>
+            <returns>The number of bytes to reserve</returns>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceList.frameReadStartPosition">
+            <summary>If positive, specifies the file position of the next frame.
+            This is used to store an index to be applied to the file pointer before 
+            a Next or Previous method operates on the stream.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceList.PositionRead">
+            <summary>
+            Get or set the read position in the stream.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceList.Next">
+            <summary>
+            Read the next frame in the file.
+            </summary>
+            <returns>True if a next frame exists, otherwise false</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceList.Previous">
+            <summary>
+            Read the previous frame in the file and leave the read pointer positioned at the start
+            of the frame just read.
+            </summary>
+            <returns>True if a previous frame exists, otherwise false</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceList.MoveToIndex(System.Int64)">
+            <summary>
+            Move to the frame with index PositionRead in the file. 
+            <para>Since the file format only supports sequential access, this is slow.</para>
+            </summary>
+            <param name="index">The frame index to move to</param>
+            <returns>If success, the frame index.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceList.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
+            <summary>
+            Perform sanity checking on a list of Sequence headers.
+            </summary>
+            <param name="headers">List of headers to check</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.SequenceMerkleTree">
+            <summary>
+            Simple Sequence that supports the append and index functions but does not 
+            provide for cryptographic integrity.
+            </summary>
+            <threadsafety static="true" instance="false"/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceMerkleTree.DigestRequired">
+            <summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.#ctor(System.Boolean)">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.PrepareFrame(Goedel.Cryptography.Dare.SequenceInfo)">
+            <summary>
+            Prepare the ContainerInfo data for the frame.
+            </summary>
+            <param name="containerInfo">The frame to prepare.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.RegisterFrame(Goedel.Cryptography.Dare.SequenceInfo,System.Int64)">
+            <summary>
+            Register a frame in the Sequence access dictionaries.
+            </summary>
+            <param name="containerInfo">First header</param>
+            <param name="position">PositionRead of the frame</param>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceMerkleTree.FrameDigestDictionary">
+            <summary>
+            Dictionary mapping the frame index to the corresponding digest value.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.FillDummyTrailer(Goedel.Cryptography.Dare.CryptoStack)">
+            <summary>
+            Pre-populate the dummy trailer so as to allow the length to be calculated.
+            </summary>
+            <returns>The dummy trailer.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.MakeTrailer(Goedel.Cryptography.Dare.DareTrailer@)">
+             <summary>
+             The dummy trailer to add to the end of the frame.
+             </summary>
+            <param name="trailer">The trailer to augment.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.GetTreeDigest(System.Int64,System.Byte[])">
+            <summary>
+            Calculate the digest of the specified tree node
+            </summary>
+            <param name="frame">The frame number</param>
+            <param name="contentDigest">The content digest</param>
+            <returns>The calculated digest</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.DigestFrame(System.Int64,System.Byte[])">
+            <summary>
+            Obtain the digest value for a frame.
+            </summary>
+            <param name="frame">The frame index.</param>
+            <param name="right">The digest of the rightmost component.</param>
+            <returns>The calculated digest.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.GetFrameDigest(System.Int64)">
+            <summary>
+            Get the digest value of the specified frame.
+            </summary>
+            <param name="Frame">The frame index.</param>
+            <returns>The digest value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
+            <summary>
+            Perform sanity checking on a list of Sequence headers.
+            </summary>
+            <param name="headers">List of headers to check</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.SequenceTree">
+            <summary>
+            Simple Sequence that supports the append and index functions but does not 
+            provide for cryptographic integrity.
+            </summary>
+            <threadsafety static="true" instance="false"/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.#ctor(System.Boolean)">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.PrepareFrame(Goedel.Cryptography.Dare.SequenceWriter)">
+            <summary>
+            Append the header to the frame. This is called after the payload data
+            has been passed using AppendPreprocess.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.PrepareFrame(Goedel.Cryptography.Dare.SequenceInfo)">
+            <summary>
+            Prepare the ContainerInfo data for the frame.
+            </summary>
+            <param name="containerInfo">The frame to prepare.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.FillDictionary(Goedel.Cryptography.Dare.SequenceInfo,System.Int64,System.Int64)">
+            <summary>
+            Initialize the dictionaries used to manage the tree by registering the set
+            of values leading up to the apex value.
+            </summary>
+            <param name="containerInfo">Final frame header</param>
+            <param name="firstPosition">PositionRead of frame 1</param>
+            <param name="positionLast">PositionRead of the last frame</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.Move(System.Int64)">
+            <summary>
+            Move to the specified frame index.
+            </summary>
+            <param name="index">First index to move to</param>
+            <returns>If the move to the specified index succeeded, returns <code>true</code>.
+            Otherwise, returns <code>false</code>.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.MoveToIndex(System.Int64)">
+            <summary>
+            Move to the frame with index PositionRead in the file. 
+            </summary>
+            <param name="index">The frame index to move to</param>
+            <returns>If success, the frame index.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.GetFramePosition(System.Int64)">
+            <summary>
+            Get the frame position.
+            </summary>
+            <param name="frame">The frame index</param>
+            <returns>The frame position.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.PreviousFramePosition(System.Int64)">
+            <summary>
+            Returns the start position of the prior frame in the tree.
+            </summary>
+            <param name="frameIndex">The First Index</param>
+            <returns>The position of the frame.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.PreviousFrame(System.Int64)">
+            <summary>
+            Returns the index of the prior frame in the tree.
+            </summary>
+            <param name="frame">The frame index</param>
+            <returns>The preceding frame index.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.CheckSequence(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareHeader})">
+            <summary>
+            Perform sanity checking on a list of Sequence headers.
+            </summary>
+            <param name="headers">List of headers to check</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.VerifySequence">
+            <summary>
+            Verify Sequence contents by reading every frame starting with the first and checking
+            for integrity. This is likely to take a very long time.
+            </summary>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceWriter">
             <summary>
-            Base class for container writers.
+            Base class for Sequence writers.
             </summary>
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceWriter.Sequence">
-            <summary>The container to be written to.</summary>
+            <summary>The Sequence to be written to.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceWriter.CryptoParametersSequence">
             <summary>Property allowing access to the crypto parameters and policy governing
-            the container.</summary> 
+            the Sequence.</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceWriter.SequenceHeader">
-            <summary>The last container header written</summary>
+            <summary>The last Sequence header written</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceWriter.SequenceInfo">
-            <summary>SequenceInfo element of last container header written.</summary>
+            <summary>SequenceInfo element of last Sequence header written.</summary>
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceWriter.DareTrailer">
             <summary>The trailer of the envelope currently being written.</summary>
@@ -6414,8 +6424,8 @@
             <summary>
             Main constructor.
             </summary>
-            <param name="sequence">The sequence to be written</param>
-            <param name="header">The sequence header???</param>
+            <param name="sequence">The Sequence to be written</param>
+            <param name="header">The Sequence header???</param>
             <param name="JBCDStream">The stream???</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceWriterFile.CommitFrame(Goedel.Cryptography.Dare.DareTrailer)">
@@ -6434,19 +6444,19 @@
             are to be created.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceWriterDeferred.Digest">
-            <summary>The apex digest value of the container as written to the file.</summary>
+            <summary>The apex digest value of the Sequence as written to the file.</summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceWriterDeferred.#ctor(Goedel.Cryptography.Dare.Sequence)">
             <summary>
             Main constructor
             </summary>
-            <param name="sequence">The container to be written</param>
+            <param name="sequence">The Sequence to be written</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceWriterDeferred.PrepareSequenceInfo">
             <summary>
-            Prepare the sequence information for a new frame to be added to the sequence.
+            Prepare the Sequence information for a new frame to be added to the Sequence.
             </summary>
-            <returns>The new sequence information</returns>
+            <returns>The new Sequence information</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceWriterDeferred.StreamOpen">
             <summary>
@@ -6477,7 +6487,7 @@
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.StoreEntry.Container">
-            <summary>The container the store entry belongs to</summary>
+            <summary>The Sequence the store entry belongs to</summary>
         </member>
         <member name="F:Goedel.Cryptography.Dare.StoreEntry.ContainerHeader">
             <summary>The envelope header</summary>
@@ -6489,7 +6499,7 @@
             <summary>Unique identifier of entry;</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.StoreEntry.FrameCount">
-            <summary>The container frame</summary>
+            <summary>The Sequence frame</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.StoreEntry.Deleted">
             <summary>If true the object haws been deleted and cannot be further modified.</summary>
@@ -6498,7 +6508,7 @@
             <summary>The JSONObject.</summary>
         </member>
         <member name="F:Goedel.Cryptography.Dare.StoreEntry.FrameIndex">
-            <summary>The frame index within the container</summary>
+            <summary>The frame index within the Sequence</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.StoreEntry.Previous">
             <summary>
@@ -6512,18 +6522,18 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.StoreEntry.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.Dare.StoreEntry,Goedel.Protocol.JsonObject)">
             <summary>
-            Constructor, creates an entry for the specified container header, data and previous relationship.
+            Constructor, creates an entry for the specified Sequence header, data and previous relationship.
             </summary>
             <param name="container">Sequence to create the entry in.</param>
             <param name="dareEnvelope">The envelope entry.</param>
             <param name="previous">Link to previous value of this object</param>
             <param name="item">The JSONObject representation.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.StoreEntry.#ctor(Goedel.Cryptography.Dare.SequenceFrameIndex,Goedel.Cryptography.Dare.StoreEntry,Goedel.Cryptography.Dare.Sequence,Goedel.Protocol.JsonObject)">
+        <member name="M:Goedel.Cryptography.Dare.StoreEntry.#ctor(Goedel.Cryptography.Dare.SequenceIndexEntry,Goedel.Cryptography.Dare.StoreEntry,Goedel.Cryptography.Dare.Sequence,Goedel.Protocol.JsonObject)">
             <summary>
-            Constructor, creates an entry for the specified container header, data and previous relationship.
+            Constructor, creates an entry for the specified Sequence header, data and previous relationship.
             </summary>
-            <param name="frameIndex">The position of the entry within the container frame.</param>
+            <param name="frameIndex">The position of the entry within the Sequence frame.</param>
             <param name="previous">Link to previous value of this object</param>
             <param name="container"></param>
             <param name="item">The JSONObject representation.</param>
@@ -6579,7 +6589,7 @@
         </member>
         <member name="T:Goedel.Cryptography.Dare.StoreIndex">
             <summary>
-            In-memory index structure for container data store. This offers the best performance
+            In-memory index structure for Sequence data store. This offers the best performance
             but at a significantly higher memory overhead than an index-on disk approach.
             </summary>
         </member>
@@ -6606,7 +6616,7 @@
         </member>
         <member name="T:Goedel.Cryptography.Dare.StreamReaderBounded">
             <summary>
-            A stream that reads from a container record.
+            A stream that reads from a Sequence record.
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.StreamReaderBounded.Length">

@@ -195,6 +195,10 @@ public partial class SequenceIndexEntry {
         }
 
 
+    public SequenceIndexEntry Previous() => Sequence.Previous(this);
+
+    public SequenceIndexEntry Next() => Sequence.Next(this);
+
     /// <summary>
     /// Read a frame from <paramref name="jbcdStream"/> at the position 
     /// specified by <paramref name="position"/>. 

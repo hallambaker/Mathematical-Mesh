@@ -217,7 +217,7 @@ public class Store : Disposable {
     /// forwards.</param>
     /// <returns></returns>
     public virtual SequenceEnumeratorRaw Select(int minIndex, bool reverse = false) =>
-        Sequence.Select(minIndex, reverse);
+        Sequence.SelectEnvelope(minIndex, reverse);
 
 
 

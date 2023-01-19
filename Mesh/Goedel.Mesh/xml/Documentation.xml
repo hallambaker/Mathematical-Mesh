@@ -15018,12 +15018,6 @@
             <param name="current">The entry to return the prior entry for.</param>
             <returns>The spool entry if found, otherwise, null.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Spool.GetLast">
-            <summary>
-            Return the last message in the spool.
-            </summary>
-            <returns>The spool entry if found, otherwise, null.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Spool.SetStatus(System.Collections.Generic.List{Goedel.Mesh.Reference})">
             <summary>
             Apply the list of message status updates specified in <paramref name="references"/>.
@@ -15207,6 +15201,9 @@
         </member>
         <member name="P:Goedel.Mesh.SpoolEntry.Spool">
             <summary>The spool the message is enrolled in.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolEntry.SequenceFrameIndex">
+            <summary>The index of the item in the original container.</summary> 
         </member>
         <member name="P:Goedel.Mesh.SpoolEntry.EnvelopeID">
             <summary>The unique envelope identifier.</summary>

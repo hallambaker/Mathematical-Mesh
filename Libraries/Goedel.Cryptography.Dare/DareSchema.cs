@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 18-Jan-23 1:56:10 PM
+//  This file was automatically generated at 18-Jan-23 7:29:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -113,10 +113,10 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	/// <summary>
 	///
 	/// A DARE envelope containing Header, EDS and Trailer in JSON object encoding.
-	/// Since a DAREMessage is almost invariably presented in JSON Sequence or
+	/// Since a DAREMessage is almost invariably presented in JSON sequence or
 	/// compact encoding, use of the DAREMessage subclass is preferred.
 	/// Although a DARE envelope is functionally an object, it is serialized as 
-	/// an ordered Sequence. This ensures that the envelope header field will always
+	/// an ordered sequence. This ensures that the envelope header field will always
 	/// precede the body in a serialization, this allowing processing of the header
 	/// information to be performed before the entire body has been received.
 	/// </summary>
@@ -478,7 +478,7 @@ public partial class DareHeader : DareTrailer {
 
 	public virtual byte[]						Cloaked  {get; set;}
         /// <summary>
-        ///If present, the Annotations field contains a Sequence of Encrypted Data 
+        ///If present, the Annotations field contains a sequence of Encrypted Data 
         ///Segments encrypted under the envelope base seed. The interpretation of these fields 
         ///is application specific.
         /// </summary>
@@ -490,7 +490,7 @@ public partial class DareHeader : DareTrailer {
 
 	public virtual List<DareRecipient>				Recipients  {get; set;}
         /// <summary>
-        ///A DARE security policy governing future additions to the Sequence.
+        ///A DARE security policy governing future additions to the container.
         /// </summary>
 
 	public virtual DarePolicy						Policy  {get; set;}
@@ -501,12 +501,12 @@ public partial class DareHeader : DareTrailer {
 
 	public virtual byte[]						ContentMetaData  {get; set;}
         /// <summary>
-        ///Information that describes Sequence information
+        ///Information that describes container information
         /// </summary>
 
 	public virtual SequenceInfo						SequenceInfo  {get; set;}
         /// <summary>
-        ///An index of records in the current Sequence up to but not including
+        ///An index of records in the current container up to but not including
         ///this one.
         /// </summary>
 
@@ -522,7 +522,7 @@ public partial class DareHeader : DareTrailer {
 
 	public virtual byte[]						Cover  {get; set;}
         /// <summary>
-        ///Bitmask used to identify a Sequence within a group for use in update notification
+        ///Bitmask used to identify a container within a group for use in update notification
         ///etc.
         /// </summary>
 
@@ -837,12 +837,12 @@ public partial class ContentMeta : Dare {
 
 	public virtual DateTime?						Expire  {get; set;}
         /// <summary>
-        ///First number of the first object instance value.
+        ///Frame number of the first object instance value.
         /// </summary>
 
 	public virtual int?						First  {get; set;}
         /// <summary>
-        ///First number of the immediately prior object instance value	
+        ///Frame number of the immediately prior object instance value	
         /// </summary>
 
 	public virtual int?						Previous  {get; set;}
@@ -1609,7 +1609,7 @@ public partial class DarePolicy : Dare {
         /// <summary>
         ///The signature policy
         ///'None': No entries are signed.
-        ///'Last': The last entry in the Sequence is signed.
+        ///'Last': The last entry in the container is signed.
         ///'Isolated': All entries are independently signed.
         ///'Any': Entries may be signed.
         ///Default value is 'None' if SignKeys is null, and 'Any' otherwise.

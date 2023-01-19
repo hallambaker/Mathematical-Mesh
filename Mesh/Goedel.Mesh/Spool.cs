@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography.Dare;
+
 namespace Goedel.Mesh;
 
 /// <summary>
@@ -197,6 +199,12 @@ public class Spool : Store {
                     select, notBefore, notOnOrAfter, last, maxResults, reverse);
 
 
+
+    SpoolEntry Intern(SequenceIndexEntry indexEntry, SpoolEntry next) {
+
+        throw new NYI();
+        }
+
     /// <summary>
     /// Intern <paramref name="envelope"/> with the following envelope 
     /// <paramref name="next"/>.
@@ -268,73 +276,15 @@ public class Spool : Store {
     /// <param name="current">The entry to return the prior entry for.</param>
     /// <returns>The spool entry if found, otherwise, null.</returns>
     public SpoolEntry GetPrevious(SpoolEntry current) {
-        if (current == null) {
-            return GetLast();
-            }
-
-        if (current.Previous != null) {
-            return current.Previous;
-            }
-
-        if (!Sequence.MoveToIndex(current.Index)) {// not found?
-            return null;
-            }
-
-        var envelope = Sequence.ReadDirectReverse();
-
-        return Intern(envelope, current);
+        var previousIndex = current.SequenceFrameIndex.Previous();
+        return Intern(previousIndex, current);
         }
+
 
     public SpoolEntry GetNext(SpoolEntry current) {
+        var nextIndex = current.SequenceFrameIndex.Next();
+        return Intern(nextIndex, current);
 
-        if (current?.Next != null) {
-            return current.Next;
-            }
-
-        if (current == null) {
-            return GetFirst();
-            }
-
-        if (!Sequence.MoveToIndex(current.Index)) {// not found?
-            return null;
-            }
-
-        var envelope = Sequence.ReadDirect();
-        return Intern(envelope, current);
-
-        }
-
-
-    public SpoolEntry GetFirst() {
-        if (SpoolEntryFirst != null) {
-            return SpoolEntryFirst;
-            }
-
-        if (!Sequence.Start()) {  // not found?
-            return null;
-            }
-        var envelope = Sequence.ReadDirect();
-
-        return Intern(envelope, null);
-        }
-    /// <summary>
-    /// Return the last message in the spool.
-    /// </summary>
-    /// <returns>The spool entry if found, otherwise, null.</returns>
-    public SpoolEntry GetLast() {
-
-        if (SpoolEntryLast != null) {
-            return SpoolEntryLast;
-            }
-
-        if (!Sequence.MoveToLast()) {  // not found?
-
-            return null;
-            }
-
-        var envelope = Sequence.ReadDirectReverse();
-
-        return Intern(envelope, null);
         }
 
 

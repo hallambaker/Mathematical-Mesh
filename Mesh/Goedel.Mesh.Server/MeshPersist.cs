@@ -390,7 +390,7 @@ public class MeshPersist : Disposable {
                 Envelopes = new List<DareEnvelope>()
                 };
 
-            foreach (var message in store.Select(selection.IndexMin??0)) {
+            foreach (var message in store.SelectEnvelope(selection.IndexMin??0)) {
                 update.Envelopes.Add(message);
                 }
 

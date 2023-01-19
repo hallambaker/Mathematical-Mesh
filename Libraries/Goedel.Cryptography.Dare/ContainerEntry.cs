@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 18-Jan-23 1:56:10 PM
+//  This file was automatically generated at 18-Jan-23 7:29:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -106,18 +106,18 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
 	/// <summary>
 	///
 	/// Information that describes the relationship of the envelope to its
-	/// enclosing Sequence.
+	/// enclosing sequence.
 	/// </summary>
 public partial class SequenceInfo : SequenceData {
         /// <summary>
         ///Specifies the data encoding for the header section of for the following frames.
-        ///This value is ONLY valid in First 0 which MUST have a header encoded in JSON.
+        ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
         /// </summary>
 
 	public virtual string						DataEncoding  {get; set;}
         /// <summary>
-        ///Specifies the Sequence type for the following records.
-        ///This value is ONLY valid in First 0 which MUST have a header encoded in JSON.
+        ///Specifies the container type for the following records.
+        ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
         /// </summary>
 
 	public virtual string						ContainerType  {get; set;}
@@ -129,15 +129,15 @@ public partial class SequenceInfo : SequenceData {
 	public virtual long?						Index  {get; set;}
         /// <summary>
         ///If true, the current frame is a meta frame and does not contain a payload.
-        ///Note: Meta frames MAY be present in any Sequence. Applications MUST
+        ///Note: Meta frames MAY be present in any container. Applications MUST
         ///accept containers that contain meta frames at any position in the file.
         ///Applications MUST NOT interpret a meta frame as a data frame with an enpty payload.
         /// </summary>
 
 	public virtual bool?						IsMeta  {get; set;}
         /// <summary>
-        ///If set true in a persistent Sequence, specifies that this record contains
-        ///the default object for the Sequence.
+        ///If set true in a persistent container, specifies that this record contains
+        ///the default object for the container.
         /// </summary>
 
 	public virtual bool?						Default  {get; set;}
@@ -326,7 +326,7 @@ public partial class SequenceInfo : SequenceData {
 
 	/// <summary>
 	///
-	/// A record providing an index to the Sequence.
+	/// A record providing an index to the sequence.
 	/// </summary>
 public partial class SequenceIndex : SequenceData {
         /// <summary>
@@ -338,7 +338,7 @@ public partial class SequenceIndex : SequenceData {
 
 	public virtual bool?						Full  {get; set;}
         /// <summary>
-        ///List of Sequence position entries
+        ///List of container position entries
         /// </summary>
 
 	public virtual List<IndexPosition>				Positions  {get; set;}

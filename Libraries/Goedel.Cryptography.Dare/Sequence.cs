@@ -251,13 +251,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     private IEnumerator GetEnumerator1() => this.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
 
-    /// <summary>
-    /// Returns an enumerator over the Sequence contents starting with the
-    /// first frame.
-    /// </summary>
-    /// <returns>The enumerator</returns>
-    public virtual ContainerEnumerator Select(long frame, long last = -1) =>
-        new ContainerEnumerator(this, frame, last);
+
 
     #endregion
 
@@ -627,12 +621,21 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
 
     /// <summary>
+    /// Returns an enumerator over the Sequence contents starting with the
+    /// first frame.
+    /// </summary>
+    /// <returns>The enumerator</returns>
+    public virtual ContainerEnumerator SelectIndex(long frame, long last = -1) =>
+        new ContainerEnumerator(this, frame, last);
+
+
+    /// <summary>
     /// Return an enumerator with the specified selectors.
     /// </summary>
     /// <param name="minIndex">The minimum index.</param>
     /// <param name="reverse">If true, read the Sequence from the end.</param>
     /// <returns>The enumerator.</returns>
-    public SequenceEnumeratorRaw Select(long minIndex, bool reverse = false) =>
+    public SequenceEnumeratorRaw SelectEnvelope(long minIndex, bool reverse = false) =>
         new(this, minIndex, reverse);
 
 
@@ -838,7 +841,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         }
 
 
-    protected SequenceIndexEntry ReadAtPosition(
+    public SequenceIndexEntry ReadAtPosition(
                 long position,
                 bool previous = false) {
 
@@ -1296,6 +1299,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         return ReadAtPosition(indexEntry.FramePositionNext);
         }
 
+
     /// <summary>
     /// Return the previous entry prior to the index <paramref name="indexEntry"/>.
     /// </summary>
@@ -1314,23 +1318,28 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
     public abstract SequenceIndexEntry FrameLast();
 
-
     public abstract SequenceIndexEntry Position(long position);
 
+    //public abstract long FrameToPosition (long frame);
 
 
-    ///// <summary>
-    ///// Move to the frame with index PositionRead in the file. 
-    ///// <para>If the tree positioning mechanism is in use, the
-    ///// time complexity for this operation is log2(n) where n is
-    ///// the difference between the current position and the new 
-    ///// position.</para>
-    ///// </summary>
-    ///// <param name="frameIndex">First index to move to.</param>
-    ///// <returns>True if the position exists.</returns>
-    //public abstract bool MoveToIndex(long frameIndex);
 
+    /// <summary>
+    /// Move to the frame with index PositionRead in the file. 
+    /// <para>If the tree positioning mechanism is in use, the
+    /// time complexity for this operation is log2(n) where n is
+    /// the difference between the current position and the new 
+    /// position.</para>
+    /// </summary>
+    /// <param name="frameIndex">First index to move to.</param>
+    /// <returns>True if the position exists.</returns>
+    public abstract bool MoveToIndex(long frameIndex);
 
+    /// <summary>
+    /// Read the previous frame in the file.
+    /// </summary>
+    /// <returns>True if a previous frame exists, otherwise false</returns>
+    public abstract bool Previous();
 
 
     ///// <summary>
@@ -1345,11 +1354,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///// <returns>True if a next frame exists, otherwise false</returns>
     //public abstract bool PreviousFrame();
 
-    ///// <summary>
-    ///// Read the previous frame in the file.
-    ///// </summary>
-    ///// <returns>True if a previous frame exists, otherwise false</returns>
-    //public abstract bool Previous();
+
 
 
 

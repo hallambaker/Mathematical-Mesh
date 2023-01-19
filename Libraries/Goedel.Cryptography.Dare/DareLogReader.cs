@@ -127,11 +127,10 @@ public class DareLogReader : Disposable, IEnumerable<SequenceIndexEntry> {
 
         using var reader = new DareLogReader(FileName, KeyCollection);
 
-        var container = reader.Sequence;
-        var containerDataReader = container.GetSequenceFrameIndex(
-                    position: container.PositionFinalFrameStart);
-        Data = containerDataReader.GetPayload(container, KeyCollection);
-        ContentMeta = containerDataReader?.Header.ContentMeta;
+        var sequence = reader.Sequence;
+        var dataReader = sequence.FrameLast();
+        Data = dataReader.GetPayload(sequence, KeyCollection);
+        ContentMeta = dataReader?.Header.ContentMeta;
         }
 
 
