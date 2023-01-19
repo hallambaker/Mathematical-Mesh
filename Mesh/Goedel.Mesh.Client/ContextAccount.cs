@@ -514,12 +514,12 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
         if (syncStatus.Index <= syncStatus.Store.FrameCount) {
-            var container = syncStatus.Store.Sequence;
+            var sequence = syncStatus.Store.Sequence;
             var envelopes = new List<DareEnvelope>();
             var containerUpdate = new ContainerUpdate() {
                 Container = syncStatus.Store.StoreName,
                 Envelopes = envelopes,
-                Digest = container.Digest
+                Digest = sequence.Digest
                 // put the digest value here
                 };
 
@@ -528,13 +528,14 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 Math.Min((start + maxEnvelopes), syncStatus.Store.FrameCount);
 
             if (start == 0) {
-                envelopes.Add(container.FrameZero);
+                envelopes.Add(sequence.FrameZero);
                 start++;
                 }
-            for (var i = start; i < last; i++) {
-                container.MoveToIndex(i);
-                envelopes.Add(container.ReadDirect());
+
+            foreach (var index in sequence.Select(start, last)) {
+                envelopes.Add(index.GetEnvelope());
                 }
+
             containerUpdates.Add(containerUpdate);
             }
 

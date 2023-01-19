@@ -293,9 +293,9 @@ public class ContainerPersistenceStoreThreadSafe : PersistenceStore {
     /// <param name="FileName">Log file.</param>
     /// <param name="Type">Type of data to store (the schema name).</param>
     /// <param name="ContainerType">The Sequence type.</param>
-    /// <param name="policy">The cryptographic policy to be applied to the container.</param>
+    /// <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
     /// <param name="DataEncoding">The data encoding.</param>
-    /// <param name="FileStatus">The file status in which to open the container.</param>
+    /// <param name="FileStatus">The file status in which to open the Sequence.</param>
     public ContainerPersistenceStoreThreadSafe(string FileName, string Type = null,
                 FileStatus FileStatus = FileStatus.OpenOrCreate,
                 SequenceType ContainerType = SequenceType.Chain,

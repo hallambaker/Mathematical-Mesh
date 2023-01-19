@@ -23,25 +23,25 @@
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
-/// Base class for container writers.
+/// Base class for Sequence writers.
 /// </summary>
 public class SequenceWriter {
 
-    ///<summary>The container to be written to.</summary>
+    ///<summary>The Sequence to be written to.</summary>
     protected Sequence Sequence;
 
     ///<summary>Property allowing access to the crypto parameters and policy governing
-    ///the container.</summary> 
+    ///the Sequence.</summary> 
     public CryptoParametersSequence CryptoParametersSequence =>
             Sequence.CryptoParametersSequence;
 
-    ///<summary>The last container header written</summary>
+    ///<summary>The last Sequence header written</summary>
     public DareHeader SequenceHeader;
 
 
 
 
-    ///<summary>SequenceInfo element of last container header written.</summary>
+    ///<summary>SequenceInfo element of last Sequence header written.</summary>
     public SequenceInfo SequenceInfo => SequenceHeader.SequenceInfo;
 
     ///<summary>The trailer of the envelope currently being written.</summary>
@@ -72,8 +72,8 @@ public class SequenceWriterFile : SequenceWriter {
     /// <summary>
     /// Main constructor.
     /// </summary>
-    /// <param name="sequence">The sequence to be written</param>
-    /// <param name="header">The sequence header???</param>
+    /// <param name="sequence">The Sequence to be written</param>
+    /// <param name="header">The Sequence header???</param>
     /// <param name="JBCDStream">The stream???</param>
     public SequenceWriterFile(Sequence sequence, DareHeader header, JbcdStream JBCDStream) {
         base.Sequence = sequence;
@@ -104,7 +104,7 @@ public class SequenceWriterDeferred : SequenceWriter {
     ///are to be created.</summary> 
     public List<KeyPair> AdditionalRecipients { get; set; }
 
-    ///<summary>The apex digest value of the container as written to the file.</summary>
+    ///<summary>The apex digest value of the Sequence as written to the file.</summary>
     public byte[] Digest => DareTrailer.TreeDigest ?? DareTrailer.ChainDigest;
 
 
@@ -113,16 +113,16 @@ public class SequenceWriterDeferred : SequenceWriter {
     /// <summary>
     /// Main constructor
     /// </summary>
-    /// <param name="sequence">The container to be written</param>
+    /// <param name="sequence">The Sequence to be written</param>
     public SequenceWriterDeferred(Sequence sequence) {
         Sequence = sequence;
         frameCount = sequence.FrameCount;
         }
 
     /// <summary>
-    /// Prepare the sequence information for a new frame to be added to the sequence.
+    /// Prepare the Sequence information for a new frame to be added to the Sequence.
     /// </summary>
-    /// <returns>The new sequence information</returns>
+    /// <returns>The new Sequence information</returns>
     public SequenceInfo PrepareSequenceInfo() => new() {
         Index = (int)frameCount++
         };

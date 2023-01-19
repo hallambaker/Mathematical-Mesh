@@ -35,19 +35,19 @@ public class DareLogWriter : DareLogReader {
 
 
     /// <summary>
-    /// Open a new file container for write access.
+    /// Open a new file Sequence for write access.
     /// </summary>
     /// <param name="fileName">The file name to create</param>
-    /// <param name="archive">If true, the container is intended to be used to create a multi-file
+    /// <param name="archive">If true, the Sequence is intended to be used to create a multi-file
     /// archive.</param>
     /// <param name="digest">If true, construct a digest </param>
     /// <param name="fileStatus">The mode to open the file in, this must be a mode
     /// that permits write access.</param>
-    /// <param name="containerType">The container type to use. If unspecified,
+    /// <param name="containerType">The Sequence type to use. If unspecified,
     /// a type appropriate for the type of use will be selected.</param>
     /// <returns>File Sequence instance</returns>
-    /// <param name="policy">The cryptographic policy to be applied to the container.</param>
-    /// <returns>The newly constructed container.</returns>
+    /// <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
+    /// <returns>The newly constructed Sequence.</returns>
     public DareLogWriter(
             string fileName,
             DarePolicy policy,
@@ -60,13 +60,13 @@ public class DareLogWriter : DareLogReader {
 
 
     /// <summary>
-    /// Open a new file container for write access.
+    /// Open a new file Sequence for write access.
     /// </summary>
-    /// <param name="jbcdStream">The stream to use to write the container.</param>
-    /// <param name="archive">If true, the container is intended to be used to create a multi-file
+    /// <param name="jbcdStream">The stream to use to write the Sequence.</param>
+    /// <param name="archive">If true, the Sequence is intended to be used to create a multi-file
     /// archive.</param>
     /// <param name="digest">If true, construct a digest </param>
-    /// <param name="containerType">The container type to use. If unspecified,
+    /// <param name="containerType">The Sequence type to use. If unspecified,
     /// a type appropriate for the type of use will be selected.</param>
     /// <returns>File Sequence instance</returns>
     public DareLogWriter(
@@ -121,7 +121,7 @@ public class DareLogWriter : DareLogReader {
     /// Add a file entry
     /// </summary>
     /// <param name="file">The file to add</param>
-    /// <param name="path">The path name attribute to give the file in the container</param>
+    /// <param name="path">The path name attribute to give the file in the Sequence</param>
     /// <param name="contentMeta">Metadata describing the content.</param>
     public void AddFile(
             string path,
@@ -145,7 +145,7 @@ public class DareLogWriter : DareLogReader {
     /// <summary>
     /// Delete a file entry
     /// </summary>
-    /// <param name="path">The path name attribute to give the file in the container</param>
+    /// <param name="path">The path name attribute to give the file in the Sequence</param>
     public bool Delete(string path) {
         GetIndex();
 
@@ -167,13 +167,13 @@ public class DareLogWriter : DareLogReader {
         }
 
     /// <summary>
-    /// Read a container data entry from one container and add it to this one.
+    /// Read a Sequence data entry from one Sequence and add it to this one.
     /// </summary>Add 
-    /// <param name="containerDataReader">Frame reader from which the
-    /// container data is to be read.</param>
+    /// <param name="containerDataReader">First reader from which the
+    /// Sequence data is to be read.</param>
     /// <param name="cryptoParameters">The new crypto parameters to be used to 
-    /// write the container data.</param>
-    public void Add(SequenceFrameIndex containerDataReader,
+    /// write the Sequence data.</param>
+    public void Add(SequenceIndexEntry containerDataReader,
             CryptoParameters cryptoParameters = null) {
         containerDataReader.Future();
         cryptoParameters.Future();
@@ -183,7 +183,7 @@ public class DareLogWriter : DareLogReader {
         }
 
     /// <summary>
-    /// Append an archive frame to the container.
+    /// Append an archive frame to the Sequence.
     /// </summary>
     /// <param name="signatures">List of JWS signatures. Since this is the first block, the signature
     /// is always over the payload data only.</param>
@@ -204,14 +204,14 @@ public class DareLogWriter : DareLogReader {
 
 
     /// <summary>
-    /// Open a new file container for write access and write a single file entry.
+    /// Open a new file Sequence for write access and write a single file entry.
     /// </summary>
     /// <param name="fileName">The file name to create</param>
     /// <param name="data">The content data</param>
     /// <param name="contentMeta">The content metadata</param>
     /// <param name="fileStatus">The mode to open the file in, this must be a mode
     /// that permits write access.</param>
-    /// <param name="policy">The cryptographic policy to be applied to the container.</param>
+    /// <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
     /// <returns>File Sequence instance</returns>
     public static void ArchiveFile(
             string fileName,
@@ -225,7 +225,7 @@ public class DareLogWriter : DareLogReader {
         }
 
     /// <summary>
-    /// Open a new file container for write access and append all the files in the directory 
+    /// Open a new file Sequence for write access and append all the files in the directory 
     /// <paramref name="directory"/>.
     /// </summary>
     /// <param name="fileName">The file name to create</param>
@@ -233,7 +233,7 @@ public class DareLogWriter : DareLogReader {
     /// <param name="contentMeta">The content metadata</param>
     /// <param name="fileStatus">The mode to open the file in, this must be a mode
     /// that permits write access.</param>
-    /// <param name="policy">The cryptographic policy to be applied to the container.</param>
+    /// <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
     /// <param name="index">If true add an index record to the end of the archive.</param>
     /// <returns>File Sequence instance</returns>
     public static void ArchiveDirectory(

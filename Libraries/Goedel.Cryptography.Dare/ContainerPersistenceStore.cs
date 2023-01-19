@@ -27,13 +27,13 @@ namespace Goedel.Cryptography.Dare;
 
 
 /// <summary>
-/// Persistence store based on a sequence interface.
+/// Persistence store based on a Sequence interface.
 /// </summary>
 public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<StoreEntry> {
 
     // Test: Addition of signed frames to persistence stores (is failing)
 
-    // Test: enumeration mechanisms, forward and reverse.
+    // Test: enumeration mechanisms, forward and Reverse.
 
     // Goal: Implement indexing of sequences, archives, etc.
 
@@ -46,7 +46,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     //// Objects that MUST be disposed correctly when leaving a using section.
     //JBCDStream JBCDStream;
 
-    ///<summary>The underlying sequence.</summary>
+    ///<summary>The underlying Sequence.</summary>
     public Sequence Sequence;
 
 
@@ -120,14 +120,14 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// Open or create a persistence store in specified mode with 
     /// the specified file name, content type and optional comment.
     /// </summary>
-    /// <param name="policy">The cryptographic policy to be applied to the sequence.</param>
+    /// <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
     /// <param name="fileName">Log file.</param>
     /// <param name="contentType">Type of data to store (the schema name).</param>
     /// <param name="sequenceType">The Sequence type.</param>
     /// <param name="dataEncoding">The data encoding.</param>
-    /// <param name="fileStatus">The file status in which to open the sequence.</param>
+    /// <param name="fileStatus">The file status in which to open the Sequence.</param>
     /// <param name="keyCollection">The key collection to use to resolve private keys.</param>
-    /// <param name="read">If true read the sequence to initialize the persistence store.</param>
+    /// <param name="read">If true read the Sequence to initialize the persistence store.</param>
     /// <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
     public PersistenceStore(string fileName, string contentType = null,
                 FileStatus fileStatus = FileStatus.OpenOrCreate,
@@ -149,7 +149,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
 
     /// <summary>
-    /// Create a persisetence store round an already opened sequence.
+    /// Create a persisetence store round an already opened Sequence.
     /// </summary>
     /// <param name="sequence"></param>
     /// <param name="read"></param>
@@ -159,7 +159,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
         Sequence = sequence;
 
-        // Barfing in the docs because we do not have the key required to decrypt the sequence
+        // Barfing in the docs because we do not have the key required to decrypt the Sequence
 
         if (read & sequence.Length > 0) {
             Read(keyLocate);
@@ -168,7 +168,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
 
     /// <summary>
-    /// Read the sequence contents in fast mode generating indexes only without reading contents.
+    /// Read the Sequence contents in fast mode generating indexes only without reading contents.
     /// </summary>
     public void FastRead() {
         foreach (var frameIndex in Sequence) {
@@ -198,9 +198,9 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
 
     /// <summary>
-    /// Read a sequence from the first frame to the last.
+    /// Read a Sequence from the first frame to the last.
     /// </summary>
-    /// <param name="integrity">Specifies the degree of sequence integrity checking to perform.</param>
+    /// <param name="integrity">Specifies the degree of Sequence integrity checking to perform.</param>
     /// <param name="keyLocate">The key collection to be used to resolve keys</param>
     void Read(IKeyLocate keyLocate, SequenceIntegrity integrity = SequenceIntegrity.None) {
         foreach (var frameIndex in Sequence) {
@@ -216,7 +216,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
 
     /// <summary>
-    /// Apply the specified message to the sequence.
+    /// Apply the specified message to the Sequence.
     /// </summary>
     /// <param name="dareMessage"></param>
     public virtual StoreEntry Apply(DareEnvelope dareMessage) {
@@ -232,9 +232,9 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <summary>
     /// Commit a transaction to memory.
     /// </summary>
-    /// <param name="frameIndex">The sequence position</param>
+    /// <param name="frameIndex">The Sequence position</param>
     /// <param name="jSONObject">The object being committed in deserialized form.</param>
-    public virtual StoreEntry CommitTransaction(SequenceFrameIndex frameIndex, JsonObject jSONObject) {
+    public virtual StoreEntry CommitTransaction(SequenceIndexEntry frameIndex, JsonObject jSONObject) {
         if (frameIndex.Header.Index == 0) {
             return null; // we do not commit fram zero transactions to memory.
             }
@@ -268,7 +268,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <summary>
     /// Commit a New transaction to memory
     /// </summary>
-    /// <param name="storeEntry">The sequence store entry representing the transaction</param>
+    /// <param name="storeEntry">The Sequence store entry representing the transaction</param>
     protected virtual void MemoryCommitNew(StoreEntry storeEntry) {
         // Check to make sure the object does not already exist
         Assert.AssertFalse(ObjectIndex.ContainsKey(storeEntry.UniqueID), EntryAlreadyExists.Throw);
@@ -280,7 +280,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <summary>
     /// Commit an Update transaction to memory
     /// </summary>
-    /// <param name="storeEntry">The sequence store entry representing the transaction</param>
+    /// <param name="storeEntry">The Sequence store entry representing the transaction</param>
     protected virtual void MemoryCommitUpdate(StoreEntry storeEntry) {
         // Check to make sure the object does not already exist
         if (ObjectIndex.ContainsKey(storeEntry.UniqueID)) {
@@ -293,7 +293,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <summary>
     /// Commit a Delete transaction to memory
     /// </summary>
-    /// <param name="storeEntry">The sequence store entry representing the transaction</param>
+    /// <param name="storeEntry">The Sequence store entry representing the transaction</param>
     protected virtual void MemoryCommitDelete(StoreEntry storeEntry) {
         // Check to make sure the object does not already exist
         Assert.AssertTrue(ObjectIndex.ContainsKey(storeEntry.UniqueID), EntryNotFound.Throw);
@@ -370,7 +370,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
 
     /// <summary>
-    /// Write a persistence entry to the sequence.
+    /// Write a persistence entry to the Sequence.
     /// </summary>
     /// <param name="item">The object to write.</param>
     /// <param name="previous">The previous entry.</param>
@@ -404,7 +404,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
         var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out var Previous);
         Assert.AssertFalse(Exists, ObjectIdentifierNotUnique.Throw);
 
-        // Create new sequence
+        // Create new Sequence
         var contentInfo = new ContentMeta() {
             Event = EventNew,
             UniqueId = jsonObject._PrimaryKey,
@@ -415,10 +415,10 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
         }
 
     /// <summary>
-    /// Create a sequence header to update an existing persistence entry
+    /// Create a Sequence header to update an existing persistence entry
     /// </summary>
 
-    /// <param name="previous">The previous sequence store entry for this object</param>
+    /// <param name="previous">The previous Sequence store entry for this object</param>
     /// <param name="jsonObject">The new object value</param>
     /// <param name="create">If true, create a new value if one does not already exist</param>
     /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
@@ -436,7 +436,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
         var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out previous);
         Assert.AssertTrue(Exists | create, EntryNotFound.Throw);
 
-        // Create new sequence
+        // Create new Sequence
         var contentInfo = new ContentMeta() {
             Event = Exists ? EventUpdate : EventNew,
             UniqueId = jsonObject._PrimaryKey,
@@ -454,7 +454,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <summary>
     /// Delete a persistence entry
     /// </summary>
-    /// <param name="previous">The previous sequence store entry for this object</param>
+    /// <param name="previous">The previous Sequence store entry for this object</param>
     /// <param name="uniqueID">The UniqueID of the object to delete</param>
     /// <returns>True if the object was updated, otherwise false.</returns>
     /// 
@@ -466,7 +466,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
             }
 
         var First = previous?.First as StoreEntry;
-        // Create new sequence
+        // Create new Sequence
         var contentInfo = new ContentMeta() {
             Event = EventDelete,
             UniqueId = uniqueID,

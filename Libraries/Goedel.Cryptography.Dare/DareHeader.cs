@@ -149,7 +149,7 @@ public partial class DareHeader {
     #endregion
 
     /// <summary>
-    /// Return a binary EDS sequence of the specified plaintext under this header. A
+    /// Return a binary EDS Sequence of the specified plaintext under this header. A
     /// unique salt will be assigned.
     /// </summary>
     /// <param name="Plaintext">The EDS plaintext.</param>

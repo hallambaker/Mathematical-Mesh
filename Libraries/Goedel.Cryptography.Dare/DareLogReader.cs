@@ -28,9 +28,9 @@ namespace Goedel.Cryptography.Dare;
 /// <summary>
 /// Log reader
 /// </summary>
-public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
+public class DareLogReader : Disposable, IEnumerable<SequenceIndexEntry> {
 
-    ///<summary>The underlying sequence</summary> 
+    ///<summary>The underlying Sequence</summary> 
     public Sequence Sequence { get; protected set; }
 
 
@@ -40,7 +40,7 @@ public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
     protected override void Disposing() => Sequence?.Dispose();
 
     /// <summary>
-    /// The number of entries in the container. Note that this will have to be 
+    /// The number of entries in the Sequence. Note that this will have to be 
     /// changed when entries spanning multiple frames are supported.
     /// </summary>
     public long Count => Sequence.FrameCount;
@@ -49,7 +49,7 @@ public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
     /// Enumerate over the archive contents.
     /// </summary>
     /// <returns>The enumerator</returns>
-    public IEnumerator<SequenceFrameIndex> GetEnumerator() => Sequence.GetEnumerator();
+    public IEnumerator<SequenceIndexEntry> GetEnumerator() => Sequence.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException();
 
 
@@ -66,13 +66,13 @@ public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
 
 
     /// <summary>
-    /// Open an existing file sequence in read mode.
+    /// Open an existing file Sequence in read mode.
     /// </summary>
     /// <param name="fileName">The file name to read</param>
     /// <param name="fileStatus">The mode to open the file in, this must be a mode
     /// that permits read access.</param>
     /// <param name="keyCollection">Key collection to be used to resolve private key references.</param>
-    /// <param name="decrypt">If true attempt to decrypt the sequence contents.</param>
+    /// <param name="decrypt">If true attempt to decrypt the Sequence contents.</param>
     /// <returns>File Sequence instance</returns>
     public DareLogReader(
             string fileName,
@@ -83,18 +83,11 @@ public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
         }
 
     /// <summary>
-    /// Compile an index over the sequence.
+    /// Compile an index over the Sequence.
     /// </summary>
     public void GetIndex() {
-        // Did we compile a complete index?
-        if (DictionaryStart <= 0) {
-            return; // already indexed
-            }
-
-
-        FileCollection.Add(Sequence.GetHeader(DictionaryStart), Sequence.PositionRead);
-        while (Sequence.Previous()) {
-            FileCollection.Add(Sequence.Header, Sequence.PositionRead);
+        foreach (var entry in Sequence) {
+            FileCollection.Add(entry.Header, entry.FramePosition);
             }
         }
 
@@ -120,7 +113,7 @@ public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
 
 
     /// <summary>
-    /// Open a file container and then read and return the last entry in the file.
+    /// Open a file Sequence and then read and return the last entry in the file.
     /// </summary>
     /// <param name="FileName">The file name to create</param>
     /// <param name="Data">The content data</param>
@@ -143,7 +136,7 @@ public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
 
 
     /// <summary>
-    /// Read an entry from a container. 
+    /// Read an entry from a Sequence. 
     /// </summary>
     /// <param name="Data">The data read.</param>
     /// <param name="contentMeta">The metadata of the entry.</param>
@@ -226,9 +219,9 @@ public class DareLogReader : Disposable, IEnumerable<SequenceFrameIndex> {
         }
 
     /// <summary>
-    /// Copy data from this container to the specified container writer.
+    /// Copy data from this Sequence to the specified Sequence writer.
     /// </summary>
-    /// <param name="fileContainerWriter">The container to be written to.</param>
+    /// <param name="fileContainerWriter">The Sequence to be written to.</param>
     public void CopyArchive(DareLogWriter fileContainerWriter) {
         foreach (var ContainerDataReader in Sequence) {
             fileContainerWriter.Add(ContainerDataReader);

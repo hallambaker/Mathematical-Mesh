@@ -5808,6 +5808,12 @@
             Dictionary of frame index to frame position.
             </summary>
         </member>
+        <member name="F:Goedel.Cryptography.Dare.Sequence.FrameIndexToEntry">
+            <summary>Frame index number to index entry.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Sequence.SequencePositionToEntry">
+            <summary>Sequence position to index entry.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.#ctor(System.Boolean)">
             <summary>
             Default constructor.

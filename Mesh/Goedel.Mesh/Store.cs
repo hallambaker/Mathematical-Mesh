@@ -147,12 +147,9 @@ public class Store : Disposable {
             bitmask: bitmask
             );
 
-
-
         KeyCollection = keyCollection;
         //CryptoParameters = cryptoParameters;
         }
-
 
     byte[] MakeMask() {
         var bitmask = new byte[BitmaskSizeBytes];
@@ -161,7 +158,6 @@ public class Store : Disposable {
         bitmask[index / 8] = (byte)(0x1 << (index & 0b0111));
         return bitmask;
         }
-
 
     /// <summary>
     /// Append the list of envelopes <paramref name="envelopes"/> to the
@@ -191,8 +187,6 @@ public class Store : Disposable {
 
         }
 
-
-
     /// <summary>
     /// Compute the filename for the container <paramref name="containerName"/> 
     /// in <paramref name="directory"/>.
@@ -202,14 +196,6 @@ public class Store : Disposable {
     /// <returns></returns>
     public static string FileName(string directory, string containerName = null) => Path.Combine(directory, Path.ChangeExtension(containerName, ".dcat"));
 
-
-    //public static Store Factory(
-    //            string Directory,
-    //            string name,
-    //            CryptoParameters cryptoParameters,
-    //            KeyCollection keyCollection) =>
-    //    new Store(Directory, name, cryptoParameters, keyCollection);
-
     /// <summary>
     /// Append the envelopes <paramref name="envelope"/> to the
     /// store.
@@ -217,8 +203,6 @@ public class Store : Disposable {
     public virtual void AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
         Sequence.Append(envelope, updateEnvelope);
         }
-
-
 
     /// <summary>
     /// Returns an enumerator for traversing the store. If <paramref name="reverse"/>

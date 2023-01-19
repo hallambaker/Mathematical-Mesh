@@ -81,7 +81,7 @@ public class JBCDStreamDebug : JbcdStream {
         }
 
     /// <summary>
-    /// Read a byte in the reverse direction, i.e. the byte immediately preceding the current position.
+    /// Read a byte in the Reverse direction, i.e. the byte immediately preceding the current position.
     /// </summary>
     /// <returns>The byte read or -1.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
@@ -97,7 +97,7 @@ public class JBCDStreamDebug : JbcdStream {
         }
 
     /// <summary>
-    /// Reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.
+    /// Reads a Sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.
     /// </summary>
     /// <param name="Buffer"> An array of bytes. When this method returns, the buffer contains the specified byte array with the values between 
     /// offset and (offset + count - 1) replaced by the bytes read from the current source.</param>

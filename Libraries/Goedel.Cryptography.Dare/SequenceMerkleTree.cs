@@ -23,11 +23,11 @@
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
-/// Simple container that supports the append and index functions but does not 
+/// Simple Sequence that supports the append and index functions but does not 
 /// provide for cryptographic integrity.
 /// </summary>
 /// <threadsafety static="true" instance="false"/>
-public class ContainerMerkleTree : ContainerTree {
+public class SequenceMerkleTree : SequenceTree {
 
 
     ///<summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
@@ -37,38 +37,7 @@ public class ContainerMerkleTree : ContainerTree {
     /// Default constructor
     /// </summary>
 
-    public ContainerMerkleTree(bool decrypt=true) : base(decrypt) {
-        }
-
-    /// <summary>
-    /// Create a new container file of the specified type and write the initial
-    /// data record
-    /// </summary>
-    /// <param name="jbcdStream">The underlying JBCDStream stream. This MUST be opened
-    /// in a read access mode and should have exclusive read access. All existing
-    /// content in the file will be overwritten.</param>
-    /// <returns>The newly constructed container.</returns>
-    /// <param name="decrypt">If true, decrypt the container payload contents.</param>
-    public static new Sequence MakeNewContainer(
-                    JbcdStream jbcdStream,
-                    bool decrypt=true) {
-
-        var containerInfo = new SequenceInfo() {
-            ContainerType = DareConstants.SequenceTypeMerkleTag,
-            Index = 0
-            };
-
-
-        var containerHeader = new DareHeader() {
-            SequenceInfo = containerInfo
-            };
-
-        var container = new ContainerMerkleTree(decrypt) {
-            JbcdStream = jbcdStream,
-            HeaderFirst = containerHeader
-            };
-
-        return container;
+    public SequenceMerkleTree(bool decrypt=true) : base(decrypt) {
         }
 
     /// <summary>
@@ -85,20 +54,14 @@ public class ContainerMerkleTree : ContainerTree {
             }
         }
 
-
-
-
-    //readonly static byte[] EmptyBytes = new byte[0];
-
     /// <summary>
-    /// Register a frame in the container access dictionaries.
+    /// Register a frame in the Sequence access dictionaries.
     /// </summary>
-    /// <param name="containerInfo">Frame header</param>
+    /// <param name="containerInfo">First header</param>
     /// <param name="position">PositionRead of the frame</param>
     protected override void RegisterFrame(SequenceInfo containerInfo, long position) {
         var Index = containerInfo.LIndex;
         FrameIndexToPositionDictionary.Add(Index, position);
-        //FrameDigestDictionary.Add(Index, ContainerInfo.TreeDigest);
         }
 
     /// <summary>
@@ -185,7 +148,7 @@ public class ContainerMerkleTree : ContainerTree {
     #endregion
     #region // Verification
     /// <summary>
-    /// Perform sanity checking on a list of container headers.
+    /// Perform sanity checking on a list of Sequence headers.
     /// </summary>
     /// <param name="headers">List of headers to check</param>
     public override void CheckSequence(List<DareHeader> headers) {

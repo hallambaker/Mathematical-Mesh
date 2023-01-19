@@ -30,13 +30,13 @@ public partial class FileEntry {
     ///<summary>The index in the log.</summary> 
     public long Index;
 
-    ///<summary>The position within the container.</summary> 
+    ///<summary>The position within the Sequence.</summary> 
     public long Position;
 
     ///<summary>The index of the previous version of this file in the log.</summary> 
     public long Previous;
 
-    ///<summary>The previous position within the container.</summary> 
+    ///<summary>The previous position within the Sequence.</summary> 
     public long PreviousPosition;
 
 
@@ -50,7 +50,7 @@ public partial class FileEntry {
 
     /// <summary>
     /// Constructor to create an instance for the header <paramref name="dareHeader"/>
-    /// located at file sequence position <paramref name="position"/>.
+    /// located at file Sequence position <paramref name="position"/>.
     /// </summary>
     /// <param name="dareHeader">The header describing the file entry.</param>
     /// <param name="position">The position of the entry in the file.</param>
@@ -70,7 +70,7 @@ public partial class FileEntry {
 
 
 /// <summary>
-/// Class tracking a set of files in a sequence.
+/// Class tracking a set of files in a Sequence.
 /// </summary>
 public class FileCollection {
 
@@ -91,7 +91,7 @@ public class FileCollection {
     /// </summary>
     /// <param name="fileInfo">File information block.</param>
     /// <param name="path">The path to be recorded.</param>
-    /// <param name="index">Index of the frame in the sequence.</param>
+    /// <param name="index">Index of the frame in the Sequence.</param>
     /// <param name="position">PositionRead of the first byte of the frame.</param>
     /// <returns>The file entry created. This will contain relative links to the
     /// previous entry (if it exists).</returns>
@@ -121,7 +121,7 @@ public class FileCollection {
     /// Add a file to the collection.
     /// </summary>
     /// <param name="dareHeader">DARE header describing the entry.</param>
-    /// <param name="position">PositionRead within the sequence file.</param>
+    /// <param name="position">PositionRead within the Sequence file.</param>
     /// <returns></returns>
     public FileEntry Add(DareHeader dareHeader, long position) {
         var filename = dareHeader.ContentMeta?.Filename;
@@ -153,7 +153,7 @@ public class FileCollection {
     /// Remove a file entry by appending a record saying it is deleted.
     /// </summary>
     /// <param name="dareHeader">DARE header describing the entry.</param>
-    /// <param name="position">PositionRead within the sequence file.</param>
+    /// <param name="position">PositionRead within the Sequence file.</param>
     /// <returns>The original file entry if found.</returns>
     public FileEntry Remove(DareHeader dareHeader, long position) {
         if (!DictionaryByPath.TryGetValue(dareHeader.ContentMeta?.Filename, out var previous)) {
@@ -201,7 +201,7 @@ public class FileCollection {
 
 
     /// <summary>
-    /// Delete the file entry <paramref name="path"/> from the sequence.
+    /// Delete the file entry <paramref name="path"/> from the Sequence.
     /// </summary>
     /// <param name="path">The unique identifier of the entry to delete.</param>
     /// <param name="position">The index position of the entry.</param>
@@ -222,7 +222,7 @@ public class FileCollection {
         }
 
     /// <summary>
-    /// Make a sequence index from the specified values.
+    /// Make a Sequence index from the specified values.
     /// </summary>
     /// <returns>The created index.</returns>
     public SequenceIndex MakeIndex() {

@@ -63,7 +63,7 @@ public partial class TestContainers {
         var policy = new DarePolicy(keyCollection, recipients: recipients);
 
 
-        //TestContainer($"ContainerList", ContainerType.List, 0, policy: CryptoParameters);
+        //TestContainer($"SequenceList", ContainerType.List, 0, policy: CryptoParameters);
 
 
         // probably failing because the encrypted payload length is being incorrectly calculated.

@@ -35,9 +35,9 @@ public partial class CryptoParametersSequence : CryptoParameters {
     int keyExchangeFrame;
 
     /// <summary>
-    /// Create cryptoparameters for a container from the specified policy.
+    /// Create cryptoparameters for a Sequence from the specified policy.
     /// </summary>
-    /// <param name="containerType">The container type.</param>
+    /// <param name="containerType">The Sequence type.</param>
     /// <param name="header">Header specifying the governing policy.</param>
     /// <param name="recover">Attempt to recover the master secret.</param>
     /// <param name="keyLocate">Key location instance.</param>
@@ -49,7 +49,7 @@ public partial class CryptoParametersSequence : CryptoParameters {
 
         var policy = header.Policy;
 
-        // Force calculation of the payload digest for container types that require it.
+        // Force calculation of the payload digest for Sequence types that require it.
         var digest = policy?.DigestAlgorithm;
         switch (containerType) {
             case SequenceType.Digest:
@@ -122,7 +122,7 @@ public partial class CryptoParametersSequence : CryptoParameters {
 
 
     /// <summary>
-    /// Applies the security policy and container status information to determine if a prior
+    /// Applies the security policy and Sequence status information to determine if a prior
     /// key exchange can be reused. If the value false is returned, a new key exchange is
     /// required. Otherwise, the value <paramref name="previousFrame"/> is set to the index value
     /// of the prior frame where the key exchange can be found.

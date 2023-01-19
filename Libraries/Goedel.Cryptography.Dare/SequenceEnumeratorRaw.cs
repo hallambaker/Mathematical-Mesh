@@ -20,34 +20,38 @@
 //  THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
-/// Enumerator for frames in a Sequence beginning with frame 1.
+/// Enumerator that returns the raw, unencrypted Sequence data.
 /// </summary>
-public class ContainerEnumerator : IEnumerator<SequenceIndexEntry> {
+public class SequenceEnumeratorRaw : IEnumerator<DareEnvelope> {
     Sequence Sequence { get; }
+    long LowIndex { get; }
+    bool Reverse { get; }
 
-    long First { get; }
-
-    long Last { get; }
 
     /// <summary>
     /// Gets the element in the collection at the current position of the enumerator.
     /// </summary>
-    public SequenceIndexEntry Current { get; set; }
+    public DareEnvelope Current { get; private set; } = null;
+
+    SequenceIndexEntry indexEntry;
+
 
     /// <summary>
     /// Create an enumerator for <paramref name="sequence"/>.
     /// </summary>
+    /// <param name="lowIndex">The lowest index to be returned.</param>
+    /// <param name="reverse">If true, enumeratre from the last item to <paramref name="lowIndex"/> (inclusive).
+    /// otherwise, enumerate from <paramref name="lowIndex"/> to the first.</param>
     /// <param name="sequence">The Sequence to enumerate.</param>
-    public ContainerEnumerator(Sequence sequence, long frame = 1, long first = -1) {
+    public SequenceEnumeratorRaw(Sequence sequence, long lowIndex = 0, bool reverse = false) {
         Sequence = sequence;
-        First = frame;
-        Last = first;
+        LowIndex = lowIndex;
+        Reverse = reverse;
+
         Reset();
         }
 
@@ -56,34 +60,39 @@ public class ContainerEnumerator : IEnumerator<SequenceIndexEntry> {
     /// selectors to be used in sub classes.
     /// </summary>
     /// <returns>This instance</returns>
-    public ContainerEnumerator GetEnumerator() => this;
-
+    public SequenceEnumeratorRaw GetEnumerator() => this;
 
     object IEnumerator.Current => Current;
 
     /// <summary>
-    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    /// Dispose method.
     /// </summary>
-    /// 
     public void Dispose() {
         GC.SuppressFinalize(this);
         }
 
     /// <summary>
-    /// Advances the enumerator to the next element of the collection.
+    /// Move to the next item in the enumeration.
     /// </summary>
-    /// <returns><code>true</code> if the enumerator was successfully advanced to the next element; 
-    /// <code>false</code> if the enumerator has passed the end of the collection.</returns>
+    /// <returns>If true, the next item was found. Otherwise, the end of the enumeration 
+    /// was reached.</returns>
     public bool MoveNext() {
-        Current = Sequence.Next(Current);
-        return Current != null && (Last < 0 | Current.Index < Last);
+        if (Reverse) {
+            Current = indexEntry?.GetEnvelope();
+            indexEntry = Sequence.Previous(indexEntry);
+            }
+        else {
+            indexEntry = Sequence.Next(indexEntry);
+            Current = indexEntry?.GetEnvelope();
+            }
+        return Current.Index >= LowIndex;
         }
 
-
     /// <summary>
-    /// Sets the enumerator to its initial position, which is before the first element in the collection.
+    /// Sets the enumerator to its initial position, which is before the first element 
+    /// in the collection.
     /// </summary>
     public void Reset() {
-        Current = Sequence.Frame(First);
+        indexEntry = Reverse ? Sequence.FrameLast() : Sequence.Frame(LowIndex);
         }
     }

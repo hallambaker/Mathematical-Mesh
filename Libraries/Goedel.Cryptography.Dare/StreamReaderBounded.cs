@@ -24,7 +24,7 @@ namespace Goedel.Cryptography.Dare;
 
 
 /// <summary>
-/// A stream that reads from a container record.
+/// A stream that reads from a Sequence record.
 /// </summary>
 public partial class StreamReaderBounded : StreamReaderBase {
     #region // Boilerplate implementations

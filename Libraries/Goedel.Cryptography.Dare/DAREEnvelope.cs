@@ -224,7 +224,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     #region // Convenience accessors
 
     /// <summary>
-    /// Return the plaintext of a data sequence.
+    /// Return the plaintext of a data Sequence.
     /// </summary>
     /// <param name="i"></param>
     /// <returns></returns>
@@ -571,7 +571,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     ///     as an EDSS header entry.</param>
     /// <param name="chunk">The maximum chunk size. If unspecified, the default
     /// system chunk size (2048) is used.</param>
-    /// <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+    /// <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
     /// to be presented in place of an encrypted document if it cannot be decrypted.</param>
     /// <returns>The number of bytes in the input file.</returns>
     public static long Encode(
@@ -603,7 +603,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     ///     as an EDSS header entry.</param>
     /// <param name="chunk">The maximum chunk size. If unspecified, the default
     /// system chunk size (2048) is used.</param>
-    /// <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+    /// <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
     /// to be presented in place of an encrypted document if it cannot be decrypted.</param>
     /// <returns>The serialized encoding of the data.</returns>
     public static byte[] Encode(
@@ -627,7 +627,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// Encode data received on the input stream to the output stream with the specified
     /// security enhancements. If the input stream supports the seek operation, and
     /// the maximum chunk size is less than 1, the output file will be written as a 
-    /// single sequence. Otherwise, the file will be written with a chunk size no
+    /// single Sequence. Otherwise, the file will be written with a chunk size no
     /// greater than the maximum specified.
     /// </summary>
     /// <param name="inputStream">The input stream, must support reading.</param>
@@ -643,7 +643,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <param name="contentLength">The content length. This value is ignored if the Plaintext
     /// parameter is not null. If the value is less than 0, chunked encoding
     /// will be used for the payload data. </param>         
-    /// <param name="cover">Optional sequence of plaintext bytes specifying a cover page
+    /// <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
     /// to be presented in place of an encrypted document if it cannot be decrypted.</param>
     public static void Encode(
         CryptoParameters cryptoParameters,

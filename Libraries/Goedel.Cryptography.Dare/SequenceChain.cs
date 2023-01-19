@@ -25,50 +25,20 @@ namespace Goedel.Cryptography.Dare;
 
 
 /// <summary>
-/// Simple container that supports the append and index functions but does not 
+/// Simple Sequence that supports the append and index functions but does not 
 /// provide for cryptographic integrity.
 /// </summary>
 /// <threadsafety static="true" instance="false"/>
-public class ContainerChain : ContainerDigest {
+public class SequenceChain : SequenceDigest {
 
 
 
     /// <summary>
     /// Default constructor
     /// </summary>
-    public ContainerChain(bool decrypt) : base(decrypt) {
+    public SequenceChain(bool decrypt) : base(decrypt) {
         }
 
-
-    /// <summary>
-    /// Create a new container file of the specified type and write the initial
-    /// data record
-    /// </summary>
-    /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
-    /// in a read access mode and should have exclusive read access. All existing
-    /// content in the file will be overwritten.</param>
-    /// <param name="decrypt">If true, decrypt the container payload contents.</param>
-    public static new Sequence MakeNewContainer(
-                    JbcdStream JBCDStream,
-                    bool decrypt) {
-
-
-        var containerInfo = new SequenceInfo() {
-            ContainerType = DareConstants.SequenceTypeChainTag,
-            Index = 0
-            };
-
-        var containerHeader = new DareHeader() {
-            SequenceInfo = containerInfo
-            };
-
-        var container = new ContainerChain(decrypt) {
-            JbcdStream = JBCDStream,
-            HeaderFirst = containerHeader
-            };
-
-        return container;
-        }
 
     /// <summary>
     /// Initialize the dictionaries used to manage the tree by registering the set
@@ -91,7 +61,7 @@ public class ContainerChain : ContainerDigest {
     public override void PrepareFrame(
                     SequenceWriter contextWrite
                     ) {
-        HeaderFinal = contextWrite.SequenceHeader;
+
         base.PrepareFrame(contextWrite);
         }
 
@@ -127,7 +97,7 @@ public class ContainerChain : ContainerDigest {
 
     #region // Verification
     /// <summary>
-    /// Perform sanity checking on a list of container headers.
+    /// Perform sanity checking on a list of Sequence headers.
     /// </summary>
     /// <param name="headers">List of headers to check</param>
     public override void CheckSequence(List<DareHeader> headers) {

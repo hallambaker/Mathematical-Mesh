@@ -131,7 +131,7 @@ public class ContainerStoreIndexEntry : IPersistenceIndexEntry {
 
 
 /// <summary>
-/// In-memory index structure for container data store. This offers the best performance
+/// In-memory index structure for Sequence data store. This offers the best performance
 /// but at a significantly higher memory overhead than an index-on disk approach.
 /// </summary>
 public class StoreIndex : IPersistenceIndex {

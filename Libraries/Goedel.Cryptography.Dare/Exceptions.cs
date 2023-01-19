@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 18-Jan-23 1:41:33 PM
+//  This file was automatically generated at 18-Jan-23 1:56:10 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -177,7 +177,7 @@ public partial class EnvelopeDataCorrupt : global::Goedel.Utilities.GoedelExcept
 
 
 /// <summary>
-/// An attempt was made to access a container type that is not supported by the
+/// An attempt was made to access a Sequence type that is not supported by the
 /// class.
 /// </summary>
 [global::System.Serializable]
@@ -283,7 +283,7 @@ public partial class FrameTooLargeException : global::Goedel.Utilities.GoedelExc
 
 
 /// <summary>
-/// An attempt was made to create a new container file in a mode that did not
+/// An attempt was made to create a new Sequence file in a mode that did not
 /// allow creation of a new file.
 /// </summary>
 [global::System.Serializable]

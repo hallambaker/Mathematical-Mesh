@@ -407,7 +407,7 @@ public partial class JbcdStream {
         }
 
     /// <summary>
-    /// Read a length value of known length in the reverse direction.
+    /// Read a length value of known length in the Reverse direction.
     /// </summary>
     /// <param name="LengthLength">The number of bytes to read.</param>
     /// <param name="Length">The length value read.</param>
@@ -649,26 +649,49 @@ public partial class JbcdStream {
     int framerCode;
 
     /// <summary>
-    /// Open a frame reader at the position indicated by <paramref name="Position"/>
+    /// Open a frame reader at the position indicated by <paramref name="position"/>
     /// and return the frame length.
     /// </summary>
-    /// <param name="Position">The file position at which to begin reading. If
-    /// less than 0, the frame reader position is reset. This will cause the last
-    /// record read with FramerOpen to be re-read unless FramerClose has been called 
-    /// in which case the next frame in the stream will be read.</param>
-    /// <returns>The length of the frame if it could be read, otherwise -1.</returns>
-    public long FramerOpen(long Position = -1) {
+    /// <param name="position">The file position at which to begin reading.</param>
+    /// <param name="previous">Read the previous frame.</param>
+    /// <returns>The length of the frame if it could be read, otherwise an error
+    /// is thrown.</returns>
+    public long FramerOpen(long position = 0, bool previous = false) {
 
-        framerFrameStart = Position < 0 ? framerFrameStart : Position;
+        //framerFrameStart = position < 0 ? framerFrameStart : position;
 
-        StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
-        var Success = ReadTag(out framerCode, out framerFrameLength);
-        framerFrameEnd = StreamRead.Position + framerFrameLength;
+        bool success = false;
+
+        if (!previous) {
+            framerFrameStart = position;
+            StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
+            StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
+            success = ReadTag(out framerCode, out framerFrameLength);
+            framerFrameEnd = StreamRead.Position + framerFrameLength;
+
+            
+            }
+        else {
+            framerFrameEnd = position;
+            success = ReadTagReverse(out var code, out var length);
+
+            framerFrameStart = framerFrameEnd - length - TagSpace(code) - 1;
+
+            // sanity check, cannot read past the start of the file.
+            (framerFrameStart >=0).AssertTrue(InvalidFileFormatException.Throw);
+
+            // read the start tag and verify it is correct.
+            success = ReadTag(out framerCode, out framerFrameLength);
+            (code == framerCode).AssertTrue(InvalidFileFormatException.Throw);
+            (length == framerFrameLength).AssertTrue(InvalidFileFormatException.Throw);
+            }
+
         framerRecordNext = StreamRead.Position;
         return framerFrameLength;
-
-
         }
+
+
+
 
 
     bool FramerOpenRecord() {
@@ -826,7 +849,7 @@ public partial class JbcdStream {
 
 
     /// <summary>
-    /// Read a pair of wrapped frames in the reverse direction. This is typically done to read the last
+    /// Read a pair of wrapped frames in the Reverse direction. This is typically done to read the last
     /// record in a file to see how the file should be extended.
     /// </summary>
     /// <param name="FrameData">The payload data that was read.</param>
@@ -857,7 +880,7 @@ public partial class JbcdStream {
 
 
     /// <summary>
-    /// Read a pair of wrapped frames in the reverse direction. This is typically done to read the last
+    /// Read a pair of wrapped frames in the Reverse direction. This is typically done to read the last
     /// record in a file to see how the file should be extended.
     /// </summary>
     /// <param name="FrameHeader">The header data that was read.</param>
@@ -885,7 +908,7 @@ public partial class JbcdStream {
         }
 
     /// <summary>
-    /// Move a frame in the reverse direction.
+    /// Move a frame in the Reverse direction.
     /// </summary>
     /// <returns></returns>
     public long MoveFrameReverse() {
@@ -949,9 +972,9 @@ public partial class JbcdStream {
         }
 
     /// <summary>
-    /// Return the current container frame as a DareEnvelope.
+    /// Return the current Sequence frame as a DareEnvelope.
     /// </summary>
-    /// <returns>The container data.</returns>
+    /// <returns>The Sequence data.</returns>
     public DareEnvelope ReadDareEnvelope() {
         var found = ReadFrame(out var headerData, out var FrameData, out var trailerData);
         if (!found) {

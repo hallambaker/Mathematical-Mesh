@@ -31,7 +31,7 @@ public class StoreEntry : IPersistenceEntry {
 
     #region // Propeties and fields
 
-    ///<summary>The container the store entry belongs to</summary>
+    ///<summary>The Sequence the store entry belongs to</summary>
     Sequence Container { get; }
 
     /////<summary>The enveloped data</summary>
@@ -46,7 +46,7 @@ public class StoreEntry : IPersistenceEntry {
     ///<summary>Unique identifier of entry;</summary>
     public string UniqueID => ContentInfo?.UniqueId;
 
-    ///<summary>The container frame</summary>
+    ///<summary>The Sequence frame</summary>
     public long FrameCount => ContainerHeader.SequenceInfo.LIndex;
 
     ///<summary>If true the object haws been deleted and cannot be further modified.</summary>
@@ -57,8 +57,8 @@ public class StoreEntry : IPersistenceEntry {
     public JsonObject JsonObject => jsonObject ?? FrameIndex.GetJSONObject(Container).CacheValue(out jsonObject);
     JsonObject jsonObject;
 
-    ///<summary>The frame index within the container</summary>
-    public SequenceFrameIndex FrameIndex;
+    ///<summary>The frame index within the Sequence</summary>
+    public SequenceIndexEntry FrameIndex;
 
 
 
@@ -82,7 +82,7 @@ public class StoreEntry : IPersistenceEntry {
     #endregion
 
     /// <summary>
-    /// Constructor, creates an entry for the specified container header, data and previous relationship.
+    /// Constructor, creates an entry for the specified Sequence header, data and previous relationship.
     /// </summary>
     /// <param name="container">Sequence to create the entry in.</param>
     /// <param name="dareEnvelope">The envelope entry.</param>
@@ -101,14 +101,14 @@ public class StoreEntry : IPersistenceEntry {
         }
 
     /// <summary>
-    /// Constructor, creates an entry for the specified container header, data and previous relationship.
+    /// Constructor, creates an entry for the specified Sequence header, data and previous relationship.
     /// </summary>
-    /// <param name="frameIndex">The position of the entry within the container frame.</param>
+    /// <param name="frameIndex">The position of the entry within the Sequence frame.</param>
     /// <param name="previous">Link to previous value of this object</param>
     /// <param name="container"></param>
     /// <param name="item">The JSONObject representation.</param>
     public StoreEntry(
-                SequenceFrameIndex frameIndex,
+                SequenceIndexEntry frameIndex,
                 StoreEntry previous,
                 Sequence container,
                 JsonObject item = null) {

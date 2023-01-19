@@ -106,7 +106,7 @@ public partial class TestContainers {
     static bool Verify(
                 Sequence container,
                 DarePolicy darePolicy,
-                SequenceFrameIndex frameIndex,
+                SequenceIndexEntry frameIndex,
                 int record,
                 int size,
                 IKeyLocate keyCollection) {

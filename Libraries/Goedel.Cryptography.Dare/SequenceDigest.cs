@@ -25,11 +25,11 @@ namespace Goedel.Cryptography.Dare;
 
 
 /// <summary>
-/// Simple container that supports the append and index functions but does not 
+/// Simple Sequence that supports the append and index functions but does not 
 /// provide for linked cryptographic integrity.
 /// </summary>
 /// <threadsafety static="true" instance="false"/>
-public class ContainerDigest : ContainerList {
+public class SequenceDigest : SequenceList {
 
     ///<summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
     public override bool DigestRequired => true;
@@ -39,49 +39,12 @@ public class ContainerDigest : ContainerList {
     /// Default constructor
     /// </summary>
 
-    public ContainerDigest(bool decrypt) : base(decrypt) {
-        }
-
-    /// <summary>
-    /// Create a new container file of the specified type and write the initial
-    /// data record
-    /// </summary>
-    /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
-    /// in a read access mode and should have exclusive read access. All existing
-    /// content in the file will be overwritten.</param>
-    /// <returns>The newly constructed container.</returns>
-    /// <param name="decrypt">If true, decrypt the container payload contents.</param>
-    public static new Sequence MakeNewContainer(
-                    JbcdStream JBCDStream,
-                    bool decrypt) {
-
-        var containerInfo = new SequenceInfo() {
-            ContainerType = DareConstants.SequenceTypeDigestTag,
-            Index = 0
-            };
-
-
-        var containerHeader = new DareHeader() {
-            SequenceInfo = containerInfo
-            };
-
-        var container = new ContainerDigest(decrypt) {
-            JbcdStream = JBCDStream,
-            HeaderFirst = containerHeader
-            };
-
-        // initialize the Frame index dictionary
-
-        return container;
-
-
+    public SequenceDigest(bool decrypt) : base(decrypt) {
         }
 
 
-
-
     /// <summary>
-    /// Perform sanity checking on a list of container headers.
+    /// Perform sanity checking on a list of Sequence headers.
     /// </summary>
     /// <param name="Headers">List of headers to check</param>
     public override void CheckSequence(List<DareHeader> Headers) {

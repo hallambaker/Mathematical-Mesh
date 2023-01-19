@@ -35,7 +35,7 @@ public partial class SequenceInfo {
 public partial class DareHeader {
 
 
-    ///<summary>The container index value.</summary>
+    ///<summary>The Sequence index value.</summary>
     public long Index => SequenceInfo.LIndex;
 
 

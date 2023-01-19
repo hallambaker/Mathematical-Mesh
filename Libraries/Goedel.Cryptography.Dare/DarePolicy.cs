@@ -44,7 +44,7 @@ public partial class DarePolicy {
 
 
     /// <summary>
-    /// Convenience constructor to create a policy to be used to encode a container. The parameter
+    /// Convenience constructor to create a policy to be used to encode a Sequence. The parameter
     /// <paramref name="keyLocate"/> is used to resolve the keys specified in 
     /// <paramref name="signers"/> and <paramref name="recipients"/>. The parameters 
     /// <paramref name="encrypt"/> and <paramref name="digest"/> allow the bulk ciphers to be
@@ -81,7 +81,7 @@ public partial class DarePolicy {
         }
 
     /// <summary>
-    /// Convenience constructor to create a policy to be used to encode a container.
+    /// Convenience constructor to create a policy to be used to encode a Sequence.
     /// </summary>
     /// <param name="keyLocate">The key location instance.</param>
     /// <param name="signer">Signer key</param>

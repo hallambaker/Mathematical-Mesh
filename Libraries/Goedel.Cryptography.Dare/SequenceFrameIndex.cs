@@ -22,7 +22,7 @@
 
 namespace Goedel.Cryptography.Dare;
 
-///<summary>Describe the integrity checking to be applied when reading a sequence.</summary>
+///<summary>Describe the integrity checking to be applied when reading a Sequence.</summary>
 public enum SequenceIntegrity {
     ///<summary>Do not perform integrity checks.</summary>
     None,
@@ -40,20 +40,28 @@ public enum SequenceIntegrity {
 
     }
 
+///<summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
+public delegate void InternSequenceIndexEntryDelegate(
+        SequenceIndexEntry sequenceIndexEntry);
+
+
 /// <summary>
 /// Sequence index with the decoded head and tail and extent information for
 /// the body.
 /// </summary>
-public partial class SequenceFrameIndex {
+public partial class SequenceIndexEntry {
 
-    public Sequence Sequence { get; init; }
-
+    ///<summary>The Sequence that is indexed.</summary> 
+    public Sequence Sequence { get; set; }
 
     ///<summary>The first byte of the data segment (excluding the length indicator)</summary>
     public long FramePosition { get; init; }
 
     ///<summary>The length of the data segment.</summary>
     public long FrameLength { get; init; }
+
+    ///<summary>The length of the data segment.</summary>
+    public long FramePositionNext => FramePosition + FrameLength;
 
     ///<summary>The first byte of the data segment (excluding the length indicator)</summary>
     public long DataPosition { get; init; }
@@ -63,6 +71,10 @@ public partial class SequenceFrameIndex {
 
     ///<summary>The frame header</summary>
     public DareHeader Header { get; init;  }
+
+    ///<summary>The frame index.</summary> 
+    public long Index => Header.Index;
+
 
     ///<summary>The frame trailer</summary>
     public DareTrailer Trailer { get; init; }
@@ -79,7 +91,7 @@ public partial class SequenceFrameIndex {
     ///<summary>Convenience property, set true iff header contains direct key exchange.</summary> 
     public bool KeyExchange => Header?.Recipients != null;
 
-    //readonly JbcdStream jbcdStream;
+    //readonly jbcdStream jbcdStream;
 
 
 
@@ -110,14 +122,14 @@ public partial class SequenceFrameIndex {
     /// Constructor returning an instance for the envelope <paramref name="envelope"/>.
     /// </summary>
     /// <param name="envelope">The envelope to return an index for.</param>
-    /// <param name="sequence">The sequence in which the envelope is embedded.</param>
-    /// <param name="dataPosition">PositionRead of the envelope in the sequence.</param>
-    public SequenceFrameIndex(Sequence sequence, DareEnvelope envelope, long dataPosition) {
+    /// <param name="sequence">The Sequence in which the envelope is embedded.</param>
+    /// <param name="dataPosition">PositionRead of the envelope in the Sequence.</param>
+    public SequenceIndexEntry(Sequence sequence, DareEnvelope envelope, long dataPosition) {
         Header = envelope.Header;
         Trailer = envelope.Trailer;
         JsonObject = envelope.JsonObject;
         Sequence = sequence;
-        //jbcdStream = sequence.JbcdStream;
+        //jbcdStream = Sequence.jbcdStream;
         DataPosition = dataPosition;
 
         if (envelope.Body != null) {
@@ -130,14 +142,14 @@ public partial class SequenceFrameIndex {
     /// Constructor
     /// </summary>
 
-    public SequenceFrameIndex() {
-        //Sequence = sequence;
+    public SequenceIndexEntry() {
+        //Sequence = Sequence;
 
         //jsonStream.FramerOpen(Position);
         //var headerBytes = jsonStream.FramerGetData();
         //Header = DareHeader.FromJson(headerBytes.JsonReader(), false);
 
-        //sequence.FramerGetFrameIndex(out DataPosition, out DataLength);
+        //Sequence.FramerGetFrameIndex(out DataPosition, out DataLength);
 
         //var TrailerBytes = jsonStream.FramerGetData();
         //if (TrailerBytes != null && TrailerBytes.Length > 0) {
@@ -147,10 +159,93 @@ public partial class SequenceFrameIndex {
         }
 
     /// <summary>
+    /// Constructor returning an instance by reading <paramref name="jbcdStream"/>
+    /// at the position specified by <paramref name="position"/>. If 
+    /// <paramref name="previous"/> is true, the previous record is read, 
+    /// otherwise the next record is read.
+    /// </summary>
+    /// <param name="jbcdStream">The stream to read.</param>
+    /// <param name="position">The starting point for the read operation.</param>
+    /// <param name="previous">If true, read the previous frame, otherwise 
+    /// return the next frame.</param>
+    public SequenceIndexEntry(
+                    JbcdStream jbcdStream,
+                    long position,
+                    bool previous = false) {
+
+        var frameLength = jbcdStream.FramerOpen(position, previous);
+        var headerBytes = jbcdStream.FramerGetData();
+        var header = DareHeader.FromJson(headerBytes.JsonReader(), false);
+
+        jbcdStream.FramerGetFrameIndex(out var dataPosition, out var dataLength);
+
+        var TrailerBytes = jbcdStream.FramerGetData();
+        DareTrailer trailer = null;
+        if (TrailerBytes != null && TrailerBytes.Length > 0) {
+            var TrailerText = TrailerBytes.ToUTF8();
+            trailer = DareTrailer.FromJson(TrailerText.JsonReader(), false);
+            }
+
+        FramePosition = position;
+        FrameLength = frameLength;
+        DataPosition = dataPosition;
+        DataLength = dataLength;
+        Header = header;
+        Trailer = trailer;
+        }
+
+
+    /// <summary>
+    /// Read a frame from <paramref name="jbcdStream"/> at the position 
+    /// specified by <paramref name="position"/>. 
+    /// </summary>
+    /// <param name="jbcdStream">The stream to read.</param>
+    /// <param name="position">The starting point for the read operation.</param>
+    /// <returns>The index entry.</returns>
+    public static SequenceIndexEntry Read(
+                    JbcdStream jbcdStream,
+                    long position) => new SequenceIndexEntry(jbcdStream, position);
+
+    /// <summary>
+    /// Read the last frame from <paramref name="jbcdStream"/>. 
+    /// </summary>
+    /// <param name="jbcdStream">The stream to read.</param>
+    /// <returns>The index entry.</returns>
+    public static SequenceIndexEntry ReadLast(
+                    JbcdStream jbcdStream) => new SequenceIndexEntry(jbcdStream, jbcdStream.Length, true);
+
+
+
+    /// <summary>
+    /// Return an envelope for the index data.
+    /// </summary>
+    /// <returns></returns>
+    public DareEnvelope GetEnvelope () {
+        return new DareEnvelopeLazy(GetBody) {
+            Header= Header,
+            Trailer= Trailer,
+            }; 
+        }
+
+
+    /// <summary>
+    /// Return the raw body bytes.
+    /// </summary>
+    /// <returns></returns>
+    public byte[] GetBody() {
+        using var input = Sequence.FramerGetReader(DataPosition, DataLength);
+        using var output = new MemoryStream();
+        input.CopyTo(output);
+        return output.ToArray();
+
+        }
+
+
+    /// <summary>
     /// Read the payload data from the specified position in <paramref name="sequence"/>
     /// and deserialize to return the corresponding object.
     /// </summary>
-    /// <param name="sequence">The container that was indexed.</param>
+    /// <param name="sequence">The Sequence that was indexed.</param>
     /// <returns>The deserialized object.</returns>
     public JsonObject GetJSONObject(Sequence sequence) {
         if (JsonObject != null) {
@@ -167,13 +262,13 @@ public partial class SequenceFrameIndex {
 
         }
     //=> JsonObject ??
-    //    GetPayload(container.KeyLocate).JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
+    //    GetPayload(Sequence.KeyLocate).JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
 
 
     /// <summary>
     /// Return the frame payload verbatim (i.e. ciphertext if encrypted).
     /// </summary>
-    /// <param name="sequence">The indexed sequence.</param>
+    /// <param name="sequence">The indexed Sequence.</param>
     /// <returns>The frame payload</returns>
     public byte[] GetBody(Sequence sequence) {
         using var input = sequence.FramerGetReader(DataPosition, DataLength);
@@ -187,7 +282,7 @@ public partial class SequenceFrameIndex {
     /// <summary>
     /// Return a DareEnvelope wrapping the fnewrame.
     /// </summary>
-    /// <param name="sequence">The indexed container.</param>
+    /// <param name="sequence">The indexed Sequence.</param>
     /// <param name="detatched">If true, </param>
     /// <returns>The frame payload</returns>      
     public DareEnvelope GetEnvelope(Sequence sequence, bool detatched = false) {
@@ -227,7 +322,7 @@ public partial class SequenceFrameIndex {
     /// Copy the payload data to file.
     /// </summary>
     /// <param name="file">The file to write the payload to.</param>
-    /// <param name="sequence">The sequence in which the payload is recorded.</param>
+    /// <param name="sequence">The Sequence in which the payload is recorded.</param>
     public void CopyToFile(Sequence sequence, string file) {
 
         using var output = file.OpenFileNew();
@@ -245,5 +340,38 @@ public partial class SequenceFrameIndex {
         CopyPayload(sequence, keyCollection, output);
         return output.ToArray();
         }
+
+    }
+
+
+/// <summary>
+/// Delegate returning the body of a DARE envelope.
+/// </summary>
+/// <returns>The body of the envelope.</returns>
+public delegate byte[] GetBodyDelegate();
+
+/// <summary>
+/// Lazy evaluation version of <see cref="DareEnvelope"/>, only reads the
+/// body part when needed.
+/// </summary>
+public class DareEnvelopeLazy : DareEnvelope {
+
+    ///<inheritdoc/>
+    public override byte[] Body {
+        get => body ?? GetBodyDelegate().CacheValue(out body);
+        set => throw new NYI(); }
+    byte[] body = null;
+
+    GetBodyDelegate GetBodyDelegate { get; }
+
+    /// <summary>
+    /// Constructor, returns an envelope that will only read the body when needed
+    /// using the <paramref name="getbody"/> delegate.
+    /// </summary>
+    /// <param name="getbody">Delegate returning the body of the envelope.</param>
+    public DareEnvelopeLazy(GetBodyDelegate getbody) {
+        GetBodyDelegate = getbody;
+        }
+
 
     }

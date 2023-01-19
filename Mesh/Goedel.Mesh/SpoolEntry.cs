@@ -30,6 +30,12 @@ public class SpoolEntry {
     ///<summary>The spool the message is enrolled in.</summary>
     public Spool Spool { get; }
 
+    ///<summary>The index of the item in the original container.</summary> 
+    public SequenceIndexEntry SequenceFrameIndex { get; }
+
+
+
+
     ///<summary>The unique envelope identifier.</summary>
     public string EnvelopeID { get; private set; }
 

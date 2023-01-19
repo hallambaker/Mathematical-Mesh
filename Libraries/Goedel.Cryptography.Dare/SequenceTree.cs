@@ -23,64 +23,24 @@
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
-/// Simple container that supports the append and index functions but does not 
+/// Simple Sequence that supports the append and index functions but does not 
 /// provide for cryptographic integrity.
 /// </summary>
 /// <threadsafety static="true" instance="false"/>
-public class ContainerTree : ContainerList {
+public class SequenceTree : SequenceList {
 
     /// <summary>
     /// Default constructor
     /// </summary>
-    public ContainerTree(bool decrypt) : base(decrypt) {
+    public SequenceTree(bool decrypt) : base(decrypt) {
         }
-
-
-    /// <summary>
-    /// Create a new container file of the specified type and write the initial
-    /// data record
-    /// </summary>
-    /// <param name="jbcdStream">The underlying JBCDStream stream. This MUST be opened
-    /// in a read access mode and should have exclusive read access. All existing
-    /// content in the file will be overwritten.</param>
-    /// <returns>The newly constructed container.</returns>
-    /// <param name="decrypt">If true, decrypt the container payload contents.</param>
-    public static new Sequence MakeNewContainer(
-                    JbcdStream jbcdStream,
-                    bool decrypt) {
-
-
-        var containerInfo = new SequenceInfo() {
-            ContainerType = DareConstants.SequenceTypeTreeTag,
-            Index = 0
-            };
-
-
-        var containerHeader = new DareHeader() {
-            SequenceInfo = containerInfo
-            };
-
-
-        var container = new ContainerTree(decrypt) {
-            JbcdStream = jbcdStream,
-            HeaderFirst = containerHeader
-            };
-
-        return container;
-        }
-
-    //readonly static byte[] EmptyBytes = new byte[0];
 
     /// <summary>
     /// Append the header to the frame. This is called after the payload data
     /// has been passed using AppendPreprocess.
     /// </summary>
     public override void PrepareFrame(SequenceWriter contextWrite) {
-
-
         PrepareFrame(contextWrite.SequenceInfo);
-
-
         base.PrepareFrame(contextWrite);
         }
 
@@ -96,15 +56,9 @@ public class ContainerTree : ContainerList {
             containerInfo.TreePosition =
                 (int)PreviousFramePosition(containerInfo.LIndex);
             }
-
-
-
         //Console.WriteLine($"Prepare #{containerInfo.Index} @{JBCDStream.PositionWrite} Tree={containerInfo.TreePosition}");
 
-
         }
-
-
 
 
     #region // Sequence navigation
@@ -172,7 +126,7 @@ public class ContainerTree : ContainerList {
     /// <summary>
     /// Move to the specified frame index.
     /// </summary>
-    /// <param name="index">Frame index to move to</param>
+    /// <param name="index">First index to move to</param>
     /// <returns>If the move to the specified index succeeded, returns <code>true</code>.
     /// Otherwise, returns <code>false</code>.</returns>
     public bool Move(long index) {
@@ -290,7 +244,7 @@ public class ContainerTree : ContainerList {
     /// <summary>
     /// Returns the start position of the prior frame in the tree.
     /// </summary>
-    /// <param name="frameIndex">The Frame Index</param>
+    /// <param name="frameIndex">The First Index</param>
     /// <returns>The position of the frame.</returns>
     public long PreviousFramePosition(long frameIndex) {
         var Previous = PreviousFrame(frameIndex);
@@ -323,7 +277,7 @@ public class ContainerTree : ContainerList {
 
     #region // Verification
     /// <summary>
-    /// Perform sanity checking on a list of container headers.
+    /// Perform sanity checking on a list of Sequence headers.
     /// </summary>
     /// <param name="headers">List of headers to check</param>
     public override void CheckSequence(List<DareHeader> headers) {
@@ -340,7 +294,7 @@ public class ContainerTree : ContainerList {
 
 
     /// <summary>
-    /// Verify container contents by reading every frame starting with the first and checking
+    /// Verify Sequence contents by reading every frame starting with the first and checking
     /// for integrity. This is likely to take a very long time.
     /// </summary>
     public override void VerifySequence() {
