@@ -70,7 +70,7 @@ public partial class SequenceIndexEntry {
     public long DataLength { get; set; }
 
     ///<summary>The frame header</summary>
-    public DareHeader Header { get; init;  }
+    public DareHeader Header { get; init; }
 
     ///<summary>The frame index.</summary> 
     public long Index => Header.Index;
@@ -168,7 +168,7 @@ public partial class SequenceIndexEntry {
     /// <param name="position">The starting point for the read operation.</param>
     /// <param name="previous">If true, read the previous frame, otherwise 
     /// return the next frame.</param>
-    public SequenceIndexEntry(
+    private SequenceIndexEntry(
                     JbcdStream jbcdStream,
                     long position,
                     bool previous = false) {
@@ -186,7 +186,7 @@ public partial class SequenceIndexEntry {
             trailer = DareTrailer.FromJson(TrailerText.JsonReader(), false);
             }
 
-        FramePosition = position;
+        FramePosition = previous ? position - frameLength : position;
         FrameLength = frameLength;
         DataPosition = dataPosition;
         DataLength = dataLength;
@@ -208,7 +208,13 @@ public partial class SequenceIndexEntry {
     /// <returns>The index entry.</returns>
     public static SequenceIndexEntry Read(
                     JbcdStream jbcdStream,
-                    long position) => new SequenceIndexEntry(jbcdStream, position);
+                    long position,
+                    bool previous = false,
+                    Sequence sequence = null) =>
+         PositionInvalid(jbcdStream, jbcdStream.Length) ? null :
+            new SequenceIndexEntry(jbcdStream, position) {
+                Sequence = sequence
+                };
 
     /// <summary>
     /// Read the last frame from <paramref name="jbcdStream"/>. 
@@ -216,19 +222,27 @@ public partial class SequenceIndexEntry {
     /// <param name="jbcdStream">The stream to read.</param>
     /// <returns>The index entry.</returns>
     public static SequenceIndexEntry ReadLast(
-                    JbcdStream jbcdStream) => new SequenceIndexEntry(jbcdStream, jbcdStream.Length, true);
+                    JbcdStream jbcdStream,
+                    Sequence sequence = null) =>
+        PositionInvalid(jbcdStream, jbcdStream.Length) ? null :
+            new SequenceIndexEntry(jbcdStream, jbcdStream.Length, true) {
+                Sequence = sequence
+                };
 
-
+    static bool PositionInvalid(JbcdStream jbcdStream,
+                    long position,
+                    bool previous = true) =>
+        previous ? position < 0 : position <= jbcdStream.Length;
 
     /// <summary>
     /// Return an envelope for the index data.
     /// </summary>
     /// <returns></returns>
-    public DareEnvelope GetEnvelope () {
+    public DareEnvelope GetEnvelope() {
         return new DareEnvelopeLazy(GetBody) {
-            Header= Header,
-            Trailer= Trailer,
-            }; 
+            Header = Header,
+            Trailer = Trailer,
+            };
         }
 
 

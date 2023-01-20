@@ -652,13 +652,11 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     protected SequenceIndexEntry ReadAtPosition(
                 long position,
                 bool previous = false) {
+        if (position >= JbcdStream.Length | position < 0) {
+            return null;
+            }
 
-        //if (SequencePositionToEntry.TryGetValue(position, out var entry)) {
-        //    return entry;
-        //    }
-        var result = new SequenceIndexEntry(JbcdStream, position, previous) {
-            Sequence = this
-            };
+        var result = SequenceIndexEntry.Read(JbcdStream, position, previous, this);
 
         // Update the dictionaries
         Intern(result);
@@ -723,6 +721,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         var dataPosition = JbcdStream.WriteWrappedFrame(headerData, payload, trailerData);
         var frameLength = JbcdStream.Length - framePosition;
 
+
         var result = new SequenceIndexEntry() {
             Sequence = this,
             FramePosition = framePosition,
@@ -733,7 +732,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             Trailer = trailer,
             JsonObject = jsonObject
             };
-
+        //Console.WriteLine($"Make atomic frame [{result.FramePosition}+{result.FrameLength}]");
         SequenceIndexEntryLast = result;
 
         Intern(result);
@@ -906,6 +905,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             Header = header,
             };
 
+        //Console.WriteLine($"Start frame [{IncrementalAppendIndex.FramePosition}+{IncrementalAppendIndex.FrameLength}]");
+
+
         return index;
         }
 
@@ -932,6 +934,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         IncrementalAppendIndex.Trailer= trailer;
         SequenceIndexEntryLast = IncrementalAppendIndex;
         Intern(IncrementalAppendIndex);
+
+        //Console.WriteLine($"Make frame [{IncrementalAppendIndex.FramePosition}+{IncrementalAppendIndex.FrameLength}]");
+
         return IncrementalAppendIndex;
         }
 

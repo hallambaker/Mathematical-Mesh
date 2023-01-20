@@ -6031,7 +6031,7 @@
             <param name="previous">If true, read the previous frame, otherwise 
             return the next frame.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.Read(Goedel.Cryptography.Dare.JbcdStream,System.Int64)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.Read(Goedel.Cryptography.Dare.JbcdStream,System.Int64,System.Boolean,Goedel.Cryptography.Dare.Sequence)">
             <summary>
             Read a frame from <paramref name="jbcdStream"/> at the position 
             specified by <paramref name="position"/>. 
@@ -6040,7 +6040,7 @@
             <param name="position">The starting point for the read operation.</param>
             <returns>The index entry.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.ReadLast(Goedel.Cryptography.Dare.JbcdStream)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.ReadLast(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.Dare.Sequence)">
             <summary>
             Read the last frame from <paramref name="jbcdStream"/>. 
             </summary>

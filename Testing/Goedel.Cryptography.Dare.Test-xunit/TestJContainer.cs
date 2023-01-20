@@ -21,6 +21,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
 
@@ -47,6 +48,7 @@ public partial class TestContainers {
     [InlineData(SequenceType.List, 0)]
     [InlineData(SequenceType.List, 1)]
     [InlineData(SequenceType.List, 50)]
+    [InlineData(SequenceType.List, 50, 2000)]
     public void TestSequence(SequenceType containerType,
         int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0) {
 
@@ -61,10 +63,12 @@ public partial class TestContainers {
     [InlineData(SequenceType.List, 1,  false)]
     [InlineData(SequenceType.List, 5, false)]
     [InlineData(SequenceType.List, 100, false)]
+    [InlineData(SequenceType.List, 10, true, 5000)]
+    [InlineData(SequenceType.List, 10, false, 5000)]
     public void TestAppend(SequenceType containerType,
-        int records = 1, bool atomic = true) {
+        int records = 1, bool atomic = true, int size=100) {
 
-        var filename = TestName.Get(containerType, records, atomic);
+        var filename = TestName.Get(containerType, records, atomic, size);
         var entries = new List<SequenceIndexEntry>();
 
 
@@ -73,7 +77,7 @@ public partial class TestContainers {
         using (var sequence = Sequence.NewContainer(filename, FileStatus.Overwrite, containerType)) {
             var header = new DareHeader() {
                 };
-            var payload = TestName.GetTestBytes(filename, 100, i++);
+            var payload = TestName.GetTestBytes(filename, size, i++);
 
             if (atomic) {
                 var entry = sequence.Append(header, payload);
@@ -90,7 +94,7 @@ public partial class TestContainers {
 
         var j = 0;
         using (var stream = filename.OpenFileRead()) {
-            var payload = TestName.GetTestBytes(filename, 100, j++);
+            var payload = TestName.GetTestBytes(filename, size, j++);
             foreach (var entry in entries) {
                 Validate(stream, entry, payload);
                 }

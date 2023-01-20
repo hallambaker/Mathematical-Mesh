@@ -23,6 +23,7 @@
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 using System.Text;
 
@@ -62,11 +63,28 @@ public static class TestName {
         }
 
 
-    public static byte[] GetTestBytes(string tag, int length, string info = "") =>
-        KeyDeriveHKDF.Derive(tag.ToBytes(), info: info.ToBytes(), length: length);
-
     public static byte[] GetTestBytes(string tag, int length, int info) =>
-        KeyDeriveHKDF.Derive(tag.ToBytes(), info: info.ToString().ToBytes(), length: length*8);
+        GetTestBytes(tag, length, info.ToString());
+
+    public static byte[] GetTestBytes(string tag, int length, string info) {
+        if (length == 0) {
+            return Array.Empty<byte>();
+            }
+
+        var result = new byte[length];
+        var key = KeyDeriveHKDF.Derive(tag.ToBytes(), info: info.ToBytes(), length: 128);
+
+
+        var aes = new AesGcm(key);
+        var nonce = new byte[AesGcm.NonceByteSizes.MinSize];
+        var discard = new byte[AesGcm.TagByteSizes.MinSize];
+
+
+        aes.Encrypt(nonce, result, result, discard);
+
+        return result;
+        }
+
 
 
     }

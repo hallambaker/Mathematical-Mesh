@@ -59,10 +59,10 @@ partial class Program {
 
 
         //TestContainers.Test().TestAppend(SequenceType.List, 1);
-        //TestContainers.Test().TestAppend(SequenceType.List, 1, false);
+        TestContainers.Test().TestAppend(SequenceType.Digest, 1, false, 5000);
 
 
-        TestContainers.Test().TestSequence(SequenceType.List, 1);
+        //TestContainers.Test().TestSequence(SequenceType.List, 20, 3000);
 
 
         //StoreTests.Test().TestAppendDirect();

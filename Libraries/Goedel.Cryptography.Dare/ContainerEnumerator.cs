@@ -40,6 +40,9 @@ public class ContainerEnumerator : IEnumerator<SequenceIndexEntry> {
     /// </summary>
     public SequenceIndexEntry Current { get; set; }
 
+    SequenceIndexEntry Next { get; set; }
+
+
     /// <summary>
     /// Create an enumerator for <paramref name="sequence"/>.
     /// </summary>
@@ -75,8 +78,11 @@ public class ContainerEnumerator : IEnumerator<SequenceIndexEntry> {
     /// <returns><code>true</code> if the enumerator was successfully advanced to the next element; 
     /// <code>false</code> if the enumerator has passed the end of the collection.</returns>
     public bool MoveNext() {
-        Current = Sequence.Next(Current);
-        return Current != null && (Last < 0 | Current.Index < Last);
+        Current = (Next is not null) && (Last < 0 | Next.Index < Last) ? Next : null;
+        if (Current is not null) {
+            Next = Sequence.Next(Next);
+            }
+        return Current != null;
         }
 
 
@@ -84,6 +90,6 @@ public class ContainerEnumerator : IEnumerator<SequenceIndexEntry> {
     /// Sets the enumerator to its initial position, which is before the first element in the collection.
     /// </summary>
     public void Reset() {
-        Current = Sequence.Frame(First);
+        Next = Sequence.Frame(First);
         }
     }
