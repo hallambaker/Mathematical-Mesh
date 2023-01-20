@@ -6000,6 +6000,12 @@
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.KeyExchange">
             <summary>Convenience property, set true iff header contains direct key exchange.</summary> 
         </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.PayloadDigest">
+            <summary>Convenience accessor for the payload digest</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.ChainDigest">
+            <summary>Convenience accessor for the payload digest</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.CopyPayload(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.IKeyLocate,System.IO.Stream)">
             <summary>
             Return the frame payload.

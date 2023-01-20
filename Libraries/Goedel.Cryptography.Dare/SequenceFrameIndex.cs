@@ -91,6 +91,14 @@ public partial class SequenceIndexEntry {
     ///<summary>Convenience property, set true iff header contains direct key exchange.</summary> 
     public bool KeyExchange => Header?.Recipients != null;
 
+
+    ///<summary>Convenience accessor for the payload digest</summary> 
+    public byte[] PayloadDigest => Trailer?.PayloadDigest ?? Header.PayloadDigest;
+
+    ///<summary>Convenience accessor for the payload digest</summary> 
+    public byte[] ChainDigest => Trailer?.ChainDigest ?? Header.ChainDigest;
+
+
     //readonly jbcdStream jbcdStream;
 
 

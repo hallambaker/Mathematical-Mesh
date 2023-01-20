@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -27,14 +28,14 @@ using System.Text;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.IO;
+using Goedel.Mesh.Shell;
 using Goedel.Test;
 using Goedel.Utilities;
 
 using Xunit;
-
 namespace Goedel.XUnit;
-
 public partial class TestContainers {
 
     public static TestContainers Test() => new();
@@ -49,6 +50,11 @@ public partial class TestContainers {
     [InlineData(SequenceType.List, 1)]
     [InlineData(SequenceType.List, 50)]
     [InlineData(SequenceType.List, 50, 2000)]
+    [InlineData(SequenceType.Digest, 0)]
+    [InlineData(SequenceType.Digest, 1)]
+    [InlineData(SequenceType.Digest, 50)]
+    [InlineData(SequenceType.Digest, 50, 2000)]
+
     public void TestSequence(SequenceType containerType,
         int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0) {
 
@@ -60,47 +66,63 @@ public partial class TestContainers {
     [InlineData(SequenceType.List)]
     [InlineData(SequenceType.List, 5)]
     [InlineData(SequenceType.List, 100)]
-    [InlineData(SequenceType.List, 1,  false)]
+    [InlineData(SequenceType.List, 1, false)]
     [InlineData(SequenceType.List, 5, false)]
     [InlineData(SequenceType.List, 100, false)]
     [InlineData(SequenceType.List, 10, true, 5000)]
     [InlineData(SequenceType.List, 10, false, 5000)]
+
+    [InlineData(SequenceType.Digest, 1000, true)]
+    [InlineData(SequenceType.Digest, 1000, false)]
+    [InlineData(SequenceType.Digest, 10, true, 5000)]
+    [InlineData(SequenceType.Digest, 10, false, 5000)]
     public void TestAppend(SequenceType containerType,
-        int records = 1, bool atomic = true, int size=100) {
+        int records = 1, bool atomic = true, int size = 100) {
 
         var filename = TestName.Get(containerType, records, atomic, size);
         var entries = new List<SequenceIndexEntry>();
 
-
+        int i, j = 0;
         //Create container
-        var i = 0;
+
+        //var payload = TestName.GetTestBytes(filename, size, j++);
+
         using (var sequence = Sequence.NewContainer(filename, FileStatus.Overwrite, containerType)) {
             var header = new DareHeader() {
                 };
-            var payload = TestName.GetTestBytes(filename, size, i++);
 
-            if (atomic) {
-                var entry = sequence.Append(header, payload);
-                entries.Add(entry);
+            for (i = 0; i < records; i++) {
+
+                var payload = TestName.GetTestBytes(filename, size, i);
+
+                if (atomic) {
+                    var entry = sequence.Append(header, payload);
+                    entries.Add(entry);
+                    }
+                else {
+                    var entry = sequence.Append(payload);
+
+                    entries.Add(entry);
+                    }
                 }
-            else {
-                var entry = sequence.Append(payload);
-
-                entries.Add(entry);
-                }
-
-
             }
 
-        var j = 0;
+
+
         using (var stream = filename.OpenFileRead()) {
-            var payload = TestName.GetTestBytes(filename, size, j++);
             foreach (var entry in entries) {
+                var payload = TestName.GetTestBytes(filename, size, j++);
                 Validate(stream, entry, payload);
                 }
             }
 
-        (i == j).TestTrue();
+        //(i == j).TestTrue();
+
+
+        if (containerType == SequenceType.Chain) {
+            CheckChain(entries);
+            }
+
         }
 
 
@@ -120,8 +142,71 @@ public partial class TestContainers {
             (data[i] == b).TestTrue();
             }
 
+        // No, cannot use a switch here.
+        if (entry.Sequence.GetType() == typeof(SequenceChain) |
+            entry.Sequence.GetType() == typeof(SequenceDigest) |
+            entry.Sequence.GetType() == typeof(SequenceMerkleTree)) {
+            ValidateDigest(entry, data);
+            }
         }
 
+    static void ValidateDigest(SequenceIndexEntry entry, byte[] data) {
+        var payloadDigest = entry.PayloadDigest;
+        payloadDigest.TestNotNull();
+
+
+        var digestAlgorithm = entry.Header.DigestAlgorithm;
+        var digestAlgorithmId = digestAlgorithm.FromJoseIDDigest();
+
+        var hashAlgorithm = digestAlgorithmId.CreateDigest();
+
+
+        var digest = hashAlgorithm.ComputeHash(data);
+
+        digest.TestEqual(payloadDigest);
+
+        }
+
+    static void CheckChain(List<SequenceIndexEntry> entries) {
+        if (entries.Count == 0) {
+            return;
+            }
+
+        byte[] lastDigest = null;
+
+        var digestAlgorithm = entries[0].Header.DigestAlgorithm;
+        var digestAlgorithmId = digestAlgorithm.FromJoseIDDigest();
+        var hashAlgorithm = digestAlgorithmId.CreateDigest();
+
+        foreach (var entry in entries) {
+            var payloadDigest = entry.PayloadDigest;
+            var chainDigest = entry.ChainDigest;
+            chainDigest.TestNotNull();
+
+            var buffer = Add(hashAlgorithm.HashSize,lastDigest, payloadDigest);
+            var digest = hashAlgorithm.ComputeHash(buffer);
+
+            digest.TestEqual(chainDigest);
+            }
+        }
+
+
+    static byte[] Add(int size, byte[] first, byte[] second) {
+        var length = size / 8;
+
+        var result = new byte[length *2];
+
+        if (first is not null) {
+            (first.Length == length).TestTrue();
+            Array.Copy(first, result, length);
+            }
+        if (second is not null) {
+            (second.Length == length).TestTrue();
+            Array.Copy(second, 0, result, length, length);
+            }
+
+        return result;
+        }
 
 
     [Fact]

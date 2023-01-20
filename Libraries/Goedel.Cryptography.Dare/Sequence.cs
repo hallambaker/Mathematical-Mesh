@@ -145,7 +145,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     public DareHeader HeaderFirst => SequenceIndexEntryFirst.Header;
 
     ///<summary>The last Sequence headerData.</summary>
-    public DareHeader HeaderFinal => SequenceIndexEntryLast.Header;
+    public DareHeader HeaderFinal => SequenceIndexEntryLast?.Header;
 
     ///<summary>The trailerData section of the last envelope in the Sequence.</summary> 
     public DareTrailer TrailerLast => SequenceIndexEntryLast.Trailer;
