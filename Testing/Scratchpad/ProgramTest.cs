@@ -59,7 +59,7 @@ partial class Program {
 
 
         //TestContainers.Test().TestAppend(SequenceType.List, 1);
-        TestContainers.Test().TestAppend(SequenceType.List, 2, true, 50);
+        TestContainers.Test().TestAppend(SequenceType.Merkle, 2, 50, true);
 
 
         //TestContainers.Test().TestSequence(SequenceType.List, 20, 3000);

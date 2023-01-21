@@ -124,7 +124,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
 
     /// <summary>The value of the last frame index plus 1</summary>
-    public virtual long FrameCount => SequenceIndexEntryLast.Header.SequenceInfo.LIndex + 1;
+    public virtual long FrameCount => SequenceIndexEntryLast?.Header.SequenceInfo.LIndex + 1 ?? 0;
 
     ///<summary>The last frame in the Sequence</summary>
     public virtual long FrameIndexLast => HeaderFinal.Index;
@@ -691,6 +691,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
     #region // Atomic Append from envelope or data
 
+
+
+
+
     /// <summary>
     /// The only valid way to append data to the sequence.
     /// </summary>
@@ -703,7 +707,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// the payload bytes are calculated automatically. Otherwise, it is assumed
     /// the value of <paramref name="payload"/> is correct.</param>
     /// <returns></returns>
-    public SequenceIndexEntry Append(
+    SequenceIndexEntry Append(
             DareHeader header,
             byte[] payload = null,
             DareTrailer trailer = null,
@@ -712,6 +716,11 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
         var framePosition = JbcdStream.Length;
         PrepareFrame(header, framePosition);
+
+        // Change the signature so that what is passed in is ContentMeta and the header is
+        // calculated from that.
+
+
 
         dataEncoding = dataEncoding == DataEncoding.Default ?
             DataEncoding : dataEncoding;
@@ -738,6 +747,20 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         Intern(result);
         return result;
         }
+
+    //public SequenceIndexEntry Append(
+    //    byte[] payload = null,
+    //    SequenceIndex sequenceIndex = null,
+    //    ContentMeta contentMeta = null,
+    //    DareTrailer trailer = null,
+    //    DataEncoding dataEncoding = DataEncoding.Default,
+    //    JsonObject jsonObject = null) {
+    //    }
+
+
+    //DareTrailer GetDareTrailer(byte[] payload) {
+
+    //    }
 
     /// <summary>
     /// Write a previously prepared or validated Dare Envelope to the Sequence directly.

@@ -66,18 +66,29 @@ public partial class TestContainers {
     [InlineData(SequenceType.List)]
     [InlineData(SequenceType.List, 5)]
     [InlineData(SequenceType.List, 100)]
-    [InlineData(SequenceType.List, 1, false)]
-    [InlineData(SequenceType.List, 5, false)]
-    [InlineData(SequenceType.List, 100, false)]
-    [InlineData(SequenceType.List, 10, true, 5000)]
-    [InlineData(SequenceType.List, 10, false, 5000)]
+    [InlineData(SequenceType.List, 10,  5000)]
+    [InlineData(SequenceType.Digest, 1000)]
+    [InlineData(SequenceType.Digest, 10, 5000)]
+    [InlineData(SequenceType.Chain, 1000) ]
+    [InlineData(SequenceType.Chain, 10,  5000)]
 
-    [InlineData(SequenceType.Digest, 1000, true)]
-    [InlineData(SequenceType.Digest, 1000, false)]
-    [InlineData(SequenceType.Digest, 10, true, 5000)]
-    [InlineData(SequenceType.Digest, 10, false, 5000)]
+    [InlineData(SequenceType.Tree, 1000)]
+    [InlineData(SequenceType.Tree, 10, 5000)]
+
+    [InlineData(SequenceType.Merkle, 1000)]
+    [InlineData(SequenceType.Merkle, 10, 5000)]
+
+    //[InlineData(SequenceType.List, 1, false)]
+    //[InlineData(SequenceType.List, 5, false)]
+    //[InlineData(SequenceType.List, 100, false)]
+    //[InlineData(SequenceType.Digest, 1000, false)]
+    //[InlineData(SequenceType.List, 10, false, 5000)]
+    //[InlineData(SequenceType.Digest, 10, false, 5000)]
+
+
+
     public void TestAppend(SequenceType containerType,
-        int records = 1, bool atomic = true, int size = 100) {
+        int records = 1, int size = 100, bool atomic = true) {
 
         var filename = TestName.Get(containerType, records, atomic, size);
         var entries = new List<SequenceIndexEntry>();
@@ -88,22 +99,22 @@ public partial class TestContainers {
         //var payload = TestName.GetTestBytes(filename, size, j++);
 
         using (var sequence = Sequence.NewContainer(filename, FileStatus.Overwrite, containerType)) {
-            var header = new DareHeader() {
-                };
-
             for (i = 0; i < records; i++) {
+                var header = new DareHeader() {
+                    };
 
                 var payload = TestName.GetTestBytes(filename, size, i);
+                var entry = sequence.Append(payload);
 
-                if (atomic) {
-                    var entry = sequence.Append(header, payload);
-                    entries.Add(entry);
-                    }
-                else {
-                    var entry = sequence.Append(payload);
+                //if (atomic) {
+                //    var entry = sequence.Append(payload);
+                //    entries.Add(entry);
+                //    }
+                //else {
+                //    var entry = sequence.Append(payload);
 
-                    entries.Add(entry);
-                    }
+                //    entries.Add(entry);
+                //    }
                 }
             }
 
