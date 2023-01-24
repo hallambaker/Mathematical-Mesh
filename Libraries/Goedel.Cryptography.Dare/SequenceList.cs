@@ -48,7 +48,10 @@ public class SequenceList : Sequence {
     protected override void FillDictionary() {
         IndexedFromStart = SequenceIndexEntryFirst;
         IndexedFromEnd = SequenceIndexEntryLast;
-
+        Intern(SequenceIndexEntryFirst);
+        if (SequenceIndexEntryFirst.Index != SequenceIndexEntryLast.Index) {
+            Intern(SequenceIndexEntryLast);
+            }
         }
 
     ///<inheritdoc/>
@@ -92,7 +95,21 @@ public class SequenceList : Sequence {
         return ReadAtPosition(position);
         }
 
+    ///<inheritdoc/>
+    protected override void Intern(SequenceIndexEntry indexEntry, bool previous) {
+        base.Intern(indexEntry);
 
+        if (previous) {
+            if (indexEntry.Index < IndexedFromEnd.Index) {
+                IndexedFromEnd = indexEntry;
+                }
+            }
+        else {
+            if (indexEntry.Index > IndexedFromStart.Index) {
+                IndexedFromStart = indexEntry;
+                }
+            }
+        }
 
 
 

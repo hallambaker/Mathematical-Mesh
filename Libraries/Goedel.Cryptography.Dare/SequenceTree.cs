@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using System;
+
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
@@ -57,7 +59,10 @@ public class SequenceTree : SequenceList {
 
 
 
-
+    public override void PrepareFrame(DareHeader header, long framePosition) {
+        header.SequenceInfo ??= MakeSequenceInfo();
+        PrepareFrame(header.SequenceInfo);
+        }
 
 
 
@@ -75,10 +80,7 @@ public class SequenceTree : SequenceList {
     /// </summary>
     /// <param name="containerInfo">The frame to prepare.</param>
     protected override void PrepareFrame(SequenceInfo containerInfo) {
-        if (containerInfo.LIndex == 0) {
-            containerInfo.ContainerType = DareConstants.SequenceTypeTreeTag;
-            }
-        else {
+        if (containerInfo.LIndex > 0) {
             containerInfo.TreePosition =
                 (int)PreviousFramePosition(containerInfo.LIndex);
             }
@@ -111,50 +113,60 @@ public class SequenceTree : SequenceList {
 
     #region // Sequence navigation
 
-    /// <summary>
-    /// Initialize the dictionaries used to manage the tree by registering the set
-    /// of values leading up to the apex value.
-    /// </summary>
-    /// <param name="containerInfo">Final frame header</param>
-    /// <param name="firstPosition">PositionRead of frame 1</param>
-    /// <param name="positionLast">PositionRead of the last frame</param>
-    protected override void FillDictionary(SequenceInfo containerInfo, long firstPosition, long positionLast) {
-        FrameIndexToPositionDictionary.Add(0, 0);
-        if (containerInfo.LIndex == 0) {
-            return;
+    SequenceIndexEntry GetPrevious(SequenceIndexEntry entry) {
+        var previous = PreviousFrame(entry.Index);
+
+        if (FrameIndexToEntry.TryGetValue(previous, out var result)) {
+            return result;
             }
-
-        FrameIndexToPositionDictionary.Add(1, firstPosition);
-        if (containerInfo.LIndex == 1) {
-            return;
-            }
-
-        var position = positionLast;
-        var index = containerInfo.LIndex;
-        var treePosition = containerInfo.TreePosition;
-
-        while (!IsApex(index)) {
-            RegisterFrame(containerInfo, position);
-
-            // Calculate position of previous node in tree.
-            position = treePosition ??0;
-            index = (int)PreviousFrame(index);
-
-            // 
-            JbcdStream.PositionRead = treePosition ?? 0;
-            containerInfo = JbcdStream.ReadFrameHeader().SequenceInfo;
-
-            if (index != containerInfo.LIndex) {
-
-                }
-
-            Assert.AssertTrue(index == containerInfo.LIndex, SequenceDataCorrupt.Throw);
-            treePosition = containerInfo.TreePosition;
-            }
-        if (containerInfo.LIndex != 1) {
-            RegisterFrame(containerInfo, position);
-            }
+        return ReadAtPosition(entry.TreePosition ?? 0);
         }
+
+    ///<inheritdoc/>
+    public override SequenceIndexEntry Frame(long index) {
+        if (FrameIndexToEntry.TryGetValue(index, out var entry)) {
+            return entry;
+            }
+
+        entry = SequenceIndexEntryLast;
+        while (entry.Index > index) {
+            var previous = GetPrevious(entry);
+
+            if (previous.Index < index) {
+                entry = entry.Previous();
+                }
+            else {
+                entry = previous;
+                }
+            }
+
+        return entry;
+
+
+        }
+
+
+    ///<inheritdoc/>
+    protected override void FillDictionary() {
+        base.FillDictionary();
+
+        if (SequenceIndexEntryLast.Index <= 1) {
+            return;
+            }
+
+        var index = SequenceIndexEntryLast.Index;
+        var position = SequenceIndexEntryLast;
+
+        while (!IsApex(position.Index)) {
+            var treePosition = position.TreePosition;
+            if (treePosition is not null) {
+                position = ReadAtPosition((long)treePosition);
+                }
+            }
+
+        }
+
+
 
     static bool IsApex(long index) {
         if (index == 0) {
@@ -276,9 +288,10 @@ public class SequenceTree : SequenceList {
     /// <param name="frame">The frame index</param>
     /// <returns>The frame position.</returns>
     public  long GetFramePosition(long frame) {
+        //var Found2 = FrameIndexToPositionDictionary.TryGetValue(frame, out var Position);
 
-
-        var Found = FrameIndexToPositionDictionary.TryGetValue(frame, out var Position);
+        var Found = FrameIndexToEntry.TryGetValue(frame, out var entry);
+        var Position = entry.FramePosition;
 
         if (!Found) {
 

@@ -5985,6 +5985,9 @@
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Index">
             <summary>The frame index.</summary> 
         </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.TreePosition">
+            <summary>The frame index.</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Trailer">
             <summary>The frame trailer</summary>
         </member>
@@ -6147,6 +6150,9 @@
         <member name="M:Goedel.Cryptography.Dare.SequenceList.Position(System.Int64)">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceList.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry,System.Boolean)">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceList.FillDictionary(Goedel.Cryptography.Dare.SequenceInfo,System.Int64,System.Int64)">
             <summary>
             Initialize the dictionaries used to manage the tree by registering the set
@@ -6288,14 +6294,11 @@
             <param name="sequenceInfo">First headerData</param>
             <param name="position">PositionRead of the frame</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceTree.FillDictionary(Goedel.Cryptography.Dare.SequenceInfo,System.Int64,System.Int64)">
-            <summary>
-            Initialize the dictionaries used to manage the tree by registering the set
-            of values leading up to the apex value.
-            </summary>
-            <param name="containerInfo">Final frame header</param>
-            <param name="firstPosition">PositionRead of frame 1</param>
-            <param name="positionLast">PositionRead of the last frame</param>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.Frame(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.FillDictionary">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceTree.MoveToIndex(System.Int64)">
             <summary>

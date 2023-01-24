@@ -641,6 +641,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         }
 
 
+
     /// <summary>
     /// Read the frame at the position <paramref name="position"/>. If <paramref name="previous"/>
     /// is true, return the previous frame, otherwise return the next frame.
@@ -659,7 +660,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         var result = SequenceIndexEntry.Read(JbcdStream, position, previous, this);
 
         // Update the dictionaries
-        Intern(result);
+        Intern(result, previous);
 
         return result;
 
@@ -675,7 +676,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// 
     /// </summary>
     /// <param name="indexEntry"></param>
-    void Intern(SequenceIndexEntry indexEntry) {
+    protected void Intern(SequenceIndexEntry indexEntry) {
         SequencePositionToEntry.Add(indexEntry.FramePosition, indexEntry);
         SequenceNextToEntry.Add(indexEntry.FramePosition + indexEntry.FrameLength, indexEntry);
         FrameIndexToEntry.Add(indexEntry.Index, indexEntry);
@@ -687,7 +688,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         }
 
 
-
+    protected virtual void Intern(SequenceIndexEntry indexEntry, bool previous) {
+        Intern(indexEntry);
+        }
 
     #region // Atomic Append from envelope or data
 
@@ -943,7 +946,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <param name="offset">Index of first byte to process.</param>
     /// <param name="count">Number of bytes to process.</param>
     void AppendProcess(byte[] data, int offset, int count) =>
-        IncrementalAppendIndex.Header.BodyWriter.Write(data, offset, count);
+        IncrementalAppendIndex.Header.BodyWriter.Writer.Write(data, offset, count);
 
     /// <summary>
     /// Complete appending a record.
@@ -1033,7 +1036,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         using var InputStream = new MemoryStream(data) {
             Position = 0
             };
+        
         var ContentLength = InputStream.Length;
+
         return AppendFromStream(InputStream, ContentLength, contentMeta, //cryptoParameters,
                 contentType, cloaked, dataSequences, cryptoParameters);
         }

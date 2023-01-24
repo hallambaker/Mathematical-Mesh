@@ -75,6 +75,8 @@ public partial class SequenceIndexEntry {
     ///<summary>The frame index.</summary> 
     public long Index => Header.Index;
 
+    ///<summary>The frame index.</summary> 
+    public long? TreePosition => Header.SequenceInfo.TreePosition;
 
     ///<summary>The frame trailer</summary>
     public DareTrailer Trailer { get; set; }
@@ -207,6 +209,7 @@ public partial class SequenceIndexEntry {
 
     public SequenceIndexEntry Next() => Sequence.Next(this);
 
+
     /// <summary>
     /// Read a frame from <paramref name="jbcdStream"/> at the position 
     /// specified by <paramref name="position"/>. 
@@ -220,7 +223,7 @@ public partial class SequenceIndexEntry {
                     bool previous = false,
                     Sequence sequence = null) =>
          PositionInvalid(jbcdStream, jbcdStream.Length) ? null :
-            new SequenceIndexEntry(jbcdStream, position) {
+            new SequenceIndexEntry(jbcdStream, position, previous) {
                 Sequence = sequence
                 };
 

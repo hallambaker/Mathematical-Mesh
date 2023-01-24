@@ -59,8 +59,14 @@ partial class Program {
 
 
         //TestContainers.Test().TestAppend(SequenceType.List, 1);
-        TestContainers.Test().TestAppend(SequenceType.Merkle, 2, 50, true);
+        //TestContainers.Test().TestAppend(SequenceType.Merkle, 2, 50, true);
 
+        TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 0);
+        TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 1);
+
+        TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 10);
+
+        //TestContainers.Test().ContainerTest500();
 
         //TestContainers.Test().TestSequence(SequenceType.List, 20, 3000);
 

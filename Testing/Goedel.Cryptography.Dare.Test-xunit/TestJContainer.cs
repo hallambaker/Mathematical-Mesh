@@ -36,6 +36,44 @@ using Goedel.Utilities;
 
 using Xunit;
 namespace Goedel.XUnit;
+
+
+
+
+public enum ModeEnhance {
+    
+    ///<summary>No signature/encryption</summary> 
+    None,
+
+    ///<summary>Signature/Key Agreement at the individual record level. Each record
+    ///individually enhanced.</summary> 
+    Record,
+
+    ///<summary>Signature/Key Agreement at the sequence level, decrypting or verifying
+    ///once authenticates, decrypts entire file.</summary> 
+    Sequence,
+
+    ///<summary>Signature/Key Agreement of multiple records but not the entire 
+    ///sequence in one operation.</summary> 
+    Sparse
+    }
+
+public enum Corruption {
+    None,
+
+    Data,
+
+    Public,
+
+    Private,
+
+    Signature,
+
+    Order,
+    }
+
+
+
 public partial class TestContainers {
 
     public static TestContainers Test() => new();
@@ -390,7 +428,7 @@ public partial class TestContainers {
 
 
 
-    static void TestContainer(string fileName, SequenceType containerType,
+    public static void TestContainer(string fileName, SequenceType containerType,
                 int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0,
                 DarePolicy policy = null,
                 CryptoParameters cryptoParametersEntry = null,
