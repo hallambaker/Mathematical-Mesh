@@ -31,25 +31,6 @@ namespace Goedel.Cryptography.Dare;
 /// <threadsafety static="true" instance="false"/>
 public class SequenceTree : SequenceList {
 
-    /// <summary>
-    /// Dictionary of frame index to frame position. OBSOLETE REMOVE
-    /// </summary>
-    public Dictionary<long, long> FrameIndexToPositionDictionary =
-        new();
-
-
-    /// <summary>
-    /// Get or set the read position in the stream.
-    /// </summary>
-    protected new long PositionRead {
-        get => JbcdStream.PositionRead;
-        set {
-            JbcdStream.PositionRead = value;
-            }
-        }
-
-
-
 
     /// <summary>
     /// Default constructor
@@ -58,12 +39,11 @@ public class SequenceTree : SequenceList {
         }
 
 
-
+    ///<inheritdoc/>
     public override void PrepareFrame(DareHeader header, long framePosition) {
         header.SequenceInfo ??= MakeSequenceInfo();
         PrepareFrame(header.SequenceInfo);
         }
-
 
 
     /// <summary>
@@ -87,29 +67,6 @@ public class SequenceTree : SequenceList {
         //Console.WriteLine($"Prepare #{containerInfo.Index} @{JBCDStream.PositionWrite} Tree={containerInfo.TreePosition}");
 
         }
-
-    /// <summary>
-    /// Register a frame in the Sequence access dictionaries.
-    /// </summary>
-    /// <param name="sequenceInfo">First headerData</param>
-    /// <param name="position">PositionRead of the frame</param>
-    protected virtual void RegisterFrame(SequenceInfo sequenceInfo, long position) {
-        var index = sequenceInfo.LIndex;
-        FrameIndexToPositionDictionary.AddSafe(index, position);
-        }
-
-
-
-
-    ///// <summary>
-    ///// Get the frame position.
-    ///// </summary>
-    ///// <param name="frame">The frame index</param>
-    ///// <returns>The frame position.</returns>
-    //public virtual long GetFramePosition(long frame) {
-    //    FrameIndexToPositionDictionary.TryGetValue(frame, out var position);
-    //    return position;
-    //    }
 
     #region // Sequence navigation
 
@@ -153,8 +110,6 @@ public class SequenceTree : SequenceList {
         if (SequenceIndexEntryLast.Index <= 1) {
             return;
             }
-
-        var index = SequenceIndexEntryLast.Index;
         var position = SequenceIndexEntryLast;
 
         while (!IsApex(position.Index)) {
@@ -183,103 +138,6 @@ public class SequenceTree : SequenceList {
         return true;
         }
 
-    ///// <summary>
-    ///// Move to the specified frame index.
-    ///// </summary>
-    ///// <param name="index">First index to move to</param>
-    ///// <returns>If the move to the specified index succeeded, returns <code>true</code>.
-    ///// Otherwise, returns <code>false</code>.</returns>
-    //public bool Move(long index) {
-    //    MoveToIndex(index);
-    //    return Next();
-    //    }
-
-    /// <summary>
-    /// Move to the frame with index PositionRead in the file. 
-    /// </summary>
-    /// <param name="index">The frame index to move to</param>
-    /// <returns>If success, the frame index.</returns>
-    public virtual bool MoveToIndex(long index) {
-        if (index == FrameCount) {
-            JbcdStream.PositionRead = JbcdStream.Length;
-            return false;
-            }
-
-        if (FrameIndexToPositionDictionary.TryGetValue(index, out var position)) {
-            JbcdStream.PositionRead = position;
-            return true;
-            //return Next();
-            }
-
-        //Obtain the position of the very last record in the file, this must be known.
-        var Record = FrameCount - 1;
-        Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(Record, out position), SequenceDataCorrupt.Throw);
-
-        long nextRecord;
-        bool found = true;
-
-        //Console.WriteLine("Move to {0}", Index);
-
-        while (Record > index) {
-            DareHeader frameHeader;
-            long nextPosition;
-
-            if (PreviousFrame(Record) < index) {
-                // The record we want is the one before the current frame
-                nextRecord = Record - 1;
-
-                if (!FrameIndexToPositionDictionary.TryGetValue(nextRecord, out nextPosition)) {
-                    // we do not know the position of the next frame
-                    if (!found) {
-                        JbcdStream.PositionRead = position;
-                        frameHeader = JbcdStream.ReadFrameHeader();
-                        RegisterFrame(frameHeader.SequenceInfo, position);
-                        }
-
-                    PositionRead = position;
-                    JbcdStream.Previous();
-                    nextPosition = JbcdStream.PositionRead;
-
-                    frameHeader = JbcdStream.ReadFrameHeader();
-                    Assert.AssertTrue(frameHeader.SequenceInfo.LIndex == nextRecord, SequenceDataCorrupt.Throw);
-
-                    found = false;
-                    }
-                else {
-                    found = true;
-                    }
-
-                }
-            else {
-                nextRecord = PreviousFrame(Record);
-                if (!FrameIndexToPositionDictionary.TryGetValue(nextRecord, out nextPosition)) {
-                    // we do not know the position of the next frame
-
-                    PositionRead = position;
-                    frameHeader = JbcdStream.ReadFrameHeader();
-                    nextPosition = frameHeader.SequenceInfo.TreePosition ??0;
-
-                    if (!found) {
-                        RegisterFrame(frameHeader.SequenceInfo, position);
-                        }
-                    found = false;
-                    }
-                else {
-                    found = true;
-                    }
-
-                }
-
-            position = nextPosition;
-            Record = nextRecord;
-
-            //Console.WriteLine("    {0}: {1}", Record, PositionRead);
-            }
-
-        PositionRead = position;
-        return true;
-        //return Next();
-        }
 
 
     /// <summary>
@@ -288,16 +146,14 @@ public class SequenceTree : SequenceList {
     /// <param name="frame">The frame index</param>
     /// <returns>The frame position.</returns>
     public  long GetFramePosition(long frame) {
-        //var Found2 = FrameIndexToPositionDictionary.TryGetValue(frame, out var Position);
-
         var Found = FrameIndexToEntry.TryGetValue(frame, out var entry);
-        var Position = entry.FramePosition;
+        var position = entry.FramePosition;
 
         if (!Found) {
 
             }
 
-        return Position;
+        return position;
 
         }
 
@@ -308,11 +164,11 @@ public class SequenceTree : SequenceList {
     /// <param name="frameIndex">The First Index</param>
     /// <returns>The position of the frame.</returns>
     public long PreviousFramePosition(long frameIndex) {
-        var Previous = PreviousFrame(frameIndex);
+        var previous = PreviousFrame(frameIndex);
 
-        //Console.WriteLine($"  Previous {FrameIndex} = {Previous}");
+        //Console.WriteLine($"  previous {FrameIndex} = {previous}");
 
-        return GetFramePosition(Previous);
+        return GetFramePosition(previous);
         }
 
     /// <summary>
@@ -371,17 +227,17 @@ public class SequenceTree : SequenceList {
         // Check subsequent frames
         int index = 1;
         while (!JbcdStream.EOF) {
-            var Position = JbcdStream.PositionRead;
+            var position = JbcdStream.PositionRead;
             header = JbcdStream.ReadFrameHeader();
-            headerDictionary.Add(Position, header);
+            headerDictionary.Add(position, header);
 
             Assert.AssertTrue(header.SequenceInfo.LIndex == index, SequenceDataCorrupt.Throw);
             if (index > 1) {
-                var Previous = PreviousFrame(index);
+                var previous = PreviousFrame(index);
                 Assert.AssertTrue(headerDictionary.TryGetValue(
                             header.SequenceInfo.TreePosition ?? 0, out var PreviousHeader),
                     SequenceDataCorrupt.Throw);
-                Assert.AssertTrue(PreviousHeader.SequenceInfo.LIndex == Previous,
+                Assert.AssertTrue(PreviousHeader.SequenceInfo.LIndex == previous,
                     SequenceDataCorrupt.Throw);
                 }
 

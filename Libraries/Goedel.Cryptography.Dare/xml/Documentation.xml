@@ -6198,14 +6198,7 @@
             <summary>
             Prepare the ContainerInfo data for the frame.
             </summary>
-            <param name="containerInfo">The frame to prepare.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.RegisterFrame(Goedel.Cryptography.Dare.SequenceInfo,System.Int64)">
-            <summary>
-            Register a frame in the Sequence access dictionaries.
-            </summary>
-            <param name="containerInfo">First header</param>
-            <param name="position">PositionRead of the frame</param>
+            <param name="sequenceInfo">The frame to prepare.</param>
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceMerkleTree.FrameDigestDictionary">
             <summary>
@@ -6260,20 +6253,13 @@
             </summary>
             <threadsafety static="true" instance="false"/>
         </member>
-        <member name="F:Goedel.Cryptography.Dare.SequenceTree.FrameIndexToPositionDictionary">
-            <summary>
-            Dictionary of frame index to frame position. OBSOLETE REMOVE
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceTree.PositionRead">
-            <summary>
-            Get or set the read position in the stream.
-            </summary>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceTree.#ctor">
             <summary>
             Default constructor
             </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceTree.PrepareFrame(Goedel.Cryptography.Dare.DareHeader,System.Int64)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceTree.PrepareFrame(Goedel.Cryptography.Dare.SequenceWriter)">
             <summary>
@@ -6287,25 +6273,11 @@
             </summary>
             <param name="containerInfo">The frame to prepare.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceTree.RegisterFrame(Goedel.Cryptography.Dare.SequenceInfo,System.Int64)">
-            <summary>
-            Register a frame in the Sequence access dictionaries.
-            </summary>
-            <param name="sequenceInfo">First headerData</param>
-            <param name="position">PositionRead of the frame</param>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceTree.Frame(System.Int64)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceTree.FillDictionary">
             <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceTree.MoveToIndex(System.Int64)">
-            <summary>
-            Move to the frame with index PositionRead in the file. 
-            </summary>
-            <param name="index">The frame index to move to</param>
-            <returns>If success, the frame index.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceTree.GetFramePosition(System.Int64)">
             <summary>

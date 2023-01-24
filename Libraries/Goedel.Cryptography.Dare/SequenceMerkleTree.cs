@@ -43,26 +43,17 @@ public class SequenceMerkleTree : SequenceTree {
     /// <summary>
     /// Prepare the ContainerInfo data for the frame.
     /// </summary>
-    /// <param name="containerInfo">The frame to prepare.</param>
-    protected override void PrepareFrame(SequenceInfo containerInfo) {
-        if (containerInfo.LIndex == 0) {
-            containerInfo.ContainerType = DareConstants.SequenceTypeMerkleTag;
+    /// <param name="sequenceInfo">The frame to prepare.</param>
+    protected override void PrepareFrame(SequenceInfo sequenceInfo) {
+        if (sequenceInfo.LIndex == 0) {
+            sequenceInfo.ContainerType = DareConstants.SequenceTypeMerkleTag;
             }
         else {
-            containerInfo.TreePosition =
-                (int)PreviousFramePosition(containerInfo.LIndex);
+            sequenceInfo.TreePosition =
+                (int)PreviousFramePosition(sequenceInfo.LIndex);
             }
         }
 
-    /// <summary>
-    /// Register a frame in the Sequence access dictionaries.
-    /// </summary>
-    /// <param name="containerInfo">First header</param>
-    /// <param name="position">PositionRead of the frame</param>
-    protected override void RegisterFrame(SequenceInfo containerInfo, long position) {
-        var Index = containerInfo.LIndex;
-        FrameIndexToPositionDictionary.Add(Index, position);
-        }
 
     /// <summary>
     /// Dictionary mapping the frame index to the corresponding digest value.
