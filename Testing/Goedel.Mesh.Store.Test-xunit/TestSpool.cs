@@ -63,7 +63,7 @@ public partial class StoreTests {
 
         // Create store
         var directory = TestEnvironment.Path;
-        var filename = TestName.Get(batches, items, direct);
+        var filename = DeterministicSeed.GetUnique(batches, items, direct);
         var signingKey = KeyPair.Factory(CryptoAlgorithmId.Ed448, KeySecurity.Exportable, KeyCollection);
 
         var store = new SpoolOutbound(directory, filename, create: true);

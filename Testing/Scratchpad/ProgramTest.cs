@@ -56,15 +56,21 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+        TestContainers.Test().TestBasic(SequenceType.List);
+
+
+
+
+
 
 
         //TestContainers.Test().TestAppend(SequenceType.List, 1);
         //TestContainers.Test().TestAppend(SequenceType.Merkle, 2, 50, true);
 
-        TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 0);
-        TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 1);
+        //TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 0);
+        //TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 1);
 
-        TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 10);
+        //TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 10);
 
         //TestContainers.Test().ContainerTest500();
 

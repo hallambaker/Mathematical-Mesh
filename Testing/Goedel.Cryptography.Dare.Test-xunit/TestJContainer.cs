@@ -29,8 +29,10 @@ using System.Text;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Discovery;
 using Goedel.IO;
 using Goedel.Mesh.Shell;
+using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
 
@@ -58,18 +60,84 @@ public enum ModeEnhance {
     Sparse
     }
 
-public enum Corruption {
+public enum ModeCorruption {
     None,
 
     Data,
 
-    Public,
+    Key
 
-    Private,
+    }
+public record TestContext {
 
-    Signature,
+    public DeterministicSeed DeterministicSeed { get; }
 
-    Order,
+
+    public string Filename => DeterministicSeed.Seed + ".dares";
+
+
+    public KeyPair KeyEncrypt { get; }
+    public KeyPair KeySign { get; }
+    public List<string> Recipients { get; }
+    public List<string> Signers { get; }
+    public KeyCollection KeyCollection { get; }
+
+
+    public KeyCollection BadKeyCollection { get; }
+
+
+    public KeyPair BadKeyEncrypt { get; }
+    public KeyPair BadKeySign { get; }
+
+    public DarePolicy DarePolicy { get; }
+
+    public ModeEnhance Encrypt { get; }
+    public ModeEnhance Sign { get; }
+    public ModeCorruption Corrupt { get; }
+
+
+    public TestContext(
+                DeterministicSeed deterministicSeed,
+                ModeEnhance encrypt = ModeEnhance.None, 
+                ModeEnhance sign = ModeEnhance.None,
+                ModeCorruption corrupt = ModeCorruption.None) {
+        DeterministicSeed = deterministicSeed;
+        Encrypt = encrypt;
+        Sign = sign;
+        Corrupt = corrupt;
+
+        // Return if we are not doing any cryptography
+        if ((encrypt == ModeEnhance.None) && (sign == ModeEnhance.None)) {
+            return;
+            }
+
+        KeyCollection = new KeyCollectionTest(deterministicSeed.GetDirectory("Keys"));
+        BadKeyCollection = new KeyCollectionTest(deterministicSeed.GetDirectory("Bad"));
+
+        // set up base keys
+        if (encrypt != ModeEnhance.None) {
+            KeyEncrypt = KeyPair.Factory(CryptoAlgorithmId.X448,
+                KeySecurity.Session, KeyCollection, keyUses: KeyUses.Encrypt);
+            BadKeyEncrypt = InvalidateKey(KeyEncrypt, BadKeyCollection);
+            Recipients = new List<string>() { (KeyEncrypt.KeyIdentifier) };
+
+            }
+        if (sign != ModeEnhance.None) {
+            KeySign = KeyPair.Factory(CryptoAlgorithmId.Ed448,
+                KeySecurity.Session, KeyCollection, keyUses: KeyUses.Sign);
+            BadKeySign = InvalidateKey(KeySign, BadKeyCollection);
+            Signers = new List<string>() { (KeySign.KeyIdentifier) };
+            }
+
+        DarePolicy = new DarePolicy(KeyCollection, signers: Signers, recipients: Recipients);
+        }
+
+
+    static KeyPair InvalidateKey(KeyPair keyEncrypt, KeyCollection keyCollection) {
+        throw new NYI();
+        }
+
+
     }
 
 
@@ -78,27 +146,250 @@ public partial class TestContainers {
 
     public static TestContainers Test() => new();
 
-    [Fact]
-    public void ContainerTestList0() => TestContainer($"ContainerList", SequenceType.List, 0);
-    [Fact]
-    public void ContainerTestList1() => TestContainer($"ContainerList", SequenceType.List, 1);
+
+    record TestBasicParams (
+                int Records = 1, int Size = 100, bool Randomsize = true,
+                int RandomChecks = 0, int AdditionalChunks = 0);
+
 
     [Theory]
-    [InlineData(SequenceType.List, 0)]
-    [InlineData(SequenceType.List, 1)]
-    [InlineData(SequenceType.List, 50)]
-    [InlineData(SequenceType.List, 50, 2000)]
-    [InlineData(SequenceType.Digest, 0)]
-    [InlineData(SequenceType.Digest, 1)]
-    [InlineData(SequenceType.Digest, 50)]
-    [InlineData(SequenceType.Digest, 50, 2000)]
+    [InlineData(SequenceType.List)]
+    [InlineData(SequenceType.Digest)]
+    [InlineData(SequenceType.Chain)]
+    [InlineData(SequenceType.Tree)]
+    [InlineData(SequenceType.Merkle)]
+    public void TestBasicMulti(SequenceType sequenceType) {
 
-    public void TestSequence(SequenceType containerType,
-        int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0) {
+        //var sequences = new List<SequenceType> {
+        //    SequenceType.List, SequenceType.Digest, SequenceType.Chain, SequenceType.Tree, SequenceType.Merkle};
+        var basicParams = new List<TestBasicParams> {
+            new TestBasicParams (0),
+            new TestBasicParams (1), 
+            new TestBasicParams (10),
+            new TestBasicParams (1000),
+            new TestBasicParams (40, 5000, true, 10, 5),
+            };
 
-        var filename = TestName.Get(containerType, records, maxSize, reOpen, moveStep);
-        TestContainer(filename, containerType, records, maxSize, reOpen, moveStep);
+        foreach (var basicParam in basicParams) {
+
+            TestBasic(sequenceType, basicParam.Records, basicParam.Size, basicParam.Randomsize,
+                basicParam.RandomChecks, basicParam.AdditionalChunks);
+            }
         }
+
+
+
+
+
+    /// <summary>
+    /// Basic testing of the ability to write to the various sequence types and read back.
+    /// </summary>
+    /// <param name="sequenceType">Exercise all the sequence types</param>
+    /// <param name="records">Number of records</param>
+    /// <param name="size"></param>
+    /// <param name="randomsize"></param>
+    /// <param name="randomChecks"></param>
+
+    [Theory]
+    [InlineData(SequenceType.List)]
+    [InlineData(SequenceType.Digest)]
+    [InlineData(SequenceType.Chain)]
+    [InlineData(SequenceType.Tree)]
+    [InlineData(SequenceType.Merkle, 40, 5000, true, 10, 5)]
+
+    public void TestBasic(SequenceType sequenceType,
+        int records = 1, int size = 100, bool randomsize = true,
+        int randomChecks = 0,
+                int additionalChunks = 0) {
+
+        var seed = DeterministicSeed.Factory(sequenceType, records, size, randomsize, randomChecks, additionalChunks);
+        var context = new TestContext(seed);
+        var sequence = new TestSequence(context, sequenceType, records, size, randomsize, additionalChunks);
+
+        sequence.ValidatePayload();
+
+        for (var i = 0; i < randomChecks; i++) {
+            var frame = seed.GetRandomInt(sequence.Records, i, "randomAccess");
+            sequence.RandomCheck(frame);
+            }
+
+        if (sequence.SequenceType == SequenceType.Chain) {
+            sequence.CheckChain();
+            }
+        if (sequence.SequenceType == SequenceType.Tree) {
+            sequence.CheckTree();
+            }
+        if (sequence.SequenceType == SequenceType.Merkle) {
+            sequence.CheckTree();
+            }
+
+        }
+
+    [Theory]
+    [InlineData(SequenceType.List)]
+    [InlineData(SequenceType.Digest)]
+    [InlineData(SequenceType.Chain)]
+    [InlineData(SequenceType.Tree)]
+    [InlineData(SequenceType.Merkle)]
+    public void TestEncrypt(SequenceType sequenceType,
+            ModeEnhance encrypt = ModeEnhance.Record, 
+            ModeCorruption corruption = ModeCorruption.None, 
+            int records = 50,
+            int size = 5000,
+            bool randomsize = true,
+            int randomChecks = 10) {
+
+        var seed = DeterministicSeed.Factory(sequenceType, records, size, randomsize,
+                    randomChecks, encrypt, corruption);
+        var TestContext = new TestContext(seed, encrypt: encrypt);
+        var sequence = new TestSequence(TestContext, sequenceType, records, size, randomsize);
+
+        sequence.ValidateCiphertext(); // Check we did encrypt!
+        sequence.ValidatePlaintext(); // Check we can decrypt
+
+        if (corruption == ModeCorruption.Data) {
+            sequence.CheckDecryptCorruptData(randomChecks);
+            }
+        if (corruption == ModeCorruption.Key) {
+            sequence.CheckDecryptCorruptKey(randomChecks);
+            }
+        }
+
+
+    [Theory]
+    [InlineData(SequenceType.List)]
+    [InlineData(SequenceType.Digest)]
+    [InlineData(SequenceType.Chain)]
+    [InlineData(SequenceType.Tree)]
+    [InlineData(SequenceType.Merkle)]
+    public void TestSign(SequenceType sequenceType,
+        ModeEnhance sign = ModeEnhance.Record,
+        ModeCorruption corruption = ModeCorruption.None,
+        int records = 50,
+        int size = 5000,
+        bool randomsize = true,
+        int randomChecks = 10) {
+
+        var seed = DeterministicSeed.Factory(sequenceType, records, size, randomsize,
+                    randomChecks, sign, corruption);
+        var TestContext = new TestContext(seed, sign: sign);
+        var sequence = new TestSequence(TestContext, sequenceType, records, size, randomsize,
+                    checkSignatures: true);
+
+        sequence.ValidateCiphertext(); // Check we did encrypt!
+        sequence.ValidatePlaintext(); // Check we can decrypt
+        sequence.ValidateSignature(); // Check the signatures
+
+
+        if (corruption == ModeCorruption.Data) {
+            sequence.CheckSignCorruptData(randomChecks);
+            }
+        if (corruption == ModeCorruption.Key) {
+            sequence.CheckSignCorruptKey(randomChecks);
+            }
+
+        }
+
+
+
+    [Theory]
+    [InlineData(SequenceType.List)]
+    [InlineData(SequenceType.Digest)]
+    [InlineData(SequenceType.Chain)]
+    [InlineData(SequenceType.Tree)]
+    [InlineData(SequenceType.Merkle)]
+    public void TestSignEncrypt(SequenceType sequenceType,
+                ModeEnhance sign = ModeEnhance.Record,
+                ModeEnhance encrypt = ModeEnhance.Record,
+                ModeCorruption corruption = ModeCorruption.None,
+                int records = 50,
+                int size = 5000,
+                bool randomsize = true,
+                int randomChecks = 10) {
+
+        var seed = DeterministicSeed.Factory(sequenceType, records, size, randomsize,
+                    randomChecks, sign, corruption);
+        var TestContext = new TestContext(seed, sign: sign, encrypt: encrypt);
+        var sequence = new TestSequence(TestContext, sequenceType, records, size, randomsize,
+                    checkSignatures: true);
+
+        sequence.ValidateCiphertext(); // Check we did encrypt!
+        sequence.ValidatePlaintext(); // Check we can decrypt
+
+        if (corruption == ModeCorruption.Data) {
+            sequence.CheckDecryptCorruptData(randomChecks);
+            sequence.CheckSignCorruptData(randomChecks);
+            }
+        if (corruption == ModeCorruption.Key) {
+            sequence.CheckDecryptCorruptKey(randomChecks);
+            sequence.CheckSignCorruptKey(randomChecks);
+            }
+
+        }
+
+
+    [Theory]
+    [InlineData(ModeEnhance.Sequence, ModeEnhance.Sequence)]
+    [InlineData(ModeEnhance.Sparse, ModeEnhance.Sequence)]
+    [InlineData(ModeEnhance.Sequence, ModeEnhance.Sparse)]
+    [InlineData(ModeEnhance.Sparse, ModeEnhance.Sparse)]
+    public void TestSparse(
+                ModeEnhance sign = ModeEnhance.Record,
+                ModeEnhance encrypt = ModeEnhance.Record,
+                ModeCorruption corruption = ModeCorruption.Data,
+                int records = 50,
+                int size = 5000,
+                bool randomsize = true,
+                int randomChecks = 10,
+                int additionalChunks = 1) {
+
+        var seed = DeterministicSeed.Factory(sign, encrypt, corruption, records, size, randomsize,
+                    randomChecks, additionalChunks);
+        var TestContext = new TestContext(seed, sign: sign, encrypt: encrypt);
+        var sequence = new TestSequence(TestContext, SequenceType.Merkle, records, size, randomsize,
+            additionalChunks,  checkSignatures: true);
+
+        sequence.ValidateCiphertext(); // Check we did encrypt!
+        sequence.ValidatePlaintext(); // Check we can decrypt
+
+        if (corruption == ModeCorruption.Data) {
+            sequence.CheckDecryptCorruptData(randomChecks);
+            sequence.CheckSignCorruptData(randomChecks);
+            }
+        if (corruption == ModeCorruption.Key) {
+            sequence.CheckDecryptCorruptKey(randomChecks);
+            sequence.CheckSignCorruptKey(randomChecks);
+            }
+
+        }
+
+
+    [Theory]
+    [InlineData(ModeEnhance.Sequence, ModeEnhance.Sequence)]
+    [InlineData(ModeEnhance.Sparse, ModeEnhance.Sequence)]
+    [InlineData(ModeEnhance.Sequence, ModeEnhance.Sparse)]
+    [InlineData(ModeEnhance.Sparse, ModeEnhance.Sparse)]
+    public void TestProof(
+                ModeEnhance sign = ModeEnhance.Record,
+                ModeEnhance encrypt = ModeEnhance.Record,
+                ModeCorruption corruption = ModeCorruption.None,
+                int records = 50,
+                int size = 5000,
+                bool randomsize = true,
+                int proofChecks = 10,
+                int additionalChunks = 1) {
+
+        var seed = DeterministicSeed.Factory(sign, encrypt, corruption, records, size, randomsize,
+                    proofChecks, additionalChunks);
+        var TestContext = new TestContext(seed, sign: sign, encrypt: encrypt);
+        var sequence = new TestSequence(TestContext, SequenceType.Merkle, records, size, randomsize,
+            additionalChunks, checkSignatures: true);
+
+        sequence.CheckProofs(proofChecks);
+        }
+
+
+
 
     [Theory]
     [InlineData(SequenceType.List)]
@@ -116,66 +407,144 @@ public partial class TestContainers {
     [InlineData(SequenceType.Merkle, 1000)]
     [InlineData(SequenceType.Merkle, 10, 5000)]
 
-    //[InlineData(SequenceType.List, 1, false)]
-    //[InlineData(SequenceType.List, 5, false)]
-    //[InlineData(SequenceType.List, 100, false)]
-    //[InlineData(SequenceType.Digest, 1000, false)]
-    //[InlineData(SequenceType.List, 10, false, 5000)]
-    //[InlineData(SequenceType.Digest, 10, false, 5000)]
-
-
 
     public void TestAppend(SequenceType containerType,
-        int records = 1, int size = 100, bool atomic = true) {
+                int records = 1, int size = 100, bool atomic = true,
+                ModeEnhance encrypt = ModeEnhance.None, ModeEnhance sign = ModeEnhance.None,
+                ModeCorruption corrupt = ModeCorruption.None,
+                int randomChecks = 0) {
 
-        var filename = TestName.Get(containerType, records, atomic, size);
+        var deterministic = DeterministicSeed.Factory(containerType, records, atomic, size);
+
+        var keyCollection = MakeKeyCollection();
+
+        KeyPair keyEncrypt = null;
+        KeyPair keySign = null;
+        List<string> recipients = null;
+        List<string> signers = null;
+        bool policyNull = true;
+
+        if (encrypt != ModeEnhance.None) {
+            keyEncrypt = KeyPair.Factory(CryptoAlgorithmId.X448,
+                KeySecurity.Session, keyCollection, keyUses: KeyUses.Encrypt);
+            recipients.Add(keyEncrypt.KeyIdentifier);
+            policyNull = false;
+            }
+        if (sign != ModeEnhance.None) {
+            keySign = KeyPair.Factory(CryptoAlgorithmId.Ed448,
+                KeySecurity.Session, keyCollection, keyUses: KeyUses.Sign);
+            policyNull = false;
+            }
+
+        var policy = policyNull ? null : new DarePolicy(keyCollection, 
+                    signers: signers, recipients: recipients);
+
+        var filename = DeterministicSeed.GetUnique(containerType, records, atomic, size);
         var entries = new List<SequenceIndexEntry>();
 
         int i, j = 0;
-        //Create container
-
-        //var payload = TestName.GetTestBytes(filename, size, j++);
 
         using (var sequence = Sequence.NewContainer(filename, FileStatus.Overwrite, containerType)) {
             for (i = 0; i < records; i++) {
                 var header = new DareHeader() {
                     };
 
-                var payload = TestName.GetTestBytes(filename, size, i);
+                var payload = deterministic.GetTestBytes( size, i);
                 var entry = sequence.Append(payload);
-
-                //if (atomic) {
-                //    var entry = sequence.Append(payload);
-                //    entries.Add(entry);
-                //    }
-                //else {
-                //    var entry = sequence.Append(payload);
-
-                //    entries.Add(entry);
-                //    }
                 }
             }
-
-
 
         using (var stream = filename.OpenFileRead()) {
             foreach (var entry in entries) {
-                var payload = TestName.GetTestBytes(filename, size, j++);
-                Validate(stream, entry, payload);
+                var payload = deterministic.GetTestBytes( size, j++);
+                Validate(stream, entry, payload, encrypt, sign, corrupt, keyEncrypt, keySign);
                 }
             }
 
-        //(i == j).TestTrue();
+
+        // validate every record in sequence forward
+        using (var sequence = Sequence.OpenExisting(filename)) {
+            //for (i = 0; i < records; i++) {
+            //    var payload = DeterministicSeed.GetTestBytes(Filename, size, i);
+            //    }
+
+            foreach (var entry in sequence) {
+                }
+
+            }
+
+        using (var sequence = Sequence.OpenExisting(filename)) {
+            //for (i = 0; i < records; i++) {
+            //    var payload = DeterministicSeed.GetTestBytes(Filename, size, i);
+            //    }
+
+            foreach (var entry in sequence.SelectEnvelope (1, true)) {
+                }
+
+            }
+
+
+        for (i = 0; i < randomChecks; i++) {
+            var sequence = Sequence.OpenExisting(filename);
+            var random = deterministic.GetRandomInt(records) + 1;
+            var entry = sequence.Frame (random);
+            }
+
+
+
+
+
 
 
         if (containerType == SequenceType.Chain) {
             CheckChain(entries);
             }
+        if (containerType == SequenceType.Tree | containerType == SequenceType.Merkle) {
+            CheckTree(entries);
+            }
+
+        var keyCollectionBad = MakeKeyCollection();
+        KeyPair keyEncryptBad = null;
+        KeyPair keySignBad = null;
+
+        if (encrypt != ModeEnhance.None) {
+            keyEncryptBad = InvalidateKey(keyEncrypt, keyCollectionBad);
+            }
+        if (encrypt != ModeEnhance.None) {
+            keySignBad = InvalidateKey(keySign, keyCollectionBad);
+            }
+
+
+
+
 
         }
 
 
-    static void Validate(FileStream stream, SequenceIndexEntry entry, byte[] data) {
+    static bool ValidateEntry(
+                    SequenceIndexEntry entry,
+                    byte[] plaintext, 
+                    KeyPair keyEncrypt = null,
+                    KeyPair keySign = null
+                    ) {
+
+        return true;
+        }
+
+
+
+    #region // Validation of correct bytes
+
+    static void Validate(
+                    FileStream stream,
+                    SequenceIndexEntry entry,
+                    byte[] data,
+                    ModeEnhance encrypt = ModeEnhance.None,
+                    ModeEnhance sign = ModeEnhance.None,
+                    ModeCorruption corrupt = ModeCorruption.None,
+                    KeyPair keyEncrypt = null,
+                    KeyPair keySign = null
+                    ) {
 
         // check frame boundaries
         (entry.FramePosition < entry.DataPosition).TestTrue();
@@ -232,18 +601,20 @@ public partial class TestContainers {
             var chainDigest = entry.ChainDigest;
             chainDigest.TestNotNull();
 
-            var buffer = Add(hashAlgorithm.HashSize,lastDigest, payloadDigest);
+            var buffer = Add(hashAlgorithm.HashSize, lastDigest, payloadDigest);
             var digest = hashAlgorithm.ComputeHash(buffer);
 
             digest.TestEqual(chainDigest);
             }
         }
 
+    static void CheckTree(List<SequenceIndexEntry> entries) {
+        }
 
     static byte[] Add(int size, byte[] first, byte[] second) {
         var length = size / 8;
 
-        var result = new byte[length *2];
+        var result = new byte[length * 2];
 
         if (first is not null) {
             (first.Length == length).TestTrue();
@@ -256,6 +627,17 @@ public partial class TestContainers {
 
         return result;
         }
+
+    #endregion
+
+
+    static KeyPair InvalidateKey(KeyPair keyEncrypt, KeyCollection keyCollection) {
+        throw new NYI();
+        }
+
+
+
+
 
 
     [Fact]
@@ -425,10 +807,32 @@ public partial class TestContainers {
 
 
 
+    [Theory]
+    [InlineData(SequenceType.List, 0)]
+    [InlineData(SequenceType.List, 1)]
+    [InlineData(SequenceType.List, 50)]
+    [InlineData(SequenceType.List, 50, 2000)]
+    [InlineData(SequenceType.Digest, 0)]
+    [InlineData(SequenceType.Digest, 1)]
+    [InlineData(SequenceType.Digest, 50)]
+    [InlineData(SequenceType.Digest, 50, 2000)]
+
+    public void TestSequence(SequenceType containerType,
+    int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0) {
+
+        var filename = DeterministicSeed.GetUnique(containerType, records, maxSize, reOpen, moveStep);
+        TestContainer(filename, containerType, records, maxSize, reOpen, moveStep);
+        }
 
 
 
-    public static void TestContainer(string fileName, SequenceType containerType,
+    [Fact]
+    public void ContainerTestList0() => TestContainer($"ContainerList", SequenceType.List, 0);
+    [Fact]
+    public void ContainerTestList1() => TestContainer($"ContainerList", SequenceType.List, 1);
+
+
+    static void TestContainer(string fileName, SequenceType containerType,
                 int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0,
                 DarePolicy policy = null,
                 CryptoParameters cryptoParametersEntry = null,

@@ -100,7 +100,7 @@ public class TestItemContainerPersistenceStore : PersistenceStore {
 
 
     /// <summary>
-    /// Get the latest value of the TestItem object with the specified unique ID
+    /// GetUnique the latest value of the TestItem object with the specified unique ID
     /// </summary>
     /// <param name="AccountID">The account identifier</param>
     /// <returns>The test item if found, otherwise null.</returns>
@@ -110,7 +110,7 @@ public class TestItemContainerPersistenceStore : PersistenceStore {
         }
 
     /// <summary>
-    /// Get the latest value of the last TestItem object with the specified unique ID that was created.
+    /// GetUnique the latest value of the last TestItem object with the specified unique ID that was created.
     /// </summary>
     /// <param name="UserProfileUDF">The user profile UDF</param>
     /// <returns>The test item</returns>
@@ -121,7 +121,7 @@ public class TestItemContainerPersistenceStore : PersistenceStore {
         }
 
     ///// <summary>
-    ///// Get the previous value(s) of a test item version.
+    ///// GetUnique the previous value(s) of a test item version.
     ///// </summary>
     ///// <param name="TestItem">The base version</param>
     ///// <param name="MaxResult">Maximum number of results to return.</param>

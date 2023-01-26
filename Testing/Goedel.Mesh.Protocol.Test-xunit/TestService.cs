@@ -250,7 +250,7 @@ public partial class TestService {
         var contactRequest = contextAccountAlice_1_a.GetPendingMessageContactRequest();
         contextAccountAlice_1_a.Process(contactRequest);
 
-        // Get the response back
+        // GetUnique the response back
         sync = contextAccountBob.Sync();
         var contactResponseBob = contextAccountBob.GetPendingMessageContactRequest();
 
@@ -266,7 +266,7 @@ public partial class TestService {
         var confirmRequest = contextAccountAlice_1_a.GetPendingMessageConfirmationRequest();
         contextAccountAlice_1_a.Process(confirmRequest);
 
-        // Get the response back
+        // GetUnique the response back
         sync = contextAccountBob.Sync();
         var confirmResponseBob = contextAccountBob.GetPendingMessageConfirmationResponse();
         contextAccountAlice_1_a.Process(confirmResponseBob);

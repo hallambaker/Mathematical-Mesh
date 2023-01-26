@@ -203,7 +203,7 @@ public class Dilithium  {
     /// <returns>The (public, private) keys.</returns>
     public static (byte[], byte[]) GenerateKeypair(Dilithium parameters, byte[]? seed = null) {
 
-        //Get randomness for rho, rhoprime and key
+        //GetUnique randomness for rho, rhoprime and key
         seed ??= Platform.GetRandomBytes(SeedBytes);
         //var seedbuff = SHAKE256.GetBytes(3 * SEEDBYTES, seed);
         var seedbuff = SHAKE256.Process(seed, 3 * 8 * SeedBytes);

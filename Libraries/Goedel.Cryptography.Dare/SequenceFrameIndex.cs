@@ -266,8 +266,21 @@ public partial class SequenceIndexEntry {
         using var output = new MemoryStream();
         input.CopyTo(output);
         return output.ToArray();
-
         }
+
+    /// <summary>
+    /// Return the frame payload.
+    /// </summary>
+    /// <returns>The frame payload data.</returns>
+    public byte[] GetPayload() {
+        using var output = new MemoryStream();
+        CopyPayload(Sequence, Sequence.KeyLocate, output);
+        return output.ToArray();
+        }
+
+
+
+
 
 
     /// <summary>
@@ -369,6 +382,9 @@ public partial class SequenceIndexEntry {
         CopyPayload(sequence, keyCollection, output);
         return output.ToArray();
         }
+
+
+
 
     }
 

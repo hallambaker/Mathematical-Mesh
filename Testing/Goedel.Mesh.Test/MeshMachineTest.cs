@@ -198,12 +198,17 @@ public class MeshMachineTest : MeshMachineCore {
 public class KeyCollectionTest : KeyCollectionCore {
     readonly MeshMachineTest meshMachine;
 
-    public override string DirectoryKeys => meshMachine.DirectoryKeys;
+    public override string DirectoryKeys => directoryKeys;
+    string directoryKeys;
 
+    public KeyCollectionTest(MeshMachineTest meshMachine) { 
+        this.meshMachine = meshMachine;
+        directoryKeys = meshMachine.DirectoryKeys;
+        }
 
-    public KeyCollectionTest(MeshMachineTest meshMachine) => this.meshMachine = meshMachine;
-
-
+    public KeyCollectionTest(string directory) {
+        directory = directoryKeys;
+        }
 
     }
 

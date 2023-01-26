@@ -49,7 +49,7 @@ public partial class TestDare {
     //static List<string> Signers = new List<string> { AccountAlice };
     //static List<string> Recipients = new List<string> { AccountAlice };
     //static KeyPair encryptAlice = KeyPair.Factory(CryptoAlgorithmId.X448,
-    //        KeySecurity.Session, keyCollection, keyUses: KeyUses.Encrypt);
+    //        KeySecurity.Session, KeyCollection, keyUses: KeyUses.Encrypt);
 
     [Fact]
     public void EnvelopePlaintextJSON() {
