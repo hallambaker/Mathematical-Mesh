@@ -122,7 +122,7 @@ public partial class TestContainers {
             sequence.CheckTree();
             }
         if (sequence.SequenceType == SequenceType.Merkle) {
-            sequence.CheckTree();
+            sequence.CheckMerkle();
             }
 
         }
@@ -293,9 +293,6 @@ public partial class TestContainers {
 
         sequence.CheckProofs(proofChecks);
         }
-
-
-
 
     [Theory]
     [InlineData(SequenceType.List)]

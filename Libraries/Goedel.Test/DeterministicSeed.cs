@@ -80,8 +80,8 @@ public class DeterministicSeed {
     public int GetRandomInt(int ceiling, int info = 0, string label="") {
         var bytes = KeyDeriveHKDF.Derive(Seed.ToBytes(),
                     info: $"Number {info} {label}".ToBytes(), length: 32);
-        var number = (long)bytes.LittleEndian32();
-        return (int) number % ceiling;
+        var number = bytes.LittleEndian32() % ceiling;
+        return (int) number;
         }
 
     public byte[] GetTestBytes(int length, long info) =>

@@ -55,7 +55,7 @@ partial class Program {
 
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
-        //TestContainers.Test().TestBasic(SequenceType.List);
+        TestContainers.Test().TestBasic(SequenceType.Chain, 10, 5000, true, 10, 5);
 
         //TestContainers.Test().ContainerTest0();
 
@@ -67,7 +67,7 @@ partial class Program {
 
 
 
-        TestContainers.Test().ZTestAppend(SequenceType.List, 1);
+        //TestContainers.Test().ZTestAppend(SequenceType.Tree, 1);
 
 
         //TestContainers.Test().TestAppend(SequenceType.Merkle, 2, 50, true);

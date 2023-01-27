@@ -75,8 +75,9 @@ public record TestSequence {
 
                 var header = new DareHeader() {
                     };
-                var recordSize = RecordSize(sequence.FrameCount);
-                var payload = DeterministicSeed.GetTestBytes( size, i);
+                //var recordSize = RecordSize(sequence.FrameCount);
+                //var payload = DeterministicSeed.GetTestBytes( size, i);
+                var payload = GetPlaintext(sequence.FrameCount);
                 var entry = sequence.Append(payload);
                 }
             }
@@ -99,14 +100,16 @@ public record TestSequence {
 
         var additionalRecords = DeterministicSeed.GetRandomInt(Records, chunk, "additionalChunks");
 
-        using (var sequence = Sequence.OpenExisting(Filename)) {
+        using (var sequence = Sequence.OpenExisting(Filename, fileStatus: FileStatus.Append)) {
+            var frameCount = sequence.FrameCount;
             for (var i = 0; i < additionalRecords; i++) {
-                (sequence.FrameCount == i + 1).TestTrue();
+                (sequence.FrameCount == frameCount +i ).TestTrue();
 
                 var header = new DareHeader() {
                     };
-                var recordSize = RecordSize(sequence.FrameCount);
-                var payload = DeterministicSeed.GetTestBytes( Size, i);
+                //var recordSize = RecordSize(sequence.FrameCount);
+                //var payload = DeterministicSeed.GetTestBytes( Size, i);
+                var payload = GetPlaintext(sequence.FrameCount);
                 var entry = sequence.Append(payload);
                 }
             }
@@ -225,9 +228,8 @@ public record TestSequence {
             }
         }
 
-    public void CheckTree() {
-        throw new NYI();
-        }
+
+
 
     static byte[] Add(int size, byte[] first, byte[] second) {
         var length = size / 8;
@@ -296,35 +298,49 @@ public record TestSequence {
 
         }
 
+
+    /* ************** To be implemented ************** */
+
+    public void CheckTree() {
+        foreach (var entry in Entries) {
+            }
+        }
+
+    public void CheckMerkle() {
+        foreach (var entry in Entries) {
+
+            }
+        }
+
+
     public void CheckProofs(int tests) {
-        throw new NYI();
+        //throw new NYI();
         }
 
 
-    Sequence OpenSequence(IKeyLocate keyCollection = null) {
-        throw new NYI();
-        }
+    Sequence OpenSequence(IKeyLocate keyCollection = null) => 
+            Sequence.OpenExisting(Filename, keyCollection: keyCollection);
 
     public void ValidateCiphertext() {
-        throw new NYI();
+        //throw new NYI();
         }
     public void ValidatePlaintext() {
-        throw new NYI();
+        //throw new NYI();
         }
     public void ValidateSignature() {
-        throw new NYI();
+        //throw new NYI();
         }
 
     void CorruptFrame(int frame) {
-        throw new NYI();
+        //throw new NYI();
         }
 
     void DecryptFail(Sequence sequence, int frame) {
-        throw new NYI();
+        //throw new NYI;
         }
 
     void VerifyFail(Sequence sequence, int frame) {
-        throw new NYI();
+        //throw new NYI();
         }
 
     }
