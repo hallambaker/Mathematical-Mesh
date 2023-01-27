@@ -96,6 +96,10 @@ public abstract partial class JsonObject {
     ///<summary>Key collection to be used to decrypt enveloped data within the object.</summary> 
     public object KeyLocate;
 
+
+    ///<summary>The parser data binding.</summary> 
+    public JbcdValueObject JbcdElementObject { get; set; }    
+
     /// <summary>
     /// Secondary keys describing the object
     /// </summary>
@@ -124,12 +128,12 @@ public abstract partial class JsonObject {
 
 
     /// <summary>
-    /// Tag value used as substitute for reflection internally.
+    /// Tag values used as substitute for reflection internally.
     /// </summary>
     public virtual string _Tag => __Tag;
 
     /// <summary>
-    /// Tag value used as substitute for reflection internally.
+    /// Tag values used as substitute for reflection internally.
     /// </summary>
     public const string __Tag = null;
 
@@ -169,20 +173,20 @@ public abstract partial class JsonObject {
         }
 
     /// <summary>
-    /// Sets the value of the property <paramref name="tag"/> to the value specified
+    /// Sets the values of the property <paramref name="tag"/> to the values specified
     /// by <paramref name="value"/>.
     /// </summary>
     /// <param name="tag">The string representation of the tag.</param>
-    /// <param name="value">The tokenized value.</param>
+    /// <param name="value">The tokenized values.</param>
     public virtual void Setter(
             string tag, TokenValue value) => _Unregistered[tag] = value;
 
 
     /// <summary>
-    /// Gets the value of the property <paramref name="tag"/>;
+    /// Gets the values of the property <paramref name="tag"/>;
     /// </summary>
     /// <param name="tag">The string representation of the tag.</param>
-    /// <returns>The value of the property with tag <paramref name="tag"/>.</returns>
+    /// <returns>The values of the property with tag <paramref name="tag"/>.</returns>
     public virtual TokenValue Getter(
                 string tag) => _unregistered == null ? TokenValue.Unknown :
                     _unregistered.ContainsKey(tag) ? _unregistered[tag] : TokenValue.Unknown;
@@ -339,7 +343,7 @@ public abstract partial class JsonObject {
 
             var value = Getter(tag);
 
-            //Console.WriteLine($"Tag {tag} = {value.IsEmpty}");
+            //Console.WriteLine($"Tag {tag} = {values.IsEmpty}");
 
 
             if (!value.IsEmpty) {

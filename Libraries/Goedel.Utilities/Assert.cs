@@ -251,6 +251,14 @@ public static class Assert {
         }
 
 
+
+    public static T CacheValue<T>(this T Value, ref bool read, out T Store) {
+        Store = Value;
+        read = true;
+        return Value;
+        }
+
+
     /// <summary>Throw an exception if <paramref name="condition"/> is true. 
     /// (test, NYIException.Throw, "test was false").AssertTrue();
     /// </summary>

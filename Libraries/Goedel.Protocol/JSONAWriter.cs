@@ -58,27 +58,27 @@ public class JSONAWriter : JsonWriter {
         }
 
     /// <summary>Write 32 bit integer.</summary>
-    /// <param name="Data">Value to write</param>
+    /// <param name="Data">Elements to write</param>
     public override void WriteInteger32(int? Data) => Output.Write(
             Data== null ? "null" : Data.ToString());
 
     /// <summary>Write 64 bit integer</summary>
-    /// <param name="Data">Value to write</param>
+    /// <param name="Data">Elements to write</param>
     public override void WriteInteger64(long? Data) => Output.Write(
             Data == null ? "null" : Data.ToString());
 
     /// <summary>Write float32</summary>
-    /// <param name="Data">Value to write</param>
+    /// <param name="Data">Elements to write</param>
     public override void WriteFloat32(float? Data) => Output.Write(
             Data == null ? "null" : Data.ToString());
 
     /// <summary>Write float64</summary>
-    /// <param name="Data">Value to write</param>
+    /// <param name="Data">Elements to write</param>
     public override void WriteFloat64(double? Data) => Output.Write(
             Data == null ? "null" : Data.ToString());
 
     /// <summary>Write boolean.</summary>
-    /// <param name="Data">Value to write</param>
+    /// <param name="Data">Elements to write</param>
     public override void WriteBoolean(bool? Data) {
         if (Data == true) {
             Output.Write("true");
@@ -92,7 +92,7 @@ public class JSONAWriter : JsonWriter {
         }
 
     /// <summary>Write string.</summary>
-    /// <param name="Data">Value to write</param>
+    /// <param name="Data">Elements to write</param>
     public override void WriteString(string Data) {
         Output.Write("\"");
         foreach (char c in Data) {
@@ -127,7 +127,7 @@ public class JSONAWriter : JsonWriter {
         }
 
     /// <summary>Write binary data as Base64Url encoded string.</summary>
-    /// <param name="buffer">Value to write</param>
+    /// <param name="buffer">Elements to write</param>
     /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
     /// at which to begin copying bytes to the current stream.</param>
     /// <param name="count">The number of bytes to be written to the current stream.</param> 
@@ -147,7 +147,7 @@ public class JSONAWriter : JsonWriter {
 
     /// <summary>Mark middle of array element</summary>
     /// <param name="first">If true, this is the first element. 
-    /// The value is set false on each call</param>
+    /// The values is set false on each call</param>
     public override void WriteArraySeparator(ref bool first) {
         if (!first) {
             Output.Write(",");
@@ -170,7 +170,7 @@ public class JSONAWriter : JsonWriter {
 
     /// <summary>Mark middle of object element</summary>
     /// <param name="first">If true, this is the first element. 
-    /// The value is set false on each call</param>
+    /// The values is set false on each call</param>
     public override void WriteObjectSeparator(ref bool first) {
         if (!first) {
             Output.Write(",");

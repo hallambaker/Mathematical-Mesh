@@ -98,7 +98,7 @@ public struct StreamId {
     /// <returns>The retrieved sourceId and position in the buffer.</returns>
     public static (StreamId, int) GetSourceId(byte[] buffer) {
         var streamId = new StreamId(buffer.BigEndianInt(StreamId.SourceIdSize));
-        //Screen.WriteLine($"Received Stream ID {streamId.Value}");
+        //Screen.WriteLine($"Received Stream ID {streamId.Elements}");
 
         return (streamId, StreamId.SourceIdSize);
         }

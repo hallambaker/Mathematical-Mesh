@@ -197,7 +197,7 @@ public abstract class BinaryStreamReader : IBinaryStream {
     public bool EOF { get; protected set; } = false;
 
     /// <summary>
-    /// Read a complete binary value.
+    /// Read a complete binary values.
     /// </summary>
     /// <param name="Length">The number of bytes to read.</param>
     /// <returns>The binary data that was read.</returns>
@@ -205,7 +205,7 @@ public abstract class BinaryStreamReader : IBinaryStream {
 
 
     /// <summary>
-    /// Read a partial binary value.
+    /// Read a partial binary values.
     /// </summary>
     /// <param name="Buffer"></param>
     /// <param name="offset"></param>
@@ -249,7 +249,7 @@ public abstract class BinaryStreamReader : IBinaryStream {
         }
 
     /// <summary>
-    /// Read a complete string value.
+    /// Read a complete string values.
     /// </summary>
     /// <param name="Length">The number of bytes to read.</param>
     /// <returns>The string that was read.</returns>
@@ -345,7 +345,7 @@ public class CharacterStreamReader : BinaryStreamReader {
 
 
     /// <summary>
-    /// Read a complete binary value, buffering partial chunk values if necessary.
+    /// Read a complete binary values, buffering partial chunk values if necessary.
     /// </summary>
     /// <param name="Length">The number of bytes to read.</param>
     /// <returns>The binary data that was read.</returns>
@@ -356,7 +356,7 @@ public class CharacterStreamReader : BinaryStreamReader {
         }
 
     /// <summary>
-    /// Read a partial binary value.
+    /// Read a partial binary values.
     /// </summary>
     /// <param name="Buffer">Buffer to write the data read to.</param>
     /// <param name="offset">Byte offset from start of <paramref name="Buffer"/></param>
@@ -477,7 +477,7 @@ public class CharacterStreamDataReader : BinaryStreamReader {
 
 
     /// <summary>
-    /// Read a complete binary value, buffering partial chunk values if necessary.
+    /// Read a complete binary values, buffering partial chunk values if necessary.
     /// </summary>
     /// <param name="Length">The number of bytes to read.</param>
     /// <returns>The binary data that was read.</returns>
@@ -492,7 +492,7 @@ public class CharacterStreamDataReader : BinaryStreamReader {
         }
 
     /// <summary>
-    /// Read a partial binary value.
+    /// Read a partial binary values.
     /// </summary>
     /// <param name="Data">Buffer to write the data read to.</param>
     /// <param name="offset">Byte offset from start of <paramref name="Data"/></param>

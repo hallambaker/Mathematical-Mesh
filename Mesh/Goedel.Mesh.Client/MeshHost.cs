@@ -193,7 +193,7 @@ public class MeshHost : Disposable {
     //    this.PersistHost = containerHost;
 
     //    foreach (var entry in containerHost.ObjectIndex) {
-    //        var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
+    //        var catalogedMachine = entry.Elements.JsonObject as CatalogedMachine;
     //        GetContext(catalogedMachine);
     //        }
 

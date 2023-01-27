@@ -78,7 +78,7 @@ public class JSONDebugWriter : JsonWriter {
         }
 
     /// <summary>Write string.</summary>
-    /// <param name="Data">Value to write</param>
+    /// <param name="Data">Elements to write</param>
     public override void WriteString(string Data) {
         Output.Write("\"");
         foreach (char c in Data) {
@@ -123,7 +123,7 @@ public class JSONDebugWriter : JsonWriter {
 
 
     /// <summary>Write binary data as Base64Url encoded string.</summary>
-    /// <param name="Data">Value to write</param>
+    /// <param name="Data">Elements to write</param>
     /// <param name="offset">The zero-based byte offset in <paramref name="Data"/>
     /// at which to begin copying bytes to the current stream.</param>
     /// <param name="count">The number of bytes to be written to the current stream.</param> 

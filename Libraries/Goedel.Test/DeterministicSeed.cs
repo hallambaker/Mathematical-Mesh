@@ -67,11 +67,14 @@ public class DeterministicSeed {
 
 
 
-    public string GetDirectory(string label) =>
-            Path.Combine(Directory, label);
-
-    public string GetFilename(string label) =>
-            Path.Combine(Directory, label);
+    public string GetDirectory(string label) {
+        System.IO.Directory.CreateDirectory(Directory);
+        return Path.Combine(Directory, label);
+        }
+    public string GetFilename(string label) {
+        System.IO.Directory.CreateDirectory(Directory);
+        return Path.Combine(Directory, label);
+        }
 
 
     public int GetRandomInt(int ceiling, int info = 0, string label="") {

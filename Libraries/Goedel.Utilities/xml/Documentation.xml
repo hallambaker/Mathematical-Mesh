@@ -1628,7 +1628,7 @@
         </member>
         <member name="T:Goedel.Utilities.Utilities">
             <summary>
-            Conversion class to and from RFC3339 DateTime representation.
+            Conversion class to and from RFC3339 dateTime representation.
             </summary>
         </member>
         <member name="M:Goedel.Utilities.Utilities.Earliest(System.DateTime,System.DateTime[])">
@@ -1656,24 +1656,35 @@
         </member>
         <member name="M:Goedel.Utilities.Utilities.ToRFC3339(System.DateTime)">
             <summary>
-            Format a DateTime value in RFC3339 format.
+            Format a dateTime value in RFC3339 format.
             </summary>
-            <param name="DateTime">The time to convert.</param>
+            <param name="dateTime">The time to convert.</param>
             <returns>The converted date time</returns>
         </member>
         <member name="M:Goedel.Utilities.Utilities.ToRFC3339(System.Nullable{System.DateTime})">
             <summary>
-            Format a DateTime value in RFC3339 format.
+            Format a dateTime value in RFC3339 format.
             </summary>
-            <param name="DateTime">The time to convert.</param>
+            <param name="dateTime">The time to convert.</param>
             <returns>The converted date time</returns>
         </member>
         <member name="M:Goedel.Utilities.Utilities.FromRFC3339(System.String)">
             <summary>
             Parse an RFC3339 format date time value.
             </summary>
-            <param name="Text">The date to parse</param>
+            <param name="text">The date to parse</param>
             <returns>The date value</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Utilities.TryParseRFC3339(System.String,System.DateTime@)">
+            <summary>
+            Attempt to parse the value <paramref name="text"/> as an RFC3339 encoded 
+            value and return <code>true</code> if successful, otherwise false.
+            The parsed value is returned in in <paramref name="dateTime"/>.
+            </summary>
+            <param name="text">The text to parse</param>
+            <param name="dateTime">The parsed value if successful, otherwise 
+            the default value for the type.</param>
+            <returns>True if the parse succeeded, otherwise false.</returns>
         </member>
         <member name="T:Goedel.Utilities.AssertionFail">
             <summary>

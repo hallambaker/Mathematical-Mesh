@@ -117,7 +117,7 @@ public abstract class ServiceRequest {
     protected virtual void ProcessBuffer() {
         var (sourceId, offset) = Presentation.StreamId.GetSourceId(Buffer);
 
-        //Screen.WriteLine($"Received Request {sourceId.Value}");
+        //Screen.WriteLine($"Received Request {sourceId.Elements}");
 
         RudStream stream = null;
 
@@ -231,7 +231,7 @@ public abstract class ServiceRequest {
     RudStream ProcessClientData(Presentation.StreamId SourceId, int offset) {
 
 
-        //Screen.WriteLine($"Try to match inbound stream {SourceId.Value}");
+        //Screen.WriteLine($"Try to match inbound stream {SourceId.Elements}");
 
         responsePacket = ResponderMessageType.Data;
 

@@ -91,7 +91,7 @@ public record HttpEndpoint(
     /// <summary>
     /// Return the specializer path element, if used.
     /// </summary>
-    /// <param name="instance">The instance value.</param>
+    /// <param name="instance">The instance values.</param>
     /// <returns>The specializer path.</returns>
     public static string Specializer(string instance) => instance == null ? "" : $"{instance}/";
 

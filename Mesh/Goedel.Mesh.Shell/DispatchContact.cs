@@ -32,7 +32,7 @@ public partial class Shell {
     ///// <returns>Mesh result instance</returns>
     //public override ShellResult ContactSelf(ContactSelf options) {
     //    var contextUser = GetContextUser(options);
-    //    var file = options.File.Value;
+    //    var file = options.File.Elements;
 
     //    "Need to merge in the self contact info and label with a name.".TaskFunctionality(true);
 

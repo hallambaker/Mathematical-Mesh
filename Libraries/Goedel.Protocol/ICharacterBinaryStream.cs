@@ -39,15 +39,15 @@ public interface ICharacterStream {
     char ReadChar();
 
     /// <summary>
-    /// Read a complete JSON escape encoded string value encoded.
+    /// Read a complete JSON escape encoded string values encoded.
     /// </summary>
-    /// <returns>The string value.</returns>
+    /// <returns>The string values.</returns>
     string GetStringJSON();
 
     /// <summary>
-    /// Read a complete base64 enccoded binary value.
+    /// Read a complete base64 enccoded binary values.
     /// </summary>
-    /// <returns>The string value.</returns>
+    /// <returns>The string values.</returns>
     byte[] GetBinaryBase64();
 
     /// <summary>
@@ -78,14 +78,14 @@ public interface IBinaryStream : ICharacterStream {
 
 
     /// <summary>
-    /// Read a complete UTF8 string value.
+    /// Read a complete UTF8 string values.
     /// </summary>
     /// <param name="Length">The number of bytes to read.</param>
     /// <returns>The string that was read.</returns>
     string ReadStringUTF8(int Length);
 
     /// <summary>
-    /// Read a complete binary value.
+    /// Read a complete binary values.
     /// </summary>
     /// <param name="Length">The number of bytes to read.</param>
     /// <returns>The binary data that was read.</returns>
@@ -93,7 +93,7 @@ public interface IBinaryStream : ICharacterStream {
 
 
     /// <summary>
-    /// Read a partial binary value.
+    /// Read a partial binary values.
     /// </summary>
     /// <param name="Data">Buffer to write the data read to.</param>
     /// <param name="Offset">Byte offset from start of <paramref name="Data"/></param>

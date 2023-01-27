@@ -37,37 +37,37 @@ public abstract class Reader : Disposable {
     abstract public void EndObject();
 
     /// <summary>Get next object</summary>
-    /// <returns>Value read</returns>
+    /// <returns>Elements read</returns>
     abstract public bool NextObject();
 
     /// <summary>Read token</summary>
-    /// <returns>Value read</returns>
+    /// <returns>Elements read</returns>
     abstract public string ReadToken();
 
     /// <summary>Read Integer32</summary>
-    /// <returns>Value read</returns>
+    /// <returns>Elements read</returns>
     abstract public int ReadInteger32();
 
     /// <summary>Read Integer64</summary>
-    /// <returns>Value read</returns>
+    /// <returns>Elements read</returns>
     abstract public long ReadInteger64();
 
 
     /// <summary>Read Integer32</summary>
-    /// <returns>Value read</returns>
+    /// <returns>Elements read</returns>
     virtual public int ReadFloat32() => throw new NYI();
 
     /// <summary>Read Integer64</summary>
-    /// <returns>Value read</returns>
+    /// <returns>Elements read</returns>
     virtual public double ReadFloat64() => throw new NYI();
 
 
-    /// <summary>Read boolen value</summary>
-    /// <returns>Value read</returns>
+    /// <summary>Read boolen values</summary>
+    /// <returns>Elements read</returns>
     abstract public bool ReadBoolean();
 
     /// <summary>Read binary date</summary>
-    /// <returns>Value read</returns>
+    /// <returns>Elements read</returns>
     abstract public byte[] ReadBinary();
 
     /// <summary>
@@ -78,11 +78,11 @@ public abstract class Reader : Disposable {
     abstract public bool ReadBinaryIncremental(out byte[] Chunk);
 
     /// <summary>Read string</summary>
-    /// <returns>Value read</returns>
+    /// <returns>Elements read</returns>
     abstract public string ReadString();
 
     /// <summary>Read date time item</summary>
-    /// <returns>Value read</returns>
+    /// <returns>Elements read</returns>
     abstract public System.DateTime ReadDateTime();
 
     /// <summary>Read</summary>
@@ -121,33 +121,33 @@ public abstract class Writer : Disposable {
     /// <param name="Indent">Indent level to write at</param>
     abstract public void WriteToken(string Tag, int Indent);
 
-    /// <summary>Write integer value token</summary>
-    /// <param name="Data">Value to write</param>
+    /// <summary>Write integer values token</summary>
+    /// <param name="Data">Elements to write</param>
     abstract public void WriteInteger32(int? Data);
 
-    /// <summary>Write integer value token</summary>
-    /// <param name="Data">Value to write</param>
+    /// <summary>Write integer values token</summary>
+    /// <param name="Data">Elements to write</param>
     abstract public void WriteInteger64(long? Data);
 
-    /// <summary>Write integer value token</summary>
-    /// <param name="Data">Value to write</param>
+    /// <summary>Write integer values token</summary>
+    /// <param name="Data">Elements to write</param>
     abstract public void WriteFloat32(float? Data);
 
-    /// <summary>Write integer value token</summary>
-    /// <param name="Data">Value to write</param>
+    /// <summary>Write integer values token</summary>
+    /// <param name="Data">Elements to write</param>
     abstract public void WriteFloat64(double? Data);
 
-    /// <summary>Write integer value token</summary>
-    /// <param name="Data">Value to write</param>
+    /// <summary>Write integer values token</summary>
+    /// <param name="Data">Elements to write</param>
     abstract public void WriteBoolean(bool? Data);
 
-    /// <summary>Write integer value token</summary>
-    /// <param name="Data">Value to write</param>
+    /// <summary>Write integer values token</summary>
+    /// <param name="Data">Elements to write</param>
     abstract public void WriteString(string Data);
 
-    /// <summary>Write integer value token</summary>
+    /// <summary>Write integer values token</summary>
 
-    /// <param name="buffer">Value to write</param>
+    /// <param name="buffer">Elements to write</param>
     /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
     /// at which to begin copying bytes to the current stream.</param>
     /// <param name="count">The number of bytes to be written to the current stream.</param> 
@@ -159,8 +159,8 @@ public abstract class Writer : Disposable {
     public void WriteBinary() => WriteBinary(NullBuffer);
 
 
-    /// <summary>Write integer value token</summary>
-    /// <param name="Data">Value to write</param>
+    /// <summary>Write integer values token</summary>
+    /// <param name="Data">Elements to write</param>
     abstract public void WriteDateTime(System.DateTime? Data);
 
 

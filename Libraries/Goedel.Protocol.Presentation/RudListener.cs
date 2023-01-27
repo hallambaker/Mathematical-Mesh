@@ -134,7 +134,7 @@ public class RudListener : Listener {
                         break;
                         }
                     //case Constants.ExtensionTagsClaimIdTag: {
-                    //    account = extension.Value.ToUTF8();
+                    //    account = extension.Elements.ToUTF8();
                     //    break;
                     //    }
                 }
@@ -157,7 +157,7 @@ public class RudListener : Listener {
 
         child.SetOptions(child.LocalStreamId.Bytes, encrypt);
 
-        //Screen.WriteLine($"Replace {child.LocalStreamId.Value} ");
+        //Screen.WriteLine($"Replace {child.LocalStreamId.Elements} ");
         if (DictionaryStreamsInbound.TryGetValue(child.LocalStreamId, out var _)) {
             DictionaryStreamsInbound.Remove(child.LocalStreamId);
 

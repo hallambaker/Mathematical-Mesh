@@ -378,7 +378,7 @@ public partial class JbcdStream {
     public virtual void WriteBinaryBegin(long Length, bool Terminal = true) => throw new NYI();
 
     /// <summary>Write binary data as length-data item.</summary>
-    /// <param name="Data">Value to write</param>
+    /// <param name="Data">Elements to write</param>
     /// <param name="First">The index position of the first byte in the input data to process</param>
     /// <param name="Length">The number of bytes to process</param>
     public virtual void WriteBinaryPart(byte[] Data, long First = 0, long Length = -1) => throw new NYI();

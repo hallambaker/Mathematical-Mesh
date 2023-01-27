@@ -134,7 +134,7 @@ public partial class Shell : _Shell {
         PublicMeshService.GetService(MeshMachine, file.Value);
 
 
-    //string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Value);
+    //string GetFile(NewFile file) => MeshMachine.GetFilePath(file.Elements);
 
     ///<summary>The Mesh Machine (Must support client catalog)</summary> 
     public IMeshMachineClient MeshMachine { get; init; }

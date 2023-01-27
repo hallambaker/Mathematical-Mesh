@@ -127,14 +127,14 @@
         </member>
         <member name="M:Goedel.Protocol.BinaryStreamReader.ReadBinary(System.Int32)">
             <summary>
-            Read a complete binary value.
+            Read a complete binary values.
             </summary>
             <param name="Length">The number of bytes to read.</param>
             <returns>The binary data that was read.</returns>
         </member>
         <member name="M:Goedel.Protocol.BinaryStreamReader.ReadBinary(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Read a partial binary value.
+            Read a partial binary values.
             </summary>
             <param name="Buffer"></param>
             <param name="offset"></param>
@@ -163,7 +163,7 @@
         </member>
         <member name="M:Goedel.Protocol.BinaryStreamReader.ReadStringUTF8(System.Int32)">
             <summary>
-            Read a complete string value.
+            Read a complete string values.
             </summary>
             <param name="Length">The number of bytes to read.</param>
             <returns>The string that was read.</returns>
@@ -214,14 +214,14 @@
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamReader.ReadBinary(System.Int32)">
             <summary>
-            Read a complete binary value, buffering partial chunk values if necessary.
+            Read a complete binary values, buffering partial chunk values if necessary.
             </summary>
             <param name="Length">The number of bytes to read.</param>
             <returns>The binary data that was read.</returns>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamReader.ReadBinary(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Read a partial binary value.
+            Read a partial binary values.
             </summary>
             <param name="Buffer">Buffer to write the data read to.</param>
             <param name="offset">Byte offset from start of <paramref name="Buffer"/></param>
@@ -282,14 +282,14 @@
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamDataReader.ReadBinary(System.Int32)">
             <summary>
-            Read a complete binary value, buffering partial chunk values if necessary.
+            Read a complete binary values, buffering partial chunk values if necessary.
             </summary>
             <param name="Length">The number of bytes to read.</param>
             <returns>The binary data that was read.</returns>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamDataReader.ReadBinary(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Read a partial binary value.
+            Read a partial binary values.
             </summary>
             <param name="Data">Buffer to write the data read to.</param>
             <param name="offset">Byte offset from start of <paramref name="Data"/></param>
@@ -310,9 +310,9 @@
             <returns></returns>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamRead.HexCharToInt(System.Char)">
-            <summary>Convert hex character to hex value</summary>
+            <summary>Convert hex character to hex values</summary>
             <param name="c">The hex character</param>
-            <returns>Integer value.</returns>
+            <returns>Integer values.</returns>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamRead.NextHex(Goedel.Protocol.ICharacterStream)">
             <summary>
@@ -320,7 +320,7 @@
             characters.
             </summary>
             <param name="Stream">The stream to read from</param>
-            <returns>The character corresponding to the hex value</returns>
+            <returns>The character corresponding to the hex values</returns>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamRead.ReadJSONEscaped(Goedel.Protocol.ICharacterStream)">
             <summary>
@@ -575,7 +575,7 @@
             <summary>
             Return the specializer path element, if used.
             </summary>
-            <param name="instance">The instance value.</param>
+            <param name="instance">The instance values.</param>
             <returns>The specializer path.</returns>
         </member>
         <member name="M:Goedel.Protocol.HttpEndpoint.GetUri(System.String,System.Int32,System.String,System.String)">
@@ -1085,7 +1085,7 @@
             <summary>Convert object to bytes in specified encoding.</summary>
             <param name="jsonObject">The object to convert.</param>
             <param name="dataEncoding">The encoding to convert to (defaults to JSON).</param>
-            <param name="tagged">It true, tag the output value with the object type.</param>
+            <param name="tagged">It true, tag the output values with the object type.</param>
             <returns>The encoded data.</returns>
         </member>
         <member name="M:Goedel.Protocol.Extensions.GetWriter(Goedel.Protocol.DataEncoding,System.IO.Stream)">
@@ -1219,15 +1219,15 @@
         </member>
         <member name="M:Goedel.Protocol.ICharacterStream.GetStringJSON">
             <summary>
-            Read a complete JSON escape encoded string value encoded.
+            Read a complete JSON escape encoded string values encoded.
             </summary>
-            <returns>The string value.</returns>
+            <returns>The string values.</returns>
         </member>
         <member name="M:Goedel.Protocol.ICharacterStream.GetBinaryBase64">
             <summary>
-            Read a complete base64 enccoded binary value.
+            Read a complete base64 enccoded binary values.
             </summary>
-            <returns>The string value.</returns>
+            <returns>The string values.</returns>
         </member>
         <member name="M:Goedel.Protocol.ICharacterStream.PeekByte">
             <summary>
@@ -1255,21 +1255,21 @@
         </member>
         <member name="M:Goedel.Protocol.IBinaryStream.ReadStringUTF8(System.Int32)">
             <summary>
-            Read a complete UTF8 string value.
+            Read a complete UTF8 string values.
             </summary>
             <param name="Length">The number of bytes to read.</param>
             <returns>The string that was read.</returns>
         </member>
         <member name="M:Goedel.Protocol.IBinaryStream.ReadBinary(System.Int32)">
             <summary>
-            Read a complete binary value.
+            Read a complete binary values.
             </summary>
             <param name="Length">The number of bytes to read.</param>
             <returns>The binary data that was read.</returns>
         </member>
         <member name="M:Goedel.Protocol.IBinaryStream.ReadBinary(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Read a partial binary value.
+            Read a partial binary values.
             </summary>
             <param name="Data">Buffer to write the data read to.</param>
             <param name="Offset">Byte offset from start of <paramref name="Data"/></param>
@@ -1744,31 +1744,31 @@
         </member>
         <member name="M:Goedel.Protocol.JSONAWriter.WriteInteger32(System.Nullable{System.Int32})">
             <summary>Write 32 bit integer.</summary>
-            <param name="Data">Value to write</param>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JSONAWriter.WriteInteger64(System.Nullable{System.Int64})">
             <summary>Write 64 bit integer</summary>
-            <param name="Data">Value to write</param>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JSONAWriter.WriteFloat32(System.Nullable{System.Single})">
             <summary>Write float32</summary>
-            <param name="Data">Value to write</param>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JSONAWriter.WriteFloat64(System.Nullable{System.Double})">
             <summary>Write float64</summary>
-            <param name="Data">Value to write</param>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JSONAWriter.WriteBoolean(System.Nullable{System.Boolean})">
             <summary>Write boolean.</summary>
-            <param name="Data">Value to write</param>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JSONAWriter.WriteString(System.String)">
             <summary>Write string.</summary>
-            <param name="Data">Value to write</param>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JSONAWriter.WriteBinary(System.Byte[],System.Int32,System.Int32)">
             <summary>Write binary data as Base64Url encoded string.</summary>
-            <param name="buffer">Value to write</param>
+            <param name="buffer">Elements to write</param>
             <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
             at which to begin copying bytes to the current stream.</param>
             <param name="count">The number of bytes to be written to the current stream.</param> 
@@ -1779,7 +1779,7 @@
         <member name="M:Goedel.Protocol.JSONAWriter.WriteArraySeparator(System.Boolean@)">
             <summary>Mark middle of array element</summary>
             <param name="first">If true, this is the first element. 
-            The value is set false on each call</param>
+            The values is set false on each call</param>
         </member>
         <member name="M:Goedel.Protocol.JSONAWriter.WriteArrayEnd">
             <summary>Mark end of array element</summary>
@@ -1790,7 +1790,7 @@
         <member name="M:Goedel.Protocol.JSONAWriter.WriteObjectSeparator(System.Boolean@)">
             <summary>Mark middle of object element</summary>
             <param name="first">If true, this is the first element. 
-            The value is set false on each call</param>
+            The values is set false on each call</param>
         </member>
         <member name="M:Goedel.Protocol.JSONAWriter.WriteObjectEnd">
             <summary>Mark end of object element</summary>
@@ -1847,13 +1847,13 @@
             <summary>Negative integer base</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.True">
-            <summary>True boolean value</summary>
+            <summary>True boolean values</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.False">
-            <summary>False boolean value</summary>
+            <summary>False boolean values</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.Null">
-            <summary>Null object value</summary>
+            <summary>Null object values</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.TagString">
             <summary>Terminal UTF8 data string chunk</summary>
@@ -1874,28 +1874,28 @@
             <summary>Insert dictionary with specified hash.</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.BinaryFloat16">
-            <summary>16 bit binary floating point value</summary>
+            <summary>16 bit binary floating point values</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.BinaryFloat32">
-            <summary>32 bit binary floating point value</summary>
+            <summary>32 bit binary floating point values</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.BinaryFloat64">
-            <summary>64 bit binary floating point value</summary>
+            <summary>64 bit binary floating point values</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.BinaryFloat128">
-            <summary>128 bit binary floating point value</summary>
+            <summary>128 bit binary floating point values</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.Intel80">
-            <summary>80 bit binary floating point value</summary>
+            <summary>80 bit binary floating point values</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.DecimalFloat32">
-            <summary>32 bit decimal floating point value</summary>
+            <summary>32 bit decimal floating point values</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.DecimalFloat64">
-            <summary>64 bit decimal floating point value</summary>
+            <summary>64 bit decimal floating point values</summary>
         </member>
         <member name="F:Goedel.Protocol.JSONBCD.DecimalFloat128">
-            <summary>128 bit decimal floating point value</summary>
+            <summary>128 bit decimal floating point values</summary>
         </member>
         <member name="T:Goedel.Protocol.JsonBcdReader">
             <summary>
@@ -1936,7 +1936,7 @@
         </member>
         <member name="M:Goedel.Protocol.JsonBcdReader.ReadBinaryData(System.Byte[],System.Int32,System.Int32)">
             <summary>
-            Read a partial binary value.
+            Read a partial binary values.
             </summary>
             <param name="data">Buffer to write the data read to.</param>
             <param name="offset">Byte offset from start of <paramref name="data"/></param>
@@ -1992,14 +1992,14 @@
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteTag(System.Byte,System.Int64)">
             <summary>
-            Write out a Tag-Length value using the shortest possible production
+            Write out a Tag-Length values using the shortest possible production
             </summary>
             <param name="code">Base code.</param>
             <param name="length">Length of data to follow.</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteTag(System.IO.Stream,System.Byte,System.Int64)">
             <summary>
-            Write out a Tag-Length value using the shortest possible production
+            Write out a Tag-Length values using the shortest possible production
             to <paramref name="output"/>.
             </summary>
             <param name="output">The output stream to write to.</param>
@@ -2008,7 +2008,7 @@
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger(System.Nullable{System.Int64})">
             <summary>Write integer.</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteToken(System.String,System.Int32)">
             <summary>
@@ -2019,31 +2019,31 @@
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger32(System.Nullable{System.Int32})">
             <summary>Write 32 bit integer.</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteInteger64(System.Nullable{System.Int64})">
             <summary>Write 64 bit integer.</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteFloat32(System.Nullable{System.Single})">
             <summary>Write float32</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteFloat64(System.Nullable{System.Double})">
             <summary>Write float64</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteBoolean(System.Nullable{System.Boolean})">
             <summary>Write boolean.</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteString(System.String)">
             <summary>Write string without escaping.</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteBinary(System.IO.Stream,System.Byte[],System.Int32,System.Int32)">
             <summary>Write binary data as length-data item.</summary>
-            <param name="buffer">Value to write</param>
+            <param name="buffer">Elements to write</param>
             <param name="stream">The output stream.</param>
             <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
             at which to begin copying bytes to the current stream.</param>
@@ -2051,7 +2051,7 @@
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteBinary(System.Byte[],System.Int32,System.Int32)">
             <summary>Write binary data as length-data item.</summary>
-            <param name="buffer">Value to write</param>
+            <param name="buffer">Elements to write</param>
             <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
             at which to begin copying bytes to the current stream.</param>
             <param name="count">The number of bytes to be written to the current stream.</param> 
@@ -2063,7 +2063,7 @@
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteBinaryPart(System.Byte[],System.Int64,System.Int64)">
             <summary>Write binary data as length-data item.</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
             <param name="first">The index position of the first byte in the input data to process</param>
             <param name="length">The number of bytes to process</param>
         </member>
@@ -2073,7 +2073,7 @@
         <member name="M:Goedel.Protocol.JsonBWriter.WriteArraySeparator(System.Boolean@)">
             <summary>Mark middle of array element</summary>
             <param name="first">If true, this is the first element. 
-            The value is set false on each call</param>
+            The values is set false on each call</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteArrayEnd">
             <summary>Mark end of array element</summary>
@@ -2084,7 +2084,7 @@
         <member name="M:Goedel.Protocol.JsonBWriter.WriteObjectSeparator(System.Boolean@)">
             <summary>Mark middle of object element</summary>
             <param name="first">If true, this is the first element. 
-            The value is set false on each call</param>
+            The values is set false on each call</param>
         </member>
         <member name="M:Goedel.Protocol.JsonBWriter.WriteObjectEnd">
             <summary>Mark end of object element</summary>
@@ -2112,7 +2112,7 @@
         </member>
         <member name="M:Goedel.Protocol.JSONCWriter.WriteString(System.String)">
             <summary>Write string.</summary>
-            <param name="Data">Value to write</param>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="T:Goedel.Protocol.JSONDebugWriter">
             <summary>
@@ -2148,11 +2148,11 @@
         </member>
         <member name="M:Goedel.Protocol.JSONDebugWriter.WriteString(System.String)">
             <summary>Write string.</summary>
-            <param name="Data">Value to write</param>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JSONDebugWriter.WriteBinary(System.Byte[],System.Int32,System.Int32)">
             <summary>Write binary data as Base64Url encoded string.</summary>
-            <param name="Data">Value to write</param>
+            <param name="Data">Elements to write</param>
             <param name="offset">The zero-based byte offset in <paramref name="Data"/>
             at which to begin copying bytes to the current stream.</param>
             <param name="count">The number of bytes to be written to the current stream.</param> 
@@ -2167,6 +2167,426 @@
         </member>
         <member name="M:Goedel.Protocol.JSONDebugWriter.WriteArrayEnd">
             <summary>Mark end of array element</summary>
+        </member>
+        <member name="T:Goedel.Protocol.IJcbdDocument">
+            <summary>
+            Interface to a document allowing certain read/write operations.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.IJcbdDocument.Root">
+            <summary>The root result.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.IJcbdDocument.Overwrite">
+            <summary>The character to be used to overwrite data being erased.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.IJcbdDocument.Erase(System.Int64,System.Int32,System.Byte[])">
+            <summary>
+            Erase the data in the range beinging at <paramref query="start"/> and
+            continuing for <paramref query="length"/> bytes. The first bytes are 
+            replaced by <paramref query="data"/> unless null.
+            </summary>
+            <param query="start">The first byte to erase.</param>
+            <param query="length">The number of bytes to erase.</param>
+            <param query="data">The </param>
+        </member>
+        <member name="M:Goedel.Protocol.IJcbdDocument.TryReadString(System.Int64)">
+            <summary>
+            Read a string values begining at the position <paramref name="position"/>.
+            </summary>
+            <param name="position">The position to begin reading from.</param>
+            <returns>The string values read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.IJcbdDocument.TryGetPath(Goedel.Protocol.JbcdValue@,System.Object[])">
+            <summary>
+            Gets a <see cref="T:Goedel.Protocol.JbcdElement"/> representing the values of a required property identified by 
+            the path <paramref queries="queries"/>
+            <para>
+            The objective is to allow easy access to elements within a document using queries of
+            the form: <code>document.TryGetPath(out result, "First", "Second", 1, "Fourth")</code> 
+            to obtain the values at <code>First.Second[1].Fourth.</code>.
+            </para>
+            </summary>
+            <param queries="queries">The list of property queries defining the path whose values is to be returned.</param>
+            <returns>A <see cref="T:Goedel.Protocol.JbcdElement"/> representing the values of the requested property.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.ICachable">
+            <summary>
+            Interface for memory saving lazy evaluation result inmplementations.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.ICachable.Load">
+            <summary>
+            Load the cahced values.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.ICachable.Unload">
+            <summary>
+            Unload the cahced values.
+            </summary>
+        </member>
+        <member name="T:Goedel.Protocol.NumberPrecision">
+            <summary>
+            Number types that can be returned when parsing.
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.NumberPrecision.Integer">
+            <summary>The number is an integer with no decimal point specified.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.NumberPrecision.Decimal">
+            <summary>The number is an decimal with a decimal point specified but no exponent.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.NumberPrecision.Double">
+            <summary>The number is a floating point values.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocument.Root">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocument.Overwrite">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocument.Start">
+            <summary>The starting point for the document within the byte stream</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocument.Length">
+            <summary>The length the document within the byte stream</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocument.Erase(System.Int64,System.Int32,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocument.TryReadString(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocument.Parse(System.IO.FileStream,System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            Parse data from the stream <paramref name="file"/> in the interval
+            <paramref name="start"/> through <paramref name="length"/> to return a 
+            <see cref="T:Goedel.Protocol.JbcdDocument"/>.
+            </summary>
+            <param name="file">The file to read data from.</param>
+            <param name="start">The first byte in the file to parse.</param>
+            <param name="length">The number of bytes to parse.</param>
+            <param name="lazy">If true, lazy evaluation should be used.</param>
+            <returns>The parsed data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocument.Parse(System.Byte[],System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            Parse data from the buffer <paramref name="data"/> in the interval
+            <paramref name="start"/> through <paramref name="length"/> to return a 
+            <see cref="T:Goedel.Protocol.JbcdDocument"/>.
+            </summary>
+            <param name="data">The data to be read.</param>
+            <param name="start">The first byte in the file to parse.</param>
+            <param name="length">The number of bytes to parse.</param>
+            <param name="lazy">If true, lazy evaluation should be used.</param>
+            <returns>The parsed data.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocument.Parse(System.Boolean,System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property})">
+            <summary>
+            Parse the document to create a DOM.
+            </summary>
+            <param name="lazy">If true, use lazy evaluation.</param>
+            <param name="properties">Properties dictionary.</param>
+            <returns>The parsed <see cref="T:Goedel.Protocol.JsonObject"/></returns>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdDocumentFile">
+            <summary>
+            A document containing a JSON or JSON-BCD file. The naming is purposefully 
+            different to avoid conflict with the .NET JSON parser clases.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocumentFile.File">
+            <summary>The backing file.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentFile.#ctor(System.IO.FileStream,System.Int64,System.Int64)">
+            <summary>
+            Constructor returning an instance from the file <paramref queries="file"/>
+            which must allow write access for the values modification functions to work.
+            </summary>
+            <param queries="file">The file to be read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentFile.TryReadString(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentFile.Erase(System.Int64,System.Int32,System.Byte[])">
+            <inheritdoc/>
+            <remarks>Since erasure is expected to be an infrequent event, this implementation is
+            not optimized for speed, each byte in the target file being individually overwritten.</remarks>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdDocumentMemory">
+            <summary>
+            A document containing a JSON or JSON-BCD file. The naming is purposefully 
+            different to avoid conflict with the .NET JSON parser clases.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdDocumentMemory.Data">
+            <summary>The data buffer.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentMemory.#ctor(System.Byte[],System.Int64,System.Int64)">
+            <summary>
+            Constructor returning an instance from the file <paramref queries="file"/>
+            which must allow write access for the values modification functions to work.
+            </summary>
+            <param queries="file">The file to be read.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentMemory.TryReadString(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdDocumentMemory.Erase(System.Int64,System.Int32,System.Byte[])">
+            <inheritdoc/>
+            <remarks>Since erasure is expected to be an infrequent event, this implementation is
+            not optimized for speed, each byte in the target file being individually overwritten.</remarks>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdElement">
+            <summary>
+            Record describing a parsed Jbcd result.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdElement.Document">
+            <summary>Enclosing document.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdElement.Name">
+            <summary>The result name.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdElement.Value">
+            <summary>The result query.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdElement.ElementStartPosition">
+            <summary>The first byte of the result in the document. For a JSON document, this
+            is always the initial double quote character.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdElement.ElementLength">
+            <summary>The length of the result in bytes from the first byte of the result
+            to the following separator character if present or the enclosing array or 
+            object closure character.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdElement.Erase">
+            <summary>
+            Erase the result data from the backing store.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdElement.TryGetPath(Goedel.Protocol.JbcdElement@,System.Object[])">
+            <summary>
+            Gets a <see cref="T:Goedel.Protocol.JbcdElement"/> representing the values of a required property identified by 
+            the path <paramref queries="queries"/>
+            </summary>
+            <param queries="queries">The list of property queries defining the path whose values is to be returned.</param>
+            <returns>A <see cref="T:Goedel.Protocol.JbcdElement"/> representing the values of the requested property.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdValue">
+            <summary>
+            Record describing a parsed Jbcd values result.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValue.DataStartPosition">
+            <summary></summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValue.DataLength">
+            <summary></summary> 
+        </member>
+        <member name="T:Goedel.Protocol.JbcdValueObject">
+            <summary>
+            Record describing a parsed Jbcd object result.
+            </summary>
+            <remarks>The property <see cref="P:Goedel.Protocol.JbcdValueObject.Elements"/>is specified as an enumerable.
+            If an implementation requires use of objects with a very large number of 
+            elements requiring random access by result name, a dictionary implementation 
+            may be substituted.</remarks> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueObject.Elements">
+            <summary>The elements.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueObject.GetProperty(System.String)">
+            <summary>
+            Gets a <see cref="T:Goedel.Protocol.JbcdElement"/> representing the values of a required property identified by 
+            <paramref queries="query"/>
+            </summary>
+            <param queries="query">The queries of the property whose values is to be returned.</param>
+            <returns>A <see cref="T:Goedel.Protocol.JbcdElement"/> representing the values of the requested property.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdValueArray">
+            <summary>
+            Record describing a parsed Jbcd array result.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueArray.Values">
+            <summary>The array of elements.</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueArray.GetProperty(System.Int32)">
+            <summary>
+            Gets a <see cref="T:Goedel.Protocol.JbcdElement"/> representing the values of a required property identified by 
+            <paramref queries="query"/>
+            </summary>
+            <param queries="query">The queries of the property whose values is to be returned.</param>
+            <returns>A <see cref="T:Goedel.Protocol.JbcdElement"/> representing the values of the requested property.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdValueString">
+            <summary>
+            Record describing a parsed Jbcd string result.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueString.Value">
+            <summary>The string values</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueString.#ctor">
+            <summary>
+            Constructor for use by derrived records.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueString.#ctor(System.String)">
+            <summary>
+            Constructor returning an instance for the values <paramref name="value"/>.
+            </summary>
+            <param name="value">The values of the string.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueString.TryGetDate(System.DateTime@)">
+            <summary>
+            Attempt to parse <see cref="P:Goedel.Protocol.JbcdValueString.Value"/> as an RFC3339 encoded 
+            values and return <code>true</code> if successful, otherwise false.
+            The parsed values is returned in in <paramref name="dateTime"/>.
+            </summary>
+            <param name="dateTime">The parsed values if successful, otherwise 
+            the default values for the type.</param>
+            <returns>True if the parse succeeded, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueString.TryGetBinary(System.Byte[]@)">
+            <summary>
+            Attempt to parse <see cref="P:Goedel.Protocol.JbcdValueString.Value"/> as Base64 encoded 
+            data and return <code>true</code> if successful, otherwise false.
+            The parsed values is returned in in <paramref name="binary"/>.
+            </summary>
+            <param name="binary">The parsed values if successful, otherwise 
+            the default values for the type.</param>
+            <returns>True if the parse succeeded, otherwise false.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdValueNumber">
+            <summary>
+            Record describing a parsed Jbcd values result. The values itself
+            is kept in string form to allow 
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueNumber.Value">
+            <summary>The number values</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueNumber.Precision">
+            <summary>The number precision</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueNumber.#ctor(System.String,Goedel.Protocol.NumberPrecision)">
+            <summary>
+            Constructor returning an instance for the values <paramref name="value"/>
+            with specified precision <paramref name="precision"/>.
+            </summary>
+            <param name="value">The values of the string.</param>
+            <param name="precision">The number precision.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueNumber.TryGetInt(System.Int32@)">
+            <summary>
+            Attempt to parse <see cref="P:Goedel.Protocol.JbcdValueNumber.Value"/> as an int32 integer
+            and return <code>true</code> if successful, otherwise false.
+            The parsed values is returned in in <paramref name="value"/>.
+            </summary>
+            <param name="value">The parsed values if successful, otherwise 
+            the default values for the type.</param>
+            <returns>True if the parse succeeded, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueNumber.TryGetLong(System.Int64@)">
+            <summary>
+            Attempt to parse <see cref="P:Goedel.Protocol.JbcdValueNumber.Value"/> as an int64 integer
+            and return <code>true</code> if successful, otherwise false.
+            The parsed values is returned in in <paramref name="value"/>.
+            </summary>
+            <param name="value">The parsed values if successful, otherwise 
+            the default values for the type.</param>
+            <returns>True if the parse succeeded, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueNumber.TryGetDouble(System.Double@)">
+            <summary>
+            Attempt to parse <see cref="P:Goedel.Protocol.JbcdValueNumber.Value"/> as a double floating point number
+            and return <code>true</code> if successful, otherwise false.
+            The parsed values is returned in in <paramref name="value"/>.
+            </summary>
+            <param name="value">The parsed values if successful, otherwise 
+            the default values for the type.</param>
+            <returns>True if the parse succeeded, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueNumber.TryGetDecimal(System.Decimal@)">
+            <summary>
+            Attempt to parse <see cref="P:Goedel.Protocol.JbcdValueNumber.Value"/> as a a decimal number
+            and return <code>true</code> if successful, otherwise false.
+            The parsed values is returned in in <paramref name="value"/>.
+            </summary>
+            <param name="value">The parsed values if successful, otherwise 
+            the default values for the type.</param>
+            <returns>True if the parse succeeded, otherwise false.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdValueLiteral">
+            <summary>
+            Record describing a parsed Jbcd values result. The values itself
+            is kept in string form to allow 
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Goedel.Protocol.JbcdValueLiteral.Value" -->
+        <member name="M:Goedel.Protocol.JbcdValueLiteral.#ctor(System.Nullable{System.Boolean})">
+            <summary>
+            Constructor, return an instance with the values <paramref name="value"/>.
+            </summary>
+            <param name="value">The values of the result.</param>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdValueObjectLazy">
+            <summary>
+            Record describing a Jbcd array values for lazy evaluation.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueObjectLazy.Document">
+            <summary>Enclosing document.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueObjectLazy.Elements">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueObjectLazy.Load">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueObjectLazy.Unload">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdValueArrayLazy">
+            <summary>
+            Record describing a Jbcd array values for lazy evaluation.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueArrayLazy.Document">
+            <summary>Enclosing document.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueArrayLazy.Values">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueArrayLazy.Load">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueArrayLazy.Unload">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.JbcdValueStringLazy">
+            <summary>
+            Record describing a Jbcd string result for lazy evaluation.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueStringLazy.Document">
+            <summary>Enclosing document.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JbcdValueStringLazy.Value">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueStringLazy.#ctor">
+            <summary>
+            Constructor returning an instance that only allocates memory for a string values
+            when required..
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueStringLazy.Load">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JbcdValueStringLazy.Unload">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.Request">
             <summary>
@@ -2249,7 +2669,7 @@
         </member>
         <member name="P:Goedel.Protocol.Response.StatusCode">
             <summary>
-            Numeric status return code value
+            Numeric status return code values
             </summary>
         </member>
         <member name="P:Goedel.Protocol.Response.StatusDescriptionCode">
@@ -2435,6 +2855,9 @@
         <member name="F:Goedel.Protocol.JsonObject.KeyLocate">
             <summary>Key collection to be used to decrypt enveloped data within the object.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.JsonObject.JbcdElementObject">
+            <summary>The parser data binding.</summary> 
+        </member>
         <member name="P:Goedel.Protocol.JsonObject._Keys">
             <summary>
             Secondary keys describing the object
@@ -2460,12 +2883,12 @@
         </member>
         <member name="P:Goedel.Protocol.JsonObject._Tag">
             <summary>
-            Tag value used as substitute for reflection internally.
+            Tag values used as substitute for reflection internally.
             </summary>
         </member>
         <member name="F:Goedel.Protocol.JsonObject.__Tag">
             <summary>
-            Tag value used as substitute for reflection internally.
+            Tag values used as substitute for reflection internally.
             </summary>
         </member>
         <member name="M:Goedel.Protocol.JsonObject._Factory">
@@ -2496,18 +2919,18 @@
         </member>
         <member name="M:Goedel.Protocol.JsonObject.Setter(System.String,Goedel.Protocol.TokenValue)">
             <summary>
-            Sets the value of the property <paramref name="tag"/> to the value specified
+            Sets the values of the property <paramref name="tag"/> to the values specified
             by <paramref name="value"/>.
             </summary>
             <param name="tag">The string representation of the tag.</param>
-            <param name="value">The tokenized value.</param>
+            <param name="value">The tokenized values.</param>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.Getter(System.String)">
             <summary>
-            Gets the value of the property <paramref name="tag"/>;
+            Gets the values of the property <paramref name="tag"/>;
             </summary>
             <param name="tag">The string representation of the tag.</param>
-            <returns>The value of the property with tag <paramref name="tag"/>.</returns>
+            <returns>The values of the property with tag <paramref name="tag"/>.</returns>
         </member>
         <member name="P:Goedel.Protocol.JsonObject._Unregistered">
             <summary>
@@ -2805,22 +3228,22 @@
             <summary>If true there is a token in the lookahead buffer.</summary>
         </member>
         <member name="P:Goedel.Protocol.JsonReader.ResultString">
-            <summary>The current token string value</summary>
+            <summary>The current token string values</summary>
         </member>
         <member name="P:Goedel.Protocol.JsonReader.ResultBinary">
-            <summary>The current token binary value</summary>
+            <summary>The current token binary values</summary>
         </member>
         <member name="F:Goedel.Protocol.JsonReader.ResultFloat">
-            <summary>Last Real32/single precision floating point value.</summary>
+            <summary>Last Real32/single precision floating point values.</summary>
         </member>
         <member name="F:Goedel.Protocol.JsonReader.ResultDouble">
-            <summary>Last Real64/double precision floating point value.</summary>
+            <summary>Last Real64/double precision floating point values.</summary>
         </member>
         <member name="F:Goedel.Protocol.JsonReader.ResultInt64">
-            <summary>Last integer value.</summary>
+            <summary>Last integer values.</summary>
         </member>
         <member name="F:Goedel.Protocol.JsonReader.ResultBigInteger">
-            <summary>Last big integer value.</summary>
+            <summary>Last big integer values.</summary>
         </member>
         <member name="F:Goedel.Protocol.JsonReader.TokenType">
             <summary>The last token type read</summary>
@@ -2829,7 +3252,7 @@
             <summary>If true, have reached the end of the current record.</summary>
         </member>
         <member name="P:Goedel.Protocol.JsonReader.Trace">
-            <summary>If true, emit trace value for debugging.</summary>
+            <summary>If true, emit trace values for debugging.</summary>
         </member>
         <member name="P:Goedel.Protocol.JsonReader.JSONReaderFactory">
             <summary>
@@ -3052,31 +3475,31 @@
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteInteger32(System.Nullable{System.Int32})">
             <summary>Write 32 bit integer.</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteInteger64(System.Nullable{System.Int64})">
             <summary>Write 64 bit integer</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteFloat32(System.Nullable{System.Single})">
             <summary>Write float32</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteFloat64(System.Nullable{System.Double})">
             <summary>Write float64</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteBoolean(System.Nullable{System.Boolean})">
             <summary>Write boolean.</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteString(System.String)">
             <summary>Write string.</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteBinary(System.Byte[],System.Int32,System.Int32)">
             <summary>Write binary data as Base64Url encoded string.</summary>
-            <param name="buffer">Value to write</param>
+            <param name="buffer">Elements to write</param>
             <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
             at which to begin copying bytes to the current stream.</param>
             <param name="count">The number of bytes to be written to the current stream.</param> 
@@ -3087,13 +3510,13 @@
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteBinaryPart(System.Byte[],System.Int64,System.Int64)">
             <summary>Write binary data as length-data item.</summary>
-            <param name="data">Value to write</param>
+            <param name="data">Elements to write</param>
             <param name="first">The index position of the first byte in the input data to process</param>
             <param name="length">The number of bytes to process</param>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteDateTime(System.Nullable{System.DateTime})">
-            <summary>Write Date-Time value in RFC3339 format.</summary>
-            <param name="data">Value to write</param>
+            <summary>Write Date-Time values in RFC3339 format.</summary>
+            <param name="data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteArrayStart">
             <summary>Mark start of array element</summary>
@@ -3101,7 +3524,7 @@
         <member name="M:Goedel.Protocol.JsonWriter.WriteArraySeparator(System.Boolean@)">
             <summary>Mark middle of array element</summary>
             <param name="first">If true, this is the first element. 
-            The value is set false on each call</param>
+            The values is set false on each call</param>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteArrayEnd">
             <summary>Mark end of array element</summary>
@@ -3112,7 +3535,7 @@
         <member name="M:Goedel.Protocol.JsonWriter.WriteObjectSeparator(System.Boolean@)">
             <summary>Mark middle of object element</summary>
             <param name="first">If true, this is the first element. 
-            The value is set false on each call</param>
+            The values is set false on each call</param>
         </member>
         <member name="M:Goedel.Protocol.JsonWriter.WriteObjectEnd">
             <summary>Mark end of object element</summary>
@@ -3147,7 +3570,7 @@
         </member>
         <member name="M:Goedel.Protocol.BoundMessage.HTTP">
             <summary>Convert message to HTTP</summary>
-            <returns>The HTTP message value.</returns>
+            <returns>The HTTP message values.</returns>
         </member>
         <member name="M:Goedel.Protocol.BoundMessage.#ctor">
             <summary>Default constructor.</summary>
@@ -3189,7 +3612,7 @@
             <summary>Constant for bad request.</summary>
         </member>
         <member name="F:Goedel.Protocol.BoundResponse.Status">
-            <summary>The status value (defaults to 200)</summary>
+            <summary>The status values (defaults to 200)</summary>
         </member>
         <member name="F:Goedel.Protocol.BoundResponse.StatusDescription">
             <summary>The status description.</summary>
@@ -3205,7 +3628,7 @@
         </member>
         <member name="M:Goedel.Protocol.BoundResponse.HTTP">
             <summary>Present message as HTTP</summary>
-            <returns>The message value.</returns>
+            <returns>The message values.</returns>
         </member>
         <member name="T:Goedel.Protocol.BaseMessage">
              <summary>
@@ -3820,35 +4243,35 @@
         </member>
         <member name="M:Goedel.Protocol.Reader.NextObject">
             <summary>Get next object</summary>
-            <returns>Value read</returns>
+            <returns>Elements read</returns>
         </member>
         <member name="M:Goedel.Protocol.Reader.ReadToken">
             <summary>Read token</summary>
-            <returns>Value read</returns>
+            <returns>Elements read</returns>
         </member>
         <member name="M:Goedel.Protocol.Reader.ReadInteger32">
             <summary>Read Integer32</summary>
-            <returns>Value read</returns>
+            <returns>Elements read</returns>
         </member>
         <member name="M:Goedel.Protocol.Reader.ReadInteger64">
             <summary>Read Integer64</summary>
-            <returns>Value read</returns>
+            <returns>Elements read</returns>
         </member>
         <member name="M:Goedel.Protocol.Reader.ReadFloat32">
             <summary>Read Integer32</summary>
-            <returns>Value read</returns>
+            <returns>Elements read</returns>
         </member>
         <member name="M:Goedel.Protocol.Reader.ReadFloat64">
             <summary>Read Integer64</summary>
-            <returns>Value read</returns>
+            <returns>Elements read</returns>
         </member>
         <member name="M:Goedel.Protocol.Reader.ReadBoolean">
-            <summary>Read boolen value</summary>
-            <returns>Value read</returns>
+            <summary>Read boolen values</summary>
+            <returns>Elements read</returns>
         </member>
         <member name="M:Goedel.Protocol.Reader.ReadBinary">
             <summary>Read binary date</summary>
-            <returns>Value read</returns>
+            <returns>Elements read</returns>
         </member>
         <member name="M:Goedel.Protocol.Reader.ReadBinaryIncremental(System.Byte[]@)">
             <summary>
@@ -3859,11 +4282,11 @@
         </member>
         <member name="M:Goedel.Protocol.Reader.ReadString">
             <summary>Read string</summary>
-            <returns>Value read</returns>
+            <returns>Elements read</returns>
         </member>
         <member name="M:Goedel.Protocol.Reader.ReadDateTime">
             <summary>Read date time item</summary>
-            <returns>Value read</returns>
+            <returns>Elements read</returns>
         </member>
         <member name="M:Goedel.Protocol.Reader.StartArray">
             <summary>Read</summary>
@@ -3899,32 +4322,32 @@
             <param name="Indent">Indent level to write at</param>
         </member>
         <member name="M:Goedel.Protocol.Writer.WriteInteger32(System.Nullable{System.Int32})">
-            <summary>Write integer value token</summary>
-            <param name="Data">Value to write</param>
+            <summary>Write integer values token</summary>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.Writer.WriteInteger64(System.Nullable{System.Int64})">
-            <summary>Write integer value token</summary>
-            <param name="Data">Value to write</param>
+            <summary>Write integer values token</summary>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.Writer.WriteFloat32(System.Nullable{System.Single})">
-            <summary>Write integer value token</summary>
-            <param name="Data">Value to write</param>
+            <summary>Write integer values token</summary>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.Writer.WriteFloat64(System.Nullable{System.Double})">
-            <summary>Write integer value token</summary>
-            <param name="Data">Value to write</param>
+            <summary>Write integer values token</summary>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.Writer.WriteBoolean(System.Nullable{System.Boolean})">
-            <summary>Write integer value token</summary>
-            <param name="Data">Value to write</param>
+            <summary>Write integer values token</summary>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.Writer.WriteString(System.String)">
-            <summary>Write integer value token</summary>
-            <param name="Data">Value to write</param>
+            <summary>Write integer values token</summary>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.Writer.WriteBinary(System.Byte[],System.Int32,System.Int32)">
-            <summary>Write integer value token</summary>
-            <param name="buffer">Value to write</param>
+            <summary>Write integer values token</summary>
+            <param name="buffer">Elements to write</param>
             <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
             at which to begin copying bytes to the current stream.</param>
             <param name="count">The number of bytes to be written to the current stream.</param> 
@@ -3933,8 +4356,8 @@
             <summary>Write empty binary data sequence</summary>
         </member>
         <member name="M:Goedel.Protocol.Writer.WriteDateTime(System.Nullable{System.DateTime})">
-            <summary>Write integer value token</summary>
-            <param name="Data">Value to write</param>
+            <summary>Write integer values token</summary>
+            <param name="Data">Elements to write</param>
         </member>
         <member name="M:Goedel.Protocol.Writer.WriteArrayStart">
             <summary>Write array start</summary>
@@ -4058,12 +4481,12 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValue">
             <summary>
-            Base record representing the value at a node in a JSON tree.
+            Base record representing the values at a node in a JSON tree.
             </summary>
         </member>
         <member name="M:Goedel.Protocol.TokenValue.#ctor">
             <summary>
-            Base record representing the value at a node in a JSON tree.
+            Base record representing the values at a node in a JSON tree.
             </summary>
         </member>
         <member name="F:Goedel.Protocol.TokenValue.Unknown">
@@ -4101,18 +4524,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueBoolean">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueBoolean.#ctor(System.Nullable{System.Boolean})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueBoolean.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueBoolean.IsEmpty">
             <inheritdoc/>
@@ -4125,18 +4548,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueString">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueString.#ctor(System.String)">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueString.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueString.IsEmpty">
             <inheritdoc/>
@@ -4149,18 +4572,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueBinary">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueBinary.#ctor(System.Byte[])">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueBinary.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueBinary.IsEmpty">
             <inheritdoc/>
@@ -4173,18 +4596,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueDateTime">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueDateTime.#ctor(System.Nullable{System.DateTime})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueDateTime.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueDateTime.IsEmpty">
             <inheritdoc/>
@@ -4197,18 +4620,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueInteger32">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueInteger32.#ctor(System.Nullable{System.Int32})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueInteger32.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueInteger32.IsEmpty">
             <inheritdoc/>
@@ -4221,18 +4644,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueInteger64">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueInteger64.#ctor(System.Nullable{System.Int64})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueInteger64.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueInteger64.IsEmpty">
             <inheritdoc/>
@@ -4245,18 +4668,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueReal32">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueReal32.#ctor(System.Nullable{System.Single})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueReal32.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueReal32.IsEmpty">
             <inheritdoc/>
@@ -4269,18 +4692,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueReal64">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueReal64.#ctor(System.Nullable{System.Double})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueReal64.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueReal64.IsEmpty">
             <inheritdoc/>
@@ -4293,12 +4716,12 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueStruct">
             <summary>
-            Base record representing a structure value at a node in a JSON tree.
+            Base record representing a structure values at a node in a JSON tree.
             </summary>
         </member>
         <member name="M:Goedel.Protocol.TokenValueStruct.#ctor">
             <summary>
-            Base record representing a structure value at a node in a JSON tree.
+            Base record representing a structure values at a node in a JSON tree.
             </summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueStruct.JsonObject">
@@ -4315,20 +4738,20 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueStruct`1">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
-            <typeparam name="T">The type of the node value</typeparam>
+            <param name="Value">The values.</param>
+            <typeparam name="T">The type of the node values</typeparam>
         </member>
         <member name="M:Goedel.Protocol.TokenValueStruct`1.#ctor(`0)">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
-            <typeparam name="T">The type of the node value</typeparam>
+            <param name="Value">The values.</param>
+            <typeparam name="T">The type of the node values</typeparam>
         </member>
         <member name="P:Goedel.Protocol.TokenValueStruct`1.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueStruct`1.JsonObject">
             <inheritdoc/>
@@ -4338,18 +4761,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueStructObject">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueStructObject.#ctor(System.Object)">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueStructObject.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueStructObject.JsonObject">
             <inheritdoc/>
@@ -4359,28 +4782,28 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueList">
             <summary>
-            Base record representing a structure value at a node in a JSON tree.
+            Base record representing a structure values at a node in a JSON tree.
             </summary>
         </member>
         <member name="M:Goedel.Protocol.TokenValueList.#ctor">
             <summary>
-            Base record representing a structure value at a node in a JSON tree.
+            Base record representing a structure values at a node in a JSON tree.
             </summary>
         </member>
         <member name="T:Goedel.Protocol.TokenValueListBoolean">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListBoolean.#ctor(System.Collections.Generic.List{System.Nullable{System.Boolean}})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListBoolean.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListBoolean.IsEmpty">
             <inheritdoc/>
@@ -4393,18 +4816,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueListString">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListString.#ctor(System.Collections.Generic.List{System.String})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListString.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListString.IsEmpty">
             <inheritdoc/>
@@ -4417,18 +4840,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueListBinary">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListBinary.#ctor(System.Collections.Generic.List{System.Byte[]})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListBinary.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListBinary.IsEmpty">
             <inheritdoc/>
@@ -4441,18 +4864,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueListDateTime">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListDateTime.#ctor(System.Collections.Generic.List{System.Nullable{System.DateTime}})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListDateTime.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListDateTime.IsEmpty">
             <inheritdoc/>
@@ -4465,18 +4888,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueListInteger32">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListInteger32.#ctor(System.Collections.Generic.List{System.Nullable{System.Int32}})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListInteger32.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListInteger32.IsEmpty">
             <inheritdoc/>
@@ -4489,18 +4912,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueListInteger64">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListInteger64.#ctor(System.Collections.Generic.List{System.Nullable{System.Int64}})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListInteger64.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListInteger64.IsEmpty">
             <inheritdoc/>
@@ -4513,18 +4936,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueListReal32">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListReal32.#ctor(System.Collections.Generic.List{System.Nullable{System.Single}})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListReal32.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListReal32.IsEmpty">
             <inheritdoc/>
@@ -4537,18 +4960,18 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueListReal64">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListReal64.#ctor(System.Collections.Generic.List{System.Nullable{System.Double}})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListReal64.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListReal64.IsEmpty">
             <inheritdoc/>
@@ -4561,12 +4984,12 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueListStruct">
             <summary>
-            Base record representing the value of a list of structure at a node in a JSON tree.
+            Base record representing the values of a list of structure at a node in a JSON tree.
             </summary>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListStruct.#ctor">
             <summary>
-            Base record representing the value of a list of structure at a node in a JSON tree.
+            Base record representing the values of a list of structure at a node in a JSON tree.
             </summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListStruct.Token">
@@ -4574,26 +4997,26 @@
         </member>
         <member name="M:Goedel.Protocol.TokenValueListStruct.Serialize(Goedel.Protocol.Writer,System.Boolean)">
             <summary>
-            Serialize the value by calling methods on the writer <paramref name="writer"/>.
+            Serialize the values by calling methods on the writer <paramref name="writer"/>.
             </summary>
-            <param name="writer">The writer to serialize the value to.</param>
+            <param name="writer">The writer to serialize the values to.</param>
             <param name="tagged">If true, structured values to be written as a tagged
             structure.</param>
         </member>
         <member name="T:Goedel.Protocol.TokenValueListStructObject">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListStructObject.#ctor(System.Object)">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
+            <param name="Value">The values.</param>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListStructObject.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListStructObject.JsonObject">
             <inheritdoc/>
@@ -4603,20 +5026,20 @@
         </member>
         <member name="T:Goedel.Protocol.TokenValueListStruct`1">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
-            <typeparam name="T">The type of the node value</typeparam>
+            <param name="Value">The values.</param>
+            <typeparam name="T">The type of the node values</typeparam>
         </member>
         <member name="M:Goedel.Protocol.TokenValueListStruct`1.#ctor(System.Collections.Generic.List{`0})">
             <summary>
-            Record representing a boolean value in a JSON tree.
+            Record representing a boolean values in a JSON tree.
             </summary>
-            <param name="Value">The value.</param>
-            <typeparam name="T">The type of the node value</typeparam>
+            <param name="Value">The values.</param>
+            <typeparam name="T">The type of the node values</typeparam>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListStruct`1.Value">
-            <summary>The value.</summary>
+            <summary>The values.</summary>
         </member>
         <member name="P:Goedel.Protocol.TokenValueListStruct`1.IsEmpty">
             <inheritdoc/>
@@ -4661,7 +5084,7 @@
             <summary>String (UTF8)</summary>
         </member>
         <member name="F:Goedel.Protocol.Token.DateTime">
-            <summary>String encoding a DateTime value</summary>
+            <summary>String encoding a DateTime values</summary>
         </member>
         <member name="F:Goedel.Protocol.Token.Tag">
             <summary>String Tag(UTF8)</summary>
@@ -4797,7 +5220,7 @@
             <summary>
             Convert pending data to string.
             </summary>
-            <returns>The string value</returns>
+            <returns>The string values</returns>
         </member>
     </members>
 </doc>

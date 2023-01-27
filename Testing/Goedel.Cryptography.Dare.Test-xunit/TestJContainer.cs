@@ -32,7 +32,6 @@ using Goedel.Cryptography.Jose;
 using Goedel.Discovery;
 using Goedel.IO;
 using Goedel.Mesh.Shell;
-using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
 
@@ -42,103 +41,6 @@ namespace Goedel.XUnit;
 
 
 
-public enum ModeEnhance {
-    
-    ///<summary>No signature/encryption</summary> 
-    None,
-
-    ///<summary>Signature/Key Agreement at the individual record level. Each record
-    ///individually enhanced.</summary> 
-    Record,
-
-    ///<summary>Signature/Key Agreement at the sequence level, decrypting or verifying
-    ///once authenticates, decrypts entire file.</summary> 
-    Sequence,
-
-    ///<summary>Signature/Key Agreement of multiple records but not the entire 
-    ///sequence in one operation.</summary> 
-    Sparse
-    }
-
-public enum ModeCorruption {
-    None,
-
-    Data,
-
-    Key
-
-    }
-public record TestContext {
-
-    public DeterministicSeed DeterministicSeed { get; }
-
-
-    public string Filename => DeterministicSeed.Seed + ".dares";
-
-
-    public KeyPair KeyEncrypt { get; }
-    public KeyPair KeySign { get; }
-    public List<string> Recipients { get; }
-    public List<string> Signers { get; }
-    public KeyCollection KeyCollection { get; }
-
-
-    public KeyCollection BadKeyCollection { get; }
-
-
-    public KeyPair BadKeyEncrypt { get; }
-    public KeyPair BadKeySign { get; }
-
-    public DarePolicy DarePolicy { get; }
-
-    public ModeEnhance Encrypt { get; }
-    public ModeEnhance Sign { get; }
-    public ModeCorruption Corrupt { get; }
-
-
-    public TestContext(
-                DeterministicSeed deterministicSeed,
-                ModeEnhance encrypt = ModeEnhance.None, 
-                ModeEnhance sign = ModeEnhance.None,
-                ModeCorruption corrupt = ModeCorruption.None) {
-        DeterministicSeed = deterministicSeed;
-        Encrypt = encrypt;
-        Sign = sign;
-        Corrupt = corrupt;
-
-        // Return if we are not doing any cryptography
-        if ((encrypt == ModeEnhance.None) && (sign == ModeEnhance.None)) {
-            return;
-            }
-
-        KeyCollection = new KeyCollectionTest(deterministicSeed.GetDirectory("Keys"));
-        BadKeyCollection = new KeyCollectionTest(deterministicSeed.GetDirectory("Bad"));
-
-        // set up base keys
-        if (encrypt != ModeEnhance.None) {
-            KeyEncrypt = KeyPair.Factory(CryptoAlgorithmId.X448,
-                KeySecurity.Session, KeyCollection, keyUses: KeyUses.Encrypt);
-            BadKeyEncrypt = InvalidateKey(KeyEncrypt, BadKeyCollection);
-            Recipients = new List<string>() { (KeyEncrypt.KeyIdentifier) };
-
-            }
-        if (sign != ModeEnhance.None) {
-            KeySign = KeyPair.Factory(CryptoAlgorithmId.Ed448,
-                KeySecurity.Session, KeyCollection, keyUses: KeyUses.Sign);
-            BadKeySign = InvalidateKey(KeySign, BadKeyCollection);
-            Signers = new List<string>() { (KeySign.KeyIdentifier) };
-            }
-
-        DarePolicy = new DarePolicy(KeyCollection, signers: Signers, recipients: Recipients);
-        }
-
-
-    static KeyPair InvalidateKey(KeyPair keyEncrypt, KeyCollection keyCollection) {
-        throw new NYI();
-        }
-
-
-    }
 
 
 
@@ -284,7 +186,7 @@ public partial class TestContainers {
         if (corruption == ModeCorruption.Data) {
             sequence.CheckSignCorruptData(randomChecks);
             }
-        if (corruption == ModeCorruption.Key) {
+        if (corruption == ModeCorruption.SignKey) {
             sequence.CheckSignCorruptKey(randomChecks);
             }
 
@@ -316,14 +218,18 @@ public partial class TestContainers {
         sequence.ValidateCiphertext(); // Check we did encrypt!
         sequence.ValidatePlaintext(); // Check we can decrypt
 
+
         if (corruption == ModeCorruption.Data) {
             sequence.CheckDecryptCorruptData(randomChecks);
             sequence.CheckSignCorruptData(randomChecks);
             }
         if (corruption == ModeCorruption.Key) {
             sequence.CheckDecryptCorruptKey(randomChecks);
+            }
+        if (corruption == ModeCorruption.SignKey) {
             sequence.CheckSignCorruptKey(randomChecks);
             }
+
 
         }
 
@@ -408,7 +314,7 @@ public partial class TestContainers {
     [InlineData(SequenceType.Merkle, 10, 5000)]
 
 
-    public void TestAppend(SequenceType containerType,
+    public void ZTestAppend(SequenceType containerType,
                 int records = 1, int size = 100, bool atomic = true,
                 ModeEnhance encrypt = ModeEnhance.None, ModeEnhance sign = ModeEnhance.None,
                 ModeCorruption corrupt = ModeCorruption.None,
@@ -641,7 +547,7 @@ public partial class TestContainers {
 
 
     [Fact]
-    public void ContainerTestEncrypted() {
+    public void ZContainerTestEncrypted() {
 
         // cre
         //var testEnvironmentCommon = new TestEnvironmentCommon();
@@ -660,16 +566,16 @@ public partial class TestContainers {
         var policy = new DarePolicy(keyCollection, recipients: recipients);
 
 
-        //TestContainer($"SequenceList", ContainerType.List, 0, policy: CryptoParameters);
+        //ZTestContainer($"SequenceList", ContainerType.List, 0, policy: CryptoParameters);
 
 
         // probably failing because the encrypted payload length is being incorrectly calculated.
-        TestContainer($"ContainerList", SequenceType.List, 1, policy: policy);
-        TestContainer($"ContainerList", SequenceType.List, 10, policy: policy);
+        ZTestContainer($"ContainerList", SequenceType.List, 1, policy: policy);
+        ZTestContainer($"ContainerList", SequenceType.List, 10, policy: policy);
         }
 
     [Fact]
-    public void ContainerTestEncryptedItem() {
+    public void ZContainerTestEncryptedItem() {
 
         var keyCollection = MakeKeyCollection();
         var encrypt = KeyPair.Factory(CryptoAlgorithmId.X448,
@@ -680,13 +586,13 @@ public partial class TestContainers {
         var CryptoParametersEntry = new CryptoParameters(
             keyCollection, recipients: recipients);
 
-        TestContainer($"ContainerList", SequenceType.List, 0, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
-        TestContainer($"ContainerList", SequenceType.List, 1, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
-        TestContainer($"ContainerList", SequenceType.List, 10, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
+        ZTestContainer($"ContainerList", SequenceType.List, 0, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
+        ZTestContainer($"ContainerList", SequenceType.List, 1, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
+        ZTestContainer($"ContainerList", SequenceType.List, 10, cryptoParametersEntry: CryptoParametersEntry, keyLocate: keyCollection);
         }
 
     [Fact]
-    public void ContainerTestSigned() {
+    public void ZContainerTestSigned() {
 
         // Setup
         var keyCollection = MakeKeyCollection();
@@ -700,68 +606,68 @@ public partial class TestContainers {
                     keyCollection,
                     signers: signers);
 
-        TestContainer($"ContainerList", SequenceType.List, 0, policy: CryptoParameters);
-        TestContainer($"ContainerList", SequenceType.List, 1, policy: CryptoParameters);
-        TestContainer($"ContainerList", SequenceType.List, 10, policy: CryptoParameters);
+        ZTestContainer($"ContainerList", SequenceType.List, 0, policy: CryptoParameters);
+        ZTestContainer($"ContainerList", SequenceType.List, 1, policy: CryptoParameters);
+        ZTestContainer($"ContainerList", SequenceType.List, 10, policy: CryptoParameters);
         }
 
     [Fact]
-    public void ContainerTestList() {
-        TestContainer($"ContainerList", SequenceType.List, 0);
-        TestContainer($"ContainerList", SequenceType.List, 1);
-        TestContainer($"ContainerList", SequenceType.List, 10);
+    public void ZContainerTestList() {
+        ZTestContainer($"ContainerList", SequenceType.List, 0);
+        ZTestContainer($"ContainerList", SequenceType.List, 1);
+        ZTestContainer($"ContainerList", SequenceType.List, 10);
         }
 
     [Fact]
-    public void ContainerTestDigest() {
-        TestContainer($"ContainerDigest", SequenceType.Digest, 0);
-        TestContainer($"ContainerDigest", SequenceType.Digest, 1);
-        TestContainer($"ContainerDigest", SequenceType.Digest, 10);
-        }
-
-
-    [Fact]
-    public void ContainerTestChain() {
-        TestContainer($"ContainerChain", SequenceType.Chain, 0);
-        TestContainer($"ContainerChain", SequenceType.Chain, 1);
-        TestContainer($"ContainerChain", SequenceType.Chain, 10);
-        }
-
-    [Fact]
-    public void ContainerTestTree() {
-        TestContainer($"ContainerTree", SequenceType.Tree, 0);
-        TestContainer($"ContainerTree", SequenceType.Tree, 1);
-        TestContainer($"ContainerTree", SequenceType.Tree, 10);
-        }
-
-    [Fact]
-    public void ContainerTestTree1() => TestContainer($"ContainerTree", SequenceType.Tree, 1);
-
-    [Fact]
-    public void ContainerTestTree10() => TestContainer($"ContainerTree", SequenceType.Tree, 10);
-
-    [Fact]
-    public void ContainerTestMerkleTree() {
-        TestContainer($"ContainerMerkle", SequenceType.Merkle, 0);
-        TestContainer($"ContainerMerkle", SequenceType.Merkle, 1);
-        TestContainer($"ContainerMerkle", SequenceType.Merkle, 10);
+    public void ZContainerTestDigest() {
+        ZTestContainer($"ContainerDigest", SequenceType.Digest, 0);
+        ZTestContainer($"ContainerDigest", SequenceType.Digest, 1);
+        ZTestContainer($"ContainerDigest", SequenceType.Digest, 10);
         }
 
 
     [Fact]
-    public void ContainerTest0() {
+    public void ZContainerTestChain() {
+        ZTestContainer($"ContainerChain", SequenceType.Chain, 0);
+        ZTestContainer($"ContainerChain", SequenceType.Chain, 1);
+        ZTestContainer($"ContainerChain", SequenceType.Chain, 10);
+        }
+
+    [Fact]
+    public void ZContainerTestTree() {
+        ZTestContainer($"ContainerTree", SequenceType.Tree, 0);
+        ZTestContainer($"ContainerTree", SequenceType.Tree, 1);
+        ZTestContainer($"ContainerTree", SequenceType.Tree, 10);
+        }
+
+    [Fact]
+    public void ZContainerTestTree1() => ZTestContainer($"ContainerTree", SequenceType.Tree, 1);
+
+    [Fact]
+    public void ZContainerTestTree10() => ZTestContainer($"ContainerTree", SequenceType.Tree, 10);
+
+    [Fact]
+    public void ZContainerTestMerkleTree() {
+        ZTestContainer($"ContainerMerkle", SequenceType.Merkle, 0);
+        ZTestContainer($"ContainerMerkle", SequenceType.Merkle, 1);
+        ZTestContainer($"ContainerMerkle", SequenceType.Merkle, 10);
+        }
+
+
+    [Fact]
+    public void ZContainerTest0() {
         var Records = 0;
         TestContainerMulti($"-{Records}", Records);
         }
 
     [Fact]
-    public void ContainerTest1() {
+    public void ZContainerTest1() {
         var Records = 1;
         TestContainerMulti($"-{Records}", Records);
         }
 
     [Fact]
-    public void ContainerTest10() {
+    public void ZContainerTest10() {
         var Records = 10;
         TestContainerMulti($"-{Records}", Records);
         }
@@ -769,7 +675,7 @@ public partial class TestContainers {
 
 
     [Fact]
-    public void ContainerTest500() {
+    public void ZContainerTest500() {
         var Records = 100;
         var ReOpen = 13;
         var MoveStep = 27;
@@ -788,20 +694,21 @@ public partial class TestContainers {
 
         }
 
+
     static void TestContainerMulti(string FileName,
         int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0,
         DarePolicy policy = null,
         CryptoParameters CryptoParametersEntry = null) {
 
-        TestContainer($"Container-List-{FileName}", SequenceType.List, Records, MaxSize, ReOpen, MoveStep,
+        ZTestContainer($"Container-List-{FileName}", SequenceType.List, Records, MaxSize, ReOpen, MoveStep,
             policy, CryptoParametersEntry);
-        TestContainer($"Container-Digest-{FileName}", SequenceType.Digest, Records, MaxSize, ReOpen, MoveStep,
+        ZTestContainer($"Container-Digest-{FileName}", SequenceType.Digest, Records, MaxSize, ReOpen, MoveStep,
             policy, CryptoParametersEntry);
-        TestContainer($"Container-Chain-{FileName}", SequenceType.Chain, Records, MaxSize, ReOpen, MoveStep,
+        ZTestContainer($"Container-Chain-{FileName}", SequenceType.Chain, Records, MaxSize, ReOpen, MoveStep,
         policy, CryptoParametersEntry);
-        TestContainer($"Container-Tree-{FileName}", SequenceType.Tree, Records, MaxSize, ReOpen, MoveStep,
+        ZTestContainer($"Container-Tree-{FileName}", SequenceType.Tree, Records, MaxSize, ReOpen, MoveStep,
             policy, CryptoParametersEntry);
-        TestContainer($"Container-MerkleTree-{FileName}", SequenceType.Merkle, Records, MaxSize, ReOpen, MoveStep,
+        ZTestContainer($"Container-MerkleTree-{FileName}", SequenceType.Merkle, Records, MaxSize, ReOpen, MoveStep,
             policy, CryptoParametersEntry);
         }
 
@@ -816,23 +723,25 @@ public partial class TestContainers {
     [InlineData(SequenceType.Digest, 1)]
     [InlineData(SequenceType.Digest, 50)]
     [InlineData(SequenceType.Digest, 50, 2000)]
-
-    public void TestSequence(SequenceType containerType,
+    [InlineData(SequenceType.Chain, 50, 2000)]
+    [InlineData(SequenceType.Tree, 50, 2000)]
+    [InlineData(SequenceType.Merkle, 50, 2000)]
+    public void ZTestSequence(SequenceType containerType,
     int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0) {
 
         var filename = DeterministicSeed.GetUnique(containerType, records, maxSize, reOpen, moveStep);
-        TestContainer(filename, containerType, records, maxSize, reOpen, moveStep);
+        ZTestContainer(filename, containerType, records, maxSize, reOpen, moveStep);
         }
 
 
 
     [Fact]
-    public void ContainerTestList0() => TestContainer($"ContainerList", SequenceType.List, 0);
+    public void ZContainerTestList0() => ZTestContainer($"ContainerList", SequenceType.List, 0);
     [Fact]
-    public void ContainerTestList1() => TestContainer($"ContainerList", SequenceType.List, 1);
+    public void ZContainerTestList1() => ZTestContainer($"ContainerList", SequenceType.List, 1);
 
 
-    static void TestContainer(string fileName, SequenceType containerType,
+    static void ZTestContainer(string fileName, SequenceType containerType,
                 int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0,
                 DarePolicy policy = null,
                 CryptoParameters cryptoParametersEntry = null,

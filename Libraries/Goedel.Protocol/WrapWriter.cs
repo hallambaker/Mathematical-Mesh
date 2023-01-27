@@ -273,7 +273,7 @@ public class WrapWriter : TextWriter {
     /// <summary>
     /// Convert pending data to string.
     /// </summary>
-    /// <returns>The string value</returns>
+    /// <returns>The string values</returns>
     public override string ToString() {
         Flush();
         string result = Output.ToString();

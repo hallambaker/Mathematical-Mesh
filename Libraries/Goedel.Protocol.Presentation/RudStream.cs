@@ -287,7 +287,7 @@ public class RudStream {
         //if (CredentialSelf != null) {
         //    extensions.Add(new() {
         //        Tag = CredentialSelf.Tag,
-        //        Value = CredentialSelf.Value
+        //        Elements = CredentialSelf.Elements
         //        });
         //    }
 
@@ -353,7 +353,7 @@ public class RudStream {
 
         var responsepacketData = await Uri.UploadDataTaskAsync(encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
-        //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+        //Screen.WriteLine($"Client Received Stream ID {sourceId.Elements}");
 
         var code = PacketReader.ReadResponderMessageType(responsepacketData, ref position);
 
@@ -384,7 +384,7 @@ public class RudStream {
         //Screen.WriteLine($"Complete");
         var responsepacketData = await Uri.UploadDataTaskAsync(encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
-        //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+        //Screen.WriteLine($"Client Received Stream ID {sourceId.Elements}");
 
         var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
 
@@ -407,7 +407,7 @@ public class RudStream {
 
         var responsepacketData = await Uri.UploadDataTaskAsync(encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
-        //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+        //Screen.WriteLine($"Client Received Stream ID {sourceId.Elements}");
 
         var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
         Process(packet);
@@ -422,7 +422,7 @@ public class RudStream {
         //Screen.WriteLine($"Data");
         var responsepacketData = await Uri.UploadDataTaskAsync(encoded);
         var (_, position) = StreamId.GetSourceId(responsepacketData);
-        //Screen.WriteLine($"Client Received Stream ID {sourceId.Value}");
+        //Screen.WriteLine($"Client Received Stream ID {sourceId.Elements}");
 
         var packet = RudConnection.ParsePacketData(responsepacketData, position, responsepacketData.Length);
         Process(packet);

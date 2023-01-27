@@ -65,7 +65,7 @@ public static partial class Extensions {
     /// <summary>Convert object to bytes in specified encoding.</summary>
     /// <param name="jsonObject">The object to convert.</param>
     /// <param name="dataEncoding">The encoding to convert to (defaults to JSON).</param>
-    /// <param name="tagged">It true, tag the output value with the object type.</param>
+    /// <param name="tagged">It true, tag the output values with the object type.</param>
     /// <returns>The encoded data.</returns>
     public static byte[] GetBytes(this JsonObject jsonObject,
                 DataEncoding dataEncoding = DataEncoding.JSON,

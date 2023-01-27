@@ -1315,6 +1315,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         if (SequenceNextToEntry.TryGetValue(indexEntry.FramePosition, out var entry)) {
             return entry;
             }
+        if (indexEntry.FramePosition <= 0) {
+            return null; 
+            }
+
         return ReadAtPosition(indexEntry.FramePosition, true);
         }
 

@@ -35,7 +35,7 @@ public static class CharacterStreamRead {
     /// <returns></returns>
     public static int Read(this IBinaryStream Stream) {
 
-        // Check to see if there is a previous buffered value.
+        // Check to see if there is a previous buffered values.
         if (Stream.UTF16Shift > 0) {
             var Result = Stream.UTF16Shift;
             Stream.UTF16Shift = -1;
@@ -95,9 +95,9 @@ public static class CharacterStreamRead {
 
         }
 
-    /// <summary>Convert hex character to hex value</summary>
+    /// <summary>Convert hex character to hex values</summary>
     /// <param name="c">The hex character</param>
-    /// <returns>Integer value.</returns>
+    /// <returns>Integer values.</returns>
     public static int HexCharToInt(this char c) {
         if ((c >= '0') & (c <= '9')) {
             return (c - '0');
@@ -116,7 +116,7 @@ public static class CharacterStreamRead {
     /// characters.
     /// </summary>
     /// <param name="Stream">The stream to read from</param>
-    /// <returns>The character corresponding to the hex value</returns>
+    /// <returns>The character corresponding to the hex values</returns>
     public static char NextHex(ICharacterStream Stream) {
         var H1 = Stream.ReadChar().HexCharToInt();
         var H2 = Stream.ReadChar().HexCharToInt();

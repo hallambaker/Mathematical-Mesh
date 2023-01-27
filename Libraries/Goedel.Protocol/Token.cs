@@ -45,7 +45,7 @@ public record Property(
 
 
 /// <summary>
-/// Base record representing the value at a node in a JSON tree.
+/// Base record representing the values at a node in a JSON tree.
 /// </summary>
 public abstract record TokenValue () {
 
@@ -84,9 +84,9 @@ public record TokenValueUnknown() : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueBoolean(bool? Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -107,9 +107,9 @@ public record TokenValueBoolean(bool? Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueString(string? Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -125,9 +125,9 @@ public record TokenValueString(string? Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueBinary(byte[] Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -141,9 +141,9 @@ public record TokenValueBinary(byte[] Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueDateTime(System.DateTime? Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -157,9 +157,9 @@ public record TokenValueDateTime(System.DateTime? Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueInteger32(int? Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -173,9 +173,9 @@ public record TokenValueInteger32(int? Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueInteger64(long? Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -189,9 +189,9 @@ public record TokenValueInteger64(long? Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueReal32(float? Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -205,9 +205,9 @@ public record TokenValueReal32(float? Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueReal64(double? Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -221,7 +221,7 @@ public record TokenValueReal64(double? Value) : TokenValue {
     }
 
 /// <summary>
-/// Base record representing a structure value at a node in a JSON tree.
+/// Base record representing a structure values at a node in a JSON tree.
 /// </summary>
 public abstract record TokenValueStruct() : TokenValue {
     ///<inheritdoc/>
@@ -239,10 +239,10 @@ public abstract record TokenValueStruct() : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
-/// <typeparam name="T">The type of the node value</typeparam>
+/// <param name="Value">The values.</param>
+/// <typeparam name="T">The type of the node values</typeparam>
 public record TokenValueStruct<T>(T Value) : TokenValueStruct where T: JsonObject {
     ///<inheritdoc/>
     public override JsonObject JsonObject => Value;
@@ -253,9 +253,9 @@ public record TokenValueStruct<T>(T Value) : TokenValueStruct where T: JsonObjec
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueStructObject(object Value) : TokenValueStruct {
     ///<inheritdoc/>
     public override JsonObject JsonObject => Value as JsonObject;
@@ -268,7 +268,7 @@ public record TokenValueStructObject(object Value) : TokenValueStruct {
 
 
 /// <summary>
-/// Base record representing a structure value at a node in a JSON tree.
+/// Base record representing a structure values at a node in a JSON tree.
 /// </summary>
 public abstract record TokenValueList() : TokenValue {
 
@@ -276,9 +276,9 @@ public abstract record TokenValueList() : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueListBoolean(List<bool?> Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -304,9 +304,9 @@ public record TokenValueListBoolean(List<bool?> Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueListString(List<string> Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -329,9 +329,9 @@ public record TokenValueListString(List<string> Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueListBinary(List<byte[]> Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -354,9 +354,9 @@ public record TokenValueListBinary(List<byte[]> Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueListDateTime(List<System.DateTime?> Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -379,9 +379,9 @@ public record TokenValueListDateTime(List<System.DateTime?> Value) : TokenValue 
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueListInteger32(List<int?> Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -404,9 +404,9 @@ public record TokenValueListInteger32(List<int?> Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueListInteger64(List<long?> Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -429,9 +429,9 @@ public record TokenValueListInteger64(List<long?> Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueListReal32(List<float?> Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -454,9 +454,9 @@ public record TokenValueListReal32(List<float?> Value) : TokenValue {
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueListReal64(List<double?> Value) : TokenValue {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -479,7 +479,7 @@ public record TokenValueListReal64(List<double?> Value) : TokenValue {
     }
 
 /// <summary>
-/// Base record representing the value of a list of structure at a node in a JSON tree.
+/// Base record representing the values of a list of structure at a node in a JSON tree.
 /// </summary>
 public abstract record TokenValueListStruct() : TokenValue {
 
@@ -487,18 +487,18 @@ public abstract record TokenValueListStruct() : TokenValue {
     public override Token Token => Token.StartObject;
 
     /// <summary>
-    /// Serialize the value by calling methods on the writer <paramref name="writer"/>.
+    /// Serialize the values by calling methods on the writer <paramref name="writer"/>.
     /// </summary>
-    /// <param name="writer">The writer to serialize the value to.</param>
+    /// <param name="writer">The writer to serialize the values to.</param>
     /// <param name="tagged">If true, structured values to be written as a tagged
     /// structure.</param>
     public abstract void Serialize(Writer writer, bool tagged);
     }
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
+/// <param name="Value">The values.</param>
 public record TokenValueListStructObject(object Value) : TokenValueStruct {
     ///<inheritdoc/>
     public override JsonObject JsonObject => Value as JsonObject;
@@ -511,10 +511,10 @@ public record TokenValueListStructObject(object Value) : TokenValueStruct {
 
 
 /// <summary>
-/// Record representing a boolean value in a JSON tree.
+/// Record representing a boolean values in a JSON tree.
 /// </summary>
-/// <param name="Value">The value.</param>
-/// <typeparam name="T">The type of the node value</typeparam>
+/// <param name="Value">The values.</param>
+/// <typeparam name="T">The type of the node values</typeparam>
 public record TokenValueListStruct<T>(List<T> Value) : TokenValueListStruct where T : JsonObject {
     ///<inheritdoc/>
     public override bool IsEmpty => Value == null;
@@ -560,7 +560,7 @@ public enum Token {
     Comma,
     /// <summary>String (UTF8)</summary>
     String,
-    /// <summary>String encoding a DateTime value</summary>
+    /// <summary>String encoding a DateTime values</summary>
     DateTime,
     /// <summary>String Tag(UTF8)</summary>
     Tag,

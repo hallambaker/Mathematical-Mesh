@@ -26,7 +26,6 @@ using System.Numerics;
 namespace Goedel.Protocol;
 
 
-
 /// <summary>
 /// Delegate method for creating structured readers
 /// </summary>
@@ -252,22 +251,22 @@ public partial class JsonReader : Reader {
     /// <summary>If true there is a token in the lookahead buffer.</summary>
     protected bool Lookahead = false;
 
-    /// <summary>The current token string value</summary>
+    /// <summary>The current token string values</summary>
     protected virtual string ResultString { get; set; }
 
-    /// <summary>The current token binary value</summary>
+    /// <summary>The current token binary values</summary>
     protected virtual byte[] ResultBinary { get; set; }
 
-    /// <summary>Last Real32/single precision floating point value.</summary>
+    /// <summary>Last Real32/single precision floating point values.</summary>
     public float ResultFloat;
 
-    /// <summary>Last Real64/double precision floating point value.</summary>
+    /// <summary>Last Real64/double precision floating point values.</summary>
     public double ResultDouble;
 
-    /// <summary>Last integer value.</summary>
+    /// <summary>Last integer values.</summary>
     public long ResultInt64;
 
-    /// <summary>Last big integer value.</summary>
+    /// <summary>Last big integer values.</summary>
     public BigInteger ResultBigInteger;
 
 
@@ -277,7 +276,7 @@ public partial class JsonReader : Reader {
     /// <summary>If true, have reached the end of the current record.</summary>
     public bool EOF => CharacterInput.EOF;
 
-    /// <summary>If true, emit trace value for debugging.</summary>
+    /// <summary>If true, emit trace values for debugging.</summary>
     public static bool Trace { get; set; } = false;
 
     /// <summary>

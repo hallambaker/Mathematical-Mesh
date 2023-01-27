@@ -38,7 +38,7 @@ public abstract partial class Request {
 public abstract partial class Response {
 
     /// <summary>
-    /// Numeric status return code value
+    /// Numeric status return code values
     /// </summary>
     public virtual int? StatusCode {
         get => Status;

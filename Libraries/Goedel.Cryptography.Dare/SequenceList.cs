@@ -59,6 +59,13 @@ public class SequenceList : Sequence {
         if (FrameIndexToEntry.TryGetValue(index, out var entry)) {
             return entry;
             }
+
+        // check to see if we are trying to read past the end of the sequence.
+        if (index > SequenceIndexEntryLast.Index) {
+            return null; 
+            }
+
+
         var fromStart = index - IndexedFromStart.Index;
         var fromEnd = IndexedFromEnd.Index - index;
 

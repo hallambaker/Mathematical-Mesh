@@ -28,7 +28,7 @@
 
 //        //var matrix = Matrix.GenerateMatrix(kyber.K, seed);
 //        //Console.WriteLine(matrix.GetHash());
-//        //// Value for Seed={0} = 3DF0-CEDB-8BAB-CF8D-348B-B746-5199-B357-CC28-D36B-A426-2D3B-C8AE-DD3D-DC39-2364
+//        //// Elements for Seed={0} = 3DF0-CEDB-8BAB-CF8D-348B-B746-5199-B357-CC28-D36B-A426-2D3B-C8AE-DD3D-DC39-2364
 
 //        //var ap1 = kyber.GetNoiseEta1(seed, 0);
 //        //Console.WriteLine(ap1.GetHash());

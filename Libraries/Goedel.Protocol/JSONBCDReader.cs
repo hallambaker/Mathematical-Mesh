@@ -274,7 +274,7 @@ public class JsonBcdReader : JsonReader {
 
 
     /// <summary>
-    /// Read a partial binary value.
+    /// Read a partial binary values.
     /// </summary>
     /// <param name="data">Buffer to write the data read to.</param>
     /// <param name="offset">Byte offset from start of <paramref name="data"/></param>

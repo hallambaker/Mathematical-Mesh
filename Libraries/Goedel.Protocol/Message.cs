@@ -65,7 +65,7 @@ public abstract class BoundMessage {
 
 
     /// <summary>Convert message to HTTP</summary>
-    /// <returns>The HTTP message value.</returns>
+    /// <returns>The HTTP message values.</returns>
     public abstract string HTTP();
 
     /// <summary>Default constructor.</summary>
@@ -148,7 +148,7 @@ public class BoundResponse : BoundMessage {
     public static BoundResponse ErrorSyntax { get; } = new(400, "Bad Request");
 
 
-    /// <summary>The status value (defaults to 200)</summary>
+    /// <summary>The status values (defaults to 200)</summary>
     public int Status = 200;
 
     /// <summary>The status description.</summary>
@@ -182,7 +182,7 @@ Content-Length: {2}
         }
 
     /// <summary>Present message as HTTP</summary>
-    /// <returns>The message value.</returns>
+    /// <returns>The message values.</returns>
     public override string HTTP() {
         string Header = String.Format(HeaderFormat, Status, StatusDescription, Payload.Length);
         string ContentIntegrity = "";

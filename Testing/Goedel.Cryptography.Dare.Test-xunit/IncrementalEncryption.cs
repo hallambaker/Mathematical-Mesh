@@ -45,16 +45,16 @@ public partial class TestContainers {
         }
 
     [Fact]
-    public void ContainerOnceExchange() =>
-        ContainerFixedExchangeTest(DareConstants.PolicyEncryptionOnceTag, true, 10, 2048, 5, 2);
+    public void ZContainerOnceExchange() =>
+        ZContainerFixedExchangeTest(DareConstants.PolicyEncryptionOnceTag, true, 10, 2048, 5, 2);
 
     [Fact]
-    public void ContainerIsolatedPolicy() =>
-        ContainerFixedExchangeTest(DareConstants.PolicyEncryptionIsolatedTag, true, 10, 2048, 5, 2);
+    public void ZContainerIsolatedPolicy() =>
+        ZContainerFixedExchangeTest(DareConstants.PolicyEncryptionIsolatedTag, true, 10, 2048, 5, 2);
 
     [Fact]
-    public void ContainerSessionPolicy() =>
-        ContainerFixedExchangeTest(DareConstants.PolicyEncryptionSessionTag, false, 10, 2048, 5, 2);
+    public void ZContainerSessionPolicy() =>
+        ZContainerFixedExchangeTest(DareConstants.PolicyEncryptionSessionTag, false, 10, 2048, 5, 2);
 
 
     [Theory]
@@ -64,7 +64,7 @@ public partial class TestContainers {
     [InlineData(DareConstants.PolicyEncryptionIsolatedTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
     [InlineData(DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
     [InlineData(DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
-    public void ContainerFixedExchangeTest(
+    public void ZContainerFixedExchangeTest(
             string encryptPolicy,
             bool seal,
             int records = 1, int maxSize = 0,

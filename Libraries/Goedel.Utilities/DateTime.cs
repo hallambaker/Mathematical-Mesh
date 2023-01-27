@@ -24,7 +24,7 @@ namespace Goedel.Utilities;
 
 
 /// <summary>
-/// Conversion class to and from RFC3339 DateTime representation.
+/// Conversion class to and from RFC3339 dateTime representation.
 /// </summary>
 public static class Utilities {
 
@@ -70,12 +70,15 @@ public static class Utilities {
         return (Result >= 0 & Result < 10) ? Result : -1;
         }
 
-    static void Accumulate(ref int Total, char C) {
+
+    // Hack: This should be rewritten so that it returns a boolean instead of
+    // throwing an exception.
+    static void Accumulate(ref int total, char C) {
         var Result = Digit(C);
         if (Result < 0) {
             throw new Exception();
             }
-        Total = Total * 10 + Result;
+        total = total * 10 + Result;
         }
 
 
@@ -86,57 +89,57 @@ public static class Utilities {
         }
 
     /// <summary>
-    /// Format a DateTime value in RFC3339 format.
+    /// Format a dateTime value in RFC3339 format.
     /// </summary>
-    /// <param name="DateTime">The time to convert.</param>
+    /// <param name="dateTime">The time to convert.</param>
     /// <returns>The converted date time</returns>
-    public static string ToRFC3339(this System.DateTime DateTime) => DateTime.ToString("yyyy-MM-dd'T'HH:mm:ssZ");
+    public static string ToRFC3339(this System.DateTime dateTime) => dateTime.ToString("yyyy-MM-dd'T'HH:mm:ssZ");
 
     /// <summary>
-    /// Format a DateTime value in RFC3339 format.
+    /// Format a dateTime value in RFC3339 format.
     /// </summary>
-    /// <param name="DateTime">The time to convert.</param>
+    /// <param name="dateTime">The time to convert.</param>
     /// <returns>The converted date time</returns>
-    public static string ToRFC3339(this System.DateTime? DateTime) => DateTime == null ? "null" :
-        ((System.DateTime)DateTime).ToString("yyyy-MM-dd'T'HH:mm:ssZ");
+    public static string ToRFC3339(this System.DateTime? dateTime) => dateTime == null ? "null" :
+        ((System.DateTime)dateTime).ToString("yyyy-MM-dd'T'HH:mm:ssZ");
 
 
 
     /// <summary>
     /// Parse an RFC3339 format date time value.
     /// </summary>
-    /// <param name="Text">The date to parse</param>
+    /// <param name="text">The date to parse</param>
     /// <returns>The date value</returns>
-    public static System.DateTime FromRFC3339(this string Text) {
+    public static System.DateTime FromRFC3339(this string text) {
         int Index = 0;
 
         try {
             var Year = 0;
-            Accumulate(ref Year, Text[Index++]);
-            Accumulate(ref Year, Text[Index++]);
-            Accumulate(ref Year, Text[Index++]);
-            Accumulate(ref Year, Text[Index++]);
-            Test('-', Text[Index++]);
+            Accumulate(ref Year, text[Index++]);
+            Accumulate(ref Year, text[Index++]);
+            Accumulate(ref Year, text[Index++]);
+            Accumulate(ref Year, text[Index++]);
+            Test('-', text[Index++]);
             var Month = 0;
-            Accumulate(ref Month, Text[Index++]);
-            Accumulate(ref Month, Text[Index++]);
-            Test('-', Text[Index++]);
+            Accumulate(ref Month, text[Index++]);
+            Accumulate(ref Month, text[Index++]);
+            Test('-', text[Index++]);
             var Day = 0;
-            Accumulate(ref Day, Text[Index++]);
-            Accumulate(ref Day, Text[Index++]);
-            Test('T', Text[Index++]);
+            Accumulate(ref Day, text[Index++]);
+            Accumulate(ref Day, text[Index++]);
+            Test('T', text[Index++]);
             var Hour = 0;
-            Accumulate(ref Hour, Text[Index++]);
-            Accumulate(ref Hour, Text[Index++]);
-            Test(':', Text[Index++]);
+            Accumulate(ref Hour, text[Index++]);
+            Accumulate(ref Hour, text[Index++]);
+            Test(':', text[Index++]);
             var Minute = 0;
-            Accumulate(ref Minute, Text[Index++]);
-            Accumulate(ref Minute, Text[Index++]);
-            Test(':', Text[Index++]);
+            Accumulate(ref Minute, text[Index++]);
+            Accumulate(ref Minute, text[Index++]);
+            Test(':', text[Index++]);
             var Seconds = 0;
-            Accumulate(ref Seconds, Text[Index++]);
-            Accumulate(ref Seconds, Text[Index++]);
-            Test('Z', Text[Index++]);
+            Accumulate(ref Seconds, text[Index++]);
+            Accumulate(ref Seconds, text[Index++]);
+            Test('Z', text[Index++]);
 
             return new System.DateTime(Year, Month, Day, Hour, Minute, Seconds, DateTimeKind.Utc);
 
@@ -147,5 +150,25 @@ public static class Utilities {
 
         }
 
+
+    /// <summary>
+    /// Attempt to parse the value <paramref name="text"/> as an RFC3339 encoded 
+    /// value and return <code>true</code> if successful, otherwise false.
+    /// The parsed value is returned in in <paramref name="dateTime"/>.
+    /// </summary>
+    /// <param name="text">The text to parse</param>
+    /// <param name="dateTime">The parsed value if successful, otherwise 
+    /// the default value for the type.</param>
+    /// <returns>True if the parse succeeded, otherwise false.</returns>
+    public static bool TryParseRFC3339(this string text, out DateTime dateTime) {
+        try {
+            dateTime = FromRFC3339(text);
+            return true;
+            }
+        catch {
+            dateTime = default;
+            return false;
+            }
+        }
 
     }

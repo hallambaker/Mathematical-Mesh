@@ -66,7 +66,7 @@ public struct PacketExtension {
     /// Debug routine, print the tag value to the screen.
     /// </summary>
     public void Dump() {
-        //Screen.WriteInfo($"    {Tag} -> {Value.ToStringBase16()}");
+        //Screen.WriteInfo($"    {Tag} -> {Elements.ToStringBase16()}");
         }
 
     #endregion

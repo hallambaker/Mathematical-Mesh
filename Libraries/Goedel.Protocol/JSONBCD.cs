@@ -64,11 +64,11 @@ public partial class JSONBCD {
     public const byte NegativeBigInteger = NegativeInteger | LengthBig;
 
 
-    /// <summary>True boolean value</summary>
+    /// <summary>True boolean values</summary>
     public const byte True = 0xB0;
-    /// <summary>False boolean value</summary>
+    /// <summary>False boolean values</summary>
     public const byte False = 0xB1;
-    /// <summary>Null object value</summary>
+    /// <summary>Null object values</summary>
     public const byte Null = 0xB2;
 
     /// <summary>Terminal UTF8 data string chunk</summary>
@@ -86,20 +86,20 @@ public partial class JSONBCD {
     /// <summary>Insert dictionary with specified hash.</summary>
     public const byte DictionaryHash = 0xD0;
 
-    /// <summary>16 bit binary floating point value</summary>
+    /// <summary>16 bit binary floating point values</summary>
     public const byte BinaryFloat16 = 0x90;
-    /// <summary>32 bit binary floating point value</summary>
+    /// <summary>32 bit binary floating point values</summary>
     public const byte BinaryFloat32 = 0x91;
-    /// <summary>64 bit binary floating point value</summary>
+    /// <summary>64 bit binary floating point values</summary>
     public const byte BinaryFloat64 = 0x92;
-    /// <summary>128 bit binary floating point value</summary>
+    /// <summary>128 bit binary floating point values</summary>
     public const byte BinaryFloat128 = 0x94;
-    /// <summary>80 bit binary floating point value</summary>
+    /// <summary>80 bit binary floating point values</summary>
     public const byte Intel80 = 0x95;
-    /// <summary>32 bit decimal floating point value</summary>
+    /// <summary>32 bit decimal floating point values</summary>
     public const byte DecimalFloat32 = 0x96;
-    /// <summary>64 bit decimal floating point value</summary>
+    /// <summary>64 bit decimal floating point values</summary>
     public const byte DecimalFloat64 = 0x97;
-    /// <summary>128 bit decimal floating point value</summary>
+    /// <summary>128 bit decimal floating point values</summary>
     public const byte DecimalFloat128 = 0x98;
     }

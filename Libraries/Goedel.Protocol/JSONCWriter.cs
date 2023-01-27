@@ -58,7 +58,7 @@ public class JSONCWriter : JsonBWriter {
     public override void WriteToken(string Tag, int IndentIn) => WriteString(Tag);
 
     /// <summary>Write string.</summary>
-    /// <param name="Data">Value to write</param>
+    /// <param name="Data">Elements to write</param>
     public override void WriteString(string Data) {
 
         if (TagDictionary.TryGetValue(Data, out var Index)) {

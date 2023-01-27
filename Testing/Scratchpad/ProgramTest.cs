@@ -55,16 +55,21 @@ partial class Program {
 
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
+        //TestContainers.Test().TestBasic(SequenceType.List);
 
-        TestContainers.Test().TestBasic(SequenceType.List);
-
-
-
+        //TestContainers.Test().ContainerTest0();
 
 
 
 
-        //TestContainers.Test().TestAppend(SequenceType.List, 1);
+
+
+
+
+
+        TestContainers.Test().ZTestAppend(SequenceType.List, 1);
+
+
         //TestContainers.Test().TestAppend(SequenceType.Merkle, 2, 50, true);
 
         //TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 0);
@@ -72,7 +77,7 @@ partial class Program {
 
         //TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 10);
 
-        //TestContainers.Test().ContainerTest500();
+        //TestContainers.Test().ZContainerTest500();
 
         //TestContainers.Test().TestSequence(SequenceType.List, 20, 3000);
 

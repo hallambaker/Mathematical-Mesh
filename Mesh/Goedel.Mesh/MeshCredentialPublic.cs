@@ -130,7 +130,7 @@ public class MeshCredentialPrivate : MeshKeyCredentialPrivate {
     #region // Properties
 
     /////<inheritdoc/>
-    //public byte[] Value { get; }
+    //public byte[] Elements { get; }
 
     //List<PacketExtension> Extensions { get; } = new();
 
