@@ -15018,12 +15018,6 @@
             <param name="current">The entry to return the prior entry for.</param>
             <returns>The spool entry if found, otherwise, null.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Spool.SetStatus(System.Collections.Generic.List{Goedel.Mesh.Reference})">
-            <summary>
-            Apply the list of message status updates specified in <paramref name="references"/>.
-            </summary>
-            <param name="references">List of message status values to be updated.</param>
-        </member>
         <member name="T:Goedel.Mesh.SpoolLocal">
             <summary>
             Class for the local spool

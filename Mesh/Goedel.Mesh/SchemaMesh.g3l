@@ -14,14 +14,15 @@ MeshItem Protocol Goedel.Mesh MeshItem
 
 	Section 3 "Classes describing keys"
 
-	PublicKey Structure		|The PublicKey class is used to describe public key pairs and 
-							|trust assertions associated with a public key.
-		UDF String				|UDF fingerprint of the public key parameters
-		X509Certificate Binary	|List of X.509 Certificates
-		X509Chain List<Binary>	|X.509 Certificate chain.
-		X509CSR Binary			|X.509 Certificate Signing Request.
-		PublicParameters Key	|The public key parameters as defined in the JOSE specification.
-		PrivateParameters Key	|The private key parameters as defined in the JOSE specification.
+	PublicKey Structure		
+				; The PublicKey class is used to describe public key pairs and 
+				; trust assertions associated with a public key.
+		UDF String				;  UDF fingerprint of the public key parameters
+		X509Certificate Binary	; List of X.509 Certificates
+		X509Chain List<Binary>	; X.509 Certificate chain.
+		X509CSR Binary			; X.509 Certificate Signing Request.
+		PublicParameters Key	; The public key parameters as defined in the JOSE specification.
+		PrivateParameters Key	; The private key parameters as defined in the JOSE specification.
 		
 	CatalogedDevice Structure	|Public device entry, indexed under the device ID
 		Inherits CatalogedEntry

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 27-Jan-23 12:22:51 AM
+//  This file was automatically generated at 27-Jan-23 7:04:44 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -46,6 +46,7 @@ using Goedel.Utilities;
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
 
+using Goedel.Mesh;
 
 
 namespace Goedel.XUnit;
@@ -75,7 +76,9 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 			new () {
 
 	    {"TestEntry", TestEntry._Factory},
-	    {"TestItem", TestItem._Factory}
+	    {"TestItem", TestItem._Factory},
+	    {"MessageTest", MessageTest._Factory},
+	    {"CatalogEntryTest", CatalogEntryTest._Factory}
 		};
 
     [ModuleInitializer]
@@ -349,6 +352,390 @@ public partial class TestItem : TestEntry {
 			return Out as TestItem;
 			}
 		var Result = new TestItem ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Test message consiting of a chunk of data with a unique identifier deterministically
+	/// Generated from the parameters Seed, Serial, Version and Length
+	/// </summary>
+public partial class MessageTest : Goedel.Mesh.Message {
+        /// <summary>
+        /// </summary>
+
+	public virtual string						UniqueId  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						VersionId  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						Seed  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						Serial  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						Version  {get; set;}
+        /// <summary>
+        ///If specified, the entry was generated with random length setting.
+        /// </summary>
+
+	public virtual int?						Length  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual byte[]						Data  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "UniqueId" : {
+				if (value is TokenValueString vvalue) {
+					UniqueId = vvalue.Value;
+					}
+				break;
+				}
+			case "VersionId" : {
+				if (value is TokenValueString vvalue) {
+					VersionId = vvalue.Value;
+					}
+				break;
+				}
+			case "Seed" : {
+				if (value is TokenValueString vvalue) {
+					Seed = vvalue.Value;
+					}
+				break;
+				}
+			case "Serial" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Serial = vvalue.Value;
+					}
+				break;
+				}
+			case "Version" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Version = vvalue.Value;
+					}
+				break;
+				}
+			case "Length" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Length = vvalue.Value;
+					}
+				break;
+				}
+			case "Data" : {
+				if (value is TokenValueBinary vvalue) {
+					Data = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "UniqueId" : {
+				return new TokenValueString (UniqueId);
+				}
+			case "VersionId" : {
+				return new TokenValueString (VersionId);
+				}
+			case "Seed" : {
+				return new TokenValueString (Seed);
+				}
+			case "Serial" : {
+				return new TokenValueInteger32 (Serial);
+				}
+			case "Version" : {
+				return new TokenValueInteger32 (Version);
+				}
+			case "Length" : {
+				return new TokenValueInteger32 (Length);
+				}
+			case "Data" : {
+				return new TokenValueBinary (Data);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "UniqueId", new Property (typeof(TokenValueString), false)} ,
+			{ "VersionId", new Property (typeof(TokenValueString), false)} ,
+			{ "Seed", new Property (typeof(TokenValueString), false)} ,
+			{ "Serial", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Version", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Length", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Data", new Property (typeof(TokenValueBinary), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Goedel.Mesh.Message._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "MessageTest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new MessageTest();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new MessageTest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as MessageTest;
+			}
+		var Result = new MessageTest ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Test message consiting of a chunk of data with a unique identifier deterministically
+	/// Generated from the parameters Seed, Serial, Version and Length
+	/// </summary>
+public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
+        /// <summary>
+        /// </summary>
+
+	public virtual string						UniqueId  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						VersionId  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual string						Seed  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						Serial  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						Version  {get; set;}
+        /// <summary>
+        ///If specified, the 
+        /// </summary>
+
+	public virtual int?						Length  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual byte[]						Data  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "UniqueId" : {
+				if (value is TokenValueString vvalue) {
+					UniqueId = vvalue.Value;
+					}
+				break;
+				}
+			case "VersionId" : {
+				if (value is TokenValueString vvalue) {
+					VersionId = vvalue.Value;
+					}
+				break;
+				}
+			case "Seed" : {
+				if (value is TokenValueString vvalue) {
+					Seed = vvalue.Value;
+					}
+				break;
+				}
+			case "Serial" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Serial = vvalue.Value;
+					}
+				break;
+				}
+			case "Version" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Version = vvalue.Value;
+					}
+				break;
+				}
+			case "Length" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Length = vvalue.Value;
+					}
+				break;
+				}
+			case "Data" : {
+				if (value is TokenValueBinary vvalue) {
+					Data = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "UniqueId" : {
+				return new TokenValueString (UniqueId);
+				}
+			case "VersionId" : {
+				return new TokenValueString (VersionId);
+				}
+			case "Seed" : {
+				return new TokenValueString (Seed);
+				}
+			case "Serial" : {
+				return new TokenValueInteger32 (Serial);
+				}
+			case "Version" : {
+				return new TokenValueInteger32 (Version);
+				}
+			case "Length" : {
+				return new TokenValueInteger32 (Length);
+				}
+			case "Data" : {
+				return new TokenValueBinary (Data);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "UniqueId", new Property (typeof(TokenValueString), false)} ,
+			{ "VersionId", new Property (typeof(TokenValueString), false)} ,
+			{ "Seed", new Property (typeof(TokenValueString), false)} ,
+			{ "Serial", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Version", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Length", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Data", new Property (typeof(TokenValueBinary), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, Goedel.Mesh.CatalogedEntry._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogEntryTest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogEntryTest();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogEntryTest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogEntryTest;
+			}
+		var Result = new CatalogEntryTest ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

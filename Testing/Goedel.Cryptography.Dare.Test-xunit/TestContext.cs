@@ -77,10 +77,10 @@ public enum ModeCorruption {
     }
 public record TestContext {
 
-    public DeterministicSeed DeterministicSeed { get; }
+    public DeterministicSeed Seed { get; }
 
 
-    public string Filename => DeterministicSeed.Seed + ".dares";
+    public string Filename => Seed.Seed + ".dares";
 
 
     public KeyPair KeyEncrypt { get; }
@@ -108,7 +108,7 @@ public record TestContext {
                 ModeEnhance encrypt = ModeEnhance.None, 
                 ModeEnhance sign = ModeEnhance.None,
                 ModeCorruption corrupt = ModeCorruption.None) {
-        DeterministicSeed = deterministicSeed;
+        Seed = deterministicSeed;
         Encrypt = encrypt;
         Sign = sign;
         Corrupt = corrupt;

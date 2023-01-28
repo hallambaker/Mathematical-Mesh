@@ -288,23 +288,6 @@ public class Spool : Store {
         }
 
 
-    /// <summary>
-    /// Apply the list of message status updates specified in <paramref name="references"/>.
-    /// </summary>
-    /// <param name="references">List of message status values to be updated.</param>
-    public static void SetStatus(List<Reference> references) {
-        if (references == null || references.Count == 0) {
-            return;
-            }
-        var messageComplete = new MessageComplete() {
-            References = references
-            };
-
-        throw new NYI();
-        }
-
-
-
 
     }
 

@@ -49,9 +49,7 @@ public partial class TestContainers {
     public static TestContainers Test() => new();
 
 
-    record TestBasicParams (
-                int Records = 1, int Size = 100, bool Randomsize = true,
-                int RandomChecks = 0, int AdditionalChunks = 0);
+
 
 
     [Theory]
@@ -368,7 +366,7 @@ public partial class TestContainers {
         // validate every record in sequence forward
         using (var sequence = Sequence.OpenExisting(filename)) {
             //for (i = 0; i < records; i++) {
-            //    var payload = DeterministicSeed.GetTestBytes(Filename, size, i);
+            //    var payload = Seed.GetTestBytes(Filename, size, i);
             //    }
 
             foreach (var entry in sequence) {
@@ -378,7 +376,7 @@ public partial class TestContainers {
 
         using (var sequence = Sequence.OpenExisting(filename)) {
             //for (i = 0; i < records; i++) {
-            //    var payload = DeterministicSeed.GetTestBytes(Filename, size, i);
+            //    var payload = Seed.GetTestBytes(Filename, size, i);
             //    }
 
             foreach (var entry in sequence.SelectEnvelope (1, true)) {

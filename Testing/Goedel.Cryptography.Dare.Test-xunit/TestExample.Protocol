@@ -3,6 +3,9 @@
 	Description
 		|Classes that represent data written to the portal log.
 
+    Using Goedel.Mesh
+
+
 
 	Structure TestEntry
 		Description
@@ -33,4 +36,37 @@
 			Description
 				|Status of the account, valid values are 'Open', 'Closed',
 				|'Suspended'
-		
+
+
+
+	Structure MessageTest
+		External  Goedel.Mesh.Message
+		Description
+			|Test message consiting of a chunk of data with a unique identifier deterministically
+			|Generated from the parameters Seed, Serial, Version and Length
+
+		String UniqueId
+		String VersionId
+		String Seed
+		Integer Serial
+		Integer Version
+		Integer Length
+			Description
+				|If specified, the entry was generated with random length setting.
+		Binary Data
+
+	Structure CatalogEntryTest
+		External  Goedel.Mesh.CatalogedEntry
+		Description
+			|Test message consiting of a chunk of data with a unique identifier deterministically
+			|Generated from the parameters Seed, Serial, Version and Length
+
+		String UniqueId
+		String VersionId
+		String Seed
+		Integer Serial
+		Integer Version
+		Integer Length
+			Description
+				|If specified, the 
+		Binary Data

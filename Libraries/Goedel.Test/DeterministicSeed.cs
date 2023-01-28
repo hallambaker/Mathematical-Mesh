@@ -24,9 +24,12 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Utilities;
 using System.Diagnostics;
+using System.Reflection.Emit;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Test;
 
@@ -34,6 +37,8 @@ public class DeterministicSeed {
     static readonly string TestPath = "TestPath";
 
     public string Seed { get; }
+    public byte[] SeedBytes { get; }
+
 
     public string Directory { get; }
 
@@ -42,6 +47,8 @@ public class DeterministicSeed {
 
     DeterministicSeed (string name) {
         Seed = name;
+        SeedBytes = Seed.ToBytes ();
+
         TestRoot = Environment.GetEnvironmentVariable(TestPath);
         TestRoot.AssertNotNull(EnvironmentVariableRequired.Throw, TestPath);
 
@@ -65,8 +72,6 @@ public class DeterministicSeed {
         return new DeterministicSeed(Format(method.Name, parameters));
         }
 
-
-
     public string GetDirectory(string label) {
         System.IO.Directory.CreateDirectory(Directory);
         return Path.Combine(Directory, label);
@@ -77,6 +82,38 @@ public class DeterministicSeed {
         }
 
 
+    public int GetInt32(int ceiling, params object[] parameters) {
+        var info = FormatBytes("GetInt32", parameters);
+
+        var bytes = KeyDeriveHKDF.Derive(SeedBytes, info: info, length: 32);
+        var number = bytes.LittleEndian32() % ceiling;
+        return (int)number;
+        }
+
+    public long GetInt64(long ceiling, params object[] parameters) {
+        var info = FormatBytes("GetInt64", parameters);
+
+        var bytes = KeyDeriveHKDF.Derive(SeedBytes, info: info, length: 64);
+        bytes[7] &= 0x7f;
+        var number = (long)bytes.LittleEndian64() % ceiling;
+        return (long)number;
+        }
+
+    public string GetNonce(params object[] parameters) {
+        var info = FormatBytes("GetNonce", parameters);
+
+        var bits = 128;
+        var bytes = GetTestBytes(SeedBytes, bits / 8, info);
+
+        return UDF.TypeBDSToString(UdfTypeIdentifier.Nonce, bytes, bits + 8);
+        }
+
+
+
+
+
+
+
     public int GetRandomInt(int ceiling, int info = 0, string label="") {
         var bytes = KeyDeriveHKDF.Derive(Seed.ToBytes(),
                     info: $"Number {info} {label}".ToBytes(), length: 32);
@@ -84,11 +121,23 @@ public class DeterministicSeed {
         return (int) number;
         }
 
+
+
+
     public byte[] GetTestBytes(int length, long info) =>
             GetTestBytes(Seed, length, info.ToString());
 
+    public byte[] GetTestBytes(int length, string info) =>
+        GetTestBytes(Seed, length, info);
 
 
+
+
+
+
+
+
+    /* Static, remove over time  */
 
     public static string GetUnique(params object[] parameters) {
         var stack = new StackTrace();
@@ -97,6 +146,10 @@ public class DeterministicSeed {
 
         return Format(method.Name, parameters);
         }
+
+    static byte[] FormatBytes(string tag, params object[] parameters) =>
+        Format(tag, parameters).ToBytes();
+
 
     static string Format(string tag, params object[] parameters) {
 
@@ -112,19 +165,17 @@ public class DeterministicSeed {
         }
 
 
+    static byte[] GetTestBytes(string tag, int length, string info) =>
+        GetTestBytes(tag.ToBytes(), length, info.ToBytes());
 
 
-
-
-
-
-    static byte[] GetTestBytes(string tag, int length, string info) {
+    static byte[] GetTestBytes(byte[] tag, int length, byte[] info) {
         if (length == 0) {
             return Array.Empty<byte>();
             }
 
         var result = new byte[length];
-        var key = KeyDeriveHKDF.Derive(tag.ToBytes(), info: info.ToBytes(), length: 128);
+        var key = KeyDeriveHKDF.Derive(tag, info: info, length: 128);
 
 
         var aes = new AesGcm(key);

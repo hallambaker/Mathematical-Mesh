@@ -46,6 +46,7 @@ local.properties
 [Rr]elease/
 bin/
 obj/
+.vs/
 packages/
 *_i.c
 *_p.c

@@ -36,9 +36,24 @@ using Xunit.Abstractions;
 
 namespace Goedel.XUnit;
 
-public record TestSequence {
-    public DeterministicSeed DeterministicSeed => TestContext.DeterministicSeed;
-    public TestContext TestContext { get; }
+
+public record TestBasicParams(
+            int Records = 1, int Size = 100, bool Randomsize = true,
+            int RandomChecks = 0, int AdditionalChunks = 0) {
+
+    public override string ToString() {
+        return $"{Records}-{Size}-{Randomsize}-{RandomChecks}-{AdditionalChunks}";
+        }
+
+    }
+
+
+
+
+
+
+public record TestSequence : TestBase {
+
 
     public SequenceType SequenceType { get; }
 
@@ -59,14 +74,14 @@ public record TestSequence {
                     bool randomsize = true,
                     int additionalChunks = 1,
                     bool checkSignatures = false,
-                    string file = "sequence") {
-        TestContext = context;
+                    string file = "sequence") : base (context){
+
         Records = records;
         Size = size;
         Randomsize = randomsize; 
         SequenceType = sequenceType;
 
-        Filename = DeterministicSeed.GetFilename(file);
+        Filename = Seed.GetFilename(file);
 
 
         using (var sequence = Sequence.NewContainer(Filename, FileStatus.Overwrite, sequenceType)) {
@@ -76,7 +91,7 @@ public record TestSequence {
                 var header = new DareHeader() {
                     };
                 //var recordSize = RecordSize(sequence.FrameCount);
-                //var payload = DeterministicSeed.GetTestBytes( size, i);
+                //var payload = Seed.GetTestBytes( size, i);
                 var payload = GetPlaintext(sequence.FrameCount);
                 var entry = sequence.Append(payload);
                 }
@@ -98,7 +113,7 @@ public record TestSequence {
 
     public void MakeAdditionalChunk(int chunk) {
 
-        var additionalRecords = DeterministicSeed.GetRandomInt(Records, chunk, "additionalChunks");
+        var additionalRecords = Seed.GetRandomInt(Records, chunk, "additionalChunks");
 
         using (var sequence = Sequence.OpenExisting(Filename, fileStatus: FileStatus.Append)) {
             var frameCount = sequence.FrameCount;
@@ -108,7 +123,7 @@ public record TestSequence {
                 var header = new DareHeader() {
                     };
                 //var recordSize = RecordSize(sequence.FrameCount);
-                //var payload = DeterministicSeed.GetTestBytes( Size, i);
+                //var payload = Seed.GetTestBytes( Length, i);
                 var payload = GetPlaintext(sequence.FrameCount);
                 var entry = sequence.Append(payload);
                 }
@@ -119,10 +134,10 @@ public record TestSequence {
 
     byte[] GetPlaintext(long frame) {
         var recordSize = RecordSize(frame);
-        return DeterministicSeed.GetTestBytes(recordSize, frame);
+        return Seed.GetTestBytes(recordSize, frame);
         }
 
-    int RecordSize(long frame) => Randomsize ? DeterministicSeed.GetRandomInt(Size, (int)frame) : 0;
+    int RecordSize(long frame) => Randomsize ? Seed.GetRandomInt(Size, (int)frame) : Size;
 
     public void ValidatePayload() {
 
@@ -254,7 +269,7 @@ public record TestSequence {
         (TestContext.Corrupt == ModeCorruption.Data).TestTrue();
 
         for (var i = 0; i < tests; i++) {
-            var frame = DeterministicSeed.GetRandomInt(Records, i, "randomAccess1");
+            var frame = Seed.GetRandomInt(Records, i, "randomAccess1");
 
             CorruptFrame(frame);
 
@@ -267,7 +282,7 @@ public record TestSequence {
         (TestContext.Corrupt == ModeCorruption.Key).TestTrue();
 
         for (var i = 0; i < tests; i++) {
-            var frame = DeterministicSeed.GetRandomInt(Records, i, "randomAccess2");
+            var frame = Seed.GetRandomInt(Records, i, "randomAccess2");
             using var sequence = OpenSequence(TestContext.BadKeyCollection);
             DecryptFail(sequence, frame);
             }
@@ -278,7 +293,7 @@ public record TestSequence {
         (TestContext.Corrupt == ModeCorruption.Data).TestTrue();
 
         for (var i = 0; i < tests; i++) {
-            var frame = DeterministicSeed.GetRandomInt(Records, i, "randomAccess3");
+            var frame = Seed.GetRandomInt(Records, i, "randomAccess3");
 
             CorruptFrame(frame);
 
@@ -291,7 +306,7 @@ public record TestSequence {
         (TestContext.Corrupt == ModeCorruption.Key).TestTrue();
 
         for (var i = 0; i < tests; i++) {
-            var frame = DeterministicSeed.GetRandomInt(Records, i, "randomAccess4");
+            var frame = Seed.GetRandomInt(Records, i, "randomAccess4");
             using var sequence = OpenSequence(TestContext.BadKeyCollection);
             VerifyFail(sequence, frame);
             }
