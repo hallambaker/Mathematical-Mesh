@@ -84,6 +84,10 @@ public class SequenceTree : SequenceList {
         if (FrameIndexToEntry.TryGetValue(index, out var entry)) {
             return entry;
             }
+        if (index >= FrameCount) {
+            return null;
+            }
+
 
         entry = SequenceIndexEntryLast;
         while (entry.Index > index) {

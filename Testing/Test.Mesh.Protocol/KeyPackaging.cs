@@ -154,7 +154,7 @@ public partial class TestService {
         //var key = UDF.DeriveKey();
 
 
-        //var keyBase = KeyPair.Factory(cryptoAlgorithmId, keySecurity: KeySecurity.Exportable);
+        //var keyBase = KeyPair.Create(cryptoAlgorithmId, keySecurity: KeySecurity.Exportable);
 
         // Using the <see cref="KeyPair"/> representation.
         var KeyData1 = new KeyData(keyBase, true);

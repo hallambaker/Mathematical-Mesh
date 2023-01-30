@@ -35,6 +35,7 @@ namespace Goedel.Test;
 
 public class DeterministicSeed {
     static readonly string TestPath = "TestPath";
+    static readonly string WorkingDirectory = "Deterministic";
 
     public string Seed { get; }
     public byte[] SeedBytes { get; }
@@ -51,12 +52,12 @@ public class DeterministicSeed {
 
         TestRoot = Environment.GetEnvironmentVariable(TestPath);
         TestRoot.AssertNotNull(EnvironmentVariableRequired.Throw, TestPath);
+        
 
-
-        Directory = System.IO.Path.Combine(TestRoot, Seed);
+        Directory = System.IO.Path.Combine(TestRoot, WorkingDirectory, Seed);
         }
 
-    public static DeterministicSeed Factory(params object[] parameters) {
+    public static DeterministicSeed Create(params object[] parameters) {
         var stack = new StackTrace();
         var frame = stack.GetFrame(1);
         var method = frame.GetMethod();
@@ -64,7 +65,15 @@ public class DeterministicSeed {
         return new DeterministicSeed (Format(method.Name, parameters));
         }
 
-    public static DeterministicSeed FactoryN(int parent, params object[] parameters) {
+    public static DeterministicSeed CreateParent(params object[] parameters) {
+        var stack = new StackTrace();
+        var frame = stack.GetFrame(2);
+        var method = frame.GetMethod();
+
+        return new DeterministicSeed(Format(method.Name, parameters));
+        }
+
+    public static DeterministicSeed CreateDeep(int parent, params object[] parameters) {
         var stack = new StackTrace();
         var frame = stack.GetFrame(parent);
         var method = frame.GetMethod();
@@ -108,7 +117,25 @@ public class DeterministicSeed {
         return UDF.TypeBDSToString(UdfTypeIdentifier.Nonce, bytes, bits + 8);
         }
 
+    public int GetTask(IList<int> tasks, params object[] parameters) {
+        var total = 0;
+        foreach (var item in tasks) {
+            total += item;
+            }
+        if (total <= 0) {
+            return -1;
+            }
+        var index = GetInt32 (total, parameters);
+        var task = 0;
+        for(var i = 0; i<tasks.Count; i++) {
+            if (index < tasks[i]) {
+                tasks[i]--;
+                return task;
+                }
+            }
 
+        return -1;
+        }
 
 
 

@@ -5249,6 +5249,21 @@
             construction is used.</para>
             </summary>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.ProofChain.Verify">
+            <summary>
+            Attempt to verify the proof chain and return null if invalid
+            </summary>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.ProofChain.Verify(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.DareEnvelope})">
+            <summary>
+            Attempt to verify the proof chain and return null if invalid
+            </summary>
+            <param name="envelopes">The envelope data to verify.</param>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.IndexType">
             <summary>File index modes</summary>
         </member>
@@ -6251,6 +6266,14 @@
             Perform sanity checking on a list of Sequence headers.
             </summary>
             <param name="headers">List of headers to check</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceMerkleTree.GetProofChain(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.SequenceIndexEntry})">
+            <summary>
+            
+            </summary>
+            <param name="entries"></param>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceTree">
             <summary>

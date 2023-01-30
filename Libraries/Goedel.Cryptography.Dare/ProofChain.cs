@@ -20,27 +20,27 @@
 //  THE SOFTWARE.
 #endregion
 
-global using System;
-global using System.Collections.Generic;
-global using System.IO;
-global using System.Text;
-global using Goedel.Cryptography;
-global using Goedel.Command;
-global using Goedel.Cryptography.Dare;
-global using Goedel.Cryptography.Jose;
-global using Goedel.IO;
-global using Goedel.Mesh.Client;
-global using Goedel.Mesh.Test;
-global using Goedel.Protocol;
-global using Goedel.Utilities;
-global using Goedel.Command.Json;
-global using Xunit;
-global using Goedel.Test;
+namespace Goedel.Cryptography.Dare;
 
-#if !(_Github_)
-[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
-#endif
+public partial class ProofChain {
 
 
+    /// <summary>
+    /// Attempt to verify the proof chain and return null if invalid
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
+    public bool Verify() => throw new NYI();
 
 
+    /// <summary>
+    /// Attempt to verify the proof chain and return null if invalid
+    /// </summary>
+    /// <param name="envelopes">The envelope data to verify.</param>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
+    public bool Verify(IEnumerable<DareEnvelope> envelopes) => throw new NYI();
+
+
+
+    }

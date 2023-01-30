@@ -67,7 +67,7 @@ public partial class TestStores {
     public void TestSpoolBasic(
             TestStoreParams testParams = null) {
 
-        var seed = DeterministicSeed.Factory(testParams);
+        var seed = DeterministicSeed.Create(testParams);
         var context = new TestContext(seed);
         var testStore = new TestSpool(context, testParams);
 
@@ -85,7 +85,7 @@ public partial class TestStores {
     public void TestCatalogBasic(
         TestStoreParams testParams = null) {
 
-        var seed = DeterministicSeed.Factory(testParams);
+        var seed = DeterministicSeed.Create(testParams);
         var context = new TestContext(seed);
         var testStore = new TestCatalog(context, testParams);
 

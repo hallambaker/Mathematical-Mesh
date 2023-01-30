@@ -330,7 +330,7 @@ public class CatalogTest : Catalog<CatalogEntryTest> {
     ///<summary>The catalog label</summary>
     public override string SequenceDefault => Label;
     #endregion
-    #region // Factory methods and constructors
+    #region // Create methods and constructors
 
 
     /// <summary>

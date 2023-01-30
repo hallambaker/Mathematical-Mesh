@@ -23,7 +23,7 @@ public class TestPQC : Disposable {
 
 
     /// <summary>
-    /// Factory method, return an instance.
+    /// Create method, return an instance.
     /// </summary>
     /// <returns>The instance</returns>
     public static TestPQC Test() => new();

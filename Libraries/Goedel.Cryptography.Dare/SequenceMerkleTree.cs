@@ -22,6 +22,7 @@
 
 namespace Goedel.Cryptography.Dare;
 
+
 /// <summary>
 /// Simple Sequence that supports the append and index functions but does not 
 /// provide for cryptographic integrity.
@@ -157,4 +158,32 @@ public class SequenceMerkleTree : SequenceTree {
         }
 
     #endregion
+
+
+    IEnumerable<SequenceIndexEntry> GetSequenceIndexEntries (IEnumerable<long> entries) =>
+                throw new NYI();
+
+    public ProofChain GetProofChain(
+        IEnumerable<long> entries) =>GetProofChain(GetSequenceIndexEntries(entries));
+
+
+    public ProofChain GetProofChain(
+            SequenceIndexEntry first,
+            SequenceIndexEntry second) =>
+        GetProofChain(new SequenceIndexEntry[] { first , second});
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="entries"></param>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
+    public ProofChain GetProofChain(
+                IEnumerable<SequenceIndexEntry> entries) {
+
+        "Implement proof chain".TaskFunctionality(true);
+        throw new NYI();
+        }
+
     }

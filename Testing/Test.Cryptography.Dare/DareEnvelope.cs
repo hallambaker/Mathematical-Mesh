@@ -48,7 +48,7 @@ public partial class TestDare {
 
     //static List<string> Signers = new List<string> { AccountAlice };
     //static List<string> Recipients = new List<string> { AccountAlice };
-    //static KeyPair encryptAlice = KeyPair.Factory(CryptoAlgorithmId.X448,
+    //static KeyPair encryptAlice = KeyPair.Create(CryptoAlgorithmId.X448,
     //        KeySecurity.Session, KeyCollection, keyUses: KeyUses.Encrypt);
 
     [Fact]

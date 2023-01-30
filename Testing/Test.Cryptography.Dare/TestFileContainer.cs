@@ -50,7 +50,7 @@ public partial class TestDareArchive {
         var bytes = CreateBytes(100);
         var policy = TestEnvironmentCommon.MakePolicy();
 
-        ReadWriteContainer("TestFilePlaintext_100", bytes, policy);
+        ReadWriteContainer(bytes, policy);
         }
 
 
@@ -62,13 +62,12 @@ public partial class TestDareArchive {
         byte[] bytes = Array.Empty<Byte>();
 
         var policy = TestEnvironmentCommon.MakePolicy();
-        ReadWriteContainer("TestFilePlaintext_0", bytes, policy);
+        ReadWriteContainer(bytes, policy);
 
         int length = 1;
         for (var i = 1; i < 16; i++) {
-            var filename = $"TestFilePlaintext_{length}";
             bytes = CreateBytes(length);
-            ReadWriteContainer(filename, bytes, null);
+            ReadWriteContainer(bytes, null);
             length *= 2;
             }
         }
@@ -85,8 +84,8 @@ public partial class TestDareArchive {
 
         var policy = TestEnvironmentCommon.MakePolicy(encryptId: CryptoAlgorithmId.X448);
 
-        var Bytes = CreateBytes(100);
-        ReadWriteContainer("TestFileEncrypted_100", Bytes, policy);
+        var bytes = CreateBytes(100);
+        ReadWriteContainer(bytes, policy);
         }
 
 
@@ -98,13 +97,12 @@ public partial class TestDareArchive {
         var policy = TestEnvironmentCommon.MakePolicy(encryptId: CryptoAlgorithmId.X448);
 
         byte[] bytes = Array.Empty<Byte>();
-        ReadWriteContainer("TestFileEncrypted_0", bytes, policy);
+        ReadWriteContainer(bytes, policy);
 
         int length = 1;
         for (var i = 1; i < 16; i++) {
-            var filename = $"TestFileEncrypted_{length}";
             bytes = CreateBytes(length);
-            ReadWriteContainer(filename, bytes, null);
+            ReadWriteContainer( bytes, null);
             length *= 2;
             }
         }
@@ -113,27 +111,28 @@ public partial class TestDareArchive {
     /// Test empty archive
     /// </summary>
     [Fact]
-    public void TestArchive0() => ReadWriteArchive("TestArchive_", 0);
+    public void TestArchive0() => ReadWriteArchive(0);
 
     /// <summary>
     /// Test single file archive
     /// </summary>
     [Fact]
-    public void TestArchive1() => ReadWriteArchive("TestArchive_", 1);
+    public void TestArchive1() => ReadWriteArchive(1);
 
     /// <summary>
     /// Test file archive with 10 plaintext entries 
     /// </summary>
     [Fact]
-    public void TestArchive10() => ReadWriteArchive("TestArchive_", 10);
+    public void TestArchive10() => ReadWriteArchive(10);
 
     /// <summary>
     /// Test file archive with 10 encrypted entries encrypted under one key exchange
     /// </summary>
     [Fact]
     public void TestArchiveEncrypted10Bulk() {
+        var seed = DeterministicSeed.Create();
         var policy = TestEnvironmentCommon.MakePolicy(encryptId: CryptoAlgorithmId.X448);
-        ReadWriteArchive("TestArchive_", 10, policy, false);
+        ReadWriteArchive(10, policy, false);
         }
 
     /// <summary>
@@ -141,8 +140,9 @@ public partial class TestDareArchive {
     /// </summary>
     [Fact]
     public void TestArchiveEncrypted10Individual() {
+        var seed = DeterministicSeed.Create();
         var policy = TestEnvironmentCommon.MakePolicy(encryptId: CryptoAlgorithmId.X448);
-        ReadWriteArchive("TestArchive_", 10, policy, true);
+        ReadWriteArchive(10, policy, true);
         }
 
     /// <summary>
@@ -154,9 +154,9 @@ public partial class TestDareArchive {
         var entries = new int[] { 5, 15, 30, 100 };
 
         foreach (var entry in entries) {
-            ReadWriteArchive("TestArchive_", entry);
-            ReadWriteArchive("TestArchive_", entry, policy, false);
-            ReadWriteArchive("TestArchive_", entry, policy, true);
+            ReadWriteArchive(entry);
+            ReadWriteArchive(entry, policy, false);
+            ReadWriteArchive(entry, policy, true);
             }
         }
 
@@ -164,7 +164,23 @@ public partial class TestDareArchive {
 
     static byte[] CreateBytes(int length) => CryptoCatalog.GetBytes(length);
 
-    static void ReadWriteContainer(string fileName, byte[] testData, DarePolicy policy = null) {
+
+    static string GetLabel(DarePolicy policy, bool independent = false) =>
+        policy == null ? "null" : policy.Encrypt ? (independent ? "Ind" : "Bulk") : "Plaintext";
+
+    static void ReadWriteContainer(
+                    byte[] testData,
+                    DarePolicy policy = null,
+                    DeterministicSeed seed = null) {
+
+        var length = testData?.Length.ToString() ?? "";
+        seed ??= DeterministicSeed.CreateDeep(1, GetLabel(policy), length);
+        var fileName = seed.GetFilename("Sequence");
+
+    //    ReadWriteContainer (fileName, testData, policy);
+    //    }
+
+    //static void ReadWriteContainer(string fileName, byte[] testData, DarePolicy policy = null) {
         policy ??= TestEnvironmentCommon.MakePolicy();
 
         // Create container
@@ -182,11 +198,31 @@ public partial class TestDareArchive {
         }
 
 
-    void ReadWriteArchive(string fileNameBase, int entries,
-                DarePolicy policy = null, bool independent = false) {
-
-        var policyNill = policy == null ? "_null" : "";
+    static void ReadWriteArchive(
+                    int entries,
+                    DarePolicy policy = null,
+                    bool independent = false,
+                    DeterministicSeed seed = null) {
         policy ??= TestEnvironmentCommon.MakePolicy();
+
+        var policyNill = policy == null ? "-null" : "";
+        var mode = policy.Encrypt ? (independent ? "-Ind" : "-Bulk") : "-plaintext";
+
+
+        seed ??= DeterministicSeed.CreateParent(entries, GetLabel(policy, independent));
+        var filename = seed.GetFilename("Sequence");
+
+    //    ReadWriteArchive(fileName, entries, policy, independent);
+    //    }
+
+
+
+    //static void ReadWriteArchive(
+    //            string filename, 
+    //            int entries,
+    //            DarePolicy policy = null, 
+    //            bool independent = false) {
+
 
         var testData = new byte[entries][];
         for (var i = 0; i < entries; i++) {
@@ -194,8 +230,8 @@ public partial class TestDareArchive {
             testData[i] = CreateBytes(Length);
             }
 
-        var mode = policy.Encrypt ? (independent ? "_Ind" : "_Bulk") : "_plaintext";
-        var filename = fileNameBase + $"{policyNill}{mode}_{entries}";
+
+        //var filename = fileNameBase + $"{policyNill}{mode}_{entries}";
 
 
         using (var writer = new DareLogWriter(

@@ -55,12 +55,18 @@ partial class Program {
 
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
-        TestContainers.Test().TestBasic(SequenceType.Chain, 10, 5000, true, 10, 5);
+        TestSequences.Test().TestEncrypt(SequenceType.List);
+        TestSequences.Test().TestSign(SequenceType.List);
+        TestSequences.Test().TestSignEncrypt(SequenceType.List);
+        TestSequences.Test().TestSparse(ModeEnhance.Sparse, ModeEnhance.Sparse);
+        TestSequences.Test().TestProof(ModeEnhance.Sparse, ModeEnhance.Sparse);
+
 
         //TestContainers.Test().ContainerTest0();
 
 
 
+        //TestDareArchive.Test().TestArchive0();
 
 
 

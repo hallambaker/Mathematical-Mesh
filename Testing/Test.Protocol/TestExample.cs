@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 30-Jan-23 11:06:04 AM
+//  This file was automatically generated at 30-Jan-23 4:45:11 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -233,7 +233,7 @@ public partial class MultiInstance : TestSchema {
 	public new const string __Tag = "MultiInstance";
 
 	/// <summary>
-    /// Factory method
+    /// Create method
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new MultiInstance();
@@ -393,7 +393,7 @@ public partial class MultiArray : MultiInstance {
 	public new const string __Tag = "MultiArray";
 
 	/// <summary>
-    /// Factory method
+    /// Create method
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new MultiArray();
@@ -543,7 +543,7 @@ public partial class MultiStruct : MultiArray {
 	public new const string __Tag = "MultiStruct";
 
 	/// <summary>
-    /// Factory method
+    /// Create method
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new MultiStruct();

@@ -140,7 +140,7 @@ public partial class TestPresence : ShellTestBase {
 
 
     /// <summary>
-    /// Factory method, return an instance.
+    /// Create method, return an instance.
     /// </summary>
     /// <returns>The instance</returns>
     public static TestPresence Test() => new();

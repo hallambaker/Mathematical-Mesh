@@ -39,6 +39,8 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
+
+
 public partial class RegistrationTests {
     string AliceAccount => $"alice@{ServiceDns}";
     string CarolAccount => $"carol@{ServiceDns}";

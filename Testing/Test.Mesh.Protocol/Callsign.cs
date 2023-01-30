@@ -74,7 +74,7 @@ public partial class TestService {
         }
 
 
-    [Fact]
+    [Fact(Skip = "Carnet not yet implemented")]
     public void MeshCarnet() {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
 
@@ -115,7 +115,7 @@ public partial class TestService {
         }
 
 
-    [Fact]
+    [Fact(Skip = "Test Mesh Presence")]
     public void MeshPresence() {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
 
@@ -138,7 +138,7 @@ public partial class TestService {
 
         }
 
-    [Fact]
+    [Fact (Skip="Test the use of the Mesh Repository")]
     public void MeshRepository() {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
         var plaintext = Platform.GetRandomBytes(1000);

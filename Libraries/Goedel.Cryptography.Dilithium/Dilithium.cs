@@ -265,10 +265,10 @@ public class Dilithium  {
         }
 
     #endregion
-    #region // Factory methods for vectors of length K, L.
+    #region // Create methods for vectors of length K, L.
 
     /// <summary>
-    /// Factory returning a <see cref="PolynomialVectorInt32"/> of
+    /// Create returning a <see cref="PolynomialVectorInt32"/> of
     /// length <see cref="L"/>.
     /// </summary>
     /// <param name="wipe">If true, wipe vector parameters on dispose.</param>
@@ -277,7 +277,7 @@ public class Dilithium  {
         => new(this, wipe, false);
 
     /// <summary>
-    /// Factory returning a <see cref="PolynomialVectorInt32"/> of
+    /// Create returning a <see cref="PolynomialVectorInt32"/> of
     /// length <see cref="K"/>.
     /// </summary>
     /// <param name="wipe">If true, wipe vector parameters on dispose.</param>
