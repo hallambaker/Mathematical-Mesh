@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(SolutionDir)Settings/CommonSettingsTest.xml" />
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
+  </ItemGroup>
+
+</Project>

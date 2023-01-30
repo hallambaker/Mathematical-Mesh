@@ -6,15 +6,13 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Goedel.Callsign.Test-xunit\Goedel.Callsign.Test-xunit.csproj" />
-		<ProjectReference Include="..\Goedel.Cryptography.Dare.Test-xunit\Goedel.Cryptography.Dare.Test-xunit.csproj" />
-		<ProjectReference Include="..\Goedel.Mesh.Store.Test-xunit\Goedel.Mesh.Store.Test-xunit.csproj" />
 		<ProjectReference Include="..\Test.Constants\Test.Common.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
 		<ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+		<ProjectReference Include="..\Test.Cryptography.Dare\Test.Cryptography.Dare.csproj" />
 	</ItemGroup>
 	
   <ItemGroup Condition="'$(Configuration)'=='Never'">

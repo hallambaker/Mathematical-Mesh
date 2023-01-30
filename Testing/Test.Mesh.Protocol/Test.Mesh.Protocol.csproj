@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(SolutionDir)Settings/CommonSettingsTest.xml" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Callsign\Goedel.Callsign.Registry\Goedel.Callsign.Registry.csproj" />
+    <ProjectReference Include="..\..\Callsign\Goedel.Callsign.Resolver\Goedel.Callsign.Resolver.csproj" />
+    <ProjectReference Include="..\..\Callsign\Goedel.Callsign\Goedel.Callsign.csproj" />
+    <ProjectReference Include="..\..\Carnet\Goedel.Carnet.Server\Goedel.Carnet.Server.csproj" />
+    <ProjectReference Include="..\..\Carnet\Goedel.Carnet\Goedel.Carnet.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
+    <ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+    <ProjectReference Include="..\..\Presence\Goedel.Presence.Server\Goedel.Presence.Server.csproj" />
+    <ProjectReference Include="..\..\Presence\Goedel.Presence\Goedel.Presence.csproj" />
+    <ProjectReference Include="..\..\Repository\Goedel.Repository.Server\Goedel.Repository.Server.csproj" />
+    <ProjectReference Include="..\..\Repository\Goedel.Repository\Goedel.Repository.csproj" />
+    <ProjectReference Include="..\Goedel.Mesh.Test\Goedel.Mesh.Test.csproj" />
+  </ItemGroup>
+
+</Project>

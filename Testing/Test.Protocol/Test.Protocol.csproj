@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(SolutionDir)Settings/CommonSettingsTest.xml" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="TestExample.cs">
+			<DependentUpon>TestExample.protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="TestExample.protocol">
+			<LastGenOutput>TestExample.cs</LastGenOutput>
+			<Generator>Protogen</Generator>
+		</None>
+
+	</ItemGroup>
+	
+	
+</Project>

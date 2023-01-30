@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(SolutionDir)Settings/BaseSettings.xml" />
+  <Import Project="$(SolutionDir)Settings/TestSettings.xml" />
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Windows\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
+    <ProjectReference Include="..\Test.Cryptography.Platform\Test.Cryptography.Platform.csproj" />
+  </ItemGroup>
+
+</Project>
