@@ -44,7 +44,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 
 
     protected string HostFile = "whatev";
-    public TestEnvironmentCommon() {
+    public TestEnvironmentCommon(DeterministicSeed seed = null) : base (seed){
 
         }
 
@@ -104,22 +104,25 @@ public abstract class TestEnvironmentBase : Disposable {
 
     public virtual string ServiceDns => "example.com";
 
-    static readonly string TestPath = "TestPath";
-    public static string TestRoot { get; set; }
+    public static readonly string TestPath = "TestPath";
 
+
+    public DeterministicSeed Seed { get; }
+
+    public static string TestRoot => DeterministicSeed.TestRoot;
+
+    public string Test => Seed.Seed;
     public static string CommonData => System.IO.Path.Combine(TestRoot, "CommonData");
-    public static string WorkingDirectory => System.IO.Path.Combine(TestRoot, "WorkingDirectory");
-    public static string Variable => System.IO.Path.Combine(TestRoot, "Variable");
+    public  string WorkingDirectory => System.IO.Path.Combine(Path, "Working");
 
-    public string Path => System.IO.Path.Combine(Variable, Test);
-    public virtual string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
+    public string Path => Seed.Directory;
+    //public virtual string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
 
-    public string Test;
+
 
     public JpcConnection JpcConnection = JpcConnection.Serialized;
 
     public List<TestCLI> testCLIs = new();
-
 
     protected override void Disposing() {
         foreach (var test in testCLIs) {
@@ -160,18 +163,18 @@ public abstract class TestEnvironmentBase : Disposable {
     /// test/debug mode.</param>
 
     static TestEnvironmentBase() {
-        TestRoot = Environment.GetEnvironmentVariable(TestPath);
-        TestRoot.AssertNotNull(EnvironmentVariableRequired.Throw, TestPath);
-
-        Directory.CreateDirectory(WorkingDirectory);
-        Directory.SetCurrentDirectory(WorkingDirectory);
         }
 
-    public TestEnvironmentBase() {
-        Test = Unique.Next();
+    public TestEnvironmentBase(DeterministicSeed seed = null) {
+
+        seed ??= DeterministicSeed.Auto();
+        Seed = seed;
+
         Path.DirectoryDelete();
+
         Directory.CreateDirectory(Path);
-        Directory.CreateDirectory(ServiceDirectory);
+        Directory.CreateDirectory(WorkingDirectory);
+        Directory.SetCurrentDirectory(WorkingDirectory);
         }
 
 
@@ -180,17 +183,17 @@ public abstract class TestEnvironmentBase : Disposable {
     public string MachinePath(string machineName) => System.IO.Path.Combine(Path, machineName);
 
 
-    public static KeyCollection MakeKeyCollection() {
-        var testEnvironment = new TestEnvironmentCommon();
+    public static KeyCollection MakeKeyCollection(DeterministicSeed seed) {
+        var testEnvironment = new TestEnvironmentCommon(seed);
         //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
         return new KeyCollectionTestEnv(testEnvironment.Path);
         }
 
-    public static DarePolicy MakePolicy(
+    public static DarePolicy MakePolicy(DeterministicSeed seed,
             CryptoAlgorithmId signId = CryptoAlgorithmId.NULL,
             CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL) =>
-        MakePolicy(out _, out _, signId, encryptId);
-    public static DarePolicy MakePolicy(
+        MakePolicy(seed, out _, out _, signId, encryptId);
+    public static DarePolicy MakePolicy(DeterministicSeed seed,
         out KeyPair signKey, out KeyPair encryptKey,
         CryptoAlgorithmId signId = CryptoAlgorithmId.NULL,
         CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL) {
@@ -198,7 +201,7 @@ public abstract class TestEnvironmentBase : Disposable {
         encryptKey = null;
         signKey = null;
 
-        var keyCollection = MakeKeyCollection();
+        var keyCollection = MakeKeyCollection(seed);
 
 
         if (encryptId != CryptoAlgorithmId.NULL) {

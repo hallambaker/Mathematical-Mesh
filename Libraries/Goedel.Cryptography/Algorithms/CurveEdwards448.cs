@@ -540,7 +540,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
 
 
     /// <summary>The public key, a point on the curve</summary>
-    public CurveEdwards448Public Public { get; }
+    public CurveEdwards448Public Public { get; set; }
 
     /// <summary>The corresponding public key</summary>
     public override CurveEdwards PublicPoint => Public.Public;

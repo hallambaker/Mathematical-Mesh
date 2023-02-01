@@ -146,7 +146,7 @@
         </member>
         <member name="M:Goedel.Cryptography.PQC.Dilithium.GetVectorL(System.Boolean)">
             <summary>
-            Factory returning a <see cref="T:Goedel.Cryptography.PQC.PolynomialVectorInt32"/> of
+            Create returning a <see cref="T:Goedel.Cryptography.PQC.PolynomialVectorInt32"/> of
             length <see cref="P:Goedel.Cryptography.PQC.Dilithium.L"/>.
             </summary>
             <param name="wipe">If true, wipe vector parameters on dispose.</param>
@@ -154,7 +154,7 @@
         </member>
         <member name="M:Goedel.Cryptography.PQC.Dilithium.GetVectorK(System.Boolean)">
             <summary>
-            Factory returning a <see cref="T:Goedel.Cryptography.PQC.PolynomialVectorInt32"/> of
+            Create returning a <see cref="T:Goedel.Cryptography.PQC.PolynomialVectorInt32"/> of
             length <see cref="P:Goedel.Cryptography.PQC.Dilithium.K"/>.
             </summary>
             <param name="wipe">If true, wipe vector parameters on dispose.</param>

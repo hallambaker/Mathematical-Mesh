@@ -56,16 +56,18 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     /// </summary>
     /// <param name="directory">Directory to store the server information.</param>
     /// <param name="direct">If true, force use of the platform key stores.</param>
-    public MeshMachineCoreServer(string? directory, bool direct = false) {
-        KeyCollection = GetKeyCollection(direct ? directory : null);
+    public MeshMachineCoreServer(string? directory) {
+
 
         if (directory != null) {
             DirectoryMaster = directory;
             DirectoryMesh = Path.Combine(directory, "Profiles");
             DirectoryKeys = Path.Combine(directory, "Keys");
-
+            KeyCollection = GetKeyCollection(directory);
             }
         else {
+            KeyCollection = GetKeyCollection(null);
+
             var keyCollectionCore = KeyCollection as KeyCollectionCore;
             DirectoryMesh = keyCollectionCore.DirectoryMesh;
             DirectoryKeys = keyCollectionCore.DirectoryKeys;
@@ -168,10 +170,9 @@ public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
     /// to store persistent data.
     /// </summary>
     /// <param name="directory">Directory to store the server information.</param>
-    /// <param name="direct">If true, force use of the platform key stores.</param>
+    /// 
     public MeshMachineCore(
-            string? directory = null, 
-            bool direct = false) : base(directory, direct) {
+            string? directory = null) : base(directory) {
         //// Read the container to get the directories.
         //PersistHost = new PersistHost(FileNameHost, FileTypeHost,
         //    fileStatus: fileStatus,

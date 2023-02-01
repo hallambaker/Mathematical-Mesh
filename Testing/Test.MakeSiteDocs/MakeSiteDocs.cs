@@ -22,7 +22,7 @@
 
 
 using ExampleGenerator;
-using Goedel.Utilities;
+using Goedel.Test;
 using Goedel.Mesh.Test;
 using Xunit;
 
@@ -45,7 +45,10 @@ public class MakeSiteDocs : CreateExamples {
         Group = new LayerGroup(this);
         NYI = new LayerNYI(this);
 
-        TestEnvironment = new TestEnvironmentCommon {
+
+
+
+        TestEnvironment = new TestEnvironmentCommon(DeterministicSeed.CreateParent()) {
             //JpcConnection = Protocol.JpcConnection.Rud
             JpcConnection = Protocol.JpcConnection.Serialized
             };

@@ -1067,6 +1067,15 @@
             Define extension codes for checking HTTP/SMTP/FTP style status return values
             </summary>
         </member>
+        <member name="M:Goedel.Protocol.Extensions.Default(Goedel.Protocol.DataEncoding,Goedel.Protocol.DataEncoding)">
+            <summary>
+            If <paramref name="encoding"/> is <see cref="F:Goedel.Protocol.DataEncoding.Default"/>,
+            return <paramref name="defaultEncoding"/>, otherwise, return <paramref name="encoding"/>.
+            </summary>
+            <param name="encoding">The encoding to apply the default to.</param>
+            <param name="defaultEncoding">The default encoding to be used.</param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Protocol.Extensions.IsSuccess(System.Nullable{System.Int32})">
             <summary>
             Report if a protocol status cude indicates success.

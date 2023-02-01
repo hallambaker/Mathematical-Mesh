@@ -29,10 +29,10 @@ public class KeyPairX448 : KeyPairECDH {
 
     #region //Properties
     ///<inheritdoc/>
-    public CurveX448Public PublicKey { get; set; }
+    public virtual CurveX448Public PublicKey { get; }
 
     ///<inheritdoc/>
-    public CurveX448Private PrivateKey { get; set; }
+    public virtual CurveX448Private PrivateKey { get;  }
 
     ///<inheritdoc/>
     public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;
@@ -122,7 +122,7 @@ public class KeyPairX448 : KeyPairECDH {
         }
 
     /// <summary>
-    /// Construct a KeyPairEd25519 instance for a secret scalar. This is used to create
+    /// Construct a KeyPairX448 instance for a secret scalar. This is used to create
     /// private keys using cogeneration.
     /// </summary>
     /// <param name="privateKey">The secret scalar value.</param>

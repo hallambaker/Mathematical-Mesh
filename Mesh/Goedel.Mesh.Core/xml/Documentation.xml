@@ -40,7 +40,7 @@
         <member name="F:Goedel.Mesh.MeshMachineCoreServer.FileTypeHost">
             <summary>The IANA media type for the host file data.</summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCoreServer.#ctor(System.String,System.Boolean)">
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.#ctor(System.String)">
             <summary>
             Default constructor
             </summary>
@@ -92,13 +92,13 @@
             Disposing routine. Feee internal resources  and shut down the Mesh Host.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCore.#ctor(System.String,System.Boolean)">
+        <member name="M:Goedel.Mesh.MeshMachineCore.#ctor(System.String)">
             <summary>
             Constructor, creating a service instance using <paramref name="directory"/>
             to store persistent data.
             </summary>
             <param name="directory">Directory to store the server information.</param>
-            <param name="direct">If true, force use of the platform key stores.</param>
+            
         </member>
         <member name="M:Goedel.Mesh.MeshMachineCore.GetCredential(System.String,System.String)">
             <inheritdoc/>

@@ -124,7 +124,7 @@ public partial class TestService {
     [InlineData(DataValidity.CorruptPayload)]
     [InlineData(DataValidity.CorruptMissing)]
     public void TestCredentialAccountFails(DataValidity dataValidity) {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
+        var testEnvironmentCommon = GetTestEnvironmentCommon(dataValidity);
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main");
         var credentialTempPrivate = contextAccountAlice.GetMeshCredentialPrivate();

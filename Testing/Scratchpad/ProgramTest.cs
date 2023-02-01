@@ -30,6 +30,7 @@ using Goedel.Mesh;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test;
+using Goedel.Test.Core;
 using Goedel.Utilities;
 using Goedel.XUnit;
 using Microsoft.Extensions.Logging;
@@ -55,19 +56,18 @@ partial class Program {
 
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
-        TestSequences.Test().TestEncrypt(SequenceType.List);
-        TestSequences.Test().TestSign(SequenceType.List);
-        TestSequences.Test().TestSignEncrypt(SequenceType.List);
-        TestSequences.Test().TestSparse(ModeEnhance.Sparse, ModeEnhance.Sparse);
-        TestSequences.Test().TestProof(ModeEnhance.Sparse, ModeEnhance.Sparse);
-
-
+        //TestSequences.Test().TestEncrypt(SequenceType.List);
+        //TestSequences.Test().TestSign(SequenceType.List);
+        //TestSequences.Test().TestSignEncrypt(SequenceType.List);
+        //TestSequences.Test().TestSparse(ModeEnhance.Sparse, ModeEnhance.Sparse);
+        //TestSequences.Test().TestProof(ModeEnhance.Sparse, ModeEnhance.Sparse);
+        //TestPersist.Test().TestPersistenceStoreAll();
         //TestContainers.Test().ContainerTest0();
 
 
 
-        //TestDareArchive.Test().TestArchive0();
-
+        //TestStores.Test().TestSpoolBasic();
+        TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
 
 
 
@@ -123,7 +123,7 @@ partial class Program {
 
         //ServiceDiscovery.Test().TestDNSMultiple(20);
 
-        //TestService.Test().MeshCatalogGroup();
+
         //ShellTests.Test().TestAccountDelete();
         //for (int i = 0; i < 10; i++) {
         //    ShellTestsAdmin.Test().TestMessageContactRemote();
@@ -321,7 +321,7 @@ partial class Program {
         }
 
     public static void Debug() {
-        var testEnvironmentCommon = new TestEnvironmentCommon();
+        var testEnvironmentCommon = new TestEnvironmentCommon(DeterministicSeed.Create());
         var meshMachine = new MeshMachineTest(testEnvironmentCommon);
         var keyCollection = new KeyCollectionTest(meshMachine);
 

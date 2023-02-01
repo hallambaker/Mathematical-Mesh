@@ -23,10 +23,12 @@
 using System.Collections.Generic;
 
 using Goedel.Cryptography;
+using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
 using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
+using Goedel.Debug;
 namespace Goedel.XUnit;
 
 
@@ -100,18 +102,18 @@ public record TestContext {
 
     public ModeEnhance Encrypt { get; }
     public ModeEnhance Sign { get; }
-    public ModeCorruption Corrupt { get; }
+    public ModeCorruption Corruption { get; }
 
 
     public TestContext(
                 DeterministicSeed deterministicSeed,
-                ModeEnhance encrypt = ModeEnhance.None, 
+                ModeEnhance encrypt = ModeEnhance.None,
                 ModeEnhance sign = ModeEnhance.None,
-                ModeCorruption corrupt = ModeCorruption.None) {
+                ModeCorruption corruption = ModeCorruption.None) {
         Seed = deterministicSeed;
         Encrypt = encrypt;
         Sign = sign;
-        Corrupt = corrupt;
+        Corruption = corruption;
 
         // Return if we are not doing any cryptography
         if ((encrypt == ModeEnhance.None) && (sign == ModeEnhance.None)) {
@@ -125,14 +127,14 @@ public record TestContext {
         if (encrypt != ModeEnhance.None) {
             KeyEncrypt = KeyPair.Factory(CryptoAlgorithmId.X448,
                 KeySecurity.Session, KeyCollection, keyUses: KeyUses.Encrypt);
-            BadKeyEncrypt = InvalidateKey(KeyEncrypt, BadKeyCollection);
+            BadKeyEncrypt = KeyEncrypt.InvalidateKey(BadKeyCollection);
             Recipients = new List<string>() { (KeyEncrypt.KeyIdentifier) };
 
             }
         if (sign != ModeEnhance.None) {
             KeySign = KeyPair.Factory(CryptoAlgorithmId.Ed448,
                 KeySecurity.Session, KeyCollection, keyUses: KeyUses.Sign);
-            BadKeySign = InvalidateKey(KeySign, BadKeyCollection);
+            BadKeySign = KeySign.InvalidateKey(BadKeyCollection);
             Signers = new List<string>() { (KeySign.KeyIdentifier) };
             }
 
@@ -140,9 +142,7 @@ public record TestContext {
         }
 
 
-    static KeyPair InvalidateKey(KeyPair keyEncrypt, KeyCollection keyCollection) {
-        throw new NYI();
-        }
+
 
 
     }

@@ -247,7 +247,7 @@ public partial class TestSequences {
 
         var seed = DeterministicSeed.Create(sign, encrypt, corruption, records, size, randomsize,
                     randomChecks, additionalChunks);
-        var TestContext = new TestContext(seed, sign: sign, encrypt: encrypt);
+        var TestContext = new TestContext(seed, sign: sign, encrypt: encrypt, corruption: corruption);
         var sequence = new TestSequence(TestContext, SequenceType.Merkle, records, size, randomsize,
             additionalChunks,  checkSignatures: true);
 
@@ -505,7 +505,7 @@ public partial class TestSequences {
         int Record;
 
         // Write initial set of records
-        using (var XContainer = Sequence.NewContainer(
+        using (var XContainer = Sequence.NewSequence(
                         fileName, FileStatus.Overwrite, sequenceType: containerType,
                         policy)) {
             for (Record = 0; Record < reOpen; Record++) {

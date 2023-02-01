@@ -56,10 +56,13 @@ public class MeshMachineTest : MeshMachineCore {
 
     readonly TestEnvironmentBase testEnvironmentCommon;
 
+
+
+
     public string Name;
     public string Path => System.IO.Path.Combine(testEnvironmentCommon.Path, Name);
 
-    public override string Instance => testEnvironmentCommon.Test;
+    public override string Instance => testEnvironmentCommon.Seed.Seed;
 
 
     ///<inheritdoc/>

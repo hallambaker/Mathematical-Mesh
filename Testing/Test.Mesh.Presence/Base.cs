@@ -29,7 +29,7 @@ public partial class TestPresence : ShellTestBase {
         foreach (var disposable in Disposables) {
             disposable.Dispose();
             }
-        TestEnvironment.Dispose();
+        TestEnvironment?.Dispose();
         }
 
     CommunicationConditions CommunicationConditions { get; set; }
@@ -42,8 +42,8 @@ public partial class TestPresence : ShellTestBase {
     //public int BobSkip = 0;
     //public int BobStride = 0;
 
-    public override TestEnvironmentBase GetTestEnvironment() =>
-            new TestEnvironmentPresence() {
+    public override TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) =>
+            new TestEnvironmentPresence(seed) {
                 CommunicationConditions = CommunicationConditions
                 };
 

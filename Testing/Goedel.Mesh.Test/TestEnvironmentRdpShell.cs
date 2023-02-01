@@ -60,8 +60,9 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
     //public override string ServiceDns { get; }
 
-    public TestEnvironmentRdpShell() { }
-    //=> ServiceDns = "localhost";
+    public TestEnvironmentRdpShell(DeterministicSeed seed = null) : base(seed) { 
+        }
+
 
     RudService RudService { get; set; }
     RudService RudServiceCallSign { get; set; }

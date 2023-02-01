@@ -21,6 +21,32 @@
             </summary>
             <param name="message"></param>
         </member>
+        <member name="T:Goedel.Debug.Extension">
+            <summary>
+            Class containing static helper methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Debug.Extension.InvalidateKey(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Generate an invalidated version of the key <paramref name="keyPair"/> and add it
+            to <paramref name="keyCollection"/>.
+            </summary>
+            <param name="keyPair">The key to modify.</param>
+            <param name="keyCollection">The key collection to add it to.</param>
+            <returns>The corrupted key</returns>
+        </member>
+        <member name="M:Goedel.Debug.KeyPairX448Corrupt.#ctor(Goedel.Cryptography.KeyPairX448)">
+            <summary>
+            Constructor returning a corrupted version of 
+            </summary>
+            <param name="keyPair"></param>
+        </member>
+        <member name="M:Goedel.Debug.KeyPairEd448Corrupt.#ctor(Goedel.Cryptography.KeyPairEd448)">
+            <summary>
+            Constructor returning a corrupted version of 
+            </summary>
+            <param name="keyPair"></param>
+        </member>
         <member name="T:Goedel.Cryptography.Test.Initialization">
             <summary>Static class whose only function is to contain the initialization 
             routine.</summary>

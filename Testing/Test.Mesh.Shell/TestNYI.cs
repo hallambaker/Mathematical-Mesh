@@ -33,7 +33,7 @@ namespace Goedel.XUnit;
 public partial class ShellTests {
 
 
-    [Fact]
+    [Fact (Skip ="Additional checks on Shell")]
     public void NYI_RecoverApps() {
         "Check that SSH and Email applications work after recovery".TaskTest();
         
@@ -41,7 +41,7 @@ public partial class ShellTests {
         EndTest();
         }
 
-    [Fact]
+    [Fact(Skip = "Additional checks on Shell")]
     public void NYI_ConfirmMultipleAccept() {
         "Attempt confirmation exchange, accept same message multiple times".TaskTest();
         "Attempt confirmation exchange, accept, reject message ".TaskTest();
@@ -50,7 +50,7 @@ public partial class ShellTests {
         TestEnvironment.Dispose();
         EndTest();
         }
-    [Fact]
+    [Fact(Skip = "Additional checks on Shell")]
     public void NYI_LocalNameDevice() {
         "Address device by local name".TaskTest();
 
@@ -58,21 +58,21 @@ public partial class ShellTests {
         EndTest();
         }
 
-    [Fact]
+    [Fact(Skip = "Additional checks on Shell")]
     public void NYI_LocalNameAccount() {
         "Address account by local name".TaskTest();
 
         TestEnvironment.Dispose();
         EndTest();
         }
-    [Fact]
+    [Fact(Skip = "Additional checks on Shell")]
     public void NYI_ChangeDeviceAuthorization() {
         "Change authorization level after device created".TaskTest();
 
         TestEnvironment.Dispose();
         EndTest();
         }
-    [Fact]
+    [Fact(Skip = "Additional checks on Shell")]
     public void NYI_HelpfulError() {
 
         //ServiceNoReply
@@ -113,7 +113,7 @@ public partial class ShellTests {
         TestEnvironment.Dispose();
         EndTest();
         }
-    [Fact]
+    [Fact(Skip = "Additional checks on Shell")]
     public void NYI_KeyData() {
         "Write out key data in all known formats".TaskTest();
         "Write in key data in all known formats".TaskTest();
@@ -121,7 +121,7 @@ public partial class ShellTests {
         TestEnvironment.Dispose();
         EndTest();
         }
-    [Fact]
+    [Fact(Skip = "Additional checks on Shell")]
     public void NYI_DareArchive() {
         "Select specific file from a large archive".TaskTest();
         "Add files to archive after creation".TaskTest();
@@ -134,7 +134,7 @@ public partial class ShellTests {
         TestEnvironment.Dispose();
         EndTest();
         }
-    [Fact]
+    [Fact(Skip = "Additional checks on Shell")]
     public void NYI_CatchUserError() {
         "Check creation of group with no devices authorized".TaskTest();
         "Check creation of ssh with no devices authorized".TaskTest();

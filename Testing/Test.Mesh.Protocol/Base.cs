@@ -43,7 +43,9 @@ public partial class TestService {
 
     #region // Methods 
 
-    public virtual TestEnvironmentCommon GetTestEnvironmentCommon() => new();
+    public virtual TestEnvironmentCommon GetTestEnvironmentCommon(
+                        params object[] parameters) => 
+                new(DeterministicSeed.Auto(parameters));
 
 
     #endregion

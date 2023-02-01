@@ -39,7 +39,7 @@ public partial class TestSequences {
         }
 
     static KeyCollection MakeKeyCollection() {
-        var TestEnvironment = new TestEnvironmentCommon();
+        var TestEnvironment = new TestEnvironmentCommon(DeterministicSeed.Auto());
         //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
         return new KeyCollectionTestEnv(TestEnvironment.Path);
         }
@@ -172,7 +172,7 @@ public partial class TestSequences {
         int record;
 
         // Write initial set of records
-        using (var XContainer = Sequence.NewContainer(
+        using (var XContainer = Sequence.NewSequence(
                         filename, FileStatus.Overwrite, sequenceType:
                         SequenceType.Merkle,
                         policy: darePolicy)) {

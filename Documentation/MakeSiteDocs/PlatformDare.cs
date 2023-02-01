@@ -128,7 +128,7 @@ public partial class CreateExamples {
 
         //var FileStream = FileName.FileStream(FileStatus.Overwrite);
         var JBCDStream = new JBCDStreamDebug(FileName, FileStatus.Overwrite, Output: consoleWriter);
-        return Goedel.Cryptography.Dare.Sequence.NewContainer(JBCDStream, sequenceType: ContainerType, policy: policy);
+        return Goedel.Cryptography.Dare.Sequence.NewSequence(JBCDStream, sequenceType: ContainerType, policy: policy);
 
         }
 

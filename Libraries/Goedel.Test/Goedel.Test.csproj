@@ -7,6 +7,10 @@
     <Title>Goedel.Test</Title>
   </PropertyGroup>
 
+
+	<ItemGroup>
+	<PackageReference Include="xunit" Version="2.4.1" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
@@ -14,8 +18,8 @@
     <ProjectReference Include="..\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
     <ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-  </ItemGroup>
 
+  </ItemGroup>
   
   
   <ItemGroup>

@@ -250,7 +250,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
             // Create new Sequence if empty or read the old one.
             if (jbcdStream.Length == 0) {
-                Container = NewContainer(jbcdStream, decrypt:decrypt,
+                Container = NewSequence(jbcdStream, decrypt:decrypt,
                     keyLocate: keyLocate, sequenceType: sequenceType, policy: policy, 
                     contentType: contentType, bitmask: bitmask);
                 }
@@ -392,7 +392,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <param name="decrypt">If true, decrypt the Sequence payload contents.</param>
     /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
     /// <exception cref="InvalidFileModeException">The file mode specified was not valid.</exception>
-    public static Sequence NewContainer(
+    public static Sequence NewSequence(
                     string filename,
                     FileStatus fileStatus,
                     SequenceType sequenceType = SequenceType.Chain,
@@ -410,7 +410,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             InvalidFileModeException.Throw);
 
         var jbcdStream = new JbcdStream(filename, fileStatus);
-        var sequence = NewContainer(
+        var sequence = NewSequence(
             jbcdStream, decrypt:decrypt, sequenceType: sequenceType, policy: policy, payload: payload, contentType: contentType, dataEncoding: dataEncoding,
             cloaked: cloaked, dataSequences: dataSequences);
 
@@ -441,7 +441,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///     as an EDSS headerData entry.</param>
     /// <param name="decrypt">If true, decrypt the Sequence payload contents.</param>
     /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
-    public static Sequence NewContainer(
+    public static Sequence NewSequence(
                     JbcdStream jbcdStream,
                     IKeyLocate? keyLocate = null,
                     SequenceType sequenceType = SequenceType.Chain,
@@ -454,6 +454,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     bool decrypt=true,
                     byte[] bitmask = null,
                     JsonObject jsonObject = null) {
+        dataEncoding = dataEncoding.Default();
 
         // Initialize the header
         var sequenceInfo = new SequenceInfo() {
@@ -552,9 +553,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     IKeyLocate keyLocate,
                     List<DareEnvelope> envelopes,
                     FileStatus fileStatus = FileStatus.CreateNew) {
-
-        "Fix this".TaskFunctionality(true);
-
         var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
         var sequence = new SequenceMerkleTree() {
             JbcdStream = jbcdStream,
@@ -562,7 +560,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             DisposeJBCDStream = jbcdStream
             };
 
-        sequence.Append(envelopes);
+        // Append the envelopes setting the first sequence entry index correctly.
+        sequence.SequenceIndexEntryFirst = sequence.Append(envelopes[0]);
+        sequence.Append(envelopes, 1);
 
         return sequence;
         }
@@ -739,7 +739,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             FramePosition = framePosition,
             FrameLength = frameLength,
             DataPosition = dataPosition,
-            DataLength = payload.Length,
+            DataLength = payload?.Length ?? 0,
             Header = header,
             Trailer = trailer,
             JsonObject = jsonObject

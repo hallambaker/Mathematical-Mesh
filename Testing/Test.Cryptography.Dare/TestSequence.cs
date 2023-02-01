@@ -84,7 +84,7 @@ public record TestSequence : TestBase {
         Filename = Seed.GetFilename(file);
 
 
-        using (var sequence = Sequence.NewContainer(Filename, FileStatus.Overwrite, sequenceType)) {
+        using (var sequence = Sequence.NewSequence(Filename, FileStatus.Overwrite, sequenceType)) {
             for (var i = 0; i < records; i++) {
                 (sequence.FrameCount == i + 1).TestTrue();
 
@@ -266,7 +266,7 @@ public record TestSequence : TestBase {
 
 
     public void CheckDecryptCorruptData(int tests) {
-        (TestContext.Corrupt == ModeCorruption.Data).TestTrue();
+        (TestContext.Corruption == ModeCorruption.Data).TestTrue();
 
         for (var i = 0; i < tests; i++) {
             var frame = Seed.GetRandomInt(Records, i, "randomAccess1");
@@ -279,7 +279,7 @@ public record TestSequence : TestBase {
         }
 
     public void CheckDecryptCorruptKey(int tests) {
-        (TestContext.Corrupt == ModeCorruption.Key).TestTrue();
+        (TestContext.Corruption == ModeCorruption.Key).TestTrue();
 
         for (var i = 0; i < tests; i++) {
             var frame = Seed.GetRandomInt(Records, i, "randomAccess2");
@@ -290,7 +290,7 @@ public record TestSequence : TestBase {
         }
 
     public void CheckSignCorruptData(int tests) {
-        (TestContext.Corrupt == ModeCorruption.Data).TestTrue();
+        (TestContext.Corruption == ModeCorruption.Data).TestTrue();
 
         for (var i = 0; i < tests; i++) {
             var frame = Seed.GetRandomInt(Records, i, "randomAccess3");
@@ -303,7 +303,7 @@ public record TestSequence : TestBase {
         }
 
     public void CheckSignCorruptKey(int tests) {
-        (TestContext.Corrupt == ModeCorruption.Key).TestTrue();
+        (TestContext.Corruption == ModeCorruption.Key).TestTrue();
 
         for (var i = 0; i < tests; i++) {
             var frame = Seed.GetRandomInt(Records, i, "randomAccess4");

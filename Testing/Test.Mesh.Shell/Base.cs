@@ -24,6 +24,7 @@ using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
+using Goedel.Test;
 using Goedel.Utilities;
 
 
@@ -42,6 +43,10 @@ namespace Goedel.XUnit;
 
 
 public partial class ShellTestBase : Disposable {
+
+
+
+
 
     public string ServiceDns => TestEnvironment.ServiceDns;
 
@@ -69,10 +74,11 @@ public partial class ShellTestBase : Disposable {
 
     ///<summary>The test environment, base for all </summary>
     public TestEnvironmentBase TestEnvironment => testEnvironment ??
-        GetTestEnvironment().CacheValue(out testEnvironment);
+        GetTestEnvironment(DeterministicSeed.Auto()).CacheValue(out testEnvironment);
     TestEnvironmentBase testEnvironment;
 
-    public virtual TestEnvironmentBase GetTestEnvironment() => new TestEnvironmentCommon();
+    public virtual TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) => 
+                new TestEnvironmentCommon(seed);
 
     public virtual TestCLI GetTestCLI(string machineName = null) =>
     TestEnvironment.GetTestCLI(machineName);
@@ -100,8 +106,8 @@ public partial class ShellTestsAdmin : ShellTests {
 
 
     // Use the new test environment (when defined.)
-    public override TestEnvironmentBase GetTestEnvironment() {
-        testEnvironmentCommon = new TestEnvironmentRdpShell() {
+    public override TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) {
+        testEnvironmentCommon = new TestEnvironmentRdpShell(seed) {
             JpcConnection = Protocol.JpcConnection.Http
             };
         return testEnvironmentCommon;

@@ -32,10 +32,10 @@ public class KeyPairEd448 : KeyPairEdwards {
 
     #region // Properties and fields 
     ///<summary>The implementation public key value</summary>
-    public CurveEdwards448Public PublicKey { get; set; }
+    public virtual CurveEdwards448Public PublicKey { get;  }
 
     ///<summary>The implementation private key value (if exportable)</summary>
-    public CurveEdwards448Private PrivateKey { get; set; }
+    public virtual CurveEdwards448Private PrivateKey { get; }
 
     ///<summary>The implementation public key value</summary>
     public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;

@@ -63,9 +63,10 @@ public partial class TestStores {
 
 
     [Theory]
-    [InlineData()]
+    [InlineData(null)]
     public void TestSpoolBasic(
             TestStoreParams testParams = null) {
+        testParams ??= new();
 
         var seed = DeterministicSeed.Create(testParams);
         var context = new TestContext(seed);
@@ -81,9 +82,10 @@ public partial class TestStores {
         }
 
     [Theory]
-    [InlineData()]
+    [InlineData(null)]
     public void TestCatalogBasic(
         TestStoreParams testParams = null) {
+        testParams ??= new();
 
         var seed = DeterministicSeed.Create(testParams);
         var context = new TestContext(seed);

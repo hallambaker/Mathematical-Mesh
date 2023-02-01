@@ -24,6 +24,7 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Utilities;
 using System.Diagnostics;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
@@ -34,7 +35,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Goedel.Test;
 
 public class DeterministicSeed {
-    static readonly string TestPath = "TestPath";
+    public static readonly string TestPath = "TestPath";
     static readonly string WorkingDirectory = "Deterministic";
 
     public string Seed { get; }
@@ -43,19 +44,93 @@ public class DeterministicSeed {
 
     public string Directory { get; }
 
-    public string TestRoot { get; }
+    public static string TestRoot { get; }
+
+
+
+    static DeterministicSeed() {
+        TestRoot = Environment.GetEnvironmentVariable(TestPath);
+        }
 
 
     DeterministicSeed (string name) {
         Seed = name;
         SeedBytes = Seed.ToBytes ();
 
-        TestRoot = Environment.GetEnvironmentVariable(TestPath);
         TestRoot.AssertNotNull(EnvironmentVariableRequired.Throw, TestPath);
         
 
         Directory = System.IO.Path.Combine(TestRoot, WorkingDirectory, Seed);
+        System.IO.Directory.CreateDirectory(Directory);
         }
+
+
+    public static DeterministicSeed Auto(params object[] parameters) {
+        var stack = new StackTrace();
+
+        //int index = 1;
+        //var frame = stack.GetFrame(index);
+        //var method = frame.GetMethod();
+
+        for (var i = 0; i < stack.FrameCount; i++) {
+            var frame = stack.GetFrame(stack.FrameCount - i -1);
+            var method = frame.GetMethod();
+            if (HasTest(method)) {
+                return new DeterministicSeed(Format(method.Name, parameters));
+                }
+            }
+
+
+        //while (method != null) {
+        //    if (HasTest(method)) {
+        //        return new DeterministicSeed(Format(method.Name, parameters));
+        //        }
+        //    index++;
+        //    frame = stack.GetFrame(index);
+        //    method = frame.GetMethod();
+        //    }
+
+        throw new NYI();
+
+        }
+
+    static bool HasTest(MethodBase method) {
+        //parameter = "";
+        if (method is MethodInfo methodInfo) {
+
+            var attributes = methodInfo.GetCustomAttributes();
+
+            foreach (var attribute in attributes) {
+
+                if ((Type)attribute.TypeId == typeof(Xunit.FactAttribute)) {
+                    return true;
+                    }
+                if ((Type)attribute.TypeId == typeof(Xunit.TheoryAttribute)) {
+                    //parameter = ParametersToString(methodInfo);
+                    return true;
+                    }
+                }
+
+
+            }
+        //foreach (var attribute in method.Attributes) {
+
+        //    }
+        return false;
+        }
+
+
+    //static string ParametersToString(MethodInfo methodInfo) {
+    //    var sb = new StringBuilder();
+
+    //    foreach (var parameter in methodInfo.GetParameters()) {
+    //        }
+
+
+    //    return sb.ToString();
+    //    }
+
+
 
     public static DeterministicSeed Create(params object[] parameters) {
         var stack = new StackTrace();
@@ -81,14 +156,12 @@ public class DeterministicSeed {
         return new DeterministicSeed(Format(method.Name, parameters));
         }
 
-    public string GetDirectory(string label) {
-        System.IO.Directory.CreateDirectory(Directory);
-        return Path.Combine(Directory, label);
-        }
-    public string GetFilename(string label) {
-        System.IO.Directory.CreateDirectory(Directory);
-        return Path.Combine(Directory, label);
-        }
+    public string GetDirectory(string label) =>
+        Path.Combine(Directory, label);
+        
+    public string GetFilename(string label) =>
+         Path.Combine(Directory, label);
+
 
 
     public int GetInt32(int ceiling, params object[] parameters) {

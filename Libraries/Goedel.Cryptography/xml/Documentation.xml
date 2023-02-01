@@ -8280,7 +8280,7 @@
         </member>
         <member name="M:Goedel.Cryptography.KeyPairX448.#ctor(Goedel.Cryptography.Algorithms.CurveX448Private,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
-            Construct a KeyPairEd25519 instance for a secret scalar. This is used to create
+            Construct a KeyPairX448 instance for a secret scalar. This is used to create
             private keys using cogeneration.
             </summary>
             <param name="privateKey">The secret scalar value.</param>

@@ -85,7 +85,7 @@ public partial class TestDare {
         }
 
     static KeyCollection MakeKeyCollection() {
-        var testEnvironment = new TestEnvironmentCommon();
+        var testEnvironment = new TestEnvironmentCommon(DeterministicSeed.Auto());
         //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
         return new KeyCollectionTestEnv(testEnvironment.Path);
         }

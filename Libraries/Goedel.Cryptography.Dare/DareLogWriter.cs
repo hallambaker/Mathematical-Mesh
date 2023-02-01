@@ -82,7 +82,7 @@ public class DareLogWriter : DareLogReader {
 
         if (jbcdStream.Length == 0) {
 
-            Sequence = Sequence.NewContainer(jbcdStream, sequenceType: containerType);
+            Sequence = Sequence.NewSequence(jbcdStream, sequenceType: containerType);
             DictionaryStart = 0;
             }
         else {

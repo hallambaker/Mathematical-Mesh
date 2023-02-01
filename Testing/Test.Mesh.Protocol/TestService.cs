@@ -100,9 +100,10 @@ public partial class TestService {
         Service = "example.net"
         };
 
+
+
     [Fact]
     public void ProtocolHello() {
-
         var testEnvironmentCommon = GetTestEnvironmentCommon();
         var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
 

@@ -47,6 +47,15 @@ public enum DataEncoding {
 
 public static partial class Extensions {
 
+    /// <summary>
+    /// If <paramref name="encoding"/> is <see cref="DataEncoding.Default"/>,
+    /// return <paramref name="defaultEncoding"/>, otherwise, return <paramref name="encoding"/>.
+    /// </summary>
+    /// <param name="encoding">The encoding to apply the default to.</param>
+    /// <param name="defaultEncoding">The default encoding to be used.</param>
+    /// <returns></returns>
+    public static DataEncoding Default(this DataEncoding encoding, DataEncoding defaultEncoding = DataEncoding.JSON) =>
+        encoding == DataEncoding.Default? defaultEncoding : encoding;
 
     /// <summary>
     /// Report if a protocol status cude indicates success.
@@ -72,6 +81,7 @@ public static partial class Extensions {
                 bool tagged = true) {
 
         switch (dataEncoding) {
+            case DataEncoding.Default:
             case DataEncoding.JSON: {
                     return GetJson(jsonObject, tagged);
                     }

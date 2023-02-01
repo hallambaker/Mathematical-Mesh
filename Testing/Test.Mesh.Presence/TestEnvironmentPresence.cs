@@ -36,6 +36,9 @@ public class TestEnvironmentPresence : TestEnvironmentCommon {
 
     PresenceServer PresenceServer;
 
+
+    public TestEnvironmentPresence (DeterministicSeed seed) : base(seed) { }
+
     protected override void Disposing() {
         base.Disposing();
         PresenceServer.Dispose();
