@@ -65,7 +65,7 @@ partial class Program {
         //TestSequences.Test().TestSparse(ModeEnhance.Sparse, ModeEnhance.Sparse);
         //TestSequences.Test().TestProof(ModeEnhance.Sparse, ModeEnhance.Sparse);
         //TestPersist.Test().TestPersistenceStoreAll();
-        //TestContainers.Test().ContainerTest0();
+
 
 
 
@@ -73,6 +73,10 @@ partial class Program {
         TestPlatform.Test().TestKeyRead();
         TestPlatform.Test().TestWritePEMRSA();
 
+        // Most likely a faulty direct append issue going on...
+        //StoreTests.Test().TestSpoolSingle();
+
+        // Next batch. Likely crashing in the service and being caught...
         //TestService.Test().MeshDeviceConnectPIN();
 
 

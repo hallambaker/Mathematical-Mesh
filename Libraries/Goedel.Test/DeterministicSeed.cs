@@ -90,7 +90,7 @@ public class DeterministicSeed {
         //    method = frame.GetMethod();
         //    }
 
-        throw new NYI();
+        throw new UnitTestNotFound();
 
         }
 

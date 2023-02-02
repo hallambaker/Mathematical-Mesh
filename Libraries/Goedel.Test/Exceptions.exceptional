@@ -53,3 +53,9 @@ Namespace Goedel.Test
         Console "An comparison check on the produced result failed"
 		Description
 			|An comparison check on the produced result failed
+
+
+	Exception UnitTestNotFound
+		Console "Could not initialize the deterministic seed as none of the callers is a unit test"
+		Description
+			|Could not initialize the deterministic seed as none of the callers is a unit test
