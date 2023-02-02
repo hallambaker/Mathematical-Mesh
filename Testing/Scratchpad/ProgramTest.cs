@@ -34,6 +34,8 @@ using Goedel.Test.Core;
 using Goedel.Utilities;
 using Goedel.XUnit;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
+
 namespace Scratchpad;
 
 
@@ -56,8 +58,9 @@ partial class Program {
 
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
-        //TestSequences.Test().TestEncrypt(SequenceType.List);
-        //TestSequences.Test().TestSign(SequenceType.List);
+        //TestSequences.Test().ZContainerFixedExchangeTest("", 
+        //    DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519);
+        //TestSequences.Test().ZContainerTest1();
         //TestSequences.Test().TestSignEncrypt(SequenceType.List);
         //TestSequences.Test().TestSparse(ModeEnhance.Sparse, ModeEnhance.Sparse);
         //TestSequences.Test().TestProof(ModeEnhance.Sparse, ModeEnhance.Sparse);
@@ -66,8 +69,11 @@ partial class Program {
 
 
 
-        //TestStores.Test().TestSpoolBasic();
-        TestService.Test().MeshDeviceConnectPIN();
+        TestPersist.Test().TestPersistenceStoreAll();
+        TestPlatform.Test().TestKeyRead();
+        TestPlatform.Test().TestWritePEMRSA();
+
+        //TestService.Test().MeshDeviceConnectPIN();
 
 
 
@@ -88,7 +94,7 @@ partial class Program {
         //TestContainers.Test().TestSequence(SequenceType.List, 20, 3000);
 
 
-        //StoreTests.Test().TestAppendDirect();
+        //TestLifecycle.Test().Test_LifecycleMaster(CryptoAlgorithmId.X448);
         //TestPresence.Test().PresenceSessionRequest();
 
 

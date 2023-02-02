@@ -442,7 +442,7 @@ public partial class TestSequences {
         }
 
 
-    static void TestContainerMulti(string FileName,
+    void TestContainerMulti(string FileName,
         int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0,
         DarePolicy policy = null,
         CryptoParameters CryptoParametersEntry = null) {
@@ -478,7 +478,7 @@ public partial class TestSequences {
 
         Seed = DeterministicSeed.Auto(containerType, records, maxSize, reOpen, moveStep);
 
-        var filename = Seed.GetFilename("TestSequence");
+        var filename = $"{containerType}-{records}-{maxSize}";
         ZTestContainer(filename, containerType, records, maxSize, reOpen, moveStep);
         }
 
@@ -490,19 +490,20 @@ public partial class TestSequences {
     public void ZContainerTestList1() => ZTestContainer($"ContainerList", SequenceType.List, 1);
 
 
-    static void ZTestContainer(string fileName, SequenceType containerType,
+    void ZTestContainer(string testLabel, SequenceType containerType,
                 int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0,
                 DarePolicy policy = null,
                 CryptoParameters cryptoParametersEntry = null,
                 IKeyLocate keyLocate = null) {
+
+        Seed = DeterministicSeed.Auto(testLabel, records);
+        var fileName = Seed.GetFilename(testLabel);
 
         var keyCollection = keyLocate ?? policy?.KeyLocation;
         //var KeyCollection = policy?.KeyLocate ?? CryptoParametersEntry?.KeyLocate;
 
         reOpen = reOpen == 0 ? records : reOpen;
         maxSize = maxSize == 0 ? records + 1 : maxSize;
-
-        fileName += $"-{records}";
 
         int Record;
 

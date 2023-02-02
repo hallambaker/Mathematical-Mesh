@@ -66,10 +66,10 @@ public partial class TestCryptography {
 
     public TestCryptography() {
         //var machineEnvironment = new TestEnviron_USELESS_DELETE( "TestCryptography");
-        var testEnvironmentCommon = new TestEnvironmentCommon();
+        //var testEnvironmentCommon = new TestEnvironmentCommon();
 
-        MeshMachine = new MeshMachineTest(testEnvironmentCommon);
-        KeyCollection = new KeyCollectionTest(MeshMachine);
+        //MeshMachine = new MeshMachineTest(testEnvironmentCommon);
+        //KeyCollection = new KeyCollectionTest(MeshMachine);
         }
 
     [Fact]

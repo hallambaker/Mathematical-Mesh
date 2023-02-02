@@ -38,40 +38,44 @@ public partial class TestSequences {
     static TestSequences() {
         }
 
-    static KeyCollection MakeKeyCollection(params object[] parameters) {
-        var TestEnvironment = new TestEnvironmentCommon(DeterministicSeed.Auto(parameters));
+    KeyCollection MakeKeyCollection(params object[] parameters) {
+        var TestEnvironment = new TestEnvironmentCommon(Seed ?? DeterministicSeed.Auto(parameters));
         //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
         return new KeyCollectionTestEnv(TestEnvironment.Path);
         }
 
     [Fact]
     public void ZContainerOnceExchange() =>
-        ZContainerFixedExchangeTest(DareConstants.PolicyEncryptionOnceTag, true, 10, 2048, 5, 2);
+        ZContainerFixedExchangeTest("", DareConstants.PolicyEncryptionOnceTag, true, 10, 2048, 5, 2);
 
     [Fact]
     public void ZContainerIsolatedPolicy() =>
-        ZContainerFixedExchangeTest(DareConstants.PolicyEncryptionIsolatedTag, true, 10, 2048, 5, 2);
+        ZContainerFixedExchangeTest("", DareConstants.PolicyEncryptionIsolatedTag, true, 10, 2048, 5, 2);
 
     [Fact]
     public void ZContainerSessionPolicy() =>
-        ZContainerFixedExchangeTest(DareConstants.PolicyEncryptionSessionTag, false, 10, 2048, 5, 2);
+        ZContainerFixedExchangeTest("", DareConstants.PolicyEncryptionSessionTag, false, 10, 2048, 5, 2);
 
 
     [Theory]
-    [InlineData(DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
-    [InlineData(DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
-    [InlineData(DareConstants.PolicyEncryptionIsolatedTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
-    [InlineData(DareConstants.PolicyEncryptionIsolatedTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
-    [InlineData(DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
-    [InlineData(DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
+    [InlineData("Session225", DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
+    [InlineData("Session448", DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
+    [InlineData("Isolated255", DareConstants.PolicyEncryptionIsolatedTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
+    [InlineData("Isolated448", DareConstants.PolicyEncryptionIsolatedTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
+    [InlineData("Once255", DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519)]
+    [InlineData("Once448", DareConstants.PolicyEncryptionOnceTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X448)]
     public void ZContainerFixedExchangeTest(
+            string testLabel,
             string encryptPolicy,
             bool seal,
             int records = 1, int maxSize = 0,
             int reOpen = 0, int moveStep = 0,
             CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.X448) {
+
+        Seed = DeterministicSeed.Auto(testLabel);
+
         // Setup
-        var keyCollection = MakeKeyCollection(encryptPolicy,seal,records, maxSize, reOpen, moveStep, cryptoAlgorithmId);
+        var keyCollection = MakeKeyCollection();
 
         // Generate key(s)
         var encrypt = KeyPair.Factory(cryptoAlgorithmId,
@@ -86,9 +90,11 @@ public partial class TestSequences {
             Sealed = seal
             };
 
-        var namebase = $"Incremental-{encryptPolicy}-";
+        //var namebase = $"Incremental-{encryptPolicy}-";
+
+        var filename = Seed.GetFilename("Sequence");
         // Exercise Sequence
-        TestContainerIncremental(namebase, keyCollection, policy, records, maxSize, reOpen, moveStep);
+        TestContainerIncremental(filename, keyCollection, policy, records, maxSize, reOpen, moveStep);
         }
 
     static byte[] MakeRecordData(int record, int size) {
@@ -159,7 +165,7 @@ public partial class TestSequences {
         }
 
     static void TestContainerIncremental(
-            string namebase,
+            string filename,
                 IKeyLocate keyCollection,
             DarePolicy darePolicy = null,
             int records = 1, int maxSize = 0,
@@ -168,7 +174,7 @@ public partial class TestSequences {
         reOpen = reOpen == 0 ? records : reOpen;
         maxSize = maxSize == 0 ? records + 1 : maxSize;
 
-        var filename = $"namebase-{records}-{maxSize}-{reOpen}-{moveStep}";
+        //var filename = $"namebase-{records}-{maxSize}-{reOpen}-{moveStep}";
         int record;
 
         // Write initial set of records
@@ -196,10 +202,6 @@ public partial class TestSequences {
                         keyLocate: keyCollection)) {
             XContainer.VerifySequence();
             }
-
-
-        //var Headers = new List<DareHeader>();
-
 
         // Read records 
         using (var XContainer = Sequence.Open(filename, FileStatus.Read,
@@ -231,13 +233,7 @@ public partial class TestSequences {
                     (ContainerDataReader.Header.SequenceInfo.LIndex == record).TestTrue();
                     }
                 }
-
             }
-
         }
-
-
-
-
 
     }

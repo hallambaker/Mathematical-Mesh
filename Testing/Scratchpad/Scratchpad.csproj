@@ -13,6 +13,8 @@
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
 		<ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
 		<ProjectReference Include="..\Test.Cryptography.Dare\Test.Cryptography.Dare.csproj" />
+		<ProjectReference Include="..\Test.Cryptography.Platform\Test.Cryptography.Platform.csproj" />
+		<ProjectReference Include="..\Test.Cryptography\Test.Cryptography.csproj" />
 	</ItemGroup>
 	
   <ItemGroup Condition="'$(Configuration)'=='Never'">
