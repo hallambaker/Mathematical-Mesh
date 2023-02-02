@@ -38,8 +38,8 @@ public partial class TestSequences {
     static TestSequences() {
         }
 
-    static KeyCollection MakeKeyCollection() {
-        var TestEnvironment = new TestEnvironmentCommon(DeterministicSeed.Auto());
+    static KeyCollection MakeKeyCollection(params object[] parameters) {
+        var TestEnvironment = new TestEnvironmentCommon(DeterministicSeed.Auto(parameters));
         //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
         return new KeyCollectionTestEnv(TestEnvironment.Path);
         }
@@ -71,7 +71,7 @@ public partial class TestSequences {
             int reOpen = 0, int moveStep = 0,
             CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.X448) {
         // Setup
-        var keyCollection = MakeKeyCollection();
+        var keyCollection = MakeKeyCollection(encryptPolicy,seal,records, maxSize, reOpen, moveStep, cryptoAlgorithmId);
 
         // Generate key(s)
         var encrypt = KeyPair.Factory(cryptoAlgorithmId,

@@ -47,7 +47,7 @@ public partial class TestSequences {
     public static TestSequences Test() => new();
 
 
-
+    DeterministicSeed Seed;
 
 
     [Theory]
@@ -476,7 +476,9 @@ public partial class TestSequences {
     public void ZTestSequence(SequenceType containerType,
     int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0) {
 
-        var filename = DeterministicSeed.GetUnique(containerType, records, maxSize, reOpen, moveStep);
+        Seed = DeterministicSeed.Auto(containerType, records, maxSize, reOpen, moveStep);
+
+        var filename = Seed.GetFilename("TestSequence");
         ZTestContainer(filename, containerType, records, maxSize, reOpen, moveStep);
         }
 

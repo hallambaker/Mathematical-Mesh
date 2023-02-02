@@ -67,7 +67,7 @@ partial class Program {
 
 
         //TestStores.Test().TestSpoolBasic();
-        TestService.Test().TestCredentialAccountFails(DataValidity.CorruptPayload);
+        TestService.Test().MeshDeviceConnectPIN();
 
 
 

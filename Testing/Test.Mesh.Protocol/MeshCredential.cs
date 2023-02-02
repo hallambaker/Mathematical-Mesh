@@ -155,7 +155,7 @@ public partial class TestService {
     [InlineData(DataValidity.CorruptPayload)]
     [InlineData(DataValidity.CorruptMissing)]
     public void TestProfileFails(DataValidity dataValidity) {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
+        var testEnvironmentCommon = GetTestEnvironmentCommon(dataValidity);
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main");
         var credentialTemp = contextAccountAlice.GetMeshCredentialPrivate();
