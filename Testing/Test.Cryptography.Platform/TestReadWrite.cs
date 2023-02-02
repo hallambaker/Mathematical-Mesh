@@ -30,7 +30,7 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
-public partial class TestPlatform {
+public partial class TestPlatform : UnitTestSet {
 
     [Fact]
     public void TestKeyRead() {

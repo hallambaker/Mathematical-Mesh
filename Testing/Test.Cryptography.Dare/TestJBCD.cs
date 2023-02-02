@@ -31,7 +31,7 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
-public class TestJBCD {
+public class TestJBCD : UnitTestSet {
 
 
 
@@ -47,15 +47,19 @@ public class TestJBCD {
         }
 
     [Theory]
-    [InlineData("JBCD0.jbcd", 0)]
-    [InlineData("JBCD1.jbcd", 1)]
-    [InlineData("JBCD10.jbcd", 10)]
-    public void TestJBCDStream(string FileName, int Records, int MaxSize = 0) {
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(10)]
+    public void TestJBCDStream(int Records, int MaxSize = 0) {
+
+        Seed = DeterministicSeed.Auto(Records, MaxSize);
+        var filename = Seed.GetFilename("JBCD");
+
         //ReOpen = ReOpen == 0 ? Records : ReOpen;
         MaxSize = MaxSize == 0 ? Records + 1 : MaxSize;
 
 
-        using (var JBCDStream = new JbcdStream(FileName, FileStatus.Overwrite)) {
+        using (var JBCDStream = new JbcdStream(filename, FileStatus.Overwrite)) {
             for (int i = 0; i < Records; i++) {
                 var Test1 = MakeConstant("Header ", ((i + 1) % MaxSize));
                 var Test2 = MakeConstant("Data ", ((i + 1) % MaxSize));
@@ -63,7 +67,7 @@ public class TestJBCD {
                 }
             }
 
-        using (var JBCDStream = new JbcdStream(FileName, FileStatus.Read)) {
+        using (var JBCDStream = new JbcdStream(filename, FileStatus.Read)) {
             for (int i = 0; i < Records; i++) {
                 var Test1 = MakeConstant("Header ", ((i + 1) % MaxSize));
                 var Test2 = MakeConstant("Data ", ((i + 1) % MaxSize));

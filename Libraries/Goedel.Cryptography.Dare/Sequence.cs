@@ -175,6 +175,32 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///<summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
     public InternSequenceIndexEntryDelegate InternSequenceIndexEntryDelegate { get; init; } = null;
 
+    ///<summary>Delegate called to create a Sequence entry for a catalog or store.</summary> 
+    public SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactoryDelegate 
+                { get; init; } = SequenceIndexEntryFactory;
+
+
+    public static SequenceIndexEntry SequenceIndexEntryFactory(
+                Sequence sequence,
+                long framePosition,
+                long frameLength,
+                long dataPosition,
+                long dataLength,
+                DareHeader header,
+                DareTrailer trailer,
+                JsonObject jsonObject
+                ) => new SequenceIndexEntry() {
+                    Sequence = sequence,
+                    FramePosition = framePosition,
+                    FrameLength = frameLength,
+                    DataPosition = dataPosition,
+                    DataLength = dataLength,
+                    Header = header,
+                    Trailer = trailer,
+                    JsonObject = jsonObject
+                    };
+
+
 
     #endregion
     /// <summary>

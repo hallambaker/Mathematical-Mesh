@@ -23,6 +23,12 @@
 
 namespace Goedel.Mesh;
 
+
+public class SpoolIndexEntry : SequenceIndexEntry {
+    }
+
+
+
 ///<summary>Message entry in spool catalog</summary>
 public class SpoolEntry {
 

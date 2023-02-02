@@ -40,6 +40,17 @@ public enum SequenceIntegrity {
 
     }
 
+
+public delegate SequenceIndexEntry SequenceIndexEntryFactoryDelegate(
+            Sequence sequence,
+            long  framePosition,
+            long  frameLength,
+            long  dataPosition,
+            long  dataLength,
+            DareHeader header,
+            DareTrailer trailer,
+            JsonObject jsonObject);
+
 ///<summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
 public delegate void InternSequenceIndexEntryDelegate(
         SequenceIndexEntry sequenceIndexEntry);
@@ -100,8 +111,6 @@ public partial class SequenceIndexEntry {
     ///<summary>Convenience accessor for the payload digest</summary> 
     public byte[] ChainDigest => Trailer?.ChainDigest ?? Header.ChainDigest;
 
-
-    //readonly jbcdStream jbcdStream;
 
 
 

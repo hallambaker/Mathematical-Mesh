@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(SolutionDir)Settings/BaseSettings.xml" />
+	<Import Project="$(SolutionDir)Settings/TestSettings.xml" />
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<StartupObject>Scratchpad.Program</StartupObject>
+		<TargetFramework>net7.0-windows</TargetFramework>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Test\**" />
+	  <EmbeddedResource Remove="Test\**" />
+	  <None Remove="Test\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
+		<ProjectReference Include="..\Test.Windows\Test.Windows.csproj" />
+	</ItemGroup>
+
+
+</Project>

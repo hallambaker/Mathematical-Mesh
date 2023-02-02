@@ -99,15 +99,13 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 /// <summary>
 /// Test environment for one test with one service with one or more devices.
 /// </summary>
-public abstract class TestEnvironmentBase : Disposable {
+public abstract class TestEnvironmentBase : UnitTestSet {
 
 
     public virtual string ServiceDns => "example.com";
 
     public static readonly string TestPath = "TestPath";
 
-
-    public DeterministicSeed Seed { get; }
 
     public static string TestRoot => DeterministicSeed.TestRoot;
 
@@ -167,8 +165,8 @@ public abstract class TestEnvironmentBase : Disposable {
 
     public TestEnvironmentBase(DeterministicSeed seed = null) {
 
-        seed ??= DeterministicSeed.Auto();
-        Seed = seed;
+        //seed ??= DeterministicSeed.Auto();
+        //Seed = seed;
 
         Path.DirectoryDelete();
 

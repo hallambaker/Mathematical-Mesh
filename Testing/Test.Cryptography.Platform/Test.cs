@@ -7,7 +7,7 @@ namespace Goedel.XUnit;
 public partial class TestPlatform {
 
     public TestEnvironmentCommon TestEnvironment => testEnvironment ??
-    new TestEnvironmentCommon().CacheValue(out testEnvironment);
+            new TestEnvironmentCommon().CacheValue(out testEnvironment);
     TestEnvironmentCommon testEnvironment;
 
     public MeshMachineTest MeshMachineTest => meshMachineTest ??
@@ -15,15 +15,10 @@ public partial class TestPlatform {
     MeshMachineTest meshMachineTest;
 
 
-    //public readonly KeyCollection KeyCollection;
 
-    //public MeshMachineTest MeshMachine;
 
     public static TestPlatform Test() => new();
     public TestPlatform() {
-        //var testEnvironmentCommon = new TestEnvironmentCommon();
 
-        //MeshMachine = new MeshMachineTest(testEnvironmentCommon);
-        //KeyCollection = new KeyCollectionTest(MeshMachine);
         }
     }

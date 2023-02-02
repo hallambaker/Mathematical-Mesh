@@ -46,6 +46,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Test.Mesh.Presence\Test.Mesh.Presence.csproj" />
 		<ProjectReference Include="..\Test.Mesh.Protocol\Test.Mesh.Protocol.csproj" />
+		<ProjectReference Include="..\Test.Mesh.Store\Test.Mesh.Store.csproj" />
 	</ItemGroup>
 	
   <ItemGroup>

@@ -58,54 +58,11 @@ partial class Program {
 
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
-        //TestSequences.Test().ZContainerFixedExchangeTest("", 
-        //    DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519);
-        //TestSequences.Test().ZContainerTest1();
-        //TestSequences.Test().TestSignEncrypt(SequenceType.List);
-        //TestSequences.Test().TestSparse(ModeEnhance.Sparse, ModeEnhance.Sparse);
-        //TestSequences.Test().TestProof(ModeEnhance.Sparse, ModeEnhance.Sparse);
-        //TestPersist.Test().TestPersistenceStoreAll();
 
 
 
-
-        //TestPersist.Test().TestPersistenceStoreAll();
-        //TestPlatform.Test().TestKeyRead();
-        //TestPlatform.Test().TestWritePEMRSA();
-
-        // Most likely a faulty direct append issue going on...
-        StoreTests.Test().TestSpoolSingle();
-
-        // Next batch. Likely crashing in the service and being caught...
-        //TestService.Test().MeshDeviceConnectPIN();
-
-
-
-
-
-        //TestContainers.Test().ZTestAppend(SequenceType.Tree, 1);
-
-
-        //TestContainers.Test().TestAppend(SequenceType.Merkle, 2, 50, true);
-
-        //TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 0);
-        //TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 1);
-
-        //TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 10);
-
-        //TestContainers.Test().ZContainerTest500();
-
-        //TestContainers.Test().TestSequence(SequenceType.List, 20, 3000);
-
-
-        //TestLifecycle.Test().Test_LifecycleMaster(CryptoAlgorithmId.X448);
-        //TestPresence.Test().PresenceSessionRequest();
-
-
-
-
-
-
+        TestPlatform.Test().TestKeyRead();
+        TestPlatformWindows.Test().TestKeyRead();
 
         //RegistrationTests.Test().CallsignBind();
 
@@ -115,7 +72,7 @@ partial class Program {
         //TestPresence.Test().PresenceHeartbeat(cycles:30, clientSkip: 1);
 
 
-        //TestPresence.Test().UdpServiceBasic(2000);
+
 
 
 

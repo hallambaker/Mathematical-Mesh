@@ -111,11 +111,16 @@ public class SpoolEnumeratorRaw : IEnumerator<SpoolEntry> {
     public bool MoveNext() {
         while (true) {
 
+            if (Current is null) {
+                return false;
+                }
+
             // Check the conditions for continuing to search
             if (checkMaxResults && (results >= maxResults)) {
                 Current = null;
                 return false;
                 }
+
 
             // move to the next item
             Current = Reverse? spool.GetPrevious(Current) : spool.GetNext(Current);

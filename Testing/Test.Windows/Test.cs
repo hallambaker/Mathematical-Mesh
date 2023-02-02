@@ -27,6 +27,9 @@ namespace Goedel.XUnit;
 
 public partial class TestPlatformWindows : TestPlatform {
 
+
+    public static new TestPlatformWindows Test() => new TestPlatformWindows();
+
     public TestPlatformWindows() => Initialization.Initialized.TestTrue();
 
 

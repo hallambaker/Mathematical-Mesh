@@ -31,7 +31,7 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
-public partial class TestPersist {
+public partial class TestPersist : UnitTestSet {
 
 
 
@@ -42,7 +42,7 @@ public partial class TestPersist {
     //static TestPersist() {
     //    Cryptography.Cryptography.Initialize();
     //    _ = Goedel.XUnit.TestItem.Initialize;
-    //    }
+    //    }FileTest
 
 
 
@@ -75,8 +75,10 @@ public partial class TestPersist {
 
     [Fact]
     public void TestPersistenceStoreCreate() {
+        var filename = base.Seed.GetFilename(FileTest);
+
         using var TestStore = new TestItemContainerPersistenceStore(
-        FileTest, "application/test", FileStatus: FileStatus.Overwrite);
+        filename, "application/test", FileStatus: FileStatus.Overwrite);
         // retrieve by master key -fail
         AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
         }
@@ -84,8 +86,10 @@ public partial class TestPersist {
 
     [Fact]
     public void TestPersistenceStoreAdd() {
+        var filename = base.Seed.GetFilename(FileTest);
+
         using var TestStore = new TestItemContainerPersistenceStore(
-        FileTest, "application/test", FileStatus: FileStatus.Overwrite);
+        filename, "application/test", FileStatus: FileStatus.Overwrite);
         // retrieve by master key -fail
         AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
         (TestStore.Sequence.FrameCount == 1).TestTrue();
@@ -109,8 +113,10 @@ public partial class TestPersist {
 
     [Fact]
     public void TestPersistenceStoreAll() {
+        var filename = base.Seed.GetFilename(FileTest);
+
         using (var TestStore = new TestItemContainerPersistenceStore(
-                FileTest, "application/test", FileStatus: FileStatus.Overwrite)) {
+                filename, "application/test", FileStatus: FileStatus.Overwrite)) {
             // retrieve by master key -fail
             AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
             TestStore.New(AccountAlice);
@@ -127,7 +133,7 @@ public partial class TestPersist {
 
         //Check we can read record back when opening the file in create or use existing mode
         using (var TestStore = new TestItemContainerPersistenceStore(
-                FileTest, "application/test", FileStatus: FileStatus.Append)) {
+                filename, "application/test", FileStatus: FileStatus.Append)) {
             AssertTest.TestTrue(TestStore.Contains(AccountIDAlice));
             AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
@@ -140,7 +146,7 @@ public partial class TestPersist {
             }
 
         //Check we can read record back when opening the file in create or use existing mode
-        using (var TestStore = new TestItemContainerPersistenceStore(FileTest)) {
+        using (var TestStore = new TestItemContainerPersistenceStore(filename)) {
             AssertTest.TestTrue(TestStore.Contains(AccountIDAlice));
             AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
@@ -149,7 +155,7 @@ public partial class TestPersist {
             }
 
         //Check we can read record back when opening the file in create or use existing mode
-        using (var TestStore = new TestItemContainerPersistenceStore(FileTest)) {
+        using (var TestStore = new TestItemContainerPersistenceStore(filename)) {
             // retrieve by master key -fail
             AssertTest.TestFalse(TestStore.Contains(AccountIDBob));
             TestStore.New(AccountBob);
@@ -165,7 +171,7 @@ public partial class TestPersist {
             }
 
         // Check we can delete an entry
-        using (var TestStore = new TestItemContainerPersistenceStore(FileTest)) {
+        using (var TestStore = new TestItemContainerPersistenceStore(filename)) {
             // retrieve by master key -fail
             AssertTest.TestTrue(TestStore.Contains(AccountIDBob));
             TestStore.Delete(AccountIDBob);

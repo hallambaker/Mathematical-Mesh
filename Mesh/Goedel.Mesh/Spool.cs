@@ -167,10 +167,10 @@ public class Spool : Store {
             return spoolEntry;
             }
 
-        foreach (var spoolEntry2 in GetMessages(select, notBefore, notOnOrAfter,
+        foreach (var entry in GetMessages(select, notBefore, notOnOrAfter,
                     SpoolEntryLast, maxSearch)) {
-            if (spoolEntry2.EnvelopeID == envelopeId) {
-                return spoolEntry2;
+            if (entry.EnvelopeID == envelopeId) {
+                return entry;
                 }
             }
         return null;
