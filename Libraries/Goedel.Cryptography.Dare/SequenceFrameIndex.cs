@@ -40,7 +40,19 @@ public enum SequenceIntegrity {
 
     }
 
-
+/// <summary>
+/// Delegate used to create spool indexes. Creating the index via a delegate allows
+/// the indexx to the overriden in stores to update indexes on the catalog or spool.
+/// </summary>
+/// <param name="sequence">Value for the <see cref="Sequence"/> property.</param>
+/// <param name="framePosition">Value for the <see cref="SequenceIndexEntry.FramePosition"/> property.</param>
+/// <param name="frameLength">Value for the <see cref="SequenceIndexEntry.FrameLength"/> property.</param>
+/// <param name="dataPosition">Value for the <see cref="SequenceIndexEntry.DataPosition"/> property.</param>
+/// <param name="dataLength">Value for the <see cref="SequenceIndexEntry.DataLength"/> property.</param>
+/// <param name="header">Value for the <see cref="SequenceIndexEntry.Header"/> property.</param>
+/// <param name="trailer">Value for the <see cref="SequenceIndexEntry.Trailer"/> property.</param>
+/// <param name="jsonObject">Value for the <see cref="SequenceIndexEntry.JsonObject"/> property.</param>
+/// <returns></returns>
 public delegate SequenceIndexEntry SequenceIndexEntryFactoryDelegate(
             Sequence sequence,
             long  framePosition,
@@ -48,8 +60,8 @@ public delegate SequenceIndexEntry SequenceIndexEntryFactoryDelegate(
             long  dataPosition,
             long  dataLength,
             DareHeader header,
-            DareTrailer trailer,
-            JsonObject jsonObject);
+            DareTrailer trailer = null,
+            JsonObject jsonObject = null);
 
 ///<summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
 public delegate void InternSequenceIndexEntryDelegate(
@@ -61,6 +73,9 @@ public delegate void InternSequenceIndexEntryDelegate(
 /// the body.
 /// </summary>
 public partial class SequenceIndexEntry {
+
+
+
 
     ///<summary>The Sequence that is indexed.</summary> 
     public Sequence Sequence { get; set; }
@@ -111,6 +126,42 @@ public partial class SequenceIndexEntry {
     ///<summary>Convenience accessor for the payload digest</summary> 
     public byte[] ChainDigest => Trailer?.ChainDigest ?? Header.ChainDigest;
 
+    /// <summary>
+    /// Factory method implementing <see cref="SequenceIndexEntryFactoryDelegate"/>.
+    /// </summary>
+    /// <inheritdoc cref="SequenceIndexEntryFactoryDelegate"/>
+    public static SequenceIndexEntry Factory(
+            Sequence sequence,
+            long framePosition,
+            long frameLength,
+            long dataPosition,
+            long dataLength,
+            DareHeader header,
+            DareTrailer trailer = null,
+            JsonObject jsonObject = null
+            ) => new SequenceIndexEntry() {
+                Sequence = sequence,
+                FramePosition = framePosition,
+                FrameLength = frameLength,
+                DataPosition = dataPosition,
+                DataLength = dataLength,
+                Header = header,
+                Trailer = trailer,
+                JsonObject = jsonObject
+                };
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="prototype"></param>
+    /// <param name="factory"></param>
+    /// <returns></returns>
+    public static SequenceIndexEntry Bind(
+                    SequenceIndexEntry prototype,
+                    SequenceIndexEntryFactoryDelegate factory) =>
+                factory(prototype.Sequence, prototype.FramePosition, prototype.FrameLength,
+                        prototype.DataPosition, prototype.DataLength,
+                        prototype.Header, prototype.Trailer, prototype.JsonObject);
 
 
 
@@ -162,19 +213,6 @@ public partial class SequenceIndexEntry {
     /// </summary>
 
     public SequenceIndexEntry() {
-        //Sequence = Sequence;
-
-        //jsonStream.FramerOpen(Position);
-        //var headerBytes = jsonStream.FramerGetData();
-        //Header = DareHeader.FromJson(headerBytes.JsonReader(), false);
-
-        //Sequence.FramerGetFrameIndex(out DataPosition, out DataLength);
-
-        //var TrailerBytes = jsonStream.FramerGetData();
-        //if (TrailerBytes != null && TrailerBytes.Length > 0) {
-        //    var TrailerText = TrailerBytes.ToUTF8();
-        //    Trailer = DareTrailer.FromJson(TrailerText.JsonReader(), false);
-        //    }
         }
 
     /// <summary>
@@ -187,7 +225,8 @@ public partial class SequenceIndexEntry {
     /// <param name="position">The starting point for the read operation.</param>
     /// <param name="previous">If true, read the previous frame, otherwise 
     /// return the next frame.</param>
-    private SequenceIndexEntry(
+    private static SequenceIndexEntry MakeSequenceIndexEntry(
+                    Sequence sequence,
                     JbcdStream jbcdStream,
                     long position,
                     bool previous = false) {
@@ -205,12 +244,17 @@ public partial class SequenceIndexEntry {
             trailer = DareTrailer.FromJson(TrailerText.JsonReader(), false);
             }
 
-        FramePosition = previous ? position - frameLength : position;
-        FrameLength = frameLength;
-        DataPosition = dataPosition;
-        DataLength = dataLength;
-        Header = header;
-        Trailer = trailer;
+        return sequence.SequenceIndexEntryFactoryDelegate(
+                    sequence,   
+                    framePosition: previous ? position - frameLength : position,
+                    frameLength: frameLength,
+                    dataPosition: dataPosition,
+                    dataLength: dataLength,
+                    header: header,
+                    trailer: trailer
+                    );
+
+
         }
 
 
@@ -232,9 +276,7 @@ public partial class SequenceIndexEntry {
                     bool previous = false,
                     Sequence sequence = null) =>
          PositionInvalid(jbcdStream, jbcdStream.Length) ? null :
-            new SequenceIndexEntry(jbcdStream, position, previous) {
-                Sequence = sequence
-                };
+            MakeSequenceIndexEntry(sequence, jbcdStream, position, previous);
 
     /// <summary>
     /// Read the last frame from <paramref name="jbcdStream"/>. 
@@ -245,9 +287,7 @@ public partial class SequenceIndexEntry {
                     JbcdStream jbcdStream,
                     Sequence sequence = null) =>
         PositionInvalid(jbcdStream, jbcdStream.Length) ? null :
-            new SequenceIndexEntry(jbcdStream, jbcdStream.Length, true) {
-                Sequence = sequence
-                };
+            MakeSequenceIndexEntry(sequence, jbcdStream, jbcdStream.Length, true);
 
     static bool PositionInvalid(JbcdStream jbcdStream,
                     long position,

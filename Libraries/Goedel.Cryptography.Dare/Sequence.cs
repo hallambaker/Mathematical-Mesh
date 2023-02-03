@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography.Standard;
+
 namespace Goedel.Cryptography.Dare;
 
 #region // enumerations
@@ -177,30 +179,12 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
     ///<summary>Delegate called to create a Sequence entry for a catalog or store.</summary> 
     public SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactoryDelegate 
-                { get; init; } = SequenceIndexEntryFactory;
+                { get; init; } = SequenceIndexEntry.Factory;
 
 
-    public static SequenceIndexEntry SequenceIndexEntryFactory(
-                Sequence sequence,
-                long framePosition,
-                long frameLength,
-                long dataPosition,
-                long dataLength,
-                DareHeader header,
-                DareTrailer trailer,
-                JsonObject jsonObject
-                ) => new SequenceIndexEntry() {
-                    Sequence = sequence,
-                    FramePosition = framePosition,
-                    FrameLength = frameLength,
-                    DataPosition = dataPosition,
-                    DataLength = dataLength,
-                    Header = header,
-                    Trailer = trailer,
-                    JsonObject = jsonObject
-                    };
 
 
+    public object Store {get; set;}
 
     #endregion
     /// <summary>
@@ -265,7 +249,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     string? contentType = null,
                     bool decrypt = true,
                     bool create = true,
-                    byte[] bitmask = null) {
+                    byte[] bitmask = null,
+                    InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
+                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null) {
 
         if (!create && !File.Exists(fileName)) {
             return null;
@@ -278,10 +264,15 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             if (jbcdStream.Length == 0) {
                 Container = NewSequence(jbcdStream, decrypt:decrypt,
                     keyLocate: keyLocate, sequenceType: sequenceType, policy: policy, 
-                    contentType: contentType, bitmask: bitmask);
+                    contentType: contentType, bitmask: bitmask,
+                    internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
+                    sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate
+                    );
                 }
             else {
-                Container = OpenExisting(jbcdStream, keyLocate, decrypt: decrypt);
+                Container = OpenExisting(jbcdStream, keyLocate, decrypt: decrypt,
+                    internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
+                    sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate);
                 }
             (Container.KeyCollection == keyLocate).AssertTrue(NYI.Throw);
             Container.DisposeJBCDStream = jbcdStream;
@@ -344,6 +335,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         return sequence;
         }
 
+    static Sequence SequenceDummy = new SequenceList() {
+        SequenceIndexEntryFactoryDelegate = SequenceIndexEntry.Factory
+        };
+
 
     /// <summary>
     /// Open an existing Sequence according to the information contained in the next frame to be read.
@@ -358,19 +353,18 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     public static Sequence OpenExisting(
                     JbcdStream jbcdStream,
                     IKeyLocate? keyCollection = null, 
-                    bool decrypt = true) {
-
+                    bool decrypt = true,
+                    InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
+                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null) {
+        sequenceIndexEntryFactoryDelegate ??= SequenceIndexEntry.Factory;
         decrypt.Future();
 
-        var sequenceIndexEntryFirst = SequenceIndexEntry.Read(jbcdStream, 0);
-        SequenceIndexEntry sequenceIndexEntryLast;
-        if (jbcdStream.Length > sequenceIndexEntryFirst.FramePositionNext) {
-            sequenceIndexEntryLast = SequenceIndexEntry.ReadLast(jbcdStream);
-            }
-        else {
-            sequenceIndexEntryLast = sequenceIndexEntryFirst;
-            }
+        var sequenceIndexEntryFirst = SequenceIndexEntry.Read(jbcdStream, 0, sequence: SequenceDummy);
 
+        SequenceIndexEntry sequenceIndexEntryLast = null;
+        if (jbcdStream.Length > sequenceIndexEntryFirst.FramePositionNext) {
+            sequenceIndexEntryLast = SequenceIndexEntry.ReadLast(jbcdStream, sequence: SequenceDummy);
+            }
 
         //var frameZero = jbcdStream.ReadDareEnvelope();
         var sequenceHeaderFirst = sequenceIndexEntryFirst.Header;
@@ -382,15 +376,24 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             new CryptoParametersSequence(sequenceType, sequenceHeaderFirst, true, keyCollection);
 
         // Create the Sequence.
-        var sequence = MakeNewSequence(jbcdStream, decrypt, sequenceType: sequenceType);
+        var sequence = MakeNewSequence(jbcdStream, decrypt, internSequenceIndexEntryDelegate,
+                     sequenceIndexEntryFactoryDelegate,
+                     sequenceType: sequenceType);
 
         // Common initialization
         sequenceIndexEntryFirst.Sequence= sequence;
-        sequenceIndexEntryLast.Sequence= sequence;
 
+        sequence.SequenceIndexEntryFirst = SequenceIndexEntry.Bind (sequenceIndexEntryFirst,
+                    sequenceIndexEntryFactoryDelegate);
 
-        sequence.SequenceIndexEntryFirst = sequenceIndexEntryFirst;
-        sequence.SequenceIndexEntryLast = sequenceIndexEntryLast;
+        if (sequenceIndexEntryLast is not null) {
+            sequenceIndexEntryLast.Sequence = sequence;
+            sequence.SequenceIndexEntryLast = SequenceIndexEntry.Bind(sequenceIndexEntryLast,
+                            sequenceIndexEntryFactoryDelegate);
+            }
+        else {
+            sequence.SequenceIndexEntryLast = sequence.SequenceIndexEntryFirst;
+            }
 
         sequence.KeyLocate = keyCollection;
         sequence.KeyCollection = keyCollection;
@@ -479,7 +482,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     List<byte[]>? dataSequences = null,
                     bool decrypt=true,
                     byte[] bitmask = null,
-                    JsonObject jsonObject = null) {
+                    JsonObject jsonObject = null,
+                    InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
+                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null) {
+        sequenceIndexEntryFactoryDelegate ??= SequenceIndexEntry.Factory;
         dataEncoding = dataEncoding.Default();
 
         // Initialize the header
@@ -499,7 +505,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             };
 
         // Initialize the sequence
-        var sequence = MakeNewSequence(jbcdStream, decrypt, sequenceType: sequenceType);
+        var sequence = MakeNewSequence(jbcdStream, decrypt, internSequenceIndexEntryDelegate,
+                     sequenceIndexEntryFactoryDelegate,
+                     sequenceType: sequenceType);
         sequence.CryptoParametersSequence =
             new CryptoParametersSequence(sequenceType, header);
         sequence.DataEncoding = dataEncoding;
@@ -536,27 +544,41 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     public static Sequence MakeNewSequence(
                     JbcdStream jbcdStream,
                     bool decrypt,
+                    InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate,
+                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate 
+,
                     SequenceType sequenceType = SequenceType.Merkle) =>
         sequenceType switch {
             SequenceType.List => new SequenceList() {
                 JbcdStream = jbcdStream,
-                Decrypt = decrypt
+                Decrypt = decrypt,
+                InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
+                SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
+
                 },
             SequenceType.Digest => new SequenceDigest() {
                 JbcdStream = jbcdStream,
-                Decrypt = decrypt
+                Decrypt = decrypt,
+                InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
+                SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             SequenceType.Chain => new SequenceChain() {
                 JbcdStream = jbcdStream,
-                Decrypt = decrypt
+                Decrypt = decrypt,
+                InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
+                SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             SequenceType.Tree => new SequenceTree() {
                 JbcdStream = jbcdStream,
-                Decrypt = decrypt
+                Decrypt = decrypt,
+                InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
+                SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             SequenceType.Merkle => new SequenceMerkleTree() {
                 JbcdStream = jbcdStream,
-                Decrypt = decrypt
+                Decrypt = decrypt,
+                InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
+                SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             _ => throw new InvalidContainerTypeException()
             };
@@ -759,17 +781,26 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         var dataPosition = JbcdStream.WriteWrappedFrame(headerData, payload, trailerData);
         var frameLength = JbcdStream.Length - framePosition;
 
-
-        var result = new SequenceIndexEntry() {
-            Sequence = this,
-            FramePosition = framePosition,
-            FrameLength = frameLength,
-            DataPosition = dataPosition,
-            DataLength = payload?.Length ?? 0,
-            Header = header,
-            Trailer = trailer,
-            JsonObject = jsonObject
-            };
+        var result = SequenceIndexEntryFactoryDelegate(
+                sequence : this,
+                framePosition : framePosition,
+                frameLength : frameLength,
+                dataPosition : dataPosition,
+                dataLength : payload?.Length ?? 0,
+                header : header,
+                trailer : trailer,
+                jsonObject : jsonObject
+                );
+        //var result = new SequenceIndexEntry() {
+        //    Sequence = this,
+        //    FramePosition = framePosition,
+        //    FrameLength = frameLength,
+        //    DataPosition = dataPosition,
+        //    DataLength = payload?.Length ?? 0,
+        //    Header = header,
+        //    Trailer = trailer,
+        //    JsonObject = jsonObject
+        //    };
         //Console.WriteLine($"Make atomic frame [{result.FramePosition}+{result.FrameLength}]");
         SequenceIndexEntryLast = result;
 
@@ -947,15 +978,23 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         //contextWrite = new SequenceWriterFile(this, header, JbcdStream,
         //    dataPosition, payloadLength, frameLength);
 
+        IncrementalAppendIndex = SequenceIndexEntryFactoryDelegate(
+            sequence: this,
+            framePosition: framePosition,
+            frameLength: frameLength,
+            dataPosition: dataPosition,
+            dataLength: dataLength,
+            header: header);
 
-        IncrementalAppendIndex = new SequenceIndexEntry() {
-            Sequence = this,
-            FramePosition = framePosition,
-            FrameLength = frameLength,
-            DataPosition = dataPosition,
-            DataLength = dataLength,
-            Header = header,
-            };
+
+        //IncrementalAppendIndex = new SequenceIndexEntry() {
+        //    Sequence = this,
+        //    FramePosition = framePosition,
+        //    FrameLength = frameLength,
+        //    DataPosition = dataPosition,
+        //    DataLength = dataLength,
+        //    Header = header,
+        //    };
 
         //Console.WriteLine($"Start frame [{IncrementalAppendIndex.FramePosition}+{IncrementalAppendIndex.FrameLength}]");
 

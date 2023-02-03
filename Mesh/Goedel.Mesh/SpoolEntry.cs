@@ -25,6 +25,33 @@ namespace Goedel.Mesh;
 
 
 public class SpoolIndexEntry : SequenceIndexEntry {
+
+    /// <summary>
+    /// Factory method implementing <see cref="SequenceIndexEntryFactoryDelegate"/>.
+    /// </summary>
+    /// <inheritdoc cref="SequenceIndexEntryFactoryDelegate"/>
+    public static new SequenceIndexEntry Factory(
+            Sequence sequence,
+            long framePosition,
+            long frameLength,
+            long dataPosition,
+            long dataLength,
+            DareHeader header,
+            DareTrailer trailer = null,
+            JsonObject jsonObject = null
+            ) => new SpoolIndexEntry() {
+                Sequence = sequence,
+                FramePosition = framePosition,
+                FrameLength = frameLength,
+                DataPosition = dataPosition,
+                DataLength = dataLength,
+                Header = header,
+                Trailer = trailer,
+                JsonObject = jsonObject
+                };
+
+
+
     }
 
 

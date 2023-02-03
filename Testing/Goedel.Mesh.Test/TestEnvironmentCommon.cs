@@ -166,7 +166,7 @@ public abstract class TestEnvironmentBase : UnitTestSet {
     public TestEnvironmentBase(DeterministicSeed seed = null) {
 
         //seed ??= DeterministicSeed.Auto();
-        //Seed = seed;
+        Seed = seed ?? Seed;
 
         Path.DirectoryDelete();
 

@@ -89,14 +89,14 @@ public class SequenceWriterFile : SequenceWriter {
         SequenceHeader = header;
 
 
-        SequenceIndexEntry = new SequenceIndexEntry() {
-            Sequence = sequence,
-            FramePosition = JBCDStream.PositionWrite,
-            FrameLength = frameLength,
-            DataPosition = dataPosition,
-            DataLength = dataLength,
-            Header = header,
-            };
+        SequenceIndexEntry = sequence.SequenceIndexEntryFactoryDelegate(
+            sequence: sequence,
+            framePosition: JBCDStream.PositionWrite,
+            frameLength: frameLength,
+            dataPosition: dataPosition,
+            dataLength: dataLength,
+            header: header);
+
 
         }
 

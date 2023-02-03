@@ -5397,6 +5397,9 @@
         <member name="P:Goedel.Cryptography.Dare.Sequence.InternSequenceIndexEntryDelegate">
             <summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Sequence.SequenceIndexEntryFactoryDelegate">
+            <summary>Delegate called to create a Sequence entry for a catalog or store.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.#ctor">
             <summary>
             Default constructor.
@@ -5414,7 +5417,7 @@
             </summary>
             <returns>The enumerator</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Open(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.String,System.Boolean,System.Boolean,System.Byte[])">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Open(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.String,System.Boolean,System.Boolean,System.Byte[],Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate)">
             <summary>
             Open or create Sequence according to the setting of FileStatus. The underlying 
             filestreams will be disposed of automatically when the Sequence is disposed.
@@ -5459,7 +5462,7 @@
             <param name="decrypt">If true configure to enable decryption of bodies.</param>
             <returns>The Sequence object if found. Otherwise, an exception is thrown.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,System.Boolean,Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate)">
             <summary>
             Open an existing Sequence according to the information contained in the next frame to be read.
             </summary>
@@ -5490,7 +5493,7 @@
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileModeException">The file mode specified was not valid.</exception>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.NewSequence(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean,System.Byte[],Goedel.Protocol.JsonObject)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.NewSequence(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean,System.Byte[],Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate)">
             <summary>
             Create a new Sequence file of the specified type and write the initial
             data record
@@ -5512,7 +5515,7 @@
             <param name="decrypt">If true, decrypt the Sequence payload contents.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(Goedel.Cryptography.Dare.JbcdStream,System.Boolean,Goedel.Cryptography.Dare.SequenceType)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(Goedel.Cryptography.Dare.JbcdStream,System.Boolean,Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,Goedel.Cryptography.Dare.SequenceType)">
             <summary>
             Create a new Sequence file of the specified type and write the initial
             data record
@@ -5967,6 +5970,21 @@
             consistent with the payload digest value specified and verify the payload digest 
             value against the payload contents.</summary>
         </member>
+        <member name="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate">
+            <summary>
+            Delegate used to create spool indexes. Creating the index via a delegate allows
+            the indexx to the overriden in stores to update indexes on the catalog or spool.
+            </summary>
+            <param name="sequence">Value for the <see cref="T:Goedel.Cryptography.Dare.Sequence"/> property.</param>
+            <param name="framePosition">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.FramePosition"/> property.</param>
+            <param name="frameLength">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.FrameLength"/> property.</param>
+            <param name="dataPosition">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.DataPosition"/> property.</param>
+            <param name="dataLength">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.DataLength"/> property.</param>
+            <param name="header">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Header"/> property.</param>
+            <param name="trailer">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Trailer"/> property.</param>
+            <param name="jsonObject">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.JsonObject"/> property.</param>
+            <returns></returns>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate">
             <summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
         </member>
@@ -6024,6 +6042,20 @@
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.ChainDigest">
             <summary>Convenience accessor for the payload digest</summary> 
         </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.Factory(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Int64,System.Int64,System.Int64,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.JsonObject)">
+            <summary>
+            Factory method implementing <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>.
+            </summary>
+            <inheritdoc cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.Bind(Goedel.Cryptography.Dare.SequenceIndexEntry,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate)">
+            <summary>
+            
+            </summary>
+            <param name="prototype"></param>
+            <param name="factory"></param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.CopyPayload(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.IKeyLocate,System.IO.Stream)">
             <summary>
             Return the frame payload.
@@ -6043,7 +6075,7 @@
             Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.#ctor(Goedel.Cryptography.Dare.JbcdStream,System.Int64,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.MakeSequenceIndexEntry(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.Dare.JbcdStream,System.Int64,System.Boolean)">
             <summary>
             Constructor returning an instance by reading <paramref name="jbcdStream"/>
             at the position specified by <paramref name="position"/>. If 

@@ -63,9 +63,39 @@ public class Spool : Store {
                 bool create = true,
                 byte[] bitmask = null) :
             base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
-                decrypt, create, bitmask) {
+                decrypt, create, bitmask, sequenceIndexEntryFactoryDelegate: SpoolIndexEntry.Factory) {
+        
+        //Sequence.InternSequenceIndexEntryDelegate = InternSequenceIndexEntry;
+        //Sequence.SequenceIndexEntryFactoryDelegate = SequenceIndexEntryFactory;
 
         }
+
+    void InternSequenceIndexEntry(
+       SequenceIndexEntry sequenceIndexEntry) {
+       }
+
+     SequenceIndexEntry SequenceIndexEntryFactory(
+                Sequence sequence,
+                long framePosition,
+                long frameLength,
+                long dataPosition,
+                long dataLength,
+                DareHeader header,
+                DareTrailer trailer = null,
+                JsonObject jsonObject = null
+                ) => new SequenceIndexEntry() {
+                    Sequence = sequence,
+                    FramePosition = framePosition,
+                    FrameLength = frameLength,
+                    DataPosition = dataPosition,
+                    DataLength = dataLength,
+                    Header = header,
+                    Trailer = trailer,
+                    JsonObject = jsonObject
+                    };
+
+
+
 
     /// <summary>
     /// Add an envelope to the spool. All information provided in the ContainerInfo

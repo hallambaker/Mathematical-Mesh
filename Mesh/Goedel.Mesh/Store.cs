@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography.Dare;
+
 namespace Goedel.Mesh;
 
 
@@ -128,7 +130,9 @@ public class Store : Disposable {
                 IMeshClient? meshClient = null,
                 bool decrypt = true,
                 bool create = true,
-                byte[] bitmask = null) {
+                byte[] bitmask = null,
+                    InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate=null,
+                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate=null) {
 
         bitmask ??= MakeMask();
 
@@ -144,8 +148,11 @@ public class Store : Disposable {
             "application/mmm-catalog",
             decrypt: decrypt,
             create: create,
-            bitmask: bitmask
+            bitmask: bitmask,
+            internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
+            sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate ?? SpoolIndexEntry.Factory
             );
+        Sequence.Store = this;
 
         KeyCollection = keyCollection;
         //CryptoParameters = cryptoParameters;

@@ -124,7 +124,9 @@ public partial class TestService {
     [InlineData(DataValidity.CorruptPayload)]
     [InlineData(DataValidity.CorruptMissing)]
     public void TestCredentialAccountFails(DataValidity dataValidity) {
-        var testEnvironmentCommon = GetTestEnvironmentCommon(dataValidity);
+        Seed = DeterministicSeed.Auto(dataValidity);
+
+        var testEnvironmentCommon = GetTestEnvironmentCommon(Seed);
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main");
         var credentialTempPrivate = contextAccountAlice.GetMeshCredentialPrivate();
@@ -155,7 +157,9 @@ public partial class TestService {
     [InlineData(DataValidity.CorruptPayload)]
     [InlineData(DataValidity.CorruptMissing)]
     public void TestProfileFails(DataValidity dataValidity) {
-        var testEnvironmentCommon = GetTestEnvironmentCommon(dataValidity);
+        Seed = DeterministicSeed.Auto(dataValidity);
+
+        var testEnvironmentCommon = GetTestEnvironmentCommon(Seed);
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main");
         var credentialTemp = contextAccountAlice.GetMeshCredentialPrivate();

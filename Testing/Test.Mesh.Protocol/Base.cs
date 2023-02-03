@@ -25,7 +25,7 @@ using Goedel.Mesh.Test;
 
 namespace Goedel.XUnit;
 
-public partial class TestService {
+public partial class TestService : UnitTestSet {
     #region // Properties
 
     public static TestService Test() => new();
@@ -43,9 +43,8 @@ public partial class TestService {
 
     #region // Methods 
 
-    public virtual TestEnvironmentCommon GetTestEnvironmentCommon(
-                        params object[] parameters) => 
-                new(DeterministicSeed.Auto(parameters));
+    public virtual TestEnvironmentCommon GetTestEnvironmentCommon(DeterministicSeed seed = null) => 
+                new(seed ?? Seed);
 
 
     #endregion

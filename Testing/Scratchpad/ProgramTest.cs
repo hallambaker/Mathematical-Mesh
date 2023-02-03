@@ -60,11 +60,11 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
         //TestSequences.Test().ZContainerFixedExchangeTest("", 
         //    DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519);
-        //TestSequences.Test().ZContainerTest1();
+        //TestService.Test().TestProfileFails(DataValidity.CorruptSigner);
         //TestSequences.Test().TestSignEncrypt(SequenceType.List);
         //TestSequences.Test().TestSparse(ModeEnhance.Sparse, ModeEnhance.Sparse);
         //TestSequences.Test().TestProof(ModeEnhance.Sparse, ModeEnhance.Sparse);
-        //TestPersist.Test().TestPersistenceStoreAll();
+        //TestSequences.Test().ZContainerTest0();
 
 
 
