@@ -40,6 +40,33 @@ public enum SequenceIntegrity {
 
     }
 
+
+/// <summary>
+/// Result of comparing a <see cref="SequenceIndexEntry"/> to a set of search criteria.
+/// </summary>
+[Flags]
+public enum ItemResult {
+
+    ///<summary>The item is a match for the search criteria.</summary> 
+    Match = 0,
+
+    ///<summary>The item is not a match for the search criteria.</summary> 
+    NotMatch = 1 << 1,
+
+    ///<summary>The item was added to the sequence before the search interval began.</summary> 
+    Earlier = 1 << 2,
+
+    ///<summary>The item was added to the sequence after the search interval ended.</summary> 
+    Later = 1 << 3,
+
+    ///<summary>The item was deleted.</summary> 
+    Deleted = 1 << 4,
+
+    ///<summary>The item was erased.</summary> 
+    Erased = 1 << 5,
+    }
+
+
 /// <summary>
 /// Delegate used to create spool indexes. Creating the index via a delegate allows
 /// the indexx to the overriden in stores to update indexes on the catalog or spool.
@@ -67,6 +94,8 @@ public delegate SequenceIndexEntry SequenceIndexEntryFactoryDelegate(
 public delegate void InternSequenceIndexEntryDelegate(
         SequenceIndexEntry sequenceIndexEntry);
 
+
+public delegate ItemResult EvaluateIndexDelegate(SequenceIndexEntry sequenceIndexEntry);
 
 /// <summary>
 /// Sequence index with the decoded head and tail and extent information for
@@ -112,6 +141,20 @@ public partial class SequenceIndexEntry {
 
     ///<summary>The decoded JSONObject</summary>
     public JsonObject JsonObject { get; set; }
+
+    public string EnvelopeId => Header.EnvelopeId;
+
+    ///<summary>The sequenced envelope is unread in the case of a message in a spool or
+    ///not deleted or overwritten in the case of an entry in a catalog.</summary> 
+    public virtual bool IsOpen => true;
+
+    ///<summary>The sequenced envelope has been deleted.</summary> 
+    public virtual bool IsDeleted => false;
+
+    ///<summary>The sequenced envelope has been erased by overwriting the salt value.</summary> 
+    public virtual bool IsErased => false;
+
+    public virtual DateTime? DateTime => null;
 
     ///<summary>Convenience property, set true iff payload is encrypted.</summary> 
     public bool IsEncrypted => Header?.EncryptionAlgorithm != null;

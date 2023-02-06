@@ -150,9 +150,10 @@ public class Store : Disposable {
             create: create,
             bitmask: bitmask,
             internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
-            sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate ?? SpoolIndexEntry.Factory
+            sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate ?? SpoolIndexEntry.Factory,
+            store:this
             );
-        Sequence.Store = this;
+        //Sequence.Store = this;
 
         KeyCollection = keyCollection;
         //CryptoParameters = cryptoParameters;
@@ -207,8 +208,8 @@ public class Store : Disposable {
     /// Append the envelopes <paramref name="envelope"/> to the
     /// store.
     /// </summary>
-    public virtual void AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
-        Sequence.Append(envelope, updateEnvelope);
+    public virtual SequenceIndexEntry AppendDirect(DareEnvelope envelope, bool updateEnvelope = true) {
+        return Sequence.Append(envelope, updateEnvelope);
         }
 
     /// <summary>

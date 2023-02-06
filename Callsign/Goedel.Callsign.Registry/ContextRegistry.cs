@@ -191,18 +191,17 @@ public class ContextRegistry : ContextAccount {
         var results = new List<ProcessResult>();
 
 
-
+        var x = new Evaluate();
 
         var spoolInbound = GetSpoolInbound();
-        foreach (var spoolEntry in spoolInbound.GetMessages(MessageStatus.Open)) {
+        foreach (var spoolEntry in spoolInbound.GetMessages(evaluateIndex: Evaluate.GetOpen)) {
             var meshMessage = spoolEntry.Message;
 
             //Logger.GotMessage(meshMessage.GetType().ToString(), meshMessage.MessageId, spoolEntry.MessageStatus);
-            if (!spoolEntry.Closed) {
+            if (spoolEntry.IsOpen) {
                 switch (meshMessage) {
                     case CallsignRegistrationRequest callsignRegistrationRequest: {
                         Process(callsignRegistrationRequest);
-
                         break;
                         }
 

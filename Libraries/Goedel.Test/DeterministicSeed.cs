@@ -67,7 +67,7 @@ public class DeterministicSeed {
         }
 
 
-    DeterministicSeed (string name) {
+    DeterministicSeed (string name, bool delete=false) {
         Seed = name;
         SeedBytes = Seed.ToBytes ();
 
@@ -75,16 +75,31 @@ public class DeterministicSeed {
         
 
         Directory = System.IO.Path.Combine(TestRoot, WorkingDirectory, Seed);
+        if (delete && System.IO.Directory.Exists(Directory)) {
+            System.IO.Directory.Delete(Directory, true);
+            }
+
         System.IO.Directory.CreateDirectory(Directory);
         }
+    public static DeterministicSeed AutoClean(params object[] parameters) {
+        var stack = new StackTrace();
 
+
+        for (var i = 0; i < stack.FrameCount; i++) {
+            var frame = stack.GetFrame(stack.FrameCount - i - 1);
+            var method = frame.GetMethod();
+            if (HasTest(method)) {
+                return new DeterministicSeed(Format(method.Name, parameters), true);
+                }
+            }
+
+        throw new UnitTestNotFound();
+
+        }
 
     public static DeterministicSeed Auto(params object[] parameters) {
         var stack = new StackTrace();
 
-        //int index = 1;
-        //var frame = stack.GetFrame(index);
-        //var method = frame.GetMethod();
 
         for (var i = 0; i < stack.FrameCount; i++) {
             var frame = stack.GetFrame(stack.FrameCount - i -1);
@@ -93,16 +108,6 @@ public class DeterministicSeed {
                 return new DeterministicSeed(Format(method.Name, parameters));
                 }
             }
-
-
-        //while (method != null) {
-        //    if (HasTest(method)) {
-        //        return new DeterministicSeed(Format(method.Name, parameters));
-        //        }
-        //    index++;
-        //    frame = stack.GetFrame(index);
-        //    method = frame.GetMethod();
-        //    }
 
         throw new UnitTestNotFound();
 

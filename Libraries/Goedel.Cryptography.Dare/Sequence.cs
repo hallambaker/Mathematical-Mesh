@@ -215,7 +215,12 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     private IEnumerator GetEnumerator1() => this.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
 
+    public virtual IEnumerable<SequenceIndexEntry> SelectFromUnread (
+                EvaluateIndexDelegate evaluate=null) => throw new NYI();
 
+    public virtual IEnumerable<SequenceIndexEntry> Select(
+                bool reverse = false,
+                EvaluateIndexDelegate evaluate = null) => throw new NYI();
 
     #endregion
 
@@ -251,7 +256,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     bool create = true,
                     byte[] bitmask = null,
                     InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
-                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null) {
+                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null,
+                    object store = null) {
 
         if (!create && !File.Exists(fileName)) {
             return null;
@@ -266,13 +272,15 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     keyLocate: keyLocate, sequenceType: sequenceType, policy: policy, 
                     contentType: contentType, bitmask: bitmask,
                     internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
-                    sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate
+                    sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate,
+                    store:store
                     );
                 }
             else {
                 Container = OpenExisting(jbcdStream, keyLocate, decrypt: decrypt,
                     internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
-                    sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate);
+                    sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate,
+                    store: store);
                 }
             (Container.KeyCollection == keyLocate).AssertTrue(NYI.Throw);
             Container.DisposeJBCDStream = jbcdStream;
@@ -326,10 +334,11 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     public static Sequence OpenExisting(
             string fileName,
             FileStatus fileStatus = FileStatus.Read,
-            IKeyLocate keyCollection = null, bool decrypt = true) {
+            IKeyLocate keyCollection = null, bool decrypt = true,
+                    object store = null) {
         var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
 
-        var sequence = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt);
+        var sequence = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt, store:store);
         sequence.DisposeJBCDStream = jbcdStream;
 
         return sequence;
@@ -355,7 +364,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     IKeyLocate? keyCollection = null, 
                     bool decrypt = true,
                     InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
-                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null) {
+                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null,
+                    object store = null) {
         sequenceIndexEntryFactoryDelegate ??= SequenceIndexEntry.Factory;
         decrypt.Future();
 
@@ -379,6 +389,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         var sequence = MakeNewSequence(jbcdStream, decrypt, internSequenceIndexEntryDelegate,
                      sequenceIndexEntryFactoryDelegate,
                      sequenceType: sequenceType);
+        sequence.Store = store;
 
         // Common initialization
         sequenceIndexEntryFirst.Sequence= sequence;
@@ -484,7 +495,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     byte[] bitmask = null,
                     JsonObject jsonObject = null,
                     InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
-                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null) {
+                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null,
+                    object store=null) {
         sequenceIndexEntryFactoryDelegate ??= SequenceIndexEntry.Factory;
         dataEncoding = dataEncoding.Default();
 
@@ -508,6 +520,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         var sequence = MakeNewSequence(jbcdStream, decrypt, internSequenceIndexEntryDelegate,
                      sequenceIndexEntryFactoryDelegate,
                      sequenceType: sequenceType);
+
+
+        sequence.Store = store;
         sequence.CryptoParametersSequence =
             new CryptoParametersSequence(sequenceType, header);
         sequence.DataEncoding = dataEncoding;

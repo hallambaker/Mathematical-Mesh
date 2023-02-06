@@ -105,17 +105,21 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// Append the envelopes <paramref name="envelope"/> to the
     /// store.
     /// </summary>
-    public override void AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
-        //var index = Sequence.Append(envelope, updateEnvelope);
+    public override SequenceIndexEntry AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
 
-        // This is not viable because the envelope that is applied has to be the container
-        // envelope;
-        var storeEntry = Apply(envelope);
-        if (storeEntry.JsonObject != null) {
-            UpdateLocal(storeEntry.JsonObject as T);
-            }
-        else {
-            }
+
+        throw new NYI();
+
+        ////var index = Sequence.Append(envelope, updateEnvelope);
+
+        //// This is not viable because the envelope that is applied has to be the container
+        //// envelope;
+        //var storeEntry = Apply(envelope);
+        //if (storeEntry.JsonObject != null) {
+        //    UpdateLocal(storeEntry.JsonObject as T);
+        //    }
+        //else {
+        //    }
         }
 
 

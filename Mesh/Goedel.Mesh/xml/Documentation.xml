@@ -14912,14 +14912,11 @@
             Base class for stores of type Spool.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Spool.SpoolEntryFirst">
-            <summary>The first spool entry.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Spool.SpoolEntryLast">
-            <summary>The last spool entry.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Spool.SpoolEntryById">
+        <member name="P:Goedel.Mesh.Spool.SequenceIndexEntryByEnvelopeId">
             <summary>Dictionary of entries by identifier.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Spool.SpoolIndexEntryLast">
+            <summary>The index entry of the last item in the spool.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Spool.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
@@ -14935,88 +14932,22 @@
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
-        <member name="M:Goedel.Mesh.Spool.Add(Goedel.Cryptography.Dare.DareEnvelope)">
-            <summary>
-            Add an envelope to the spool. All information provided in the ContainerInfo
-            field is discarded. The trailer, if present must be rewritten for the 
-            purposes of the container.
-            </summary>
-            <param name="envelope"></param>
-        </member>
         <member name="M:Goedel.Mesh.Spool.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
             <summary>
             Append the envelopes <paramref name="envelope"/> to the
             store.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Spool.CheckTime(System.Nullable{System.DateTime},System.Int64,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+        <member name="M:Goedel.Mesh.Spool.GetMessages(Goedel.Mesh.SpoolIndexEntry,System.Boolean,Goedel.Cryptography.Dare.EvaluateIndexDelegate)">
             <summary>
-            Check that the time value <paramref name="dateTime"/> is within the boundaries
-            defined by <paramref name="maxTicks"/>, <paramref name="notBefore"/> and
-            <paramref name="notOnOrAfter"/>.
+            Return an enumerator returning a sequence of <see cref="T:Goedel.Mesh.SpoolIndexEntry"/> entries
+            matching the criteria specified by <paramref name="evaluateIndex"/>.
             </summary>
-            <param name="dateTime">The time to test.</param>
-            <param name="maxTicks">If greater or equal to zero, return <code>false</code> if 
-            <paramref name="dateTime"/> is more than
-            this number of ticks earlier than the current time.</param>
-            <param name="notBefore">If not null, return <code>false</code> if <paramref name="dateTime"/>
-            is earlier than this time.</param>
-            <param name="notOnOrAfter">If not null, return <code>false</code> if <paramref name="dateTime"/>
-            is later than or the same as this time.</param>
-            <returns><code>true</code> unless one of the conditions defined by <paramref name="maxTicks"/>, 
-            <paramref name="notBefore"/> or <paramref name="notOnOrAfter"/> </returns> is not
-            met in which case return <code>false</code>.
-        </member>
-        <member name="M:Goedel.Mesh.Spool.GetByMessageId(System.String,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int64)">
-            <summary>
-            Retrieve a message by message ID. 
-            </summary>
-            <param name="messageID"></param>
-            <param name="select"></param>
-            <param name="notBefore"></param>
-            <param name="notOnOrAfter"></param>
-            <param name="maxSearch"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.GetByEnvelopeId(System.String,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int64)">
-            <summary>
-            Retrieve a message by message ID. 
-            </summary>
-            <param name="envelopeId"></param>
-            <param name="select"></param>
-            <param name="notBefore"></param>
-            <param name="notOnOrAfter"></param>
-            <param name="maxSearch"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.GetMessages(Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},Goedel.Mesh.SpoolEntry,System.Int64,System.Boolean)">
-            <summary>
-            Returns an enumerator over the messages in the spool that match the
-            constraints specified by <paramref name="select"/>, <paramref name="notBefore"/>, 
-            <paramref name="notOnOrAfter"/> and <paramref name="maxResults"/>.
-            </summary>
-            <param name="select">Message status selection mask.</param>
-            <param name="notBefore">Exclude messages sent before this time.</param>
-            <param name="notOnOrAfter">Exclude messages sent after this time.</param>
-            <param name="last">The point from which to begin the enumeration (exclusive).</param>
-            <param name="maxResults">Maximum number of records to check (-1 = check all).</param>
-            <returns>The enumerator.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.Intern(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.SpoolEntry)">
-            <summary>
-            Intern <paramref name="envelope"/> with the following envelope 
-            <paramref name="next"/>.
-            </summary>
-            <param name="envelope"></param>
-            <param name="next">The next frame number</param>
-            <returns>The interned envelope instance.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.GetPrevious(Goedel.Mesh.SpoolEntry)">
-            <summary>
-            Return the spool entry previous to <paramref name="current"/>.
-            </summary>
-            <param name="current">The entry to return the prior entry for.</param>
-            <returns>The spool entry if found, otherwise, null.</returns>
+            <param name="start">The starting point for the search.</param>
+            <param name="reverse">Return items in reverse order, i.e. most recently received
+            first.</param>
+            <param name="evaluateIndex">Evaluation delegate specifying if the item is a match.</param>
+            <returns>The enumeration.</returns>
         </member>
         <member name="T:Goedel.Mesh.SpoolLocal">
             <summary>
@@ -15190,83 +15121,25 @@
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
+        <member name="P:Goedel.Mesh.SpoolPlaceholder.References">
+            <summary>The list of references to the message, most recently added first.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolIndexEntry.References">
+            <summary>The list of references to the message, most recently added first.</summary>
+        </member>
         <member name="M:Goedel.Mesh.SpoolIndexEntry.Factory(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Int64,System.Int64,System.Int64,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.JsonObject)">
             <summary>
             Factory method implementing <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>.
             </summary>
             <inheritdoc cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>
         </member>
-        <member name="T:Goedel.Mesh.SpoolEntry">
-            <summary>Message entry in spool catalog</summary>
-        </member>
-        <member name="P:Goedel.Mesh.SpoolEntry.Spool">
-            <summary>The spool the message is enrolled in.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.SpoolEntry.SequenceFrameIndex">
-            <summary>The index of the item in the original container.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.SpoolEntry.EnvelopeID">
-            <summary>The unique envelope identifier.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.SpoolEntry.DareEnvelope">
-            <summary>The envelope from the spool.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.SpoolEntry.Next">
-            <summary>The next entry in the spool.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.SpoolEntry.Previous">
-            <summary>The previous entry in the spool.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.SpoolEntry.Closed">
-            <summary>Returns true iff message status is Closed.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.SpoolEntry.Open">
-            <summary>Returns true iff message status is Open.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.SpoolEntry.References">
-            <summary>The list of references to the message, most recently added first.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.SpoolEntry.Message">
+        <member name="P:Goedel.Mesh.SpoolIndexEntry.Message">
             <summary>Returns the message</summary>
         </member>
-        <member name="P:Goedel.Mesh.SpoolEntry.Index">
-            <summary>Convenience accessor for the envelope index number.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.SpoolEntry.MessageStatus">
+        <member name="P:Goedel.Mesh.SpoolIndexEntry.MessageStatus">
             <summary>The message status value.</summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolEntry.#ctor(Goedel.Mesh.Spool,Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.SpoolEntry)">
-            <summary>
-            Construct a Spool entry for the previously unregistered envelope
-            <paramref name="envelope"/>.
-            </summary>
-            <param name="spool">The spool the entry is created for.</param>
-            <param name="envelope">The envelope value.</param>
-            <param name="next">The next entry in the spool.</param>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolEntry.#ctor(Goedel.Mesh.Spool,Goedel.Mesh.Reference)">
-            <summary>
-            Construct a Spool entry for an envelope that has not yet been registered
-            that has been referenced by <paramref name="reference"/>.
-            </summary>
-            <param name="spool">The spool the entry is created for.</param>
-            <param name="reference">The reference.</param>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolEntry.AddEnvelope(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.SpoolEntry)">
-            <summary>
-            Add an envelope to an existing entry created because a status value was reported.
-            </summary>
-            <param name="envelope">The envelope to add.</param>
-            <param name="next">The next entry in the spool.</param>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolEntry.Link(Goedel.Mesh.SpoolEntry)">
-            <summary>
-            Link the spool entry <paramref name="next"/> to this entry as the next
-            entry in the chain.
-            </summary>
-            <param name="next">The next entry to link.</param>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolEntry.AddReference(Goedel.Mesh.Reference,System.Boolean)">
+        <member name="M:Goedel.Mesh.SpoolIndexEntry.AddReference(Goedel.Mesh.Reference,System.Boolean)">
             <summary>
             Add a reference to this entry. The reference will cause the message status to be 
             updated if either this is the first reference to be added or the 
@@ -15275,57 +15148,71 @@
             <param name="reference">The reference to add.</param>
             <param name="force">Force updating of the status.</param>
         </member>
-        <member name="M:Goedel.Mesh.SpoolEntry.Decode">
+        <member name="T:Goedel.Mesh.Evaluate">
             <summary>
-            Decode the envelope as a DARE Message using the current
-            KeyCollection and return the result.
-            </summary>
-            <returns>The decoded message</returns>
-        </member>
-        <member name="T:Goedel.Mesh.SpoolEnumeratorRaw">
-            <summary>
-            Enumerator that returns the raw, unencrypted container data.
+            Class constructing a delegate for evaluating a <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntry"/> in
+            searches.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.SpoolEnumeratorRaw.Current">
-            <summary>The current enumerated value.</summary>
+        <member name="P:Goedel.Mesh.Evaluate.NotBefore">
+            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Earlier"/> if the envelope has an
+            added date before this date.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.GetEnumerator">
-            <summary>
-            When called on an instance of this class, returns the instance. Thus allowing
-            selectors to be used in sub classes.
-            </summary>
-            <returns>This instance</returns>
+        <member name="P:Goedel.Mesh.Evaluate.NotOnOrAfter">
+            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Later"/> if the envelope has an
+            added date on or after this date.</summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.#ctor(Goedel.Mesh.Spool,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},Goedel.Mesh.SpoolEntry,System.Int64,System.Boolean)">
-            <summary>
-            Constructor for an enumerator on the store <paramref name="spool"/> with search constraints.
-            
-            
-            </summary>
-            <remarks>This enumerator is NOT currently thread safe though it should be.</remarks>
-            <param name="spool"></param>
-            <param name="select"></param>
-            <param name="notBefore"></param>
-            <param name="notOnOrAfter"></param>
-            <param name="last"></param>
-            <param name="maxResults"></param>
+        <member name="P:Goedel.Mesh.Evaluate.FrameFirst">
+            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Earlier"/> if the envelope has an
+            index less than this.</summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.Dispose">
+        <member name="P:Goedel.Mesh.Evaluate.FrameLast">
+            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Later"/> if the envelope has an
+            index greater than this.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Evaluate.ObjectType">
+            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Match"/> if the 
+            payload does not match this message type.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Evaluate.IsOpen">
+            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Match"/> if the 
+            entry <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsOpen"/> property does not return
+            a matching value.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Evaluate.IsDeleted">
+            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Deleted"/> if the 
+            entry <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsDeleted"/> property does not return
+            a matching value.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Evaluate.IsErased">
+            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Erased"/> if the 
+            entry <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsErased"/> property does not return
+            a matching value.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Evaluate.Get(Goedel.Cryptography.Dare.SequenceIndexEntry)">
             <summary>
-            Disposal method.
+            Returns the result of evaluating <paramref name="sequenceIndexEntry"/> against
+            for matching the specified criteria.
+            </summary>
+            <param name="sequenceIndexEntry"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolEnumerator">
+            <summary>
+            Spool enumerator, returns a sequence of <see cref="T:Goedel.Mesh.SpoolIndexEntry"/> instances
+            matching a specified set of conditions.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.MoveNext">
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.SpoolEnumerator.GetEnumerator" -->
+        <member name="M:Goedel.Mesh.SpoolEnumerator.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Mesh.SpoolIndexEntry,System.Boolean,Goedel.Cryptography.Dare.EvaluateIndexDelegate)">
             <summary>
-            Move to the next value in the enumeration.
+            Constructor, returns an enumerator on the sequence <paramref name="sequence"/> matching
+            the conditions specified beginning with the entry <paramref name="start"/>.
             </summary>
-            <returns>True if successful, otherwise false.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.Reset">
-            <summary>
-            Reset the enumeration to the origin of the search.
-            </summary>
+            <param name="sequence">The sequence to enumerate.</param>
+            <param name="start">The first item to evaluate.</param>
+            <param name="reverse">Return entries in reverse order.</param>
+            <param name="evaluateIndex">The enumerator.</param>
         </member>
         <member name="T:Goedel.Mesh.StoreFactoryDelegate">
             <summary>

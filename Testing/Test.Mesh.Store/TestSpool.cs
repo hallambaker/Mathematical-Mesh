@@ -73,7 +73,7 @@ public partial class StoreTests {
         // loop
         for (var batch = 0; batch < batches; batch++) {
 
-            var spoolEntry = store.SpoolEntryLast;
+            var spoolEntry = store.SpoolIndexEntryLast;
             for (var item = 0; item < items; item++) {
                 var message = MakeMessage($"{filename} {count++}", signingKey);
 
@@ -81,7 +81,7 @@ public partial class StoreTests {
                     store.AppendDirect(message, true);
                     }
                 else {
-                    store.Add(message);
+                    store.AppendDirect(message);
                     }
                 }
 
@@ -93,7 +93,7 @@ public partial class StoreTests {
 
 
             var j = 0;
-            foreach (var entry in store.GetMessages(last: spoolEntry, reverse:false)) {
+            foreach (var entry in store.GetMessages(start: spoolEntry, reverse:false)) {
                 j++;
                 Console.WriteLine($"Got {j}/{items} ${entry.Index}");
                 }
@@ -134,28 +134,26 @@ public partial class StoreTests {
         CheckEntry(directory, file, spool, id).TestNull();
 
         // add element
-        var entry1 = spool.Add(MakeMessage(id, signingKey));
+        var entry1 = spool.AppendDirect(MakeMessage(id, signingKey));
 
         var entry = CheckEntry(directory, file, spool, id);
         entry.TestNotNull();
-        entry.Open.TestTrue();
-        entry.Closed.TestFalse();
+        entry.IsOpen.TestTrue();
 
         // mark element closed
         SetStatus(spool, id, MessageStatus.Closed, signingKey);
 
         var entry2 = CheckEntry(directory, file, spool, id);
         entry2.TestNotNull();
-        entry2.Closed.TestTrue();
-        entry2.Open.TestFalse();
+        entry2.IsOpen.TestFalse();
 
         // mark element open (again)
         SetStatus(spool, id, MessageStatus.Open, signingKey);
 
         var entry3 = CheckEntry(directory, file, spool, id);
         entry3.TestNotNull();
-        entry3.Open.TestTrue();
-        entry3.Closed.TestFalse();
+        entry3.IsOpen.TestTrue();
+
 
         }
 
@@ -178,7 +176,7 @@ public partial class StoreTests {
                     }
             };
         var envelope = message.Envelope(signingKey);
-        spool.Add(envelope);
+        spool.AppendDirect(envelope);
 
         return message;
         }
@@ -192,7 +190,7 @@ public partial class StoreTests {
     /// <param name="spool"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    SpoolEntry CheckEntry(string directory, string file, Spool spool, string id) {
+    SpoolIndexEntry CheckEntry(string directory, string file, Spool spool, string id) {
         var spoolEntry = spool.GetByMessageId(id);
 
 

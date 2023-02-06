@@ -195,13 +195,13 @@ public partial class ContextAccount {
         if (transactRequest.Inbound != null) {
             var spoolInbound = GetStore(SpoolInbound.Label) as SpoolInbound;
             foreach (var envelope in transactRequest.Inbound) {
-                spoolInbound.Add(envelope);
+                spoolInbound.AppendDirect(envelope);
                 }
             }
         if (transactRequest.Local != null) {
             var spoolLocal = GetStore(SpoolLocal.Label) as SpoolLocal;
             foreach (var envelope in transactRequest.Local) {
-                spoolLocal.Add(envelope);
+                spoolLocal.AppendDirect(envelope);
                 }
             }
 

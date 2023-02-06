@@ -5417,7 +5417,7 @@
             </summary>
             <returns>The enumerator</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Open(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.String,System.Boolean,System.Boolean,System.Byte[],Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Open(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.String,System.Boolean,System.Boolean,System.Byte[],Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,System.Object)">
             <summary>
             Open or create Sequence according to the setting of FileStatus. The underlying 
             filestreams will be disposed of automatically when the Sequence is disposed.
@@ -5451,7 +5451,7 @@
             The default key collection to use for decryption
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,System.Boolean,System.Object)">
             <summary>
             Open an existing Sequence file.
             </summary>
@@ -5462,7 +5462,7 @@
             <param name="decrypt">If true configure to enable decryption of bodies.</param>
             <returns>The Sequence object if found. Otherwise, an exception is thrown.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,System.Boolean,Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,System.Boolean,Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,System.Object)">
             <summary>
             Open an existing Sequence according to the information contained in the next frame to be read.
             </summary>
@@ -5493,7 +5493,7 @@
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileModeException">The file mode specified was not valid.</exception>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.NewSequence(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean,System.Byte[],Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.NewSequence(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean,System.Byte[],Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,System.Object)">
             <summary>
             Create a new Sequence file of the specified type and write the initial
             data record
@@ -5970,6 +5970,29 @@
             consistent with the payload digest value specified and verify the payload digest 
             value against the payload contents.</summary>
         </member>
+        <member name="T:Goedel.Cryptography.Dare.ItemResult">
+            <summary>
+            Result of comparing a <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntry"/> to a set of search criteria.
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ItemResult.Match">
+            <summary>The item is a match for the search criteria.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ItemResult.NotMatch">
+            <summary>The item is not a match for the search criteria.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ItemResult.Earlier">
+            <summary>The item was added to the sequence before the search interval began.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ItemResult.Later">
+            <summary>The item was added to the sequence after the search interval ended.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ItemResult.Deleted">
+            <summary>The item was deleted.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ItemResult.Erased">
+            <summary>The item was erased.</summary> 
+        </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate">
             <summary>
             Delegate used to create spool indexes. Creating the index via a delegate allows
@@ -6029,6 +6052,16 @@
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.JsonObject">
             <summary>The decoded JSONObject</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsOpen">
+            <summary>The sequenced envelope is unread in the case of a message in a spool or
+            not deleted or overwritten in the case of an entry in a catalog.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsDeleted">
+            <summary>The sequenced envelope has been deleted.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsErased">
+            <summary>The sequenced envelope has been erased by overwriting the salt value.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsEncrypted">
             <summary>Convenience property, set true iff payload is encrypted.</summary> 

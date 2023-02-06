@@ -69,7 +69,7 @@ partial class Program {
 
 
 
-        //TestPersist.Test().TestPersistenceStoreAll();
+        //TestStores.Test().TestSpoolBasic();
         //TestPlatform.Test().TestKeyRead();
         //TestPlatform.Test().TestWritePEMRSA();
 
