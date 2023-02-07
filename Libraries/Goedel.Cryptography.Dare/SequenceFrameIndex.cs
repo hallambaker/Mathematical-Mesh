@@ -63,7 +63,7 @@ public enum ItemResult {
     Deleted = 1 << 4,
 
     ///<summary>The item was erased.</summary> 
-    Erased = 1 << 5,
+    Erased = 1 << 5
     }
 
 
@@ -94,8 +94,9 @@ public delegate SequenceIndexEntry SequenceIndexEntryFactoryDelegate(
 public delegate void InternSequenceIndexEntryDelegate(
         SequenceIndexEntry sequenceIndexEntry);
 
-
-public delegate ItemResult EvaluateIndexDelegate(SequenceIndexEntry sequenceIndexEntry);
+///<summary>Delegate called to evaluate an index entry and return a result accordning 
+///to it's set of match criteria.</summary> 
+public delegate ItemResult FilterIndexDelegate(SequenceIndexEntry sequenceIndexEntry);
 
 /// <summary>
 /// Sequence index with the decoded head and tail and extent information for

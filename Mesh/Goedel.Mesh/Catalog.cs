@@ -22,6 +22,7 @@
 
 
 
+using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using System.Collections;
 
@@ -32,8 +33,7 @@ namespace Goedel.Mesh;
 /// <summary>
 /// Base class for catalogs.
 /// </summary>
-public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
-            where T : CatalogedEntry {
+public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEntry {
 
     ///<summary>Class exposing the Mesh Client locate interface.</summary>
     public IMeshClient MeshClient;
@@ -43,9 +43,26 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     public PersistenceStore PersistenceStore { get; set; } = null;
 
 
-    ///<summary>Enumerate the catalog as the cataloged type.</summary>
-    public AsCatalogedType<T> AsCatalogedType =>
-            new(PersistenceStore);
+    ///<summary>Return an enumeration over the object collection.</summary> 
+    public IEnumerable<T> GetEntries => 
+            new PersistenceStoreEnumerateObject<string, T>(PersistenceStore.ObjectIndex);
+
+    ///<summary>Return an enumeration over the deleted object collection.</summary> 
+    public IEnumerable<T> GetDeletedEntries=> 
+            new PersistenceStoreEnumerateObject<string, T>(PersistenceStore.DeletedObjectIndex);
+
+
+    /// <summary>
+    /// Returns an enumerator over the catalog entries. Most catalog classes offer typed
+    /// enumerators as an alternative.
+    /// </summary>
+    /// <returns>The enumerator.</returns>
+    public IEnumerator<T> GetEnumerator() => 
+                new PersistenceStoreEnumerateObject<string, T>(PersistenceStore.ObjectIndex);
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
+    private IEnumerator GetEnumerator1() => this.GetEnumerator();
+
 
     ///<summary>Dictionary mapping local names to the corresponding catalog entries.</summary> 
     public Dictionary<string, CatalogedEntry> DictionaryByLocalName { get; } = 
@@ -93,13 +110,27 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
         PersistenceStore = new PersistenceStore(Sequence, keyCollection, readContainer);
 
         if (readContainer) {
-            foreach (var indexEntry in PersistenceStore.ObjectIndex) {
+            foreach (var indexEntry in PersistenceStore.X_ObjectIndex) {
                 var objectData = indexEntry.Value.JsonObject as T;
                 NewEntry(objectData);
                 }
             }
 
         }
+
+    static void InternSequenceIndexEntry(
+                    SequenceIndexEntry sequenceIndexEntry) {
+        var store = sequenceIndexEntry.Sequence.Store as Catalog<T>;
+        store.Intern(sequenceIndexEntry);
+
+        }
+
+    void Intern(
+            SequenceIndexEntry indexEntry) {
+        PersistenceStore.Intern(indexEntry);
+
+        }
+
 
     /// <summary>
     /// Append the envelopes <paramref name="envelope"/> to the
@@ -226,10 +257,8 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     /// <returns>The instance if found, otherwise null.</returns>
     public virtual TT GetDefault<TT>() where TT : class{
 
-        foreach (var entry in PersistenceStore) {
-            if (entry.JsonObject is TT) {
-
-                var result = entry.JsonObject as TT;
+        foreach (var entry in this) {
+            if (entry is TT result) {
                 return result;
                 }
             }
@@ -340,15 +369,7 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
     public StoreEntry GetEntry(string key) => PersistenceStore.Get(key) as StoreEntry;
 
 
-    /// <summary>
-    /// Returns an enumerator over the catalog entries. Most catalog classes offer typed
-    /// enumerators as an alternative.
-    /// </summary>
-    /// <returns>The enumerator.</returns>
-    public IEnumerator<CatalogedEntry> GetEnumerator() => new EnumeratorCatalogEntry(PersistenceStore);
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
-    private IEnumerator GetEnumerator1() => this.GetEnumerator();
 
 
     /// <summary>
@@ -411,39 +432,39 @@ public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
 
 #region // Enumerators and associated classes
 
-/// <summary>
-/// Enumerator class for sequences of <see cref="CatalogedEntry"/> over a persistence
-/// store.
-/// </summary>
-public class EnumeratorCatalogEntry : IEnumerator<CatalogedEntry> {
-    readonly IEnumerator<StoreEntry> baseEnumerator;
+///// <summary>
+///// Enumerator class for sequences of <see cref="CatalogedEntry"/> over a persistence
+///// store.
+///// </summary>
+//public class EnumeratorCatalogEntry : IEnumerator<CatalogedEntry> {
+//    readonly IEnumerator<StoreEntry> baseEnumerator;
 
-    ///<summary>The current item in the enumeration.</summary>
-    public CatalogedEntry Current => baseEnumerator.Current.JsonObject as CatalogedEntry;
-    object IEnumerator.Current => Current;
+//    ///<summary>The current item in the enumeration.</summary>
+//    public CatalogedEntry Current => baseEnumerator.Current.JsonObject as CatalogedEntry;
+//    object IEnumerator.Current => Current;
 
-    /// <summary>
-    /// Disposal method.
-    /// </summary>
-    public void Dispose() => baseEnumerator.Dispose();
+//    /// <summary>
+//    /// Disposal method.
+//    /// </summary>
+//    public void Dispose() => baseEnumerator.Dispose();
 
-    /// <summary>
-    /// Move to the next item in the enumeration.
-    /// </summary>
-    /// <returns>The next item in the enumeration</returns>
-    public bool MoveNext() => baseEnumerator.MoveNext();
+//    /// <summary>
+//    /// Move to the next item in the enumeration.
+//    /// </summary>
+//    /// <returns>The next item in the enumeration</returns>
+//    public bool MoveNext() => baseEnumerator.MoveNext();
 
-    /// <summary>
-    /// Restart the enumeration.
-    /// </summary>
-    public void Reset() => throw new NotImplementedException();
+//    /// <summary>
+//    /// Restart the enumeration.
+//    /// </summary>
+//    public void Reset() => throw new NotImplementedException();
 
-    /// <summary>
-    /// Construct enumerator from <see cref="PersistenceStore"/>,
-    /// <paramref name="persistenceStore"/>.
-    /// </summary>
-    /// <param name="persistenceStore">The persistence store to enumerate.</param>
-    public EnumeratorCatalogEntry(PersistenceStore persistenceStore) =>
-        baseEnumerator = persistenceStore.GetEnumerator();
-    }
+//    /// <summary>
+//    /// Construct enumerator from <see cref="PersistenceStore"/>,
+//    /// <paramref name="persistenceStore"/>.
+//    /// </summary>
+//    /// <param name="persistenceStore">The persistence store to enumerate.</param>
+//    public EnumeratorCatalogEntry(PersistenceStore persistenceStore) =>
+//        baseEnumerator = persistenceStore.GetEnumerator();
+//    }
 #endregion

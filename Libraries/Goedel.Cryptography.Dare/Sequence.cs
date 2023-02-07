@@ -201,7 +201,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     protected override void Disposing() =>
         DisposeJBCDStream?.Dispose();
     #endregion
-    #region // IEnumerable
+    #region // IEnumerable and filtering enumerations
 
     /// <summary>
     /// Returns an enumerator over the Sequence contents starting with the
@@ -209,18 +209,64 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// </summary>
     /// <returns>The enumerator</returns>
     public virtual IEnumerator<SequenceIndexEntry> GetEnumerator() =>
-        new ContainerEnumerator(this);
+        new SequenceEnumeratorIndex(this, FrameCount, true);
 
     // Must also implement IEnumerable.GetEnumerator, but implement as a private method.
     private IEnumerator GetEnumerator1() => this.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
 
-    public virtual IEnumerable<SequenceIndexEntry> SelectFromUnread (
-                EvaluateIndexDelegate evaluate=null) => throw new NYI();
 
+    /// <summary>
+    /// Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+    /// with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
+    /// results are returned from the last match first.
+    /// </summary>
+    /// <param name="sequence">The sequence to enumerate.</param>
+    /// <param name="start">The starting point for the enumeration. If it matches, this will 
+    /// be the first result returned.</param>
+    /// <param name="reverse">If true, return results in the reverse order.</param>
+    /// <param name="filter">If not null, specifies a filtering function on the 
+    /// store entries.</param>
+    /// <param name="skip">If true, the search MAY optimize search time by performing a binary
+    /// search on the records. Note however that since this will cause entry update entries to
+    /// be skipped, the status might be affected by one or more skipped records.</param>
+    /// <param name="count">Maximum number of records to return.</param>
     public virtual IEnumerable<SequenceIndexEntry> Select(
-                bool reverse = false,
-                EvaluateIndexDelegate evaluate = null) => throw new NYI();
+                long start,
+                bool reverse = true,
+                long count = -1,
+                FilterIndexDelegate filter = null,
+                bool skip = false) => new SequenceEnumeratorIndex(
+                    this, start, reverse, count, filter, skip);
+
+
+    public virtual IEnumerable<SequenceIndexEntry> SelectFromUnread (
+            FilterIndexDelegate evaluate=null) => throw new NYI();
+
+
+
+
+
+    /// <summary>
+    /// Returns an enumerator over the Sequence contents starting with the
+    /// first frame.
+    /// </summary>
+    /// <returns>The enumerator</returns>
+    public virtual IEnumerable<SequenceIndexEntry> SelectIndex(long first, long count = -1) =>
+            new SequenceEnumeratorIndex(this, first, count: count);
+
+
+    /// <summary>
+    /// Return an enumerator with the specified selectors.
+    /// </summary>
+    /// <param name="minIndex">The minimum index.</param>
+    /// <param name="reverse">If true, read the Sequence from the end.</param>
+    /// <returns>The enumerator.</returns>
+    public IEnumerable<DareEnvelope> SelectEnvelope(long minIndex, bool reverse = false) =>
+        new SequenceEnumerateEnvelope(this, minIndex, reverse);
+
+
+
 
     #endregion
 
@@ -632,25 +678,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
     #endregion
     #region // Navigation and enumeration methods
-
-
-    /// <summary>
-    /// Returns an enumerator over the Sequence contents starting with the
-    /// first frame.
-    /// </summary>
-    /// <returns>The enumerator</returns>
-    public virtual ContainerEnumerator SelectIndex(long frame, long last = -1) =>
-        new ContainerEnumerator(this, frame, last);
-
-
-    /// <summary>
-    /// Return an enumerator with the specified selectors.
-    /// </summary>
-    /// <param name="minIndex">The minimum index.</param>
-    /// <param name="reverse">If true, read the Sequence from the end.</param>
-    /// <returns>The enumerator.</returns>
-    public SequenceEnumeratorRaw SelectEnvelope(long minIndex, bool reverse = false) =>
-        new(this, minIndex, reverse);
 
 
 

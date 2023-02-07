@@ -1045,7 +1045,7 @@ public partial class ContextUser : ContextAccount {
 
 
 
-        foreach (var entry in catalogAccess.AsCatalogedType) {
+        foreach (var entry in catalogAccess.GetEntries) {
             if (entry.Capability is CryptographicCapability cryptographicCapability) {
                 if (cryptographicCapability.GranteeUdf ==
                         deviceEntry.ConnectionDevice.AuthenticationPublic.KeyIdentifier) {
@@ -1121,15 +1121,14 @@ public partial class ContextUser : ContextAccount {
         var results = new List<ProcessResult>();
 
         var spoolInbound = GetSpoolInbound();
-        foreach (var spoolEntry in spoolInbound.GetMessages(evaluateIndex: Evaluate.GetOpen)) {
+        foreach (var spoolEntry in spoolInbound.GetMessages(open: true)) {
             var meshMessage = spoolEntry.Message;
-
             Logger.GotMessage(meshMessage.GetType().ToString(), meshMessage.MessageId, spoolEntry.MessageStatus);
+
             if (spoolEntry.IsOpen) {
                 switch (meshMessage) {
                     case AcknowledgeConnection acknowledgeConnection: {
                             if (acknowledgeConnection.MessageConnectionRequest.PinId != null) {
-                                //Screen.WriteLine($"    {acknowledgeConnection.MessageConnectionRequest.PinId}");
                                 results.Add(ProcessAutomatic(acknowledgeConnection));
                                 }
                             break;
@@ -1179,20 +1178,7 @@ public partial class ContextUser : ContextAccount {
         var transactRequest = TransactBegin();
         var catalogContact = transactRequest.GetCatalogContact();
 
-        //catalogContact.Add(request.Contact);  
-
         transactRequest.CatalogUpdate(catalogContact, request.Contact);
-
-        //if (request.Contact?.NetworkAddresses != null) {
-        //    var catalogCapability = transactRequest.GetCatalogAccess(); // Hack: make transactional
-        //    foreach (var address in request.Contact.NetworkAddresses) {
-        //        if (address.Capabilities != null) {
-        //            foreach (var capability in address.Capabilities) {
-        //                catalogCapability.Add(capability);
-        //                }
-        //            }
-        //        }
-        //    }
         transactRequest.InboundComplete(MessageStatus.Closed, request);
         transactRequest.Transact();
 
@@ -1207,12 +1193,12 @@ public partial class ContextUser : ContextAccount {
     /// <param name="request">Connection request to be processed.</param>
     /// <returns>The result of requesting the connection.</returns>
     public ProcessResult ProcessAutomatic(AcknowledgeConnection request) {
-        try {
-            }
-        catch {
-            return new InsufficientAuthorization(request.MessageConnectionRequest);
+        //try {
+        //    }
+        //catch {
+        //    return new InsufficientAuthorization(request.MessageConnectionRequest);
 
-            }
+        //    }
 
 
 
@@ -1304,17 +1290,6 @@ public partial class ContextUser : ContextAccount {
         // When creating a device for the first time, the update is always encrypted
         // under the device key.
         transact.CatalogUpdate(device, ProfileDevice.KeyEncrypt);
-
-        //var catalogDevice = transact.GetCatalogDevice();
-        //transact.CatalogUpdate(catalogDevice, device);
-
-        //var catalogedAccessors = device.EnvelopedActivationAccount?.EnvelopedObject?.CatalogedAccessors;
-        //if (catalogedAccessors != null) {
-        //    var catalogAccess = transactRequest.GetCatalogAccess();
-        //    foreach (var capability in catalogedAccessors) {
-        //        transactRequest.CatalogUpdate(catalogAccess, capability);
-        //        }
-        //    }
         }
 
     /// <summary>
@@ -1337,31 +1312,7 @@ public partial class ContextUser : ContextAccount {
             }
         List<ApplicationEntry> result = null;
 
-
-        //foreach (var entry in ApplicationEntries) {
-        //    entry.Ac
-
-
-        //    switch (entry) {
-        //        case ApplicationEntrySsh applicationEntrySsh: {
-        //                if (applicationEntrySsh.Activation == null) {
-        //                    applicationEntrySsh.Decode(this);
-        //                    }
-        //                KeyCollection.Add(applicationEntrySsh.Activation.ClientKey.GetKeyPair());
-        //                break;
-        //                }
-        //        case ApplicationEntryMail applicationEntryMail: {
-        //                break;
-        //                }
-        //        }
-
-
-
-
-        //    }
-
-
-        foreach (var application in catalogApplication.AsCatalogedType) {
+        foreach (var application in catalogApplication.GetEntries) {
 
 
             if (!application.Deny.Intersects(roles) &&

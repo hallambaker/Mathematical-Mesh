@@ -144,7 +144,7 @@ public class MeshHost : Disposable {
 
         Logger.ReloadHost();
 
-        foreach (var entry in persistHost.ObjectIndex) {
+        foreach (var entry in persistHost.X_ObjectIndex) {
             ObjectIndex.Add(entry.Key, entry.Value);
 
             var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;

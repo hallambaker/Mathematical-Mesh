@@ -116,7 +116,7 @@ public class CatalogApplication : Catalog<CatalogedApplication> {
     /// <returns>Sequence of SSH application instances.</returns>
     public List<CatalogedApplication> GetSsh() {
         var result = new List<CatalogedApplication>();
-        foreach (var application in AsCatalogedType) {
+        foreach (var application in GetEntries) {
             if (application is CatalogedApplicationSsh catalogedApplicationSsh) {
                 result.Add(catalogedApplicationSsh);
                 }
@@ -149,7 +149,7 @@ public class CatalogApplication : Catalog<CatalogedApplication> {
     /// <returns>Sequence of Mail application instances.</returns>
     public List<CatalogedApplication> GetMail() {
         var result = new List<CatalogedApplication>();
-        foreach (var entry in PersistenceStore.ObjectIndex) {
+        foreach (var entry in PersistenceStore.X_ObjectIndex) {
             var application = entry.Value;
             if (application.JsonObject is CatalogedApplicationMail catalogedApplicationMail) {
                 result.Add(catalogedApplicationMail);

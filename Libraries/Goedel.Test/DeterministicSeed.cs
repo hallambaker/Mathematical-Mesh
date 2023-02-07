@@ -39,7 +39,7 @@ public class UnitTestSet : Disposable {
     ///<summary>The deterministic seed to be used by the test, may be set explictly
     ///or generated automatically through use in a test method.</summary> 
     public virtual DeterministicSeed Seed {
-        get => seed ?? DeterministicSeed.Auto ().CacheValue(out seed);
+        get => seed ?? DeterministicSeed.AutoClean ().CacheValue(out seed);
         set => seed = value;
         }
 

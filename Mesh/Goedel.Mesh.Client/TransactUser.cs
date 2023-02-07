@@ -139,7 +139,7 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
 
         var catalogDevice = GetCatalogDevice();
         var updated = new List<CatalogedDevice>();
-        foreach (var device in catalogDevice.AsCatalogedType) {
+        foreach (var device in catalogDevice.GetEntries) {
 
             //Screen.WriteLine("Got device");
             if (catalogedApplication.DeviceAuthorized(device)) {

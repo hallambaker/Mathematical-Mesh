@@ -2084,8 +2084,15 @@
         <member name="P:Goedel.Mesh.Catalog`1.PersistenceStore">
             <summary>The persistence store.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Catalog`1.AsCatalogedType">
-            <summary>Enumerate the catalog as the cataloged type.</summary>
+        <member name="P:Goedel.Mesh.Catalog`1.X_AsCatalogedType">
+            <summary>Enumerate the catalog as the cataloged type. Remove as this is now the default.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog`1.GetEnumerator">
+            <summary>
+            Returns an enumerator over the catalog entries. Most catalog classes offer typed
+            enumerators as an alternative.
+            </summary>
+            <returns>The enumerator.</returns>
         </member>
         <member name="P:Goedel.Mesh.Catalog`1.DictionaryByLocalName">
             <summary>Dictionary mapping local names to the corresponding catalog entries.</summary> 
@@ -2225,49 +2232,10 @@
             <param name="key">Unique identifier of entry to return.</param>
             <returns>The entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.GetEnumerator">
-            <summary>
-            Returns an enumerator over the catalog entries. Most catalog classes offer typed
-            enumerators as an alternative.
-            </summary>
-            <returns>The enumerator.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Catalog`1.Dump(System.IO.TextWriter)">
             <summary>
             Write the 
             </summary>
-        </member>
-        <member name="T:Goedel.Mesh.EnumeratorCatalogEntry">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedEntry"/> over a persistence
-            store.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.EnumeratorCatalogEntry.Current">
-            <summary>The current item in the enumeration.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntry.Dispose">
-            <summary>
-            Disposal method.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntry.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns>The next item in the enumeration</returns>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntry.Reset">
-            <summary>
-            Restart the enumeration.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntry.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
-            <paramref name="persistenceStore"/>.
-            </summary>
-            <param name="persistenceStore">The persistence store to enumerate.</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogAccess">
             <summary>
@@ -5593,56 +5561,163 @@
             <param name="recipient">The recipient account under which the </param>
             <returns>The EARL</returns>
         </member>
-        <member name="T:Goedel.Mesh.AsCatalogedType`1">
+        <member name="T:Goedel.Mesh.StoreEnumerateEnvelope">
+            <summary>
+            Enumerate the envelopes in a DARE store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.StoreEnumerateEnvelope.Current">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.StoreEnumerateEnvelope.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.StoreEnumerateEnvelope.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.StoreEnumerateEnvelope.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Boolean,Goedel.Cryptography.Dare.FilterIndexDelegate,System.Boolean)">
+            <summary>
+            Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+            with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
+            results are returned from the last match first.
+            </summary>
+            <param name="sequence">The sequence to enumerate.</param>
+            <param name="start">The starting point for the enumeration. If it matches, this will 
+            be the first result returned.</param>
+            <param name="reverse">If true, return results in the reverse order.</param>
+            <param name="evaluateIndex">If not null, specifies a filtering function on the 
+            store entries.</param>
+            <param name="skip">If true, the search MAY optimize search time by performing a binary
+            search on the records. Note however that since this will cause entry update entries to
+            be skipped, the status might be affected by one or more skipped records.</param>
+        </member>
+        <member name="M:Goedel.Mesh.StoreEnumerateEnvelope.MoveNext">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.StoreEnumerateEnvelope.Reset">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.StoreEnumerateEnvelope.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogEnumerateItem`1">
             <summary>
             Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a Catalog
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.AsCatalogedType`1.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogDevice"/>,
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to enumerate.</param>
+        <member name="P:Goedel.Mesh.CatalogEnumerateItem`1.Current">
+            <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.AsCatalogedType`1.GetEnumerator">
-            <summary>
-            Return an enumerator for the catalog.
-            </summary>
-            <returns>The enumerator.</returns>
+        <member name="M:Goedel.Mesh.CatalogEnumerateItem`1.GetEnumerator">
+            <inheritdoc/>
         </member>
-        <member name="T:Goedel.Mesh.EnumeratorAsCatalogedType`1">
+        <member name="M:Goedel.Mesh.CatalogEnumerateItem`1.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogEnumerateItem`1.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Boolean,Goedel.Cryptography.Dare.FilterIndexDelegate,System.Boolean)">
             <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a persistence
-            store.
+            Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+            with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
+            results are returned from the last match first.
+            </summary>
+            <param name="sequence">The sequence to enumerate.</param>
+            <param name="start">The starting point for the enumeration. If it matches, this will 
+            be the first result returned.</param>
+            <param name="reverse">If true, return results in the reverse order.</param>
+            <param name="evaluateIndex">If not null, specifies a filtering function on the 
+            store entries.</param>
+            <param name="skip">If true, the search MAY optimize search time by performing a binary
+            search on the records. Note however that since this will cause entry update entries to
+            be skipped, the status might be affected by one or more skipped records.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogEnumerateItem`1.MoveNext">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogEnumerateItem`1.Reset">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogEnumerateItem`1.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolEnumerator">
+            <summary>
+            Spool enumerator, returns a sequence of <see cref="T:Goedel.Mesh.SpoolIndexEntry"/> instances
+            matching a specified set of conditions.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.EnumeratorAsCatalogedType`1.Current">
-            <summary>The current item in the enumeration.</summary>
+        <member name="P:Goedel.Mesh.SpoolEnumerator.Current">
+            <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.EnumeratorAsCatalogedType`1.Dispose">
+        <member name="M:Goedel.Mesh.SpoolEnumerator.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumerator.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumerator.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Boolean,Goedel.Cryptography.Dare.FilterIndexDelegate,System.Boolean)">
             <summary>
-            Disposal method.
+            Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+            with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
+            results are returned from the last match first.
+            </summary>
+            <param name="sequence">The sequence to enumerate.</param>
+            <param name="start">The starting point for the enumeration. If it matches, this will 
+            be the first result returned.</param>
+            <param name="reverse">If true, return results in the reverse order.</param>
+            <param name="evaluateIndex">If not null, specifies a filtering function on the 
+            store entries.</param>
+            <param name="skip">If true, the search MAY optimize search time by performing a binary
+            search on the records. Note however that since this will cause entry update entries to
+            be skipped, the status might be affected by one or more skipped records.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumerator.MoveNext">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumerator.Reset">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumerator.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolEnumerateMessage">
+            <summary>
+            Spool enumerator, returns a sequence of <see cref="T:Goedel.Mesh.Message"/> instances
+            matching a specified set of conditions.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.EnumeratorAsCatalogedType`1.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns><see langword="true"/> if there was a next item to return, otherwise,
-            <see langword="false"/>.</returns>
+        <member name="P:Goedel.Mesh.SpoolEnumerateMessage.Current">
+            <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.EnumeratorAsCatalogedType`1.Reset">
-            <summary>
-            Restart the enumeration.
-            </summary>
+        <member name="M:Goedel.Mesh.SpoolEnumerateMessage.GetEnumerator">
+            <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.EnumeratorAsCatalogedType`1.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
+        <member name="M:Goedel.Mesh.SpoolEnumerateMessage.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumerateMessage.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Boolean,Goedel.Cryptography.Dare.FilterIndexDelegate,System.Boolean)">
             <summary>
-            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
-            <paramref name="persistenceStore"/>.
+            Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+            with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
+            results are returned from the last match first.
             </summary>
-            <param name="persistenceStore">The persistence store to enumerate.</param>
+            <param name="sequence">The sequence to enumerate.</param>
+            <param name="start">The starting point for the enumeration. If it matches, this will 
+            be the first result returned.</param>
+            <param name="reverse">If true, return results in the reverse order.</param>
+            <param name="evaluateIndex">If not null, specifies a filtering function on the 
+            store entries.</param>
+            <param name="skip">If true, the search MAY optimize search time by performing a binary
+            search on the records. Note however that since this will cause entry update entries to
+            be skipped, the status might be affected by one or more skipped records.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumerateMessage.MoveNext">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumerateMessage.Reset">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumerateMessage.Dispose">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Internal">
             <summary>
@@ -6582,6 +6657,55 @@
             <param name="actor">The actor for whom the key is generated.</param>
             <param name="operation">The operation for which the key is to be used.</param>
             <returns>The derrived private key</returns>
+        </member>
+        <member name="T:Goedel.Mesh.FilterSequenceIndex">
+            <summary>
+            Class constructing a delegate for evaluating a <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntry"/> in
+            searches.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.FilterSequenceIndex.NotBefore">
+            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Earlier"/> if the envelope has an
+            added date before this date.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.FilterSequenceIndex.NotOnOrAfter">
+            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Later"/> if the envelope has an
+            added date on or after this date.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.FilterSequenceIndex.FrameFirst">
+            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Earlier"/> if the envelope has an
+            index less than this.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.FilterSequenceIndex.FrameLast">
+            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Later"/> if the envelope has an
+            index greater than this.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.FilterSequenceIndex.ObjectType">
+            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Match"/> if the 
+            payload does not match this message type.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.FilterSequenceIndex.IsOpen">
+            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Match"/> if the 
+            entry <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsOpen"/> property does not return
+            a matching value.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.FilterSequenceIndex.IsDeleted">
+            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Deleted"/> if the 
+            entry <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsDeleted"/> property does not return
+            a matching value.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.FilterSequenceIndex.IsErased">
+            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Erased"/> if the 
+            entry <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsErased"/> property does not return
+            a matching value.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.FilterSequenceIndex.Get(Goedel.Cryptography.Dare.SequenceIndexEntry)">
+            <summary>
+            Returns the result of evaluating <paramref name="sequenceIndexEntry"/> against
+            for matching the specified criteria.
+            </summary>
+            <param name="sequenceIndexEntry"></param>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Mesh.KeyShare">
             <summary>
@@ -14938,7 +15062,7 @@
             store.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Spool.GetMessages(Goedel.Mesh.SpoolIndexEntry,System.Boolean,Goedel.Cryptography.Dare.EvaluateIndexDelegate)">
+        <member name="M:Goedel.Mesh.Spool.GetMessages(Goedel.Mesh.SpoolIndexEntry,System.Boolean,System.Boolean,Goedel.Cryptography.Dare.FilterIndexDelegate)">
             <summary>
             Return an enumerator returning a sequence of <see cref="T:Goedel.Mesh.SpoolIndexEntry"/> entries
             matching the criteria specified by <paramref name="evaluateIndex"/>.
@@ -15121,23 +15245,35 @@
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
+        <member name="P:Goedel.Mesh.ISpoolItem.MessageStatus">
+            <summary>The message status value.</summary>
+        </member>
         <member name="P:Goedel.Mesh.SpoolPlaceholder.References">
             <summary>The list of references to the message, most recently added first.</summary>
         </member>
+        <member name="P:Goedel.Mesh.SpoolPlaceholder.MessageStatus">
+            <summary>The message status value.</summary>
+        </member>
         <member name="P:Goedel.Mesh.SpoolIndexEntry.References">
             <summary>The list of references to the message, most recently added first.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.SpoolIndexEntry.Factory(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Int64,System.Int64,System.Int64,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.JsonObject)">
-            <summary>
-            Factory method implementing <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>.
-            </summary>
-            <inheritdoc cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>
         </member>
         <member name="P:Goedel.Mesh.SpoolIndexEntry.Message">
             <summary>Returns the message</summary>
         </member>
         <member name="P:Goedel.Mesh.SpoolIndexEntry.MessageStatus">
             <summary>The message status value.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolIndexEntry.MessageId">
+            <summary>Convenience accessor for the message identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.SpoolIndexEntry.MessageType">
+            <summary>Convenience accessor for the message type.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.SpoolIndexEntry.Factory(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Int64,System.Int64,System.Int64,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.JsonObject)">
+            <summary>
+            Factory method implementing <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>.
+            </summary>
+            <inheritdoc cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>
         </member>
         <member name="M:Goedel.Mesh.SpoolIndexEntry.AddReference(Goedel.Mesh.Reference,System.Boolean)">
             <summary>
@@ -15147,72 +15283,6 @@
             </summary>
             <param name="reference">The reference to add.</param>
             <param name="force">Force updating of the status.</param>
-        </member>
-        <member name="T:Goedel.Mesh.Evaluate">
-            <summary>
-            Class constructing a delegate for evaluating a <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntry"/> in
-            searches.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Evaluate.NotBefore">
-            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Earlier"/> if the envelope has an
-            added date before this date.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Evaluate.NotOnOrAfter">
-            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Later"/> if the envelope has an
-            added date on or after this date.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Evaluate.FrameFirst">
-            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Earlier"/> if the envelope has an
-            index less than this.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Evaluate.FrameLast">
-            <summary>Set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Later"/> if the envelope has an
-            index greater than this.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Evaluate.ObjectType">
-            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Match"/> if the 
-            payload does not match this message type.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Evaluate.IsOpen">
-            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Match"/> if the 
-            entry <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsOpen"/> property does not return
-            a matching value.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Evaluate.IsDeleted">
-            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Deleted"/> if the 
-            entry <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsDeleted"/> property does not return
-            a matching value.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Evaluate.IsErased">
-            <summary>If not null, set the flag <see cref="F:Goedel.Cryptography.Dare.ItemResult.Erased"/> if the 
-            entry <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsErased"/> property does not return
-            a matching value.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Evaluate.Get(Goedel.Cryptography.Dare.SequenceIndexEntry)">
-            <summary>
-            Returns the result of evaluating <paramref name="sequenceIndexEntry"/> against
-            for matching the specified criteria.
-            </summary>
-            <param name="sequenceIndexEntry"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Goedel.Mesh.SpoolEnumerator">
-            <summary>
-            Spool enumerator, returns a sequence of <see cref="T:Goedel.Mesh.SpoolIndexEntry"/> instances
-            matching a specified set of conditions.
-            </summary>
-        </member>
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.SpoolEnumerator.GetEnumerator" -->
-        <member name="M:Goedel.Mesh.SpoolEnumerator.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Mesh.SpoolIndexEntry,System.Boolean,Goedel.Cryptography.Dare.EvaluateIndexDelegate)">
-            <summary>
-            Constructor, returns an enumerator on the sequence <paramref name="sequence"/> matching
-            the conditions specified beginning with the entry <paramref name="start"/>.
-            </summary>
-            <param name="sequence">The sequence to enumerate.</param>
-            <param name="start">The first item to evaluate.</param>
-            <param name="reverse">Return entries in reverse order.</param>
-            <param name="evaluateIndex">The enumerator.</param>
         </member>
         <member name="T:Goedel.Mesh.StoreFactoryDelegate">
             <summary>
@@ -15254,6 +15324,23 @@
         </member>
         <member name="P:Goedel.Mesh.Store.StoreType">
             <summary>The default bitmask identifier for update notification.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Store.Select(System.Int64,System.Boolean,System.Int64,Goedel.Cryptography.Dare.FilterIndexDelegate,System.Boolean)">
+            <summary>
+            Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+            with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
+            results are returned from the last match first.
+            </summary>
+            <param name="sequence">The sequence to enumerate.</param>
+            <param name="start">The starting point for the enumeration. If it matches, this will 
+            be the first result returned.</param>
+            <param name="reverse">If true, return results in the reverse order.</param>
+            <param name="filter">If not null, specifies a filtering function on the 
+            store entries.</param>
+            <param name="skip">If true, the search MAY optimize search time by performing a binary
+            search on the records. Note however that since this will cause entry update entries to
+            be skipped, the status might be affected by one or more skipped records.</param>
+            <param name="count">Maximum number of records to return.</param>
         </member>
         <member name="M:Goedel.Mesh.Store.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>

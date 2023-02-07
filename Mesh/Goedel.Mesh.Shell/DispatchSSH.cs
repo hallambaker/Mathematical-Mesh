@@ -224,7 +224,7 @@ public partial class Shell {
 
 
         if (id == null) {
-            foreach (var entry in catalog.AsCatalogedType) {
+            foreach (var entry in catalog.GetEntries) {
 
                 if (entry.HostAuthentication != null) {
                     result.CatalogedEntries.Add(entry);

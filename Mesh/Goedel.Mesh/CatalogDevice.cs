@@ -119,7 +119,7 @@ public class CatalogDevice : Catalog<CatalogedDevice> {
     public string Report() {
 
         var builder = new StringBuilder();
-        foreach (var catalog in AsCatalogedType) {
+        foreach (var catalog in GetEntries) {
             catalog.ItemToBuilder(builder, 1);
             }
 

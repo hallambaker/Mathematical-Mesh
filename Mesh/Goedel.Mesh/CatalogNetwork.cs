@@ -106,7 +106,7 @@ public class CatalogNetwork : Catalog<CatalogedNetwork> {
     /// <param name="key">The service to be matched.</param>
     /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
     public CatalogedNetwork LocateByService(string key) {
-        foreach (var network in AsCatalogedType) {
+        foreach (var network in GetEntries) {
             if (network.Service == key) {
                 return network;
                 }

@@ -85,6 +85,31 @@ public class Store : Disposable {
 
     int BitmaskSizeBytes => 4;
 
+
+    /// <summary>
+    /// Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+    /// with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
+    /// results are returned from the last match first.
+    /// </summary>
+    /// <param name="sequence">The sequence to enumerate.</param>
+    /// <param name="start">The starting point for the enumeration. If it matches, this will 
+    /// be the first result returned.</param>
+    /// <param name="reverse">If true, return results in the reverse order.</param>
+    /// <param name="filter">If not null, specifies a filtering function on the 
+    /// store entries.</param>
+    /// <param name="skip">If true, the search MAY optimize search time by performing a binary
+    /// search on the records. Note however that since this will cause entry update entries to
+    /// be skipped, the status might be affected by one or more skipped records.</param>
+    /// <param name="count">Maximum number of records to return.</param>
+    public virtual IEnumerable<SequenceIndexEntry> Select(
+                long start,
+                bool reverse = true,
+                long count = -1, 
+                FilterIndexDelegate filter = null,
+                bool skip = false) => new SequenceEnumeratorIndex(
+                    Sequence, start, reverse, count, filter, skip);
+
+
     /// <summary>
     /// Factory delegate
     /// </summary>
@@ -224,7 +249,7 @@ public class Store : Disposable {
     /// work backwards. Otherwise begin at <paramref name="minIndex"/> and move
     /// forwards.</param>
     /// <returns></returns>
-    public virtual SequenceEnumeratorRaw Select(int minIndex, bool reverse = false) =>
+    public virtual IEnumerable<DareEnvelope> Select(int minIndex, bool reverse = false) =>
         Sequence.SelectEnvelope(minIndex, reverse);
 
 

@@ -116,7 +116,7 @@ public class CatalogCredential : Catalog<CatalogedCredential> {
     /// <param name="key">The service to be matched.</param>
     /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
     public CatalogedCredential? GetCredentialByService(string key) {
-        foreach (var credential in AsCatalogedType) {
+        foreach (var credential in GetEntries) {
             if (credential.Service == key) {
                 return credential;
                 }

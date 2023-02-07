@@ -85,6 +85,11 @@ public enum CatalogedEntryFormat {
 public partial class CatalogedEntry {
 
 
+
+    public SequenceIndexEntry SequenceIndexEntry {get; set; }
+
+
+
     ///<summary>Additional encryption keys to which the encrypted catalog entry is to be written.</summary> 
     public List<KeyPair> AdditionalRecipients;
 

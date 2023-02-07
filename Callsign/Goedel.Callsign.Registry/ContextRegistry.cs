@@ -191,10 +191,10 @@ public class ContextRegistry : ContextAccount {
         var results = new List<ProcessResult>();
 
 
-        var x = new Evaluate();
+        var x = new FilterSequenceIndex();
 
         var spoolInbound = GetSpoolInbound();
-        foreach (var spoolEntry in spoolInbound.GetMessages(evaluateIndex: Evaluate.GetOpen)) {
+        foreach (var spoolEntry in spoolInbound.GetMessages(open: true)) {
             var meshMessage = spoolEntry.Message;
 
             //Logger.GotMessage(meshMessage.GetType().ToString(), meshMessage.MessageId, spoolEntry.MessageStatus);

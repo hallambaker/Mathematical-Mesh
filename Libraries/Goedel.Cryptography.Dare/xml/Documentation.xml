@@ -335,47 +335,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Cryptography.Dare.ContainerEnumerator">
-            <summary>
-            Enumerator for frames in a Sequence beginning with frame 1.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ContainerEnumerator.Current">
-            <summary>
-            Gets the element in the collection at the current position of the enumerator.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerEnumerator.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Int64)">
-            <summary>
-            Create an enumerator for <paramref name="sequence"/>.
-            </summary>
-            <param name="sequence">The Sequence to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerEnumerator.GetEnumerator">
-            <summary>
-            When called on an instance of this class, returns the instance. Thus allowing
-            selectors to be used in sub classes.
-            </summary>
-            <returns>This instance</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerEnumerator.Dispose">
-            <summary>
-            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-            </summary>
-            
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerEnumerator.MoveNext">
-            <summary>
-            Advances the enumerator to the next element of the collection.
-            </summary>
-            <returns><code>true</code> if the enumerator was successfully advanced to the next element; 
-            <code>false</code> if the enumerator has passed the end of the collection.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerEnumerator.Reset">
-            <summary>
-            Sets the enumerator to its initial position, which is before the first element in the collection.
-            </summary>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.DareHeader">
              <summary>
             
@@ -898,23 +857,20 @@
             The default data encoding of payload items.
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.ObjectIndex">
+        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.X_ObjectIndex">
             <summary>
             Index of items by _PrimaryKey
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.DeletedObjects">
+        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.X_DeletedObjects">
             <summary>
             Index of items by _PrimaryKey
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.IndexDictionary">
+        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.X_IndexDictionary">
             <summary>
             Dictionary mapping keywords to index for that keyword.
             </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.GetEnumerator">
-            <summary>Return an enumerator over a set of catalog items</summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.#ctor(System.String,System.String,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,Goedel.Protocol.DataEncoding,Goedel.Cryptography.IKeyLocate,System.Boolean,System.Boolean)">
             <summary>
@@ -5417,6 +5373,38 @@
             </summary>
             <returns>The enumerator</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Select(System.Int64,System.Boolean,System.Int64,Goedel.Cryptography.Dare.FilterIndexDelegate,System.Boolean)">
+            <summary>
+            Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+            with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
+            results are returned from the last match first.
+            </summary>
+            <param name="sequence">The sequence to enumerate.</param>
+            <param name="start">The starting point for the enumeration. If it matches, this will 
+            be the first result returned.</param>
+            <param name="reverse">If true, return results in the reverse order.</param>
+            <param name="filter">If not null, specifies a filtering function on the 
+            store entries.</param>
+            <param name="skip">If true, the search MAY optimize search time by performing a binary
+            search on the records. Note however that since this will cause entry update entries to
+            be skipped, the status might be affected by one or more skipped records.</param>
+            <param name="count">Maximum number of records to return.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.SelectIndex(System.Int64,System.Int64)">
+            <summary>
+            Returns an enumerator over the Sequence contents starting with the
+            first frame.
+            </summary>
+            <returns>The enumerator</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.SelectEnvelope(System.Int64,System.Boolean)">
+            <summary>
+            Return an enumerator with the specified selectors.
+            </summary>
+            <param name="minIndex">The minimum index.</param>
+            <param name="reverse">If true, read the Sequence from the end.</param>
+            <returns>The enumerator.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Open(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.String,System.Boolean,System.Boolean,System.Byte[],Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,System.Object)">
             <summary>
             Open or create Sequence according to the setting of FileStatus. The underlying 
@@ -5538,21 +5526,6 @@
             <param name="fileStatus">File status (used for concurrency locking)</param>
             <param name="keyLocate">The key location collection to be used to resolve keys.</param>
             <returns>The created Sequence</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.SelectIndex(System.Int64,System.Int64)">
-            <summary>
-            Returns an enumerator over the Sequence contents starting with the
-            first frame.
-            </summary>
-            <returns>The enumerator</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.SelectEnvelope(System.Int64,System.Boolean)">
-            <summary>
-            Return an enumerator with the specified selectors.
-            </summary>
-            <param name="minIndex">The minimum index.</param>
-            <param name="reverse">If true, read the Sequence from the end.</param>
-            <returns>The enumerator.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.FillDummyTrailer(Goedel.Cryptography.Dare.CryptoStack)">
             <summary>
@@ -5910,49 +5883,93 @@
             </summary>
             <param name="Headers">List of headers to check</param>
         </member>
-        <member name="T:Goedel.Cryptography.Dare.SequenceEnumeratorRaw">
+        <member name="T:Goedel.Cryptography.Dare.SequenceEnumeratorIndex">
             <summary>
-            Enumerator that returns the raw, unencrypted Sequence data.
+            Enumerator for frames in a Sequence beginning with frame 1.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.Current">
+        <member name="P:Goedel.Cryptography.Dare.SequenceEnumeratorIndex.Current">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorIndex.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorIndex.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorIndex.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Boolean,System.Int64,Goedel.Cryptography.Dare.FilterIndexDelegate,System.Boolean)">
             <summary>
-            Gets the element in the collection at the current position of the enumerator.
+            Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+            with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
+            results are returned from the last match first.
+            </summary>
+            <param name="sequence">The sequence to enumerate.</param>
+            <param name="start">The starting point for the enumeration. If it matches, this will 
+            be the first result returned.</param>
+            <param name="reverse">If true, return results in the reverse order.</param>
+            <param name="filter">If not null, specifies a filtering function on the 
+            store entries.</param>
+            <param name="skip">If true, the search MAY optimize search time by performing a binary
+            search on the records. Note however that since this will cause entry update entries to
+            be skipped, the status might be affected by one or more skipped records.</param>
+            <param name="count">Maximum number of records to return.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorIndex.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorIndex.MoveNext">
+            <summary>
+            Advances the enumerator to the next element of the collection.
+            </summary>
+            <returns><code>true</code> if the enumerator was successfully advanced to the next element; 
+            <code>false</code> if the enumerator has passed the end of the collection.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorIndex.Reset">
+            <summary>
+            Sets the enumerator to its initial position, which is before the first element in the collection.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Boolean)">
+        <member name="T:Goedel.Cryptography.Dare.SequenceEnumerateEnvelope">
             <summary>
-            Create an enumerator for <paramref name="sequence"/>.
-            </summary>
-            <param name="lowIndex">The lowest index to be returned.</param>
-            <param name="reverse">If true, enumeratre from the last item to <paramref name="lowIndex"/> (inclusive).
-            otherwise, enumerate from <paramref name="lowIndex"/> to the first.</param>
-            <param name="sequence">The Sequence to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.GetEnumerator">
-            <summary>
-            When called on an instance of this class, returns the instance. Thus allowing
-            selectors to be used in sub classes.
-            </summary>
-            <returns>This instance</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.Dispose">
-            <summary>
-            Dispose method.
+            Enumerate the envelopes in a DARE store.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns>If true, the next item was found. Otherwise, the end of the enumeration 
-            was reached.</returns>
+        <member name="P:Goedel.Cryptography.Dare.SequenceEnumerateEnvelope.Current">
+            <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceEnumeratorRaw.Reset">
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumerateEnvelope.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumerateEnvelope.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumerateEnvelope.#ctor(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Boolean,Goedel.Cryptography.Dare.FilterIndexDelegate,System.Boolean)">
             <summary>
-            Sets the enumerator to its initial position, which is before the first element 
-            in the collection.
+            Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+            with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
+            results are returned from the last match first.
             </summary>
+            <param name="sequence">The sequence to enumerate.</param>
+            <param name="start">The starting point for the enumeration. If it matches, this will 
+            be the first result returned.</param>
+            <param name="reverse">If true, return results in the reverse order.</param>
+            <param name="evaluateIndex">If not null, specifies a filtering function on the 
+            store entries.</param>
+            <param name="skip">If true, the search MAY optimize search time by performing a binary
+            search on the records. Note however that since this will cause entry update entries to
+            be skipped, the status might be affected by one or more skipped records.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumerateEnvelope.MoveNext">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumerateEnvelope.Reset">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceEnumerateEnvelope.Dispose">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceIntegrity">
             <summary>Describe the integrity checking to be applied when reading a Sequence.</summary>
@@ -6010,6 +6027,10 @@
         </member>
         <member name="T:Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate">
             <summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.FilterIndexDelegate">
+            <summary>Delegate called to evaluate an index entry and return a result accordning 
+            to it's set of match criteria.</summary> 
         </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceIndexEntry">
             <summary>

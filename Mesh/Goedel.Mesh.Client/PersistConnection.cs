@@ -23,18 +23,6 @@
 
 namespace Goedel.Mesh.Client;
 
-
-//public class AccountDescription {
-//    public string Account;
-//    public ProfileAccount ProfileMesh;
-//    public ProfileDevice DefaultProfileDevice;
-//    public Dictionary<string, Mesh.CatalogedDevice> Devices = new Dictionary<string, Mesh.CatalogedDevice>();
-
-//    }
-
-
-
-
 /// <summary>
 /// Sequence persisting entries for the connection catalog. This is the only type of catalog that
 /// is never synchronized to a service under any circumstance.
@@ -44,19 +32,8 @@ public class PersistHost : PersistenceStore {
     ///<summary>The default entry</summary>
     public CatalogedMachine DefaultEntry { get; private set; }
 
-    /////<summary></summary>
-    //public CatalogedPending DefaultPendingEntry { get; private set; }
 
     readonly Dictionary<string, CatalogedMachine> dictionaryLocal2Connection = new();
-
-    /////<summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
-    //static PersistHost() {
-    //    _ = MeshItem.Initialize;
-    //    _ = HostCatalogItem.Initialize;
-    //    _ = MeshProtocol.Initialize;
-    //    }
-
-
 
 
     /// <summary>
@@ -82,77 +59,6 @@ public class PersistHost : PersistenceStore {
                     readContainer) {
         }
 
-
-    ///// <summary>
-    ///// Get Mesh machine with the localname <paramref name="localName"/>
-    ///// </summary>
-    ///// <param name="localName">Name of the machine to fetch.</param>
-    ///// <returns>The machine if found, otherwise null.</returns>
-    //public CatalogedMachine GetByName(string localName) {
-    //    foreach (var containerStoreEntry in this) {
-    //        var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
-
-    //        if (localName != null & catalogItem.Local == localName) {
-    //            return catalogItem;
-    //            }
-    //        }
-    //    return null;
-    //    }
-
-    ///// <summary>
-    ///// Get Mesh machine that matches <paramref name="localName"/> if specified, otherwise
-    ///// the default machine.
-    ///// </summary>
-    ///// <param name="localName">The machine to fetch.</param>
-    ///// <returns>The machine if found, otherwise null.</returns>
-    //public CatalogedMachine GetMachine(string localName = null) {
-    //    if (localName != null) {
-    //        return GetByName(localName);
-    //        }
-
-    //    CatalogedMachine defaultMachine = null;
-
-    //    foreach (var containerStoreEntry in this) {
-    //        var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
-
-    //        if (catalogItem.Default) {
-    //            defaultMachine = catalogItem;
-    //            }
-    //        }
-    //    return defaultMachine;
-    //    }
-
-    ///// <summary>
-    ///// Gets the machine waiting for completion that mactches <paramref name="localName"/> if
-    ///// specified, or the default pending machine otherwise or the default preconfigured
-    ///// machine if not found.
-    ///// </summary>
-    ///// <param name="localName">The machine to fetch.</param>
-    ///// <returns>The machine if found, otherwise null.</returns>
-    //public CatalogedMachine GetForCompletion(string localName = null) {
-    //    if (localName != null) {
-    //        return GetByName(localName);
-    //        }
-
-    //    CatalogedMachine preconfiguredMachine = null;
-    //    foreach (var containerStoreEntry in this) {
-    //        var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
-
-    //        switch (catalogItem) {
-    //            case CatalogedPending _: {
-    //                    return catalogItem;
-
-    //                    // Hack: Should have a mechanism to time out connection attempts.
-    //                    }
-    //            case CatalogedPreconfigured _: {
-    //                    preconfiguredMachine = catalogItem;
-    //                    break;
-    //                    }
-    //            }
-
-    //        }
-    //    return preconfiguredMachine;
-    //    }
 
 
     /// <summary>

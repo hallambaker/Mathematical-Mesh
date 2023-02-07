@@ -20,16 +20,51 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography.Jose;
+
 namespace Goedel.Cryptography.Dare;
 
 
 
+public class PersistenceStoreEnumerateObject<K,T> : IEnumerator<T>, IEnumerable<T> where T : class {
 
+    public IEnumerator<KeyValuePair<string, SequenceIndexEntry>> Enumerator { get; }
+
+    public T Current => Enumerator.Current.Value.JsonObject as T;
+
+    ///<inheritdoc/>
+    public IEnumerator<T> GetEnumerator() => this; 
+
+    ///<inheritdoc/>
+    IEnumerator IEnumerable.GetEnumerator() => this;
+
+    object IEnumerator.Current => Current;
+
+
+    public PersistenceStoreEnumerateObject(
+                Dictionary<string, SequenceIndexEntry> dictionary) {
+        Enumerator = dictionary.GetEnumerator();
+        }
+
+
+
+    #region // Implementation
+    ///<inheritdoc/>
+    public bool MoveNext() => Enumerator.MoveNext();
+
+    ///<inheritdoc/>
+    public void Reset() => Enumerator.Reset();
+
+    ///<inheritdoc/>
+    public void Dispose() => Enumerator.Dispose();
+    #endregion
+
+    }
 
 /// <summary>
 /// Persistence store based on a Sequence interface.
 /// </summary>
-public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<StoreEntry> {
+public class PersistenceStore : Disposable, IPersistenceStoreWrite {
 
     // Test: Addition of signed frames to persistence stores (is failing)
 
@@ -78,39 +113,49 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// </summary>
     public DataEncoding Encoding = DataEncoding.JSON;
 
-    /// <summary>
-    /// Index of items by _PrimaryKey
-    /// </summary>
-    public Dictionary<string, StoreEntry> ObjectIndex = new();
+    
+    public Dictionary<string, SequenceIndexEntry> ObjectIndex = new();
+
+    public Dictionary<string, SequenceIndexEntry> DeletedObjectIndex = new();
+
+
+
+
+
 
     /// <summary>
     /// Index of items by _PrimaryKey
     /// </summary>
-    public Dictionary<string, StoreEntry> DeletedObjects = new();
+    public Dictionary<string, StoreEntry> X_ObjectIndex = new();
+
+    /// <summary>
+    /// Index of items by _PrimaryKey
+    /// </summary>
+    public Dictionary<string, StoreEntry> X_DeletedObjects = new();
 
     /// <summary>
     /// Dictionary mapping keywords to index for that keyword.
     /// </summary>
-    public Dictionary<string, StoreIndex> IndexDictionary =
+    public Dictionary<string, StoreIndex> X_IndexDictionary =
                             new();
 
     #region --- IEnumerable Implementation 
-    ///<summary>Return an enumerator over a set of catalog items</summary>
-    public IEnumerator<StoreEntry> GetEnumerator() => new EnumeratorStoreEntry(ObjectIndex);
+    /////<summary>Return an enumerator over a set of catalog items</summary>
+    //public IEnumerator<StoreEntry> GetEnumerator() => new EnumeratorStoreEntry(ObjectIndex);
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
-    private IEnumerator GetEnumerator1() => this.GetEnumerator();
+    //IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
+    //private IEnumerator GetEnumerator1() => this.GetEnumerator();
 
-    private class EnumeratorStoreEntry : IEnumerator<StoreEntry> {
-        Dictionary<string, StoreEntry>.Enumerator baseEnumerator;
-        public StoreEntry Current => baseEnumerator.Current.Value;
-        object IEnumerator.Current => baseEnumerator.Current.Value;
-        public void Dispose() => baseEnumerator.Dispose();
-        public bool MoveNext() => baseEnumerator.MoveNext();
-        public void Reset() => throw new NotImplementedException();
-        public EnumeratorStoreEntry(Dictionary<string, StoreEntry> baseEnumerator) =>
-            this.baseEnumerator = baseEnumerator.GetEnumerator();
-        }
+    //private class EnumeratorStoreEntry : IEnumerator<StoreEntry> {
+    //    Dictionary<string, StoreEntry>.Enumerator baseEnumerator;
+    //    public StoreEntry Current => baseEnumerator.Current.Value;
+    //    object IEnumerator.Current => baseEnumerator.Current.Value;
+    //    public void Dispose() => baseEnumerator.Dispose();
+    //    public bool MoveNext() => baseEnumerator.MoveNext();
+    //    public void Reset() => throw new NotImplementedException();
+    //    public EnumeratorStoreEntry(Dictionary<string, StoreEntry> baseEnumerator) =>
+    //        this.baseEnumerator = baseEnumerator.GetEnumerator();
+    //    }
 
     #endregion
 
@@ -159,12 +204,27 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
         Sequence = sequence;
 
+
+        foreach (var x in ObjectIndex) {
+            
+            }
+
         // Barfing in the docs because we do not have the key required to decrypt the Sequence
 
         if (read & sequence.Length > 0) {
             Read(keyLocate);
             }
         }
+
+    public void Intern(
+                SequenceIndexEntry indexEntry) {
+        "Here we need to update the dictionaries".TaskFunctionality(true);
+        
+        }
+
+
+
+
 
 
     /// <summary>
@@ -176,15 +236,15 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
             var uniqueID = contentMeta.UniqueId;
 
-            ObjectIndex.TryGetValue(uniqueID, out var previous);
+            X_ObjectIndex.TryGetValue(uniqueID, out var previous);
             var storeEntry = new StoreEntry(frameIndex, previous, Sequence);
 
 
-            ObjectIndex.Remove(uniqueID);
+            X_ObjectIndex.Remove(uniqueID);
             switch (contentMeta.Event) {
                 case EventUpdate:
                 case EventNew: {
-                        ObjectIndex.Add(uniqueID, storeEntry);
+                        X_ObjectIndex.Add(uniqueID, storeEntry);
                         break;
                         }
 
@@ -241,7 +301,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
 
         var contentMeta = frameIndex.Header.ContentMeta;
 
-        ObjectIndex.TryGetValue(contentMeta.UniqueId, out var Previous);
+        X_ObjectIndex.TryGetValue(contentMeta.UniqueId, out var Previous);
         var storeEntry = new StoreEntry(frameIndex, Previous, Sequence, jSONObject);
 
         switch (contentMeta.Event) {
@@ -271,8 +331,8 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <param name="storeEntry">The Sequence store entry representing the transaction</param>
     protected virtual void MemoryCommitNew(StoreEntry storeEntry) {
         // Check to make sure the object does not already exist
-        Assert.AssertFalse(ObjectIndex.ContainsKey(storeEntry.UniqueID), EntryAlreadyExists.Throw);
-        ObjectIndex.Add(storeEntry.UniqueID, storeEntry);
+        Assert.AssertFalse(X_ObjectIndex.ContainsKey(storeEntry.UniqueID), EntryAlreadyExists.Throw);
+        X_ObjectIndex.Add(storeEntry.UniqueID, storeEntry);
 
         KeyValueIndexAdd(storeEntry);
         }
@@ -283,10 +343,10 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <param name="storeEntry">The Sequence store entry representing the transaction</param>
     protected virtual void MemoryCommitUpdate(StoreEntry storeEntry) {
         // Check to make sure the object does not already exist
-        if (ObjectIndex.ContainsKey(storeEntry.UniqueID)) {
-            ObjectIndex.Remove(storeEntry.UniqueID);
+        if (X_ObjectIndex.ContainsKey(storeEntry.UniqueID)) {
+            X_ObjectIndex.Remove(storeEntry.UniqueID);
             }
-        ObjectIndex.Add(storeEntry.UniqueID, storeEntry);
+        X_ObjectIndex.Add(storeEntry.UniqueID, storeEntry);
         KeyValueIndexAdd(storeEntry);
         }
 
@@ -296,8 +356,8 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <param name="storeEntry">The Sequence store entry representing the transaction</param>
     protected virtual void MemoryCommitDelete(StoreEntry storeEntry) {
         // Check to make sure the object does not already exist
-        Assert.AssertTrue(ObjectIndex.ContainsKey(storeEntry.UniqueID), EntryNotFound.Throw);
-        ObjectIndex.Remove(storeEntry.UniqueID);
+        Assert.AssertTrue(X_ObjectIndex.ContainsKey(storeEntry.UniqueID), EntryNotFound.Throw);
+        X_ObjectIndex.Remove(storeEntry.UniqueID);
         //DeletedObjects.Add(storeEntry.UniqueID, storeEntry);
 
         KeyValueIndexDelete(storeEntry);
@@ -401,7 +461,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
         encryptionKey.Future();
 
         // Precondition UniqueID does not exist
-        var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out var Previous);
+        var Exists = X_ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out var Previous);
         Assert.AssertFalse(Exists, ObjectIdentifierNotUnique.Throw);
 
         // Create new Sequence
@@ -433,7 +493,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
         encryptionKey.Future();
 
         // Precondition UniqueID does not exist
-        var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out previous);
+        var Exists = X_ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out previous);
         Assert.AssertTrue(Exists | create, EntryNotFound.Throw);
 
         // Create new Sequence
@@ -460,7 +520,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// 
     public DareEnvelope PrepareDelete(
         out StoreEntry previous, string uniqueID) {
-        var Exists = ObjectIndex.TryGetValue(uniqueID, out previous);
+        var Exists = X_ObjectIndex.TryGetValue(uniqueID, out previous);
         if (!Exists) {
             return null;
             }
@@ -540,11 +600,11 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <param name="create">If true, will create an index if none is found.</param>
     /// <returns>The index.</returns>
     public virtual StoreIndex GetStoreIndex(string key, bool create = true) {
-        var found = IndexDictionary.TryGetValue(key, out var Index);
+        var found = X_IndexDictionary.TryGetValue(key, out var Index);
 
         if (!found & create) {
             Index = new StoreIndex();
-            IndexDictionary.Add(key, Index);
+            X_IndexDictionary.Add(key, Index);
             }
 
         return (Index);
@@ -568,7 +628,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <param name="uniqueID">The unique identifier of the object instance to locate.</param>
     /// <returns>True if found, otherwise false.</returns>
     public IPersistenceEntry Get(string uniqueID) {
-        ObjectIndex.TryGetValue(uniqueID, out var result);
+        X_ObjectIndex.TryGetValue(uniqueID, out var result);
         return result;
         }
 
@@ -577,7 +637,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// </summary>
     /// <param name="uniqueID">The unique identifier of the object instance to locate.</param>
     /// <returns>True if found, otherwise false.</returns>
-    public bool Contains(string uniqueID) => ObjectIndex.TryGetValue(uniqueID, out var _);
+    public bool Contains(string uniqueID) => X_ObjectIndex.TryGetValue(uniqueID, out var _);
 
     /// <summary>
     /// The last object instance that matches the specified key/value condition.
@@ -586,7 +646,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<
     /// <param name="value">The value to match</param>
     /// <returns>The object instance if found, otherwise false.</returns>
     public IPersistenceIndexEntry Last(string key, string value) {
-        var found = IndexDictionary.TryGetValue(key, out var Index);
+        var found = X_IndexDictionary.TryGetValue(key, out var Index);
         if (!found) {
             return null;
             }

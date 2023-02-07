@@ -532,7 +532,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                 start++;
                 }
 
-            foreach (var index in sequence.SelectIndex(start, last)) {
+            foreach (var index in sequence.SelectIndex(start, maxEnvelopes)) {
                 envelopes.Add(index.GetEnvelope());
                 }
 
