@@ -147,6 +147,9 @@ public class Store : Disposable {
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
     /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+    /// <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
+    /// <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
+    /// items in the sequence.</param>
     public Store(string directory,
                 string? storeId = null,
                 DarePolicy? policy = null,

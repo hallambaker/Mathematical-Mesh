@@ -45,11 +45,11 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
 
     ///<summary>Return an enumeration over the object collection.</summary> 
     public IEnumerable<T> GetEntries => 
-            new PersistenceStoreEnumerateObject<string, T>(PersistenceStore.ObjectIndex);
+            new PersistenceStoreEnumerateObject<T>(PersistenceStore.ObjectIndex);
 
     ///<summary>Return an enumeration over the deleted object collection.</summary> 
     public IEnumerable<T> GetDeletedEntries=> 
-            new PersistenceStoreEnumerateObject<string, T>(PersistenceStore.DeletedObjectIndex);
+            new PersistenceStoreEnumerateObject<T>(PersistenceStore.DeletedObjectIndex);
 
 
     /// <summary>
@@ -58,7 +58,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
     /// </summary>
     /// <returns>The enumerator.</returns>
     public IEnumerator<T> GetEnumerator() => 
-                new PersistenceStoreEnumerateObject<string, T>(PersistenceStore.ObjectIndex);
+                new PersistenceStoreEnumerateObject<T>(PersistenceStore.ObjectIndex);
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
     private IEnumerator GetEnumerator1() => this.GetEnumerator();

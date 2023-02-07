@@ -291,6 +291,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// otherwise return payload contents as plaintext.</param>
     /// <param name="create">If true, create a Sequence file if none already exists</param>
     /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+    /// <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
+    /// <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
+    /// items in the sequence.</param>
+    /// <param name="store">Context information to be passed in when creating sequence index entries.</param>
     /// <returns>The new Sequence.</returns>
     public static Sequence Open(
                     string fileName,
@@ -377,6 +381,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <param name="keyCollection">The key collection to be used to decrypt the contents
     /// of the Sequence.</param>
     /// <param name="decrypt">If true configure to enable decryption of bodies.</param>
+    /// <param name="store">Context information to be passed in when creating sequence index entries.</param>
     /// <returns>The Sequence object if found. Otherwise, an exception is thrown.</returns>
     public static Sequence OpenExisting(
             string fileName,
@@ -405,7 +410,11 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
     /// <param name="decrypt">If true, enable decryption of Sequence payload,
     /// otherwise return payload contents as plaintext.</param>
-    /// <returns></returns>
+    /// <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
+    /// <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
+    /// items in the sequence.</param>
+    /// <param name="store">Context information to be passed in when creating sequence index entries.</param>
+    /// <returns>The sequence created</returns>
     public static Sequence OpenExisting(
                     JbcdStream jbcdStream,
                     IKeyLocate? keyCollection = null, 
@@ -528,6 +537,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///     as an EDSS headerData entry.</param>
     /// <param name="decrypt">If true, decrypt the Sequence payload contents.</param>
     /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+    /// <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
+    /// <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
+    /// items in the sequence.</param>
+    /// <param name="store">Context information to be passed in when creating sequence index entries.</param>
     public static Sequence NewSequence(
                     JbcdStream jbcdStream,
                     IKeyLocate? keyLocate = null,
@@ -603,6 +616,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// a tree index is to be created or not and if so, whether </param>
     /// <returns>The newly constructed Sequence.</returns>
     /// <param name="decrypt">If true, decrypt the Sequence payload contents.</param>
+    /// <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
+    /// <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
+    /// items in the sequence.</param>
     public static Sequence MakeNewSequence(
                     JbcdStream jbcdStream,
                     bool decrypt,

@@ -25,31 +25,43 @@ using System.Collections;
 
 namespace Goedel.Mesh;
 
-
+/// <summary>
+/// An index entry or a placeholder for one that has not been read yet.
+/// </summary>
 public interface ISpoolItem {
     ///<summary>The message status value.</summary>
     public MessageStatus MessageStatus { get;  }
 
+    ///<summary>The list of references to the message, most recently added first.</summary>
     List<Reference> References { get; } 
+
+    ///<summary>Add a reference entry.</summary> 
     void AddReference(Reference reference, bool force);
     }
 
-
+///<summary>Placehoolder for a referenced but not yet read item.</summary> 
 public class SpoolPlaceholder : ISpoolItem {
 
-    ///<summary>The list of references to the message, most recently added first.</summary>
+    ///<inheritdoc/>
     public List<Reference> References { get; } = new();
 
     ///<summary>The message status value.</summary>
     public MessageStatus MessageStatus { get; set; }
 
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="reference"></param>
     public SpoolPlaceholder (Reference reference) { 
         }
 
+    ///<inheritdoc/>
     public void AddReference(Reference reference, bool force) => throw new NYI();
     }
 
-
+/// <summary>
+/// Index entry for a spool element.
+/// </summary>
 public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
 
     ///<summary>The list of references to the message, most recently added first.</summary>

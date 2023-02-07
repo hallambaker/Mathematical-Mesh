@@ -25,22 +25,32 @@ using Goedel.Cryptography.Jose;
 namespace Goedel.Cryptography.Dare;
 
 
+/// <summary>
+/// Enumerator over the objects in a persistence store.
+/// </summary>
+/// <typeparam name="T">The type of the objects contained in the store.</typeparam>
+public class PersistenceStoreEnumerateObject<T> : IEnumerator<T>, IEnumerable<T> where T : class {
 
-public class PersistenceStoreEnumerateObject<K,T> : IEnumerator<T>, IEnumerable<T> where T : class {
+    #region // Properties
+    IEnumerator<KeyValuePair<string, SequenceIndexEntry>> Enumerator { get; }
 
-    public IEnumerator<KeyValuePair<string, SequenceIndexEntry>> Enumerator { get; }
-
+    ///<inheritdoc/>
     public T Current => Enumerator.Current.Value.JsonObject as T;
 
     ///<inheritdoc/>
-    public IEnumerator<T> GetEnumerator() => this; 
+    public IEnumerator<T> GetEnumerator() => this;
 
     ///<inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator() => this;
 
     object IEnumerator.Current => Current;
+    #endregion
+    #region // Constructor
 
-
+    /// <summary>
+    /// Constructor returning an enumerator for the objects in the dictionary <paramref name="dictionary"/>.
+    /// </summary>
+    /// <param name="dictionary">The dictionary to enumerate.</param>
     public PersistenceStoreEnumerateObject(
                 Dictionary<string, SequenceIndexEntry> dictionary) {
         Enumerator = dictionary.GetEnumerator();
@@ -48,6 +58,7 @@ public class PersistenceStoreEnumerateObject<K,T> : IEnumerator<T>, IEnumerable<
 
 
 
+    #endregion
     #region // Implementation
     ///<inheritdoc/>
     public bool MoveNext() => Enumerator.MoveNext();
@@ -67,8 +78,6 @@ public class PersistenceStoreEnumerateObject<K,T> : IEnumerator<T>, IEnumerable<
 public class PersistenceStore : Disposable, IPersistenceStoreWrite {
 
     // Test: Addition of signed frames to persistence stores (is failing)
-
-    // Test: enumeration mechanisms, forward and Reverse.
 
     // Goal: Implement indexing of sequences, archives, etc.
 
@@ -108,20 +117,14 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite {
     /// <summary>Tag for Delete event</summary>
     public const string EventDelete = "Delete";
 
-    /// <summary>
-    /// The default data encoding of payload items.
-    /// </summary>
+    ///<summary>The default data encoding of payload items.</summary> 
     public DataEncoding Encoding = DataEncoding.JSON;
 
-    
+    ///<summary>Index of current objects by _PrimaryKey</summary> 
     public Dictionary<string, SequenceIndexEntry> ObjectIndex = new();
 
+    ///<summary>Index of deleted objects by _PrimaryKey</summary> 
     public Dictionary<string, SequenceIndexEntry> DeletedObjectIndex = new();
-
-
-
-
-
 
     /// <summary>
     /// Index of items by _PrimaryKey
@@ -138,27 +141,6 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite {
     /// </summary>
     public Dictionary<string, StoreIndex> X_IndexDictionary =
                             new();
-
-    #region --- IEnumerable Implementation 
-    /////<summary>Return an enumerator over a set of catalog items</summary>
-    //public IEnumerator<StoreEntry> GetEnumerator() => new EnumeratorStoreEntry(ObjectIndex);
-
-    //IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
-    //private IEnumerator GetEnumerator1() => this.GetEnumerator();
-
-    //private class EnumeratorStoreEntry : IEnumerator<StoreEntry> {
-    //    Dictionary<string, StoreEntry>.Enumerator baseEnumerator;
-    //    public StoreEntry Current => baseEnumerator.Current.Value;
-    //    object IEnumerator.Current => baseEnumerator.Current.Value;
-    //    public void Dispose() => baseEnumerator.Dispose();
-    //    public bool MoveNext() => baseEnumerator.MoveNext();
-    //    public void Reset() => throw new NotImplementedException();
-    //    public EnumeratorStoreEntry(Dictionary<string, StoreEntry> baseEnumerator) =>
-    //        this.baseEnumerator = baseEnumerator.GetEnumerator();
-    //    }
-
-    #endregion
-
 
 
     /// <summary>

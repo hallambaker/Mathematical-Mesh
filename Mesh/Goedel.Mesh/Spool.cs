@@ -38,16 +38,6 @@ public class Spool : Store {
     ///<summary>The index entry of the last item in the spool.</summary> 
     public SpoolIndexEntry SpoolIndexEntryLast => Sequence.SequenceIndexEntryLast as SpoolIndexEntry;
 
-
-
-    /////<summary>The last spool entry.</summary>
-    //SpoolEntry SpoolEntryLast { get; set; } = null;
-
-    /////<summary>Dictionary of entries by identifier.</summary>
-    //Dictionary<string, SpoolEntry> X_SpoolEntryById { get; } = new();
-
-
-
     /// <summary>
     /// Constructor.
     /// </summary>
@@ -74,10 +64,6 @@ public class Spool : Store {
                 decrypt, create, bitmask,
                 internSequenceIndexEntryDelegate: InternSequenceIndexEntry,
                 sequenceIndexEntryFactoryDelegate: SpoolIndexEntry.Factory) {
-
-        //Sequence.InternSequenceIndexEntryDelegate = InternSequenceIndexEntry;
-        //Sequence.SequenceIndexEntryFactoryDelegate = SequenceIndexEntryFactory;
-
         }
 
     static void InternSequenceIndexEntry(

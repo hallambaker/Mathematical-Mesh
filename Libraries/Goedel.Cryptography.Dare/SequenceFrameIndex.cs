@@ -143,6 +143,7 @@ public partial class SequenceIndexEntry {
     ///<summary>The decoded JSONObject</summary>
     public JsonObject JsonObject { get; set; }
 
+    ///<summary>Convenience accessor for the envelope identifier.</summary> 
     public string EnvelopeId => Header.EnvelopeId;
 
     ///<summary>The sequenced envelope is unread in the case of a message in a spool or
@@ -155,6 +156,7 @@ public partial class SequenceIndexEntry {
     ///<summary>The sequenced envelope has been erased by overwriting the salt value.</summary> 
     public virtual bool IsErased => false;
 
+    ///<summary>Date and time at which the item was added.</summary> 
     public virtual DateTime? DateTime => null;
 
     ///<summary>Convenience property, set true iff payload is encrypted.</summary> 
@@ -206,8 +208,6 @@ public partial class SequenceIndexEntry {
                 factory(prototype.Sequence, prototype.FramePosition, prototype.FrameLength,
                         prototype.DataPosition, prototype.DataLength,
                         prototype.Header, prototype.Trailer, prototype.JsonObject);
-
-
 
     /// <summary>
     /// Return the frame payload.
