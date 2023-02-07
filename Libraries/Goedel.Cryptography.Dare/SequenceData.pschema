@@ -104,3 +104,7 @@
 		String Value
 			Description
 				|The value corresponding to the key
+
+	Structure ProofChain
+		Description
+			|Specifies a signature 

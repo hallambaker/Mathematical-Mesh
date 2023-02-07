@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 06-Feb-23 6:17:15 PM
+//  This file was automatically generated at 07-Feb-23 12:22:54 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -78,7 +78,8 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
 	    {"SequenceInfo", SequenceInfo._Factory},
 	    {"SequenceIndex", SequenceIndex._Factory},
 	    {"IndexPosition", IndexPosition._Factory},
-	    {"KeyValue", KeyValue._Factory}
+	    {"KeyValue", KeyValue._Factory},
+	    {"ProofChain", ProofChain._Factory}
 		};
 
     [ModuleInitializer]
@@ -698,6 +699,97 @@ public partial class KeyValue : SequenceData {
 			return Out as KeyValue;
 			}
 		var Result = new KeyValue ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Specifies a signature 
+	/// </summary>
+public partial class ProofChain : SequenceData {
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ProofChain";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ProofChain();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ProofChain FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ProofChain;
+			}
+		var Result = new ProofChain ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

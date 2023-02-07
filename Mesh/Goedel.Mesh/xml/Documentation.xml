@@ -2084,8 +2084,11 @@
         <member name="P:Goedel.Mesh.Catalog`1.PersistenceStore">
             <summary>The persistence store.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Catalog`1.X_AsCatalogedType">
-            <summary>Enumerate the catalog as the cataloged type. Remove as this is now the default.</summary>
+        <member name="P:Goedel.Mesh.Catalog`1.GetEntries">
+            <summary>Return an enumeration over the object collection.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Catalog`1.GetDeletedEntries">
+            <summary>Return an enumeration over the deleted object collection.</summary> 
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.GetEnumerator">
             <summary>

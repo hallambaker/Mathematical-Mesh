@@ -19,35 +19,28 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+
 namespace Goedel.Cryptography.Dare;
 
 
-public partial class SequenceInfo {
-
-    ///<summary>The index value as a non-nullable long</summary> 
-    public long LIndex => Index ?? 0;
+public partial class IntervalSignature {
 
 
-    ///<summary>If true, the field ExchangePosition is specified</summary>
-    public bool HasExchangePosition() => ExchangePosition != null;
-    }
-
-public partial class DareHeader {
-
-
-    ///<summary>The Sequence index value.</summary>
-    public long Index => SequenceInfo.LIndex;
+    /// <summary>
+    /// Attempt to verify the proof chain and return null if invalid
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
+    public bool Verify() => throw new NYI();
 
 
-    public long FrameStart {get; set;}
-
-    public long FrameLength {get; set;}
-
-
-    /////<summary>If true, the field ExchangePosition is specified</summary>
-    //public bool HasExchangePosition => SequenceInfo.HasExchangePosition();
-    //// Should get rid of these and use nullable types.
-
+    /// <summary>
+    /// Attempt to verify the proof chain and return null if invalid
+    /// </summary>
+    /// <param name="envelopes">The envelope data to verify.</param>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
+    public bool Verify(IEnumerable<DareEnvelope> envelopes) => throw new NYI();
 
 
 

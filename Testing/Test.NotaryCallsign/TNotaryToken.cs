@@ -67,7 +67,7 @@ public record ParametersClaim  {
     public DareEnvelope[] GetFrames(long[] frames) => throw new NYI();
 
 
-    public ProofChain MakeCorrupted (ProofChain original) => throw new NYI();
+    public IntervalSignature MakeCorrupted (IntervalSignature original) => throw new NYI();
 
 
     public DareEnvelope[] MakeCorrupted(DareEnvelope[] frames) => throw new NYI();
@@ -98,7 +98,7 @@ public partial class TClaimProof {
         parameters ??= new();
 
 
-        ProofChain proof;
+        IntervalSignature proof;
         var checkFrames = parameters.GetCheckFrames();
 
         // Create chain of length parameters.SequenceLength

@@ -967,8 +967,8 @@ public partial class JbcdStream {
         var length = ReadFrame(out var HeaderData);
 
         var header = DareHeader.FromJson(HeaderData.JsonReader(), false);
-        header.FrameStart= position;
-        header.FrameLength = length;
+        //header.FrameStart= position;
+        //header.FrameLength = length;
 
         return header;
         }
@@ -995,8 +995,8 @@ public partial class JbcdStream {
 
 
         var header = DareHeader.FromJson(HeaderData.JsonReader(), false);
-        header.FrameStart = position - length;
-        header.FrameLength = length;
+        //header.FrameStart = position - length;
+        //header.FrameLength = length;
 
         return header;
         }

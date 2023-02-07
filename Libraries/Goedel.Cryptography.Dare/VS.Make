@@ -24,12 +24,12 @@ LinkFiles = \
     Goedel.Protocol.dll
 
 ToolTargets = \
-	ContainerEntry.cs\
+	SequenceData.cs\
 	DareSchema.cs\
 	Exceptions.cs\
 	DareConstants.cs
-ContainerEntry.cs : ContainerEntry.pschema 
-	protogen ContainerEntry.pschema  /cs  ContainerEntry.cs
+SequenceData.cs : SequenceData.pschema 
+	protogen SequenceData.pschema  /cs  SequenceData.cs
 
 DareSchema.cs : DareSchema.Protocol 
 	protogen DareSchema.Protocol  /cs  DareSchema.cs

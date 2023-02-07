@@ -96,7 +96,7 @@ public class SequenceList : Sequence {
 
     ///<inheritdoc/>
     public override SequenceIndexEntry Position(long position) {
-        if (SequencePositionToEntry.TryGetValue(position, out var entry)) {
+        if (SequencePositionStartToEntry.TryGetValue(position, out var entry)) {
             return entry;
             }
         return ReadAtPosition(position);

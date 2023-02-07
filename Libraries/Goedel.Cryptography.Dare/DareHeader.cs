@@ -31,6 +31,9 @@ public partial class DareHeader {
     long saltValue = 0;
 
 
+    ///<summary>The Sequence index value.</summary>
+    public long Index => SequenceInfo.LIndex;
+
     /// <summary>
     /// Calculate the expected payload length for the specified <paramref name="contentLength"/>.
     /// </summary>
@@ -76,6 +79,9 @@ public partial class DareHeader {
 
     ///<summary>Writer used to assemble stream</summary> 
     public CryptoStackStreamWriter BodyWriter = null;
+
+
+
 
 
     ///<inheritdoc/>

@@ -44,9 +44,6 @@ public class CatalogRegistration : Catalog<CatalogedRegistration> {
     ///<summary>The catalog label</summary>
     public override string SequenceDefault => Label;
 
-
-    ///<inheritdoc/>
-
     #endregion
     #region // Factory methods and constructors
     /// <summary>

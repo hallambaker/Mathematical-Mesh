@@ -16,8 +16,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="ContainerEntry.cs">
-			<DependentUpon>ContainerEntry.pschema</DependentUpon>
+		<Compile Update="SequenceData.cs">
+			<DependentUpon>SequenceData.pschema</DependentUpon>
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
@@ -39,8 +39,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="ContainerEntry.pschema">
-			<LastGenOutput>ContainerEntry.cs</LastGenOutput>
+		<None Update="SequenceData.pschema">
+			<LastGenOutput>SequenceData.cs</LastGenOutput>
 			<Generator>PROTOGEN</Generator>
 		</None>
 		<None Update="DareSchema.Protocol">

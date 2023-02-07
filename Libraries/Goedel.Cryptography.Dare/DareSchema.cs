@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 06-Feb-23 6:17:15 PM
+//  This file was automatically generated at 07-Feb-23 12:22:54 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -80,6 +80,8 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	    {"DareHeader", DareHeader._Factory},
 	    {"ContentMeta", ContentMeta._Factory},
 	    {"DareSignature", DareSignature._Factory},
+	    {"IntervalSignature", IntervalSignature._Factory},
+	    {"SignedEnvelope", SignedEnvelope._Factory},
 	    {"X509Certificate", X509Certificate._Factory},
 	    {"DareRecipient", DareRecipient._Factory},
 	    {"DarePolicy", DarePolicy._Factory},
@@ -268,6 +270,13 @@ public partial class DareTrailer : Dare {
 
 	public virtual List<DareSignature>				Signatures  {get; set;}
         /// <summary>
+        ///A list of signatures over the apex digest.
+        ///A envelope trailer MUST NOT contain av apex field if the header contains 
+        ///a signatures field.
+        /// </summary>
+
+	public virtual List<DareSignature>				ApexSignatures  {get; set;}
+        /// <summary>
         ///Contains a DAREHeader object 
         /// </summary>
 
@@ -297,6 +306,12 @@ public partial class DareTrailer : Dare {
 			case "signatures" : {
 				if (value is TokenValueListStructObject vvalue) {
 					Signatures = vvalue.Value as List<DareSignature>;
+					}
+				break;
+				}
+			case "ApexSignatures" : {
+				if (value is TokenValueListStructObject vvalue) {
+					ApexSignatures = vvalue.Value as List<DareSignature>;
 					}
 				break;
 				}
@@ -339,6 +354,9 @@ public partial class DareTrailer : Dare {
 			case "signatures" : {
 				return new TokenValueListStruct<DareSignature> (Signatures);
 				}
+			case "ApexSignatures" : {
+				return new TokenValueListStruct<DareSignature> (ApexSignatures);
+				}
 			case "SignedData" : {
 				return new TokenValueBinary (SignedData);
 				}
@@ -363,6 +381,8 @@ public partial class DareTrailer : Dare {
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
 			{ "signatures", new Property ( typeof(TokenValueListStruct), true,
+					()=>new List<DareSignature>(), ()=>new DareSignature(), false)} ,
+			{ "ApexSignatures", new Property ( typeof(TokenValueListStruct), true,
 					()=>new List<DareSignature>(), ()=>new DareSignature(), false)} ,
 			{ "SignedData", new Property (typeof(TokenValueBinary), false)} ,
 			{ "PayloadDigest", new Property (typeof(TokenValueBinary), false)} ,
@@ -1287,6 +1307,249 @@ public partial class DareSignature : Dare {
 			return Out as DareSignature;
 			}
 		var Result = new DareSignature ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// A digital signature over one or more envelopes consisting of an apex signature value 
+	/// </summary>
+public partial class IntervalSignature : Dare {
+        /// <summary>
+        ///The index number of the frame containing the apex signature.
+        /// </summary>
+
+	public virtual int?						Index  {get; set;}
+        /// <summary>
+        ///The signed envelopes in order, lowest index first.
+        /// </summary>
+
+	public virtual SignedEnvelope						Envelopes  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Index" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Index = vvalue.Value;
+					}
+				break;
+				}
+			case "Envelopes" : {
+				if (value is TokenValueStructObject vvalue) {
+					Envelopes = vvalue.Value as SignedEnvelope;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Index" : {
+				return new TokenValueInteger32 (Index);
+				}
+			case "Envelopes" : {
+				return new TokenValueStruct<SignedEnvelope> (Envelopes);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Index", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Envelopes", new Property ( typeof(TokenValueStruct), false,
+					()=>new SignedEnvelope(), ()=>new SignedEnvelope(), false)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "IntervalSignature";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new IntervalSignature();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new IntervalSignature FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as IntervalSignature;
+			}
+		var Result = new IntervalSignature ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// An entry describing one signed envelope within an IntervalSignature
+	/// </summary>
+public partial class SignedEnvelope : Dare {
+        /// <summary>
+        ///The index number of the envelope.
+        /// </summary>
+
+	public virtual int?						Index  {get; set;}
+        /// <summary>
+        ///The digests required to complete the verification of the signature.		
+        /// </summary>
+
+	public virtual List<byte[]>				Digest  {get; set;}
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+			case "Index" : {
+				if (value is TokenValueInteger32 vvalue) {
+					Index = vvalue.Value;
+					}
+				break;
+				}
+			case "Digest" : {
+				if (value is TokenValueListBinary vvalue) {
+					Digest = vvalue.Value;
+					}
+				break;
+				}
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+			case "Index" : {
+				return new TokenValueInteger32 (Index);
+				}
+			case "Digest" : {
+				return new TokenValueListBinary (Digest);
+				}
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+			{ "Index", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "Digest", new Property (typeof(TokenValueListBinary), true)} 
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "SignedEnvelope";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new SignedEnvelope();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new SignedEnvelope FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as SignedEnvelope;
+			}
+		var Result = new SignedEnvelope ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

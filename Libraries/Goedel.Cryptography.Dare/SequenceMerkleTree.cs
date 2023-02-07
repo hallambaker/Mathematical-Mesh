@@ -163,11 +163,11 @@ public class SequenceMerkleTree : SequenceTree {
     IEnumerable<SequenceIndexEntry> GetSequenceIndexEntries (IEnumerable<long> entries) =>
                 throw new NYI();
 
-    public ProofChain GetProofChain(
+    public IntervalSignature GetProofChain(
         IEnumerable<long> entries) =>GetProofChain(GetSequenceIndexEntries(entries));
 
 
-    public ProofChain GetProofChain(
+    public IntervalSignature GetProofChain(
             SequenceIndexEntry first,
             SequenceIndexEntry second) =>
         GetProofChain(new SequenceIndexEntry[] { first , second});
@@ -179,7 +179,7 @@ public class SequenceMerkleTree : SequenceTree {
     /// <param name="entries"></param>
     /// <returns></returns>
     /// <exception cref="NYI"></exception>
-    public ProofChain GetProofChain(
+    public IntervalSignature GetProofChain(
                 IEnumerable<SequenceIndexEntry> entries) {
 
         "Implement proof chain".TaskFunctionality(true);

@@ -47,7 +47,7 @@ public partial class TestDareArchive {
     /// </summary>
     [Fact]
     public void TestFileContainer1() {
-        var seed = DeterministicSeed.Create();
+        var seed = DeterministicSeed.AutoClean();
 
 
         var bytes = CreateBytes(100);
@@ -62,7 +62,7 @@ public partial class TestDareArchive {
     /// </summary>
     [Fact]
     public void TestFileContainer16() {
-        var seed = DeterministicSeed.Create();
+        var seed = DeterministicSeed.AutoClean();
         byte[] bytes = Array.Empty<Byte>();
 
         var policy = TestEnvironmentCommon.MakePolicy(seed);
@@ -85,7 +85,7 @@ public partial class TestDareArchive {
     /// </summary>
     [Fact]
     public void TestFileContainerEncrypted1() {
-        var seed = DeterministicSeed.Create();
+        var seed = DeterministicSeed.AutoClean();
         var policy = TestEnvironmentCommon.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
 
         var bytes = CreateBytes(100);
@@ -98,7 +98,7 @@ public partial class TestDareArchive {
     /// </summary>
     [Fact]
     public void TestFileContainerEncrypted16() {
-        var seed = DeterministicSeed.Create();
+        var seed = DeterministicSeed.AutoClean();
         var policy = TestEnvironmentCommon.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
 
         byte[] bytes = Array.Empty<Byte>();
@@ -135,7 +135,7 @@ public partial class TestDareArchive {
     /// </summary>
     [Fact]
     public void TestArchiveEncrypted10Bulk() {
-        var seed = DeterministicSeed.Create();
+        var seed = DeterministicSeed.AutoClean();
         var policy = TestEnvironmentCommon.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
         ReadWriteArchive(10, policy, false);
         }
@@ -145,7 +145,7 @@ public partial class TestDareArchive {
     /// </summary>
     [Fact]
     public void TestArchiveEncrypted10Individual() {
-        var seed = DeterministicSeed.Create();
+        var seed = DeterministicSeed.AutoClean();
         var policy = TestEnvironmentCommon.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
         ReadWriteArchive(10, policy, true);
         }
@@ -155,7 +155,7 @@ public partial class TestDareArchive {
     /// </summary>
     [Fact]
     public void TestArchiveMulti() {
-        var seed = DeterministicSeed.Create();
+        var seed = DeterministicSeed.AutoClean();
 
         var policy = TestEnvironmentCommon.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
         var entries = new int[] { 5, 15, 30, 100 };

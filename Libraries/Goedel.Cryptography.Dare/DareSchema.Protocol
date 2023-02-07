@@ -56,6 +56,13 @@
 				|A list of signatures.
 				|A envelope trailer MUST NOT contain a signatures field if the header contains 
 				|a signatures field.
+		Struct DareSignature ApexSignatures
+			Multiple
+			Description
+				|A list of signatures over the apex digest.
+				|A envelope trailer MUST NOT contain av apex field if the header contains 
+				|a signatures field.
+
 		Binary SignedData
 			Description
 				|Contains a DAREHeader object 
@@ -255,6 +262,28 @@
 				|The signature witness value used on an encrypted envelope to demonstrate that 
 				|the signature was authorized by a party with actual knowledge of the encryption 
 				|key used to encrypt the envelope.
+
+	Structure IntervalSignature
+		Description
+			|A digital signature over one or more envelopes consisting of an apex signature value 
+		Integer Index
+			Description
+				|The index number of the frame containing the apex signature.
+		Struct SignedEnvelope Envelopes
+			Description
+				|The signed envelopes in order, lowest index first.
+
+	Structure SignedEnvelope
+		Description
+			|An entry describing one signed envelope within an IntervalSignature
+		Integer Index
+			Description
+				|The index number of the envelope.
+		Binary Digest
+			Multiple
+			Description
+				|The digests required to complete the verification of the signature.		
+
 
 	Structure X509Certificate
 		String X5u

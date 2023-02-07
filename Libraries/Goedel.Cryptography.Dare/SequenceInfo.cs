@@ -19,28 +19,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-
 namespace Goedel.Cryptography.Dare;
 
-public partial class ProofChain {
+
+public partial class SequenceInfo {
+
+    ///<summary>The index value as a non-nullable long</summary> 
+    public long LIndex => Index ?? 0;
 
 
-    /// <summary>
-    /// Attempt to verify the proof chain and return null if invalid
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="NYI"></exception>
-    public bool Verify() => throw new NYI();
-
-
-    /// <summary>
-    /// Attempt to verify the proof chain and return null if invalid
-    /// </summary>
-    /// <param name="envelopes">The envelope data to verify.</param>
-    /// <returns></returns>
-    /// <exception cref="NYI"></exception>
-    public bool Verify(IEnumerable<DareEnvelope> envelopes) => throw new NYI();
-
-
-
+    ///<summary>If true, the field ExchangePosition is specified</summary>
+    public bool HasExchangePosition() => ExchangePosition != null;
     }
+

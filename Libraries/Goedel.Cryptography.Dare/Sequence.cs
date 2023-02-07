@@ -77,12 +77,22 @@ public class SequenceFrame {
 public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
     #region // Properties
+    #region // File and stream related
+
+    ///<summary>Name of the underlying file (may be used to reconnect to file)</summary> 
+    public string Filename { get; set; }
 
     /// <summary>The underlying file stream</summary>
     protected JbcdStream JbcdStream { get; init; }
 
-    ///<summary>Name of the underlying file (may be used to reconnect to file)</summary> 
-    public string Filename { get; set; }
+    ///<summary>The current read position.</summary> 
+    public long PositionRead => JbcdStream.PositionRead;
+
+    ///<summary>The current write position.</summary> 
+    public long PositionWrite => JbcdStream.PositionWrite;
+
+    ///<summary>The length.</summary> 
+    public long Length => JbcdStream.Length;
 
     /// <summary>
     /// The underlying stream reader/writer for the Sequence. This will be disposed of when
@@ -99,6 +109,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         set => DisposeJBCDStream = value ? JbcdStream : null;
         }
 
+    #endregion
+    #region // Cryptography
     /// <summary>The encoding to use for creating the FrameHeader entry</summary>
     public DataEncoding DataEncoding { get; protected set; }
 
@@ -107,9 +119,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
     ///<summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
     public virtual bool DigestRequired => false;
-
-
-
 
     /// <summary>
     /// The cryptography parameters.
@@ -124,21 +133,14 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///<summary>The key location instance.</summary>
     public IKeyLocate KeyLocate { get; protected set; }
 
+    #endregion
+    #region // Indexing and convenience accessors
 
-    /// <summary>The value of the last frame index plus 1</summary>
-    public virtual long FrameCount => SequenceIndexEntryLast?.Header.SequenceInfo.LIndex + 1 ?? 0;
+    ///<summary>Index entry of the first frame.</summary> 
+    public SequenceIndexEntry SequenceIndexEntryFirst { get; protected set; }
 
-    ///<summary>The last frame in the Sequence</summary>
-    public virtual long FrameIndexLast => HeaderFinal.Index;
-
-    ///<summary>The current read position.</summary> 
-    public long PositionRead => JbcdStream.PositionRead;
-
-    ///<summary>The current write position.</summary> 
-    public long PositionWrite => JbcdStream.PositionWrite;
-
-    ///<summary>The length.</summary> 
-    public long Length => JbcdStream.Length;
+    ///<summary>Index entry of the last frame.</summary> 
+    public SequenceIndexEntry SequenceIndexEntryLast { get; protected set; }
 
     /// <summary>
     /// The first Sequence headerData. This is read only since it is fixed after
@@ -152,40 +154,41 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///<summary>The trailerData section of the last envelope in the Sequence.</summary> 
     public DareTrailer TrailerLast => SequenceIndexEntryLast.Trailer;
 
+    /// <summary>The value of the last frame index plus 1</summary>
+    public virtual long FrameCount => FrameIndexLast + 1;
+
+    ///<summary>The last frame in the Sequence</summary>
+    public virtual long FrameIndexLast => HeaderFinal?.Index ?? 0;
+
     ///<summary>The bitmask identifier of the Sequence.</summary> 
     public byte[] Bitmask => HeaderFirst.Bitmask;
 
-
-
-
-    ///<summary>Index entry of the first frame.</summary> 
-    public SequenceIndexEntry SequenceIndexEntryFirst { get; protected set; }
-
-    ///<summary>Index entry of the last frame.</summary> 
-    public SequenceIndexEntry SequenceIndexEntryLast { get; protected set; }
-
+    #endregion
+    #region // Dictionaries
 
     ///<summary>First index number to index entry.</summary> 
-    public Dictionary<long, SequenceIndexEntry> FrameIndexToEntry = new ();
+    public Dictionary<long, SequenceIndexEntry> FrameIndexToEntry = new();
 
     ///<summary>Sequence position to index entry.</summary> 
-    public Dictionary<long, SequenceIndexEntry> SequencePositionToEntry = new();
+    public Dictionary<long, SequenceIndexEntry> SequencePositionStartToEntry = new();
 
     ///<summary>Sequence position to index entry.</summary> 
-    public Dictionary<long, SequenceIndexEntry> SequenceNextToEntry = new();
+    public Dictionary<long, SequenceIndexEntry> SequencePositionEndToEntry = new();
+
+    #endregion
+    #region // Delegates
+
+    ///<summary>Delegate called to create a Sequence entry for a catalog or store.</summary> 
+    public SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactoryDelegate { get; init; } = SequenceIndexEntry.Factory;
 
     ///<summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
     public InternSequenceIndexEntryDelegate InternSequenceIndexEntryDelegate { get; init; } = null;
 
-    ///<summary>Delegate called to create a Sequence entry for a catalog or store.</summary> 
-    public SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactoryDelegate 
-                { get; init; } = SequenceIndexEntry.Factory;
+    ///<summary>Context information for use by the 
+    ///<see cref="InternSequenceIndexEntryDelegate"/>.</summary> 
+    public object Store { get; set; }
 
-
-
-
-    public object Store {get; set;}
-
+    #endregion
     #endregion
     /// <summary>
     /// Default constructor.
@@ -217,11 +220,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
 
     /// <summary>
-    /// Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+    /// Constructor, returns an enumerator on this sequence, starting
     /// with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
     /// results are returned from the last match first.
     /// </summary>
-    /// <param name="sequence">The sequence to enumerate.</param>
     /// <param name="start">The starting point for the enumeration. If it matches, this will 
     /// be the first result returned.</param>
     /// <param name="reverse">If true, return results in the reverse order.</param>
@@ -341,8 +343,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             }
         }
     #endregion
-    #region // 
-    #endregion
+
     #region // Open Sequence 
 
     /// <summary>
@@ -767,8 +768,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// </summary>
     /// <param name="indexEntry"></param>
     protected void Intern(SequenceIndexEntry indexEntry) {
-        SequencePositionToEntry.Add(indexEntry.FramePosition, indexEntry);
-        SequenceNextToEntry.Add(indexEntry.FramePosition + indexEntry.FrameLength, indexEntry);
+        SequencePositionStartToEntry.Add(indexEntry.FramePosition, indexEntry);
+        SequencePositionEndToEntry.Add(indexEntry.FramePosition + indexEntry.FrameLength, indexEntry);
         FrameIndexToEntry.Add(indexEntry.Index, indexEntry);
 
         if (InternSequenceIndexEntryDelegate is not null) {
@@ -1405,7 +1406,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <returns>The next index entry.</returns>
     public SequenceIndexEntry Next(SequenceIndexEntry indexEntry) {
 
-        if (SequencePositionToEntry.TryGetValue(indexEntry.FramePositionNext, out var entry)) {
+        if (SequencePositionStartToEntry.TryGetValue(indexEntry.FramePositionNext, out var entry)) {
             return entry;
             }
         return ReadAtPosition(indexEntry.FramePositionNext);
@@ -1419,7 +1420,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <returns>The previous index entry.</returns>
     public SequenceIndexEntry Previous(SequenceIndexEntry indexEntry) {
 
-        if (SequenceNextToEntry.TryGetValue(indexEntry.FramePosition, out var entry)) {
+        if (SequencePositionEndToEntry.TryGetValue(indexEntry.FramePosition, out var entry)) {
             return entry;
             }
         if (indexEntry.FramePosition <= 0) {
