@@ -1813,7 +1813,7 @@
             <param name="message">The message to append to the local spool.</param>
             <param name="keyEncrypt">The message encryption key.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.Transaction`1.InboundComplete(Goedel.Mesh.MessageStatus,Goedel.Mesh.Message,Goedel.Mesh.Message)">
+        <member name="M:Goedel.Mesh.Client.Transaction`1.InboundComplete(Goedel.Mesh.StateSpoolMessage,Goedel.Mesh.Message,Goedel.Mesh.Message)">
             <summary>
             Mark the message <paramref name="completed"/> on the inbound spool as having status 
             <paramref name="messageStatus"/>. If 
@@ -1823,7 +1823,7 @@
             <param name="completed">The message whose status is being changed.</param>
             <param name="response">The message generated in response.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.Transaction`1.LocalComplete(Goedel.Mesh.MessageStatus,Goedel.Mesh.Message,Goedel.Mesh.Message)">
+        <member name="M:Goedel.Mesh.Client.Transaction`1.LocalComplete(Goedel.Mesh.StateSpoolMessage,Goedel.Mesh.Message,Goedel.Mesh.Message)">
             <summary>
             Mark the message <paramref name="completed"/> on the local spool as having status 
             <paramref name="messageStatus"/>. If 

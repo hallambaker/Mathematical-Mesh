@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 07-Feb-23 12:23:00 AM
+//  This file was automatically generated at 08-Feb-23 5:35:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -60,6 +60,25 @@ public enum StoreType {
     Publication,
     ///<summary>Task Catalog</summary>
     Task    }
+
+///<summary>Inbound spool message state</summary>
+public enum StateSpoolMessage {
+    ///<summary>Undefined type</summary>
+    Unknown = -1,
+    ///<summary>Initial state (unread)</summary>
+    Initial,
+    ///<summary>Message was read</summary>
+    Read,
+    ///<summary>Message was sent and receipt acknowledged</summary>
+    Received,
+    ///<summary>Message was refused</summary>
+    Refused,
+    ///<summary>Message was sent</summary>
+    Sent,
+    ///<summary>Transaction associated with the message was completed</summary>
+    Closed,
+    ///<summary>Transaction associated with the message was completed</summary>
+    Deleted    }
 
 ///<summary>Inbound spool message state</summary>
 public enum StateSpoolInbound {
@@ -261,6 +280,60 @@ public static partial class MeshConstants {
             };
 
     // File: SpoolLabels
+
+    // File: MessageState
+
+
+    ///<summary>Jose enumeration tag for StateSpoolMessage.Initial</summary>
+    public const string  StateSpoolMessageInitialTag = "Initial";
+    ///<summary>Jose enumeration tag for StateSpoolMessage.Read</summary>
+    public const string  StateSpoolMessageReadTag = "Read";
+    ///<summary>Jose enumeration tag for StateSpoolMessage.Received</summary>
+    public const string  StateSpoolMessageReceivedTag = "Received";
+    ///<summary>Jose enumeration tag for StateSpoolMessage.Refused</summary>
+    public const string  StateSpoolMessageRefusedTag = "Refused";
+    ///<summary>Jose enumeration tag for StateSpoolMessage.Sent</summary>
+    public const string  StateSpoolMessageSentTag = "Sent";
+    ///<summary>Jose enumeration tag for StateSpoolMessage.Closed</summary>
+    public const string  StateSpoolMessageClosedTag = "Closed";
+    ///<summary>Jose enumeration tag for StateSpoolMessage.Deleted</summary>
+    public const string  StateSpoolMessageDeletedTag = "Deleted";
+
+    /// <summary>
+    /// Convert the string <paramref name="text"/> to the corresponding enumeration
+    /// value.
+    /// </summary>
+    /// <param name="text">The string to convert.</param>
+    /// <returns>The enumeration value.</returns>
+    public static StateSpoolMessage ToStateSpoolMessage (this string text) =>
+        text switch {
+            StateSpoolMessageInitialTag => StateSpoolMessage.Initial,
+            StateSpoolMessageReadTag => StateSpoolMessage.Read,
+            StateSpoolMessageReceivedTag => StateSpoolMessage.Received,
+            StateSpoolMessageRefusedTag => StateSpoolMessage.Refused,
+            StateSpoolMessageSentTag => StateSpoolMessage.Sent,
+            StateSpoolMessageClosedTag => StateSpoolMessage.Closed,
+            StateSpoolMessageDeletedTag => StateSpoolMessage.Deleted,
+            _ => StateSpoolMessage.Unknown
+            };
+
+    /// <summary>
+    /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+    /// value.
+    /// </summary>
+    /// <param name="data">The enumerated value.</param>
+    /// <returns>The text value.</returns>
+    public static string ToLabel (this StateSpoolMessage data) =>
+        data switch {
+            StateSpoolMessage.Initial => StateSpoolMessageInitialTag,
+            StateSpoolMessage.Read => StateSpoolMessageReadTag,
+            StateSpoolMessage.Received => StateSpoolMessageReceivedTag,
+            StateSpoolMessage.Refused => StateSpoolMessageRefusedTag,
+            StateSpoolMessage.Sent => StateSpoolMessageSentTag,
+            StateSpoolMessage.Closed => StateSpoolMessageClosedTag,
+            StateSpoolMessage.Deleted => StateSpoolMessageDeletedTag,
+            _ => null
+            };
 
     // File: MessageStateInbound
 

@@ -54,8 +54,10 @@ public class StoreEntry : IPersistenceEntry {
     public bool Deleted => ContentInfo?.Event == PersistenceStore.EventDelete;
 
     ///<summary>The JSONObject.</summary>
-    public JsonObject JsonObject => jsonObject ?? FrameIndex.GetJSONObject(Container).CacheValue(out jsonObject);
-    JsonObject jsonObject;
+    public JsonObject JsonObject {
+        get => FrameIndex.JsonObject;
+        set => FrameIndex.JsonObject = value;
+        }
 
     ///<summary>The frame index within the Sequence</summary>
     public SequenceIndexEntry FrameIndex;
@@ -93,7 +95,7 @@ public class StoreEntry : IPersistenceEntry {
                 StoreEntry previous,
                 JsonObject item = null) {
         Container = container;
-        jsonObject = item;
+        JsonObject = item;
 
         ContainerHeader = dareEnvelope.Header as DareHeader;
         Previous = previous;
@@ -126,7 +128,7 @@ public class StoreEntry : IPersistenceEntry {
 
 
         FrameIndex = frameIndex;
-        jsonObject = item;
+        JsonObject = item;
 
         Previous = previous;
         First = previous?.First ?? this;

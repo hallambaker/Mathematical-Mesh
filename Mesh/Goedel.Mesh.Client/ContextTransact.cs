@@ -418,7 +418,7 @@ public abstract class Transaction<TAccount> : Disposable
     /// <param name="completed">The message whose status is being changed.</param>
     /// <param name="response">The message generated in response.</param>
     public void InboundComplete(
-            MessageStatus messageStatus,
+            StateSpoolMessage messageStatus,
             Message completed,
             Message response = null
             ) {
@@ -441,7 +441,7 @@ public abstract class Transaction<TAccount> : Disposable
     /// <param name="completed">The message whose status is being changed.</param>
     /// <param name="response">The message generated in response.</param>
     public void LocalComplete(
-            MessageStatus messageStatus,
+            StateSpoolMessage messageStatus,
             Message completed,
             Message response = null
             ) {

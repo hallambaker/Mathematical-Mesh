@@ -247,7 +247,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite {
     void Read(IKeyLocate keyLocate, SequenceIntegrity integrity = SequenceIntegrity.None) {
         foreach (var frameIndex in Sequence) {
 
-            var item = frameIndex.GetJSONObject(Sequence);
+            var item = frameIndex.JsonObject;
 
             CommitTransaction(frameIndex, item);
             if (integrity != SequenceIntegrity.None) {

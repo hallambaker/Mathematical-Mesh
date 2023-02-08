@@ -68,6 +68,9 @@ Namespace Goedel.Cryptography.Dare
 
 	Exception FileNotFound
         Console "The file was not found."
+	
 	Exception DirectoryNotFound
         Console "The directory was not found."
-
+	
+	Exception NotInDecryptionMode
+        Console "The envelope could not be decrypted because the sequence was not opened in decryption mode."

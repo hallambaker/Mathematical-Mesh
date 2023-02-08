@@ -30,13 +30,13 @@ namespace Goedel.Mesh;
 /// </summary>
 public interface ISpoolItem {
     ///<summary>The message status value.</summary>
-    public MessageStatus MessageStatus { get;  }
+    public StateSpoolMessage MessageStatus { get;  }
 
     ///<summary>The list of references to the message, most recently added first.</summary>
     List<Reference> References { get; } 
 
     ///<summary>Add a reference entry.</summary> 
-    void AddReference(Reference reference, bool force);
+    void AddReference(Reference reference, long index);
     }
 
 ///<summary>Placehoolder for a referenced but not yet read item.</summary> 
@@ -46,7 +46,7 @@ public class SpoolPlaceholder : ISpoolItem {
     public List<Reference> References { get; } = new();
 
     ///<summary>The message status value.</summary>
-    public MessageStatus MessageStatus { get; set; }
+    public StateSpoolMessage MessageStatus { get; set; }
 
     /// <summary>
     /// Constructor.
@@ -56,13 +56,18 @@ public class SpoolPlaceholder : ISpoolItem {
         }
 
     ///<inheritdoc/>
-    public void AddReference(Reference reference, bool force) => throw new NYI();
+    public void AddReference(Reference reference, long force) => throw new NYI();
     }
 
 /// <summary>
 /// Index entry for a spool element.
 /// </summary>
 public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
+
+
+    ///<summary>The underlying spool.</summary> 
+    public Spool Spool => Sequence.Store as Spool;
+
 
     ///<summary>The list of references to the message, most recently added first.</summary>
     public List<Reference> References { get; set; }
@@ -73,9 +78,20 @@ public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
 
 
     ///<summary>The message status value.</summary>
-    public MessageStatus MessageStatus { get; set; }
-    //public Message Message => message ?? Decode().CacheValue(out message);
-    //Message message;
+    public StateSpoolMessage MessageStatus { get; set; } = StateSpoolMessage.Initial;
+
+    ///<inheritdoc/>
+    public override bool IsOpen { get; set; } = true;
+
+    ///<summary>The decoded JSONObject</summary>
+    public override JsonObject JsonObject {
+        get => jsonObject ?? GetJSONObject().CacheValue(out jsonObject);
+        set => jsonObject = value;
+        }
+    JsonObject jsonObject = null;
+
+    ///<summary>Index of the frame in which the status was set;</summary> 
+    long messageStatusIndex = 0;
 
     ///<summary>Convenience accessor for the message identifier.</summary> 
     public string MessageId => Message?.MessageId;
@@ -97,8 +113,7 @@ public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
             DareHeader header,
             DareTrailer trailer = null,
             JsonObject jsonObject = null
-            ) => new SpoolIndexEntry() {
-                Sequence = sequence,
+            ) => new SpoolIndexEntry(sequence) {
                 FramePosition = framePosition,
                 FrameLength = frameLength,
                 DataPosition = dataPosition,
@@ -109,6 +124,11 @@ public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
                 };
 
 
+    public SpoolIndexEntry(Sequence sequence) {
+        (sequence?.Store as Spool).AssertNotNull(NYI.Throw);
+        Sequence = sequence;
+        }
+
 
 
     /// <summary>
@@ -118,22 +138,22 @@ public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
     /// </summary>
     /// <param name="reference">The reference to add.</param>
     /// <param name="force">Force updating of the status.</param>
-    public void AddReference(Reference reference, bool force=true) {
-        //throw new NYI();
+    public void AddReference(Reference reference, long index) {
+        References ??= new();
 
-        if ((References == null) | force) {
-            References ??= new ();
+        if (index >= messageStatusIndex) {
             References.Insert(0, reference);
             MessageStatus = reference.MessageStatus;
-            // Message.MessageStatus = MessageStatus;
-            //"Handle the message status properly".TaskFunctionality();
+            IsOpen = MessageStatus.IsOpen();
             }
         else {
             References.Add(reference);
             }
+
         }
 
-
+    ///<inheritdoc/>
+    public override void Intern() => Spool.Intern(this);
 
     }
 

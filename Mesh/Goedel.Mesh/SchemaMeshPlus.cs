@@ -90,7 +90,7 @@ public partial class MeshItem {
     //public static object Initialize => null;
 
     ///<summary>Reports the status of the item. </summary>
-    public MessageStatus Status = MessageStatus.None;
+    //public MessageStatus Status = MessageStatus.None;
 
     //static MeshItem() => AddDictionary(ref _TagDictionary);
 

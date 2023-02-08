@@ -163,6 +163,13 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///<summary>The bitmask identifier of the Sequence.</summary> 
     public byte[] Bitmask => HeaderFirst.Bitmask;
 
+    ///<summary>The last frame indexed in the forwards direction</summary> 
+    protected SequenceIndexEntry IndexedFromStart { get; set; } = null;
+
+    ///<summary>The last frame indexed in the backwards direction</summary> 
+    protected SequenceIndexEntry IndexedFromEnd { get; set; } = null;
+
+
     #endregion
     #region // Dictionaries
 
@@ -243,7 +250,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
 
     public virtual IEnumerable<SequenceIndexEntry> SelectFromUnread (
-            FilterIndexDelegate evaluate=null) => throw new NYI();
+            FilterIndexDelegate evaluate=null) => new SequenceEnumeratorIndex(
+                    this, IndexedFromEnd.Previous(), true);
 
 
 
@@ -316,11 +324,11 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             }
         var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
         try {
-            Sequence Container;
+            Sequence sequence;
 
             // Create new Sequence if empty or read the old one.
             if (jbcdStream.Length == 0) {
-                Container = NewSequence(jbcdStream, decrypt:decrypt,
+                sequence = NewSequence(jbcdStream, decrypt:decrypt,
                     keyLocate: keyLocate, sequenceType: sequenceType, policy: policy, 
                     contentType: contentType, bitmask: bitmask,
                     internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
@@ -329,16 +337,17 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     );
                 }
             else {
-                Container = OpenExisting(jbcdStream, keyLocate, decrypt: decrypt,
+                sequence = OpenExisting(jbcdStream, keyLocate, decrypt: decrypt,
                     internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
                     sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate,
                     store: store);
                 }
-            (Container.KeyCollection == keyLocate).AssertTrue(NYI.Throw);
-            Container.DisposeJBCDStream = jbcdStream;
-            Container.Filename = fileName;
-
-            return Container;
+            (sequence.KeyCollection == keyLocate).AssertTrue(NYI.Throw);
+            sequence.DisposeJBCDStream = jbcdStream;
+            sequence.Filename = fileName;
+            sequence.IndexedFromStart = sequence.SequenceIndexEntryFirst;
+            sequence.IndexedFromEnd = sequence.SequenceIndexEntryLast;
+            return sequence;
             }
         catch (Exception exception) {
             jbcdStream?.Dispose();
@@ -788,9 +797,11 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         SequencePositionEndToEntry.Add(indexEntry.FramePosition + indexEntry.FrameLength, indexEntry);
         FrameIndexToEntry.Add(indexEntry.Index, indexEntry);
 
-        if (InternSequenceIndexEntryDelegate is not null) {
-            InternSequenceIndexEntryDelegate(indexEntry);
-            }
+
+        indexEntry.Intern();
+        //if (InternSequenceIndexEntryDelegate is not null) {
+        //    InternSequenceIndexEntryDelegate(indexEntry);
+        //    }
 
         }
 
@@ -1452,7 +1463,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// </summary>
     /// <param name="Index">Index of the frame to return.</param>
     /// <returns>The Frame index.</returns>
-    public abstract SequenceIndexEntry Frame(long Index);
+    public abstract SequenceIndexEntry Frame(long Index, bool skip=true);
 
     /// <summary>
     /// Return a <see cref="SequenceIndexEntry"/> for the last frame in the sequence.

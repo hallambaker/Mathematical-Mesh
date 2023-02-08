@@ -81,18 +81,22 @@ public class FilterSequenceIndex {
 
         if (FrameFirst > sequenceIndexEntry.Index) {
             result |= ItemResult.Earlier;
+            result |= ItemResult.NotMatch;
             }
         if (FrameLast < sequenceIndexEntry.Index) {
             result |= ItemResult.Later;
+            result |= ItemResult.NotMatch;
             }
 
         var datetime = sequenceIndexEntry.DateTime;
         if (datetime != null) {
             if (datetime < NotBefore) {
                 result |= ItemResult.Earlier;
+                result |= ItemResult.NotMatch;
                 }
             if (datetime >= NotOnOrAfter) {
                 result |= ItemResult.Later;
+                result |= ItemResult.NotMatch;
                 }
             }
 
@@ -100,9 +104,12 @@ public class FilterSequenceIndex {
             result |= ItemResult.NotMatch;
             }
         if (IsDeleted is not null && IsDeleted != sequenceIndexEntry.IsDeleted) {
+            result |= ItemResult.NotMatch;
             result |= ItemResult.Deleted;
             }
         if (IsErased is not null && IsErased != sequenceIndexEntry.IsErased) {
+
+            result |= ItemResult.NotMatch;
             result |= ItemResult.Earlier;
             }
         return result;

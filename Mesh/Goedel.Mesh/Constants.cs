@@ -24,46 +24,46 @@
 namespace Goedel.Mesh;
 
 
-/// <summary>
-/// Status values for Mesh Messages
-/// </summary>
-public enum MessageStatus {
+///// <summary>
+///// Status values for Mesh Messages
+///// </summary>
+//public enum MessageStatus {
 
 
 
-    ///<summary>Message is unread.</summary>
-    Unread = 0b1,
+//    ///<summary>Message is unread.</summary>
+//    Unread = 0b1,
 
-    ///<summary>Message has been read.</summary>
-    Read = 0b10,
+//    ///<summary>Message has been read.</summary>
+//    Read = 0b10,
 
-    ///<summary>Message has expired</summary>
-    Unexpired = 0b100,
+//    ///<summary>Message has expired</summary>
+//    Unexpired = 0b100,
 
-    ///<summary>Message has expired</summary>
-    Expired = 0b1000,
+//    ///<summary>Message has expired</summary>
+//    Expired = 0b1000,
 
-    ///<summary>Message is open.</summary>
-    Open = 0b1_0000,
+//    ///<summary>Message is open.</summary>
+//    Open = 0b1_0000,
 
-    ///<summary>Message is closed.</summary>
-    Closed = 0b10_0000,
-
-
-    ///<summary>Initial Message Status</summary>
-    Initial = Unread | Open,
-
-    ///<summary>Initial Message Status</summary>
-    Active = Unexpired | Open,
+//    ///<summary>Message is closed.</summary>
+//    Closed = 0b10_0000,
 
 
-    ///<summary>All messages.</summary>
-    All = 0b11_1111,
+//    ///<summary>Initial Message Status</summary>
+//    Initial = Unread | Open,
 
-    ///<summary>No messages.</summary>
-    None = 0b00_0000,
+//    ///<summary>Initial Message Status</summary>
+//    Active = Unexpired | Open,
 
-    }
+
+//    ///<summary>All messages.</summary>
+//    All = 0b11_1111,
+
+//    ///<summary>No messages.</summary>
+//    None = 0b00_0000,
+
+//    }
 
 /// <summary>
 /// Collected constants used in the Mathematical Mesh

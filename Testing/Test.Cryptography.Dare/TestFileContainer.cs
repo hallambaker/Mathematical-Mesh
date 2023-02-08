@@ -136,7 +136,7 @@ public partial class TestDareArchive {
     [Fact]
     public void TestArchiveEncrypted10Bulk() {
         var seed = DeterministicSeed.AutoClean();
-        var policy = TestEnvironmentCommon.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
+        var policy = TestEnvironmentBase.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
         ReadWriteArchive(10, policy, false);
         }
 
@@ -146,7 +146,7 @@ public partial class TestDareArchive {
     [Fact]
     public void TestArchiveEncrypted10Individual() {
         var seed = DeterministicSeed.AutoClean();
-        var policy = TestEnvironmentCommon.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
+        var policy = TestEnvironmentBase.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
         ReadWriteArchive(10, policy, true);
         }
 
@@ -155,15 +155,16 @@ public partial class TestDareArchive {
     /// </summary>
     [Fact]
     public void TestArchiveMulti() {
-        var seed = DeterministicSeed.AutoClean();
-
-        var policy = TestEnvironmentCommon.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
         var entries = new int[] { 5, 15, 30, 100 };
 
         foreach (var entry in entries) {
-            ReadWriteArchive(entry);
-            ReadWriteArchive(entry, policy, false);
-            ReadWriteArchive(entry, policy, true);
+            var seed = DeterministicSeed.AutoClean(entry);
+            var policy = TestEnvironmentBase.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
+
+
+            ReadWriteArchive(entry, seed: seed);
+            ReadWriteArchive(entry, policy, false, seed: seed);
+            ReadWriteArchive(entry, policy, true, seed: seed);
             }
         }
 
@@ -210,7 +211,7 @@ public partial class TestDareArchive {
                     DarePolicy policy = null,
                     bool independent = false,
                     DeterministicSeed seed = null) {
-        policy ??= TestEnvironmentCommon.MakePolicy(seed);
+        policy ??= TestEnvironmentBase.MakePolicy(seed);
 
         var policyNill = policy == null ? "-null" : "";
         var mode = policy.Encrypt ? (independent ? "-Ind" : "-Bulk") : "-plaintext";

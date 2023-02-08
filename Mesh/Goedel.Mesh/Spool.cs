@@ -74,17 +74,28 @@ public class Spool : Store {
         }
 
     void Intern(
-                SequenceIndexEntry indexEntry) {
-        var entry = indexEntry as SpoolIndexEntry;
+                SequenceIndexEntry indexEntry) => Intern(indexEntry as SpoolIndexEntry);
+
+
+    public void Intern(
+            SpoolIndexEntry entry) {
+
         entry.AssertNotNull(NYI.Throw);
 
+        if (entry.EnvelopeId is null) {
+            return;
+            }
+
         // check to see if the item has been added already.
-        if (entry.EnvelopeId != null &&
-                    SequenceIndexEntryByEnvelopeId.TryGetValue(entry.EnvelopeId, out var value)) {
+        if (SequenceIndexEntryByEnvelopeId.TryGetValue(entry.EnvelopeId, out var value)) {
             entry.References = value.References;
             entry.MessageStatus = value.MessageStatus;
             return;
             }
+        else {
+            SequenceIndexEntryByEnvelopeId.Add(entry.EnvelopeId, entry);
+            }
+
 
         if (entry.MessageType == MessageComplete.__Tag) {
             var message = entry.Message as MessageComplete;
@@ -96,7 +107,7 @@ public class Spool : Store {
 
                 if (SequenceIndexEntryByEnvelopeId.TryGetValue(envelopeID, out var referenceEntry)) {
                     var referenceEntrySpool = referenceEntry as SpoolIndexEntry;
-                    referenceEntrySpool.AddReference(reference);
+                    referenceEntrySpool.AddReference(reference, entry.Index);
                     }
                 else {
                     var placeholder = new SpoolPlaceholder( reference);
@@ -110,6 +121,7 @@ public class Spool : Store {
         }
 
 
+      
 
 
 

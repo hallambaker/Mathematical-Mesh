@@ -64,17 +64,20 @@ partial class Program {
         //TestSequences.Test().TestSignEncrypt(SequenceType.List);
         //TestSequences.Test().TestSparse(ModeEnhance.Sparse, ModeEnhance.Sparse);
         //TestSequences.Test().TestProof(ModeEnhance.Sparse, ModeEnhance.Sparse);
+        //TestSequences.Test().ZContainerTestList();
+
         //TestSequences.Test().ZContainerTest0();
 
+        //TestSequences.Test().TestBasic(SequenceType.List, 40, 5000, true, 10, 5);
+        //StoreTests.Test().TestSpoolSingle();
 
 
 
-        //TestStores.Test().TestSpoolBasic();
-        //TestPlatform.Test().TestKeyRead();
+        TestDareArchive.Test().TestArchiveMulti();
         //TestPlatform.Test().TestWritePEMRSA();
 
         // Most likely a faulty direct append issue going on...
-        StoreTests.Test().TestSpoolSingle();
+
 
         // Next batch. Likely crashing in the service and being caught...
         //TestService.Test().MeshDeviceConnectPIN();

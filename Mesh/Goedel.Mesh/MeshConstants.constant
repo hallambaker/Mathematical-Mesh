@@ -81,6 +81,16 @@ File CatalogLabels
 
 File SpoolLabels
 
+File MessageState
+	Enum StateSpoolMessage "Inbound spool message state"
+		Code Initial "Initial state (unread)"
+		Code Read "Message was read"
+		Code Received "Message was sent and receipt acknowledged"
+		Code Refused "Message was refused"
+		Code Sent "Message was sent"
+		Code Closed "Transaction associated with the message was completed"
+		Code Deleted "Transaction associated with the message was completed"
+
 File MessageStateInbound
 	Enum StateSpoolInbound "Inbound spool message state"
 		Code Initial "Initial state (unread)"

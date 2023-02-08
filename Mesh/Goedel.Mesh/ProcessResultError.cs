@@ -62,17 +62,17 @@ public partial class ProcessResult {
     /// <summary>The message that caused this result</summary>
     public virtual Message RequestMessage { get; }
 
-    /// <summary>The message that caused this result</summary>
-    public virtual string InboundMessageId => RequestMessage.MessageId;
+    ///// <summary>The message that caused this result</summary>
+    //public virtual string InboundMessageId => RequestMessage.MessageId;
 
-    /// <summary>The new message status (<see cref="MessageStatus.None"/> if unchanged)</summary>
-    public virtual MessageStatus InboundMessageStatus { get; set; } = MessageStatus.None;
+    ///// <summary>The new message status (<see cref="MessageStatus.None"/> if unchanged)</summary>
+    //public virtual StateSpoolMessage InboundMessageStatus { get; set; } = StateSpoolMessage.Initial;
 
     /// <summary>The message that caused this result</summary>
     public virtual MessagePin MessagePin { get; }
 
-    /// <summary>The message that caused this result</summary>
-    public virtual string MessagePinId => MessagePin?.MessageId;
+    ///// <summary>The message that caused this result</summary>
+    //public virtual string MessagePinId => MessagePin?.MessageId;
 
     /// <summary>
     /// Deserialization constructor.

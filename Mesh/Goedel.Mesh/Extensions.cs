@@ -34,6 +34,20 @@ public static partial class Extensions {
     //delegate void ToBuilderDelegate (StringBuilder builder, int indent);
 
     /// <summary>
+    /// Returns <code>true</code> if <paramref name="spoolMessageState"/> represents an open
+    /// state, otherwise false.
+    /// </summary>
+    /// <param name="spoolMessageState">The state to evaluate.</param>
+    /// <returns>Return value is <code>true</code> if <paramref name="spoolMessageState"/> represents an open
+    /// state, otherwise false.</returns>
+    public static bool IsOpen(this StateSpoolMessage spoolMessageState) =>
+        spoolMessageState switch {
+            StateSpoolMessage.Read => true,
+            StateSpoolMessage.Initial => true,
+            _ => false
+            };
+
+    /// <summary>
     /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
     /// a leading indent of <paramref name="indent"/> units.
     /// </summary>

@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 07-Feb-23 12:22:59 AM
+//  This file was automatically generated at 08-Feb-23 5:35:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1116,10 +1116,10 @@ public  static partial class EventExtensions {
         _ActivatePrivate = LoggerMessage.Define<string,string,MeshActor,MeshKeyOperation,string>(
             LogLevel.Trace, new EventId(101, nameof(_ActivatePrivate)),
             "Activate Seed {Seed} + Key {Base} for {Actor}-{Operation} = {Result}");
-        _InternMessage = LoggerMessage.Define<string,string,MessageStatus>(
+        _InternMessage = LoggerMessage.Define<string,string,StateSpoolMessage>(
             LogLevel.Trace, new EventId(102, nameof(_InternMessage)),
             "Intern EnvelopeID {EnvelopeID} Message {Message} Status {Status}");
-        _GotMessage = LoggerMessage.Define<string,string,MessageStatus>(
+        _GotMessage = LoggerMessage.Define<string,string,StateSpoolMessage>(
             LogLevel.Trace, new EventId(103, nameof(_GotMessage)),
             "Got Message type {MessageType} Message {Message} Status {Status}");
         _AddAccessCapability = LoggerMessage.Define<string>(
@@ -1188,7 +1188,7 @@ public  static partial class EventExtensions {
         }
 
 
-    private static readonly Action<ILogger, string, string, MessageStatus, Exception> _InternMessage;
+    private static readonly Action<ILogger, string, string, StateSpoolMessage, Exception> _InternMessage;
 
 	/// <summary>
     /// Write an event of type InternMessage to <paramref name="logger"/> 
@@ -1202,13 +1202,13 @@ public  static partial class EventExtensions {
 			this ILogger logger,
 			string envelopeId,
 			string messageId,
-			MessageStatus status,
+			StateSpoolMessage status,
 			Exception _exception=null) {
         _InternMessage(logger, envelopeId, messageId, status, _exception);
         }
 
 
-    private static readonly Action<ILogger, string, string, MessageStatus, Exception> _GotMessage;
+    private static readonly Action<ILogger, string, string, StateSpoolMessage, Exception> _GotMessage;
 
 	/// <summary>
     /// Write an event of type GotMessage to <paramref name="logger"/> 
@@ -1222,7 +1222,7 @@ public  static partial class EventExtensions {
 			this ILogger logger,
 			string messageType,
 			string messageId,
-			MessageStatus status,
+			StateSpoolMessage status,
 			Exception _exception=null) {
         _GotMessage(logger, messageType, messageId, status, _exception);
         }

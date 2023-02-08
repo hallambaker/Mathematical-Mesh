@@ -38,9 +38,7 @@ public class SequenceList : Sequence {
     public SequenceList() {
         }
 
-    SequenceIndexEntry IndexedFromStart { get; set; } = null;
 
-    SequenceIndexEntry IndexedFromEnd { get; set; } = null;
 
 
 
@@ -55,7 +53,7 @@ public class SequenceList : Sequence {
         }
 
     ///<inheritdoc/>
-    public override SequenceIndexEntry Frame(long index) {
+    public override SequenceIndexEntry Frame(long index, bool skip = true) {
         if (FrameIndexToEntry.TryGetValue(index, out var entry)) {
             return entry;
             }

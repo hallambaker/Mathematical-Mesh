@@ -51,19 +51,22 @@ public enum ItemResult {
     Match = 0,
 
     ///<summary>The item is not a match for the search criteria.</summary> 
-    NotMatch = 1 << 1,
+    NotMatch = 1 << 0,
 
     ///<summary>The item was added to the sequence before the search interval began.</summary> 
-    Earlier = 1 << 2,
+    Earlier = 1 << 1,
 
     ///<summary>The item was added to the sequence after the search interval ended.</summary> 
-    Later = 1 << 3,
+    Later = 1 << 2,
 
-    ///<summary>The item was deleted.</summary> 
-    Deleted = 1 << 4,
+    ///<summary>The item is not a match on account of its deletion status.</summary> 
+    Deleted = 1 << 3,
 
-    ///<summary>The item was erased.</summary> 
-    Erased = 1 << 5
+    ///<summary>The item is not a match on account of its erasure status.</summary> 
+    Erased = 1 << 4,
+
+    ///<summary>The item is not a match on account of its status.</summary> 
+    Status = 1 << 5
     }
 
 
@@ -141,14 +144,17 @@ public partial class SequenceIndexEntry {
     public bool HasPayload => DataLength > 0;
 
     ///<summary>The decoded JSONObject</summary>
-    public JsonObject JsonObject { get; set; }
+    public virtual JsonObject JsonObject {
+        get => jsonObject;
+        set => jsonObject = value; }
+    JsonObject jsonObject = null;
 
     ///<summary>Convenience accessor for the envelope identifier.</summary> 
     public string EnvelopeId => Header.EnvelopeId;
 
     ///<summary>The sequenced envelope is unread in the case of a message in a spool or
     ///not deleted or overwritten in the case of an entry in a catalog.</summary> 
-    public virtual bool IsOpen => true;
+    public virtual bool IsOpen { get; set; } = true;
 
     ///<summary>The sequenced envelope has been deleted.</summary> 
     public virtual bool IsDeleted => false;
@@ -208,6 +214,16 @@ public partial class SequenceIndexEntry {
                 factory(prototype.Sequence, prototype.FramePosition, prototype.FrameLength,
                         prototype.DataPosition, prototype.DataLength,
                         prototype.Header, prototype.Trailer, prototype.JsonObject);
+
+
+    /// <summary>
+    /// Method called to intern an element on the underlying store. May be overriden in
+    /// subclasses to perform store specific tasks.
+    /// </summary>
+    public virtual void Intern() {
+        }
+
+
 
     /// <summary>
     /// Return the frame payload.
@@ -382,16 +398,14 @@ public partial class SequenceIndexEntry {
     /// </summary>
     /// <param name="sequence">The Sequence that was indexed.</param>
     /// <returns>The deserialized object.</returns>
-    public JsonObject GetJSONObject(Sequence sequence) {
-        if (JsonObject != null) {
-            return JsonObject;
-            }
-        if (IsEncrypted & !sequence.Decrypt) {
-            return null;
+    /// <exception cref="NotInDecryptionMode">The envelope could not be decrypted 
+    /// because the sequence was not opened in decryption mode.</exception>
+    public JsonObject GetJSONObject() {
+        if (IsEncrypted & !Sequence.Decrypt) {
+            throw new NotInDecryptionMode();
             }
 
-
-        var bytes = GetPayload(sequence, sequence.KeyLocate);
+        var bytes = GetPayload(Sequence, Sequence.KeyLocate);
         //var text = bytes.ToUTF8();
         return bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
 

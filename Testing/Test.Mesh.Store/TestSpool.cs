@@ -118,39 +118,39 @@ public partial class StoreTests {
 
     [Fact]
     public void TestSpoolSingle() {
-        var id = UDF.Nonce();
+        var message_id = UDF.Nonce();
 
         var directory = TestEnvironment.Path;
         var file = "TestSpoolSingle";
 
         var signingKey = KeyPair.Factory(CryptoAlgorithmId.Ed448, KeySecurity.Exportable,
             KeyCollection);
-
+        var message = MakeMessage(message_id, signingKey);
 
         // create spool
         var spool = new Spool(directory, file, keyCollection: KeyCollection);
+        var envelope_id = message.EnvelopeId;
 
-
-        CheckEntry(directory, file, spool, id).TestNull();
+        CheckEntry(directory, file, spool, message_id).TestNull();
 
         // add element
-        var entry1 = spool.AppendDirect(MakeMessage(id, signingKey));
+        var entry1 = spool.AppendDirect(message);
 
-        var entry = CheckEntry(directory, file, spool, id);
+        var entry = CheckEntry(directory, file, spool, message_id);
         entry.TestNotNull();
         entry.IsOpen.TestTrue();
 
         // mark element closed
-        SetStatus(spool, id, MessageStatus.Closed, signingKey);
+        SetStatus(spool, message_id, StateSpoolMessage.Closed, signingKey);
 
-        var entry2 = CheckEntry(directory, file, spool, id);
+        var entry2 = CheckEntry(directory, file, spool, message_id);
         entry2.TestNotNull();
         entry2.IsOpen.TestFalse();
 
         // mark element open (again)
-        SetStatus(spool, id, MessageStatus.Open, signingKey);
+        SetStatus(spool, message_id, StateSpoolMessage.Initial, signingKey);
 
-        var entry3 = CheckEntry(directory, file, spool, id);
+        var entry3 = CheckEntry(directory, file, spool, message_id);
         entry3.TestNotNull();
         entry3.IsOpen.TestTrue();
 
@@ -159,12 +159,13 @@ public partial class StoreTests {
 
     static DareEnvelope MakeMessage(string id, KeyPair signingKey=null) {
         var message = new Message() {
-            Sender = id
+            Sender = id,
+            MessageId = id
             };
         return message.Envelope(signingKey);
         }
 
-    static MessageComplete SetStatus(Spool spool, string id, MessageStatus messageStatus, KeyPair signingKey) {
+    static MessageComplete SetStatus(Spool spool, string id, StateSpoolMessage messageStatus, KeyPair signingKey) {
 
         var message = new MessageComplete() {
 

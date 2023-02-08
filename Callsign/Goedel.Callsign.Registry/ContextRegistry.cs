@@ -263,7 +263,7 @@ public class ContextRegistry : ContextAccount {
             }
 
         transactRequest.OutboundMessage(registrationRequest.Sender, registrationResponse);
-        transactRequest.LocalComplete(MessageStatus.Closed, registrationRequest, registrationResponse);
+        transactRequest.LocalComplete(StateSpoolMessage.Closed, registrationRequest, registrationResponse);
 
         var responseTransaction = Transact(transactRequest);
 

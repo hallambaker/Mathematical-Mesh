@@ -32,22 +32,11 @@ public partial class Reference {
 
     ///<summary>Accessor for the <see cref="Relationship"/> property
     ///as a <see cref="MessageStatus"/> property.</summary>
-    public MessageStatus MessageStatus {
-        get => Relationship switch {
-            "Open" => MessageStatus.Open,
-            "Closed" => MessageStatus.Closed,
-            "Read" => MessageStatus.Read,
-            "Unread" => MessageStatus.Unread,
-            _ => MessageStatus.None
-            };
-        set => Relationship = value switch {
-            MessageStatus.Open => "Open",
-            MessageStatus.Closed => "Closed",
-            MessageStatus.Read => "Read",
-            MessageStatus.Unread => "Unread",
-            _ => "Unknown"
-            };
+    public StateSpoolMessage MessageStatus {
+        get => Relationship.ToStateSpoolMessage();
+        set => Relationship = value.ToLabel();
         }
+
 
     }
 
@@ -61,7 +50,7 @@ public partial class Message {
         new(DareEnvelope);
 
     ///<summary>The message status.</summary>
-    public MessageStatus MessageStatus;
+    public StateSpoolMessage MessageStatus;
 
 
 
@@ -196,7 +185,7 @@ public partial class MessageValidated {
         if (messagePin == null) {
             return ProcessingResult.PinInvalid;
             }
-        if ((messagePin.MessageStatus & MessageStatus.Closed) == MessageStatus.Closed) {
+        if (!messagePin.MessageStatus.IsOpen()) {
             return ProcessingResult.PinUsed;
             }
         if (messagePin.Expires != null && messagePin.Expires < System.DateTime.Now) {
@@ -283,7 +272,7 @@ public partial class MessagePin {
         if (messagePin == null) {
             return ProcessingResult.PinInvalid;
             }
-        if ((messagePin.MessageStatus & MessageStatus.Closed) == MessageStatus.Closed) {
+        if (!messagePin.MessageStatus.IsOpen()) {
             return ProcessingResult.PinUsed;
             }
         if (messagePin.Expires != null && messagePin.Expires < System.DateTime.Now) {

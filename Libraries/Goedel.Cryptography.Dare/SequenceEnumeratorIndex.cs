@@ -36,13 +36,17 @@ namespace Goedel.Cryptography.Dare;
 public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumerable<SequenceIndexEntry> {
     Sequence Sequence { get; }
 
-    long First { get; }
 
-    long Last { get; }
+
+    SequenceIndexEntry Start { get; }
+
+    long Count { get; set; }
+
+    bool Reverse { get; }
+
+    FilterIndexDelegate Filter { get; }
 
     SequenceIndexEntry Next { get; set; }
-
-
 
     ///<inheritdoc/>
     public SequenceIndexEntry Current { get; private set; }
@@ -55,7 +59,35 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
 
     object IEnumerator.Current => Current;
 
+    /// <summary>
+    /// Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
+    /// with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
+    /// results are returned from the last match first.
+    /// </summary>
+    /// <param name="sequence">The sequence to enumerate.</param>
+    /// <param name="start">The starting point for the enumeration. If it matches, this will 
+    /// be the first result returned.</param>
+    /// <param name="reverse">If true, return results in the reverse order.</param>
+    /// <param name="filter">If not null, specifies a filtering function on the 
+    /// store entries.</param>
+    /// <param name="skip">If true, the search MAY optimize search time by performing a binary
+    /// search on the records. Note however that since this will cause entry update entries to
+    /// be skipped, the status might be affected by one or more skipped records.</param>
+    /// <param name="count">Maximum number of records to return.</param>
+    public SequenceEnumeratorIndex(
+                Sequence sequence,
+                SequenceIndexEntry start,
+                bool reverse = true,
+                long count = -1,
+                FilterIndexDelegate filter = null) {
+        Sequence = sequence;
+        Start = start;
+        Reverse = reverse;
+        Count = count;
+        Filter = filter;
 
+        Reset();
+        }
 
 
     /// <summary>
@@ -75,16 +107,21 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
     /// <param name="count">Maximum number of records to return.</param>
     public SequenceEnumeratorIndex(
                 Sequence sequence,
-                long start,
+                long start = -1,
                 bool reverse = true,
                 long count = -1,
                 FilterIndexDelegate filter = null,
-                bool skip = false) {
-        Sequence = sequence;
-
-        throw new NYI();
+                bool skip = false) : this (sequence, GetStart (sequence, reverse, start, skip),
+                    reverse, count, filter) {
         }
 
+
+    static SequenceIndexEntry GetStart(Sequence sequence, bool reverse, long start, bool skip) {
+        if (start >= 0) {
+            return sequence.Frame(start, skip);
+            }
+        return reverse ? sequence.SequenceIndexEntryLast : sequence.SequenceIndexEntryFirst;
+        }
 
     /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -100,38 +137,46 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
     /// <returns><code>true</code> if the enumerator was successfully advanced to the next element; 
     /// <code>false</code> if the enumerator has passed the end of the collection.</returns>
     public bool MoveNext() {
-        Current = (Next is not null) && (Last < 0 | Next.Index < Last) ? Next : null;
-        if (Current is not null) {
-            Next = Sequence.Next(Next);
+        if (Count <= 0 | Next is null)
+            {
+            return false;
             }
-        return Current != null;
-        }
 
-    bool Forward() {
-        Current = (Next is not null) && (Last < 0 | Next.Index < Last) ? Next : null;
-        if (Current is not null) {
-            Next = Sequence.Next(Next);
+        Current = Next;
+        while (Current != null) {
+            Next = Reverse ? Sequence.Previous(Next) : Sequence.Next(Next);
+
+            // if we have no filter, we always have a match
+            if (Filter == null) {
+                Count--;
+                return true;
+                }
+
+            // check for match on filter
+            var filter = Filter(Current);
+            if ((filter & ItemResult.NotMatch) == ItemResult.Match) {
+                Count--;
+                return true;
+                }
+
+            // Check to see if we have exceeded the search interval.
+            if ((Reverse && (filter & ItemResult.Earlier) == ItemResult.Earlier) |
+                    (!Reverse && (filter & ItemResult.Later) == ItemResult.Later) ){
+                return false;
+                }
+
+            // Try again with the next item
+            Current = Next;
             }
-        return Current != null;
+        return false;
         }
-
-    bool Reverse() {
-
-        Current = (Next is not null) && (Last < 0 | Next.Index < Last) ? Next : null;
-        if (Current is not null) {
-            Next = Sequence.Previous(Next);
-            }
-        return Current != null;
-
-
-        }
-
 
     /// <summary>
     /// Sets the enumerator to its initial position, which is before the first element in the collection.
     /// </summary>
     public void Reset() {
-        Next = Sequence.Frame(First);
+        Next = Start;
+
         }
     }
 

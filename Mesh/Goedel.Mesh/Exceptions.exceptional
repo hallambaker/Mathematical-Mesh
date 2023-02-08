@@ -99,12 +99,12 @@ Namespace Goedel.Mesh
 	Trace 102 InternMessage "Intern EnvelopeID {EnvelopeID} Message {Message} Status {Status}"
 		envelopeId string "Envelope identifier"
 		messageId string "Message identifier"
-		status MessageStatus "Message status"
+		status StateSpoolMessage "Message status"
 
 	Trace 103 GotMessage "Got Message type {MessageType} Message {Message} Status {Status}"
 		messageType string "MessageType"
 		messageId string "Message identifier"
-		status MessageStatus "Message status"
+		status StateSpoolMessage "Message status"
 
 
 	Trace 104 AddAccessCapability "Add accessCapability {Key}"

@@ -4954,41 +4954,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Mesh.MessageStatus">
-            <summary>
-            Status values for Mesh Messages
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MessageStatus.Unread">
-            <summary>Message is unread.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MessageStatus.Read">
-            <summary>Message has been read.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MessageStatus.Unexpired">
-            <summary>Message has expired</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MessageStatus.Expired">
-            <summary>Message has expired</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MessageStatus.Open">
-            <summary>Message is open.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MessageStatus.Closed">
-            <summary>Message is closed.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MessageStatus.Initial">
-            <summary>Initial Message Status</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MessageStatus.Active">
-            <summary>Initial Message Status</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MessageStatus.All">
-            <summary>All messages.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.MessageStatus.None">
-            <summary>No messages.</summary>
-        </member>
         <member name="T:Goedel.Mesh.MeshConstants">
             <summary>
             Collected constants used in the Mathematical Mesh
@@ -5126,6 +5091,43 @@
             <returns>The enumeration value.</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshConstants.ToLabel(Goedel.Mesh.StoreType)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolMessageInitialTag">
+            <summary>Jose enumeration tag for StateSpoolMessage.Initial</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolMessageReadTag">
+            <summary>Jose enumeration tag for StateSpoolMessage.Read</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolMessageReceivedTag">
+            <summary>Jose enumeration tag for StateSpoolMessage.Received</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolMessageRefusedTag">
+            <summary>Jose enumeration tag for StateSpoolMessage.Refused</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolMessageSentTag">
+            <summary>Jose enumeration tag for StateSpoolMessage.Sent</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolMessageClosedTag">
+            <summary>Jose enumeration tag for StateSpoolMessage.Closed</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StateSpoolMessageDeletedTag">
+            <summary>Jose enumeration tag for StateSpoolMessage.Deleted</summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshConstants.ToStateSpoolMessage(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshConstants.ToLabel(Goedel.Mesh.StateSpoolMessage)">
             <summary>
             Convert the enumerated value <paramref name="data"/> to the corresponding string
             value.
@@ -6414,7 +6416,7 @@
             <param name="result">Result key</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
-        <member name="M:Goedel.Mesh.EventExtensions.InternMessage(Microsoft.Extensions.Logging.ILogger,System.String,System.String,Goedel.Mesh.MessageStatus,System.Exception)">
+        <member name="M:Goedel.Mesh.EventExtensions.InternMessage(Microsoft.Extensions.Logging.ILogger,System.String,System.String,Goedel.Mesh.StateSpoolMessage,System.Exception)">
             <summary>
             Write an event of type InternMessage to <paramref name="logger"/> 
             </summary>
@@ -6424,7 +6426,7 @@
             <param name="status">Message status</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
-        <member name="M:Goedel.Mesh.EventExtensions.GotMessage(Microsoft.Extensions.Logging.ILogger,System.String,System.String,Goedel.Mesh.MessageStatus,System.Exception)">
+        <member name="M:Goedel.Mesh.EventExtensions.GotMessage(Microsoft.Extensions.Logging.ILogger,System.String,System.String,Goedel.Mesh.StateSpoolMessage,System.Exception)">
             <summary>
             Write an event of type GotMessage to <paramref name="logger"/> 
             </summary>
@@ -6481,6 +6483,15 @@
             <summary>
             Static extensions class.
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.IsOpen(Goedel.Mesh.StateSpoolMessage)">
+            <summary>
+            Returns <code>true</code> if <paramref name="spoolMessageState"/> represents an open
+            state, otherwise false.
+            </summary>
+            <param name="spoolMessageState">The state to evaluate.</param>
+            <returns>Return value is <code>true</code> if <paramref name="spoolMessageState"/> represents an open
+            state, otherwise false.</returns>
         </member>
         <member name="M:Goedel.Mesh.Extensions.ToBuilder(Goedel.Mesh.MeshItem,System.Text.StringBuilder,System.Int32,System.String)">
             <summary>
@@ -6903,6 +6914,33 @@
         </member>
         <member name="F:Goedel.Mesh.StoreType.Task">
             <summary>Task Catalog</summary>
+        </member>
+        <member name="T:Goedel.Mesh.StateSpoolMessage">
+            <summary>Inbound spool message state</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StateSpoolMessage.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StateSpoolMessage.Initial">
+            <summary>Initial state (unread)</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StateSpoolMessage.Read">
+            <summary>Message was read</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StateSpoolMessage.Received">
+            <summary>Message was sent and receipt acknowledged</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StateSpoolMessage.Refused">
+            <summary>Message was refused</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StateSpoolMessage.Sent">
+            <summary>Message was sent</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StateSpoolMessage.Closed">
+            <summary>Transaction associated with the message was completed</summary>
+        </member>
+        <member name="F:Goedel.Mesh.StateSpoolMessage.Deleted">
+            <summary>Transaction associated with the message was completed</summary>
         </member>
         <member name="T:Goedel.Mesh.StateSpoolInbound">
             <summary>Inbound spool message state</summary>
@@ -8283,16 +8321,7 @@
         <member name="P:Goedel.Mesh.ProcessResult.RequestMessage">
             <summary>The message that caused this result</summary>
         </member>
-        <member name="P:Goedel.Mesh.ProcessResult.InboundMessageId">
-            <summary>The message that caused this result</summary>
-        </member>
-        <member name="P:Goedel.Mesh.ProcessResult.InboundMessageStatus">
-            <summary>The new message status (<see cref="F:Goedel.Mesh.MessageStatus.None"/> if unchanged)</summary>
-        </member>
         <member name="P:Goedel.Mesh.ProcessResult.MessagePin">
-            <summary>The message that caused this result</summary>
-        </member>
-        <member name="P:Goedel.Mesh.ProcessResult.MessagePinId">
             <summary>The message that caused this result</summary>
         </member>
         <member name="M:Goedel.Mesh.ProcessResult.#ctor">
@@ -13140,9 +13169,6 @@
             <returns>Envelope containing the signed profile. Also updates the property
             <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/></returns>
         </member>
-        <member name="F:Goedel.Mesh.MeshItem.Status">
-            <summary>Reports the status of the item. </summary>
-        </member>
         <member name="M:Goedel.Mesh.MeshItem.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
@@ -15248,14 +15274,45 @@
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
+        <member name="T:Goedel.Mesh.ISpoolItem">
+            <summary>
+            An index entry or a placeholder for one that has not been read yet.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.ISpoolItem.MessageStatus">
             <summary>The message status value.</summary>
         </member>
-        <member name="P:Goedel.Mesh.SpoolPlaceholder.References">
+        <member name="P:Goedel.Mesh.ISpoolItem.References">
             <summary>The list of references to the message, most recently added first.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ISpoolItem.AddReference(Goedel.Mesh.Reference,System.Int64)">
+            <summary>Add a reference entry.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.SpoolPlaceholder">
+            <summary>Placehoolder for a referenced but not yet read item.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.SpoolPlaceholder.References">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.SpoolPlaceholder.MessageStatus">
             <summary>The message status value.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolPlaceholder.#ctor(Goedel.Mesh.Reference)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="reference"></param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolPlaceholder.AddReference(Goedel.Mesh.Reference,System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolIndexEntry">
+            <summary>
+            Index entry for a spool element.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolIndexEntry.Spool">
+            <summary>The underlying spool.</summary> 
         </member>
         <member name="P:Goedel.Mesh.SpoolIndexEntry.References">
             <summary>The list of references to the message, most recently added first.</summary>
@@ -15265,6 +15322,15 @@
         </member>
         <member name="P:Goedel.Mesh.SpoolIndexEntry.MessageStatus">
             <summary>The message status value.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolIndexEntry.IsOpen">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolIndexEntry.JsonObject">
+            <summary>The decoded JSONObject</summary>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolIndexEntry.messageStatusIndex">
+            <summary>Index of the frame in which the status was set;</summary> 
         </member>
         <member name="P:Goedel.Mesh.SpoolIndexEntry.MessageId">
             <summary>Convenience accessor for the message identifier.</summary> 
@@ -15278,7 +15344,7 @@
             </summary>
             <inheritdoc cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>
         </member>
-        <member name="M:Goedel.Mesh.SpoolIndexEntry.AddReference(Goedel.Mesh.Reference,System.Boolean)">
+        <member name="M:Goedel.Mesh.SpoolIndexEntry.AddReference(Goedel.Mesh.Reference,System.Int64)">
             <summary>
             Add a reference to this entry. The reference will cause the message status to be 
             updated if either this is the first reference to be added or the 
@@ -15286,6 +15352,9 @@
             </summary>
             <param name="reference">The reference to add.</param>
             <param name="force">Force updating of the status.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolIndexEntry.Intern">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.StoreFactoryDelegate">
             <summary>
@@ -15372,6 +15441,9 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
+            <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
+            items in the sequence.</param>
         </member>
         <member name="M:Goedel.Mesh.Store.Append(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.String)">
             <summary>

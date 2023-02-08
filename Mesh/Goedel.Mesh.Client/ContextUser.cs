@@ -1179,7 +1179,7 @@ public partial class ContextUser : ContextAccount {
         var catalogContact = transactRequest.GetCatalogContact();
 
         transactRequest.CatalogUpdate(catalogContact, request.Contact);
-        transactRequest.InboundComplete(MessageStatus.Closed, request);
+        transactRequest.InboundComplete(StateSpoolMessage.Closed, request);
         transactRequest.Transact();
 
         return new ResultGroupInvitation(request);
@@ -1262,12 +1262,12 @@ public partial class ContextUser : ContextAccount {
 
 
 
-        transactRequest.InboundComplete(MessageStatus.Closed, request, respondConnection);
+        transactRequest.InboundComplete(StateSpoolMessage.Closed, request, respondConnection);
         transactRequest.LocalMessage(respondConnection, deviceEncrypt);
 
         // Mark the pin code as having been used.
         if (messagePin != null) {
-            transactRequest.LocalComplete(MessageStatus.Closed,
+            transactRequest.LocalComplete(StateSpoolMessage.Closed,
                 messagePin, respondConnection);
             }
 
@@ -1410,7 +1410,7 @@ public partial class ContextUser : ContextAccount {
         // Do nothing if the request is rejected.
         if (!accept) {
             var transact = TransactBegin();
-            transact.InboundComplete(MessageStatus.Closed, requestContact);
+            transact.InboundComplete(StateSpoolMessage.Closed, requestContact);
             transact.Transact();
 
             return new ResultMessageContact(requestContact, null);
@@ -1425,7 +1425,7 @@ public partial class ContextUser : ContextAccount {
             var catalog = transact.GetCatalogContact();
             
             transact.CatalogUpdate(catalog, cataloged);
-            transact.InboundComplete(MessageStatus.Closed, requestContact);
+            transact.InboundComplete(StateSpoolMessage.Closed, requestContact);
             transact.Transact();
             }
 
