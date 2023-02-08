@@ -53,7 +53,7 @@ public delegate Store StoreFactoryDelegate(
 /// Base class for managing Mesh stores (catalogs, spools).
 /// </summary>
 /// 
-public class Store : Disposable {
+public class Store : Disposable, IInternSequenceIndexEntry {
     ///<summary>The default name for the sequence</summary>
     public virtual string SequenceDefault => throw new NYI();
 
@@ -159,7 +159,7 @@ public class Store : Disposable {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null,
-                    InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate=null,
+                    //InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate=null,
                     SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate=null) {
 
         bitmask ??= MakeMask();
@@ -177,7 +177,7 @@ public class Store : Disposable {
             decrypt: decrypt,
             create: create,
             bitmask: bitmask,
-            internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
+            //internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
             sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate ?? SpoolIndexEntry.Factory,
             store:this
             );
@@ -194,6 +194,13 @@ public class Store : Disposable {
         bitmask[index / 8] = (byte)(0x1 << (index & 0b0111));
         return bitmask;
         }
+
+    ///<inheritdoc/>
+    public virtual void Intern(
+                SequenceIndexEntry indexEntry) {
+        }
+
+
 
     /// <summary>
     /// Append the list of envelopes <paramref name="envelopes"/> to the

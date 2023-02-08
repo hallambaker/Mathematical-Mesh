@@ -73,7 +73,7 @@ partial class Program {
 
 
 
-        TestDareArchive.Test().TestArchiveMulti();
+        TestPersist.Test().TestPersistenceStoreAdd();
         //TestPlatform.Test().TestWritePEMRSA();
 
         // Most likely a faulty direct append issue going on...

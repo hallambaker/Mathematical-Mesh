@@ -93,13 +93,14 @@ public delegate SequenceIndexEntry SequenceIndexEntryFactoryDelegate(
             DareTrailer trailer = null,
             JsonObject jsonObject = null);
 
-///<summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
-public delegate void InternSequenceIndexEntryDelegate(
-        SequenceIndexEntry sequenceIndexEntry);
+/////<summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
+//public delegate void InternSequenceIndexEntryDelegate(
+//        SequenceIndexEntry sequenceIndexEntry);
 
 ///<summary>Delegate called to evaluate an index entry and return a result accordning 
 ///to it's set of match criteria.</summary> 
 public delegate ItemResult FilterIndexDelegate(SequenceIndexEntry sequenceIndexEntry);
+
 
 /// <summary>
 /// Sequence index with the decoded head and tail and extent information for

@@ -2120,6 +2120,9 @@
             <param name="create">If true, create a container if it does not already exist.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
+        <member name="M:Goedel.Mesh.Catalog`1.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.Catalog`1.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
             <summary>
             Append the envelopes <paramref name="envelope"/> to the
@@ -15344,6 +15347,12 @@
             </summary>
             <inheritdoc cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>
         </member>
+        <member name="M:Goedel.Mesh.SpoolIndexEntry.#ctor(Goedel.Cryptography.Dare.Sequence)">
+            <summary>
+            Constructor returning a in instance bound to the sequence <paramref name="sequence"/>
+            </summary>
+            <param name="sequence">The sequence the index is bound to.</param>
+        </member>
         <member name="M:Goedel.Mesh.SpoolIndexEntry.AddReference(Goedel.Mesh.Reference,System.Int64)">
             <summary>
             Add a reference to this entry. The reference will cause the message status to be 
@@ -15428,7 +15437,7 @@
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
-        <member name="M:Goedel.Mesh.Store.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[],Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate)">
+        <member name="M:Goedel.Mesh.Store.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[],Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate)">
             <summary>
             The constructor
             </summary>
@@ -15444,6 +15453,9 @@
             <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
             <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
             items in the sequence.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Store.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Store.Append(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.String)">
             <summary>

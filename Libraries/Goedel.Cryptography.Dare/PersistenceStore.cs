@@ -25,6 +25,9 @@ using Goedel.Cryptography.Jose;
 namespace Goedel.Cryptography.Dare;
 
 
+
+
+
 /// <summary>
 /// Enumerator over the objects in a persistence store.
 /// </summary>
@@ -75,7 +78,7 @@ public class PersistenceStoreEnumerateObject<T> : IEnumerator<T>, IEnumerable<T>
 /// <summary>
 /// Persistence store based on a Sequence interface.
 /// </summary>
-public class PersistenceStore : Disposable, IPersistenceStoreWrite {
+public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSequenceIndexEntry {
 
     // Test: Addition of signed frames to persistence stores (is failing)
 
@@ -161,18 +164,23 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite {
                 SequenceType sequenceType = SequenceType.Chain,
                 DarePolicy policy = null,
                 DataEncoding dataEncoding = DataEncoding.JSON,
-                IKeyLocate keyCollection = null,
+                IKeyLocate keyLocate = null,
                 bool read = true,
-                bool decrypt = true) : this(
-                    Sequence.Open(
+                bool decrypt = true) {
+        Sequence = Sequence.Open(
                         fileName,
                         fileStatus,
-                        keyCollection,
+                        keyLocate,
                         sequenceType,
                         policy,
                         contentType,
-                        decrypt
-                        ), keyCollection, read) { }
+                        decrypt,
+                        sequenceIndexEntryFactoryDelegate: PersistentIndexEntry.Factory, store: this
+                        );
+        if (read & Sequence.Length > 0) {
+            Read(keyLocate);
+            }
+        } 
 
 
     /// <summary>
@@ -183,23 +191,25 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite {
     /// <param name="keyLocate">The key collection to be used to resolve keys</param>
     public PersistenceStore(Sequence sequence, IKeyLocate keyLocate, bool read = true) {
         sequence.AssertNotNull(NoAvailableDecryptionKey.Throw);
-
         Sequence = sequence;
-
-
-        foreach (var x in ObjectIndex) {
-            
-            }
-
-        // Barfing in the docs because we do not have the key required to decrypt the Sequence
 
         if (read & sequence.Length > 0) {
             Read(keyLocate);
             }
         }
 
+
+
+
+    ///<inheritdoc/>
     public void Intern(
                 SequenceIndexEntry indexEntry) {
+
+        if (!indexEntry.HasPayload) { // no payload means no object to persist.
+            return;
+            }
+
+
         "Here we need to update the dictionaries".TaskFunctionality(true);
         
         }

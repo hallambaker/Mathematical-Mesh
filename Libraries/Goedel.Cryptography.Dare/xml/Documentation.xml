@@ -4719,6 +4719,9 @@
             <param name="read"></param>
             <param name="keyLocate">The key collection to be used to resolve keys</param>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.FastRead">
             <summary>
             Read the Sequence contents in fast mode generating indexes only without reading contents.
@@ -4874,6 +4877,24 @@
             Base class for transactions.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.PersistentIndexEntry.PersistenceStore">
+            <summary>The underlying spool.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistentIndexEntry.Factory(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Int64,System.Int64,System.Int64,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.JsonObject)">
+            <summary>
+            Factory method implementing <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>.
+            </summary>
+            <inheritdoc cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistentIndexEntry.#ctor(Goedel.Cryptography.Dare.Sequence)">
+            <summary>
+            Constructor returning a in instance bound to the sequence <paramref name="sequence"/>
+            </summary>
+            <param name="sequence">The sequence the index is bound to.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistentIndexEntry.Intern">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.IndexType">
             <summary>File index modes</summary>
         </member>
@@ -5013,12 +5034,9 @@
         <member name="P:Goedel.Cryptography.Dare.Sequence.SequenceIndexEntryFactoryDelegate">
             <summary>Delegate called to create a Sequence entry for a catalog or store.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.Dare.Sequence.InternSequenceIndexEntryDelegate">
-            <summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
-        </member>
         <member name="P:Goedel.Cryptography.Dare.Sequence.Store">
             <summary>Context information for use by the 
-            <see cref="P:Goedel.Cryptography.Dare.Sequence.InternSequenceIndexEntryDelegate"/>.</summary> 
+            <see cref="!:InternSequenceIndexEntryDelegate"/>.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.#ctor">
             <summary>
@@ -5068,7 +5086,7 @@
             <param name="reverse">If true, read the Sequence from the end.</param>
             <returns>The enumerator.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Open(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.String,System.Boolean,System.Boolean,System.Byte[],Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,System.Object)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Open(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.String,System.Boolean,System.Boolean,System.Byte[],Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,Goedel.Cryptography.Dare.IInternSequenceIndexEntry)">
             <summary>
             Open or create Sequence according to the setting of FileStatus. The underlying 
             filestreams will be disposed of automatically when the Sequence is disposed.
@@ -5106,7 +5124,7 @@
             The default key collection to use for decryption
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,System.Boolean,System.Object)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,System.Boolean,Goedel.Cryptography.Dare.IInternSequenceIndexEntry)">
             <summary>
             Open an existing Sequence file.
             </summary>
@@ -5118,7 +5136,7 @@
             <param name="store">Context information to be passed in when creating sequence index entries.</param>
             <returns>The Sequence object if found. Otherwise, an exception is thrown.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,System.Boolean,Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,System.Object)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,System.Boolean,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,Goedel.Cryptography.Dare.IInternSequenceIndexEntry)">
             <summary>
             Open an existing Sequence according to the information contained in the next frame to be read.
             </summary>
@@ -5153,7 +5171,7 @@
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileModeException">The file mode specified was not valid.</exception>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.NewSequence(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean,System.Byte[],Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,System.Object)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.NewSequence(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean,System.Byte[],Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,Goedel.Cryptography.Dare.IInternSequenceIndexEntry)">
             <summary>
             Create a new Sequence file of the specified type and write the initial
             data record
@@ -5179,7 +5197,7 @@
             items in the sequence.</param>
             <param name="store">Context information to be passed in when creating sequence index entries.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(Goedel.Cryptography.Dare.JbcdStream,System.Boolean,Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,Goedel.Cryptography.Dare.SequenceType)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(Goedel.Cryptography.Dare.JbcdStream,System.Boolean,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,Goedel.Cryptography.Dare.SequenceType)">
             <summary>
             Create a new Sequence file of the specified type and write the initial
             data record
@@ -6105,9 +6123,6 @@
             <param name="trailer">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Trailer"/> property.</param>
             <param name="jsonObject">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.JsonObject"/> property.</param>
             <returns></returns>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.InternSequenceIndexEntryDelegate">
-            <summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
         </member>
         <member name="T:Goedel.Cryptography.Dare.FilterIndexDelegate">
             <summary>Delegate called to evaluate an index entry and return a result accordning 

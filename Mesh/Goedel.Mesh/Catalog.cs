@@ -100,7 +100,8 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
                 bool create = true,
                 byte[] bitmask = null) :
             base(directory, containerName, policy, cryptoParameters, keyCollection, 
-                decrypt: decrypt, create: create, bitmask: bitmask) {
+                decrypt: decrypt, create: create, bitmask: bitmask,
+                sequenceIndexEntryFactoryDelegate: PersistentIndexEntry.Factory) {
 
         if (!create & Sequence == null) {
             return;
@@ -118,17 +119,10 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
 
         }
 
-    static void InternSequenceIndexEntry(
-                    SequenceIndexEntry sequenceIndexEntry) {
-        var store = sequenceIndexEntry.Sequence.Store as Catalog<T>;
-        store.Intern(sequenceIndexEntry);
-
-        }
-
-    void Intern(
-            SequenceIndexEntry indexEntry) {
+    ///<inheritdoc/>
+    public override void Intern(
+                SequenceIndexEntry indexEntry) {
         PersistenceStore.Intern(indexEntry);
-
         }
 
 

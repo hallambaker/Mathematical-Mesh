@@ -68,7 +68,11 @@ public class SequenceFrame {
 #endregion
 
 
+public interface IInternSequenceIndexEntry {
 
+    public void Intern(SequenceIndexEntry sequenceIndexEntry);
+
+    }
 
 
 /// <summary>
@@ -189,11 +193,11 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     public SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactoryDelegate { get; init; } = SequenceIndexEntry.Factory;
 
     ///<summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
-    public InternSequenceIndexEntryDelegate InternSequenceIndexEntryDelegate { get; init; } = null;
+    //public InternSequenceIndexEntryDelegate InternSequenceIndexEntryDelegate { get; init; } = null;
 
     ///<summary>Context information for use by the 
     ///<see cref="InternSequenceIndexEntryDelegate"/>.</summary> 
-    public object Store { get; set; }
+    public IInternSequenceIndexEntry Store { get; set; }
 
     #endregion
     #endregion
@@ -315,9 +319,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     bool decrypt = true,
                     bool create = true,
                     byte[] bitmask = null,
-                    InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
+                    //InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
                     SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null,
-                    object store = null) {
+                    IInternSequenceIndexEntry store = null) {
 
         if (!create && !File.Exists(fileName)) {
             return null;
@@ -331,14 +335,14 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                 sequence = NewSequence(jbcdStream, decrypt:decrypt,
                     keyLocate: keyLocate, sequenceType: sequenceType, policy: policy, 
                     contentType: contentType, bitmask: bitmask,
-                    internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
+                    //internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
                     sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate,
                     store:store
                     );
                 }
             else {
                 sequence = OpenExisting(jbcdStream, keyLocate, decrypt: decrypt,
-                    internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
+                    //internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
                     sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate,
                     store: store);
                 }
@@ -396,7 +400,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             string fileName,
             FileStatus fileStatus = FileStatus.Read,
             IKeyLocate keyCollection = null, bool decrypt = true,
-                    object store = null) {
+                    IInternSequenceIndexEntry store = null) {
         var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
 
         var sequence = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt, store:store);
@@ -428,9 +432,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     JbcdStream jbcdStream,
                     IKeyLocate? keyCollection = null, 
                     bool decrypt = true,
-                    InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
+                    //InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
                     SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null,
-                    object store = null) {
+                    IInternSequenceIndexEntry store = null) {
         sequenceIndexEntryFactoryDelegate ??= SequenceIndexEntry.Factory;
         decrypt.Future();
 
@@ -451,7 +455,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             new CryptoParametersSequence(sequenceType, sequenceHeaderFirst, true, keyCollection);
 
         // Create the Sequence.
-        var sequence = MakeNewSequence(jbcdStream, decrypt, internSequenceIndexEntryDelegate,
+        var sequence = MakeNewSequence(jbcdStream, decrypt, 
+            //internSequenceIndexEntryDelegate,
                      sequenceIndexEntryFactoryDelegate,
                      sequenceType: sequenceType);
         sequence.Store = store;
@@ -563,9 +568,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     bool decrypt=true,
                     byte[] bitmask = null,
                     JsonObject jsonObject = null,
-                    InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
+                    //InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
                     SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null,
-                    object store=null) {
+                    IInternSequenceIndexEntry store =null) {
         sequenceIndexEntryFactoryDelegate ??= SequenceIndexEntry.Factory;
         dataEncoding = dataEncoding.Default();
 
@@ -586,7 +591,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             };
 
         // Initialize the sequence
-        var sequence = MakeNewSequence(jbcdStream, decrypt, internSequenceIndexEntryDelegate,
+        var sequence = MakeNewSequence(jbcdStream, decrypt, 
+            //internSequenceIndexEntryDelegate,
                      sequenceIndexEntryFactoryDelegate,
                      sequenceType: sequenceType);
 
@@ -631,7 +637,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     public static Sequence MakeNewSequence(
                     JbcdStream jbcdStream,
                     bool decrypt,
-                    InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate,
+                    //InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate,
                     SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate 
 ,
                     SequenceType sequenceType = SequenceType.Merkle) =>
@@ -639,32 +645,32 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             SequenceType.List => new SequenceList() {
                 JbcdStream = jbcdStream,
                 Decrypt = decrypt,
-                InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
+                //InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
                 SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
 
                 },
             SequenceType.Digest => new SequenceDigest() {
                 JbcdStream = jbcdStream,
                 Decrypt = decrypt,
-                InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
+                //InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
                 SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             SequenceType.Chain => new SequenceChain() {
                 JbcdStream = jbcdStream,
                 Decrypt = decrypt,
-                InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
+                //InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
                 SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             SequenceType.Tree => new SequenceTree() {
                 JbcdStream = jbcdStream,
                 Decrypt = decrypt,
-                InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
+                //InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
                 SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             SequenceType.Merkle => new SequenceMerkleTree() {
                 JbcdStream = jbcdStream,
                 Decrypt = decrypt,
-                InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
+                //InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
                 SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             _ => throw new InvalidContainerTypeException()

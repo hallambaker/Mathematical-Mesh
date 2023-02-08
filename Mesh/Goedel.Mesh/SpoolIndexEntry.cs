@@ -123,8 +123,11 @@ public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
                 JsonObject = jsonObject
                 };
 
-
-    public SpoolIndexEntry(Sequence sequence) {
+    /// <summary>
+    /// Constructor returning a in instance bound to the sequence <paramref name="sequence"/>
+    /// </summary>
+    /// <param name="sequence">The sequence the index is bound to.</param>
+    SpoolIndexEntry(Sequence sequence) {
         (sequence?.Store as Spool).AssertNotNull(NYI.Throw);
         Sequence = sequence;
         }

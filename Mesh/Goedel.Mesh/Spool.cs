@@ -62,16 +62,15 @@ public class Spool : Store {
                 byte[] bitmask = null) :
             base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
                 decrypt, create, bitmask,
-                internSequenceIndexEntryDelegate: InternSequenceIndexEntry,
                 sequenceIndexEntryFactoryDelegate: SpoolIndexEntry.Factory) {
         }
 
-    static void InternSequenceIndexEntry(
-                    SequenceIndexEntry sequenceIndexEntry) {
-        var store = sequenceIndexEntry.Sequence.Store as Spool;
-        store.Intern(sequenceIndexEntry);
+    //static void InternSequenceIndexEntry(
+    //                SequenceIndexEntry sequenceIndexEntry) {
+    //    var store = sequenceIndexEntry.Sequence.Store as Spool;
+    //    store.Intern(sequenceIndexEntry);
 
-        }
+    //    }
 
     void Intern(
                 SequenceIndexEntry indexEntry) => Intern(indexEntry as SpoolIndexEntry);
