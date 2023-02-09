@@ -2087,15 +2087,15 @@
         <member name="P:Goedel.Mesh.Catalog`1.GetEntries">
             <summary>Return an enumeration over the object collection.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.Catalog`1.GetDeletedEntries">
-            <summary>Return an enumeration over the deleted object collection.</summary> 
-        </member>
         <member name="M:Goedel.Mesh.Catalog`1.GetEnumerator">
             <summary>
             Returns an enumerator over the catalog entries. Most catalog classes offer typed
             enumerators as an alternative.
             </summary>
             <returns>The enumerator.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.Catalog`1.SequenceIndexEntryFactory">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Catalog`1.DictionaryByLocalName">
             <summary>Dictionary mapping local names to the corresponding catalog entries.</summary> 
@@ -2115,7 +2115,7 @@
             <param name="policy">The cryptographic policy to be applied to the container.</param>
             <param name="keyCollection">Key collection to use for decryption.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-            <param name="readContainer">If true, read the container.</param>
+            <param name="read">If true, read the container.</param>
             <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
             <param name="create">If true, create a container if it does not already exist.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
@@ -4172,6 +4172,18 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="P:Goedel.Mesh.CatalogIndexEntry`1.PersistenceStore">
+            <summary>The underlying spool.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogIndexEntry`1.Catalog">
+            <summary>The underlying spool.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.CatalogIndexEntry`1.Factory(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Int64,System.Int64,System.Int64,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.JsonObject)">
+            <summary>
+            Factory method implementing <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>.
+            </summary>
+            <inheritdoc cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>
         </member>
         <member name="T:Goedel.Mesh.CatalogMember">
             <summary>
@@ -15074,6 +15086,9 @@
         <member name="P:Goedel.Mesh.Spool.SpoolIndexEntryLast">
             <summary>The index entry of the last item in the spool.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Spool.SequenceIndexEntryFactory">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.Spool.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor.
@@ -15362,9 +15377,6 @@
             <param name="reference">The reference to add.</param>
             <param name="force">Force updating of the status.</param>
         </member>
-        <member name="M:Goedel.Mesh.SpoolIndexEntry.Intern">
-            <inheritdoc/>
-        </member>
         <member name="T:Goedel.Mesh.StoreFactoryDelegate">
             <summary>
             Factory delegate
@@ -15406,6 +15418,9 @@
         <member name="P:Goedel.Mesh.Store.StoreType">
             <summary>The default bitmask identifier for update notification.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Store.SequenceIndexEntryFactory">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.Store.Select(System.Int64,System.Boolean,System.Int64,Goedel.Cryptography.Dare.FilterIndexDelegate,System.Boolean)">
             <summary>
             Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
@@ -15437,7 +15452,7 @@
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
-        <member name="M:Goedel.Mesh.Store.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[],Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate)">
+        <member name="M:Goedel.Mesh.Store.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             The constructor
             </summary>
@@ -15450,9 +15465,6 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
-            <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
-            <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
-            items in the sequence.</param>
         </member>
         <member name="M:Goedel.Mesh.Store.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
             <inheritdoc/>

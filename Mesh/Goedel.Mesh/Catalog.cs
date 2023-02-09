@@ -47,9 +47,13 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
     public IEnumerable<T> GetEntries => 
             new PersistenceStoreEnumerateObject<T>(PersistenceStore.ObjectIndex);
 
-    ///<summary>Return an enumeration over the deleted object collection.</summary> 
-    public IEnumerable<T> GetDeletedEntries=> 
-            new PersistenceStoreEnumerateObject<T>(PersistenceStore.DeletedObjectIndex);
+
+    bool InternEntry { get; } = false;
+
+
+    /////<summary>Return an enumeration over the deleted object collection.</summary> 
+    //public IEnumerable<T> GetDeletedEntries=> 
+    //        new PersistenceStoreEnumerateObject<T>(PersistenceStore.DeletedObjectIndex);
 
 
     /// <summary>
@@ -63,6 +67,9 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
     private IEnumerator GetEnumerator1() => this.GetEnumerator();
 
+
+    ///<inheritdoc/>
+    public override SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory => CatalogIndexEntry<T>.Factory;
 
     ///<summary>Dictionary mapping local names to the corresponding catalog entries.</summary> 
     public Dictionary<string, CatalogedEntry> DictionaryByLocalName { get; } = 
@@ -86,7 +93,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
     /// <param name="policy">The cryptographic policy to be applied to the container.</param>
     /// <param name="keyCollection">Key collection to use for decryption.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
-    /// <param name="readContainer">If true, read the container.</param>
+    /// <param name="read">If true, read the container.</param>
     /// <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
     /// <param name="create">If true, create a container if it does not already exist.</param>
     /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
@@ -95,36 +102,47 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
                 CryptoParameters? cryptoParameters = null,
                 IKeyCollection? keyCollection = null,
                 IMeshClient? meshClient = null,
-                bool readContainer = true,
+                bool read = true,
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) :
             base(directory, containerName, policy, cryptoParameters, keyCollection, 
-                decrypt: decrypt, create: create, bitmask: bitmask,
-                sequenceIndexEntryFactoryDelegate: PersistentIndexEntry.Factory) {
+                decrypt: decrypt, create: create, bitmask: bitmask) {
 
         if (!create & Sequence == null) {
             return;
             }
         MeshClient = meshClient;
 
-        PersistenceStore = new PersistenceStore(Sequence, keyCollection, readContainer);
-
-        if (readContainer) {
-            foreach (var indexEntry in PersistenceStore.X_ObjectIndex) {
-                var objectData = indexEntry.Value.JsonObject as T;
-                NewEntry(objectData);
-                }
+        PersistenceStore = new PersistenceStore(Sequence, keyCollection, read);
+        Intern(Sequence.SequenceIndexEntryFirst);
+        if (Sequence.SequenceIndexEntryFirst !=  Sequence.SequenceIndexEntryLast) {
+            Intern(Sequence.SequenceIndexEntryLast);
             }
 
+        if (read) {
+            PersistenceStore.Read();
+            }
+
+        Complete();
+        InternEntry = true;
         }
 
     ///<inheritdoc/>
     public override void Intern(
                 SequenceIndexEntry indexEntry) {
-        PersistenceStore.Intern(indexEntry);
+        PersistenceStore?.Intern(indexEntry);
+        if (InternEntry) {
+            InternCatalog(indexEntry as CatalogIndexEntry<T>);
+            }
         }
 
+
+    protected virtual void InternCatalog(CatalogIndexEntry<T> catalogIndexEntry) {
+        }
+
+    public void Complete() {
+        }
 
     /// <summary>
     /// Append the envelopes <paramref name="envelope"/> to the

@@ -42,6 +42,8 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
 
     long Count { get; set; }
 
+    long Items { get; set; }
+
     bool Reverse { get; }
 
     FilterIndexDelegate Filter { get; }
@@ -137,8 +139,7 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
     /// <returns><code>true</code> if the enumerator was successfully advanced to the next element; 
     /// <code>false</code> if the enumerator has passed the end of the collection.</returns>
     public bool MoveNext() {
-        if (Count <= 0 | Next is null)
-            {
+        if (Next is null | ((Count > 0) & (Items >= Count)) ) {
             return false;
             }
 
@@ -148,14 +149,14 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
 
             // if we have no filter, we always have a match
             if (Filter == null) {
-                Count--;
+                Items++;
                 return true;
                 }
 
             // check for match on filter
             var filter = Filter(Current);
             if ((filter & ItemResult.NotMatch) == ItemResult.Match) {
-                Count--;
+                Items++;
                 return true;
                 }
 
@@ -176,7 +177,7 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
     /// </summary>
     public void Reset() {
         Next = Start;
-
+        Items = 0;
         }
     }
 

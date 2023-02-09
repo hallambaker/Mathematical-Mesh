@@ -22,10 +22,39 @@
 
 namespace Goedel.Cryptography.Dare;
 
-public partial class PersistentIndexEntry : SequenceIndexEntry {
+public partial class PersistentIndexEntry : SequenceIndexEntry, IPersistenceEntry {
 
     ///<summary>The underlying spool.</summary> 
-    public PersistenceStore PersistenceStore => Sequence.Store as PersistenceStore;
+    public virtual PersistenceStore PersistenceStore => Sequence.Store as PersistenceStore;
+
+    public long EntryStatusFrame;
+
+    public string Event => Header?.ContentMeta?.Event;
+
+    public SequenceEvent SequenceEvent => Event.ToSequenceEvent();
+
+    ///<inheritdoc/>
+    public string UniqueID => Header?.ContentMeta?.UniqueId;
+
+    ///<inheritdoc/>
+    public bool Deleted => SequenceEvent == SequenceEvent.Delete;
+
+
+    ///<summary>The decoded JSONObject</summary>
+    public override JsonObject JsonObject {
+        get => jsonObject ?? GetJSONObject().CacheValue(out jsonObject);
+        set => jsonObject = value;
+        }
+    JsonObject jsonObject = null;
+
+
+
+    IPersistenceEntry IPersistenceEntry.X_Previous => throw new NotImplementedException();
+
+    public IPersistenceEntry X_First => throw new NotImplementedException();
+
+
+
 
 
     /// <summary>
@@ -60,7 +89,11 @@ public partial class PersistentIndexEntry : SequenceIndexEntry {
         Sequence = sequence;
         }
 
-    ///<inheritdoc/>
-    public override void Intern() => PersistenceStore.Intern(this);
+    /// <summary>
+    /// Constructor returning a in instance bound to the sequence <paramref name="sequence"/>
+    /// </summary>
+    /// <param name="sequence">The sequence the index is bound to.</param>
+    protected PersistentIndexEntry() {
+        }
 
     }

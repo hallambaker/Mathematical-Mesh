@@ -69,11 +69,11 @@ partial class Program {
         //TestSequences.Test().ZContainerTest0();
 
         //TestSequences.Test().TestBasic(SequenceType.List, 40, 5000, true, 10, 5);
-        //StoreTests.Test().TestSpoolSingle();
+        TestStores.Test().TestCatalogBasic();
 
 
 
-        TestPersist.Test().TestPersistenceStoreAdd();
+        //TestPersist.Test().TestPersistenceStoreAll();
         //TestPlatform.Test().TestWritePEMRSA();
 
         // Most likely a faulty direct append issue going on...

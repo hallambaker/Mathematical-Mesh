@@ -108,9 +108,6 @@ public delegate ItemResult FilterIndexDelegate(SequenceIndexEntry sequenceIndexE
 /// </summary>
 public partial class SequenceIndexEntry {
 
-
-
-
     ///<summary>The Sequence that is indexed.</summary> 
     public Sequence Sequence { get; set; }
 
@@ -215,14 +212,6 @@ public partial class SequenceIndexEntry {
                 factory(prototype.Sequence, prototype.FramePosition, prototype.FrameLength,
                         prototype.DataPosition, prototype.DataLength,
                         prototype.Header, prototype.Trailer, prototype.JsonObject);
-
-
-    /// <summary>
-    /// Method called to intern an element on the underlying store. May be overriden in
-    /// subclasses to perform store specific tasks.
-    /// </summary>
-    public virtual void Intern() {
-        }
 
 
 

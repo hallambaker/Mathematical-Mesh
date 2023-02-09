@@ -82,6 +82,10 @@ public class Store : Disposable, IInternSequenceIndexEntry {
     ///<summary>The default bitmask identifier for update notification.</summary> 
     public virtual StoreType StoreType => StoreType.Any;
 
+    ///<inheritdoc/>
+    public virtual SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory => SpoolIndexEntry.Factory;
+ 
+
 
     int BitmaskSizeBytes => 4;
 
@@ -147,9 +151,6 @@ public class Store : Disposable, IInternSequenceIndexEntry {
     /// <param name="create">If true, create a new file if none exists.</param>
     /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
     /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
-    /// <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
-    /// <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
-    /// items in the sequence.</param>
     public Store(string directory,
                 string? storeId = null,
                 DarePolicy? policy = null,
@@ -158,9 +159,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
                 IMeshClient? meshClient = null,
                 bool decrypt = true,
                 bool create = true,
-                byte[] bitmask = null,
-                    //InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate=null,
-                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate=null) {
+                byte[] bitmask = null) {
 
         bitmask ??= MakeMask();
 
@@ -177,8 +176,6 @@ public class Store : Disposable, IInternSequenceIndexEntry {
             decrypt: decrypt,
             create: create,
             bitmask: bitmask,
-            //internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
-            sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate ?? SpoolIndexEntry.Factory,
             store:this
             );
         //Sequence.Store = this;
@@ -199,6 +196,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
     public virtual void Intern(
                 SequenceIndexEntry indexEntry) {
         }
+
 
 
 

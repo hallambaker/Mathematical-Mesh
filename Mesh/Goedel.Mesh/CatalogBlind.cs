@@ -53,6 +53,6 @@ public class CatalogBlind : Catalog<CatalogedEntry> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null) :
         base(directory, containerName, policy, cryptoParameters, keyCollection,
-                    readContainer: false, decrypt: false, create: false) => PersistenceStore?.FastRead();
+                    read: true, decrypt: false, create: false) => PersistenceStore?.Read();
 
     }

@@ -35,7 +35,7 @@ namespace Goedel.Cryptography.Dare;
 public class PersistenceStoreEnumerateObject<T> : IEnumerator<T>, IEnumerable<T> where T : class {
 
     #region // Properties
-    IEnumerator<KeyValuePair<string, SequenceIndexEntry>> Enumerator { get; }
+    IEnumerator<KeyValuePair<string, PersistentIndexEntry>> Enumerator { get; }
 
     ///<inheritdoc/>
     public T Current => Enumerator.Current.Value.JsonObject as T;
@@ -55,11 +55,9 @@ public class PersistenceStoreEnumerateObject<T> : IEnumerator<T>, IEnumerable<T>
     /// </summary>
     /// <param name="dictionary">The dictionary to enumerate.</param>
     public PersistenceStoreEnumerateObject(
-                Dictionary<string, SequenceIndexEntry> dictionary) {
+                Dictionary<string, PersistentIndexEntry> dictionary) {
         Enumerator = dictionary.GetEnumerator();
         }
-
-
 
     #endregion
     #region // Implementation
@@ -110,24 +108,19 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
                 Sequence?.Dispose();
     #endregion
 
+    ///<inheritdoc/>
+    public virtual SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory => PersistentIndexEntry.Factory;
 
-    /// <summary>Tag for new event</summary>
-    public const string EventNew = "New";
 
-    /// <summary>Tag for Update event</summary>
-    public const string EventUpdate = "Update";
-
-    /// <summary>Tag for Delete event</summary>
-    public const string EventDelete = "Delete";
 
     ///<summary>The default data encoding of payload items.</summary> 
     public DataEncoding Encoding = DataEncoding.JSON;
 
     ///<summary>Index of current objects by _PrimaryKey</summary> 
-    public Dictionary<string, SequenceIndexEntry> ObjectIndex = new();
+    public Dictionary<string, PersistentIndexEntry> ObjectIndex = new();
 
-    ///<summary>Index of deleted objects by _PrimaryKey</summary> 
-    public Dictionary<string, SequenceIndexEntry> DeletedObjectIndex = new();
+    /////<summary>Index of deleted objects by _PrimaryKey</summary> 
+    //public Dictionary<string, SequenceIndexEntry> DeletedObjectIndex = new();
 
     /// <summary>
     /// Index of items by _PrimaryKey
@@ -156,7 +149,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
     /// <param name="sequenceType">The Sequence type.</param>
     /// <param name="dataEncoding">The data encoding.</param>
     /// <param name="fileStatus">The file status in which to open the Sequence.</param>
-    /// <param name="keyCollection">The key collection to use to resolve private keys.</param>
+    /// <param name="keyLocate">The key collection to use to resolve private keys.</param>
     /// <param name="read">If true read the Sequence to initialize the persistence store.</param>
     /// <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
     public PersistenceStore(string fileName, string contentType = null,
@@ -175,10 +168,10 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
                         policy,
                         contentType,
                         decrypt,
-                        sequenceIndexEntryFactoryDelegate: PersistentIndexEntry.Factory, store: this
+                        store: this
                         );
         if (read & Sequence.Length > 0) {
-            Read(keyLocate);
+            Read();
             }
         } 
 
@@ -194,77 +187,322 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
         Sequence = sequence;
 
         if (read & sequence.Length > 0) {
-            Read(keyLocate);
+            Read();
             }
         }
 
-
+    public void Complete() {
+        }
 
 
     ///<inheritdoc/>
     public void Intern(
                 SequenceIndexEntry indexEntry) {
+        var persistentIndexEntry = indexEntry as PersistentIndexEntry;
 
-        if (!indexEntry.HasPayload) { // no payload means no object to persist.
+        if (persistentIndexEntry.Event == null) { // no event means no update to persistence store.
             return;
             }
 
+        var contentMeta = indexEntry.Header.ContentMeta;
+        var uniqueID = contentMeta.UniqueId;
 
-        "Here we need to update the dictionaries".TaskFunctionality(true);
-        
-        }
-
-
-
-
-
-
-    /// <summary>
-    /// Read the Sequence contents in fast mode generating indexes only without reading contents.
-    /// </summary>
-    public void FastRead() {
-        foreach (var frameIndex in Sequence) {
-            var contentMeta = frameIndex.Header.ContentMeta;
-
-            var uniqueID = contentMeta.UniqueId;
-
-            X_ObjectIndex.TryGetValue(uniqueID, out var previous);
-            var storeEntry = new StoreEntry(frameIndex, previous, Sequence);
-
-
-            X_ObjectIndex.Remove(uniqueID);
-            switch (contentMeta.Event) {
-                case EventUpdate:
-                case EventNew: {
-                        X_ObjectIndex.Add(uniqueID, storeEntry);
-                        break;
-                        }
-
-                default:
-                    break;
+        if (ObjectIndex.TryGetValue(uniqueID, out var existingItem)) {
+            if (indexEntry.Index > existingItem.Index) {
+                ObjectIndex.Remove(uniqueID);
+                ObjectIndex.Add(uniqueID, persistentIndexEntry);
                 }
-
             }
-
+        else {
+            ObjectIndex.Add(uniqueID, persistentIndexEntry);
+            }
         }
-
 
     /// <summary>
     /// Read a Sequence from the first frame to the last.
     /// </summary>
     /// <param name="integrity">Specifies the degree of Sequence integrity checking to perform.</param>
-    /// <param name="keyLocate">The key collection to be used to resolve keys</param>
-    void Read(IKeyLocate keyLocate, SequenceIntegrity integrity = SequenceIntegrity.None) {
-        foreach (var frameIndex in Sequence) {
-
-            var item = frameIndex.JsonObject;
-
-            CommitTransaction(frameIndex, item);
+    public int Read(SequenceIntegrity integrity = SequenceIntegrity.None) {
+        // todo: check if can 
+        var count = 0;
+        foreach (var frameIndex in Sequence.Select(1,false)) {
+            count++;
             if (integrity != SequenceIntegrity.None) {
+                // Todo: implement checks here.
                 throw new NYI();
                 }
             }
+        return count;
         }
+
+    #region Prepare and commit transaction to sequence
+
+    /// <summary>
+    /// Prepare a transaction to be committed.
+    /// </summary>
+    /// <param name="contentInfo">The content metadata</param>
+    /// <param name="jsonObject">The object.</param>
+    /// <param name="additionalRecipients">Encryption keys of additional recipients.</param>
+    /// <returns>The prepared envelope.</returns>
+    public DareEnvelope Prepare(
+            ContentMeta contentInfo,
+            JsonObject jsonObject,
+                List<KeyPair> additionalRecipients = null) {
+
+        var contextWrite = new SequenceWriterDeferred(Sequence) {
+            AdditionalRecipients = additionalRecipients
+            };
+
+        var data = jsonObject?.GetBytes();
+        var envelope = Sequence.Defer(contextWrite, contentInfo, data);
+        envelope.JsonObject = jsonObject;
+
+        if (envelope.Trailer != null) {
+            envelope.Header.ChainDigest = envelope.Trailer.ChainDigest;
+            envelope.Header.PayloadDigest = envelope.Trailer.PayloadDigest;
+            envelope.Header.TreeDigest = envelope.Trailer.TreeDigest;
+            envelope.Header.Signatures = envelope.Trailer.Signatures;
+            envelope.Header.SignedData = envelope.Trailer.SignedData;
+            envelope.Trailer = null;
+            }
+
+        return envelope;
+        }
+
+    #endregion
+
+    #region Entry points for specific transactions
+
+    /// <summary>
+    /// Create a new persistence entry.
+    /// </summary>
+    /// <param name="jsonObject">Object to create</param>
+
+    public virtual DareEnvelope PrepareNew(
+            JsonObject jsonObject) {
+
+        // Precondition UniqueID does not exist
+        if (ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out var previous)) {
+            throw new ObjectIdentifierNotUnique();
+            }
+
+        // Create new Sequence
+        var contentInfo = new ContentMeta() {
+            Event = DareConstants.SequenceEventNewTag,
+            UniqueId = jsonObject._PrimaryKey,
+            KeyValues = jsonObject._KeyValues.ToKeyValues()
+            };
+
+        return Prepare(contentInfo, jsonObject);
+        }
+
+    /// <summary>
+    /// Create a Sequence header to update an existing persistence entry
+    /// </summary>
+
+    /// <param name="previous">The previous Sequence store entry for this object</param>
+    /// <param name="jsonObject">The new object value</param>
+    /// <param name="create">If true, create a new value if one does not already exist</param>
+    /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
+    /// <param name="additionalRecipients">Additional encryption keys for which recipient
+    /// entries are to be created.</param>
+    public virtual DareEnvelope PrepareUpdate(
+                out PersistentIndexEntry previous,
+                JsonObject jsonObject,
+                bool create = true, CryptoKey encryptionKey = null,
+                List<KeyPair> additionalRecipients = null) {
+
+        encryptionKey.Future();
+
+        var exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out previous);
+
+        // Create new Sequence
+        var contentInfo = new ContentMeta() {
+            Event = exists ? DareConstants.SequenceEventUpdateTag : DareConstants.SequenceEventNewTag,
+            UniqueId = jsonObject._PrimaryKey,
+            KeyValues = jsonObject._KeyValues.ToKeyValues(),
+            };
+
+        return Prepare(contentInfo, jsonObject, additionalRecipients);
+        }
+
+    /// <summary>
+    /// Delete a persistence entry
+    /// </summary>
+    /// <param name="previous">The previous Sequence store entry for this object</param>
+    /// <param name="uniqueID">The UniqueID of the object to delete</param>
+    /// <returns>True if the object was updated, otherwise false.</returns>
+    /// 
+    public DareEnvelope PrepareDelete(
+        out PersistentIndexEntry previous, string uniqueID) {
+
+        var exists = ObjectIndex.TryGetValue(uniqueID, out previous);
+        if (!exists) {
+            return null;
+            }
+
+        // Create new Sequence
+        var contentInfo = new ContentMeta() {
+            Event = DareConstants.SequenceEventDeleteTag,
+            UniqueId = uniqueID,
+            };
+
+        return Prepare(contentInfo, null);
+
+        }
+
+    /// <summary>
+    /// Create a new persistence entry.
+    /// </summary>
+    /// <param name="jsonObject">Object to create</param>
+    /// <param name="transaction">The transaction context in which to prepare the update.</param>
+    public virtual IPersistenceEntry New(JsonObject jsonObject, Transaction transaction = null) {
+        var envelope = PrepareNew(jsonObject);
+        var result = Sequence.Append(envelope) as PersistentIndexEntry;
+
+        return result;
+        }
+
+
+    /// <summary>
+    /// Update an existing persistence entry
+    /// </summary>
+    /// <param name="jsonObject">The new object value</param>
+    /// <param name="create">If true, create a new value if one does not already exist</param>
+    /// <param name="transaction">The transaction context in which to perform the update.</param>
+    public virtual IPersistenceEntry Update(JsonObject jsonObject, bool create = true, Transaction transaction = null) {
+
+        var envelope = PrepareUpdate(out _, jsonObject, create);
+        var result = Sequence.Append(envelope) as PersistentIndexEntry;
+
+        return result;
+
+        //var storeEntry = CommitToSequence(envelope, jsonObject, Previous);
+        //MemoryCommitUpdate(storeEntry);
+
+        //return storeEntry;
+        }
+
+    /// <summary>
+    /// Delete a persistence entry
+    /// </summary>
+    /// <threadsafety static="true" instance="true"/>
+    /// <param name="uniqueID">The UniqueID of the object to delete</param>
+    /// <param name="transaction">The transaction context in which to perform the update.</param>
+    /// <returns>True if the object was updated, otherwise false.</returns>
+    public virtual bool Delete(string uniqueID, Transaction transaction = null) {
+        var envelope = PrepareDelete(out var Previous, uniqueID);
+        if (envelope == null) {
+            return false;
+            }
+        Sequence.Append(envelope);
+        return true;
+
+        //var storeEntry = CommitToSequence(envelope, null, Previous);
+        //MemoryCommitDelete(storeEntry);
+        //return true;
+        }
+
+
+
+    #endregion
+
+    #region Navigation
+
+    /// <summary>
+    /// Determines if a object instance with the specified unique identifier is registered
+    /// and has not been deleted.
+    /// </summary>
+    /// <param name="uniqueID">The unique identifier of the object instance to locate.</param>
+    /// <returns>True if found, otherwise false.</returns>
+    public bool Contains(string uniqueID) {
+        if (ObjectIndex.TryGetValue(uniqueID, out var entry)) {
+            return entry.SequenceEvent != SequenceEvent.Delete;
+            }
+
+
+        return false;
+        }
+
+
+
+    /// <summary>
+    /// Get object instance by unique identifier
+    /// </summary>
+    /// <param name="uniqueID">The unique identifier of the object instance to locate.</param>
+    /// <returns>True if found, otherwise false.</returns>
+    public IPersistenceEntry Get(string uniqueID) {
+        ObjectIndex.TryGetValue(uniqueID, out var result);
+        return result;
+        }
+
+
+
+    /// <summary>
+    /// The last object instance that matches the specified key/value condition.
+    /// </summary>
+    /// <param name="key">The key</param>
+    /// <param name="value">The value to match</param>
+    /// <returns>The object instance if found, otherwise false.</returns>
+    public IPersistenceIndexEntry Last(string key, string value) {
+        var found = X_IndexDictionary.TryGetValue(key, out var Index);
+        if (!found) {
+            return null;
+            }
+        return Index.Last(value);
+        }
+
+    #endregion
+
+    #region // Hot mess to be deleted.
+
+
+    ///// <summary>
+    ///// Return an index for the specified key, creating it if necessary.
+    ///// </summary>
+    ///// <param name="key">The key for which the index is requested.</param>
+    ///// <param name="create">If true, will create an index if none is found.</param>
+    ///// <returns>The index.</returns>
+    //public virtual IPersistenceIndex GetIndex(string key, bool create = true) =>
+    //    GetStoreIndex(key, create);
+
+    /// <summary>
+    /// Return an index for the specified key, creating it if necessary.
+    /// </summary>
+    /// <param name="key">The key for which the index is requested.</param>
+    /// <param name="create">If true, will create an index if none is found.</param>
+    /// <returns>The index.</returns>
+    public virtual StoreIndex GetStoreIndex(string key, bool create = true) {
+        var found = X_IndexDictionary.TryGetValue(key, out var Index);
+
+        if (!found & create) {
+            Index = new StoreIndex();
+            X_IndexDictionary.Add(key, Index);
+            }
+
+        return (Index);
+        }
+
+
+    /// <summary>
+    /// Write a persistence entry to the Sequence.
+    /// </summary>
+    /// <param name="item">The object to write.</param>
+    /// <param name="previous">The previous entry.</param>
+    /// <param name="dareEnvelope">The serialized persistence data.</param>
+    /// <returns></returns>
+    public virtual StoreEntry CommitToSequence(
+            DareEnvelope dareEnvelope,
+            JsonObject item,
+            StoreEntry previous = null) {
+
+        Sequence.Append(dareEnvelope);
+        return new StoreEntry(Sequence, dareEnvelope, previous, item);
+        }
+
+
+    #region Commit transaction to memory
+
 
 
     /// <summary>
@@ -279,43 +517,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
         return CommitTransaction(frameIndex, dareMessage.JsonObject);
         }
 
-    #region Commit transaction to memory
 
-    /// <summary>
-    /// Commit a transaction to memory.
-    /// </summary>
-    /// <param name="frameIndex">The Sequence position</param>
-    /// <param name="jSONObject">The object being committed in deserialized form.</param>
-    public virtual StoreEntry CommitTransaction(SequenceIndexEntry frameIndex, JsonObject jSONObject) {
-        if (frameIndex.Header.Index == 0) {
-            return null; // we do not commit fram zero transactions to memory.
-            }
-
-        var contentMeta = frameIndex.Header.ContentMeta;
-
-        X_ObjectIndex.TryGetValue(contentMeta.UniqueId, out var Previous);
-        var storeEntry = new StoreEntry(frameIndex, Previous, Sequence, jSONObject);
-
-        switch (contentMeta.Event) {
-            case EventNew: {
-                    //MemoryCommitNew(storeEntry);
-                    MemoryCommitUpdate(storeEntry);
-                    break;
-                    }
-            case EventUpdate: {
-                    MemoryCommitUpdate(storeEntry);
-                    break;
-                    }
-            case EventDelete: {
-                    MemoryCommitDelete(storeEntry);
-                    break;
-                    }
-            default: {
-                    throw new UndefinedStoreAction(contentMeta.Event);
-                    }
-            }
-        return storeEntry;
-        }
 
     /// <summary>
     /// Commit a New transaction to memory
@@ -373,7 +575,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
     // Hack: Right now the key value pairs are only indexed when the object is initially
     // interned. These are immutable subsequently.
     void KeyValueIndexDelete(StoreEntry storeEntry) {
-        var First = storeEntry.First as StoreEntry;
+        var First = storeEntry.X_First as StoreEntry;
         if (First.ContentInfo.KeyValues == null) {
             return;
             }
@@ -386,269 +588,50 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
 
     #endregion
 
-    #region Prepare and commit transaction to sequence
-
     /// <summary>
-    /// Prepare a transaction to be committed.
+    /// Commit a transaction to memory.
     /// </summary>
-    /// <param name="contentInfo">The content metadata</param>
-    /// <param name="jsonObject">The object.</param>
-    /// <param name="additionalRecipients">Encryption keys of additional recipients.</param>
-    /// <returns>The prepared envelope.</returns>
-    public DareEnvelope Prepare(
-            ContentMeta contentInfo,
-            JsonObject jsonObject,
-                List<KeyPair> additionalRecipients = null) {
+    /// <param name="frameIndex">The Sequence position</param>
+    /// <param name="jSONObject">The object being committed in deserialized form.</param>
+    public virtual StoreEntry CommitTransaction(SequenceIndexEntry frameIndex, JsonObject jSONObject) {
 
-        var contextWrite = new SequenceWriterDeferred(Sequence) {
-            AdditionalRecipients = additionalRecipients
-            };
+        // This needs some rework here. Probably superfluous as we can overload the intern method.
+        throw new NYI();
 
-        var data = jsonObject?.GetBytes();
-        var envelope = Sequence.Defer(contextWrite, contentInfo, data);
-        envelope.JsonObject = jsonObject;
 
-        if (envelope.Trailer != null) {
-            envelope.Header.ChainDigest = envelope.Trailer.ChainDigest;
-            envelope.Header.PayloadDigest = envelope.Trailer.PayloadDigest;
-            envelope.Header.TreeDigest = envelope.Trailer.TreeDigest;
-            envelope.Header.Signatures = envelope.Trailer.Signatures;
-            envelope.Header.SignedData = envelope.Trailer.SignedData;
-            envelope.Trailer = null;
-            }
+        //if (frameIndex.Header.Index == 0) {
+        //    return null; // we do not commit fram zero transactions to memory.
+        //    }
 
-        return envelope;
+        //var contentMeta = frameIndex.Header.ContentMeta;
+
+        //X_ObjectIndex.TryGetValue(contentMeta.UniqueId, out var Previous);
+        //var storeEntry = new StoreEntry(frameIndex, Previous, Sequence, jSONObject);
+
+
+
+        //switch (contentMeta.Event) {
+        //    case EventNew: {
+        //            //MemoryCommitNew(storeEntry);
+        //            MemoryCommitUpdate(storeEntry);
+        //            break;
+        //            }
+        //    case EventUpdate: {
+        //            MemoryCommitUpdate(storeEntry);
+        //            break;
+        //            }
+        //    case EventDelete: {
+        //            MemoryCommitDelete(storeEntry);
+        //            break;
+        //            }
+        //    default: {
+        //            throw new UndefinedStoreAction(contentMeta.Event);
+        //            }
+        //    }
+        //return storeEntry;
         }
-
-
-    /// <summary>
-    /// Write a persistence entry to the Sequence.
-    /// </summary>
-    /// <param name="item">The object to write.</param>
-    /// <param name="previous">The previous entry.</param>
-    /// <param name="dareEnvelope">The serialized persistence data.</param>
-    /// <returns></returns>
-    public virtual StoreEntry CommitToSequence(
-            DareEnvelope dareEnvelope,
-            JsonObject item,
-            StoreEntry previous = null) {
-
-        Sequence.Append(dareEnvelope);
-        return new StoreEntry(Sequence, dareEnvelope, previous, item);
-        }
-
 
     #endregion
-
-    #region Entry points for specific transactions
-
-    /// <summary>
-    /// Create a new persistence entry.
-    /// </summary>
-    /// <param name="jsonObject">Object to create</param>
-    /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
-    public virtual DareEnvelope PrepareNew(
-            JsonObject jsonObject, CryptoKey encryptionKey = null) {
-
-        encryptionKey.Future();
-
-        // Precondition UniqueID does not exist
-        var Exists = X_ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out var Previous);
-        Assert.AssertFalse(Exists, ObjectIdentifierNotUnique.Throw);
-
-        // Create new Sequence
-        var contentInfo = new ContentMeta() {
-            Event = EventNew,
-            UniqueId = jsonObject._PrimaryKey,
-            KeyValues = jsonObject._KeyValues.ToKeyValues()
-            };
-
-        return Prepare(contentInfo, jsonObject);
-        }
-
-    /// <summary>
-    /// Create a Sequence header to update an existing persistence entry
-    /// </summary>
-
-    /// <param name="previous">The previous Sequence store entry for this object</param>
-    /// <param name="jsonObject">The new object value</param>
-    /// <param name="create">If true, create a new value if one does not already exist</param>
-    /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
-    /// <param name="additionalRecipients">Additional encryption keys for which recipient
-    /// entries are to be created.</param>
-    public virtual DareEnvelope PrepareUpdate(
-                out StoreEntry previous,
-                JsonObject jsonObject,
-                bool create = true, CryptoKey encryptionKey = null,
-                List<KeyPair> additionalRecipients = null) {
-
-        encryptionKey.Future();
-
-        // Precondition UniqueID does not exist
-        var Exists = X_ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out previous);
-        Assert.AssertTrue(Exists | create, EntryNotFound.Throw);
-
-        // Create new Sequence
-        var contentInfo = new ContentMeta() {
-            Event = Exists ? EventUpdate : EventNew,
-            UniqueId = jsonObject._PrimaryKey,
-            KeyValues = jsonObject._KeyValues.ToKeyValues(),
-            };
-
-        if (Exists) {
-            var First = previous?.First as StoreEntry;
-            contentInfo.First = (int)First?.FrameCount;
-            contentInfo.Previous = (int)previous?.FrameCount;
-            }
-        return Prepare(contentInfo, jsonObject, additionalRecipients);
-        }
-
-    /// <summary>
-    /// Delete a persistence entry
-    /// </summary>
-    /// <param name="previous">The previous Sequence store entry for this object</param>
-    /// <param name="uniqueID">The UniqueID of the object to delete</param>
-    /// <returns>True if the object was updated, otherwise false.</returns>
-    /// 
-    public DareEnvelope PrepareDelete(
-        out StoreEntry previous, string uniqueID) {
-        var Exists = X_ObjectIndex.TryGetValue(uniqueID, out previous);
-        if (!Exists) {
-            return null;
-            }
-
-        var First = previous?.First as StoreEntry;
-        // Create new Sequence
-        var contentInfo = new ContentMeta() {
-            Event = EventDelete,
-            UniqueId = uniqueID,
-            Previous = (int)previous?.FrameCount,
-            First = (int)First?.FrameCount
-            };
-
-        return Prepare(contentInfo, null);
-
-        }
-
-    /// <summary>
-    /// Create a new persistence entry.
-    /// </summary>
-    /// <param name="jsonObject">Object to create</param>
-    /// <param name="transaction">The transaction context in which to prepare the update.</param>
-    public virtual IPersistenceEntry New(JsonObject jsonObject, Transaction transaction = null) {
-        var envelope = PrepareNew(jsonObject);
-        var storeEntry = CommitToSequence(envelope, jsonObject);
-        MemoryCommitNew(storeEntry);
-
-        return storeEntry;
-        }
-
-
-    /// <summary>
-    /// Update an existing persistence entry
-    /// </summary>
-    /// <param name="jsonObject">The new object value</param>
-    /// <param name="create">If true, create a new value if one does not already exist</param>
-    /// <param name="transaction">The transaction context in which to perform the update.</param>
-    public virtual IPersistenceEntry Update(JsonObject jsonObject, bool create = true, Transaction transaction = null) {
-
-        var envelope = PrepareUpdate(out var Previous, jsonObject, create);
-
-        var storeEntry = CommitToSequence(envelope, jsonObject, Previous);
-        MemoryCommitUpdate(storeEntry);
-
-        return storeEntry;
-        }
-
-    /// <summary>
-    /// Delete a persistence entry
-    /// </summary>
-    /// <threadsafety static="true" instance="true"/>
-    /// <param name="uniqueID">The UniqueID of the object to delete</param>
-    /// <param name="transaction">The transaction context in which to perform the update.</param>
-    /// <returns>True if the object was updated, otherwise false.</returns>
-    public virtual bool Delete(string uniqueID, Transaction transaction = null) {
-        var envelope = PrepareDelete(out var Previous, uniqueID);
-        if (envelope == null) {
-            return false;
-            }
-
-        var storeEntry = CommitToSequence(envelope, null, Previous);
-        MemoryCommitDelete(storeEntry);
-        return true;
-        }
-
-
-
-    #endregion
-
-    #region Navigation
-
-
-    /// <summary>
-    /// Return an index for the specified key, creating it if necessary.
-    /// </summary>
-    /// <param name="key">The key for which the index is requested.</param>
-    /// <param name="create">If true, will create an index if none is found.</param>
-    /// <returns>The index.</returns>
-    public virtual StoreIndex GetStoreIndex(string key, bool create = true) {
-        var found = X_IndexDictionary.TryGetValue(key, out var Index);
-
-        if (!found & create) {
-            Index = new StoreIndex();
-            X_IndexDictionary.Add(key, Index);
-            }
-
-        return (Index);
-        }
-
-
-
-    /// <summary>
-    /// Return an index for the specified key, creating it if necessary.
-    /// </summary>
-    /// <param name="key">The key for which the index is requested.</param>
-    /// <param name="create">If true, will create an index if none is found.</param>
-    /// <returns>The index.</returns>
-    public virtual IPersistenceIndex GetIndex(string key, bool create = true) =>
-        GetStoreIndex(key, create);
-
-
-    /// <summary>
-    /// Get object instance by unique identifier
-    /// </summary>
-    /// <param name="uniqueID">The unique identifier of the object instance to locate.</param>
-    /// <returns>True if found, otherwise false.</returns>
-    public IPersistenceEntry Get(string uniqueID) {
-        X_ObjectIndex.TryGetValue(uniqueID, out var result);
-        return result;
-        }
-
-    /// <summary>
-    /// Determines if a object instance with the specified unique identifier is registered.
-    /// </summary>
-    /// <param name="uniqueID">The unique identifier of the object instance to locate.</param>
-    /// <returns>True if found, otherwise false.</returns>
-    public bool Contains(string uniqueID) => X_ObjectIndex.TryGetValue(uniqueID, out var _);
-
-    /// <summary>
-    /// The last object instance that matches the specified key/value condition.
-    /// </summary>
-    /// <param name="key">The key</param>
-    /// <param name="value">The value to match</param>
-    /// <returns>The object instance if found, otherwise false.</returns>
-    public IPersistenceIndexEntry Last(string key, string value) {
-        var found = X_IndexDictionary.TryGetValue(key, out var Index);
-        if (!found) {
-            return null;
-            }
-        return Index.Last(value);
-        }
-
-
-    #endregion
-
-
     }
 
 /// <summary>

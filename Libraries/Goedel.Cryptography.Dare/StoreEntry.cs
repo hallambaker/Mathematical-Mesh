@@ -51,7 +51,7 @@ public class StoreEntry : IPersistenceEntry {
 
     ///<summary>If true the object haws been deleted and cannot be further modified.</summary>
 
-    public bool Deleted => ContentInfo?.Event == PersistenceStore.EventDelete;
+    public bool Deleted => ContentInfo?.Event == DareConstants.SequenceEventDeleteTag;
 
     ///<summary>The JSONObject.</summary>
     public JsonObject JsonObject {
@@ -71,12 +71,12 @@ public class StoreEntry : IPersistenceEntry {
     /// <summary>
     /// The previous object instance value for this object instance.
     /// </summary>
-    public IPersistenceEntry Previous { get; }
+    public IPersistenceEntry X_Previous { get; }
 
     /// <summary>
     /// The first object instance value for this object instance.
     /// </summary>
-    public IPersistenceEntry First { get; }
+    public IPersistenceEntry X_First { get; }
 
 
 
@@ -98,8 +98,8 @@ public class StoreEntry : IPersistenceEntry {
         JsonObject = item;
 
         ContainerHeader = dareEnvelope.Header as DareHeader;
-        Previous = previous;
-        First = previous?.First ?? this;
+        X_Previous = previous;
+        X_First = previous?.X_First ?? this;
         }
 
     /// <summary>
@@ -130,8 +130,8 @@ public class StoreEntry : IPersistenceEntry {
         FrameIndex = frameIndex;
         JsonObject = item;
 
-        Previous = previous;
-        First = previous?.First ?? this;
+        X_Previous = previous;
+        X_First = previous?.X_First ?? this;
         }
 
 

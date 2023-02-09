@@ -74,7 +74,7 @@ public partial class TestItem {
 
 
 public class TestItemContainerPersistenceStore : PersistenceStore {
-    readonly IPersistenceIndex indexKeyUserProfileUDF;
+    readonly IPersistenceEntry indexKeyUserProfileUDF;
 
 
     /// <summary>
@@ -94,10 +94,9 @@ public class TestItemContainerPersistenceStore : PersistenceStore {
                 FileStatus FileStatus = FileStatus.OpenOrCreate,
                 SequenceType ContainerType = SequenceType.Chain) : base(
                     FileName, Type, FileStatus, ContainerType) =>
-                    indexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
+                    indexKeyUserProfileUDF = Get(TestItem.KeyUserProfileUDF);
 
     static TestItem Get(IPersistenceEntry DataItem) => DataItem.JsonObject as TestItem;
-
 
     /// <summary>
     /// GetUnique the latest value of the TestItem object with the specified unique ID
@@ -108,36 +107,5 @@ public class TestItemContainerPersistenceStore : PersistenceStore {
         var Entry = Get(AccountID);
         return Entry != null ? Get(Entry) : null;
         }
-
-    /// <summary>
-    /// GetUnique the latest value of the last TestItem object with the specified unique ID that was created.
-    /// </summary>
-    /// <param name="UserProfileUDF">The user profile UDF</param>
-    /// <returns>The test item</returns>
-    public TestItem GetUserProfileUDF(string UserProfileUDF) {
-        var IndexEntry = indexKeyUserProfileUDF.Last(UserProfileUDF);
-        var DataItem = IndexEntry.Data;
-        return Get(DataItem);
-        }
-
-    ///// <summary>
-    ///// GetUnique the previous value(s) of a test item version.
-    ///// </summary>
-    ///// <param name="TestItem">The base version</param>
-    ///// <param name="MaxResult">Maximum number of results to return.</param>
-    ///// <param name="OnOrAfter">Only return versions that are on or after the specified value.</param>
-    ///// <returns>The list of previous versions.</returns>
-    //public static List<TestItem> GetPrevious(TestItem TestItem, int MaxResult, DateTime OnOrAfter) => throw new NYI();
-
-
-    //public static TestItem GetRecord(int Record) =>
-    //    // read the header and data from container
-
-    //    //
-
-
-    //    throw new NYI();
-
-
 
     }

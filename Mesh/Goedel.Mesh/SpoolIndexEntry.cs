@@ -59,6 +59,9 @@ public class SpoolPlaceholder : ISpoolItem {
     public void AddReference(Reference reference, long force) => throw new NYI();
     }
 
+
+
+
 /// <summary>
 /// Index entry for a spool element.
 /// </summary>
@@ -98,6 +101,8 @@ public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
 
     ///<summary>Convenience accessor for the message type.</summary> 
     public string MessageType => Header?.ContentMeta?.MessageType;
+
+
 
 
     /// <summary>
@@ -155,8 +160,6 @@ public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
 
         }
 
-    ///<inheritdoc/>
-    public override void Intern() => Spool.Intern(this);
 
     }
 

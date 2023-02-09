@@ -106,8 +106,8 @@ public partial class TestPersist : UnitTestSet {
         var AccountTest = TestStore.GetAccountID(AccountIDAlice);
         AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest));
 
-        var AccountTest2 = TestStore.GetUserProfileUDF(AccountAlice.UserProfileUDF);
-        AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest2));
+        //var AccountTest2 = TestStore.GetUserProfileUDF(AccountAlice.UserProfileUDF);
+        //AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest2));
         }
 
 
@@ -127,8 +127,6 @@ public partial class TestPersist : UnitTestSet {
             var AccountTest = TestStore.GetAccountID(AccountIDAlice);
             AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest));
 
-            var AccountTest2 = TestStore.GetUserProfileUDF(AccountAlice.UserProfileUDF);
-            AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest2));
             }
 
         //Check we can read record back when opening the file in create or use existing mode
@@ -140,8 +138,6 @@ public partial class TestPersist : UnitTestSet {
             var AccountTest = TestStore.GetAccountID(AccountIDAlice);
             AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest));
 
-            var AccountTest2 = TestStore.GetUserProfileUDF(AccountAlice.UserProfileUDF);
-            AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest2));
 
             }
 

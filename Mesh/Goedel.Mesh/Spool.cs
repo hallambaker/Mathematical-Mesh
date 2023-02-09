@@ -38,6 +38,11 @@ public class Spool : Store {
     ///<summary>The index entry of the last item in the spool.</summary> 
     public SpoolIndexEntry SpoolIndexEntryLast => Sequence.SequenceIndexEntryLast as SpoolIndexEntry;
 
+
+    ///<inheritdoc/>
+    public override SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory => SpoolIndexEntry.Factory;
+
+
     /// <summary>
     /// Constructor.
     /// </summary>
@@ -61,8 +66,7 @@ public class Spool : Store {
                 bool create = true,
                 byte[] bitmask = null) :
             base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, 
-                decrypt, create, bitmask,
-                sequenceIndexEntryFactoryDelegate: SpoolIndexEntry.Factory) {
+                decrypt, create, bitmask) {
         }
 
     //static void InternSequenceIndexEntry(

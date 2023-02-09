@@ -27,13 +27,13 @@ namespace Goedel.Cryptography.Dare;
 /// </summary>
 public interface IPersistenceStoreRead {
 
-    /// <summary>
-    /// Return an index for the specified key, creating it if necessary.
-    /// </summary>
-    /// <param name="Key">The key for which the index is requested.</param>
-    /// <param name="Create">If true, will create an index if none is found.</param>
-    /// <returns>The index.</returns>
-    IPersistenceIndex GetIndex(string Key, bool Create = true);
+    ///// <summary>
+    ///// Return an index for the specified key, creating it if necessary.
+    ///// </summary>
+    ///// <param name="Key">The key for which the index is requested.</param>
+    ///// <param name="Create">If true, will create an index if none is found.</param>
+    ///// <returns>The index.</returns>
+    //IPersistenceIndex GetIndex(string Key, bool Create = true);
 
     /// <summary>
     /// Get object instance by unique identifier
@@ -176,12 +176,12 @@ public interface IPersistenceEntry {
     /// <summary>
     /// The previous object instance value for this object instance.
     /// </summary>
-    IPersistenceEntry Previous { get; }
+    IPersistenceEntry X_Previous { get; }
 
     /// <summary>
     /// The first object instance value for this object instance.
     /// </summary>
-    IPersistenceEntry First { get; }
+    IPersistenceEntry X_First { get; }
 
 
 

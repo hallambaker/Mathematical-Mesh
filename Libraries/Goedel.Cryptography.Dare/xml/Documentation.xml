@@ -3918,14 +3918,6 @@
             
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.IPersistenceStoreRead.GetIndex(System.String,System.Boolean)">
-            <summary>
-            Return an index for the specified key, creating it if necessary.
-            </summary>
-            <param name="Key">The key for which the index is requested.</param>
-            <param name="Create">If true, will create an index if none is found.</param>
-            <returns>The index.</returns>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.IPersistenceStoreRead.Get(System.String)">
             <summary>
             Get object instance by unique identifier
@@ -4038,12 +4030,12 @@
         <member name="P:Goedel.Cryptography.Dare.IPersistenceEntry.JsonObject">
             <summary>The persisted JsonObject</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.IPersistenceEntry.Previous">
+        <member name="P:Goedel.Cryptography.Dare.IPersistenceEntry.X_Previous">
             <summary>
             The previous object instance value for this object instance.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.IPersistenceEntry.First">
+        <member name="P:Goedel.Cryptography.Dare.IPersistenceEntry.X_First">
             <summary>
             The first object instance value for this object instance.
             </summary>
@@ -4632,7 +4624,7 @@
         <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEnumerateObject`1.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEnumerateObject`1.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Cryptography.Dare.SequenceIndexEntry})">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEnumerateObject`1.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Cryptography.Dare.PersistentIndexEntry})">
             <summary>
             Constructor returning an enumerator for the objects in the dictionary <paramref name="dictionary"/>.
             </summary>
@@ -4663,23 +4655,14 @@
             The disposal routine. This is wrapped to provide the IDisposable interface. 
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.EventNew">
-            <summary>Tag for new event</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.EventUpdate">
-            <summary>Tag for Update event</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.EventDelete">
-            <summary>Tag for Delete event</summary>
+        <member name="P:Goedel.Cryptography.Dare.PersistenceStore.SequenceIndexEntryFactory">
+            <inheritdoc/>
         </member>
         <member name="F:Goedel.Cryptography.Dare.PersistenceStore.Encoding">
             <summary>The default data encoding of payload items.</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.PersistenceStore.ObjectIndex">
             <summary>Index of current objects by _PrimaryKey</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.DeletedObjectIndex">
-            <summary>Index of deleted objects by _PrimaryKey</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.PersistenceStore.X_ObjectIndex">
             <summary>
@@ -4707,7 +4690,7 @@
             <param name="sequenceType">The Sequence type.</param>
             <param name="dataEncoding">The data encoding.</param>
             <param name="fileStatus">The file status in which to open the Sequence.</param>
-            <param name="keyCollection">The key collection to use to resolve private keys.</param>
+            <param name="keyLocate">The key collection to use to resolve private keys.</param>
             <param name="read">If true read the Sequence to initialize the persistence store.</param>
             <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
         </member>
@@ -4722,48 +4705,11 @@
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.FastRead">
-            <summary>
-            Read the Sequence contents in fast mode generating indexes only without reading contents.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Read(Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceIntegrity)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Read(Goedel.Cryptography.Dare.SequenceIntegrity)">
             <summary>
             Read a Sequence from the first frame to the last.
             </summary>
             <param name="integrity">Specifies the degree of Sequence integrity checking to perform.</param>
-            <param name="keyLocate">The key collection to be used to resolve keys</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Apply(Goedel.Cryptography.Dare.DareEnvelope)">
-            <summary>
-            Apply the specified message to the Sequence.
-            </summary>
-            <param name="dareMessage"></param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.CommitTransaction(Goedel.Cryptography.Dare.SequenceIndexEntry,Goedel.Protocol.JsonObject)">
-            <summary>
-            Commit a transaction to memory.
-            </summary>
-            <param name="frameIndex">The Sequence position</param>
-            <param name="jSONObject">The object being committed in deserialized form.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitNew(Goedel.Cryptography.Dare.StoreEntry)">
-            <summary>
-            Commit a New transaction to memory
-            </summary>
-            <param name="storeEntry">The Sequence store entry representing the transaction</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitUpdate(Goedel.Cryptography.Dare.StoreEntry)">
-            <summary>
-            Commit an Update transaction to memory
-            </summary>
-            <param name="storeEntry">The Sequence store entry representing the transaction</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitDelete(Goedel.Cryptography.Dare.StoreEntry)">
-            <summary>
-            Commit a Delete transaction to memory
-            </summary>
-            <param name="storeEntry">The Sequence store entry representing the transaction</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Prepare(Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.JsonObject,System.Collections.Generic.List{Goedel.Cryptography.KeyPair})">
             <summary>
@@ -4774,23 +4720,13 @@
             <param name="additionalRecipients">Encryption keys of additional recipients.</param>
             <returns>The prepared envelope.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.CommitToSequence(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.StoreEntry)">
-            <summary>
-            Write a persistence entry to the Sequence.
-            </summary>
-            <param name="item">The object to write.</param>
-            <param name="previous">The previous entry.</param>
-            <param name="dareEnvelope">The serialized persistence data.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.PrepareNew(Goedel.Protocol.JsonObject,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.PrepareNew(Goedel.Protocol.JsonObject)">
             <summary>
             Create a new persistence entry.
             </summary>
             <param name="jsonObject">Object to create</param>
-            <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.PrepareUpdate(Goedel.Cryptography.Dare.StoreEntry@,Goedel.Protocol.JsonObject,System.Boolean,Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{Goedel.Cryptography.KeyPair})">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.PrepareUpdate(Goedel.Cryptography.Dare.PersistentIndexEntry@,Goedel.Protocol.JsonObject,System.Boolean,Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{Goedel.Cryptography.KeyPair})">
             <summary>
             Create a Sequence header to update an existing persistence entry
             </summary>
@@ -4801,7 +4737,7 @@
             <param name="additionalRecipients">Additional encryption keys for which recipient
             entries are to be created.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.PrepareDelete(Goedel.Cryptography.Dare.StoreEntry@,System.String)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.PrepareDelete(Goedel.Cryptography.Dare.PersistentIndexEntry@,System.String)">
             <summary>
             Delete a persistence entry
             </summary>
@@ -4834,32 +4770,17 @@
             <param name="transaction">The transaction context in which to perform the update.</param>
             <returns>True if the object was updated, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.GetStoreIndex(System.String,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Contains(System.String)">
             <summary>
-            Return an index for the specified key, creating it if necessary.
-            </summary>
-            <param name="key">The key for which the index is requested.</param>
-            <param name="create">If true, will create an index if none is found.</param>
-            <returns>The index.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.GetIndex(System.String,System.Boolean)">
-            <summary>
-            Return an index for the specified key, creating it if necessary.
-            </summary>
-            <param name="key">The key for which the index is requested.</param>
-            <param name="create">If true, will create an index if none is found.</param>
-            <returns>The index.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Get(System.String)">
-            <summary>
-            Get object instance by unique identifier
+            Determines if a object instance with the specified unique identifier is registered
+            and has not been deleted.
             </summary>
             <param name="uniqueID">The unique identifier of the object instance to locate.</param>
             <returns>True if found, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Contains(System.String)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Get(System.String)">
             <summary>
-            Determines if a object instance with the specified unique identifier is registered.
+            Get object instance by unique identifier
             </summary>
             <param name="uniqueID">The unique identifier of the object instance to locate.</param>
             <returns>True if found, otherwise false.</returns>
@@ -4872,6 +4793,54 @@
             <param name="value">The value to match</param>
             <returns>The object instance if found, otherwise false.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.GetStoreIndex(System.String,System.Boolean)">
+            <summary>
+            Return an index for the specified key, creating it if necessary.
+            </summary>
+            <param name="key">The key for which the index is requested.</param>
+            <param name="create">If true, will create an index if none is found.</param>
+            <returns>The index.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.CommitToSequence(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.StoreEntry)">
+            <summary>
+            Write a persistence entry to the Sequence.
+            </summary>
+            <param name="item">The object to write.</param>
+            <param name="previous">The previous entry.</param>
+            <param name="dareEnvelope">The serialized persistence data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Apply(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Apply the specified message to the Sequence.
+            </summary>
+            <param name="dareMessage"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitNew(Goedel.Cryptography.Dare.StoreEntry)">
+            <summary>
+            Commit a New transaction to memory
+            </summary>
+            <param name="storeEntry">The Sequence store entry representing the transaction</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitUpdate(Goedel.Cryptography.Dare.StoreEntry)">
+            <summary>
+            Commit an Update transaction to memory
+            </summary>
+            <param name="storeEntry">The Sequence store entry representing the transaction</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitDelete(Goedel.Cryptography.Dare.StoreEntry)">
+            <summary>
+            Commit a Delete transaction to memory
+            </summary>
+            <param name="storeEntry">The Sequence store entry representing the transaction</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.CommitTransaction(Goedel.Cryptography.Dare.SequenceIndexEntry,Goedel.Protocol.JsonObject)">
+            <summary>
+            Commit a transaction to memory.
+            </summary>
+            <param name="frameIndex">The Sequence position</param>
+            <param name="jSONObject">The object being committed in deserialized form.</param>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.Transaction">
             <summary>
             Base class for transactions.
@@ -4879,6 +4848,15 @@
         </member>
         <member name="P:Goedel.Cryptography.Dare.PersistentIndexEntry.PersistenceStore">
             <summary>The underlying spool.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.PersistentIndexEntry.UniqueID">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.PersistentIndexEntry.Deleted">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.PersistentIndexEntry.JsonObject">
+            <summary>The decoded JSONObject</summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistentIndexEntry.Factory(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Int64,System.Int64,System.Int64,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.JsonObject)">
             <summary>
@@ -4892,8 +4870,11 @@
             </summary>
             <param name="sequence">The sequence the index is bound to.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistentIndexEntry.Intern">
-            <inheritdoc/>
+        <member name="M:Goedel.Cryptography.Dare.PersistentIndexEntry.#ctor">
+            <summary>
+            Constructor returning a in instance bound to the sequence <paramref name="sequence"/>
+            </summary>
+            <param name="sequence">The sequence the index is bound to.</param>
         </member>
         <member name="T:Goedel.Cryptography.Dare.IndexType">
             <summary>File index modes</summary>
@@ -5034,10 +5015,6 @@
         <member name="P:Goedel.Cryptography.Dare.Sequence.SequenceIndexEntryFactoryDelegate">
             <summary>Delegate called to create a Sequence entry for a catalog or store.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.Dare.Sequence.Store">
-            <summary>Context information for use by the 
-            <see cref="!:InternSequenceIndexEntryDelegate"/>.</summary> 
-        </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.#ctor">
             <summary>
             Default constructor.
@@ -5086,7 +5063,7 @@
             <param name="reverse">If true, read the Sequence from the end.</param>
             <returns>The enumerator.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Open(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.String,System.Boolean,System.Boolean,System.Byte[],Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,Goedel.Cryptography.Dare.IInternSequenceIndexEntry)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Open(System.String,Goedel.IO.FileStatus,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.String,System.Boolean,System.Boolean,System.Byte[],Goedel.Cryptography.Dare.IInternSequenceIndexEntry)">
             <summary>
             Open or create Sequence according to the setting of FileStatus. The underlying 
             filestreams will be disposed of automatically when the Sequence is disposed.
@@ -5104,9 +5081,6 @@
             otherwise return payload contents as plaintext.</param>
             <param name="create">If true, create a Sequence file if none already exists</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
-            <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
-            <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
-            items in the sequence.</param>
             <param name="store">Context information to be passed in when creating sequence index entries.</param>
             <returns>The new Sequence.</returns>
         </member>
@@ -5136,7 +5110,7 @@
             <param name="store">Context information to be passed in when creating sequence index entries.</param>
             <returns>The Sequence object if found. Otherwise, an exception is thrown.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,System.Boolean,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,Goedel.Cryptography.Dare.IInternSequenceIndexEntry)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.OpenExisting(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,System.Boolean,Goedel.Cryptography.Dare.IInternSequenceIndexEntry)">
             <summary>
             Open an existing Sequence according to the information contained in the next frame to be read.
             </summary>
@@ -5171,7 +5145,7 @@
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileModeException">The file mode specified was not valid.</exception>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.NewSequence(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean,System.Byte[],Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate,Goedel.Cryptography.Dare.IInternSequenceIndexEntry)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.NewSequence(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],System.String,Goedel.Protocol.DataEncoding,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Boolean,System.Byte[],Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.IInternSequenceIndexEntry)">
             <summary>
             Create a new Sequence file of the specified type and write the initial
             data record
@@ -6212,12 +6186,6 @@
             <param name="factory"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.Intern">
-            <summary>
-            Method called to intern an element on the underlying store. May be overriden in
-            subclasses to perform store specific tasks.
-            </summary>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.CopyPayload(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.IKeyLocate,System.IO.Stream)">
             <summary>
             Return the frame payload.
@@ -6665,12 +6633,12 @@
         <member name="F:Goedel.Cryptography.Dare.StoreEntry.FrameIndex">
             <summary>The frame index within the Sequence</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.StoreEntry.Previous">
+        <member name="P:Goedel.Cryptography.Dare.StoreEntry.X_Previous">
             <summary>
             The previous object instance value for this object instance.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.StoreEntry.First">
+        <member name="P:Goedel.Cryptography.Dare.StoreEntry.X_First">
             <summary>
             The first object instance value for this object instance.
             </summary>

@@ -70,7 +70,12 @@ public class SequenceFrame {
 
 public interface IInternSequenceIndexEntry {
 
+
+    public SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory { get; }
+
     public void Intern(SequenceIndexEntry sequenceIndexEntry);
+
+
 
     }
 
@@ -192,11 +197,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     ///<summary>Delegate called to create a Sequence entry for a catalog or store.</summary> 
     public SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactoryDelegate { get; init; } = SequenceIndexEntry.Factory;
 
-    ///<summary>Delegate called to intern a Sequence entry into a catalog or store.</summary> 
-    //public InternSequenceIndexEntryDelegate InternSequenceIndexEntryDelegate { get; init; } = null;
-
-    ///<summary>Context information for use by the 
-    ///<see cref="InternSequenceIndexEntryDelegate"/>.</summary> 
     public IInternSequenceIndexEntry Store { get; set; }
 
     #endregion
@@ -303,9 +303,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// otherwise return payload contents as plaintext.</param>
     /// <param name="create">If true, create a Sequence file if none already exists</param>
     /// <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
-    /// <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
-    /// <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
-    /// items in the sequence.</param>
     /// <param name="store">Context information to be passed in when creating sequence index entries.</param>
     /// <returns>The new Sequence.</returns>
     public static Sequence Open(
@@ -319,9 +316,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     bool decrypt = true,
                     bool create = true,
                     byte[] bitmask = null,
-                    //InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
-                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null,
                     IInternSequenceIndexEntry store = null) {
+
+
 
         if (!create && !File.Exists(fileName)) {
             return null;
@@ -335,15 +332,11 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                 sequence = NewSequence(jbcdStream, decrypt:decrypt,
                     keyLocate: keyLocate, sequenceType: sequenceType, policy: policy, 
                     contentType: contentType, bitmask: bitmask,
-                    //internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
-                    sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate,
                     store:store
                     );
                 }
             else {
                 sequence = OpenExisting(jbcdStream, keyLocate, decrypt: decrypt,
-                    //internSequenceIndexEntryDelegate: internSequenceIndexEntryDelegate,
-                    sequenceIndexEntryFactoryDelegate: sequenceIndexEntryFactoryDelegate,
                     store: store);
                 }
             (sequence.KeyCollection == keyLocate).AssertTrue(NYI.Throw);
@@ -432,10 +425,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     JbcdStream jbcdStream,
                     IKeyLocate? keyCollection = null, 
                     bool decrypt = true,
-                    //InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
-                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null,
                     IInternSequenceIndexEntry store = null) {
-        sequenceIndexEntryFactoryDelegate ??= SequenceIndexEntry.Factory;
+        var sequenceIndexEntryFactoryDelegate = store?.SequenceIndexEntryFactory ?? SequenceIndexEntry.Factory;
         decrypt.Future();
 
         var sequenceIndexEntryFirst = SequenceIndexEntry.Read(jbcdStream, 0, sequence: SequenceDummy);
@@ -456,7 +447,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
         // Create the Sequence.
         var sequence = MakeNewSequence(jbcdStream, decrypt, 
-            //internSequenceIndexEntryDelegate,
                      sequenceIndexEntryFactoryDelegate,
                      sequenceType: sequenceType);
         sequence.Store = store;
@@ -568,10 +558,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                     bool decrypt=true,
                     byte[] bitmask = null,
                     JsonObject jsonObject = null,
-                    //InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate = null,
-                    SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate = null,
                     IInternSequenceIndexEntry store =null) {
-        sequenceIndexEntryFactoryDelegate ??= SequenceIndexEntry.Factory;
+        var sequenceIndexEntryFactoryDelegate = store?.SequenceIndexEntryFactory ?? SequenceIndexEntry.Factory;
         dataEncoding = dataEncoding.Default();
 
         // Initialize the header
@@ -592,7 +580,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
         // Initialize the sequence
         var sequence = MakeNewSequence(jbcdStream, decrypt, 
-            //internSequenceIndexEntryDelegate,
                      sequenceIndexEntryFactoryDelegate,
                      sequenceType: sequenceType);
 
@@ -637,7 +624,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     public static Sequence MakeNewSequence(
                     JbcdStream jbcdStream,
                     bool decrypt,
-                    //InternSequenceIndexEntryDelegate internSequenceIndexEntryDelegate,
                     SequenceIndexEntryFactoryDelegate sequenceIndexEntryFactoryDelegate 
 ,
                     SequenceType sequenceType = SequenceType.Merkle) =>
@@ -645,32 +631,27 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             SequenceType.List => new SequenceList() {
                 JbcdStream = jbcdStream,
                 Decrypt = decrypt,
-                //InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
                 SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
 
                 },
             SequenceType.Digest => new SequenceDigest() {
                 JbcdStream = jbcdStream,
                 Decrypt = decrypt,
-                //InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
                 SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             SequenceType.Chain => new SequenceChain() {
                 JbcdStream = jbcdStream,
                 Decrypt = decrypt,
-                //InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
                 SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             SequenceType.Tree => new SequenceTree() {
                 JbcdStream = jbcdStream,
                 Decrypt = decrypt,
-                //InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
                 SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             SequenceType.Merkle => new SequenceMerkleTree() {
                 JbcdStream = jbcdStream,
                 Decrypt = decrypt,
-                //InternSequenceIndexEntryDelegate = internSequenceIndexEntryDelegate,
                 SequenceIndexEntryFactoryDelegate = sequenceIndexEntryFactoryDelegate
                 },
             _ => throw new InvalidContainerTypeException()
@@ -804,11 +785,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         FrameIndexToEntry.Add(indexEntry.Index, indexEntry);
 
 
-        indexEntry.Intern();
-        //if (InternSequenceIndexEntryDelegate is not null) {
-        //    InternSequenceIndexEntryDelegate(indexEntry);
-        //    }
-
+        Store?.Intern(indexEntry);
         }
 
 
