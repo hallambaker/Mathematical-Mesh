@@ -60,20 +60,15 @@ public class PersistHost : PersistenceStoreEphemeral {
         }
 
 
+    public override void Intern(
+               SequenceIndexEntry indexEntry) {
+        base.Intern(indexEntry);
+        if (!indexEntry.HasPayload) {
+            return;
+            }
 
-    /// <summary>
-    /// Commit a New transaction to memory
-    /// </summary>
-    /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
-    protected override void MemoryCommitNew(StoreEntry containerStoreEntry) =>
-        MemoryCommitUpdate(containerStoreEntry);
 
-    /// <summary>
-    /// Commit update to memory.
-    /// </summary>
-    /// <param name="containerStoreEntry">The store entry to commit.</param>
-    protected override void MemoryCommitUpdate(StoreEntry containerStoreEntry) {
-        var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
+        var catalogItem = indexEntry.JsonObject as CatalogedMachine;
 
         if (catalogItem.Local != null) {
             dictionaryLocal2Connection.AddSafe(catalogItem.Local, catalogItem);
@@ -85,32 +80,78 @@ public class PersistHost : PersistenceStoreEphemeral {
             //    break;
             //    }
             case CatalogedStandard adminEntry: {
-                    if (DefaultEntry == null || adminEntry.Default==true || DefaultEntry.Id == adminEntry.Id) {
-                        DefaultEntry = adminEntry;
-                        }
-                    break;
+                if (DefaultEntry == null || adminEntry.Default == true || DefaultEntry.Id == adminEntry.Id) {
+                    DefaultEntry = adminEntry;
                     }
+                break;
+                }
             case CatalogedMachine adminEntry: {
-                    if (DefaultEntry == null || adminEntry.Default == true || DefaultEntry.Id == adminEntry.Id) {
-                        DefaultEntry = adminEntry;
-                        }
-                    break;
+                if (DefaultEntry == null || adminEntry.Default == true || DefaultEntry.Id == adminEntry.Id) {
+                    DefaultEntry = adminEntry;
                     }
+                break;
+                }
 
             default:
-                break;
+            break;
             }
 
-        base.MemoryCommitUpdate(containerStoreEntry);
         }
 
-    /// <summary>
-    /// Commit a Delete transaction to memory
-    /// </summary>
-    /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
-    protected override void MemoryCommitDelete(StoreEntry containerStoreEntry) {
 
-        }
+    #region // Hot mess
+
+    ///// <summary>
+    ///// Commit a New transaction to memory
+    ///// </summary>
+    ///// <param name="containerStoreEntry">The container store entry representing the transaction</param>
+    //protected override void MemoryCommitNew(StoreEntry containerStoreEntry) =>
+    //    MemoryCommitUpdate(containerStoreEntry);
+
+    ///// <summary>
+    ///// Commit update to memory.
+    ///// </summary>
+    ///// <param name="containerStoreEntry">The store entry to commit.</param>
+    //protected override void MemoryCommitUpdate(StoreEntry containerStoreEntry) {
+    //    var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
+
+    //    if (catalogItem.Local != null) {
+    //        dictionaryLocal2Connection.AddSafe(catalogItem.Local, catalogItem);
+    //        }
+
+    //    switch (catalogItem) {
+    //        //case CatalogedPending pendingEntry: {
+    //        //    DefaultPendingEntry = pendingEntry.Default ? pendingEntry : DefaultPendingEntry ?? pendingEntry;
+    //        //    break;
+    //        //    }
+    //        case CatalogedStandard adminEntry: {
+    //            if (DefaultEntry == null || adminEntry.Default == true || DefaultEntry.Id == adminEntry.Id) {
+    //                DefaultEntry = adminEntry;
+    //                }
+    //            break;
+    //            }
+    //        case CatalogedMachine adminEntry: {
+    //            if (DefaultEntry == null || adminEntry.Default == true || DefaultEntry.Id == adminEntry.Id) {
+    //                DefaultEntry = adminEntry;
+    //                }
+    //            break;
+    //            }
+
+    //        default:
+    //        break;
+    //        }
+
+    //    base.MemoryCommitUpdate(containerStoreEntry);
+    //    }
+
+    ///// <summary>
+    ///// Commit a Delete transaction to memory
+    ///// </summary>
+    ///// <param name="containerStoreEntry">The container store entry representing the transaction</param>
+    //protected override void MemoryCommitDelete(StoreEntry containerStoreEntry) {
+
+    //    } 
+    #endregion
 
 
     }

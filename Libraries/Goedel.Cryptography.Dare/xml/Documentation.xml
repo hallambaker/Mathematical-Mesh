@@ -3913,105 +3913,6 @@
             <param name="joseKey">The private key parameters.</param>
             <param name="exportable">If true, the key is exportable.</param>
         </member>
-        <member name="T:Goedel.Cryptography.Dare.IPersistenceStoreRead">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.IPersistenceStoreRead.Get(System.String)">
-            <summary>
-            Get object instance by unique identifier
-            </summary>
-            <param name="UniqueID">The unique identifier of the object instance to locate.</param>
-            <returns>True if found, otherwise false.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.IPersistenceStoreRead.Contains(System.String)">
-            <summary>
-            Determines if a object instance with the specified unique identifier is registered.
-            </summary>
-            <param name="UniqueID">The unique identifier of the object instance to locate.</param>
-            <returns>True if found, otherwise false.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.IPersistenceStoreRead.Last(System.String,System.String)">
-            <summary>
-            The last object instance that matches the specified key/value condition.
-            </summary>
-            <param name="Key">The key</param>
-            <param name="Value">The value to match</param>
-            <returns>The object instance if found, otherwise false.</returns>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.IPersistenceStoreWrite">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.IPersistenceStoreWrite.New(Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.Transaction)">
-            <summary>
-            Add new JSON object to the store with the specified identifier, unique ID and keys.
-            </summary>
-            <param name="Object">Object to add.</param>
-            <param name="transaction">The transaction context under which the object is 
-            created.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.IPersistenceStoreWrite.Update(Goedel.Protocol.JsonObject,System.Boolean,Goedel.Cryptography.Dare.Transaction)">
-            <summary>
-            Update a JSON object in the store with the specified identifier, unique ID and keys.
-            </summary>
-            <param name="Object">Object to add.</param>
-            <param name="Create">If true, create a new value if one does not already exist</param>
-            <param name="transaction">The transaction context under which the object is 
-            created.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.IPersistenceStoreWrite.Delete(System.String,Goedel.Cryptography.Dare.Transaction)">
-            <summary>
-            Delete a persistence entry
-            </summary>
-            <threadsafety static="true" instance="true"/>
-            <param name="UniqueID">The UniqueID of the object to delete</param>
-            <returns>True if the object was updated, otherwise false.</returns>
-            <param name="transaction">The transaction context under which the object is 
-            created.</param>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.IPersistenceIndex">
-            <summary>
-            Persistence store index
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.IPersistenceIndex.Last(System.String)">
-            <summary>
-            Return an IPersistenceIndexEntry index entry to the last object instance that matches 
-            the specified value. Additional values may be obtained by calling an enumerator
-            on the index entry.
-            </summary>
-            <param name="Value">The value to match</param>
-            <returns>The index entry to the object instance if found, otherwise false.</returns>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.IPersistenceIndexEntry">
-            <summary>
-            Persistence store index result. Contains a link to the current value and an 
-            iterator over future values.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.IPersistenceIndexEntry.Data">
-            <summary>
-            The Data Entry.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.IPersistenceIndexEntry.Insert(Goedel.Cryptography.Dare.IPersistenceIndexEntry,Goedel.Cryptography.Dare.IPersistenceEntry)">
-            <summary>
-            Insert a new Index entry to a list of index entries.
-            </summary>
-            <param name="Existing">The entry that will becomd the Previous entry,
-            if null, starts a new list.</param>
-            <param name="EntryData">The entry data for the new index value.</param>
-            <returns>The new entry.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.IPersistenceIndexEntry.Remove(Goedel.Cryptography.Dare.IPersistenceIndexEntry)">
-            <summary>
-            Remove an entry from a list of index entries.
-            </summary>
-            <param name="Entry"></param>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.IPersistenceEntry">
             <summary>
             Persistence store entry
@@ -4029,16 +3930,6 @@
         </member>
         <member name="P:Goedel.Cryptography.Dare.IPersistenceEntry.JsonObject">
             <summary>The persisted JsonObject</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.IPersistenceEntry.X_Previous">
-            <summary>
-            The previous object instance value for this object instance.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.IPersistenceEntry.X_First">
-            <summary>
-            The first object instance value for this object instance.
-            </summary>
         </member>
         <member name="T:Goedel.Cryptography.Dare.JbcdStream">
             <summary>
@@ -4694,21 +4585,6 @@
         <member name="F:Goedel.Cryptography.Dare.PersistenceStore.ObjectIndex">
             <summary>Index of current objects by _PrimaryKey</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.X_ObjectIndex">
-            <summary>
-            Index of items by _PrimaryKey
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.X_DeletedObjects">
-            <summary>
-            Index of items by _PrimaryKey
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.X_IndexDictionary">
-            <summary>
-            Dictionary mapping keywords to index for that keyword.
-            </summary>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.#ctor(System.String,System.String,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,Goedel.Protocol.DataEncoding,Goedel.Cryptography.IKeyLocate,System.Boolean,System.Boolean)">
             <summary>
             Open or create a persistence store in specified mode with 
@@ -4810,6 +4686,12 @@
             <param name="transaction">The transaction context in which to perform the update.</param>
             <returns>True if the object was updated, otherwise false.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Apply(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Apply the specified message to the Sequence.
+            </summary>
+            <param name="dareMessage"></param>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Contains(System.String)">
             <summary>
             Determines if a object instance with the specified unique identifier is registered
@@ -4825,65 +4707,14 @@
             <param name="uniqueID">The unique identifier of the object instance to locate.</param>
             <returns>True if found, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Last(System.String,System.String)">
-            <summary>
-            The last object instance that matches the specified key/value condition.
-            </summary>
-            <param name="key">The key</param>
-            <param name="value">The value to match</param>
-            <returns>The object instance if found, otherwise false.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.GetStoreIndex(System.String,System.Boolean)">
-            <summary>
-            Return an index for the specified key, creating it if necessary.
-            </summary>
-            <param name="key">The key for which the index is requested.</param>
-            <param name="create">If true, will create an index if none is found.</param>
-            <returns>The index.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.CommitToSequence(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.StoreEntry)">
-            <summary>
-            Write a persistence entry to the Sequence.
-            </summary>
-            <param name="item">The object to write.</param>
-            <param name="previous">The previous entry.</param>
-            <param name="dareEnvelope">The serialized persistence data.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Apply(Goedel.Cryptography.Dare.DareEnvelope)">
-            <summary>
-            Apply the specified message to the Sequence.
-            </summary>
-            <param name="dareMessage"></param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitNew(Goedel.Cryptography.Dare.StoreEntry)">
-            <summary>
-            Commit a New transaction to memory
-            </summary>
-            <param name="storeEntry">The Sequence store entry representing the transaction</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitUpdate(Goedel.Cryptography.Dare.StoreEntry)">
-            <summary>
-            Commit an Update transaction to memory
-            </summary>
-            <param name="storeEntry">The Sequence store entry representing the transaction</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.MemoryCommitDelete(Goedel.Cryptography.Dare.StoreEntry)">
-            <summary>
-            Commit a Delete transaction to memory
-            </summary>
-            <param name="storeEntry">The Sequence store entry representing the transaction</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.CommitTransaction(Goedel.Cryptography.Dare.SequenceIndexEntry,Goedel.Protocol.JsonObject)">
-            <summary>
-            Commit a transaction to memory.
-            </summary>
-            <param name="frameIndex">The Sequence position</param>
-            <param name="jSONObject">The object being committed in deserialized form.</param>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.Transaction">
             <summary>
             Base class for transactions.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.PersistentIndexEntry">
+            <summary>
+            Index entry used in a Persistence store.
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.PersistentIndexEntry.PersistenceStore">
@@ -6666,139 +6497,6 @@
             Finish writing the frame
             </summary>
             <param name="dareTrailer">The trailer to write.</param>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.StoreEntry">
-            <summary>
-            Index handle for data stored in a <see cref="T:Goedel.Cryptography.Dare.StoreIndex"/> in-memory index.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.StoreEntry.Container">
-            <summary>The Sequence the store entry belongs to</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.StoreEntry.ContainerHeader">
-            <summary>The envelope header</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.StoreEntry.ContentInfo">
-            <summary>The envelope metadata</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.StoreEntry.UniqueID">
-            <summary>Unique identifier of entry;</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.StoreEntry.FrameCount">
-            <summary>The Sequence frame</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.StoreEntry.Deleted">
-            <summary>If true the object haws been deleted and cannot be further modified.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.StoreEntry.JsonObject">
-            <summary>The JSONObject.</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.StoreEntry.FrameIndex">
-            <summary>The frame index within the Sequence</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.StoreEntry.X_Previous">
-            <summary>
-            The previous object instance value for this object instance.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.StoreEntry.X_First">
-            <summary>
-            The first object instance value for this object instance.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.StoreEntry.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.Dare.StoreEntry,Goedel.Protocol.JsonObject)">
-            <summary>
-            Constructor, creates an entry for the specified Sequence header, data and previous relationship.
-            </summary>
-            <param name="container">Sequence to create the entry in.</param>
-            <param name="dareEnvelope">The envelope entry.</param>
-            <param name="previous">Link to previous value of this object</param>
-            <param name="item">The JSONObject representation.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.StoreEntry.#ctor(Goedel.Cryptography.Dare.SequenceIndexEntry,Goedel.Cryptography.Dare.StoreEntry,Goedel.Cryptography.Dare.Sequence,Goedel.Protocol.JsonObject)">
-            <summary>
-            Constructor, creates an entry for the specified Sequence header, data and previous relationship.
-            </summary>
-            <param name="frameIndex">The position of the entry within the Sequence frame.</param>
-            <param name="previous">Link to previous value of this object</param>
-            <param name="container"></param>
-            <param name="item">The JSONObject representation.</param>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.ContainerStoreIndexEntry">
-            <summary>
-            Index entry for Item.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ContainerStoreIndexEntry.Data">
-            <summary>
-            The associated persistence data.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ContainerStoreIndexEntry.Singleton">
-            <summary>
-            If true, this is the only entry in the list.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerStoreIndexEntry.GetEnumerator">
-            <summary>
-            Implement the enumeration interface
-            </summary>
-            <returns>The enumerator</returns>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.ContainerStoreIndexEntry.Enumerator">
-            <summary>
-            Enumerator class. 
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerStoreIndexEntry.#ctor(Goedel.Cryptography.Dare.ContainerStoreIndexEntry,Goedel.Cryptography.Dare.IPersistenceEntry)">
-            <summary>
-            Insert a new Index entry to a list of index entries
-            </summary>
-            <param name="Existing">The entry that will becomd the Previous entry,
-            if null, starts a new list.</param>
-            <param name="EntryData">The entry data for the new index value.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerStoreIndexEntry.Insert(Goedel.Cryptography.Dare.IPersistenceIndexEntry,Goedel.Cryptography.Dare.IPersistenceEntry)">
-            <summary>
-            Insert a new Index entry to a list of index entries.
-            </summary>
-            <param name="Existing">The entry that will becomd the Previous entry,
-            if null, starts a new list.</param>
-            <param name="EntryData">The entry data for the new index value.</param>
-            <returns>The new entry.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.ContainerStoreIndexEntry.Remove(Goedel.Cryptography.Dare.IPersistenceIndexEntry)">
-            <summary>
-            Remove an entry from a list of index entries.
-            </summary>
-            <param name="Entry"></param>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.StoreIndex">
-            <summary>
-            In-memory index structure for Sequence data store. This offers the best performance
-            but at a significantly higher memory overhead than an index-on disk approach.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.StoreIndex.Last(System.String)">
-            <summary>
-            The set of object instances that match the specified value.
-            </summary>
-            <param name="Value">The value to match</param>
-            <returns>The object instance if found, otherwise false.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.StoreIndex.Add(Goedel.Cryptography.Dare.StoreEntry,System.String)">
-            <summary>
-            Add an entry to the index.
-            </summary>
-            <param name="ContainerStoreEntry">The entry to add.</param>
-            <param name="Value">The value to add it to</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.StoreIndex.Delete(Goedel.Cryptography.Dare.StoreEntry,System.String)">
-            <summary>
-            Remove an entry from the index.
-            </summary>
-            <param name="ContainerStoreEntry">The entry to remove.</param>
-            <param name="Value">The value to remove it from</param>
         </member>
         <member name="T:Goedel.Cryptography.Dare.StreamReaderBounded">
             <summary>

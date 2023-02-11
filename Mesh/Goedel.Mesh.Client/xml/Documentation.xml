@@ -3115,24 +3115,6 @@
             <param name="keyCollection">The key collection to use to resolve private keys.</param>
             <param name="readContainer">If true read the container to initialize the persistence store.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.MemoryCommitNew(Goedel.Cryptography.Dare.StoreEntry)">
-            <summary>
-            Commit a New transaction to memory
-            </summary>
-            <param name="containerStoreEntry">The container store entry representing the transaction</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.MemoryCommitUpdate(Goedel.Cryptography.Dare.StoreEntry)">
-            <summary>
-            Commit update to memory.
-            </summary>
-            <param name="containerStoreEntry">The store entry to commit.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.MemoryCommitDelete(Goedel.Cryptography.Dare.StoreEntry)">
-            <summary>
-            Commit a Delete transaction to memory
-            </summary>
-            <param name="containerStoreEntry">The container store entry representing the transaction</param>
-        </member>
         <member name="T:Goedel.Mesh.Client.TransactGroup">
             <summary>
             Transaction on a Mesh group account. Provides access to the account catalogs and spools.

@@ -22,6 +22,10 @@
 
 namespace Goedel.Cryptography.Dare;
 
+
+/// <summary>
+/// Index entry used in a Persistence store.
+/// </summary>
 public partial class PersistentIndexEntry : SequenceIndexEntry, IPersistenceEntry {
 
     ///<summary>The underlying spool.</summary> 
@@ -49,9 +53,9 @@ public partial class PersistentIndexEntry : SequenceIndexEntry, IPersistenceEntr
 
 
 
-    IPersistenceEntry IPersistenceEntry.X_Previous => throw new NotImplementedException();
+    //IPersistenceEntry IPersistenceEntry.X_Previous => throw new NotImplementedException();
 
-    public IPersistenceEntry X_First => throw new NotImplementedException();
+    //public IPersistenceEntry X_First => throw new NotImplementedException();
 
 
 

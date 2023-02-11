@@ -149,7 +149,7 @@ public class CatalogApplication : Catalog<CatalogedApplication> {
     /// <returns>Sequence of Mail application instances.</returns>
     public List<CatalogedApplication> GetMail() {
         var result = new List<CatalogedApplication>();
-        foreach (var entry in PersistenceStore.X_ObjectIndex) {
+        foreach (var entry in PersistenceStore.ObjectIndex) {
             var application = entry.Value;
             if (application.JsonObject is CatalogedApplicationMail catalogedApplicationMail) {
                 result.Add(catalogedApplicationMail);

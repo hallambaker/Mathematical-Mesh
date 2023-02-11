@@ -163,7 +163,7 @@ public class MeshPersist : Disposable {
     public void AccountBind(
                     AccountEntry accountEntry,
                     List<CatalogedCallsign> catalogedCallsigns) {
-        StoreEntry containerEntry;
+        IPersistenceEntry containerEntry;
         //Console.WriteLine("Start Bind");
         accountEntry.ProfileUdf = accountEntry.ProfileUdf;
 
@@ -178,7 +178,7 @@ public class MeshPersist : Disposable {
                 }
 
 
-            containerEntry = Container.New(accountEntry) as StoreEntry;
+            containerEntry = Container.New(accountEntry);
             //Console.WriteLine("Start write");
             foreach (var catalogedCallsign in catalogedCallsigns) {
                 //Console.WriteLine($"Callsign {catalogedCallsign.Canonical} -> {catalogedCallsign.ProfileUdf}");
@@ -752,11 +752,11 @@ public class MeshPersist : Disposable {
 
 
         lock (Container) {
-            var containerEntry = Container.Get(account) as StoreEntry;
+            var containerEntry = Container.Get(account) as PersistentIndexEntry;
 
             if (containerEntry is null) {
                 var profileUdf = GetProfileUdf(account);
-                containerEntry = Container.Get(profileUdf) as StoreEntry;
+                containerEntry = Container.Get(profileUdf) as PersistentIndexEntry;
                 }
 
             result = containerEntry?.JsonObject as AccountEntry;
