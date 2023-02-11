@@ -55,7 +55,7 @@ public partial class StoreTests {
 
 
     [Theory]
-    [InlineData()]
+    [InlineData(10, 5, true)]
     public void TestAppendDirect(
         int batches = 10,
         int items = 5,
@@ -93,7 +93,7 @@ public partial class StoreTests {
 
 
             var j = 0;
-            foreach (var entry in store.GetMessages(start: spoolEntry, reverse:false)) {
+            foreach (var entry in store.GetMessages(start: spoolEntry.Next(), reverse:false)) {
                 j++;
                 Console.WriteLine($"Got {j}/{items} ${entry.Index}");
                 }

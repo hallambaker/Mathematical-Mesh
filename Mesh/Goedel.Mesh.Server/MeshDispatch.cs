@@ -382,14 +382,14 @@ public class PublicMeshService : MeshService {
     public override MeshHelloResponse Hello(
             HelloRequest request, IJpcSession jpcSession) {
 
+        var envelopedProfileService = ProfileService.GetEnvelopedProfileService();
         var HelloResponse = new MeshHelloResponse() {
             Version = new Goedel.Protocol.Version() {
                 Major = 3,
                 Minor = 0,
                 Encodings = new List<Goedel.Protocol.Encoding>(),
                 },
-            EnvelopedProfileService = ProfileService.GetEnvelopedProfileService(),
-            //EnvelopedProfileHost = ProfileHost.EnvelopedProfileHost,
+            EnvelopedProfileService = envelopedProfileService,
             Status = 201 // Must specify this explicitly since not derrived from MeshResponse.
             };
 

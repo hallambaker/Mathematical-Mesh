@@ -2905,11 +2905,11 @@
         <member name="P:Goedel.Mesh.Client.MeshHost.KeyCollection">
             <summary>The Key Collection of the Mesh Machine.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.MeshHost.ObjectIndex">
+            <summary>Index of current objects by _PrimaryKey</summary> 
+        </member>
         <member name="F:Goedel.Mesh.Client.MeshHost.DictionaryMachineIdContextMesh">
             <summary>Dictionary mapping mesh UDF to Context.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.MeshHost.ObjectIndex">
-            <summary>The object index</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.MeshHost.DictionaryUDFContextMesh">
             <summary>Dictionary mapping mesh UDF to Context.</summary>

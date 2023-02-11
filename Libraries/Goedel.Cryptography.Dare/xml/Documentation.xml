@@ -4639,12 +4639,42 @@
         <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEnumerateObject`1.Dispose">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Cryptography.Dare.PersistenceStoreEphemeral">
+            <summary>
+            A persistence store that closes and reopens the underlying sequence automatically
+            on each action.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.#ctor(System.String,System.String,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.SequenceType,Goedel.Cryptography.Dare.DarePolicy,Goedel.Protocol.DataEncoding,Goedel.Cryptography.IKeyLocate,System.Boolean)">
+            <summary>
+            Open or create a persistence store in specified mode with 
+            the specified file name, content type and optional comment.
+            </summary>
+            <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
+            <param name="fileName">Log file.</param>
+            <param name="contentType">Type of data to store (the schema name).</param>
+            <param name="sequenceType">The Sequence type.</param>
+            <param name="dataEncoding">The data encoding.</param>
+            <param name="fileStatus">The file status in which to open the Sequence.</param>
+            <param name="keyLocate">The key collection to use to resolve private keys.</param>
+            <param name="read">If true read the Sequence to initialize the persistence store.</param>
+            <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.New(Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.Transaction)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.Update(Goedel.Protocol.JsonObject,System.Boolean,Goedel.Cryptography.Dare.Transaction)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.Delete(System.String,Goedel.Cryptography.Dare.Transaction)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.PersistenceStore">
             <summary>
             Persistence store based on a Sequence interface.
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.Dare.PersistenceStore.Sequence">
+        <member name="P:Goedel.Cryptography.Dare.PersistenceStore.Sequence">
             <summary>The underlying Sequence.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.PersistenceStore.FrameCount">
@@ -4693,6 +4723,16 @@
             <param name="keyLocate">The key collection to use to resolve private keys.</param>
             <param name="read">If true read the Sequence to initialize the persistence store.</param>
             <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Unload">
+            <summary>
+            Close the underlying sequence so as to save file handles.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Reload">
+            <summary>
+            Reopen the underlying sequence.
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.PersistenceStore.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.IKeyLocate,System.Boolean)">
             <summary>
@@ -4915,6 +4955,23 @@
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceFrame.Trailer">
             <summary>The current frame trailerData as a parsed object.</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.IInternSequenceIndexEntry">
+            <summary>
+            Interface describing methods used by <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/> and related
+            object stores to update status.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.IInternSequenceIndexEntry.SequenceIndexEntryFactory">
+            <summary>
+            Factory delegate returning a new <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntry"/> instance.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.IInternSequenceIndexEntry.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
+            <summary>
+            Intern the element <paramref name="sequenceIndexEntry"/> in the store.
+            </summary>
+            <param name="sequenceIndexEntry">The element to intern.</param>
         </member>
         <member name="T:Goedel.Cryptography.Dare.Sequence">
             <summary>
@@ -6216,6 +6273,12 @@
             <param name="position">The starting point for the read operation.</param>
             <param name="previous">If true, read the previous frame, otherwise 
             return the next frame.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.Previous">
+            <summary>Return the index of the previous item in the sequence.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.Next">
+            <summary>Return the index of the next item in the sequence.</summary> 
         </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.Read(Goedel.Cryptography.Dare.JbcdStream,System.Int64,System.Boolean,Goedel.Cryptography.Dare.Sequence)">
             <summary>

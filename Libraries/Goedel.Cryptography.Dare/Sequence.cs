@@ -67,12 +67,22 @@ public class SequenceFrame {
 
 #endregion
 
-
+/// <summary>
+/// Interface describing methods used by <see cref="PersistenceStore"/> and related
+/// object stores to update status.
+/// </summary>
 public interface IInternSequenceIndexEntry {
 
-
+    /// <summary>
+    /// Factory delegate returning a new <see cref="SequenceIndexEntry"/> instance.
+    /// </summary>
     public SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory { get; }
 
+
+    /// <summary>
+    /// Intern the element <paramref name="sequenceIndexEntry"/> in the store.
+    /// </summary>
+    /// <param name="sequenceIndexEntry">The element to intern.</param>
     public void Intern(SequenceIndexEntry sequenceIndexEntry);
 
 

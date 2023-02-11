@@ -2123,11 +2123,24 @@
         <member name="M:Goedel.Mesh.Catalog`1.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
+        <member name="M:Goedel.Mesh.Catalog`1.New(`0)">
             <summary>
-            Append the envelopes <paramref name="envelope"/> to the
-            store.
+            Add <paramref name="catalogEntry"/> to the catalog as a new entry.
             </summary>
+            <param name="catalogEntry">The entry to add.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog`1.Update(`0,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Update <paramref name="catalogEntry"/> in the catalog.
+            </summary>
+            <param name="catalogEntry">The entry to update.</param>
+            <param name="encryptionKey">Key under which the item is to be encrypted.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog`1.Delete(`0)">
+            <summary>
+            Delete <paramref name="catalogEntry"/> from the catalog.
+            </summary>
+            <param name="catalogEntry">The entry to delete.</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.NewEntry(`0)">
             <summary>
@@ -2150,38 +2163,6 @@
             </summary>
             <param name="key">The entry being deleted.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.UpdateLocal(Goedel.Mesh.CatalogedEntry)">
-            <summary>
-            Update the value of <paramref name="catalogedEntry"/> in local storage.
-            (i.e. append it to the log file).
-            </summary>
-            <param name="catalogedEntry">The value to update.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Catalog`1.Apply(Goedel.Cryptography.Dare.DareEnvelope)">
-            <summary>
-            Apply the update in <paramref name="dareMessage"/> to the persistence store.
-            </summary>
-            <param name="dareMessage">The update to apply.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Catalog`1.New(`0)">
-            <summary>
-            Add <paramref name="catalogEntry"/> to the catalog as a new entry.
-            </summary>
-            <param name="catalogEntry">The entry to add.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Catalog`1.Update(`0,Goedel.Cryptography.CryptoKey)">
-            <summary>
-            Update <paramref name="catalogEntry"/> in the catalog.
-            </summary>
-            <param name="catalogEntry">The entry to update.</param>
-            <param name="encryptionKey">Key under which the item is to be encrypted.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Catalog`1.Delete(`0)">
-            <summary>
-            Delete <paramref name="catalogEntry"/> from the catalog.
-            </summary>
-            <param name="catalogEntry">The entry to delete.</param>
-        </member>
         <member name="M:Goedel.Mesh.Catalog`1.Get(System.String)">
             <summary>
             Return the catalogued entry with key <paramref name="key"/> as the catalogued type.
@@ -2196,17 +2177,12 @@
             <typeparam name="TT">The parameter type to return.</typeparam>
             <returns>The instance if found, otherwise null.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.AddFromStream(System.IO.Stream,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
+        <member name="M:Goedel.Mesh.Catalog`1.Locate(System.String)">
             <summary>
-            Add the catalog entry data speficied in the stream <paramref name="stream"/>. If 
-            <paramref name="merge"/> is true, merge this contact information.
+            Locate the entry with key <paramref name="key"/>.
             </summary>
-            <param name="stream">The stream to fetch the contact data from.</param>
-            <param name="format">The file format to write the output in.</param>
-            <param name="localName">Short name for the contact to distinguish it from
-            others.</param>
-            <param name="merge">Add this data to the existing contact.</param>
-            <returns>The catalog entry</returns>
+            <param name="key">Unique identifier of the entry to locate.</param>
+            <returns>The entry (if found).</returns>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.ReadFromStream(System.IO.Stream,Goedel.Mesh.CatalogedEntryFormat)">
             <summary>
@@ -2216,20 +2192,16 @@
             <param name="format">The file format to write the output in.</param>
             <returns>The catalog entry</returns>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.ReadListFromFile(System.String,Goedel.Mesh.CatalogedEntryFormat)">
+        <member name="M:Goedel.Mesh.Catalog`1.Dump(System.IO.TextWriter)">
             <summary>
-            Read list of catalog entries from the file <paramref name="fileName"/> in format <paramref name="format"/>.
+            Write the 
             </summary>
-            <param name="fileName">The file to read from.</param>
-            <param name="format">The file format</param>
-            <returns>The list of entries read from the file.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.Locate(System.String)">
+        <member name="M:Goedel.Mesh.Catalog`1.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
             <summary>
-            Locate the entry with key <paramref name="key"/>.
+            Append the envelopes <paramref name="envelope"/> to the
+            store.
             </summary>
-            <param name="key">Unique identifier of the entry to locate.</param>
-            <returns>The entry (if found).</returns>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.GetEntry(System.String)">
             <summary>
@@ -2237,11 +2209,6 @@
             </summary>
             <param name="key">Unique identifier of entry to return.</param>
             <returns>The entry.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Catalog`1.Dump(System.IO.TextWriter)">
-            <summary>
-            Write the 
-            </summary>
         </member>
         <member name="T:Goedel.Mesh.CatalogAccess">
             <summary>
@@ -2339,9 +2306,6 @@
             <param name="catalogedEntry">The entry being added.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogAccess.UpdateEntry(Goedel.Mesh.CatalogedAccess)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogAccess.UpdateLocal(Goedel.Mesh.CatalogedEntry)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogAccess.MakeActivation(Goedel.Mesh.Right,Goedel.Cryptography.KeyPairAdvanced,System.String,Goedel.Mesh.ITransactContextAccount)">
@@ -3083,9 +3047,6 @@
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.UpdateEntry(Goedel.Mesh.CatalogedContact)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogContact.UpdateLocal(Goedel.Mesh.CatalogedEntry)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.Update(Goedel.Mesh.CatalogedContact)">
@@ -15103,6 +15064,15 @@
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
+        <member name="M:Goedel.Mesh.Spool.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
+            <summary>
+            Intern the element <paramref name="indexEntry"/> in the store.
+            </summary>
+            <param name="indexEntry">The element to intern.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.Intern(Goedel.Mesh.SpoolIndexEntry)">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.Spool.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
             <summary>
             Append the envelopes <paramref name="envelope"/> to the
@@ -15367,6 +15337,12 @@
             Constructor returning a in instance bound to the sequence <paramref name="sequence"/>
             </summary>
             <param name="sequence">The sequence the index is bound to.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolIndexEntry.Previous">
+            <summary>Return the index of the previous item in the sequence.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.SpoolIndexEntry.Next">
+            <summary>Return the index of the next item in the sequence.</summary> 
         </member>
         <member name="M:Goedel.Mesh.SpoolIndexEntry.AddReference(Goedel.Mesh.Reference,System.Int64)">
             <summary>

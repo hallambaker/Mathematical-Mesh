@@ -51,18 +51,24 @@ public class MeshHost : Disposable {
     public IKeyCollection KeyCollection => MeshMachine.KeyCollection;
 
 
+    PersistHost PersistHost { get; set;  }
+
+    ///<summary>Index of current objects by _PrimaryKey</summary> 
+    public Dictionary<string, PersistentIndexEntry> ObjectIndex => PersistHost.ObjectIndex;
 
     ///<summary>Dictionary mapping mesh UDF to Context.</summary>
     protected Dictionary<string, ContextAccount> DictionaryMachineIdContextMesh = new();
-
-    ///<summary>The object index</summary> 
-    protected Dictionary<string, StoreEntry> ObjectIndex = new();
 
     ///<summary>Dictionary mapping mesh UDF to Context.</summary>
     protected Dictionary<string, ContextAccount> DictionaryUDFContextMesh = new();
 
     ///<summary>Dictionary mapping mesh local name to Context.</summary>
     protected Dictionary<string, ContextAccount> DictionaryLocalContextMesh = new();
+
+    ///<summary>The object index</summary> 
+    //protected Dictionary<string, StoreEntry> ObjectIndex = new();
+
+
 
     ///<summary>The default context</summary> 
     public CatalogedStandard DefaultAccount=> defaultAccount;
@@ -78,15 +84,8 @@ public class MeshHost : Disposable {
     CatalogedPreconfigured defaultPreconfigured;
     static ILogger Logger => Component.Logger;
 
-    //bool SuppressDispose { get; }  = false;
-
-
     string Filename { get; }
 
-
-    //keyCollection ??
-    //        new KeyCollectionClient(this, MeshMachine.KeyCollection).CacheValue(out keyCollection);
-    //KeyCollection keyCollection;
     ///<summary>The IANA media type for the host file data.</summary>
     public const string FileTypeHost = "application/mmm-host";
 
@@ -132,19 +131,18 @@ public class MeshHost : Disposable {
     /// </summary>
     public void ReadHost() {
 
-        var old =    DictionaryMachineIdContextMesh;
+        var old = DictionaryMachineIdContextMesh;
         DictionaryMachineIdContextMesh = new();
         DictionaryUDFContextMesh = new();
         DictionaryLocalContextMesh = new();
-        ObjectIndex = new();
 
-        using var persistHost = new PersistHost(Filename, FileTypeHost,
+        PersistHost = new PersistHost(Filename, FileTypeHost,
             fileStatus: FileStatus.ConcurrentLocked,
             containerType: SequenceType.Merkle);
 
         Logger.ReloadHost();
 
-        foreach (var entry in persistHost.X_ObjectIndex) {
+        foreach (var entry in ObjectIndex) {
             ObjectIndex.Add(entry.Key, entry.Value);
 
             var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
@@ -152,7 +150,6 @@ public class MeshHost : Disposable {
 
             if (old.TryGetValue(catalogedMachine.Id, out var contextMesh)) {
                 Register(contextMesh);
-
                 }
             else {
                 // add the new context
@@ -161,9 +158,6 @@ public class MeshHost : Disposable {
             }
         
         // cleanup the old list
-
-
-        // Delete any deleted contexts
         foreach (var entry in old.Values) {
             entry.Dispose();
             }
@@ -174,30 +168,15 @@ public class MeshHost : Disposable {
     /// Force disposal of all contexts and re-load the hosts file.
     /// </summary>
     public void ReloadContexts() {
-
         foreach (var entry in DictionaryMachineIdContextMesh.Values) {
             entry.Dispose();
             }
         DictionaryMachineIdContextMesh.Clear();
+        PersistHost.Dispose();
+        PersistHost = null;
         ReadHost();
 
         }
-
-    ///// <summary>
-    ///// Get the host catalog from the specified mesh machine.
-    ///// </summary>
-    ///// <param name="meshMachine">The Mesh Machine.</param>
-    ///// <param name="containerHost">The host catalog.</param>
-    //public MeshHost(PersistHost containerHost, IMeshMachineClient meshMachine) {
-    //    this.MeshMachine = meshMachine;
-    //    this.PersistHost = containerHost;
-
-    //    foreach (var entry in containerHost.ObjectIndex) {
-    //        var catalogedMachine = entry.Elements.JsonObject as CatalogedMachine;
-    //        GetContext(catalogedMachine);
-    //        }
-
-    //    }
 
     /// <summary>
     /// Return a new MeshHost instance with the fields and properties of <paramref name="parent"/>
@@ -370,21 +349,14 @@ public class MeshHost : Disposable {
     /// already exist.</param>
     /// <param name="context">The dynamic context that interfaces to the catalog item.</param>
     public void Register(HostCatalogItem catalogItem, ContextAccount context = null, bool create = true) {
-        using var persistHost = new PersistHost(Filename, FileTypeHost,
-                fileStatus: FileStatus.ConcurrentLocked, containerType: SequenceType.Merkle);
-        // persist the permanent record.
-        var entry = persistHost.Update(catalogItem, create) as StoreEntry;
+        var entry = PersistHost.Update(catalogItem, create);
+
         var catalogedMachine = entry.JsonObject as CatalogedMachine;
         SetDefaults(catalogedMachine);
 
-        if (ObjectIndex.ContainsKey(catalogItem._PrimaryKey)) {
-            ObjectIndex.Remove(catalogItem._PrimaryKey);
-            }
-        ObjectIndex.Add(catalogItem._PrimaryKey, entry);
         if (context != null) {
             Register(context);
             }
-
         }
 
 
@@ -393,9 +365,9 @@ public class MeshHost : Disposable {
     /// </summary>
     /// <param name="key">The profile to delete</param>
     public virtual void Delete(string key) {
-        using var persistHost = new PersistHost(Filename, FileTypeHost,
-                fileStatus: FileStatus.ConcurrentLocked, containerType: SequenceType.Merkle);
-        persistHost.Delete(key);
+        //using var persistHost = new PersistHost(Filename, FileTypeHost,
+        //        fileStatus: FileStatus.ConcurrentLocked, containerType: SequenceType.Merkle);
+        PersistHost.Delete(key);
         ObjectIndex.Remove(key);
         }
     #endregion

@@ -21,6 +21,8 @@
 #endregion
 
 using Goedel.Cryptography.Jose;
+using Goedel.IO;
+using System.Net.Mime;
 
 namespace Goedel.Cryptography.Dare;
 
@@ -74,6 +76,68 @@ public class PersistenceStoreEnumerateObject<T> : IEnumerator<T>, IEnumerable<T>
     }
 
 /// <summary>
+/// A persistence store that closes and reopens the underlying sequence automatically
+/// on each action.
+/// </summary>
+public class PersistenceStoreEphemeral : PersistenceStore {
+
+    /// <summary>
+    /// Open or create a persistence store in specified mode with 
+    /// the specified file name, content type and optional comment.
+    /// </summary>
+    /// <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
+    /// <param name="fileName">Log file.</param>
+    /// <param name="contentType">Type of data to store (the schema name).</param>
+    /// <param name="sequenceType">The Sequence type.</param>
+    /// <param name="dataEncoding">The data encoding.</param>
+    /// <param name="fileStatus">The file status in which to open the Sequence.</param>
+    /// <param name="keyLocate">The key collection to use to resolve private keys.</param>
+    /// <param name="read">If true read the Sequence to initialize the persistence store.</param>
+    /// <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
+    public PersistenceStoreEphemeral(string fileName, string contentType = null,
+                FileStatus fileStatus = FileStatus.OpenOrCreate,
+                SequenceType sequenceType = SequenceType.Chain,
+                DarePolicy policy = null,
+                DataEncoding dataEncoding = DataEncoding.JSON,
+                IKeyLocate keyLocate = null,
+                bool decrypt = true) : base (fileName, contentType, fileStatus, sequenceType,
+                    policy, dataEncoding, keyLocate, true, decrypt){
+        Unload();
+        }
+
+    #region // Override update accessors so as to wrap with callse to open/close the sequence.
+    ///<inheritdoc/>
+    public override IPersistenceEntry New(JsonObject jsonObject, Transaction transaction = null) {
+        Reload();
+        var result = base.New(jsonObject, transaction);
+        Unload();
+        return result;
+        }
+
+    ///<inheritdoc/>
+    public override IPersistenceEntry Update(JsonObject jsonObject, bool create = true, Transaction transaction = null) {
+        Reload();
+        var result = base.Update(jsonObject, create, transaction);
+        Unload();
+        return result;
+        }
+
+    ///<inheritdoc/>
+    public override bool Delete(string uniqueID, Transaction transaction = null) {
+        Reload();
+        var result = base.Delete(uniqueID, transaction);
+        Unload();
+        return result;
+        }
+
+
+    #endregion
+
+    }
+
+
+
+/// <summary>
 /// Persistence store based on a Sequence interface.
 /// </summary>
 public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSequenceIndexEntry {
@@ -92,8 +156,14 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
     //JBCDStream JBCDStream;
 
     ///<summary>The underlying Sequence.</summary>
-    public Sequence Sequence;
+    public Sequence Sequence => sequence;
+    Sequence sequence = null;
 
+
+    string Filename { get; }
+    IKeyLocate KeyLocate { get; }
+
+    bool Decrypt { get; }
 
 
     /// <summary>The value of the last frame index</summary>
@@ -104,8 +174,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
     /// <summary>
     /// The disposal routine. This is wrapped to provide the IDisposable interface. 
     /// </summary>
-    protected override void Disposing() =>
-                Sequence?.Dispose();
+    protected override void Disposing() => sequence?.Dispose();
     #endregion
 
     ///<inheritdoc/>
@@ -160,7 +229,10 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
                 IKeyLocate keyLocate = null,
                 bool read = true,
                 bool decrypt = true) {
-        Sequence = Sequence.Open(
+        Filename = fileName;
+        KeyLocate = keyLocate;
+        Decrypt = decrypt;
+        sequence = Sequence.Open(
                         fileName,
                         fileStatus,
                         keyLocate,
@@ -173,7 +245,28 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
         if (read & Sequence.Length > 0) {
             Read();
             }
-        } 
+        }
+
+    /// <summary>
+    /// Close the underlying sequence so as to save file handles.
+    /// </summary>
+    protected void Unload() {
+        sequence?.Dispose();
+        sequence = null;
+        }
+
+    /// <summary>
+    /// Reopen the underlying sequence.
+    /// </summary>
+    protected void Reload() {
+        sequence = Sequence.Open(
+                Filename,
+                FileStatus.ConcurrentLocked,
+                KeyLocate,
+                decrypt: Decrypt,
+                store: this
+                );
+        }
 
 
     /// <summary>
@@ -184,16 +277,12 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
     /// <param name="keyLocate">The key collection to be used to resolve keys</param>
     public PersistenceStore(Sequence sequence, IKeyLocate keyLocate, bool read = true) {
         sequence.AssertNotNull(NoAvailableDecryptionKey.Throw);
-        Sequence = sequence;
+        this.sequence = sequence;
 
         if (read & sequence.Length > 0) {
             Read();
             }
         }
-
-    public void Complete() {
-        }
-
 
     ///<inheritdoc/>
     public void Intern(
@@ -397,10 +486,6 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
             }
         Sequence.Append(envelope);
         return true;
-
-        //var storeEntry = CommitToSequence(envelope, null, Previous);
-        //MemoryCommitDelete(storeEntry);
-        //return true;
         }
 
 
@@ -419,8 +504,6 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
         if (ObjectIndex.TryGetValue(uniqueID, out var entry)) {
             return entry.SequenceEvent != SequenceEvent.Delete;
             }
-
-
         return false;
         }
 
@@ -509,12 +592,13 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
     /// Apply the specified message to the Sequence.
     /// </summary>
     /// <param name="dareMessage"></param>
-    public virtual StoreEntry Apply(DareEnvelope dareMessage) {
+    public virtual SequenceIndexEntry Apply(DareEnvelope dareMessage) {
 
         //Console.WriteLine($"Append");
         var frameIndex = Sequence.Append(dareMessage);
         //Console.WriteLine($"Commit");
-        return CommitTransaction(frameIndex, dareMessage.JsonObject);
+        //return CommitTransaction(frameIndex, dareMessage.JsonObject);
+        return frameIndex;
         }
 
 
@@ -593,7 +677,7 @@ public class PersistenceStore : Disposable, IPersistenceStoreWrite, IInternSeque
     /// </summary>
     /// <param name="frameIndex">The Sequence position</param>
     /// <param name="jSONObject">The object being committed in deserialized form.</param>
-    public virtual StoreEntry CommitTransaction(SequenceIndexEntry frameIndex, JsonObject jSONObject) {
+    StoreEntry CommitTransaction(SequenceIndexEntry frameIndex, JsonObject jSONObject) {
 
         // This needs some rework here. Probably superfluous as we can overload the intern method.
         throw new NYI();

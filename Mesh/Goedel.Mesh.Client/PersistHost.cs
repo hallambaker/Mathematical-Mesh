@@ -27,7 +27,7 @@ namespace Goedel.Mesh.Client;
 /// Sequence persisting entries for the connection catalog. This is the only type of catalog that
 /// is never synchronized to a service under any circumstance.
 /// </summary>
-public class PersistHost : PersistenceStore {
+public class PersistHost : PersistenceStoreEphemeral {
 
     ///<summary>The default entry</summary>
     public CatalogedMachine DefaultEntry { get; private set; }

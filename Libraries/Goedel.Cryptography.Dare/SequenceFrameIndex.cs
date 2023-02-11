@@ -307,9 +307,10 @@ public partial class SequenceIndexEntry {
 
         }
 
-
+    ///<summary>Return the index of the previous item in the sequence.</summary> 
     public SequenceIndexEntry Previous() => Sequence.Previous(this);
 
+    ///<summary>Return the index of the next item in the sequence.</summary> 
     public SequenceIndexEntry Next() => Sequence.Next(this);
 
 

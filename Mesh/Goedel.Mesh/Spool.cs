@@ -69,19 +69,16 @@ public class Spool : Store {
                 decrypt, create, bitmask) {
         }
 
-    //static void InternSequenceIndexEntry(
-    //                SequenceIndexEntry sequenceIndexEntry) {
-    //    var store = sequenceIndexEntry.Sequence.Store as Spool;
-    //    store.Intern(sequenceIndexEntry);
-
-    //    }
-
-    void Intern(
+    /// <summary>
+    /// Intern the element <paramref name="indexEntry"/> in the store.
+    /// </summary>
+    /// <param name="indexEntry">The element to intern.</param>
+    public override void Intern(
                 SequenceIndexEntry indexEntry) => Intern(indexEntry as SpoolIndexEntry);
 
 
-    public void Intern(
-            SpoolIndexEntry entry) {
+    ///<inheritdoc/>
+    public void Intern(SpoolIndexEntry entry) {
 
         entry.AssertNotNull(NYI.Throw);
 

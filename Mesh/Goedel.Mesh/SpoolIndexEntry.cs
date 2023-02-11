@@ -137,6 +137,11 @@ public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
         Sequence = sequence;
         }
 
+    ///<summary>Return the index of the previous item in the sequence.</summary> 
+    public new SpoolIndexEntry Previous() => Sequence.Previous(this) as SpoolIndexEntry;
+
+    ///<summary>Return the index of the next item in the sequence.</summary> 
+    public new SpoolIndexEntry Next() => Sequence.Next(this) as SpoolIndexEntry;
 
 
     /// <summary>

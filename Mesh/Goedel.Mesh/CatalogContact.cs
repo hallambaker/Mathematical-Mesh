@@ -106,18 +106,12 @@ public class CatalogContact : Catalog<CatalogedContact> {
     #endregion
     #region // Override methods
     ///<inheritdoc/>
-    public override void NewEntry(CatalogedContact catalogedEntry) => UpdateLocal(catalogedEntry);
+    protected override void NewEntry(CatalogedContact catalogedEntry) => UpdateEntry(catalogedEntry);
 
     ///<inheritdoc/>
-    public override void UpdateEntry(CatalogedContact catalogedEntry) => UpdateLocal(catalogedEntry);
+    protected override void UpdateEntry(CatalogedContact catalogedEntry) {
 
-    #endregion
-    #region // Class methods
-
-    ///<inheritdoc/>
-    public override void UpdateLocal(CatalogedEntry catalogedEntry) {
-
-        base.UpdateLocal(catalogedEntry);
+        base.UpdateEntry(catalogedEntry);
 
         var catalogedContact = catalogedEntry as CatalogedContact;
         var contact = catalogedContact.Contact;

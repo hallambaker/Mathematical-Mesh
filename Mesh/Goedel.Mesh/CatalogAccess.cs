@@ -179,16 +179,13 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
     /// in the dictionaries serving key discovery.
     /// </summary>
     /// <param name="catalogedEntry">The entry being added.</param>
-    public override void NewEntry(CatalogedAccess catalogedEntry) => UpdateLocal(catalogedEntry);
+    protected override void NewEntry(CatalogedAccess catalogedEntry) => UpdateEntry(catalogedEntry);
 
 
     ///<inheritdoc/>
-    public override void UpdateEntry(CatalogedAccess catalogedEntry) => UpdateLocal(catalogedEntry);
+    protected override void UpdateEntry(CatalogedAccess catalogedEntry) {
 
-    ///<inheritdoc/>
-    public override void UpdateLocal(CatalogedEntry catalogedEntry) {
-
-        base.UpdateLocal(catalogedEntry);
+        base.UpdateEntry(catalogedEntry);
 
         var catalogedCapability = catalogedEntry as CatalogedAccess;
         switch (catalogedCapability?.Capability) {

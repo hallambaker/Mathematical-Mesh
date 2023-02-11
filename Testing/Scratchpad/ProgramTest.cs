@@ -58,6 +58,16 @@ partial class Program {
 
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
+
+        //StoreTests.Test().TestAppendDirect();
+        //StoreTests.Test().TestSpoolSingle();
+        //StoreTests.Test().TestCatalog();
+
+
+        TestService.Test().TestCredentialAccount();
+
+
+
         //TestSequences.Test().ZContainerFixedExchangeTest("", 
         //    DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519);
         //TestService.Test().TestProfileFails(DataValidity.CorruptSigner);
@@ -69,7 +79,7 @@ partial class Program {
         //TestSequences.Test().ZContainerTest0();
 
         //TestSequences.Test().TestBasic(SequenceType.List, 40, 5000, true, 10, 5);
-        TestStores.Test().TestCatalogBasic();
+        //TestStores.Test().TestCatalogBasic();
 
 
 
