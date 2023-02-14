@@ -244,8 +244,6 @@ public class AccountHandleLocked : Disposable {
 
         Console.WriteLine($"{AccountAddress}: Receive message {sequence.FrameCount}");
 
-        if (sequence.FrameCount == 3) {
-            }
 
         }
 
@@ -365,7 +363,7 @@ public class AccountHandleLocked : Disposable {
 
         using var spoolLocal = GetSequence(SpoolLocal.Label);
 
-        foreach (var message in spoolLocal.SelectEnvelope(0, reverse: true)) {
+        foreach (var message in spoolLocal.SelectEnvelope(-1, reverse: true)) {
             if (message?.EnvelopeId == envelopeId) {
                 return message;
                 }

@@ -505,6 +505,10 @@ public class DareEnvelopeLazy : DareEnvelope {
         set => throw new NYI(); }
     byte[] body = null;
 
+    ///<inheritdoc/>
+    public override void LoadBody() => body ??= GetBodyDelegate();
+      
+
     GetBodyDelegate GetBodyDelegate { get; }
 
     /// <summary>

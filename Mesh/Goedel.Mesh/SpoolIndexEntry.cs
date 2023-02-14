@@ -133,7 +133,7 @@ public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
     /// </summary>
     /// <param name="sequence">The sequence the index is bound to.</param>
     SpoolIndexEntry(Sequence sequence) {
-        (sequence?.Store as Spool).AssertNotNull(NYI.Throw);
+        //(sequence?.Store as Spool).AssertNotNull(NYI.Throw);
         Sequence = sequence;
         }
 

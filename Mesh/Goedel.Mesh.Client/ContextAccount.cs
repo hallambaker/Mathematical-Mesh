@@ -595,14 +595,17 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             }
 
         else {
-            using var storeLocal = new Store(StoresDirectory, statusRemote.Container,
-                        decrypt: false, create: false);
+            //using var storeLocal = new Store(StoresDirectory, statusRemote.Container,
+            //            decrypt: false, create: false);
+            //var frameCount = storeLocal.FrameCount;
+            var frameCount = Store.GetFrameCount(StoresDirectory, statusRemote.Container);
+
             //Console.WriteLine($"Sequence {statusRemote.Sequence}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
-            return storeLocal.FrameCount >= statusRemote.Index ? null :
+            return frameCount >= statusRemote.Index ? null :
                 new ConstraintsSelect() {
                     Container = statusRemote.Container,
                     IndexMax = statusRemote.Index,
-                    IndexMin = (int)storeLocal.FrameCount
+                    IndexMin = (int)frameCount
                     };
             }
         }

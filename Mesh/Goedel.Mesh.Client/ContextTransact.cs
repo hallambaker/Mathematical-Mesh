@@ -63,8 +63,9 @@ public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : Catalo
 
         foreach (var envelope in Envelopes) {
             var action = envelope.Header.ContentMeta.Event;
+            Catalog.AppendDirect(envelope);
 
-            throw new NYI();
+            //throw new NYI();
             //// update in memory structure
             //switch (action) {
             //    case PersistenceStore.EventDelete: {

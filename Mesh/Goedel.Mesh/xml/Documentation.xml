@@ -15442,6 +15442,15 @@
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
         </member>
+        <member name="M:Goedel.Mesh.Store.GetFrameCount(System.String,System.String)">
+            <summary>
+            Return the frame count of the sequence in the file store <paramref name="storeId"/> in
+            directory <paramref name="directory"/>.
+            </summary>
+            <param name="directory">Directory of store file on local machine.</param>
+            <param name="storeId">Store identifier.</param>
+            <returns>The value of the last frame index plus 1.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Store.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
             <inheritdoc/>
         </member>

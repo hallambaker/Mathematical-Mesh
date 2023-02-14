@@ -1110,6 +1110,11 @@
         <member name="F:Goedel.Cryptography.Dare.DareEnvelope.PayloadLength">
             <summary>The length of the payload value</summary> 
         </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.LoadBody">
+            <summary>
+            Force loading of the payload body.
+            </summary>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Dispose">
             <summary>
             Dispose method, frees all resources.
@@ -4981,6 +4986,14 @@
             <param name="keyLocate">The key collection to be used to resolve keys</param>
             <returns>The new Sequence.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.Sequence.GetFrameCount(System.String)">
+            <summary>
+            Return the frame count of the sequence in the file <paramref name="fileName"/> if it exists,
+            otherwise zero.
+            </summary>
+            <param name="fileName">The sequence to report the frame count of.</param>
+            <returns>The value of the last frame index plus 1.</returns>
+        </member>
         <member name="F:Goedel.Cryptography.Dare.Sequence.KeyCollection">
             <summary>
             The default key collection to use for decryption
@@ -5008,9 +5021,6 @@
             for decryption keys. If unspecified, the default KeyCollection is used.</param>
             <param name="decrypt">If true, enable decryption of Sequence payload,
             otherwise return payload contents as plaintext.</param>
-            <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
-            <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
-            items in the sequence.</param>
             <param name="store">Context information to be passed in when creating sequence index entries.</param>
             <returns>The sequence created</returns>
         </member>
@@ -6196,6 +6206,9 @@
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareEnvelopeLazy.Body">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeLazy.LoadBody">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelopeLazy.#ctor(Goedel.Cryptography.Dare.GetBodyDelegate)">

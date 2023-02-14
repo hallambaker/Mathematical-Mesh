@@ -21,6 +21,7 @@
 #endregion
 
 using Goedel.Cryptography.Standard;
+using Goedel.IO;
 
 namespace Goedel.Cryptography.Dare;
 
@@ -362,9 +363,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             throw new AccessRefused($"Failed to open {fileName}", exception);
             }
         }
-    #endregion
-
-    #region // Open Sequence 
 
     /// <summary>
     /// Open or create Sequence according to the setting of FileStatus. The underlying 
@@ -383,6 +381,25 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
         return sequence;
         }
+
+    /// <summary>
+    /// Return the frame count of the sequence in the file <paramref name="fileName"/> if it exists,
+    /// otherwise zero.
+    /// </summary>
+    /// <param name="fileName">The sequence to report the frame count of.</param>
+    /// <returns>The value of the last frame index plus 1.</returns>
+    public static long GetFrameCount(
+                    string fileName) {
+        if (!File.Exists(fileName)) {
+            return 0;
+            }
+        var jbcdStream = new JbcdStream(fileName, FileStatus.Read);
+        var sequenceIndexEntryLast = SequenceIndexEntry.ReadLast(jbcdStream, sequence: SequenceDummy);
+        return sequenceIndexEntryLast.Index + 1;
+
+        }
+
+
 
     /// <summary>
     /// The default key collection to use for decryption
@@ -426,9 +443,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
     /// <param name="decrypt">If true, enable decryption of Sequence payload,
     /// otherwise return payload contents as plaintext.</param>
-    /// <param name="internSequenceIndexEntryDelegate">Delegate to intern items into the sequence.</param>
-    /// <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
-    /// items in the sequence.</param>
     /// <param name="store">Context information to be passed in when creating sequence index entries.</param>
     /// <returns>The sequence created</returns>
     public static Sequence OpenExisting(
@@ -612,10 +626,13 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         // Write out the first frame to the container.
         sequence.SequenceIndexEntryFirst = sequence.Append(header,
             payload, trailer, dataEncoding, jsonObject);
-        sequence.SequenceIndexEntryLast = sequence.SequenceIndexEntryFirst;
+        (sequence.SequenceIndexEntryLast == sequence.SequenceIndexEntryFirst).AssertTrue(NYI.Throw);
 
         return sequence;
         }
+
+
+
 
     /// <summary>
     /// Create a new Sequence file of the specified type and write the initial
@@ -693,7 +710,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             };
 
         // Append the envelopes setting the first sequence entry index correctly.
-        sequence.SequenceIndexEntryFirst = sequence.Append(envelopes[0]);
+
+        var first = envelopes[0];
+        sequence.SequenceIndexEntryFirst = sequence.Append(first.Header, first.Body, first.Trailer);
         sequence.Append(envelopes, 1);
 
         return sequence;

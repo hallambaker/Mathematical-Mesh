@@ -391,6 +391,7 @@ public class MeshPersist : Disposable {
                 };
 
             foreach (var message in store.SelectEnvelope(selection.IndexMin??0)) {
+                message.LoadBody();
                 update.Envelopes.Add(message);
                 }
 

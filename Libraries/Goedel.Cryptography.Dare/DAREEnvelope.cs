@@ -85,6 +85,10 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     ///<summary>The length of the payload value</summary> 
     public long PayloadLength;
 
+    /// <summary>
+    /// Force loading of the payload body.
+    /// </summary>
+    public virtual void LoadBody() { }
 
     #endregion
 

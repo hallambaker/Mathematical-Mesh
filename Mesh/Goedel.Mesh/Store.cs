@@ -184,6 +184,20 @@ public class Store : Disposable, IInternSequenceIndexEntry {
         //CryptoParameters = cryptoParameters;
         }
 
+
+    /// <summary>
+    /// Return the frame count of the sequence in the file store <paramref name="storeId"/> in
+    /// directory <paramref name="directory"/>.
+    /// </summary>
+    /// <param name="directory">Directory of store file on local machine.</param>
+    /// <param name="storeId">Store identifier.</param>
+    /// <returns>The value of the last frame index plus 1.</returns>
+    public static long GetFrameCount(
+                    string directory,
+                    string? storeId) => Sequence.GetFrameCount(FileName(directory, storeId));
+
+
+
     byte[] MakeMask() {
         var bitmask = new byte[BitmaskSizeBytes];
 

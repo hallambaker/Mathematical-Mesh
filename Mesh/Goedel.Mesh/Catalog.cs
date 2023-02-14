@@ -116,7 +116,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
 
         Complete();
         InternEntry = true;
-        }
+       }
 
     #region // Update entries in the catalog
     ///<inheritdoc/>
@@ -148,7 +148,10 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
             }
         }
 
-    public void Complete() {
+    public virtual void Complete() {
+        foreach (var entry in PersistenceStore.ObjectIndex) {
+            InternCatalog(entry.Value as CatalogIndexEntry<T>);
+            }
         }
 
     #endregion
@@ -339,10 +342,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
     /// </summary>
     public override SequenceIndexEntry AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
 
-
-        throw new NYI();
-
-        ////var index = Sequence.Append(envelope, updateEnvelope);
+        return Sequence.Append(envelope, updateEnvelope);
 
         //// This is not viable because the envelope that is applied has to be the container
         //// envelope;
