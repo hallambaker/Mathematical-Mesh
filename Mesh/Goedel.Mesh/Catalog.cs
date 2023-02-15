@@ -142,7 +142,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
                 break;
                 }
             case SequenceEvent.Delete: {
-                DeleteEntry(catalogedEntry._PrimaryKey);
+                DeleteEntry(catalogIndexEntry.UniqueID);
                 break;
                 }
             }
