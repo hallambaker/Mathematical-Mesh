@@ -143,7 +143,7 @@ public class MeshHost : Disposable {
         Logger.ReloadHost();
 
         foreach (var entry in ObjectIndex) {
-            ObjectIndex.Add(entry.Key, entry.Value);
+            //ObjectIndex.Add(entry.Key, entry.Value);
 
             var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
             SetDefaults(catalogedMachine);
@@ -163,6 +163,10 @@ public class MeshHost : Disposable {
             }
         old.Clear();
         }
+
+
+
+
 
     /// <summary>
     /// Force disposal of all contexts and re-load the hosts file.

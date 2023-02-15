@@ -294,10 +294,10 @@ public class SpoolInbound : Spool {
     ///<inheritdocs/>
     public override StoreType StoreType => StoreType.Inbound;
 
-
+    ///<inheritdoc/>
     protected override void Disposing() {
         base.Disposing();
-        Console.WriteLine($"Dispose SpoolInbound");
+        //Console.WriteLine($"Dispose SpoolInbound");
         }
     #endregion
     #region // Factory methods and constructors
@@ -351,7 +351,7 @@ public class SpoolInbound : Spool {
                 byte[] bitmask = null) :
             base(directory, storeId, policy, cryptoParameters, keyCollection, meshClient,
                 decrypt, create, bitmask: bitmask) {
-        Console.WriteLine($"Create SpoolInbound");
+        //Console.WriteLine($"Create SpoolInbound");
         }
 
     #endregion

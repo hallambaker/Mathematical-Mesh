@@ -282,15 +282,16 @@ public class MeshPersist : Disposable {
     /// <param name="completeRequest">The completion request.</param>
     public CompleteResponse AccountComplete(IJpcSession jpcSession,
                 CompleteRequest completeRequest) {
-
+        Console.WriteLine($"AccountComplete {jpcSession.Credential.AuthenticationKeyId}");
         //using var accountHandle = GetAccountUnverified(completeRequest.AccountAddress);
         using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Device);
 
-
+        Console.WriteLine($"AccountComplete Got handle, find message {completeRequest.ResponseID}");
         // pull the request off SpoolLocal
         var envelope = accountHandle.GetLocal(completeRequest.ResponseID);
 
         if (envelope == null) {
+            Console.WriteLine($"Not found");
             return new CompleteResponse() {
                 StatusCode = 400,
                 StatusDescriptionCode = "MeshResponseNotFound",
@@ -798,6 +799,9 @@ public class MeshPersist : Disposable {
     AccountHandleLocked GetAccountHandleLocked(IJpcSession session,
             AccountPrivilege accountPrivilege) {
 
+        Console.WriteLine($"Request to access {session.TargetAccount} for {accountPrivilege}");
+
+
         LockedCatalogedEntry<AccountEntry> accountEntry = null;
 
         try {
@@ -814,6 +818,7 @@ public class MeshPersist : Disposable {
                 };
             }
         catch (Exception) {
+            Console.WriteLine($"Refused {session.TargetAccount} for {accountPrivilege}");
             accountEntry?.Dispose();
             throw;
             }

@@ -64,7 +64,7 @@ partial class Program {
         //StoreTests.Test().TestCatalog();
 
 
-        TestService.Test().MeshDeviceSsh();
+        TestService.Test().MeshServiceFull();
 
 
 

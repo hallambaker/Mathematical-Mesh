@@ -15156,6 +15156,9 @@
         <member name="P:Goedel.Mesh.SpoolInbound.StoreType">
             <inheritdocs/>
         </member>
+        <member name="M:Goedel.Mesh.SpoolInbound.Disposing">
+            <inheritdoc/>
+        </member>
         <member name="M:Goedel.Mesh.SpoolInbound.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate

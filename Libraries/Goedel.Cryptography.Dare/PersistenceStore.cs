@@ -313,6 +313,8 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
                 // Todo: implement checks here.
                 throw new NYI();
                 }
+            Intern (frameIndex);
+
             }
         return count;
         }

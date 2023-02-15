@@ -362,12 +362,15 @@ public class AccountHandleLocked : Disposable {
         var envelopeId = Message.GetEnvelopeId(messageId);
 
         using var spoolLocal = GetSequence(SpoolLocal.Label);
-
+        Console.WriteLine($"Items on spoolLocal {spoolLocal.FrameCount}");
+        Console.WriteLine($"Last Frame {spoolLocal.SequenceIndexEntryLast.Index}");
         foreach (var message in spoolLocal.SelectEnvelope(-1, reverse: true)) {
+
             if (message?.EnvelopeId == envelopeId) {
+                message.LoadBody();
                 return message;
                 }
-
+            Console.WriteLine($"not match {message.Index} ID={message?.EnvelopeId}");
             }
         return null;
         }

@@ -165,7 +165,7 @@ public class AccountContext : Disposable {
         AccountPrivilege accountPrivilege) {
 
         //var ProfileAccount = (AccountEntry as AccountUser).GetProfileAccount();
-
+        Console.WriteLine($"Authenticate {credential.AuthenticationKeyId}");
         if (accountPrivilege == AccountPrivilege.Read & PermitPublicReadAccess) {
             return true;
             }

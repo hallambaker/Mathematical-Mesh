@@ -631,8 +631,11 @@ public partial class ContextUser : ContextAccount {
     /// <returns>The message found.</returns>
     public Message GetPendingMessage(string tag) {
         var completed = new Dictionary<string, Message>();
+        var spool = GetSpoolInbound();
 
-        foreach (var message in GetSpoolInbound().Select(1, true)) {
+        Console.WriteLine($"Spool has messages {spool.FrameCount}");
+
+        foreach (var message in spool.Select(-1, true)) {
             var contentMeta = message.Header.ContentMeta;
 
             if (!completed.ContainsKey(contentMeta.UniqueId)) {
@@ -1260,7 +1263,7 @@ public partial class ContextUser : ContextAccount {
 
         var deviceEncrypt = request.MessageConnectionRequest.ProfileDevice.Encryption.GetKeyPair();
 
-
+        Console.WriteLine($"Make response message {respondConnection.MessageId}");
 
         transactRequest.InboundComplete(StateSpoolMessage.Closed, request, respondConnection);
         transactRequest.LocalMessage(respondConnection, deviceEncrypt);
