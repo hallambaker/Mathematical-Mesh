@@ -234,7 +234,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// </summary>
     /// <returns>The enumerator</returns>
     public virtual IEnumerator<SequenceIndexEntry> GetEnumerator() =>
-        new SequenceEnumeratorIndex(this, FrameCount, true);
+        new SequenceEnumeratorIndex(this, SequenceIndexEntryFirst, false);
 
     // Must also implement IEnumerable.GetEnumerator, but implement as a private method.
     private IEnumerator GetEnumerator1() => this.GetEnumerator();
@@ -1322,10 +1322,10 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         var record = 0;
         // read each record in turn
         foreach (var frameIndex in this) {
-            record++;
             Verify(this, darePolicy, frameIndex, record, KeyCollection, dictionary);
             dictionary.Add(record, frameIndex);
             lastFrame = frameIndex;
+            record++;
             }
 
         VerifyFinal(this, darePolicy, lastFrame);
@@ -1419,24 +1419,6 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// </summary>
     /// <param name="headers">List of headers to check</param>
     public abstract void CheckSequence(List<DareHeader> headers);
-
-    /// <summary>
-    /// Read the data in the current file 
-    /// </summary>
-    /// <param name="direction">Direction in which to perform check.
-    /// <list type="bullet"><item>1 = forward</item><item>-1 = forward</item>
-    /// <item>0 = forward then backward.</item></list></param>
-    /// <returns>True if the validation succeded, otherwise false.</returns>
-    public virtual bool Validate(long direction) => throw new NYI();
-
-    /// <summary>
-    /// Move read pointer to First 1.
-    /// </summary>
-    /// <returns>True if a next frame exists, otherwise false</returns>
-    public virtual bool Start() {
-        JbcdStream.Begin();
-        return JbcdStream.EOF;
-        }
 
     /// <summary>
     /// Return the next entry folowing the index <paramref name="indexEntry"/>.

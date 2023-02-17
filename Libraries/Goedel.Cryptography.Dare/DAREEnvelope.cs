@@ -64,7 +64,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     public int DataSequences => Header.EDSS.Count;
 
     ///<summary>The inner enveloped content.</summary>
-    public JsonObject JsonObject { get; set; }
+    public virtual JsonObject JsonObject { get; set; }
 
     ///<summary>Convenience accessor for the frame index.</summary>
     public long Index => Header.Index;

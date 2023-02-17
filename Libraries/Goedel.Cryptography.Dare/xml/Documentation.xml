@@ -5315,21 +5315,6 @@
             </summary>
             <param name="headers">List of headers to check</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Validate(System.Int64)">
-            <summary>
-            Read the data in the current file 
-            </summary>
-            <param name="direction">Direction in which to perform check.
-            <list type="bullet"><item>1 = forward</item><item>-1 = forward</item>
-            <item>0 = forward then backward.</item></list></param>
-            <returns>True if the validation succeded, otherwise false.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Start">
-            <summary>
-            Move read pointer to First 1.
-            </summary>
-            <returns>True if a next frame exists, otherwise false</returns>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Next(Goedel.Cryptography.Dare.SequenceIndexEntry)">
             <summary>
             Return the next entry folowing the index <paramref name="indexEntry"/>.
@@ -5991,8 +5976,8 @@
             <param name="frameLength">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.FrameLength"/> property.</param>
             <param name="dataPosition">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.DataPosition"/> property.</param>
             <param name="dataLength">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.DataLength"/> property.</param>
-            <param name="header">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Header"/> property.</param>
-            <param name="trailer">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Trailer"/> property.</param>
+            <param name="header">Value for the <see cref="!:SequenceIndexEntry.Header"/> property.</param>
+            <param name="trailer">Value for the <see cref="!:SequenceIndexEntry.Trailer"/> property.</param>
             <param name="jsonObject">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.JsonObject"/> property.</param>
             <returns></returns>
         </member>
@@ -6024,26 +6009,14 @@
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.DataLength">
             <summary>The length of the data segment.</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Header">
-            <summary>The frame header</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Index">
-            <summary>The frame index.</summary> 
-        </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.TreePosition">
             <summary>The frame index.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Trailer">
-            <summary>The frame trailer</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.HasPayload">
             <summary>If true, the frame has a payload section</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.JsonObject">
             <summary>The decoded JSONObject</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.EnvelopeId">
-            <summary>Convenience accessor for the envelope identifier.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.IsOpen">
             <summary>The sequenced envelope is unread in the case of a message in a spool or
@@ -6063,9 +6036,6 @@
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.KeyExchange">
             <summary>Convenience property, set true iff header contains direct key exchange.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.PayloadDigest">
-            <summary>Convenience accessor for the payload digest</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.ChainDigest">
             <summary>Convenience accessor for the payload digest</summary> 

@@ -106,8 +106,8 @@ public class Spool : Store {
                 var envelopeID = reference.EnvelopeId;
 
                 if (SequenceIndexEntryByEnvelopeId.TryGetValue(envelopeID, out var referenceEntry)) {
-                    var referenceEntrySpool = referenceEntry as SpoolIndexEntry;
-                    referenceEntrySpool.AddReference(reference, entry.Index);
+                    //var referenceEntrySpool = referenceEntry as SpoolIndexEntry;
+                    referenceEntry.AddReference(reference, entry.Index);
                     }
                 else {
                     var placeholder = new SpoolPlaceholder( reference);
@@ -172,8 +172,7 @@ public class Spool : Store {
                 bool reverse = true,
                 bool open = true,
                 FilterIndexDelegate evaluateIndex = null) =>
-        evaluateIndex != null ? new SpoolEnumerator(Sequence, start.Index, reverse, evaluateIndex) :
-            new SpoolEnumerator(Sequence, start.Index, reverse, FilterSequenceIndex.GetOpen);
+            new SpoolEnumerator(Sequence, start?.Index?? -1, reverse, evaluateIndex ?? FilterSequenceIndex.GetOpen);
 
 
 

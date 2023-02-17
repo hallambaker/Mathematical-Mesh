@@ -98,14 +98,16 @@ public class DareLogReader : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <param name="output">Stream to write the matching entries to.</param>
     /// <returns>The number of entries written.</returns>
     public int List(TextWriter output) {
-        Sequence.Start();
+
 
         int count = 0;
         foreach (var frame in Sequence) {
-            var data = frame.GetPayload(Sequence, Sequence.KeyLocate).ToUTF8();
-            var created = frame.Header.ContentMeta?.Created;
-            output.WriteLine($"[{created}],{data}");
-            count++;
+            if (frame.HasPayload) {
+                var data = frame.GetPayload(Sequence, Sequence.KeyLocate).ToUTF8();
+                var created = frame.Header.ContentMeta?.Created;
+                output.WriteLine($"[{created}],{data}");
+                count++;
+                }
             }
         return count;
 

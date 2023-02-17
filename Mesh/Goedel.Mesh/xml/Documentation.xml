@@ -15288,6 +15288,12 @@
         <member name="P:Goedel.Mesh.SpoolPlaceholder.MessageStatus">
             <summary>The message status value.</summary>
         </member>
+        <member name="P:Goedel.Mesh.SpoolPlaceholder.IsOpen">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolPlaceholder.messageStatusIndex">
+            <summary>Index of the frame in which the status was set;</summary> 
+        </member>
         <member name="M:Goedel.Mesh.SpoolPlaceholder.#ctor(Goedel.Mesh.Reference)">
             <summary>
             Constructor.

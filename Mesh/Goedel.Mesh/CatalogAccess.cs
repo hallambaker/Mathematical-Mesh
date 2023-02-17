@@ -119,7 +119,7 @@ public class CatalogAccess : Catalog<CatalogedAccess> {
         // Should treat this like any other account except that the service is granted access when it
         // connects.
 
-        Console.WriteLine($"Catalog load {FrameCount} -> {PersistenceStore.ObjectIndex.Count}");
+        //Console.WriteLine($"Catalog load {FrameCount} -> {PersistenceStore.ObjectIndex.Count}");
         }
     #endregion
     #region // Class methods

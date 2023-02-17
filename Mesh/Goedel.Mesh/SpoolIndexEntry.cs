@@ -21,6 +21,7 @@
 #endregion
 
 
+using System;
 using System.Collections;
 
 namespace Goedel.Mesh;
@@ -48,24 +49,40 @@ public class SpoolPlaceholder : ISpoolItem {
     ///<summary>The message status value.</summary>
     public StateSpoolMessage MessageStatus { get; set; }
 
+    ///<inheritdoc/>
+    public bool IsOpen { get; set; } = true;
+
+    ///<summary>Index of the frame in which the status was set;</summary> 
+    long messageStatusIndex = 0;
+
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="reference"></param>
-    public SpoolPlaceholder (Reference reference) { 
+    public SpoolPlaceholder(Reference reference) {
         }
 
     ///<inheritdoc/>
-    public void AddReference(Reference reference, long force) => throw new NYI();
+    public void AddReference(Reference reference, long index) {
+        if (index >= messageStatusIndex) {
+            References.Insert(0, reference);
+            MessageStatus = reference.MessageStatus;
+            IsOpen = MessageStatus.IsOpen();
+            }
+        else {
+            References.Add(reference);
+            }
+
+        }
     }
 
 
 
 
-/// <summary>
-/// Index entry for a spool element.
-/// </summary>
-public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
+    /// <summary>
+    /// Index entry for a spool element.
+    /// </summary>
+    public class SpoolIndexEntry : SequenceIndexEntry, ISpoolItem {
 
 
     ///<summary>The underlying spool.</summary> 

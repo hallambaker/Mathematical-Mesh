@@ -598,14 +598,14 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <returns>The latest unprocessed MessageConnectionRequest</returns>
     public Message GetPendingMessageConnectionRequest() =>
-        GetPendingMessage(AcknowledgeConnection.__Tag);
+        GetOpenMessageLast(AcknowledgeConnection.__Tag);
 
     /// <summary>
     /// Return the latest unprocessed MessageContactRequest that was received.
     /// </summary>
     /// <returns>The latest unprocessed MessageContactRequest</returns>
     public Message GetPendingMessageContactRequest() =>
-        GetPendingMessage(MessageContact.__Tag);
+        GetOpenMessageLast(MessageContact.__Tag);
 
 
     /// <summary>
@@ -613,14 +613,55 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <returns>The latest unprocessed MessageConfirmationRequest</returns>
     public Message GetPendingMessageConfirmationRequest() =>
-        GetPendingMessage(RequestConfirmation.__Tag);
+        GetOpenMessageLast(RequestConfirmation.__Tag);
 
     /// <summary>
     /// Return the latest unprocessed MessageConfirmationResponse that was received.
     /// </summary>
     /// <returns>The latest unprocessed MessageConfirmationResponse</returns>
     public Message GetPendingMessageConfirmationResponse() =>
-        GetPendingMessage(ResponseConfirmation.__Tag);
+        GetOpenMessageLast(ResponseConfirmation.__Tag);
+
+
+
+    public List<Message> GetOpenMessages(
+                    string tag = null) {
+        // get the inbound spool
+        var inbound = GetSpoolInbound();
+        var messages = new List<Message>();
+        foreach (var index in inbound.GetMessages()) {
+            if (index.HasPayload & (
+                    tag == null || index.Header.ContentMeta.MessageType == AcknowledgeConnection.__Tag)) {
+                var meshMessage = index.Message;
+                if (meshMessage != null) {
+                    messages.Add(meshMessage);
+                    }
+                }
+            }
+        return messages;
+        }
+
+    public Message GetOpenMessageLast(
+                string tag = null) {
+        // get the inbound spool
+        var inbound = GetSpoolInbound();
+        var messages = new List<Message>();
+        foreach (var index in inbound.GetMessages()) {
+            if (tag == null || index.Header.ContentMeta.MessageType == AcknowledgeConnection.__Tag) {
+                return index.Message;
+
+                }
+            }
+        return null;
+        }
+
+
+    public bool TryGetMessageById(
+                string messageID, out SpoolIndexEntry index) {
+        var inbound = GetSpoolInbound();
+        index = inbound.GetByMessageId(messageID);
+        return index != null;
+        }
 
 
     /// <summary>
@@ -630,36 +671,39 @@ public partial class ContextUser : ContextAccount {
     /// <param name="tag">Message selector.</param>
     /// <returns>The message found.</returns>
     public Message GetPendingMessage(string tag) {
-        var completed = new Dictionary<string, Message>();
-        var spool = GetSpoolInbound();
 
-        Console.WriteLine($"Spool has messages {spool.FrameCount}");
+        throw new NYI(); // ToDo: remove
 
-        foreach (var message in spool.Select(-1, true)) {
-            var contentMeta = message.Header.ContentMeta;
+        //var completed = new Dictionary<string, Message>();
+        //var spool = GetSpoolInbound();
 
-            if (!completed.ContainsKey(contentMeta.UniqueId)) {
-                var meshMessage = Message.Decode(message, KeyCollection);
-                //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
-                if (contentMeta.MessageType == tag) {
-                    return meshMessage;
-                    }
-                switch (meshMessage) {
-                    case MessageComplete meshMessageComplete: {
-                            foreach (var reference in meshMessageComplete.References) {
-                                completed.Add(reference.MessageId, meshMessageComplete);
-                                // Hack: This should make actual use of the relationship
-                                //   (Accept, Reject, Read)
-                                }
-                            break;
-                            }
+        //Console.WriteLine($"Spool has messages {spool.FrameCount}");
 
-                    default:
-                        break;
-                    }
-                }
-            }
-        return null;
+        //foreach (var message in spool.Select(-1, true)) {
+        //    var contentMeta = message.Header.ContentMeta;
+
+        //    if (!completed.ContainsKey(contentMeta.UniqueId)) {
+        //        var meshMessage = Message.Decode(message, KeyCollection);
+        //        //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
+        //        if (contentMeta.MessageType == tag) {
+        //            return meshMessage;
+        //            }
+        //        switch (meshMessage) {
+        //            case MessageComplete meshMessageComplete: {
+        //                    foreach (var reference in meshMessageComplete.References) {
+        //                        completed.Add(reference.MessageId, meshMessageComplete);
+        //                        // Hack: This should make actual use of the relationship
+        //                        //   (Accept, Reject, Read)
+        //                        }
+        //                    break;
+        //                    }
+
+        //            default:
+        //                break;
+        //            }
+        //        }
+        //    }
+        //return null;
         }
 
     /// <summary>
@@ -670,36 +714,37 @@ public partial class ContextUser : ContextAccount {
     /// <param name="read">If true, the message has already been read.</param>
     /// <returns>The message value (if unread).</returns>
     public Message GetPendingMessageByID(string messageID, out bool read) {
-        foreach (var envelope in GetSpoolInbound().Select(1, true)) {
-            var contentMeta = envelope.Header.ContentMeta;
-            var meshMessage = Message.Decode(envelope, KeyCollection);
+        throw new NYI();
+        //foreach (var envelope in GetSpoolInbound().Select(1, true)) {
+        //    var contentMeta = envelope.Header.ContentMeta;
+        //    var meshMessage = Message.Decode(envelope, KeyCollection);
 
-            // Message.FromJson(envelope.GetBodyReader());
-            //meshMessage.DareEnvelope = envelope;
-            //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
+        //    // Message.FromJson(envelope.GetBodyReader());
+        //    //meshMessage.DareEnvelope = envelope;
+        //    //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
 
-            if (meshMessage.MessageId == messageID) {
-                read = true;
-                return meshMessage;
-                }
-            switch (meshMessage) {
-                case MessageComplete meshMessageComplete: {
-                        foreach (var reference in meshMessageComplete.References) {
-                            if (reference.MessageId == messageID) {
-                                read = true;
-                                return null;
-                                }
-                            }
-                        break;
-                        }
+        //    if (meshMessage.MessageId == messageID) {
+        //        read = true;
+        //        return meshMessage;
+        //        }
+        //    switch (meshMessage) {
+        //        case MessageComplete meshMessageComplete: {
+        //                foreach (var reference in meshMessageComplete.References) {
+        //                    if (reference.MessageId == messageID) {
+        //                        read = true;
+        //                        return null;
+        //                        }
+        //                    }
+        //                break;
+        //                }
 
-                default:
-                    break;
-                }
-            }
+        //        default:
+        //            break;
+        //        }
+        //    }
 
-        read = false;
-        return null;
+        //read = false;
+        //return null;
         }
 
 
@@ -1126,7 +1171,7 @@ public partial class ContextUser : ContextAccount {
         var spoolInbound = GetSpoolInbound();
         foreach (var spoolEntry in spoolInbound.GetMessages(open: true)) {
             var meshMessage = spoolEntry.Message;
-            Logger.GotMessage(meshMessage.GetType().ToString(), meshMessage.MessageId, spoolEntry.MessageStatus);
+            Logger.GotMessage(meshMessage?.GetType().ToString(), meshMessage?.MessageId, spoolEntry.MessageStatus);
 
             if (spoolEntry.IsOpen) {
                 switch (meshMessage) {
@@ -1341,14 +1386,10 @@ public partial class ContextUser : ContextAccount {
     /// contact information in response to an initial contact request.</param>
     /// <returns></returns>
     public ProcessResult Process(string messageId, bool accept = true, bool reciprocate = true) {
+        TryGetMessageById(messageId, out var index).AssertTrue(MessageIdNotFound.Throw);
+        index.IsOpen.AssertTrue(NYI.Throw); // make a better response for already done.
 
-
-        // Hack: should be able to accept, reject specific requests, not just
-        // the last one.
-        var message = GetPendingMessageByID(messageId, out var found);
-        found.AssertTrue(MessageIdNotFound.Throw);
-
-        return Process(message, accept, reciprocate);
+        return Process(index.Message, accept, reciprocate);
 
         }
 

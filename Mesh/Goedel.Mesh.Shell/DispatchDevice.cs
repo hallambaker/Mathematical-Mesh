@@ -118,29 +118,7 @@ public partial class Shell {
         var contextAccount = GetContextUser(options);
         contextAccount.Sync();
 
-        // get the inbound spool
-        var inbound = contextAccount.GetSpoolInbound();
-
-        var messages = new List<Message>();
-        var completed = new Dictionary<string, Message>();
-
-        foreach (var message in inbound.Select(1, true)) {
-            var meshMessage = Message.FromJson(message.GetBodyReader());
-            if (!completed.ContainsKey(meshMessage.MessageId)) {
-                switch (meshMessage) {
-                    case MessageComplete meshMessageComplete: {
-                            foreach (var reference in meshMessageComplete.References) {
-                                completed.Add(reference.MessageId, meshMessageComplete);
-                                }
-                            break;
-                            }
-                    case AcknowledgeConnection : {
-                            messages.Add(meshMessage);
-                            break;
-                            }
-                    }
-                }
-            }
+         var messages = contextAccount.GetOpenMessages(AcknowledgeConnection.__Tag);
 
         var result = new ResultPending() {
             Success = true,
@@ -177,18 +155,12 @@ public partial class Shell {
 
         // Hack: should be able to accept, reject specific requests, not just
         // the last one.
-        var message = contextAccount.GetPendingMessageByID(messageID, out var found);
 
-        if (message == null) {
-            if (found) {
-                // already processed
-                throw new NYI();
-                }
-            else {
-                // Didn't receive that request
-                throw new NYI();
-                }
-            }
+        contextAccount.TryGetMessageById(messageID, out var index).AssertTrue(MessageIdNotFound.Throw);
+        index.IsOpen.AssertTrue(NYI.Throw); // make a better response for already done.
+
+
+        var message = index.Message;
         var processResult = contextAccount.Process(message, accept, roles: rights);
 
         // Hack: need to obtain the actual result.

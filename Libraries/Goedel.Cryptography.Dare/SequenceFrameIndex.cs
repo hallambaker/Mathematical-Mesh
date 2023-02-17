@@ -106,7 +106,7 @@ public delegate ItemResult FilterIndexDelegate(SequenceIndexEntry sequenceIndexE
 /// Sequence index with the decoded head and tail and extent information for
 /// the body.
 /// </summary>
-public partial class SequenceIndexEntry {
+public partial class SequenceIndexEntry : DareEnvelope {
 
     ///<summary>The Sequence that is indexed.</summary> 
     public Sequence Sequence { get; set; }
@@ -127,28 +127,28 @@ public partial class SequenceIndexEntry {
     public long DataLength { get; set; }
 
     ///<summary>The frame header</summary>
-    public DareHeader Header { get; init; }
+    //public DareHeader Header { get; init; }
 
     ///<summary>The frame index.</summary> 
-    public long Index => Header.Index;
+    //public long Index => Header.Index;
 
     ///<summary>The frame index.</summary> 
     public long? TreePosition => Header.SequenceInfo.TreePosition;
 
     ///<summary>The frame trailer</summary>
-    public DareTrailer Trailer { get; set; }
+    //public DareTrailer Trailer { get; set; }
 
     ///<summary>If true, the frame has a payload section</summary>
     public bool HasPayload => DataLength > 0;
 
     ///<summary>The decoded JSONObject</summary>
-    public virtual JsonObject JsonObject {
+    public override JsonObject JsonObject {
         get => jsonObject;
         set => jsonObject = value; }
     JsonObject jsonObject = null;
 
     ///<summary>Convenience accessor for the envelope identifier.</summary> 
-    public string EnvelopeId => Header.EnvelopeId;
+    //public string EnvelopeId => Header.EnvelopeId;
 
     ///<summary>The sequenced envelope is unread in the case of a message in a spool or
     ///not deleted or overwritten in the case of an entry in a catalog.</summary> 
@@ -171,7 +171,7 @@ public partial class SequenceIndexEntry {
 
 
     ///<summary>Convenience accessor for the payload digest</summary> 
-    public byte[] PayloadDigest => Trailer?.PayloadDigest ?? Header.PayloadDigest;
+    //public byte[] PayloadDigest => Trailer?.PayloadDigest ?? Header.PayloadDigest;
 
     ///<summary>Convenience accessor for the payload digest</summary> 
     public byte[] ChainDigest => Trailer?.ChainDigest ?? Header.ChainDigest;
@@ -397,8 +397,16 @@ public partial class SequenceIndexEntry {
             }
 
         var bytes = GetPayload(Sequence, Sequence.KeyLocate);
+
+        if (bytes.Length == 0) {
+            return null;
+            }
+
         //var text = bytes.ToUTF8();
-        return bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
+        var result = bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
+        result.Enveloped = this;
+
+        return result;
 
         }
     //=> JsonObject ??

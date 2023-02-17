@@ -39,6 +39,8 @@ namespace Goedel.XUnit;
 
 public partial class ShellTests {
 
+    public static string CommonData => "../../../CommonData/";
+
 
     [Fact]
     public void TestFilePlain() => TestFile("Hello world");
@@ -114,14 +116,14 @@ public partial class ShellTests {
     [Fact]
     public void TestLog() => LogTest(counts);
 
-    readonly string archive1 = "../CommonData/Archive1";
-    readonly string archive2 = "../CommonData/Archive2";
-    readonly string archive3 = "../CommonData/Archive3";
+    readonly string archive1 = CommonData + "Archive1";
+    readonly string archive2 = CommonData + "Archive2";
+    readonly string archive3 = CommonData + "Archive3";
 
     [Theory]
-    [InlineData(100)]
+    [InlineData()]
     public void TestSequence(
-                int count = 10,
+
                 string encrypt = null,
                 string sign = null,
                 bool purge = false,
@@ -129,7 +131,7 @@ public partial class ShellTests {
                 string initial = "Archive1") {
 
 
-        initial = initial == null ? null : "../CommonData/" + initial;
+        initial = initial == null ? null : CommonData + initial;
 
         // create Alice account
         var accountAlice = AliceAccount;
@@ -141,7 +143,7 @@ public partial class ShellTests {
 
 
         var entries = new SortedDictionary<string, string>();
-        var filename = $"archive-{encrypt}-{sign}-{count}-{purge}-{index}";
+        var filename = $"archive-{encrypt}-{sign}-{purge}-{index}";
 
         var options = encrypt == null ? "" : $" /encrypt={encrypt}" +
                     sign == null ? "" : $" /sign={sign}";

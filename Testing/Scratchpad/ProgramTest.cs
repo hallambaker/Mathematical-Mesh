@@ -59,12 +59,18 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        //StoreTests.Test().TestAppendDirect();
+        //TestPersist.Test().TestPersistenceStoreAll();
+
+
+
+        //ShellTests.Test().TestMessageConfirmationAccept();
+        ShellTests.Test().TestSequence();
         //StoreTests.Test().TestSpoolSingle();
         //StoreTests.Test().TestCatalog();
 
 
-        TestService.Test().MeshDeviceDirectKey();
+        //ShellTests.Test().TestFileEncrypt();
+        //ShellTests.Test().TestConnectRequest();
 
 
 

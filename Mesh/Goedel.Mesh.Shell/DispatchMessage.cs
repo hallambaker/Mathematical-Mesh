@@ -77,30 +77,7 @@ public partial class Shell {
 
 
         contextAccount.Sync();
-
-        // get the inbound spool
-        var inbound = contextAccount.GetSpoolInbound();
-
-        var messages = new List<Message>();
-        var completed = new Dictionary<string, Message>();
-
-        foreach (var envelope in inbound.Select(1, true)) {
-            var meshMessage = Message.Decode(envelope, contextAccount);
-            if (!completed.ContainsKey(envelope.Header.ContentMeta.UniqueId)) {
-                switch (meshMessage) {
-                    case MessageComplete meshMessageComplete: {
-                            foreach (var reference in meshMessageComplete.References) {
-                                completed.AddSafe(reference.MessageId, meshMessageComplete);
-                                }
-                            break;
-                            }
-                    default: {
-                            messages.Add(meshMessage);
-                            break;
-                            }
-                    }
-                }
-            }
+        var messages = contextAccount.GetOpenMessages();
 
         var result = new ResultPending() {
             Success = true,
@@ -121,12 +98,16 @@ public partial class Shell {
 
         // pull out the message here.
 
-        var message = contextAccount.GetPendingMessageByID(messageID, out var found);
+        //var message = contextAccount.GetPendingMessageByID(messageID, out var found);
+        contextAccount.TryGetMessageById(messageID, out var index).AssertTrue(MessageIdNotFound.Throw);
+        var message = index.Message;
+
 
         // return status as Pending / Accepted / Rejected
 
         var result = new ResultReceived() {
-            Message = message
+            Message = message,
+            Status = index.MessageStatus.ToLabel()
             };
         return result;
         }

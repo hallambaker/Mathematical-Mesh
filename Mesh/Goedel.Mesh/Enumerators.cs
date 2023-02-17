@@ -158,6 +158,11 @@ public class SpoolEnumerator : IEnumerator<SpoolIndexEntry>, IEnumerable<SpoolIn
 
     #endregion
     #region Constructors
+
+
+
+
+
     /// <summary>
     /// Constructor, returns an enumerator on the sequence <paramref name="sequence"/>, starting
     /// with the frame numbered <paramref name="start"/>. If <paramref name="reverse"/> is true, 
