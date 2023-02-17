@@ -603,6 +603,15 @@
 			Include AccountOptions
 			Include Reporting
 
+		Command ContactExport "export"
+			Brief "Export contact entry from file"
+			Parameter Identifier "id" String
+				Brief "Contact entry identifier"
+			Parameter File "file" ExistingFile
+				Brief "File containing the contact entry to add"
+			Include AccountOptions
+			Include Reporting
+
 		Command ContactDelete "delete"
 			Brief "Delete contact entry"
 			Parameter Identifier "id" String

@@ -36,6 +36,9 @@ public partial class ShellTests {
     ///after he is removed.</summary>
     [Fact]
     public void TestMessageGroup() {
+        StartTest();
+
+
         var accountGroup = "groupw@example.com";
         var filename = "Hello world".ToFileUnique();
 
@@ -63,6 +66,9 @@ public partial class ShellTests {
         deviceA.Dispatch($"group add {accountGroup} {AccountB}");
         deviceB.Dispatch($"account sync /auto");
         deviceB.Dispatch($"dare decode {result1.Filename}");
+
+
+        EndTest();
         }
 
     }

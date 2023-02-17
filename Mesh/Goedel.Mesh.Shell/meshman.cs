@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 16-Feb-23 9:07:49 PM
+//  This file was automatically generated at 17-Feb-23 12:13:03 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -229,6 +229,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			{"exchange", _ContactExchange._DescribeCommand },
 			{"request", _MessageContact._DescribeCommand },
 			{"import", _ContactImport._DescribeCommand },
+			{"export", _ContactExport._DescribeCommand },
 			{"delete", _ContactDelete._DescribeCommand },
 			{"get", _ContactGet._DescribeCommand },
 			{"list", _ContactDump._DescribeCommand }
@@ -959,6 +960,16 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
 		var result = Dispatch.ContactImport (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_ContactExport (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		ContactExport		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.ContactExport (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -11064,6 +11075,185 @@ public class _ContactImport : Goedel.Command.Dispatch ,
 
 public partial class ContactImport : _ContactImport {
     } // class ContactImport
+
+public class _ContactExport : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new ExistingFile (),
+		new String (),
+		new String (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Identifier {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _Identifier {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual ExistingFile File {
+		get => _Data[1] as ExistingFile;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _File {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[2] as String;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[3] as String;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _AutoSync {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _AutoApprove {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[6] as Flag;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[6].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[7] as Flag;
+		set => _Data[7]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[7].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[8] as Flag;
+		set => _Data[8]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[8].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "export",
+		Brief =  "Export contact entry from file",
+		HandleDelegate =  CommandLineInterpreter.Handle_ContactExport,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryParameter () {
+				Identifier = "Identifier", 
+				Default = null, // null if null
+				Brief = "Contact entry identifier",
+				Index = 0,
+				Key = ""
+				},
+			new DescribeEntryParameter () {
+				Identifier = "File", 
+				Default = null, // null if null
+				Brief = "File containing the contact entry to add",
+				Index = 1,
+				Key = ""
+				},
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 2,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 3,
+				Key = "local"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoSync", 
+				Default = "true", // null if null
+				Brief = "If true, attempt to synchronize the account to the service before operation",
+				Index = 4,
+				Key = "sync"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoApprove", 
+				Default = "true", // null if null
+				Brief = "If true, automatically approve pending requests with prior authorization.",
+				Index = 5,
+				Key = "auto"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "false", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 6,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 7,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 8,
+				Key = "json"
+				}
+			}
+		};
+
+	}
+
+public partial class ContactExport : _ContactExport {
+    } // class ContactExport
 
 public class _ContactDelete : Goedel.Command.Dispatch ,
 						IAccountOptions,
@@ -25912,6 +26102,11 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		}
 
 	public virtual ShellResult ContactImport ( ContactImport Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult ContactExport ( ContactExport Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}

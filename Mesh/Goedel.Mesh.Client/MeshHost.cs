@@ -191,7 +191,7 @@ public class MeshHost : Disposable {
     /// <param name="meshMachine">The substitute MeshMachine.</param>
     public MeshHost(MeshHost parent, IMeshMachineClient meshMachine) {
         this.MeshMachine = meshMachine;
-        //PersistHost = parent.PersistHost;
+        PersistHost = parent.PersistHost;
         DictionaryUDFContextMesh = parent.DictionaryUDFContextMesh;
         DictionaryLocalContextMesh = parent.DictionaryLocalContextMesh;
         //SuppressDispose = true;

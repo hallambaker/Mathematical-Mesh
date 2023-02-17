@@ -83,6 +83,12 @@ public partial class ShellTestBase : Disposable {
     public virtual TestCLI GetTestCLI(string machineName = null) =>
     TestEnvironment.GetTestCLI(machineName);
 
+
+    public virtual void StartTest() {
+        testEnvironment = GetTestEnvironment(DeterministicSeed.Auto());
+        }
+
+
     protected virtual void EndTest() {
         testEnvironment?.Dispose();
         testEnvironment = null;

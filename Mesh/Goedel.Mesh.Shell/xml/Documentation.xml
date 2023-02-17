@@ -242,6 +242,13 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ContactExport(Goedel.Mesh.Shell.ContactExport)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.ContactDelete(Goedel.Mesh.Shell.ContactDelete)">
             <summary>
             Dispatch method
@@ -3023,6 +3030,33 @@
             <summary>Field accessor for option [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactImport.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.File">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.LocalName">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDelete.Identifier">

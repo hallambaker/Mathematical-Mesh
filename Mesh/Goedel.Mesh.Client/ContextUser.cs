@@ -631,7 +631,7 @@ public partial class ContextUser : ContextAccount {
         var messages = new List<Message>();
         foreach (var index in inbound.GetMessages()) {
             if (index.HasPayload & (
-                    tag == null || index.Header.ContentMeta.MessageType == AcknowledgeConnection.__Tag)) {
+                    tag == null || index.MessageType == tag)) {
                 var meshMessage = index.Message;
                 if (meshMessage != null) {
                     messages.Add(meshMessage);
@@ -647,7 +647,7 @@ public partial class ContextUser : ContextAccount {
         var inbound = GetSpoolInbound();
         var messages = new List<Message>();
         foreach (var index in inbound.GetMessages()) {
-            if (tag == null || index.Header.ContentMeta.MessageType == AcknowledgeConnection.__Tag) {
+            if (tag == null || index.MessageType == tag) {
                 return index.Message;
 
                 }

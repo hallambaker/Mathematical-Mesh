@@ -59,292 +59,43 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        //TestPersist.Test().TestPersistenceStoreAll();
+
+        /* Minor */
+
+        //TestService.Test().MeshServiceFull();
+        //TestService.Test().MeshCatalogGroup();
+        //TestService.Test().MeshMessageConfirm();
+        //TestService.Test().MeshMessageContact();
 
 
-
-        //ShellTests.Test().TestMessageConfirmationAccept();
-        ShellTests.Test().TestSequence();
-        //StoreTests.Test().TestSpoolSingle();
-        //StoreTests.Test().TestCatalog();
-
-
-        //ShellTests.Test().TestFileEncrypt();
-        //ShellTests.Test().TestConnectRequest();
-
-
-
-        //TestSequences.Test().ZContainerFixedExchangeTest("", 
-        //    DareConstants.PolicyEncryptionSessionTag, true, 50, 2048, 5, 2, CryptoAlgorithmId.X25519);
-        //TestService.Test().TestProfileFails(DataValidity.CorruptSigner);
-        //TestSequences.Test().TestSignEncrypt(SequenceType.List);
-        //TestSequences.Test().TestSparse(ModeEnhance.Sparse, ModeEnhance.Sparse);
-        //TestSequences.Test().TestProof(ModeEnhance.Sparse, ModeEnhance.Sparse);
-        //TestSequences.Test().ZContainerTestList();
-
-        //TestSequences.Test().ZContainerTest0();
-
-        //TestSequences.Test().TestBasic(SequenceType.List, 40, 5000, true, 10, 5);
-        //TestStores.Test().TestCatalogBasic();
-
-
-
-        //TestPersist.Test().TestPersistenceStoreAll();
-        //TestPlatform.Test().TestWritePEMRSA();
-
-        // Most likely a faulty direct append issue going on...
-
-
-        // Next batch. Likely crashing in the service and being caught...
-        //TestService.Test().MeshDeviceConnectPIN();
-
-
-
-
-
-        //TestContainers.Test().ZTestAppend(SequenceType.Tree, 1);
-
-
-        //TestContainers.Test().TestAppend(SequenceType.Merkle, 2, 50, true);
-
-        //TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 0);
-        //TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 1);
-
-        //TestContainers.TestContainer($"ContainerMerkle", SequenceType.Merkle, 10);
-
-        //TestContainers.Test().ZContainerTest500();
-
-        //TestContainers.Test().TestSequence(SequenceType.List, 20, 3000);
-
-
-        //TestLifecycle.Test().Test_LifecycleMaster(CryptoAlgorithmId.X448);
-        //TestPresence.Test().PresenceSessionRequest();
-
-
-
-
-
-
-
-        //RegistrationTests.Test().CallsignBind();
 
         //ShellTests.Test().TestMessageGroup();
-
-        //TestPresence.Test().PresenceStatusUpdate();
-        //TestPresence.Test().PresenceHeartbeat(cycles:30, clientSkip: 1);
-
-
-        //TestPresence.Test().UdpServiceBasic(2000);
-
-
-
-        //TestPresence.Test().ClientServerDirect();
-        //TestPresence.Test().Poll();
-        //TestPresence.Test().ConnectAccept();
-        //TestPresence.Test().ClientServerDirect();
-
-
-        //TestPQC.Test().Kyber(1024, 1);
-        //TestPQC.Test().Dilithium(DilithiumMode.Mode5, 1);
-
-        //TestPQC.Test().Kyber(768);
-        //TestPQC.Test().Kyber(512);
-
-        //ServiceDiscovery.Test().TestDNSMultiple(20);
-
-
-        //ShellTests.Test().TestAccountDelete();
-        //for (int i = 0; i < 10; i++) {
-        //    ShellTestsAdmin.Test().TestMessageContactRemote();
-        //    }
-        //for (int i = 0; i < 10; i++) {
-        //    TestService.Test().MeshCatalogGroup();
-        //    }
-
-        //ShellTestsAdmin.Test().TestProfileConnectStaticQR();
-        //ShellTestsAdmin.Test().TestMessageGroup();
-
-
-        //TestPersist.Test().TestPersistenceStoreAll();
-        //TestService.Test().MeshDeviceMail();
-
-
-
-        //ShellTestsAdmin.Test().TestProfileContact();
-
-
-        //ShellTestsAdmin.Test().TestAccount();
-
-        //RegistrationTests.Test().CallsignBind();
-
-
-
-        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
-
-
-        //ShellTestsAdmin.Test().TestProfileConnectPinExpired();
-        //ShellTestsAdmin.Test().TestAccountRefreshed();
-        //ShellTests.Test().TestConnectRequest();
-
-
-
-
-        //ShellTestsAdmin.Test().TestAccount();
-
-
-        //ShellTests.Test().TestProfileSSHPrivate();
-
-
-
-        ////TestService.Test().MeshDeviceSsh();
-        //TestService.Test().MeshDeviceThresholdKey();
-
-
-
-
-
-        //ShellTests.Test().TestAccountDelete();
-
-
-        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
-        //Goedel.XUnit.MakeSiteDocs.Test().QRAuth();
-
-
-
-        //ShellTests.Test().TestProfileBookmark();
-        //ShellTests.Test().TestProfileNetwork();
-
-        //TestService.Test().MeshDeviceThresholdKey();
-        //ShellTestsAdmin.Test().TestSequence(count:100);
-
-        //for (var i = 0; i < 1000; i++) {
-        //    Screen.WriteLine($"Test {i}");
-
-        //    ShellTestsAdmin.Test().TestAccountDelete();
-        //    ShellTestsAdmin.Test().TestAccount();
-        //    }
-
+        //ShellTests.Test().TestProfileConnect();
 
         //ShellTests.Test().TestProfileContact();
 
+        ShellTestsAdmin.Test().TestLog();
 
-        //ShellTestsAdmin.Test().TestMessageContactRemote();
-        //ShellTestsAdmin.Test().TestMessageContactRemote();
+        TestSequences.Test().ZContainerIsolatedPolicy();
+        TestSequences.Test().ZContainerOnceExchange();
+        TestSequences.Test().ZContainerSessionPolicy();
 
-        //TestService.Test().MeshCatalogAccount();
+        /* Need thinking */
 
-        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+        ShellTests.Test().TestArchive();
+        ShellTests.Test().TestSequence();
+        ShellTests.Test().TestProfileConnectPinReused();
 
-        //ShellTestsAdmin.Test().TestProfileSSHPrivate();
+        /* Callsigns */
 
-        //ShellTestsAdmin.Test().TestProfileMail();
+        RegistrationTests.Test().CallsignBind();
+        RegistrationTests.Test().CallsignRegistration();
+        RegistrationTests.Test().CallsignRegistrationPaid();
+        RegistrationTests.Test().CallsignRegistrationInsufficient();
+        RegistrationTests.Test().CallsignTransfer();
+        RegistrationTests.Test().CallsignPresencePresent();
+        RegistrationTests.Test().CallsignPresenceAbsent();
 
-        ////ShellTestsAdmin.Test().TestMessageContactRemote();
-        ////ShellTestsAdmin.Test().TestFilePlain();
-
-
-        //ShellTestsAdmin.Test().TestAccountDelete();
-        //ShellTestsAdmin.Test().TestProfileConnectPin();
-        //ShellTestsAdmin.Test().TestProfileConnectPinExpired();
-        //ShellTestsAdmin.Test().TestProfileConnectPinInvalid();
-
-
-
-
-
-
-
-        //TestService.Test().MeshCatalogGroup();
-        //TestService.Test().MeshDeviceThresholdKey();
-
-
-
-
-        //ShellTestsAdmin.Test().TestProfileConnectStaticQR();
-
-
-
-        //ShellTestsAdmin.Test().TestCreateSuper();
-
-
-        //ShellTestsAdmin.Test().TestMessageConfirmationAccept();
-        //ShellTestsAdmin.Test().TestProfileConnect();
-
-        //ShellTestsAdmin.Test().TestProfileConnect();
-
-
-        //ShellTestsAdmin.Test().TestCreateDevice();
-
-
-
-
-        //ShellTestsRud.Test().TestHello();
-
-
-        // Refactor to make KeyCredential Mesh a subclass and chain Mesh credential off that.
-        //ShellTestsHTTP.Test().TestAccount();
-
-        //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
-        //ShellTests.Test().TestMessageGroup();
-
-
-
-        //TestService.Test().MeshDeviceDirectKey();
-
-
-
-        //Debug();
-
-
-        //TestService.Test().MeshEscrowRecover();
-
-
-
-        //TestService.Test().MeshDeviceConnectPIN();
-        //TestService.Test().MeshDeviceConnectDynamicQR();
-        //TestService.Test().MeshDeviceConnectStaticQR();
-
-        //TestService.Test().MeshDeviceMail();
-
-
-        //ShellTests.Test().TestProfileConnectPinReused();
-        //ShellTests.Test().TestProfileMail();
-        //ShellTests.Test().TestProfileSSHPrivate();
-        //ShellTests.Test().TestProfileSSHPublic();
-
-        //TestService.Test().MeshDeviceSsh();
-
-
-        //TestService.Test().MeshDeviceDeveloper();
-
-
-
-        //TestService.Test().MeshDeviceConnectPIN();
-        //TestService.Test().MeshDeviceConnectDynamicQR();
-
-
-
-        //ShellTests.Test().TestProfileConnectPin();
-
-
-        //ShellTests.Test().TestProfileConnect();
-        //ShellTests.Test().TestProfileConnectDynamicQR();
-
-
-        //ShellTestsHTTP.Test().TestMessageGroup();
-        //TestPresentationMesh.Test().TestMeshService();
-
-
-        //// This is failing as a result of Operate having a lock that is acquired but not released.
-        //ShellTestsAdmin.Test().TestAccount();
-
-
-        //TestPresentationMesh.Test().TestAccountDeletion();
-        //TestPresentationMesh.Test().TestDeviceDeletion();
-
-        //TestPresentationMesh.Test().TestImpersonationConfirm();
-
-        //TestPresentationMesh.Test().TestImpersonationGroup();
         Logger.LogInformation("End test {time}, Fail={Softfail}", System.DateTime.Now, TestCLI.CountSoftFail);
         //Screen.WriteLine($"Total Soft fail {TestCLI.CountSoftFail}");
         }

@@ -154,6 +154,28 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
+    public override ShellResult ContactExport(ContactExport options) {
+        var contextUser = GetContextUser(options);
+        var identifier = options.Identifier.Value;
+        var file = options.File.Value;
+        var result = contextUser.GetContact(identifier);
+
+        using var fileStream = file.OpenFileNew();
+        result.WriteToStream(fileStream);
+
+
+        return new ResultEntry() {
+            Success = result != null,
+            CatalogEntry = result
+            };
+        }
+
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
     public override ShellResult ContactDelete(ContactDelete options) {
         var contextUser = GetContextUser(options);
         var key = options.Identifier.Value;
@@ -186,7 +208,9 @@ public partial class Shell {
 
         var catalog = contextUser.GetStore(CatalogContact.Label) as CatalogContact;
         foreach (var entry in catalog) {
-            result.CatalogedEntries.Add(entry);
+            if (entry != null) {
+                result.CatalogedEntries.Add(entry);
+                }
             }
 
         return result;

@@ -84,6 +84,8 @@ public partial class ShellTests {
     [Fact]
     public void TestProfileContact() {
 
+        StartTest();
+
         var device1 = GetTestCLI("Device1");
         var device2 = GetTestCLI("Device2");
         var device3 = GetTestCLI("Device3");
@@ -107,9 +109,9 @@ public partial class ShellTests {
 
 
         // export the contact data to a file
-        device1.Dispatch($"contact get {AliceAccount} {fileA}");
-        device2.Dispatch($"contact get {AccountB} {fileB}");
-        device3.Dispatch($"contact get {AccountC} {fileC}");
+        device1.Dispatch($"contact export {AliceAccount} {fileA}");
+        device2.Dispatch($"contact export {AccountB} {fileB}");
+        device3.Dispatch($"contact export {AccountC} {fileC}");
 
         // Add a single entry and check that it is correctly registered.
         var contactID1 = GetContactKey(device1.Dispatch($"contact import {fileB}"));
