@@ -199,7 +199,7 @@ public partial class CreateExamples {
     public void Examples() {
 
         outputPath = Directory.GetCurrentDirectory();
-        TestEnvironment = new TestEnvironmentCommon();
+        testEnvironment = new TestEnvironmentCommon();
 
         PlatformCrypto();
 
@@ -310,7 +310,8 @@ public partial class CreateExamples {
         return $">>>> Unfinished {example}\n\n" ?? "TBS";
         }
 
-    public TestEnvironmentCommon TestEnvironment;
+    public virtual TestEnvironmentCommon TestEnvironment => testEnvironment;
+    TestEnvironmentCommon testEnvironment;
     public TestCLI GetTestCLI(string MachineName = null) {
         var testShell = new TestShell(TestEnvironment, MachineName);
         return new TestCLI(testShell);

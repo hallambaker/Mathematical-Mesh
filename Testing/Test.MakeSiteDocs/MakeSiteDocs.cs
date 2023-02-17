@@ -25,13 +25,20 @@ using ExampleGenerator;
 using Goedel.Test;
 using Goedel.Mesh.Test;
 using Xunit;
-
+using Goedel.Utilities;
 
 namespace Goedel.XUnit;
 
 public class MakeSiteDocs : CreateExamples {
-    public static MakeSiteDocs Test() => new();
+    public static new MakeSiteDocs Test() => new();
 
+
+    public override TestEnvironmentCommon TestEnvironment => testEnvironment ??
+        new TestEnvironmentCommon(DeterministicSeed.AutoClean()) {
+            //JpcConnection = Protocol.JpcConnection.Rud
+            JpcConnection = Protocol.JpcConnection.Serialized
+            }.CacheValue(out testEnvironment);
+    TestEnvironmentCommon testEnvironment;
 
     public MakeSiteDocs() {
 
@@ -45,13 +52,10 @@ public class MakeSiteDocs : CreateExamples {
         Group = new LayerGroup(this);
         NYI = new LayerNYI(this);
 
-
-
-
-        TestEnvironment = new TestEnvironmentCommon(DeterministicSeed.CreateParent()) {
-            //JpcConnection = Protocol.JpcConnection.Rud
-            JpcConnection = Protocol.JpcConnection.Serialized
-            };
+        //TestEnvironment = new TestEnvironmentCommon(DeterministicSeed.CreateParent()) {
+        //    //JpcConnection = Protocol.JpcConnection.Rud
+        //    JpcConnection = Protocol.JpcConnection.Serialized
+        //    };
         }
 
 
@@ -149,6 +153,9 @@ public class MakeSiteDocs : CreateExamples {
 
     [Fact]
     public void CreateMail() {
+
+
+
         ServiceConnect();
         CreateAliceAccount();
         ConnectDevice();

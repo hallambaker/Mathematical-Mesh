@@ -61,6 +61,9 @@ public partial class CreateExamples {
     ///<summary></summary> 
     public int CountObsolete = 0;
 
+
+    public static CreateExamples Test() => new();
+
     public void ReportMissingExample() {
 
         ReportMissing();
@@ -667,9 +670,10 @@ public partial class CreateExamples {
         Contact.ContactAliceResponse.AddRange(Contact.ContactAliceAccept);
         Contact.ContactAliceResponse.AddRange(Contact.ContactAliceList);
 
-        Contact.ContactBobStatus = Bob1.Example(
-            $"message status"
-             );
+
+        //Contact.ContactBobStatus = Bob1.Example(
+        //    $"message status"
+        //     );
 
         Contact.ContactBobFinal = Bob1.Example(
                 $"account sync /auto",

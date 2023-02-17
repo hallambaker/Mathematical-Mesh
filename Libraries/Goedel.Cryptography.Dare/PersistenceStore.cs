@@ -64,7 +64,20 @@ public class PersistenceStoreEnumerateObject<T> : IEnumerator<T>, IEnumerable<T>
     #endregion
     #region // Implementation
     ///<inheritdoc/>
-    public bool MoveNext() => Enumerator.MoveNext();
+    public bool MoveNext() {
+        var result = Enumerator.MoveNext();
+        if (result == false) {
+            return false;
+            }
+
+        while (Current == null) {
+            if (!Enumerator.MoveNext()) {
+                return false;
+                }
+            }
+
+        return true;
+        }
 
     ///<inheritdoc/>
     public void Reset() => Enumerator.Reset();

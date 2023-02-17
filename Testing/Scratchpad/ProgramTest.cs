@@ -22,6 +22,7 @@
 
 
 using System;
+using ExampleGenerator;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
@@ -74,7 +75,7 @@ partial class Program {
 
         //ShellTests.Test().TestProfileContact();
 
-        ShellTestsAdmin.Test().TestLog();
+        Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
         TestSequences.Test().ZContainerIsolatedPolicy();
         TestSequences.Test().ZContainerOnceExchange();
