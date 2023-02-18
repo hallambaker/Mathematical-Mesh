@@ -29,6 +29,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		 HashReference (Index);
 		 WebDare (Index);
 		 DareReference (Index);
+		 WebLog (Index);
+		 LogReference (Index);
+		 WebArchive (Index);
+		 ArchiveReference (Index);
 		//
 		// *****Mesh Core
 		 WebAccount (Index);

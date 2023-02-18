@@ -15,21 +15,21 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	
 
 	//
-	// WebDare
+	// WebArchive
 	//
-	public static void WebDare(CreateExamples Examples) { /* XFile  */
-			using var _Output = new StreamWriter("Guide/dare.md");
+	public static void WebArchive(CreateExamples Examples) { /* XFile  */
+			using var _Output = new StreamWriter("Guide/archive.md");
 		Examples._Output = _Output;
-		Examples._WebDare(Examples);
+		Examples._WebArchive(Examples);
 		}
-	public void _WebDare(CreateExamples Examples) {
+	public void _WebArchive(CreateExamples Examples) {
 
-			 MakeTitle ("dare");
+			 MakeTitle ("archive");
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("**Under development**: This command set is currently under development and many\n{0}", _Indent);
 			_Output.Write ("features are documented but not yet implemented. Use with care!\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `dare` command set contains commands that encode, decode and verify \n{0}", _Indent);
+			_Output.Write ("The `archive` command set contains commands that encode, decode and verify \n{0}", _Indent);
 			_Output.Write ("DARE envelopes and sequences.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## Encoding, decoding and verifying individual files in a DARE envelope.\n{0}", _Indent);
@@ -241,16 +241,16 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	
 
 	//
-	// DareReference
+	// ArchiveReference
 	//
-	public static void DareReference(CreateExamples Examples) { /* XFile  */
-			using var _Output = new StreamWriter("Reference/dare.md");
+	public static void ArchiveReference(CreateExamples Examples) { /* XFile  */
+			using var _Output = new StreamWriter("Reference/archive.md");
 		Examples._Output = _Output;
-		Examples._DareReference(Examples);
+		Examples._ArchiveReference(Examples);
 		}
-	public void _DareReference(CreateExamples Examples) {
+	public void _ArchiveReference(CreateExamples Examples) {
 
-			 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Dare;
+			 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Archive;
 			 Describe(CommandSet);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("**Under development**: This command set is currently under development and many\n{0}", _Indent);
@@ -261,95 +261,69 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			// ------------------ archive append
+			 Describe(CommandSet, ArchiveAppend._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `dare append` command appends the specified file to the sequence.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			 ConsoleReference (ShellSequence.SequenceAppend);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			// ------------------ dare decode
-			 Describe(CommandSet, _DareDecode._DescribeCommand);
+			// ------------------ ArchiveCreate create
+			 Describe(CommandSet, _ArchiveCreate._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `dare decode` command decodes the specified input file using keys found in the\n{0}", _Indent);
-			_Output.Write ("currently active key collection.\n{0}", _Indent);
+			_Output.Write ("The `dare archive` command creates an archive sequence with the specified cryptographic\n{0}", _Indent);
+			_Output.Write ("enhancements. If a file or directory is specified, they are added to the archive and\n{0}", _Indent);
+			_Output.Write ("an index appended to the end.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The active key collection may be overriden using the `/mesh` option.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `/out` option may be used to specify the output file name. Otherwise the output\n{0}", _Indent);
-			_Output.Write ("file name is the input file name stripped of the extension `.dare` if present or\n{0}", _Indent);
-			_Output.Write ("with the extension `.undare` otherwise.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			 ConsoleReference (ShellDare.DareDecodeSymmetric);
+			 ConsoleReference (ShellSequence.SequenceArchive);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
+			// ------------------ archive copy
+			 Describe(CommandSet, _ArchiveCopy._DescribeCommand);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The `dare copy` command copies a sequence applying the specified filtering \n{0}", _Indent);
+			_Output.Write ("and indexing criteria.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			 ConsoleReference (ShellSequence.SequenceArchiveCopy);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			// ------------------ dare earl
-			 Describe(CommandSet, _DareEARL._DescribeCommand);
+			// ------------------ archive delete
+			 Describe(CommandSet, _ArchiveDelete._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The {1} command is used to encode an input file and return\n{0}", _Indent, ToCommand("dare earl"));
-			_Output.Write ("(or log) the corresponding identifier information in a format that enables use\n{0}", _Indent);
-			_Output.Write ("as an Encrypted Authenticated Resource Locator.\n{0}", _Indent);
+			_Output.Write ("The `dare delete` command marks the specified file entry as deleted in the\n{0}", _Indent);
+			_Output.Write ("sequence but does not erase the data from the file.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("If the input file specified is a file, the tool processes that file. If the\n{0}", _Indent);
-			_Output.Write ("input file is a directory, the tool processes all the files in the directory. If the\n{0}", _Indent);
-			_Output.Write ("`/sub` option is specified, subdirectories are processed recursively.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("If the `/log` or `/new` option is specified, the filename, encryption key and other details of\n{0}", _Indent);
-			_Output.Write ("each completed transaction are written to a DARE Sequence Log. If `/log` is specified, the \n{0}", _Indent);
-			_Output.Write ("file is always processed. If `/new` is specified, files are only\n{0}", _Indent);
-			_Output.Write ("processed if there is no existing entry in the specified log.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The log file must be initialized before use (eg. using the {1} \n{0}", _Indent, ToCommand("dare log"));
-			_Output.Write ("command). Log entries are written with the cryptographic enhancements specified in\n{0}", _Indent);
-			_Output.Write ("the sequence using the active key collection.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The active key collection may be overriden using the `/mesh` option.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			 ConsoleReference (ShellDare.DareEarl);
+			 ConsoleReference (ShellSequence.SequenceDelete);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			// ------------------ dare encode
-			 Describe(CommandSet, _DareEncode._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `dare encode` command encrypts a file and writes the output to a DARE Message.\n{0}", _Indent);
+			// ------------------ archive dir
+			 Describe(CommandSet, _ArchiveDir._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("If the input file specified is a file, the tool processes that file. If the\n{0}", _Indent);
-			_Output.Write ("input file is a directory, the tool processes all the files in the directory. If the\n{0}", _Indent);
-			_Output.Write ("`/sub` option is specified, subdirectories are processed recursively.\n{0}", _Indent);
+			_Output.Write ("The `dare delete` command marks the specified file entry as deleted in the\n{0}", _Indent);
+			_Output.Write ("sequence but does not erase the data from the file.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("By default, a digest value is calculated over the message body (i.e. the ciphertext\n{0}", _Indent);
-			_Output.Write ("if it is encrypted). This may be suppressed using the `/nohash` option.\n{0}", _Indent);
+			 ConsoleReference (ShellSequence.SequenceDelete);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The tool attempts to determine the IANA media type of the file from the file \n{0}", _Indent);
-			_Output.Write ("extension. This may be overriden using the /cty `option`.\n{0}", _Indent);
+			// ------------------ dare extract
+			 Describe(CommandSet, _ArchiveExtract._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Encryption and Signature enhancements may be specified with the `/sign` and \n{0}", _Indent);
-			_Output.Write ("`/encrypt` options. \n{0}", _Indent);
+			_Output.Write ("The `dare extract` command extracts the specified sequence entries and writes them\n{0}", _Indent);
+			_Output.Write ("to files.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("* Key parameters that have the form of a UDF secret (Exxx-xxxx-...) are interpreted\n{0}", _Indent);
-			_Output.Write ("as symmetric encryption keys and used to encrypt the contents directly.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("* Key parameters that have the form of an Internet user account (\\<user\\>@\\<domain\\> are \n{0}", _Indent);
-			_Output.Write ("resolved according to the currently active key collection.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The active key collection may be overriden using the `/mesh` option.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("Algorithms for public key operations are inferred from the keys provided. The \n{0}", _Indent);
-			_Output.Write ("`\\alg` option may be used to override the inferred or default algorithms.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `/out` option may be used to specify the output file name. Otherwise the output\n{0}", _Indent);
-			_Output.Write ("file name is the input file name with the additional extension `.dare`.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			 ConsoleReference (ShellDare.DareSymmetric);
+			 ConsoleReference (ShellSequence.SequenceArchiveExtractFile);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			// ------------------ dare verify
-			 Describe(CommandSet, _DareVerify._DescribeCommand);
+			// ------------------ dare index
+			 Describe(CommandSet, _ArchiveIndex._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The `dare verify` command verifies the specified input file using keys found in the\n{0}", _Indent);
-			_Output.Write ("currently active key collection and reports success or failure.\n{0}", _Indent);
+			_Output.Write ("The `dare index` command appends an index record to the end of the sequence.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The active key collection may be overriden using the `/mesh` option.\n{0}", _Indent);
+			 ConsoleReference (ShellSequence.SequenceIndex);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			 ConsoleReference (ShellDare.DareVerifySymmetric);
+			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);

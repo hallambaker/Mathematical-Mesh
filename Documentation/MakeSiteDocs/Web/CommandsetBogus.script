@@ -237,6 +237,41 @@ DARE envelopes and sequences.
 
 
 
+#! ------------------ dare append
+#% Describe(CommandSet, _DareAppend._DescribeCommand);
+
+The `dare append` command appends the specified file to the sequence.
+
+#% ConsoleReference (ShellSequence.SequenceAppend);
+
+
+#! ------------------ dare archive
+#% Describe(CommandSet, _DareArchive._DescribeCommand);
+
+The `dare archive` command creates an archive sequence with the specified cryptographic
+enhancements. If a file or directory is specified, they are added to the archive and
+an index appended to the end.
+
+#% ConsoleReference (ShellSequence.SequenceArchive);
+
+
+#! ------------------ dare create
+#% Describe(CommandSet, _DareCreate._DescribeCommand);
+
+
+The `dare create` command creates an empty DARE sequence with the specified
+security policy.
+
+#% ConsoleReference (ShellSequence.SequenceCreate);
+
+
+#! ------------------ dare copy
+#% Describe(CommandSet, _DareCopy._DescribeCommand);
+
+The `dare copy` command copies a sequence applying the specified filtering 
+and indexing criteria.
+
+#% ConsoleReference (ShellSequence.SequenceArchiveCopy);
 
 
 #! ------------------ dare decode
@@ -254,6 +289,13 @@ with the extension `.undare` otherwise.
 #% ConsoleReference (ShellDare.DareDecodeSymmetric);
 
 
+#! ------------------ dare delete
+#% Describe(CommandSet, _DareDelete._DescribeCommand);
+
+The `dare delete` command marks the specified file entry as deleted in the
+sequence but does not erase the data from the file.
+
+#% ConsoleReference (ShellSequence.SequenceDelete);
 
 
 #! ------------------ dare earl
@@ -314,6 +356,42 @@ The `/out` option may be used to specify the output file name. Otherwise the out
 file name is the input file name with the additional extension `.dare`.
 
 #% ConsoleReference (ShellDare.DareSymmetric);
+
+
+#! ------------------ dare extract
+#% Describe(CommandSet, _DareExtract._DescribeCommand);
+
+The `dare extract` command extracts the specified sequence entries and writes them
+to files.
+
+#% ConsoleReference (ShellSequence.SequenceArchiveExtractFile);
+
+
+#! ------------------ dare index
+#% Describe(CommandSet, _DareIndex._DescribeCommand);
+
+The `dare index` command appends an index record to the end of the sequence.
+
+#% ConsoleReference (ShellSequence.SequenceIndex);
+
+
+
+
+#! ------------------ dare list
+#% Describe(CommandSet, _DareList._DescribeCommand);
+
+The `dare list` command returns a list of items in the specified sequence..
+
+#% ConsoleReference (ShellSequence.SequenceList);
+
+
+#! ------------------ dare log
+#% Describe(CommandSet, _DareLog._DescribeCommand);
+
+The `dare log` command appends a text entry to the specified DARE sequence.
+
+#% ConsoleReference (ShellSequence.SequenceCreate);
+
 
 
 #! ------------------ dare verify

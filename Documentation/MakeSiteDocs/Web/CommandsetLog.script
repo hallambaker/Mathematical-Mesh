@@ -1,0 +1,72 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Mesh.Shell
+#using Goedel.Protocol
+#% #pragma warning disable IDE0022
+#% #pragma warning disable IDE0060
+#% #pragma warning disable IDE1006
+#xclass ExampleGenerator CreateExamples
+
+
+
+#zfile CreateExamples WebLog "Guide/log.md" Examples
+#% MakeTitle ("log");
+
+**Under development**: This command set is currently under development and many
+features are documented but not yet implemented. Use with care!
+
+The `log` command set contains commands that create, read and write text data to DARE 
+log sequences..
+
+#### Creating a DARE log
+
+#### Appending a log item
+
+#### Listing data from a log
+
+
+
+#end zfile
+
+#zfile CreateExamples LogReference "Reference/log.md" Examples
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Log;
+#% Describe(CommandSet);
+
+**Under development**: This command set is currently under development and many
+features are documented but not yet implemented. Use with care!
+
+The `log` command set contains commands that create, read and write text data to DARE 
+log sequences..
+
+
+
+
+
+#! ------------------ log append
+#% Describe(CommandSet, _LogAppend._DescribeCommand);
+
+The `log append` command appends a text entry to the specified DARE sequence.
+
+#!% ConsoleReference (ShellSequence.SequenceArchive);
+
+#! ------------------ log create
+#% Describe(CommandSet, _LogCreate._DescribeCommand);
+
+
+#!% ConsoleReference (ShellSequence.SequenceAppend);
+
+
+#! ------------------ log list
+#% Describe(CommandSet, _LogList._DescribeCommand);
+
+
+The `log list` command returns a list of items in the specified sequence..
+
+#!% ConsoleReference (ShellSequence.SequenceCreate);
+
+
+
+#end zfile
+
+#end xclass
+

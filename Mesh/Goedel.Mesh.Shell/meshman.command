@@ -935,7 +935,7 @@
 	CommandSet Archive "archive"
 		Brief "DARE archive commands"
 
-		Command DareArchiveC "archive"
+		Command ArchiveCreate "create"
 			Brief "Create a new DARE archive and add the specified files"
 			Include EncodeOptions
 			Include CryptoOptions
@@ -950,7 +950,7 @@
 				Default "true"
 				Brief "Append index to the archive"	
 
-		Command DareAppend "append"
+		Command ArchiveAppend "append"
 			Brief "Append the specified file as an entry to the specified sequence."
 			Include EncodeOptions
 			Include CryptoOptions
@@ -966,7 +966,7 @@
 				Default "false"
 				Brief "Append index to the archive"	
 
-		Command DareDelete "delete"
+		Command ArchiveDelete "delete"
 			Include AccountOptions
 			Brief "Delete file from archive index."
 			Parameter Sequence "in" ExistingFile
@@ -979,7 +979,7 @@
 				Brief "If true, erase file from container preventing recovery."	
 
 
-		Command DareIndex "index"
+		Command ArchiveIndex "index"
 			Brief "Compile an index for the specified sequence and append to the end."
 			Include EncodeOptions
 			Include CryptoOptions
@@ -988,23 +988,16 @@
 			Parameter Sequence "in" ExistingFile
 				Brief "Sequence to be indexed"
 
-		Command DareDir "dir"
+		Command ArchiveDir "dir"
 			Brief "Compile a catalog for the specified sequence."
 			Include Reporting
 			Include AccountOptions
 			Parameter Sequence "in" ExistingFile
 				Brief "Sequence to be cataloged"
 
-		Command DareList "list"
-			Brief "Compile a catalog for the specified sequence."
-			Include Reporting
-			Include AccountOptions
-			Parameter Sequence "in" ExistingFile
-				Brief "Sequence to be cataloged"
-			Parameter Output "out" NewFile
-				Brief "List output"	
 
-		Command DareExtract "extract"
+
+		Command ArchiveExtract "extract"
 			Brief "Extract the specified record from the sequence"
 			Parameter Sequence "in" ExistingFile
 				Brief "Sequence to read"
@@ -1024,7 +1017,7 @@
 				Brief "If true, return deleted files."	
 
 
-		Command DareCopy "copy"
+		Command ArchiveCopy "copy"
 			Brief "Copy sequence contents to create a new sequence removing deleted elements"
 			Parameter Input "in" ExistingFile
 				Brief "Sequence to read"
@@ -1050,7 +1043,7 @@
 	CommandSet Log "log"
 		Brief "DARE log commands"
 
-		Command DareCreate "create"
+		Command LogCreate "create"
 			Brief "Create a new DARE Sequence"
 			Include EncodeOptions
 			Include CryptoOptions
@@ -1060,7 +1053,7 @@
 			Parameter Sequence "out" NewFile
 				Brief "New sequence"
 
-		Command DareLog "append"
+		Command LogAppend "append"
 			Brief "Append the specified string to the sequence."
 			Include EncodeOptions
 			Include CryptoOptions
@@ -1070,6 +1063,16 @@
 				Brief "Sequence to append to"
 			Parameter Entry "entry" NewFile
 				Brief "Text to append"
+
+		Command LogList "list"
+			Brief "Compile a catalog for the specified sequence."
+			Include Reporting
+			Include AccountOptions
+			Parameter Sequence "in" ExistingFile
+				Brief "Sequence to be cataloged"
+			Parameter Output "out" NewFile
+				Brief "List output"	
+
 
 	// Mail
 	CommandSet Mail "mail"

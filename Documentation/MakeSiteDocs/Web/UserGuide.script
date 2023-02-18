@@ -21,6 +21,10 @@
 #% HashReference (Index);
 #% WebDare (Index);
 #% DareReference (Index);
+#% WebLog (Index);
+#% LogReference (Index);
+#% WebArchive (Index);
+#% ArchiveReference (Index);
 #!
 #! *****Mesh Core
 #% WebAccount (Index);

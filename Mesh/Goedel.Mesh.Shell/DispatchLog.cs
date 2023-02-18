@@ -30,7 +30,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DareCreate(DareCreate options) {
+    public override ShellResult LogCreate(LogCreate options) {
         var outputFile = options.Sequence.Value;
 
         var keyLocate = GetKeyCollection(options);
@@ -51,7 +51,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DareLog(DareLog options) {
+    public override ShellResult LogAppend(LogAppend options) {
 
         var outputFile = options.Sequence.Value;
         var Entry = options.Entry.Value;
@@ -77,7 +77,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DareList(DareList options) {
+    public override ShellResult LogList(LogList options) {
         var inputFile = options.Sequence.Value;
         var outputFile = options.Output.Value;
         var contextAccount = GetContextUser(options);

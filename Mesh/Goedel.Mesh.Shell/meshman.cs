@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 18-Feb-23 1:58:11 PM
+//  This file was automatically generated at 18-Feb-23 3:26:29 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -309,14 +309,13 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         Identifier = "archive",
 		Brief = "DARE archive commands",
 		Entries = new  () {
-			{"archive", _DareArchiveC._DescribeCommand },
-			{"append", _DareAppend._DescribeCommand },
-			{"delete", _DareDelete._DescribeCommand },
-			{"index", _DareIndex._DescribeCommand },
-			{"dir", _DareDir._DescribeCommand },
-			{"list", _DareList._DescribeCommand },
-			{"extract", _DareExtract._DescribeCommand },
-			{"copy", _DareCopy._DescribeCommand }
+			{"create", _ArchiveCreate._DescribeCommand },
+			{"append", _ArchiveAppend._DescribeCommand },
+			{"delete", _ArchiveDelete._DescribeCommand },
+			{"index", _ArchiveIndex._DescribeCommand },
+			{"dir", _ArchiveDir._DescribeCommand },
+			{"extract", _ArchiveExtract._DescribeCommand },
+			{"copy", _ArchiveCopy._DescribeCommand }
 			} // End Entries
 		};
 
@@ -324,8 +323,9 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         Identifier = "log",
 		Brief = "DARE log commands",
 		Entries = new  () {
-			{"create", _DareCreate._DescribeCommand },
-			{"append", _DareLog._DescribeCommand }
+			{"create", _LogCreate._DescribeCommand },
+			{"append", _LogAppend._DescribeCommand },
+			{"list", _LogList._DescribeCommand }
 			} // End Entries
 		};
 
@@ -1289,103 +1289,103 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DareArchiveC (
+	public static void Handle_ArchiveCreate (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DareArchiveC		Options = new ();
+		ArchiveCreate		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DareArchiveC (Options);
+		var result = Dispatch.ArchiveCreate (Options);
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DareAppend (
+	public static void Handle_ArchiveAppend (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DareAppend		Options = new ();
+		ArchiveAppend		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DareAppend (Options);
+		var result = Dispatch.ArchiveAppend (Options);
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DareDelete (
+	public static void Handle_ArchiveDelete (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DareDelete		Options = new ();
+		ArchiveDelete		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DareDelete (Options);
+		var result = Dispatch.ArchiveDelete (Options);
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DareIndex (
+	public static void Handle_ArchiveIndex (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DareIndex		Options = new ();
+		ArchiveIndex		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DareIndex (Options);
+		var result = Dispatch.ArchiveIndex (Options);
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DareDir (
+	public static void Handle_ArchiveDir (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DareDir		Options = new ();
+		ArchiveDir		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DareDir (Options);
+		var result = Dispatch.ArchiveDir (Options);
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DareList (
+	public static void Handle_ArchiveExtract (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DareList		Options = new ();
+		ArchiveExtract		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DareList (Options);
+		var result = Dispatch.ArchiveExtract (Options);
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DareExtract (
+	public static void Handle_ArchiveCopy (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DareExtract		Options = new ();
+		ArchiveCopy		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DareExtract (Options);
+		var result = Dispatch.ArchiveCopy (Options);
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DareCopy (
+	public static void Handle_LogCreate (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DareCopy		Options = new ();
+		LogCreate		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DareCopy (Options);
+		var result = Dispatch.LogCreate (Options);
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DareCreate (
+	public static void Handle_LogAppend (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DareCreate		Options = new ();
+		LogAppend		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DareCreate (Options);
+		var result = Dispatch.LogAppend (Options);
 		Dispatch._PostProcess (result);
 		}
 
-	public static void Handle_DareLog (
+	public static void Handle_LogList (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
-		DareLog		Options = new ();
+		LogList		Options = new ();
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
-		var result = Dispatch.DareLog (Options);
+		var result = Dispatch.LogList (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -16478,7 +16478,7 @@ public class _DareEARL : Goedel.Command.Dispatch ,
 public partial class DareEARL : _DareEARL {
     } // class DareEARL
 
-public class _DareArchiveC : Goedel.Command.Dispatch ,
+public class _ArchiveCreate : Goedel.Command.Dispatch ,
 						IEncodeOptions,
 						ICryptoOptions,
 						IAccountOptions,
@@ -16684,9 +16684,9 @@ public class _DareArchiveC : Goedel.Command.Dispatch ,
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "archive",
+		Identifier = "create",
 		Brief =  "Create a new DARE archive and add the specified files",
-		HandleDelegate =  CommandLineInterpreter.Handle_DareArchiveC,
+		HandleDelegate =  CommandLineInterpreter.Handle_ArchiveCreate,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
@@ -16827,10 +16827,10 @@ public class _DareArchiveC : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class DareArchiveC : _DareArchiveC {
-    } // class DareArchiveC
+public partial class ArchiveCreate : _ArchiveCreate {
+    } // class ArchiveCreate
 
-public class _DareAppend : Goedel.Command.Dispatch ,
+public class _ArchiveAppend : Goedel.Command.Dispatch ,
 						IEncodeOptions,
 						ICryptoOptions,
 						IAccountOptions,
@@ -17017,7 +17017,7 @@ public class _DareAppend : Goedel.Command.Dispatch ,
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "append",
 		Brief =  "Append the specified file as an entry to the specified sequence.",
-		HandleDelegate =  CommandLineInterpreter.Handle_DareAppend,
+		HandleDelegate =  CommandLineInterpreter.Handle_ArchiveAppend,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
@@ -17144,10 +17144,10 @@ public class _DareAppend : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class DareAppend : _DareAppend {
-    } // class DareAppend
+public partial class ArchiveAppend : _ArchiveAppend {
+    } // class ArchiveAppend
 
-public class _DareDelete : Goedel.Command.Dispatch ,
+public class _ArchiveDelete : Goedel.Command.Dispatch ,
 						IAccountOptions{
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
@@ -17241,7 +17241,7 @@ public class _DareDelete : Goedel.Command.Dispatch ,
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "delete",
 		Brief =  "Delete file from archive index.",
-		HandleDelegate =  CommandLineInterpreter.Handle_DareDelete,
+		HandleDelegate =  CommandLineInterpreter.Handle_ArchiveDelete,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
@@ -17305,10 +17305,10 @@ public class _DareDelete : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class DareDelete : _DareDelete {
-    } // class DareDelete
+public partial class ArchiveDelete : _ArchiveDelete {
+    } // class ArchiveDelete
 
-public class _DareIndex : Goedel.Command.Dispatch ,
+public class _ArchiveIndex : Goedel.Command.Dispatch ,
 						IEncodeOptions,
 						ICryptoOptions,
 						IAccountOptions,
@@ -17465,7 +17465,7 @@ public class _DareIndex : Goedel.Command.Dispatch ,
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "index",
 		Brief =  "Compile an index for the specified sequence and append to the end.",
-		HandleDelegate =  CommandLineInterpreter.Handle_DareIndex,
+		HandleDelegate =  CommandLineInterpreter.Handle_ArchiveIndex,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
@@ -17571,10 +17571,10 @@ public class _DareIndex : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class DareIndex : _DareIndex {
-    } // class DareIndex
+public partial class ArchiveIndex : _ArchiveIndex {
+    } // class ArchiveIndex
 
-public class _DareDir : Goedel.Command.Dispatch ,
+public class _ArchiveDir : Goedel.Command.Dispatch ,
 						IReporting,
 						IAccountOptions{
 
@@ -17669,7 +17669,7 @@ public class _DareDir : Goedel.Command.Dispatch ,
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "dir",
 		Brief =  "Compile a catalog for the specified sequence.",
-		HandleDelegate =  CommandLineInterpreter.Handle_DareDir,
+		HandleDelegate =  CommandLineInterpreter.Handle_ArchiveDir,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
@@ -17733,189 +17733,10 @@ public class _DareDir : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class DareDir : _DareDir {
-    } // class DareDir
+public partial class ArchiveDir : _ArchiveDir {
+    } // class ArchiveDir
 
-public class _DareList : Goedel.Command.Dispatch ,
-						IReporting,
-						IAccountOptions{
-
-	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new Flag (),
-		new Flag (),
-		new Flag (),
-		new String (),
-		new String (),
-		new Flag (),
-		new Flag (),
-		new ExistingFile (),
-		new NewFile ()		} ;
-
-
-
-
-
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[0] as Flag;
-		set => _Data[0]  = value;
-		}
-
-	public virtual string _Verbose {
-		set => _Data[0].Parameter (value);
-		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
-		get => _Data[1] as Flag;
-		set => _Data[1]  = value;
-		}
-
-	public virtual string _Report {
-		set => _Data[1].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[2] as Flag;
-		set => _Data[2]  = value;
-		}
-
-	public virtual string _Json {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[3] as String;
-		set => _Data[3]  = value;
-		}
-
-	public virtual string _AccountAddress {
-		set => _Data[3].Parameter (value);
-		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
-		get => _Data[4] as String;
-		set => _Data[4]  = value;
-		}
-
-	public virtual string _LocalName {
-		set => _Data[4].Parameter (value);
-		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[5] as Flag;
-		set => _Data[5]  = value;
-		}
-
-	public virtual string _AutoSync {
-		set => _Data[5].Parameter (value);
-		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
-		get => _Data[6] as Flag;
-		set => _Data[6]  = value;
-		}
-
-	public virtual string _AutoApprove {
-		set => _Data[6].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Sequence {
-		get => _Data[7] as ExistingFile;
-		set => _Data[7]  = value;
-		}
-
-	public virtual string _Sequence {
-		set => _Data[7].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual NewFile Output {
-		get => _Data[8] as NewFile;
-		set => _Data[8]  = value;
-		}
-
-	public virtual string _Output {
-		set => _Data[8].Parameter (value);
-		}
-	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "list",
-		Brief =  "Compile a catalog for the specified sequence.",
-		HandleDelegate =  CommandLineInterpreter.Handle_DareList,
-		Lazy =  false,
-		Entries = new List<DescribeEntry> () {
-			new DescribeEntryOption () {
-				Identifier = "Verbose", 
-				Default = "false", // null if null
-				Brief = "Verbose reports (default)",
-				Index = 0,
-				Key = "verbose"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Report", 
-				Default = "true", // null if null
-				Brief = "Report output (default)",
-				Index = 1,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Json", 
-				Default = "false", // null if null
-				Brief = "Report output in JSON format",
-				Index = 2,
-				Key = "json"
-				},
-			new DescribeEntryOption () {
-				Identifier = "AccountAddress", 
-				Default = null, // null if null
-				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 3,
-				Key = "account"
-				},
-			new DescribeEntryOption () {
-				Identifier = "LocalName", 
-				Default = null, // null if null
-				Brief = "Local name for account (e.g. personal)",
-				Index = 4,
-				Key = "local"
-				},
-			new DescribeEntryOption () {
-				Identifier = "AutoSync", 
-				Default = "true", // null if null
-				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 5,
-				Key = "sync"
-				},
-			new DescribeEntryOption () {
-				Identifier = "AutoApprove", 
-				Default = "true", // null if null
-				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 6,
-				Key = "auto"
-				},
-			new DescribeEntryParameter () {
-				Identifier = "Sequence", 
-				Default = null, // null if null
-				Brief = "Sequence to be cataloged",
-				Index = 7,
-				Key = ""
-				},
-			new DescribeEntryParameter () {
-				Identifier = "Output", 
-				Default = null, // null if null
-				Brief = "List output",
-				Index = 8,
-				Key = ""
-				}
-			}
-		};
-
-	}
-
-public partial class DareList : _DareList {
-    } // class DareList
-
-public class _DareExtract : Goedel.Command.Dispatch ,
+public class _ArchiveExtract : Goedel.Command.Dispatch ,
 						IAccountOptions,
 						IReporting{
 
@@ -18060,7 +17881,7 @@ public class _DareExtract : Goedel.Command.Dispatch ,
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "extract",
 		Brief =  "Extract the specified record from the sequence",
-		HandleDelegate =  CommandLineInterpreter.Handle_DareExtract,
+		HandleDelegate =  CommandLineInterpreter.Handle_ArchiveExtract,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryParameter () {
@@ -18159,10 +17980,10 @@ public class _DareExtract : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class DareExtract : _DareExtract {
-    } // class DareExtract
+public partial class ArchiveExtract : _ArchiveExtract {
+    } // class ArchiveExtract
 
-public class _DareCopy : Goedel.Command.Dispatch ,
+public class _ArchiveCopy : Goedel.Command.Dispatch ,
 						IEncodeOptions,
 						ICryptoOptions,
 						ISequenceOptions,
@@ -18390,7 +18211,7 @@ public class _DareCopy : Goedel.Command.Dispatch ,
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "copy",
 		Brief =  "Copy sequence contents to create a new sequence removing deleted elements",
-		HandleDelegate =  CommandLineInterpreter.Handle_DareCopy,
+		HandleDelegate =  CommandLineInterpreter.Handle_ArchiveCopy,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryParameter () {
@@ -18545,10 +18366,10 @@ public class _DareCopy : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class DareCopy : _DareCopy {
-    } // class DareCopy
+public partial class ArchiveCopy : _ArchiveCopy {
+    } // class ArchiveCopy
 
-public class _DareCreate : Goedel.Command.Dispatch ,
+public class _LogCreate : Goedel.Command.Dispatch ,
 						IEncodeOptions,
 						ICryptoOptions,
 						ISequenceOptions,
@@ -18736,7 +18557,7 @@ public class _DareCreate : Goedel.Command.Dispatch ,
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "create",
 		Brief =  "Create a new DARE Sequence",
-		HandleDelegate =  CommandLineInterpreter.Handle_DareCreate,
+		HandleDelegate =  CommandLineInterpreter.Handle_LogCreate,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
@@ -18863,10 +18684,10 @@ public class _DareCreate : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class DareCreate : _DareCreate {
-    } // class DareCreate
+public partial class LogCreate : _LogCreate {
+    } // class LogCreate
 
-public class _DareLog : Goedel.Command.Dispatch ,
+public class _LogAppend : Goedel.Command.Dispatch ,
 						IEncodeOptions,
 						ICryptoOptions,
 						IAccountOptions,
@@ -19033,7 +18854,7 @@ public class _DareLog : Goedel.Command.Dispatch ,
 	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
 		Identifier = "append",
 		Brief =  "Append the specified string to the sequence.",
-		HandleDelegate =  CommandLineInterpreter.Handle_DareLog,
+		HandleDelegate =  CommandLineInterpreter.Handle_LogAppend,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryOption () {
@@ -19146,8 +18967,187 @@ public class _DareLog : Goedel.Command.Dispatch ,
 
 	}
 
-public partial class DareLog : _DareLog {
-    } // class DareLog
+public partial class LogAppend : _LogAppend {
+    } // class LogAppend
+
+public class _LogList : Goedel.Command.Dispatch ,
+						IReporting,
+						IAccountOptions{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new String (),
+		new String (),
+		new Flag (),
+		new Flag (),
+		new ExistingFile (),
+		new NewFile ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[0] as Flag;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[1] as Flag;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[2] as Flag;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[3] as String;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[4] as String;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _LocalName {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _AutoSync {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
+		get => _Data[6] as Flag;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _AutoApprove {
+		set => _Data[6].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual ExistingFile Sequence {
+		get => _Data[7] as ExistingFile;
+		set => _Data[7]  = value;
+		}
+
+	public virtual string _Sequence {
+		set => _Data[7].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual NewFile Output {
+		get => _Data[8] as NewFile;
+		set => _Data[8]  = value;
+		}
+
+	public virtual string _Output {
+		set => _Data[8].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "list",
+		Brief =  "Compile a catalog for the specified sequence.",
+		HandleDelegate =  CommandLineInterpreter.Handle_LogList,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "false", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 0,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 1,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 2,
+				Key = "json"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 3,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "LocalName", 
+				Default = null, // null if null
+				Brief = "Local name for account (e.g. personal)",
+				Index = 4,
+				Key = "local"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoSync", 
+				Default = "true", // null if null
+				Brief = "If true, attempt to synchronize the account to the service before operation",
+				Index = 5,
+				Key = "sync"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoApprove", 
+				Default = "true", // null if null
+				Brief = "If true, automatically approve pending requests with prior authorization.",
+				Index = 6,
+				Key = "auto"
+				},
+			new DescribeEntryParameter () {
+				Identifier = "Sequence", 
+				Default = null, // null if null
+				Brief = "Sequence to be cataloged",
+				Index = 7,
+				Key = ""
+				},
+			new DescribeEntryParameter () {
+				Identifier = "Output", 
+				Default = null, // null if null
+				Brief = "List output",
+				Index = 8,
+				Key = ""
+				}
+			}
+		};
+
+	}
+
+public partial class LogList : _LogList {
+    } // class LogList
 
 public class _MailAdd : Goedel.Command.Dispatch ,
 						IDeviceAuthOptions,
@@ -26380,52 +26380,52 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		return null;
 		}
 
-	public virtual ShellResult DareArchiveC ( DareArchiveC Options) {
+	public virtual ShellResult ArchiveCreate ( ArchiveCreate Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
 
-	public virtual ShellResult DareAppend ( DareAppend Options) {
+	public virtual ShellResult ArchiveAppend ( ArchiveAppend Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
 
-	public virtual ShellResult DareDelete ( DareDelete Options) {
+	public virtual ShellResult ArchiveDelete ( ArchiveDelete Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
 
-	public virtual ShellResult DareIndex ( DareIndex Options) {
+	public virtual ShellResult ArchiveIndex ( ArchiveIndex Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
 
-	public virtual ShellResult DareDir ( DareDir Options) {
+	public virtual ShellResult ArchiveDir ( ArchiveDir Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
 
-	public virtual ShellResult DareList ( DareList Options) {
+	public virtual ShellResult ArchiveExtract ( ArchiveExtract Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
 
-	public virtual ShellResult DareExtract ( DareExtract Options) {
+	public virtual ShellResult ArchiveCopy ( ArchiveCopy Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
 
-	public virtual ShellResult DareCopy ( DareCopy Options) {
+	public virtual ShellResult LogCreate ( LogCreate Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
 
-	public virtual ShellResult DareCreate ( DareCreate Options) {
+	public virtual ShellResult LogAppend ( LogAppend Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
 
-	public virtual ShellResult DareLog ( DareLog Options) {
+	public virtual ShellResult LogList ( LogList Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}

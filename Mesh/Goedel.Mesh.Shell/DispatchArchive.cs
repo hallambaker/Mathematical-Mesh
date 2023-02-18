@@ -64,7 +64,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DareArchiveC(DareArchiveC options) {
+    public override ShellResult ArchiveCreate(ArchiveCreate options) {
         var inputFile = options.Input.Value;
         var outputFile = options.Sequence.Value;
         var index = options.Index.Value;
@@ -84,7 +84,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DareAppend(DareAppend options) {
+    public override ShellResult ArchiveAppend(ArchiveAppend options) {
         var inputFile = options.File.Value;
         var outputFile = options.Sequence.Value;
         var index = options.Index.Value;
@@ -120,7 +120,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DareDelete(DareDelete options) {
+    public override ShellResult ArchiveDelete(ArchiveDelete options) {
         var inputFile = options.Filename.Value;
         var outputFile = options.Sequence.Value;
         var keyLocate = GetKeyCollection(options);
@@ -142,7 +142,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DareIndex(DareIndex options) {
+    public override ShellResult ArchiveIndex(ArchiveIndex options) {
         var inputFile = options.Sequence.Value;
         var keyLocate = GetKeyCollection(options);
 
@@ -161,7 +161,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DareDir(DareDir options) {
+    public override ShellResult ArchiveDir(ArchiveDir options) {
         var inputFile = options.Sequence.Value;
         var keyLocate = GetKeyCollection(options);
 
@@ -189,7 +189,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DareExtract(DareExtract options) {
+    public override ShellResult ArchiveExtract(ArchiveExtract options) {
         var inputFile = options.Sequence.Value;
         var outputFile = options.Output.Value;
         var file = options.Filename.Value;
@@ -223,7 +223,7 @@ public partial class Shell {
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
-    public override ShellResult DareCopy(DareCopy options) {
+    public override ShellResult ArchiveCopy(ArchiveCopy options) {
         var inputFile = options.Input.Value;
         var outputFile = options.Output.Value;
         var index = options.Index.Value;

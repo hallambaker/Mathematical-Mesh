@@ -91,6 +91,11 @@
 			<AutoGen>True</AutoGen>
 		</Compile>
 
+		<Compile Update="Web\CommandsetArchive.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+
 		<Compile Update="Web\ToDo.cs">
 			<DependentUpon>ToDo.script</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -156,6 +161,16 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Web\CommandsetLog.cs">
+			<DependentUpon>CommandsetLog.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Web\CommandsetArchive.cs">
+			<DependentUpon>CommandsetArchive.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Web\CommandsetHash.cs">
 			<DependentUpon>CommandsetHash.script</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -212,6 +227,17 @@
 
     <None Update="IDs\MakeExamples-8-Cryptography.script">
       <LastGenOutput>MakeExamples-8-Cryptography.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+
+
+    <None Update="Web\CommandsetLog.script">
+      <LastGenOutput>CommandsetLog.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+
+    <None Update="Web\CommandsetArchive.script">
+      <LastGenOutput>CommandsetArchive.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
 

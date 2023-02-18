@@ -191,18 +191,22 @@ public partial class TestDareArchive {
     //static void ReadWriteContainer(string fileName, byte[] testData, DarePolicy policy = null) {
         policy ??= TestEnvironmentCommon.MakePolicy(seed);
 
-        // Create container
-        DareArchive.ArchiveFile(fileName, policy, testData, null);
-
-        // Read Sequence
-        DareLogReader.File(fileName, policy.KeyLocation,
-                    out var ReadData, out var ContentMetaOut);
-
-        // Check for equality
-        ReadData.IsEqualTo(testData).TestTrue();
+        throw new NYI();
 
 
-        Sequence.VerifyPolicy(fileName, policy.KeyLocation);
+
+        //// Create container
+        //DareArchive.ArchiveFile(fileName, policy, testData, null);
+
+        //// Read Sequence
+        //DareLogReader.File(fileName, policy.KeyLocation,
+        //            out var ReadData, out var ContentMetaOut);
+
+        //// Check for equality
+        //ReadData.IsEqualTo(testData).TestTrue();
+
+
+        //Sequence.VerifyPolicy(fileName, policy.KeyLocation);
         }
 
 
@@ -254,8 +258,11 @@ public partial class TestDareArchive {
         using (var reader = new DareArchive(filename, keyLocate:policy.KeyLocation)) {
             for (var i = 0; i < entries; i++) {
 
-                reader.Read(policy?.KeyLocation, out var ReadData, out var ContentMeta, index: i + 1);
-                ReadData.IsEqualTo(testData[i]).TestTrue();
+
+                throw new NYI();
+
+                //reader.Read(policy?.KeyLocation, out var ReadData, out var ContentMeta, index: i + 1);
+                //ReadData.IsEqualTo(testData[i]).TestTrue();
                 }
             }
 
