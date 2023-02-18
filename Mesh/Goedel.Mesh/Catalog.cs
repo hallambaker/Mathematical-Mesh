@@ -142,7 +142,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
                 break;
                 }
             case SequenceEvent.Delete: {
-                DeleteEntry(catalogIndexEntry.UniqueID);
+                DeleteEntry(catalogIndexEntry.Previous as CatalogIndexEntry<T>);
                 break;
                 }
             }
@@ -180,8 +180,11 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
     /// </summary>
     /// <param name="catalogEntry">The entry to delete.</param>
     public void Delete(T catalogEntry) {
-        var envelope = PersistenceStore.PrepareDelete(out _, catalogEntry._PrimaryKey);
-        PersistenceStore.Apply(envelope);
+        var envelope = PersistenceStore.PrepareDelete(out var previous, catalogEntry._PrimaryKey);
+        if (envelope != null) {
+            var delete = PersistenceStore.Apply(envelope);
+            delete.Previous = previous;
+            }
         }
     #endregion
     #region // Protected interfaces that perform the actual Add/Update/Delete function.
@@ -210,10 +213,10 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
     /// derrived classes to update local indexes.
     /// </summary>
     /// <param name="key">The entry being deleted.</param>
-    protected virtual void DeleteEntry(string key) {
-        var entry = PersistenceStore.Get(key)?.JsonObject as T;
-        if (entry?.LocalName != null) {
-            DictionaryByLocalName.Remove(entry.LocalName);
+    protected virtual void DeleteEntry(CatalogIndexEntry<T> deletedIndex) {
+        var deletedEntry = deletedIndex?.CatalogedEntry;
+        if (deletedEntry?.LocalName != null) {
+            DictionaryByLocalName.Remove(deletedEntry.LocalName);
             }
         }
 

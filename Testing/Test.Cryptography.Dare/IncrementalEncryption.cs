@@ -208,7 +208,7 @@ public partial class TestSequences {
                         keyLocate: keyCollection)) {
 
             record = 0;
-            foreach (var ContainerDataReader in XContainer) {
+            foreach (var ContainerDataReader in XContainer.ReadForward) {
                 Verify(XContainer, darePolicy, ContainerDataReader, record++, maxSize, keyCollection);
                 }
 

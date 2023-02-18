@@ -289,20 +289,6 @@ public partial class ShellTests  {
         EndTest();
         }
 
-    //[Fact]
-    //public void TestAuthSuper() {
-    //    var device1 = GetTestCLI(DeviceAdminName);
-    //    var device2 = GetTestCLI("Device2");
-
-    //    TestAuthCreate(device1, device2, "");
-    //    //CheckCanSuper(device2).TestFalse(); 
-
-    //    device1.Dispatch("device auth device2 /root");
-
-    //    CheckCanSuper(device2).TestTrue();
-
-    //    EndTest();
-    //    }
 
     static bool CheckCanSuper(Mesh.Test.TestCLI device2) => true;
 
@@ -319,20 +305,6 @@ public partial class ShellTests  {
         EndTest();
         }
 
-    //[Fact]
-    //public void TestAuthAdmin() {
-    //    var device1 = GetTestCLI(DeviceAdminName);
-    //    var device2 = GetTestCLI("Device2");
-
-    //    TestAuthCreate(device1, device2, "");
-    //    //CheckCanAdmin(device2).TestFalse(); 
-
-    //    device1.Dispatch("device auth device2 /admin");
-
-    //    CheckCanAdmin(device2).TestTrue();
-
-    //    EndTest();
-    //    }
 
     static bool CheckCanAdmin(Mesh.Test.TestCLI device2) => true;
 
@@ -349,20 +321,6 @@ public partial class ShellTests  {
         EndTest();
         }
 
-    //[Fact]
-    //public void TestAuthMessage() {
-    //    var device1 = GetTestCLI(DeviceAdminName);
-    //    var device2 = GetTestCLI("Device2");
-
-    //    TestAuthCreate(device1, device2, "");
-    //    //CheckCanMessage(device2).TestFalse(); 
-
-    //    device1.Dispatch("device auth device2 /message");
-
-    //    CheckCanMessage(device2).TestTrue();
-
-    //    EndTest();
-    //    }
 
     static bool CheckCanMessage(Mesh.Test.TestCLI device2) => true;
 
@@ -378,20 +336,6 @@ public partial class ShellTests  {
         EndTest();
         }
 
-    //[Fact]
-    //public void TestAuthWeb() {
-    //    var device1 = GetTestCLI(DeviceAdminName);
-    //    var device2 = GetTestCLI("Device2");
-
-    //    TestAuthCreate(device1, device2, "");
-    //    //CheckCanWeb(device2).TestFalse(); 
-
-    //    device1.Dispatch("device auth device2 /web");
-
-    //    CheckCanWeb(device2).TestTrue();
-
-    //    EndTest();
-    //    }
 
     static bool CheckCanWeb(Mesh.Test.TestCLI device2) => true;
 
@@ -407,20 +351,6 @@ public partial class ShellTests  {
         EndTest();
         }
 
-    //[Fact]
-    //public void TestAuthDevice() {
-    //    var device1 = GetTestCLI(DeviceAdminName);
-    //    var device2 = GetTestCLI("Device2");
-
-    //    TestAuthCreate(device1, device2, "");
-    //    //CheckCanDevice(device2).TestFalse(); 
-
-    //    device1.Dispatch("device auth device2 /device");
-
-    //    CheckCanDevice(device2).TestTrue();
-
-    //    EndTest();
-    //    }
 
     static bool CheckCanDevice(Mesh.Test.TestCLI device2) => true;
 

@@ -75,17 +75,21 @@ partial class Program {
 
         //ShellTests.Test().TestProfileContact();
 
-        Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
-        TestSequences.Test().ZContainerIsolatedPolicy();
-        TestSequences.Test().ZContainerOnceExchange();
-        TestSequences.Test().ZContainerSessionPolicy();
+
+        //TestSequences.Test().ZContainerIsolatedPolicy();
+        //TestSequences.Test().ZContainerOnceExchange();
+        //TestSequences.Test().ZContainerSessionPolicy();
 
         /* Need thinking */
 
         ShellTests.Test().TestArchive();
         ShellTests.Test().TestSequence();
+        ShellTests.Test().TestMessageConfirmationAccept();
+        ShellTests.Test().TestProfileConnectPin();
         ShellTests.Test().TestProfileConnectPinReused();
+
+        Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
         /* Callsigns */
 

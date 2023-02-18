@@ -22,6 +22,8 @@
 
 namespace Goedel.Cryptography.Dare;
 
+
+
 /// <summary>
 /// 
 /// </summary>
@@ -55,7 +57,7 @@ public class DareLogWriter : DareLogReader {
             bool digest = true,
             FileStatus fileStatus = FileStatus.Overwrite,
             SequenceType containerType = SequenceType.Unknown) :
-                    this(new JbcdStream(fileName, fileStatus), archive, digest, containerType) => 
+                    this(new JbcdStream(fileName, fileStatus), archive, digest, containerType) =>
         Sequence.DisposeStream = true;
 
 
@@ -102,176 +104,176 @@ public class DareLogWriter : DareLogReader {
             byte[] data,
             ContentMeta contentInfo = null) => Sequence.Append(data, contentInfo);
 
-    /// <summary>
-    /// Add a file entry
-    /// </summary>
-    /// <param name="basePath">The base path of the file.</param>
-    /// <param name="relativePath">The path of the file within the archive.</param>
-    /// <param name="contentMeta">Metadata describing the content.</param>
-    public void AddFile(
-            string basePath,
-            string relativePath,
-            ContentMeta contentMeta = null) {
-        var path = Path.Combine(basePath, relativePath);
-        var fileinfo = new FileInfo(path);
-        AddFile(basePath, fileinfo, contentMeta);
-        }
+    ///// <summary>
+    ///// Add a file entry
+    ///// </summary>
+    ///// <param name="basePath">The base path of the file.</param>
+    ///// <param name="relativePath">The path of the file within the archive.</param>
+    ///// <param name="contentMeta">Metadata describing the content.</param>
+    //public void AddFile(
+    //        string basePath,
+    //        string relativePath,
+    //        ContentMeta contentMeta = null) {
+    //    var path = Path.Combine(basePath, relativePath);
+    //    var fileinfo = new FileInfo(path);
+    //    AddFile(basePath, fileinfo, contentMeta);
+    //    }
 
-    /// <summary>
-    /// Add a file entry
-    /// </summary>
-    /// <param name="file">The file to add</param>
-    /// <param name="path">The path name attribute to give the file in the Sequence</param>
-    /// <param name="contentMeta">Metadata describing the content.</param>
-    public void AddFile(
-            string path,
-            FileInfo file,
-            ContentMeta contentMeta = null) {
+    ///// <summary>
+    ///// Add a file entry
+    ///// </summary>
+    ///// <param name="file">The file to add</param>
+    ///// <param name="path">The path name attribute to give the file in the Sequence</param>
+    ///// <param name="contentMeta">Metadata describing the content.</param>
+    //public void AddFile(
+    //        string path,
+    //        FileInfo file,
+    //        ContentMeta contentMeta = null) {
 
-        var filename = Path.Combine(path, file.Name);
-        contentMeta ??= new ContentMeta() {
-            Filename = filename,
-            };
+    //    var filename = Path.Combine(path, file.Name);
+    //    contentMeta ??= new ContentMeta() {
+    //        Filename = filename,
+    //        };
 
-        var index = Sequence.FrameCount;
-        var position = Sequence.PositionWrite;
+    //    var index = Sequence.FrameCount;
+    //    var position = Sequence.PositionWrite;
 
-        Sequence.AppendFile(file.FullName, contentMeta);
-
-
-        FileCollection.Add(file, contentMeta.Filename, index, position);
-        }
-
-    /// <summary>
-    /// Delete a file entry
-    /// </summary>
-    /// <param name="path">The path name attribute to give the file in the Sequence</param>
-    public bool Delete(string path) {
-        GetIndex();
-
-        if (!FileCollection.DictionaryByPath.TryGetValue(path, out var fileEntry)) {
-            return false;
-            }
-
-        var contentMeta = new ContentMeta() {
-            Filename = path,
-            Event = DareConstants.SequenceEventDeleteTag
-            };
-        var index = Sequence.FrameCount;
-
-        Sequence.Append(contentMeta: contentMeta);
-
-        FileCollection.Delete(path, index);
-
-        return true;
-        }
-
-    /// <summary>
-    /// Read a Sequence data entry from one Sequence and add it to this one.
-    /// </summary>Add 
-    /// <param name="containerDataReader">First reader from which the
-    /// Sequence data is to be read.</param>
-    /// <param name="cryptoParameters">The new crypto parameters to be used to 
-    /// write the Sequence data.</param>
-    public void Add(SequenceIndexEntry containerDataReader,
-            CryptoParameters cryptoParameters = null) {
-        containerDataReader.Future();
-        cryptoParameters.Future();
-        this.Future();
-
-        throw new NYI();
-        }
-
-    /// <summary>
-    /// Append an archive frame to the Sequence.
-    /// </summary>
-    /// <param name="signatures">List of JWS signatures. Since this is the first block, the signature
-    /// is always over the payload data only.</param>
-    public void AddIndex(List<KeyPair> signatures = null) {
-
-        GetIndex();
-        var index = FileCollection.MakeIndex();
-
-        Sequence.Append(index);
+    //    Sequence.AppendFile(file.FullName, contentMeta);
 
 
-        signatures.Future();
-        //throw new NYI();
-        }
+    //    FileCollection.Add(file, contentMeta.Filename, index, position);
+    //    }
+
+    ///// <summary>
+    ///// Delete a file entry
+    ///// </summary>
+    ///// <param name="path">The path name attribute to give the file in the Sequence</param>
+    //public bool Delete(string path) {
+    //    GetIndex();
+
+    //    if (!FileCollection.DictionaryByPath.TryGetValue(path, out var fileEntry)) {
+    //        return false;
+    //        }
+
+    //    var contentMeta = new ContentMeta() {
+    //        Filename = path,
+    //        Event = DareConstants.SequenceEventDeleteTag
+    //        };
+    //    var index = Sequence.FrameCount;
+
+    //    Sequence.Append(contentMeta: contentMeta);
+
+    //    FileCollection.Delete(path, index);
+
+    //    return true;
+    //    }
+
+    ///// <summary>
+    ///// Read a Sequence data entry from one Sequence and add it to this one.
+    ///// </summary>Add 
+    ///// <param name="containerDataReader">First reader from which the
+    ///// Sequence data is to be read.</param>
+    ///// <param name="cryptoParameters">The new crypto parameters to be used to 
+    ///// write the Sequence data.</param>
+    //public void Add(SequenceIndexEntry containerDataReader,
+    //        CryptoParameters cryptoParameters = null) {
+    //    containerDataReader.Future();
+    //    cryptoParameters.Future();
+    //    this.Future();
+
+    //    throw new NYI();
+    //    }
+
+    ///// <summary>
+    ///// Append an archive frame to the Sequence.
+    ///// </summary>
+    ///// <param name="signatures">List of JWS signatures. Since this is the first block, the signature
+    ///// is always over the payload data only.</param>
+    //public void AddIndex(List<KeyPair> signatures = null) {
+
+    //    GetIndex();
+    //    var index = FileCollection.MakeIndex();
+
+    //    Sequence.Append(index);
 
 
+    //    signatures.Future();
+    //    //throw new NYI();
+    //    }
 
 
 
-    /// <summary>
-    /// Open a new file Sequence for write access and write a single file entry.
-    /// </summary>
-    /// <param name="fileName">The file name to create</param>
-    /// <param name="data">The content data</param>
-    /// <param name="contentMeta">The content metadata</param>
-    /// <param name="fileStatus">The mode to open the file in, this must be a mode
-    /// that permits write access.</param>
-    /// <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
-    /// <returns>File Sequence instance</returns>
-    public static void ArchiveFile(
-            string fileName,
-            DarePolicy policy,
-            byte[] data,
-            ContentMeta contentMeta = null,
-            FileStatus fileStatus = FileStatus.Overwrite
-            ) {
-        using var writer = new DareLogWriter(fileName, policy, true, true, fileStatus, SequenceType.Digest);
-        writer.AddData(data, contentMeta);
-        }
 
-    /// <summary>
-    /// Open a new file Sequence for write access and append all the files in the directory 
-    /// <paramref name="directory"/>.
-    /// </summary>
-    /// <param name="fileName">The file name to create</param>
-    /// <param name="directory">The directory to append files from.</param>
-    /// <param name="contentMeta">The content metadata</param>
-    /// <param name="fileStatus">The mode to open the file in, this must be a mode
-    /// that permits write access.</param>
-    /// <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
-    /// <param name="index">If true add an index record to the end of the archive.</param>
-    /// <returns>File Sequence instance</returns>
-    public static void ArchiveDirectory(
-            string fileName,
-            DarePolicy policy,
-            string directory,
-            ContentMeta contentMeta = null,
-            FileStatus fileStatus = FileStatus.Overwrite,
-            bool index = true
-            ) {
 
-        using var writer = new DareLogWriter(fileName, policy, true, true, fileStatus, SequenceType.Merkle);
+    ///// <summary>
+    ///// Open a new file Sequence for write access and write a single file entry.
+    ///// </summary>
+    ///// <param name="fileName">The file name to create</param>
+    ///// <param name="data">The content data</param>
+    ///// <param name="contentMeta">The content metadata</param>
+    ///// <param name="fileStatus">The mode to open the file in, this must be a mode
+    ///// that permits write access.</param>
+    ///// <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
+    ///// <returns>File Sequence instance</returns>
+    //public static void ArchiveFile(
+    //        string fileName,
+    //        DarePolicy policy,
+    //        byte[] data,
+    //        ContentMeta contentMeta = null,
+    //        FileStatus fileStatus = FileStatus.Overwrite
+    //        ) {
+    //    using var writer = new DareLogWriter(fileName, policy, true, true, fileStatus, SequenceType.Digest);
+    //    writer.AddData(data, contentMeta);
+    //    }
 
-        var directoryInfo = new DirectoryInfo(directory);
-        directoryInfo.Exists.AssertTrue(DirectoryNotFound.Throw);
-        writer.AddDirectory(directoryInfo.Name, directoryInfo, contentMeta);
+    ///// <summary>
+    ///// Open a new file Sequence for write access and append all the files in the directory 
+    ///// <paramref name="directory"/>.
+    ///// </summary>
+    ///// <param name="fileName">The file name to create</param>
+    ///// <param name="directory">The directory to append files from.</param>
+    ///// <param name="contentMeta">The content metadata</param>
+    ///// <param name="fileStatus">The mode to open the file in, this must be a mode
+    ///// that permits write access.</param>
+    ///// <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
+    ///// <param name="index">If true add an index record to the end of the archive.</param>
+    ///// <returns>File Sequence instance</returns>
+    //public static void ArchiveDirectory(
+    //        string fileName,
+    //        DarePolicy policy,
+    //        string directory,
+    //        ContentMeta contentMeta = null,
+    //        FileStatus fileStatus = FileStatus.Overwrite,
+    //        bool index = true
+    //        ) {
 
-        if (index) {
-            writer.AddIndex();
-            }
-        }
+    //    using var writer = new DareLogWriter(fileName, policy, true, true, fileStatus, SequenceType.Merkle);
 
-    /// <summary>
-    /// Append all the files in the directory 
-    /// <paramref name="directory"/>.
-    /// </summary>
-    /// <param name="directory">The directory to append files from.</param>
-    /// <param name="directoryInfo">The directory descriptor.</param>
-    /// <param name="contentMeta">The content metadata</param>
-    public void AddDirectory(string directory, DirectoryInfo directoryInfo, ContentMeta contentMeta) {
-        foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
-            AddFile(directory, fileInfo, contentMeta);
+    //    var directoryInfo = new DirectoryInfo(directory);
+    //    directoryInfo.Exists.AssertTrue(DirectoryNotFound.Throw);
+    //    writer.AddDirectory(directoryInfo.Name, directoryInfo, contentMeta);
 
-            }
-        foreach (var directgoryInfo in directoryInfo.EnumerateDirectories()) {
+    //    if (index) {
+    //        writer.AddIndex();
+    //        }
+    //    }
 
-            AddDirectory(Path.Combine(directory, directgoryInfo.Name), directgoryInfo, contentMeta);
+    ///// <summary>
+    ///// Append all the files in the directory 
+    ///// <paramref name="directory"/>.
+    ///// </summary>
+    ///// <param name="directory">The directory to append files from.</param>
+    ///// <param name="directoryInfo">The directory descriptor.</param>
+    ///// <param name="contentMeta">The content metadata</param>
+    //public void AddDirectory(string directory, DirectoryInfo directoryInfo, ContentMeta contentMeta) {
+    //    foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
+    //        AddFile(directory, fileInfo, contentMeta);
 
-            }
-        }
+    //        }
+    //    foreach (var directgoryInfo in directoryInfo.EnumerateDirectories()) {
+
+    //        AddDirectory(Path.Combine(directory, directgoryInfo.Name), directgoryInfo, contentMeta);
+
+    //        }
+    //    }
     }

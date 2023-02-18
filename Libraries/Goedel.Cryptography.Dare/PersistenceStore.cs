@@ -136,9 +136,9 @@ public class PersistenceStoreEphemeral : PersistenceStore {
         }
 
     ///<inheritdoc/>
-    public override bool Delete(string uniqueID, Transaction transaction = null) {
+    public override bool Delete(string uniqueID, Transaction transaction = null, bool erase=false) {
         Reload();
-        var result = base.Delete(uniqueID, transaction);
+        var result = base.Delete(uniqueID, transaction, erase);
         Unload();
         return result;
         }
@@ -306,6 +306,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
             if (indexEntry.Index > existingItem.Index) {
                 ObjectIndex.Remove(uniqueID);
                 ObjectIndex.Add(uniqueID, persistentIndexEntry);
+                persistentIndexEntry.Previous = existingItem;
                 }
             }
         else {
@@ -482,7 +483,8 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// <param name="uniqueID">The UniqueID of the object to delete</param>
     /// <param name="transaction">The transaction context in which to perform the update.</param>
     /// <returns>True if the object was updated, otherwise false.</returns>
-    public virtual bool Delete(string uniqueID, Transaction transaction = null) {
+    public virtual bool Delete(string uniqueID, Transaction transaction = null, bool erase = false) {
+        erase.AssertFalse(NYI.Throw);
         var envelope = PrepareDelete(out var Previous, uniqueID);
         if (envelope == null) {
             return false;
@@ -495,8 +497,8 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// Apply the specified message to the Sequence.
     /// </summary>
     /// <param name="dareMessage"></param>
-    public virtual SequenceIndexEntry Apply(DareEnvelope dareMessage) {
-        var frameIndex = Sequence.Append(dareMessage);
+    public virtual PersistentIndexEntry Apply(DareEnvelope dareMessage) {
+        var frameIndex = Sequence.Append(dareMessage) as PersistentIndexEntry;
         return frameIndex;
         }
 

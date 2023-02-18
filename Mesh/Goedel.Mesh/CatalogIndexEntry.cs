@@ -32,6 +32,7 @@ public class CatalogIndexEntry<T> : PersistentIndexEntry where T : CatalogedEntr
     ///<summary>The underlying spool.</summary> 
     public Catalog<T> Catalog => Sequence.Store as Catalog<T>;
 
+    public T CatalogedEntry => JsonObject as T;
 
     public CatalogIndexEntry(Sequence sequence): base() {
         (sequence?.Store as Catalog<T>).AssertNotNull(NYI.Throw);

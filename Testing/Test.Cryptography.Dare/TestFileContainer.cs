@@ -192,7 +192,7 @@ public partial class TestDareArchive {
         policy ??= TestEnvironmentCommon.MakePolicy(seed);
 
         // Create container
-        DareLogWriter.ArchiveFile(fileName, policy, testData, null);
+        DareArchive.ArchiveFile(fileName, policy, testData, null);
 
         // Read Sequence
         DareLogReader.File(fileName, policy.KeyLocation,
@@ -242,8 +242,8 @@ public partial class TestDareArchive {
         //var filename = fileNameBase + $"{policyNill}{mode}_{entries}";
 
 
-        using (var writer = new DareLogWriter(
-                filename, policy, true, fileStatus: FileStatus.Overwrite)) {
+        using (var writer = new DareArchive(
+                filename, fileStatus: FileStatus.Overwrite, policy:policy, read:true)) {
             for (var i = 0; i < entries; i++) {
                 writer.AddData(testData[i]);
                 }
@@ -251,7 +251,7 @@ public partial class TestDareArchive {
 
         // Test retrieval by index number. Note that since record 0 has the 
         // container header data, the data items run through [1..Entries]
-        using (var reader = new DareLogReader(filename, policy.KeyLocation)) {
+        using (var reader = new DareArchive(filename, keyLocate:policy.KeyLocation)) {
             for (var i = 0; i < entries; i++) {
 
                 reader.Read(policy?.KeyLocation, out var ReadData, out var ContentMeta, index: i + 1);

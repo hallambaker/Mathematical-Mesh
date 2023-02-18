@@ -263,6 +263,9 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
                 bool skip = false) => new SequenceEnumeratorIndex(
                     this, start, reverse, count, filter, skip);
 
+    public virtual IEnumerable<SequenceIndexEntry> ReadForward =>
+            Select(1, false);
+
 
     public virtual IEnumerable<SequenceIndexEntry> SelectFromUnread (
             FilterIndexDelegate evaluate=null) => new SequenceEnumeratorIndex(

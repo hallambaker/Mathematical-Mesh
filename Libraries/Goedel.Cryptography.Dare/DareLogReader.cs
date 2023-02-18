@@ -178,97 +178,97 @@ public class DareLogReader : Disposable, IEnumerable<SequenceIndexEntry> {
         containerDataReader.CopyToFile(Sequence, outputFile);
         }
 
-    /// <summary>
-    /// Unpack a file archive
-    /// </summary>
-    /// <param name="outputPath">The output directory path to which the
-    /// data is to be written.</param>
-    /// <param name="selector">Optional selector to be used for filtering 
-    /// (not implemented).</param>
-    public void UnpackArchive(
-        string outputPath,
-        string selector = null) {
+    ///// <summary>
+    ///// Unpack a file archive
+    ///// </summary>
+    ///// <param name="outputPath">The output directory path to which the
+    ///// data is to be written.</param>
+    ///// <param name="selector">Optional selector to be used for filtering 
+    ///// (not implemented).</param>
+    //public void UnpackArchive(
+    //    string outputPath,
+    //    string selector = null) {
 
-        selector.Future();
-        GetIndex();
-        var outputDirectory = Path.GetFullPath(outputPath) + Path.DirectorySeparatorChar;
+    //    selector.Future();
+    //    GetIndex();
+    //    var outputDirectory = Path.GetFullPath(outputPath) + Path.DirectorySeparatorChar;
 
-        // no, have to iterate over the archive.
-        foreach (var entry in FileCollection.DictionaryByPath) {
-            var fileEntry = entry.Value;
+    //    // no, have to iterate over the archive.
+    //    foreach (var entry in FileCollection.DictionaryByPath) {
+    //        var fileEntry = entry.Value;
 
-            // form the path here
-            var destination = Path.Combine(outputDirectory, fileEntry.Path);
+    //        // form the path here
+    //        var destination = Path.Combine(outputDirectory, fileEntry.Path);
 
-            var destinationInfo = new FileInfo(destination);
-            var destinationDir = destinationInfo.Directory;
+    //        var destinationInfo = new FileInfo(destination);
+    //        var destinationDir = destinationInfo.Directory;
 
-            // verify that the destination is a subdirectory of outputDirectory
-            destinationDir.FullName.StartsWith(outputDirectory).AssertTrue(NYI.Throw);
+    //        // verify that the destination is a subdirectory of outputDirectory
+    //        destinationDir.FullName.StartsWith(outputDirectory).AssertTrue(NYI.Throw);
 
-            // Create the directory (if needed)
-            if (!destinationDir.Exists) {
-                Directory.CreateDirectory(destinationDir.FullName);
-                }
+    //        // Create the directory (if needed)
+    //        if (!destinationDir.Exists) {
+    //            Directory.CreateDirectory(destinationDir.FullName);
+    //            }
 
-            // unpack the file
-            //Screen.WriteLine($"File: {fileEntry.Path} PositionRead is {fileEntry.Index}");
-            var containerDataReader = Sequence.Frame(fileEntry.Index);
-            containerDataReader.CopyToFile(Sequence, destination);
-            }
+    //        // unpack the file
+    //        //Screen.WriteLine($"File: {fileEntry.Path} PositionRead is {fileEntry.Index}");
+    //        var containerDataReader = Sequence.Frame(fileEntry.Index);
+    //        containerDataReader.CopyToFile(Sequence, destination);
+    //        }
 
-        }
+    //    }
 
-    /// <summary>
-    /// Copy data from this Sequence to the specified Sequence writer.
-    /// </summary>
-    /// <param name="fileContainerWriter">The Sequence to be written to.</param>
-    public void CopyArchive(DareLogWriter fileContainerWriter) {
-        foreach (var ContainerDataReader in Sequence) {
-            fileContainerWriter.Add(ContainerDataReader);
+    ///// <summary>
+    ///// Copy data from this Sequence to the specified Sequence writer.
+    ///// </summary>
+    ///// <param name="fileContainerWriter">The Sequence to be written to.</param>
+    //public void CopyArchive(DareLogWriter fileContainerWriter) {
+    //    foreach (var ContainerDataReader in Sequence) {
+    //        fileContainerWriter.Add(ContainerDataReader);
 
-            }
+    //        }
 
-        }
-
-
-    /// <summary>
-    /// Perform a Key Exchange
-    /// </summary>
-    /// <param name="recipients">The list of recipients</param>
-    /// <param name="algorithmID">The bulk encryption algorithm</param>
-    /// <returns>The result of the key exchange.</returns>
-    public virtual byte[] GetExchange(
-            List<Recipient> recipients,
-            CryptoAlgorithmId algorithmID) => Decrypt(recipients, algorithmID);
+    //    }
 
 
-
-    /// <summary>
-    /// Attempt to decrypt a decryption blob from a list of recipient entries.
-    /// </summary>
-    /// <param name="recipients">The recipient entry.</param>
-    /// <param name="algorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
-    /// <returns></returns>
-    public static byte[] Decrypt(
-            List<Recipient> recipients,
-            CryptoAlgorithmId algorithmID) {
-        foreach (var Recipient in recipients) {
-
-            if (KeyCollection.Default.TryFindKeyDecryption(Recipient.Header.Kid.Trim(), out var DecryptionKey)) {
-
-                // Recipient has the following fields of interest
-                // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
-                // Recipient.Header.Epk  -- The ephemeral public key
-                // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
-
-                return DecryptionKey.Decrypt(Recipient.EncryptedKey, Recipient.Header.Epk.KeyPair, algorithmID: algorithmID);
-                }
-            }
+    ///// <summary>
+    ///// Perform a Key Exchange
+    ///// </summary>
+    ///// <param name="recipients">The list of recipients</param>
+    ///// <param name="algorithmID">The bulk encryption algorithm</param>
+    ///// <returns>The result of the key exchange.</returns>
+    //public virtual byte[] GetExchange(
+    //        List<Recipient> recipients,
+    //        CryptoAlgorithmId algorithmID) => Decrypt(recipients, algorithmID);
 
 
-        throw new NoAvailableDecryptionKey();
-        }
+
+    ///// <summary>
+    ///// Attempt to decrypt a decryption blob from a list of recipient entries.
+    ///// </summary>
+    ///// <param name="recipients">The recipient entry.</param>
+    ///// <param name="algorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
+    ///// <returns></returns>
+    //public static byte[] Decrypt(
+    //        List<Recipient> recipients,
+    //        CryptoAlgorithmId algorithmID) {
+    //    foreach (var Recipient in recipients) {
+
+    //        if (KeyCollection.Default.TryFindKeyDecryption(Recipient.Header.Kid.Trim(), out var DecryptionKey)) {
+
+    //            // Recipient has the following fields of interest
+    //            // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
+    //            // Recipient.Header.Epk  -- The ephemeral public key
+    //            // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
+
+    //            return DecryptionKey.Decrypt(Recipient.EncryptedKey, Recipient.Header.Epk.KeyPair, algorithmID: algorithmID);
+    //            }
+    //        }
+
+
+    //    throw new NoAvailableDecryptionKey();
+    //    }
 
 
     }

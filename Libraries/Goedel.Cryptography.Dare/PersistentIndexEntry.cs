@@ -43,6 +43,7 @@ public partial class PersistentIndexEntry : SequenceIndexEntry, IPersistenceEntr
     ///<inheritdoc/>
     public bool Deleted => SequenceEvent == SequenceEvent.Delete;
 
+    public PersistentIndexEntry Previous { get; set; }
 
     ///<summary>The decoded JSONObject</summary>
     public override JsonObject JsonObject {

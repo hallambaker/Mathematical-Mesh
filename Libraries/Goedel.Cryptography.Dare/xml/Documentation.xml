@@ -764,6 +764,33 @@
             be stupid.
             </summary>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.DareArchive.ArchiveFile(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.ContentMeta,Goedel.IO.FileStatus)">
+            <summary>
+            Open a new file Sequence for write access and write a single file entry.
+            </summary>
+            <param name="archiveName">The file name to create</param>
+            <param name="fileName">The file name to create</param>
+            <param name="data">The content data</param>
+            <param name="contentMeta">The content metadata</param>
+            <param name="fileStatus">The mode to open the file in, this must be a mode
+            that permits write access.</param>
+            <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
+            <returns>File Sequence instance</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareArchive.ArchiveDirectory(System.String,Goedel.Cryptography.Dare.DarePolicy,System.String,Goedel.Cryptography.Dare.ContentMeta,Goedel.IO.FileStatus,System.Boolean)">
+            <summary>
+            Open a new file Sequence for write access and append all the files in the directory 
+            <paramref name="directory"/>.
+            </summary>
+            <param name="archiveName">The file name to create</param>
+            <param name="directory">The directory to append files from.</param>
+            <param name="contentMeta">The content metadata</param>
+            <param name="fileStatus">The mode to open the file in, this must be a mode
+            that permits write access.</param>
+            <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
+            <param name="index">If true add an index record to the end of the archive.</param>
+            <returns>File Sequence instance</returns>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceType">
             <summary>Sequence types</summary>
         </member>
@@ -2162,37 +2189,6 @@
             <param name="index"></param>
             <param name="path"></param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogReader.UnpackArchive(System.String,System.String)">
-            <summary>
-            Unpack a file archive
-            </summary>
-            <param name="outputPath">The output directory path to which the
-            data is to be written.</param>
-            <param name="selector">Optional selector to be used for filtering 
-            (not implemented).</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogReader.CopyArchive(Goedel.Cryptography.Dare.DareLogWriter)">
-            <summary>
-            Copy data from this Sequence to the specified Sequence writer.
-            </summary>
-            <param name="fileContainerWriter">The Sequence to be written to.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogReader.GetExchange(System.Collections.Generic.List{Goedel.Cryptography.Jose.Recipient},Goedel.Cryptography.CryptoAlgorithmId)">
-            <summary>
-            Perform a Key Exchange
-            </summary>
-            <param name="recipients">The list of recipients</param>
-            <param name="algorithmID">The bulk encryption algorithm</param>
-            <returns>The result of the key exchange.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogReader.Decrypt(System.Collections.Generic.List{Goedel.Cryptography.Jose.Recipient},Goedel.Cryptography.CryptoAlgorithmId)">
-            <summary>
-            Attempt to decrypt a decryption blob from a list of recipient entries.
-            </summary>
-            <param name="recipients">The recipient entry.</param>
-            <param name="algorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
-            <returns></returns>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.DareLogWriter">
             <summary>
             
@@ -2237,79 +2233,6 @@
             </summary>
             <param name="data">The content data</param>
             <param name="contentInfo">The content metadata</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.AddFile(System.String,System.String,Goedel.Cryptography.Dare.ContentMeta)">
-            <summary>
-            Add a file entry
-            </summary>
-            <param name="basePath">The base path of the file.</param>
-            <param name="relativePath">The path of the file within the archive.</param>
-            <param name="contentMeta">Metadata describing the content.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.AddFile(System.String,System.IO.FileInfo,Goedel.Cryptography.Dare.ContentMeta)">
-            <summary>
-            Add a file entry
-            </summary>
-            <param name="file">The file to add</param>
-            <param name="path">The path name attribute to give the file in the Sequence</param>
-            <param name="contentMeta">Metadata describing the content.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.Delete(System.String)">
-            <summary>
-            Delete a file entry
-            </summary>
-            <param name="path">The path name attribute to give the file in the Sequence</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.Add(Goedel.Cryptography.Dare.SequenceIndexEntry,Goedel.Cryptography.Dare.CryptoParameters)">
-            <summary>
-            Read a Sequence data entry from one Sequence and add it to this one.
-            </summary>Add 
-            <param name="containerDataReader">First reader from which the
-            Sequence data is to be read.</param>
-            <param name="cryptoParameters">The new crypto parameters to be used to 
-            write the Sequence data.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.AddIndex(System.Collections.Generic.List{Goedel.Cryptography.KeyPair})">
-            <summary>
-            Append an archive frame to the Sequence.
-            </summary>
-            <param name="signatures">List of JWS signatures. Since this is the first block, the signature
-            is always over the payload data only.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.ArchiveFile(System.String,Goedel.Cryptography.Dare.DarePolicy,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,Goedel.IO.FileStatus)">
-            <summary>
-            Open a new file Sequence for write access and write a single file entry.
-            </summary>
-            <param name="fileName">The file name to create</param>
-            <param name="data">The content data</param>
-            <param name="contentMeta">The content metadata</param>
-            <param name="fileStatus">The mode to open the file in, this must be a mode
-            that permits write access.</param>
-            <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
-            <returns>File Sequence instance</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.ArchiveDirectory(System.String,Goedel.Cryptography.Dare.DarePolicy,System.String,Goedel.Cryptography.Dare.ContentMeta,Goedel.IO.FileStatus,System.Boolean)">
-            <summary>
-            Open a new file Sequence for write access and append all the files in the directory 
-            <paramref name="directory"/>.
-            </summary>
-            <param name="fileName">The file name to create</param>
-            <param name="directory">The directory to append files from.</param>
-            <param name="contentMeta">The content metadata</param>
-            <param name="fileStatus">The mode to open the file in, this must be a mode
-            that permits write access.</param>
-            <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
-            <param name="index">If true add an index record to the end of the archive.</param>
-            <returns>File Sequence instance</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.AddDirectory(System.String,System.IO.DirectoryInfo,Goedel.Cryptography.Dare.ContentMeta)">
-            <summary>
-            Append all the files in the directory 
-            <paramref name="directory"/>.
-            </summary>
-            <param name="directory">The directory to append files from.</param>
-            <param name="directoryInfo">The directory descriptor.</param>
-            <param name="contentMeta">The content metadata</param>
         </member>
         <member name="T:Goedel.Cryptography.Dare.DarePolicy">
             <summary>
@@ -4562,7 +4485,7 @@
         <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.Update(Goedel.Protocol.JsonObject,System.Boolean,Goedel.Cryptography.Dare.Transaction)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.Delete(System.String,Goedel.Cryptography.Dare.Transaction)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.Delete(System.String,Goedel.Cryptography.Dare.Transaction,System.Boolean)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.Dare.PersistenceStore">
@@ -4682,7 +4605,7 @@
             <param name="create">If true, create a new value if one does not already exist</param>
             <param name="transaction">The transaction context in which to perform the update.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Delete(System.String,Goedel.Cryptography.Dare.Transaction)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Delete(System.String,Goedel.Cryptography.Dare.Transaction,System.Boolean)">
             <summary>
             Delete a persistence entry
             </summary>

@@ -931,17 +931,11 @@
 			Include Reporting
 
 
-		Command DareCreate "create"
-			Brief "Create a new DARE Sequence"
-			Include EncodeOptions
-			Include CryptoOptions
-			Include SequenceOptions
-			Include AccountOptions
-			Include Reporting
-			Parameter Sequence "out" NewFile
-				Brief "New sequence"			
+	
+	CommandSet Archive "archive"
+		Brief "DARE archive commands"
 
-		Command DareArchive "archive"
+		Command DareArchiveC "archive"
 			Brief "Create a new DARE archive and add the specified files"
 			Include EncodeOptions
 			Include CryptoOptions
@@ -955,17 +949,6 @@
 			Option Index "index" Flag
 				Default "true"
 				Brief "Append index to the archive"	
-
-		Command DareLog "log"
-			Brief "Append the specified string to the sequence."
-			Include EncodeOptions
-			Include CryptoOptions
-			Include AccountOptions
-			Include Reporting
-			Parameter Sequence "in" ExistingFile
-				Brief "Sequence to append to"
-			Parameter Entry "entry" NewFile
-				Brief "Text to append"
 
 		Command DareAppend "append"
 			Brief "Append the specified file as an entry to the specified sequence."
@@ -984,13 +967,26 @@
 				Brief "Append index to the archive"	
 
 		Command DareDelete "delete"
+			Include AccountOptions
 			Brief "Delete file from archive index."
 			Parameter Sequence "in" ExistingFile
 				Brief "Sequence to append to"
 			Option Filename "file" String
 				Brief "Name of file to delete"
 			Option Key "key" String
+			Option Erase "erase" Flag
+				Default "false"
+				Brief "If true, erase file from container preventing recovery."	
 
+
+		Command DareIndex "index"
+			Brief "Compile an index for the specified sequence and append to the end."
+			Include EncodeOptions
+			Include CryptoOptions
+			Include AccountOptions
+			Include Reporting
+			Parameter Sequence "in" ExistingFile
+				Brief "Sequence to be indexed"
 
 		Command DareDir "dir"
 			Brief "Compile a catalog for the specified sequence."
@@ -1008,15 +1004,6 @@
 			Parameter Output "out" NewFile
 				Brief "List output"	
 
-		Command DareIndex "index"
-			Brief "Compile an index for the specified sequence and append to the end."
-			Include EncodeOptions
-			Include CryptoOptions
-			Include AccountOptions
-			Include Reporting
-			Parameter Sequence "in" ExistingFile
-				Brief "Sequence to be indexed"
-
 		Command DareExtract "extract"
 			Brief "Extract the specified record from the sequence"
 			Parameter Sequence "in" ExistingFile
@@ -1032,6 +1019,10 @@
 			Option Key "key" String
 			Include AccountOptions
 			Include Reporting
+			Option Recover "recover" Flag
+				Default "false"
+				Brief "If true, return deleted files."	
+
 
 		Command DareCopy "copy"
 			Brief "Copy sequence contents to create a new sequence removing deleted elements"
@@ -1053,6 +1044,32 @@
 			Option Purge "purge" Flag
 				Default "true"
 				Brief "Purge unused data etc."
+
+
+
+	CommandSet Log "log"
+		Brief "DARE log commands"
+
+		Command DareCreate "create"
+			Brief "Create a new DARE Sequence"
+			Include EncodeOptions
+			Include CryptoOptions
+			Include SequenceOptions
+			Include AccountOptions
+			Include Reporting
+			Parameter Sequence "out" NewFile
+				Brief "New sequence"
+
+		Command DareLog "append"
+			Brief "Append the specified string to the sequence."
+			Include EncodeOptions
+			Include CryptoOptions
+			Include AccountOptions
+			Include Reporting
+			Parameter Sequence "in" ExistingFile
+				Brief "Sequence to append to"
+			Parameter Entry "entry" NewFile
+				Brief "Text to append"
 
 	// Mail
 	CommandSet Mail "mail"

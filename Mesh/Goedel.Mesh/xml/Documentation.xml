@@ -2156,7 +2156,7 @@
             </summary>
             <param name="catalogedEntry">The entry being updated.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.DeleteEntry(System.String)">
+        <member name="M:Goedel.Mesh.Catalog`1.DeleteEntry(Goedel.Mesh.CatalogIndexEntry{`0})">
             <summary>
             Callback called before deleting an entry from the catalog. May be overriden in 
             derrived classes to update local indexes.

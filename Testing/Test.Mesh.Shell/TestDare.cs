@@ -205,6 +205,11 @@ public partial class ShellTests {
         EndTest();
         }
 
+    [Fact]
+    public void RelativePathDirectoryFail() => throw new NYI();
+
+    [Fact]
+    public void RelativePathFileFail() => throw new NYI();
 
 
 
