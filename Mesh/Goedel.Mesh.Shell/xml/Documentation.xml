@@ -4047,7 +4047,7 @@
             <summary>Field accessor for option [record]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Filename">
-            <summary>Field accessor for option [file]</summary>
+            <summary>Field accessor for option [out]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Key">
             <summary>Field accessor for option [key]</summary>

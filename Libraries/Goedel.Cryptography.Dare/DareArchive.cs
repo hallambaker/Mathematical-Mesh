@@ -42,13 +42,6 @@ public class DareArchive : PersistenceStore {
                     policy, dataEncoding, keyLocate, read, false) {
         }
 
-    public void AddData(
-            byte[] data,
-            ContentMeta contentMeta = null) {
-        throw new NYI();
-        }
-
-
     public void AddFile(
                 string directoryPath,
                 string fileName,

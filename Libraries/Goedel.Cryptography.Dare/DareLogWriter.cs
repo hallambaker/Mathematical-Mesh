@@ -53,11 +53,9 @@ public class DareLogWriter : DareLogReader {
     public DareLogWriter(
             string fileName,
             DarePolicy policy,
-            bool archive = false,
-            bool digest = true,
             FileStatus fileStatus = FileStatus.Overwrite,
-            SequenceType containerType = SequenceType.Unknown) :
-                    this(new JbcdStream(fileName, fileStatus), archive, digest, containerType) =>
+            SequenceType containerType = SequenceType.Merkle) :
+                    this(new JbcdStream(fileName, fileStatus), containerType) =>
         Sequence.DisposeStream = true;
 
 
@@ -73,14 +71,8 @@ public class DareLogWriter : DareLogReader {
     /// <returns>File Sequence instance</returns>
     public DareLogWriter(
             JbcdStream jbcdStream,
-            bool archive = false,
-            bool digest = true,
-            SequenceType containerType = SequenceType.Unknown) {
+            SequenceType containerType = SequenceType.Merkle) {
 
-        if (containerType == SequenceType.Unknown) {
-            containerType = digest ? archive ? SequenceType.Merkle : SequenceType.Chain :
-                archive ? SequenceType.Tree : SequenceType.List;
-            }
 
         if (jbcdStream.Length == 0) {
 

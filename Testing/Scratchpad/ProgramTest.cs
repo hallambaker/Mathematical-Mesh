@@ -81,9 +81,14 @@ partial class Program {
         //TestSequences.Test().ZContainerOnceExchange();
         //TestSequences.Test().ZContainerSessionPolicy();
 
+
+        //TestDareArchive.Test().ArchiveTest();
+        TestDareLog.Test().TestFileContainer1();
+        TestDareLog.Test().TestLogMulti();
+
         /* Need thinking */
 
-        ShellTests.Test().TestArchive();
+        ShellTests.Test().TestArchive(); 
         ShellTests.Test().TestSequence();
         ShellTests.Test().TestMessageConfirmationAccept();
         ShellTests.Test().TestProfileConnectPin();

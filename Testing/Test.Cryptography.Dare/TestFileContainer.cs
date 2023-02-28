@@ -25,6 +25,7 @@ using System;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
+using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test;
 using Goedel.Utilities;
@@ -36,12 +37,12 @@ namespace Goedel.XUnit;
 /// <summary>
 /// Test routines for file containers
 /// </summary>
-public partial class TestDareArchive {
+public partial class TestDareLog {
 
 
 
 
-    public static TestDareArchive Test() => new();
+    public static TestDareLog Test() => new();
     /// <summary>
     /// Test a single plaintext singleton containers.
     /// </summary>
@@ -49,11 +50,7 @@ public partial class TestDareArchive {
     public void TestFileContainer1() {
         var seed = DeterministicSeed.AutoClean();
 
-
-        var bytes = CreateBytes(100);
-        var policy = TestEnvironmentCommon.MakePolicy(seed);
-
-        ReadWriteContainer(bytes, policy);
+        ReadWriteEnvelope(100);
         }
 
 
@@ -63,15 +60,10 @@ public partial class TestDareArchive {
     [Fact]
     public void TestFileContainer16() {
         var seed = DeterministicSeed.AutoClean();
-        byte[] bytes = Array.Empty<Byte>();
-
-        var policy = TestEnvironmentCommon.MakePolicy(seed);
-        ReadWriteContainer(bytes, policy);
+        ReadWriteEnvelope(0);
 
         int length = 1;
-        for (var i = 1; i < 16; i++) {
-            bytes = CreateBytes(length);
-            ReadWriteContainer(bytes, null);
+        for (var i = 1; i < 16; i++) {            ReadWriteEnvelope(length, null);
             length *= 2;
             }
         }
@@ -86,10 +78,9 @@ public partial class TestDareArchive {
     [Fact]
     public void TestFileContainerEncrypted1() {
         var seed = DeterministicSeed.AutoClean();
-        var policy = TestEnvironmentCommon.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
+        var policy = TestEnvironmentCommon.MakeCrypto(seed, encryptId: CryptoAlgorithmId.X448);
 
-        var bytes = CreateBytes(100);
-        ReadWriteContainer(bytes, policy);
+        ReadWriteEnvelope(100, policy);
         }
 
 
@@ -99,15 +90,14 @@ public partial class TestDareArchive {
     [Fact]
     public void TestFileContainerEncrypted16() {
         var seed = DeterministicSeed.AutoClean();
-        var policy = TestEnvironmentCommon.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
+        var policy = TestEnvironmentCommon.MakeCrypto(seed, encryptId: CryptoAlgorithmId.X448);
 
-        byte[] bytes = Array.Empty<Byte>();
-        ReadWriteContainer(bytes, policy);
+
+        ReadWriteEnvelope(0, policy);
 
         int length = 1;
         for (var i = 1; i < 16; i++) {
-            bytes = CreateBytes(length);
-            ReadWriteContainer( bytes, null);
+            ReadWriteEnvelope(length, null);
             length *= 2;
             }
         }
@@ -116,45 +106,45 @@ public partial class TestDareArchive {
     /// Test empty archive
     /// </summary>
     [Fact]
-    public void TestArchive0() => ReadWriteArchive(0);
+    public void TestLog0() => ReadWriteLog(0);
 
     /// <summary>
     /// Test single file archive
     /// </summary>
     [Fact]
-    public void TestArchive1() => ReadWriteArchive(1);
+    public void TestLog1() => ReadWriteLog(1);
 
     /// <summary>
     /// Test file archive with 10 plaintext entries 
     /// </summary>
     [Fact]
-    public void TestArchive10() => ReadWriteArchive(10);
+    public void TestLog10() => ReadWriteLog(10);
 
     /// <summary>
     /// Test file archive with 10 encrypted entries encrypted under one key exchange
     /// </summary>
     [Fact]
-    public void TestArchiveEncrypted10Bulk() {
+    public void TestLogEncrypted10Bulk() {
         var seed = DeterministicSeed.AutoClean();
         var policy = TestEnvironmentBase.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
-        ReadWriteArchive(10, policy, false);
+        ReadWriteLog(10, policy, false);
         }
 
     /// <summary>
     /// Test file archive with 10 encrypted entries encrypted under independent key exchanges
     /// </summary>
     [Fact]
-    public void TestArchiveEncrypted10Individual() {
+    public void TestLogEncrypted10Individual() {
         var seed = DeterministicSeed.AutoClean();
         var policy = TestEnvironmentBase.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
-        ReadWriteArchive(10, policy, true);
+        ReadWriteLog(10, policy, true);
         }
 
     /// <summary>
     /// Test file archive with multiple different sizes, etc.
     /// </summary>
     [Fact]
-    public void TestArchiveMulti() {
+    public void TestLogMulti() {
         var entries = new int[] { 5, 15, 30, 100 };
 
         foreach (var entry in entries) {
@@ -162,9 +152,9 @@ public partial class TestDareArchive {
             var policy = TestEnvironmentBase.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
 
 
-            ReadWriteArchive(entry, seed: seed);
-            ReadWriteArchive(entry, policy, false, seed: seed);
-            ReadWriteArchive(entry, policy, true, seed: seed);
+            ReadWriteLog(entry, seed: seed);
+            ReadWriteLog(entry, policy, false, seed: seed);
+            ReadWriteLog(entry, policy, true, seed: seed);
             }
         }
 
@@ -176,52 +166,58 @@ public partial class TestDareArchive {
     static string GetLabel(DarePolicy policy, bool independent = false) =>
         policy == null ? "null" : policy.Encrypt ? (independent ? "Ind" : "Bulk") : "Plaintext";
 
-    static void ReadWriteContainer(
-                    byte[] testData,
-                    DarePolicy policy = null,
+    static void ReadWriteEnvelope(
+                    int length = 1000,
+                    CryptoParameters policy = null,
                     DeterministicSeed seed = null) {
 
-        var length = testData?.Length.ToString() ?? "";
-        seed ??= DeterministicSeed.CreateDeep(1, GetLabel(policy), length);
-        var fileName = seed.GetFilename("Sequence");
 
-    //    ReadWriteContainer (fileName, testData, policy);
-    //    }
-
-    //static void ReadWriteContainer(string fileName, byte[] testData, DarePolicy policy = null) {
-        policy ??= TestEnvironmentCommon.MakePolicy(seed);
-
-        throw new NYI();
+        seed ??= DeterministicSeed.Auto(length);
+        var fileName = seed.GetFilename("Sequence.random");
+        policy ??= new CryptoParameters();
 
 
+        //    ReadWriteContainer (fileName, testData, policy);
+        //    }
 
-        //// Create container
-        //DareArchive.ArchiveFile(fileName, policy, testData, null);
+        //static void ReadWriteContainer(string fileName, byte[] testData, DarePolicy policy = null) {
+        seed.MakeTestFile(fileName, length);
+        seed.CheckTestFile(fileName, length);
 
-        //// Read Sequence
-        //DareLogReader.File(fileName, policy.KeyLocation,
-        //            out var ReadData, out var ContentMetaOut);
+        var tempEncode = seed.GetTempFilename();
+        DareEnvelope.Encode(policy, fileName, tempEncode);
 
-        //// Check for equality
-        //ReadData.IsEqualTo(testData).TestTrue();
+        var tempDecode = seed.GetTempFilename();
+        DareEnvelope.Decode(tempEncode, tempDecode, policy.KeyLocate);
+
+        seed.CheckTestFile(tempDecode, length);
 
 
-        //Sequence.VerifyPolicy(fileName, policy.KeyLocation);
+        var v1 = DareEnvelope.Verify(tempEncode);
+
+        if (policy.SignerKeys != null) {
+            // Here corrupt the file data 
+
+            var v2 = DareEnvelope.Verify(tempEncode);
+            }
         }
 
 
-    static void ReadWriteArchive(
+    static void ReadWriteLog(
                     int entries,
                     DarePolicy policy = null,
                     bool independent = false,
                     DeterministicSeed seed = null) {
+
+
+        seed ??= DeterministicSeed.Auto(entries, GetLabel(policy, independent));
         policy ??= TestEnvironmentBase.MakePolicy(seed);
 
         var policyNill = policy == null ? "-null" : "";
         var mode = policy.Encrypt ? (independent ? "-Ind" : "-Bulk") : "-plaintext";
 
 
-        seed ??= DeterministicSeed.CreateParent(entries, GetLabel(policy, independent));
+
         var filename = seed.GetFilename("Sequence");
 
     //    ReadWriteArchive(fileName, entries, policy, independent);
@@ -246,8 +242,8 @@ public partial class TestDareArchive {
         //var filename = fileNameBase + $"{policyNill}{mode}_{entries}";
 
 
-        using (var writer = new DareArchive(
-                filename, fileStatus: FileStatus.Overwrite, policy:policy, read:true)) {
+        using (var writer = new DareLogWriter(
+                filename, fileStatus: FileStatus.Overwrite, policy:policy)) {
             for (var i = 0; i < entries; i++) {
                 writer.AddData(testData[i]);
                 }
@@ -255,14 +251,14 @@ public partial class TestDareArchive {
 
         // Test retrieval by index number. Note that since record 0 has the 
         // container header data, the data items run through [1..Entries]
-        using (var reader = new DareArchive(filename, keyLocate:policy.KeyLocation)) {
+        using (var reader = new DareLogReader(filename, keyLocate:policy.KeyLocation)) {
             for (var i = 0; i < entries; i++) {
 
 
-                throw new NYI();
+                //throw new NYI();
 
-                //reader.Read(policy?.KeyLocation, out var ReadData, out var ContentMeta, index: i + 1);
-                //ReadData.IsEqualTo(testData[i]).TestTrue();
+                reader.Read(policy?.KeyLocation, out var ReadData, out var ContentMeta, index: i + 1);
+                ReadData.IsEqualTo(testData[i]).TestTrue();
                 }
             }
 

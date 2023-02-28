@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using Goedel.Cryptography.Jose;
+
 namespace Goedel.Cryptography.Dare;
 
 
@@ -161,8 +163,8 @@ public partial class CryptoParameters {
 
         if (recipients != null) {
             EncryptionKeys = new List<CryptoKey>();
-            foreach (var Entry in recipients) {
-                AddEncrypt(Entry);
+            foreach (var entry in recipients) {
+                AddEncrypt(entry);
                 }
             SetEncrypt();
             }
@@ -187,7 +189,19 @@ public partial class CryptoParameters {
 
 
 
+    //public CryptoParameters(DarePolicy policy)  {
+    //    if (policy.EncryptKeys != null) {
 
+    //        EncryptionKeys = new ();
+
+    //        foreach (var entry in policy.EncryptKeys) {
+    //            EncryptionKeys.Add(Key.GetPublic(entry));
+    //            }
+    //        SetEncrypt();
+
+    //        }
+
+    //    }
 
 
 

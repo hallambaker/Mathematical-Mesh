@@ -820,20 +820,60 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         return message;
 
         }
+    #endregion
 
 
-    /// <summary>
-    /// Strip the envelope of all unnecessary convenience data.
-    /// </summary>
-    public void Strip() {
-        if (Trailer != null) {
-            Trailer.PayloadDigest = null;
-            }
 
-        if (Header != null) {
-            Header.ContentMeta = null;
-            Header.ContentMetaData = null;
-            }
+    #region // File Encode/Decode
+
+    public static string GetContentType(string filename) {
+        throw new NYI();
+        //FileExtensionContentTypeProvider
         }
+
+
+    //public static void FileEncode(
+    //            string input,
+    //            string? output = null,
+    //            DarePolicy? policy = null,
+    //            string? contentType = null) {
+    //    contentType ??= GetContentType(input);
+
+    //    using (var read = input.OpenFileRead()) {
+    //        FileEncode(read, read.Length, output, policy, contentType);
+    //        }
+
+    //    }
+
+    //public static void FileEncode(
+    //            Stream input,
+    //            long length = -1,
+    //            string? output = null,
+    //            DarePolicy? policy = null,
+    //            string? contentType = null) {
+    //    output ??= input + ".dare";
+    //    using (output.OpenFileNew ()) {
+            
+            
+            
+    //        }
+
+
+    //    throw new NYI();
+    //    }
+
+    //public static void FileDecode(
+    //            string input,
+    //            string? output = null,
+    //            IKeyLocate keyLocate = null) {
+    //    }
+
+    //public static bool FileVerify(
+    //        string input) {
+
+
+    //    throw new NYI();
+    //    }
+
     #endregion
     }

@@ -44,50 +44,6 @@ public class TestHost {
     // Dispatch delegate for the flogging
     delegate int FlogDelegate(TestClient client, int index);
 
-    //public TestService(TestEnvironmentCommon TestEnvironmentCommon) {
-
-
-    //    var meshProvider = TestEnvironmentCommon.MeshService;
-
-    //    var monitorProvider = new ServiceManagementServiceProvider();
-
-
-
-    //    // Set up the service
-    //    var httpEndpoint = new HttpEndpoint(Domain, Protocol, Instance);
-    //    var udpEndpoint = new UdpEndpoint(Protocol, Instance);
-    //    var endpoints = new List<Endpoint> { httpEndpoint, udpEndpoint };
-
-
-
-
-    //    using var provider = new Provider(endpoints, meshProvider);
-
-
-    //    var providers = new List<Provider> { provider };
-    //    using var service = new Service(providers);
-
-    //    // Set up the client(s)
-    //    var accountAlice = httpEndpoint.Account(Alice);
-    //    var accountBob = httpEndpoint.Account(Bob);
-
-    //    var clientAlice = new TestClient(accountAlice, endpoints);
-    //    var clientBob = new TestClient(accountBob, endpoints);
-
-
-
-    //    // Exercise the service
-    //    var clients = new List<TestClient> { clientAlice, clientBob };
-    //    Flog(clients, Work, 100);
-
-
-    //    // Service shut down is performed automatically when the Dispose methods are 
-    //    // called on the Service and Provider in turn.
-
-
-    //    }
-
-
     static void Flog(List<TestClient> clients, FlogDelegate workDelegate, int count) {
 
         int threadCount = 0;

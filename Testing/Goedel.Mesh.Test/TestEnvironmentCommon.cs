@@ -187,6 +187,36 @@ public abstract class TestEnvironmentBase : UnitTestSet {
         return new KeyCollectionTestEnv(testEnvironment.Path);
         }
 
+
+    public static CryptoParameters MakeCrypto(DeterministicSeed seed,
+            CryptoAlgorithmId signId = CryptoAlgorithmId.NULL,
+            CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL) =>
+                MakeCrypto(seed, out _, out _, signId, encryptId);
+
+    public static CryptoParameters MakeCrypto(DeterministicSeed seed,
+            out KeyPair signKey, out KeyPair encryptKey,
+            CryptoAlgorithmId signId = CryptoAlgorithmId.NULL,
+            CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL) {
+
+        encryptKey = null;
+        signKey = null;
+
+        var keyCollection = MakeKeyCollection(seed);
+
+
+        if (encryptId != CryptoAlgorithmId.NULL) {
+            encryptKey = KeyPair.Factory(encryptId,
+                    KeySecurity.Exportable, keyCollection, keyUses: KeyUses.Encrypt);
+            }
+        if (signId != CryptoAlgorithmId.NULL) {
+            signKey = KeyPair.Factory(encryptId,
+                    KeySecurity.Exportable, keyCollection, keyUses: KeyUses.Sign);
+            }
+
+        return new CryptoParameters(keyCollection, signer: signKey, recipient:encryptKey);
+        }
+
+
     public static DarePolicy MakePolicy(DeterministicSeed seed,
             CryptoAlgorithmId signId = CryptoAlgorithmId.NULL,
             CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL) =>

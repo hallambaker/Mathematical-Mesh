@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 18-Feb-23 3:26:29 PM
+//  This file was automatically generated at 28-Feb-23 3:07:41 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -17786,7 +17786,7 @@ public class _ArchiveExtract : Goedel.Command.Dispatch ,
 	public virtual string _Record {
 		set => _Data[2].Parameter (value);
 		}
-	/// <summary>Field accessor for option [file]</summary>
+	/// <summary>Field accessor for option [out]</summary>
 	public virtual String Filename {
 		get => _Data[3] as String;
 		set => _Data[3]  = value;
@@ -17910,7 +17910,7 @@ public class _ArchiveExtract : Goedel.Command.Dispatch ,
 				Default = null, // null if null
 				Brief = "Name of file to extract",
 				Index = 3,
-				Key = "file"
+				Key = "out"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Key", 

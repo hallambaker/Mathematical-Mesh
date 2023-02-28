@@ -71,14 +71,14 @@ public class DareLogReader : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <param name="fileName">The file name to read</param>
     /// <param name="fileStatus">The mode to open the file in, this must be a mode
     /// that permits read access.</param>
-    /// <param name="keyCollection">Key collection to be used to resolve private key references.</param>
+    /// <param name="keyLocate">Key collection to be used to resolve private key references.</param>
     /// <param name="decrypt">If true attempt to decrypt the Sequence contents.</param>
     /// <returns>File Sequence instance</returns>
     public DareLogReader(
             string fileName,
-            IKeyLocate keyCollection = null,
+            IKeyLocate keyLocate = null,
             FileStatus fileStatus = FileStatus.Read, bool decrypt = true) {
-        Sequence = Sequence.OpenExisting(fileName, fileStatus, keyCollection, decrypt);
+        Sequence = Sequence.OpenExisting(fileName, fileStatus, keyLocate, decrypt);
         DictionaryStart = Sequence.FrameIndexLast;
         }
 

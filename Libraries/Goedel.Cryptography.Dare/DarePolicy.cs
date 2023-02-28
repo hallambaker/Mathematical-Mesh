@@ -113,15 +113,4 @@ public partial class DarePolicy {
 
 
 
-    ///// <summary>
-    ///// Obsolete constructor being used for testing, eliminate when no longer used.
-    ///// </summary>
-    ///// <param name="cryptoParameters"></param>
-    //public DarePolicy(CryptoParameters cryptoParameters) {
-    //    CryptoParameters = cryptoParameters;
-    //    throw new NYI();
-    //    }
-
-
-
     }

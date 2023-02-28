@@ -60,7 +60,7 @@ public class DeterministicSeed {
 
     public static string TestRoot { get; }
 
-
+    public int TempCount { get; set;}= 0;
 
     static DeterministicSeed() {
         TestRoot = Environment.GetEnvironmentVariable(TestPath);
@@ -81,6 +81,12 @@ public class DeterministicSeed {
 
         System.IO.Directory.CreateDirectory(Directory);
         }
+
+    public string GetTempFilename() => Path.Combine(Directory, $"Temp{TempCount++}");
+
+
+
+
     public static DeterministicSeed AutoClean(params object[] parameters) {
         var stack = new StackTrace();
 
@@ -137,18 +143,6 @@ public class DeterministicSeed {
         //    }
         return false;
         }
-
-
-    //static string ParametersToString(MethodInfo methodInfo) {
-    //    var sb = new StringBuilder();
-
-    //    foreach (var parameter in methodInfo.GetParameters()) {
-    //        }
-
-
-    //    return sb.ToString();
-    //    }
-
 
 
     public static DeterministicSeed Create(params object[] parameters) {
@@ -229,10 +223,6 @@ public class DeterministicSeed {
         return -1;
         }
 
-
-
-
-
     public int GetRandomInt(int ceiling, int info = 0, string label="") {
         var bytes = KeyDeriveHKDF.Derive(Seed.ToBytes(),
                     info: $"Number {info} {label}".ToBytes(), length: 32);
@@ -251,10 +241,31 @@ public class DeterministicSeed {
 
 
 
+    public void MakeTestFile(string filename, int length, string info="") {
+
+        var bytes = GetTestBytes(length, info);
+        using (var stream = filename.OpenFileNew()) {
+            stream.Write(bytes);
+            }
+        }
+
+    public void CheckTestFile(string filename, int length, string info="") {
+        var bytes = GetTestBytes(length, info);
+        using (var stream = filename.OpenFileRead()) {
+            (stream.Length == length).TestTrue();
+
+            var read = new byte[length];
+            
+            stream.Read(read, 0, length);
+
+            read.TestEqual (bytes);
+            }
+        }
 
 
-
-
+    public void CheckTestFileNotExist(string filename) {
+        throw new NYI();
+        }
 
     /* Static, remove over time  */
 

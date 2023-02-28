@@ -1322,12 +1322,6 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.KeyCore.#ctor(Goedel.Cryptography.CryptoKey)">
-            <summary>
-            Builds a KeyData object from a key.
-            </summary>
-            <param name="CryptoKey">The input data</param>
-        </member>
         <member name="T:Goedel.Cryptography.Jose.Signature">
              <summary>
             

@@ -280,6 +280,13 @@ public partial class ShellTests {
         return true;
         }
 
+
+    bool CreateAliceBobMallet(out TestCLI alice, out TestCLI bob, out TestCLI mallet) {
+        CreateAliceBob(out alice, out bob);
+        mallet = GetTestCLI(MalletAccount);
+        return true;
+        }
+
     Message GetResponse(TestCLI deviceA, Message message) => GetMessage(deviceA, message.GetResponseId());
 
     static Message GetMessage(TestCLI deviceA, string id) {

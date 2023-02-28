@@ -1002,12 +1002,12 @@
 			Parameter Sequence "in" ExistingFile
 				Brief "Sequence to read"
 
-			Parameter Output "out" NewFile
+			Parameter Output "file" NewFile
 				Brief "Extracted file"	
 			Option Record "record" Integer
 				Brief "Index number of file to extract"
 				Default "-1"
-			Option Filename "file" String
+			Option Filename "out" String
 				Brief "Name of file to extract"
 			Option Key "key" String
 			Include AccountOptions

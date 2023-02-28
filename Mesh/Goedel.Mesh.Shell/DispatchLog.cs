@@ -57,7 +57,7 @@ public partial class Shell {
         var Entry = options.Entry.Value;
 
         using var writer = new DareLogWriter(
-                outputFile, null, true, fileStatus: FileStatus.Existing);
+                outputFile, null, fileStatus: FileStatus.Existing);
 
 
         var data = Entry.ToUTF8();

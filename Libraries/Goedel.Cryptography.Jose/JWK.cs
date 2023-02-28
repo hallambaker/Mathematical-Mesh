@@ -33,11 +33,5 @@ public partial class KeyCore {
     /// </summary>
     public KeyCore() { }
 
-    /// <summary>
-    /// Builds a KeyData object from a key.
-    /// </summary>
-    /// <param name="CryptoKey">The input data</param>
-    public KeyCore(CryptoKey CryptoKey) {
-        }
 
     }

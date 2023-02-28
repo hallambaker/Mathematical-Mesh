@@ -1423,11 +1423,6 @@
             <param name="inputStream">The input stream, must support reading.</param>
             <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Strip">
-            <summary>
-            Strip the envelope of all unnecessary convenience data.
-            </summary>
-        </member>
         <member name="P:Goedel.Cryptography.Dare.DareEnvelopeWriter.CanRead">
             <summary>
                 Gets a value indicating whether the current stream supports reading.
@@ -2146,7 +2141,7 @@
             <param name="fileName">The file name to read</param>
             <param name="fileStatus">The mode to open the file in, this must be a mode
             that permits read access.</param>
-            <param name="keyCollection">Key collection to be used to resolve private key references.</param>
+            <param name="keyLocate">Key collection to be used to resolve private key references.</param>
             <param name="decrypt">If true attempt to decrypt the Sequence contents.</param>
             <returns>File Sequence instance</returns>
         </member>
@@ -2199,7 +2194,7 @@
             The class specific disposal routine.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.#ctor(System.String,Goedel.Cryptography.Dare.DarePolicy,System.Boolean,System.Boolean,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.SequenceType)">
+        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.#ctor(System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.SequenceType)">
             <summary>
             Open a new file Sequence for write access.
             </summary>
@@ -2215,7 +2210,7 @@
             <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
             <returns>The newly constructed Sequence.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.#ctor(Goedel.Cryptography.Dare.JbcdStream,System.Boolean,System.Boolean,Goedel.Cryptography.Dare.SequenceType)">
+        <member name="M:Goedel.Cryptography.Dare.DareLogWriter.#ctor(Goedel.Cryptography.Dare.JbcdStream,Goedel.Cryptography.Dare.SequenceType)">
             <summary>
             Open a new file Sequence for write access.
             </summary>
