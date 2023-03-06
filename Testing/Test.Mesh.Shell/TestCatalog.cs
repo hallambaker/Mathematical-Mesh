@@ -83,16 +83,16 @@ public partial class ShellTests {
 
     [Fact]
     public void TestProfileContact() {
-
+        Seed = DeterministicSeed.AutoClean();
         StartTest();
 
         var device1 = GetTestCLI("Device1");
         var device2 = GetTestCLI("Device2");
         var device3 = GetTestCLI("Device3");
 
-        var fileA = $"Contact-{AliceAccount}.mcf";
-        var fileB = $"Contact-{AccountB}.mcf";
-        var fileC = $"Contact-{AccountC}.mcf";
+        var fileA = Seed.GetFilename("AliceAccount"); 
+        var fileB = Seed.GetFilename("AccountB");
+        var fileC = Seed.GetFilename("AliceAccount");
 
         // rewrite this test so that we create three accounts, export the contact self values
         // then test import into the catalog from the file.

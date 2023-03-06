@@ -583,7 +583,7 @@ public record JbcdValueNumber : JbcdValue {
 /// </summary>
 public record JbcdValueLiteral : JbcdValue {
 
-    ///<summary>The parsed values of the literal. 
+    ///<summary>The parsed values of the literal.  </summary>
     public bool? Value;
 
     /// <summary>

@@ -174,7 +174,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
 
 
     string Filename { get; }
-    IKeyLocate KeyLocate { get; }
+    protected IKeyLocate KeyLocate { get; }
 
     bool Decrypt { get; }
 
@@ -202,16 +202,6 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     public Dictionary<string, PersistentIndexEntry> ObjectIndex = new();
 
 
-    ///// <summary>
-    ///// Index of items by _PrimaryKey
-    ///// </summary>
-    //public Dictionary<string, StoreEntry> X_ObjectIndex = new();
-
-    ///// <summary>
-    ///// Dictionary mapping keywords to index for that keyword.
-    ///// </summary>
-    //public Dictionary<string, StoreIndex> X_IndexDictionary =
-    //                        new();
 
 
     /// <summary>
@@ -531,192 +521,8 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
         return result;
         }
 
-
-
-    ///// <summary>
-    ///// The last object instance that matches the specified key/value condition.
-    ///// </summary>
-    ///// <param name="key">The key</param>
-    ///// <param name="value">The value to match</param>
-    ///// <returns>The object instance if found, otherwise false.</returns>
-    //public IPersistenceIndexEntry Last(string key, string value) {
-    //    var found = X_IndexDictionary.TryGetValue(key, out var Index);
-    //    if (!found) {
-    //        return null;
-    //        }
-    //    return Index.Last(value);
-    //    }
-
     #endregion
 
-    #region // Hot mess to be deleted.
-
-
-    /////// <summary>
-    /////// Return an index for the specified key, creating it if necessary.
-    /////// </summary>
-    /////// <param name="key">The key for which the index is requested.</param>
-    /////// <param name="create">If true, will create an index if none is found.</param>
-    /////// <returns>The index.</returns>
-    ////public virtual IPersistenceIndex GetIndex(string key, bool create = true) =>
-    ////    GetStoreIndex(key, create);
-
-    ///// <summary>
-    ///// Return an index for the specified key, creating it if necessary.
-    ///// </summary>
-    ///// <param name="key">The key for which the index is requested.</param>
-    ///// <param name="create">If true, will create an index if none is found.</param>
-    ///// <returns>The index.</returns>
-    //public virtual StoreIndex GetStoreIndex(string key, bool create = true) {
-    //    var found = X_IndexDictionary.TryGetValue(key, out var Index);
-
-    //    if (!found & create) {
-    //        Index = new StoreIndex();
-    //        X_IndexDictionary.Add(key, Index);
-    //        }
-
-    //    return (Index);
-    //    }
-
-
-    ///// <summary>
-    ///// Write a persistence entry to the Sequence.
-    ///// </summary>
-    ///// <param name="item">The object to write.</param>
-    ///// <param name="previous">The previous entry.</param>
-    ///// <param name="dareEnvelope">The serialized persistence data.</param>
-    ///// <returns></returns>
-    //public virtual StoreEntry CommitToSequence(
-    //        DareEnvelope dareEnvelope,
-    //        JsonObject item,
-    //        StoreEntry previous = null) {
-
-    //    Sequence.Append(dareEnvelope);
-    //    return new StoreEntry(Sequence, dareEnvelope, previous, item);
-    //    }
-
-
-    #region Commit transaction to memory
-
-
-
-
-
-
-
-    ///// <summary>
-    ///// Commit a New transaction to memory
-    ///// </summary>
-    ///// <param name="storeEntry">The Sequence store entry representing the transaction</param>
-    //protected virtual void MemoryCommitNew(StoreEntry storeEntry) {
-    //    // Check to make sure the object does not already exist
-    //    Assert.AssertFalse(X_ObjectIndex.ContainsKey(storeEntry.UniqueID), EntryAlreadyExists.Throw);
-    //    X_ObjectIndex.Add(storeEntry.UniqueID, storeEntry);
-
-    //    KeyValueIndexAdd(storeEntry);
-    //    }
-
-    ///// <summary>
-    ///// Commit an Update transaction to memory
-    ///// </summary>
-    ///// <param name="storeEntry">The Sequence store entry representing the transaction</param>
-    //protected virtual void MemoryCommitUpdate(StoreEntry storeEntry) {
-    //    // Check to make sure the object does not already exist
-    //    if (X_ObjectIndex.ContainsKey(storeEntry.UniqueID)) {
-    //        X_ObjectIndex.Remove(storeEntry.UniqueID);
-    //        }
-    //    X_ObjectIndex.Add(storeEntry.UniqueID, storeEntry);
-    //    KeyValueIndexAdd(storeEntry);
-    //    }
-
-    ///// <summary>
-    ///// Commit a Delete transaction to memory
-    ///// </summary>
-    ///// <param name="storeEntry">The Sequence store entry representing the transaction</param>
-    //protected virtual void MemoryCommitDelete(StoreEntry storeEntry) {
-    //    // Check to make sure the object does not already exist
-    //    Assert.AssertTrue(X_ObjectIndex.ContainsKey(storeEntry.UniqueID), EntryNotFound.Throw);
-    //    X_ObjectIndex.Remove(storeEntry.UniqueID);
-    //    //DeletedObjects.Add(storeEntry.UniqueID, storeEntry);
-
-    //    KeyValueIndexDelete(storeEntry);
-    //    }
-
-
-    //// Hack: Right now the key value pairs are only indexed when the object is initially
-    //// interned. These are immutable subsequently.
-    //void KeyValueIndexAdd(StoreEntry storeEntry) {
-    //    if (storeEntry.ContentInfo.KeyValues == null) {
-    //        return;
-    //        }
-
-    //    foreach (var KeyValue in storeEntry.ContentInfo.KeyValues) {
-    //        var Index = GetStoreIndex(KeyValue.Key, true);
-    //        Index.Add(storeEntry, KeyValue.Value);
-    //        }
-    //    }
-
-
-    //// Hack: Right now the key value pairs are only indexed when the object is initially
-    //// interned. These are immutable subsequently.
-    //void KeyValueIndexDelete(StoreEntry storeEntry) {
-    //    var First = storeEntry.X_First as StoreEntry;
-    //    if (First.ContentInfo.KeyValues == null) {
-    //        return;
-    //        }
-
-    //    foreach (var KeyValue in First.ContentInfo.KeyValues) {
-    //        var Index = GetStoreIndex(KeyValue.Key, true);
-    //        Index.Delete(storeEntry, KeyValue.Value);
-    //        }
-    //    }
-
-    #endregion
-
-    ///// <summary>
-    ///// Commit a transaction to memory.
-    ///// </summary>
-    ///// <param name="frameIndex">The Sequence position</param>
-    ///// <param name="jSONObject">The object being committed in deserialized form.</param>
-    //StoreEntry CommitTransaction(SequenceIndexEntry frameIndex, JsonObject jSONObject) {
-
-    //    // This needs some rework here. Probably superfluous as we can overload the intern method.
-    //    throw new NYI();
-
-
-    //    //if (frameIndex.Header.Index == 0) {
-    //    //    return null; // we do not commit fram zero transactions to memory.
-    //    //    }
-
-    //    //var contentMeta = frameIndex.Header.ContentMeta;
-
-    //    //X_ObjectIndex.TryGetValue(contentMeta.UniqueId, out var Previous);
-    //    //var storeEntry = new StoreEntry(frameIndex, Previous, Sequence, jSONObject);
-
-
-
-    //    //switch (contentMeta.Event) {
-    //    //    case EventNew: {
-    //    //            //MemoryCommitNew(storeEntry);
-    //    //            MemoryCommitUpdate(storeEntry);
-    //    //            break;
-    //    //            }
-    //    //    case EventUpdate: {
-    //    //            MemoryCommitUpdate(storeEntry);
-    //    //            break;
-    //    //            }
-    //    //    case EventDelete: {
-    //    //            MemoryCommitDelete(storeEntry);
-    //    //            break;
-    //    //            }
-    //    //    default: {
-    //    //            throw new UndefinedStoreAction(contentMeta.Event);
-    //    //            }
-    //    //    }
-    //    //return storeEntry;
-    //    }
-
-    #endregion
     }
 
 /// <summary>

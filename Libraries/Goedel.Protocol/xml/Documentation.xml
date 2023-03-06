@@ -2533,7 +2533,9 @@
             is kept in string form to allow 
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "F:Goedel.Protocol.JbcdValueLiteral.Value" -->
+        <member name="F:Goedel.Protocol.JbcdValueLiteral.Value">
+            <summary>The parsed values of the literal.  </summary>
+        </member>
         <member name="M:Goedel.Protocol.JbcdValueLiteral.#ctor(System.Nullable{System.Boolean})">
             <summary>
             Constructor, return an instance with the values <paramref name="value"/>.

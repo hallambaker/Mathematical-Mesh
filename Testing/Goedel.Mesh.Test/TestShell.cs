@@ -379,7 +379,7 @@ public partial class TestCLI : CommandLineInterpreter {
     public ResultSync Connect(TestCLI newDevice, string account, bool threshold = false) {
         var roles = threshold ? "/web" : "/threshold";
 
-    var result = Dispatch($"account pin {roles}") as ResultPIN;
+        var result = Dispatch($"account pin {roles}") as ResultPIN;
         var pin = result.MessagePIN.Pin;
 
         newDevice.Dispatch($"device request {account} /pin {pin}");

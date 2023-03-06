@@ -1702,6 +1702,9 @@ public partial class ContextUser : ContextAccount {
         // prepare the contact request
 
         var recipientAddress = requestConfirmation.Sender;
+        Console.WriteLine(
+            $"Message is {requestConfirmation.MessageId}, response will be {requestConfirmation.GetResponseId()}");
+
 
         var message = new ResponseConfirmation() {
             MessageId = requestConfirmation.GetResponseId(),

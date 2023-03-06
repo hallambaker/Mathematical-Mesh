@@ -101,7 +101,7 @@ public class SpoolPlaceholder : ISpoolItem {
     public StateSpoolMessage MessageStatus { get; set; } = StateSpoolMessage.Initial;
 
     ///<inheritdoc/>
-    public override bool IsOpen { get; set; } = true;
+    public override bool IsOpen => MessageStatus == StateSpoolMessage.Initial;
 
     ///<summary>The decoded JSONObject</summary>
     public override JsonObject JsonObject {
@@ -174,7 +174,7 @@ public class SpoolPlaceholder : ISpoolItem {
         if (index >= messageStatusIndex) {
             References.Insert(0, reference);
             MessageStatus = reference.MessageStatus;
-            IsOpen = MessageStatus.IsOpen();
+            //IsOpen = MessageStatus.IsOpen();
             }
         else {
             References.Add(reference);

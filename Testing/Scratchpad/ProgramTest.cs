@@ -83,16 +83,30 @@ partial class Program {
 
 
         //TestDareArchive.Test().ArchiveTest();
-        TestDareLog.Test().TestFileContainer1();
-        TestDareLog.Test().TestLogMulti();
+
+        //ShellTests.Test().NewFileTestOnce(false, false, false);
+        //ShellTests.Test().NewArchiveTestOnce(false, false, false);
 
         /* Need thinking */
 
-        ShellTests.Test().TestArchive(); 
-        ShellTests.Test().TestSequence();
-        ShellTests.Test().TestMessageConfirmationAccept();
-        ShellTests.Test().TestProfileConnectPin();
-        ShellTests.Test().TestProfileConnectPinReused();
+        //ShellTests.Test().TestArchive(); 
+        //ShellTests.Test().TestSequence();
+        //ShellTests.Test().TestMessageConfirmationAccept();
+
+
+
+
+        //ShellTests.Test().TestProfileConnectPin();
+        //ShellTests.Test().TestProfileConnectPinReused();
+        //ShellTests.Test().TestProfileContact();
+        ShellTests.Test().TestLog();
+        ShellTests.Test().TestProfileContact();
+        ShellTests.Test().TestMessageGroup();
+
+        ShellTests.Test().RelativePathFileFail();
+        ShellTests.Test().RelativePathDirectoryFail();
+        ShellTests.Test().NewFileTestOnce();
+
 
         Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 

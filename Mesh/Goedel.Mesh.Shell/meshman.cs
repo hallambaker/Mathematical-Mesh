@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 28-Feb-23 3:07:41 PM
+//  This file was automatically generated at 06-Mar-23 3:22:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -16502,8 +16502,8 @@ public class _ArchiveCreate : Goedel.Command.Dispatch ,
 		new String (),
 		new Enumeration<EnumAuthentication> (CommandLineInterpreter.DescribeEnumAuthentication),
 		new Enumeration<EnumUse> (CommandLineInterpreter.DescribeEnumUse),
-		new ExistingFile (),
 		new NewFile (),
+		new ExistingFile (),
 		new Flag ()		} ;
 
 
@@ -16655,21 +16655,21 @@ public class _ArchiveCreate : Goedel.Command.Dispatch ,
 		set => _Data[15].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Input {
-		get => _Data[16] as ExistingFile;
+	public virtual NewFile Archive {
+		get => _Data[16] as NewFile;
 		set => _Data[16]  = value;
 		}
 
-	public virtual string _Input {
+	public virtual string _Archive {
 		set => _Data[16].Parameter (value);
 		}
-	/// <summary>Field accessor for option [out]</summary>
-	public virtual NewFile Sequence {
-		get => _Data[17] as NewFile;
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual ExistingFile Input {
+		get => _Data[17] as ExistingFile;
 		set => _Data[17]  = value;
 		}
 
-	public virtual string _Sequence {
+	public virtual string _Input {
 		set => _Data[17].Parameter (value);
 		}
 	/// <summary>Field accessor for option [index]</summary>
@@ -16802,18 +16802,18 @@ public class _ArchiveCreate : Goedel.Command.Dispatch ,
 				Key = "use"
 				},
 			new DescribeEntryParameter () {
-				Identifier = "Input", 
+				Identifier = "Archive", 
 				Default = null, // null if null
-				Brief = "Directory containing files to create archive from",
+				Brief = "Filename for encrypted output.",
 				Index = 16,
 				Key = ""
 				},
-			new DescribeEntryOption () {
-				Identifier = "Sequence", 
+			new DescribeEntryParameter () {
+				Identifier = "Input", 
 				Default = null, // null if null
-				Brief = "New sequence",
+				Brief = "Directory containing files to create archive from",
 				Index = 17,
-				Key = "out"
+				Key = ""
 				},
 			new DescribeEntryOption () {
 				Identifier = "Index", 
@@ -16977,12 +16977,12 @@ public class _ArchiveAppend : Goedel.Command.Dispatch ,
 		set => _Data[12].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Sequence {
+	public virtual ExistingFile Archive {
 		get => _Data[13] as ExistingFile;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _Sequence {
+	public virtual string _Archive {
 		set => _Data[13].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
@@ -17112,7 +17112,7 @@ public class _ArchiveAppend : Goedel.Command.Dispatch ,
 				Key = "json"
 				},
 			new DescribeEntryParameter () {
-				Identifier = "Sequence", 
+				Identifier = "Archive", 
 				Default = null, // null if null
 				Brief = "Sequence to append to",
 				Index = 13,
@@ -17201,15 +17201,15 @@ public class _ArchiveDelete : Goedel.Command.Dispatch ,
 		set => _Data[3].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Sequence {
+	public virtual ExistingFile Archive {
 		get => _Data[4] as ExistingFile;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _Sequence {
+	public virtual string _Archive {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [file]</summary>
+	/// <summary>Field accessor for parameter []</summary>
 	public virtual String Filename {
 		get => _Data[5] as String;
 		set => _Data[5]  = value;
@@ -17273,18 +17273,18 @@ public class _ArchiveDelete : Goedel.Command.Dispatch ,
 				Key = "auto"
 				},
 			new DescribeEntryParameter () {
-				Identifier = "Sequence", 
+				Identifier = "Archive", 
 				Default = null, // null if null
 				Brief = "Sequence to append to",
 				Index = 4,
 				Key = ""
 				},
-			new DescribeEntryOption () {
+			new DescribeEntryParameter () {
 				Identifier = "Filename", 
 				Default = null, // null if null
 				Brief = "Name of file to delete",
 				Index = 5,
-				Key = "file"
+				Key = ""
 				},
 			new DescribeEntryOption () {
 				Identifier = "Key", 
@@ -17452,12 +17452,12 @@ public class _ArchiveIndex : Goedel.Command.Dispatch ,
 		set => _Data[12].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Sequence {
+	public virtual ExistingFile Archive {
 		get => _Data[13] as ExistingFile;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _Sequence {
+	public virtual string _Archive {
 		set => _Data[13].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -17560,7 +17560,7 @@ public class _ArchiveIndex : Goedel.Command.Dispatch ,
 				Key = "json"
 				},
 			new DescribeEntryParameter () {
-				Identifier = "Sequence", 
+				Identifier = "Archive", 
 				Default = null, // null if null
 				Brief = "Sequence to be indexed",
 				Index = 13,
@@ -17656,12 +17656,12 @@ public class _ArchiveDir : Goedel.Command.Dispatch ,
 		set => _Data[6].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Sequence {
+	public virtual ExistingFile Archive {
 		get => _Data[7] as ExistingFile;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _Sequence {
+	public virtual string _Archive {
 		set => _Data[7].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
@@ -17722,7 +17722,7 @@ public class _ArchiveDir : Goedel.Command.Dispatch ,
 				Key = "auto"
 				},
 			new DescribeEntryParameter () {
-				Identifier = "Sequence", 
+				Identifier = "Archive", 
 				Default = null, // null if null
 				Brief = "Sequence to be cataloged",
 				Index = 7,
@@ -17760,12 +17760,12 @@ public class _ArchiveExtract : Goedel.Command.Dispatch ,
 
 
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Sequence {
+	public virtual ExistingFile Archive {
 		get => _Data[0] as ExistingFile;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _Sequence {
+	public virtual string _Archive {
 		set => _Data[0].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
@@ -17885,7 +17885,7 @@ public class _ArchiveExtract : Goedel.Command.Dispatch ,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryParameter () {
-				Identifier = "Sequence", 
+				Identifier = "Archive", 
 				Default = null, // null if null
 				Brief = "Sequence to read",
 				Index = 0,
@@ -18018,12 +18018,12 @@ public class _ArchiveCopy : Goedel.Command.Dispatch ,
 
 
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Input {
+	public virtual ExistingFile Archive {
 		get => _Data[0] as ExistingFile;
 		set => _Data[0]  = value;
 		}
 
-	public virtual string _Input {
+	public virtual string _Archive {
 		set => _Data[0].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
@@ -18215,7 +18215,7 @@ public class _ArchiveCopy : Goedel.Command.Dispatch ,
 		Lazy =  false,
 		Entries = new List<DescribeEntry> () {
 			new DescribeEntryParameter () {
-				Identifier = "Input", 
+				Identifier = "Archive", 
 				Default = null, // null if null
 				Brief = "Sequence to read",
 				Index = 0,

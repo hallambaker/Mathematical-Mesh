@@ -942,10 +942,11 @@
 			Include AccountOptions
 			Include Reporting
 			Include SequenceOptions
+			Parameter Archive "out" NewFile
+				Brief "Filename for encrypted output."
 			Parameter Input "in" ExistingFile
 				Brief "Directory containing files to create archive from"
-			Option Sequence "out" NewFile
-				Brief "New sequence"	
+
 			Option Index "index" Flag
 				Default "true"
 				Brief "Append index to the archive"	
@@ -956,7 +957,7 @@
 			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
-			Parameter Sequence "in" ExistingFile
+			Parameter Archive "in" ExistingFile
 				Brief "Sequence to append to"
 			Parameter File "file" NewFile
 				Brief "File to append"
@@ -969,9 +970,9 @@
 		Command ArchiveDelete "delete"
 			Include AccountOptions
 			Brief "Delete file from archive index."
-			Parameter Sequence "in" ExistingFile
+			Parameter Archive "in" ExistingFile
 				Brief "Sequence to append to"
-			Option Filename "file" String
+			Parameter Filename "file" String
 				Brief "Name of file to delete"
 			Option Key "key" String
 			Option Erase "erase" Flag
@@ -985,21 +986,21 @@
 			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
-			Parameter Sequence "in" ExistingFile
+			Parameter Archive "in" ExistingFile
 				Brief "Sequence to be indexed"
 
 		Command ArchiveDir "dir"
 			Brief "Compile a catalog for the specified sequence."
 			Include Reporting
 			Include AccountOptions
-			Parameter Sequence "in" ExistingFile
+			Parameter Archive "in" ExistingFile
 				Brief "Sequence to be cataloged"
 
 
 
 		Command ArchiveExtract "extract"
 			Brief "Extract the specified record from the sequence"
-			Parameter Sequence "in" ExistingFile
+			Parameter Archive "in" ExistingFile
 				Brief "Sequence to read"
 
 			Parameter Output "file" NewFile
@@ -1019,7 +1020,7 @@
 
 		Command ArchiveCopy "copy"
 			Brief "Copy sequence contents to create a new sequence removing deleted elements"
-			Parameter Input "in" ExistingFile
+			Parameter Archive "in" ExistingFile
 				Brief "Sequence to read"
 			Parameter Output "out" NewFile
 				Brief "Copy"

@@ -36,11 +36,14 @@ public partial class ShellTests {
     ///after he is removed.</summary>
     [Fact]
     public void TestMessageGroup() {
+        Seed = DeterministicSeed.AutoClean();
         StartTest();
 
 
         var accountGroup = "groupw@example.com";
-        var filename = "Hello world".ToFileUnique();
+        var filename = Seed.GetFilename("Source");
+        Seed.MakeTestFile(filename, 1000);
+
 
         CreateAliceBob(out var deviceA, out var deviceB);
 

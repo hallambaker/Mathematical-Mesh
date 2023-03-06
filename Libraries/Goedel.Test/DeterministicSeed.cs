@@ -80,12 +80,13 @@ public class DeterministicSeed {
             }
 
         System.IO.Directory.CreateDirectory(Directory);
+        System.IO.Directory.SetCurrentDirectory(Directory);
         }
 
-    public string GetTempFilename() => Path.Combine(Directory, $"Temp{TempCount++}");
+    public string GetTempFilePath() => Path.Combine(Directory, GetTempFileName());
 
 
-
+    public string GetTempFileName() => $"Temp{TempCount++}";
 
     public static DeterministicSeed AutoClean(params object[] parameters) {
         var stack = new StackTrace();
@@ -287,7 +288,7 @@ public class DeterministicSeed {
         builder.Append(tag);
         foreach (var v in parameters) {
             builder.Append('-');
-            builder.Append(v.ToString());
+            builder.Append((v??"-").ToString());
             }
 
         return builder.ToString();

@@ -3887,11 +3887,11 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveCreate.EnumUse">
             <summary>Field accessor for parameter [use]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveCreate.Input">
+        <member name="P:Goedel.Mesh.Shell._ArchiveCreate.Archive">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveCreate.Sequence">
-            <summary>Field accessor for option [out]</summary>
+        <member name="P:Goedel.Mesh.Shell._ArchiveCreate.Input">
+            <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveCreate.Index">
             <summary>Field accessor for option [index]</summary>
@@ -3935,7 +3935,7 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveAppend.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveAppend.Sequence">
+        <member name="P:Goedel.Mesh.Shell._ArchiveAppend.Archive">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveAppend.File">
@@ -3959,11 +3959,11 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveDelete.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveDelete.Sequence">
+        <member name="P:Goedel.Mesh.Shell._ArchiveDelete.Archive">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveDelete.Filename">
-            <summary>Field accessor for option [file]</summary>
+            <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveDelete.Key">
             <summary>Field accessor for option [key]</summary>
@@ -4010,7 +4010,7 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveIndex.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveIndex.Sequence">
+        <member name="P:Goedel.Mesh.Shell._ArchiveIndex.Archive">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveDir.Verbose">
@@ -4034,10 +4034,10 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveDir.AutoApprove">
             <summary>Field accessor for option [auto]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveDir.Sequence">
+        <member name="P:Goedel.Mesh.Shell._ArchiveDir.Archive">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Sequence">
+        <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Archive">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Output">
@@ -4076,7 +4076,7 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveExtract.Recover">
             <summary>Field accessor for option [recover]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ArchiveCopy.Input">
+        <member name="P:Goedel.Mesh.Shell._ArchiveCopy.Archive">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveCopy.Output">

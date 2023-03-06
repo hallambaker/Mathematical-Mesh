@@ -110,7 +110,9 @@ public class Spool : Store {
                     referenceEntry.AddReference(reference, entry.Index);
                     }
                 else {
-                    var placeholder = new SpoolPlaceholder( reference);
+                    var placeholder = new SpoolPlaceholder(reference) {
+                        MessageStatus= reference.MessageStatus
+                        };
                     SequenceIndexEntryByEnvelopeId.Add(envelopeID, placeholder);
                     }
                 }

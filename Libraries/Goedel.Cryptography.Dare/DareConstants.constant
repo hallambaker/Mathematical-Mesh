@@ -29,3 +29,4 @@ File SequenceEvents
 		Code New					"New"
 		Code Update					"Update"
 		Code Delete					"Delete"
+		Code Erase					"Erase"

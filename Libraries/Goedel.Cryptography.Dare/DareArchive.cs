@@ -22,14 +22,66 @@
 
 using Goedel.IO;
 using System.IO;
+using System.Runtime;
+using System.Runtime.InteropServices;
 
 namespace Goedel.Cryptography.Dare;
+
+public class ArchiveIndexEntry : PersistentIndexEntry {
+
+    public ContentMeta ContentMeta  => Header?.ContentMeta;
+
+    public FileEntry FileEntry => ContentMeta?.FileEntry;
+    public override bool IsDeleted => IsErased | Event == DareConstants.SequenceEventDeleteTag;
+
+    public override bool IsErased => Event == DareConstants.SequenceEventEraseTag;
+    ///<inheritdoc/>
+    public override JsonObject JsonObject {
+        get => Header.ContentMeta;
+        set => _ = value;
+        }
+
+
+    /// <summary>
+    /// Factory method implementing <see cref="SequenceIndexEntryFactoryDelegate"/>.
+    /// </summary>
+    /// <inheritdoc cref="SequenceIndexEntryFactoryDelegate"/>
+    public static new SequenceIndexEntry Factory(
+            Sequence sequence,
+            long framePosition,
+            long frameLength,
+            long dataPosition,
+            long dataLength,
+            DareHeader header,
+            DareTrailer trailer = null,
+            JsonObject jsonObject = null
+            ) => new ArchiveIndexEntry(sequence) {
+                FramePosition = framePosition,
+                FrameLength = frameLength,
+                DataPosition = dataPosition,
+                DataLength = dataLength,
+                Header = header,
+                Trailer = trailer
+                };
+
+
+    /// <summary>
+    /// Constructor returning a in instance bound to the sequence <paramref name="sequence"/>
+    /// </summary>
+    /// <param name="sequence">The sequence the index is bound to.</param>
+    ArchiveIndexEntry(Sequence sequence) {
+        (sequence?.Store as DareArchive).AssertNotNull(NYI.Throw);
+        Sequence = sequence;
+        }
+
+    }
+
 
 public class DareArchive : PersistenceStore {
 
     public static string ContentType => "mmm-tbs";
-
-
+    public override SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory =>
+                ArchiveIndexEntry.Factory;
 
     public DareArchive(
                 string fileName,
@@ -42,18 +94,68 @@ public class DareArchive : PersistenceStore {
                     policy, dataEncoding, keyLocate, read, false) {
         }
 
-    public void AddFile(
+
+
+    public override void Intern(SequenceIndexEntry indexEntry) {
+        var entry = indexEntry as ArchiveIndexEntry;
+
+        base.Intern(indexEntry);
+
+
+
+        }
+
+
+    public ArchiveIndexEntry AddFile(
+                string diskPath,
                 string directoryPath,
                 string fileName,
                 ContentMeta contentMeta = null) {
-        throw new NYI();
+        var file = Path.Combine(diskPath, directoryPath, fileName);
+        var fileInfo = new FileInfo(file);
+
+        return AddFile(directoryPath, fileInfo, contentMeta);
         }
 
-    public void AddFile(
-                Stream data,
-                string fileName,
+    /// <summary>
+    /// Add the file <paramref name="fileInfo"/> into the archive with the directory 
+    /// path prefix <paramref name="directoryPath"/>.
+    /// </summary>
+    /// <param name="directoryPath"></param>
+    /// <param name="fileInfo"></param>
+    public ArchiveIndexEntry AddFile(
+                string directoryPath,
+                FileInfo fileInfo,
                 ContentMeta contentMeta = null) {
-        throw new NYI();
+
+        // here we build the ContentMeta entry
+        contentMeta ??= new();
+        contentMeta.Filename = fileInfo.Name;
+        contentMeta.FileEntry = new FileEntry() {
+            Path = directoryPath,
+            CreationTime= fileInfo.CreationTime,
+            LastAccessTime= fileInfo.LastAccessTime,
+            LastWriteTime= fileInfo.LastWriteTime,
+            Attributes = (int) fileInfo.Attributes
+            };
+        contentMeta.UniqueId = Path.Combine(directoryPath, fileInfo.Name);
+        contentMeta.Event = DareConstants.SequenceEventNewTag;
+
+        using var stream = fileInfo.FullName.OpenFileReadShared();
+        return AddFile(stream, stream.Length, contentMeta);
+        }
+
+
+
+    public ArchiveIndexEntry AddFile(
+                Stream data,
+                long length,
+                ContentMeta contentMeta = null) {
+
+        var result = Sequence.AppendFromStream(data, length, contentMeta) as
+                    ArchiveIndexEntry;
+
+        return result;
         }
 
     public void AddIndex(
@@ -61,25 +163,46 @@ public class DareArchive : PersistenceStore {
         throw new NYI();
         }
 
+
+    public void AddDirectory(
+                        string diskPath,
+                        string directoryPath) {
+        var path = Path.Combine(diskPath, directoryPath);
+        var directoryInfo = new DirectoryInfo (path);
+
+
+        AddDirectory(directoryPath, directoryInfo);
+        }
+
+
+
     public void AddDirectory(
                 string directoryPath,
-                DirectoryInfo directoryInfo,
-                ContentMeta contentMeta
+                DirectoryInfo directoryInfo
                 ) {
         foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
-            AddFile(directoryPath, fileInfo.FullName, contentMeta);
+            AddFile(directoryPath, fileInfo);
             }
-        foreach (var directgoryInfo in directoryInfo.EnumerateDirectories()) {
-            AddDirectory(Path.Combine(directoryPath, directgoryInfo.Name), directgoryInfo, contentMeta);
+
+        foreach (var subDirectoryInfo in directoryInfo.EnumerateDirectories()) {
+            var subpath = Path.Combine(directoryPath, subDirectoryInfo.Name);
+            AddDirectory(subpath, subDirectoryInfo);
             }
         }
 
 
-    public void DeleteFile (
-                string archivePath
-                ) {
-        throw new NYI(); 
+    public byte[] GetBytes(
+                string archivePath,
+                bool recover = false) {
+
+        using var input = GetStream(archivePath);
+        using var output = new MemoryStream();
+
+
+        input.CopyTo(output);
+        return output.ToArray();
         }
+
 
     public bool GetFile(
                 string archivePath,
@@ -108,7 +231,12 @@ public class DareArchive : PersistenceStore {
     public Stream GetStream(
                 string archivePath
                 ) {
-        throw new NYI();
+        ObjectIndex.TryGetValue( archivePath, out var entry ).AssertTrue(NYI.Throw);
+
+        var stream = entry.GetPayloadStreamn(Sequence, KeyLocate);
+
+        return stream;
+
         }
 
 
@@ -117,6 +245,22 @@ public class DareArchive : PersistenceStore {
                 bool purge = true
                 ) {
         throw new NYI();
+        }
+
+
+    public override bool Delete(string uniqueID, Transaction transaction = null, bool erase = false) {
+        var envelope = PrepareDelete(out var Previous, uniqueID);
+        if (envelope == null) {
+            return false;
+            }
+        Sequence.Append(envelope);
+
+        if (erase) {
+            // here we are going to parse the header and erase the salt value.
+            throw new NYI();
+            }
+
+        return true;
         }
 
 
@@ -139,8 +283,10 @@ public class DareArchive : PersistenceStore {
             ContentMeta contentMeta = null,
             FileStatus fileStatus = FileStatus.Append
             ) {
-        using var writer = new DareArchive(archiveName, fileStatus, SequenceType.Digest, policy);
-        writer.AddFile("", fileName, contentMeta);
+
+        "Fix here".TaskFunctionality(true);
+        //using var writer = new DareArchive(archiveName, fileStatus, SequenceType.Digest, policy);
+        //writer.AddFile("", fileName, contentMeta);
         }
 
     /// <summary>
@@ -159,20 +305,74 @@ public class DareArchive : PersistenceStore {
             string archiveName,
             DarePolicy policy,
             string directory,
+            string sourceDir = null,
             ContentMeta contentMeta = null,
             FileStatus fileStatus = FileStatus.Overwrite,
             bool index = true
             ) {
+        sourceDir ??= "";
+        using var archive = new DareArchive(archiveName, policy: policy);
+        archive.AddDirectory(sourceDir, directory);
+        }
 
-        using var writer = new DareArchive(archiveName, fileStatus, SequenceType.Merkle, policy);
 
-        var directoryInfo = new DirectoryInfo(directory);
-        directoryInfo.Exists.AssertTrue(DirectoryNotFound.Throw);
-        writer.AddDirectory(directoryInfo.Name, directoryInfo, contentMeta);
+    readonly static char[] SplitChars = new[] {
+        Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar
+        };
 
-        if (index) {
-            writer.AddIndex();
+    void CheckPathIsValid(string path) {
+        if (Path.IsPathRooted(path)) {
+            throw new NYI();
+            }
+        var split = path.Split(SplitChars);
+        foreach (var element in split) {
+            if (element == "..") {
+                throw new NYI();
+                }
+            }
+
+        }
+
+    void Unpack(ArchiveIndexEntry index) {
+        var contentMeta = index.JsonObject as ContentMeta;
+        var fileEntry = contentMeta.FileEntry;
+
+        CheckPathIsValid(index.UniqueID);
+
+
+        if (fileEntry.Path is not null && fileEntry.Path != "") {
+            Directory.CreateDirectory(fileEntry.Path);
+            }
+
+        var stream = index.GetPayloadStreamn(Sequence, KeyLocate);
+        stream.CopyToFile(index.UniqueID);
+        // create the directory
+
+
+        }
+
+    public void UnpackArchive() {
+        foreach (var file in ObjectIndex) {
+            var index = file.Value as ArchiveIndexEntry;
+
+
+            if (!index.IsDeleted) {
+                Unpack(index);
+                }
+
             }
         }
+
+
+    public static void UnpackArchive (
+                    string archiveName,
+                    IKeyLocate keyLocate=null) {
+        using var reader = new DareArchive(archiveName);
+
+        reader.UnpackArchive();
+
+
+        }
+
 
     }

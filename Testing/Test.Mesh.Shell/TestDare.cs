@@ -29,156 +29,158 @@ using Goedel.IO;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test;
+using Goedel.Test.Core;
 using Goedel.Utilities;
 
 using Xunit;
+using Xunit.Sdk;
 
 #pragma warning disable IDE0060
 
 namespace Goedel.XUnit;
 
-public record TestFile {
-    public string Filename { get; set; }
-    public bool Encrypt { get; set; }
-    public bool Sign { get; set; }
-    public bool Notarize { get; set; }
+//public record TestFile {
+//    public string Filename { get; set; }
+//    public bool Encrypt { get; set; }
+//    public bool Sign { get; set; }
+//    public bool Notarize { get; set; }
 
 
-    public TestCLI Alice { get; set; }
-    public TestCLI Bob { get; set; }
-    public TestCLI Mallet { get; set; }
+//    public TestCLI Alice { get; set; }
+//    public TestCLI Bob { get; set; }
+//    public TestCLI Mallet { get; set; }
 
-    public void CheckFiles(
-            string file1,
-            string file2) {
-        }
+//    public void CheckFiles(
+//            string file1,
+//            string file2) {
+//        }
 
-    public void CheckNotExist(
-            string file1) {
-        }
-
-
-    }
-
-public record TestArchive: TestFile {
+//    public void CheckNotExist(
+//            string file1) {
+//        }
 
 
+//    }
 
-    public Dictionary<string, TestArchiveEntry> Files { get; set; }
-
-    int tempFile = 0;
-
-    string GetTemp() => $"Temp{tempFile++}";
-
-    public void AddFile(string file) {
-        var entry = new TestArchiveEntry() {
-            Filename= file,
-            Deleted= false,
-            Erased  = false
-            };
-        Files.Add (file, entry);
-        }
-
-    public void Add(string directory) {
-        foreach (var file in Directory.EnumerateFiles(directory)) {
-            AddFile(file);
-            }
-        }
-
-    public void Delete(string file) {
-        Files.TryGetValue(file, out var entry).TestTrue();
-        entry.Deleted = true;
-        }
-
-
-    public void Erase(string file) {
-        Files.TryGetValue(file, out var entry).TestTrue();
-        entry.Deleted = true;
-        entry.Erased = true;
-        }
+//public record TestArchive: TestFile {
 
 
 
+//    public Dictionary<string, TestArchiveEntry> Files { get; set; }
+
+//    int tempFile = 0;
+
+//    string GetTemp() => $"Temp{tempFile++}";
+
+//    public void AddFile(string file) {
+//        var entry = new TestArchiveEntry() {
+//            Filename= file,
+//            Deleted= false,
+//            Erased  = false
+//            };
+//        Files.Add (file, entry);
+//        }
+
+//    public void Add(string directory) {
+//        foreach (var file in Directory.EnumerateFiles(directory)) {
+//            AddFile(file);
+//            }
+//        }
+
+//    public void Delete(string file) {
+//        Files.TryGetValue(file, out var entry).TestTrue();
+//        entry.Deleted = true;
+//        }
 
 
-    public void CheckFile(
-                string file) {
+//    public void Erase(string file) {
+//        Files.TryGetValue(file, out var entry).TestTrue();
+//        entry.Deleted = true;
+//        entry.Erased = true;
+//        }
 
 
-        Files.TryGetValue(file, out var entry).TestTrue();
-
-        if (!entry.Deleted) {
-            var outFile = GetTemp();
-            Alice.Dispatch($"archive extract {Filename} {file} /out=${outFile}");
-            CheckFiles(file, outFile);
-            }
-        else {
-            var outFile = GetTemp();
-            Alice.Dispatch($"archive extract {Filename} {file} /file=${outFile}");
-            CheckNotExist(outFile);
-            Alice.Dispatch($"archive extract {Filename} {file} /file=${outFile} /recover");
-            if (!entry.Erased) {
-                CheckFiles(file, outFile);
-                }
-            else {
-                CheckNotExist(outFile);
-                }
-            }
-
-        }
 
 
-    public void CheckArchive() {
-        var current = Directory.GetCurrentDirectory();
 
-        // Unpack as Alice - success
-        var aliceDir = GetTemp();
-        Directory.CreateDirectory(aliceDir);
-        Directory.SetCurrentDirectory(aliceDir);
-        Alice.Dispatch($"archive extract {Filename}");
-        CheckDirectory();
-        Directory.SetCurrentDirectory(current);
+//    public void CheckFile(
+//                string file) {
 
 
-        // Unpack as Bob - success
-        var bobDir = GetTemp();
-        Directory.CreateDirectory(bobDir);
-        Directory.SetCurrentDirectory(bobDir);
-        Bob.Dispatch($"archive extract {Filename}");
-        CheckDirectory();
-        Directory.SetCurrentDirectory(current);
-        if (Encrypt) {
-            // Unpack as Mallet - fail
+//        Files.TryGetValue(file, out var entry).TestTrue();
 
-            var malletDir = GetTemp();
-            Directory.CreateDirectory(malletDir);
-            Directory.SetCurrentDirectory(malletDir);
-            Mallet.Dispatch($"archive extract {Filename}", fail: true);
-            CheckDirectoryEmpty();
-            Directory.SetCurrentDirectory(current);
-            }
+//        if (!entry.Deleted) {
+//            var outFile = GetTemp();
+//            Alice.Dispatch($"archive extract {Filename} {file} /out=${outFile}");
+//            CheckFiles(file, outFile);
+//            }
+//        else {
+//            var outFile = GetTemp();
+//            Alice.Dispatch($"archive extract {Filename} {file} /file=${outFile}");
+//            CheckNotExist(outFile);
+//            Alice.Dispatch($"archive extract {Filename} {file} /file=${outFile} /recover");
+//            if (!entry.Erased) {
+//                CheckFiles(file, outFile);
+//                }
+//            else {
+//                CheckNotExist(outFile);
+//                }
+//            }
 
-        }
-
-
-    public void CheckDirectory() {
-        throw new NYI();
-        }
-
-    public void CheckDirectoryEmpty() {
-        throw new NYI();
-        }
-
-    }
+//        }
 
 
-public record TestArchiveEntry {
-    public string Filename { get; set; }
-    public bool Deleted { get; set; }
+//    public void CheckArchive() {
+//        var current = Directory.GetCurrentDirectory();
+
+//        // Unpack as Alice - success
+//        var aliceDir = GetTemp();
+//        Directory.CreateDirectory(aliceDir);
+//        Directory.SetCurrentDirectory(aliceDir);
+//        Alice.Dispatch($"archive extract {Filename}");
+//        CheckDirectory();
+//        Directory.SetCurrentDirectory(current);
 
 
-    public bool Erased { get; set; }
-    }
+//        // Unpack as Bob - success
+//        var bobDir = GetTemp();
+//        Directory.CreateDirectory(bobDir);
+//        Directory.SetCurrentDirectory(bobDir);
+//        Bob.Dispatch($"archive extract {Filename}");
+//        CheckDirectory();
+//        Directory.SetCurrentDirectory(current);
+//        if (Encrypt) {
+//            // Unpack as Mallet - fail
+
+//            var malletDir = GetTemp();
+//            Directory.CreateDirectory(malletDir);
+//            Directory.SetCurrentDirectory(malletDir);
+//            Mallet.Dispatch($"archive extract {Filename}", fail: true);
+//            CheckDirectoryEmpty();
+//            Directory.SetCurrentDirectory(current);
+//            }
+
+//        }
+
+
+//    public void CheckDirectory() {
+//        throw new NYI();
+//        }
+
+//    public void CheckDirectoryEmpty() {
+//        throw new NYI();
+//        }
+
+//    }
+
+
+//public record TestArchiveEntry {
+//    public string Filename { get; set; }
+//    public bool Deleted { get; set; }
+
+
+//    public bool Erased { get; set; }
+//    }
 
 
 public partial class ShellTests {
@@ -189,33 +191,38 @@ public partial class ShellTests {
 
     [Fact]
     public void NewFileTestAll() {
-        var seed = DeterministicSeed.Auto();
+        StartTest();
         CreateAliceBobMallet(out var alice, out var bob, out var mallet);
 
         // Plaintext
-        NewFileTest(seed, false, false, false, alice, bob, mallet, info: "plaintext");
+        NewFileTest(Seed, false, false, false, alice, bob, mallet, info: "plaintext");
 
         // Encrypted
-        NewFileTest(seed, true, false, false, alice, bob, mallet, info: "encrypt");
+        NewFileTest(Seed, true, false, false, alice, bob, mallet, info: "encrypt");
 
         // Signed
-        NewFileTest(seed, false, true, false, alice, bob, mallet, info: "sign");
+        NewFileTest(Seed, false, true, false, alice, bob, mallet, info: "sign");
 
         // Notarized
-        NewFileTest(seed, false, false, true, alice, bob, mallet, info: "notarize");
+        NewFileTest(Seed, false, false, true, alice, bob, mallet, info: "notarize");
+
+        EndTest();
         }
 
 
     [Theory]
     [InlineData(true, false, false)]
     public void NewFileTestOnce(
-                    bool encrypt,
-                    bool sign,
-                    bool notarize) {
-        var seed = DeterministicSeed.Auto(encrypt, sign, notarize);
+                    bool encrypt=false,
+                    bool sign = false,
+                    bool notarize = false) {
+        StartTest(encrypt, sign, notarize);
+
         CreateAliceBobMallet(out var alice, out var bob, out var mallet);
 
-        NewFileTest(seed, encrypt, sign, notarize, alice, bob, mallet);
+        NewFileTest(Seed, encrypt, sign, notarize, alice, bob, mallet);
+
+        EndTest();
         }
 
 
@@ -230,39 +237,37 @@ public partial class ShellTests {
                     int length = 1000,
                     string info = ""
                     ) {
-        int tempFile = 0;
-        string GetTemp() => $"Temp{tempFile++}";
 
 
-        var filename = "flibble";
+        var filename = seed.GetTempFileName();
 
         // make a file 
         seed.MakeTestFile(filename, length, info);
 
         // encode
-        var fileEncoded = GetTemp();
-        alice.Dispatch($"dare encode {filename} /out=${fileEncoded}");
+        var fileEncoded = seed.GetTempFileName();
+        alice.Dispatch($"dare encode {filename} {fileEncoded}");
 
         // decode as Alice
-        var aliceDecoded = GetTemp();
-        alice.Dispatch($"dare decode {fileEncoded} /out=${aliceDecoded}");
+        var aliceDecoded = seed.GetTempFileName();
+        alice.Dispatch($"dare decode {fileEncoded} {aliceDecoded}");
         seed.CheckTestFile(aliceDecoded, length, info);
 
         // decode as Bob
-        var bobDecoded = GetTemp();
-        bob.Dispatch($"dare decode {fileEncoded} /out=${bobDecoded}");
+        var bobDecoded = seed.GetTempFileName();
+        bob.Dispatch($"dare decode {fileEncoded} {bobDecoded}");
         seed.CheckTestFile(bobDecoded, length, info);
 
         if (encrypt) {
-            var malletDecoded = GetTemp();
-            mallet.Dispatch($"dare decode {fileEncoded} /out=${malletDecoded}");
+            var malletDecoded = seed.GetTempFileName();
+            mallet.Dispatch($"dare decode {fileEncoded} {malletDecoded}", fail: true);
             seed.CheckTestFileNotExist(malletDecoded);
             }
 
         if (sign | notarize) {
             var corruptedFile = CorruptFile(fileEncoded); 
-            var aliceDecoded2 = GetTemp();
-            alice.Dispatch($"dare decode {fileEncoded} /out=${aliceDecoded2}, fail:true");
+            var aliceDecoded2 = seed.GetTempFileName();
+            alice.Dispatch($"dare decode {fileEncoded} {aliceDecoded2}, fail:true");
             seed.CheckTestFileNotExist(aliceDecoded2);
             }
 
@@ -297,13 +302,16 @@ public partial class ShellTests {
                     TestCLI bob,
                     TestCLI mallet,
                     int length = 1000) {
-        var sourceDirectory = "flobble";
-        var archive = "bibble";
-        var extraFile = "wibble";
-        var deleteFile = "wobble";
-        var eraseFile = "wabble";
+        var sourceDir = TestEnvironmentBase.CommonData;
+        var sourcePath = TestArchive.Archive1;
 
-        var testArchive = new TestArchive() {
+        var source = Path.Combine(sourceDir, sourcePath);
+        var archive = seed.GetTempFilePath();
+        var extraFile = seed.GetTempFileName();
+        var deleteFile = Path.Combine(sourcePath, "Test_Key_RSA_Alice.prv");
+        var eraseFile = Path.Combine(sourcePath, "Test_Key_RSA_Bob.prv");
+
+        var testArchive = new TestArchiveShell() {
             Filename = archive,
             Encrypt = encrypt,
             Sign = sign,
@@ -314,32 +322,37 @@ public partial class ShellTests {
             };
 
         // Create an archive from a directory
-        alice.Dispatch($"archive create {sourceDirectory}");
-        testArchive.Add(sourceDirectory);
+        alice.Dispatch($"archive create {archive} {source} ");
+        testArchive.Add(sourceDir, sourcePath);
         testArchive.CheckArchive();
 
         // Add a file
-        alice.Dispatch($"archive append {extraFile}");
-        testArchive.AddFile(extraFile);
+        seed.MakeTestFile(extraFile, length);
+        alice.Dispatch($"archive append {archive} {extraFile}");
+        testArchive.AddFile(extraFile, "");
         testArchive.CheckArchive();
 
         // Delete a file
-        alice.Dispatch($"archive delete {deleteFile}");
+        alice.Dispatch($"archive delete {archive} {deleteFile}");
         testArchive.Delete(deleteFile);
         testArchive.CheckArchive();
-        testArchive.CheckFile(deleteFile);
+        //testArchive.CheckFile(deleteFile);
 
-        // Erase a file
-        alice.Dispatch($"archive delete {eraseFile} /erase");
-        testArchive.Erase(eraseFile);
-        testArchive.CheckArchive();
-        testArchive.CheckFile(eraseFile);
+        if (encrypt) {
+            // Erasure only works if the archive is encrypted.
 
-        // Erase the deleted file
-        alice.Dispatch($"archive delete {deleteFile} /erase");
-        testArchive.Erase(deleteFile);
-        testArchive.CheckArchive();
-        testArchive.CheckFile(deleteFile);
+            // Erase a file
+            alice.Dispatch($"archive delete {archive} {eraseFile} /erase");
+            testArchive.Erase(eraseFile);
+            testArchive.CheckArchive();
+            //testArchive.CheckFile(eraseFile);
+
+            // Erase the deleted file
+            alice.Dispatch($"archive delete {archive} {deleteFile} /erase");
+            testArchive.Erase(deleteFile);
+            testArchive.CheckArchive();
+            //testArchive.CheckFile(deleteFile);
+            }
         }
 
 
@@ -414,8 +427,8 @@ public partial class ShellTests {
         return true;
         }
 
-    [Fact]
-    public void TestArchive() => TestSequence();
+
+    //public void TestArchive() => TestSequence();
 
     readonly int[] counts = { 10, 20 };
 
@@ -426,7 +439,7 @@ public partial class ShellTests {
     readonly string archive2 = CommonData + "Archive2";
     readonly string archive3 = CommonData + "Archive3";
 
-    [Theory]
+    [Theory(Skip = "Duplicate except for purge functionality")]
     [InlineData()]
     public void TestSequence(
 
@@ -457,7 +470,7 @@ public partial class ShellTests {
         var staleFrames = 0;
 
         options = initial == null ? options : $" {initial}" + options;
-        Dispatch($"dare archive {options} /out={filename}");
+        Dispatch($"archive create {filename} {options}");
 
         AddEntries(entries, initial);
 
@@ -467,7 +480,7 @@ public partial class ShellTests {
         // Update old file.
         var filepath = getItem(entries, 0);
         var update = Path.Combine(archive2, Path.GetFileName(filepath));
-        Dispatch($"dare append {filename} {update} /id={filepath}");
+        Dispatch($"archive append {filename} {update} ");
 
         // update the entries directory
         entries.Remove(filepath);
@@ -477,18 +490,18 @@ public partial class ShellTests {
 
         // Delete file
         var filepathd = getItem(entries, 2); ;
-        Dispatch($"dare delete {filename} /file={filepathd}");
+        Dispatch($"archive delete {filename} filepathd");
         entries.Remove(filepathd);
         VerifyArchive(filename, entries, sign, encrypt, mallet, initial, archive3);
         staleFrames++;
 
-        var original = Dispatch($"dare dir {filename}") as ResultArchive;
+        var original = Dispatch($"archive dir {filename}") as ResultArchive;
         if (purge) {
             // Test Purge
             var purgefile = "purged_" + filename;
-            Dispatch($"dare purge {filename} {purgefile}");
+            Dispatch($"archive copy {filename} {purgefile} /purge");
             VerifyArchive(purgefile, entries, sign, encrypt, mallet, initial, archive3);
-            var purged = Dispatch($"dare dir {purgefile}") as ResultArchive;
+            var purged = Dispatch($"archive dir {purgefile}") as ResultArchive;
 
             purged.Deleted.TestEqual(0);
             purged.Frames.TestEqual(original.Frames - staleFrames);
@@ -525,7 +538,7 @@ public partial class ShellTests {
                 string sign = null
         ) {
 
-
+        Seed = DeterministicSeed.AutoClean(encrypt, sign );
         // create Alice account
         var accountAlice = AliceAccount;
         CreateAccount(accountAlice);
@@ -539,19 +552,19 @@ public partial class ShellTests {
             ct += $"-{count}";
             }
 
-        var filename = $"log-{encrypt}-{sign}{ct}";
+        var filename = Seed.GetFilename(ct) ;
 
         var options = encrypt == null ? "" : $" /encrypt={encrypt}" +
                     sign == null ? "" : $" /sign={sign}";
 
-        Dispatch($"dare create {filename} {options}");
+        Dispatch($"log create {filename} {options}");
 
         var entries = new List<string>();
         foreach (var count in counts) {
             for (var i = 0; i < count; i++) {
                 var bytes = Platform.GetRandomBytes(10, 80);
                 var entry = bytes.ToStringBase32();
-                Dispatch($"dare log {filename} {entry}");
+                Dispatch($"log append {filename} {entry}");
                 entries.Add(entry);
                 }
             VerifyLog(encrypt, sign, filename, entries, mallet);
@@ -569,8 +582,9 @@ public partial class ShellTests {
             string filename,
             List<string> entries,
             TestCLI mallet) {
-        var output = "output_" + filename;
-        var listArchive = Dispatch($"dare list {filename} {output}") as ResultListLog;
+        var output = Seed.GetTempFilePath();
+
+        var listArchive = Dispatch($"log list {filename} {output}") as ResultListLog;
 
         listArchive.Count.TestEqual(entries.Count);
         

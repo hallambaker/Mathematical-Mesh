@@ -20,6 +20,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
+using Goedel.IO;
 using System;
 using System.Runtime.InteropServices;
 
@@ -51,9 +52,9 @@ public class SHA3Managed : SHA3 {
     /// 
     /// <returns>The digest value</returns>
     public static byte[] Process512(byte[] input) {
-        using var Provider = new SHA3Managed(512);
-        Provider.TransformFinalBlock(input, 0, input.Length);
-        return Provider.Hash;
+        using var provider = new SHA3Managed(512);
+        provider.TransformFinalBlock(input, 0, input.Length);
+        return provider.Hash;
         }
 
     /// <summary>
@@ -64,10 +65,12 @@ public class SHA3Managed : SHA3 {
 
     public static byte[] Process256(byte[] input) {
 
-        using var Provider = new SHA3Managed(256);
-        Provider.TransformFinalBlock(input, 0, input.Length);
-        return Provider.Hash;
+        using var provider = new SHA3Managed(256);
+        provider.TransformFinalBlock(input, 0, input.Length);
+        return provider.Hash;
         }
+
+
     }
 
 /// <summary>
@@ -93,9 +96,9 @@ public class SHAKE128 : SHA3 {
     /// <param name="hashBitLength">The number of output bits</param>
     /// <returns>The digest value</returns>
     public static byte[] Process(byte[] input, int hashBitLength = 256) {
-        using var Provider = new SHAKE128(hashBitLength);
-        Provider.TransformFinalBlock(input, 0, input.Length);
-        return Provider.Hash;
+        using var provider = new SHAKE128(hashBitLength);
+        provider.TransformFinalBlock(input, 0, input.Length);
+        return provider.Hash;
         }
 
     /// <summary>

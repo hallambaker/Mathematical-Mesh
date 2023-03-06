@@ -152,7 +152,7 @@ public partial class SequenceIndexEntry : DareEnvelope {
 
     ///<summary>The sequenced envelope is unread in the case of a message in a spool or
     ///not deleted or overwritten in the case of an entry in a catalog.</summary> 
-    public virtual bool IsOpen { get; set; } = true;
+    public virtual bool IsOpen { get; } = true;
 
     ///<summary>The sequenced envelope has been deleted.</summary> 
     public virtual bool IsDeleted => false;
@@ -215,16 +215,7 @@ public partial class SequenceIndexEntry : DareEnvelope {
 
 
 
-    /// <summary>
-    /// Return the frame payload.
-    /// </summary>
-    /// <returns>The frame payload data.</returns>
-    public void CopyPayload(Sequence sequence, IKeyLocate keyCollection, Stream output) {
-
-
-
-        // failing here because we have encryption but no recipients!!!
-
+    public Stream GetPayloadStreamn(Sequence sequence, IKeyLocate keyCollection) {
         DareHeader exchange = null;
         if (Header?.SequenceInfo?.ExchangePosition is not null) {
             exchange = sequence.GetHeader(Header.SequenceInfo.ExchangePosition ?? 0);
@@ -232,10 +223,34 @@ public partial class SequenceIndexEntry : DareEnvelope {
 
         using var input = Sequence.FramerGetReader(DataPosition, DataLength);
         Header.GetDecoder(input,
-            out var Reader, keyCollection: keyCollection, exchange: exchange);
+            out var reader, keyCollection: keyCollection, exchange: exchange);
+
+        return reader;
+
+        }
 
 
-        Reader.CopyTo(output);
+    /// <summary>
+    /// Return the frame payload.
+    /// </summary>
+    /// <returns>The frame payload data.</returns>
+    public void CopyPayload(Sequence sequence, IKeyLocate keyCollection, Stream output) {
+        var reader = GetPayloadStreamn(sequence, keyCollection);
+
+
+        //// failing here because we have encryption but no recipients!!!
+
+        //DareHeader exchange = null;
+        //if (Header?.SequenceInfo?.ExchangePosition is not null) {
+        //    exchange = sequence.GetHeader(Header.SequenceInfo.ExchangePosition ?? 0);
+        //    }
+
+        //using var input = Sequence.FramerGetReader(DataPosition, DataLength);
+        //Header.GetDecoder(input,
+        //    out var Reader, keyCollection: keyCollection, exchange: exchange);
+
+
+        reader.CopyTo(output);
         }
 
     /// <summary>

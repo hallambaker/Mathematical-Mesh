@@ -53,6 +53,7 @@ public partial class Shell {
         var recipient = options.Recipient.Value;
         var text = options.Text.Value;
 
+
         var message = contextAccount.ConfirmationRequest(recipient, text);
 
         var result = new ResultSent() {
@@ -97,6 +98,9 @@ public partial class Shell {
         var messageID = options.RequestID.Value;
 
         // pull out the message here.
+
+        Console.WriteLine($"Look for message {messageID}");
+
 
         //var message = contextAccount.GetPendingMessageByID(messageID, out var found);
         contextAccount.TryGetMessageById(messageID, out var index).AssertTrue(MessageIdNotFound.Throw);

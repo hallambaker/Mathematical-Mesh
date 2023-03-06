@@ -72,6 +72,11 @@ public partial class ShellTestBase : Disposable {
 
     #region // The test environment specific calls
 
+    public DeterministicSeed Seed { 
+            get => seed ?? DeterministicSeed.Auto().CacheValue (out seed); 
+            set => seed = value; }
+    DeterministicSeed seed;
+
     ///<summary>The test environment, base for all </summary>
     public TestEnvironmentBase TestEnvironment => testEnvironment ??
         GetTestEnvironment(DeterministicSeed.Auto()).CacheValue(out testEnvironment);
@@ -84,8 +89,9 @@ public partial class ShellTestBase : Disposable {
     TestEnvironment.GetTestCLI(machineName);
 
 
-    public virtual void StartTest() {
-        testEnvironment = GetTestEnvironment(DeterministicSeed.Auto());
+    public virtual void StartTest(params object[] parameters) {
+        Seed = DeterministicSeed.Auto(parameters);
+        testEnvironment = GetTestEnvironment(Seed);
         }
 
 

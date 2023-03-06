@@ -764,6 +764,29 @@
             be stupid.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.ArchiveIndexEntry.JsonObject">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.ArchiveIndexEntry.Factory(Goedel.Cryptography.Dare.Sequence,System.Int64,System.Int64,System.Int64,System.Int64,Goedel.Cryptography.Dare.DareHeader,Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.JsonObject)">
+            <summary>
+            Factory method implementing <see cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>.
+            </summary>
+            <inheritdoc cref="T:Goedel.Cryptography.Dare.SequenceIndexEntryFactoryDelegate"/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.ArchiveIndexEntry.#ctor(Goedel.Cryptography.Dare.Sequence)">
+            <summary>
+            Constructor returning a in instance bound to the sequence <paramref name="sequence"/>
+            </summary>
+            <param name="sequence">The sequence the index is bound to.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareArchive.AddFile(System.String,System.IO.FileInfo,Goedel.Cryptography.Dare.ContentMeta)">
+            <summary>
+            Add the file <paramref name="fileInfo"/> into the archive with the directory 
+            path prefix <paramref name="directoryPath"/>.
+            </summary>
+            <param name="directoryPath"></param>
+            <param name="fileInfo"></param>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.DareArchive.ArchiveFile(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.ContentMeta,Goedel.IO.FileStatus)">
             <summary>
             Open a new file Sequence for write access and write a single file entry.
@@ -777,7 +800,7 @@
             <param name="policy">The cryptographic policy to be applied to the Sequence.</param>
             <returns>File Sequence instance</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareArchive.ArchiveDirectory(System.String,Goedel.Cryptography.Dare.DarePolicy,System.String,Goedel.Cryptography.Dare.ContentMeta,Goedel.IO.FileStatus,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.DareArchive.ArchiveDirectory(System.String,Goedel.Cryptography.Dare.DarePolicy,System.String,System.String,Goedel.Cryptography.Dare.ContentMeta,Goedel.IO.FileStatus,System.Boolean)">
             <summary>
             Open a new file Sequence for write access and append all the files in the directory 
             <paramref name="directory"/>.
@@ -862,6 +885,9 @@
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceEvent.Delete">
             <summary>Delete</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceEvent.Erase">
+            <summary>Erase</summary>
         </member>
         <member name="T:Goedel.Cryptography.Dare.DareConstants">
             <summary>
@@ -963,6 +989,9 @@
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareConstants.SequenceEventDeleteTag">
             <summary>Jose enumeration tag for SequenceEvent.Delete</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareConstants.SequenceEventEraseTag">
+            <summary>Jose enumeration tag for SequenceEvent.Erase</summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareConstants.ToSequenceEvent(System.String)">
             <summary>
@@ -5058,7 +5087,7 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Sequence.Append(Goedel.Cryptography.Dare.DareHeader,System.Byte[],Goedel.Cryptography.Dare.DareTrailer,Goedel.Protocol.DataEncoding,Goedel.Protocol.JsonObject)">
             <summary>
-            The only valid way to append data to the sequence.
+            Append a fixed or empty payload to the sequence.
             </summary>
             <param name="header">The header data.</param>
             <param name="payload">The payload as bytes.</param>
@@ -5172,7 +5201,7 @@
             </summary>
             <param name="input">The stream to be read.</param>
             <param name="contentLength"> The number of bytes to read from <paramref name="input"/>.</param>
-            <param name="contentInfo">Sequence headerData data.</param>
+            <param name="contentMeta">Sequence headerData data.</param>
             <param name="contentType">The payload content type.</param>
             <param name="cloaked">Data to be converted to an EDS and presented as a cloaked headerData.</param>
             <param name="dataSequences">Data sequences to be converted to an EDS and presented 

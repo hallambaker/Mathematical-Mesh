@@ -23,17 +23,20 @@
 
 #pragma warning disable IDE0060
 
+using Goedel.Cryptography;
+using Goedel.Cryptography.Algorithms;
+
 namespace Goedel.Mesh.Test;
 public record TestDareFile {
     public string Filename { get; set; }
+
+
     public bool Encrypt { get; set; }
     public bool Sign { get; set; }
     public bool Notarize { get; set; }
 
 
-    public TestCLI Alice { get; set; }
-    public TestCLI Bob { get; set; }
-    public TestCLI Mallet { get; set; }
+
 
     public void CheckFiles(
             string file1,
@@ -48,6 +51,7 @@ public record TestDareFile {
     }
 
 
+
 public record TestArchive : TestDareFile {
 
     public static string Archive1 = "Archive1";
@@ -60,25 +64,37 @@ public record TestArchive : TestDareFile {
         "TestKey_OpenSSH.pub"
         };
 
-    public Dictionary<string, TestArchiveEntry> Files { get; set; }
+    public Dictionary<string, TestArchiveEntry> Files { get; set; } = new();
 
     int tempFile = 0;
 
-    string GetTemp() => $"Temp{tempFile++}";
+    protected string GetTemp() => $"CheckTemp{tempFile++}";
 
-    public void AddFile(string file) {
+    public void AddFile(string file, string directory) {
+        var filename = Path.GetFileName(file);
+        var id = Path.Combine(directory, filename);
+        var digest = file.Sha3_512();
+
         var entry = new TestArchiveEntry() {
-            Filename = file,
+            Disk = file,
+            Filename = filename,
+            Directory = directory,
             Deleted = false,
-            Erased = false
+            Erased = false,
+            Digest= digest
             };
-        Files.Add(file, entry);
+        Files.Add(id, entry);
         }
 
-    public void Add(string directory) {
-        foreach (var file in Directory.EnumerateFiles(directory)) {
-            AddFile(file);
+    public void Add(string path, string directory) {
+
+        var dirpath = Path.Combine(path, directory);
+
+        foreach (var file in Directory.EnumerateFiles(dirpath)) {
+            AddFile(file, directory);
             }
+
+
         }
 
     public void Delete(string file) {
@@ -96,12 +112,117 @@ public record TestArchive : TestDareFile {
 
 
 
+    public void UnpackDirect(string source, string directory) {
+        
+        
+        }
+
 
     public void CheckFile(
-                string file) {
+                    string file) {
+        Files.TryGetValue (file, out var entry).TestTrue();
+        CheckFile(entry);
+        }
+
+    public virtual void CheckFile(
+                    TestArchiveEntry entry) {
 
 
-        Files.TryGetValue(file, out var entry).TestTrue();
+        var digest = entry.FullFilename.Sha3_512();
+        digest.TestEqual(entry.Digest);
+        }
+
+    public virtual void CheckArchive(IKeyLocate keyLocate=null) {
+        var directory = Directory.GetCurrentDirectory();
+
+        // create temporary directory
+        var tempDirectory = GetTemp();
+        Directory.CreateDirectory(tempDirectory);
+        Directory.SetCurrentDirectory(tempDirectory);
+
+
+
+        // unpack the archive
+        DareArchive.UnpackArchive(Filename, keyLocate);
+
+        // check each file.
+        foreach (var entry in Files) {
+            if (!entry.Value.Deleted) {
+                CheckFile(entry.Value);
+                }
+
+
+            }
+
+
+        Directory.SetCurrentDirectory(directory);
+        }
+
+
+    public void CheckDirectory() {
+        var directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
+        var count = CheckDirectory("", directoryInfo);
+
+        var check = 0;
+        foreach (var file in Files) {
+            if (!file.Value.Deleted) {
+                check++;
+                }
+            }
+
+        (check == count).TestTrue();
+        }
+
+
+    int CheckDirectory(
+                string directoryPath,
+                DirectoryInfo directoryInfo
+                ) {
+        var count = 0;
+        foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
+            var filePath = Path.Combine(directoryPath, fileInfo.Name);
+            CheckFile(filePath);
+            count++;
+            }
+        foreach (var subDirectoryInfo in directoryInfo.EnumerateDirectories()) {
+            var subpath = Path.Combine(directoryPath, subDirectoryInfo.Name);
+            count += CheckDirectory(subpath, subDirectoryInfo);
+            }
+
+
+
+        return count;
+        }
+
+    //static void CheckFile(
+    //        FileInfo fileInfo,
+    //        string path) {
+    //    var diskpath = Path.Combine();
+
+
+    //    }
+
+
+
+    public void CheckDirectoryEmpty() {
+        throw new NYI();
+        }
+
+    }
+
+
+
+public record TestArchiveShell : TestArchive {
+
+    public TestCLI Alice { get; set; }
+    public TestCLI Bob { get; set; }
+    public TestCLI Mallet { get; set; }
+
+
+    public override void CheckFile(
+                    TestArchiveEntry entry) {
+
+        var file = entry.Filename;
 
         if (!entry.Deleted) {
             var outFile = GetTemp();
@@ -124,7 +245,7 @@ public record TestArchive : TestDareFile {
         }
 
 
-    public void CheckArchive() {
+    public override void CheckArchive(IKeyLocate keyLocate = null) {
         var current = Directory.GetCurrentDirectory();
 
         // Unpack as Alice - success
@@ -157,21 +278,24 @@ public record TestArchive : TestDareFile {
         }
 
 
-    public void CheckDirectory() {
-        throw new NYI();
-        }
-
-    public void CheckDirectoryEmpty() {
-        throw new NYI();
-        }
 
     }
 
 
+
 public record TestArchiveEntry {
+
+    public string FullFilename => Path.Combine(Directory, Filename);
+
+    public string Disk { get; set; }
     public string Filename { get; set; }
+
+    public string Directory { get; set; }
+
     public bool Deleted { get; set; }
 
-
     public bool Erased { get; set; }
+
+
+    public byte[] Digest { get; set; }
     }

@@ -34,6 +34,7 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
+[Collection("Our Test Collection #1")]
 /// <summary>
 /// Test routines for file containers
 /// </summary>
@@ -184,10 +185,10 @@ public partial class TestDareLog {
         seed.MakeTestFile(fileName, length);
         seed.CheckTestFile(fileName, length);
 
-        var tempEncode = seed.GetTempFilename();
+        var tempEncode = seed.GetTempFilePath();
         DareEnvelope.Encode(policy, fileName, tempEncode);
 
-        var tempDecode = seed.GetTempFilename();
+        var tempDecode = seed.GetTempFilePath();
         DareEnvelope.Decode(tempEncode, tempDecode, policy.KeyLocate);
 
         seed.CheckTestFile(tempDecode, length);

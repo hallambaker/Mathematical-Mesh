@@ -66,16 +66,28 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult ArchiveCreate(ArchiveCreate options) {
         var inputFile = options.Input.Value;
-        var outputFile = options.Sequence.Value;
+        var archiveFile = options.Archive.Value;
         var index = options.Index.Value;
 
         var keyLocate = GetKeyCollection(options);
         var policy = GetPolicy(keyLocate, options);
 
-        DareArchive.ArchiveDirectory(outputFile, policy, inputFile, index: index);
+        if (inputFile == null) {
+            _ = new DareArchive(
+                inputFile, fileStatus: FileStatus.New, keyLocate: keyLocate, policy:policy);
+            }
+        else {
+            var sourceDirectory = Path.GetFileName(inputFile);
+            var sourcePath = Path.GetDirectoryName(inputFile);
+
+            DareArchive.ArchiveDirectory(archiveFile, policy, sourceDirectory,
+                            sourcePath, index: index);
+            }
+
+
 
         return new ResultFile() {
-            Filename = outputFile
+            Filename = archiveFile
             };
         }
 
@@ -85,23 +97,20 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult ArchiveAppend(ArchiveAppend options) {
+        var archiveFile = options.Archive.Value;
         var inputFile = options.File.Value;
-        var outputFile = options.Sequence.Value;
         var index = options.Index.Value;
         var id = options.Id.Value;
         var keyLocate = GetKeyCollection(options);
 
         using (var archive = new DareArchive(
-                inputFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
+                archiveFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
 
-            ContentMeta contentMeta = null;
-            if (id != null) {
-                contentMeta = new ContentMeta() {
-                    Filename = id
-                    };
-                }
+            var fileInfo = new FileInfo(inputFile);
 
-            archive.AddFile("", inputFile, contentMeta);
+            //var inputFileName = Path.GetFileName(inputFile);
+
+            archive.AddFile(fileInfo.Directory.FullName, "", fileInfo.Name);
 
             if (index) {
                 archive.AddIndex();
@@ -122,18 +131,18 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult ArchiveDelete(ArchiveDelete options) {
         var inputFile = options.Filename.Value;
-        var outputFile = options.Sequence.Value;
+        var archiveFile = options.Archive.Value;
         var keyLocate = GetKeyCollection(options);
         var erase = options.Erase.Value;
 
 
         using (var archive = new DareArchive(
-                inputFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
+                archiveFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
             archive.Delete(inputFile, erase:erase);
             }
 
         return new ResultFile() {
-            Filename = inputFile
+            Filename = archiveFile
             };
         }
 
@@ -143,16 +152,16 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult ArchiveIndex(ArchiveIndex options) {
-        var inputFile = options.Sequence.Value;
+        var archiveFile = options.Archive.Value;
         var keyLocate = GetKeyCollection(options);
 
         using (var archive = new DareArchive(
-                inputFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
+                archiveFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
             archive.AddIndex();
             }
 
         return new ResultFile() {
-            Filename = inputFile
+            Filename = archiveFile
             };
         }
 
@@ -162,22 +171,21 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult ArchiveDir(ArchiveDir options) {
-        var inputFile = options.Sequence.Value;
+        var archiveFile = options.Archive.Value;
         var keyLocate = GetKeyCollection(options);
 
         using (var archive = new DareArchive(
-                inputFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
+                archiveFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
 
             var result = new ResultArchive() {
                 Entries = new List<FileEntry>(),
                 Frames = (int)archive.FrameCount,
-                //IndexFrame = reader.Sequence.Index,
-                //Deleted = reader.Sequence.Deleted
+                IndexFrame = (int) archive.Sequence.FrameCount,
                 };
 
             foreach (var entry in archive.ObjectIndex) {
-                throw new NYI();
-                //result.Entries.Add(entry.Value);
+                var archiveEntry = entry.Value as ArchiveIndexEntry;
+                result.Entries.Add(archiveEntry.FileEntry);
                 }
 
             return result;
@@ -190,7 +198,7 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult ArchiveExtract(ArchiveExtract options) {
-        var inputFile = options.Sequence.Value;
+        var archiveFile = options.Archive.Value;
         var outputFile = options.Output.Value;
         var file = options.Filename.Value;
         var recover = options.Recover.Value;
@@ -198,7 +206,7 @@ public partial class Shell {
         var keyLocate = GetKeyCollection(options);
 
         using (var archive = new DareArchive(
-                inputFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
+                archiveFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
 
             if (file != null) {
                 outputFile ??= Path.GetFileName(file);
@@ -209,7 +217,7 @@ public partial class Shell {
                     };
                 }
             else {
-                archive.GetFiles(outputFile);
+                archive.UnpackArchive();
                 return new ResultFile() {
                     Filename = outputFile
                     };
@@ -224,19 +232,19 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult ArchiveCopy(ArchiveCopy options) {
-        var inputFile = options.Input.Value;
+        var archiveFile = options.Archive.Value;
         var outputFile = options.Output.Value;
         var index = options.Index.Value;
         var keyLocate = GetKeyCollection(options);
 
         using (var archive = new DareArchive(
-                inputFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
+                archiveFile, fileStatus: FileStatus.Existing, keyLocate: keyLocate)) {
 
-            archive.Copy(inputFile);
+            archive.Copy(outputFile);
 
 
             return new ResultFile() {
-                Filename = inputFile
+                Filename = outputFile
                 };
             }
 

@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 28-Feb-23 3:06:58 PM
+//  This file was automatically generated at 06-Mar-23 3:35:44 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -72,7 +72,9 @@ public enum SequenceEvent {
     ///<summary>Update</summary>
     Update,
     ///<summary>Delete</summary>
-    Delete    }
+    Delete,
+    ///<summary>Erase</summary>
+    Erase    }
 
 
 ///<summary>
@@ -219,6 +221,8 @@ public static partial class DareConstants {
     public const string  SequenceEventUpdateTag = "Update";
     ///<summary>Jose enumeration tag for SequenceEvent.Delete</summary>
     public const string  SequenceEventDeleteTag = "Delete";
+    ///<summary>Jose enumeration tag for SequenceEvent.Erase</summary>
+    public const string  SequenceEventEraseTag = "Erase";
 
     /// <summary>
     /// Convert the string <paramref name="text"/> to the corresponding enumeration
@@ -231,6 +235,7 @@ public static partial class DareConstants {
             SequenceEventNewTag => SequenceEvent.New,
             SequenceEventUpdateTag => SequenceEvent.Update,
             SequenceEventDeleteTag => SequenceEvent.Delete,
+            SequenceEventEraseTag => SequenceEvent.Erase,
             _ => SequenceEvent.Unknown
             };
 
@@ -245,6 +250,7 @@ public static partial class DareConstants {
             SequenceEvent.New => SequenceEventNewTag,
             SequenceEvent.Update => SequenceEventUpdateTag,
             SequenceEvent.Delete => SequenceEventDeleteTag,
+            SequenceEvent.Erase => SequenceEventEraseTag,
             _ => null
             };
 

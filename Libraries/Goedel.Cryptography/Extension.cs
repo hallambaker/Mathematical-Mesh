@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using Goedel.IO;
 using System.Security.Cryptography.X509Certificates;
 
 
@@ -40,6 +41,18 @@ public static class ExtensionMethods {
         if (buffer != null) {
             hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, buffer, 0);
             }
+        }
+
+    public static byte[] Sha3_512(this string file) {
+        using var provider = new SHA3Managed(512);
+        using var stream = file.OpenFileReadShared();
+        return provider.ComputeHash(stream);
+        }
+
+    public static byte[] Sha3_256(this string file) {
+        using var provider = new SHA3Managed(256);
+        using var stream = file.OpenFileReadShared();
+        return provider.ComputeHash(stream);
         }
 
     /// <summary>
