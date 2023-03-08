@@ -38,6 +38,7 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     /// </summary>
     public string StrongInternetName => Locator + ".mm--" + KeyIdentifier;
 
+
     /// <summary>The supported key uses (e.g. signing, encryption)</summary>
     public abstract KeyUses KeyUses { get; }
 

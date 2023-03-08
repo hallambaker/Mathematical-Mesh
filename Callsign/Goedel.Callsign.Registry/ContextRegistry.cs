@@ -37,8 +37,9 @@ public class ContextRegistry : ContextAccount {
 
 
     ///<inheritdoc/>
-    public override string AccountAddress => "@registry";
+    public override string AccountAddress { get; }
 
+    public override string ServiceDns { get; }
 
     ///<inheritdoc/>
     public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => StaticCatalogDelegates;
@@ -62,10 +63,17 @@ public class ContextRegistry : ContextAccount {
     /// <param name="catalogedCallsign">Description of the Registry to return the
     /// context for.</param>
     /// <param name="activationAccount">The account activation.</param>
-    public ContextRegistry(ContextUser contextAccount,
+    public ContextRegistry(
+                ContextUser contextAccount,
                 CatalogedRegistry catalogedCallsign,
                 ActivationCommon activationAccount) :
                 base(contextAccount.MeshHost, null) {
+
+        // Set the service account address
+        var profile = catalogedCallsign.ProfileRegistry;
+        AccountAddress = profile.AccountAddress;
+        ServiceDns = AccountAddress.GetService();
+
         ActivationCommon = activationAccount;
         CatalogedRegistry = catalogedCallsign;
         ContextUser = contextAccount;
@@ -74,11 +82,16 @@ public class ContextRegistry : ContextAccount {
         
         CatalogRegistration = GetStore(CatalogRegistration.Label) as CatalogRegistration;
         CatalogRegistration.CallsignMapping = CallsignMapping;
+
+        KeyCollection.Add(KeyCommonEncryption);
+
+
+
         }
 
 
     /// <summary>
-    /// Create a threshold encryption Registry.
+    /// Create the callsign Registry.
     /// </summary>
     /// <param name="contextUser">The user context in which the Registry is to be created.</param>
     /// <param name="RegistryName">Name of the Registry to create.</param>
@@ -144,6 +157,9 @@ public class ContextRegistry : ContextAccount {
 
             transaction.Transact();
             }
+
+        contextUser.ProfileRegistryCallsign = profileRegistry;
+        contextRegistry.ProfileRegistryCallsign = profileRegistry;
 
         return contextRegistry;
         }

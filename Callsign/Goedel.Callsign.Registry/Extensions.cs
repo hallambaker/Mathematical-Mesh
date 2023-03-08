@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +22,12 @@ public static class Extensions {
     /// <returns></returns>
     /// <exception cref="NYI"></exception>
     public static ContextRegistry CreateRegistry(
-            this ContextUser contextUser, string accountAddress) =>
-        ContextRegistry.CreateRegistry(contextUser, accountAddress);
+                        this ContextUser contextUser, 
+                        string accountAddress,
+                    PrivateKeyUDF accountSeed = null) =>
+        ContextRegistry.CreateRegistry(contextUser, accountAddress, accountSeed);
+
+
+
 
     }

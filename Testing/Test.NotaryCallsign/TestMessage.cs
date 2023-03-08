@@ -34,6 +34,7 @@ using Xunit;
 
 namespace Goedel.XUnit;
 
+
 public partial class RegistrationTests {
 
 
@@ -44,10 +45,12 @@ public partial class RegistrationTests {
         var resulta = MakeAccount(deviceA, AliceAccount);
 
         var serviceCallsign = GetCallSignService();
-        Console.WriteLine("");
+        Console.WriteLine("Created Callsign Service");
 
 
         var resultBind = deviceA.Dispatch($"callsign bind {AliceCallsign}") as ResultPublish;
+        serviceCallsign.Sync();
+
 
         // Replace this with some command that waits until a completion message is received.
         var resultSync = deviceA.Dispatch($"callsign sync {AliceCallsign}");

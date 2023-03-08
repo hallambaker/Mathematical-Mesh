@@ -41,12 +41,8 @@ public class ContextMeshPreconfigured : ContextAccount {
     ///<summary>The account address. This binds to the manufacturer account.</summary>
     public override string AccountAddress => CatalogedPreconfigured?.AccountAddress;
 
-    //public override MeshService MeshClient => meshClient ??
-    //     MeshMachine.GetMeshClient(CatalogedPreconfigured.AccountAddress, null, null).
-    //            CacheValue(out meshClient);
-    //MeshService meshClient;
-
-
+    ///<inheritdoc/>
+    public override string ServiceDns => AccountAddress.GetService();
 
 
     /// <summary>
@@ -94,9 +90,6 @@ public class ContextMeshPreconfigured : ContextAccount {
         var messageClaim = MeshItem.Decode(claimResponse.EnvelopedMessage, KeyCollection) as MessageClaim;
         messageClaim.AssertNotNull(InvalidServiceResponse.Throw); // should never be null
 
-
-        // Verify request.ServiceAuthenticate & request.AccountAddress
-        // Verify request.DeviceAuthenticate & request.AccountAddress
         messageClaim.Verify(
                 CatalogedPreconfigured.ServiceAuthenticator,
                 CatalogedPreconfigured.DeviceAuthenticator).AssertTrue(RefusedPINInvalid.Throw);
@@ -121,10 +114,6 @@ public class ContextMeshPreconfigured : ContextAccount {
 
         return context;
 
-
-
-
-        //throw new NYI();
         }
 
 

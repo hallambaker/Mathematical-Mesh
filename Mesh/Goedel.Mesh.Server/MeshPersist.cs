@@ -22,6 +22,7 @@
 
 
 using Microsoft.Extensions.Logging;
+using System.ComponentModel;
 using System.Net.Sockets;
 using System.Security.Principal;
 
@@ -519,7 +520,7 @@ public class MeshPersist : Disposable {
         var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
         identifier.AssertNotNull(InvalidMessageID.Throw);
 
-        var senderService = senderAccount.AccountAddress.GetService();
+        //var senderService = senderAccount.AccountAddress.GetService();
 
         foreach (var recipient in accounts) {
             var recipientUdf = CatalogCallsign.Get(recipient);
@@ -747,19 +748,22 @@ public class MeshPersist : Disposable {
     /// Get the account record and lock it. The entry must be disposed properly 
     /// to prevent access to the account being blocked from other threads.
     /// </summary>
-    /// <param name="account">The account to get.</param>
+    /// <param name="accountAddress">The account to get.</param>
     /// <returns>The locked account entry if found, otherwise null.</returns>
-    LockedCatalogedEntry<AccountEntry> GetAccountLocked(string account) {
+    LockedCatalogedEntry<AccountEntry> GetAccountLocked(string accountAddress) {
         AccountEntry result = null;
+
+        var addressType = accountAddress.SplitAccountAddress(out var service, out var account);
 
 
         lock (Container) {
-            var containerEntry = Container.Get(account) as PersistentIndexEntry;
+            PersistentIndexEntry containerEntry = null;
 
-            if (containerEntry is null) {
-                var profileUdf = GetProfileUdf(account);
-                containerEntry = Container.Get(profileUdf) as PersistentIndexEntry;
-                }
+            containerEntry = addressType switch {
+                AddressType.AccountOnly => Container.Get(account) ,
+                AddressType.AccountAtDns => (Container.Get(account) ?? Container.Get(GetProfileUdf(accountAddress))) ,
+                _ => throw new NYI()
+                } as PersistentIndexEntry;
 
             result = containerEntry?.JsonObject as AccountEntry;
             result.AssertNotNull(MeshUnknownAccount.Throw);

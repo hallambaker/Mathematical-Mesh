@@ -8,6 +8,19 @@ using System.Threading.Tasks;
 namespace Goedel.Callsign;
 
 
+public enum CallsignState {
+    
+    Unregistered,
+
+    Registered,
+
+    Bound,
+
+    Hold
+    
+    }
+
+
 /// <summary>
 /// Extensions class. Provides static convenience extensions.
 /// </summary>
@@ -26,34 +39,38 @@ public static class Extensions {
                 this ContextAccount contextAccount,
                 string callsign,
                 bool bind = false,
-                string registry = null,
-                string transfer = null) {
+                ProfileAccount transfer = null) {
 
-        registry ??= contextAccount.CallsignRegistry;
+        
+        var profile = transfer ?? contextAccount.Profile as ProfileAccount;
+
+
+        var registry = contextAccount.ProfileRegistryCallsign;
 
         var callsignBinding = new CallsignBinding() {
             Canonical = callsign.CannonicalAccountAddress(),
             Display = callsign,
-            ProfileUdf = contextAccount.Profile.Udf
+            ProfileUdf = profile.Udf
             };
 
 
         if (bind) {
+            var service = profile.AccountAddress.GetService();
             callsignBinding.Services = new() {
                 new NamedService() {
-                    Prefix = MeshService.WellKnown
+                    Prefix = MeshService.WellKnown,
+                    Endpoints = new() { service }
                     }
                 };
             }
         var envelopedBinding = callsignBinding.Envelope(signingKey: contextAccount.KeyAdministratorSign);
 
         var message = new CallsignRegistrationRequest() {
-            Recipient = registry,
             EnvelopedCallsignBinding = new Enveloped<CallsignBinding>(envelopedBinding)
             };
 
         using (var transact = contextAccount.TransactBegin()) {
-            transact.OutboundMessage(registry, message);
+            transact.OutboundMessage(registry.AccountAddress, message);
             contextAccount.Transact(transact);
             }
 

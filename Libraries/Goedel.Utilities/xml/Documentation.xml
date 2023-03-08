@@ -323,6 +323,16 @@
             <returns><paramref name="accountID"/> if it is a well formed account identifier
             and null otherwise.</returns>
         </member>
+        <member name="M:Goedel.Utilities.Extension.SplitAccountAddress(System.String,System.String@,System.String@)">
+            <summary>
+            Parse a string that may contain an account identifier to extract the service and 
+            account components.
+            </summary>
+            <param name="identifier">The AccountID to split.</param>
+            <param name="service">The portal address.</param>
+            <param name="account">The account name.</param>
+            <returns>The type of address specified.</returns>
+        </member>
         <member name="M:Goedel.Utilities.Extension.SplitAccountIDService(System.String,System.String@,System.String@)">
             <summary>
             Parse a string that may contain an account identifier to extract the service and 
@@ -2374,6 +2384,25 @@
             <param name="data">The data to read.</param>
             <param name="index">The starting index.</param>
             <returns>The converted data.</returns>
+        </member>
+        <member name="T:Goedel.Utilities.AddressType">
+            <summary>
+            Account addresses used in the Mesh.
+            </summary>
+        </member>
+        <member name="F:Goedel.Utilities.AddressType.Null">
+            <summary>Address value is null.</summary> 
+        </member>
+        <member name="F:Goedel.Utilities.AddressType.AccountAtDns">
+            <summary>Address is in username@domain format. Note that if there
+            are multiple @ signs the address is always split at the last one so that
+            domain never contains an @.</summary> 
+        </member>
+        <member name="F:Goedel.Utilities.AddressType.AccountOnly">
+            <summary>Address is a pure account, no service specifier.</summary> 
+        </member>
+        <member name="F:Goedel.Utilities.AddressType.Callsign">
+            <summary>Address begins with @, is a callsign.</summary> 
         </member>
         <member name="T:Goedel.Utilities.Screen">
             <summary>

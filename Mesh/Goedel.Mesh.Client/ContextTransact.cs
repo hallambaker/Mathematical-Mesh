@@ -257,7 +257,7 @@ public abstract class Transaction<TAccount> : Disposable
     static KeyPair SignLocalMessage => null; // ToDo: set signing key to the device admin key.
 
     ///<summary>The account identifier.</summary> 
-    public string AccountId => ContextAccount.AccountAddress;
+    public string AccountId => ContextAccount.AccountAddressUdf;
 
     ///<summary>The service profile.</summary> 
     public ProfileService ProfileService => ContextAccount.ProfileService;

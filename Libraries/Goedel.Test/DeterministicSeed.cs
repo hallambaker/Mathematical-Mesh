@@ -35,6 +35,31 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Goedel.Test;
 
 public class UnitTestSet : Disposable {
+    public static readonly string AccountAlice = "alice@example.com";
+    public static readonly string ServiceName = "example.com";
+    public static readonly string AccountBob = "bob@example.com";
+    public static readonly string AccountQ = "q@example.com";
+    public static readonly string AccountMallet = "mallet@example.com";
+    public static readonly string AccountRegistryAdmin = "registryadmin@example.com";
+    public static readonly string AccountAdminCarnet = "carnetadmin@example.com";
+    public static readonly string AccountRegistry = "callsign@example.com";
+    public static readonly string AccountResolver = "resolver@example.com";
+    public static readonly string AccountCarnet = "carnet@example.com";
+
+
+    public string DeviceAliceAdmin = "Alice Admin";
+    public string DeviceAlice2 = "Alice Device 2";
+    public string DeviceAlice3 = "Alice Device 3";
+    public string DeviceBobAdmin = "Bob Admin";
+    public string DeviceQ = "DeviceQ";
+    public string DeviceMallet = "DeviceMallet";
+
+
+
+    public string CallsignAlice => "@alice";
+    public string CallsignBob => "@bob";
+    public string CallsignMallet => "@mallet";
+    public string CallsignRegistry => "@registry";
 
     ///<summary>The deterministic seed to be used by the test, may be set explictly
     ///or generated automatically through use in a test method.</summary> 
@@ -288,7 +313,9 @@ public class DeterministicSeed {
         builder.Append(tag);
         foreach (var v in parameters) {
             builder.Append('-');
-            builder.Append((v??"-").ToString());
+            if (v is not null) {
+                builder.Append(v.ToString());
+                }
             }
 
         return builder.ToString();

@@ -18,9 +18,6 @@
         <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.MeshServiceConfiguration">
             <summary>The Mesh service configuration.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.CallsignRegistryConfiguration">
-            <summary>The Mesh service configuration.</summary> 
-        </member>
         <member name="P:Goedel.Mesh.ServiceAdmin.Configuration.CallsignResolverConfiguration">
             <summary>The Mesh service configuration.</summary> 
         </member>

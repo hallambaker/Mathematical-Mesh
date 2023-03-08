@@ -31,7 +31,29 @@ using Goedel.Utilities;
 using System;
 using System.Collections.Generic;
 */
+using System.Runtime.CompilerServices;
+
 namespace Goedel.Utilities;
+
+/// <summary>
+/// Account addresses used in the Mesh.
+/// </summary>
+public enum AddressType {
+    ///<summary>Address value is null.</summary> 
+    Null,
+
+    ///<summary>Address is in username@domain format. Note that if there
+    ///are multiple @ signs the address is always split at the last one so that
+    ///domain never contains an @.</summary> 
+    AccountAtDns,
+
+    ///<summary>Address is a pure account, no service specifier.</summary> 
+    AccountOnly,
+
+    ///<summary>Address begins with @, is a callsign.</summary> 
+    Callsign
+    }
+
 
 
 public static partial class Extension {
@@ -93,6 +115,43 @@ public static partial class Extension {
             }
         return true; // Hack: need to do this properly.
         }
+
+
+    /// <summary>
+    /// Parse a string that may contain an account identifier to extract the service and 
+    /// account components.
+    /// </summary>
+    /// <param name="identifier">The AccountID to split.</param>
+    /// <param name="service">The portal address.</param>
+    /// <param name="account">The account name.</param>
+    /// <returns>The type of address specified.</returns>
+    public static AddressType SplitAccountAddress(this string identifier,
+            out string service,
+            out string account) {
+        account = null;
+        service = null;
+        if (identifier == null) {
+            return AddressType.Null;
+            }
+
+        var at = identifier.LastIndexOf('@');
+        if (at < 0) {
+            account = identifier;
+            return AddressType.AccountOnly;
+            }
+
+        if (at == 0) {
+            account = identifier;
+            service = null;
+            return AddressType.Callsign;
+            }
+
+        account = identifier[..at];
+        service = identifier[(at + 1)..];
+
+        return AddressType.AccountAtDns;
+        }
+
 
 
     /// <summary>

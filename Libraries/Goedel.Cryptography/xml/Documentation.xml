@@ -6023,11 +6023,12 @@
             <param name="cryptoKey">The key (if found)</param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.IKeyLocate.Add(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Cryptography.IKeyLocate.Add(Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})">
             <summary>
             Add a keypair to the collection.
             </summary>
             <param name="keyPair">The key pair to add.</param>
+            <param name="accounts">Accounts to which the key is bound.</param>
         </member>
         <member name="M:Goedel.Cryptography.IKeyLocate.Persist(Goedel.Cryptography.KeyPair)">
             <summary>
@@ -6086,7 +6087,7 @@
         <member name="F:Goedel.Cryptography.KeyCollection.DictionaryKeyPairByAccountSign">
             <summary>Signature keypairs by Account</summary>
         </member>
-        <member name="M:Goedel.Cryptography.KeyCollection.Add(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Cryptography.KeyCollection.Add(Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})">
             <summary>
             Add a keypair to the collection.
             </summary>
@@ -8445,8 +8446,8 @@
              <param name="cryptoKey">The key, (if found).</param>
             <returns>A KeyPair instance bound to the private key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.CryptoKey.Add(Goedel.Cryptography.KeyPair)">
-            <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.Add(Goedel.Cryptography.KeyPair)"/>
+        <member name="M:Goedel.Cryptography.CryptoKey.Add(Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})">
+            <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.Add(Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})"/>
         </member>
         <member name="M:Goedel.Cryptography.CryptoKey.Persist(Goedel.Cryptography.KeyPair)">
             <inheritdoc cref="M:Goedel.Cryptography.IKeyLocate.Persist(Goedel.Cryptography.KeyPair)"/>

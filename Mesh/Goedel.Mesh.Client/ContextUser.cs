@@ -50,9 +50,9 @@ public partial class ContextUser : ContextAccount {
     static ILogger Logger => Component.Logger;
 
     ///<summary>The profile</summary>
-    public ProfileUser ProfileUser { get; set; }
+    public ProfileUser ProfileUser { get; }
 
-
+    public override string ServiceDns { get; }
 
     ///<summary>The connection device</summary>
     public ConnectionService ConnectionService => CatalogedDevice?.ConnectionService;
@@ -132,6 +132,7 @@ public partial class ContextUser : ContextAccount {
             }
 
         ProfileUser = CatalogedDevice.ProfileUser;
+        ServiceDns = ProfileUser.AccountAddress.GetService();
 
         // Get the device key so that we can decrypt the activation record.
         var deviceKeySeed = KeyCollection.LocatePrivateKey(ProfileDevice.Udf) as PrivateKeyUDF;

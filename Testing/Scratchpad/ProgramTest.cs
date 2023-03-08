@@ -99,16 +99,12 @@ partial class Program {
         //ShellTests.Test().TestProfileConnectPin();
         //ShellTests.Test().TestProfileConnectPinReused();
         //ShellTests.Test().TestProfileContact();
-        ShellTests.Test().TestLog();
-        ShellTests.Test().TestProfileContact();
-        ShellTests.Test().TestMessageGroup();
+        //ShellTests.Test().TestLog();
 
-        ShellTests.Test().RelativePathFileFail();
-        ShellTests.Test().RelativePathDirectoryFail();
-        ShellTests.Test().NewFileTestOnce();
-
-
-        Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+        CallsignDirect.Test().CreateRegistry();
+        CallsignDirect.Test().RegisterAlice();
+        CallsignDirect.Test().RegisterAliceDuplicate();
+        CallsignDirect.Test().RegisterAliceTransferBob();
 
         /* Callsigns */
 
@@ -119,6 +115,25 @@ partial class Program {
         RegistrationTests.Test().CallsignTransfer();
         RegistrationTests.Test().CallsignPresencePresent();
         RegistrationTests.Test().CallsignPresenceAbsent();
+
+
+
+
+
+
+        /* Save for later */
+
+
+
+        ShellTests.Test().TestFileEncrypt();
+        //ShellTests.Test().TestMessageGroup();
+
+        ShellTests.Test().RelativePathFileFail();
+        ShellTests.Test().RelativePathDirectoryFail();
+        ShellTests.Test().NewFileTestOnce();
+
+
+        Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
         Logger.LogInformation("End test {time}, Fail={Softfail}", System.DateTime.Now, TestCLI.CountSoftFail);
         //Screen.WriteLine($"Total Soft fail {TestCLI.CountSoftFail}");

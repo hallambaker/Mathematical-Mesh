@@ -13634,6 +13634,11 @@
             Encryption key to be used to encrypt data for the service to use.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.AccountHostAssignment.CallsignServiceProfile">
+             <summary>
+            Profile of the callsign registry used by the service.
+             </summary>
+        </member>
         <member name="M:Goedel.Mesh.AccountHostAssignment.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>

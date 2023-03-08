@@ -1297,7 +1297,7 @@
             Extensions class. Provides static convenience extensions.
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.Extensions.CallsignRequest(Goedel.Mesh.Client.ContextAccount,System.String,System.Boolean,System.String,System.String)">
+        <member name="M:Goedel.Callsign.Extensions.CallsignRequest(Goedel.Mesh.Client.ContextAccount,System.String,System.Boolean,Goedel.Mesh.ProfileAccount)">
             <summary>
             Make a callsign registration, binding or transfer request
             </summary>

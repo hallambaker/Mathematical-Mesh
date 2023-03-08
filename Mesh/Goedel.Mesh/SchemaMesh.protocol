@@ -391,6 +391,9 @@
 		Struct KeyData AccessEncrypt
 			Description
 				|Encryption key to be used to encrypt data for the service to use.
+		Struct ProfileAccount CallsignServiceProfile
+			Description
+				|Profile of the callsign registry used by the service.
 
 
 	Structure ConnectionHost

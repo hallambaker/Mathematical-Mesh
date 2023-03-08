@@ -34,8 +34,7 @@ public partial class TestService {
         contextAccountAlice.CallsignRegistry = AccountRegistry;
         contextAccountBob.CallsignRegistry = AccountRegistry;
 
-        var callsignRequestAlice1 = contextAccountAlice.CallsignRequest(CallsignAlice, true,
-                registry: AccountRegistry);
+        var callsignRequestAlice1 = contextAccountAlice.CallsignRequest(CallsignAlice, true);
         contextRegistry.Process();
         resolverServer.Update();
 

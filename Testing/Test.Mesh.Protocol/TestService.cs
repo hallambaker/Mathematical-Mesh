@@ -59,16 +59,7 @@ public partial class TestService {
     static TestService() => Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
 
 
-    static readonly string AccountAlice = "alice@example.com";
-    static readonly string ServiceName = "example.com";
-    static readonly string AccountBob = "bob@example.com";
-    static readonly string AccountQ = "q@example.com";
-    static readonly string AccountMallet = "mallet@example.com";
-    static readonly string AccountRegistryAdmin = "registryadmin@example.com"; 
-    static readonly string AccountAdminCarnet = "carnetadmin@example.com";
-    static readonly string AccountRegistry = "registry@example.com";
-    static readonly string AccountResolver = "resolver@example.com";
-    static readonly string AccountCarnet = "carnet@example.com";
+
 
     public string DeviceServiceRegistry = "Service Registry";
     public string DeviceServiceResolver = "Service Resolver";
@@ -77,12 +68,7 @@ public partial class TestService {
     public string DeviceServiceRepository = "Service Repository";
 
 
-    public string DeviceAliceAdmin = "Alice Admin";
-    public string DeviceAlice2 = "Alice Device 2";
-    public string DeviceAlice3 = "Alice Device 3";
-    public string DeviceBobAdmin = "Bob Admin";
-    public string DeviceQ = "DeviceQ";
-    public string DeviceMallet = "DeviceMallet";
+
 
     static readonly string AccountGroup = "groupw@example.com";
 

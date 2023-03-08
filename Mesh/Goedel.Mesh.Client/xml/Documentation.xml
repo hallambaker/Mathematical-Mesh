@@ -388,6 +388,18 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.Profile">
             <summary>The account profile</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
+            <summary>The account address in human readable format user@domain.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddressUdf">
+            <summary>The account address in canonical format udf@domain.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountCallsign">
+            <summary>The default account callsign.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.ServiceDns">
+            <summary>The service to which the account is bound.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.ProfileDevice">
             <summary>The device profile</summary>
         </member>
@@ -423,9 +435,6 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.HostEncryptAccount">
             <summary>The host encryption key.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
-            <summary>The Account Address</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.ActivationCommon">
             <summary>The account activation</summary>
@@ -671,7 +680,7 @@
             <param name="cryptoKey">The found key </param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.Add(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.Add(Goedel.Cryptography.KeyPair,System.Collections.Generic.List{System.String})">
             <summary>
             Add a keypair to the collection.
             </summary>
@@ -834,6 +843,9 @@
         <member name="P:Goedel.Mesh.Client.ContextGroup.AccountAddress">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextGroup.ServiceDns">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.ProfileGroup">
             <summary>The group profile.</summary>
         </member>
@@ -935,6 +947,9 @@
             <summary>The account address from the cataloged pending record. Note that this
             address MUST be for the same service that the original request was made to.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPending.ServiceDns">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextMeshPending.Profile">
             <summary>The account profile. Always null.</summary>
         </member>
@@ -1004,6 +1019,9 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextMeshPreconfigured.AccountAddress">
             <summary>The account address. This binds to the manufacturer account.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPreconfigured.ServiceDns">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>

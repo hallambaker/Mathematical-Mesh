@@ -50,6 +50,8 @@ public class ContextMeshPending : ContextAccount {
     ///address MUST be for the same service that the original request was made to.</summary>
     public override string AccountAddress => CatalogedPending?.AccountAddress;
 
+    ///<inheritdoc/>
+    public override string ServiceDns => AccountAddress.GetService();
 
     ///<summary>The account profile. Always null.</summary>
     public override Profile Profile => null;

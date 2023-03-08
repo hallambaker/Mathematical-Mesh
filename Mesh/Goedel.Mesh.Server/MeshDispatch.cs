@@ -105,6 +105,9 @@ public class PublicMeshService : MeshService {
     IPresence PresenceService { get; }
 
 
+
+    public ProfileAccount CallsignServiceProfile { get; set; }
+
     #endregion
     #region // Disposing
     ///<inheritdoc/>
@@ -457,6 +460,7 @@ public class PublicMeshService : MeshService {
             var accountHostAssignment = new AccountHostAssignment() {
                 AccountAddess = account,
                 AccessEncrypt = ProfileHost.Encryption,
+                CallsignServiceProfile = CallsignServiceProfile
                 };
             accountHostAssignment.Envelope();
 

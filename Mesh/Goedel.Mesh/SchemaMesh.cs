@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 06-Mar-23 3:21:29 PM
+//  This file was automatically generated at 08-Mar-23 6:13:39 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -3207,6 +3207,11 @@ public partial class AccountHostAssignment : Assertion {
         /// </summary>
 
 	public virtual KeyData						AccessEncrypt  {get; set;}
+        /// <summary>
+        ///Profile of the callsign registry used by the service.
+        /// </summary>
+
+	public virtual ProfileAccount						CallsignServiceProfile  {get; set;}
 
 
     ///<inheritdoc/>
@@ -3231,6 +3236,12 @@ public partial class AccountHostAssignment : Assertion {
 					}
 				break;
 				}
+			case "CallsignServiceProfile" : {
+				if (value is TokenValueStructObject vvalue) {
+					CallsignServiceProfile = vvalue.Value as ProfileAccount;
+					}
+				break;
+				}
 
 			default: {
 				base.Setter(tag, value);
@@ -3252,6 +3263,9 @@ public partial class AccountHostAssignment : Assertion {
 			case "AccessEncrypt" : {
 				return new TokenValueStruct<KeyData> (AccessEncrypt);
 				}
+			case "CallsignServiceProfile" : {
+				return new TokenValueStruct<ProfileAccount> (CallsignServiceProfile);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -3266,7 +3280,9 @@ public partial class AccountHostAssignment : Assertion {
 			{ "AccountAddess", new Property (typeof(TokenValueString), false)} ,
 			{ "HostAddresses", new Property (typeof(TokenValueListString), true)} ,
 			{ "AccessEncrypt", new Property ( typeof(TokenValueStruct), false,
-					()=>new KeyData(), ()=>new KeyData(), false)} 
+					()=>new KeyData(), ()=>new KeyData(), false)} ,
+			{ "CallsignServiceProfile", new Property ( typeof(TokenValueStruct), false,
+					()=>new ProfileAccount(), ()=>new ProfileAccount(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

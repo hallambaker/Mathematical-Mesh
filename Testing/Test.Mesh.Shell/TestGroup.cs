@@ -42,13 +42,14 @@ public partial class ShellTests {
 
         var accountGroup = "groupw@example.com";
         var filename = Seed.GetFilename("Source");
+        var encoded = Seed.GetFilename("Encoded");
         Seed.MakeTestFile(filename, 1000);
 
 
         CreateAliceBob(out var deviceA, out var deviceB);
 
         deviceA.Dispatch($"group create {accountGroup}  /web");
-        var result1 = deviceA.Dispatch($"dare encode {filename} /encrypt {accountGroup}") as ResultFile;
+        var result1 = deviceA.Dispatch($"dare encode {filename} {encoded} /encrypt {accountGroup}") as ResultFile;
         //deviceA.Dispatch($"dare decode {result1.Filename}", fail: true);
         //deviceB.Dispatch($"dare decode {result1.Filename}", fail: true);
 
@@ -57,18 +58,18 @@ public partial class ShellTests {
         deviceA.Dispatch($"group add {accountGroup} {AccountB}");
         deviceB.Dispatch($"account sync /auto");
 
-        deviceA.Dispatch($"dare decode {result1.Filename}");
-        deviceB.Dispatch($"dare decode {result1.Filename}");
+        deviceA.Dispatch($"dare decode {encoded}");
+        deviceB.Dispatch($"dare decode {encoded}");
 
         deviceA.Dispatch($"group delete {accountGroup} {AccountB}");
-        deviceA.Dispatch($"dare decode {result1.Filename}");
+        deviceA.Dispatch($"dare decode {encoded}");
 
         // Probably failing because Bob is not actually being deleted from the group
-        deviceB.Dispatch($"dare decode {result1.Filename}", fail: true);
+        deviceB.Dispatch($"dare decode {encoded}", fail: true);
 
         deviceA.Dispatch($"group add {accountGroup} {AccountB}");
         deviceB.Dispatch($"account sync /auto");
-        deviceB.Dispatch($"dare decode {result1.Filename}");
+        deviceB.Dispatch($"dare decode {encoded}");
 
 
         EndTest();

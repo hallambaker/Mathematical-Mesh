@@ -67,6 +67,22 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ///<summary>The account profile</summary>
     public abstract Profile Profile { get; }
 
+
+    ///<summary>The account address in human readable format user@domain.</summary>
+    public abstract string AccountAddress { get; }
+
+    ///<summary>The account address in canonical format udf@domain.</summary> 
+    public string AccountAddressUdf => Profile.Udf + "@" + ServiceDns;
+
+    ///<summary>The default account callsign.</summary> 
+    public string AccountCallsign { get; set; }
+
+    ///<summary>The service to which the account is bound.</summary> 
+    public abstract string ServiceDns { get; } 
+
+
+
+
     ///<summary>The device profile</summary>
     public virtual ProfileDevice ProfileDevice => CatalogedMachine?.ProfileDevice;
 
@@ -88,6 +104,20 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
     ///<summary>Contact address for the callsign registry broker.</summary> 
     public string CallsignRegistry { get; set; }
+
+
+    public ProfileAccount ProfileRegistryCallsign { 
+                get => profileRegistryCallsign;
+                set {
+                    profileRegistryCallsign = value;
+                    var accounts = new List<string> { value.AccountAddress };
+                    KeyCollection.Add(value.AccountEncryptionKey, accounts);
+                    } }
+
+
+    public ProfileAccount profileRegistryCallsign;
+
+
 
     /// <summary>
     /// Create a new ICredential.
@@ -116,8 +146,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public KeyPair HostEncryptAccount => hostEncryptAccount ??
         AccountHostAssignment?.AccessEncrypt?.GetKeyPair().CacheValue(out hostEncryptAccount);
     KeyPair hostEncryptAccount;
-    ///<summary>The Account Address</summary>
-    public abstract string AccountAddress { get; }
+
     #endregion
     #region // Activated account keys
     ///<summary>The account activation</summary>
@@ -349,7 +378,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <returns>The Mesh service client</returns>
     public MeshServiceClient GetMeshClient(ICredentialPrivate credentialPrivate) =>
-                MeshMachine.GetMeshClient(credentialPrivate, AccountAddress);
+                MeshMachine.GetMeshClient(credentialPrivate, AccountAddressUdf);
 
 
     /// <summary>
@@ -778,7 +807,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// Add a keypair to the collection.
     /// </summary>
     /// <param name="keyPair">The key pair to add.</param>
-    public void Add(KeyPair keyPair) => KeyCollection.Add(keyPair);
+    public void Add(KeyPair keyPair, List<string> accounts = null) => 
+        KeyCollection.Add(keyPair, accounts);
 
     /// <summary>
     /// Persist a private key if permitted by the KeySecurity model of the key.

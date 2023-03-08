@@ -400,26 +400,33 @@ public partial class ShellTests {
 
         string encrypt = null, string sign = null, bool corrupt = false) {
 
+
+
+
         _ = DefaultDevice;
 
-        var filename = content.ToFileUnique();
+        var filename = Seed.GetFilename("TestFile");
+        Seed.MakeTestFile(filename, 1000);
+
+        var result = Seed.GetFilename("Encoded");
+
         var contentClause = contentType == null ? "" : $" /cty {contentType}";
         var encryptClause = encrypt == null ? "" : $" /encrypt {encrypt}";
         var signClause = sign == null ? "" : $" /sign {sign}";
 
         var file1UDF = GetFileUDF(filename);
 
-        var result1 = Dispatch($"dare encode {filename}{contentClause}{encryptClause}{signClause}") as ResultFile;
+        var result1 = Dispatch($"dare encode {filename} {result} {contentClause}{encryptClause}{signClause}") as ResultFile;
 
 
         System.IO.File.Delete(filename);
 
-        Dispatch($"dare decode {result1.Filename} {filename}");
+        Dispatch($"dare decode {result} {filename}");
         var file2UDF = GetFileUDF(filename);
         file1UDF.TestEqual(file2UDF);
 
         if (corrupt) {
-            result1.Filename.CorruptDareMessage();
+            result.CorruptDareMessage();
             }
 
         var resultVerify = Dispatch($"dare verify {result1.Filename}") as ResultFile;

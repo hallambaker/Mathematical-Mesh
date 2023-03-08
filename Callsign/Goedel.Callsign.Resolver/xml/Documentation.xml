@@ -396,6 +396,9 @@
         <member name="P:Goedel.Callsign.Resolver.ContextResolver.AccountAddress">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Callsign.Resolver.ContextResolver.ServiceDns">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Callsign.Resolver.ContextResolver.CatalogRegistration">
             <summary>Returns the inbound spool for the account</summary>
         </member>

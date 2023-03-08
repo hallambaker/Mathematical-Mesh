@@ -1577,7 +1577,7 @@
             Get the account record and lock it. The entry must be disposed properly 
             to prevent access to the account being blocked from other threads.
             </summary>
-            <param name="account">The account to get.</param>
+            <param name="accountAddress">The account to get.</param>
             <returns>The locked account entry if found, otherwise null.</returns>
         </member>
         <member name="T:Goedel.Mesh.Server.MeshServiceConfiguration">

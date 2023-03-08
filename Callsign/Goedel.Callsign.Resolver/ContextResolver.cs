@@ -58,6 +58,8 @@ public class ContextResolver : ContextAccount {
     ///<inheritdoc/>
     public override string AccountAddress { get; }
 
+    ///<inheritdoc/>
+    public override string ServiceDns => AccountAddress.GetService();
 
     KeyPair KeyAuthentication { get; }
 

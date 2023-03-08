@@ -189,7 +189,7 @@ public abstract class CryptoKey : IKeyLocate, IKeyDecrypt, IKeySign {
         }
 
     ///<inheritdoc cref="IKeyLocate.Add"/>
-    public void Add(KeyPair keyPair) => throw new NotImplementedException();
+    public void Add(KeyPair keyPair, List<string> accounts = null) => throw new NotImplementedException();
 
     ///<inheritdoc cref="IKeyLocate.Persist"/>
     public void Persist(KeyPair keyPair) => throw new NotImplementedException();

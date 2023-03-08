@@ -27,7 +27,7 @@ public class Configuration : Disposable {
     public MeshServiceConfiguration MeshServiceConfiguration { get; set; }
 
     ///<summary>The Mesh service configuration.</summary> 
-    public CallsignRegistryConfiguration CallsignRegistryConfiguration { get; set; }
+    //public CallsignRegistryConfiguration CallsignRegistryConfiguration { get; set; }
 
     ///<summary>The Mesh service configuration.</summary> 
     public CallsignResolverConfiguration CallsignResolverConfiguration { get; set; }

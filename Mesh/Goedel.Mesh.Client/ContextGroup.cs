@@ -54,6 +54,9 @@ public partial class ContextGroup : ContextAccount {
     ///<inheritdoc/>
     public override string AccountAddress => ProfileGroup?.AccountAddress;
 
+    ///<inheritdoc/>
+    public override string ServiceDns => AccountAddress.GetService();
+
     ///<summary>The group profile.</summary>
     public ProfileGroup ProfileGroup => CatalogedGroup?.ProfileGroup;
 

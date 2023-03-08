@@ -463,6 +463,9 @@
         <member name="P:Goedel.Carnet.ContextCarnet.AccountAddress">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Carnet.ContextCarnet.ServiceDns">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Carnet.ContextCarnet.CatalogCarnet">
             <summary>Returns the inbound spool for the account</summary>
         </member>

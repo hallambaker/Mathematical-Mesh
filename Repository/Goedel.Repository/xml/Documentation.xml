@@ -263,6 +263,9 @@
         <member name="P:Goedel.Repository.ContextRepository.AccountAddress">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Repository.ContextRepository.ServiceDns">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Repository.ContextRepository.DictionaryCatalogDelegates">
             <inheritdoc/>
         </member>
