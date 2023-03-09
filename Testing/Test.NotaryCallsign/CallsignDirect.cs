@@ -140,6 +140,15 @@ public partial class CallsignDirect : UnitTestSet {
 
         }
 
+    /// <summary>
+    /// Alice registers the callsign @alice which Bob uses to exchange contacts.
+    /// </summary>
+    /// <exception cref="NYI"></exception>
+    [Fact]
+    public void RegisterAliceConnectBob() {
+        throw new NYI();
+
+        }
 
 
     void CheckResolve(
