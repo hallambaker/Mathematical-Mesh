@@ -235,8 +235,8 @@ public partial class StatusResponse {
     /// <param name="indent">The indentation level.</param>
     public override void ToBuilder(StringBuilder builder, int indent = 0) {
         builder.AppendIndent(indent, "Status");
-        if (ContainerStatus != null) {
-            foreach (var status in ContainerStatus) {
+        if (StoreStatus != null) {
+            foreach (var status in StoreStatus) {
                 status.ToBuilder(builder, indent + 1);
                 }
             }
@@ -261,7 +261,7 @@ public partial class StatusResponse {
 
     }
 
-public partial class ContainerStatus {
+public partial class StoreStatus {
 
     /// <summary>
     /// Append the response description to <paramref name="builder"/> at an indentation
@@ -270,11 +270,11 @@ public partial class ContainerStatus {
     /// <param name="builder">The string builder to append the description to.</param>
     /// <param name="indent">The indentation level.</param>
     public override void ToBuilder(StringBuilder builder, int indent = 0) =>
-        builder.AppendIndent(indent, $"{Container}:  {Index} {Digest?.ToStringBase64url()}");
+        builder.AppendIndent(indent, $"{Store}:  {Index} {Digest?.ToStringBase64url()}");
     }
 
 
-public partial class ContainerUpdate {
+public partial class StoreUpdate {
 
     /// <summary>
     /// Append the response description to <paramref name="builder"/> at an indentation
@@ -283,7 +283,7 @@ public partial class ContainerUpdate {
     /// <param name="builder">The string builder to append the description to.</param>
     /// <param name="indent">The indentation level.</param>
     public override void ToBuilder(StringBuilder builder, int indent = 0) =>
-        builder.AppendIndent(indent, $"{Container}:  {Index}+{Envelopes.Count} {Digest?.ToStringBase64url()}");
+        builder.AppendIndent(indent, $"{Store}:  {Index}+{Envelopes.Count} {Digest?.ToStringBase64url()}");
     }
 
 
@@ -311,6 +311,22 @@ public partial class PostResponse {
     }
 
 public partial class DownloadResponse {
+
+    public StoreUpdate GetUpdate(string store) {
+        if (Updates == null) {
+            return null;
+            }
+
+        foreach (var update in Updates) {
+            if (update.Store == store) { 
+                return update; 
+                }
+            }
+
+        return null;
+        }
+
+
     /// <summary>
     /// Default constructor. 
     /// </summary>

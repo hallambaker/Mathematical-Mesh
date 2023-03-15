@@ -191,10 +191,10 @@ public class SharedSecret : Shared {
     /// <summary>
     /// The Key Value as a Base32 encoded string.
     /// </summary>
-    public virtual string UDFKey => UDF.PresentationBase32(Key, Key.Length * 8);
+    public virtual string UDFKey => Udf.PresentationBase32(Key, Key.Length * 8);
 
     ///<summary>The UDF identifier of the secret value.</summary>
-    public string UDFIdentifier => UDF.ContentDigestOfUDF(UDFKey, bits: KeyBits * 2);
+    public string UDFIdentifier => Udf.ContentDigestOfUDF(UDFKey, bits: KeyBits * 2);
 
     ///<summary>The maximum allowed secret value.</summary>
     public BigInteger SecretMax;
@@ -228,7 +228,7 @@ public class SharedSecret : Shared {
     /// Create a secret from the specified key value.
     /// </summary>
     /// <param name="udf">The key value as a UDF.</param>
-    public SharedSecret(string udf) => this.Key = UDF.SymmetricKey(udf);
+    public SharedSecret(string udf) => this.Key = Udf.SymmetricKey(udf);
 
     /// <summary>
     /// Recreate a secret from the specified shares.
@@ -480,7 +480,7 @@ public class KeyShareSymmetric : KeyShare {
     /// <summary>
     /// The Key Value as a Base32 encoded string.
     /// </summary>
-    public override string UDFKey => Cryptography.UDF.KeyShare(Key);
+    public override string UDFKey => Cryptography.Udf.KeyShare(Key);
 
     ///<summary>The value of the first byte specifying the threshold and index values</summary>
     public int First;
@@ -556,7 +556,7 @@ public class KeyShareSymmetric : KeyShare {
     /// </summary>
     /// <param name="text">The secret value in text form.</param>
     public KeyShareSymmetric(string text) {
-        var buffer = UDF.Parse(text, out var code);
+        var buffer = Udf.Parse(text, out var code);
         Assert.AssertTrue(code == (byte)UdfTypeIdentifier.ShamirSecret, KeyTypeMismatch.Throw);
         Key = buffer;
         }

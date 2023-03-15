@@ -53,10 +53,10 @@ public class CryptoKeySymmetric : CryptoKey {
 
         // Create the presentation of the secret value.
         SecretValue = secretValue;
-        SecretKey = UDF.TypeBDSToString(udfTypeIdentifier, SecretValue, 8 * (secretValue.Length + 1));
+        SecretKey = Udf.TypeBDSToString(udfTypeIdentifier, SecretValue, 8 * (secretValue.Length + 1));
 
 
-        KeyIdentifier = UDF.SymetricKeyId(SecretKey);
+        KeyIdentifier = Udf.SymetricKeyId(SecretKey);
 
 
         //Console.WriteLine($"SecretKey {SecretKey}/{KeyIdentifier} {secretValue.ToStringBase16FormatHex()}");
@@ -69,7 +69,7 @@ public class CryptoKeySymmetric : CryptoKey {
     /// </summary>
     /// <param name="encryptionKey">The UDF presentation of the secret value.</param>
     public CryptoKeySymmetric(string encryptionKey) :
-            this(UDF.SymmetricKeyData(encryptionKey)) {
+            this(Udf.SymmetricKeyData(encryptionKey)) {
         }
 
     /// <summary>
@@ -177,7 +177,7 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
     /// </summary>
     /// <param name="keySecurity">The key security model.</param>
     /// <param name="bits">Number of bits precision, if less than the minimum number
-    /// of bits will be set equal to <see cref="UDF.MinimumBits"/></param>
+    /// of bits will be set equal to <see cref="Udf.MinimumBits"/></param>
     /// <param name="algorithmSign">The signature algorithm to use.</param>
     /// <param name="algorithmDigest">The digest algorithm to use.</param>
     public CryptoKeySymmetricSigner(
@@ -197,7 +197,7 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
 
         algorithmDigest.AssertEqual(CryptoAlgorithmId.SHA_2_512, Internal.Throw); // NYI: Algorithm agility.
 
-        bits = bits.Minimum(UDF.MinimumBits);
+        bits = bits.Minimum(Udf.MinimumBits);
         signingKey = KeyPair.Factory(algorithmSign, keySecurity);
 
         var secretValue = signingKey.UDFBytes.OrTruncated(bits);
@@ -212,7 +212,7 @@ public class CryptoKeySymmetricSigner : CryptoKeySymmetric {
     /// <param name="keyIdentifier">The decryption/verification key.</param>
     public CryptoKeySymmetricSigner(
             string keyIdentifier) :
-                base(UDF.SymmetricKeyData(keyIdentifier), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
+                base(Udf.SymmetricKeyData(keyIdentifier), UdfTypeIdentifier.EncryptionSignature_HKDF_AES_512) {
 
         }
 

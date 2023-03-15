@@ -178,7 +178,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		}
 	public void _UDFEncrypt(CreateExamples Example) {
 
-			 var data = UDF.Parse (Example.ResultUDFSecret.Key, out var code);
+			 var data = Udf.Parse (Example.ResultUDFSecret.Key, out var code);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("KeyValue:{1}\n{0}", _Indent, data.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
@@ -659,13 +659,13 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("<dl>\n{0}", _Indent);
 			_Output.Write ("<dt>100 bit precision\n{0}", _Indent);
-			_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Data, ContentType, 100));
+			_Output.Write ("<dd>{1}\n{0}", _Indent, Udf.ContentDigestOfDataString(Data, ContentType, 100));
 			_Output.Write ("<dt>120 bit precision\n{0}", _Indent);
-			_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Data, ContentType, 120));
+			_Output.Write ("<dd>{1}\n{0}", _Indent, Udf.ContentDigestOfDataString(Data, ContentType, 120));
 			_Output.Write ("<dt>200 bit precision\n{0}", _Indent);
-			_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Data, ContentType, 200));
+			_Output.Write ("<dd>{1}\n{0}", _Indent, Udf.ContentDigestOfDataString(Data, ContentType, 200));
 			_Output.Write ("<dt>260 bit precision\n{0}", _Indent);
-			_Output.Write ("<dd>{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Data, ContentType, 260));
+			_Output.Write ("<dd>{1}\n{0}", _Indent, Udf.ContentDigestOfDataString(Data, ContentType, 260));
 			_Output.Write ("</dl>\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("###Using SHA-3-512 Digest\n{0}", _Indent);
@@ -699,7 +699,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The UTF8 SHA-3-512 Content Digest is\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmId.SHA_3_512));
+			_Output.Write ("{1}\n{0}", _Indent, Udf.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmId.SHA_3_512));
 			_Output.Write ("\n{0}", _Indent);
 				}
 	
@@ -711,7 +711,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		 var DataBytes = DataString.ToUTF8();
 		 var ContentType = "text/plain";
 		 var HashData = DataBytes.GetDigest(CryptoAlgorithmId);
-		 var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType);
+		 var UDFDataBuffer = Udf.UDFBuffer(HashData, ContentType);
 		 byte[] UDFData ;
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("~~~~\n{0}", _Indent);
@@ -726,7 +726,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("H(&<Content-ID> + ‘:’ + H(&<Data>)) =  ", _Indent);
 			} else {
 			 var keyBytes = key.ToUTF8();
-			 var macKey = UDF.KeyStringToKey(key,512);
+			 var macKey = Udf.KeyStringToKey(key,512);
 			 UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmId.HMAC_SHA_2_512);
 			 var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmId.HMAC_SHA_2_512);
 			_Output.Write ("PRK(Key) =  ", _Indent);
@@ -737,13 +737,13 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  ", _Indent);
 			}
-		 var binaryUDF = UDF.DigestToUDFBinary (HashData, ContentType, 140, CryptoAlgorithmId, key);
+		 var binaryUDF = Udf.DigestToUDFBinary (HashData, ContentType, 140, CryptoAlgorithmId, key);
 		_Output.Write ("{1}\n{0}", _Indent, UDFData.ToStringBase16FormatHex());
 		_Output.Write ("\n{0}", _Indent);
 		_Output.Write ("The prefixed Binary Data Sequence is thus{1}\n{0}", _Indent, binaryUDF.ToStringBase16FormatHex());
 		_Output.Write ("~~~~\n{0}", _Indent);
 		_Output.Write ("\n{0}", _Indent);
-		_Output.Write ("The 125 bit fingerprint value is {1}\n{0}", _Indent, UDF.PresentationBase32 (binaryUDF, 140));
+		_Output.Write ("The 125 bit fingerprint value is {1}\n{0}", _Indent, Udf.PresentationBase32 (binaryUDF, 140));
 		_Output.Write ("\n{0}", _Indent);
 		}
 	

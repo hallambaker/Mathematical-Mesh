@@ -115,7 +115,7 @@ public partial class CatalogedPublication {
     /// </summary>
     /// <param name="pin">The pin value as a UDF.</param>
     public CatalogedPublication(string pin) {
-        Id = UDF.SymetricKeyId(pin);
+        Id = Udf.SymetricKeyId(pin);
         Authenticator = GetServiceAuthenticator(pin);
         }
 
@@ -125,7 +125,7 @@ public partial class CatalogedPublication {
     /// <param name="key">A UDF symmetric key value</param>
     /// <returns>The authenticator key</returns>
     public static string GetServiceAuthenticator(
-                string key) => UDF.SymmetricKeyHkdf(key, MeshConstants.ServiceAuthenticatorInfo);
+                string key) => Udf.SymmetricKeyHkdf(key, MeshConstants.ServiceAuthenticatorInfo);
 
     /// <summary>
     /// Get the device authenticator key using a HKDF function on <paramref name="key"/>.
@@ -133,7 +133,7 @@ public partial class CatalogedPublication {
     /// <param name="key">A UDF symmetric key value</param>
     /// <returns>The authenticator key</returns>
     public static string GetDeviceAuthenticator(
-        string key) => UDF.SymmetricKeyHkdf(key, MeshConstants.DeviceAuthenticatorInfo);
+        string key) => Udf.SymmetricKeyHkdf(key, MeshConstants.DeviceAuthenticatorInfo);
 
 
     /// <summary>
@@ -176,7 +176,7 @@ public partial class CatalogedPublication {
 
 
     static string Authenticate(string account, string key) =>
-        UDF.SymmetricKeyMac(account.ToUTF8(), key);
+        Udf.SymmetricKeyMac(account.ToUTF8(), key);
 
     /// <summary>
     /// Verify a MAC value <paramref name="value"/> against the
@@ -189,7 +189,7 @@ public partial class CatalogedPublication {
     /// <param name="length">The minimum match length (default is 125 bits)</param>
     /// <returns>The authenticator value</returns>
     public static bool Verify(string account, string key, string value, int length) =>
-        UDF.SymmetricKeyVerifyMac(value, account.ToUTF8(), key, length);
+        Udf.SymmetricKeyVerifyMac(value, account.ToUTF8(), key, length);
 
 
     }

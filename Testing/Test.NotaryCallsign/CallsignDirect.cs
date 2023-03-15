@@ -26,22 +26,29 @@
 
 using Goedel.Callsign;
 using Goedel.Callsign.Registry;
+using Goedel.Callsign.Resolver;
 using Goedel.Mesh.Test;
 using Goedel.Mesh;
+using Goedel.Cryptography;
+using Goedel.Mesh.Server;
 
 namespace Goedel.XUnit;
 
 public partial class CallsignDirect : UnitTestSet {
 
     public static CallsignDirect Test() => new ();
+    public PublicCallsignResolver CallsignResolver { get; set; }
 
+    public ResolverServiceClient ResolverServiceClient { get; set; }
 
     public TestEnvironmentCommon TestEnvironmentCommon => testEnvironmentCommon ??
         GetTestEnvironmentCommon().CacheValue(out testEnvironmentCommon);
     TestEnvironmentCommon testEnvironmentCommon;
 
     public virtual TestEnvironmentCommon GetTestEnvironmentCommon(DeterministicSeed seed = null) =>
-            new(seed ?? Seed);
+            new(seed ?? Seed) {
+                CallsignRegistry = AccountRegistry
+                };
 
 
     void Initialize(out ContextUser contextAccountAlice, out ContextRegistry contextRegistry) {
@@ -52,12 +59,16 @@ public partial class CallsignDirect : UnitTestSet {
 
         contextRegistry = contextAccountAlice.CreateRegistry(AccountRegistry);
 
-
+        // Bind to the callsign @callsign
         TestEnvironmentCommon.MeshService.CallsignServiceProfile = contextRegistry.Profile as ProfileAccount;
-
         var bindRegistry = contextRegistry.CallsignRequest(CallsignRegistry, true);
         contextRegistry.Process();
 
+
+        CallsignResolver = TestEnvironmentCommon.Resolver;
+        ResolverServiceClient = CallsignResolver.GetClient();
+
+        CallsignResolver.SyncToRegistry();
         }
 
 
@@ -84,6 +95,7 @@ public partial class CallsignDirect : UnitTestSet {
 
         contextRegistry.Process();
 
+        CheckResponse(contextAccountAlice, bindAlice);
         CheckResolve(CallsignAlice, contextAccountAlice);
         }
 
@@ -126,6 +138,7 @@ public partial class CallsignDirect : UnitTestSet {
         Initialize(out var contextAccountAlice, out var contextRegistry);
         var contextAccountMallet = MeshMachineTest.GenerateAccountUser(TestEnvironmentCommon,
                 DeviceMallet, AccountMallet, "main");
+        //contextAccountMallet.ProfileRegistryCallsign = contextAccountAlice.ProfileRegistryCallsign;
 
         var bindAlice = contextAccountAlice.CallsignRequest(CallsignAlice, true);
         contextRegistry.Process();
@@ -151,18 +164,103 @@ public partial class CallsignDirect : UnitTestSet {
         }
 
 
-    void CheckResolve(
-                    string callsign,
-                    ContextAccount account=null,
-                    bool bound = true) {
+    [Fact]
+    public void TestRegisterSuccess() {
+
+        var tests = new List<string> {
+            "@alice",
+            "@bob",
+            "@1verylongcallsign",
+            "@gödel",
+            "@alice_cryptographer"
+            };
+
+
+        Initialize(out var contextAccountAlice, out var contextRegistry);
+
+        foreach (var callsign in tests) {
+            var bindAlice = contextAccountAlice.CallsignRequest(callsign, true);
+            CheckResponse(contextAccountAlice, bindAlice);
+            }
+
         }
+
+
+    [Fact]
+    public void TestRegisterFail() {
+        var tests = new List<string> {
+            "@alice™",
+            "@alice®",
+            "@12345"
+            };
+
+
+        Initialize(out var contextAccountAlice, out var contextRegistry);
+
+        foreach (var callsign in tests) {
+            var bindAlice = contextAccountAlice.CallsignRequest(callsign, true);
+            CheckResponse(contextAccountAlice, bindAlice, false);
+            }
+        }
+
+
+
+
 
 
     void CheckResponse(
-                    ContextAccount account,
+                    ContextUser account,
                     CallsignRegistrationRequest request,
                     bool success = true) {
+        account.Sync();
+        // check result.
+
+        if (!account.TryGetMessageResponse(request, out var index)) {
+            // message is not supposed to have been received yet.
+            success.TestFalse();
+            return;
+            }
+
+        //Here check we got the expected message response
+        success.TestTrue();
+        var message = index.JsonObject as CallsignRegistrationResponse;
+        message.TestNotNull();
+        var registration = message.CatalogedRegistration.EnvelopedRegistration.Decode();
+
+        var entry = registration.Entry.Decode();
+        account.Profile.Matches(entry.ProfileUdf).TestTrue();
         }
 
+    void CheckResolve(
+                string callsign,
+                ContextAccount account = null,
+                bool bound = true) {
 
+        CallsignResolver.SyncToRegistry();
+        var queryResponse = ResolverServiceClient.Query(callsign);
+
+        if (account == null) {
+            queryResponse.Success().TestFalse();
+            queryResponse.Result.TestNull();
+            return;
+            }
+        queryResponse.Success().TestTrue();
+
+        var result = queryResponse.Result.Decode();
+        var binding = result.Entry.Decode();
+
+        var bindingUdf = binding.ProfileUdf;
+        var boundtoaccount = account.Profile.Matches (binding.ProfileUdf);
+
+
+
+        // expand this to unpack queryResponse and check it is bound to the specified account.
+
+        //"MDJS-6ZFZ-HJBB-OIQ7-XXPX-NSXL-MGDT"
+        //"MDJS-6ZFZ-HJBB-OIQ7-XXPX-NSXL-MGDT"
+
+
+        (bound == boundtoaccount).TestTrue();
+
+        }
     }

@@ -26,7 +26,7 @@ namespace Goedel.Cryptography;
 /// <summary>
 /// Class implementing the Uniform Data Fingerprint spec.
 /// </summary>
-public static class UDF {
+public class Udf {
 
     #region // Constants
 
@@ -77,6 +77,41 @@ public static class UDF {
             };
 
     #endregion
+
+    byte[] Value { get; }
+    byte Code { get; }
+    public Udf(string presentation, byte[] value) {
+        var parsed = Parse(presentation, out var code);
+        Code = code;
+        Value = value;
+        }
+
+    /// <summary>
+    /// Test to see if <paramref name="presentation"/> matches the UDF value.
+    /// </summary>
+    /// <param name="presentation">The value to test</param>
+    /// <param name="minBits">The minimum number of precision to accept in 
+    ///     <paramref name="presentation"/></param>
+    /// <returns>True if <paramref name="presentation"/> is a match to the specified precision,
+    /// othewise false.</returns>
+    public bool Matches(
+            string presentation,
+            int minBits = 100) {
+
+        var parsed = BaseConvert.FromBase32(presentation);
+        if ((parsed.Length < minBits / 8) || (parsed.Length > Value.Length)){
+            return false;
+            }
+
+        for (var i= 0; i< parsed.Length; i++) {
+            if (parsed[i] != Value[i]) {
+                return false; 
+                }
+            }
+        return true;
+        }
+
+    
     #region // Conversions to binary UDF value
     /// <summary>
     /// Calculate a UDF fingerprint from the content data with specified precision.
@@ -1277,7 +1312,7 @@ public static partial class Extension {
     /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
     /// <returns>The UDF fingerprint.</returns>
     public static string GetUDFContentDigest(this byte[] Data, string ContentType, int Bits = 0) =>
-        UDF.ContentDigestOfDataString(Data, ContentType, Bits);
+        Udf.ContentDigestOfDataString(Data, ContentType, Bits);
 
     }
 #endregion

@@ -45,12 +45,12 @@ public static class Extensions {
         var profile = transfer ?? contextAccount.Profile as ProfileAccount;
 
 
-        var registry = contextAccount.ProfileRegistryCallsign;
+        var registry = contextAccount.CallsignRegistry;
 
         var callsignBinding = new CallsignBinding() {
             Canonical = callsign.CannonicalAccountAddress(),
             Display = callsign,
-            ProfileUdf = profile.Udf
+            ProfileUdf = profile.UdfString
             };
 
 
@@ -70,7 +70,7 @@ public static class Extensions {
             };
 
         using (var transact = contextAccount.TransactBegin()) {
-            transact.OutboundMessage(registry.AccountAddress, message);
+            transact.OutboundMessage(registry, message);
             contextAccount.Transact(transact);
             }
 
@@ -79,13 +79,11 @@ public static class Extensions {
         }
 
 
-    ///// <summary>
-    ///// Return the status of a callsign managed through this account.
-    ///// </summary>
-    ///// <param name="callsign"></param>
-    //public void CallsignStatus(
-    //            string callsign) {
+    public static CatalogedRegistration ResolveCallsign(
+            string callsign) {
 
-    //    }
+
+        throw new NYI();
+        }
 
     }

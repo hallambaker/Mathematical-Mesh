@@ -146,7 +146,7 @@ public class CatalogRegistration : Catalog<CatalogedRegistration> {
 
             catalogedRegistration = new CatalogedRegistration() {
                 Canonical = id,
-                Id = UDF.Nonce(),
+                Id = Udf.Nonce(),
                 EnvelopedRegistration = enveloped
                 };
 

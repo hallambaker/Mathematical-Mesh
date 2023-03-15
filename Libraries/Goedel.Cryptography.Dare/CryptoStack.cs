@@ -92,7 +92,7 @@ public abstract partial class CryptoStack {
     protected abstract int BlockSizeByte { get; }
 
     ///<summary>Returns a UDF key identifier for the master secret</summary>
-    public string GetKeyIdentifier() => BaseSeed == null ? null : UDF.SymetricKeyId(BaseSeed);
+    public string GetKeyIdentifier() => BaseSeed == null ? null : Udf.SymetricKeyId(BaseSeed);
 
 
     /// <summary>

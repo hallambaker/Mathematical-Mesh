@@ -113,7 +113,7 @@ public partial class CatalogedTask {
     /// <summary>
     /// Default constructor
     /// </summary>
-    public CatalogedTask() => Key = UDF.Nonce();
+    public CatalogedTask() => Key = Udf.Nonce();
 
     #endregion
 

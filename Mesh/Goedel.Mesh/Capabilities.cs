@@ -100,7 +100,7 @@ public partial class CryptographicCapability {
     /// <param name="capability">The capability type.</param>
     public CryptographicCapability(string subjectId, string capability) {
         var contentType = MeshConstants.IanaTypeMeshCapabilityId + capability;
-        Id = UDF.ContentDigestOfDataString(subjectId.ToUTF8(), contentType);
+        base.Id = Cryptography.Udf.ContentDigestOfDataString(subjectId.ToUTF8(), contentType);
         }
 
 
@@ -268,7 +268,7 @@ public partial class CapabilityKeyGenerate {
 
         for (var i = 0; i < capabilities.Length; i++) {
             capabilities[i].KeyData = new KeyData(keys[i]) {
-                Udf = UDF.Nonce() // Hack: ??? should this be some function of the base key???
+                Udf = Cryptography.Udf.Nonce() // Hack: ??? should this be some function of the base key???
                 };
             }
         }

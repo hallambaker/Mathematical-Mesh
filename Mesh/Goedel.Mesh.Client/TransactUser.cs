@@ -88,7 +88,7 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
         var digest = catalogedDevice.DareEnvelope.GetUnvalidatedDigest();
         catalogedDevice.DareEnvelope.Header.PayloadDigest = digest;
 
-        var digestUDF = UDF.Sha2ToString(digest, 128);
+        var digestUDF = Udf.Sha2ToString(digest, 128);
 
         var accessCapability = new AccessCapability() {
             Id = catalogedDevice.ConnectionService.AuthenticationPublic.KeyIdentifier,

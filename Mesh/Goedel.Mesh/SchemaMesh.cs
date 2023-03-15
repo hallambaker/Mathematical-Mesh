@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 08-Mar-23 6:24:33 PM
+//  This file was automatically generated at 15-Mar-23 5:24:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -130,6 +130,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"Engagement", Engagement._Factory},
 	    {"CatalogedEntry", CatalogedEntry._Factory},
 	    {"CatalogedDevice", CatalogedDevice._Factory},
+	    {"CatalogedSignature", CatalogedSignature._Factory},
 	    {"CatalogedPublication", CatalogedPublication._Factory},
 	    {"CatalogedCredential", CatalogedCredential._Factory},
 	    {"CatalogedApplicationSsh", CatalogedApplicationSsh._Factory},
@@ -7621,6 +7622,98 @@ public partial class CatalogedDevice : CatalogedEntry {
 			return Out as CatalogedDevice;
 			}
 		var Result = new CatalogedDevice ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// Cataloged Signature
+	/// </summary>
+public partial class CatalogedSignature : CatalogedEntry {
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CatalogedSignature";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CatalogedSignature();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new CatalogedSignature FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as CatalogedSignature;
+			}
+		var Result = new CatalogedSignature ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

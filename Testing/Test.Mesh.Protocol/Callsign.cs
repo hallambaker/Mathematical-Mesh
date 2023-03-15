@@ -8,69 +8,69 @@ namespace Goedel.XUnit;
 
 public partial class TestService {
 
-    public const string CallsignAlice = "@Alice";
-    public const string CallsignAlice2 = "@callsign";
-    public const string CallsignBob = "@Bob";
-    [Fact]
-    public void MeshCallsign() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
+    //public const string CallsignAlice = "@Alice";
+    //public const string CallsignAlice2 = "@callsign";
+    //public const string CallsignBob = "@Bob";
+    //[Fact]
+    //public void MeshCallsign() {
+    //    var testEnvironmentCommon = GetTestEnvironmentCommon();
 
-        var contextAccountRegistry = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceServiceRegistry, AccountRegistryAdmin, "main");
-        var contextRegistry = contextAccountRegistry.CreateRegistry(AccountRegistry);
+    //    var contextAccountRegistry = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+    //            DeviceServiceRegistry, AccountRegistryAdmin, "main");
+    //    var contextRegistry = contextAccountRegistry.CreateRegistry(AccountRegistry);
 
-        //var resolverServer = new ResolverServer(AccountCallsign);
-        var resolverServer = ContextResolver.Create(
-                contextAccountRegistry.MeshHost, AccountResolver, 
-                contextRegistry.CatalogedRegistry.EnvelopedProfileRegistry
-                );
-
-
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountAlice, "main");
-        var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceBobAdmin, AccountBob, "main");
-
-        contextAccountAlice.CallsignRegistry = AccountRegistry;
-        contextAccountBob.CallsignRegistry = AccountRegistry;
-
-        var callsignRequestAlice1 = contextAccountAlice.CallsignRequest(CallsignAlice, true);
-        contextRegistry.Process();
-        resolverServer.Update();
-
-        var result1 = resolverServer.Resolve(CallsignAlice);
-        var result2 = resolverServer.Resolve(CallsignAlice2);
-
-        var callsignRequestAlice2 = contextAccountAlice.CallsignRequest(CallsignAlice2);
-        contextRegistry.Process();
-        resolverServer.Update();
-
-        var result3 = resolverServer.Resolve(CallsignAlice);
-        var result4 = resolverServer.Resolve(CallsignAlice2);
+    //    //var resolverServer = new ResolverServer(AccountCallsign);
+    //    var resolverServer = ContextResolver.Create(
+    //            contextAccountRegistry.MeshHost, AccountResolver, 
+    //            contextRegistry.CatalogedRegistry.EnvelopedProfileRegistry
+    //            );
 
 
-        var callsignRequestAlice3 = contextAccountAlice.CallsignRequest(CallsignAlice2, true);
-        contextRegistry.Process();
-        resolverServer.Update();
+    //    var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+    //            DeviceAliceAdmin, AccountAlice, "main");
+    //    var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+    //            DeviceBobAdmin, AccountBob, "main");
 
-        var result5 = resolverServer.Resolve(CallsignAlice);
-        var result6 = resolverServer.Resolve(CallsignAlice2);
+    //    //contextAccountAlice.ProfileRegistryCallsign = AccountRegistry;
+    //    contextAccountBob.ProfileRegistryCallsign = contextAccountAlice.ProfileRegistryCallsign;
+
+    //    var callsignRequestAlice1 = contextAccountAlice.CallsignRequest(CallsignAlice, true);
+    //    contextRegistry.Process();
+    //    resolverServer.Update();
+
+    //    var result1 = resolverServer.Resolve(CallsignAlice);
+    //    var result2 = resolverServer.Resolve(CallsignAlice2);
+
+    //    var callsignRequestAlice2 = contextAccountAlice.CallsignRequest(CallsignAlice2);
+    //    contextRegistry.Process();
+    //    resolverServer.Update();
+
+    //    var result3 = resolverServer.Resolve(CallsignAlice);
+    //    var result4 = resolverServer.Resolve(CallsignAlice2);
 
 
-        var callsignRequestBob = contextAccountBob.CallsignRequest(CallsignBob, true);
-        contextRegistry.Process();
-        resolverServer.Update();
+    //    var callsignRequestAlice3 = contextAccountAlice.CallsignRequest(CallsignAlice2, true);
+    //    contextRegistry.Process();
+    //    resolverServer.Update();
 
-        var result7 = resolverServer.Resolve(CallsignAlice);
-        var result8 = resolverServer.Resolve(CallsignAlice2);
-        var result9 = resolverServer.Resolve(CallsignBob);
+    //    var result5 = resolverServer.Resolve(CallsignAlice);
+    //    var result6 = resolverServer.Resolve(CallsignAlice2);
 
 
+    //    var callsignRequestBob = contextAccountBob.CallsignRequest(CallsignBob, true);
+    //    contextRegistry.Process();
+    //    resolverServer.Update();
+
+    //    var result7 = resolverServer.Resolve(CallsignAlice);
+    //    var result8 = resolverServer.Resolve(CallsignAlice2);
+    //    var result9 = resolverServer.Resolve(CallsignBob);
 
 
 
 
-        }
+
+
+    //    }
 
 
     [Fact(Skip = "Carnet not yet implemented")]

@@ -74,3 +74,18 @@
 			Description
 				|The latest notarization entry corresponding to the specified log.
 
+
+
+	Transaction Service Sync SyncRequest SyncResponse
+		Description
+			|
+	
+	Message SyncRequest
+		Inherits ResolverRequest
+		Description
+			|
+	
+	Message SyncResponse
+		Inherits ResolverResponse
+		Description
+			|

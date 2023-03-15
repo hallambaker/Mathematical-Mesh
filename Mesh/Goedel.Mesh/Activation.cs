@@ -65,7 +65,7 @@ public partial class Activation {
             byte[] masterSecret = null,
             int bits = 256) {
         (var actor, var keytype) = udfAlgorithmIdentifier.GetMeshKeyType();
-        ActivationKey = Cryptography.UDF.DerivedKey(udfAlgorithmIdentifier, data: masterSecret, bits);
+        ActivationKey = Cryptography.Udf.DerivedKey(udfAlgorithmIdentifier, data: masterSecret, bits);
         ActivationSeed = new PrivateKeyUDF(ActivationKey);
         //ProfileSignature = ActivationSeed.ActivatePublic(
         //        profile.ProfileSignature.GetKeyPairAdvanced(), actor, MeshKeyOperation.Profile);

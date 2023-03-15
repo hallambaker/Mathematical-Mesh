@@ -60,7 +60,7 @@ public partial class ActivationHost : ActivationAccount {
                 int bits = 256) : base(
                     profileDevice, serviceUdf, masterSecret, bits) {
         ProfileDevice = profileDevice;
-        AccountUdf = profileDevice.Udf;
+        AccountUdf = profileDevice.UdfString;
         }
 
     #endregion
@@ -137,7 +137,7 @@ public partial class ActivationAccount {
                     profileDevice, UdfAlgorithmIdentifier.MeshActivationAccount, masterSecret, bits) {
         ProfileDevice = profileDevice;
 
-        AccountUdf = profileDevice.Udf;
+        AccountUdf = profileDevice.UdfString;
 
         AccountAuthentication = ActivationSeed.ActivatePublic(
             profileDevice.Authentication.GetKeyPairAdvanced(), MeshActor, MeshKeyOperation.Authenticate);

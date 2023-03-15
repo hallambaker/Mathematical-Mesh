@@ -229,7 +229,7 @@ public class PublicMeshService : MeshService {
         using var directMachine = new MeshMachineDirect(meshMachine, this);
         using var meshHost = new MeshHost(meshMachine.MeshHost, directMachine);
         var contextUser = meshHost.ConfigureMesh(admin, "admin");
-        var udf = contextUser.ProfileUser.Udf;
+        var udf = contextUser.ProfileUser.UdfString;
 
         // Set the log files to encrypt to the newly created admin account.
         var adminSin = $"{admin}.mm-{udf}";
@@ -253,33 +253,13 @@ public class PublicMeshService : MeshService {
             GenericHostConfiguration hostConfiguration,
             string deviceAddress = "@example"
             ) {
+        ProfileService profileService;
+        ProfileHost profileHost;
+        ActivationHost activationDevice;
+        ConnectionService connectionDevice;
 
-        // Create the service profile
-        var profileService = ProfileService.Generate(meshMachine.KeyCollection);
-
-        // Create a host profile and add create a connection to the host.
-        var profileHost = ProfileHost.CreateHost(meshMachine);
-        var activationDevice = new ActivationHost(profileHost, profileService.Udf);
-        activationDevice.Envelope(encryptionKey: profileHost.KeyEncrypt);
-        // Persist the profile keys
-        profileService.PersistSeed(meshMachine.KeyCollection);
-        profileHost.PersistSeed(meshMachine.KeyCollection);
-
-        // Need to envelope the activation device under device key.
-
-        activationDevice.Activate(profileHost.SecretSeed);
-        var connectionDevice1 = activationDevice.Connection;
-        var connectionDevice = new ConnectionService() {
-            ProfileUdf = profileHost.Udf,
-            Subject = connectionDevice1.Authentication.CryptoKey.KeyIdentifier,
-            Authority = profileService.Udf,
-
-            Authentication = connectionDevice1.Authentication
-            };
-
-        // Strip and sign the device connection.
-        connectionDevice.Strip();
-        profileService.Sign(connectionDevice, ObjectEncoding.JSON_B);
+        ProfileService.CreateService(meshMachine, 
+            out profileService, out profileHost, out activationDevice, out connectionDevice);
 
         var catalogedService = new CatalogedService() {
             Id = connectionDevice.Subject,
@@ -296,9 +276,9 @@ public class PublicMeshService : MeshService {
         //hostConfiguration.EnvelopedProfileHost = profileHost.EnvelopedProfileHost;
         //hostConfiguration.EnvelopedConnectionDevice = connectionDevice.EnvelopedConnectionDevice;
 
-        serviceConfiguration.ServiceUdf = profileService.Udf;
+        serviceConfiguration.ServiceUdf = profileService.UdfString;
         hostConfiguration.HostUdf = connectionDevice.Subject;
-        hostConfiguration.DeviceUdf = profileHost.Udf;
+        hostConfiguration.DeviceUdf = profileHost.UdfString;
 
         var logService = new LogService(hostConfiguration, serviceConfiguration, null);
         logService.Logger ??= ConsoleLogger.Factory("MeshHost");
@@ -317,6 +297,8 @@ public class PublicMeshService : MeshService {
             };
 
         }
+
+
 
 
     #endregion

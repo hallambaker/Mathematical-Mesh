@@ -8011,7 +8011,7 @@
             </summary>
             <param name="keySecurity">The key security model.</param>
             <param name="bits">Number of bits precision, if less than the minimum number
-            of bits will be set equal to <see cref="P:Goedel.Cryptography.UDF.MinimumBits"/></param>
+            of bits will be set equal to <see cref="P:Goedel.Cryptography.Udf.MinimumBits"/></param>
             <param name="algorithmSign">The signature algorithm to use.</param>
             <param name="algorithmDigest">The digest algorithm to use.</param>
         </member>
@@ -13499,41 +13499,51 @@
             <param name="Offset">The index of the array to start the fill operation.</param>
             <param name="Count">The number of bytes to fill</param>
         </member>
-        <member name="T:Goedel.Cryptography.UDF">
+        <member name="T:Goedel.Cryptography.Udf">
             <summary>
             Class implementing the Uniform Data Fingerprint spec.
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.UDF.DefaultBits">
+        <member name="P:Goedel.Cryptography.Udf.DefaultBits">
             <summary>
             Default number of UDF bits (usually 140).
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.UDF.MinimumBits">
+        <member name="P:Goedel.Cryptography.Udf.MinimumBits">
             <summary>
             Maximum precision (usually 440);
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.UDF.MaximumBits">
+        <member name="P:Goedel.Cryptography.Udf.MaximumBits">
             <summary>
             Maximum precision (usually 440);
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.GetCryptoAlgorithmId(Goedel.Cryptography.UdfTypeIdentifier)">
+        <member name="M:Goedel.Cryptography.Udf.GetCryptoAlgorithmId(Goedel.Cryptography.UdfTypeIdentifier)">
             <summary>
             Return the <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> corresponding to <paramref name="typeIdentifier"/>.
             </summary>
             <param name="typeIdentifier">The UDF type identifier.</param>
             <returns>The cryptographic algorithm identifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.GetUDFTypeIdentifier(Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Udf.GetUDFTypeIdentifier(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Return the <see cref="T:Goedel.Cryptography.UdfTypeIdentifier"/> corresponding to <paramref name="typeIdentifier"/>.
             </summary>
             <param name="typeIdentifier">The cryptographic algorithm identifier.</param>
             <returns>The UDF type identifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.DataToUDFBinary(System.Byte[],System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.Matches(System.String,System.Int32)">
+            <summary>
+            Test to see if <paramref name="presentation"/> matches the UDF value.
+            </summary>
+            <param name="presentation">The value to test</param>
+            <param name="minBits">The minimum number of precision to accept in 
+                <paramref name="presentation"/></param>
+            <returns>True if <paramref name="presentation"/> is a match to the specified precision,
+            othewise false.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Udf.DataToUDFBinary(System.Byte[],System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
             <summary>
             Calculate a UDF fingerprint from the content data with specified precision.
             </summary>
@@ -13545,7 +13555,7 @@
             <param name="key">Optional key used to create a keyed fingerprint.</param>
             <returns>The binary UDF fingerprint.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.DigestToUDFBinary(System.Byte[],System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.DigestToUDFBinary(System.Byte[],System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
             <summary>
             Calculate a UDF fingerprint from the content digest with specified precision.
             </summary>
@@ -13557,7 +13567,7 @@
             <param name="key">Optional key used to create a keyed fingerprint.</param>
             <returns>The binary UDF fingerprint.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.BufferDigestToUDF(System.Byte[],System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Udf.BufferDigestToUDF(System.Byte[],System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Calculate a UDF fingerprint with specified precision.
             </summary>
@@ -13567,7 +13577,7 @@
             the hash value.</param>
             <returns>The binary UDF fingerprint.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.GetCompression(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Udf.GetCompression(System.Byte[])">
             <summary>
             Returns the compression level as determined by the number of trailing zero
             bits of <paramref name="buffer"/>
@@ -13576,7 +13586,7 @@
             <returns>The compression level, 3 if there are 50 leading zeros, 2 if there
             are 40 leading zeros, 1 if there are 20 and 0 otherwise.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.BufferDigestToUDF(System.Byte[],System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Udf.BufferDigestToUDF(System.Byte[],System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Calculate a UDF fingerprint with specified precision.
             </summary>
@@ -13587,7 +13597,7 @@
             <param name="key">Key used to create a keyed fingerprint.</param>
             <returns>The binary UDF fingerprint.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.TypeBDSToBinary(Goedel.Cryptography.UdfTypeIdentifier,System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.TypeBDSToBinary(Goedel.Cryptography.UdfTypeIdentifier,System.Byte[],System.Int32,System.Int32)">
             <summary>
             Convert a Type Identifier and binary data sequence to a UDF binary buffer 
             ready for presentation.
@@ -13599,7 +13609,7 @@
             <param name="offset">Offset in <paramref name="source"/>.</param>
             <returns>The resulting binary buffer.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.TypeBDSToString(Goedel.Cryptography.UdfTypeIdentifier,System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.TypeBDSToString(Goedel.Cryptography.UdfTypeIdentifier,System.Byte[],System.Int32,System.Int32)">
             <summary>
             Convert a Type Identifier and binary data sequence to a UDF binary buffer 
             ready for presentation.
@@ -13611,7 +13621,7 @@
             <param name="offset">Offset in <paramref name="source"/>.</param>
             <returns>The resulting binary buffer.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.Sha2ToString(System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.Sha2ToString(System.Byte[],System.Int32)">
             <summary>
             Convert the SHA-2-512 digest value <paramref name="source"/> to a 
             UDF string with <paramref name="bits"/> precision.
@@ -13620,7 +13630,7 @@
             <param name="bits">The output precision in bits.</param>
             <returns>The UDF string value.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.Sha3ToString(System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.Sha3ToString(System.Byte[],System.Int32)">
             <summary>
             Convert the SHA-3-512 digest value <paramref name="source"/> to a 
             UDF string with <paramref name="bits"/> precision.
@@ -13629,7 +13639,7 @@
             <param name="bits">The output precision in bits.</param>
             <returns>The UDF string value.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.UDFBuffer(System.Byte[],System.String)">
+        <member name="M:Goedel.Cryptography.Udf.UDFBuffer(System.Byte[],System.String)">
             <summary>
             Convert a digest value and content type to a UDF buffer.
             </summary>
@@ -13638,7 +13648,7 @@
             http://www.iana.org/assignments/media-types/media-types.xhtml for list.</param>
             <returns>SHA2-512 (UTF8(ContentType) + ":" + SHA2512(Data))</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.KeyStringToKey(System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Udf.KeyStringToKey(System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Convert TextKey to the MAC key.
             </summary>
@@ -13647,7 +13657,7 @@
             <param name="algorithm">The MAC algorithm to use.</param>
             <returns>The corresponding MAC key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.Matches(System.String,Goedel.Cryptography.UdfTypeIdentifier,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.Matches(System.String,Goedel.Cryptography.UdfTypeIdentifier,System.Byte[],System.Int32)">
             <summary>
             Determine if the string <paramref name="value"/> matches the 
             pattern <paramref name="test"/> with at least <paramref name="minBits"/>
@@ -13661,7 +13671,7 @@
             pattern <paramref name="test"/> with at least <paramref name="minBits"/>
             significant bits. Otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.PresentationBase32(System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.PresentationBase32(System.Byte[],System.Int32)">
             <summary>
             convert a UDF fingerprint from binary to string form.
             </summary>
@@ -13669,7 +13679,7 @@
             <param name="bits">Precision.</param>
             <returns>The binary UDF fingerprint.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.ContentDigestOfDataString(System.Byte[],System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.ContentDigestOfDataString(System.Byte[],System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
             <summary>
             Calculate a UDF fingerprint from an OpenPGP key with specified precision.
             </summary>
@@ -13681,7 +13691,7 @@
             <param name="key">Optional key used to create a keyed fingerprint.</param>
             <returns>The binary UDF fingerprint.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.ContentDigestOfDigestString(System.Byte[],System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.ContentDigestOfDigestString(System.Byte[],System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
             <summary>
             Calculate a UDF fingerprint from an OpenPGP key with specified precision.
             </summary>
@@ -13693,7 +13703,7 @@
             <param name="key">Optional key used to create a keyed fingerprint.</param>
             <returns>The binary UDF fingerprint.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.ContentDigestOfUDF(System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Udf.ContentDigestOfUDF(System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Calculate the UDF fingerprint identifier of a fingerprint identifier.
             </summary>
@@ -13704,7 +13714,7 @@
             <returns>The Base32 presentation of the UDF value truncated to 
             <paramref name="bits"/> precision.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymetricKeyIdBytes(System.Byte[],System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Udf.SymetricKeyIdBytes(System.Byte[],System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Return the UDF fingerprint of the encryption key <paramref name="key"/> to
             the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmId"/>.
@@ -13715,7 +13725,7 @@
             the hash value.</param>
             <returns>The fingerprint value</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymetricKeyId(System.Byte[],System.Int32,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.UdfTypeIdentifier)">
+        <member name="M:Goedel.Cryptography.Udf.SymetricKeyId(System.Byte[],System.Int32,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.UdfTypeIdentifier)">
             <summary>
             Return the UDF fingerprint of the encryption key <paramref name="key"/> to
             the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmId"/>.
@@ -13727,7 +13737,7 @@
             <param name="udfTypeIdentifier">The UDF type identifier.</param>
             <returns>The fingerprint value</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymetricKeyId(System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Udf.SymetricKeyId(System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Return the UDF fingerprint of the encryption key data specified by <paramref name="udf"/> to
             the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmId"/>.
@@ -13738,14 +13748,14 @@
             the hash value.</param>
             <returns>The fingerprint value</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymmetricKeyData(System.String)">
+        <member name="M:Goedel.Cryptography.Udf.SymmetricKeyData(System.String)">
             <summary>
             Return the key data encoded in <paramref name="udf"/>.
             </summary>
             <param name="udf">The udf to parse</param>
             <returns>The binary key data.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymmetricKeyHkdf(System.String,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.SymmetricKeyHkdf(System.String,System.String)">
             <summary>
             Generate a UDF key by means of a HKDF on the initial keying material 
             <paramref name="ikm"/> with info tag <paramref name="info"/>.
@@ -13754,7 +13764,7 @@
             <param name="info">The HKDF info input.</param>
             <returns>The derived key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymmetricKeyHkdf(System.String,System.Byte[])">
+        <member name="M:Goedel.Cryptography.Udf.SymmetricKeyHkdf(System.String,System.Byte[])">
             <summary>
             Generate a UDF key by means of a HKDF on the initial keying material 
             <paramref name="ikm"/> with info tag <paramref name="info"/>.
@@ -13763,7 +13773,7 @@
             <param name="info">The HKDF info input.</param>
             <returns>The derived key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymmetricKeyHkdf(System.Byte[],System.Byte[],System.Int32,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Udf.SymmetricKeyHkdf(System.Byte[],System.Byte[],System.Int32,System.Byte[],Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Generate a UDF key by means of a HKDF on the OKM <paramref name="ikm"/> with
             info tag <paramref name="info"/>.
@@ -13775,7 +13785,7 @@
             <param name="algorithm">The MAC algorithm to use.</param>
             <returns>The derived key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymmetricKeyMac(System.Byte[],System.String,System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.SymmetricKeyMac(System.Byte[],System.String,System.Int32)">
             <summary>
             Generate a UDF key
             on the input data <paramref name="data"/> using <paramref name="udf"/>
@@ -13787,7 +13797,7 @@
             <param name="length">The number of bits of output to generate.</param>
             <returns>The derived key.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymmetricKeyVerifyMac(System.String,System.Byte[],System.String,System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.SymmetricKeyVerifyMac(System.String,System.Byte[],System.String,System.Int32)">
             <summary>
             Verify that the output <paramref name="value"/> is generated by applying
             a MAC algorithm and key specified by <paramref name="udf"/>
@@ -13801,7 +13811,7 @@
             in <paramref name="value"/>.</param>
             <returns>True if verification succeeded.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.LockName(System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Udf.LockName(System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Calculate the UDF lock identifier for a local file.
             </summary>
@@ -13811,21 +13821,21 @@
             <returns>The Base32 presentation of the UDF value truncated to 
             <paramref name="bits"/> precision.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.Nonce(System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.Nonce(System.Int32)">
             <summary>
             Return a random sequence as a UDF 
             </summary>
             <param name="bits">Number of random bits in the string</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.OID(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Cryptography.Udf.OID(Goedel.Cryptography.KeyPair)">
             <summary>
             Return the OID Sequence describing the public key <paramref name="keyPair"/>.
             </summary>
             <param name="keyPair">Number of random bits in the string</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymmetricKey(Goedel.Cryptography.UdfTypeIdentifier,System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.SymmetricKey(Goedel.Cryptography.UdfTypeIdentifier,System.Int32)">
             <summary>
             Return a random sequence as a UDF 
             </summary>
@@ -13833,7 +13843,7 @@
             <param name="bits">Number of random bits in the string</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymmetricKey(Goedel.Cryptography.UdfTypeIdentifier,System.Byte[])">
+        <member name="M:Goedel.Cryptography.Udf.SymmetricKey(Goedel.Cryptography.UdfTypeIdentifier,System.Byte[])">
             <summary>
             Return the key value <paramref name="data"/> in UDF form.
             </summary>
@@ -13841,49 +13851,49 @@
             <param name="data">The data to convert to key form</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.AuthenticationKey(System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.AuthenticationKey(System.Int32)">
             <summary>
             Return a random sequence as a UDF 
             </summary>
             <param name="bits">Number of random bits in the string</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.AuthenticationKey(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Udf.AuthenticationKey(System.Byte[])">
             <summary>
             Return a random sequence as a UDF 
             </summary>
             <param name="data">The data to convert to key form</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.EncryptionKey(System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.EncryptionKey(System.Int32)">
             <summary>
             Return a random sequence as a UDF 
             </summary>
             <param name="bits">Number of random bits in the string</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.EncryptionKey(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Udf.EncryptionKey(System.Byte[])">
             <summary>
             Return the key value <paramref name="data"/> in UDF form.
             </summary>
             <param name="data">The data to convert to key form</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.KeyShare(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Udf.KeyShare(System.Byte[])">
             <summary>
             Return the key value <paramref name="Data"/> in UDF form.
             </summary>
             <param name="Data">The data to convert to key form</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymmetricKeyUDF(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Udf.SymmetricKeyUDF(System.Byte[])">
             <summary>
             Return the key value <paramref name="data"/> in UDF form.
             </summary>
             <param name="data">The data to convert to key form</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.FromKeyInfo(System.Byte[],System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Udf.FromKeyInfo(System.Byte[],System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Calculate a UDF fingerprint from a PKIX KeyInfo blob with specified precision.
             </summary>
@@ -13892,7 +13902,7 @@
             <param name="cryptoAlgorithmId">The digest algorithm to use.</param>
             <returns>The binary UDF fingerprint.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.Parse(System.String,System.Byte@)">
+        <member name="M:Goedel.Cryptography.Udf.Parse(System.String,System.Byte@)">
             <summary>
             Parse a UDF to obtain the type identifier and Binary Data Sequence.
             </summary>
@@ -13900,14 +13910,14 @@
             <param name="code">The type identifier code.</param>
             <returns>The Binary Data Sequence.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.Parse(System.String)">
+        <member name="M:Goedel.Cryptography.Udf.Parse(System.String)">
             <summary>
             Parse a UDF to obtain the type identifier and Binary Data Sequence.
             </summary>
             <param name="udf">UDF to parse.</param>
             <returns>The Binary Data Sequence.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.Nonce(System.String)">
+        <member name="M:Goedel.Cryptography.Udf.Nonce(System.String)">
             <summary>
             Parse a UDF and return the encryption key value if and only if it
             is of the correct type code, otherwise null.
@@ -13915,7 +13925,7 @@
             <param name="udf">The string tro parse.</param>
             <returns>The key value.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.SymmetricKey(System.String)">
+        <member name="M:Goedel.Cryptography.Udf.SymmetricKey(System.String)">
             <summary>
             Parse a UDF and return the encryption key value if and only if it
             is of the correct type code, otherwise null.
@@ -13923,7 +13933,7 @@
             <param name="udf">The string tro parse.</param>
             <returns>The key value.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.ShamirSecret(System.String)">
+        <member name="M:Goedel.Cryptography.Udf.ShamirSecret(System.String)">
             <summary>
             Parse a UDF and return the encryption key value if and only if it
             is of the correct type code, otherwise null.
@@ -13931,7 +13941,7 @@
             <param name="udf">The string tro parse.</param>
             <returns>The key value.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.Validate(System.String,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.Validate(System.String,System.String)">
             <summary>
             Check that a UDF fingerprint satisfies a test value. At present
             the test must be exact. It is possible that this can be relaxed
@@ -13940,19 +13950,19 @@
             <param name="test">Expected value</param>
             <param name="value">Comparison value.</param>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.MakeStrongName(System.String,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.MakeStrongName(System.String,System.String)">
             <summary>Convert address and fingerprint value to Strong Internet Name.</summary>
             <param name="address">DNS address.</param>
             <param name="uDF">Fingerprint value.</param>
             <returns>The strong name.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.ParseStrongRFC822(System.String,System.String@,System.String@)">
+        <member name="M:Goedel.Cryptography.Udf.ParseStrongRFC822(System.String,System.String@,System.String@)">
             <summary>Parse an RFC822 address to extract strong name component if present.</summary>
             <param name="address">The Internet address.</param>
             <param name="in">The address to parse.</param>
             <param name="uDF">The strong name fingerprint (if found).</param>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.MakeWitness(System.Byte[],System.Byte[],System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Cryptography.Udf.MakeWitness(System.Byte[],System.Byte[],System.Byte[],System.Byte[])">
             <summary>
             Make a witness value from two input fingerprints and nonces.
             </summary>
@@ -13962,7 +13972,7 @@
             <param name="nonce2">The second nonce value</param>
             <returns>The fingerprint value</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.MakeWitnessString(System.Byte[],System.Byte[],System.Byte[],System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.MakeWitnessString(System.Byte[],System.Byte[],System.Byte[],System.Byte[],System.Int32)">
             <summary>
             Make a witness value from two input fingerprints and nonces.
             </summary>
@@ -13973,7 +13983,7 @@
             <param name="bits">The output precision in bits.</param>
             <returns>The fingerprint value</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.MakeWitness(System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Cryptography.Udf.MakeWitness(System.Byte[],System.Byte[])">
             <summary>
             Calculate a binary witness value for the specified fingerprint
             and nonce value.
@@ -13982,7 +13992,7 @@
             <param name="nonce">The nonce value</param>
             <returns>The corresponding witness value.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.MakeWitnessString(System.Byte[],System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.MakeWitnessString(System.Byte[],System.Byte[],System.Int32)">
             <summary>
             Calculate a witness fingerprint for the specified fingerprint
             and nonce value.
@@ -13992,7 +14002,7 @@
             <param name="bits">The number of bits precision to provide in the output.</param>
             <returns>The corresponding witness value.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.PinWitness(System.String,System.Byte[],System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Cryptography.Udf.PinWitness(System.String,System.Byte[],System.Byte[],System.Byte[])">
             <summary>
             Convert a PIN to a Pin Identifier
             </summary>
@@ -14002,7 +14012,7 @@
             <param name="p3">Third data item</param>
             <returns>The corresponding PIN identifier</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.PinWitnessString(System.String,System.Byte[],System.Byte[],System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.PinWitnessString(System.String,System.Byte[],System.Byte[],System.Byte[],System.Int32)">
             <summary>
             Convert a PIN to a Pin Identifier
             </summary>
@@ -14013,14 +14023,14 @@
             <param name="bits">The output precision in bits.</param>
             <returns>The fingerprint value</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.KeySpecifier(Goedel.Cryptography.UdfAlgorithmIdentifier)">
+        <member name="M:Goedel.Cryptography.Udf.KeySpecifier(Goedel.Cryptography.UdfAlgorithmIdentifier)">
             <summary>
             Construct a key specifier for the specified algorithm.
             </summary>
             <param name="algorithmIdentifier">The algorithm to generate the key specifier for.</param>
             <returns>Two byte key specifier.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.DerivedKey(Goedel.Cryptography.UdfAlgorithmIdentifier,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Cryptography.Udf.DerivedKey(Goedel.Cryptography.UdfAlgorithmIdentifier,System.Byte[],System.Int32)">
             <summary>
             Create a derived key UDF for algorithm <paramref name="algorithmIdentifier"/> with
             key data <paramref name="data"/> if specified. Otherwise generate a new random key 
@@ -14032,14 +14042,14 @@
             not null.</param>
             <returns>The generated UDF</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.DerivedKey(System.String)">
+        <member name="M:Goedel.Cryptography.Udf.DerivedKey(System.String)">
             <summary>
             Extract the binary data sequence from the string <paramref name="udf"/>.
             </summary>
             <param name="udf">The UDF to parse.</param>
             <returns>The corresponding binary data sequence.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.ParseUdfAlgorithmIdentifier(System.String)">
+        <member name="M:Goedel.Cryptography.Udf.ParseUdfAlgorithmIdentifier(System.String)">
             <summary>
             Parse the UDF string <paramref name="udf"/> to return the
             UDF type identifier and data.
@@ -14047,7 +14057,7 @@
             <param name="udf">The string to parse.</param>
             <returns>The UDF Type identifier and data section.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.DeriveKey(System.String,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
+        <member name="M:Goedel.Cryptography.Udf.DeriveKey(System.String,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses)">
             <summary>
             Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
             <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
@@ -14057,7 +14067,7 @@
             <param name="keyUses"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.DeriveKey(System.String,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.DeriveKey(System.String,Goedel.Cryptography.IKeyLocate,Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
             <summary>
             Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
             <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
@@ -14071,7 +14081,7 @@
             a single seed.</param>
             <returns>The derrived key pair.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.TestKey(Goedel.Cryptography.CryptoAlgorithmId,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.TestKey(Goedel.Cryptography.CryptoAlgorithmId,System.String)">
             <summary>
             Generate a UDF for a test key for the algorithm <paramref name="cryptoAlgorithmId"/>
             using the seed string <paramref name="text"/>.
@@ -14080,7 +14090,7 @@
             <param name="text">The seed text.</param>
             <returns>The computed UDF.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.UDF.TestKey(Goedel.Cryptography.UdfAlgorithmIdentifier,System.String)">
+        <member name="M:Goedel.Cryptography.Udf.TestKey(Goedel.Cryptography.UdfAlgorithmIdentifier,System.String)">
             <summary>
             Generate a UDF for a test key for the algorithm <paramref name="algorithmIdentifier"/>
             using the seed string <paramref name="text"/>.

@@ -35,7 +35,7 @@ public partial class Shell {
         var uri = options.Uri.Value;
         var title = options.Title.Value;
         var id = options.Identifier.Value;
-        var uid = options.Unique.Value ?? UDF.Nonce();
+        var uid = options.Unique.Value ?? Udf.Nonce();
 
         var entry = new CatalogedBookmark() {
             Uri = uri,

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 08-Mar-23 6:24:33 PM
+//  This file was automatically generated at 15-Mar-23 5:24:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -84,8 +84,8 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 	    {"ConstraintsSelect", ConstraintsSelect._Factory},
 	    {"ConstraintsData", ConstraintsData._Factory},
 	    {"PolicyAccount", PolicyAccount._Factory},
-	    {"ContainerStatus", ContainerStatus._Factory},
-	    {"ContainerUpdate", ContainerUpdate._Factory},
+	    {"StoreStatus", StoreStatus._Factory},
+	    {"StoreUpdate", StoreUpdate._Factory},
 	    {"MeshHelloRequest", MeshHelloRequest._Factory},
 	    {"MeshHelloResponse", MeshHelloResponse._Factory},
 	    {"BindRequest", BindRequest._Factory},
@@ -1034,7 +1034,7 @@ public partial class ConstraintsSelect : MeshProtocol {
         ///The container to be searched.
         /// </summary>
 
-	public virtual string						Container  {get; set;}
+	public virtual string						Store  {get; set;}
         /// <summary>
         ///Only return objects with an index value that is equal to or
         ///higher than the value specified.
@@ -1074,9 +1074,9 @@ public partial class ConstraintsSelect : MeshProtocol {
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
-			case "Container" : {
+			case "Store" : {
 				if (value is TokenValueString vvalue) {
-					Container = vvalue.Value;
+					Store = vvalue.Value;
 					}
 				break;
 				}
@@ -1122,8 +1122,8 @@ public partial class ConstraintsSelect : MeshProtocol {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
-			case "Container" : {
-				return new TokenValueString (Container);
+			case "Store" : {
+				return new TokenValueString (Store);
 				}
 			case "IndexMin" : {
 				return new TokenValueInteger32 (IndexMin);
@@ -1151,7 +1151,7 @@ public partial class ConstraintsSelect : MeshProtocol {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Container", new Property (typeof(TokenValueString), false)} ,
+			{ "Store", new Property (typeof(TokenValueString), false)} ,
 			{ "IndexMin", new Property (typeof(TokenValueInteger32), false)} ,
 			{ "IndexMax", new Property (typeof(TokenValueInteger32), false)} ,
 			{ "NotBefore", new Property (typeof(TokenValueDateTime), false)} ,
@@ -1538,11 +1538,11 @@ public partial class PolicyAccount : MeshProtocol {
 
 	/// <summary>
 	/// </summary>
-public partial class ContainerStatus : MeshProtocol {
+public partial class StoreStatus : MeshProtocol {
         /// <summary>
         /// </summary>
 
-	public virtual string						Container  {get; set;}
+	public virtual string						Store  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -1557,9 +1557,9 @@ public partial class ContainerStatus : MeshProtocol {
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
-			case "Container" : {
+			case "Store" : {
 				if (value is TokenValueString vvalue) {
-					Container = vvalue.Value;
+					Store = vvalue.Value;
 					}
 				break;
 				}
@@ -1587,8 +1587,8 @@ public partial class ContainerStatus : MeshProtocol {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
-			case "Container" : {
-				return new TokenValueString (Container);
+			case "Store" : {
+				return new TokenValueString (Store);
 				}
 			case "Index" : {
 				return new TokenValueInteger32 (Index);
@@ -1607,7 +1607,7 @@ public partial class ContainerStatus : MeshProtocol {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
-			{ "Container", new Property (typeof(TokenValueString), false)} ,
+			{ "Store", new Property (typeof(TokenValueString), false)} ,
 			{ "Index", new Property (typeof(TokenValueInteger32), false)} ,
 			{ "Digest", new Property (typeof(TokenValueBinary), false)} 
         };
@@ -1635,13 +1635,13 @@ public partial class ContainerStatus : MeshProtocol {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "ContainerStatus";
+	public new const string __Tag = "StoreStatus";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ContainerStatus();
+	public static new JsonObject _Factory () => new StoreStatus();
 
 
     /// <summary>
@@ -1650,15 +1650,15 @@ public partial class ContainerStatus : MeshProtocol {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new ContainerStatus FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new StoreStatus FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ContainerStatus;
+			return Out as StoreStatus;
 			}
-		var Result = new ContainerStatus ();
+		var Result = new StoreStatus ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -1669,7 +1669,7 @@ public partial class ContainerStatus : MeshProtocol {
 
 	/// <summary>
 	/// </summary>
-public partial class ContainerUpdate : ContainerStatus {
+public partial class StoreUpdate : StoreStatus {
         /// <summary>
         ///The entries to be uploaded. 
         /// </summary>
@@ -1719,7 +1719,7 @@ public partial class ContainerUpdate : ContainerStatus {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ContainerStatus._StaticAllProperties);
+			Combine(_StaticProperties, StoreStatus._StaticAllProperties);
 
 
     ///<inheritdoc/>
@@ -1741,13 +1741,13 @@ public partial class ContainerUpdate : ContainerStatus {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "ContainerUpdate";
+	public new const string __Tag = "StoreUpdate";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ContainerUpdate();
+	public static new JsonObject _Factory () => new StoreUpdate();
 
 
     /// <summary>
@@ -1756,15 +1756,15 @@ public partial class ContainerUpdate : ContainerStatus {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new ContainerUpdate FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new StoreUpdate FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ContainerUpdate;
+			return Out as StoreUpdate;
 			}
-		var Result = new ContainerUpdate ();
+		var Result = new StoreUpdate ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -3197,7 +3197,7 @@ public partial class StatusResponse : MeshResponse {
         /// <summary>
         /// </summary>
 
-	public virtual List<ContainerStatus>				ContainerStatus  {get; set;}
+	public virtual List<StoreStatus>				StoreStatus  {get; set;}
         /// <summary>
         ///The enveloped assignment describing how the client should
         ///discover the host and encrypt data to it.
@@ -3243,9 +3243,9 @@ public partial class StatusResponse : MeshResponse {
 					}
 				break;
 				}
-			case "ContainerStatus" : {
+			case "StoreStatus" : {
 				if (value is TokenValueListStructObject vvalue) {
-					ContainerStatus = vvalue.Value as List<ContainerStatus>;
+					StoreStatus = vvalue.Value as List<StoreStatus>;
 					}
 				break;
 				}
@@ -3291,8 +3291,8 @@ public partial class StatusResponse : MeshResponse {
 			case "CatalogedDeviceDigest" : {
 				return new TokenValueString (CatalogedDeviceDigest);
 				}
-			case "ContainerStatus" : {
-				return new TokenValueListStruct<ContainerStatus> (ContainerStatus);
+			case "StoreStatus" : {
+				return new TokenValueListStruct<StoreStatus> (StoreStatus);
 				}
 			case "EnvelopedAccountHostAssignment" : {
 				return new TokenValueStruct<Enveloped<AccountHostAssignment>> (EnvelopedAccountHostAssignment);
@@ -3320,8 +3320,8 @@ public partial class StatusResponse : MeshResponse {
 			{ "EnvelopedCatalogedDevice", new Property ( typeof(TokenValueStruct), false,
 					()=>new Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>(), false)} ,
 			{ "CatalogedDeviceDigest", new Property (typeof(TokenValueString), false)} ,
-			{ "ContainerStatus", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<ContainerStatus>(), ()=>new ContainerStatus(), false)} ,
+			{ "StoreStatus", new Property ( typeof(TokenValueListStruct), true,
+					()=>new List<StoreStatus>(), ()=>new StoreStatus(), false)} ,
 			{ "EnvelopedAccountHostAssignment", new Property ( typeof(TokenValueStruct), false,
 					()=>new Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>(), false)} ,
 			{ "Services", new Property ( typeof(TokenValueListStruct), true,
@@ -3673,7 +3673,7 @@ public partial class DownloadResponse : MeshResponse {
         ///The updated data
         /// </summary>
 
-	public virtual List<ContainerUpdate>				Updates  {get; set;}
+	public virtual List<StoreUpdate>				Updates  {get; set;}
 
 
     ///<inheritdoc/>
@@ -3682,7 +3682,7 @@ public partial class DownloadResponse : MeshResponse {
 		switch (tag) {
 			case "Updates" : {
 				if (value is TokenValueListStructObject vvalue) {
-					Updates = vvalue.Value as List<ContainerUpdate>;
+					Updates = vvalue.Value as List<StoreUpdate>;
 					}
 				break;
 				}
@@ -3699,7 +3699,7 @@ public partial class DownloadResponse : MeshResponse {
             string tag) {
         switch (tag) {
 			case "Updates" : {
-				return new TokenValueListStruct<ContainerUpdate> (Updates);
+				return new TokenValueListStruct<StoreUpdate> (Updates);
 				}
 
             default: {
@@ -3713,7 +3713,7 @@ public partial class DownloadResponse : MeshResponse {
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
 			{ "Updates", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<ContainerUpdate>(), ()=>new ContainerUpdate(), false)} 
+					()=>new List<StoreUpdate>(), ()=>new StoreUpdate(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3782,7 +3782,7 @@ public partial class TransactRequest : MeshRequestUser {
         ///The data to be updated
         /// </summary>
 
-	public virtual List<ContainerUpdate>				Updates  {get; set;}
+	public virtual List<StoreUpdate>				Updates  {get; set;}
         /// <summary>
         ///The account(s) to which the request is directed.
         /// </summary>
@@ -3814,7 +3814,7 @@ public partial class TransactRequest : MeshRequestUser {
 		switch (tag) {
 			case "Updates" : {
 				if (value is TokenValueListStructObject vvalue) {
-					Updates = vvalue.Value as List<ContainerUpdate>;
+					Updates = vvalue.Value as List<StoreUpdate>;
 					}
 				break;
 				}
@@ -3855,7 +3855,7 @@ public partial class TransactRequest : MeshRequestUser {
             string tag) {
         switch (tag) {
 			case "Updates" : {
-				return new TokenValueListStruct<ContainerUpdate> (Updates);
+				return new TokenValueListStruct<StoreUpdate> (Updates);
 				}
 			case "Accounts" : {
 				return new TokenValueListString (Accounts);
@@ -3881,7 +3881,7 @@ public partial class TransactRequest : MeshRequestUser {
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
 			{ "Updates", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<ContainerUpdate>(), ()=>new ContainerUpdate(), false)} ,
+					()=>new List<StoreUpdate>(), ()=>new StoreUpdate(), false)} ,
 			{ "Accounts", new Property (typeof(TokenValueListString), true)} ,
 			{ "Outbound", new Property ( typeof(TokenValueListStruct), true,
 					()=>new List<Enveloped<Message>>(), ()=>new Enveloped<Message>(), false)} ,

@@ -77,7 +77,7 @@ public class ContextMeshPending : ContextAccount {
                 base(meshHost, catalogedMachine) {
 
         //DeviceKeySeed should never be null
-        DeviceKeySeed = KeyCollection.LocatePrivateKey(ProfileDevice.Udf) as PrivateKeyUDF;
+        DeviceKeySeed = KeyCollection.LocatePrivateKey(ProfileDevice.UdfString) as PrivateKeyUDF;
         DeviceKeySeed.AssertNotNull(DeviceSeedNotFound.Throw);
 
         keyEncryption = DeviceKeySeed?.GenerateContributionKeyPair(
@@ -181,8 +181,8 @@ public class ContextMeshPending : ContextAccount {
         // create the pending connection here
 
         var catalogedPending = new CatalogedPending() {
-            Id = profileDevice.Udf,
-            DeviceUDF = profileDevice.Udf,
+            Id = profileDevice.UdfString,
+            DeviceUDF = profileDevice.UdfString,
             AccountAddress = accountAddress,
             EnvelopedAcknowledgeConnection = connectResponse.EnvelopedAcknowledgeConnection,
             EnvelopedProfileAccount = connectResponse.EnvelopedProfileAccount,
@@ -249,7 +249,7 @@ public class ContextMeshPending : ContextAccount {
 
         // create the host catalog entry
         var catalogedStandard = new CatalogedStandard() {
-            Id = profileDevice.Udf,
+            Id = profileDevice.UdfString,
             CatalogedDevice = catalogedEntry,
             EnvelopedProfileAccount = profileUser.GetEnvelopedProfileAccount()
             };

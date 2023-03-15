@@ -101,7 +101,7 @@ partial class Program {
         //ShellTests.Test().TestProfileContact();
         //ShellTests.Test().TestLog();
 
-        CallsignDirect.Test().CreateRegistry();
+        //CallsignDirect.Test().CreateRegistry();
         CallsignDirect.Test().RegisterAlice();
         CallsignDirect.Test().RegisterAliceDuplicate();
         CallsignDirect.Test().RegisterAliceTransferBob();
@@ -196,10 +196,10 @@ partial class Program {
             var utf8 = document.ToUTF8();
             var digest = Platform.SHA3_512.Process(utf8);
 
-            var buffer = UDF.UDFBuffer(digest, contentType);
+            var buffer = Udf.UDFBuffer(digest, contentType);
             var UDFData = buffer.GetDigest(cryptoAlgorithmID);
 
-            if (UDF.GetCompression(UDFData) > 0) {
+            if (Udf.GetCompression(UDFData) > 0) {
                 Console.WriteLine($"!!!!!!!!!!!!!!!!  {i}");
                 return;
                 }

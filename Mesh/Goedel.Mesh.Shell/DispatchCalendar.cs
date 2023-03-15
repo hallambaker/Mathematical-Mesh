@@ -34,7 +34,7 @@ public partial class Shell {
     public override ShellResult CalendarAdd(CalendarAdd options) {
         var contextAccount = GetContextUser(options);
         var title = options.Title.Value;
-        var identifier = options.Identifier.Value ?? UDF.Nonce();
+        var identifier = options.Identifier.Value ?? Udf.Nonce();
 
         var entry = new CatalogedTask() {
             Key = identifier,

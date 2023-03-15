@@ -41,7 +41,7 @@ public partial class TestSequences {
     KeyCollection MakeKeyCollection(params object[] parameters) {
         var TestEnvironment = new TestEnvironmentCommon(Seed ?? DeterministicSeed.Auto(parameters));
         //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
-        return new KeyCollectionTestEnv(TestEnvironment.Path);
+        return new KeyCollectionTestEnv(TestEnvironment.DirectoryPath);
         }
 
     [Fact]

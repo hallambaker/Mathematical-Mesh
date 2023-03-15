@@ -59,7 +59,7 @@ public class ContextCarnet : ContextAccount {
         ProfileCarnet = catalogedService.EnvelopedProfileService.Decode() as ProfileCarnet;
 
 
-        var SecretSeed = meshHost.KeyCollection.LocatePrivateKey(ProfileCarnet.Udf) as PrivateKeyUDF;
+        var SecretSeed = meshHost.KeyCollection.LocatePrivateKey(ProfileCarnet.UdfString) as PrivateKeyUDF;
         (KeyAuthentication, _) = SecretSeed.GenerateContributionKey(
         ProfileCarnet.MeshKeyType, ProfileCarnet.MeshActor, MeshKeyOperation.Authenticate);
 

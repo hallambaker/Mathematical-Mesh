@@ -130,7 +130,7 @@ public partial class ShellTests {
         for (var i = 0; i < repeat; i++) {
             var result = testCLI.Dispatch($"key nonce{bitsClause}") as ResultKey; ;
             var random = result.Key;
-            var randomData = UDF.Nonce(random);
+            var randomData = Udf.Nonce(random);
             randomData.Length.TestEqual(bits / 8);
 
             random.Length.TestEqual(length);
@@ -158,7 +158,7 @@ public partial class ShellTests {
         for (var i = 0; i < repeat; i++) {
             var result = testCLI.Dispatch($"key secret{bitsClause}") as ResultKey; ;
             var random = result.Key;
-            var randomData = UDF.SymmetricKey(random);
+            var randomData = Udf.SymmetricKey(random);
             randomData.Length.TestEqual(bits / 8);
             random.Length.TestEqual(length);
             results.Contains(random).TestFalse();
@@ -218,7 +218,7 @@ public partial class ShellTests {
                 Console.WriteLine(i);
                 }
             var content = i.ToString().ToUTF8();
-            var buffer = UDF.DataToUDFBinary(
+            var buffer = Udf.DataToUDFBinary(
                 content, "text/plain", cryptoAlgorithmId: CryptoAlgorithmId.SHA_3_512);
             if (buffer[0] > 144) {
                 //Console.WriteLine(UDF.PresentationBase32(buffer));

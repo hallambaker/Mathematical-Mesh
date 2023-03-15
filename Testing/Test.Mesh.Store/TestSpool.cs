@@ -62,7 +62,7 @@ public partial class StoreTests {
         bool direct= true) {
 
         // Create store
-        var directory = TestEnvironment.Path;
+        var directory = TestEnvironment.DirectoryPath;
         var filename = DeterministicSeed.GetUnique(batches, items, direct);
         var signingKey = KeyPair.Factory(CryptoAlgorithmId.Ed448, KeySecurity.Exportable, KeyCollection);
 
@@ -118,9 +118,9 @@ public partial class StoreTests {
 
     [Fact]
     public void TestSpoolSingle() {
-        var message_id = UDF.Nonce();
+        var message_id = Udf.Nonce();
 
-        var directory = TestEnvironment.Path;
+        var directory = TestEnvironment.DirectoryPath;
         var file = "TestSpoolSingle";
 
         var signingKey = KeyPair.Factory(CryptoAlgorithmId.Ed448, KeySecurity.Exportable,
@@ -215,7 +215,7 @@ public partial class StoreTests {
     [Fact]
     public void TestCatalog() {
 
-        var directory = TestEnvironment.Path;
+        var directory = TestEnvironment.DirectoryPath;
         var file = "TestCatalogSingle";
 
         var encryptionKey = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Exportable,

@@ -67,5 +67,5 @@ public partial class DareRecipient {
     /// </summary>
     /// <param name="masterKey">The master key</param>
     /// <returns>The recipient informatin object.</returns>
-    public DareRecipient(byte[] masterKey) => KeyIdentifier = UDF.SymetricKeyId(masterKey);
+    public DareRecipient(byte[] masterKey) => KeyIdentifier = Udf.SymetricKeyId(masterKey);
     }

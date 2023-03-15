@@ -411,7 +411,7 @@ public partial class TestService {
         // Recover to new service
 
 
-        contextAliceOriginal.ProfileUser.Udf.TestEqual(recoveredAccount.ProfileUser.Udf);
+        contextAliceOriginal.ProfileUser.UdfString.TestEqual(recoveredAccount.ProfileUser.UdfString);
 
 
         }
@@ -454,6 +454,15 @@ public partial class TestService {
         var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
 
         return (contextAccountAlice, contextOnboarded);
+        }
+
+    /// <summary>
+    /// Test that attempts by Mallet to read Alice's private catalogs fail.
+    /// </summary>
+    /// <exception cref="NYI"></exception>
+    [Fact(Skip = "Not yet implemented")]
+    public void MalletCatalogReadFail() {
+        throw new NYI();
         }
 
     [Fact]
@@ -721,7 +730,7 @@ public partial class TestService {
 
     static bool Verify(ProfileUser first, ProfileUser second) {
         (first.CommonEncryption.Udf == second.CommonEncryption.Udf).TestTrue();
-        (first.Udf == second.Udf).TestTrue();
+        (first.UdfString == second.UdfString).TestTrue();
         return true;
         }
 

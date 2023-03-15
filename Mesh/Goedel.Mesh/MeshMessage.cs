@@ -60,7 +60,7 @@ public partial class Message {
                 CryptoKey encryptionKey = null,
                 ObjectEncoding objectEncoding = ObjectEncoding.JSON) {
 
-        MessageId ??= UDF.Nonce(); // Add a message ID unless one is already defined.
+        MessageId ??= Udf.Nonce(); // Add a message ID unless one is already defined.
         return base.Envelope(signingKey, encryptionKey, objectEncoding);
         }
 
@@ -97,11 +97,11 @@ public partial class Message {
 
 
     static string MakeID(string udf, string content) {
-        var (code, bds) = UDF.Parse(udf);
+        var (code, bds) = Udf.Parse(udf);
         return code switch {
-            UdfTypeIdentifier.Digest_SHA_3_512 => UDF.ContentDigestOfDataString(
+            UdfTypeIdentifier.Digest_SHA_3_512 => Udf.ContentDigestOfDataString(
                 bds, content, cryptoAlgorithmId: CryptoAlgorithmId.SHA_3_512),
-            _ => UDF.ContentDigestOfDataString(
+            _ => Udf.ContentDigestOfDataString(
             bds, content, cryptoAlgorithmId: CryptoAlgorithmId.SHA_2_512),
             };
         }
@@ -250,7 +250,7 @@ public partial class MessagePin {
     /// <param name="pin">The pin code presented to the user.</param>
     /// <param name="action">The action to which the pin code is bound.</param>
     /// <returns>UDF presentation of the salted PIN.</returns>
-    public static string SaltPIN(string pin, string action) => UDF.SymmetricKeyMac(action.ToUTF8(), pin);
+    public static string SaltPIN(string pin, string action) => Udf.SymmetricKeyMac(action.ToUTF8(), pin);
 
 
     /// <summary>
@@ -306,7 +306,7 @@ public partial class MessagePin {
     public static string GetPinId(
                 string pin,
                 string accountAddress) {
-        var result = UDF.SymmetricKeyMac(accountAddress.CannonicalAccountAddressUtf8(), pin);
+        var result = Udf.SymmetricKeyMac(accountAddress.CannonicalAccountAddressUtf8(), pin);
 
         //ScreenConsole.WriteLine($"{pin} + {accountAddress}  -> PinUDF = {result}");
 
@@ -333,7 +333,7 @@ public partial class MessagePin {
         var digest = envelope.Trailer.PayloadDigest;
 
         //Screen.WriteLine($"clientNonce {digest.ToStringBase16FormatHex()}");
-        return UDF.PinWitness(pin, accountAddress.CannonicalAccountAddressUtf8(), clientNonce, digest);
+        return Udf.PinWitness(pin, accountAddress.CannonicalAccountAddressUtf8(), clientNonce, digest);
         }
     }
 public partial class RequestConnection {

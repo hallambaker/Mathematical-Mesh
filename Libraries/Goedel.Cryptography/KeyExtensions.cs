@@ -40,7 +40,7 @@ public static class KeyExtensions {
                 CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) {
         var data = key.SubjectPublicKeyInfo().DER();
 
-        return Cryptography.UDF.FromKeyInfo(data, bits, cryptoAlgorithmID);
+        return Cryptography.Udf.FromKeyInfo(data, bits, cryptoAlgorithmID);
         }
 
 
@@ -52,7 +52,7 @@ public static class KeyExtensions {
     /// <returns>The fingerprint presentation</returns>
     public static string UDF(this IPkixPublicKey key) {
         var Bytes = key.UDFBytes();
-        return Cryptography.UDF.PresentationBase32(Cryptography.UDF.FromKeyInfo(Bytes));
+        return Cryptography.Udf.PresentationBase32(Cryptography.Udf.FromKeyInfo(Bytes));
         }
 
     /// <summary>

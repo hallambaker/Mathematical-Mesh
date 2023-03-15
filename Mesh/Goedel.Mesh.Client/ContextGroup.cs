@@ -228,7 +228,7 @@ public partial class ContextGroup : ContextAccount {
             };
 
         var anchorAccount = new Anchor() {
-            Udf = ProfileGroup.Udf,
+            Udf = ProfileGroup.UdfString,
             Validation = "Self"
             };
         // ContextMesh.ProfileMesh.UDF 

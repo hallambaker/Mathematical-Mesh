@@ -32,7 +32,9 @@ File CatalogLabels
 		Code Archive "Archive Spool"
 			Description
 				|Archival spool. 
-
+		Code Notary "Notary Catalog"
+			Description
+				|Catalog identifier for the notary catalog.
 		Code Access  "Access Catalog"
 			Description
 				|Access control policy and keys used to perform threshold enforcement of policy

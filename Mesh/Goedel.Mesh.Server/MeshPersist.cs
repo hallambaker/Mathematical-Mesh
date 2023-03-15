@@ -242,10 +242,10 @@ public class MeshPersist : Disposable {
         var MeshUDF = accountHandle.ProfileAccount.ProfileSignature.CryptoKey.UDFBytes;
         var DeviceUDF = requestConnection.ProfileDevice.ProfileSignature.CryptoKey.UDFBytes;
 
-        var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
+        var witness = Udf.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
             requestConnection.ClientNonce);
 
-        var messageID = UDF.Nonce();
+        var messageID = Udf.Nonce();
         //Console.WriteLine($"The AcknowledgeConnection.MessageID = {messageID}");
 
         var acknowledgeConnection = new AcknowledgeConnection() {
@@ -330,7 +330,7 @@ public class MeshPersist : Disposable {
 
 
         var statusResponse = new StatusResponse() {
-            ContainerStatus = containerStatus,
+            StoreStatus = containerStatus,
             EnvelopedCatalogedDevice = null
             };
 
@@ -375,7 +375,7 @@ public class MeshPersist : Disposable {
     /// </summary>
     /// <param name="session">The session connection data.</param>
     /// <param name="selections">The selection criteria.</param>
-    public List<ContainerUpdate> AccountDownload(
+    public List<StoreUpdate> AccountDownload(
                 IJpcSession session,
 
                 List<ConstraintsSelect> selections) {
@@ -383,12 +383,12 @@ public class MeshPersist : Disposable {
         using var accountHandle = GetAccountHandleLocked(session, AccountPrivilege.Read);
 
         //using var accountEntry = GetAccountVerified(account, jpcSession);
-        var updates = new List<ContainerUpdate>();
+        var updates = new List<StoreUpdate>();
         foreach (var selection in selections) {
-            using var store = accountHandle.GetSequence(selection.Container);
+            using var store = accountHandle.GetSequence(selection.Store);
 
-            var update = new ContainerUpdate() {
-                Container = selection.Container,
+            var update = new StoreUpdate() {
+                Store = selection.Store,
                 Envelopes = new List<DareEnvelope>()
                 };
 
@@ -415,7 +415,7 @@ public class MeshPersist : Disposable {
     /// <param name="accounts">Accounts to which outbound messages are to be sent.</param>
     public byte[] AccountTransact(
                 IJpcSession jpcSession,
-                List<ContainerUpdate> updates,
+                List<StoreUpdate> updates,
                 List<Enveloped<Message>> inbound,
                 List<Enveloped<Message>> outbound,
                 List<Enveloped<Message>> local,
@@ -447,7 +447,7 @@ public class MeshPersist : Disposable {
         if (updates != null) {
             foreach (var update in updates) {
                 //Screen.WriteLine(update.ToString());
-                accountHandle.StoreAppend(update.Container, update.Envelopes, bitmask);
+                accountHandle.StoreAppend(update.Store, update.Envelopes, bitmask);
                 }
             }
         if (inbound != null) {

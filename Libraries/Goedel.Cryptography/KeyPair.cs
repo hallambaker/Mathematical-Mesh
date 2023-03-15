@@ -385,11 +385,11 @@ public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
     /// <summary>
     /// Returns the UDF fingerprint of the current key as a string.
     /// </summary>
-    public override string KeyIdentifier => udf ?? UDF.PresentationBase32(UDFBytes).CacheValue(out udf);
+    public override string KeyIdentifier => udf ?? Udf.PresentationBase32(UDFBytes).CacheValue(out udf);
     string udf = null;
 
     ///<summary>The UDF fingerprint of this key pair.</summary>
-    public string UDFValue => Cryptography.UDF.OID(this);
+    public string UDFValue => Cryptography.Udf.OID(this);
 
 
 

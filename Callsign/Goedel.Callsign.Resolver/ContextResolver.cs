@@ -96,7 +96,7 @@ public class ContextResolver : ContextAccount {
         ProfileRegistry  = ProfileResolver.EnvelopedProfileRegistry.Decode() as ProfileRegistry;
         //ActivationCommon = catalogedService.EnvelopedActivationCommon.Decode() ;
 
-        var SecretSeed = meshHost.KeyCollection.LocatePrivateKey(ProfileResolver.Udf) as PrivateKeyUDF;
+        var SecretSeed = meshHost.KeyCollection.LocatePrivateKey(ProfileResolver.UdfString) as PrivateKeyUDF;
         (KeyAuthentication, _) = SecretSeed.GenerateContributionKey(
         ProfileResolver.MeshKeyType, ProfileResolver.MeshActor, MeshKeyOperation.Authenticate);
 

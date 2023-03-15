@@ -312,7 +312,7 @@ public partial class JoseWebEncryption {
     public Recipient AddRecipient(byte[] Secret, string Info = null,
             CryptoAlgorithmId ProviderAlgorithm = CryptoAlgorithmId.Default) {
 
-        var Identifier = UDF.SymmetricKeyUDF(Secret);
+        var Identifier = Udf.SymmetricKeyUDF(Secret);
         Info ??= Identifier;
 
         var KeyDerive = new KeyDeriveHKDF(Secret, Info);
@@ -495,7 +495,7 @@ public partial class JoseWebEncryption {
         var BulkID = Header.Enc.FromJoseID();
         var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
 
-        var Identifier = UDF.SymmetricKeyUDF(Secret);
+        var Identifier = Udf.SymmetricKeyUDF(Secret);
         var Recipient = MatchRecipient(Identifier);
 
         Info ??= Identifier;
@@ -535,7 +535,7 @@ public partial class JoseWebEncryption {
     /// <returns>The recipient record that was matched.</returns>
     public Recipient GetRecrypted(out string Address, out string UDF) {
         foreach (var Recipient in Recipients) {
-            Cryptography.UDF.ParseStrongRFC822(Recipient.Header.Kid, out Address, out UDF);
+            Cryptography.Udf.ParseStrongRFC822(Recipient.Header.Kid, out Address, out UDF);
 
             if (UDF != null) {
                 return Recipient;

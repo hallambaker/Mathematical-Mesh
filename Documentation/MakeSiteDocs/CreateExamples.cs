@@ -346,7 +346,7 @@ public partial class CreateExamples {
             );
         var resultAccept = Connect.ConnectAccept[0].Result as ResultProcess;
         deviceId = (resultAccept.ProcessResult as ResultAcknowledgeConnection).
-                AcknowledgeConnection.MessageConnectionRequest.ProfileDevice.Udf;
+                AcknowledgeConnection.MessageConnectionRequest.ProfileDevice.UdfString;
         Connect.Device2Id = deviceId;
 
         //Connect.ConnectReject = Alice1.Example(
@@ -954,7 +954,7 @@ public partial class CreateExamples {
 
         var responseConnection = Connect.ConnectPINResponseConnection.ResponseObject as ConnectResponse;
         Connect.ConnectPINAcknowledgeConnection = responseConnection.EnvelopedAcknowledgeConnection.Decode();
-        Connect.Device3Id = Connect.ConnectPINAcknowledgeConnection.MessageConnectionRequest.ProfileDevice.Udf;
+        Connect.Device3Id = Connect.ConnectPINAcknowledgeConnection.MessageConnectionRequest.ProfileDevice.UdfString;
 
 
         Connect.ConnectPINPending = Alice1.Example(
@@ -1138,7 +1138,7 @@ public partial class CreateExamples {
 
         // Should really spin up a new blank device for this
         Account.ProfilePurge = Alice1.Example(
-            $"~account purge {AliceProfileAccount.Udf}"
+            $"~account purge {AliceProfileAccount.UdfString}"
             );
 
 
@@ -1157,7 +1157,7 @@ public partial class CreateExamples {
             );
 
         Account.DeleteAlice = Alice1.Example(
-            $"~account delete {AliceProfileAccount.Udf}"
+            $"~account delete {AliceProfileAccount.UdfString}"
             );
 
 

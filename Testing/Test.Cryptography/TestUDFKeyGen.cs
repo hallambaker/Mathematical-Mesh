@@ -67,11 +67,11 @@ public partial class TestGoedelCryptography {
 
         (var actor, var keytype) = udfAlgorithmIdentifier.GetMeshKeyType();
 
-        var primeUDF = UDF.DerivedKey(udfAlgorithmIdentifier, data: Platform.GetRandomBits(bits));
+        var primeUDF = Udf.DerivedKey(udfAlgorithmIdentifier, data: Platform.GetRandomBits(bits));
         var primeSeed = new PrivateKeyUDF(primeUDF);
         var primeKey = primeSeed.GenerateContributionKeyPair(keytype, actor, operation);
 
-        var activationUDF = UDF.DerivedKey(udfAlgorithmIdentifier + 1, data: Platform.GetRandomBits(bits));
+        var activationUDF = Udf.DerivedKey(udfAlgorithmIdentifier + 1, data: Platform.GetRandomBits(bits));
         var activationSeed = new PrivateKeyUDF(activationUDF);
         var activationKey = activationSeed.GenerateContributionKeyPair(MeshKeyType.Activation, actor, operation);
 
@@ -233,10 +233,10 @@ public class TestVectorUDFKeyGen {
 
     public virtual void Test() {
 
-        var udf = UDF.DerivedKey(UdfAlgorithmIdentifier, data: Seed.ToUTF8());
+        var udf = Udf.DerivedKey(UdfAlgorithmIdentifier, data: Seed.ToUTF8());
 
 
-        var keypair = UDF.DeriveKey(udf, KeySecurity.Ephemeral, KeyUses);
+        var keypair = Udf.DeriveKey(udf, KeySecurity.Ephemeral, KeyUses);
         Console.WriteLine($"{UdfAlgorithmIdentifier}:  {udf} -> {keypair.KeyIdentifier}");
 
 
@@ -308,10 +308,10 @@ public class TestVectorUDFKeyGenUdfKey : TestVectorUDFKeyGen {
     public string ResultAuthenticate;
 
     public override void Test() {
-        var udf = UDF.DerivedKey(UdfAlgorithmIdentifier, data: Seed.ToUTF8());
+        var udf = Udf.DerivedKey(UdfAlgorithmIdentifier, data: Seed.ToUTF8());
         var privatekeyUDF = new PrivateKeyUDF(udf);
 
-        var udfa = UDF.DerivedKey(UdfAlgorithmIdentifier, data: SeedA.ToUTF8());
+        var udfa = Udf.DerivedKey(UdfAlgorithmIdentifier, data: SeedA.ToUTF8());
         var privatekeyUDFa = new PrivateKeyUDF(udfa);
 
 

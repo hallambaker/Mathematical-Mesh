@@ -156,7 +156,7 @@ public partial class Shell {
         // Hack: should be able to accept, reject specific requests, not just
         // the last one.
 
-        contextAccount.TryGetMessageById(messageID, out var index).AssertTrue(MessageIdNotFound.Throw);
+        contextAccount.TryGetMessageByMessageId(messageID, out var index).AssertTrue(MessageIdNotFound.Throw);
         index.IsOpen.AssertTrue(NYI.Throw); // make a better response for already done.
 
 

@@ -2163,6 +2163,16 @@
             </summary>
             <param name="key">The entry being deleted.</param>
         </member>
+        <member name="M:Goedel.Mesh.Catalog`1.TryGetValue(System.String,Goedel.Cryptography.Dare.PersistentIndexEntry@)">
+            <summary>
+            Query function. This is currently a pass through to query the object indext of the 
+            underlying persistence store. This is broken out so as to allow later implementations
+            to make use of an object store on disk.
+            </summary>
+            <param name="key">Query term.</param>
+            <param name="result">Result if found, otherwise null.</param>
+            <returns>True if a result was found, otherwise false.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Catalog`1.Get(System.String)">
             <summary>
             Return the catalogued entry with key <paramref name="key"/> as the catalogued type.
@@ -2821,7 +2831,7 @@
         <member name="P:Goedel.Mesh.CatalogCallsign.SequenceDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogCallsign.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogCallsign.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Factory delegate
             </summary>
@@ -2834,7 +2844,7 @@
             <param name="create">If true, create a new file if none exists.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogCallsign.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogCallsign.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -4403,6 +4413,105 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Mesh.CatalogNotary">
+            <summary>
+            Bookmark catalog. Describes the bookmarks in the user's Mesh account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogNotary.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogNotary.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogNotary.SequenceDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogNotary.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Factory delegate
+            </summary>
+            <param name="directory">Directory of store file on local machine.</param>
+            <param name="storeId">Store identifier.</param>
+            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+            <param name="policy">The cryptographic policy to be applied to the catalog.</param>
+            <param name="keyCollection">Key collection to be used to resolve keys</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogNotary.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogedSignature">
+             <summary>
+            
+             Cataloged Signature
+             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedSignature.Describe(System.Text.StringBuilder,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedSignature.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedSignature.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedSignature.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedSignature._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedSignature._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedSignature._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedSignature._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedSignature._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedSignature._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedSignature.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedSignature._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedSignature.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Mesh.CatalogPublication">
             <summary>
             Device catalog. Describes the members of a Mesh Group.
@@ -5021,6 +5130,9 @@
         </member>
         <member name="F:Goedel.Mesh.MeshConstants.StoreTypeArchiveTag">
             <summary>Jose enumeration tag for StoreType.Archive</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshConstants.StoreTypeNotaryTag">
+            <summary>Jose enumeration tag for StoreType.Notary</summary>
         </member>
         <member name="F:Goedel.Mesh.MeshConstants.StoreTypeAccessTag">
             <summary>Jose enumeration tag for StoreType.Access</summary>
@@ -6855,6 +6967,9 @@
         <member name="F:Goedel.Mesh.StoreType.Archive">
             <summary>Archive Spool</summary>
         </member>
+        <member name="F:Goedel.Mesh.StoreType.Notary">
+            <summary>Notary Catalog</summary>
+        </member>
         <member name="F:Goedel.Mesh.StoreType.Access">
             <summary>Access Catalog</summary>
         </member>
@@ -8683,7 +8798,7 @@
         <member name="P:Goedel.Mesh.Profile._PrimaryKey">
             <summary>The primary key value.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Profile.Udf">
+        <member name="P:Goedel.Mesh.Profile.UdfString">
             <summary>The UDF of the profile, that is the UDF of the offline signature.</summary>
         </member>
         <member name="P:Goedel.Mesh.Profile.SecretSeed">
@@ -8705,6 +8820,16 @@
             <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Profile.Matches(System.String,System.Int32)">
+            <summary>
+            Test to see if <paramref name="presentation"/> matches the profile UDF value.
+            </summary>
+            <param name="presentation">The value to test</param>
+            <param name="minBits">The minimum number of precision to accept in 
+                <paramref name="presentation"/></param>
+            <returns>True if <paramref name="presentation"/> is a match to the specified precision,
+            othewise false.</returns>
         </member>
         <member name="M:Goedel.Mesh.Profile.PersistSeed(Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
@@ -10079,7 +10204,7 @@
              of data returned, the earliest and latest data returned, etc.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConstraintsSelect.Container">
+        <member name="P:Goedel.Mesh.ConstraintsSelect.Store">
              <summary>
             The container to be searched.
              </summary>
@@ -10314,60 +10439,60 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Mesh.ContainerStatus">
+        <member name="T:Goedel.Mesh.StoreStatus">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ContainerStatus.Container">
+        <member name="P:Goedel.Mesh.StoreStatus.Store">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ContainerStatus.Index">
+        <member name="P:Goedel.Mesh.StoreStatus.Index">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ContainerStatus.Digest">
+        <member name="P:Goedel.Mesh.StoreStatus.Digest">
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ContainerStatus.Setter(System.String,Goedel.Protocol.TokenValue)">
+        <member name="M:Goedel.Mesh.StoreStatus.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.ContainerStatus.Getter(System.String)">
+        <member name="M:Goedel.Mesh.StoreStatus.Getter(System.String)">
             <inheritdoc/>
         </member>
-        <member name="F:Goedel.Mesh.ContainerStatus._StaticProperties">
+        <member name="F:Goedel.Mesh.StoreStatus._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Mesh.ContainerStatus._StaticAllProperties">
+        <member name="F:Goedel.Mesh.StoreStatus._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ContainerStatus._AllProperties">
+        <member name="P:Goedel.Mesh.StoreStatus._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.ContainerStatus._Properties">
+        <member name="P:Goedel.Mesh.StoreStatus._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.ContainerStatus._ParentProperties">
+        <member name="P:Goedel.Mesh.StoreStatus._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.ContainerStatus._Tag">
+        <member name="P:Goedel.Mesh.StoreStatus._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.ContainerStatus.__Tag">
+        <member name="F:Goedel.Mesh.StoreStatus.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ContainerStatus._Factory">
+        <member name="M:Goedel.Mesh.StoreStatus._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.ContainerStatus.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.StoreStatus.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10375,7 +10500,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ContainerStatus.ToBuilder(System.Text.StringBuilder,System.Int32)">
+        <member name="M:Goedel.Mesh.StoreStatus.ToBuilder(System.Text.StringBuilder,System.Int32)">
             <summary>
             Append the response description to <paramref name="builder"/> at an indentation
             level of <paramref name="indent"/>.
@@ -10383,53 +10508,53 @@
             <param name="builder">The string builder to append the description to.</param>
             <param name="indent">The indentation level.</param>
         </member>
-        <member name="T:Goedel.Mesh.ContainerUpdate">
+        <member name="T:Goedel.Mesh.StoreUpdate">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ContainerUpdate.Envelopes">
+        <member name="P:Goedel.Mesh.StoreUpdate.Envelopes">
              <summary>
             The entries to be uploaded. 
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.ContainerUpdate.Setter(System.String,Goedel.Protocol.TokenValue)">
+        <member name="M:Goedel.Mesh.StoreUpdate.Setter(System.String,Goedel.Protocol.TokenValue)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.ContainerUpdate.Getter(System.String)">
+        <member name="M:Goedel.Mesh.StoreUpdate.Getter(System.String)">
             <inheritdoc/>
         </member>
-        <member name="F:Goedel.Mesh.ContainerUpdate._StaticProperties">
+        <member name="F:Goedel.Mesh.StoreUpdate._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Mesh.ContainerUpdate._StaticAllProperties">
+        <member name="F:Goedel.Mesh.StoreUpdate._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Mesh.ContainerUpdate._AllProperties">
+        <member name="P:Goedel.Mesh.StoreUpdate._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.ContainerUpdate._Properties">
+        <member name="P:Goedel.Mesh.StoreUpdate._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.ContainerUpdate._ParentProperties">
+        <member name="P:Goedel.Mesh.StoreUpdate._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.ContainerUpdate._Tag">
+        <member name="P:Goedel.Mesh.StoreUpdate._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.ContainerUpdate.__Tag">
+        <member name="F:Goedel.Mesh.StoreUpdate.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ContainerUpdate._Factory">
+        <member name="M:Goedel.Mesh.StoreUpdate._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.ContainerUpdate.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.StoreUpdate.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10437,7 +10562,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ContainerUpdate.ToBuilder(System.Text.StringBuilder,System.Int32)">
+        <member name="M:Goedel.Mesh.StoreUpdate.ToBuilder(System.Text.StringBuilder,System.Int32)">
             <summary>
             Append the response description to <paramref name="builder"/> at an indentation
             level of <paramref name="indent"/>.
@@ -11175,7 +11300,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.StatusResponse.ContainerStatus">
+        <member name="P:Goedel.Mesh.StatusResponse.StoreStatus">
             <summary>
             </summary>
         </member>
@@ -15486,6 +15611,12 @@
             <param name="directory">Directory in which the containers are kept.</param>
             <param name="containerName">The name of the container.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Store.AppendDirect(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.DareEnvelope})">
+            <summary>
+            Append the envelopes <paramref name="envelopes"/> to the
+            store.
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.Store.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
             <summary>

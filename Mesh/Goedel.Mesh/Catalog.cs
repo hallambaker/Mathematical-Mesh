@@ -224,6 +224,25 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
 
     #endregion
     #region Query functions
+
+    /// <summary>
+    /// Query function. This is currently a pass through to query the object indext of the 
+    /// underlying persistence store. This is broken out so as to allow later implementations
+    /// to make use of an object store on disk.
+    /// </summary>
+    /// <param name="key">Query term.</param>
+    /// <param name="result">Result if found, otherwise null.</param>
+    /// <returns>True if a result was found, otherwise false.</returns>
+    public virtual bool TryGetValue(string key, out PersistentIndexEntry? result) {
+        if (PersistenceStore.ObjectIndex.TryGetValue(key, out result)) {
+            return true;
+            }
+        result = null;
+        return false;
+        }
+
+
+
     /// <summary>
     /// Return the catalogued entry with key <paramref name="key"/> as the catalogued type.
     /// </summary>

@@ -596,7 +596,7 @@
             </summary>
             <returns>The default contact.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetStoreStatus(Goedel.Mesh.ContainerStatus)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetStoreStatus(Goedel.Mesh.StoreStatus)">
             <summary>
             Return a <see cref="T:Goedel.Mesh.ConstraintsSelect"/> instance that requests synchronization to the
             remote store whose status is described by <paramref name="statusRemote"/>.
@@ -604,7 +604,7 @@
             <param name="statusRemote">Status of the remote store.</param>
             <returns>The selection constraints.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.UpdateStore(Goedel.Mesh.ContainerUpdate)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.UpdateStore(Goedel.Mesh.StoreUpdate)">
             <summary>
             Update the store according to the values <paramref name="containerUpdate"/>.
             </summary>

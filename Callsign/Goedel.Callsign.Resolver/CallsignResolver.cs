@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 08-Mar-23 6:25:41 PM
+//  This file was automatically generated at 15-Mar-23 5:24:11 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -82,7 +82,9 @@ public abstract partial class CallsignResolver : global::Goedel.Protocol.JsonObj
 	    {"ResolverRequest", ResolverRequest._Factory},
 	    {"ResolverResponse", ResolverResponse._Factory},
 	    {"QueryRequest", QueryRequest._Factory},
-	    {"QueryResponse", QueryResponse._Factory}
+	    {"QueryResponse", QueryResponse._Factory},
+	    {"SyncRequest", SyncRequest._Factory},
+	    {"SyncResponse", SyncResponse._Factory}
 		};
 
     [ModuleInitializer]
@@ -130,7 +132,8 @@ public abstract partial class ResolverService : Goedel.Protocol.JpcInterface {
 	public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
 		
 	static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {
-				{"Query", QueryRequest._Factory}
+				{"Query", QueryRequest._Factory},
+				{"Sync", SyncRequest._Factory}
 		};
 
     ///<inheritdoc/>
@@ -139,6 +142,7 @@ public abstract partial class ResolverService : Goedel.Protocol.JpcInterface {
 			Goedel.Protocol.JsonObject request,
 			IJpcSession session) => token switch {
 		"Query" => Query(request as QueryRequest, session),
+		"Sync" => Sync(request as SyncRequest, session),
 		_ => throw new Goedel.Protocol.UnknownOperation(),
         };
 
@@ -167,6 +171,15 @@ public abstract partial class ResolverService : Goedel.Protocol.JpcInterface {
 	/// <returns>The response object from the service</returns>
     public abstract QueryResponse Query (
             QueryRequest request, IJpcSession session);
+
+    /// <summary>
+	/// Base method for implementing the transaction Sync.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+	/// <param name="session">The request context.</param>
+	/// <returns>The response object from the service</returns>
+    public abstract SyncResponse Sync (
+            SyncRequest request, IJpcSession session);
 
     }
 
@@ -203,6 +216,14 @@ public partial class ResolverServiceClient : Goedel.Protocol.JpcClientInterface 
     public virtual QueryResponse Query (QueryRequest request) =>
 			JpcSession.Post("Query", request) as QueryResponse;
 
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual SyncResponse Sync (SyncRequest request) =>
+			JpcSession.Post("Sync", request) as SyncResponse;
+
 
 	}
 
@@ -224,6 +245,15 @@ public partial class ResolverServiceDirect: ResolverServiceClient {
 	/// <returns>The response object</returns>
     public override QueryResponse Query (QueryRequest request) =>
 			Service.Query (request, JpcSession);
+
+
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public override SyncResponse Sync (SyncRequest request) =>
+			Service.Sync (request, JpcSession);
 
 
 		}
@@ -671,6 +701,190 @@ public partial class QueryResponse : ResolverResponse {
 			return Out as QueryResponse;
 			}
 		var Result = new QueryResponse ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// 
+	/// </summary>
+public partial class SyncRequest : ResolverRequest {
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, ResolverRequest._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "SyncRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new SyncRequest();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new SyncRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as SyncRequest;
+			}
+		var Result = new SyncRequest ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+	/// <summary>
+	///
+	/// 
+	/// </summary>
+public partial class SyncResponse : ResolverResponse {
+
+
+    ///<inheritdoc/>
+	public override void Setter(
+			string tag, TokenValue value) { 
+		switch (tag) {
+
+			default: {
+				base.Setter(tag, value);
+				break;
+				}
+			}
+		}
+
+    ///<inheritdoc/>
+    public override TokenValue Getter(
+            string tag) {
+        switch (tag) {
+
+            default: {
+                return base.Getter(tag);
+                }
+            }
+        }
+
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = new() {
+
+        };
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(_StaticProperties, ResolverResponse._StaticAllProperties);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "SyncResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new SyncResponse();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new SyncResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as SyncResponse;
+			}
+		var Result = new SyncResponse ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

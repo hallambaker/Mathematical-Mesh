@@ -72,7 +72,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public abstract string AccountAddress { get; }
 
     ///<summary>The account address in canonical format udf@domain.</summary> 
-    public string AccountAddressUdf => Profile.Udf + "@" + ServiceDns;
+    public string AccountAddressUdf => Profile.UdfString + "@" + ServiceDns;
 
     ///<summary>The default account callsign.</summary> 
     public string AccountCallsign { get; set; }
@@ -103,11 +103,12 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public abstract Connection Connection { get; }
 
     ///<summary>Contact address for the callsign registry broker.</summary> 
-    public string CallsignRegistry { get; set; }
+    public string CallsignRegistry => ProfileRegistryCallsign?.AccountAddress;
+
 
 
     public ProfileAccount ProfileRegistryCallsign { 
-                get => profileRegistryCallsign;
+                get => profileRegistryCallsign ?? GetProfileRegistryCallsign();
                 set {
                     profileRegistryCallsign = value;
                     var accounts = new List<string> { value.AccountAddress };
@@ -115,8 +116,12 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                     } }
 
 
-    public ProfileAccount profileRegistryCallsign;
+    ProfileAccount profileRegistryCallsign;
 
+    ProfileAccount GetProfileRegistryCallsign() {
+        ProfileRegistryCallsign = AccountHostAssignment.CallsignServiceProfile;
+        return ProfileRegistryCallsign;
+        }
 
 
     /// <summary>
@@ -207,7 +212,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="profile">The profile.</param>
     /// <returns>Path to the directory containing the profile stores.</returns>
     public static string GetStoresDirectory(IMeshMachineClient meshMachine, Profile profile) =>
-        Path.Combine(meshMachine.DirectoryMesh, profile.Udf);
+        Path.Combine(meshMachine.DirectoryMesh, profile.UdfString);
 
     ///<summary>Dictionary locating the stores connected to the context.</summary>
     public Dictionary<string, SyncStatus> DictionaryStores = new();
@@ -308,7 +313,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
                         List<string> roles = null) {
 
 
-        var pin = UDF.AuthenticationKey(bits);
+        var pin = Udf.AuthenticationKey(bits);
         var expires = System.DateTime.Now.AddTicks(validity);
         var messagePin = new MessagePin(pin, automatic, expires, AccountAddress, action) {
             Roles = roles
@@ -369,7 +374,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         // Erase from the registry
         MeshHost.Deregister(this);
-        MeshHost.Delete(Profile.Udf);
+        MeshHost.Delete(Profile.UdfString);
         }
 
 
@@ -422,7 +427,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         var status = meshClient.Status(statusRequest);
 
-        status.ContainerStatus.AssertNotNull(ServerResponseInvalid.Throw, status);
+        status.StoreStatus.AssertNotNull(ServerResponseInvalid.Throw, status);
 
         if (statusRequest.CatalogedDeviceDigest != null & status.EnvelopedCatalogedDevice != null) {
             var catalogedDevice = status.EnvelopedCatalogedDevice.Decode(this);
@@ -431,7 +436,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         var constraintsSelects = new List<ConstraintsSelect>();
 
-        foreach (var container in status.ContainerStatus) {
+        foreach (var container in status.StoreStatus) {
             var constraintsSelect = GetStoreStatus(container);
             if (constraintsSelect != null) {
                 constraintsSelects.Add(constraintsSelect);
@@ -502,7 +507,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <returns>If true, the synchronization has completed.</returns>
     public bool SyncProgressUpload(int maxEnvelopes = -1) {
         bool complete = true;
-        var updates = new List<ContainerUpdate>();
+        var updates = new List<StoreUpdate>();
 
         //// Always do the devices first (if we are an admin device)
         //if (SyncStatusDevice != null) {
@@ -532,7 +537,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         return complete;
         }
 
-    static int AddUpload(List<ContainerUpdate> containerUpdates, SyncStatus syncStatus, int maxEnvelopes = -1) {
+    static int AddUpload(List<StoreUpdate> containerUpdates, SyncStatus syncStatus, int maxEnvelopes = -1) {
 
         //Console.WriteLine($"Initial sync of {syncStatus.Store.StoreName}");
 
@@ -545,8 +550,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         if (syncStatus.Index <= syncStatus.Store.FrameCount) {
             var sequence = syncStatus.Store.Sequence;
             var envelopes = new List<DareEnvelope>();
-            var containerUpdate = new ContainerUpdate() {
-                Container = syncStatus.Store.StoreName,
+            var containerUpdate = new StoreUpdate() {
+                Store = syncStatus.Store.StoreName,
                 Envelopes = envelopes,
                 //Digest = sequence.Digest
                 // put the digest value here
@@ -589,7 +594,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             };
 
         var anchorAccount = new Anchor() {
-            Udf = Profile.Udf,
+            Udf = Profile.UdfString,
             Validation = "Self"
             };
         // ContextMesh.ProfileMesh.UDF 
@@ -611,13 +616,13 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <param name="statusRemote">Status of the remote store.</param>
     /// <returns>The selection constraints.</returns>
-    public ConstraintsSelect GetStoreStatus(ContainerStatus statusRemote) {
-        if (DictionaryStores.TryGetValue(statusRemote.Container, out var syncStore)) {
+    public ConstraintsSelect GetStoreStatus(StoreStatus statusRemote) {
+        if (DictionaryStores.TryGetValue(statusRemote.Store, out var syncStore)) {
             var storeLocal = syncStore.Store;
 
             return storeLocal.FrameCount >= statusRemote.Index ? null :
                 new ConstraintsSelect() {
-                    Container = statusRemote.Container,
+                    Store = statusRemote.Store,
                     IndexMax = statusRemote.Index,
                     IndexMin = (int)storeLocal.FrameCount
                     };
@@ -627,12 +632,12 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             //using var storeLocal = new Store(StoresDirectory, statusRemote.Container,
             //            decrypt: false, create: false);
             //var frameCount = storeLocal.FrameCount;
-            var frameCount = Store.GetFrameCount(StoresDirectory, statusRemote.Container);
+            var frameCount = Store.GetFrameCount(StoresDirectory, statusRemote.Store);
 
             //Console.WriteLine($"Sequence {statusRemote.Sequence}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
             return frameCount >= statusRemote.Index ? null :
                 new ConstraintsSelect() {
-                    Container = statusRemote.Container,
+                    Store = statusRemote.Store,
                     IndexMax = statusRemote.Index,
                     IndexMin = (int)frameCount
                     };
@@ -644,9 +649,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// </summary>
     /// <param name="containerUpdate">The update to apply.</param>
     /// <returns>The number of envelopes successfully added.</returns>
-    public virtual int UpdateStore(ContainerUpdate containerUpdate) {
+    public virtual int UpdateStore(StoreUpdate containerUpdate) {
         int count = 0;
-        if (DictionaryStores.TryGetValue(containerUpdate.Container, out var syncStore)) {
+        if (DictionaryStores.TryGetValue(containerUpdate.Store, out var syncStore)) {
             var store = syncStore.Store;
             foreach (var entry in containerUpdate.Envelopes) {
                 if (entry.Index == 0) {
@@ -666,7 +671,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         else {
             // we have zero envelopes being returned in this update.
 
-            Store.Append(StoresDirectory, this, containerUpdate.Envelopes, containerUpdate.Container);
+            Store.Append(StoresDirectory, this, containerUpdate.Envelopes, containerUpdate.Store);
             return containerUpdate.Envelopes.Count;
             }
 
@@ -977,7 +982,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         var callsignBinding = new CallsignBinding() {
             Canonical = accountAddress.CannonicalAccountAddress(),
             Display = accountAddress,
-            ProfileUdf = profile.Udf,
+            ProfileUdf = profile.UdfString,
             Services = new() {
                 new NamedService() {
                     Prefix = MeshService.WellKnown
@@ -1006,6 +1011,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     //    }
 
     #endregion
+
+
 
 
     }

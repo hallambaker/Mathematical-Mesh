@@ -175,7 +175,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("public static string GetEnvelopeId(string messageID) =>\n{0}", _Indent);
-			_Output.Write ("            UDF.ContentDigestOfUDF(messageID);\n{0}", _Indent);
+			_Output.Write ("            Udf.ContentDigestOfUDF(messageID);\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 				}
 	
@@ -192,14 +192,14 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("static string MakeID(string udf, string content) {{\n{0}", _Indent);
-			_Output.Write ("    var (code, bds) = UDF.Parse(udf);\n{0}", _Indent);
+			_Output.Write ("    var (code, bds) = Udf.Parse(udf);\n{0}", _Indent);
 			_Output.Write ("    return code switch\n{0}", _Indent);
 			_Output.Write ("        {{\n{0}", _Indent);
 			_Output.Write ("            UdfTypeIdentifier.Digest_SHA_3_512 => \n{0}", _Indent);
-			_Output.Write ("                UDF.ContentDigestOfDataString(\n{0}", _Indent);
+			_Output.Write ("                Udf.ContentDigestOfDataString(\n{0}", _Indent);
 			_Output.Write ("                bds, content, cryptoAlgorithmId: \n{0}", _Indent);
 			_Output.Write ("                    CryptoAlgorithmId.SHA_3_512),\n{0}", _Indent);
-			_Output.Write ("            _ => UDF.ContentDigestOfDataString(\n{0}", _Indent);
+			_Output.Write ("            _ => Udf.ContentDigestOfDataString(\n{0}", _Indent);
 			_Output.Write ("            bds, content, cryptoAlgorithmId: \n{0}", _Indent);
 			_Output.Write ("                    CryptoAlgorithmId.SHA_2_512),\n{0}", _Indent);
 			_Output.Write ("            }};\n{0}", _Indent);
@@ -551,7 +551,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			 var account = message.AccountAddress;
 			 var pin = Connect.ConnectPINMessagePin.Pin;
 			 var action = MeshConstants.MessagePINActionDevice;
-			 var (code,key) = UDF.Parse(pin);
+			 var (code,key) = Udf.Parse(pin);
 			 var saltedPINData = action.ToUTF8().GetMAC(key, CryptoAlgorithmId.HMAC_SHA_2_512);
 			 var saltedPIN = MessagePin.SaltPIN (pin, action);
 			 var PinId = MessagePin.GetPinId(pin, account);

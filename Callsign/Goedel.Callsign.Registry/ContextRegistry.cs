@@ -32,6 +32,7 @@ public class ContextRegistry : ContextAccount {
 
     public CatalogRegistration CatalogRegistration;
 
+    public CatalogNotary CatalogNotary;
     ///<summary>The callsign mapping</summary> 
     public CallsignMapping CallsignMapping { get; }
 
@@ -45,7 +46,7 @@ public class ContextRegistry : ContextAccount {
     public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => StaticCatalogDelegates;
     static readonly Dictionary<string, StoreFactoryDelegate> StaticCatalogDelegates = new() {
             { CatalogRegistration.Label, CatalogRegistration.Factory },
-
+            { CatalogNotary.Label, CatalogNotary.Factory },
         // All contexts have a capability catalog:
             { CatalogAccess.Label, CatalogAccess.Factory },
             { CatalogPublication.Label, CatalogPublication.Factory }
@@ -81,6 +82,7 @@ public class ContextRegistry : ContextAccount {
         CallsignMapping = new CallsignMapping();
         
         CatalogRegistration = GetStore(CatalogRegistration.Label) as CatalogRegistration;
+        CatalogNotary = GetStore(CatalogNotary.Label) as CatalogNotary;
         CatalogRegistration.CallsignMapping = CallsignMapping;
 
         KeyCollection.Add(KeyCommonEncryption);
@@ -134,7 +136,7 @@ public class ContextRegistry : ContextAccount {
 
         // Since the service does not know this account (yet)
         var credentialPrivate = new MeshKeyCredentialPrivate(
-                    activationRegistry.CommonAuthenticationKey as KeyPairAdvanced, profileRegistry.Udf);
+                    activationRegistry.CommonAuthenticationKey as KeyPairAdvanced, profileRegistry.UdfString);
         var registryClient = contextUser.MeshMachine.GetMeshClient(credentialPrivate, RegistryName);
         var createResponse = registryClient.BindAccount(createRequest);
         createResponse.AssertSuccess();
@@ -158,6 +160,7 @@ public class ContextRegistry : ContextAccount {
             transaction.Transact();
             }
 
+        //contextUser.CallsignRegistry = RegistryName;
         contextUser.ProfileRegistryCallsign = profileRegistry;
         contextRegistry.ProfileRegistryCallsign = profileRegistry;
 
@@ -255,7 +258,8 @@ public class ContextRegistry : ContextAccount {
 
             registrationResponse = new CallsignRegistrationResponse() {
                 Registered = true,
-                CatalogedRegistration = catalogedRegistration
+                CatalogedRegistration = catalogedRegistration,
+                MessageId = registrationRequest.GetResponseId(),
                 };
             transactRequest.CatalogUpdate(CatalogRegistration, catalogedRegistration);
 

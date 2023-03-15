@@ -106,7 +106,7 @@ public partial class DHDomain {
     public byte[] UDFData {
         get {
             var DEREncoded = DER();
-            udfData ??= UDF.FromKeyInfo(DEREncoded);
+            udfData ??= Udf.FromKeyInfo(DEREncoded);
             return udfData;
             }
         }

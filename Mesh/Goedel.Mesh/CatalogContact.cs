@@ -310,7 +310,7 @@ public partial class CatalogedContact {
     /// Default constructor for deserializers.
     /// </summary>
 
-    public CatalogedContact() => Key = UDF.Nonce();
+    public CatalogedContact() => Key = Udf.Nonce();
 
 
 
@@ -323,7 +323,7 @@ public partial class CatalogedContact {
     public CatalogedContact(Contact contact, bool self = false) {
         Contact = contact;
         Self = self;
-        Key = contact.Id ?? UDF.Nonce();
+        Key = contact.Id ?? Udf.Nonce();
         }
 
     #endregion

@@ -39,7 +39,7 @@ public partial class Shell {
 
 
         var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
-        var digest = Cryptography.UDF.ContentDigestOfDigestString(
+        var digest = Cryptography.Udf.ContentDigestOfDigestString(
             contentDigest, contentType, cryptoAlgorithmId: hashAlgorithm, bits: bits);
 
         if (expect == null) {
@@ -88,10 +88,10 @@ public partial class Shell {
         var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
         var expect = options.Expect.Value;
 
-        var key = options.DigestKey.Value ?? Cryptography.UDF.Nonce();
+        var key = options.DigestKey.Value ?? Cryptography.Udf.Nonce();
 
         var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
-        var digest = Cryptography.UDF.ContentDigestOfDigestString(
+        var digest = Cryptography.Udf.ContentDigestOfDigestString(
             contentDigest, contentType, cryptoAlgorithmId: hashAlgorithm, key: key, bits: bits);
 
         if (expect == null) {

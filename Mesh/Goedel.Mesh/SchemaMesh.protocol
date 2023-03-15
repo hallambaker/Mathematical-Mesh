@@ -806,6 +806,13 @@
 			Description
 				|Application activations granted to the device.
 
+
+	Structure CatalogedSignature
+		Inherits CatalogedEntry
+		Description
+			|Cataloged Signature
+
+
 	Structure CatalogedPublication
 		Inherits CatalogedEntry
 		Description

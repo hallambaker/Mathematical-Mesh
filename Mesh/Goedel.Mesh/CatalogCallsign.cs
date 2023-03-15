@@ -58,8 +58,10 @@ public class CatalogCallsign : Catalog<CatalogedCallsign> {
                 CryptoParameters cryptoParameters = null,
                 IKeyCollection keyCollection = null,
                 bool decrypt = true,
-                bool create = true) =>
-        new CatalogCallsign(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, decrypt, create);
+                bool create = true,
+                byte[] bitmask = null) =>
+        new CatalogCallsign(directory, storeId, policy, cryptoParameters, keyCollection, 
+            meshClient, decrypt, create, bitmask);
 
     /// <summary>
     /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -82,9 +84,11 @@ public class CatalogCallsign : Catalog<CatalogedCallsign> {
                 IKeyCollection keyCollection = null,
                 IMeshClient meshClient = null,
                 bool decrypt = true,
-                bool create = true) :
+                bool create = true,
+                byte[] bitmask = null) :
         base(directory, storeName ?? Label,
-                    policy, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                    policy, cryptoParameters, keyCollection, 
+                    decrypt: decrypt, create: create, bitmask: bitmask) {
         }
 
     #endregion

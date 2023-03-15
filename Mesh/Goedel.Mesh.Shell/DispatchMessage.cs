@@ -103,7 +103,7 @@ public partial class Shell {
 
 
         //var message = contextAccount.GetPendingMessageByID(messageID, out var found);
-        contextAccount.TryGetMessageById(messageID, out var index).AssertTrue(MessageIdNotFound.Throw);
+        contextAccount.TryGetMessageByMessageId(messageID, out var index).AssertTrue(MessageIdNotFound.Throw);
         var message = index.Message;
 
 

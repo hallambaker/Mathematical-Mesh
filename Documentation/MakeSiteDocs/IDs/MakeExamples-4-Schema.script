@@ -92,21 +92,21 @@
 #zfile CreateExamples SchemaCode1 "Examples\\SchemaCode1.md" Example
 ~~~~
 public static string GetEnvelopeId(string messageID) =>
-            UDF.ContentDigestOfUDF(messageID);
+            Udf.ContentDigestOfUDF(messageID);
 ~~~~
 #end zfile
 
 #zfile CreateExamples SchemaCode2 "Examples\\SchemaCode2.md" Example
 ~~~~
 static string MakeID(string udf, string content) {
-    var (code, bds) = UDF.Parse(udf);
+    var (code, bds) = Udf.Parse(udf);
     return code switch
         {
             UdfTypeIdentifier.Digest_SHA_3_512 => 
-                UDF.ContentDigestOfDataString(
+                Udf.ContentDigestOfDataString(
                 bds, content, cryptoAlgorithmId: 
                     CryptoAlgorithmId.SHA_3_512),
-            _ => UDF.ContentDigestOfDataString(
+            _ => Udf.ContentDigestOfDataString(
             bds, content, cryptoAlgorithmId: 
                     CryptoAlgorithmId.SHA_2_512),
             };
@@ -278,7 +278,7 @@ ResponseID
 #% var account = message.AccountAddress;
 #% var pin = Connect.ConnectPINMessagePin.Pin;
 #% var action = MeshConstants.MessagePINActionDevice;
-#% var (code,key) = UDF.Parse(pin);
+#% var (code,key) = Udf.Parse(pin);
 #% var saltedPINData = action.ToUTF8().GetMAC(key, CryptoAlgorithmId.HMAC_SHA_2_512);
 #% var saltedPIN = MessagePin.SaltPIN (pin, action);
 #% var PinId = MessagePin.GetPinId(pin, account);

@@ -33,7 +33,7 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult KeyNonce(KeyNonce options) => new ResultKey() {
         Success = true,
-        Key = Cryptography.UDF.Nonce(options.Bits.ValueDefaulted(128))
+        Key = Cryptography.Udf.Nonce(options.Bits.ValueDefaulted(128))
         };
 
     /// <summary>
@@ -44,7 +44,7 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult KeySecret(KeySecret options) => new ResultKey() {
         Success = true,
-        Key = Cryptography.UDF.EncryptionKey(options.Bits.ValueDefaulted(128))
+        Key = Cryptography.Udf.EncryptionKey(options.Bits.ValueDefaulted(128))
         };
 
 
@@ -58,8 +58,8 @@ public partial class Shell {
         var bits = options.Bits.ValueDefaulted(140);
         var bitsid = Math.Min(bits * 2, 440);
 
-        var key = Cryptography.UDF.EncryptionKey(bits);
-        var identifier = Cryptography.UDF.ContentDigestOfDataString(key.ToUTF8(),
+        var key = Cryptography.Udf.EncryptionKey(bits);
+        var identifier = Cryptography.Udf.ContentDigestOfDataString(key.ToUTF8(),
                 UDFConstants.UDFEncryption, bits = bitsid);
 
 

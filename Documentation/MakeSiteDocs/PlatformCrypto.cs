@@ -523,10 +523,10 @@ public partial class CurveKey {
 
         if (name != null) {
             Name = cryptoAlgorithmID.ToJoseID() + name;
-            UDF = Goedel.Cryptography.UDF.TestKey(cryptoAlgorithmID, prefix + Name);
+            UDF = Goedel.Cryptography.Udf.TestKey(cryptoAlgorithmID, prefix + Name);
             }
 
-        KeyPair = Goedel.Cryptography.UDF.DeriveKey(UDF, KeySecurity.Exportable, KeyUses.Any) as KeyPairAdvanced;
+        KeyPair = Goedel.Cryptography.Udf.DeriveKey(UDF, KeySecurity.Exportable, KeyUses.Any) as KeyPairAdvanced;
         SetParameters(KeyPair, extended);
 
         }
@@ -779,12 +779,12 @@ public class CryptoGroup {
 
     public CryptoGroup() {
 
-        KeyUDFGroup = UDF.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: GroupName.ToUTF8());
-        KeyUDFDevice = UDF.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: UserName.ToUTF8());
+        KeyUDFGroup = Udf.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: GroupName.ToUTF8());
+        KeyUDFDevice = Udf.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: UserName.ToUTF8());
 
 
 
-        KeyPairGroup = UDF.DeriveKey(KeyUDFGroup, keySecurity: KeySecurity.Exportable) as KeyPairEd25519;
+        KeyPairGroup = Udf.DeriveKey(KeyUDFGroup, keySecurity: KeySecurity.Exportable) as KeyPairEd25519;
         KeyPairGroup.Locator = KeyUDFGroup;
 
 
@@ -792,7 +792,7 @@ public class CryptoGroup {
         var CryptoParametersGroup = new CryptoParameters(recipient: KeyPairGroup);
 
 
-        KeyPairDevice = UDF.DeriveKey(KeyUDFDevice, keySecurity: KeySecurity.Exportable) as KeyPairEd25519;
+        KeyPairDevice = Udf.DeriveKey(KeyUDFDevice, keySecurity: KeySecurity.Exportable) as KeyPairEd25519;
 
         KeyPairService = KeyPairGroup.GetThresholdKey(KeyPairDevice) as KeyPairEd25519;
 
@@ -861,11 +861,11 @@ public class CryptoCombine {
         var random1 = KeyDeriveHKDF.Random(seed, 128, "Signature".ToUTF8());
         var random2 = KeyDeriveHKDF.Random(seed, 128, "OverlaySignature".ToUTF8());
 
-        SeedAliceDevice = UDF.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: random1);
-        SeedAliceOverlay = UDF.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: random2);
+        SeedAliceDevice = Udf.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: random1);
+        SeedAliceOverlay = Udf.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: random2);
 
-        KeyPairDevice = UDF.DeriveKey(SeedAliceDevice, KeySecurity.Exportable) as KeyPairEd25519;
-        KeyPairOverlay = UDF.DeriveKey(SeedAliceOverlay, KeySecurity.Exportable) as KeyPairEd25519;
+        KeyPairDevice = Udf.DeriveKey(SeedAliceDevice, KeySecurity.Exportable) as KeyPairEd25519;
+        KeyPairOverlay = Udf.DeriveKey(SeedAliceOverlay, KeySecurity.Exportable) as KeyPairEd25519;
 
         CombinedPrivate = KeyPairDevice.Combine(KeyPairDevice) as KeyPairEd25519;
         CombinedPublic = KeyPairDevice.CombinePublic(KeyPairDevice) as KeyPairEd25519;

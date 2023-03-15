@@ -170,7 +170,7 @@ public static partial class Extensions {
         var keyUses = GetMeshKeyType(operation);
         var cryptoAlgorithmID = GetCryptoAlgorithmID(operation, secretSeed);
 
-        var result = UDF.DeriveKey(secretSeed.PrivateValue, keyCollection,
+        var result = Udf.DeriveKey(secretSeed.PrivateValue, keyCollection,
                 keySecurity, keyUses: keyUses, cryptoAlgorithmID, keyName) as KeyPairAdvanced;
 
         return result;

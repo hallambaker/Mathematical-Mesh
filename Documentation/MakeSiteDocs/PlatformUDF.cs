@@ -140,13 +140,13 @@ public partial class DerivedKey {
 
         AlgorithmID = specific == UdfAlgorithmIdentifier.Any ? type : specific;
 
-        var seed = GC.UDF.KeySpecifier(type);
+        var seed = GC.Udf.KeySpecifier(type);
         var random = KeyDeriveHKDF.Random(seed, 128, "UDF examples".ToUTF8());
 
-        UDF = GC.UDF.DerivedKey(type, data: random);
-        IKM = GC.UDF.DerivedKey(UDF);
+        UDF = GC.Udf.DerivedKey(type, data: random);
+        IKM = GC.Udf.DerivedKey(UDF);
 
-        Salt = GC.UDF.KeySpecifier(AlgorithmID);
+        Salt = GC.Udf.KeySpecifier(AlgorithmID);
 
         HKDF = new KeyDeriveHKDF(IKM, Salt, CryptoAlgorithmId.HMAC_SHA_2_512);
 

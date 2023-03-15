@@ -60,7 +60,7 @@ public partial class TestPersist : UnitTestSet {
         Status = "Open",
         Created = Now,
         Modified = Now,
-        UserProfileUDF = UDF.PresentationBase32(AccountIDAlice.ToBytes())
+        UserProfileUDF = Udf.PresentationBase32(AccountIDAlice.ToBytes())
         };
 
     readonly static TestItem AccountBob = new() {
@@ -68,7 +68,7 @@ public partial class TestPersist : UnitTestSet {
         Status = "Open",
         Created = Now,
         Modified = Now,
-        UserProfileUDF = UDF.PresentationBase32(AccountIDBob.ToBytes())
+        UserProfileUDF = Udf.PresentationBase32(AccountIDBob.ToBytes())
         };
 
 

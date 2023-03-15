@@ -119,7 +119,7 @@ key unambiguously but does not provide the value:
 
 
 #zfile CreateExamples UDFEncrypt "Examples\\UDFEncrypt.md" Example
-#% var data = UDF.Parse (Example.ResultUDFSecret.Key, out var code);
+#% var data = Udf.Parse (Example.ResultUDFSecret.Key, out var code);
 ~~~~
 KeyValue:#{data.ToStringBase16FormatHex()}
 
@@ -452,13 +452,13 @@ This fingerprint MAY be specified with higher or lower precision as appropriate.
 
 <dl>
 <dt>100 bit precision
-<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 100)}
+<dd>#{Udf.ContentDigestOfDataString(Data, ContentType, 100)}
 <dt>120 bit precision
-<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 120)}
+<dd>#{Udf.ContentDigestOfDataString(Data, ContentType, 120)}
 <dt>200 bit precision
-<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 200)}
+<dd>#{Udf.ContentDigestOfDataString(Data, ContentType, 200)}
 <dt>260 bit precision
-<dd>#{UDF.ContentDigestOfDataString(Data, ContentType, 260)}
+<dd>#{Udf.ContentDigestOfDataString(Data, ContentType, 260)}
 </dl>
 
 ######Using SHA-3-512 Digest
@@ -492,7 +492,7 @@ Data = #{Datac3.ToStringBase16FormatHex()}
 ~~~~
 
 The UTF8 SHA-3-512 Content Digest is
-#{UDF.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmId.SHA_3_512)}
+#{Udf.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmId.SHA_3_512)}
 
 #end zfile
 
@@ -500,7 +500,7 @@ The UTF8 SHA-3-512 Content Digest is
 #% var DataBytes = DataString.ToUTF8();
 #% var ContentType = "text/plain";
 #% var HashData = DataBytes.GetDigest(CryptoAlgorithmId);
-#% var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType);
+#% var UDFDataBuffer = Udf.UDFBuffer(HashData, ContentType);
 #% byte[] UDFData ;
 
 ~~~~
@@ -515,7 +515,7 @@ H(&<Data>) = #!
 H(&<Content-ID> + ‘:’ + H(&<Data>)) =  #!
 #else
 #% var keyBytes = key.ToUTF8();
-#% var macKey = UDF.KeyStringToKey(key,512);
+#% var macKey = Udf.KeyStringToKey(key,512);
 #% UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmId.HMAC_SHA_2_512);
 #% var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmId.HMAC_SHA_2_512);
 PRK(Key) =  #!
@@ -526,13 +526,13 @@ HKDF(Key) =  #!
 
 MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  #!
 #end if
-#% var binaryUDF = UDF.DigestToUDFBinary (HashData, ContentType, 140, CryptoAlgorithmId, key);
+#% var binaryUDF = Udf.DigestToUDFBinary (HashData, ContentType, 140, CryptoAlgorithmId, key);
 #{UDFData.ToStringBase16FormatHex()}
 
 The prefixed Binary Data Sequence is thus#{binaryUDF.ToStringBase16FormatHex()}
 ~~~~
 
-The 125 bit fingerprint value is #{UDF.PresentationBase32 (binaryUDF, 140)}
+The 125 bit fingerprint value is #{Udf.PresentationBase32 (binaryUDF, 140)}
 
 #end method3
 
@@ -560,7 +560,7 @@ compression is never used:
 
 #% MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, key);
 #!The SHA-3-512 commitment with the same inputs is:
-#!#{UDF.DataToFormat(Data, ContentType, 125, CryptoAlgorithmId.SHA_3_512, key)}
+#!#{Udf.DataToFormat(Data, ContentType, 125, CryptoAlgorithmId.SHA_3_512, key)}
 #end zfile
 
 

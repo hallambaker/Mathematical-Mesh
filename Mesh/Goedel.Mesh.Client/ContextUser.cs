@@ -135,7 +135,7 @@ public partial class ContextUser : ContextAccount {
         ServiceDns = ProfileUser.AccountAddress.GetService();
 
         // Get the device key so that we can decrypt the activation record.
-        var deviceKeySeed = KeyCollection.LocatePrivateKey(ProfileDevice.Udf) as PrivateKeyUDF;
+        var deviceKeySeed = KeyCollection.LocatePrivateKey(ProfileDevice.UdfString) as PrivateKeyUDF;
         deviceSeedId = deviceKeySeed.KeyId;
 
         BaseDecrypt = deviceKeySeed.GenerateContributionKeyPair(MeshKeyType.Base,
@@ -196,7 +196,7 @@ public partial class ContextUser : ContextAccount {
     public void DescribeContext(TextWriter output) {
 
 
-        output.WriteLine($"Profile {Profile.Udf}");
+        output.WriteLine($"Profile {Profile.UdfString}");
         output.WriteLine($"    Account Common {ProfileUser.AccountAddress}");
         output.WriteLine($"        Signature {ProfileUser.CommonSignature.Udf}");
         output.WriteLine($"        Authentication {ProfileUser.CommonAuthentication.Udf}");
@@ -208,7 +208,7 @@ public partial class ContextUser : ContextAccount {
             $"Loaded = {ActivationAccount.AccountAuthentication != null}");
         output.WriteLine($"        Encryption {ConnectionAccount?.Encryption?.Udf}" +
             $"Loaded = {ActivationAccount.AccountEncryption != null}");
-        output.WriteLine($"    Device {ProfileDevice.Udf} {deviceSeedId}");
+        output.WriteLine($"    Device {ProfileDevice.UdfString} {deviceSeedId}");
         output.WriteLine($"        Signature {ProfileDevice.Signature.CryptoKey.KeyIdentifier} " +
             $"Loaded {ActivationAccount.AccountSignature != null}");
         output.WriteLine($"        Authentication {ProfileDevice.Authentication.CryptoKey.KeyIdentifier} " +
@@ -280,7 +280,7 @@ public partial class ContextUser : ContextAccount {
 
         // Since the service does not know this account (yet)
         var credentialPrivate = new MeshKeyCredentialPrivate(
-                    KeyCommonAuthentication as KeyPairAdvanced, ProfileUser.Udf);
+                    KeyCommonAuthentication as KeyPairAdvanced, ProfileUser.UdfString);
 
 
         MeshClient = MeshMachine.GetMeshClient(credentialPrivate, accountAddress);
@@ -291,7 +291,7 @@ public partial class ContextUser : ContextAccount {
         ProfileService = helloResponse.EnvelopedProfileService.Decode();
 
         // Update the profile
-        ProfileUser.ServiceUdf = ProfileService.Udf;
+        ProfileUser.ServiceUdf = ProfileService.UdfString;
         ProfileUser.AccountAddress = accountAddress;
         ProfileUser.Envelope(KeyProfile);
 
@@ -364,7 +364,7 @@ public partial class ContextUser : ContextAccount {
                     ProfileDevice.KeyEncrypt);
 
         foreach (var update in transact.TransactRequest.Updates) {
-            DictionaryStores.TryGetValue(update.Container, out var status).AssertTrue(NYI.Throw);
+            DictionaryStores.TryGetValue(update.Store, out var status).AssertTrue(NYI.Throw);
             status.Index = update.Envelopes.Count;
             }
 
@@ -438,7 +438,7 @@ public partial class ContextUser : ContextAccount {
             };
         contact.Sources.Add(tagged);
 
-        contact.Id = ProfileUser.Udf;
+        contact.Id = ProfileUser.UdfString;
 
         var transact = TransactBegin();
         var catalog = transact.GetCatalogContact();
@@ -657,8 +657,22 @@ public partial class ContextUser : ContextAccount {
         }
 
 
-    public bool TryGetMessageById(
-                string messageID, out SpoolIndexEntry index) {
+    public bool TryGetMessageResponse(
+                Message request,
+                out SpoolIndexEntry response) {
+
+        var responseId = request.GetResponseId();
+        DateTime? notBefore = request?.DareEnvelope?.Header?.ContentMeta?.Created;
+
+        return TryGetMessageByMessageId(responseId, out response, notBefore);
+
+        }
+
+
+    public bool TryGetMessageByMessageId(
+                string messageID, out SpoolIndexEntry index,
+                DateTime? notBefore=null) {
+        notBefore.Future();
         var inbound = GetSpoolInbound();
         index = inbound.GetByMessageId(messageID);
         return index != null;
@@ -807,7 +821,7 @@ public partial class ContextUser : ContextAccount {
 
         // Since the service does not know this account (yet)
         var credentialPrivate = new MeshKeyCredentialPrivate(
-                    activationGroup.CommonAuthenticationKey as KeyPairAdvanced, profileGroup.Udf);
+                    activationGroup.CommonAuthenticationKey as KeyPairAdvanced, profileGroup.UdfString);
 
         var groupClient = MeshMachine.GetMeshClient(credentialPrivate, groupName);
 
@@ -1387,7 +1401,7 @@ public partial class ContextUser : ContextAccount {
     /// contact information in response to an initial contact request.</param>
     /// <returns></returns>
     public ProcessResult Process(string messageId, bool accept = true, bool reciprocate = true) {
-        TryGetMessageById(messageId, out var index).AssertTrue(MessageIdNotFound.Throw);
+        TryGetMessageByMessageId(messageId, out var index).AssertTrue(MessageIdNotFound.Throw);
         index.IsOpen.AssertTrue(NYI.Throw); // make a better response for already done.
 
         return Process(index.Message, accept, reciprocate);
@@ -1531,7 +1545,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="localName">Local name for the contact</param>
     /// <returns></returns>
     public Enveloped<Contact> GetSelf(string localName) {
-        var self = GetContact(ProfileUser.Udf);
+        var self = GetContact(ProfileUser.UdfString);
 
         foreach (var tagged in self.Contact.Sources) {
             if (tagged.EnvelopedSource == null) {

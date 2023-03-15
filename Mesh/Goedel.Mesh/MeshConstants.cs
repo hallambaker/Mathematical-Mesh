@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 08-Mar-23 6:24:33 PM
+//  This file was automatically generated at 15-Mar-23 5:24:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -36,6 +36,8 @@ public enum StoreType {
     Outbound,
     ///<summary>Archive Spool</summary>
     Archive,
+    ///<summary>Notary Catalog</summary>
+    Notary,
     ///<summary>Access Catalog</summary>
     Access,
     ///<summary>Application Catalog</summary>
@@ -198,6 +200,8 @@ public static partial class MeshConstants {
     public const string  StoreTypeOutboundTag = "Outbound";
     ///<summary>Jose enumeration tag for StoreType.Archive</summary>
     public const string  StoreTypeArchiveTag = "Archive";
+    ///<summary>Jose enumeration tag for StoreType.Notary</summary>
+    public const string  StoreTypeNotaryTag = "Notary";
     ///<summary>Jose enumeration tag for StoreType.Access</summary>
     public const string  StoreTypeAccessTag = "Access";
     ///<summary>Jose enumeration tag for StoreType.Application</summary>
@@ -236,6 +240,7 @@ public static partial class MeshConstants {
             StoreTypeInboundTag => StoreType.Inbound,
             StoreTypeOutboundTag => StoreType.Outbound,
             StoreTypeArchiveTag => StoreType.Archive,
+            StoreTypeNotaryTag => StoreType.Notary,
             StoreTypeAccessTag => StoreType.Access,
             StoreTypeApplicationTag => StoreType.Application,
             StoreTypeBookmarkTag => StoreType.Bookmark,
@@ -264,6 +269,7 @@ public static partial class MeshConstants {
             StoreType.Inbound => StoreTypeInboundTag,
             StoreType.Outbound => StoreTypeOutboundTag,
             StoreType.Archive => StoreTypeArchiveTag,
+            StoreType.Notary => StoreTypeNotaryTag,
             StoreType.Access => StoreTypeAccessTag,
             StoreType.Application => StoreTypeApplicationTag,
             StoreType.Bookmark => StoreTypeBookmarkTag,

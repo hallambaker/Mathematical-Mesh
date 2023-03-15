@@ -101,6 +101,44 @@ public partial class ProfileService {
         return new ProfileService(secretSeed, keyCollection, persist);
         }
 
+    public static void CreateService(
+                IMeshMachine meshMachine,
+                out ProfileService profileService,
+                out ProfileHost profileHost,
+                out ActivationHost activationDevice,
+                out ConnectionService connectionDevice) {
+
+        // Create the service profile
+        profileService = ProfileService.Generate(meshMachine.KeyCollection);
+
+        // Create a host profile and add create a connection to the host.
+        profileHost = ProfileHost.CreateHost(meshMachine);
+        activationDevice = new ActivationHost(profileHost, profileService.UdfString);
+        activationDevice.Envelope(encryptionKey: profileHost.KeyEncrypt);
+        // Persist the profile keys
+        profileService.PersistSeed(meshMachine.KeyCollection);
+        profileHost.PersistSeed(meshMachine.KeyCollection);
+
+        // Need to envelope the activation device under device key.
+
+        activationDevice.Activate(profileHost.SecretSeed);
+        var connectionDevice1 = activationDevice.Connection;
+        connectionDevice = new ConnectionService() {
+            ProfileUdf = profileHost.UdfString,
+            Subject = connectionDevice1.Authentication.CryptoKey.KeyIdentifier,
+            Authority = profileService.UdfString,
+
+            Authentication = connectionDevice1.Authentication
+            };
+
+        // Strip and sign the device connection.
+        connectionDevice.Strip();
+        profileService.Sign(connectionDevice, ObjectEncoding.JSON_B);
+
+
+        }
+
+
     /// <summary>
     /// Constructor create service with the signature key <paramref name="keySign"/>
     /// </summary>

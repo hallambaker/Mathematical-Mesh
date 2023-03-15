@@ -87,7 +87,7 @@ public partial class TestDare {
     static KeyCollection MakeKeyCollection() {
         var testEnvironment = new TestEnvironmentCommon(DeterministicSeed.Auto());
         //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
-        return new KeyCollectionTestEnv(testEnvironment.Path);
+        return new KeyCollectionTestEnv(testEnvironment.DirectoryPath);
         }
     static List<string> MakeRecipients(IKeyLocate keyLocate) {
         var encrypt = KeyPair.Factory(CryptoAlgorithmId.X448,

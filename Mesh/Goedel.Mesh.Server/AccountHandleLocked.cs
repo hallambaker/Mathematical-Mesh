@@ -192,13 +192,13 @@ public class AccountHandleLocked : Disposable {
     /// </summary>
     /// <param name="label">Catalog to return status on.</param>
     /// <returns>The status vector.</returns>
-    public ContainerStatus GetStatusStore(string label) {
+    public StoreStatus GetStatusStore(string label) {
         var sequence = GetSequence(label, false);
-        return sequence == null ? null : new ContainerStatus() {
+        return sequence == null ? null : new StoreStatus() {
             // Bug: This should populate the TreeDigest
             Digest = sequence.HeaderFinal?.TreeDigest ?? sequence.TrailerLast?.TreeDigest,
             Index = (int)sequence.FrameCount,
-            Container = label
+            Store = label
             };
         }
 
@@ -296,7 +296,7 @@ public class AccountHandleLocked : Disposable {
             }
         }
 
-    void AddStatusStore(List<ContainerStatus> statuses, string label) {
+    void AddStatusStore(List<StoreStatus> statuses, string label) {
         var result = GetStatusStore(label);
         if (result != null) {
             statuses.Add(result);
@@ -311,9 +311,9 @@ public class AccountHandleLocked : Disposable {
     /// <param name="catalogs">The named catalogs to return the status of. If
     /// null, the default set of catalogs is returned.</param>
     /// <returns>The list of container status entries.</returns>
-    public List<ContainerStatus> GetContainerStatuses(List <string> catalogs) {
+    public List<StoreStatus> GetContainerStatuses(List <string> catalogs) {
         try {
-            var result = new List<ContainerStatus>();
+            var result = new List<StoreStatus>();
             if (catalogs != null) {
                 // return the specified stores
                 foreach (var catalog in catalogs) {

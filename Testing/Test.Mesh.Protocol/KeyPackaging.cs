@@ -174,10 +174,10 @@ public partial class TestService {
         var method = frame.GetMethod();
 
         var seed = method.Name;
-        var testKey = UDF.TestKey(cryptoAlgorithmId, $"{seed}-{round}-{count}");
+        var testKey = Udf.TestKey(cryptoAlgorithmId, $"{seed}-{round}-{count}");
 
 
-        return UDF.DeriveKey(testKey, null, KeySecurity.Exportable) as KeyPairAdvanced;
+        return Udf.DeriveKey(testKey, null, KeySecurity.Exportable) as KeyPairAdvanced;
         }
 
 

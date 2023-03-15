@@ -47,7 +47,7 @@ public partial class MessageClaim {
             string pin) {
         Recipient = targetAccount;
         Sender = claimaintAccount;
-        PublicationId = UDF.SymetricKeyId(pin);
+        PublicationId = Udf.SymetricKeyId(pin);
 
         ServiceAuthenticate = CatalogedPublication.AuthenticateService(claimaintAccount, pin);
         DeviceAuthenticate = CatalogedPublication.AuthenticateDevice(claimaintAccount, pin);

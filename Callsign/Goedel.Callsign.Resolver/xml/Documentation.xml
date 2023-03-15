@@ -76,6 +76,14 @@
             <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
+        <member name="M:Goedel.Callsign.Resolver.ResolverService.Sync(Goedel.Callsign.Resolver.SyncRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction Sync.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
         <member name="T:Goedel.Callsign.Resolver.ResolverServiceClient">
             <summary>
             Client class for ResolverService.
@@ -108,6 +116,13 @@
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
+        <member name="M:Goedel.Callsign.Resolver.ResolverServiceClient.Sync(Goedel.Callsign.Resolver.SyncRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
         <member name="T:Goedel.Callsign.Resolver.ResolverServiceDirect">
             <summary>
             Direct API class for ResolverService.
@@ -119,6 +134,13 @@
             </summary>	
         </member>
         <member name="M:Goedel.Callsign.Resolver.ResolverServiceDirect.Query(Goedel.Callsign.Resolver.QueryRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.ResolverServiceDirect.Sync(Goedel.Callsign.Resolver.SyncRequest)">
             <summary>
             Implement the transaction
             </summary>		
@@ -356,6 +378,108 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Callsign.Resolver.SyncRequest">
+             <summary>
+            
+             
+             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.SyncRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.SyncRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.Resolver.SyncRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Resolver.SyncRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.SyncRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.SyncRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.SyncRequest._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.SyncRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.Resolver.SyncRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.SyncRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.SyncRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Callsign.Resolver.SyncResponse">
+             <summary>
+            
+             
+             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.SyncResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.SyncResponse.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.Resolver.SyncResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Resolver.SyncResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.SyncResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.SyncResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.SyncResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.SyncResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.Resolver.SyncResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.SyncResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.SyncResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Callsign.Resolver.CallsignResolverConfiguration">
             <summary>
             The Mesh service configuration.
@@ -476,6 +600,45 @@
         <member name="M:Goedel.Callsign.Resolver.EventExtensions.#cctor">
             <summary>
             Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.MeshMachine">
+            <summary>The Mesh Machine base</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.ProfileService">
+            <summary>The profile describing the service</summary>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.ProfileHost">
+            <summary>The profile describing the host</summary>
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.ActivationDevice">
+            <summary>The host activation record.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.Resolver.PublicCallsignResolver.ConnectionDevice">
+            <summary>The host connection record.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Resolver.PublicCallsignResolver.CatalogRegistration">
+            <summary>The registation catalog.</summary> 
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Dispose">
+            <summary>
+            Dispose method, frees all resources.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Dispose(System.Boolean)">
+            <summary>
+            Dispose method, frees resources when disposing, 
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.Resolver.PublicCallsignResolver.Disposing">
+            <summary>
+            The class specific disposal routine.
             </summary>
         </member>
         <member name="T:Goedel.Callsign.Resolver.ResolverServer">

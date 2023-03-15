@@ -263,7 +263,7 @@ public partial class ActivationCommon {
 
 
 
-        activationDevice ??= new ActivationAccount(profileDevice, profileUser.Udf);
+        activationDevice ??= new ActivationAccount(profileDevice, profileUser.UdfString);
         var activationAccount = MakeActivationAccount(profileDevice, activationDevice, roles, transactContextAccount);
 
         var catalogedDevice = CreateCataloguedDevice(
@@ -356,7 +356,7 @@ public partial class ActivationCommon {
             EnvelopedActivationAccount = activationDevice?.GetEnvelopedActivationDevice(),
             EnvelopedActivationCommon = activationAccount?.GetEnvelopedActivationAccount(),
             ApplicationEntries = applicationEntries,
-            DeviceUdf = profileDevice.Udf
+            DeviceUdf = profileDevice.UdfString
             //AccessCapability = accessCapability
 
             //AdditionalRecipients = new() { activationDevice.DeviceEncryption}

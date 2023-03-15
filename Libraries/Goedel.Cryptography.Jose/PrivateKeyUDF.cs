@@ -62,7 +62,7 @@ public interface IActivate {
 public partial class PrivateKeyUDF : IActivate {
 
     ///<summary>Opaque key identifier</summary> 
-    public string KeyId => UDF.ContentDigestOfDataString(PrivateValue.ToUTF8(), "PrivateKey");
+    public string KeyId => Udf.ContentDigestOfDataString(PrivateValue.ToUTF8(), "PrivateKey");
 
     ///<summary>The encryption algorithm identifier</summary>
     public CryptoAlgorithmId AlgorithmEncryptID =>
@@ -105,12 +105,12 @@ public partial class PrivateKeyUDF : IActivate {
             int bits = 256) {
 
         if (udf == null) {
-            PrivateValue = udf ?? UDF.DerivedKey(udfAlgorithmIdentifier,
+            PrivateValue = udf ?? Udf.DerivedKey(udfAlgorithmIdentifier,
                 data: secret ?? Platform.GetRandomBits(bits));
             }
         else {
             PrivateValue = udf;
-            (udfAlgorithmIdentifier, _) = UDF.ParseUdfAlgorithmIdentifier(udf);
+            (udfAlgorithmIdentifier, _) = Udf.ParseUdfAlgorithmIdentifier(udf);
             }
 
         KeyType = udfAlgorithmIdentifier.ToString();
@@ -136,12 +136,12 @@ public partial class PrivateKeyUDF : IActivate {
                 IKeyLocate keyCollection,
                 KeyUses keyUses, string saltSuffix,
                 CryptoAlgorithmId cryptoAlgorithmID) {
-        var baseKey = UDF.DeriveKey(PrivateValue, keyCollection,
+        var baseKey = Udf.DeriveKey(PrivateValue, keyCollection,
                 KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
 
         //Console.WriteLine($"Private: Base-{baseKey.UDF} Seed-{activationSeed} Type-{meshKeyType}");
 
-        var activationKey = UDF.DeriveKey(activationSeed, keyCollection,
+        var activationKey = Udf.DeriveKey(activationSeed, keyCollection,
                 KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
 
 

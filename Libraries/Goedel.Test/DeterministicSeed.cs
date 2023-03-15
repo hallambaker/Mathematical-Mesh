@@ -226,7 +226,7 @@ public class DeterministicSeed {
         var bits = 128;
         var bytes = GetTestBytes(SeedBytes, bits / 8, info);
 
-        return UDF.TypeBDSToString(UdfTypeIdentifier.Nonce, bytes, bits + 8);
+        return Udf.TypeBDSToString(UdfTypeIdentifier.Nonce, bytes, bits + 8);
         }
 
     public int GetTask(IList<int> tasks, params object[] parameters) {

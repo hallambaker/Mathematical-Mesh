@@ -99,8 +99,8 @@ public class ContextMeshPreconfigured : ContextAccount {
         // Create a pending connection entry.
         var profileDevice = CatalogedPreconfigured.ProfileDevice;
         var catalogedPending = new CatalogedPending() {
-            Id = profileDevice.Udf,
-            DeviceUDF = profileDevice.Udf,
+            Id = profileDevice.UdfString,
+            DeviceUDF = profileDevice.UdfString,
             AccountAddress = messageClaim.Sender,
             EnvelopedProfileDevice = profileDevice.GetEnvelopedProfileDevice(),
             EnvelopedAcknowledgeConnection =
@@ -147,7 +147,7 @@ public class ContextMeshPreconfigured : ContextAccount {
 
         // Note that we process the devicePreconfiguration values so that the device itself
         // does not have a machine readable value for the secret key.
-        var publicationID = UDF.SymetricKeyId(key);
+        var publicationID = Udf.SymetricKeyId(key);
         var serviceAuthenticator = CatalogedPublication.GetServiceAuthenticator(key);
         var deviceAuthenticator = CatalogedPublication.GetDeviceAuthenticator(key);
 
@@ -157,7 +157,7 @@ public class ContextMeshPreconfigured : ContextAccount {
         // check for sanity here
         var profileDeviceRecovered = devicePreconfiguration.EnvelopedProfileDevice.Decode();
         profileDeviceRecovered.Validate();
-        (profileDeviceRecovered.Udf == profileDevice.Udf).AssertTrue(InvalidProfile.Throw);
+        (profileDeviceRecovered.UdfString == profileDevice.UdfString).AssertTrue(InvalidProfile.Throw);
         (profileDeviceRecovered.Authentication.Udf ==
                 profileDevice.Authentication.Udf).AssertTrue(InvalidProfile.Throw);
         (profileDeviceRecovered.Encryption.Udf ==
@@ -173,7 +173,7 @@ public class ContextMeshPreconfigured : ContextAccount {
         var catalogedPreconfig = new CatalogedPreconfigured() {
             EnvelopedProfileDevice = devicePreconfiguration.EnvelopedProfileDevice,
             EnvelopedConnectionDevice = devicePreconfiguration.EnvelopedConnectionDevice,
-            Id = profileDevice.Udf,
+            Id = profileDevice.UdfString,
             ServiceAuthenticator = serviceAuthenticator,
             DeviceAuthenticator = deviceAuthenticator,
             PublicationId = publicationID,

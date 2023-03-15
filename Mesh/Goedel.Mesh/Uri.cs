@@ -72,7 +72,7 @@ public class MeshUri {
                 CryptoAlgorithmId algorithm = CryptoAlgorithmId.HMAC_SHA_2_512) {
         var keyDerive = new KeyDeriveHKDF(privateKeyUDF.PrivateValue.ToBytes(), "", algorithm);
 
-        return UDF.EncryptionKey(keyDerive.Derive(accountAddress.ToBytes(), length));
+        return Udf.EncryptionKey(keyDerive.Derive(accountAddress.ToBytes(), length));
         }
 
     /// <summary>

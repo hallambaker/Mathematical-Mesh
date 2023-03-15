@@ -62,7 +62,7 @@ public partial class Registration {
             CallsignBinding callsign, 
             Registration? registration=null, 
             RegistrationReason registrationReason= RegistrationReason.Update) {
-        Id = UDF.Nonce();
+        Id = Udf.Nonce();
         Entry = callsign.Enveloped as Enveloped<CallsignBinding>;
         Submitted = System.DateTime.Now;
 

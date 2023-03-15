@@ -320,7 +320,7 @@ public partial class CreateExamples {
 
     #region // Mesh commands
 
-    public string AliceProfileUDF => AliceProfileAccount?.Udf;
+    public string AliceProfileUDF => AliceProfileAccount?.UdfString;
 
     #endregion
     #region // Application commands

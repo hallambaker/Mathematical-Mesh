@@ -52,10 +52,14 @@ public partial class Profile {
 
 
     ///<summary>The primary key value.</summary>
-    public override string _PrimaryKey => Udf;
+    public override string _PrimaryKey => UdfString;
 
     ///<summary>The UDF of the profile, that is the UDF of the offline signature.</summary>
-    public string Udf => ProfileSignature.Udf;
+    public string UdfString => ProfileSignature.Udf;
+
+
+    public Udf Udf => udf ?? new Udf(UdfString, ProfileSignatureKey.UDFBytes).CacheValue(out udf);
+    Udf udf;
 
     ///<summary>The secret seed value used to derrive the private keys.</summary>
     public PrivateKeyUDF SecretSeed {
@@ -109,6 +113,18 @@ public partial class Profile {
     #endregion
     #region // Methods 
 
+    /// <summary>
+    /// Test to see if <paramref name="presentation"/> matches the profile UDF value.
+    /// </summary>
+    /// <param name="presentation">The value to test</param>
+    /// <param name="minBits">The minimum number of precision to accept in 
+    ///     <paramref name="presentation"/></param>
+    /// <returns>True if <paramref name="presentation"/> is a match to the specified precision,
+    /// othewise false.</returns>
+    public bool Matches(
+            string presentation,
+            int minBits = 100) => Udf.Matches(presentation, minBits);
+
 
     /// <summary>
     /// Persist the secret seed used to generate a profile to the local machine as a non-exportable
@@ -127,7 +143,7 @@ public partial class Profile {
     /// </summary>
     /// <param name="keyLocate">Key collection containing the secret seed.</param>
     public void Activate(IKeyCollection keyLocate) {
-        SecretSeed ??= keyLocate.LocatePrivateKey(Udf) as PrivateKeyUDF;
+        SecretSeed ??= keyLocate.LocatePrivateKey(UdfString) as PrivateKeyUDF;
         Generate();
         }
 

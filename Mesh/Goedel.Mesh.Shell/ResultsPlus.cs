@@ -118,7 +118,7 @@ public partial class ResultHello {
                 }
             if (Response.EnvelopedProfileService != null) {
                 var profileService = Response.EnvelopedProfileService.Decode();
-                builder.AppendLine($"   Service UDF = {profileService.Udf}");
+                builder.AppendLine($"   Service UDF = {profileService.UdfString}");
                 }
             }
         }
@@ -143,12 +143,12 @@ public partial class ResultConnect {
                     break;
                     }
             case CatalogedStandard catalogedStandard: {
-                    builder.AppendLine($"   Device UDF = {catalogedStandard.ProfileDevice.Udf}");
+                    builder.AppendLine($"   Device UDF = {catalogedStandard.ProfileDevice.UdfString}");
 
                     if (Profile is ProfileUser profileUser) {
                         builder.AppendLine($"   Account = {profileUser.AccountAddress}");
                         }
-                    builder.AppendLine($"   Account UDF = {Profile.Udf}");
+                    builder.AppendLine($"   Account UDF = {Profile.UdfString}");
 
                     break;
                     }
@@ -214,12 +214,12 @@ public partial class ResultStatus {
                 }
             if (StatusResponse.EnvelopedCatalogedDevice != null) {
                 }
-            if (StatusResponse.ContainerStatus != null) {
-                foreach (var containerStatus in StatusResponse.ContainerStatus) {
+            if (StatusResponse.StoreStatus != null) {
+                foreach (var containerStatus in StatusResponse.StoreStatus) {
                     var digest = containerStatus.Digest == null ? "" :
                         containerStatus.Digest.ToStringBase32(format: ConversionFormat.Dash4, outputMax: 120);
 
-                    builder.Append($"   [{containerStatus.Container}] {containerStatus.Index}  {digest}");
+                    builder.Append($"   [{containerStatus.Store}] {containerStatus.Index}  {digest}");
                     builder.AppendLine();
                     }
                 }
@@ -242,7 +242,7 @@ public partial class ResultPending {
             switch (message) {
                 case AcknowledgeConnection acknowledgeConnection: {
                         ToBuilder(builder, message, $"    Connection Request:");
-                        builder.AppendLine($"        Device:  {acknowledgeConnection.MessageConnectionRequest.ProfileDevice.Udf}");
+                        builder.AppendLine($"        Device:  {acknowledgeConnection.MessageConnectionRequest.ProfileDevice.UdfString}");
                         builder.AppendLine($"        Witness: {acknowledgeConnection.Witness}");
                         break;
                         }
@@ -473,7 +473,7 @@ public partial class ResultPublishDevice {
 
         var profileDevice = DevicePreconfigurationPublic.EnvelopedProfileDevice.Decode();
 
-        builder.AppendLine($"Device UDF: {profileDevice.Udf}");
+        builder.AppendLine($"Device UDF: {profileDevice.UdfString}");
         builder.AppendLine($"File: {FileName}");
 
         }

@@ -20,12 +20,22 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Callsign.Resolver;
+
 namespace Goedel.Mesh.Test;
+
+
+
+
+
 
 
 public class TestEnvironmentCommon : TestEnvironmentBase {
     protected LogService Logger { get; set; }
     protected Configuration Configuration { get; set; }
+
+
+    public string CallsignRegistry { get; set; }
 
     protected override void Disposing() {
         base.Disposing();
@@ -39,6 +49,10 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
     new TestServiceRud(MeshService, null).CacheValue(out testServiceRud);
     TestServiceRud testServiceRud;
 
+    public virtual PublicCallsignResolver Resolver => callsignResolver ??
+                 GetCallsignResolver().CacheValue(out callsignResolver);
+    PublicCallsignResolver callsignResolver;
+
 
     public IMeshMachineClient MeshMachineHost { get; set; }
 
@@ -47,6 +61,10 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
     public TestEnvironmentCommon(DeterministicSeed seed = null) : base (seed){
 
         }
+
+
+    
+
 
     protected virtual PublicMeshService GetPublicMeshService() {
         // create the Mesh service
@@ -66,6 +84,34 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
         return new PublicMeshService(MeshMachineHost,
             Configuration.GenericHostConfiguration, Configuration.MeshServiceConfiguration, Logger);
         }
+
+    protected virtual PublicCallsignResolver GetCallsignResolver() {
+        _ = MeshService;
+
+
+        var pathHost = System.IO.Path.Combine(
+                MeshMachineHost.DirectoryMesh, CallsignResolver.__Tag) ; ;
+
+        Configuration.CallsignResolverConfiguration = new CallsignResolverConfiguration() {
+            Registry = CallsignRegistry,
+            HostPath = pathHost
+            };
+
+        return PublicCallsignResolver.Create(MeshMachineHost,
+                    Configuration.GenericHostConfiguration,
+                    Configuration.CallsignResolverConfiguration,
+                    Logger);
+
+
+        //return new PublicCallsignResolver(MeshMachineHost,
+        //    Configuration.GenericHostConfiguration, Configuration.CallsignResolverConfiguration, Logger);
+
+        }
+
+
+
+
+    //protected virtual 
 
     public override MeshServiceClient GetMeshClient(
         MeshMachineTest meshMachineTest,
@@ -111,9 +157,9 @@ public abstract class TestEnvironmentBase : UnitTestSet {
 
     public string Test => Seed.Seed;
     public static string CommonData => System.IO.Path.Combine(TestRoot, "CommonData");
-    public  string WorkingDirectory => System.IO.Path.Combine(Path, "Working");
+    public  string WorkingDirectory => System.IO.Path.Combine(DirectoryPath, "Working");
 
-    public string Path => Seed.Directory;
+    public string DirectoryPath => Seed.Directory;
     //public virtual string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
 
 
@@ -168,9 +214,9 @@ public abstract class TestEnvironmentBase : UnitTestSet {
         //seed ??= DeterministicSeed.Auto();
         Seed = seed ?? Seed;
 
-        Path.DirectoryDelete();
+        DirectoryPath.DirectoryDelete();
 
-        Directory.CreateDirectory(Path);
+        Directory.CreateDirectory(DirectoryPath);
         Directory.CreateDirectory(WorkingDirectory);
         Directory.SetCurrentDirectory(WorkingDirectory);
         }
@@ -178,13 +224,13 @@ public abstract class TestEnvironmentBase : UnitTestSet {
 
     public MeshMachineTest GetMeshMachine(string device) => new(this, device);
 
-    public string MachinePath(string machineName) => System.IO.Path.Combine(Path, machineName);
+    public string MachinePath(string machineName) => Path.Combine(DirectoryPath, machineName);
 
 
     public static KeyCollection MakeKeyCollection(DeterministicSeed seed) {
         var testEnvironment = new TestEnvironmentCommon(seed);
         //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
-        return new KeyCollectionTestEnv(testEnvironment.Path);
+        return new KeyCollectionTestEnv(testEnvironment.DirectoryPath);
         }
 
 

@@ -210,7 +210,7 @@ public class MeshHost : Disposable {
             // consider adding a machine catalog entry for a group...
             case CatalogedStandard standardEntry: {
                     var context = new ContextUser(this, standardEntry);
-                    Logger.HostCreateContext(context.Profile.Udf, context.AccountAddress);
+                    Logger.HostCreateContext(context.Profile.UdfString, context.AccountAddress);
                     Register(context);
                     return context;
                     }
@@ -261,7 +261,7 @@ public class MeshHost : Disposable {
             DictionaryLocalContextMesh.AddSafe(contextMesh.AccountAddress, contextMesh);
             }
         if (contextMesh.Profile != null) {
-            DictionaryUDFContextMesh.AddSafe(contextMesh.Profile.Udf, contextMesh);
+            DictionaryUDFContextMesh.AddSafe(contextMesh.Profile.UdfString, contextMesh);
             }
 
         if (machine.Local != null) {
@@ -281,7 +281,7 @@ public class MeshHost : Disposable {
             DictionaryLocalContextMesh.Remove(contextMesh.AccountAddress);
             }
         if (contextMesh.Profile != null) {
-            DictionaryUDFContextMesh.Remove(contextMesh.Profile.Udf);
+            DictionaryUDFContextMesh.Remove(contextMesh.Profile.UdfString);
             }
 
         if (machine.Local != null) {
@@ -446,7 +446,7 @@ public class MeshHost : Disposable {
             algorithmEncrypt: commonSeed.AlgorithmEncryptID,
             algorithmAuthenticate: commonSeed.AlgorithmAuthenticateID);
 
-        Logger.CreateDevice(profileDevice.Udf, profileDevice.KeyAuthentication?.KeyIdentifier);
+        Logger.CreateDevice(profileDevice.UdfString, profileDevice.KeyAuthentication?.KeyIdentifier);
         Logger.DeviceSeed(profileDevice.SecretSeed.KeyId);
 
         // Check that the profile is valid before using it.
@@ -461,7 +461,7 @@ public class MeshHost : Disposable {
 
         // create the initial profile
         var profileUser = new ProfileUser(accountAddress, activationCommon);
-        Logger.CreateAccount(profileUser.Udf, profileUser.AccountAuthenticationKey?.KeyIdentifier);
+        Logger.CreateAccount(profileUser.UdfString, profileUser.AccountAuthenticationKey?.KeyIdentifier);
         Logger.CommonSeed(commonSeed.KeyId);
 
 
@@ -479,7 +479,7 @@ public class MeshHost : Disposable {
                 };
 
 
-        var activationAccount = new ActivationAccount(profileDevice, profileUser.Udf);
+        var activationAccount = new ActivationAccount(profileDevice, profileUser.UdfString);
 
         // create a Cataloged activationRoot.Device entry for the admin device
         var catalogedDevice = activationCommon.CreateCataloguedDevice(
@@ -491,7 +491,7 @@ public class MeshHost : Disposable {
 
         // Create the host catalog entry and apply to the context user.
         var catalogedMachine = new CatalogedStandard() {
-            Id = profileDevice.Udf,
+            Id = profileDevice.UdfString,
             Local = localName,
             CatalogedDevice = catalogedDevice,
             EnvelopedProfileAccount = profileUser.GetEnvelopedProfileAccount()
@@ -501,7 +501,7 @@ public class MeshHost : Disposable {
         if (persistDevice) {
             profileDevice.PersistSeed(KeyCollection);
             }
-        KeyCollection.Persist(profileUser.Udf, commonSeed, false);
+        KeyCollection.Persist(profileUser.UdfString, commonSeed, false);
 
 
         // Return a user context. It is necessary to ovewrite the activation records

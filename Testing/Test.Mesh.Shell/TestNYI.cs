@@ -33,6 +33,15 @@ namespace Goedel.XUnit;
 public partial class ShellTests {
 
 
+    /// <summary>
+    /// Test that attempts by Mallet to read Alice's private catalogs fail.
+    /// </summary>
+    /// <exception cref="NYI"></exception>
+    [Fact(Skip = "Not yet implemented")]
+    public void NYI_MalletCatalogReadFail() {
+        throw new NYI();
+        }
+
     [Fact (Skip ="Additional checks on Shell")]
     public void NYI_RecoverApps() {
         "Check that SSH and Email applications work after recovery".TaskTest();

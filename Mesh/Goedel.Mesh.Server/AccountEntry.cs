@@ -78,7 +78,7 @@ public partial class AccountUser {
 
         var profileUser = request.EnvelopedProfileAccount.Decode();
 
-        ProfileUdf = profileUser.Udf;
+        ProfileUdf = profileUser.UdfString;
         EnvelopedProfileUser = request.EnvelopedProfileAccount;
         Directory = ProfileUdf;
         }

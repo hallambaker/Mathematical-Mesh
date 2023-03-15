@@ -84,7 +84,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
 
     ///<inheritdoc/>
     public virtual SequenceIndexEntryFactoryDelegate SequenceIndexEntryFactory => SpoolIndexEntry.Factory;
- 
+
 
 
     int BitmaskSizeBytes => 4;
@@ -108,7 +108,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
     public virtual IEnumerable<SequenceIndexEntry> Select(
                 long start,
                 bool reverse = true,
-                long count = -1, 
+                long count = -1,
                 FilterIndexDelegate filter = null,
                 bool skip = false) => new SequenceEnumeratorIndex(
                     Sequence, start, reverse, count, filter, skip);
@@ -136,7 +136,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
                 bool decrypt = true,
                 bool create = true,
                 byte[] bitmask = null) => throw new NYI();
-        //new(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, bitmask: bitmask);
+    //new(directory, storeId, policy, cryptoParameters, keyCollection, meshClient, bitmask: bitmask);
 
 
     /// <summary>
@@ -176,7 +176,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
             decrypt: decrypt,
             create: create,
             bitmask: bitmask,
-            store:this
+            store: this
             );
         //Sequence.Store = this;
 
@@ -250,6 +250,17 @@ public class Store : Disposable, IInternSequenceIndexEntry {
     /// <param name="containerName">The name of the container.</param>
     /// <returns></returns>
     public static string FileName(string directory, string containerName = null) => Path.Combine(directory, Path.ChangeExtension(containerName, ".dcat"));
+
+
+    /// <summary>
+    /// Append the envelopes <paramref name="envelopes"/> to the
+    /// store.
+    /// </summary>
+    public void AppendDirect(IEnumerable<DareEnvelope> envelopes) {
+        foreach (var envelope in envelopes) {
+            AppendDirect(envelope);
+            }
+        }
 
     /// <summary>
     /// Append the envelopes <paramref name="envelope"/> to the

@@ -21,13 +21,15 @@
 #endregion
 
 
+using Goedel.Cryptography.Dare;
+
 namespace Goedel.Mesh.Client;
 
 
 /// <summary>
 /// Untyped transaction update.
 /// </summary>
-public abstract class TransactionUpdate : ContainerUpdate {
+public abstract class TransactionUpdate : StoreUpdate {
 
     /// <summary>
     /// Commit the transaction to the remote and local copies of the catalog.
@@ -49,7 +51,7 @@ public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : Catalo
     /// </summary>
     /// <param name="catalog">The catalog on which the transaction is to be performed.</param>
     public TransactionUpdate(Catalog<TEntry> catalog) {
-        Container = catalog.StoreName;
+        Store = catalog.StoreName;
         Envelopes = new List<DareEnvelope>();
         Catalog = catalog;
 
@@ -60,11 +62,11 @@ public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : Catalo
     /// Commit the transaction to the remote and local copies of the catalog.
     /// </summary>
     public override void Commit() {
-
-        foreach (var envelope in Envelopes) {
-            var action = envelope.Header.ContentMeta.Event;
-            Catalog.AppendDirect(envelope);
-            }
+        Catalog.AppendDirect(Envelopes);
+        //foreach (var envelope in Envelopes) {
+        //    var action = envelope.Header.ContentMeta.Event;
+        //    Catalog.AppendDirect(envelope);
+        //    }
         }
 
     /// <summary>
@@ -435,12 +437,12 @@ public abstract class Transaction<TAccount> : Disposable
         }
 
     static TransactionUpdate<TEntry> GetContainerUpdate<TEntry>(
-            List<ContainerUpdate> containerUpdates,
+            List<StoreUpdate> containerUpdates,
             Catalog<TEntry> catalog
             ) where TEntry : CatalogedEntry {
 
         foreach (var update in containerUpdates) {
-            if (update.Container == catalog.StoreName) {
+            if (update.Store == catalog.StoreName) {
                 return update as TransactionUpdate<TEntry>;
                 }
             }
@@ -461,7 +463,7 @@ public abstract class Transaction<TAccount> : Disposable
     public void CatalogUpdate<TEntry>(
             Catalog<TEntry> catalog,
             TEntry catalogedEntry) where TEntry : CatalogedEntry {
-        TransactRequest.Updates ??= new List<ContainerUpdate>();
+        TransactRequest.Updates ??= new List<StoreUpdate>();
         var update = GetContainerUpdate(TransactRequest.Updates, catalog);
         update.Update(catalogedEntry);
         }
@@ -490,7 +492,7 @@ public abstract class Transaction<TAccount> : Disposable
     public void CatalogDelete<TEntry>(
             Catalog<TEntry> catalog,
             TEntry catalogedEntry) where TEntry : CatalogedEntry {
-        TransactRequest.Updates ??= new List<ContainerUpdate>();
+        TransactRequest.Updates ??= new List<StoreUpdate>();
         var update = GetContainerUpdate(TransactRequest.Updates, catalog);
         update.Delete(catalogedEntry);
         }
