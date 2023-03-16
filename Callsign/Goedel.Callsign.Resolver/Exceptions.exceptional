@@ -1,8 +1,4 @@
 ﻿
 Namespace Goedel.Callsign.Resolver
 
-	Exception TBS
-		Console "Exception TBS"
-		Description
-			|TBS
 

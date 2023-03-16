@@ -183,6 +183,14 @@
         <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.ToBuilder(System.Text.StringBuilder)">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry.MaximumRequestLength">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry.MaximumCallsignLength">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Callsign.Registry.CatalogedRegistry.EnvelopedConnectionAddress">
              <summary>
             The connection allowing control of the registry.
@@ -769,7 +777,7 @@
             context for.</param>
             <param name="activationAccount">The account activation.</param>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ContextRegistry.CreateRegistry(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.CreateRegistry(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String},Goedel.Callsign.CallsignMapping)">
             <summary>
             Create the callsign Registry.
             </summary>
@@ -794,12 +802,36 @@
             Process the list of pending messages in order of receipt. 
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ContextRegistry.Process(Goedel.Callsign.CallsignRegistrationRequest)">
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.Process(Goedel.Mesh.SpoolIndexEntry,Goedel.Callsign.CallsignRegistrationRequest)">
             <summary>
             Process the callsign registration request <paramref name="registrationRequest"/>.
             </summary>
             <param name="registrationRequest">The request to process.</param>
             <returns>Reports the processing result.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.MessageValidate(Goedel.Mesh.SpoolIndexEntry,Goedel.Callsign.CallsignRegistrationRequest,Goedel.Mesh.CallsignBinding)">
+            <summary>
+            /
+            </summary>
+            <param name="registrationRequest"></param>
+            <param name="binding"></param>
+            <exception cref="T:Goedel.Callsign.RegistrationRefused">The callsign registration was refused</exception>
+            <exception cref="T:Goedel.Callsign.RequestTooLarge">The binding request was larger than the maximum permitted size.</exception>
+            <exception cref="T:Goedel.Callsign.CanonicalFormInvalid">The canonical form is not valid.</exception>
+            <exception cref="T:Goedel.Callsign.DisplayFormInvalid">The display form does not match the canonical form.</exception>
+            <exception cref="T:Goedel.Callsign.CallsignLengthInvalid">The callsign length is invalid.</exception>
+            <exception cref="T:Goedel.Callsign.BindingSignatureInvalid">The binding signature is invalid.</exception>
+            <exception cref="T:Goedel.Callsign.RequestSignatureInvalid">The request signature is invalid.</exception>
+            <exception cref="T:Goedel.Callsign.RequestNotAuthorized">The request is not authorized.</exception>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.PaymentValidate(Goedel.Callsign.CallsignRegistrationRequest,Goedel.Mesh.CallsignBinding)">
+            <summary>
+            
+            </summary>
+            <param name="registrationRequest"></param>
+            <param name="binding"></param>
+            <exception cref="T:Goedel.Callsign.RequestRequiresPayment"></exception>
+            <exception cref="T:Goedel.Callsign.PaymentInsufficient"></exception>
         </member>
         <member name="T:Goedel.Callsign.Registry.Internal">
             <summary>
@@ -848,7 +880,7 @@
             Extensions class. Provides static convenience extensions.
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.Registry.Extensions.CreateRegistry(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF)">
+        <member name="M:Goedel.Callsign.Registry.Extensions.CreateRegistry(Goedel.Mesh.Client.ContextUser,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Callsign.CallsignMapping)">
             <summary>
             Create a registry account under the name <paramref name="accountAddress"/> 
             </summary>

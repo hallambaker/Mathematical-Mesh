@@ -26,17 +26,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.NetworkInformation;
 
 namespace Goedel.Callsign;
 
-
-//public record CallSign {
-
-//    public CallsignMapping CallsignMapping { get; init; }
-
-//    public string Id { get; set; }
-//    public string Presentation { get; set; }
-//    }
 
 /// <summary>
 /// Maintains a collection of callsign mapping pages that map a callsign to a value. 
@@ -46,10 +39,16 @@ public partial class CallsignMapping {
 
 
     ///<summary>List of callsign code pages.</summary> 
-    public static List<Page> Pages { get; } = new();
+    public List<Page> Pages { get; } = new();
+
+
+    public static CallsignMapping Default => defaultMapping ?? 
+            new CallsignMapping(true).CacheValue (out defaultMapping);
+    static CallsignMapping defaultMapping = null;
+
 
     ///<summary>List of variant characters specified in the code page.</summary> 
-    static SortedList<int, CharacterSpan> VariantList { get; set; }
+    SortedList<int, CharacterSpan> VariantList { get; set; }
 
 
     #endregion
@@ -61,9 +60,15 @@ public partial class CallsignMapping {
     /// <summary>
     /// Constructor returning a callsign mapping instance. 
     /// </summary>
-    public CallsignMapping() {
+    public CallsignMapping(bool loadDefaults = false) {
 
-
+        if (loadDefaults) {
+            var pages = Page.LoadResources();
+            foreach (var page in pages) {
+                Pages.Add(page);
+                }
+            MakeIndex();
+            }
         }
 
     #endregion
@@ -86,17 +91,21 @@ public partial class CallsignMapping {
         }
 
 
+
+
+
+
     /// <summary>
     /// Add the code page <paramref name="page"/>
     /// </summary>
     /// <param name="page">The code page to add.</param>
-    public static void AddPage(Page page) => Pages.Add(page);
+    public void AddPage(Page page) => Pages.Add(page);
 
 
     /// <summary>
     /// Create an index over the code page.
     /// </summary>
-    public static void MakeIndex() {
+    public void MakeIndex() {
         var variantList = new SortedList<int, CharacterSpan>();
 
         foreach (var page in Pages) {
@@ -115,7 +124,7 @@ public partial class CallsignMapping {
     /// <param name="presentation">The presentation to canonicalize</param>
     /// <returns>The canonical form of <paramref name="presentation"/>.</returns>
     /// <exception cref="InvalidCharacter">A character is invalid</exception>
-    public static string Canonicalize(string presentation) {
+    public string Canonicalize(string presentation) {
         var builder = new StringBuilder();
 
         foreach (var c in presentation) {
@@ -154,7 +163,7 @@ public partial class CallsignMapping {
     /// <param name="characterSpan"></param>
     /// <returns></returns>
     /// <exception cref="NYI"></exception>
-    public static bool IsAllowed(char c, out CharacterSpan characterSpan) {
+    public bool IsAllowed(char c, out CharacterSpan characterSpan) {
         characterSpan = null;
         foreach (var span in VariantList) {
             if (span.Value.First > c) {

@@ -31,6 +31,7 @@ using Goedel.Mesh.Test;
 using Goedel.Mesh;
 using Goedel.Cryptography;
 using Goedel.Mesh.Server;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 
 namespace Goedel.XUnit;
 
@@ -56,6 +57,10 @@ public partial class CallsignDirect : UnitTestSet {
         contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main");
 
+        var pages = Page.LoadResources();
+
+        var callsignMapping = new CallsignMapping();
+
 
         contextRegistry = contextAccountAlice.CreateRegistry(AccountRegistry);
 
@@ -70,6 +75,22 @@ public partial class CallsignDirect : UnitTestSet {
 
         CallsignResolver.SyncToRegistry();
         }
+
+
+    void LoadCharacterPages() {
+        using var file = GetEmbedded("Resources.CharacterPageDigits.json");
+        }
+
+    System.IO.Stream GetEmbedded(string file) {
+        var assembly = typeof(CallsignEntry).Assembly;
+        var name = assembly.GetName().Name;
+        var resourceName = $"{name}.{file}";
+
+        var resources = assembly.GetManifestResourceNames();
+
+        return assembly.GetManifestResourceStream(resourceName);
+        }
+
 
 
     [Fact]

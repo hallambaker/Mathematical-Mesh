@@ -24,8 +24,10 @@ public static class Extensions {
     public static ContextRegistry CreateRegistry(
                         this ContextUser contextUser, 
                         string accountAddress,
-                    PrivateKeyUDF accountSeed = null) =>
-        ContextRegistry.CreateRegistry(contextUser, accountAddress, accountSeed);
+                    PrivateKeyUDF accountSeed = null,
+                    CallsignMapping callsignMapping = null) =>
+        ContextRegistry.CreateRegistry(
+            contextUser, accountAddress, accountSeed, callsignMapping:callsignMapping);
 
 
 

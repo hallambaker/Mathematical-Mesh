@@ -14,6 +14,8 @@
 
 	Structure CatalogedRegistry
 		External CatalogedApplication
+		Integer MaximumRequestLength
+		Integer MaximumCallsignLength
 		Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
 			Description
 				|The connection allowing control of the registry.

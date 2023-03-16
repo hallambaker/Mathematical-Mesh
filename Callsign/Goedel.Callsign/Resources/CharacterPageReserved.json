@@ -1,0 +1,25 @@
+{
+  "Page":{
+    "Id":"CharacterPageReserved",
+    "CharacterSpans":[{
+        "MapString":{
+          "First":8482,
+          "Target":""}},
+      {
+        "MapString":{
+          "First":174,
+          "Target":""}},
+      {
+        "MapString":{
+          "First":8480,
+          "Target":""}},
+      {
+        "MapString":{
+          "First":127278,
+          "Target":""}},
+      {
+        "MapString":{
+          "First":127338,
+          "Target":""}}
+		  
+]}}

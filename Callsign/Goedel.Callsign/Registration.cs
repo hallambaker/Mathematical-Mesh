@@ -28,8 +28,42 @@ using System.Threading;
 using System.Threading.Tasks;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Protocol;
 
-namespace Goedel.Callsign; 
+namespace Goedel.Callsign;
+
+public partial class Page {
+
+    public const string FileCharacterPageDigits = "Resources.CharacterPageDigits.json";
+    public const string FileCharacterPageLatin = "Resources.CharacterPageLatin.json";
+    public const string FileCharacterPageReserved = "Resources.CharacterPageReserved.json";
+
+    public static Page LoadResource(string file) {
+        var assembly = typeof(CallsignEntry).Assembly;
+        var name = assembly.GetName().Name;
+        var resourceName = $"{name}.{file}";
+
+        using var stream = assembly.GetManifestResourceStream(resourceName);
+        using var reader = new JsonBcdReader(stream);
+
+        var result = Page.FromJson(reader);
+
+        return result;
+        }
+
+    public static List<Page> LoadResources() {
+        var result = new List<Page>();
+
+        result.Add(LoadResource(FileCharacterPageDigits));
+        result.Add(LoadResource(FileCharacterPageLatin));
+        result.Add(LoadResource(FileCharacterPageReserved));
+
+        return result;
+        }
+
+
+    }
+
 
 public partial class Registration {
     #region // Properties

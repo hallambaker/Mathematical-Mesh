@@ -21,6 +21,7 @@
 #endregion
 
 
+using Goedel.Callsign;
 using Goedel.Test;
 using System.Security.Claims;
 
@@ -68,6 +69,44 @@ public partial class TCallsign {
         parameters ??= new();
 
 
+        // check that the binding is of acceptable size.
+
+        throw new RegistrationRefused();
+        throw new RequestTooLarge();
+
+
+        // Is the canonical form legitimate?
+
+        throw new CanonicalFormInvalid();
+
+        // check that it really is canonical.
+
+
+        // check that the display form canonicalizes to the canonical.
+        throw new DisplayFormInvalid();
+
+        // check that the length is valid
+        throw new CallsignLengthInvalid();
+
+        // check that the binding is signed under the specified ProfileUdf
+
+        throw new BindingSignatureInvalid();
+
+
+        // Check the signature on the registrationRequest
+
+        throw new RequestSignatureInvalid();
+
+        // is there an existing registration?
+
+        throw new CanonicalFormInvalid();
+
+        // If not, accept
+
+        // Otherwise, check that the signer has valid authorization for the specific registration form.
+        throw new RequestNotAuthorized();
+        throw new RequestRequiresPayment();
+        throw new PaymentInsufficient();
         // Create account
 
 

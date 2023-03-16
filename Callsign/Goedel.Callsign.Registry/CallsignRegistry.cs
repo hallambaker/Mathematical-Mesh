@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 15-Mar-23 5:24:09 PM
+//  This file was automatically generated at 16-Mar-23 7:05:02 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -270,6 +270,14 @@ public partial class RegistryServiceDirect: RegistryServiceClient {
 	/// </summary>
 public partial class CatalogedRegistry : CatalogedApplication {
         /// <summary>
+        /// </summary>
+
+	public virtual int?						MaximumRequestLength  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual int?						MaximumCallsignLength  {get; set;}
+        /// <summary>
         ///The connection allowing control of the registry.
         /// </summary>
 
@@ -290,6 +298,18 @@ public partial class CatalogedRegistry : CatalogedApplication {
 	public override void Setter(
 			string tag, TokenValue value) { 
 		switch (tag) {
+			case "MaximumRequestLength" : {
+				if (value is TokenValueInteger32 vvalue) {
+					MaximumRequestLength = vvalue.Value;
+					}
+				break;
+				}
+			case "MaximumCallsignLength" : {
+				if (value is TokenValueInteger32 vvalue) {
+					MaximumCallsignLength = vvalue.Value;
+					}
+				break;
+				}
 			case "EnvelopedConnectionAddress" : {
 				if (value is TokenValueStructObject vvalue) {
 					EnvelopedConnectionAddress = vvalue.Value as Enveloped<ConnectionStripped>;
@@ -320,6 +340,12 @@ public partial class CatalogedRegistry : CatalogedApplication {
     public override TokenValue Getter(
             string tag) {
         switch (tag) {
+			case "MaximumRequestLength" : {
+				return new TokenValueInteger32 (MaximumRequestLength);
+				}
+			case "MaximumCallsignLength" : {
+				return new TokenValueInteger32 (MaximumCallsignLength);
+				}
 			case "EnvelopedConnectionAddress" : {
 				return new TokenValueStruct<Enveloped<ConnectionStripped>> (EnvelopedConnectionAddress);
 				}
@@ -340,6 +366,8 @@ public partial class CatalogedRegistry : CatalogedApplication {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
+			{ "MaximumRequestLength", new Property (typeof(TokenValueInteger32), false)} ,
+			{ "MaximumCallsignLength", new Property (typeof(TokenValueInteger32), false)} ,
 			{ "EnvelopedConnectionAddress", new Property ( typeof(TokenValueStruct), false,
 					()=>new Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>(), false)} ,
 			{ "EnvelopedProfileRegistry", new Property ( typeof(TokenValueStruct), false,

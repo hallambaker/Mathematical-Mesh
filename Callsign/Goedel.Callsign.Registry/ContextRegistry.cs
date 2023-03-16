@@ -5,6 +5,7 @@ using Goedel.Cryptography.Jose;
 using Goedel.Cryptography;
 using Microsoft.Extensions.Logging;
 using Goedel.Mesh;
+using System.Data.SqlTypes;
 
 namespace Goedel.Callsign.Registry;
 
@@ -27,7 +28,7 @@ public class ContextRegistry : ContextAccount {
 
     ///<summary>The catalogued Registry description.</summary>
     public CatalogedRegistry CatalogedRegistry;
-    
+
     ///<summary>The registation catalog.</summary> 
 
     public CatalogRegistration CatalogRegistration;
@@ -80,14 +81,14 @@ public class ContextRegistry : ContextAccount {
         ContextUser = contextAccount;
 
         CallsignMapping = new CallsignMapping();
-        
+
         CatalogRegistration = GetStore(CatalogRegistration.Label) as CatalogRegistration;
         CatalogNotary = GetStore(CatalogNotary.Label) as CatalogNotary;
         CatalogRegistration.CallsignMapping = CallsignMapping;
 
         KeyCollection.Add(KeyCommonEncryption);
 
-
+        CallsignMapping = CallsignMapping.Default;
 
         }
 
@@ -105,7 +106,8 @@ public class ContextRegistry : ContextAccount {
                     ContextUser contextUser,
                     string RegistryName,
                     PrivateKeyUDF accountSeed = null,
-                    List<string> roles = null
+                    List<string> roles = null,
+                    CallsignMapping callsignMapping = null
                     ) {
 
         // create the registry profile
@@ -120,7 +122,9 @@ public class ContextRegistry : ContextAccount {
         // Wrap the registry profile in an application entry.
         var catalogedRegistry = new CatalogedRegistry(profileRegistry,
             activationRegistry, contextUser.KeyCommonEncryption) {
-            Grant = roles
+            Grant = roles,
+            MaximumRequestLength = 8191,
+            MaximumCallsignLength = 31
             };
 
 
@@ -159,6 +163,9 @@ public class ContextRegistry : ContextAccount {
 
             transaction.Transact();
             }
+
+        callsignMapping ??= CallsignMapping.Default;
+
 
         //contextUser.CallsignRegistry = RegistryName;
         contextUser.ProfileRegistryCallsign = profileRegistry;
@@ -220,7 +227,7 @@ public class ContextRegistry : ContextAccount {
             if (spoolEntry.IsOpen) {
                 switch (meshMessage) {
                     case CallsignRegistrationRequest callsignRegistrationRequest: {
-                        Process(callsignRegistrationRequest);
+                        Process(spoolEntry, callsignRegistrationRequest);
                         break;
                         }
 
@@ -240,59 +247,186 @@ public class ContextRegistry : ContextAccount {
     /// </summary>
     /// <param name="registrationRequest">The request to process.</param>
     /// <returns>Reports the processing result.</returns>
-    public ProcessResult Process (
+    public ProcessResult Process(
+                SpoolIndexEntry spoolEntry,
                 CallsignRegistrationRequest registrationRequest) {
 
-        var transactRequest = TransactBegin();
 
-        Console.WriteLine("got request");
+        CallsignBinding binding;
+
 
         ProcessResult result;
+        try {
+            // Extract binding request
+            binding = registrationRequest.EnvelopedCallsignBinding.Decode();
+            MessageValidate(spoolEntry, registrationRequest, binding);
+            PaymentValidate(registrationRequest, binding);
 
-        CallsignRegistrationResponse registrationResponse = null;
-        if (CatalogRegistration.PrepareAdd(
-                registrationRequest.EnvelopedCallsignBinding,
-                KeyAdministratorSign,
-                out var catalogedRegistration, 
-                out var reason)) {
 
-            registrationResponse = new CallsignRegistrationResponse() {
-                Registered = true,
-                CatalogedRegistration = catalogedRegistration,
-                MessageId = registrationRequest.GetResponseId(),
-                };
-            transactRequest.CatalogUpdate(CatalogRegistration, catalogedRegistration);
 
-            result = new ProcessResultCallsignRegistration() {
-                Success = true,
-                CallsignRegistrationResponse = registrationResponse
-                };
 
+
+            var transactRequest = TransactBegin();
+
+            Console.WriteLine("got request");
+            CallsignRegistrationResponse registrationResponse = null;
+            if (CatalogRegistration.PrepareAdd(
+                    registrationRequest.EnvelopedCallsignBinding,
+                    KeyAdministratorSign,
+                    out var catalogedRegistration,
+                    out var reason)) {
+
+                registrationResponse = new CallsignRegistrationResponse() {
+                    Registered = true,
+                    CatalogedRegistration = catalogedRegistration,
+                    MessageId = registrationRequest.GetResponseId(),
+                    };
+                transactRequest.CatalogUpdate(CatalogRegistration, catalogedRegistration);
+
+                result = new ProcessResultCallsignRegistration() {
+                    Success = true,
+                    CallsignRegistrationResponse = registrationResponse
+                    };
+
+                }
+            else {
+                registrationResponse = new CallsignRegistrationResponse() {
+                    Registered = false,
+                    CatalogedRegistration = catalogedRegistration,
+                    Reason = reason
+                    };
+                result = new ProcessResultCallsignRegistration() {
+                    Success = true,
+                    CallsignRegistrationResponse = registrationResponse
+                    };
+
+                }
+
+            transactRequest.OutboundMessage(registrationRequest.Sender, registrationResponse);
+            transactRequest.LocalComplete(StateSpoolMessage.Closed, registrationRequest, registrationResponse);
+
+            var responseTransaction = Transact(transactRequest);
+
+            return result;
             }
-        else {
-            registrationResponse = new CallsignRegistrationResponse() {
-                Registered = false,
-                CatalogedRegistration = catalogedRegistration,
-                Reason = reason
-                };
-            result = new ProcessResultCallsignRegistration() {
-                Success = false,
-                CallsignRegistrationResponse = registrationResponse
-                };
-
+        catch (Exception ex) {
+            return RefuseRequest(registrationRequest, ex);
             }
+        }
+
+
+    public ProcessResult RefuseRequest (
+                CallsignRegistrationRequest registrationRequest,
+                Exception e) {
+        var transactRequest = TransactBegin();
+        var registrationResponse = new CallsignRegistrationResponse() {
+            Registered = true,
+            MessageId = registrationRequest.GetResponseId(),
+            };
 
         transactRequest.OutboundMessage(registrationRequest.Sender, registrationResponse);
         transactRequest.LocalComplete(StateSpoolMessage.Closed, registrationRequest, registrationResponse);
-
         var responseTransaction = Transact(transactRequest);
 
-        return result;
+
+        return new ProcessResultCallsignRegistration() {
+            Success = false,
+            CallsignRegistrationResponse = registrationResponse
+            };
+
+        }
+
+    /// <summary>
+    /// /
+    /// </summary>
+    /// <param name="registrationRequest"></param>
+    /// <param name="binding"></param>
+    /// <exception cref="RegistrationRefused">The callsign registration was refused</exception>
+    /// <exception cref="RequestTooLarge">The binding request was larger than the maximum permitted size.</exception>
+    /// <exception cref="CanonicalFormInvalid">The canonical form is not valid.</exception>
+    /// <exception cref="DisplayFormInvalid">The display form does not match the canonical form.</exception>
+    /// <exception cref="CallsignLengthInvalid">The callsign length is invalid.</exception>
+    /// <exception cref="BindingSignatureInvalid">The binding signature is invalid.</exception>
+    /// <exception cref="RequestSignatureInvalid">The request signature is invalid.</exception>
+    /// <exception cref="RequestNotAuthorized">The request is not authorized.</exception>
+    public void MessageValidate(
+                SpoolIndexEntry spoolEntry,
+                CallsignRegistrationRequest registrationRequest,
+                CallsignBinding binding) {
+
+        // check that the binding is of acceptable size.
+
+        (spoolEntry.DataLength <= CatalogedRegistry.MaximumRequestLength).
+            AssertTrue(RequestTooLarge.Throw);
+
+
+        var canonical = StripAt(binding.Canonical);
+
+
+
+        var display = StripAt(binding.Display);
+
+
+
+        // Is the canonical form legitimate?
+        (canonical.Length <= CatalogedRegistry.MaximumCallsignLength).AssertTrue(CallsignLengthInvalid.Throw);
+
+        // check that it really is canonical.
+        var canonical2 = CallsignMapping.Canonicalize(canonical);
+        (canonical == canonical2).AssertTrue(CanonicalFormInvalid.Throw);
+
+
+
+        if (display != null) {
+            (display.Length <= CatalogedRegistry.MaximumCallsignLength).AssertTrue(CallsignLengthInvalid.Throw);
+
+            var display2 = CallsignMapping.Canonicalize(canonical);
+            (canonical == display2).AssertTrue(DisplayFormInvalid.Throw);
+            }
+
+        // check that the binding is signed under the specified ProfileUdf
+
+        throw new BindingSignatureInvalid();
+
+
+        // Check the signature on the registrationRequest
+
+        throw new RequestSignatureInvalid();
+
+        // is there an existing registration?
+
+        throw new CanonicalFormInvalid();
+
+        // If not, accept
+
+        // Otherwise, check that the signer has valid authorization for the specific registration form.
+        throw new RequestNotAuthorized();
+
 
         }
 
 
 
+    string StripAt(string callsign) {
+        if (callsign[0] != '@') {
+            return callsign; 
+            }
+        return callsign.Substring(1);
+        }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="registrationRequest"></param>
+    /// <param name="binding"></param>
+    /// <exception cref="RequestRequiresPayment"></exception>
+    /// <exception cref="PaymentInsufficient"></exception>
+    public void PaymentValidate(
+                CallsignRegistrationRequest registrationRequest,
+                CallsignBinding binding) {
+        throw new RequestRequiresPayment();
+        throw new PaymentInsufficient();
+        }
 
     #endregion
 

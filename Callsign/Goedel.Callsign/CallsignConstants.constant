@@ -45,9 +45,22 @@ File ReservedCallsigns
 			|The quartermaster's callsign.
 
 File RegistrationReasons
-	Enum RegistrationReason "Registration reasons"
+	Enum RegistrationReason "Registration reason"
 		Code Initial "Initial registration"
 		Code Update "Update of prior registration"
 		Code Voluntary "Voluntary transfer of registration"
 		Code Administrative "Administrative transfer of registration"
 		Code Revoke "Registration revocation"
+
+File RegistrationRefusal
+	Enum RegistrationRefusal "Refusal reason"
+		Code RegistrationRefused "Registration refused"
+		Code RequestTooLarge "Binding request larger than the maximum permitted size."
+		Code CanonicalFormInvalid "Canonical form invalid."
+		Code DisplayFormInvalid "Display form does not match the canonical form."
+		Code CallsignLengthInvalid "Callsign length is invalid."
+		Code RequestSignatureInvalid "Request signature is invalid."
+		Code BindingSignatureInvalid "Binding signature is invalid."
+		Code RequestNotAuthorized "Request is not authorized."
+		Code RequestRequiresPayment "Requires payment."
+		Code PaymentInsufficient "Payment insufficient."

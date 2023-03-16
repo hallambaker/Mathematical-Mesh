@@ -8,3 +8,55 @@ Namespace Goedel.Callsign
 			|to a value that does not match the canonical form of that callsign.
 	Exception InvalidCharacter
 		Console "The character {0} is not permitted in this callsign page."
+
+	Exception RegistrationRefused
+		Console "The callsign registration was refused"
+		Description
+			|The callsign registration was refused
+
+		Exception RequestTooLarge
+			Console "The binding request was larger than the maximum permitted size."
+			Description
+				|The binding request was larger than the maximum permitted size.
+
+		Exception CanonicalFormInvalid
+			Console "The canonical form is not valid."
+			Description
+				|The canonical form is not valid.
+
+		Exception DisplayFormInvalid
+			Console "The display form does not match the canonical form."
+			Description
+				|The display form does not match the canonical form.
+
+		Exception CallsignLengthInvalid
+
+			Console "The callsign length is invalid."
+			Description
+				|The length is invalid.
+
+		Exception RequestSignatureInvalid
+			Console "The request signature is invalid."
+			Description
+				|The request signature is invalid.
+
+		Exception BindingSignatureInvalid
+			Console "The binding signature is invalid."
+			Description
+				|The binding signature is invalid.
+
+		Exception RequestNotAuthorized
+			Console "The request is not authorized."
+			Description
+				|The request is not authorized.
+
+		Exception RequestRequiresPayment
+			Console "The request requires payment."
+			Description
+				|The request requires payment.
+
+		Exception PaymentInsufficient
+			Console "The payment is insufficient."
+			Description
+				|The payment is insufficient.
+

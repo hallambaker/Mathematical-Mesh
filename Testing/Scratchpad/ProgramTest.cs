@@ -102,7 +102,7 @@ partial class Program {
         //ShellTests.Test().TestLog();
 
         //CallsignDirect.Test().CreateRegistry();
-        CallsignDirect.Test().RegisterAlice();
+        //CallsignDirect.Test().RegisterAlice();
         CallsignDirect.Test().RegisterAliceDuplicate();
         CallsignDirect.Test().RegisterAliceTransferBob();
 

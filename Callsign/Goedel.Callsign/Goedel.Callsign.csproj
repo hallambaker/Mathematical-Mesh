@@ -18,7 +18,11 @@
 		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
 		<ProjectReference Include="..\..\Mesh\Goedel.Mesh\Goedel.Mesh.csproj" />
 	</ItemGroup>
-
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\CharacterPageLatin.json" />
+		<EmbeddedResource Include="Resources\CharacterPageDigits.json" />
+		<EmbeddedResource Include="Resources\CharacterPageReserved.json" />
+	</ItemGroup>
 	<ItemGroup>
 
 		<Compile Update="Exceptions.cs">
@@ -52,6 +56,10 @@
 			<LastGenOutput>CallsignConstants.cs</LastGenOutput>
 			<Generator>Constant</Generator>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Resources\" />
 	</ItemGroup>
 
 </Project>
