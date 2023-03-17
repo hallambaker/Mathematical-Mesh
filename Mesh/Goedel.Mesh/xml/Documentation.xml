@@ -1346,6 +1346,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Mesh.Assertion.ValidateAll(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Profile}},System.String)">
+            <summary>
+            Validate the binding value against the specified root of trust.
+            </summary>
+            <returns>True if the binding is valid, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Assertion.ValidateAny(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Profile}},System.String)">
+            <summary>
+            Validate the binding value against the specified root of trust.
+            </summary>
+            <returns>True if the binding is valid, otherwise false.</returns>
+        </member>
         <member name="P:Goedel.Mesh.Assertion.Names">
              <summary>
             Fingerprints of index terms for profile retrieval. The use of the fingerprint
@@ -1421,7 +1433,7 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CallsignBinding.Validate">
+        <member name="M:Goedel.Mesh.CallsignBinding.Validate(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Profile}})">
             <summary>
             Validate the binding value against the specified root of trust.
             </summary>
@@ -8865,6 +8877,24 @@
             to be verified.</param>
             <returns>True if there is a valid signature under this profile, otherwise false.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Profile.Validate(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Profile}},Goedel.Cryptography.Dare.DareSignature,System.Byte[],System.String)">
+            <summary>
+            Verify that the signature <paramref name="signature"/> is valid under one of the
+            profiles specified in <paramref name="envelopedProfiles"/> and that the specified profile 
+            has the key identifier <paramref name="keyIdentifier"/>.
+            </summary>
+            <param name="envelopedProfiles">The profiles to search.</param>
+            <param name="signature">The signature to verify.</param>
+            <param name="digest">The digest value to verify.</param>
+            <param name="keyIdentifier">The key identifier to verify.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Profile.ValidateAny(Goedel.Cryptography.Dare.DareEnvelope,System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Profile}},System.String)">
+            <summary>
+            Validate the binding value against the specified root of trust.
+            </summary>
+            <returns>True if the binding is valid, otherwise false.</returns>
+        </member>
         <member name="P:Goedel.Mesh.Profile.Description">
              <summary>
             Description of the profile
@@ -8964,10 +8994,10 @@
             <param name="activationAccount">The activation used to create the account data.</param>
         </member>
         <member name="M:Goedel.Mesh.ProfileAccount.Validate">
-            <summary>
-            Verify the profile to check that it is correctly signed and consistent.
-            </summary>
-            <returns></returns>
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileAccount.Verify(Goedel.Cryptography.Dare.DareSignature,System.Byte[],System.String)">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount.AccountAddress">
              <summary>

@@ -40,5 +40,54 @@ public partial class Assertion {
                 AssertTrue(InvalidAssertion.Throw);
 
 
+    /// <summary>
+    /// Validate the binding value against the specified root of trust.
+    /// </summary>
+    /// <returns>True if the binding is valid, otherwise false.</returns>
+    public virtual bool ValidateAll(IEnumerable<Enveloped<Profile>> profiles, string profileUdf) {
+
+        var signatures = DareEnvelope?.Header?.Signatures ??
+            DareEnvelope?.Trailer?.Signatures;
+        if (signatures == null | profileUdf == null) {
+            return false;
+            }
+
+        // get the payload digest, check against Payload digest if specified.
+        var digest = DareEnvelope.GetValidatedDigest();
+
+        // Every signature specified MUST be valid and MUST be present in <profiles>
+        foreach (var signature in signatures) {
+            if (!Profile.Validate(profiles, signature, digest, profileUdf)) {
+                return false;
+                }
+            }
+
+        return true;
+        }
+
+    /// <summary>
+    /// Validate the binding value against the specified root of trust.
+    /// </summary>
+    /// <returns>True if the binding is valid, otherwise false.</returns>
+    public virtual bool ValidateAny(IEnumerable<Enveloped<Profile>> profiles, string profileUdf) {
+
+        var signatures = DareEnvelope?.Header?.Signatures ??
+            DareEnvelope?.Trailer?.Signatures;
+        if (signatures == null | profileUdf == null) {
+            return false;
+            }
+
+        // get the payload digest, check against Payload digest if specified.
+        var digest = DareEnvelope.GetValidatedDigest();
+
+        // Every signature specified MUST be valid and MUST be present in <profiles>
+        foreach (var signature in signatures) {
+            if (Profile.Validate(profiles, signature, digest, profileUdf)) {
+                return true;
+                }
+            }
+
+        return false;
+        }
 
     }

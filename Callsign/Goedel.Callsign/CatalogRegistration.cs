@@ -25,7 +25,6 @@ using Goedel.Mesh;
 
 namespace Goedel.Callsign;
 
-
 /// <summary>
 /// Bookmark catalog. Describes the bookmarks in the user's Mesh account.
 /// </summary>
@@ -105,62 +104,62 @@ public class CatalogRegistration : Catalog<CatalogedRegistration> {
     #region Methods
 
 
-    /// <summary>
-    /// Prepare addition of the callsign binding <paramref name="envelopedCallsignBinding"/>, signing
-    /// it with the key <paramref name="sign"/>.
-    /// </summary>
-    /// <param name="envelopedCallsignBinding">The binding to sign.</param>
-    /// <param name="sign">The signature key.</param>
-    /// <param name="catalogedRegistration">The catalog registration for the binding.</param>
-    /// <param name="reason">The failure reason.</param>
-    /// <returns>True if the binding is created, otherwise null.</returns>
-    public bool PrepareAdd(
-                Enveloped<CallsignBinding> envelopedCallsignBinding, 
-                KeyPair sign,
-                out CatalogedRegistration catalogedRegistration,
-                out string reason) {
-        reason = null;
-        catalogedRegistration = null;
+    ///// <summary>
+    ///// Prepare addition of the callsign binding <paramref name="envelopedCallsignBinding"/>, signing
+    ///// it with the key <paramref name="sign"/>.
+    ///// </summary>
+    ///// <param name="envelopedCallsignBinding">The binding to sign.</param>
+    ///// <param name="sign">The signature key.</param>
+    ///// <param name="catalogedRegistration">The catalog registration for the binding.</param>
+    ///// <param name="reason">The failure reason.</param>
+    ///// <returns>True if the binding is created, otherwise null.</returns>
+    //public bool PrepareAdd(
+    //            Enveloped<CallsignBinding> envelopedCallsignBinding,
+    //            KeyPair sign,
+    //            out CatalogedRegistration catalogedRegistration,
+    //            out string reason) {
+    //    reason = null;
+    //    catalogedRegistration = null;
 
-        var callsignBinding = envelopedCallsignBinding.Decode();
-        if (!CallsignMapping.Validate(callsignBinding)) {
-            reason = "Invalid canonical form";
-            return false;
-            }
-        if (!callsignBinding.Validate()) {
-            reason = "Invalid binding";
-            return false;
-            }
+    //    var callsignBinding = envelopedCallsignBinding.Decode();
+    //    if (!CallsignMapping.Validate(callsignBinding)) {
+    //        reason = "Invalid canonical form";
+    //        return false;
+    //        }
+    //    if (!callsignBinding.Validate(null)) {
+    //        reason = "Invalid binding";
+    //        return false;
+    //        }
 
-        var id = callsignBinding.Canonical;
+    //    var id = callsignBinding.Canonical;
 
 
-        var existing = Get(callsignBinding.Canonical);
+    //    var existing = Get(callsignBinding.Canonical);
 
-        if (existing == null) {
-            var registration = new Registration() {
-                Entry = envelopedCallsignBinding
-                };
-            //enveloped = registration.Envelope(sign);
-            var enveloped = registration.Enveloped(sign);
+    //    if (existing == null) {
+    //        var registration = new Registration() {
+    //            Entry = envelopedCallsignBinding
+    //            };
+    //        //enveloped = registration.Envelope(sign);
+    //        var enveloped = registration.Enveloped(sign);
 
-            catalogedRegistration = new CatalogedRegistration() {
-                Canonical = id,
-                Id = Udf.Nonce(),
-                EnvelopedRegistration = enveloped
-                };
+    //        catalogedRegistration = new CatalogedRegistration() {
+    //            Canonical = id,
+    //            Id = Udf.Nonce(),
+    //            EnvelopedRegistration = enveloped
+    //            };
 
-            //New(catalogedRegistration);
+    //        //New(catalogedRegistration);
 
-            return true;
-            }
+    //        return true;
+    //        }
 
-        "Implement callsign update validation logic".TaskValidate();
+    //    "Implement callsign update validation logic".TaskValidate();
 
-        catalogedRegistration = existing;
-        return false;
+    //    catalogedRegistration = existing;
+    //    return false;
 
-        }
+    //    }
 
     #endregion
 

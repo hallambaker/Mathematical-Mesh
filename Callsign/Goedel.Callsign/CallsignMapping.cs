@@ -78,6 +78,11 @@ public partial class CallsignMapping {
     #endregion
     #region // Methods
 
+
+    public static string Strip(string callsign) =>
+        callsign[0] == '@' ? callsign.Substring(1) : callsign;
+
+
     /// <summary>
     /// Validate the callsign binding <paramref name="callsignBinding"/> for consistency of the
     /// presentation value according to the mapping rules specified.
@@ -116,6 +121,10 @@ public partial class CallsignMapping {
 
         VariantList = variantList;
         }
+
+
+
+
 
     /// <summary>
     /// Return the canonical form of the page <paramref name="presentation"/> according

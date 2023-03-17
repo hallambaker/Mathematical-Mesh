@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 16-Mar-23 7:04:59 PM
+//  This file was automatically generated at 17-Mar-23 6:50:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1499,10 +1499,16 @@ public partial class Challenge : Assertion {
 	/// </summary>
 public partial class CallsignRegistrationRequest : MessageValidated {
         /// <summary>
-        ///The enveloped binnding of the callsign to the profile.	
+        ///The enveloped binnding of the callsign to the profile.
         /// </summary>
 
 	public virtual Enveloped<CallsignBinding>						EnvelopedCallsignBinding  {get; set;}
+        /// <summary>
+        ///One or more profiles under which the EnvelopedCallsignBinding is 
+        ///validlty signed.
+        /// </summary>
+
+	public virtual List<Enveloped<Profile>>				Profiles  {get; set;}
 
 
     ///<inheritdoc/>
@@ -1512,6 +1518,12 @@ public partial class CallsignRegistrationRequest : MessageValidated {
 			case "EnvelopedCallsignBinding" : {
 				if (value is TokenValueStructObject vvalue) {
 					EnvelopedCallsignBinding = vvalue.Value as Enveloped<CallsignBinding>;
+					}
+				break;
+				}
+			case "Profiles" : {
+				if (value is TokenValueListStructObject vvalue) {
+					Profiles = vvalue.Value as List<Enveloped<Profile>>;
 					}
 				break;
 				}
@@ -1530,6 +1542,9 @@ public partial class CallsignRegistrationRequest : MessageValidated {
 			case "EnvelopedCallsignBinding" : {
 				return new TokenValueStruct<Enveloped<CallsignBinding>> (EnvelopedCallsignBinding);
 				}
+			case "Profiles" : {
+				return new TokenValueListStruct<Enveloped<Profile>> (Profiles);
+				}
 
             default: {
                 return base.Getter(tag);
@@ -1542,7 +1557,9 @@ public partial class CallsignRegistrationRequest : MessageValidated {
     public readonly static new Dictionary<string, Property> _StaticProperties = new() {
 
 			{ "EnvelopedCallsignBinding", new Property ( typeof(TokenValueStruct), false,
-					()=>new Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>(), false)} 
+					()=>new Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>(), false)} ,
+			{ "Profiles", new Property ( typeof(TokenValueListStruct), true,
+					()=>new List<Enveloped<Profile>>(), ()=>new Enveloped<Profile>(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

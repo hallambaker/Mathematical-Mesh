@@ -259,51 +259,79 @@ public class ContextRegistry : ContextAccount {
         try {
             // Extract binding request
             binding = registrationRequest.EnvelopedCallsignBinding.Decode();
-            MessageValidate(spoolEntry, registrationRequest, binding);
+            var canonical = MessageValidate(spoolEntry, registrationRequest, binding, out var previous);
             PaymentValidate(registrationRequest, binding);
-
-
-
-
 
             var transactRequest = TransactBegin();
 
-            Console.WriteLine("got request");
-            CallsignRegistrationResponse registrationResponse = null;
-            if (CatalogRegistration.PrepareAdd(
-                    registrationRequest.EnvelopedCallsignBinding,
-                    KeyAdministratorSign,
-                    out var catalogedRegistration,
-                    out var reason)) {
+            Console.WriteLine($"got request for @{canonical}");
+            var id = Udf.Nonce();
 
-                registrationResponse = new CallsignRegistrationResponse() {
-                    Registered = true,
-                    CatalogedRegistration = catalogedRegistration,
-                    MessageId = registrationRequest.GetResponseId(),
-                    };
-                transactRequest.CatalogUpdate(CatalogRegistration, catalogedRegistration);
+            var registration = new Registration() {
+                Submitted = DateTime.Now,
+                Id = id,
+                Entry = registrationRequest.EnvelopedCallsignBinding,
+                Reason = previous == null ?
+                    CallsignConstants.RegistrationReasonInitialTag : 
+                        CallsignConstants.RegistrationReasonUpdateTag,
+                PriorId = previous?.Id
+                };
 
-                result = new ProcessResultCallsignRegistration() {
-                    Success = true,
-                    CallsignRegistrationResponse = registrationResponse
-                    };
+            var enveloped = registration.Enveloped(KeyAdministratorSign);
+            var catalogedRegistration = new CatalogedRegistration() {
+                Canonical = canonical,
+                Id = id,
+                EnvelopedRegistration = enveloped
+                };
 
-                }
-            else {
-                registrationResponse = new CallsignRegistrationResponse() {
-                    Registered = false,
-                    CatalogedRegistration = catalogedRegistration,
-                    Reason = reason
-                    };
-                result = new ProcessResultCallsignRegistration() {
-                    Success = true,
-                    CallsignRegistrationResponse = registrationResponse
-                    };
+            CallsignRegistrationResponse registrationResponse = new CallsignRegistrationResponse() {
+                Registered = true,
+                Reason = registration.Reason,
+                CatalogedRegistration = catalogedRegistration,
+                MessageId = registrationRequest.GetResponseId(),
+                };
 
-                }
+
+            transactRequest.CatalogUpdate(CatalogRegistration, catalogedRegistration);
+            result = new ProcessResultCallsignRegistration() {
+                Success = true,
+                CallsignRegistrationResponse = registrationResponse
+                };
+
+            //if (CatalogRegistration.PrepareAdd(
+            //        registrationRequest.EnvelopedCallsignBinding,
+            //        KeyAdministratorSign,
+            //        out var catalogedRegistration,
+            //        out var reason)) {
+
+            //    registrationResponse = new CallsignRegistrationResponse() {
+            //        Registered = true,
+            //        CatalogedRegistration = catalogedRegistration,
+            //        MessageId = registrationRequest.GetResponseId(),
+            //        };
+            //    transactRequest.CatalogUpdate(CatalogRegistration, catalogedRegistration);
+
+            //    result = new ProcessResultCallsignRegistration() {
+            //        Success = true,
+            //        CallsignRegistrationResponse = registrationResponse
+            //        };
+
+            //    }
+            //else {
+            //    registrationResponse = new CallsignRegistrationResponse() {
+            //        Registered = false,
+            //        CatalogedRegistration = catalogedRegistration,
+            //        Reason = reason
+            //        };
+            //    result = new ProcessResultCallsignRegistration() {
+            //        Success = true,
+            //        CallsignRegistrationResponse = registrationResponse
+            //        };
+
+            //    }
 
             transactRequest.OutboundMessage(registrationRequest.Sender, registrationResponse);
-            transactRequest.LocalComplete(StateSpoolMessage.Closed, registrationRequest, registrationResponse);
+            transactRequest.InboundComplete(StateSpoolMessage.Closed, registrationRequest, registrationResponse);
 
             var responseTransaction = Transact(transactRequest);
 
@@ -314,13 +342,33 @@ public class ContextRegistry : ContextAccount {
             }
         }
 
-
+    /// <summary>
+    /// Return a message refusing the request <paramref name="registrationRequest"/> for the
+    /// reason corresponding to <paramref name="exception"/>. The request is returned
+    /// to the original sender.
+    /// </summary>
+    /// <param name="registrationRequest">The request that caused the exception to be raised.</param>
+    /// <param name="exception">The exception raised.</param>
+    /// <returns>Processing result with <see cref="ProcessResult.Success"/> set false.</returns>
     public ProcessResult RefuseRequest (
                 CallsignRegistrationRequest registrationRequest,
-                Exception e) {
+                Exception exception) {
+        var reason = exception switch {
+            CanonicalFormInvalid => RegistrationRefusal.CanonicalFormInvalid,
+            DisplayFormInvalid => RegistrationRefusal.DisplayFormInvalid,
+            CallsignLengthInvalid => RegistrationRefusal.CallsignLengthInvalid,
+            RequestSignatureInvalid => RegistrationRefusal.RequestSignatureInvalid,
+            BindingSignatureInvalid => RegistrationRefusal.BindingSignatureInvalid,
+            RequestNotAuthorized => RegistrationRefusal.RequestNotAuthorized,
+            RequestRequiresPayment => RegistrationRefusal.RequestRequiresPayment,
+            PaymentInsufficient => RegistrationRefusal.PaymentInsufficient,
+            _ => RegistrationRefusal.RegistrationRefused
+            };
+
         var transactRequest = TransactBegin();
         var registrationResponse = new CallsignRegistrationResponse() {
-            Registered = true,
+            Reason = reason.ToLabel(),
+            Registered = false,
             MessageId = registrationRequest.GetResponseId(),
             };
 
@@ -349,10 +397,11 @@ public class ContextRegistry : ContextAccount {
     /// <exception cref="BindingSignatureInvalid">The binding signature is invalid.</exception>
     /// <exception cref="RequestSignatureInvalid">The request signature is invalid.</exception>
     /// <exception cref="RequestNotAuthorized">The request is not authorized.</exception>
-    public void MessageValidate(
+    public string MessageValidate(
                 SpoolIndexEntry spoolEntry,
                 CallsignRegistrationRequest registrationRequest,
-                CallsignBinding binding) {
+                CallsignBinding binding,
+                out CatalogedRegistration previous) {
 
         // check that the binding is of acceptable size.
 
@@ -361,12 +410,7 @@ public class ContextRegistry : ContextAccount {
 
 
         var canonical = StripAt(binding.Canonical);
-
-
-
         var display = StripAt(binding.Display);
-
-
 
         // Is the canonical form legitimate?
         (canonical.Length <= CatalogedRegistry.MaximumCallsignLength).AssertTrue(CallsignLengthInvalid.Throw);
@@ -386,23 +430,28 @@ public class ContextRegistry : ContextAccount {
 
         // check that the binding is signed under the specified ProfileUdf
 
-        throw new BindingSignatureInvalid();
 
+        binding.Validate(registrationRequest.Profiles).AssertTrue(BindingSignatureInvalid.Throw);
 
         // Check the signature on the registrationRequest
+        if (CatalogRegistration.TryGetValue(canonical, out var index)) {
+            previous = index.JsonObject as CatalogedRegistration;
+            previous.AssertNotNull(NYI.Throw);
 
-        throw new RequestSignatureInvalid();
+            var previousRegistration = previous.EnvelopedRegistration.Decode();
+            var previousBinding = previousRegistration.Entry.Decode();
 
-        // is there an existing registration?
-
-        throw new CanonicalFormInvalid();
-
-        // If not, accept
-
-        // Otherwise, check that the signer has valid authorization for the specific registration form.
-        throw new RequestNotAuthorized();
+            registrationRequest.DareEnvelope.PayloadDigestComputed ??=
+                    spoolEntry.ComputeDigest();
 
 
+            registrationRequest.Validate(previousBinding.ProfileUdf).AssertTrue(RequestSignatureInvalid.Throw); ;
+            }
+        else {
+            previous = null;
+            }
+
+        return canonical;
         }
 
 
@@ -424,8 +473,11 @@ public class ContextRegistry : ContextAccount {
     public void PaymentValidate(
                 CallsignRegistrationRequest registrationRequest,
                 CallsignBinding binding) {
-        throw new RequestRequiresPayment();
-        throw new PaymentInsufficient();
+
+        return;
+
+        //throw new RequestRequiresPayment();
+        //throw new PaymentInsufficient();
         }
 
     #endregion

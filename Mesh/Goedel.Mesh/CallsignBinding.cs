@@ -48,11 +48,11 @@ public partial class CallsignBinding  {
 	/// Validate the binding value against the specified root of trust.
 	/// </summary>
 	/// <returns>True if the binding is valid, otherwise false.</returns>
-	public bool Validate() {
-		"Implement callsign binding validation logic".TaskValidate();
+	public bool Validate(IEnumerable<Enveloped<Profile>> profiles) =>
+		ValidateAll(profiles, ProfileUdf);
 
-		return true;
-		}
+
+
 
 
 	}

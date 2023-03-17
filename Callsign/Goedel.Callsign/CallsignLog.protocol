@@ -173,7 +173,13 @@
 			|Connection request message. This message contains the information
 		Struct Enveloped<CallsignBinding> EnvelopedCallsignBinding
 			Description
-				|The enveloped binnding of the callsign to the profile.	
+				|The enveloped binnding of the callsign to the profile.
+		Struct Enveloped<Profile> Profiles
+			Multiple
+			Description
+				|One or more profiles under which the EnvelopedCallsignBinding is 
+				|validlty signed.
+
 
 	Structure CallsignRegistrationResponse
 		External Message

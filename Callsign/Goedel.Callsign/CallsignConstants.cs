@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 16-Mar-23 1:06:54 PM
+//  This file was automatically generated at 17-Mar-23 6:50:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -22,7 +22,7 @@ using Goedel.Utilities;
 namespace Goedel.Callsign ;
 
 
-///<summary>Registration reasons</summary>
+///<summary>Registration reason</summary>
 public enum RegistrationReason {
     ///<summary>Undefined type</summary>
     Unknown = -1,
@@ -36,6 +36,31 @@ public enum RegistrationReason {
     Administrative,
     ///<summary>Registration revocation</summary>
     Revoke    }
+
+///<summary>Refusal reason</summary>
+public enum RegistrationRefusal {
+    ///<summary>Undefined type</summary>
+    Unknown = -1,
+    ///<summary>Registration refused</summary>
+    RegistrationRefused,
+    ///<summary>Binding request larger than the maximum permitted size.</summary>
+    RequestTooLarge,
+    ///<summary>Canonical form invalid.</summary>
+    CanonicalFormInvalid,
+    ///<summary>Display form does not match the canonical form.</summary>
+    DisplayFormInvalid,
+    ///<summary>Callsign length is invalid.</summary>
+    CallsignLengthInvalid,
+    ///<summary>Request signature is invalid.</summary>
+    RequestSignatureInvalid,
+    ///<summary>Binding signature is invalid.</summary>
+    BindingSignatureInvalid,
+    ///<summary>Request is not authorized.</summary>
+    RequestNotAuthorized,
+    ///<summary>Requires payment.</summary>
+    RequestRequiresPayment,
+    ///<summary>Payment insufficient.</summary>
+    PaymentInsufficient    }
 
 
 ///<summary>
@@ -137,6 +162,72 @@ public static partial class CallsignConstants {
             RegistrationReason.Voluntary => RegistrationReasonVoluntaryTag,
             RegistrationReason.Administrative => RegistrationReasonAdministrativeTag,
             RegistrationReason.Revoke => RegistrationReasonRevokeTag,
+            _ => null
+            };
+
+    // File: RegistrationRefusals
+
+
+    ///<summary>Jose enumeration tag for RegistrationRefusal.RegistrationRefused</summary>
+    public const string  RegistrationRefusalRegistrationRefusedTag = "RegistrationRefused";
+    ///<summary>Jose enumeration tag for RegistrationRefusal.RequestTooLarge</summary>
+    public const string  RegistrationRefusalRequestTooLargeTag = "RequestTooLarge";
+    ///<summary>Jose enumeration tag for RegistrationRefusal.CanonicalFormInvalid</summary>
+    public const string  RegistrationRefusalCanonicalFormInvalidTag = "CanonicalFormInvalid";
+    ///<summary>Jose enumeration tag for RegistrationRefusal.DisplayFormInvalid</summary>
+    public const string  RegistrationRefusalDisplayFormInvalidTag = "DisplayFormInvalid";
+    ///<summary>Jose enumeration tag for RegistrationRefusal.CallsignLengthInvalid</summary>
+    public const string  RegistrationRefusalCallsignLengthInvalidTag = "CallsignLengthInvalid";
+    ///<summary>Jose enumeration tag for RegistrationRefusal.RequestSignatureInvalid</summary>
+    public const string  RegistrationRefusalRequestSignatureInvalidTag = "RequestSignatureInvalid";
+    ///<summary>Jose enumeration tag for RegistrationRefusal.BindingSignatureInvalid</summary>
+    public const string  RegistrationRefusalBindingSignatureInvalidTag = "BindingSignatureInvalid";
+    ///<summary>Jose enumeration tag for RegistrationRefusal.RequestNotAuthorized</summary>
+    public const string  RegistrationRefusalRequestNotAuthorizedTag = "RequestNotAuthorized";
+    ///<summary>Jose enumeration tag for RegistrationRefusal.RequestRequiresPayment</summary>
+    public const string  RegistrationRefusalRequestRequiresPaymentTag = "RequestRequiresPayment";
+    ///<summary>Jose enumeration tag for RegistrationRefusal.PaymentInsufficient</summary>
+    public const string  RegistrationRefusalPaymentInsufficientTag = "PaymentInsufficient";
+
+    /// <summary>
+    /// Convert the string <paramref name="text"/> to the corresponding enumeration
+    /// value.
+    /// </summary>
+    /// <param name="text">The string to convert.</param>
+    /// <returns>The enumeration value.</returns>
+    public static RegistrationRefusal ToRegistrationRefusal (this string text) =>
+        text switch {
+            RegistrationRefusalRegistrationRefusedTag => RegistrationRefusal.RegistrationRefused,
+            RegistrationRefusalRequestTooLargeTag => RegistrationRefusal.RequestTooLarge,
+            RegistrationRefusalCanonicalFormInvalidTag => RegistrationRefusal.CanonicalFormInvalid,
+            RegistrationRefusalDisplayFormInvalidTag => RegistrationRefusal.DisplayFormInvalid,
+            RegistrationRefusalCallsignLengthInvalidTag => RegistrationRefusal.CallsignLengthInvalid,
+            RegistrationRefusalRequestSignatureInvalidTag => RegistrationRefusal.RequestSignatureInvalid,
+            RegistrationRefusalBindingSignatureInvalidTag => RegistrationRefusal.BindingSignatureInvalid,
+            RegistrationRefusalRequestNotAuthorizedTag => RegistrationRefusal.RequestNotAuthorized,
+            RegistrationRefusalRequestRequiresPaymentTag => RegistrationRefusal.RequestRequiresPayment,
+            RegistrationRefusalPaymentInsufficientTag => RegistrationRefusal.PaymentInsufficient,
+            _ => RegistrationRefusal.Unknown
+            };
+
+    /// <summary>
+    /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+    /// value.
+    /// </summary>
+    /// <param name="data">The enumerated value.</param>
+    /// <returns>The text value.</returns>
+    public static string ToLabel (this RegistrationRefusal data) =>
+        data switch {
+            RegistrationRefusal.RegistrationRefused => RegistrationRefusalRegistrationRefusedTag,
+            RegistrationRefusal.RequestTooLarge => RegistrationRefusalRequestTooLargeTag,
+            RegistrationRefusal.CanonicalFormInvalid => RegistrationRefusalCanonicalFormInvalidTag,
+            RegistrationRefusal.DisplayFormInvalid => RegistrationRefusalDisplayFormInvalidTag,
+            RegistrationRefusal.CallsignLengthInvalid => RegistrationRefusalCallsignLengthInvalidTag,
+            RegistrationRefusal.RequestSignatureInvalid => RegistrationRefusalRequestSignatureInvalidTag,
+            RegistrationRefusal.BindingSignatureInvalid => RegistrationRefusalBindingSignatureInvalidTag,
+            RegistrationRefusal.RequestNotAuthorized => RegistrationRefusalRequestNotAuthorizedTag,
+            RegistrationRefusal.RequestRequiresPayment => RegistrationRefusalRequestRequiresPaymentTag,
+            RegistrationRefusal.PaymentInsufficient => RegistrationRefusalPaymentInsufficientTag,
             _ => null
             };
 

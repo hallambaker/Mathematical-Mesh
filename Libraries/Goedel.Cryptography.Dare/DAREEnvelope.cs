@@ -398,16 +398,20 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// Verify that the signature value is correct for the key <paramref name="key"/>
     /// </summary>
     /// <param name="key">The signature key.</param>
+    /// <param name="digest">The payload digest value if known.</param>
     /// <returns>True, if the signature is valid.</returns>
-    public bool Verify(KeyPair key) {
+    public bool Verify(KeyPair key, byte[] digest=null) {
 
         var signature = FindSignature(key);
         if (signature == null) {
             return false;
             }
-        var digest = GetValidatedDigest();
+        digest ??= GetValidatedDigest();
         return key.VerifyHash(digest, signature.SignatureValue);
         }
+
+
+
 
     /// <summary>
     /// Compute the digest of the payload and if a digest value is specified in the header
@@ -417,6 +421,8 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// match the digest of the payload, returns the payload. Otherwise returns the
     /// digest of the payload.</returns>
     public byte[] GetValidatedDigest() {
+
+        "Change from returning byte[] to byte[] plus algorithm".TaskTest();
 
         var digestAlg = (Header.DigestAlgorithm ?? "S512").FromJoseIDDigest();
         var provider = digestAlg.CreateDigest();

@@ -83,16 +83,25 @@ public partial class ProfileAccount {
 
 
 
-    /// <summary>
-    /// Verify the profile to check that it is correctly signed and consistent.
-    /// </summary>
-    /// <returns></returns>
+    ///<inheritdoc/>
     public override void Validate() {
         base.Validate();
 
         AccountEncryptionKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
         AdministratorSignatureKey.PublicOnly.AssertTrue(InvalidProfile.Throw);
 
+        }
+
+    ///<inheritdoc/>
+    public override bool Verify(
+            DareSignature signature,
+            byte[] digest,
+            string keyIdentifier) {
+
+        if (AdministratorSignatureKey.MatchKeyIdentifier(keyIdentifier)) {
+            return AdministratorSignatureKey.VerifyHash(digest, signature.SignatureValue);
+            }
+        return base.Verify(signature, digest, keyIdentifier);
         }
 
 

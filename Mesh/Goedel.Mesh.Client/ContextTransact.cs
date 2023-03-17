@@ -248,8 +248,8 @@ public abstract class Transaction<TAccount> : Disposable
     /// <summary>The account context in which this transaction takes place.</summary>
     public abstract TAccount ContextAccount { get; }
 
-    ///<summary>Outbound message signature key, the global account signature key</summary> 
-    static KeyPair SignOutboundMessage => null; // ToDo: set signing key to the account signature key.
+    /////<summary>Outbound message signature key, the global account signature key</summary> 
+    //public KeyPair SignOutboundMessage { get; init; } // ToDo: set signing key to the account signature key.
 
     ///<summary>Inbound message signature key, the device account signature key.
     ///This is only used to update message status.</summary> 
@@ -310,9 +310,23 @@ public abstract class Transaction<TAccount> : Disposable
     /// <param name="message">The message to send</param>
     public void OutboundMessage(
             string recipientAddress,
+            Message message,
+            bool admin = false) {
+        TryFindKeyEncryption(recipientAddress, out var recipientEncryptionKey);
+        OutboundMessage(recipientAddress, recipientEncryptionKey, message, admin);
+        }
+
+    /// <summary>
+    /// Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> as an
+    /// outbound message.
+    /// </summary>
+    /// <param name="recipientAddress">The message recipient</param>
+    /// <param name="message">The message to send</param>
+    public void OutboundMessageAdmin(
+            string recipientAddress,
             Message message) {
         TryFindKeyEncryption(recipientAddress, out var recipientEncryptionKey);
-        OutboundMessage(recipientAddress, recipientEncryptionKey, message);
+        OutboundMessage(recipientAddress, recipientEncryptionKey, message, admin: true);
         }
 
 
@@ -343,13 +357,17 @@ public abstract class Transaction<TAccount> : Disposable
     public void OutboundMessage(
             string recipientAddress,
             CryptoKey recipientEncryptionKey,
-            Message message) {
+            Message message,
+            bool admin = true) {
         TransactRequest.Outbound ??= new List<Enveloped<Message>>();
         TransactRequest.Accounts ??= new List<string>();
 
         message.Sender ??= ContextAccount.AccountAddress;
 
-        var envelope = message.Envelope(SignOutboundMessage, recipientEncryptionKey);
+        var signingKey = admin ? ContextAccount.KeyAdministratorSign :
+            ContextAccount.KeyCommonSignature;
+
+        var envelope = message.Envelope(signingKey, recipientEncryptionKey);
         envelope.JsonObject = message;
 
         TransactRequest.Outbound.Add(new Enveloped<Message>(envelope));
@@ -357,6 +375,7 @@ public abstract class Transaction<TAccount> : Disposable
             TransactRequest.Accounts.Add(recipientAddress);
             }
         }
+
 
 
     /// <summary>

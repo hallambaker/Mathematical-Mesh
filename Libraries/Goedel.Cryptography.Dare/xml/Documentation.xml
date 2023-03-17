@@ -1284,11 +1284,12 @@
             <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
             <returns>The plaintext payload.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Verify(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Verify(Goedel.Cryptography.KeyPair,System.Byte[])">
             <summary>
             Verify that the signature value is correct for the key <paramref name="key"/>
             </summary>
             <param name="key">The signature key.</param>
+            <param name="digest">The payload digest value if known.</param>
             <returns>True, if the signature is valid.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetValidatedDigest">

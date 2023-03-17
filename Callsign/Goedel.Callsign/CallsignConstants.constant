@@ -52,7 +52,7 @@ File RegistrationReasons
 		Code Administrative "Administrative transfer of registration"
 		Code Revoke "Registration revocation"
 
-File RegistrationRefusal
+File RegistrationRefusals
 	Enum RegistrationRefusal "Refusal reason"
 		Code RegistrationRefused "Registration refused"
 		Code RequestTooLarge "Binding request larger than the maximum permitted size."

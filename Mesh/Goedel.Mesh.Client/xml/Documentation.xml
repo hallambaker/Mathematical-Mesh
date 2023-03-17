@@ -1754,9 +1754,6 @@
         <member name="P:Goedel.Mesh.Client.Transaction`1.ContextAccount">
             <summary>The account context in which this transaction takes place.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.Transaction`1.SignOutboundMessage">
-            <summary>Outbound message signature key, the global account signature key</summary> 
-        </member>
         <member name="P:Goedel.Mesh.Client.Transaction`1.SignInboundMessage">
             <summary>Inbound message signature key, the device account signature key.
             This is only used to update message status.</summary> 
@@ -1791,7 +1788,15 @@
         <member name="M:Goedel.Mesh.Client.Transaction`1.GetCatalogAccess">
             <summary>Returns the capability catalog for the account</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(System.String,Goedel.Mesh.Message)">
+        <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(System.String,Goedel.Mesh.Message,System.Boolean)">
+            <summary>
+            Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> as an
+            outbound message.
+            </summary>
+            <param name="recipientAddress">The message recipient</param>
+            <param name="message">The message to send</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessageAdmin(System.String,Goedel.Mesh.Message)">
             <summary>
             Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> as an
             outbound message.
@@ -1807,7 +1812,7 @@
             <param name="recipient">The message recipient</param>
             <param name="message">The message to send</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(System.String,Goedel.Cryptography.CryptoKey,Goedel.Mesh.Message)">
+        <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(System.String,Goedel.Cryptography.CryptoKey,Goedel.Mesh.Message,System.Boolean)">
             <summary>
             Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> 
             encrypted under <paramref name="recipientEncryptionKey"/> as an

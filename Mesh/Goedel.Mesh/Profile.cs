@@ -180,5 +180,73 @@ public partial class Profile {
     public bool Verify(DareEnvelope envelopedAssertion) =>
                 envelopedAssertion.Verify(ProfileSignatureKey);
 
+
+
+    public virtual bool Verify(
+                DareSignature signature,
+                byte[] digest,
+                string keyIdentifier) {
+
+        if (ProfileSignatureKey.MatchKeyIdentifier(keyIdentifier)) {
+            return ProfileSignatureKey.VerifyHash(digest, signature.SignatureValue);
+            }
+        return false;
+        }
+
+    /// <summary>
+    /// Verify that the signature <paramref name="signature"/> is valid under one of the
+    /// profiles specified in <paramref name="envelopedProfiles"/> and that the specified profile 
+    /// has the key identifier <paramref name="keyIdentifier"/>.
+    /// </summary>
+    /// <param name="envelopedProfiles">The profiles to search.</param>
+    /// <param name="signature">The signature to verify.</param>
+    /// <param name="digest">The digest value to verify.</param>
+    /// <param name="keyIdentifier">The key identifier to verify.</param>
+    /// <returns></returns>
+    public static bool Validate(
+            IEnumerable<Enveloped<Profile>> envelopedProfiles,
+            DareSignature signature,
+            byte[] digest,
+            string keyIdentifier
+            ) {
+        foreach (var envelope in envelopedProfiles) {
+            var profile = envelope.Decode();
+            if (profile.Verify(signature, digest, keyIdentifier)) {
+                profile.Validate();
+                return true;
+                }
+            }
+        return false;
+        }
+
+    /// <summary>
+    /// Validate the binding value against the specified root of trust.
+    /// </summary>
+    /// <returns>True if the binding is valid, otherwise false.</returns>
+    public static bool ValidateAny(
+                    DareEnvelope dareEnvelope, 
+                    IEnumerable<Enveloped<Profile>> profiles, 
+                    string profileUdf) {
+
+        var signatures = dareEnvelope?.Header?.Signatures ??
+            dareEnvelope?.Trailer?.Signatures;
+        if (signatures == null | profileUdf == null) {
+            return false;
+            }
+
+        // get the payload digest, check against Payload digest if specified.
+        var digest = dareEnvelope.PayloadDigestComputed ?? dareEnvelope.GetValidatedDigest();
+
+        // Every signature specified MUST be valid and MUST be present in <profiles>
+        foreach (var signature in signatures) {
+            if (Profile.Validate(profiles, signature, digest, profileUdf)) {
+                return true;
+                }
+            }
+
+        return false;
+        }
+
+
     #endregion
     }

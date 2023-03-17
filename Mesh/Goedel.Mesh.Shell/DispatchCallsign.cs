@@ -29,7 +29,7 @@ public partial class Shell {
         var callsign = options.Identifier.Value;
 
         var contextAccount = GetContextUser(options);
-        var message = contextAccount.CallsignRequest(callsign);
+        var message = contextAccount.CallsignRequest(callsign, null);
 
         var result = new ResultSent() {
             Success = true,
@@ -43,7 +43,7 @@ public partial class Shell {
         var callsign = options.Identifier.Value;
 
         var contextAccount = GetContextUser(options);
-        var message = contextAccount.CallsignRequest(callsign, true);
+        var message = contextAccount.CallsignRequest(callsign, bind: true, transfer: null);
 
         var result = new ResultSent() {
             Success = true,

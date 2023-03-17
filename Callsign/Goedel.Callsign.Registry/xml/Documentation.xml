@@ -809,7 +809,17 @@
             <param name="registrationRequest">The request to process.</param>
             <returns>Reports the processing result.</returns>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ContextRegistry.MessageValidate(Goedel.Mesh.SpoolIndexEntry,Goedel.Callsign.CallsignRegistrationRequest,Goedel.Mesh.CallsignBinding)">
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.RefuseRequest(Goedel.Callsign.CallsignRegistrationRequest,System.Exception)">
+            <summary>
+            Return a message refusing the request <paramref name="registrationRequest"/> for the
+            reason corresponding to <paramref name="exception"/>. The request is returned
+            to the original sender.
+            </summary>
+            <param name="registrationRequest">The request that caused the exception to be raised.</param>
+            <param name="exception">The exception raised.</param>
+            <returns>Processing result with <see cref="P:Goedel.Mesh.ProcessResult.Success"/> set false.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.Registry.ContextRegistry.MessageValidate(Goedel.Mesh.SpoolIndexEntry,Goedel.Callsign.CallsignRegistrationRequest,Goedel.Mesh.CallsignBinding,Goedel.Callsign.CatalogedRegistration@)">
             <summary>
             /
             </summary>

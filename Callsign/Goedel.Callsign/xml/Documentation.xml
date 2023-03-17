@@ -5,7 +5,7 @@
     </assembly>
     <members>
         <member name="T:Goedel.Callsign.RegistrationReason">
-            <summary>Registration reasons</summary>
+            <summary>Registration reason</summary>
         </member>
         <member name="F:Goedel.Callsign.RegistrationReason.Unknown">
             <summary>Undefined type</summary>
@@ -24,6 +24,42 @@
         </member>
         <member name="F:Goedel.Callsign.RegistrationReason.Revoke">
             <summary>Registration revocation</summary>
+        </member>
+        <member name="T:Goedel.Callsign.RegistrationRefusal">
+            <summary>Refusal reason</summary>
+        </member>
+        <member name="F:Goedel.Callsign.RegistrationRefusal.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Callsign.RegistrationRefusal.RegistrationRefused">
+            <summary>Registration refused</summary>
+        </member>
+        <member name="F:Goedel.Callsign.RegistrationRefusal.RequestTooLarge">
+            <summary>Binding request larger than the maximum permitted size.</summary>
+        </member>
+        <member name="F:Goedel.Callsign.RegistrationRefusal.CanonicalFormInvalid">
+            <summary>Canonical form invalid.</summary>
+        </member>
+        <member name="F:Goedel.Callsign.RegistrationRefusal.DisplayFormInvalid">
+            <summary>Display form does not match the canonical form.</summary>
+        </member>
+        <member name="F:Goedel.Callsign.RegistrationRefusal.CallsignLengthInvalid">
+            <summary>Callsign length is invalid.</summary>
+        </member>
+        <member name="F:Goedel.Callsign.RegistrationRefusal.RequestSignatureInvalid">
+            <summary>Request signature is invalid.</summary>
+        </member>
+        <member name="F:Goedel.Callsign.RegistrationRefusal.BindingSignatureInvalid">
+            <summary>Binding signature is invalid.</summary>
+        </member>
+        <member name="F:Goedel.Callsign.RegistrationRefusal.RequestNotAuthorized">
+            <summary>Request is not authorized.</summary>
+        </member>
+        <member name="F:Goedel.Callsign.RegistrationRefusal.RequestRequiresPayment">
+            <summary>Requires payment.</summary>
+        </member>
+        <member name="F:Goedel.Callsign.RegistrationRefusal.PaymentInsufficient">
+            <summary>Payment insufficient.</summary>
         </member>
         <member name="T:Goedel.Callsign.CallsignConstants">
             <summary>
@@ -99,6 +135,52 @@
             <returns>The enumeration value.</returns>
         </member>
         <member name="M:Goedel.Callsign.CallsignConstants.ToLabel(Goedel.Callsign.RegistrationReason)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignConstants.RegistrationRefusalRegistrationRefusedTag">
+            <summary>Jose enumeration tag for RegistrationRefusal.RegistrationRefused</summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignConstants.RegistrationRefusalRequestTooLargeTag">
+            <summary>Jose enumeration tag for RegistrationRefusal.RequestTooLarge</summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignConstants.RegistrationRefusalCanonicalFormInvalidTag">
+            <summary>Jose enumeration tag for RegistrationRefusal.CanonicalFormInvalid</summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignConstants.RegistrationRefusalDisplayFormInvalidTag">
+            <summary>Jose enumeration tag for RegistrationRefusal.DisplayFormInvalid</summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignConstants.RegistrationRefusalCallsignLengthInvalidTag">
+            <summary>Jose enumeration tag for RegistrationRefusal.CallsignLengthInvalid</summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignConstants.RegistrationRefusalRequestSignatureInvalidTag">
+            <summary>Jose enumeration tag for RegistrationRefusal.RequestSignatureInvalid</summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignConstants.RegistrationRefusalBindingSignatureInvalidTag">
+            <summary>Jose enumeration tag for RegistrationRefusal.BindingSignatureInvalid</summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignConstants.RegistrationRefusalRequestNotAuthorizedTag">
+            <summary>Jose enumeration tag for RegistrationRefusal.RequestNotAuthorized</summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignConstants.RegistrationRefusalRequestRequiresPaymentTag">
+            <summary>Jose enumeration tag for RegistrationRefusal.RequestRequiresPayment</summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignConstants.RegistrationRefusalPaymentInsufficientTag">
+            <summary>Jose enumeration tag for RegistrationRefusal.PaymentInsufficient</summary>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignConstants.ToRegistrationRefusal(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignConstants.ToLabel(Goedel.Callsign.RegistrationRefusal)">
             <summary>
             Convert the enumerated value <paramref name="data"/> to the corresponding string
             value.
@@ -939,7 +1021,13 @@
         </member>
         <member name="P:Goedel.Callsign.CallsignRegistrationRequest.EnvelopedCallsignBinding">
              <summary>
-            The enveloped binnding of the callsign to the profile.	
+            The enveloped binnding of the callsign to the profile.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignRegistrationRequest.Profiles">
+             <summary>
+            One or more profiles under which the EnvelopedCallsignBinding is 
+            validlty signed.
              </summary>
         </member>
         <member name="M:Goedel.Callsign.CallsignRegistrationRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
@@ -1206,17 +1294,6 @@
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
             <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
-        </member>
-        <member name="M:Goedel.Callsign.CatalogRegistration.PrepareAdd(Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.CallsignBinding},Goedel.Cryptography.KeyPair,Goedel.Callsign.CatalogedRegistration@,System.String@)">
-            <summary>
-            Prepare addition of the callsign binding <paramref name="envelopedCallsignBinding"/>, signing
-            it with the key <paramref name="sign"/>.
-            </summary>
-            <param name="envelopedCallsignBinding">The binding to sign.</param>
-            <param name="sign">The signature key.</param>
-            <param name="catalogedRegistration">The catalog registration for the binding.</param>
-            <param name="reason">The failure reason.</param>
-            <returns>True if the binding is created, otherwise null.</returns>
         </member>
         <member name="T:Goedel.Callsign.InvalidPresentation">
             <summary>
@@ -1617,7 +1694,7 @@
             Extensions class. Provides static convenience extensions.
             </summary>
         </member>
-        <member name="M:Goedel.Callsign.Extensions.CallsignRequest(Goedel.Mesh.Client.ContextAccount,System.String,System.Boolean,Goedel.Mesh.ProfileAccount)">
+        <member name="M:Goedel.Callsign.Extensions.CallsignRequest(Goedel.Mesh.Client.ContextAccount,System.String,System.String,System.Boolean,Goedel.Mesh.ProfileAccount)">
             <summary>
             Make a callsign registration, binding or transfer request
             </summary>
@@ -1625,7 +1702,7 @@
             <param name="bind">If true bind to the account context.</param>
             <param name="transfer">Transfer the callsign to the specified address.</param>
             <param name="contextAccount">The account context in which to make the request.</param>
-            <param name="registry">The registry address.</param>
+            <param name="display">The display form of the callsign.</param>
         </member>
         <member name="T:Callsign.NamespaceDoc">
             <summary>

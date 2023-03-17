@@ -20,6 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography.Standard;
+using System.Security.Cryptography;
+
 namespace Goedel.Cryptography.Dare;
 
 ///<summary>Describe the integrity checking to be applied when reading a Sequence.</summary>
@@ -394,7 +397,18 @@ public partial class SequenceIndexEntry : DareEnvelope {
         }
 
 
+    public byte[] ComputeDigest() {
+        if (PayloadDigestComputed != null) {
+            return PayloadDigestComputed;
+            }
+        var payload = GetBody();
+        var digestAlgorithm = Header.DigestAlgorithm.ToCryptoAlgorithmID() ;
+        var digestProvider = CryptoCatalog.Default.Get(digestAlgorithm);
 
+        var result = digestProvider.Encode(payload);
+
+        return result.Integrity;
+        }
 
 
 
