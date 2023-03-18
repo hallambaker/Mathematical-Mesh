@@ -29,7 +29,7 @@ public partial class ResolverServiceClient {
 
 
     public QueryResponse Query(string callSign, string registrationId=null, string logId=null) {
-
+        callSign = CallsignMapping.Default.CanonicalizeStripped(callSign);
         var queryRequest = new QueryRequest() {
             CallSign = callSign,
             RegistrationId = registrationId,

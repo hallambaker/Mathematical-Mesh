@@ -97,11 +97,16 @@ public partial class ProfileAccount {
             DareSignature signature,
             byte[] digest,
             string keyIdentifier) {
-
-        if (AdministratorSignatureKey.MatchKeyIdentifier(keyIdentifier)) {
+        if (!Udf.Matches(keyIdentifier)) {
+            return false;
+            }
+        if (AdministratorSignatureKey.MatchKeyIdentifier(signature.KeyIdentifier)) {
             return AdministratorSignatureKey.VerifyHash(digest, signature.SignatureValue);
             }
-        return base.Verify(signature, digest, keyIdentifier);
+        if (ProfileSignatureKey.MatchKeyIdentifier(ProfileSignatureKey.KeyIdentifier)) {
+            return ProfileSignatureKey.VerifyHash(digest, signature.SignatureValue);
+            }
+        return false;
         }
 
 

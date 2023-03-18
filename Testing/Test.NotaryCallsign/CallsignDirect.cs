@@ -136,7 +136,7 @@ public partial class CallsignDirect : UnitTestSet {
         CheckResponse(contextAccountAlice, bindAlice);
         CheckResponse(contextAccountAlice, bindAliceBob);
 
-        CheckResolve(CallsignBob);
+        CheckResolve(CallsignBob, contextAccountAlice);
 
         var transferBob = contextAccountAlice.CallsignRequest(CallsignBob, display: null, bind: false, transfer: profileBob);
         contextRegistry.Process();

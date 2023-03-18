@@ -28,7 +28,7 @@ namespace Goedel.XUnit;
 
 public partial class TSignatures {
 
-
+    public static TSignatures Test() => new();
 
     [Fact(Skip = "Signature testing skiped pending invalidation library")]
     public void TestSignatureProfile() => throw new NYI();

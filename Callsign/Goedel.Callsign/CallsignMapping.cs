@@ -122,6 +122,8 @@ public partial class CallsignMapping {
         VariantList = variantList;
         }
 
+    public string CanonicalizeStripped(string presentation) =>
+        Canonicalize(Strip(presentation));
 
 
 

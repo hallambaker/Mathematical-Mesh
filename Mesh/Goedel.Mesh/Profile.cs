@@ -186,8 +186,10 @@ public partial class Profile {
                 DareSignature signature,
                 byte[] digest,
                 string keyIdentifier) {
-
-        if (ProfileSignatureKey.MatchKeyIdentifier(keyIdentifier)) {
+        if (!Udf.Matches(keyIdentifier)) {
+            return false;
+            }
+        if (ProfileSignatureKey.MatchKeyIdentifier(ProfileSignatureKey.KeyIdentifier)) {
             return ProfileSignatureKey.VerifyHash(digest, signature.SignatureValue);
             }
         return false;

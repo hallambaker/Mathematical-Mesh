@@ -103,8 +103,17 @@ partial class Program {
 
         //CallsignDirect.Test().CreateRegistry();
         //CallsignDirect.Test().RegisterAlice();
-        CallsignDirect.Test().RegisterAliceDuplicate();
+        //CallsignDirect.Test().RegisterAliceDuplicate();
+
+
+
+
         CallsignDirect.Test().RegisterAliceTransferBob();
+        CallsignDirect.Test().RegisterAliceConnectBob();
+        CallsignDirect.Test().TestRegisterSuccess();
+        CallsignDirect.Test().TestRegisterFail();
+
+
 
         /* Callsigns */
 
@@ -116,14 +125,26 @@ partial class Program {
         RegistrationTests.Test().CallsignPresencePresent();
         RegistrationTests.Test().CallsignPresenceAbsent();
 
+        /* Callsigns But likely redundant */
+        TCallsign.Test().TestIssue();
+        TCallsign.Test().TestResolve();
+        TCallsign.Test().TestCallSignBadSignatureIssuer();
+        TCallsign.Test().TestCallSignBadSignatureRegistration();
+        TCallsign.Test().TestCallSignBadSignatureProfile();
 
 
 
 
+        /* The presence stuff */
+
+        TestPresence.Test().PresenceStatusUpdate();
+        TestPresence.Test().PresenceSessionRequest();
+        TestPresence.Test().PresenceHeartbeat();
+        TestService.Test().MeshPresence();
 
         /* Save for later */
 
-
+        TestService.Test().MeshDeviceThresholdKey();
 
         ShellTests.Test().TestFileEncrypt();
         //ShellTests.Test().TestMessageGroup();
@@ -133,6 +154,35 @@ partial class Program {
         ShellTests.Test().NewFileTestOnce();
 
 
+
+
+        /* Skipped tests */
+
+        /* Notary functionality */
+        TestSequences.Test().TestProof();
+        TClaimProof.Test().TestProof();
+        TClaimProof.Test().TestNotaryToken();
+        TClaimProof.Test().TestEnrolledNotaryToken();
+        TClaimProof.Test().TestNotarizedSignature();
+        TClaimProof.Test().TestServiceNotarizedSignature();
+        TClaimProof.Test().TestMultiNotarizedSignature();
+        TClaimProof.Test().TestWebNotarizedSignature();
+
+        /* Catalog etc read permissions */
+        TestService.Test().MalletCatalogReadFail();
+
+
+        /* Carnet */
+        TestService.Test().MeshCarnet();
+        TestService.Test().MeshRepository();
+        TCallsign.Test().TestPurchase();
+        TCallsign.Test().TestPurchaseIndirect();
+
+
+        /* Signatures */
+        TSignatures.Test().TestSignatureProfile();
+
+        /* Documentation */
         Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
         Logger.LogInformation("End test {time}, Fail={Softfail}", System.DateTime.Now, TestCLI.CountSoftFail);
