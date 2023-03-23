@@ -40,7 +40,7 @@ public partial class CallsignMapping {
 
     ///<summary>List of callsign code pages.</summary> 
     public List<Page> Pages { get; } = new();
-
+    public Dictionary<string, Page> PageDictionary = new Dictionary<string, Page>();
 
     public static CallsignMapping Default => defaultMapping ?? 
             new CallsignMapping(true).CacheValue (out defaultMapping);
@@ -114,11 +114,14 @@ public partial class CallsignMapping {
         var variantList = new SortedList<int, CharacterSpan>();
 
         foreach (var page in Pages) {
+            PageDictionary.Add(page.Id, page);
             foreach (var characterSpan in page.CharacterSpans) {
-                variantList.Add(characterSpan.First??0, characterSpan);
+                variantList.Add(characterSpan.First ?? 0, characterSpan);
                 }
             }
-
+        foreach (var page in Pages) {
+            page.Expand(PageDictionary);
+            }
         VariantList = variantList;
         }
 
@@ -162,6 +165,40 @@ public partial class CallsignMapping {
         //Screen.WriteLine($"{presentation} -> {builder.ToString()}");
 
         return builder.ToString();
+        }
+
+
+
+    public bool CheckPage(string presentation, string pageName) {
+        var hasNonDigit = false;
+
+        if (!PageDictionary.TryGetValue(pageName, out var page)) {
+            return false;
+            }
+
+        foreach (var c in presentation) {
+            if (!CheckPage(c, page)) {
+                return false;
+                }
+            hasNonDigit |= !Char.IsDigit(c);
+            }
+
+
+        return hasNonDigit;
+        }
+
+    public bool CheckPage(char c, Page page) {
+
+        if (page.IsAllowed(c)) {
+            return true;
+            }
+        foreach (var subPage in page.SubPages) {
+            if (subPage.Value.IsAllowed(c)) {
+                return true;
+                }
+            }
+
+        return false;
         }
 
 

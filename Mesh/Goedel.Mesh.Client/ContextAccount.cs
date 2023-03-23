@@ -49,6 +49,7 @@ public class SyncStatus {
         }
     }
 
+
 /// <summary>
 /// Base class from which Contexts for Accounts and Groups are derrived. These are
 /// separate contexts but share functions and thus code.
@@ -141,6 +142,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         }
 
     MeshServiceClient meshClient;
+
+
+
 
     ///<summary>The host assignment binding.</summary> 
     public AccountHostAssignment AccountHostAssignment => accountHostAssignment ??
@@ -239,9 +243,15 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ///<summary>Returns the inbound spool for the account</summary>
     public SpoolInbound GetSpoolInbound() => GetStore(SpoolInbound.Label) as SpoolInbound;
 
+    ///<summary>The callsign resolver.</summary> 
+    public IResolver CallsignResolver => callsignResolver??
+        MeshMachine.GetResolver(GetMeshCredentialPrivate()).CacheValue(out callsignResolver);
+    IResolver callsignResolver;
 
-    //uint storeCount = 0;
-    //int BitMaskSize = 64;
+    ///<summary>The carnet payments client.</summary> 
+    public ICarnet CarnetClient => carnetClient ??
+        MeshMachine.GetCarnet(GetMeshCredentialPrivate()).CacheValue(out carnetClient);
+    ICarnet carnetClient;
 
 
     #endregion
@@ -290,8 +300,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
     #endregion
+    #region // Calls to layered services
+    public bool TryResolveCallsign(string callsign, out CallsignBinding callsignBinding) =>
+        CallsignResolver.TryResolveCallsign(callsign, out callsignBinding);
 
-
+    #endregion
     #region // PIN code generation and use
     /// <summary>
     /// Create a PIN value of length <paramref name="bits"/> bits valid for 

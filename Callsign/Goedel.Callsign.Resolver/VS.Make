@@ -26,10 +26,8 @@ LinkFiles = \
     Goedel.Callsign.Registry.dll
 
 ToolTargets = \
-	CallsignResolver.cs\
 	Exceptions.cs
-CallsignResolver.cs : CallsignResolver.protocol 
-	protogen CallsignResolver.protocol  /cs  CallsignResolver.cs
+
 
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs

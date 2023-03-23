@@ -290,7 +290,7 @@ public class DeterministicSeed {
 
 
     public void CheckTestFileNotExist(string filename) {
-        throw new NYI();
+        File.Exists(filename).TestFalse();
         }
 
     /* Static, remove over time  */

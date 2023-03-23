@@ -1439,6 +1439,20 @@
             </summary>
             <returns>True if the binding is valid, otherwise false.</returns>
         </member>
+        <member name="M:Goedel.Mesh.CallsignBinding.GetMeshAccount">
+            <summary>
+            Return the mesh account service address associated with the binding.
+            </summary>
+            <returns>The mesh service address.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Mesh.CallsignBinding.GetEncryptionKey">
+            <summary>
+            Return the mesh encryption key associated with the binding.
+            </summary>
+            <returns>The mesh encryption key.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
         <member name="P:Goedel.Mesh.CallsignBinding.Canonical">
              <summary>
             The canonical form of the callsign.
@@ -1450,15 +1464,35 @@
             trademark signifiers, etc. that are omitted of trranslated in the canonical form.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CallsignBinding.CharacterPage">
+             <summary>
+            Specifies the page to which the Description"CharacterPageLatin"
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.CallsignBinding.ProfileUdf">
              <summary>
             The profile to which the name is bound.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CallsignBinding.TransferUdf">
+             <summary>
+            The profile to which the name has been transfered.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CallsignBinding.Services">
              <summary>
             List of named services. If multiple service providers are specified for a given 
             service, these are listed in order of priority, most preferred first.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CallsignBinding.ServiceAddress">
+             <summary>
+            The Mesh service address. 
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CallsignBinding.CommonEncryption">
+             <summary>
+            Key currently used to encrypt data under this profile
              </summary>
         </member>
         <member name="M:Goedel.Mesh.CallsignBinding.Setter(System.String,Goedel.Protocol.TokenValue)">
@@ -2191,6 +2225,16 @@
             </summary>
             <param name="key">Unique identifier of the device to return.</param>
             <returns>The <see cref="T:Goedel.Mesh.CatalogedDevice"/> entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog`1.TryLocate(System.String,`0@)">
+            <summary>
+            Attempt to locate key <paramref name="key"/> returning true if
+            found, false otherwise. The value is returned in 
+            <paramref name="value"/> if found, otherwise null.
+            </summary>
+            <param name="key">The key to search for.</param>
+            <param name="value">The value, if found, otherwise null.</param>
+            <returns>True if the value was found, otherwise null.</returns>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.GetDefault``1">
             <summary>
@@ -6821,6 +6865,20 @@
             <param name="sequenceIndexEntry"></param>
             <returns></returns>
         </member>
+        <member name="T:Goedel.Mesh.IResolver">
+            <summary>
+            Callsign resolution interface.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.IResolver.TryResolveCallsign(System.String,Goedel.Mesh.CallsignBinding@)">
+            <summary>
+            Resolve the callsign <paramref name="callsign"/> and return the associated binding
+            if found.
+            </summary>
+            <param name="callsign"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Goedel.Mesh.ICarnet" -->
         <member name="T:Goedel.Mesh.KeyShare">
             <summary>
             </summary>
@@ -7338,6 +7396,13 @@
             <param name="accountAddress">Account under which service is requested.</param>
             <returns>The client instance.</returns>
         </member>
+        <member name="M:Goedel.Mesh.IMeshMachine.GetClient``1(System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
+            <summary>
+            Return a client bound to the connection via the relevant protocol
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.IMeshMachine.GetCredential(System.String,System.String)">
             <summary>
             Returns the private credential to be presented by the device <paramref name="deviceUdf"/>,
@@ -7451,6 +7516,13 @@
             Return the identifier for a response to this message.
             </summary>
             <returns>The response identifier.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Message.GetResponseId(System.String)">
+            <summary>
+            Return the identifier for a response to the message <paramref name="messageId"/>.
+            </summary>
+            <param name="messageId">The message the response ID is requested for.</param>
+            <returns>The response ID.</returns>
         </member>
         <member name="M:Goedel.Mesh.Message.GetEnvelopeId(System.String)">
             <summary>

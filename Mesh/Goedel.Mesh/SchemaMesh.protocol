@@ -286,14 +286,26 @@
 			Description
 				|The display form of the callsign. This MAY include characters such as whitespace,
 				|trademark signifiers, etc. that are omitted of trranslated in the canonical form.
+		String CharacterPage
+			Description
+				|Specifies the page to which the Description"CharacterPageLatin"
 		String ProfileUdf
 			Description
 				|The profile to which the name is bound.
+		String TransferUdf
+			Description
+				|The profile to which the name has been transfered.
 		Struct NamedService Services
 			Multiple
 			Description
 				|List of named services. If multiple service providers are specified for a given 
 				|service, these are listed in order of priority, most preferred first.
+		String ServiceAddress
+			Description
+				|The Mesh service address. 
+		Struct KeyData CommonEncryption
+			Description
+				|Key currently used to encrypt data under this profile
 
 
 	Structure Accreditation

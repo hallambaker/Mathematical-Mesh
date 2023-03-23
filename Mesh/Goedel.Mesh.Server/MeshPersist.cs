@@ -77,7 +77,7 @@ public class MeshPersist : Disposable {
 
     #region // Properties
     ///<summary>The underlying persistence store for the account catalog.</summary>
-    public PersistenceStore Container;
+    public PersistenceStore AccountStore;
 
     ///<summary>The callsign catalog mapping account names to profiles.</summary> 
     public CatalogCallsign CatalogCallsign { get; init; }
@@ -106,7 +106,7 @@ public class MeshPersist : Disposable {
     protected override void Disposing() {
 
         base.Disposing();
-        Container.Dispose();
+        AccountStore.Dispose();
         CatalogCallsign.Dispose();
         }
 
@@ -138,7 +138,7 @@ public class MeshPersist : Disposable {
 
         Directory.CreateDirectory(directory);
         var fileName = Path.Combine(directory, "Master.cat");
-        Container = new PersistenceStore(fileName, "application/mmm-catalog",
+        AccountStore = new PersistenceStore(fileName, "application/mmm-catalog",
             fileStatus: fileStatus,
             sequenceType: SequenceType.Merkle
             );
@@ -149,7 +149,27 @@ public class MeshPersist : Disposable {
     #endregion
 
 
+    ////string GetAccountKey(string accountAddress) {
 
+    ////    var addressType = accountAddress.SplitAccountAddress(out var service, out var account);
+    ////    account = account.CannonicalAccountAddress();
+
+
+    ////    switch (addressType) {
+    ////        case AddressType.AccountOnly: {
+    ////            break;
+    ////            }
+    ////        case AddressType.AccountAtDns: {
+    ////            break;
+    ////            }
+    ////        default: {
+    ////            // we should never be presented with a callsign at the service.
+    ////            throw new NYI();
+    ////            }
+    ////        }
+
+    ////    //GetProfileUdf(accountAddress)
+    ////    }
 
 
 
@@ -166,20 +186,20 @@ public class MeshPersist : Disposable {
                     List<CatalogedCallsign> catalogedCallsigns) {
         IPersistenceEntry containerEntry;
         //Console.WriteLine("Start Bind");
-        accountEntry.ProfileUdf = accountEntry.ProfileUdf;
+        accountEntry.ProfileUdf = accountEntry.ProfileUdf.CannonicalAccountAddress();
 
         var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
         accountEntry.Directory = directory;
 
         // Lock the container so that we can create the new account entry without 
         // causing contention.
-        lock (Container) {
+        lock (AccountStore) {
             foreach (var catalogedCallsign in catalogedCallsigns) {
                 CatalogCallsign.Get(catalogedCallsign.Canonical).AssertNull(NYI.Throw);
                 }
 
 
-            containerEntry = Container.New(accountEntry);
+            containerEntry = AccountStore.New(accountEntry);
             //Console.WriteLine("Start write");
             foreach (var catalogedCallsign in catalogedCallsigns) {
                 //Console.WriteLine($"Callsign {catalogedCallsign.Canonical} -> {catalogedCallsign.ProfileUdf}");
@@ -215,8 +235,8 @@ public class MeshPersist : Disposable {
         using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Unbind);
         //accountAddress.CannonicalAccountAddress().AssertEqual(accountHandle.AccountAddress, NYI.Throw);
 
-        lock (Container) {
-            return Container.Delete(jpcSession.TargetAccount);
+        lock (AccountStore) {
+            return AccountStore.Delete(jpcSession.TargetAccount);
             }
         }
 
@@ -753,18 +773,12 @@ public class MeshPersist : Disposable {
     LockedCatalogedEntry<AccountEntry> GetAccountLocked(string accountAddress) {
         AccountEntry result = null;
 
-        var addressType = accountAddress.SplitAccountAddress(out var service, out var account);
+        var key = GetAccountKey(accountAddress);
 
-
-        lock (Container) {
+        lock (AccountStore) {
             PersistentIndexEntry containerEntry = null;
 
-            containerEntry = addressType switch {
-                AddressType.AccountOnly => Container.Get(account) ,
-                AddressType.AccountAtDns => (Container.Get(account) ?? Container.Get(GetProfileUdf(accountAddress))) ,
-                _ => throw new NYI()
-                } as PersistentIndexEntry;
-
+            containerEntry = AccountStore.Get(key)  as PersistentIndexEntry;
             result = containerEntry?.JsonObject as AccountEntry;
             result.AssertNotNull(MeshUnknownAccount.Throw);
 
@@ -783,9 +797,7 @@ public class MeshPersist : Disposable {
         LockedCatalogedEntry<AccountEntry> accountEntry = null;
 
         try {
-            var profileUdf = GetProfileUdf(account);
-
-            accountEntry = GetAccountLocked(profileUdf);
+            accountEntry = GetAccountLocked(account);
             var accountContext = new AccountContext(accountEntry, KeyCollection);
 
             return new AccountHandleLocked(accountContext, Logger) {
@@ -809,9 +821,6 @@ public class MeshPersist : Disposable {
         LockedCatalogedEntry<AccountEntry> accountEntry = null;
 
         try {
-            //
-
-
             accountEntry = GetAccountLocked(session.TargetAccount);
             var accountContext = new AccountContext(accountEntry, KeyCollection);
             accountContext.Authenticate(
@@ -828,9 +837,21 @@ public class MeshPersist : Disposable {
             }
         }
 
-    string GetProfileUdf(string accountIn) {
+    string GetAccountKey(string accountIn) {
         var account = accountIn.CannonicalAccountAddress();
-        return CatalogCallsign.Get(account)?.ProfileUdf;
+        if (CatalogCallsign.TryLocate(account, out var catalogedCallsign)) {
+            return catalogedCallsign.ProfileUdf.ToLower();
+            }
+
+        switch (account.SplitAccountAddress(out var service, out var accountAddress)) {
+            case AddressType.AccountAtDns:
+            case AddressType.AccountOnly: {
+                return accountAddress;
+                }
+            default: {
+                throw new NYI();
+                }
+            }
         }
 
     #endregion

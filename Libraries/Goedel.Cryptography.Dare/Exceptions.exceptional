@@ -74,3 +74,6 @@ Namespace Goedel.Cryptography.Dare
 	
 	Exception NotInDecryptionMode
         Console "The envelope could not be decrypted because the sequence was not opened in decryption mode."
+	
+	Exception RelativeDirectoryInvalid
+        Console "A relative directory specification was encountered in an invalid context.."

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 17-Mar-23 9:37:39 PM
+//  This file was automatically generated at 23-Mar-23 1:11:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -48,11 +48,10 @@ using Goedel.Utilities;
 
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
-using Goedel.Callsign.Registry;
 using Goedel.Callsign;
 
 
-namespace Goedel.Callsign.Resolver;
+namespace Goedel.Callsign;
 
 
 	/// <summary>

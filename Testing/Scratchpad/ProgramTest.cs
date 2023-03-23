@@ -60,7 +60,6 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-
         /* Minor */
 
         //TestService.Test().MeshServiceFull();
@@ -108,12 +107,21 @@ partial class Program {
 
 
 
-        CallsignDirect.Test().RegisterAliceTransferBob();
-        CallsignDirect.Test().RegisterAliceConnectBob();
-        CallsignDirect.Test().TestRegisterSuccess();
-        CallsignDirect.Test().TestRegisterFail();
+        //CallsignDirect.Test().RegisterAliceTransferBob();
+
+        //CallsignDirect.Test().TestRegisterFail();
+        //CallsignDirect.Test().TestRegisterSuccess();
+        //CallsignDirect.Test().RegisterAliceConnectBob();
 
 
+
+        //TestService.Test().MeshDeviceThresholdKey();
+
+        //TestDareArchive.Test().ArchiveRelativeDirectory();
+        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
+
+        ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
+        ShellTests.Test().NewArchiveTestOnce(true, true, false, false);
 
         /* Callsigns */
 
@@ -144,13 +152,7 @@ partial class Program {
 
         /* Save for later */
 
-        TestService.Test().MeshDeviceThresholdKey();
 
-        ShellTests.Test().TestFileEncrypt();
-        //ShellTests.Test().TestMessageGroup();
-
-        ShellTests.Test().RelativePathFileFail();
-        ShellTests.Test().RelativePathDirectoryFail();
         ShellTests.Test().NewFileTestOnce();
 
 

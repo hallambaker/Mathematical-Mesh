@@ -32,7 +32,7 @@ global using System.Text;
 
 
 
-namespace Callsign;
+namespace Goedel.Callsign;
 /// <summary>
 /// Mesh Callsign registry implementation.
 /// </summary>

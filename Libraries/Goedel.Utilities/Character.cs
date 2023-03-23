@@ -43,6 +43,7 @@ public static partial class Extension {
 
     readonly static char[] Split = { ' ', ',' };
 
+
     /// <summary>
     /// Split a string into a series of substrings delimited by spaces and/or commas
     /// with null entries suppressed.

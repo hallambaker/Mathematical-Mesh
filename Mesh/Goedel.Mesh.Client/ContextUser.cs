@@ -23,6 +23,7 @@
 
 using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client;
 
@@ -674,7 +675,7 @@ public partial class ContextUser : ContextAccount {
                 DateTime? notBefore=null) {
         notBefore.Future();
         var inbound = GetSpoolInbound();
-        index = inbound.GetByMessageId(messageID);
+        index = inbound.GetByMessageId(messageID) ;
         return index != null;
         }
 
@@ -1611,7 +1612,26 @@ public partial class ContextUser : ContextAccount {
                     string pin = null,
                     string localname = null,
                     bool reply = true) {
-        // prepare the reply
+
+
+        // process the recipient to get the service, unless known.
+
+        CryptoKey recipientEncryptionKey = null;
+
+        var addressType = recipient.SplitAccountAddress(out var service, out var account);
+        switch (addressType) {
+            case AddressType.Callsign: {
+                TryResolveCallsign(account, out var binding).AssertTrue(NYI.Throw);
+                recipient = binding.GetMeshAccount();
+                recipientEncryptionKey = binding.GetEncryptionKey();
+                break;
+                }
+            case AddressType.AccountAtDns: {
+                TryFindKeyEncryption(recipient, out recipientEncryptionKey);
+                break;
+                }
+            }
+
         var contactSelf = GetSelf(localname);
 
         //"agh... not creating the pin code for the response here.".TaskFunctionality(true);
@@ -1638,12 +1658,16 @@ public partial class ContextUser : ContextAccount {
             message.Authenticate(pin);
 
             // send it to the service
-            transact.OutboundMessage(recipient, message);
+            transact.OutboundMessage(recipient, recipientEncryptionKey, message);
             Transact(transact);
             }
 
         return message;
         }
+
+
+
+
 
 
     /// <summary>

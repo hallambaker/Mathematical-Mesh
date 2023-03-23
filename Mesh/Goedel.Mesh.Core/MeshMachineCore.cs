@@ -123,17 +123,48 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
 
     ///<inheritdoc cref="IMeshMachine"/>
     public virtual MeshServiceClient GetMeshClient(
-            ICredentialPrivate credential,
-            string accountAddress) {
+                    ICredentialPrivate credential,
+                    string accountAddress) => 
+                GetClient<MeshServiceClient>(MeshServiceClient.WellKnown, credential, accountAddress);
+        
+        //{
+        //var service = accountAddress.GetService();
+        //var meshServiceBinding = new ConnectionInitiator(
+        //credential, service, null, TransportType.Http, MeshServiceClient.WellKnown);
+
+        //return meshServiceBinding.GetClient<MeshServiceClient>();
+        //}
+
+
+    ///<inheritdoc cref="IMeshMachine"/>
+    public virtual T GetClient<T>(
+                string wellKnown,
+                ICredentialPrivate credential,
+                string accountAddress) where T : JpcClientInterface, new() {
+
         var service = accountAddress.GetService();
         var meshServiceBinding = new ConnectionInitiator(
-        credential, service, null, TransportType.Http, MeshServiceClient.WellKnown);
+        credential, service, null, TransportType.Http, wellKnown);
 
-        return meshServiceBinding.GetClient<MeshServiceClient>();
+        return meshServiceBinding.GetClient<T>();
         }
+
+
 
     ///<inheritdoc cref="IMeshMachine"/>
     public virtual ICredentialPrivate GetCredential(string deviceUdf, string connectionUdf) => throw new NYI();
+
+
+    ///<inheritdoc/>
+    public virtual IResolver GetResolver(ICredentialPrivate credential) {
+
+        throw new NotImplementedException();
+        }
+
+    ///<inheritdoc/>
+    public virtual ICarnet GetCarnet(ICredentialPrivate credential) {
+        throw new NotImplementedException();
+        }
 
 
 

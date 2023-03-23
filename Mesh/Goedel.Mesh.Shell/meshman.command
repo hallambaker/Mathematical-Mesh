@@ -133,6 +133,8 @@
 			Brief "Content Type"
 		Option Encrypt "encrypt" String
 			Brief "Encrypt data for specified recipient"
+		Option Self "self" String
+			Brief "Encrypt a copy of the data for self"
 		Option Sign "sign" String
 			Brief "Sign data with specified key"
 		Option Hash "hash" Flag

@@ -26,6 +26,8 @@ global using Goedel.Cryptography.Dare;
 global using Goedel.Cryptography.Jose;
 global using Goedel.IO;
 global using Goedel.Mesh.Client;
+global using Goedel.Callsign;
+global using Goedel.Carnet;
 global using Goedel.Protocol;
 global using Goedel.Protocol.Presentation;
 global using Goedel.Utilities;

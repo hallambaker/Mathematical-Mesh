@@ -502,6 +502,12 @@
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolInbound">
             <summary>Returns the inbound spool for the account</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.CallsignResolver">
+            <summary>The callsign resolver.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.CarnetClient">
+            <summary>The carnet payments client.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Disposing">
             <summary>
             Disposal method called on exit.

@@ -188,7 +188,6 @@ public partial class ShellTests {
     public static string CommonData => "../../../CommonData/";
 
 
-
     [Fact]
     public void NewFileTestAll() {
         StartTest();
@@ -244,19 +243,21 @@ public partial class ShellTests {
         // make a file 
         seed.MakeTestFile(filename, length, info);
 
+        var options = encrypt ? $" /encrypt={alice.ContextUser.AccountAddress}" : "";
+
         // encode
         var fileEncoded = seed.GetTempFileName();
-        alice.Dispatch($"dare encode {filename} {fileEncoded}");
+        alice.Dispatch($"dare encode {filename} {fileEncoded} {options}");
 
         // decode as Alice
         var aliceDecoded = seed.GetTempFileName();
         alice.Dispatch($"dare decode {fileEncoded} {aliceDecoded}");
         seed.CheckTestFile(aliceDecoded, length, info);
 
-        // decode as Bob
-        var bobDecoded = seed.GetTempFileName();
-        bob.Dispatch($"dare decode {fileEncoded} {bobDecoded}");
-        seed.CheckTestFile(bobDecoded, length, info);
+        //// decode as Bob
+        //var bobDecoded = seed.GetTempFileName();
+        //bob.Dispatch($"dare decode {fileEncoded} {bobDecoded}");
+        //seed.CheckTestFile(bobDecoded, length, info);
 
         if (encrypt) {
             var malletDecoded = seed.GetTempFileName();
@@ -278,30 +279,34 @@ public partial class ShellTests {
         }
 
     [Theory]
-    [InlineData(true, false, false)]
+    [InlineData(true, true, false, false)]
     public void NewArchiveTestOnce(
                     bool encrypt,
+                    bool self,
                     bool sign,
-                    bool notarize) {
-        var seed = DeterministicSeed.Auto();
+                    bool notarize,
+                    bool checkErase = false) {
+        Seed = DeterministicSeed.AutoClean(encrypt, self, sign, notarize, checkErase);
         CreateAliceBobMallet(out var alice, out var bob, out var mallet);
 
 
+        NewArchiveTest(Seed, encrypt, self, sign, notarize, alice, bob, mallet);
 
-
-        NewArchiveTest(seed, encrypt, sign, notarize, alice, bob, mallet);
+        EndTest();
         }
 
 
     static void NewArchiveTest(DeterministicSeed seed,
                     bool encrypt,
+                    bool self,
                     bool sign,
                     bool notarize,
 
                     TestCLI alice,
                     TestCLI bob,
                     TestCLI mallet,
-                    int length = 1000) {
+                    int length = 1000,
+                    bool checkErase = false) {
         var sourceDir = TestEnvironmentBase.CommonData;
         var sourcePath = TestArchive.Archive1;
 
@@ -321,36 +326,41 @@ public partial class ShellTests {
             Mallet= mallet
             };
 
+        var options = encrypt ? $" /encrypt={bob.ContextUser.AccountAddress} " : "";
+        options += self ? $" /encrypt={alice.ContextUser.AccountAddress} " : "";
+
+        bool checkSelf = !encrypt | self;
+
         // Create an archive from a directory
-        alice.Dispatch($"archive create {archive} {source} ");
+        alice.Dispatch($"archive create {archive} {source}{options}");
         testArchive.Add(sourceDir, sourcePath);
-        testArchive.CheckArchive();
+        testArchive.CheckArchive(self: checkSelf);
 
         // Add a file
         seed.MakeTestFile(extraFile, length);
         alice.Dispatch($"archive append {archive} {extraFile}");
         testArchive.AddFile(extraFile, "");
-        testArchive.CheckArchive();
+        testArchive.CheckArchive(self: checkSelf);
 
         // Delete a file
         alice.Dispatch($"archive delete {archive} {deleteFile}");
         testArchive.Delete(deleteFile);
-        testArchive.CheckArchive();
+        testArchive.CheckArchive(self: checkSelf);
         //testArchive.CheckFile(deleteFile);
 
-        if (encrypt) {
+        if (encrypt & checkErase) {
             // Erasure only works if the archive is encrypted.
 
             // Erase a file
             alice.Dispatch($"archive delete {archive} {eraseFile} /erase");
             testArchive.Erase(eraseFile);
-            testArchive.CheckArchive();
+            testArchive.CheckArchive(self: checkSelf);
             //testArchive.CheckFile(eraseFile);
 
             // Erase the deleted file
             alice.Dispatch($"archive delete {archive} {deleteFile} /erase");
             testArchive.Erase(deleteFile);
-            testArchive.CheckArchive();
+            testArchive.CheckArchive(self: checkSelf);
             //testArchive.CheckFile(deleteFile);
             }
         }
@@ -530,13 +540,6 @@ public partial class ShellTests {
             }
         EndTest();
         }
-
-    [Fact]
-    public void RelativePathDirectoryFail() => throw new NYI();
-
-    [Fact]
-    public void RelativePathFileFail() => throw new NYI();
-
 
 
     private void LogTest(

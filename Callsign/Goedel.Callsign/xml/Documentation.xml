@@ -1247,6 +1247,482 @@
             <returns></returns>
             <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
+        <member name="T:Goedel.Callsign.CallsignResolver">
+             <summary>
+            
+             Callsign Registrar protocol supporting query function.
+             Protocol interactions supported by the Mesh Service.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignResolver._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.CallsignResolver.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.CallsignResolver._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.CallsignResolver.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
+            <summary>
+            Construct an instance from the specified tagged JsonReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="T:Goedel.Callsign.ResolverService">
+            <summary>
+            The new base class for the client and service side APIs.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Callsign.ResolverService.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.ResolverService.GetWellKnown">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.ResolverService.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.ResolverService.GetDiscovery">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverService.GetTagDictionary">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverService.GetDirect(Goedel.Protocol.IJpcSession)">
+            <summary>
+            Return a client tapping the service API directly without serialization bound to
+            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+            </summary>
+            <param name="jpcSession">Session to which requests are to be bound.</param>
+            <returns>The direct client instance.</returns>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverService.Query(Goedel.Callsign.QueryRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction Query.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverService.Sync(Goedel.Callsign.SyncRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction Sync.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="T:Goedel.Callsign.ResolverServiceClient">
+            <summary>
+            Client class for ResolverService.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Callsign.ResolverServiceClient.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.ResolverServiceClient.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.ResolverServiceClient.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Callsign.ResolverServiceClient.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverServiceClient.Query(Goedel.Callsign.QueryRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverServiceClient.Sync(Goedel.Callsign.SyncRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="T:Goedel.Callsign.ResolverServiceDirect">
+            <summary>
+            Direct API class for ResolverService.
+            </summary>		
+        </member>
+        <member name="P:Goedel.Callsign.ResolverServiceDirect.Service">
+            <summary>
+            Interface object to dispatch requests to.
+            </summary>	
+        </member>
+        <member name="M:Goedel.Callsign.ResolverServiceDirect.Query(Goedel.Callsign.QueryRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverServiceDirect.Sync(Goedel.Callsign.SyncRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="T:Goedel.Callsign.ResolverRequest">
+             <summary>
+            
+             Base class for all requests made to a registrar
+             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.ResolverRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.ResolverRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.ResolverRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ResolverRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ResolverRequest._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ResolverRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.ResolverRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Callsign.ResolverResponse">
+             <summary>
+            
+             Base class for all response messages. Contains only the
+             status code and status description fields.
+             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverResponse.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.ResolverResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.ResolverResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.ResolverResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ResolverResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ResolverResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.ResolverResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.ResolverResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.ResolverResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Callsign.QueryRequest">
+             <summary>
+            
+             Request resolution of a profile bound to a callsign or registration identifier. 
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.QueryRequest.CallSign">
+             <summary>
+            The callsign being requested in canonical form.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.QueryRequest.RegistrationId">
+             <summary>
+            The registration identifier of a registration in the log.
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.QueryRequest.LogId">
+             <summary>
+            The unique identifier of an append only log whose signed Notarization
+            entry is requested.
+             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.QueryRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.QueryRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.QueryRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.QueryRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.QueryRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.QueryRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.QueryRequest._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.QueryRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.QueryRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.QueryRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.QueryRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Callsign.QueryResponse">
+             <summary>
+            
+             Return the result of a QueryRequest
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.QueryResponse.Result">
+             <summary>
+            The registration specified in the result (if found).	
+             </summary>
+        </member>
+        <member name="P:Goedel.Callsign.QueryResponse.Notarization">
+             <summary>
+            The latest notarization entry corresponding to the specified log.
+             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.QueryResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.QueryResponse.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.QueryResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.QueryResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.QueryResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.QueryResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.QueryResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.QueryResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.QueryResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.QueryResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.QueryResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Callsign.SyncRequest">
+             <summary>
+            
+             
+             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.SyncRequest.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.SyncRequest.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.SyncRequest._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.SyncRequest._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.SyncRequest._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.SyncRequest._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.SyncRequest._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.SyncRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.SyncRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.SyncRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.SyncRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Callsign.SyncResponse">
+             <summary>
+            
+             
+             </summary>
+        </member>
+        <member name="M:Goedel.Callsign.SyncResponse.Setter(System.String,Goedel.Protocol.TokenValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Callsign.SyncResponse.Getter(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Callsign.SyncResponse._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.SyncResponse._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Callsign.SyncResponse._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.SyncResponse._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.SyncResponse._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Callsign.SyncResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Callsign.SyncResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Callsign.SyncResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Callsign.SyncResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Callsign.CatalogRegistration">
             <summary>
             Bookmark catalog. Describes the bookmarks in the user's Mesh account.
@@ -1704,7 +2180,7 @@
             <param name="contextAccount">The account context in which to make the request.</param>
             <param name="display">The display form of the callsign.</param>
         </member>
-        <member name="T:Callsign.NamespaceDoc">
+        <member name="T:Goedel.Callsign.NamespaceDoc">
             <summary>
             Mesh Callsign registry implementation.
             </summary>

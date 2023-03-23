@@ -29,10 +29,54 @@ using System.Threading.Tasks;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
+using System.Net.WebSockets;
 
 namespace Goedel.Callsign;
 
 public partial class Page {
+
+    public Dictionary<string, Page> SubPages = new Dictionary<string, Page>();
+
+    public void Expand(Dictionary<string, Page> pages) {
+        if (Allow is null) {
+            return;
+            }
+        foreach (var allow in Allow) {
+            pages.TryGetValue(allow, out var page).AssertTrue(NYI.Throw);
+
+
+            SubPages.Add (allow, page);
+            Expand(pages, page);
+
+            }
+
+
+        }
+
+    void Expand(Dictionary<string, Page> pages, Page page) {
+        foreach (var allow in Allow) {
+            if (!SubPages.TryGetValue(allow, out _)) {
+                SubPages.Add(allow, page);
+                Expand(pages, page);
+                }
+            }
+        }
+
+
+    public bool IsAllowed(char c) {
+        foreach (var span in CharacterSpans) {
+            if ((c == span.First) & (span.Last == null)) {
+                return true;
+                }
+            if ((c >= span.First) & (c <= span.Last)) {
+                return true;
+                }
+            }
+
+        return false;
+        }
+
+
 
     public const string FileCharacterPageDigits = "Resources.CharacterPageDigits.json";
     public const string FileCharacterPageLatin = "Resources.CharacterPageLatin.json";

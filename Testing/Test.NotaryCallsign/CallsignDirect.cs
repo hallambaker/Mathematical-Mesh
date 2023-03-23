@@ -37,7 +37,7 @@ namespace Goedel.XUnit;
 
 public partial class CallsignDirect : UnitTestSet {
 
-    public static CallsignDirect Test() => new ();
+    public static CallsignDirect Test() => new();
     public PublicCallsignResolver CallsignResolver { get; set; }
 
     public ResolverServiceClient ResolverServiceClient { get; set; }
@@ -77,20 +77,6 @@ public partial class CallsignDirect : UnitTestSet {
         }
 
 
-    void LoadCharacterPages() {
-        using var file = GetEmbedded("Resources.CharacterPageDigits.json");
-        }
-
-    System.IO.Stream GetEmbedded(string file) {
-        var assembly = typeof(CallsignEntry).Assembly;
-        var name = assembly.GetName().Name;
-        var resourceName = $"{name}.{file}";
-
-        var resources = assembly.GetManifestResourceNames();
-
-        return assembly.GetManifestResourceStream(resourceName);
-        }
-
 
 
     [Fact]
@@ -110,7 +96,7 @@ public partial class CallsignDirect : UnitTestSet {
 
         // Make the binding request
         var bindAlice = contextAccountAlice.CallsignRequest(CallsignAlice, bind: true, transfer: null);
-        
+
         // Callsign is not assigned until we process it.
         CheckResolve(CallsignAlice);
 
@@ -141,7 +127,7 @@ public partial class CallsignDirect : UnitTestSet {
         var transferBob = contextAccountAlice.CallsignRequest(CallsignBob, display: null, bind: false, transfer: profileBob);
         contextRegistry.Process();
 
-        CheckResponse(contextAccountAlice, transferBob);
+        CheckResponse(contextAccountAlice, transferBob, bound: false);
         CheckResolve(CallsignBob, contextAccountBob, false);
 
         var bindBob = contextAccountBob.CallsignRequest(CallsignBob, bind: true, transfer: null);
@@ -180,7 +166,17 @@ public partial class CallsignDirect : UnitTestSet {
     /// <exception cref="NYI"></exception>
     [Fact]
     public void RegisterAliceConnectBob() {
-        throw new NYI();
+        Initialize(out var contextAccountAlice, out var contextRegistry);
+        var contextAccountBob = MeshMachineTest.GenerateAccountUser(TestEnvironmentCommon,
+                DeviceBobAdmin, AccountBob, "mainbob");
+
+        var bindAlice = contextAccountAlice.CallsignRequest(CallsignAlice, bind: true, transfer: null);
+        contextRegistry.Process();
+        CheckResponse(contextAccountAlice, bindAlice);
+
+
+        CallsignResolver.SyncToRegistry();
+        var bobRequest = contextAccountBob.ContactRequest(CallsignAlice);
 
         }
 
@@ -201,6 +197,8 @@ public partial class CallsignDirect : UnitTestSet {
 
         foreach (var callsign in tests) {
             var bindAlice = contextAccountAlice.CallsignRequest(callsign, bind: true, transfer: null);
+            contextRegistry.Process();
+
             CheckResponse(contextAccountAlice, bindAlice);
             }
 
@@ -220,6 +218,8 @@ public partial class CallsignDirect : UnitTestSet {
 
         foreach (var callsign in tests) {
             var bindAlice = contextAccountAlice.CallsignRequest(callsign, bind: true, transfer: null);
+            contextRegistry.Process();
+
             CheckResponse(contextAccountAlice, bindAlice, false);
             }
         }
@@ -232,7 +232,8 @@ public partial class CallsignDirect : UnitTestSet {
     void CheckResponse(
                     ContextUser account,
                     CallsignRegistrationRequest request,
-                    bool success = true) {
+                    bool success = true,
+                    bool bound = true) {
         account.Sync();
         // check result.
 
@@ -253,9 +254,12 @@ public partial class CallsignDirect : UnitTestSet {
             }
 
         var registration = message.CatalogedRegistration.EnvelopedRegistration.Decode();
-
         var entry = registration.Entry.Decode();
-        account.Profile.Matches(entry.ProfileUdf).TestTrue();
+        if (bound) {
+            account.Profile.Matches(entry.ProfileUdf).TestTrue();
+            }
+        else {
+            }
         }
 
     void CheckResolve(
@@ -277,6 +281,11 @@ public partial class CallsignDirect : UnitTestSet {
         var binding = result.Entry.Decode();
 
         var bindingUdf = binding.ProfileUdf;
+
+        if (!bound) {
+            binding.ProfileUdf.TestNull();
+            return;
+            }
         var boundtoaccount = account.Profile.Matches (binding.ProfileUdf);
 
 

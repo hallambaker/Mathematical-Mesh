@@ -21,6 +21,7 @@
 #endregion
 
 
+using Goedel.Cryptography;
 using Goedel.Test.Core;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
@@ -41,6 +42,110 @@ public partial class TestDareArchive {
 
         }
 
+
+    [Fact]
+    public void ArchiveRelativeDirectory() {
+        var seed = DeterministicSeed.AutoClean();
+        var archiveFile = seed.GetTempFilePath();
+        var sourceDir = TestEnvironmentBase.CommonData;
+        var sourcePath = TestArchive.Archive1;
+
+        using (var archive = new DareArchive(archiveFile)) {
+
+
+            Xunit.Assert.Throws<RelativeDirectoryInvalid>(() =>
+                    AttemptAddRelativeDirectory(archive, sourceDir));
+            ForceAddRelativeDirectory(archive, sourceDir);
+            }
+
+        // attempting to unpack should throw error
+        Xunit.Assert.Throws<RelativeDirectoryInvalid>(() => DareArchive.UnpackArchive(archiveFile));
+
+
+        }
+
+    static void AttemptAddRelativeDirectory(DareArchive archive, string sourceDir) {
+        var directory = "../CommonDate" ;
+        archive.AddDirectory(sourceDir, directory);
+        }
+
+    static void ForceAddRelativeDirectory(DareArchive archive, string sourceDir) {
+        var directory = "../CommonDate";
+        AddDirectoryForce(archive, sourceDir, directory);
+
+        }
+
+    #region // Forced add file to archive without checking directory path is valid.
+
+    static void AddDirectoryForce(
+                    DareArchive archive,
+                    string diskPath,
+                    string directoryPath) {
+        var path = Path.Combine(diskPath, directoryPath);
+        var directoryInfo = new DirectoryInfo(diskPath);
+
+
+        AddDirectoryForce(archive, directoryPath, directoryInfo);
+        }
+
+    static void AddDirectoryForce(
+            DareArchive archive,
+            string directoryPath,
+            DirectoryInfo directoryInfo
+            ) {
+
+        foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
+            AddFileForce(archive, directoryPath, fileInfo);
+            }
+
+        foreach (var subDirectoryInfo in directoryInfo.EnumerateDirectories()) {
+            var subpath = Path.Combine(directoryPath, subDirectoryInfo.Name);
+            AddDirectoryForce(archive, subpath, subDirectoryInfo);
+            }
+        }
+
+    /// <summary>
+    /// Add the file <paramref name="fileInfo"/> into the archive with the directory 
+    /// path prefix <paramref name="directoryPath"/>.
+    /// </summary>
+    /// <param name="directoryPath"></param>
+    /// <param name="fileInfo"></param>
+    static ArchiveIndexEntry AddFileForce(
+                DareArchive archive,
+                string directoryPath,
+                FileInfo fileInfo,
+                ContentMeta contentMeta = null) {
+
+        // here we build the ContentMeta entry
+        contentMeta ??= new();
+        contentMeta.Filename = fileInfo.Name;
+        contentMeta.FileEntry = new FileEntry() {
+            Path = directoryPath,
+            CreationTime = fileInfo.CreationTime,
+            LastAccessTime = fileInfo.LastAccessTime,
+            LastWriteTime = fileInfo.LastWriteTime,
+            Attributes = (int)fileInfo.Attributes
+            };
+        contentMeta.UniqueId = Path.Combine(directoryPath, fileInfo.Name);
+        contentMeta.Event = DareConstants.SequenceEventNewTag;
+
+        using var stream = fileInfo.FullName.OpenFileReadShared();
+        return AddFileForce(archive, stream, stream.Length, contentMeta);
+        }
+
+    static ArchiveIndexEntry AddFileForce(
+            DareArchive archive,
+            Stream data,
+            long length,
+            ContentMeta contentMeta = null) {
+
+        var result = archive.Sequence.AppendFromStream(data, length, contentMeta) as
+                    ArchiveIndexEntry;
+
+        return result;
+        }
+
+    #endregion
 
     static void TestArchiveCore(
                     bool encrypt,

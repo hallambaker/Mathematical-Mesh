@@ -25,6 +25,12 @@
 	</ItemGroup>
 	<ItemGroup>
 
+		<Compile Update="CallsignResolver.cs">
+		  <DependentUpon>CallsignResolver.protocol</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+
 		<Compile Update="Exceptions.cs">
 			<DependentUpon>Exceptions.exceptional</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -44,6 +50,12 @@
 
 	<ItemGroup>
 
+		<None Update="CallsignResolver.protocol">
+		  <LastGenOutput>CallsignResolver.cs</LastGenOutput>
+		  <Generator>Protogen</Generator>
+		</None>
+
+		
 		<None Update="Exceptions.exceptional">
 			<LastGenOutput>Exceptions.cs</LastGenOutput>
 			<Generator>exceptional</Generator>

@@ -250,6 +250,20 @@ public abstract class Catalog<T> : Store, IEnumerable<T>  where T : CatalogedEnt
     /// <returns>The <see cref="CatalogedDevice"/> entry.</returns>
     public virtual T Get(string key) => Locate(key) as T;
 
+
+    /// <summary>
+    /// Attempt to locate key <paramref name="key"/> returning true if
+    /// found, false otherwise. The value is returned in 
+    /// <paramref name="value"/> if found, otherwise null.
+    /// </summary>
+    /// <param name="key">The key to search for.</param>
+    /// <param name="value">The value, if found, otherwise null.</param>
+    /// <returns>True if the value was found, otherwise null.</returns>
+    public bool TryLocate(string key, out T value) {
+        value = Locate(key);
+        return value != null;
+        }
+
     /// <summary>
     /// Get default instance of type <typeparamref name="TT"/>
     /// </summary>

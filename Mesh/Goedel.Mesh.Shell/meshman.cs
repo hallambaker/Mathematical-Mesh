@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 17-Mar-23 9:37:41 PM
+//  This file was automatically generated at 23-Mar-23 1:11:58 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1827,6 +1827,7 @@ public interface ICryptoOptions {
 public interface IEncodeOptions {
 	String			ContentType{get; set;}
 	String			Encrypt{get; set;}
+	String			Self{get; set;}
 	String			Sign{get; set;}
 	Flag			Hash{get; set;}
 	ExistingFile			Cover{get; set;}
@@ -15532,6 +15533,7 @@ public class _DareEncode : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new String (),
 		new Flag (),
 		new ExistingFile (),
 		new String (),
@@ -15585,122 +15587,131 @@ public class _DareEncode : Goedel.Command.Dispatch ,
 	public virtual string _Encrypt {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sign]</summary>
-	public virtual String Sign {
+	/// <summary>Field accessor for option [self]</summary>
+	public virtual String Self {
 		get => _Data[4] as String;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _Sign {
+	public virtual string _Self {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [hash]</summary>
-	public virtual Flag Hash {
-		get => _Data[5] as Flag;
+	/// <summary>Field accessor for option [sign]</summary>
+	public virtual String Sign {
+		get => _Data[5] as String;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _Hash {
+	public virtual string _Sign {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [cover]</summary>
-	public virtual ExistingFile Cover {
-		get => _Data[6] as ExistingFile;
+	/// <summary>Field accessor for option [hash]</summary>
+	public virtual Flag Hash {
+		get => _Data[6] as Flag;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _Cover {
+	public virtual string _Hash {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for option [alg]</summary>
-	public virtual String Algorithms {
-		get => _Data[7] as String;
+	/// <summary>Field accessor for option [cover]</summary>
+	public virtual ExistingFile Cover {
+		get => _Data[7] as ExistingFile;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _Algorithms {
+	public virtual string _Cover {
 		set => _Data[7].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
+	/// <summary>Field accessor for option [alg]</summary>
+	public virtual String Algorithms {
 		get => _Data[8] as String;
 		set => _Data[8]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _Algorithms {
 		set => _Data[8].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[9] as String;
 		set => _Data[9]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[9].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[10] as Flag;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[10] as String;
 		set => _Data[10]  = value;
 		}
 
-	public virtual string _AutoSync {
+	public virtual string _LocalName {
 		set => _Data[10].Parameter (value);
 		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
 		get => _Data[11] as Flag;
 		set => _Data[11]  = value;
 		}
 
-	public virtual string _AutoApprove {
+	public virtual string _AutoSync {
 		set => _Data[11].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
 		get => _Data[12] as Flag;
 		set => _Data[12]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _AutoApprove {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[13] as Flag;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[13].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[14] as Flag;
 		set => _Data[14]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[14].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sub]</summary>
-	public virtual Flag Subdirectories {
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
 		get => _Data[15] as Flag;
 		set => _Data[15]  = value;
 		}
 
-	public virtual string _Subdirectories {
+	public virtual string _Json {
 		set => _Data[15].Parameter (value);
 		}
-	/// <summary>Field accessor for option [key]</summary>
-	public virtual String SymmetrictKey {
-		get => _Data[16] as String;
+	/// <summary>Field accessor for option [sub]</summary>
+	public virtual Flag Subdirectories {
+		get => _Data[16] as Flag;
 		set => _Data[16]  = value;
 		}
 
-	public virtual string _SymmetrictKey {
+	public virtual string _Subdirectories {
 		set => _Data[16].Parameter (value);
+		}
+	/// <summary>Field accessor for option [key]</summary>
+	public virtual String SymmetrictKey {
+		get => _Data[17] as String;
+		set => _Data[17]  = value;
+		}
+
+	public virtual string _SymmetrictKey {
+		set => _Data[17].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -15739,94 +15750,101 @@ public class _DareEncode : Goedel.Command.Dispatch ,
 				Key = "encrypt"
 				},
 			new DescribeEntryOption () {
+				Identifier = "Self", 
+				Default = null, // null if null
+				Brief = "Encrypt a copy of the data for self",
+				Index = 4,
+				Key = "self"
+				},
+			new DescribeEntryOption () {
 				Identifier = "Sign", 
 				Default = null, // null if null
 				Brief = "Sign data with specified key",
-				Index = 4,
+				Index = 5,
 				Key = "sign"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Hash", 
 				Default = "true", // null if null
 				Brief = "Compute hash of content",
-				Index = 5,
+				Index = 6,
 				Key = "hash"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Cover", 
 				Default = null, // null if null
 				Brief = "File containing a cover to be added to encrypted files",
-				Index = 6,
+				Index = 7,
 				Key = "cover"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Algorithms", 
 				Default = null, // null if null
 				Brief = "List of algorithm specifiers",
-				Index = 7,
+				Index = 8,
 				Key = "alg"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 8,
+				Index = 9,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 9,
+				Index = 10,
 				Key = "local"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoSync", 
 				Default = "true", // null if null
 				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 10,
+				Index = 11,
 				Key = "sync"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoApprove", 
 				Default = "true", // null if null
 				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 11,
+				Index = 12,
 				Key = "auto"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 12,
+				Index = 13,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 13,
+				Index = 14,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 14,
+				Index = 15,
 				Key = "json"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Subdirectories", 
 				Default = null, // null if null
 				Brief = "Process subdirectories recursively.",
-				Index = 15,
+				Index = 16,
 				Key = "sub"
 				},
 			new DescribeEntryOption () {
 				Identifier = "SymmetrictKey", 
 				Default = null, // null if null
 				Brief = "Specifies the value of the master key",
-				Index = 16,
+				Index = 17,
 				Key = "key"
 				}
 			}
@@ -16489,6 +16507,7 @@ public class _ArchiveCreate : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new String (),
 		new Flag (),
 		new ExistingFile (),
 		new String (),
@@ -16528,158 +16547,167 @@ public class _ArchiveCreate : Goedel.Command.Dispatch ,
 	public virtual string _Encrypt {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sign]</summary>
-	public virtual String Sign {
+	/// <summary>Field accessor for option [self]</summary>
+	public virtual String Self {
 		get => _Data[2] as String;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _Sign {
+	public virtual string _Self {
 		set => _Data[2].Parameter (value);
 		}
-	/// <summary>Field accessor for option [hash]</summary>
-	public virtual Flag Hash {
-		get => _Data[3] as Flag;
+	/// <summary>Field accessor for option [sign]</summary>
+	public virtual String Sign {
+		get => _Data[3] as String;
 		set => _Data[3]  = value;
 		}
 
-	public virtual string _Hash {
+	public virtual string _Sign {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for option [cover]</summary>
-	public virtual ExistingFile Cover {
-		get => _Data[4] as ExistingFile;
+	/// <summary>Field accessor for option [hash]</summary>
+	public virtual Flag Hash {
+		get => _Data[4] as Flag;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _Cover {
+	public virtual string _Hash {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [alg]</summary>
-	public virtual String Algorithms {
-		get => _Data[5] as String;
+	/// <summary>Field accessor for option [cover]</summary>
+	public virtual ExistingFile Cover {
+		get => _Data[5] as ExistingFile;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _Algorithms {
+	public virtual string _Cover {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
+	/// <summary>Field accessor for option [alg]</summary>
+	public virtual String Algorithms {
 		get => _Data[6] as String;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _Algorithms {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[7] as String;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[7].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[8] as Flag;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[8] as String;
 		set => _Data[8]  = value;
 		}
 
-	public virtual string _AutoSync {
+	public virtual string _LocalName {
 		set => _Data[8].Parameter (value);
 		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
 		get => _Data[9] as Flag;
 		set => _Data[9]  = value;
 		}
 
-	public virtual string _AutoApprove {
+	public virtual string _AutoSync {
 		set => _Data[9].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
 		get => _Data[10] as Flag;
 		set => _Data[10]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _AutoApprove {
 		set => _Data[10].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[11] as Flag;
 		set => _Data[11]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[11].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[12] as Flag;
 		set => _Data[12]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for option [type]</summary>
-	public virtual String Type {
-		get => _Data[13] as String;
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[13] as Flag;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _Type {
+	public virtual string _Json {
 		set => _Data[13].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter [auth]</summary>
-	public virtual Enumeration<EnumAuthentication> EnumAuthentication {
-		get => _Data[14] as Enumeration<EnumAuthentication>;
+	/// <summary>Field accessor for option [type]</summary>
+	public virtual String Type {
+		get => _Data[14] as String;
 		set => _Data[14]  = value;
 		}
 
-	public virtual string _EnumAuthentication {
+	public virtual string _Type {
 		set => _Data[14].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter [use]</summary>
-	public virtual Enumeration<EnumUse> EnumUse {
-		get => _Data[15] as Enumeration<EnumUse>;
+	/// <summary>Field accessor for parameter [auth]</summary>
+	public virtual Enumeration<EnumAuthentication> EnumAuthentication {
+		get => _Data[15] as Enumeration<EnumAuthentication>;
 		set => _Data[15]  = value;
 		}
 
-	public virtual string _EnumUse {
+	public virtual string _EnumAuthentication {
 		set => _Data[15].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual NewFile Archive {
-		get => _Data[16] as NewFile;
+	/// <summary>Field accessor for parameter [use]</summary>
+	public virtual Enumeration<EnumUse> EnumUse {
+		get => _Data[16] as Enumeration<EnumUse>;
 		set => _Data[16]  = value;
 		}
 
-	public virtual string _Archive {
+	public virtual string _EnumUse {
 		set => _Data[16].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Input {
-		get => _Data[17] as ExistingFile;
+	public virtual NewFile Archive {
+		get => _Data[17] as NewFile;
 		set => _Data[17]  = value;
 		}
 
-	public virtual string _Input {
+	public virtual string _Archive {
 		set => _Data[17].Parameter (value);
 		}
-	/// <summary>Field accessor for option [index]</summary>
-	public virtual Flag Index {
-		get => _Data[18] as Flag;
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual ExistingFile Input {
+		get => _Data[18] as ExistingFile;
 		set => _Data[18]  = value;
 		}
 
-	public virtual string _Index {
+	public virtual string _Input {
 		set => _Data[18].Parameter (value);
+		}
+	/// <summary>Field accessor for option [index]</summary>
+	public virtual Flag Index {
+		get => _Data[19] as Flag;
+		set => _Data[19]  = value;
+		}
+
+	public virtual string _Index {
+		set => _Data[19].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -16704,122 +16732,129 @@ public class _ArchiveCreate : Goedel.Command.Dispatch ,
 				Key = "encrypt"
 				},
 			new DescribeEntryOption () {
+				Identifier = "Self", 
+				Default = null, // null if null
+				Brief = "Encrypt a copy of the data for self",
+				Index = 2,
+				Key = "self"
+				},
+			new DescribeEntryOption () {
 				Identifier = "Sign", 
 				Default = null, // null if null
 				Brief = "Sign data with specified key",
-				Index = 2,
+				Index = 3,
 				Key = "sign"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Hash", 
 				Default = "true", // null if null
 				Brief = "Compute hash of content",
-				Index = 3,
+				Index = 4,
 				Key = "hash"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Cover", 
 				Default = null, // null if null
 				Brief = "File containing a cover to be added to encrypted files",
-				Index = 4,
+				Index = 5,
 				Key = "cover"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Algorithms", 
 				Default = null, // null if null
 				Brief = "List of algorithm specifiers",
-				Index = 5,
+				Index = 6,
 				Key = "alg"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 6,
+				Index = 7,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 7,
+				Index = 8,
 				Key = "local"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoSync", 
 				Default = "true", // null if null
 				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 8,
+				Index = 9,
 				Key = "sync"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoApprove", 
 				Default = "true", // null if null
 				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 9,
+				Index = 10,
 				Key = "auto"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 10,
+				Index = 11,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 11,
+				Index = 12,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 12,
+				Index = 13,
 				Key = "json"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Type", 
 				Default = null, // null if null
 				Brief = "The sequence type, plain/tree/digest/chain/tree",
-				Index = 13,
+				Index = 14,
 				Key = "type"
 				},
 			new DescribeEntryEnumerate () {
 				Identifier = "EnumAuthentication", 
 				Default = null, // null if null
 				Brief = "Authentication and indexing",
-				Index = 14,
+				Index = 15,
 				Key = "auth"
 				},
 			new DescribeEntryEnumerate () {
 				Identifier = "EnumUse", 
 				Default = null, // null if null
 				Brief = "<Unspecified>",
-				Index = 15,
+				Index = 16,
 				Key = "use"
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Archive", 
 				Default = null, // null if null
 				Brief = "Filename for encrypted output.",
-				Index = 16,
+				Index = 17,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Input", 
 				Default = null, // null if null
 				Brief = "Directory containing files to create archive from",
-				Index = 17,
+				Index = 18,
 				Key = ""
 				},
 			new DescribeEntryOption () {
 				Identifier = "Index", 
 				Default = "true", // null if null
 				Brief = "Append index to the archive",
-				Index = 18,
+				Index = 19,
 				Key = "index"
 				}
 			}
@@ -16837,6 +16872,7 @@ public class _ArchiveAppend : Goedel.Command.Dispatch ,
 						IReporting{
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
 		new String (),
 		new String (),
 		new String (),
@@ -16877,140 +16913,149 @@ public class _ArchiveAppend : Goedel.Command.Dispatch ,
 	public virtual string _Encrypt {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sign]</summary>
-	public virtual String Sign {
+	/// <summary>Field accessor for option [self]</summary>
+	public virtual String Self {
 		get => _Data[2] as String;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _Sign {
+	public virtual string _Self {
 		set => _Data[2].Parameter (value);
 		}
-	/// <summary>Field accessor for option [hash]</summary>
-	public virtual Flag Hash {
-		get => _Data[3] as Flag;
+	/// <summary>Field accessor for option [sign]</summary>
+	public virtual String Sign {
+		get => _Data[3] as String;
 		set => _Data[3]  = value;
 		}
 
-	public virtual string _Hash {
+	public virtual string _Sign {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for option [cover]</summary>
-	public virtual ExistingFile Cover {
-		get => _Data[4] as ExistingFile;
+	/// <summary>Field accessor for option [hash]</summary>
+	public virtual Flag Hash {
+		get => _Data[4] as Flag;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _Cover {
+	public virtual string _Hash {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [alg]</summary>
-	public virtual String Algorithms {
-		get => _Data[5] as String;
+	/// <summary>Field accessor for option [cover]</summary>
+	public virtual ExistingFile Cover {
+		get => _Data[5] as ExistingFile;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _Algorithms {
+	public virtual string _Cover {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
+	/// <summary>Field accessor for option [alg]</summary>
+	public virtual String Algorithms {
 		get => _Data[6] as String;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _Algorithms {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[7] as String;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[7].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[8] as Flag;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[8] as String;
 		set => _Data[8]  = value;
 		}
 
-	public virtual string _AutoSync {
+	public virtual string _LocalName {
 		set => _Data[8].Parameter (value);
 		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
 		get => _Data[9] as Flag;
 		set => _Data[9]  = value;
 		}
 
-	public virtual string _AutoApprove {
+	public virtual string _AutoSync {
 		set => _Data[9].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
 		get => _Data[10] as Flag;
 		set => _Data[10]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _AutoApprove {
 		set => _Data[10].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[11] as Flag;
 		set => _Data[11]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[11].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[12] as Flag;
 		set => _Data[12]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Archive {
-		get => _Data[13] as ExistingFile;
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[13] as Flag;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _Archive {
+	public virtual string _Json {
 		set => _Data[13].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual NewFile File {
-		get => _Data[14] as NewFile;
+	public virtual ExistingFile Archive {
+		get => _Data[14] as ExistingFile;
 		set => _Data[14]  = value;
 		}
 
-	public virtual string _File {
+	public virtual string _Archive {
 		set => _Data[14].Parameter (value);
 		}
-	/// <summary>Field accessor for option [id]</summary>
-	public virtual String Id {
-		get => _Data[15] as String;
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual NewFile File {
+		get => _Data[15] as NewFile;
 		set => _Data[15]  = value;
 		}
 
-	public virtual string _Id {
+	public virtual string _File {
 		set => _Data[15].Parameter (value);
 		}
-	/// <summary>Field accessor for option [index]</summary>
-	public virtual Flag Index {
-		get => _Data[16] as Flag;
+	/// <summary>Field accessor for option [id]</summary>
+	public virtual String Id {
+		get => _Data[16] as String;
 		set => _Data[16]  = value;
 		}
 
-	public virtual string _Index {
+	public virtual string _Id {
 		set => _Data[16].Parameter (value);
+		}
+	/// <summary>Field accessor for option [index]</summary>
+	public virtual Flag Index {
+		get => _Data[17] as Flag;
+		set => _Data[17]  = value;
+		}
+
+	public virtual string _Index {
+		set => _Data[17].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -17035,108 +17080,115 @@ public class _ArchiveAppend : Goedel.Command.Dispatch ,
 				Key = "encrypt"
 				},
 			new DescribeEntryOption () {
+				Identifier = "Self", 
+				Default = null, // null if null
+				Brief = "Encrypt a copy of the data for self",
+				Index = 2,
+				Key = "self"
+				},
+			new DescribeEntryOption () {
 				Identifier = "Sign", 
 				Default = null, // null if null
 				Brief = "Sign data with specified key",
-				Index = 2,
+				Index = 3,
 				Key = "sign"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Hash", 
 				Default = "true", // null if null
 				Brief = "Compute hash of content",
-				Index = 3,
+				Index = 4,
 				Key = "hash"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Cover", 
 				Default = null, // null if null
 				Brief = "File containing a cover to be added to encrypted files",
-				Index = 4,
+				Index = 5,
 				Key = "cover"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Algorithms", 
 				Default = null, // null if null
 				Brief = "List of algorithm specifiers",
-				Index = 5,
+				Index = 6,
 				Key = "alg"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 6,
+				Index = 7,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 7,
+				Index = 8,
 				Key = "local"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoSync", 
 				Default = "true", // null if null
 				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 8,
+				Index = 9,
 				Key = "sync"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoApprove", 
 				Default = "true", // null if null
 				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 9,
+				Index = 10,
 				Key = "auto"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 10,
+				Index = 11,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 11,
+				Index = 12,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 12,
+				Index = 13,
 				Key = "json"
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Archive", 
 				Default = null, // null if null
 				Brief = "Sequence to append to",
-				Index = 13,
+				Index = 14,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "File", 
 				Default = null, // null if null
 				Brief = "File to append",
-				Index = 14,
+				Index = 15,
 				Key = ""
 				},
 			new DescribeEntryOption () {
 				Identifier = "Id", 
 				Default = null, // null if null
 				Brief = "Identifier of the file in the sequence",
-				Index = 15,
+				Index = 16,
 				Key = "id"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Index", 
 				Default = "false", // null if null
 				Brief = "Append index to the archive",
-				Index = 16,
+				Index = 17,
 				Key = "index"
 				}
 			}
@@ -17318,6 +17370,7 @@ public class _ArchiveIndex : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new String (),
 		new Flag (),
 		new ExistingFile (),
 		new String (),
@@ -17352,113 +17405,122 @@ public class _ArchiveIndex : Goedel.Command.Dispatch ,
 	public virtual string _Encrypt {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sign]</summary>
-	public virtual String Sign {
+	/// <summary>Field accessor for option [self]</summary>
+	public virtual String Self {
 		get => _Data[2] as String;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _Sign {
+	public virtual string _Self {
 		set => _Data[2].Parameter (value);
 		}
-	/// <summary>Field accessor for option [hash]</summary>
-	public virtual Flag Hash {
-		get => _Data[3] as Flag;
+	/// <summary>Field accessor for option [sign]</summary>
+	public virtual String Sign {
+		get => _Data[3] as String;
 		set => _Data[3]  = value;
 		}
 
-	public virtual string _Hash {
+	public virtual string _Sign {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for option [cover]</summary>
-	public virtual ExistingFile Cover {
-		get => _Data[4] as ExistingFile;
+	/// <summary>Field accessor for option [hash]</summary>
+	public virtual Flag Hash {
+		get => _Data[4] as Flag;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _Cover {
+	public virtual string _Hash {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [alg]</summary>
-	public virtual String Algorithms {
-		get => _Data[5] as String;
+	/// <summary>Field accessor for option [cover]</summary>
+	public virtual ExistingFile Cover {
+		get => _Data[5] as ExistingFile;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _Algorithms {
+	public virtual string _Cover {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
+	/// <summary>Field accessor for option [alg]</summary>
+	public virtual String Algorithms {
 		get => _Data[6] as String;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _Algorithms {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[7] as String;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[7].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[8] as Flag;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[8] as String;
 		set => _Data[8]  = value;
 		}
 
-	public virtual string _AutoSync {
+	public virtual string _LocalName {
 		set => _Data[8].Parameter (value);
 		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
 		get => _Data[9] as Flag;
 		set => _Data[9]  = value;
 		}
 
-	public virtual string _AutoApprove {
+	public virtual string _AutoSync {
 		set => _Data[9].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
 		get => _Data[10] as Flag;
 		set => _Data[10]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _AutoApprove {
 		set => _Data[10].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[11] as Flag;
 		set => _Data[11]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[11].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[12] as Flag;
 		set => _Data[12]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Archive {
-		get => _Data[13] as ExistingFile;
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[13] as Flag;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _Archive {
+	public virtual string _Json {
 		set => _Data[13].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual ExistingFile Archive {
+		get => _Data[14] as ExistingFile;
+		set => _Data[14]  = value;
+		}
+
+	public virtual string _Archive {
+		set => _Data[14].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -17483,87 +17545,94 @@ public class _ArchiveIndex : Goedel.Command.Dispatch ,
 				Key = "encrypt"
 				},
 			new DescribeEntryOption () {
+				Identifier = "Self", 
+				Default = null, // null if null
+				Brief = "Encrypt a copy of the data for self",
+				Index = 2,
+				Key = "self"
+				},
+			new DescribeEntryOption () {
 				Identifier = "Sign", 
 				Default = null, // null if null
 				Brief = "Sign data with specified key",
-				Index = 2,
+				Index = 3,
 				Key = "sign"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Hash", 
 				Default = "true", // null if null
 				Brief = "Compute hash of content",
-				Index = 3,
+				Index = 4,
 				Key = "hash"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Cover", 
 				Default = null, // null if null
 				Brief = "File containing a cover to be added to encrypted files",
-				Index = 4,
+				Index = 5,
 				Key = "cover"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Algorithms", 
 				Default = null, // null if null
 				Brief = "List of algorithm specifiers",
-				Index = 5,
+				Index = 6,
 				Key = "alg"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 6,
+				Index = 7,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 7,
+				Index = 8,
 				Key = "local"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoSync", 
 				Default = "true", // null if null
 				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 8,
+				Index = 9,
 				Key = "sync"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoApprove", 
 				Default = "true", // null if null
 				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 9,
+				Index = 10,
 				Key = "auto"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 10,
+				Index = 11,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 11,
+				Index = 12,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 12,
+				Index = 13,
 				Key = "json"
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Archive", 
 				Default = null, // null if null
 				Brief = "Sequence to be indexed",
-				Index = 13,
+				Index = 14,
 				Key = ""
 				}
 			}
@@ -17996,6 +18065,7 @@ public class _ArchiveCopy : Goedel.Command.Dispatch ,
 		new String (),
 		new String (),
 		new String (),
+		new String (),
 		new Flag (),
 		new ExistingFile (),
 		new String (),
@@ -18053,158 +18123,167 @@ public class _ArchiveCopy : Goedel.Command.Dispatch ,
 	public virtual string _Encrypt {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sign]</summary>
-	public virtual String Sign {
+	/// <summary>Field accessor for option [self]</summary>
+	public virtual String Self {
 		get => _Data[4] as String;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _Sign {
+	public virtual string _Self {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [hash]</summary>
-	public virtual Flag Hash {
-		get => _Data[5] as Flag;
+	/// <summary>Field accessor for option [sign]</summary>
+	public virtual String Sign {
+		get => _Data[5] as String;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _Hash {
+	public virtual string _Sign {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [cover]</summary>
-	public virtual ExistingFile Cover {
-		get => _Data[6] as ExistingFile;
+	/// <summary>Field accessor for option [hash]</summary>
+	public virtual Flag Hash {
+		get => _Data[6] as Flag;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _Cover {
+	public virtual string _Hash {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for option [alg]</summary>
-	public virtual String Algorithms {
-		get => _Data[7] as String;
+	/// <summary>Field accessor for option [cover]</summary>
+	public virtual ExistingFile Cover {
+		get => _Data[7] as ExistingFile;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _Algorithms {
+	public virtual string _Cover {
 		set => _Data[7].Parameter (value);
 		}
-	/// <summary>Field accessor for option [type]</summary>
-	public virtual String Type {
+	/// <summary>Field accessor for option [alg]</summary>
+	public virtual String Algorithms {
 		get => _Data[8] as String;
 		set => _Data[8]  = value;
 		}
 
-	public virtual string _Type {
+	public virtual string _Algorithms {
 		set => _Data[8].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter [auth]</summary>
-	public virtual Enumeration<EnumAuthentication> EnumAuthentication {
-		get => _Data[9] as Enumeration<EnumAuthentication>;
+	/// <summary>Field accessor for option [type]</summary>
+	public virtual String Type {
+		get => _Data[9] as String;
 		set => _Data[9]  = value;
 		}
 
-	public virtual string _EnumAuthentication {
+	public virtual string _Type {
 		set => _Data[9].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter [use]</summary>
-	public virtual Enumeration<EnumUse> EnumUse {
-		get => _Data[10] as Enumeration<EnumUse>;
+	/// <summary>Field accessor for parameter [auth]</summary>
+	public virtual Enumeration<EnumAuthentication> EnumAuthentication {
+		get => _Data[10] as Enumeration<EnumAuthentication>;
 		set => _Data[10]  = value;
 		}
 
-	public virtual string _EnumUse {
+	public virtual string _EnumAuthentication {
 		set => _Data[10].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[11] as String;
+	/// <summary>Field accessor for parameter [use]</summary>
+	public virtual Enumeration<EnumUse> EnumUse {
+		get => _Data[11] as Enumeration<EnumUse>;
 		set => _Data[11]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _EnumUse {
 		set => _Data[11].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[12] as String;
 		set => _Data[12]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[13] as Flag;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[13] as String;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _AutoSync {
+	public virtual string _LocalName {
 		set => _Data[13].Parameter (value);
 		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
 		get => _Data[14] as Flag;
 		set => _Data[14]  = value;
 		}
 
-	public virtual string _AutoApprove {
+	public virtual string _AutoSync {
 		set => _Data[14].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
 		get => _Data[15] as Flag;
 		set => _Data[15]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _AutoApprove {
 		set => _Data[15].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[16] as Flag;
 		set => _Data[16]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[16].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[17] as Flag;
 		set => _Data[17]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[17].Parameter (value);
 		}
-	/// <summary>Field accessor for option [decrypt]</summary>
-	public virtual Flag Decrypt {
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
 		get => _Data[18] as Flag;
 		set => _Data[18]  = value;
 		}
 
-	public virtual string _Decrypt {
+	public virtual string _Json {
 		set => _Data[18].Parameter (value);
 		}
-	/// <summary>Field accessor for option [index]</summary>
-	public virtual Flag Index {
+	/// <summary>Field accessor for option [decrypt]</summary>
+	public virtual Flag Decrypt {
 		get => _Data[19] as Flag;
 		set => _Data[19]  = value;
 		}
 
-	public virtual string _Index {
+	public virtual string _Decrypt {
 		set => _Data[19].Parameter (value);
 		}
-	/// <summary>Field accessor for option [purge]</summary>
-	public virtual Flag Purge {
+	/// <summary>Field accessor for option [index]</summary>
+	public virtual Flag Index {
 		get => _Data[20] as Flag;
 		set => _Data[20]  = value;
 		}
 
-	public virtual string _Purge {
+	public virtual string _Index {
 		set => _Data[20].Parameter (value);
+		}
+	/// <summary>Field accessor for option [purge]</summary>
+	public virtual Flag Purge {
+		get => _Data[21] as Flag;
+		set => _Data[21]  = value;
+		}
+
+	public virtual string _Purge {
+		set => _Data[21].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -18243,122 +18322,129 @@ public class _ArchiveCopy : Goedel.Command.Dispatch ,
 				Key = "encrypt"
 				},
 			new DescribeEntryOption () {
+				Identifier = "Self", 
+				Default = null, // null if null
+				Brief = "Encrypt a copy of the data for self",
+				Index = 4,
+				Key = "self"
+				},
+			new DescribeEntryOption () {
 				Identifier = "Sign", 
 				Default = null, // null if null
 				Brief = "Sign data with specified key",
-				Index = 4,
+				Index = 5,
 				Key = "sign"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Hash", 
 				Default = "true", // null if null
 				Brief = "Compute hash of content",
-				Index = 5,
+				Index = 6,
 				Key = "hash"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Cover", 
 				Default = null, // null if null
 				Brief = "File containing a cover to be added to encrypted files",
-				Index = 6,
+				Index = 7,
 				Key = "cover"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Algorithms", 
 				Default = null, // null if null
 				Brief = "List of algorithm specifiers",
-				Index = 7,
+				Index = 8,
 				Key = "alg"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Type", 
 				Default = null, // null if null
 				Brief = "The sequence type, plain/tree/digest/chain/tree",
-				Index = 8,
+				Index = 9,
 				Key = "type"
 				},
 			new DescribeEntryEnumerate () {
 				Identifier = "EnumAuthentication", 
 				Default = null, // null if null
 				Brief = "Authentication and indexing",
-				Index = 9,
+				Index = 10,
 				Key = "auth"
 				},
 			new DescribeEntryEnumerate () {
 				Identifier = "EnumUse", 
 				Default = null, // null if null
 				Brief = "<Unspecified>",
-				Index = 10,
+				Index = 11,
 				Key = "use"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 11,
+				Index = 12,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 12,
+				Index = 13,
 				Key = "local"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoSync", 
 				Default = "true", // null if null
 				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 13,
+				Index = 14,
 				Key = "sync"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoApprove", 
 				Default = "true", // null if null
 				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 14,
+				Index = 15,
 				Key = "auto"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 15,
+				Index = 16,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 16,
+				Index = 17,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 17,
+				Index = 18,
 				Key = "json"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Decrypt", 
 				Default = "false", // null if null
 				Brief = "Decrypt contents",
-				Index = 18,
+				Index = 19,
 				Key = "decrypt"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Index", 
 				Default = "true", // null if null
 				Brief = "Append an index record to the end",
-				Index = 19,
+				Index = 20,
 				Key = "index"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Purge", 
 				Default = "true", // null if null
 				Brief = "Purge unused data etc.",
-				Index = 20,
+				Index = 21,
 				Key = "purge"
 				}
 			}
@@ -18377,6 +18463,7 @@ public class _LogCreate : Goedel.Command.Dispatch ,
 						IReporting{
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
 		new String (),
 		new String (),
 		new String (),
@@ -18417,140 +18504,149 @@ public class _LogCreate : Goedel.Command.Dispatch ,
 	public virtual string _Encrypt {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sign]</summary>
-	public virtual String Sign {
+	/// <summary>Field accessor for option [self]</summary>
+	public virtual String Self {
 		get => _Data[2] as String;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _Sign {
+	public virtual string _Self {
 		set => _Data[2].Parameter (value);
 		}
-	/// <summary>Field accessor for option [hash]</summary>
-	public virtual Flag Hash {
-		get => _Data[3] as Flag;
+	/// <summary>Field accessor for option [sign]</summary>
+	public virtual String Sign {
+		get => _Data[3] as String;
 		set => _Data[3]  = value;
 		}
 
-	public virtual string _Hash {
+	public virtual string _Sign {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for option [cover]</summary>
-	public virtual ExistingFile Cover {
-		get => _Data[4] as ExistingFile;
+	/// <summary>Field accessor for option [hash]</summary>
+	public virtual Flag Hash {
+		get => _Data[4] as Flag;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _Cover {
+	public virtual string _Hash {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [alg]</summary>
-	public virtual String Algorithms {
-		get => _Data[5] as String;
+	/// <summary>Field accessor for option [cover]</summary>
+	public virtual ExistingFile Cover {
+		get => _Data[5] as ExistingFile;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _Algorithms {
+	public virtual string _Cover {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [type]</summary>
-	public virtual String Type {
+	/// <summary>Field accessor for option [alg]</summary>
+	public virtual String Algorithms {
 		get => _Data[6] as String;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _Type {
+	public virtual string _Algorithms {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter [auth]</summary>
-	public virtual Enumeration<EnumAuthentication> EnumAuthentication {
-		get => _Data[7] as Enumeration<EnumAuthentication>;
+	/// <summary>Field accessor for option [type]</summary>
+	public virtual String Type {
+		get => _Data[7] as String;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _EnumAuthentication {
+	public virtual string _Type {
 		set => _Data[7].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter [use]</summary>
-	public virtual Enumeration<EnumUse> EnumUse {
-		get => _Data[8] as Enumeration<EnumUse>;
+	/// <summary>Field accessor for parameter [auth]</summary>
+	public virtual Enumeration<EnumAuthentication> EnumAuthentication {
+		get => _Data[8] as Enumeration<EnumAuthentication>;
 		set => _Data[8]  = value;
 		}
 
-	public virtual string _EnumUse {
+	public virtual string _EnumAuthentication {
 		set => _Data[8].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[9] as String;
+	/// <summary>Field accessor for parameter [use]</summary>
+	public virtual Enumeration<EnumUse> EnumUse {
+		get => _Data[9] as Enumeration<EnumUse>;
 		set => _Data[9]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _EnumUse {
 		set => _Data[9].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[10] as String;
 		set => _Data[10]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[10].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[11] as Flag;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[11] as String;
 		set => _Data[11]  = value;
 		}
 
-	public virtual string _AutoSync {
+	public virtual string _LocalName {
 		set => _Data[11].Parameter (value);
 		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
 		get => _Data[12] as Flag;
 		set => _Data[12]  = value;
 		}
 
-	public virtual string _AutoApprove {
+	public virtual string _AutoSync {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
 		get => _Data[13] as Flag;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _AutoApprove {
 		set => _Data[13].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[14] as Flag;
 		set => _Data[14]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[14].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[15] as Flag;
 		set => _Data[15]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[15].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual NewFile Sequence {
-		get => _Data[16] as NewFile;
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[16] as Flag;
 		set => _Data[16]  = value;
 		}
 
-	public virtual string _Sequence {
+	public virtual string _Json {
 		set => _Data[16].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual NewFile Sequence {
+		get => _Data[17] as NewFile;
+		set => _Data[17]  = value;
+		}
+
+	public virtual string _Sequence {
+		set => _Data[17].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -18575,108 +18671,115 @@ public class _LogCreate : Goedel.Command.Dispatch ,
 				Key = "encrypt"
 				},
 			new DescribeEntryOption () {
+				Identifier = "Self", 
+				Default = null, // null if null
+				Brief = "Encrypt a copy of the data for self",
+				Index = 2,
+				Key = "self"
+				},
+			new DescribeEntryOption () {
 				Identifier = "Sign", 
 				Default = null, // null if null
 				Brief = "Sign data with specified key",
-				Index = 2,
+				Index = 3,
 				Key = "sign"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Hash", 
 				Default = "true", // null if null
 				Brief = "Compute hash of content",
-				Index = 3,
+				Index = 4,
 				Key = "hash"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Cover", 
 				Default = null, // null if null
 				Brief = "File containing a cover to be added to encrypted files",
-				Index = 4,
+				Index = 5,
 				Key = "cover"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Algorithms", 
 				Default = null, // null if null
 				Brief = "List of algorithm specifiers",
-				Index = 5,
+				Index = 6,
 				Key = "alg"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Type", 
 				Default = null, // null if null
 				Brief = "The sequence type, plain/tree/digest/chain/tree",
-				Index = 6,
+				Index = 7,
 				Key = "type"
 				},
 			new DescribeEntryEnumerate () {
 				Identifier = "EnumAuthentication", 
 				Default = null, // null if null
 				Brief = "Authentication and indexing",
-				Index = 7,
+				Index = 8,
 				Key = "auth"
 				},
 			new DescribeEntryEnumerate () {
 				Identifier = "EnumUse", 
 				Default = null, // null if null
 				Brief = "<Unspecified>",
-				Index = 8,
+				Index = 9,
 				Key = "use"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 9,
+				Index = 10,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 10,
+				Index = 11,
 				Key = "local"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoSync", 
 				Default = "true", // null if null
 				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 11,
+				Index = 12,
 				Key = "sync"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoApprove", 
 				Default = "true", // null if null
 				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 12,
+				Index = 13,
 				Key = "auto"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 13,
+				Index = 14,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 14,
+				Index = 15,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 15,
+				Index = 16,
 				Key = "json"
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Sequence", 
 				Default = null, // null if null
 				Brief = "New sequence",
-				Index = 16,
+				Index = 17,
 				Key = ""
 				}
 			}
@@ -18694,6 +18797,7 @@ public class _LogAppend : Goedel.Command.Dispatch ,
 						IReporting{
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
 		new String (),
 		new String (),
 		new String (),
@@ -18732,122 +18836,131 @@ public class _LogAppend : Goedel.Command.Dispatch ,
 	public virtual string _Encrypt {
 		set => _Data[1].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sign]</summary>
-	public virtual String Sign {
+	/// <summary>Field accessor for option [self]</summary>
+	public virtual String Self {
 		get => _Data[2] as String;
 		set => _Data[2]  = value;
 		}
 
-	public virtual string _Sign {
+	public virtual string _Self {
 		set => _Data[2].Parameter (value);
 		}
-	/// <summary>Field accessor for option [hash]</summary>
-	public virtual Flag Hash {
-		get => _Data[3] as Flag;
+	/// <summary>Field accessor for option [sign]</summary>
+	public virtual String Sign {
+		get => _Data[3] as String;
 		set => _Data[3]  = value;
 		}
 
-	public virtual string _Hash {
+	public virtual string _Sign {
 		set => _Data[3].Parameter (value);
 		}
-	/// <summary>Field accessor for option [cover]</summary>
-	public virtual ExistingFile Cover {
-		get => _Data[4] as ExistingFile;
+	/// <summary>Field accessor for option [hash]</summary>
+	public virtual Flag Hash {
+		get => _Data[4] as Flag;
 		set => _Data[4]  = value;
 		}
 
-	public virtual string _Cover {
+	public virtual string _Hash {
 		set => _Data[4].Parameter (value);
 		}
-	/// <summary>Field accessor for option [alg]</summary>
-	public virtual String Algorithms {
-		get => _Data[5] as String;
+	/// <summary>Field accessor for option [cover]</summary>
+	public virtual ExistingFile Cover {
+		get => _Data[5] as ExistingFile;
 		set => _Data[5]  = value;
 		}
 
-	public virtual string _Algorithms {
+	public virtual string _Cover {
 		set => _Data[5].Parameter (value);
 		}
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
+	/// <summary>Field accessor for option [alg]</summary>
+	public virtual String Algorithms {
 		get => _Data[6] as String;
 		set => _Data[6]  = value;
 		}
 
-	public virtual string _AccountAddress {
+	public virtual string _Algorithms {
 		set => _Data[6].Parameter (value);
 		}
-	/// <summary>Field accessor for option [local]</summary>
-	public virtual String LocalName {
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
 		get => _Data[7] as String;
 		set => _Data[7]  = value;
 		}
 
-	public virtual string _LocalName {
+	public virtual string _AccountAddress {
 		set => _Data[7].Parameter (value);
 		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[8] as Flag;
+	/// <summary>Field accessor for option [local]</summary>
+	public virtual String LocalName {
+		get => _Data[8] as String;
 		set => _Data[8]  = value;
 		}
 
-	public virtual string _AutoSync {
+	public virtual string _LocalName {
 		set => _Data[8].Parameter (value);
 		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
 		get => _Data[9] as Flag;
 		set => _Data[9]  = value;
 		}
 
-	public virtual string _AutoApprove {
+	public virtual string _AutoSync {
 		set => _Data[9].Parameter (value);
 		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
 		get => _Data[10] as Flag;
 		set => _Data[10]  = value;
 		}
 
-	public virtual string _Verbose {
+	public virtual string _AutoApprove {
 		set => _Data[10].Parameter (value);
 		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
 		get => _Data[11] as Flag;
 		set => _Data[11]  = value;
 		}
 
-	public virtual string _Report {
+	public virtual string _Verbose {
 		set => _Data[11].Parameter (value);
 		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
 		get => _Data[12] as Flag;
 		set => _Data[12]  = value;
 		}
 
-	public virtual string _Json {
+	public virtual string _Report {
 		set => _Data[12].Parameter (value);
 		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual ExistingFile Sequence {
-		get => _Data[13] as ExistingFile;
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[13] as Flag;
 		set => _Data[13]  = value;
 		}
 
-	public virtual string _Sequence {
+	public virtual string _Json {
 		set => _Data[13].Parameter (value);
 		}
 	/// <summary>Field accessor for parameter []</summary>
-	public virtual NewFile Entry {
-		get => _Data[14] as NewFile;
+	public virtual ExistingFile Sequence {
+		get => _Data[14] as ExistingFile;
 		set => _Data[14]  = value;
 		}
 
-	public virtual string _Entry {
+	public virtual string _Sequence {
 		set => _Data[14].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual NewFile Entry {
+		get => _Data[15] as NewFile;
+		set => _Data[15]  = value;
+		}
+
+	public virtual string _Entry {
+		set => _Data[15].Parameter (value);
 		}
 	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -18872,94 +18985,101 @@ public class _LogAppend : Goedel.Command.Dispatch ,
 				Key = "encrypt"
 				},
 			new DescribeEntryOption () {
+				Identifier = "Self", 
+				Default = null, // null if null
+				Brief = "Encrypt a copy of the data for self",
+				Index = 2,
+				Key = "self"
+				},
+			new DescribeEntryOption () {
 				Identifier = "Sign", 
 				Default = null, // null if null
 				Brief = "Sign data with specified key",
-				Index = 2,
+				Index = 3,
 				Key = "sign"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Hash", 
 				Default = "true", // null if null
 				Brief = "Compute hash of content",
-				Index = 3,
+				Index = 4,
 				Key = "hash"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Cover", 
 				Default = null, // null if null
 				Brief = "File containing a cover to be added to encrypted files",
-				Index = 4,
+				Index = 5,
 				Key = "cover"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Algorithms", 
 				Default = null, // null if null
 				Brief = "List of algorithm specifiers",
-				Index = 5,
+				Index = 6,
 				Key = "alg"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AccountAddress", 
 				Default = null, // null if null
 				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 6,
+				Index = 7,
 				Key = "account"
 				},
 			new DescribeEntryOption () {
 				Identifier = "LocalName", 
 				Default = null, // null if null
 				Brief = "Local name for account (e.g. personal)",
-				Index = 7,
+				Index = 8,
 				Key = "local"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoSync", 
 				Default = "true", // null if null
 				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 8,
+				Index = 9,
 				Key = "sync"
 				},
 			new DescribeEntryOption () {
 				Identifier = "AutoApprove", 
 				Default = "true", // null if null
 				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 9,
+				Index = 10,
 				Key = "auto"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Verbose", 
 				Default = "false", // null if null
 				Brief = "Verbose reports (default)",
-				Index = 10,
+				Index = 11,
 				Key = "verbose"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Report", 
 				Default = "true", // null if null
 				Brief = "Report output (default)",
-				Index = 11,
+				Index = 12,
 				Key = "report"
 				},
 			new DescribeEntryOption () {
 				Identifier = "Json", 
 				Default = "false", // null if null
 				Brief = "Report output in JSON format",
-				Index = 12,
+				Index = 13,
 				Key = "json"
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Sequence", 
 				Default = null, // null if null
 				Brief = "Sequence to append to",
-				Index = 13,
+				Index = 14,
 				Key = ""
 				},
 			new DescribeEntryParameter () {
 				Identifier = "Entry", 
 				Default = null, // null if null
 				Brief = "Text to append",
-				Index = 14,
+				Index = 15,
 				Key = ""
 				}
 			}

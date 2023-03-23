@@ -132,7 +132,7 @@ public record TestArchive : TestDareFile {
         digest.TestEqual(entry.Digest);
         }
 
-    public virtual void CheckArchive(IKeyLocate keyLocate=null) {
+    public virtual void CheckArchive(IKeyLocate keyLocate= null, bool self = false) {
         var directory = Directory.GetCurrentDirectory();
 
         // create temporary directory
@@ -204,8 +204,19 @@ public record TestArchive : TestDareFile {
 
 
 
-    public void CheckDirectoryEmpty() {
-        throw new NYI();
+    public void CheckDirectoryEmpty(string directory) {
+        if (!Directory.Exists(directory)) {
+            return;
+            }
+
+        // directory exists but is empty
+        var directoryInfo = new DirectoryInfo(directory);
+        foreach (var file in directoryInfo.EnumerateFiles()) {
+            throw new NYI();
+            }
+        foreach (var file in directoryInfo.EnumerateDirectories()) {
+            throw new NYI();
+            }
         }
 
     }
@@ -245,17 +256,19 @@ public record TestArchiveShell : TestArchive {
         }
 
 
-    public override void CheckArchive(IKeyLocate keyLocate = null) {
+    public override void CheckArchive(IKeyLocate keyLocate = null, 
+                    bool self = false) {
         var current = Directory.GetCurrentDirectory();
 
-        // Unpack as Alice - success
-        var aliceDir = GetTemp();
-        Directory.CreateDirectory(aliceDir);
-        Directory.SetCurrentDirectory(aliceDir);
-        Alice.Dispatch($"archive extract {Filename}");
-        CheckDirectory();
-        Directory.SetCurrentDirectory(current);
-
+        if (self) {
+            // Unpack as Alice - success
+            var aliceDir = GetTemp();
+            Directory.CreateDirectory(aliceDir);
+            Directory.SetCurrentDirectory(aliceDir);
+            Alice.Dispatch($"archive extract {Filename}");
+            CheckDirectory();
+            Directory.SetCurrentDirectory(current);
+            }
 
         // Unpack as Bob - success
         var bobDir = GetTemp();
@@ -264,6 +277,8 @@ public record TestArchiveShell : TestArchive {
         Bob.Dispatch($"archive extract {Filename}");
         CheckDirectory();
         Directory.SetCurrentDirectory(current);
+
+
         if (Encrypt) {
             // Unpack as Mallet - fail
 
@@ -271,7 +286,7 @@ public record TestArchiveShell : TestArchive {
             Directory.CreateDirectory(malletDir);
             Directory.SetCurrentDirectory(malletDir);
             Mallet.Dispatch($"archive extract {Filename}", fail: true);
-            CheckDirectoryEmpty();
+            CheckDirectoryEmpty(malletDir);
             Directory.SetCurrentDirectory(current);
             }
 

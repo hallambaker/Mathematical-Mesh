@@ -24,6 +24,7 @@ using System.Collections.Generic;
 
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
+using Goedel.Protocol;
 using Goedel.Utilities;
 
 namespace ExampleGenerator;
@@ -77,13 +78,21 @@ public class ShellMessage : ExampleSet {
         ConfirmPending = Alice1.Example($"message pending");
         var confirmPending = (ConfirmPending[0].Result as ResultPending);
 
-        var id1 = confirmPending.Messages[0].MessageId;
-        var id2 = confirmPending.Messages[1].MessageId;
+        var id2 = confirmPending.Messages[0].MessageId;
+        var id1 = confirmPending.Messages[1].MessageId;
+
+        var response1 = confirmPending.Messages[1].GetResponseId();
+        var response2 = confirmPending.Messages[0].GetResponseId();
 
         ConfirmAccept = Alice1.Example($"message accept {id1}");
-        ConfirmGetAccept = Bob1.Example($"message status {id1}");
+
+        Bob1.Example("account sync");
+
+        ConfirmGetAccept = Bob1.Example($"message status {response1}");
         ConfirmReject = Alice1.Example($"message reject {id2}");
-        ConfirmGetReject = Mallet1.Example($"message status {id2}");
+
+        Mallet1.Example("account sync");
+        ConfirmGetReject = Mallet1.Example($"message status {response2}");
 
         //ConfirmMallet = Mallet1.Example($"!message confirm {AliceAccount} \"{BobPurchase}\"");
         }

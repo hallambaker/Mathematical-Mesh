@@ -37,7 +37,7 @@ public class ContextRegistry : ContextAccount {
     ///<summary>The callsign mapping</summary> 
     public CallsignMapping CallsignMapping { get; }
 
-
+    public  string DefaultPage => "CharacterPageLatin";
     ///<inheritdoc/>
     public override string AccountAddress { get; }
 
@@ -262,9 +262,12 @@ public class ContextRegistry : ContextAccount {
             var canonical = MessageValidate(spoolEntry, registrationRequest, binding, out var previous);
             PaymentValidate(registrationRequest, binding);
 
+
+
+
             var transactRequest = TransactBegin();
 
-            Console.WriteLine($"got request for @{canonical}");
+
             var id = Udf.Nonce();
 
             var registration = new Registration() {
@@ -297,38 +300,6 @@ public class ContextRegistry : ContextAccount {
                 Success = true,
                 CallsignRegistrationResponse = registrationResponse
                 };
-
-            //if (CatalogRegistration.PrepareAdd(
-            //        registrationRequest.EnvelopedCallsignBinding,
-            //        KeyAdministratorSign,
-            //        out var catalogedRegistration,
-            //        out var reason)) {
-
-            //    registrationResponse = new CallsignRegistrationResponse() {
-            //        Registered = true,
-            //        CatalogedRegistration = catalogedRegistration,
-            //        MessageId = registrationRequest.GetResponseId(),
-            //        };
-            //    transactRequest.CatalogUpdate(CatalogRegistration, catalogedRegistration);
-
-            //    result = new ProcessResultCallsignRegistration() {
-            //        Success = true,
-            //        CallsignRegistrationResponse = registrationResponse
-            //        };
-
-            //    }
-            //else {
-            //    registrationResponse = new CallsignRegistrationResponse() {
-            //        Registered = false,
-            //        CatalogedRegistration = catalogedRegistration,
-            //        Reason = reason
-            //        };
-            //    result = new ProcessResultCallsignRegistration() {
-            //        Success = true,
-            //        CallsignRegistrationResponse = registrationResponse
-            //        };
-
-            //    }
 
             transactRequest.OutboundMessage(registrationRequest.Sender, registrationResponse);
             transactRequest.InboundComplete(StateSpoolMessage.Closed, registrationRequest, registrationResponse);
@@ -373,7 +344,7 @@ public class ContextRegistry : ContextAccount {
             };
 
         transactRequest.OutboundMessage(registrationRequest.Sender, registrationResponse);
-        transactRequest.LocalComplete(StateSpoolMessage.Closed, registrationRequest, registrationResponse);
+        transactRequest.InboundComplete(StateSpoolMessage.Closed, registrationRequest, registrationResponse);
         var responseTransaction = Transact(transactRequest);
 
 
@@ -412,6 +383,15 @@ public class ContextRegistry : ContextAccount {
         var canonical = StripAt(binding.Canonical);
         var display = StripAt(binding.Display);
 
+
+        Console.WriteLine();
+        Console.WriteLine($"got request for @{canonical} = @{display}");
+
+
+
+        string page = binding.CharacterPage ?? DefaultPage;
+        DefaultPage.Equals(page).AssertTrue(CanonicalFormInvalid.Throw);
+
         // Is the canonical form legitimate?
         (canonical.Length <= CatalogedRegistry.MaximumCallsignLength).AssertTrue(CallsignLengthInvalid.Throw);
 
@@ -419,19 +399,26 @@ public class ContextRegistry : ContextAccount {
         var canonical2 = CallsignMapping.Canonicalize(canonical);
         (canonical == canonical2).AssertTrue(CanonicalFormInvalid.Throw);
 
-
+        CallsignMapping.CheckPage(canonical, page).AssertTrue(CanonicalFormInvalid.Throw);
+        //page.Id.AssertEqual("CharacterPageLatin", CanonicalFormInvalid.Throw);
 
         if (display != null) {
             (display.Length <= CatalogedRegistry.MaximumCallsignLength).AssertTrue(CallsignLengthInvalid.Throw);
 
             var display2 = CallsignMapping.Canonicalize(canonical);
             (canonical == display2).AssertTrue(DisplayFormInvalid.Throw);
+
+            CallsignMapping.CheckPage(display, page).AssertTrue(DisplayFormInvalid.Throw);
             }
 
         // check that the binding is signed under the specified ProfileUdf
 
-
-        binding.Validate(registrationRequest.Profiles).AssertTrue(BindingSignatureInvalid.Throw);
+        if (binding.ProfileUdf != null) {
+            binding.Validate(registrationRequest.Profiles).AssertTrue(BindingSignatureInvalid.Throw);
+            }
+        else if (binding.TransferUdf != null) {
+            
+            }
 
         // Check the signature on the registrationRequest
         if (CatalogRegistration.TryGetValue(canonical, out var index)) {
@@ -444,10 +431,18 @@ public class ContextRegistry : ContextAccount {
             registrationRequest.DareEnvelope.PayloadDigestComputed ??=
                     spoolEntry.ComputeDigest();
 
+            var previousUdf = previousBinding.TransferUdf ?? previousBinding.ProfileUdf;
+            registrationRequest.Validate(previousUdf).AssertTrue(RequestSignatureInvalid.Throw); ;
 
-            registrationRequest.Validate(previousBinding.ProfileUdf).AssertTrue(RequestSignatureInvalid.Throw); ;
+            if (binding.TransferUdf != null) {
+                binding.ValidateAny(registrationRequest.Profiles, previousBinding.ProfileUdf).AssertTrue(
+                            BindingSignatureInvalid.Throw);
+                }
+
+
             }
         else {
+            binding.TransferUdf.AssertNull(BindingSignatureInvalid.Throw);
             previous = null;
             }
 

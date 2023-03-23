@@ -33,14 +33,19 @@ public partial class Shell {
 
 
         // ToDo: enable specification of multiple recipients in COMMAND
-        if (Options.Encrypt != null) {
-            if (Options.Encrypt.Value != null) {
-                recipients = new List<string> {
+
+        if (Options.Encrypt?.Value != null) {
+            recipients = new List<string> {
                         Options.Encrypt.Value
                         };
-                }
-
             }
+
+
+        if (Options.Self?.Value != null) {
+            recipients ??= new List<string>();
+            recipients.Add(Options.Self.Value);
+            }
+
 
         // ToDo: enable specification of multiple signers in COMMAND
         if (Options.Sign != null) {

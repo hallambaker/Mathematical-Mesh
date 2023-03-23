@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 17-Mar-23 9:37:27 PM
+//  This file was automatically generated at 23-Mar-23 1:11:46 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2286,16 +2286,36 @@ public partial class CallsignBinding : Assertion {
 
 	public virtual string						Display  {get; set;}
         /// <summary>
+        ///Specifies the page to which the Description"CharacterPageLatin"
+        /// </summary>
+
+	public virtual string						CharacterPage  {get; set;}
+        /// <summary>
         ///The profile to which the name is bound.
         /// </summary>
 
 	public virtual string						ProfileUdf  {get; set;}
+        /// <summary>
+        ///The profile to which the name has been transfered.
+        /// </summary>
+
+	public virtual string						TransferUdf  {get; set;}
         /// <summary>
         ///List of named services. If multiple service providers are specified for a given 
         ///service, these are listed in order of priority, most preferred first.
         /// </summary>
 
 	public virtual List<NamedService>				Services  {get; set;}
+        /// <summary>
+        ///The Mesh service address. 
+        /// </summary>
+
+	public virtual string						ServiceAddress  {get; set;}
+        /// <summary>
+        ///Key currently used to encrypt data under this profile
+        /// </summary>
+
+	public virtual KeyData						CommonEncryption  {get; set;}
 
 
     ///<inheritdoc/>
@@ -2314,15 +2334,39 @@ public partial class CallsignBinding : Assertion {
 					}
 				break;
 				}
+			case "CharacterPage" : {
+				if (value is TokenValueString vvalue) {
+					CharacterPage = vvalue.Value;
+					}
+				break;
+				}
 			case "ProfileUdf" : {
 				if (value is TokenValueString vvalue) {
 					ProfileUdf = vvalue.Value;
 					}
 				break;
 				}
+			case "TransferUdf" : {
+				if (value is TokenValueString vvalue) {
+					TransferUdf = vvalue.Value;
+					}
+				break;
+				}
 			case "Services" : {
 				if (value is TokenValueListStructObject vvalue) {
 					Services = vvalue.Value as List<NamedService>;
+					}
+				break;
+				}
+			case "ServiceAddress" : {
+				if (value is TokenValueString vvalue) {
+					ServiceAddress = vvalue.Value;
+					}
+				break;
+				}
+			case "CommonEncryption" : {
+				if (value is TokenValueStructObject vvalue) {
+					CommonEncryption = vvalue.Value as KeyData;
 					}
 				break;
 				}
@@ -2344,11 +2388,23 @@ public partial class CallsignBinding : Assertion {
 			case "Display" : {
 				return new TokenValueString (Display);
 				}
+			case "CharacterPage" : {
+				return new TokenValueString (CharacterPage);
+				}
 			case "ProfileUdf" : {
 				return new TokenValueString (ProfileUdf);
 				}
+			case "TransferUdf" : {
+				return new TokenValueString (TransferUdf);
+				}
 			case "Services" : {
 				return new TokenValueListStruct<NamedService> (Services);
+				}
+			case "ServiceAddress" : {
+				return new TokenValueString (ServiceAddress);
+				}
+			case "CommonEncryption" : {
+				return new TokenValueStruct<KeyData> (CommonEncryption);
 				}
 
             default: {
@@ -2363,9 +2419,14 @@ public partial class CallsignBinding : Assertion {
 
 			{ "Canonical", new Property (typeof(TokenValueString), false)} ,
 			{ "Display", new Property (typeof(TokenValueString), false)} ,
+			{ "CharacterPage", new Property (typeof(TokenValueString), false)} ,
 			{ "ProfileUdf", new Property (typeof(TokenValueString), false)} ,
+			{ "TransferUdf", new Property (typeof(TokenValueString), false)} ,
 			{ "Services", new Property ( typeof(TokenValueListStruct), true,
-					()=>new List<NamedService>(), ()=>new NamedService(), false)} 
+					()=>new List<NamedService>(), ()=>new NamedService(), false)} ,
+			{ "ServiceAddress", new Property (typeof(TokenValueString), false)} ,
+			{ "CommonEncryption", new Property ( typeof(TokenValueStruct), false,
+					()=>new KeyData(), ()=>new KeyData(), false)} 
         };
 
 	///<summary>Dictionary describing the serializable properties.</summary> 

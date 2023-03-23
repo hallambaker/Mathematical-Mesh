@@ -180,6 +180,9 @@ public class DareArchive : PersistenceStore {
                 string directoryPath,
                 DirectoryInfo directoryInfo
                 ) {
+
+        CheckPathIsValid(directoryPath);
+
         foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
             AddFile(directoryPath, fileInfo);
             }
@@ -322,12 +325,12 @@ public class DareArchive : PersistenceStore {
 
     void CheckPathIsValid(string path) {
         if (Path.IsPathRooted(path)) {
-            throw new NYI();
+            throw new RelativeDirectoryInvalid();
             }
         var split = path.Split(SplitChars);
         foreach (var element in split) {
             if (element == "..") {
-                throw new NYI();
+                throw new RelativeDirectoryInvalid();
                 }
             }
 

@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Callsign;
+
 namespace Goedel.Mesh.Test;
 
 
@@ -54,15 +56,15 @@ public class MeshMachineTest : MeshMachineCore {
     //List<Trace> meshProtocolMessages;
 
 
-    readonly TestEnvironmentBase testEnvironmentCommon;
+     TestEnvironmentBase TestEnvironmentCommon { get; }
 
 
 
 
     public string Name;
-    public string Path => System.IO.Path.Combine(testEnvironmentCommon.DirectoryPath, Name);
+    public string Path => System.IO.Path.Combine(TestEnvironmentCommon.DirectoryPath, Name);
 
-    public override string Instance => testEnvironmentCommon.Seed.Seed;
+    public override string Instance => TestEnvironmentCommon.Seed.Seed;
 
 
     ///<inheritdoc/>
@@ -75,7 +77,7 @@ public class MeshMachineTest : MeshMachineCore {
                 ICredentialPrivate credential,
                 string accountAddress
                 ) => // Pass through to the test environment.
-        testEnvironmentCommon.GetMeshClient(this, credential, accountAddress);
+        TestEnvironmentCommon.GetMeshClient(this, credential, accountAddress);
 
 
     public static Contact ContactAlice { get; } = new ContactPerson(
@@ -90,14 +92,14 @@ public class MeshMachineTest : MeshMachineCore {
 
 
     public ContextMeshPreconfigured Install(string filename) {
-        var machine = new MeshMachineTest(testEnvironmentCommon, DirectoryMaster);
+        var machine = new MeshMachineTest(TestEnvironmentCommon, DirectoryMaster);
         return machine.MeshHost.Install(filename);
         }
 
     public ContextUser GetContextAccount(string localName = null, string accountName = null) {
         accountName.Future();
 
-        var machine = new MeshMachineTest(testEnvironmentCommon, DirectoryMaster);
+        var machine = new MeshMachineTest(TestEnvironmentCommon, DirectoryMaster);
         return machine.MeshHost.GetContextMesh(localName) as ContextUser;
         }
 
@@ -150,7 +152,7 @@ public class MeshMachineTest : MeshMachineCore {
     public MeshMachineTest(TestEnvironmentBase testEnvironmentPerTest, string name = "Test") :
                 base(testEnvironmentPerTest.MachinePath(name)) {
         Name = name;
-        testEnvironmentCommon = testEnvironmentPerTest;
+        TestEnvironmentCommon = testEnvironmentPerTest;
         }
 
     //public MeshMachineTest(MeshMachineTest existing) :
@@ -185,17 +187,28 @@ public class MeshMachineTest : MeshMachineCore {
 
     public void ResetHost() {
         MeshHost.ReloadContexts();
-
-
-        //PersistHost.Dispose();
-        //PersistHost = new PersistHost(FileNameHost, FileTypeHost,
-        //    fileStatus: FileStatus.ConcurrentLocked,
-        //    containerType: SequenceType.Merkle);
-
-        //MeshHost = new MeshHost(PersistHost, this);
         }
 
+
+    ///<inheritdoc/>
+    public override IResolver GetResolver(ICredentialPrivate credential) {
+        var resolver = TestEnvironmentCommon.Resolver;
+        var client = resolver.GetClient();
+        return new ResolveClient(client, null);
+        }
+
+    ///<inheritdoc/>
+    public override ICarnet GetCarnet(ICredentialPrivate credential) {
+        throw new NotImplementedException();
+        }
+
+
+
     }
+
+
+
+
 
 
 public class KeyCollectionTest : KeyCollectionCore {

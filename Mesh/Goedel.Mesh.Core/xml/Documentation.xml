@@ -70,8 +70,17 @@
         <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
             <inheritdoc cref="T:Goedel.Mesh.IMeshMachine"/>
         </member>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetClient``1(System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
+            <inheritdoc cref="T:Goedel.Mesh.IMeshMachine"/>
+        </member>
         <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetCredential(System.String,System.String)">
             <inheritdoc cref="T:Goedel.Mesh.IMeshMachine"/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetResolver(Goedel.Protocol.Presentation.ICredentialPrivate)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.GetCarnet(Goedel.Protocol.Presentation.ICredentialPrivate)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.MeshMachineCore">
             <summary>
@@ -101,6 +110,69 @@
             
         </member>
         <member name="M:Goedel.Mesh.MeshMachineCore.GetCredential(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.Core.MeshMachineDirect">
+            <summary>
+            Machine using a client directly bound to the underlying service.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Core.MeshMachineDirect.#ctor(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.MeshService)">
+            <summary>
+            Constructor returning a new instance connecting to the service 
+            <paramref name="publicMeshService"/> by means of the client 
+            <paramref name="meshMachineClient"/>.
+            </summary>
+            <param name="meshMachineClient">A client instance provisioned with the
+            necessary credential.</param>
+            <param name="publicMeshService">The service instance.</param>
+        </member>
+        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.Instance">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.MeshHost">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.DirectoryMesh">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.DirectoryKeys">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.KeyCollection">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.ResolverService">
+            <summary>The Callsign resolution service (if bound).</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.CarnetService">
+            <summary>The Carnet payment service (if bound).</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Core.MeshMachineDirect.CreateKeyPair(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.KeyUses)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Core.MeshMachineDirect.GetCredential(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Core.MeshMachineDirect.GetFilePath(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Core.MeshMachineDirect.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Core.MeshMachineDirect.GetClient``1(System.String,Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Core.MeshMachineDirect.AddService(Goedel.Protocol.JpcInterface)">
+            <summary>
+            Add service to direct interface machine.
+            </summary>
+            <param name="jpcInterface"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Core.MeshMachineDirect.GetResolver(Goedel.Protocol.Presentation.ICredentialPrivate)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Core.MeshMachineDirect.GetCarnet(Goedel.Protocol.Presentation.ICredentialPrivate)">
             <inheritdoc/>
         </member>
     </members>

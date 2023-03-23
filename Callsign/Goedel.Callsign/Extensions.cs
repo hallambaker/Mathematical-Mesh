@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 namespace Goedel.Callsign;
 
 
+
+
 public enum CallsignState {
     
     Unregistered,
@@ -22,10 +24,59 @@ public enum CallsignState {
     }
 
 
+
+public class ContextResolver : IResolver {
+
+    ContextAccount ContextAccount { get; }
+
+
+    public 
+        ResolverServiceClient ResolverServiceClient { get; set; }
+
+    public ContextResolver(
+                ContextAccount contextAccount
+                ) {
+        ContextAccount = contextAccount;
+
+        //contextAccount.CallsignResolver = this;
+        }
+
+    public bool TryResolveCallsign(string callsign, out CallsignBinding callsignBinding) {
+        throw new NotImplementedException();
+        }
+
+    }
+
+
+
 /// <summary>
 /// Extensions class. Provides static convenience extensions.
 /// </summary>
 public static class Extensions {
+
+
+    public static IResolver GetResolver(
+                this ContextAccount contextAccount) {
+        if (contextAccount == null) {
+            throw new ArgumentNullException(paramName: nameof(contextAccount));
+            }
+        if (contextAccount.CallsignResolver != null) {
+            return contextAccount.CallsignResolver;
+            }
+
+        return new ContextResolver(contextAccount);
+
+        }
+
+
+    public static bool TryResolveCallsign(
+                this ContextAccount contextAccount,
+                string callsign, 
+                out CallsignBinding callsignBinding) {
+        var resolver = contextAccount.GetResolver();
+        return resolver.TryResolveCallsign(callsign, out callsignBinding);
+        }
+
 
 
     /// <summary>
@@ -43,9 +94,9 @@ public static class Extensions {
                 bool bind = false, 
                 ProfileAccount transfer = null) {
 
-
+        display = CallsignMapping.Strip(display ?? callsign);
         callsign = CallsignMapping.Default.Canonicalize(CallsignMapping.Strip(callsign));
-        display = display == null ? callsign : CallsignMapping.Strip(display);
+
 
 
         (CallsignMapping.Default.Canonicalize(display) == callsign).AssertTrue(CanonicalFormInvalid.Throw);
@@ -57,8 +108,20 @@ public static class Extensions {
         var callsignBinding = new CallsignBinding() {
             Canonical = callsign,
             Display = display,
-            ProfileUdf = profile.UdfString
+            ServiceAddress = contextAccount.AccountAddress,
             };
+
+        if (contextAccount.Profile is ProfileAccount profileAccount) {
+            callsignBinding.CommonEncryption = profileAccount.CommonEncryption;
+            }
+
+        if (transfer == null) {
+            callsignBinding.ProfileUdf = contextAccount.Profile.UdfString;
+            }
+        else {
+            callsignBinding.TransferUdf = transfer.UdfString;
+            }
+
 
 
         if (bind) {

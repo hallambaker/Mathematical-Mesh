@@ -48,7 +48,7 @@ public partial class Assertion {
 
         var signatures = DareEnvelope?.Header?.Signatures ??
             DareEnvelope?.Trailer?.Signatures;
-        if (signatures == null | profileUdf == null) {
+        if (signatures == null ) {
             return false;
             }
 
@@ -73,7 +73,7 @@ public partial class Assertion {
 
         var signatures = DareEnvelope?.Header?.Signatures ??
             DareEnvelope?.Trailer?.Signatures;
-        if (signatures == null | profileUdf == null) {
+        if (signatures == null ) {
             return false;
             }
 

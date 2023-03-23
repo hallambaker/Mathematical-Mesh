@@ -490,8 +490,6 @@ public partial class TestService {
                 DeviceBobAdmin, AccountBob, "main");
 
 
-        // This test is failing because the message from Bob isn't passed to Alice.
-        // Bob ---> Alice
         contextAccountBob.ContactRequest(AccountAlice);
 
         // Alice ---> Bob

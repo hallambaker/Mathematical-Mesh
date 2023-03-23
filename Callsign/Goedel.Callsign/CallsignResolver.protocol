@@ -1,4 +1,4 @@
-﻿Protocol Goedel.Callsign.Resolver CallsignResolver CallsignResolver
+﻿Protocol Goedel.Callsign CallsignResolver CallsignResolver
 
 	Section 2 "Registrar service"
 
@@ -7,7 +7,6 @@
 
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare
-	Using Goedel.Callsign.Registry
 	Using Goedel.Callsign
 	
 	Extern CallsignRequest

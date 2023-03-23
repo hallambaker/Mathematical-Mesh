@@ -92,6 +92,18 @@ public class CatalogCallsign : Catalog<CatalogedCallsign> {
         }
 
     #endregion
+
+
+    //public override void Intern(SequenceIndexEntry indexEntry) {
+    //    base.Intern(indexEntry);
+    //    }
+
+
+    //public override CatalogedCallsign Get(string key) {
+    //    return base.Get(key);
+    //    }
+
+
     }
 
 

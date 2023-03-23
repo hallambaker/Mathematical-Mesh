@@ -1375,48 +1375,6 @@
             <param name="session">The authentication binding.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="T:Goedel.Mesh.Server.MeshMachineDirect">
-            <summary>
-            Machine using a client directly bound to the underlying service.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshMachineDirect.#ctor(Goedel.Mesh.Client.IMeshMachineClient,Goedel.Mesh.Server.PublicMeshService)">
-            <summary>
-            Constructor returning a new instance connecting to the service 
-            <paramref name="publicMeshService"/> by means of the client 
-            <paramref name="meshMachineClient"/>.
-            </summary>
-            <param name="meshMachineClient">A client instance provisioned with the
-            necessary credential.</param>
-            <param name="publicMeshService">The service instance.</param>
-        </member>
-        <member name="P:Goedel.Mesh.Server.MeshMachineDirect.Instance">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Server.MeshMachineDirect.MeshHost">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Server.MeshMachineDirect.DirectoryMesh">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Server.MeshMachineDirect.DirectoryKeys">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Server.MeshMachineDirect.KeyCollection">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshMachineDirect.CreateKeyPair(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.KeyUses)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshMachineDirect.GetCredential(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshMachineDirect.GetFilePath(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshMachineDirect.GetMeshClient(Goedel.Protocol.Presentation.ICredentialPrivate,System.String)">
-            <inheritdoc/>
-        </member>
         <member name="T:Goedel.Mesh.Server.LockedCatalogedEntry`1">
             <summary>
             Wrapper providing a locked accessor to a CatalogedEntry of type <typeparamref name="T"/>.
@@ -1442,7 +1400,7 @@
             The Mathematical Mesh persistence store.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Server.MeshPersist.Container">
+        <member name="F:Goedel.Mesh.Server.MeshPersist.AccountStore">
             <summary>The underlying persistence store for the account catalog.</summary>
         </member>
         <member name="P:Goedel.Mesh.Server.MeshPersist.CatalogCallsign">

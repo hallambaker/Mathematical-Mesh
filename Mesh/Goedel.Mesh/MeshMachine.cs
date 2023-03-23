@@ -102,6 +102,23 @@ public interface IMeshMachine {
             string accountAddress);
 
 
+
+    /// <summary>
+    /// Return a client bound to the connection via the relevant protocol
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public T GetClient<T>(
+        string wellKnown, ICredentialPrivate credential = null,
+                string accountAddress = null) where T : JpcClientInterface, new();
+
+    
+    public IResolver GetResolver(ICredentialPrivate credential);
+
+
+    public ICarnet GetCarnet(ICredentialPrivate credential);
+
+
     /// <summary>
     /// Returns the private credential to be presented by the device <paramref name="deviceUdf"/>,
     /// connected to the account or service as <paramref name="connectionUdf"/>.
@@ -111,6 +128,11 @@ public interface IMeshMachine {
     /// service or account.</param>
     /// <returns>The private credential.</returns>
     ICredentialPrivate GetCredential(string deviceUdf, string connectionUdf);
+
+
+
+
+
 
     }
 

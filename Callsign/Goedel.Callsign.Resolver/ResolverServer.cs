@@ -53,7 +53,8 @@ public class PublicCallsignResolver : CallsignResolver, IDisposable{
 
     #region // Properties
 
-    PublicResolverService PublicResolverService { get; }
+    ///<summary>The resolver service.</summary> 
+    public PublicResolverService PublicResolverService { get; }
 
     ///<summary>The Mesh Machine base</summary> 
     public IMeshMachine MeshMachine { get; init; }
@@ -320,18 +321,6 @@ public class PublicCallsignResolver : CallsignResolver, IDisposable{
             }
 
         }
-
-    void Update(StoreUpdate update) {
-
-
-        
-        }
-
-    void MakeCatalogRegistration(
-                List<DareEnvelope> envelopes) {
-        }
-
-
 
     #endregion
 

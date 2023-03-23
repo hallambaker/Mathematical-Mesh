@@ -84,7 +84,16 @@ public partial class Message {
     /// Return the identifier for a response to this message.
     /// </summary>
     /// <returns>The response identifier.</returns>
-    public string GetResponseId() => MakeID(MessageId, MeshConstants.IanaTypeMeshResponseId);
+    public string GetResponseId() => GetResponseId(MessageId);
+
+
+    /// <summary>
+    /// Return the identifier for a response to the message <paramref name="messageId"/>.
+    /// </summary>
+    /// <param name="messageId">The message the response ID is requested for.</param>
+    /// <returns>The response ID.</returns>
+    public static string GetResponseId(string messageId) =>
+        MakeID(messageId, MeshConstants.IanaTypeMeshResponseId);
 
     /// <summary>
     /// Compute the EnvelopeID for <paramref name="messageID"/>.

@@ -3701,6 +3701,9 @@
         <member name="P:Goedel.Mesh.Shell._DareEncode.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DareEncode.Self">
+            <summary>Field accessor for option [self]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareEncode.Sign">
             <summary>Field accessor for option [sign]</summary>
         </member>
@@ -3845,6 +3848,9 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveCreate.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._ArchiveCreate.Self">
+            <summary>Field accessor for option [self]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveCreate.Sign">
             <summary>Field accessor for option [sign]</summary>
         </member>
@@ -3901,6 +3907,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveAppend.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ArchiveAppend.Self">
+            <summary>Field accessor for option [self]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveAppend.Sign">
             <summary>Field accessor for option [sign]</summary>
@@ -3976,6 +3985,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveIndex.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ArchiveIndex.Self">
+            <summary>Field accessor for option [self]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveIndex.Sign">
             <summary>Field accessor for option [sign]</summary>
@@ -4088,6 +4100,9 @@
         <member name="P:Goedel.Mesh.Shell._ArchiveCopy.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._ArchiveCopy.Self">
+            <summary>Field accessor for option [self]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._ArchiveCopy.Sign">
             <summary>Field accessor for option [sign]</summary>
         </member>
@@ -4145,6 +4160,9 @@
         <member name="P:Goedel.Mesh.Shell._LogCreate.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._LogCreate.Self">
+            <summary>Field accessor for option [self]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._LogCreate.Sign">
             <summary>Field accessor for option [sign]</summary>
         </member>
@@ -4195,6 +4213,9 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._LogAppend.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._LogAppend.Self">
+            <summary>Field accessor for option [self]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._LogAppend.Sign">
             <summary>Field accessor for option [sign]</summary>
